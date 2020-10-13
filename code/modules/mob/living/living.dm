@@ -475,7 +475,7 @@
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
 	var/static/datum/callback/rest_checks = CALLBACK(src, .proc/rest_checks_callback)
-	if(!instant && !do_mob(src, src, 2 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
+	if(!instant && !do_mob(src, src, 1 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -614,6 +614,8 @@
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
+		if(admin_revive)
+			get_up(TRUE)
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -625,6 +627,10 @@
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
+	else if(admin_revive)
+		updatehealth()
+		get_up(TRUE)
+
 
 /mob/living/proc/remove_CC()
 	SetStun(0)
@@ -1597,15 +1603,13 @@
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_FLOORED, UNCONSCIOUS_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
-				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			if(pulledby)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
 		if(UNCONSCIOUS)
@@ -1617,18 +1621,16 @@
 	switch(stat) //Current stat.
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
-			REMOVE_TRAIT(src, TRAIT_FLOORED, UNCONSCIOUS_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
@@ -1659,6 +1661,7 @@
 				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
 			if(0) // Forcing to a standing position.
 				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				set_body_position(STANDING_UP)
 				set_lying_angle(0)
 			else // Forcing to a lying position.
 				ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)

@@ -38,7 +38,7 @@
 	name = "Monkeys delight"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/monkeycube = 1,

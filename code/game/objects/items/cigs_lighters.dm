@@ -49,8 +49,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigon"
 		name = "lit [initial(name)]"
 		desc = "A [initial(name)]. This one is lit."
-		attack_verb_continuous = list("burns", "sings")
-		attack_verb_simple = list("burn", "sing")
+		attack_verb_continuous = string_list(list("burns", "sings"))
+		attack_verb_simple = string_list(list("burn", "sing"))
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -64,8 +64,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigoff"
 		name = "burnt [initial(name)]"
 		desc = "A [initial(name)]. This one has seen better days."
-		attack_verb_continuous = list("flicks")
-		attack_verb_simple = list("flick")
+		attack_verb_continuous = string_list(list("flicks"))
+		attack_verb_simple = string_list(list("flick"))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/match/extinguish()
@@ -188,8 +188,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	lit = TRUE
 	name = "lit [name]"
-	attack_verb_continuous = list("burns", "sings")
-	attack_verb_simple = list("burn", "sing")
+	attack_verb_continuous = string_list(list("burns", "sings"))
+	attack_verb_simple = string_list(list("burn", "sing"))
 	hitsound = 'sound/items/welder.ogg'
 	damtype = BURN
 	force = 4
@@ -680,8 +680,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = 5
 		damtype = BURN
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb_continuous = list("burns", "sings")
-		attack_verb_simple = list("burn", "sing")
+		attack_verb_continuous = string_list(list("burns", "sings"))
+		attack_verb_simple = string_list(list("burn", "sing"))
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"

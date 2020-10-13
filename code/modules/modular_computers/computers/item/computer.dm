@@ -20,6 +20,10 @@
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
+	///Looping sound for when the computer is on
+	var/datum/looping_sound/computer/soundloop
+	///Whether or not this modular computer uses the looping sound
+	var/looping_sound = TRUE
 
 	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
@@ -56,11 +60,14 @@
 		physical = src
 	comp_light_color = "#FFFFFF"
 	idle_threads = list()
+	if(looping_sound)
+		soundloop = new(list(src), enabled)
 	update_icon()
 
 /obj/item/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(soundloop)
 	for(var/H in all_components)
 		var/obj/item/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
@@ -207,6 +214,8 @@
 			to_chat(user, "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>")
 		else
 			to_chat(user, "<span class='notice'>You press the power button and start up \the [src].</span>")
+		if(looping_sound)
+			soundloop.start()
 		enabled = 1
 		update_icon()
 		ui_interact(user)
@@ -343,6 +352,8 @@
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
 		idle_threads.Remove(P)
+	if(looping_sound)
+		soundloop.stop()
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0

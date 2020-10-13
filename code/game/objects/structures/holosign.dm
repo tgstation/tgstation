@@ -9,20 +9,17 @@
 	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 	var/obj/item/holosign_creator/projector
 
-/obj/structure/holosign/New(loc, source_projector)
-	if(source_projector)
-		projector = source_projector
-		projector.signs += src
-	..()
-
-/obj/structure/holosign/Initialize()
+/obj/structure/holosign/Initialize(loc, source_projector)
 	. = ..()
 	alpha = 0
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	if(source_projector)
+		projector = source_projector
+		LAZYADD(projector.signs, src)
 
 /obj/structure/holosign/Destroy()
 	if(projector)
-		projector.signs -= src
+		LAZYREMOVE(projector.signs, src)
 		projector = null
 	return ..()
 
