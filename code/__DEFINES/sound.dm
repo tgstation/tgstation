@@ -11,14 +11,14 @@
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
-///default extra range for sounds considered to be quiet, such as mice
-#define SHORT_RANGE_SOUND_EXTRARANGE -8
+///default extra range for sounds considered to be quieter
+#define SHORT_RANGE_SOUND_EXTRARANGE -9
 ///The range deducted from sound range for things that are considered silent / sneaky
-#define SILENCED_SOUND_EXTRARANGE -12
+#define SILENCED_SOUND_EXTRARANGE -11
 ///Percentage of sound's range where no falloff is applied
-#define SOUND_DEFAULT_FALLOFF_DISTANCE 2 //For a normal sound this would be 3 tiles of no falloff
+#define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
 ///The default exponent of sound falloff
-#define SOUND_FALLOFF_EXPONENT 3
+#define SOUND_FALLOFF_EXPONENT 5
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED

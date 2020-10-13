@@ -15,8 +15,12 @@
 
 	///extra-range for this component's sound
 	var/sound_extra_range = -1
+	///when sounds start falling off for the squeak
+	var/sound_falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
+	///sound exponent for squeak. Defaults to 10 as squeaking is loud and annoying enough.
+	var/sound_falloff_exponent = 10
 
-/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange)
+/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
@@ -46,15 +50,19 @@
 		use_delay = use_delay_override
 	if(isnum(extrarange))
 		sound_extra_range = extrarange
+	if(isnum(falloff_exponent))
+		sound_falloff_exponent = falloff_exponent
+	if(isnum(fallof_distance))
+		sound_falloff_distance = fallof_distance
 
 /datum/component/squeak/proc/play_squeak()
 	SIGNAL_HANDLER
 
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, sound_extra_range)
+			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = fallof_distance)
 		else
-			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, sound_extra_range)
+			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = fallof_distance)
 
 /datum/component/squeak/proc/step_squeak()
 	SIGNAL_HANDLER
