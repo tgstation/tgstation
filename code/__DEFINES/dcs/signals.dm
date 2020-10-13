@@ -477,6 +477,8 @@
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
+///from /obj/machinery/set_occupant(atom/movable/O): ()
+#define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
 
 // /obj/machinery/door/airlock signals
 

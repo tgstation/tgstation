@@ -152,7 +152,8 @@ Class Procs:
 	RETURN_TYPE(/atom/movable)
 	return occupant
 
-/obj/machinery/proc/set_occupant(new_occupant)
+/obj/machinery/proc/set_occupant(atom/movable/new_occupant)
+	SEND_SIGNAL(src, COMSIG_MACHINERY_SET_OCCUPANT, new_occupant)
 	occupant = new_occupant
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
