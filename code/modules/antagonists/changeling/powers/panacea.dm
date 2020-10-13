@@ -46,6 +46,7 @@
 			if(D.severity == DISEASE_SEVERITY_POSITIVE)
 				continue
 			D.cure()
+		radiation = 0
 		L.clear_addictions()
 		L.dizziness = 0
 		L.drowsyness = 0
