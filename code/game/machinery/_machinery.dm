@@ -150,9 +150,13 @@ Class Procs:
 
 /obj/machinery/proc/get_occupant()
 	RETURN_TYPE(/atom/movable)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	return occupant
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
+	SHOULD_CALL_PARENT(TRUE)
+
 	SEND_SIGNAL(src, COMSIG_MACHINERY_SET_OCCUPANT, new_occupant)
 	occupant = new_occupant
 
@@ -705,6 +709,13 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, MELEE, 1)
+
+/obj/machinery/vv_edit_var(vname, vval)
+	if(vname == "occupant")
+		set_occupant(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
 
 /**
  * Generate a name devices
