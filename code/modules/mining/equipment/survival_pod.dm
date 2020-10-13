@@ -16,19 +16,14 @@
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
-	var/datum/map_template/shelter/template //template = SSmapping.holodeck_templates[template_id]
-	//so this is a var that stores the intended shelter_id for when it does template.load(deploy_location, centered = TRUE)
-	//template.load is really template_id.load
+	var/datum/map_template/shelter/template
 	var/used = FALSE
 
 /obj/item/survivalcapsule/proc/get_template()
 	if(template)
 		return
-	var/obj/item/survivalcapsule/N = name
-	if (N == "holodeck lounge sim capsule")//kyler, remove this shit
-		template = SSmapping.holodeck_templates[template_id]
-	else
-		template = SSmapping.shelter_templates[template_id]
+
+	template = SSmapping.shelter_templates[template_id]
 	if(!template)
 		WARNING("Shelter template ([template_id]) not found!")
 		qdel(src)
@@ -85,12 +80,6 @@
 	name = "luxury elite bar capsule"
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
-
-/obj/item/survivalcapsule/holodeck_lounge//TODO: REMOVE BEFORE MERGING
-	name = "holodeck lounge sim capsule"
-	desc = "benis"
-	template_id = "holodeck_lounge"
-
 
 
 //Pod objects

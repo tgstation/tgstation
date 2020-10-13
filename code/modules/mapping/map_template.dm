@@ -49,9 +49,9 @@
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
-				cables += A//if A is a cable, add to the cable list
+				cables += A
 				continue
-			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
+			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
@@ -107,7 +107,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
 							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
 	for(var/L in border)
 		var/turf/turf_to_disable = L
