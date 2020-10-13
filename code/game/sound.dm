@@ -24,8 +24,6 @@ ignore_walls - Whether or not the sound can pass through walls.
 	if (!turf_source)
 		return
 
-	falloff_exponent = SSsounds.falloff_exponent
-
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
