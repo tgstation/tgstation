@@ -36,9 +36,9 @@
 
 	// Splitting this up allows two holodecks of the same size
 	// to use the same source patterns.  Y'know, if you want to.
-	var/holodeck_type = /datum/map_template/holodeck	// locate(this) to get the target holodeck
+	var/holodeck_type = /datum/map_template/holodeck
 	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
-	//^ im pretty sure this will not work
+
 	var/active = FALSE
 	var/damaged = FALSE
 	var/list/spawned = list()
@@ -46,9 +46,7 @@
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/spawn_tile
-	//var/template_id
 	var/turf/bottom_left
-	//var/area/current_holodeck_are
 	var/list/before_load = list()
 	var/list/after_load = list()
 
@@ -60,8 +58,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
-	//var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner) //BAD KYLER :newspaper2:
-	//get_spawn_tile(holodeck_helper)
 	linked = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
 	bottom_left = locate(linked.x, linked.y, 2)
 	var/area/AS = get_area(src)
@@ -70,8 +66,7 @@
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
-	//if(ispath(holodeck_type, /area))//evaluates to false, i dont think that holodeck_type is used
-	//	linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
+
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
@@ -86,12 +81,6 @@
 		else
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
-	//linked.linked = src
-	//var/area/my_area = get_area(src)
-	//if(my_area)
-	//	linked.power_usage = my_area.power_usage
-	//else
-	//	linked.power_usage = new /list(AREA_USAGE_LEN)
 	generate_program_list()
 	load_program("holodeck_offline")//honestly there isnt a reason to do this as far as im aware
 
@@ -132,22 +121,8 @@
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]
-			//if(!ispath(program_to_load))
-			//	return FALSE
-			//var/valid = FALSE
-			//var/list/checked = program_cache.Copy()
-			/*if(obj_flags & EMAGGED)
-				checked |= emag_programs
-			for(var/prog in checked)
-				var/list/P = prog
-				if(P["type"] == program_to_load)
-					valid = TRUE
-					break
-			if(!valid)
-				return FALSE*/
 			//load the map_template that program_to_load represents
 			if(program_to_load)
-				//var/id = initial(program_to_load.template_id)
 				load_program(program_to_load)//do i only need to replace this? NO EASYNESS, ONLY PAIN
 		if("safety")
 			if((obj_flags & EMAGGED) && program)
@@ -327,9 +302,6 @@
 		var/turf/B = L
 		atoms += B
 		areas |= B.loc
-		//for (var/a in B.baseturfs)
-		//	if (!istype(/turf/baseturf_bottom))
-
 		for(var/atom/A in B)
 			if (!(A.flags_1 & INITIALIZED_1))
 				newatoms += A
@@ -342,11 +314,6 @@
 				continue
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
-	//for(var/L in border)
-	//	var/turf/T = L
-	//	T.air_update_turf(TRUE)
-
-
 
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
@@ -361,14 +328,14 @@
 	if(program == map_id)
 		return
 
-	//if(current_cd > world.time && !force)
-	//	say("ERROR. Recalibrating projection apparatus.")
-	//	return
+	if(current_cd > world.time && !force)
+		say("ERROR. Recalibrating projection apparatus.")
+		return
 
 	if(add_delay)
 		current_cd = world.time + HOLODECK_CD
-//		if(damaged)
-//			current_cd += HOLODECK_DMG_CD
+		if(damaged)
+			current_cd += HOLODECK_DMG_CD
 
 	use_power = active + IDLE_POWER_USE
 	program = map_id
