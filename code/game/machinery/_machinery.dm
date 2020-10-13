@@ -113,6 +113,7 @@ Class Procs:
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
+	var/atom/movable/occupant = null
 	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
 	var/processing_flags = START_PROCESSING_ON_INIT
 	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
@@ -123,9 +124,6 @@ Class Procs:
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
-
-	/// Use `(get|set)_occupant` instead
-	VAR_PRIVATE/atom/movable/occupant = null
 
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
