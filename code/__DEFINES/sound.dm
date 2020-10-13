@@ -16,7 +16,7 @@
 ///Percentage of sound's range where no falloff is applied
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 2 //For a normal sound this would be 3 tiles of no falloff
 ///The default exponent of sound falloff
-#define SOUND_FALLOFF_EXPONENT 0.3
+#define SOUND_FALLOFF_EXPONENT 3
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED

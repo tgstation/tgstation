@@ -7,11 +7,12 @@ soundin - Either a file, or a string that can be used to get an SFX
 vol - The volume of the sound, excluding falloff
 vary - bool that determines if the sound changes pitch every time it plays
 extrarange - modifier for sound range
-falloff - number between 0 and 1, to determine how steep the falloff reaches 0 at max distance
+falloff_exponent - Rate of falloff for the audio
 frequency - playback speed of audio
 channel - The channel the sound is played at
 pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space)
 ignore_walls - Whether or not the sound can pass through walls.
+falloff_distance - Distance at which falloff begins.
 
 */
 
@@ -23,6 +24,9 @@ ignore_walls - Whether or not the sound can pass through walls.
 
 	if (!turf_source)
 		return
+
+	falloff_exponent = SSsounds.sound_exponent
+	falloff_distance = SSsounds.falloff_start
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -61,6 +65,25 @@ ignore_walls - Whether or not the sound can pass through walls.
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance)
 
+/*! playsound
+
+playsound_local is a proc used to play a sound directly on a mob from a specific turf.
+This is called by playsound to send sounds to players, in which case it also gets the max_distance of that sound.
+
+turf_source - Origin of sound
+soundin - Either a file, or a string that can be used to get an SFX
+vol - The volume of the sound, excluding falloff
+vary - bool that determines if the sound changes pitch every time it plays
+frequency - playback speed of audio
+falloff_exponent - Rate of falloff for the audio. This should generally be above 1 as there should be a steep decline at the start.
+channel - The channel the sound is played at
+pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space)
+max_distance - The peak distance of the sound, if this is a 3D sound
+falloff_distance - Distance at which falloff begins, if this is a 3D sound
+distance_multiplier - Can be used to multiply the distance at which the sound is heard
+
+*/
+
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1)
 	if(!client || !can_hear())
 		return
@@ -87,7 +110,8 @@ ignore_walls - Whether or not the sound can pass through walls.
 		distance *= distance_multiplier
 
 		if(max_distance) //If theres no max_distance we're not a 3D sound, so no falloff.
-			S.volume -= (max(distance - falloff_distance, 0) ** falloff_exponent) / ((max_distance - falloff_distance) ** falloff_exponent) * S.volume
+			S.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * S.volume
+			//https://www.desmos.com/calculator/sqdfl8ipgf
 
 		if(pressure_affected)
 			//Atmosphere affects sound
