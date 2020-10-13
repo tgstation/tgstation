@@ -51,7 +51,7 @@
 	rogue_types = list(/datum/nanite_program/shocking, /datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/stun/on_trigger(comm_message)
-	playsound(host_mob, "sparks", 75, TRUE, -1)
+	playsound(host_mob, "sparks", 75, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	host_mob.Paralyze(80)
 
 /datum/nanite_program/pacifying

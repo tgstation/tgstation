@@ -11,6 +11,8 @@
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
+///default extra range for sounds considered to be quiet, such as mice
+#define SHORT_RANGE_SOUND_EXTRARANGE -8
 ///The range deducted from sound range for things that are considered silent / sneaky
 #define SILENCED_SOUND_EXTRARANGE -12
 ///Percentage of sound's range where no falloff is applied

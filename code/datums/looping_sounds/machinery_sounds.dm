@@ -77,6 +77,7 @@
 	mid_length = 1.8 SECONDS
 	extra_range = -11
 	falloff_distance = 1
+	falloff_exponent = 5
 	volume = 50
 
 /datum/looping_sound/computer
@@ -88,7 +89,8 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
 	volume = 3
-	extra_range = -13
+	falloff_exponent = 20 //Ultra quiet very fast
+	extra_range = -14
 	falloff_distance = 1
 
 /datum/looping_sound/gravgen
