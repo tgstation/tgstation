@@ -480,6 +480,11 @@
 ///from /obj/machinery/set_occupant(atom/movable/O): ()
 #define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
 
+// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+
+/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): ()
+#define COMSIG_CRYO_SET_ON "cryo_set_on"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)

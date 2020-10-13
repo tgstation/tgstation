@@ -11,15 +11,28 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
+	var/mob/living/occupant
 
-/atom/movable/visual/cryo_occupant/Initialize()
+/atom/movable/visual/cryo_occupant/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/parent)
 	. = ..()
 	// Alpha masking
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
 	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/cryogenics.dmi', "mask"), "y" = -22))
+	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
+	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
-/atom/movable/visual/cryo_occupant/proc/on_occupant_enter(mob/living/occupant)
+/atom/movable/visual/cryo_occupant/proc/on_set_occupant(mob/living/L)
+	SIGNAL_HANDLER
+
+	vis_contents -= occupant
+	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
+		occupant.set_lying_down()
+	if(!L || !istype(L))
+		return
+
+	occupant = L
 	occupant.setDir(SOUTH)
 	vis_contents += occupant
 	pixel_y = 22
@@ -27,18 +40,14 @@
 	occupant.set_body_position(STANDING_UP)
 	occupant.set_lying_angle(0)
 
-/atom/movable/visual/cryo_occupant/proc/on_occupant_exit(mob/living/occupant)
-	vis_contents -= occupant
-	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
-	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
-		occupant.set_lying_down()
+/atom/movable/visual/cryo_occupant/proc/on_set_on(on)
+	SIGNAL_HANDLER
 
-/atom/movable/visual/cryo_occupant/proc/on_toggle_on()
-	animate(src, pixel_y = 24, time = 20, loop = -1)
-	animate(pixel_y = 22, time = 20)
-
-/atom/movable/visual/cryo_occupant/proc/on_toggle_off()
-	animate(src)
+	if(on)
+		animate(src, pixel_y = 24, time = 20, loop = -1)
+		animate(pixel_y = 22, time = 20)
+	else
+		animate(src)
 
 /// Cryo cell
 /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -97,15 +106,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-	occupant_vis = new(null)
+	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
-	var/mob/living/oldoccupant = occupant
-	. = ..() // Parent proc takes care of removing occupant if necessary
-	if (oldoccupant && istype(oldoccupant) && AM == oldoccupant)
-		update_icon()
-		occupant_vis.on_occupant_exit(oldoccupant)
+/obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
+	. = ..()
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
@@ -195,10 +201,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	. = on
 	on = new_value
 	update_icon()
-	if(on)
-		occupant_vis.on_toggle_on()
-	else
-		occupant_vis.on_toggle_off()
+	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -317,8 +320,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
-		if(isliving(occupant))
-			occupant_vis.on_occupant_enter(occupant)
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
@@ -452,7 +453,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 				set_on(FALSE)
 			else if(!state_open)
 				set_on(TRUE)
-			update_icon()
 			. = TRUE
 		if("door")
 			if(state_open)
