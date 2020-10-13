@@ -135,7 +135,7 @@
 	name = "ghost burger"
 	desc = "Too Spooky!"
 	icon_state = "ghostburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/sodiumchloride = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/salt = 5)
 	tastes = list("bun" = 2, "ectoplasm" = 4)
 	foodtypes = GRAIN
 	alpha = 170
