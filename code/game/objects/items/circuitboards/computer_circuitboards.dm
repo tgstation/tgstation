@@ -127,7 +127,6 @@
 	name = "Communications (Computer Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/communications
-	var/lastTimeUsed = 0
 
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
