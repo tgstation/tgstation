@@ -1,4 +1,21 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+/*! playsound
+
+playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
+
+source - Origin of sound
+soundin - Either a file, or a string that can be used to get an SFX
+vol - The volume of the sound, excluding falloff
+vary - bool that determines if the sound changes pitch every time it plays
+extrarange - modifier for sound range
+falloff - number between 0 and 1, to determine how steep the falloff reaches 0 at max distance
+frequency - no clue tbf
+channel - The channel the sound is played at
+pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space)
+ignore_walls - Whether or not the sound can pass through walls.
+
+*/
+
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
@@ -7,7 +24,7 @@
 	if (!turf_source)
 		return
 
-	falloff = SSsounds.falloff_exponent
+	falloff_exponent = SSsounds.falloff_exponent
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -40,13 +57,13 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, max_distance = maxdistance)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance)
 	for(var/P in SSmobs.dead_players_by_zlevel[source_z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, max_distance = maxdistance)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, distance_multiplier = 1, max_distance)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1)
 	if(!client || !can_hear())
 		return
 
@@ -71,9 +88,8 @@
 
 		distance *= distance_multiplier
 
-		if(max_distance) //If theres no max_distance we're not a 3D sound anyways.
-			S.volume -= (max(distance - SOUND_FALLOFF_DISTANCE, 0) ** falloff) / ((max_distance - SOUND_FALLOFF_DISTANCE) ** falloff) * S.volume
-
+		if(max_distance) //If theres no max_distance we're not a 3D sound, so no falloff.
+			S.volume -= (max(distance - falloff_distance, 0) ** falloff_exponent) / ((max_distance - falloff_distance) ** falloff_exponent) * S.volume
 
 		if(pressure_affected)
 			//Atmosphere affects sound

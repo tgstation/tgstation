@@ -9,11 +9,14 @@
 #define CHANNEL_BUZZ 1017
 #define CHANNEL_BICYCLE 1016
 
-
-#define SOUND_RANGE 20
-#define SILENCED_SOUND_EXTRARANGE -14
-#define SOUND_FALLOFF_DISTANCE 7
-#define SOUND_FALLOFF_EXPONENT 2
+///Default range of a sound.
+#define SOUND_RANGE 16
+///The range deducted from sound range for things that are considered silent / sneaky
+#define SILENCED_SOUND_EXTRARANGE -10
+///Percentage of sound's range where no falloff is applied
+#define SOUND_DEFAULT_FALLOFF_DISTANCE 3 //For a normal sound this would be 3 tiles of no falloff
+///The default exponent of sound falloff
+#define SOUND_FALLOFF_EXPONENT 0.3
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
