@@ -31,8 +31,6 @@
 
 	///Reagents when consumed
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	///Volume of reagents as food
-	var/food_volume = 10
 
 /obj/item/organ/Initialize()
 	. = ..()
@@ -40,8 +38,8 @@
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = RAW | MEAT | GROSS,\
-			volume = food_volume,\
-			after_eat = CALLBACK(src, .proc/OnEatFrom))
+			volume = 10,\
+			before_eat = CALLBACK(src, .proc/OnEatFrom))
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -145,8 +143,13 @@
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/**
+ * Callback when the item is being eaten
+ *
+ * Changes the usability of the organ as it is now being eaten.
+ */
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
-	useable = FALSE //You can't use it anymore after eating it you spaztic
+	useable = FALSE
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.

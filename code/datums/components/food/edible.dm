@@ -29,6 +29,8 @@ Behavior that's still missing from this component that original food items had t
 	var/junkiness = 0
 	///Message to send when eating
 	var/list/eatverbs
+	///Callback to be run before you take a bite of something
+	var/datum/callback/before_eat
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
 	///Callback to be ran for when you take a bite of something
@@ -54,6 +56,7 @@ Behavior that's still missing from this component that original food items had t
 								bite_consumption = 2,
 								microwaved_type,
 								junkiness,
+								datum/callback/before_eat,
 								datum/callback/after_eat,
 								datum/callback/on_consume)
 
@@ -84,6 +87,7 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
+	src.before_eat = before_eat
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.initial_reagents = string_assoc_list(initial_reagents)
@@ -111,6 +115,7 @@ Behavior that's still missing from this component that original food items had t
 	list/tastes,
 	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 	bite_consumption = 2,
+	datum/callback/before_eat,
 	datum/callback/after_eat,
 	datum/callback/on_consume
 	)
@@ -122,6 +127,7 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = eatverbs
 	src.junkiness = junkiness
+	src.before_eat = before_eat
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 
@@ -261,11 +267,13 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-
 	if(feeder.a_intent == INTENT_HARM)
 		return
-	//If we had initial volume we should still have some until the last bite
-	if(volume > 0 && !owner.reagents.total_volume)
+
+	if(before_eat)
+		before_eat.Invoke(eater, feeder, bitecount)
+
+	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
 		if(isturf(parent))
 			var/turf/T = parent
@@ -332,8 +340,8 @@ Behavior that's still missing from this component that original food items had t
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(owner.reagents.total_volume)
+		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 		bitecount++
