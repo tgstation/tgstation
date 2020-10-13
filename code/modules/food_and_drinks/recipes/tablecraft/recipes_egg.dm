@@ -6,7 +6,7 @@
 /datum/crafting_recipe/food/friedegg
 	name = "Fried egg"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/food/egg = 1
 	)
