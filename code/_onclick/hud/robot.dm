@@ -212,7 +212,7 @@
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = CEILING(length(R.module.get_inactive_modules()) / 8, 1)
+		var/display_rows = max(CEILING(length(R.module.get_inactive_modules()) / 8, 1),1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 

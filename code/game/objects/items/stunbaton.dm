@@ -333,9 +333,7 @@
 		if(ishuman(hit_atom) && !caught && prob(throw_stun_chance))//if they are a carbon and they didn't catch it
 			baton_effect(hit_atom)
 		if(thrownby && !caught)
-			sleep(1)
-			if(!QDELETED(src))
-				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 

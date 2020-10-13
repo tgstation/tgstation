@@ -91,9 +91,15 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/comms_console/Run(list/input)
+	// Reject comms messages from other servers that are not on our configured network,
+	// if this has been configured. (See CROSS_COMMS_NETWORK in comms.txt)
+	var/configured_network = CONFIG_GET(string/cross_comms_network)
+	if (configured_network && configured_network != input["network"])
+		return
+
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.overrideCooldown()
+		CM.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"

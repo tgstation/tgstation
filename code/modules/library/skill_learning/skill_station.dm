@@ -92,13 +92,13 @@
 		return
 	return ..()
 
-/obj/machinery/skill_station/drop_contents()
+/obj/machinery/skill_station/dump_contents()
 	. = ..()
 	inserted_skillchip = null
 
-/obj/machinery/skill_station/drop_stored_items(list/subset = null)
+/obj/machinery/skill_station/dump_inventory_contents(list/subset = null)
 	// Don't drop the skillchip, it's directly inserted into the machine.
-	// drop_contents() will drop everything including the skillchip.
+	// dump_contents() will drop everything including the skillchip as an alternative to this.
 	subset = contents - inserted_skillchip
 	return ..()
 

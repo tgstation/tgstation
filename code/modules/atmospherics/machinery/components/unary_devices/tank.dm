@@ -12,7 +12,8 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	var/volume = 10000 //in liters
-	var/gas_type = 0
+	/// The typepath of the gas this tank should be filled with.
+	var/gas_type = null
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
@@ -44,10 +45,68 @@
 	icon_state = "orange"
 	gas_type = /datum/gas/plasma
 
+/obj/machinery/atmospherics/components/unary/tank/nitrogen
+	icon_state = "red"
+	gas_type = /datum/gas/nitrogen
+
 /obj/machinery/atmospherics/components/unary/tank/oxygen
 	icon_state = "blue"
 	gas_type = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/components/unary/tank/nitrogen
+/obj/machinery/atmospherics/components/unary/tank/nitrous
+	icon_state = "red_white"
+	gas_type = /datum/gas/nitrous_oxide
+
+/obj/machinery/atmospherics/components/unary/tank/bz
+	gas_type = /datum/gas/bz
+
+/obj/machinery/atmospherics/components/unary/tank/freon
+	icon_state = "blue"
+	gas_type = /datum/gas/freon
+
+/obj/machinery/atmospherics/components/unary/tank/halon
+	icon_state = "blue"
+	gas_type = /datum/gas/halon
+
+/obj/machinery/atmospherics/components/unary/tank/healium
 	icon_state = "red"
-	gas_type = /datum/gas/nitrogen
+	gas_type = /datum/gas/healium
+
+/obj/machinery/atmospherics/components/unary/tank/hexane
+	gas_type = /datum/gas/hexane
+
+/obj/machinery/atmospherics/components/unary/tank/hydrogen
+	icon_state = "grey"
+	gas_type = /datum/gas/hydrogen
+
+/obj/machinery/atmospherics/components/unary/tank/hypernoblium
+	icon_state = "blue"
+	gas_type = /datum/gas/hypernoblium
+
+/obj/machinery/atmospherics/components/unary/tank/miasma
+	gas_type = /datum/gas/miasma
+
+/obj/machinery/atmospherics/components/unary/tank/nitryl
+	gas_type = /datum/gas/nitryl
+
+/obj/machinery/atmospherics/components/unary/tank/pluoxium
+	icon_state = "blue"
+	gas_type = /datum/gas/pluoxium
+
+/obj/machinery/atmospherics/components/unary/tank/proto_nitrate
+	icon_state = "red"
+	gas_type = /datum/gas/proto_nitrate
+
+/obj/machinery/atmospherics/components/unary/tank/stimulum
+	icon_state = "red"
+	gas_type = /datum/gas/stimulum
+
+/obj/machinery/atmospherics/components/unary/tank/tritium
+	gas_type = /datum/gas/tritium
+
+/obj/machinery/atmospherics/components/unary/tank/water_vapor
+	icon_state = "grey"
+	gas_type = /datum/gas/water_vapor
+
+/obj/machinery/atmospherics/components/unary/tank/zauker
+	gas_type = /datum/gas/zauker
