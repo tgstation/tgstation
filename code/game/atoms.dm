@@ -4,7 +4,7 @@
   * Lots and lots of functionality lives here, although in general we are striving to move
   * as much as possible to the components/elements system
   */
-/atom
+/ato
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
