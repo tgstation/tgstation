@@ -44,7 +44,7 @@
 		return
 
 	//running and someone in there
-	if(get_occupant())
+	if(occupant)
 		icon_state = initial(icon_state)+ "_occupied"
 		return
 
@@ -97,7 +97,7 @@
 	..(user)
 
 	// DNA manipulators cannot operate on severed heads or brains
-	if(iscarbon(get_occupant()))
+	if(iscarbon(occupant))
 		if(linked_console)
 			linked_console.on_scanner_close()
 
@@ -124,7 +124,7 @@
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
-	if(!get_occupant() && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 

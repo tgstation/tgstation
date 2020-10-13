@@ -37,7 +37,7 @@
 
 /obj/machinery/implantchair/ui_data()
 	var/list/data = list()
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 
 	data["occupied"] = mob_occupant ? 1 : 0
 	data["open"] = state_open
@@ -66,7 +66,7 @@
 				open_machine()
 			. = TRUE
 		if("implant")
-			implant(get_occupant(), usr)
+			implant(occupant, usr)
 			. = TRUE
 
 /obj/machinery/implantchair/proc/implant(mob/living/M,mob/user)
@@ -103,7 +103,7 @@
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
-	if(get_occupant())
+	if(occupant)
 		icon_state += "_occupied"
 
 /obj/machinery/implantchair/update_overlays()

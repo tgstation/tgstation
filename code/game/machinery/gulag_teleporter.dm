@@ -54,7 +54,7 @@ The console is located at computer/gulag_teleporter.dm
 	return
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
-	if(!get_occupant() && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
+	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
 		update_icon()
 		return
 
@@ -80,7 +80,7 @@ The console is located at computer/gulag_teleporter.dm
 		return
 
 	//running and someone in there
-	if(get_occupant())
+	if(occupant)
 		icon_state += "_occupied"
 		return
 
@@ -131,8 +131,8 @@ The console is located at computer/gulag_teleporter.dm
 // strips and stores all occupant's items
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
 	if(linked_reclaimer)
-		linked_reclaimer.stored_items[get_occupant()] = list()
-	var/mob/living/mob_occupant = get_occupant()
+		linked_reclaimer.stored_items[occupant] = list()
+	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
 		if(!is_type_in_typecache(W, telegulag_required_items))
 			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
@@ -147,10 +147,10 @@ The console is located at computer/gulag_teleporter.dm
 					W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
-	if(!ishuman(get_occupant()))
+	if(!ishuman(occupant))
 		return
 	strip_occupant()
-	var/mob/living/carbon/human/prisoner = get_occupant()
+	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
 		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
 		prisoner.equip_to_appropriate_slot(new suit_or_skirt)

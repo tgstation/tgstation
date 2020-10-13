@@ -36,7 +36,7 @@
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
-	if(get_occupant())
+	if(occupant)
 		icon_state += "_occupied"
 
 /obj/machinery/skill_station/update_overlays()
@@ -64,8 +64,8 @@
 
 /obj/machinery/skill_station/close_machine(atom/movable/target)
 	. = ..()
-	if(get_occupant())
-		ui_interact(get_occupant())
+	if(occupant)
+		ui_interact(occupant)
 
 /obj/machinery/skill_station/proc/interrupt_operation()
 	working = FALSE
@@ -76,7 +76,7 @@
 
 /obj/machinery/skill_station/interact(mob/user)
 	. = ..()
-	if(user == get_occupant())
+	if(user == occupant)
 		ui_interact(user)
 	else
 		toggle_open()
@@ -108,7 +108,7 @@
 // Functions below do not validate occupant exists - should be handled outer wrappers.
 /// Start implanting.
 /obj/machinery/skill_station/proc/start_implanting()
-	var/mob/living/carbon/carbon_occupant = get_occupant()
+	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(inserted_skillchip.has_mob_incompatibility(carbon_occupant))
 		CRASH("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
@@ -121,7 +121,7 @@
 /obj/machinery/skill_station/proc/implant()
 	working = FALSE
 	work_timer = null
-	var/mob/living/carbon/carbon_occupant = get_occupant()
+	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
 		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
@@ -137,7 +137,7 @@
 		return
 
 	if(to_be_removed.is_on_cooldown())
-		to_chat(get_occupant(), "<span class='notice'>DANGER! Operation cannot be completed, removal is unsafe.</span>")
+		to_chat(occupant, "<span class='notice'>DANGER! Operation cannot be completed, removal is unsafe.</span>")
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
@@ -150,7 +150,7 @@
 	work_timer = null
 	update_icon()
 
-	var/mob/living/carbon/carbon_occupant = get_occupant()
+	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_removed.is_on_cooldown())
 		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely removed.</span>")
@@ -172,7 +172,7 @@
 	to_chat(carbon_occupant, "<span class='notice'>Operation complete!</span>")
 
 /obj/machinery/skill_station/proc/toggle_chip_active(obj/item/skillchip/to_be_toggled)
-	var/mob/living/carbon/carbon_occupant = get_occupant()
+	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_toggled.is_on_cooldown())
 		to_chat(carbon_occupant,"<span class='notice'>Safety mechanisms activated! Skillchip cannot be safely modified.</span>")
@@ -197,7 +197,7 @@
 	. = ..()
 	.["working"] = working
 	.["timeleft"] = work_timer ? timeleft(work_timer) : null
-	var/mob/living/carbon/carbon_occupant = get_occupant()
+	var/mob/living/carbon/carbon_occupant = occupant
 
 	.["skillchip_ready"] = inserted_skillchip ? TRUE : FALSE
 	if(inserted_skillchip)
@@ -255,14 +255,14 @@
 	. = ..()
 	if(.)
 		return
-	if(usr != get_occupant())
+	if(usr != occupant)
 		return
 	switch(action)
 		if("implant")
 			if(working)
 				stack_trace("[usr] tried to start skillchip implanting when [src] was in an invalid state.")
 				return TRUE
-			if(get_occupant() && inserted_skillchip)
+			if(occupant && inserted_skillchip)
 				start_implanting()
 			return TRUE
 		if("remove")
@@ -270,7 +270,7 @@
 				stack_trace("[usr] tried to start skillchip removal when [src] was in an invalid state.")
 				return TRUE
 			var/chipref = params["ref"]
-			var/mob/living/carbon/carbon_occupant = get_occupant()
+			var/mob/living/carbon/carbon_occupant = occupant
 			var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
@@ -284,8 +284,8 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			if(inserted_skillchip)
-				to_chat(get_occupant(),"<span class='notice'>You eject the skillchip.</span>")
-				var/mob/living/carbon/human/H = get_occupant()
+				to_chat(occupant,"<span class='notice'>You eject the skillchip.</span>")
+				var/mob/living/carbon/human/H = occupant
 				H.put_in_hands(inserted_skillchip)
 				inserted_skillchip = null
 				return TRUE
@@ -295,7 +295,7 @@
 			if(working)
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
-			var/mob/living/carbon/carbon_occupant = get_occupant()
+			var/mob/living/carbon/carbon_occupant = occupant
 			var/obj/item/organ/brain/occupant_brain = carbon_occupant.getorganslot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE

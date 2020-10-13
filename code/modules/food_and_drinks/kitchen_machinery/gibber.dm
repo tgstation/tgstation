@@ -44,7 +44,7 @@
 		. +="grbloody"
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if (!get_occupant())
+	if (!occupant)
 		. += "grjam"
 	else if (operating)
 		. += "gruse"
@@ -95,7 +95,7 @@
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
-			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !get_occupant())
+			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				set_occupant(C)
@@ -138,7 +138,7 @@
 /obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(operating)
 		return
-	if(!get_occupant())
+	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
@@ -149,11 +149,11 @@
 
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
 	var/sourcejob
-	if(ishuman(get_occupant()))
-		var/mob/living/carbon/human/gibee = get_occupant()
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
@@ -164,14 +164,14 @@
 	var/obj/item/stack/sheet/animalhide/skin
 	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
-	if(ishuman(get_occupant()))
-		var/mob/living/carbon/human/gibee = get_occupant()
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/gibee = occupant
 		if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 			typeofskin = gibee.dna.species.skinned_type
 
-	else if(iscarbon(get_occupant()))
-		var/mob/living/carbon/C = get_occupant()
+	else if(iscarbon(occupant))
+		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat
 		gibtype = C.gib_type
 		if(ismonkey(C))
@@ -179,8 +179,8 @@
 		else if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 	var/occupant_volume
-	if(get_occupant()?.reagents)
-		occupant_volume = get_occupant().reagents.total_volume
+	if(occupant?.reagents)
+		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
@@ -188,7 +188,7 @@
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(occupant_volume)
-				get_occupant().reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
+				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
@@ -196,10 +196,10 @@
 	if(typeofskin)
 		skin = new typeofskin
 
-	log_combat(user, get_occupant(), "gibbed")
+	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
-	qdel(get_occupant())
+	qdel(occupant)
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)

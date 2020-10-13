@@ -56,7 +56,7 @@
 	radio.recalculateChannels()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
-	var/oldoccupant = get_occupant()
+	var/oldoccupant = occupant
 	. = ..() // Parent proc takes care of removing occupant if necessary
 	if (AM == oldoccupant)
 		update_icon()
@@ -128,24 +128,24 @@
 		icon_state = "pod-open"
 		return
 
-	if(get_occupant())
+	if(occupant)
 		var/image/occupant_overlay
 
-		if(ismonkey(get_occupant())) // Monkey
+		if(ismonkey(occupant)) // Monkey
 			occupant_overlay = image(CRYOMOBS, "monkey")
-		else if(isalienadult(get_occupant()))
-			if(isalienroyal(get_occupant())) // Queen and prae
+		else if(isalienadult(occupant))
+			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
-			else if(isalienhunter(get_occupant())) // Hunter
+			else if(isalienhunter(occupant)) // Hunter
 				occupant_overlay = image(CRYOMOBS, "alienh")
-			else if(isaliensentinel(get_occupant())) // Sentinel
+			else if(isaliensentinel(occupant)) // Sentinel
 				occupant_overlay = image(CRYOMOBS, "aliens")
 			else // Drone or other
 				occupant_overlay = image(CRYOMOBS, "aliend")
 
-		else if(ishuman(get_occupant()) || islarva(get_occupant()) || (isanimal(get_occupant()) && !ismegafauna(get_occupant()))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(get_occupant().icon, get_occupant().icon_state)
-			occupant_overlay.copy_overlays(get_occupant())
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
 
 		else
 			occupant_overlay = image(CRYOMOBS, "generic")
@@ -170,7 +170,7 @@
 		add_overlay("cover-off")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
-	if(!on || !get_occupant() || !is_operational)
+	if(!on || !occupant || !is_operational)
 		running_anim = FALSE
 		return
 	cut_overlays()
@@ -202,10 +202,10 @@
 
 	if(!on)
 		return
-	if(!get_occupant())
+	if(!occupant)
 		return
 
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
 		mob_occupant.extinguish_mob()
 	if(!check_nap_violations())
@@ -243,7 +243,7 @@
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 1000 * delta_time)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(get_occupant(), 1, efficiency * 12.5 * delta_time, methods = VAPOR) // Transfer reagents.
+				beaker.reagents.trans_to(occupant, 1, efficiency * 12.5 * delta_time, methods = VAPOR) // Transfer reagents.
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0, air1.gases[/datum/gas/oxygen][MOLES] - delta_time / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			reagent_transfer += 0.5 * delta_time
@@ -265,8 +265,8 @@
 		update_icon()
 		return
 
-	if(get_occupant())
-		var/mob/living/mob_occupant = get_occupant()
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 
@@ -308,7 +308,7 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
-		return get_occupant()
+		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -325,7 +325,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	. = ..()
-	if(get_occupant())
+	if(occupant)
 		if(on)
 			. += "Someone's inside [src]!"
 		else
@@ -359,7 +359,7 @@
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
-	if(!on && !get_occupant() && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))
@@ -367,7 +367,7 @@
 		return
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
-		+ (on ? "active" : (get_occupant() ? "full" : "open")) + "!</span>")
+		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
 		return
 	return ..()
 
@@ -384,13 +384,13 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
-	data["hasOccupant"] = get_occupant() ? TRUE : FALSE
+	data["hasOccupant"] = occupant ? TRUE : FALSE
 	data["isOpen"] = state_open
 	data["autoEject"] = autoeject
 
 	data["occupant"] = list()
-	if(get_occupant())
-		var/mob/living/mob_occupant = get_occupant()
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
 			if(CONSCIOUS)

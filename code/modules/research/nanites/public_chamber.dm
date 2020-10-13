@@ -37,7 +37,7 @@
 		return
 	if((machine_stat & MAINT) || panel_open)
 		return
-	if(!get_occupant() || busy)
+	if(!occupant || busy)
 		return
 
 	var/locked_state = locked
@@ -53,19 +53,19 @@
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
-	if(!get_occupant())
+	if(!occupant)
 		return
 	if(attacker)
-		get_occupant().investigate_log("was injected with nanites by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
-		log_combat(attacker, get_occupant(), "injected", null, "with nanites via [src]")
-	get_occupant().AddComponent(/datum/component/nanites, 75, cloud_id)
+		occupant.investigate_log("was injected with nanites by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
+	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
 /obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if((machine_stat & MAINT) || panel_open)
 		return
-	if(!get_occupant() || busy)
+	if(!occupant || busy)
 		return
 
 	var/locked_state = locked
@@ -79,15 +79,15 @@
 /obj/machinery/public_nanite_chamber/proc/complete_cloud_change(locked_state, mob/living/attacker)
 	locked = locked_state
 	set_busy(FALSE)
-	if(!get_occupant())
+	if(!occupant)
 		return
 	if(attacker)
-		get_occupant().investigate_log("had their nanite cloud ID changed into [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
-	SEND_SIGNAL(get_occupant(), COMSIG_NANITE_SET_CLOUD, cloud_id)
+		occupant.investigate_log("had their nanite cloud ID changed into [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon_state()
 	//running and someone in there
-	if(get_occupant())
+	if(occupant)
 		if(busy)
 			icon_state = busy_icon_state
 		else
@@ -154,8 +154,8 @@
 	addtimer(CALLBACK(src, .proc/try_inject_nanites, attacker), 30) //If someone is shoved in give them a chance to get out before the injection starts
 
 /obj/machinery/public_nanite_chamber/proc/try_inject_nanites(mob/living/attacker)
-	if(get_occupant())
-		var/mob/living/L = get_occupant()
+	if(occupant)
+		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
 			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
 			if(nanites && nanites.cloud_id != cloud_id)
@@ -181,7 +181,7 @@
 	open_machine()
 
 /obj/machinery/public_nanite_chamber/attackby(obj/item/I, mob/user, params)
-	if(!get_occupant() && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 

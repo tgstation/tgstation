@@ -49,7 +49,7 @@
 
 
 /obj/machinery/recharge_station/process(delta_time)
-	if(get_occupant())
+	if(occupant)
 		process_occupant(delta_time)
 	return 1
 
@@ -61,8 +61,8 @@
 /obj/machinery/recharge_station/emp_act(severity)
 	. = ..()
 	if(!(machine_stat & (BROKEN|NOPOWER)))
-		if(get_occupant() && !(. & EMP_PROTECT_CONTENTS))
-			get_occupant().emp_act(severity)
+		if(occupant && !(. & EMP_PROTECT_CONTENTS))
+			occupant.emp_act(severity)
 		if (!(. & EMP_PROTECT_SELF))
 			open_machine()
 
@@ -94,20 +94,20 @@
 
 /obj/machinery/recharge_station/close_machine()
 	. = ..()
-	if(get_occupant())
+	if(occupant)
 		use_power = ACTIVE_POWER_USE //It always tries to charge, even if it can't.
-		add_fingerprint(get_occupant())
+		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon_state()
 	if(is_operational)
 		if(state_open)
 			icon_state = "borgcharger0"
 		else
-			icon_state = (get_occupant() ? "borgcharger1" : "borgcharger2")
+			icon_state = (occupant ? "borgcharger1" : "borgcharger2")
 	else
 		icon_state = (state_open ? "borgcharger-u0" : "borgcharger-u1")
 
 /obj/machinery/recharge_station/proc/process_occupant(delta_time)
-	if(!get_occupant())
+	if(!occupant)
 		return
-	SEND_SIGNAL(get_occupant(), COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)

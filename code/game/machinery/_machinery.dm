@@ -148,12 +148,6 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/proc/get_occupant()
-	RETURN_TYPE(/atom/movable)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	return occupant
-
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -269,7 +263,7 @@ Class Procs:
 
 		movable_atom.forceMove(this_turf)
 
-		if(get_occupant() == movable_atom)
+		if(occupant == movable_atom)
 			set_occupant(null)
 
 /**
@@ -378,9 +372,9 @@ Class Procs:
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
 		return TRUE
-	if(get_occupant() && !state_open)
-		if(ishuman(get_occupant()))
-			var/mob/living/carbon/human/H = get_occupant()
+	if(occupant && !state_open)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
 			var/obj/item/card/id/I = H.get_idcard(TRUE)
 			if(I)
 				var/datum/bank_account/insurance = I.registered_account
@@ -523,10 +517,10 @@ Class Procs:
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
-	get_occupant()?.ex_act(severity, target)
+	occupant?.ex_act(severity, target)
 
 /obj/machinery/handle_atom_del(atom/A)
-	if(A == get_occupant())
+	if(A == occupant)
 		set_occupant(null)
 		update_icon()
 		updateUsrDialog()
@@ -694,7 +688,7 @@ Class Procs:
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if(AM == get_occupant())
+	if(AM == occupant)
 		set_occupant(null)
 	if(AM == circuit)
 		circuit = null

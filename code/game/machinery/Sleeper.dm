@@ -60,12 +60,12 @@
 		icon_state = initial(icon_state)
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
-	visible_message("<span class='notice'>[get_occupant()] emerges from [src]!</span>",
+	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/sleeper/Exited(atom/movable/user)
-	if (!state_open && user == get_occupant())
+	if (!state_open && user == occupant)
 		container_resist_act(user)
 
 /obj/machinery/sleeper/relaymove(mob/living/user, direction)
@@ -81,7 +81,7 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("[initial(icon_state)]-anim", src)
 		..(user)
-		var/mob/living/mob_occupant = get_occupant()
+		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(mob_occupant, "[enter_message]")
 
@@ -89,7 +89,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(is_operational && get_occupant())
+	if(is_operational && occupant)
 		open_machine()
 
 
@@ -104,7 +104,7 @@
 	. = TRUE
 	if(..())
 		return
-	if(get_occupant())
+	if(occupant)
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
@@ -165,7 +165,7 @@
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
-	data["occupied"] = get_occupant() ? 1 : 0
+	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
 
 	data["chems"] = list()
@@ -174,7 +174,7 @@
 		data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		switch(mob_occupant.stat)
@@ -210,7 +210,7 @@
 	if(.)
 		return
 
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	check_nap_violations()
 	switch(action)
 		if("door")
@@ -236,13 +236,13 @@
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
-		get_occupant().reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
-			log_combat(user, get_occupant(), "injected [chem] into", addition = "via [src]")
+			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
@@ -307,16 +307,16 @@
 
 /obj/machinery/sleeper/party/inject_chem(chem, mob/user)
 	if(leddit)
-		get_occupant().reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
 	else if (prob(20))
-		get_occupant().reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
 	if(chem in spray_chems)
 		var/datum/reagents/holder = new()
 		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
-		holder.trans_to(get_occupant(), 10, methods = VAPOR)
+		holder.trans_to(occupant, 10, methods = VAPOR)
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
-			log_combat(user, get_occupant(), "sprayed [chem] into", addition = "via [src]")
+			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 		return TRUE
 	..()
 

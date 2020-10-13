@@ -427,7 +427,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(!(scanner_occupant == connected_scanner.get_occupant()))
+			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
 			check_discovery(params["alias"])
@@ -446,7 +446,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(!(scanner_occupant == connected_scanner.get_occupant()))
+			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
 			// Go over all standard mutations and check if they've been discovered.
@@ -472,7 +472,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(!(scanner_occupant == connected_scanner.get_occupant()))
+			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
 			// GUARD CHECK - Is the occupant currently undergoing some form of
@@ -542,7 +542,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(!(scanner_occupant == connected_scanner.get_occupant()))
+			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
 			var/bref = params["mutref"]
@@ -585,7 +585,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(scanner_occupant != connected_scanner.get_occupant())
+			if(scanner_occupant != connected_scanner.occupant)
 				return
 
 			//GUARD CHECK
@@ -1627,10 +1627,10 @@
 	if(!scanner_operational())
 		return FALSE
 
-	if(!connected_scanner.get_occupant())
+	if(!connected_scanner.occupant)
 		return FALSE
 
-	scanner_occupant = connected_scanner.get_occupant()
+	scanner_occupant = connected_scanner.occupant
 
 		// Check validity of occupent for DNA Modification
 		// DNA Modification:
@@ -1682,8 +1682,8 @@
   */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	// Set the appropriate occupant now the scanner is closed
-	if(connected_scanner.get_occupant())
-		scanner_occupant = connected_scanner.get_occupant()
+	if(connected_scanner.occupant)
+		scanner_occupant = connected_scanner.occupant
 	else
 		scanner_occupant = null
 
@@ -1696,7 +1696,7 @@
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
 		if(apply_genetic_makeup(type, buffer_slot))
-			to_chat(connected_scanner.get_occupant(), "<span class='notice'>[src] activates!</span>")
+			to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		delayed_action = null
 
 /**

@@ -59,7 +59,7 @@
 		update_icon()
 
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
-	if(AM == get_occupant())
+	if(AM == occupant)
 		var/mob/living/L = AM
 		if(IS_IN_STASIS(L))
 			thaw_them(L)
@@ -105,7 +105,7 @@
 	play_power_sound()
 
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
-	if(target != get_occupant())
+	if(target != occupant)
 		return
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
@@ -117,7 +117,7 @@
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
 	target.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
 	REMOVE_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
-	if(target == get_occupant())
+	if(target == occupant)
 		use_power = IDLE_POWER_USE
 
 /obj/machinery/stasis/post_buckle_mob(mob/living/L)
@@ -130,15 +130,15 @@
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
-	if(L == get_occupant())
+	if(L == occupant)
 		set_occupant(null)
 	update_icon()
 
 /obj/machinery/stasis/process()
-	if( !( get_occupant() && isliving(get_occupant()) && check_nap_violations() ) )
+	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
 		use_power = IDLE_POWER_USE
 		return
-	var/mob/living/L_occupant = get_occupant()
+	var/mob/living/L_occupant = occupant
 	if(stasis_running())
 		if(!IS_IN_STASIS(L_occupant))
 			chill_out(L_occupant)

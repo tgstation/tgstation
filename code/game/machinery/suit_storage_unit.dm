@@ -165,7 +165,7 @@
 	if(uv)
 		if(uv_super)
 			. += "super"
-		else if(get_occupant())
+		else if(occupant)
 			. += "uvhuman"
 		else
 			. += "uv"
@@ -180,7 +180,7 @@
 				. += "helm"
 			if(storage)
 				. += "storage"
-	else if(get_occupant())
+	else if(occupant)
 		. += "human"
 
 /obj/machinery/suit_storage_unit/power_change()
@@ -257,19 +257,19 @@
 		if ("open")
 			if (!state_open)
 				open_machine(drop = FALSE)
-				if (get_occupant())
+				if (occupant)
 					dump_inventory_contents()
 		if ("close")
 			if (state_open)
 				close_machine()
 		if ("disinfect")
-			if (get_occupant() && safeties)
+			if (occupant && safeties)
 				return
-			else if (!helmet && !mask && !suit && !storage && !get_occupant())
+			else if (!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				if (get_occupant())
-					var/mob/living/mob_occupant = get_occupant()
+				if (occupant)
+					var/mob/living/mob_occupant = occupant
 					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 		if ("lock", "unlock")
@@ -319,7 +319,7 @@
 	if(!is_operational)
 		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
 		return
-	if(get_occupant() || helmet || suit || storage)
+	if(occupant || helmet || suit || storage)
 		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
@@ -329,7 +329,7 @@
 		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
 	if(do_mob(user, target, 30))
-		if(get_occupant() || helmet || suit || storage)
+		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
 			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
@@ -347,7 +347,7 @@
   * All atoms still inside at the end of all cycles are ejected from the unit.
 */
 /obj/machinery/suit_storage_unit/proc/cook()
-	var/mob/living/mob_occupant = get_occupant()
+	var/mob/living/mob_occupant = occupant
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
@@ -466,7 +466,7 @@
 		dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
-	if(!state_open && get_occupant() && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
+	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
 		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
