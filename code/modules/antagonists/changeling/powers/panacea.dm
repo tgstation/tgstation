@@ -1,6 +1,6 @@
 /datum/action/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing negative diseases, removing parasites, sobering us, purging radiation and all reagents, curing brain traumas and brain damage, breaking addictions, healing toxin damage, and resetting our genetic code completely. This power doesn't heal our non-brain organs, cure blindness, cure deafness, or restore our blood volume; for that, we should use the Regenerate power. Costs 20 chemicals."
+	desc = "Expels impurifications from our form; curing non-positive diseases, removing parasites, sobering us, purging radiation and all reagents, curing brain traumas and brain damage, breaking addictions, healing toxin damage, and resetting our genetic code completely. This power doesn't heal our non-brain organs, cure blindness, cure deafness, or restore our blood volume; for that, we should use the Regenerate power. Costs 20 chemicals."
 	helptext = "Can be used while unconscious."
 	button_icon_state = "panacea"
 	chemical_cost = 20
