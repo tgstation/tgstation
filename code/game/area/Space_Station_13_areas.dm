@@ -420,6 +420,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Cafeteria"
 	icon_state = "cafeteria"
 
+/area/crew_quarters/tele1
+	name = "Petting Zoo"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele2
+	name = "Rollercoaster Ride"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele3
+	name = "BEHOLD: THE THUNDERTENT!!"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele4
+	name = "Memorial Cemetery"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele5
+	name = "Corn Maze"
+	icon_state = "cafeteria"
+
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
@@ -836,6 +856,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "hauntedmorgue"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
+
+/area/medical/morgue/hauntedhouse/Entered(atom/movable/M) // NOT WORKING FOR SOME REASON.
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/doomed = M
+		var/list/not_bones = doomed.GetAllContents()
+		for(var/obj/item/teleportation_scroll/way_out in not_bones)
+			qdel(way_out)
 
 /area/medical/morgue/tele
 	name = "Haunted Manor"
