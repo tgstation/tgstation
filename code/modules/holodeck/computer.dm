@@ -383,7 +383,6 @@
 					var/obj/machinery/button/B = M
 					B.setup_device()
 
-
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()
