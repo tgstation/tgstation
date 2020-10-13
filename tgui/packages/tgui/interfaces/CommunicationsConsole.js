@@ -268,6 +268,7 @@ const PageMain = (props, context) => {
     canBuyShuttles,
     canMakeAnnouncement,
     canMessageAssociates,
+    canRecallShuttles,
     canRequestNuke,
     canSendToSectors,
     canSetAlertLevel,
@@ -306,8 +307,14 @@ const PageMain = (props, context) => {
               icon="space-shuttle"
               content="Recall Emergency Shuttle"
               color="bad"
-              disabled={!shuttleRecallable}
-              tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
+              disabled={!canRecallShuttles || !shuttleRecallable}
+              tooltip={(
+                canRecallShuttles && (
+                  !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
+                ) || (
+                  "You do not have permission to recall the emergency shuttle."
+                )
+              )}
               tooltipPosition="bottom-right"
               onClick={() => act("recallShuttle")}
             />
