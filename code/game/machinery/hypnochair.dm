@@ -20,7 +20,7 @@
 	update_icon()
 
 /obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+	if(!get_occupant() && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_icon()
 		return
 	if(default_pry_open(I))
@@ -40,13 +40,14 @@
 
 /obj/machinery/hypnochair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	var/mob/living/mob_occupant = get_occupant()
+
+	data["occupied"] = mob_occupant ? 1 : 0
 	data["open"] = state_open
 	data["interrogating"] = interrogating
 
 	data["occupant"] = list()
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 
@@ -84,7 +85,7 @@
 	if(!trigger_phrase)
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 		return
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	if(!istype(C))
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 		return
@@ -100,7 +101,7 @@
 	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
 
 /obj/machinery/hypnochair/process(delta_time)
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	if(!istype(C) || C != victim)
 		interrupt_interrogation()
 		return
@@ -122,7 +123,7 @@
 	audible_message("<span class='notice'>[src] pings!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
-	if(QDELETED(victim) || victim != occupant)
+	if(QDELETED(victim) || victim != get_occupant())
 		victim = null
 		return
 	victim.cure_blind("hypnochair")
@@ -171,7 +172,7 @@
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
-	if(occupant)
+	if(get_occupant())
 		if(interrogating)
 			icon_state += "_active"
 		else

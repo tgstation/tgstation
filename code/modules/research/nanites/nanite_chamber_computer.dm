@@ -36,11 +36,11 @@
 		data["status_msg"] = "No chamber detected."
 		return data
 
-	if(!chamber.occupant)
+	if(!chamber.get_occupant())
 		data["status_msg"] = "No occupant detected."
 		return data
 
-	var/mob/living/L = chamber.occupant
+	var/mob/living/L = chamber.get_occupant()
 
 	if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		data["status_msg"] = "Occupant not compatible with nanites."
@@ -53,7 +53,7 @@
 	data["status_msg"] = null
 	data["scan_level"] = chamber.scan_level
 	data["locked"] = chamber.locked
-	data["occupant_name"] = chamber.occupant.name
+	data["occupant_name"] = chamber.get_occupant().name
 
 	SEND_SIGNAL(L, COMSIG_NANITE_UI_DATA, data, chamber.scan_level)
 
@@ -73,14 +73,14 @@
 			if(!isnull(threshold))
 				chamber.set_safety(clamp(round(threshold, 1),0,500))
 				playsound(src, "terminal_type", 25, FALSE)
-				chamber.occupant.investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+				chamber.get_occupant().investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
 			var/cloud_id = text2num(params["value"])
 			if(!isnull(cloud_id))
 				chamber.set_cloud(clamp(round(cloud_id, 1),0,100))
 				playsound(src, "terminal_type", 25, FALSE)
-				chamber.occupant.investigate_log("'s nanites' cloud id was set to [cloud_id] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+				chamber.get_occupant().investigate_log("'s nanites' cloud id was set to [cloud_id] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("connect_chamber")
 			find_chamber()
@@ -88,12 +88,12 @@
 		if("remove_nanites")
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			chamber.remove_nanites()
-			log_combat(usr, chamber.occupant, "cleared nanites from", null, "via [src]")
-			chamber.occupant.investigate_log("'s nanites were cleared by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+			log_combat(usr, chamber.get_occupant(), "cleared nanites from", null, "via [src]")
+			chamber.get_occupant().investigate_log("'s nanites were cleared by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("nanite_injection")
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			chamber.inject_nanites()
-			log_combat(usr, chamber.occupant, "injected", null, "with nanites via [src]")
-			chamber.occupant.investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+			log_combat(usr, chamber.get_occupant(), "injected", null, "with nanites via [src]")
+			chamber.get_occupant().investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE

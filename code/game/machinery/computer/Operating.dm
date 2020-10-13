@@ -90,10 +90,10 @@
 	else
 		if(sbed)
 			data["table"] = sbed
-			if(!ishuman(sbed.occupant) &&  !ismonkey(sbed.occupant))
+			if(!ishuman(sbed.get_occupant()) && !ismonkey(sbed.get_occupant()))
 				return data
 			data["patient"] = list()
-			patient = sbed.occupant
+			patient = sbed.get_occupant()
 		else
 			data["patient"] = null
 			return data

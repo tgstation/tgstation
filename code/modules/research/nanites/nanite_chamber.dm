@@ -41,21 +41,21 @@
 	update_icon()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
-	if(!occupant)
+	if(!get_occupant())
 		return
-	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_SAFETY, threshold)
+	SEND_SIGNAL(get_occupant(), COMSIG_NANITE_SET_SAFETY, threshold)
 
 /obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
-	if(!occupant)
+	if(!get_occupant())
 		return
-	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
+	SEND_SIGNAL(get_occupant(), COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if((machine_stat & MAINT) || panel_open)
 		return
-	if(!occupant || busy)
+	if(!get_occupant() || busy)
 		return
 
 	var/locked_state = locked
@@ -73,16 +73,16 @@
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
-	if(!occupant)
+	if(!get_occupant())
 		return
-	occupant.AddComponent(/datum/component/nanites, 100)
+	get_occupant().AddComponent(/datum/component/nanites, 100)
 
 /obj/machinery/nanite_chamber/proc/remove_nanites(datum/nanite_program/NP)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if((machine_stat & MAINT) || panel_open)
 		return
-	if(!occupant || busy)
+	if(!get_occupant() || busy)
 		return
 
 	var/locked_state = locked
@@ -100,13 +100,13 @@
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
-	if(!occupant)
+	if(!get_occupant())
 		return
-	SEND_SIGNAL(occupant, COMSIG_NANITE_DELETE)
+	SEND_SIGNAL(get_occupant(), COMSIG_NANITE_DELETE)
 
 /obj/machinery/nanite_chamber/update_icon_state()
 	//running and someone in there
-	if(occupant)
+	if(get_occupant())
 		if(busy)
 			icon_state = busy_icon_state
 		else
@@ -187,7 +187,7 @@
 	open_machine()
 
 /obj/machinery/nanite_chamber/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!get_occupant() && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 

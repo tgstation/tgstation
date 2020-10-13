@@ -55,7 +55,7 @@
 		open_machine()
 
 /obj/machinery/abductor/experiment/ui_status(mob/user)
-	if(user == occupant)
+	if(user == get_occupant())
 		return UI_CLOSE
 	return ..()
 
@@ -72,11 +72,11 @@
 	var/list/data = list()
 	data["open"] = state_open
 	data["feedback"] = flash
-	data["occupant"] = occupant ? TRUE : FALSE
+	data["occupant"] = get_occupant() ? TRUE : FALSE
 	data["occupant_name"] = null
 	data["occupant_status"] = null
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
+	if(get_occupant())
+		var/mob/living/mob_occupant = get_occupant()
 		data["occupant_name"] = mob_occupant.name
 		data["occupant_status"] = mob_occupant.stat
 	return data
@@ -95,12 +95,12 @@
 				open_machine()
 				return TRUE
 		if("experiment")
-			if(!occupant)
+			if(!get_occupant())
 				return
-			var/mob/living/mob_occupant = occupant
+			var/mob/living/mob_occupant = get_occupant()
 			if(mob_occupant.stat == DEAD)
 				return
-			flash = experiment(occupant, params["experiment_type"], usr)
+			flash = experiment(mob_occupant, params["experiment_type"], usr)
 			return TRUE
 
 /**

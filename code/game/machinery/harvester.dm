@@ -58,9 +58,9 @@
 		start_harvest()
 
 /obj/machinery/harvester/proc/can_harvest()
-	if(!powered() || state_open || !occupant || !iscarbon(occupant))
+	if(!powered() || state_open || !get_occupant() || !iscarbon(get_occupant()))
 		return
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	if(!allow_clothing)
 		for(var/A in C.held_items + C.get_equipped_items())
 			if(!isitem(A))
@@ -81,9 +81,9 @@
 	return TRUE
 
 /obj/machinery/harvester/proc/start_harvest()
-	if(!occupant || !iscarbon(occupant))
+	if(!get_occupant() || !iscarbon(get_occupant()))
 		return
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
@@ -95,10 +95,10 @@
 /obj/machinery/harvester/proc/harvest()
 	warming_up = FALSE
 	update_icon()
-	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
+	if(!harvesting || state_open || !powered() || !get_occupant() || !iscarbon(get_occupant()))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
 		end_harvesting()
 		return
@@ -138,7 +138,7 @@
 	. = TRUE
 	if(..())
 		return
-	if(occupant)
+	if(get_occupant())
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
@@ -170,14 +170,14 @@
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
-		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
+		visible_message("<span class='notice'>[get_occupant()] emerges from [src]!</span>",
 			"<span class='notice'>You climb out of [src]!</span>")
 		open_machine()
 	else
 		to_chat(user,"<span class='warning'>[src] is active and can't be opened!</span>") //rip
 
 /obj/machinery/harvester/Exited(atom/movable/user)
-	if (!state_open && user == occupant)
+	if (!state_open && user == get_occupant())
 		container_resist_act(user)
 
 /obj/machinery/harvester/relaymove(mob/living/user, direction)

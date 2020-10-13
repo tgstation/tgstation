@@ -31,8 +31,8 @@
 	var/list/prisoner_list = list()
 	var/can_teleport = FALSE
 
-	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
-		prisoner = teleporter.occupant
+	if(teleporter && (teleporter.get_occupant() && ishuman(teleporter.get_occupant())))
+		prisoner = teleporter.get_occupant()
 		prisoner_list["name"] = prisoner.real_name
 		if(contained_id)
 			can_teleport = TRUE

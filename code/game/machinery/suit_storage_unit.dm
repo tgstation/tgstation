@@ -165,7 +165,7 @@
 	if(uv)
 		if(uv_super)
 			. += "super"
-		else if(occupant)
+		else if(get_occupant())
 			. += "uvhuman"
 		else
 			. += "uv"
@@ -180,7 +180,7 @@
 				. += "helm"
 			if(storage)
 				. += "storage"
-	else if(occupant)
+	else if(get_occupant())
 		. += "human"
 
 /obj/machinery/suit_storage_unit/power_change()
@@ -196,7 +196,7 @@
 	suit = null
 	mask = null
 	storage = null
-	occupant = null
+	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -257,19 +257,19 @@
 		if ("open")
 			if (!state_open)
 				open_machine(drop = FALSE)
-				if (occupant)
+				if (get_occupant())
 					dump_contents()
 		if ("close")
 			if (state_open)
 				close_machine()
 		if ("disinfect")
-			if (occupant && safeties)
+			if (get_occupant() && safeties)
 				return
-			else if (!helmet && !mask && !suit && !storage && !occupant)
+			else if (!helmet && !mask && !suit && !storage && !get_occupant())
 				return
 			else
-				if (occupant)
-					var/mob/living/mob_occupant = occupant
+				if (get_occupant())
+					var/mob/living/mob_occupant = get_occupant()
 					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
 				cook()
 		if ("lock", "unlock")
@@ -319,7 +319,7 @@
 	if(!is_operational)
 		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
 		return
-	if(occupant || helmet || suit || storage)
+	if(get_occupant() || helmet || suit || storage)
 		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
 		return
 
@@ -329,7 +329,7 @@
 		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
 	if(do_mob(user, target, 30))
-		if(occupant || helmet || suit || storage)
+		if(get_occupant() || helmet || suit || storage)
 			return
 		if(target == user)
 			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
@@ -347,13 +347,13 @@
   * All atoms still inside at the end of all cycles are ejected from the unit.
 */
 /obj/machinery/suit_storage_unit/proc/cook()
-	var/mob/living/mob_occupant = occupant
+	var/mob/living/mob_occupant = get_occupant()
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
 		update_icon()
-		if(occupant)
+		if(mob_occupant)
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -380,7 +380,7 @@
 			// The wires get damaged too.
 			wires.cut_all()
 		else
-			if(!occupant)
+			if(!mob_occupant)
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
@@ -399,14 +399,14 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.GetAllContents()
-			if(occupant)
-				things_to_clear += occupant
-				things_to_clear += occupant.GetAllContents()
+			if(mob_occupant)
+				things_to_clear += mob_occupant
+				things_to_clear += mob_occupant.GetAllContents()
 			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				var/atom/movable/dirty_movable = am
 				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
-		if(occupant)
+		if(mob_occupant)
 			dump_contents()
 
 /obj/machinery/suit_storage_unit/process(delta_time)
@@ -466,7 +466,7 @@
 		dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
-	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
+	if(!state_open && get_occupant() && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
 		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()

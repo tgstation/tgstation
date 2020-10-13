@@ -52,12 +52,12 @@
 		return
 	..()
 	playsound(src, 'sound/machines/click.ogg', 50)
-	if(occupant)
-		if(!iscarbon(occupant))
-			occupant.forceMove(drop_location())
-			occupant = null
+	if(get_occupant())
+		if(!iscarbon(get_occupant()))
+			get_occupant().forceMove(drop_location())
+			set_occupant(null)
 			return
-		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
+		to_chat(get_occupant(), "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_icon()
 
@@ -97,7 +97,7 @@
 /obj/machinery/fat_sucker/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if(user == occupant)
+	if(user == get_occupant())
 		to_chat(user, "<span class='warning'>You can't reach the controls from inside!</span>")
 		return
 	if(!(obj_flags & EMAGGED) && !allowed(user))
@@ -117,7 +117,7 @@
 			. += "[icon_state]_green"
 		else
 			. += "[icon_state]_door_off"
-			if(occupant)
+			if(get_occupant())
 				if(powered())
 					. += "[icon_state]_stack"
 					. += "[icon_state]_yellow"
@@ -131,11 +131,11 @@
 /obj/machinery/fat_sucker/process(delta_time)
 	if(!processing)
 		return
-	if(!powered() || !occupant || !iscarbon(occupant))
+	if(!powered() || !get_occupant() || !iscarbon(get_occupant()))
 		open_machine()
 		return
 
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/C = get_occupant()
 	if(C.nutrition <= stop_at)
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
@@ -152,10 +152,10 @@
 	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
-	if(state_open || !occupant || processing || !powered())
+	if(state_open || !get_occupant() || processing || !powered())
 		return
-	if(iscarbon(occupant))
-		var/mob/living/carbon/C = occupant
+	if(iscarbon(get_occupant()))
+		var/mob/living/carbon/C = get_occupant()
 		if(C.nutrition > start_at)
 			processing = TRUE
 			soundloop.start()
@@ -172,8 +172,8 @@
 	set_light(0, 0)
 
 /obj/machinery/fat_sucker/proc/make_meat()
-	if(occupant && iscarbon(occupant))
-		var/mob/living/carbon/C = occupant
+	if(get_occupant() && iscarbon(get_occupant()))
+		var/mob/living/carbon/C = get_occupant()
 		if(C.type_of_meat)
 			if(nutrients >= nutrient_to_meat * 2)
 				C.put_in_hands(new /obj/item/reagent_containers/food/snacks/cookie (), TRUE)
@@ -189,7 +189,7 @@
 	. = TRUE
 	if(..())
 		return
-	if(occupant)
+	if(get_occupant())
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
