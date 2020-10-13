@@ -75,7 +75,7 @@
 	mid_sounds = list('sound/machines/tcomms/tcomms_mid1.ogg'=1,'sound/machines/tcomms/tcomms_mid2.ogg'=1,'sound/machines/tcomms/tcomms_mid3.ogg'=1,'sound/machines/tcomms/tcomms_mid4.ogg'=1,\
 										'sound/machines/tcomms/tcomms_mid5.ogg'=1,'sound/machines/tcomms/tcomms_mid6.ogg'=1,'sound/machines/tcomms/tcomms_mid7.ogg'=1)
 	mid_length = 1.8 SECONDS
-	extra_range = -10
+	extra_range = -11
 	falloff_distance = 1
 	volume = 50
 
@@ -88,7 +88,7 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
 	volume = 3
-	extra_range = -12
+	extra_range = -13
 	falloff_distance = 1
 
 /datum/looping_sound/gravgen
