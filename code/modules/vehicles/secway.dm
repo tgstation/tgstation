@@ -7,7 +7,7 @@
 	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
-
+	fall_off_if_missing_arms = TRUE
 
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.

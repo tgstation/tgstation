@@ -71,7 +71,7 @@
 				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	if(arms_required)
-		if(user.usable_hands < arms_required)
+		if(user.usable_hands < arms_required || HAS_TRAIT(user, TRAIT_FLOORED) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(user, TRAIT_INCAPACITATED))
 			if(fall_off_if_missing_arms)
 				unbuckle_mob(user, TRUE)
 				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
@@ -102,3 +102,9 @@
 /obj/vehicle/ridden/zap_act(power, zap_flags)
 	zap_buckle_check(power)
 	. = ..()
+
+/obj/vehicle/ridden/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
+	if(mover.pass_flags & PASSTABLE)
+		return TRUE
