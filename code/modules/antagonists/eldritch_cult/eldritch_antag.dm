@@ -93,8 +93,8 @@
 	var/list/assasination = list()
 	var/list/protection = list()
 
-	var/choose_list_begin = list("assasinate","protect")
-	var/choose_list_end = list("assasinate","hjiack","protect","glory")
+	var/choose_list_begin = list("assassinate","protect")
+	var/choose_list_end = list("assassinate","hjiack","protect","glory")
 
 	var/pck1 = pick(choose_list_begin)
 	var/pck2 = pick(choose_list_end)
@@ -108,8 +108,8 @@
 	objectives += SE
 
 /datum/antagonist/heretic/proc/forge_objective(string,assasination,protection)
-	switch(pck1)
-		if("assasinate")
+	switch(string)
+		if("assassinate")
 			var/datum/objective/assassinate/A = new
 			A.owner = owner
 			var/list/owners = A.get_owners()
