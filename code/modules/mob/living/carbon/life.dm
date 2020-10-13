@@ -370,7 +370,7 @@
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
+	if(mind && hud_used?.lingchemdisplay)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.regenerate()
@@ -381,7 +381,7 @@
 
 
 /mob/living/carbon/handle_mutations_and_radiation()
-	if(dna && dna.temporary_mutations.len)
+	if(dna?.temporary_mutations.len)
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -405,7 +405,7 @@
 					dna.temporary_mutations.Remove(mut)
 					continue
 		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM && HM.timed)
+			if(HM?.timed)
 				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)

@@ -48,7 +48,7 @@
 /obj/structure/flora/tree/pine/Initialize()
 	. = ..()
 
-	if(islist(icon_states && icon_states.len))
+	if(islist(icon_states?.len))
 		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/pine/xmas

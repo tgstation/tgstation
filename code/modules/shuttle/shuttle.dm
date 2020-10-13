@@ -188,7 +188,7 @@
 /obj/docking_port/stationary/register()
 	if(!id)
 		id = "dock"
-	else 
+	else
 		port_destinations = id
 
 	if(!name)
@@ -391,7 +391,7 @@
 		name = "shuttle"
 	var/counter = 1
 	var/tmp_id = id
-	var/tmp_name = name	
+	var/tmp_name = name
 	while(Check_id(id))
 		counter++
 		id = "[tmp_id]_[counter]"
@@ -543,7 +543,7 @@
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
-	if(current_dock && current_dock.area_type)
+	if(current_dock?.area_type)
 		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
@@ -691,7 +691,7 @@
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		shuttle_area.parallax_movedir = FALSE
-	if(assigned_transit && assigned_transit.assigned_area)
+	if(assigned_transit?.assigned_area)
 		assigned_transit.assigned_area.parallax_movedir = FALSE
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
@@ -817,7 +817,7 @@
 
 /obj/docking_port/mobile/proc/getDbgStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
-	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	. = (dockedAt?.name) ? dockedAt.name : "unknown"
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
 		var/obj/docking_port/stationary/dst
 		if(mode == SHUTTLE_RECALL)
