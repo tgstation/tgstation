@@ -247,10 +247,10 @@ Prefer to either access the variable directly or use a macro/define.
 These are bad:
 ```DM
 /datum/datum1/proc/complex_getter()
-	return condition_a ? VALUE_A : VALUE_B
+	return condition ? VALUE_A : VALUE_B
 
 /datum/datum1/child_datum/complex_getter()
-	return condition_a ? VALUE_C : VALUE_D
+	return condition ? VALUE_C : VALUE_D
 ```
 
 This is good:
@@ -258,17 +258,17 @@ This is good:
 /datum/datum1
 	var/getter_turned_into_variable
 
-/datum/datum1/proc/set_condition_a(new_value)
-	if(condition_a == new_value)
+/datum/datum1/proc/set_condition(new_value)
+	if(condition == new_value)
 		return
-	condition_a = new_value
-	on_set_condition_a_change()
+	condition = new_value
+	on_condition_change()
 
-/datum/datum1/proc/on_set_condition_a_change()
-	getter_turned_into_variable = condition_a ? VALUE_A : VALUE_B
+/datum/datum1/proc/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_A : VALUE_B
 
-/datum/datum1/child_datum/on_set_condition_a_change()
-	getter_turned_into_variable = condition_a ? VALUE_C : VALUE_D
+/datum/datum1/child_datum/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
 
