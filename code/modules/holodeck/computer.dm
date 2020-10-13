@@ -50,9 +50,6 @@
 	var/list/before_load = list()
 	var/list/after_load = list()
 
-/obj/effect/mapping_helpers/holodeck_spawner
-	icon_state = ""
-
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
