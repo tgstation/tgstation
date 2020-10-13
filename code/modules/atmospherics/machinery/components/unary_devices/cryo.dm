@@ -25,11 +25,13 @@
 /atom/movable/visual/cryo_occupant/proc/on_set_occupant(mob/living/L)
 	SIGNAL_HANDLER
 
-	vis_contents -= occupant
-	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
-	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
-		occupant.set_lying_down()
+	if(occupant)
+		vis_contents -= occupant
+		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+		if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
+			occupant.set_lying_down()
 	if(!L || !istype(L))
+		occupant = null
 		return
 
 	occupant = L
