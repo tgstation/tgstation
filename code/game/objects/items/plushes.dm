@@ -553,6 +553,17 @@
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 
+/obj/item/toy/plush/bobbahbee
+	name = "collector bee plushie"
+	desc = "An adorable bee plushie that oversees tickets galaxy-wide with its trusty boots and a look of innocence in its eyes!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "bobbah_plush"
+	inhand_icon_state = "plushie_h"
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
+	gender = MALE // i dont fucking know.
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+
 /obj/item/toy/plush/goatplushie
 	name = "strange goat plushie"
 	icon_state = "goat"

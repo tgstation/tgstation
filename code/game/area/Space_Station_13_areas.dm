@@ -430,10 +430,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "kitchen_cold"
 
 /area/crew_quarters/bar
-	name = "Bar"
+	name = "Thundertent"
 	icon_state = "bar"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
+	mood_message = "<span class='nicegreen'>I can't wait to witness some 3v3 fighting!\n</span>"
+	airlock_wires = /datum/wires/airlock/service
+
+/area/crew_quarters/bar/announcerroom
+	name = "Thundertent Announcer Room"
+	icon_state = "DJ"
+	mood_bonus = 10
+	mood_message = "<span class='nicegreen'>Let's get ready to rumble!\n</span>"
+	airlock_wires = /datum/wires/airlock/service
+
+/area/crew_quarters/bar/vip
+	name = "Thundertent V.I.P."
+	icon_state = "centcom"
+	mood_bonus = 10
+	mood_message = "<span class='nicegreen'>Woohoo! Front row seats!\n</span>"
 	airlock_wires = /datum/wires/airlock/service
 
 /area/crew_quarters/bar/atrium

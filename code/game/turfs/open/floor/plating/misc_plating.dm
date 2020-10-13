@@ -293,6 +293,7 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	layer = HIGH_TURF_LAYER
+	smoothing_flags = 0
 
 /turf/open/floor/plating/grass/Initialize()
 	. = ..()
