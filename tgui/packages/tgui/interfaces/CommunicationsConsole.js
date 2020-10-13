@@ -24,7 +24,7 @@ const AlertButton = (props, context) => {
   return (
     <Button
       icon="exclamation-triangle"
-      color={thisIsCurrent ? "good" : undefined}
+      color={thisIsCurrent && "good"}
       content={capitalize(alertLevel)}
       onClick={() => {
         if (thisIsCurrent) {
