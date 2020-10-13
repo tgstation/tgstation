@@ -34,11 +34,18 @@
 			B.decoy_override = TRUE
 			B.Insert(C)
 		C.regenerate_organs()
+		for(var/organ in C.internal_organs)
+			var/obj/item/organ/O = organ
+			O.setOrganDamage(0) //this heals brain damage too!
+		var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+		if(istype(ears))
+			ears.deaf = 0 //because deafness isn't cured by just healing ear damage
+		C.set_blindness(0)
+		C.set_blurriness(0)
+		C.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 		for(var/i in C.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.remove_wound()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.restore_blood()
-		H.remove_all_embedded_objects()
+		C.restore_blood()
+		C.remove_all_embedded_objects()
 	return TRUE

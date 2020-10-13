@@ -200,7 +200,6 @@
 	if(dna?.species)
 		dna.species.regenerate_organs(src)
 		return
-
 	else
 		var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
 		if(!L)
@@ -231,6 +230,13 @@
 			ears = new()
 			ears.Insert(src)
 		ears.setOrganDamage(0)
+
+		var/obj/item/organ/stomach = getorganslot(ORGAN_SLOT_STOMACH)
+		if(!stomach)
+			stomach = new()
+			stomach.Insert(src)
+		stomach.setOrganDamage(0)
+
 
 
 /** get_availability

@@ -34,6 +34,7 @@
 	color = "#E0BB00" //golden for the gods
 	can_synth = FALSE
 	taste_description = "badmins"
+	self_consuming = TRUE //admin magic allows this to work on even races that normally can't metabolize reagents, like skeletons
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -856,9 +857,8 @@
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
 	M.adjustToxLoss(-0.2*REM, 0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.drunkenness = max(H.drunkenness - 10, 0)
+	if(istype(M))
+		M.drunkenness = max(M.drunkenness - 10, 0)
 	..()
 	. = 1
 
