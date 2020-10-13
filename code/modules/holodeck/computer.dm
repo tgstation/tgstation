@@ -339,7 +339,7 @@
 		var/turf/affected_turf = t
 		affected_turf.air_update_turf(TRUE)
 
-	return newatoms
+	return newatoms//this is what will become the spawned list for the holodeck
 
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 

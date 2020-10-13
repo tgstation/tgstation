@@ -44,17 +44,18 @@
 	direction = 1
 
 /turf/open/floor/holofloor/chapel/Initialize()
-	//if (direction)
-	//	src.setDir(dir)
-	//. = ..()
+	. = ..()
+	if (direction != 2)
+		src.setDir(direction)
+
 	//message_admins("INITIALIZE")
-	return INITIALIZE_HINT_LATELOAD
+	//return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/holofloor/chapel/LateInitialize()
 	//message_admins("LATE INITIALIZE")
-	if (direction != 2)
-		src.setDir(direction)
-	. = ..()
+	//if (direction != 2)
+	//	src.setDir(direction)
+	//. = ..()
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
