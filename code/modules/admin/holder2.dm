@@ -164,7 +164,7 @@ NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc wh
 you will have to do something like if(client.rights & R_ADMIN) yourself.
 */
 /proc/check_rights(rights_required, show_msg=1)
-	if(usr && usr.client)
+	if(usr?.client)
 		if (check_rights_for(usr.client, rights_required))
 			return TRUE
 		else
@@ -174,7 +174,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //probably a bit iffy - will hopefully figure out a better solution
 /proc/check_if_greater_rights_than(client/other)
-	if(usr && usr.client)
+	if(usr?.client)
 		if(usr.client.holder)
 			if(!other || !other.holder)
 				return TRUE
@@ -183,7 +183,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
-	if(subject && subject.holder)
+	if(subject?.holder)
 		return subject.holder.check_for_rights(rights_required)
 	return FALSE
 

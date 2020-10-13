@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Fixed syndicate shuttle catalog entity, admins can now spawn the advanced syndicate infiltator during a round"

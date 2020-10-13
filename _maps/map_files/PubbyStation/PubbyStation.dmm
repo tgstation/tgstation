@@ -16909,7 +16909,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -19060,7 +19060,7 @@
 "aYw" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -40854,10 +40854,9 @@
 	desc = "A warning sign which reads 'BOMB RANGE";
 	name = "BOMB RANGE"
 	},
-/turf/closed/indestructible{
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	icon_state = "riveted";
-	name = "hyper-reinforced wall"
+/turf/closed/indestructible/riveted{
+	name = "hyper-reinforced wall";
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cjx" = (
@@ -41807,10 +41806,9 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
-/turf/closed/indestructible{
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	icon_state = "riveted";
-	name = "hyper-reinforced wall"
+/turf/closed/indestructible/riveted{
+	name = "hyper-reinforced wall";
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cnr" = (
@@ -52887,8 +52885,8 @@
 "nTU" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	req_access_txt = "31"
+	name = "Cargo Bay";
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -54156,7 +54154,7 @@
 "pIa" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4

@@ -210,7 +210,7 @@
 	INVOKE_ASYNC(src, .proc/do_openDoor, A)
 
 /obj/machinery/door_buttons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
-	if(A && A.open())
+	if(A?.open())
 		if(machine_stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 			A.bolt()
 	goIdle(TRUE)

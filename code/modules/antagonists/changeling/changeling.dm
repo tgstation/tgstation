@@ -295,6 +295,10 @@
 
 	prof.skillchips = H.clone_skillchip_list(TRUE)
 
+	for(var/i in H.all_scars)
+		var/datum/scar/iter_scar = i
+		LAZYADD(prof.stored_scars, iter_scar.format())
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
@@ -529,9 +533,12 @@
 	var/socks
 
 	var/list/skillchips = list()
+	/// What scars the target had when we copied them, in string form (like persistent scars)
+	var/list/stored_scars
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
+	LAZYCLEARLIST(stored_scars)
 	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
@@ -552,6 +559,7 @@
 	newprofile.worn_icon_list = worn_icon_list.Copy()
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
 	newprofile.skillchips = skillchips.Copy()
+	newprofile.stored_scars = stored_scars.Copy()
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"

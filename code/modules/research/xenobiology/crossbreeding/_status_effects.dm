@@ -146,7 +146,7 @@
 		owner.remove_status_effect(src)
 
 /datum/status_effect/slime_clone/on_remove()
-	if(clone && clone.mind && owner)
+	if(clone?.mind && owner)
 		clone.mind.transfer_to(owner)
 	else
 		if(owner && originalmind)
