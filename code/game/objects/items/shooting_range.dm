@@ -6,14 +6,18 @@
 	density = FALSE
 	vis_flags = VIS_INHERIT_ID
 	var/hp = 1800
-	var/list/bullethole_overlays = list()
+	//Lazylist to keep track of bullet-hole overlays
+	var/list/bullethole_overlays
+
+/obj/item/target/Initialize()
+	. = ..()
 
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(I.use_tool(src, user, 0, volume=40))
-		for (var/image/bullethole in bullethole_overlays)
+		for (var/bullethole in bullethole_overlays)
 			cut_overlay(bullethole)
-		bullethole_overlays = list()
+		LAZYCLEARLIST(bullethole_overlays)
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
 	return TRUE
 
@@ -67,7 +71,7 @@
 				bullet_hole.icon_state = "light_scorch"
 		else
 			bullet_hole.icon_state = "dent"
-		bullethole_overlays += bullet_hole
+		LAZYADD(bullethole_overlays, bullet_hole)
 		add_overlay(bullet_hole)
 		return BULLET_ACT_HIT
 	return BULLET_ACT_FORCE_PIERCE

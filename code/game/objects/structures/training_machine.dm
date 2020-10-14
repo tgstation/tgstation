@@ -3,24 +3,25 @@
 #define MAX_RANGE 7
 #define MAX_SPEED 10
 #define HITS_TO_KILL 9
-#define MIN_ATTACK_DELAY 70
-#define MAX_ATTACK_DELAY 50
+#define MIN_ATTACK_DELAY 15
+#define MAX_ATTACK_DELAY 25
 
 /**
   * Machine that runs around wildly so people can practice clickin on things
   *
   * Can have a mob buckled on or a obj/item/target attached. Uses timers to move, which is necessary because it's movespeed
   * needs to both be variable and potentially faster than SSFastProcess's tick speed, so hey this is what we got. 
-  * As a note, there generally shouldn't be too many timers in existance at a time, but as there probably will only be
-  * one of these active at a time it shouldn't be an issue.
+  * As a note, there generally shouldn't be too many timers in existance at a time, so there will only ever be
+  * one or two of these on the station.
   */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
-	desc = "Used for combat training simulations. Accepts standard training targets."
+	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "training_machine"
 	can_buckle = TRUE
 	buckle_lying = 0
+	max_integrity = 200
 	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
@@ -39,6 +40,13 @@
 	var/attack_cooldown = 50
 	///Helper for timing attacks when emagged
 	var/last_attack_time = 0
+
+/obj/structure/training_machine/Destroy()
+	. = ..()
+	if (pinned_target)
+		remove_target()
+	if (secret_evil_toolbox)
+		QDEL_NULL(secret_evil_toolbox)
 
 /obj/structure/training_machine/ui_state(mob/user)
 	return GLOB.physical_state
@@ -89,7 +97,10 @@
 
 /obj/structure/training_machine/proc/remove_target(mob/user)
 	vis_contents.Cut()
-	user.put_in_hands(pinned_target)
+	if (user)
+		user.put_in_hands(pinned_target)
+	else
+		pinned_target.forceMove(drop_location())
 	pinned_target = null
 
 /obj/structure/training_machine/AltClick(mob/user)
@@ -102,6 +113,9 @@
 
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
+		if (obj_flags & EMAGGED)
+			visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
+			return
 		moving = FALSE
 	else
 		start_moving()
@@ -133,16 +147,9 @@
 	var/turf/nextStep = get_step_towards(src, target_position)
 	if (!Move(nextStep))
 		target_position = null //We couldn't move towards the target turf, so find a new target turf
-	if (obj_flags & EMAGGED && world.time > last_attack_time + attack_cooldown)
-		var/mob/living/carbon/target = locate() in view(1, src)
-		if (target?.stat == CONSCIOUS)
-			do_attack_animation(target, null, secret_evil_toolbox)
-			target.apply_damage(secret_evil_toolbox.force, BRUTE, BODY_ZONE_HEAD)
-			playsound(src,'sound/weapons/smash.ogg',50,FALSE)
-			last_attack_time = world.time
-			attack_cooldown = rand(MIN_ATTACK_DELAY,MAX_ATTACK_DELAY)
-
-	addtimer(CALLBACK(src, .proc/do_movement), max(MAX_SPEED - move_speed, 1) // We want to ensure this is never <=0
+	if (obj_flags & EMAGGED)
+		try_attack()
+	addtimer(CALLBACK(src, .proc/do_movement), max(MAX_SPEED - move_speed, 1)) // We want to ensure this is never <=0
 
 /obj/structure/training_machine/proc/find_target_position()
 	var/list/turfs = list()
@@ -153,6 +160,18 @@
 	if (!length(turfs))
 		return
 	return pick(turfs)
+
+/obj/structure/training_machine/proc/try_attack()
+	if (world.time < last_attack_time + attack_cooldown)
+		return
+	var/mob/living/carbon/target = locate() in oview(1, src) //Find adjacent target
+	if (target?.stat != CONSCIOUS || !target.Adjacent(src))
+		return
+	do_attack_animation(target, null, secret_evil_toolbox)
+	target.apply_damage(secret_evil_toolbox.force, BRUTE, BODY_ZONE_CHEST)
+	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
+	last_attack_time = world.time
+	attack_cooldown = rand(MIN_ATTACK_DELAY,MAX_ATTACK_DELAY)
 
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || pinned_target || (obj_flags & EMAGGED))
@@ -186,17 +205,11 @@
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
-	. += "You notice it has a set of <span class='notice'><b>buckling straps</b></span>"
 	if (obj_flags & EMAGGED)
-		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it...</span>"
+		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
 	if (pinned_target)
 		. += "<span class='notice'><b>Alt-Click to remove pinned target</b></span>"
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
-
-/obj/structure/training_machine/Destroy()
-	. = ..()
-	if (secret_evil_toolbox)
-		QDEL_NULL(secret_evil_toolbox)
 
 /**
   * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
