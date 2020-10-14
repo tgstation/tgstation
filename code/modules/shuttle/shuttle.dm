@@ -42,8 +42,8 @@
 	///register to SSshuttles
 /obj/docking_port/proc/register()
 	if(registered)
-		unregister()
 		WARNING("docking_port registered multiple times")
+		unregister()
 	registered = TRUE
 	return
 
