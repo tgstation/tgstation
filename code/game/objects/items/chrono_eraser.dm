@@ -196,7 +196,7 @@
 	return ..()
 
 /obj/structure/chrono_field/Destroy()
-	if(gun && gun.field_check(src))
+	if(gun?.field_check(src))
 		gun.field_disconnect(src)
 	return ..()
 

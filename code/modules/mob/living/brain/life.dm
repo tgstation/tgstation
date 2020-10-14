@@ -14,7 +14,7 @@
 		if(stat != DEAD)
 			death()
 		var/obj/item/organ/brain/BR
-		if(container && container.brain)
+		if(container?.brain)
 			BR = container.brain
 		else if(istype(loc, /obj/item/organ/brain))
 			BR = loc

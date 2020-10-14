@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - bugfix: "fixes heretic mass deletion during transmutation bug."
