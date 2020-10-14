@@ -1012,18 +1012,22 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
-	switch(.) //Previous state.
-		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
-			if(grab_state >= GRAB_NECK)
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
-	switch(grab_state) //Current state.
-		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
-			if(. >= GRAB_NECK)
-				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+	switch(grab_state) // Current state.
+		if(GRAB_PASSIVE)
+			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-				REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+		if(GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK) // Grab got downgraded.
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+			else // Grab got upgraded from a passive one.
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+		if(GRAB_NECK, GRAB_KILL)
+			if(. <= GRAB_AGGRESSIVE)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+
 
 
 /obj/item/proc/do_pickup_animation(atom/target)

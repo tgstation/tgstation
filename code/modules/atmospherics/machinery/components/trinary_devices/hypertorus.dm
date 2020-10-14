@@ -318,10 +318,12 @@
 	//Start by storing the gasmix of the inputs
 	buffer = linked_input.airs[1].remove(fuel_injection_rate)
 	internal_fusion.merge(buffer)
-	buffer.clear()
+	if(buffer)
+		buffer.clear()
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
 	moderator_internal.merge(buffer)
-	buffer.clear()
+	if(buffer)
+		buffer.clear()
 
 	///Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -404,7 +406,7 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	///Hotter air is easier to heat up and cool down
-	if(internal_fusion.total_moles()) //prevent initial division by zero runtime
+	if(internal_fusion.total_moles() > 0) //prevent initial division by zero runtime
 		heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
@@ -506,7 +508,7 @@
 				"amount" = 0,
 				)))
 	//Moderator gases
-	var/moderator_gasdata = list()
+	var/list/moderator_gasdata = list()
 	if(connected_core.moderator_internal.total_moles())
 		for(var/gasid in connected_core.moderator_internal.gases)
 			moderator_gasdata.Add(list(list(

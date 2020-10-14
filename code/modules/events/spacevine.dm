@@ -461,7 +461,7 @@
 	growth_queue += SV
 	vines += SV
 	SV.master = src
-	if(muts && muts.len)
+	if(muts?.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
 	if(parent)

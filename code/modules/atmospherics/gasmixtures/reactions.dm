@@ -90,10 +90,10 @@ nobiliumsuppression = INFINITY
 	var/turf/open/location = isturf(holder) ? holder : null
 	. = NO_REACTION
 	if (air.temperature <= WATER_VAPOR_FREEZE)
-		if(location && location.freon_gas_act())
+		if(location?.freon_gas_act())
 			. = REACTING
 	else if(air.temperature <= T20C + 10)
-		if(location && location.water_vapor_gas_act())
+		if(location?.water_vapor_gas_act())
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 			. = REACTING
 

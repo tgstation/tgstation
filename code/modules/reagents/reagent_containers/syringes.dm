@@ -175,7 +175,7 @@
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
 	var/rounded_vol = get_rounded_vol()
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
@@ -190,7 +190,7 @@
 
 ///Used by update_icon() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
 		return 0
