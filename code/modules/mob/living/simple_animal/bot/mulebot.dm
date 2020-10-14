@@ -514,7 +514,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path && path.len)
+	if(path?.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
@@ -700,7 +700,7 @@
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM && AM.Adjacent(src))
+				if(AM?.Adjacent(src))
 					load(AM)
 					if(report_delivery)
 						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)

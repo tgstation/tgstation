@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(!randumb)
 			return
 		while(randumb == SPAWN_MEGAFAUNA)
-			if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list && megafauna_spawn_list.len) //this is danger. it's boss time.
+			if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list?.len) //this is danger. it's boss time.
 				var/maybe_boss = pickweight(megafauna_spawn_list)
 				if(megafauna_spawn_list[maybe_boss])
 					randumb = maybe_boss

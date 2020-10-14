@@ -266,12 +266,12 @@
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
+			if(speak?.len)
+				if((emote_hear?.len) || (emote_see?.len))
 					var/length = speak.len
-					if(emote_hear && emote_hear.len)
+					if(emote_hear?.len)
 						length += emote_hear.len
-					if(emote_see && emote_see.len)
+					if(emote_see?.len)
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
@@ -285,11 +285,11 @@
 				else
 					say(pick(speak), forced = "poly")
 			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if(!(emote_hear?.len) && (emote_see?.len))
 					manual_emote(pick(emote_see))
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
+				if((emote_hear?.len) && !(emote_see?.len))
 					manual_emote(pick(emote_hear))
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if((emote_hear?.len) && (emote_see?.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)

@@ -45,14 +45,14 @@
 		D.card_throwforce = 0
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb_continuous = list("attacks")
+		D.card_attack_verb_continuous = string_list(list("attacks"))
 	else
 		D.card_hitsound = 'sound/weapons/bladeslice.ogg'
 		D.card_force = 5
 		D.card_throwforce = 10
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+		D.card_attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
 
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)

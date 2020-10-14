@@ -553,7 +553,7 @@
 	time = 15
 	name = "Cracker"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/cracker
@@ -562,7 +562,7 @@
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)

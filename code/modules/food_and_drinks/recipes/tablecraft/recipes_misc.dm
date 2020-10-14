@@ -107,7 +107,7 @@
 /datum/crafting_recipe/food/baguette
 	name = "Baguette"
 	time = 40
-	reqs = list(/datum/reagent/consumable/sodiumchloride = 1,
+	reqs = list(/datum/reagent/consumable/salt = 1,
 				/datum/reagent/consumable/blackpepper = 1,
 				/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
@@ -207,7 +207,7 @@
 /datum/crafting_recipe/food/nachos
 	name ="Nachos"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/tortilla = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/nachos
@@ -216,7 +216,7 @@
 /datum/crafting_recipe/food/cheesynachos
 	name ="Cheesy nachos"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/tortilla = 1
 	)

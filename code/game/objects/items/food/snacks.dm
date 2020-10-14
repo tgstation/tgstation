@@ -11,6 +11,7 @@
 	junkiness = 25
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy/bronx
 	name = "South Bronx Paradise bar"
@@ -24,6 +25,7 @@
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtypes = JUNKFOOD | RAW | GROSS
 	custom_price = 800
+	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
 /obj/item/food/candy/bronx/MakeEdible()
@@ -59,9 +61,10 @@
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
 	trash_type = /obj/item/trash/sosjerky
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/sodiumchloride = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/salt = 2)
 	junkiness = 25
 	tastes = list("dried meat" = 1)
+	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
 
 /obj/item/food/sosjerky/healthy
@@ -76,10 +79,11 @@
 	icon_state = "chips"
 	trash_type = /obj/item/trash/chips
 	bite_consumption = 1
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sodiumchloride = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/salt = 1)
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtypes = JUNKFOOD | FRIED
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
 	name = "4no raisins"
@@ -91,6 +95,7 @@
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	custom_price = 90
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin/healthy
 	name = "homemade raisins"
@@ -98,6 +103,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	junkiness = 0
 	foodtypes = FRUIT
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spacetwinkie
 	name = "space twinkie"
@@ -107,6 +113,7 @@
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	custom_price = 30
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/candy_trash
 	name = "candy cigarette butt"
@@ -116,6 +123,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/ash = 3)
 	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
 	foodtypes = JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy_trash/nicotine
 	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine..?"
@@ -131,6 +139,7 @@
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtypes = JUNKFOOD | DAIRY | SUGAR
 	custom_price = 45
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/syndicake
 	name = "syndi-cakes"
@@ -140,6 +149,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/doctor_delight = 5)
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtypes = GRAIN | FRUIT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/energybar
 	name = "High-power energy bars"
@@ -149,3 +159,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 3)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
+	w_class = WEIGHT_CLASS_SMALL

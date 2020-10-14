@@ -15,6 +15,7 @@
 	max_integrity = 200
 	layer = CORGI_ASS_PIN_LAYER
 
+
 /obj/item/poster/tail_board
 	name = "party game poster"
 	poster_type = /obj/structure/sign/poster/party_game
@@ -22,6 +23,22 @@
 
 /obj/structure/sign/poster/party_game
 	name = "pin the tail on the corgi"
+	desc = "The rules are simple, pin the tail on the corgi while blindfolded. Are you a bad enough dude to hit the target?"
+	icon_state = "pinningposter"
+
+/obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I,/obj/item/tail_pin))
+		if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT)) //We're using the same trick that tables use for placing objects x and y onto the click location.
+			if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+				var/list/click_params = params2list(params)
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				return TRUE
+	else
+		return ..()
 	desc = "The rules are simple, pin the tail on the corgi, while blindfolded. Are you a bad enough dude to hit the target?"
 	icon_state = "pinningposter"
 	poster_item_name = "party game poster"
