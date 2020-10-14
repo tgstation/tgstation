@@ -379,6 +379,8 @@
 			SSshuttle.assoc_mobile[id] = counter
 			id = "[id]_[counter]"
 			name = "[name] [counter]"
+			//Re link machinery to new shuttle id
+			linkup()
 		else
 			SSshuttle.assoc_mobile[id] = 1
 
