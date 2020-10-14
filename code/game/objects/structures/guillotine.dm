@@ -189,9 +189,9 @@
 	else
 		return ..()
 
-/obj/structure/guillotine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/obj/structure/guillotine/user_buckle_mob(mob/living/M, force = FALSE, check_loc = FALSE)
 	if (!anchored)
-		to_chat(usr, "<span class='warning'>The [src] needs to be wrenched to the floor!</span>")
+		to_chat(usr, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
@@ -202,7 +202,7 @@
 		to_chat(usr, "<span class='warning'>You need to raise the blade before buckling someone in!</span>")
 		return FALSE
 
-	return ..(M, force, FALSE)
+	return ..(M, force, FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
 	if (!istype(M, /mob/living/carbon/human))
@@ -261,9 +261,6 @@
 		return TRUE
 	else
 		current_action = 0
-
-/obj/structure/guillotine/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
-    return ..()
 
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP
