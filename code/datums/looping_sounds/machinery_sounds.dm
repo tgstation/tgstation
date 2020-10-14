@@ -12,7 +12,9 @@
 	mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
 	mid_length = 60
 	volume = 40
-	extra_range = 10
+	extra_range = 25
+	falloff_exponent = 10
+	falloff_distance = 5
 	vary = TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

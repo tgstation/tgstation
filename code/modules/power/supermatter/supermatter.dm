@@ -310,7 +310,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/processes = TRUE
 
 
-	var/test_extrarange = 30
+	var/test_extrarange = 25
 	var/test_falloff_distance = 10
 	var/test_falloff_exponent = 20
 
