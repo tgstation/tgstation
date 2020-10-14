@@ -114,7 +114,7 @@
 	else if (user)
 		user.put_in_hands(attached_item)
 	else
-		attached_item.forceMove(get_turf(src))
+		attached_item.forceMove(drop_location())
 	if (throwing) //Fun little thing where we throw out the old attached item when emagged
 		var/destination = get_edge_target_turf(get_turf(src), pick(GLOB.alldirs))
 		attached_item.throw_at(destination, 4, 1)
