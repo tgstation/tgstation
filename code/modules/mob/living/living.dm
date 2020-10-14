@@ -1675,6 +1675,13 @@
 			if(old_buckled.buckle_lying == 0 && (resting || HAS_TRAIT(src, TRAIT_FLOORED))) // The buckle forced us to stay up (like a chair)
 				set_lying_down() // We want to rest or are otherwise floored, so let's drop on the ground.
 
+///can the mob be buckled to something by default?
+/mob/proc/can_buckle()
+	return TRUE
+
+///can the mob be unbuckled from something by default?
+/mob/proc/can_unbuckle()
+	return TRUE
 
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()

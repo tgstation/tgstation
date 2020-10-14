@@ -1017,14 +1017,6 @@
 			return 0
 	return 9
 
-///can the mob be buckled to something by default?
-/mob/proc/can_buckle()
-	return TRUE
-
-///can the mob be unbuckled from something by default?
-/mob/proc/can_unbuckle()
-	return TRUE
-
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
 	if(isAdminGhostAI(src) || Adjacent(A))
