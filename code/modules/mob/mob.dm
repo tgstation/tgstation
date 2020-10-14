@@ -979,7 +979,7 @@
 		return src
 
 /**
-  * Buckle to another mob
+  * Buckle a living mob to this mob
   *
   * You can buckle on mobs if you're next to them since most are dense
   *

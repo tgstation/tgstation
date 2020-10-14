@@ -41,11 +41,9 @@
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
-			if(user_unbuckle_mob(unbuckled,user))
-				return TRUE
+			return(user_unbuckle_mob(unbuckled,user))
 		else
-			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return TRUE
+			return(user_unbuckle_mob(buckled_mobs[1],user))
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
@@ -53,8 +51,7 @@
 
 /atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
-		if(user_buckle_mob(M, user))
-			return TRUE
+		return(user_buckle_mob(M, user))
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
@@ -192,12 +189,6 @@
 
 	// In buckling even possible in the first place?
 	if(!is_buckle_possible(target, FALSE, check_loc))
-		return FALSE
-
-	// If the person attempting to buckle is stood on this atom's turf and they're not buckling themselves,
-	// buckling shouldn't be possible as they're blocking it.
-	if((target != user) && (get_turf(user) == get_turf(src)))
-		to_chat(target, "<span class='warning'>You are unable to buckle [target] to [src] while it is blocked!</span>")
 		return FALSE
 
 	return TRUE
