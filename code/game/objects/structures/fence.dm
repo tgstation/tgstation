@@ -16,6 +16,7 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "straight"

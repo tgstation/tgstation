@@ -639,6 +639,28 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/stop1
+	name = "Holobarrier Sign"
+	desc = "What do you mean we can't go on the really cool ferris wheel?!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign_sec"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/stop1
+	name = "Holobarrier Sign"
+	desc = "What do you mean we can't go on the really cool ferris wheel?!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign_engi"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/playertrophy1 // Ashe
 	name = "Bust of The Rat"
 	desc = "A bust that resembles the head of a rat. Don't worry, it won't chomp down on you!"
