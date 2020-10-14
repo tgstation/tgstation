@@ -156,10 +156,10 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 600
+	specific_heat = 2069
 	name = "Freon"
 	gas_overlay = "freon"
-	moles_visible = MOLES_GAS_VISIBLE *30
+	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = -5
 	rarity = 10
 

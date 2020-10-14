@@ -185,11 +185,12 @@
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
-	desc = "Freon. Can absorb heat"
+	desc = "Freon. Ice to see you."
 	icon_state = "freon"
 	base_icon_state = "freon"
 	gas_type = /datum/gas/freon
 	filled = 1
+	starter_temp = 2.7
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"

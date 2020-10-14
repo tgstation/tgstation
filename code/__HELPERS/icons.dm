@@ -1080,25 +1080,36 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	dir = newdir
 
 GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
+GLOBAL_VAR_INIT(freon_icon, new /icon('icons/effects/freeze.dmi', "icesolid"))
+GLOBAL_VAR(freon_filter)
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
+	if(!GLOB.freon_filter)
+		GLOB.freon_filter = filter(type="layer", icon = GLOB.freon_icon, blend_mode = BLEND_INSET_OVERLAY )
 	if(resistance_flags & FREEZE_PROOF)
 		return
 	if(!(obj_flags & FROZEN))
 		name = "frozen [name]"
-		add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
 		obj_flags |= FROZEN
+		if(appearance_flags & KEEP_TOGETHER)
+			ADD_TRAIT(src, TRAIT_KEEP_TOGETHER, TRAIT_GENERIC)
+		else
+			appearance_flags |= KEEP_TOGETHER
+		filters += GLOB.freon_filter
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
+	if(!GLOB.freon_filter)
+		GLOB.freon_filter = filter(type="layer", icon = GLOB.freon_icon, blend_mode = BLEND_INSET_OVERLAY )
 	if(obj_flags & FROZEN)
 		name = replacetext(name, "frozen ", "")
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
+		filters -= GLOB.freon_filter
 		alpha += 25
 		obj_flags &= ~FROZEN
-
+		if (!(HAS_TRAIT(src, TRAIT_KEEP_TOGETHER)))
+			appearance_flags &= ~KEEP_TOGETHER
 
 /// Save file used in icon2base64. Used for converting icons to base64.
 GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of icons for the browser output
@@ -1154,7 +1165,7 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 				return SSassets.transport.get_asset_url(name)
 			return "<img class='icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 		var/atom/A = thing
-		
+
 		I = A.icon
 		if (isnull(icon_state))
 			icon_state = A.icon_state
@@ -1162,10 +1173,10 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 				icon_state = initial(A.icon_state)
 				if (isnull(dir))
 					dir = initial(A.dir)
-		
+
 		if (isnull(dir))
-			dir = A.dir		
-		
+			dir = A.dir
+
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()

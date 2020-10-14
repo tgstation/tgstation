@@ -58,7 +58,7 @@
 			if(TURF_WET_PERMAFROST)
 				intended = permafrost_overlay
 			if(TURF_WET_ICE)
-				intended = ice_overlay
+				intended = permafrost_overlay
 			else
 				intended = water_overlay
 	if(current_overlay != intended)
@@ -83,10 +83,10 @@
 			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		if(TURF_WET_ICE)
 			intensity = 120
-			lube_flags = SLIDE | GALOSHES_DONT_HELP
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
 		if(TURF_WET_PERMAFROST)
 			intensity = 120
-			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP | SLIP_WHEN_CRAWLING
 		if(TURF_WET_SUPERLUBE)
 			intensity = 120
 			lube_flags = SLIDE | GALOSHES_DONT_HELP | SLIP_WHEN_CRAWLING

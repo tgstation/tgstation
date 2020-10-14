@@ -97,6 +97,22 @@ nobiliumsuppression = INFINITY
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 			. = REACTING
 
+//freon: helps the station chill out
+/datum/gas_reaction/freon_freeze
+	priority = 1
+	name = "Freon Freeze"
+	id = "freon_freeze"
+
+/datum/gas_reaction/freon_freeze/init_reqs()
+	min_requirements = list(/datum/gas/freon = MOLES_GAS_VISIBLE)
+
+/datum/gas_reaction/freon_freeze/react(datum/gas_mixture/air, datum/holder)
+	var/turf/open/location = isturf(holder) ? holder : null
+	. = NO_REACTION
+	if(location?.freon_gas_act())
+		air.temperature = max(2.7, air.temperature - 10)
+		. = REACTING
+
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/nitrous_decomp
 	priority = 0
