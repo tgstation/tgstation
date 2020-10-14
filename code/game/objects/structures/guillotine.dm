@@ -202,7 +202,7 @@
 		to_chat(usr, "<span class='warning'>You need to raise the blade before buckling someone in!</span>")
 		return FALSE
 
-	return ..(M, force, FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
+	return ..(M, force, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
 
 /obj/structure/guillotine/post_buckle_mob(mob/living/M)
 	if (!istype(M, /mob/living/carbon/human))
