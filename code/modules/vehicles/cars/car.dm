@@ -93,3 +93,7 @@
 		M.visible_message("<span class='warning'>[M] is forced into \the [src]!</span>")
 	M.forceMove(src)
 	add_occupant(M, VEHICLE_CONTROL_KIDNAPPED)
+
+/obj/vehicle/sealed/car/obj_destruction(damage_flag)
+	explosion(loc, 0, 1, 2, 3, 0)
+	return ..()
