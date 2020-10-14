@@ -22,7 +22,7 @@
 	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
-/atom/movable/visual/cryo_occupant/proc/on_set_occupant(mob/living/L)
+/atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/L)
 	SIGNAL_HANDLER
 
 	if(occupant)
@@ -42,7 +42,7 @@
 	occupant.set_body_position(STANDING_UP)
 	occupant.set_lying_angle(0)
 
-/atom/movable/visual/cryo_occupant/proc/on_set_on(on)
+/atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
 	SIGNAL_HANDLER
 
 	if(on)
