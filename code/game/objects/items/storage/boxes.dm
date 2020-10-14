@@ -991,6 +991,18 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/aiuri(src)
 
+/obj/item/storage/box/prescriptions
+	name = "box of prescriptions"
+	desc = "It has pictures of smiling puppies running through sunflower fields on its front."
+	illustration = "pillbox"
+
+/obj/item/storage/box/prescriptions/PopulateContents()
+	new /obj/item/storage/pill_bottle/mannitol(src)
+	new /obj/item/storage/pill_bottle/psicodine(src)
+	new /obj/item/storage/pill_bottle/paxpsych(src)
+	new /obj/item/storage/pill_bottle/happinesspsych(src)
+	new /obj/item/storage/pill_bottle/lsdpsych(src)
+
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 	illustration = "fpen"
