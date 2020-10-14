@@ -137,7 +137,7 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!isfelinid(H) || H.incapacitated() || H.is_blind())
 			continue
-		if(user.mobility_flags & MOBILITY_STAND)
+		if(user.body_position == STANDING_UP)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
@@ -151,9 +151,11 @@
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
 		if(prob(effectchance * diode.rating))
+			if(C.resting)
+				C.set_resting(FALSE, instant = TRUE)
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.set_resting(TRUE, FALSE)
+			C.Immobilize(1 SECONDS)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 

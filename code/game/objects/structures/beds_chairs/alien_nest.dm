@@ -4,11 +4,13 @@
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
-	icon_state = "nest"
+	icon_state = "nest-0"
+	base_icon_state = "nest"
 	max_integrity = 120
 	can_be_unanchored = FALSE
-	smoothing_flags = SMOOTH_CORNERS
-	canSmoothWith = null
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_ALIEN_NEST)
+	canSmoothWith = list(SMOOTH_GROUP_ALIEN_NEST)
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE
@@ -33,7 +35,7 @@
 					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
 					"<span class='hear'>You hear squelching...</span>")
 				if(!do_after(M, 1200, target = src))
-					if(M && M.buckled)
+					if(M?.buckled)
 						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
 				if(!M.buckled)
@@ -69,8 +71,8 @@
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
-	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
-	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
+	M.pixel_x = M.get_standard_pixel_x_offset(M.body_position == LYING_DOWN)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.body_position == LYING_DOWN)
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 

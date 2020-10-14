@@ -1,40 +1,36 @@
 
 ////////////////////////////////////////////EGGS////////////////////////////////////////////
 
-/obj/item/reagent_containers/food/snacks/chocolateegg
+/obj/item/food/chocolateegg
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
-	filling_color = "#A0522D"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
-	foodtype = JUNKFOOD | SUGAR
-	value = FOOD_JUNK
+	foodtypes = JUNKFOOD | SUGAR
+	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/reagent_containers/food/snacks/egg
+/obj/item/food/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	list_reagents = list(/datum/reagent/consumable/eggyolk = 5)
-	cooked_type = /obj/item/reagent_containers/food/snacks/boiledegg
-	filling_color = "#F0E68C"
-	foodtype = MEAT
-	grind_results = list()
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 4)
+	microwaved_type = /obj/item/food/boiledegg
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_TINY
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
-	value = FOOD_JUNK
 
-/obj/item/reagent_containers/food/snacks/egg/gland
+/obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
 
-/obj/item/reagent_containers/food/snacks/egg/gland/Initialize()
+/obj/item/food/egg/gland/Initialize()
 	. = ..()
 	reagents.add_reagent(get_random_reagent_id(), 15)
 
 	var/color = mix_color_from_reagents(reagents.reagent_list)
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/decal/cleanable/food/egg_smudge(T)
@@ -45,7 +41,7 @@
 		reagents.expose(hit_atom, TOUCH)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/egg/attackby(obj/item/W, mob/user, params)
+/obj/item/food/egg/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.crayon_color
@@ -64,68 +60,59 @@
 	else
 		..()
 
-/obj/item/reagent_containers/food/snacks/egg/blue
+/obj/item/food/egg/blue
 	icon_state = "egg-blue"
 
-/obj/item/reagent_containers/food/snacks/egg/green
+/obj/item/food/egg/green
 	icon_state = "egg-green"
 
-/obj/item/reagent_containers/food/snacks/egg/mime
+/obj/item/food/egg/mime
 	icon_state = "egg-mime"
 
-/obj/item/reagent_containers/food/snacks/egg/orange
+/obj/item/food/egg/orange
 	icon_state = "egg-orange"
 
-/obj/item/reagent_containers/food/snacks/egg/purple
+/obj/item/food/egg/purple
 	icon_state = "egg-purple"
 
-/obj/item/reagent_containers/food/snacks/egg/rainbow
+/obj/item/food/egg/rainbow
 	icon_state = "egg-rainbow"
 
-/obj/item/reagent_containers/food/snacks/egg/red
+/obj/item/food/egg/red
 	icon_state = "egg-red"
 
-/obj/item/reagent_containers/food/snacks/egg/yellow
+/obj/item/food/egg/yellow
 	icon_state = "egg-yellow"
 
-/obj/item/reagent_containers/food/snacks/friedegg
+/obj/item/food/friedegg
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
-	bitesize = 1
-	filling_color = "#FFFFF0"
-	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bite_consumption = 1
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
-	foodtype = MEAT | FRIED | BREAKFAST
-	value = FOOD_FAST
+	foodtypes = MEAT | FRIED | BREAKFAST
 
-/obj/item/reagent_containers/food/snacks/boiledegg
+/obj/item/food/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	filling_color = "#FFFFF0"
-	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("egg" = 1)
-	foodtype = MEAT | BREAKFAST
-	value = FOOD_JUNK
+	foodtypes = MEAT | BREAKFAST
 
-/obj/item/reagent_containers/food/snacks/omelette	//FUCK THIS
+/obj/item/food/omelette	//FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
-	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
-
-	bitesize = 1
+	trash_type = /obj/item/trash/plate
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 3)
+	bite_consumption = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("egg" = 1, "cheese" = 1)
-	foodtype = MEAT | BREAKFAST | DAIRY
-	value = FOOD_RARE
+	foodtypes = MEAT | BREAKFAST | DAIRY
 
-/obj/item/reagent_containers/food/snacks/omelette/attackby(obj/item/W, mob/user, params)
+/obj/item/food/omelette/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/kitchen/fork))
 		var/obj/item/kitchen/fork/F = W
 		if(F.forkload)
@@ -143,14 +130,12 @@
 		return
 	..()
 
-/obj/item/reagent_containers/food/snacks/benedict
+/obj/item/food/benedict
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
-	trash = /obj/item/trash/plate
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment = 3)
+	trash_type = /obj/item/trash/plate
 	w_class = WEIGHT_CLASS_NORMAL
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3,/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
-	foodtype = MEAT | BREAKFAST | GRAIN
-	value = FOOD_EXOTIC
+	foodtypes = MEAT | BREAKFAST | GRAIN

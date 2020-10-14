@@ -76,9 +76,20 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
-#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
-#define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
-#define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
+/// Forces the user to stay unconscious.
+#define TRAIT_KNOCKEDOUT		"knockedout"
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED		"immobilized"
+/// Prevents voluntary standing or staying up on its own.
+#define TRAIT_FLOORED			"floored"
+/// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
+#define TRAIT_HANDS_BLOCKED		"handsblocked"
+/// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
+#define TRAIT_UI_BLOCKED		"uiblocked"
+/// Inability to pull things. Turned into a trait from [MOBILITY_PULL] to be able to track sources.
+#define TRAIT_PULL_BLOCKED		"pullblocked"
+/// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
+#define TRAIT_RESTRAINED		"restrained"
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
@@ -286,6 +297,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define RESTING_TRAIT "resting" //trait associated to resting
 #define STAT_TRAIT "stat" //trait associated to a stat value or range of
 #define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
+/// Trait associated to wearing a suit
+#define SUIT_TRAIT "suit"
+/// Trait associated to lying down (having a [lying_angle] of a different value than zero).
+#define LYING_DOWN_TRAIT "lying-down"
+/// Trait associated to lacking electrical power.
+#define POWER_LACK_TRAIT "power-lack"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -331,3 +348,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
+#define CRYO_TRAIT "cryo"
+#define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades" //trait associated to not having fine manipulation appendages such as hands
+#define HANDCUFFED_TRAIT "handcuffed"
+/// Trait granted by [/obj/item/warpwhistle]
+#define WARPWHISTLE_TRAIT "warpwhistle"
+/// Trait applied by by [/datum/component/soulstoned]
+#define SOULSTONE_TRAIT "soulstone"
+/// Trait applied to slimes by low temperature
+#define SLIME_COLD "slime-cold"
+/// Trait applied to bots by being tipped over
+#define BOT_TIPPED_OVER "bot-tipped-over"
+/// Trait applied to PAIs by being folded
+#define PAI_FOLDED "pai-folded"
+/// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
+#define BRAIN_UNAIDED "brain-unaided"

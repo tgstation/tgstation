@@ -12,7 +12,7 @@
 	//Buckling
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
-	buckle_lying = -1
+	buckle_lying = NO_BUCKLE_LYING
 
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)

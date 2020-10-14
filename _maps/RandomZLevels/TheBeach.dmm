@@ -781,11 +781,11 @@
 /area/awaymission/beach)
 "cw" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
-/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/meat/slab/spider,
-/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/spider,
+/obj/item/food/meat/slab/killertomato,
+/obj/item/food/meat/slab/bear,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cx" = (
@@ -880,7 +880,7 @@
 /area/awaymission/beach)
 "cM" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cN" = (

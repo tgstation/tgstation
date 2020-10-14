@@ -87,5 +87,6 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 //Shuttle unlocks
-#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
+#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_NARNAR "narnar"

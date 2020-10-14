@@ -623,7 +623,7 @@
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode.", null, null, null, null)
@@ -706,7 +706,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -716,7 +716,7 @@
 	else if(href_list["f_dynamic_roundstart_centre"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -733,7 +733,7 @@
 	else if(href_list["f_dynamic_roundstart_width"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -750,7 +750,7 @@
 	else if(href_list["f_dynamic_roundstart_latejoin_min"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -768,7 +768,7 @@
 	else if(href_list["f_dynamic_roundstart_latejoin_max"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -786,7 +786,7 @@
 	else if(href_list["f_dynamic_roundstart_midround_min"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -804,7 +804,7 @@
 	else if(href_list["f_dynamic_roundstart_midround_max"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -871,7 +871,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 
 		if(GLOB.master_mode != "dynamic")
@@ -1407,9 +1407,9 @@
 		else if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isethereal(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+			cookiealt = /obj/item/food/energybar
 		else if(islizard(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+			cookiealt = /obj/item/food/meat/slab
 		var/obj/item/new_item = new cookiealt(H)
 		if(H.put_in_hands(new_item))
 			H.update_inv_hands()

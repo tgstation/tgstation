@@ -739,13 +739,13 @@
 	return
 
 /obj/item/spellbook/Topic(href, href_list)
-	..()
-	var/mob/living/carbon/human/H = usr
+	. = ..()
 
-	if(H.stat || H.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!ishuman(H))
+	if(!ishuman(usr))
 		return TRUE
+	var/mob/living/carbon/human/H = usr
 
 	if(H.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
@@ -756,14 +756,14 @@
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
-			if(E && E.CanBuy(H,src))
+			if(E?.CanBuy(H,src))
 				if(E.Buy(H,src))
 					if(E.limit)
 						E.limit--
 					uses -= E.cost
 		else if(href_list["refund"])
 			E = entries[text2num(href_list["refund"])]
-			if(E && E.refundable)
+			if(E?.refundable)
 				var/result = E.Refund(H,src)
 				if(result > 0)
 					if(!isnull(E.limit))

@@ -39,7 +39,7 @@
 #define APC_FULLY_CHARGED 2
 
 #define APC_DRAIN_TIME 75
-#define APC_POWER_GAIN 10
+#define APC_POWER_GAIN 200
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
@@ -819,7 +819,7 @@
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
 		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
-			if(cell.charge == cell.maxcharge)
+			if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
@@ -1168,7 +1168,7 @@
 		return 0
 
 /obj/machinery/power/apc/add_load(amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.add_load(amount)
 
 /obj/machinery/power/apc/avail(amount)

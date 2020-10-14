@@ -187,10 +187,10 @@
 	. = ..()
 	if(!is_operational && state_open)
 		open_machine()
-		dump_contents()
+		dump_inventory_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/drop_stored_items()
+/obj/machinery/suit_storage_unit/dump_inventory_contents()
 	. = ..()
 	helmet = null
 	suit = null
@@ -201,8 +201,8 @@
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
-		dump_contents()
-		new /obj/item/stack/sheet/metal (loc, 2)
+		dump_inventory_contents()
+		new /obj/item/stack/sheet/metal(loc, 2)
 	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -258,7 +258,7 @@
 			if (!state_open)
 				open_machine(drop = FALSE)
 				if (occupant)
-					dump_contents()
+					dump_inventory_contents()
 		if ("close")
 			if (state_open)
 				close_machine()
@@ -310,7 +310,7 @@
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	var/mob/living/target = A
 	if(!state_open)
@@ -407,7 +407,7 @@
 				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
 		if(occupant)
-			dump_contents()
+			dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/process(delta_time)
 	if(!suit)
@@ -436,12 +436,12 @@
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open_machine()
-	dump_contents()
+	dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
-		dump_contents()
+		dump_inventory_contents()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -454,7 +454,7 @@
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
-		dump_contents()
+		dump_inventory_contents()
 
 	add_fingerprint(user)
 	if(locked)
@@ -463,7 +463,7 @@
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
-		dump_contents()
+		dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
@@ -513,7 +513,7 @@
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
 	if(default_pry_open(I))
-		dump_contents()
+		dump_inventory_contents()
 		return
 
 	return ..()

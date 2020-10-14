@@ -1,7 +1,7 @@
-#define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUN 2
-#define AB_CHECK_LYING 4
-#define AB_CHECK_CONSCIOUS 8
+#define AB_CHECK_HANDS_BLOCKED (1<<0)
+#define AB_CHECK_IMMOBILE (1<<1)
+#define AB_CHECK_LYING (1<<2)
+#define AB_CHECK_CONSCIOUS (1<<3)
 
 /datum/action
 	var/name = "Generic Action"
@@ -91,33 +91,29 @@
 		return FALSE
 	return TRUE
 
+
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
-	if(check_flags & AB_CHECK_RESTRAINED)
-		if(owner.restrained())
+	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+		return FALSE
+	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+		return FALSE
+	if((check_flags & AB_CHECK_LYING) && isliving(owner))
+		var/mob/living/action_user = owner
+		if(action_user.body_position == LYING_DOWN)
 			return FALSE
-	if(check_flags & AB_CHECK_STUN)
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(L.IsParalyzed() || L.IsStun())
-				return FALSE
-	if(check_flags & AB_CHECK_LYING)
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(!(L.mobility_flags & MOBILITY_STAND))
-				return FALSE
-	if(check_flags & AB_CHECK_CONSCIOUS)
-		if(owner.stat)
-			return FALSE
+	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+		return FALSE
 	return TRUE
+
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
 		if(!status_only)
 			button.name = name
 			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			if(owner?.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
 				var/list/settings = owner.hud_used.get_action_buttons_icons()
 				if(button.icon != settings["bg_icon"])
 					button.icon = settings["bg_icon"]
@@ -150,7 +146,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -499,7 +495,7 @@
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
