@@ -74,6 +74,7 @@
 		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
+	shuttle_port = SSshuttle.getShuttle(shuttleId)
 	if(QDELETED(shuttle_port))
 		shuttle_port = connect_to_shuttle(SSshuttle.get_containing_shuttle(src), SSshuttle.get_containing_dock(src))
 		return
