@@ -21,7 +21,7 @@
 ///Max amount of allowed heat change
 #define MAX_HEAT_VARIATION 1e5
 ///Max mole consumption per reaction cycle
-#define MAX_FUEL_USAGE 5
+#define MAX_FUEL_USAGE 20
 ///Mole count required (tritium/hydrogen) to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				25
 ///Used to reduce the gas_power to a more useful amount
@@ -141,14 +141,16 @@
 	icon_state = "core"
 	circuit = /obj/item/circuitboard/machine/hypertorus/core
 
+	var/fusing = FALSE
 	var/obj/machinery/hypertorus/interface/linked_interface
 	var/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input/linked_moderator
 	var/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input/linked_input
 	var/obj/machinery/atmospherics/components/unary/hypertorus/waste_output/linked_output
 	var/list/corners = list()
 	var/datum/gas_mixture/internal_fusion
-	var/datum/gas_mixture/internal_buffer
+	var/datum/gas_mixture/buffer
 	var/datum/gas_mixture/internal_output
+	var/datum/gas_mixture/moderator_internal
 	var/gas_efficiency = 0.015
 	///E=mc^2 with some addition to allow it gameplaywise
 	var/energy = 0
@@ -183,18 +185,28 @@
 
 	var/tritium = 0
 	var/hydrogen = 0
-	var/plasma = 0
-	var/nitrogen = 0
-	var/co2 = 0
-	var/h2o = 0
-	var/bz= 0
-	var/freon = 0
+	var/helium = 0
+
+	var/m_tritium = 0
+	var/m_hydrogen = 0
+	var/m_plasma = 0
+	var/m_nitrogen = 0
+	var/m_co2 = 0
+	var/m_h2o = 0
+	var/m_bz= 0
+	var/m_freon = 0
+
+	var/waste_remove = FALSE
+	var/heating_conductor = 1
+	var/magnetic_constrictor  = 1
 
 /obj/machinery/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
-	internal_buffer = new
+	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
+	buffer = new
 	internal_output = new
+	moderator_internal = new
 
 /obj/machinery/hypertorus/core/check_part_connectivity()
 	. = ..()
@@ -265,6 +277,7 @@
 	if(!active)
 		message_admins("YES")
 		active = TRUE
+		fusing = TRUE
 		linked_interface.active = TRUE
 		linked_input.active = TRUE
 		linked_output.active = TRUE
@@ -300,41 +313,53 @@
 		return
 
 	//Start by storing the gasmix of the inputs
-	linked_input.airs[1].pump_gas_to(internal_buffer, 10000)
-	internal_fusion.merge(internal_buffer)
-	internal_buffer.clear()
-//	var/datum/gas_mixture/removed_buffer = linked_moderator.airs[1].remove(gas_efficiency * linked_moderator.airs[1])
+	linked_input.airs[1].pump_gas_to(buffer, 10000)
+	internal_fusion.merge(buffer)
+	buffer.clear()
+	linked_moderator.airs[1].pump_gas_to(buffer, 10000)
+	moderator_internal.merge(buffer)
+	buffer.clear()
 
 	///Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
+	var/volume = internal_fusion.volume * magnetic_constrictor
 
-	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/bz, /datum/gas/freon)
+	internal_fusion.assert_gases(/datum/gas/helium)
+	moderator_internal.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/bz, /datum/gas/freon)
 
 	tritium = internal_fusion.gases[/datum/gas/tritium][MOLES]
 	hydrogen = internal_fusion.gases[/datum/gas/hydrogen][MOLES]
-	plasma = internal_fusion.gases[/datum/gas/plasma][MOLES]
-	nitrogen = internal_fusion.gases[/datum/gas/nitrogen][MOLES]
-	co2 = internal_fusion.gases[/datum/gas/carbon_dioxide][MOLES]
-	h2o = internal_fusion.gases[/datum/gas/water_vapor][MOLES]
-	bz= internal_fusion.gases[/datum/gas/bz][MOLES]
-	freon = internal_fusion.gases[/datum/gas/freon][MOLES]
+	helium = internal_fusion.gases[/datum/gas/helium][MOLES]
+
+	m_tritium = moderator_internal.gases[/datum/gas/tritium][MOLES]
+	m_hydrogen = moderator_internal.gases[/datum/gas/hydrogen][MOLES]
+	m_plasma = moderator_internal.gases[/datum/gas/plasma][MOLES]
+	m_nitrogen = moderator_internal.gases[/datum/gas/nitrogen][MOLES]
+	m_co2 = moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES]
+	m_h2o = moderator_internal.gases[/datum/gas/water_vapor][MOLES]
+	m_bz = moderator_internal.gases[/datum/gas/bz][MOLES]
+	m_freon = moderator_internal.gases[/datum/gas/freon][MOLES]
 
 	///We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
-	var/scale_factor = internal_fusion.volume * 0.5
+	var/scale_factor = volume * 0.5
 
 	///Scaled down moles of gases, no less than 0
 	var/scaled_tritium = max((tritium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_hydrogen = max((hydrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_plasma = max((plasma - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_nitrogen = max((nitrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_co2 = max((co2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_h2o = max((h2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_bz = max((bz - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
-	var/scaled_freon = max((freon - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_helium = max((helium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+
+	var/scaled_m_tritium = max((m_tritium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_hydrogen = max((m_hydrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_plasma = max((m_plasma - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_nitrogen = max((m_nitrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_co2 = max((m_co2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_h2o = max((m_h2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_bz = max((m_bz - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_m_freon = max((m_freon - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
 	//This section is used for the instability calculation for the fusion reaction
 	///The size of the phase space hypertorus
-	var/toroidal_size = (2 * PI) + TORADIANS(arctan((internal_fusion.volume - TOROID_VOLUME_BREAKEVEN) / TOROID_VOLUME_BREAKEVEN))
+	var/toroidal_size = (2 * PI) + TORADIANS(arctan((volume - TOROID_VOLUME_BREAKEVEN) / TOROID_VOLUME_BREAKEVEN))
 	///Calculation of the gas power, only for theoretical instability calculations
 	var/gas_power = 0
 	for (var/gas_id in internal_fusion.gases)
@@ -350,15 +375,15 @@
 
 	//here go the other gas interactions
 	///Those are the scaled gases that gets consumed and releases energy
-	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_nitrogen * 0.35 + scaled_co2 * 0.55 + scaled_bz * 1.15
+	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_m_nitrogen * 0.35 + scaled_m_co2 * 0.55 + scaled_m_bz * 1.15 + scaled_m_hydrogen * 0.05 + scaled_m_tritium * 0.06
 	///Those are the scaled gases that gets produced and consumes energy
-	var/negative_modifiers = scaled_plasma + scaled_h2o * 0.75 + scaled_freon * 1.15
+	var/negative_modifiers = scaled_helium + scaled_m_h2o * 0.75 + scaled_m_freon * 1.15
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
-	var/power_modifier = clamp(scaled_tritium * 1.05 + scaled_co2 * 0.95 + scaled_bz * 0.85 - scaled_plasma * 0.55 - scaled_freon * 0.75, 0.25, 100)
+	var/power_modifier = clamp(scaled_tritium * 1.05 + scaled_m_co2 * 0.95 + scaled_m_tritium * 1.55 + scaled_m_bz * 0.85 + scaled_m_plasma * 0.05 - scaled_helium * 0.55 - scaled_m_freon * 0.75, 0.25, 100)
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
-	var/heat_modifier = max(scaled_hydrogen * 1.15 + scaled_plasma * 1.05 - scaled_nitrogen * 0.75 - scaled_freon * 0.95, 0.25)
+	var/heat_modifier = max(scaled_hydrogen * 1.15 + scaled_helium * 1.05 + scaled_m_hydrogen * 0.05 + scaled_m_plasma * 1.25 - scaled_m_nitrogen * 0.75 - scaled_m_freon * 0.95, 0.25)
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
-	var/radiation_modifier = clamp(scaled_bz * 1.25 + scaled_plasma * 0.55 - scaled_freon * 1.15 - scaled_nitrogen * 0.45, 0.005, 1000)
+	var/radiation_modifier = clamp(scaled_m_bz * 1.25 + scaled_helium * 0.55 - scaled_m_freon * 1.15 - scaled_m_nitrogen * 0.45 - scaled_m_plasma * 0.95, 0.005, 1000)
 
 	//upgrades vars are placeholders for gas interactions
 	//Can go either positive or negative depending on the instability and the negative_modifiers
@@ -373,26 +398,34 @@
 	///The remaining wavelength that actually can do damage to mobs.
 	radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
 	///Efficiency of the reaction, it increases with the amount of plasma
-	efficiency = VOID_CONDUCTION * clamp(scaled_plasma, 1, 100)
+	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	///Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())
+	if(internal_fusion.total_moles()) //prevent initial division by zero runtime
+		heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
 	//better gas usage and consumption
 	//To do
-	internal_fusion.gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 45, 0.15, MAX_FUEL_USAGE) * 0.25
-	internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 50, 0.25, MAX_FUEL_USAGE) * 0.35
-	internal_fusion.gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 100, 0, MAX_FUEL_USAGE) * 0.5
-	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
-	//This is an example, will be changed later
-	if(power_output > 0)
-		internal_fusion.gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.65
-		internal_fusion.gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.25
-	if(power_output < 0)
-		internal_fusion.gases[/datum/gas/tritium][MOLES] -= 5
-		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= 5
+	if(check_fuel())
+		internal_fusion.gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 45, 0.15, MAX_FUEL_USAGE) * 0.25
+		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 50, 0.25, MAX_FUEL_USAGE) * 0.35
+		internal_fusion.gases[/datum/gas/helium][MOLES] += clamp(heat_output / 100, 0, MAX_FUEL_USAGE) * 0.5
+		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
+		//This is an example, will be changed later
+		if(power_output > 0)
+			moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.65
+			moderator_internal.gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.25
+		if(power_output < 0)
+			internal_fusion.gases[/datum/gas/tritium][MOLES] -= 5
+			internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= 5
+
+	if(waste_remove)
+		internal_output = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
+		internal_fusion.garbage_collect()
+		linked_output.airs[1].merge(internal_output)
+		internal_output.clear()
 
 	//better heat and rads emission
 	//To do
@@ -405,9 +438,11 @@
 
 		if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 			internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
-		if(core_temperature < internal_fusion.temperature && power_output < 0)
-			internal_fusion.gases[/datum/gas/tritium][MOLES] -= 50
-			internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= 50
+
+/obj/machinery/hypertorus/core/proc/check_fuel()
+	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
+		return TRUE
+	return FALSE
 
 /obj/machinery/hypertorus/interface
 	name = "hypertorus_interface"
@@ -442,9 +477,80 @@
 	message_admins("conduction [connected_core.conduction]")
 	message_admins("radiation [connected_core.radiation]")
 	message_admins("efficiency [connected_core.efficiency]")
-	message_admins("power_output [connected_core.power_output]")
 	message_admins("heat_limiter_modifier [connected_core.heat_limiter_modifier]")
 	message_admins("heat_output [connected_core.heat_output]")
+
+/obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Hypertorus", name)
+		ui.open()
+
+/obj/machinery/hypertorus/interface/ui_data()
+	var/data = list()
+	//Internal Fusion gases
+	var/list/fusion_gasdata = list()
+	if(connected_core.internal_fusion.total_moles())
+		for(var/gasid in connected_core.internal_fusion.gases)
+			fusion_gasdata.Add(list(list(
+			"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
+			"amount" = round(connected_core.internal_fusion.gases[gasid][MOLES], 0.01),
+			)))
+	else
+		for(var/gasid in connected_core.internal_fusion.gases)
+			fusion_gasdata.Add(list(list(
+				"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
+				"amount" = 0,
+				)))
+	//Moderator gases
+	var/moderator_gasdata = list()
+	if(connected_core.moderator_internal.total_moles())
+		for(var/gasid in connected_core.moderator_internal.gases)
+			moderator_gasdata.Add(list(list(
+			"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
+			"amount" = round(connected_core.moderator_internal.gases[gasid][MOLES], 0.01),
+			)))
+	else
+		for(var/gasid in connected_core.moderator_internal.gases)
+			moderator_gasdata.Add(list(list(
+				"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"amount" = 0,
+				)))
+
+	data["fusion_gases"] = fusion_gasdata
+	data["moderator_gases"] = moderator_gasdata
+
+	data["energy_level"] = connected_core.energy
+	data["core_temperature"] = connected_core.core_temperature
+	data["internal_power"] = connected_core.internal_power
+	data["power_output"] = connected_core.power_output
+	data["heat_limiter_modifier"] = connected_core.heat_limiter_modifier
+	data["heat_output"] = connected_core.heat_output
+
+	data["heating_conductor"] = connected_core.heating_conductor
+	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
+
+	return data
+
+/obj/machinery/hypertorus/interface/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("heating_conductor")
+			var/heating_conductor = params["heating_conductor"]
+			if(text2num(heating_conductor) != null)
+				heating_conductor = text2num(heating_conductor)
+				. = TRUE
+			if(.)
+				connected_core.heating_conductor = clamp(0.5, heating_conductor, 10)
+		if("magnetic_constrictor")
+			var/magnetic_constrictor = params["magnetic_constrictor"]
+			if(text2num(magnetic_constrictor) != null)
+				magnetic_constrictor = text2num(magnetic_constrictor)
+				. = TRUE
+			if(.)
+				connected_core.magnetic_constrictor = clamp(0.5, magnetic_constrictor, 10)
 
 /obj/machinery/hypertorus/corner
 	name = "hypertorus_corner"
