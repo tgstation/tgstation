@@ -650,7 +650,7 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
-/obj/structure/fluff/stop1
+/obj/structure/fluff/stop2
 	name = "Holobarrier Sign"
 	desc = "What do you mean we can't go on the really cool ferris wheel?!"
 	icon = 'icons/effects/effects.dmi'
@@ -658,6 +658,17 @@
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/body1
+	name = "Body Outline"
+	desc = "Someone must've died. Did the ferris wheel do it? Murderers always return to the scene of the crime!"
+	icon = 'icons/effects/crayondecal.dmi'
+	icon_state = "body"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
 
