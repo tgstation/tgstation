@@ -36,10 +36,21 @@
 	///Delete this port after ship fly off.
 	var/delete_after = FALSE
 
+	///are we registered in SSshuttles?
+	var/registered = FALSE
+
+	///register to SSshuttles
 /obj/docking_port/proc/register()
+	if(registered)
+		stack_trace("multiple register")
+	registered = TRUE
 	return
 
+	///unregister from SSshuttles
 /obj/docking_port/proc/unregister()
+	if(!registered)
+		stack_trace("multiple unregister")
+	registered = FALSE
 	return
 
 /obj/docking_port/proc/Check_id()
@@ -186,6 +197,7 @@
 	var/json_key
 
 /obj/docking_port/stationary/register()
+	. = ..()
 	if(!id)
 		id = "dock"
 	else
@@ -224,6 +236,7 @@
 	#endif
 
 /obj/docking_port/stationary/unregister()
+	. = ..()
 	SSshuttle.stationary -= src
 
 /obj/docking_port/stationary/Destroy(force)
@@ -351,6 +364,7 @@
 	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/register(replace = FALSE)
+	. = ..()
 	if(!id)
 		id = "shuttle"
 
@@ -370,6 +384,7 @@
 	SSshuttle.mobile += src
 
 /obj/docking_port/mobile/unregister()
+	. = ..()
 	SSshuttle.mobile -= src
 
 /obj/docking_port/mobile/Destroy(force)
