@@ -139,7 +139,7 @@
   * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
   * Arguments:
   * * target - Target mob to check against buckling to src.
-  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var.
+  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle()
   * * check_loc - Whether to do a proximity check or not. The proximity check looks for target.loc == src.loc.
   */
 /atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
