@@ -3,8 +3,8 @@
 #define MAX_RANGE 7
 #define MAX_SPEED 10
 #define HITS_TO_KILL 9
-#define MIN_ATTACK_DELAY 15
-#define MAX_ATTACK_DELAY 25
+#define MIN_ATTACK_DELAY 10
+#define MAX_ATTACK_DELAY 15
 
 /**
   * Machine that runs around wildly so people can practice clickin on things
@@ -32,10 +32,8 @@
 	var/turf/starting_turf
 	///How fast the machine moves. Cannot be higher than MAX_SPEED
 	var/move_speed = 1
-	///Reference to a potentially attached obj/item/target 
-	var/obj/item/target/pinned_target
-	///Secret built-in-toolbox that pops out when emagged to do battle in the robot revolution
-	var/obj/item/storage/toolbox/syndicate/secret_evil_toolbox
+	///Reference to a potentially attached object
+	var/obj/item/attached_item
 	///Time between attacks when emagged
 	var/attack_cooldown = 50
 	///Helper for timing attacks when emagged
@@ -43,10 +41,8 @@
 
 /obj/structure/training_machine/Destroy()
 	. = ..()
-	if (pinned_target)
-		remove_target()
-	if (secret_evil_toolbox)
-		QDEL_NULL(secret_evil_toolbox)
+	remove_attached_item()
+	explosion(src, 0, 0, 1)
 
 /obj/structure/training_machine/ui_state(mob/user)
 	return GLOB.physical_state
@@ -73,46 +69,59 @@
 	switch(action)
 		if("toggle")
 			toggle()
+			. = TRUE
 		if("range")
 			var/range_input = params["range"]
 			range = clamp(range_input, MIN_RANGE, MAX_RANGE)
+			. = TRUE
 		if("movespeed")
 			var/range_input = params["movespeed"]
 			move_speed = clamp(range_input, MIN_SPEED, MAX_SPEED)
+			. = TRUE
 
 /obj/structure/training_machine/attack_hand(mob/user)
 	ui_interact(user)
 
-/obj/structure/training_machine/attackby(obj/item/target/target, mob/user)
+/obj/structure/training_machine/attackby(obj/item/target, mob/user)
 	. = ..()
-	if (!istype(target))
+	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return
 	if (length(buckled_mobs))
 		return
-	if (pinned_target) //Swap out the old with the new
-		remove_target(user)
-	pinned_target = target
-	pinned_target.forceMove(src)
-	vis_contents += pinned_target
-	handle_density()
-	to_chat(user, "<span class='notice'>You attach the target to the seat.</span>")
+	attach_item(target)
+	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the seat.</span>")
 	playsound(src, "rustle", 50, TRUE)
 
-/obj/structure/training_machine/proc/remove_target(mob/user)
+/obj/structure/training_machine/proc/attach_item(target)
+	remove_attached_item()
+	attached_item = target
+	attached_item.forceMove(src)
+	attached_item.vis_flags |= VIS_INHERIT_ID
+	vis_contents += attached_item
+	handle_density()
+
+/obj/structure/training_machine/proc/remove_attached_item(mob/user)
+	if (!attached_item)
+		return
 	vis_contents.Cut()
-	if (user)
-		user.put_in_hands(pinned_target)
+	if (istype(attached_item, /obj/item/storage/toolbox/syndicate))
+		qdel(attached_item)
+	else if (user)
+		user.put_in_hands(attached_item)
 	else
-		pinned_target.forceMove(drop_location())
-	pinned_target = null
+		attached_item.forceMove(drop_location())
+	attached_item = null
+	handle_density()
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
-	if (!pinned_target)
+	if (!attached_item)
 		return
-	remove_target(user)
-	handle_density()
-	to_chat(user, "<span class='notice'>You remove the target from the seat.</span>")
+	if (obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		return
+	remove_attached_item(user)
+	to_chat(user, "<span class='notice'>You remove \the [attached_item] from the seat.</span>")
 	playsound(src, "rustle", 50, TRUE)
 
 /obj/structure/training_machine/proc/toggle()
@@ -146,9 +155,9 @@
 		if (!target_position)
 			stop_moving("ERROR! Cannot calculate suitable movement path.")
 	var/turf/nextStep = get_step_towards(src, target_position)
-	if (!Move(nextStep))
+	if (!Move(nextStep, get_dir(src, nextStep)))
 		target_position = null //We couldn't move towards the target turf, so find a new target turf
-	if (obj_flags & EMAGGED)
+	if (attached_item)
 		try_attack()
 	addtimer(CALLBACK(src, .proc/do_movement), max(MAX_SPEED - move_speed, 1)) // We want to ensure this is never <=0
 
@@ -163,30 +172,33 @@
 	return pick(turfs)
 
 /obj/structure/training_machine/proc/try_attack()
+	if (istype(attached_item, /obj/item/target))
+		return
 	if (world.time < last_attack_time + attack_cooldown)
 		return
 	var/list/targets
-	for(var/mob/living/carbon/target in oview(1, get_turf(src)) //Find adjacent target
-		if (target.stat != CONSCIOUS && target.Adjacent(src))
+	for(var/mob/living/carbon/target in oview(1, get_turf(src))) //Find adjacent target
+		if (target.stat == CONSCIOUS && target.Adjacent(src))
 			LAZYADD(targets, target)
 	var/mob/living/carbon/target = pick(targets)
 	if (!target)
 		return
-	do_attack_animation(target, null, secret_evil_toolbox)
-	target.apply_damage(secret_evil_toolbox.force, BRUTE, BODY_ZONE_CHEST)
-	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
+	do_attack_animation(target, null, attached_item)
+	if (obj_flags & EMAGGED)
+		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST)
+	playsound(src, 'sound/weapons/smash.ogg', 25, TRUE)
 	last_attack_time = world.time
-	attack_cooldown = rand(MIN_ATTACK_DELAY,MAX_ATTACK_DELAY)
+	attack_cooldown = rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY)
 
 /obj/structure/training_machine/proc/handle_density()
-	if(length(buckled_mobs) || pinned_target || (obj_flags & EMAGGED))
+	if(length(buckled_mobs) || attached_item)
 		density = TRUE
 	else
 		density = FALSE
 
 /obj/structure/training_machine/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	. = ..()
-	if (pinned_target)
+	if (istype(attached_item, /obj/item/target))
 		return FALSE
 
 /obj/structure/training_machine/post_buckle_mob()
@@ -202,18 +214,16 @@
 	if (obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	secret_evil_toolbox = new(src)
+	attach_item(new /obj/item/storage/toolbox/syndicate(src))
 	to_chat(user, "<span class='warning'>You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top.</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	add_overlay("tm_toolbox")
-	handle_density()
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
 	if (obj_flags & EMAGGED)
 		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
-	if (pinned_target)
-		. += "<span class='notice'><b>Alt-Click to remove pinned target</b></span>"
+	else if (attached_item) //Can't removed the syndicate toolbox!
+		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
 /**
@@ -248,14 +258,14 @@
 		return
 	if (target_is_machine)
 		var/obj/structure/training_machine/trainer = target
-		if (!trainer.pinned_target)
+		if (!trainer.attached_item)
 			return
 	total_hits++
 	lap_hits++
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
 	if (lap_hits % HITS_TO_KILL == 0)
-		playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+		playsound(src,'sound/machines/twobeep.ogg',25,FALSE)
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()

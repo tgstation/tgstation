@@ -29,7 +29,7 @@ export const TrainingMachine = (props, context) => {
                 inline
                 size={1.2}
                 step={1}
-                stepPixelSize={51}
+                stepPixelSize={50}
                 value={data.range}
                 minValue={1}
                 maxValue={7}
