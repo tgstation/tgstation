@@ -102,10 +102,17 @@
 
 	if(!layer_mode)
 		icon_state = initial(icon_state)
+		to_chat(user, "<span class='notice'>You set the plunger to 'Plunger Mode'.</span>")
 	else
 		icon_state = layer_mode_sprite
+		to_chat(user, "<span class='notice'>You set the plunger to 'Layer Mode'.</span>")
+
+	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
 	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
 	if(new_layer)
 		target_layer = layers[new_layer]

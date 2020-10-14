@@ -283,7 +283,7 @@
 		AM.update_icon()
 
 	if(O)
-		playsound(O, 'sound/items/ratchet.ogg', 5, TRUE) //sound
+		playsound(O, 'sound/items/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)
