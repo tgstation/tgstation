@@ -17,7 +17,7 @@
 	///Looping audio for when the computer is on
 	var/datum/looping_sound/computer/soundloop
 	///Whether or not to use looping audio
-	var/looping_sound = TRUE
+	var/looping_sound = FALSE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
