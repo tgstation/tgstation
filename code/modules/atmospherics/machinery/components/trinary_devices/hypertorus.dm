@@ -200,6 +200,9 @@
 	var/heating_conductor = 1
 	var/magnetic_constrictor  = 1
 
+	var/fuel_injection_rate = 25
+	var/moderator_injection_rate = 25
+
 /obj/machinery/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
@@ -313,10 +316,10 @@
 		return
 
 	//Start by storing the gasmix of the inputs
-	linked_input.airs[1].pump_gas_to(buffer, 10000)
+	buffer = linked_input.airs[1].remove(fuel_injection_rate)
 	internal_fusion.merge(buffer)
 	buffer.clear()
-	linked_moderator.airs[1].pump_gas_to(buffer, 10000)
+	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
 	moderator_internal.merge(buffer)
 	buffer.clear()
 
@@ -529,6 +532,8 @@
 
 	data["heating_conductor"] = connected_core.heating_conductor
 	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
+	data["fuel_injection_rate"] = connected_core.fuel_injection_rate
+	data["moderator_injection_rate"] = connected_core.moderator_injection_rate
 
 	return data
 
@@ -551,6 +556,20 @@
 				. = TRUE
 			if(.)
 				connected_core.magnetic_constrictor = clamp(0.5, magnetic_constrictor, 10)
+		if("fuel_injection_rate")
+			var/fuel_injection_rate = params["fuel_injection_rate"]
+			if(text2num(fuel_injection_rate) != null)
+				fuel_injection_rate = text2num(fuel_injection_rate)
+				. = TRUE
+			if(.)
+				connected_core.fuel_injection_rate = clamp(0.5, fuel_injection_rate, 150)
+		if("moderator_injection_rate")
+			var/moderator_injection_rate = params["moderator_injection_rate"]
+			if(text2num(moderator_injection_rate) != null)
+				moderator_injection_rate = text2num(moderator_injection_rate)
+				. = TRUE
+			if(.)
+				connected_core.moderator_injection_rate = clamp(0.5, moderator_injection_rate, 150)
 
 /obj/machinery/hypertorus/corner
 	name = "hypertorus_corner"
