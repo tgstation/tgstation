@@ -3,50 +3,50 @@
 
 GLOBAL_LIST_EMPTY(radial_menus)
 
-/obj/screen/radial
+/atom/movable/screen/radial
 	icon = 'icons/mob/radial.dmi'
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
-/obj/screen/radial/slice
+/atom/movable/screen/radial/slice
 	icon_state = "radial_slice"
 	var/choice
 	var/next_page = FALSE
 	var/tooltips = FALSE
 
-/obj/screen/radial/slice/MouseEntered(location, control, params)
+/atom/movable/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_slice_focus"
 	if(tooltips)
 		openToolTip(usr, src, params, title = name)
 
-/obj/screen/radial/slice/MouseExited(location, control, params)
+/atom/movable/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_slice"
 	if(tooltips)
 		closeToolTip(usr)
 
-/obj/screen/radial/slice/Click(location, control, params)
+/atom/movable/screen/radial/slice/Click(location, control, params)
 	if(usr.client == parent.current_user)
 		if(next_page)
 			parent.next_page()
 		else
 			parent.element_chosen(choice,usr)
 
-/obj/screen/radial/center
+/atom/movable/screen/radial/center
 	name = "Close Menu"
 	icon_state = "radial_center"
 
-/obj/screen/radial/center/MouseEntered(location, control, params)
+/atom/movable/screen/radial/center/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_center_focus"
 
-/obj/screen/radial/center/MouseExited(location, control, params)
+/atom/movable/screen/radial/center/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_center"
 
-/obj/screen/radial/center/Click(location, control, params)
+/atom/movable/screen/radial/center/Click(location, control, params)
 	if(usr.client == parent.current_user)
 		parent.finished = TRUE
 
@@ -58,8 +58,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 
 	var/selected_choice
-	var/list/obj/screen/elements = list()
-	var/obj/screen/radial/center/close_button
+	var/list/atom/movable/screen/elements = list()
+	var/atom/movable/screen/radial/center/close_button
 	var/client/current_user
 	var/atom/anchor
 	var/image/menu_holder
@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(elements.len < max_elements)
 		var/elements_to_add = max_elements - elements.len
 		for(var/i in 1 to elements_to_add) //Create all elements
-			var/obj/screen/radial/slice/new_element = new /obj/screen/radial/slice
+			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
 			new_element.tooltips = use_tooltips
 			new_element.parent = src
 			elements += new_element
@@ -153,14 +153,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/list/page_choices = page_data[current_page]
 	var/angle_per_element = round(zone / page_choices.len)
 	for(var/i in 1 to elements.len)
-		var/obj/screen/radial/E = elements[i]
+		var/atom/movable/screen/radial/E = elements[i]
 		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,0,360)
 		if(i > page_choices.len)
 			HideElement(E)
 		else
 			SetElement(E,page_choices[i],angle,anim = anim,anim_order = i)
 
-/datum/radial_menu/proc/HideElement(obj/screen/radial/slice/E)
+/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
 	E.cut_overlays()
 	E.alpha = 0
 	E.name = "None"
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	E.choice = null
 	E.next_page = FALSE
 
-/datum/radial_menu/proc/SetElement(obj/screen/radial/slice/E,choice_id,angle,anim,anim_order)
+/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E,choice_id,angle,anim,anim_order)
 	//Position
 	var/py = round(cos(angle) * radius) + py_shift
 	var/px = round(sin(angle) * radius)

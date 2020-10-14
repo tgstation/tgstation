@@ -163,6 +163,6 @@
 /mob/living/proc/update_succumb_action()
 	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src))
-		throw_alert("succumb", /obj/screen/alert/succumb)
+		throw_alert("succumb", /atom/movable/screen/alert/succumb)
 	else
 		clear_alert("succumb")

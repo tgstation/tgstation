@@ -4,7 +4,7 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
-	var/obj/screen/leap_icon = null
+	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small

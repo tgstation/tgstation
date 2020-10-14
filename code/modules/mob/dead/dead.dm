@@ -88,7 +88,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/C = client
 	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
-	new /obj/screen/splash(C)
+	new /atom/movable/screen/splash(C)
 
 	notransform = TRUE
 	sleep(29)	//let the animation play

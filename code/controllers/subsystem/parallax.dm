@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(parallax)
 /datum/controller/subsystem/parallax/PreInit()
 	. = ..()
 	if(prob(70))	//70% chance to pick a special extra layer
-		random_layer = pick(/obj/screen/parallax_layer/random/space_gas, /obj/screen/parallax_layer/random/asteroids)
+		random_layer = pick(/atom/movable/screen/parallax_layer/random/space_gas, /atom/movable/screen/parallax_layer/random/asteroids)
 		random_parallax_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)//Special color for random_layer1. Has to be done here so everyone sees the same color.
 	planet_y_offset = rand(100, 160)
 	planet_x_offset = rand(100, 160)
