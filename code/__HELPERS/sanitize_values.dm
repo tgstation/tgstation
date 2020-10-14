@@ -22,7 +22,7 @@
 		return value
 	if(default)
 		return default
-	if(List && List.len)
+	if(List?.len)
 		return pick(List)
 
 

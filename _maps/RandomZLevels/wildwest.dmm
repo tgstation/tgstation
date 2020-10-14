@@ -25,11 +25,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "ah" = (
-/turf/closed/indestructible{
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
+/turf/closed/indestructible/cult,
 /area/awaymission/wildwest/vault)
 "ai" = (
 /obj/structure/table/wood,

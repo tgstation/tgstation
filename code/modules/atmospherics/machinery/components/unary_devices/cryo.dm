@@ -1,7 +1,46 @@
-#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
 
+/// This is a visual helper that shows the occupant inside the cryo cell.
+/atom/movable/visual/cryo_occupant
+	icon = 'icons/obj/cryogenics.dmi'
+	// Must be tall, otherwise the filter will consider this as a 32x32 tile
+	// and will crop the head off.
+	icon_state = "mask_bg"
+	layer = ABOVE_WINDOW_LAYER + 0.01
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	pixel_y = 22
+	appearance_flags = KEEP_TOGETHER
+
+/atom/movable/visual/cryo_occupant/Initialize()
+	. = ..()
+	// Alpha masking
+	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
+	// already accounts for this.
+	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/cryogenics.dmi', "mask"), "y" = -22))
+
+/atom/movable/visual/cryo_occupant/proc/on_occupant_enter(mob/living/occupant)
+	occupant.setDir(SOUTH)
+	vis_contents += occupant
+	pixel_y = 22
+	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	occupant.set_body_position(STANDING_UP)
+	occupant.set_lying_angle(0)
+
+/atom/movable/visual/cryo_occupant/proc/on_occupant_exit(mob/living/occupant)
+	vis_contents -= occupant
+	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
+		occupant.set_lying_down()
+
+/atom/movable/visual/cryo_occupant/proc/on_toggle_on()
+	animate(src, pixel_y = 24, time = 20, loop = -1)
+	animate(pixel_y = 22, time = 20)
+
+/atom/movable/visual/cryo_occupant/proc/on_toggle_off()
+	animate(src)
+
+/// Cryo cell
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -15,6 +54,8 @@
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
+
+	showpipe = FALSE
 
 	var/autoeject = TRUE
 	var/volume = 100
@@ -32,7 +73,8 @@
 	var/radio_key = /obj/item/encryptionkey/headset_med
 	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
-	var/running_anim = FALSE
+	/// Visual content - Occupant
+	var/atom/movable/visual/cryo_occupant/occupant_vis
 
 	var/escape_in_progress = FALSE
 	var/message_cooldown
@@ -55,11 +97,15 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
+	occupant_vis = new(null)
+	vis_contents += occupant_vis
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
-	var/oldoccupant = occupant
+	var/mob/living/oldoccupant = occupant
 	. = ..() // Parent proc takes care of removing occupant if necessary
-	if (AM == oldoccupant)
+	if (oldoccupant && istype(oldoccupant) && AM == oldoccupant)
 		update_icon()
+		occupant_vis.on_occupant_exit(oldoccupant)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
@@ -81,6 +127,9 @@
 		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
+	vis_contents.Cut()
+
+	QDEL_NULL(occupant_vis)
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
 	///Take the turf the cryotube is on
@@ -118,81 +167,43 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+	. = ..()
+	plane = initial(plane)
+	icon_state = (state_open) ? "pod-open" : (on && is_operational) ? "pod-on" : "pod-off"
 
-	cut_overlays()
+GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_WINDOW_LAYER + 0.02))
+GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_WINDOW_LAYER + 0.02))
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("pod-panel")
-
+		. += "pod-panel"
 	if(state_open)
-		icon_state = "pod-open"
 		return
-
-	if(occupant)
-		var/image/occupant_overlay
-
-		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
-		else if(isalienadult(occupant))
-			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = image(CRYOMOBS, "alienq")
-			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = image(CRYOMOBS, "alienh")
-			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = image(CRYOMOBS, "aliens")
-			else // Drone or other
-				occupant_overlay = image(CRYOMOBS, "aliend")
-
-		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
-			occupant_overlay.copy_overlays(occupant)
-
-		else
-			occupant_overlay = image(CRYOMOBS, "generic")
-
-		occupant_overlay.dir = SOUTH
-		occupant_overlay.pixel_y = 22
-
-		if(on && !running_anim && is_operational)
-			icon_state = "pod-on"
-			running_anim = TRUE
-			run_anim(TRUE, occupant_overlay)
-		else
-			icon_state = "pod-off"
-			add_overlay(occupant_overlay)
-			add_overlay("cover-off")
-
-	else if(on && is_operational)
-		icon_state = "pod-on"
-		add_overlay("cover-on")
+	if(on && is_operational)
+		. += GLOB.cryo_overlay_cover_on
 	else
-		icon_state = "pod-off"
-		add_overlay("cover-off")
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
-	if(!on || !occupant || !is_operational)
-		running_anim = FALSE
-		return
-	cut_overlays()
-	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
-		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
-	if(anim_up)
-		occupant_overlay.pixel_y++
-	else
-		occupant_overlay.pixel_y--
-	add_overlay(occupant_overlay)
-	add_overlay("cover-on")
-	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
+		. += GLOB.cryo_overlay_cover_off
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
 
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
+	if(on == new_value)
+		return
+	. = on
+	on = new_value
+	update_icon()
+	if(on)
+		occupant_vis.on_toggle_on()
+	else
+		occupant_vis.on_toggle_off()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
-		on = FALSE
+		set_on(FALSE)
 		end_processing()
-		update_icon()
 	else //Turned on
 		begin_processing()
 
@@ -225,8 +236,7 @@
 				treating_wounds = FALSE
 
 		if(!treating_wounds)
-			on = FALSE
-			update_icon()
+			set_on(FALSE)
 			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 			var/msg = "Patient fully restored."
 			if(autoeject) // Eject if configured.
@@ -261,8 +271,7 @@
 	var/datum/gas_mixture/air1 = airs[1]
 
 	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
-		on = FALSE
-		update_icon()
+		set_on(FALSE)
 		return
 
 	if(occupant)
@@ -295,12 +304,9 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
-		on = FALSE
+		set_on(FALSE)
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
-		if(isliving(M))
-			var/mob/living/L = M
-			L.update_mobility()
 	occupant = null
 	flick("pod-open-anim", src)
 	reagent_transfer = efficiency * 10 - 5 // wait before injecting the next occupant
@@ -311,6 +317,8 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
+		if(isliving(occupant))
+			occupant_vis.on_occupant_enter(occupant)
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
@@ -441,9 +449,9 @@
 	switch(action)
 		if("power")
 			if(on)
-				on = FALSE
+				set_on(FALSE)
 			else if(!state_open)
-				on = TRUE
+				set_on(TRUE)
 			update_icon()
 			. = TRUE
 		if("door")
@@ -465,8 +473,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		on = !on
-		update_icon()
+		set_on(!on)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
@@ -512,5 +519,4 @@
 			node.addMember(src)
 		SSair.add_to_rebuild_queue(src)
 
-#undef CRYOMOBS
 #undef MAX_TEMPERATURE

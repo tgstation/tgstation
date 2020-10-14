@@ -70,7 +70,7 @@
   * * random - creates random mobs. self explanatory.
   */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
