@@ -137,7 +137,7 @@
 	var/turf/body_turf = get_turf(old_body)
 	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
-	if(old_body && old_body.loc)
+	if(old_body?.loc)
 		if(iscarbon(old_body))
 			var/mob/living/carbon/C = old_body
 			for(var/obj/item/W in C)

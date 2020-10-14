@@ -35,7 +35,7 @@
 					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
 					"<span class='hear'>You hear squelching...</span>")
 				if(!do_after(M, 1200, target = src))
-					if(M && M.buckled)
+					if(M?.buckled)
 						to_chat(M, "<span class='warning'>You fail to unbuckle yourself!</span>")
 					return
 				if(!M.buckled)

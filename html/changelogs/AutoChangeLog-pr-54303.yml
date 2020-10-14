@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - balance: "Getting up from the ground is steamlined. Instead of going up instantly after a stun and taking 2 seconds if you had rested, you take 1 second on both conditions but you can do so while moving without interrupting it. Shove stuns have been modified accordingly in light of this."

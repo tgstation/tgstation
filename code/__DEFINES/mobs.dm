@@ -348,14 +348,13 @@
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
 #define DEFIB_FAIL_SUICIDE (1<<1)
-#define DEFIB_FAIL_HELLBOUND (1<<2)
-#define DEFIB_FAIL_HUSK (1<<3)
-#define DEFIB_FAIL_TISSUE_DAMAGE (1<<4)
-#define DEFIB_FAIL_FAILING_HEART (1<<5)
-#define DEFIB_FAIL_NO_HEART (1<<6)
-#define DEFIB_FAIL_FAILING_BRAIN (1<<7)
-#define DEFIB_FAIL_NO_BRAIN (1<<8)
-#define DEFIB_FAIL_NO_INTELLIGENCE (1<<9)
+#define DEFIB_FAIL_HUSK (1<<2)
+#define DEFIB_FAIL_TISSUE_DAMAGE (1<<3)
+#define DEFIB_FAIL_FAILING_HEART (1<<4)
+#define DEFIB_FAIL_NO_HEART (1<<5)
+#define DEFIB_FAIL_FAILING_BRAIN (1<<6)
+#define DEFIB_FAIL_NO_BRAIN (1<<7)
+#define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
 #define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
