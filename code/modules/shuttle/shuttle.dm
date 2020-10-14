@@ -196,7 +196,7 @@
 	var/datum/map_template/shuttle/roundstart_template
 	var/json_key
 
-/obj/docking_port/stationary/register()
+/obj/docking_port/stationary/register(replace = FALSE)
 	. = ..()
 	if(!id)
 		id = "dock"
@@ -207,13 +207,14 @@
 		name = "dock"
 
 	var/counter = SSshuttle.assoc_stationary[id]
-	if(counter)
-		counter++
-		SSshuttle.assoc_stationary[id] = counter
-		id = "[id]_[counter]"
-		name = "[name] [counter]"
-	else
-		SSshuttle.assoc_stationary[id] = 1
+	if(!replace || !counter)
+		if(counter)
+			counter++
+			SSshuttle.assoc_stationary[id] = counter
+			id = "[id]_[counter]"
+			name = "[name] [counter]"
+		else
+			SSshuttle.assoc_stationary[id] = 1
 
 	if(!port_destinations)
 		port_destinations = id
@@ -371,8 +372,8 @@
 	if(!name)
 		name = "shuttle"
 
-	if(!replace)
-		var/counter = SSshuttle.assoc_mobile[id]
+	var/counter = SSshuttle.assoc_mobile[id]
+	if(!replace || !counter)
 		if(counter)
 			counter++
 			SSshuttle.assoc_mobile[id] = counter
