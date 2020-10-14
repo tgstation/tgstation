@@ -76,11 +76,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
-// Forces the user to stay unconscious.
+/// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT		"knockedout"
-// Prevents voluntary movement.
+/// Prevents voluntary movement.
 #define TRAIT_IMMOBILIZED		"immobilized"
-// Prevents voluntary standing or staying up on its own.
+/// Prevents voluntary standing or staying up on its own.
 #define TRAIT_FLOORED			"floored"
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED		"handsblocked"
@@ -348,6 +348,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
+#define CRYO_TRAIT "cryo"
 #define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades" //trait associated to not having fine manipulation appendages such as hands
 #define HANDCUFFED_TRAIT "handcuffed"
 /// Trait granted by [/obj/item/warpwhistle]

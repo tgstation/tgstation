@@ -119,7 +119,7 @@ handles linking back and forth.
 		return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/remote_materials/proc/on_hold()
-	return silo && silo.holds["[get_area(parent)]/[category]"]
+	return silo?.holds["[get_area(parent)]/[category]"]
 
 /datum/component/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (silo)

@@ -125,7 +125,7 @@
 	return TRUE
 
 /proc/is_monkey_leader(datum/mind/monkey_mind)
-	return monkey_mind && monkey_mind.has_antag_datum(/datum/antagonist/monkey/leader)
+	return monkey_mind?.has_antag_datum(/datum/antagonist/monkey/leader)
 
 /proc/is_monkey(datum/mind/monkey_mind)
 	return monkey_mind && (monkey_mind.has_antag_datum(/datum/antagonist/monkey) || is_monkey_leader(monkey_mind))

@@ -131,7 +131,7 @@
 	if(detect_state)
 		return
 	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
-	if(chunk && chunk.seenby.len)
+	if(chunk?.seenby.len)
 		for(var/mob/camera/ai_eye/A in chunk.seenby)
 			if(!A.ai_detector_visible)
 				continue
