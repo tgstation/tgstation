@@ -6,42 +6,8 @@ import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Button, ByondUi, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
-import { CameraConsoleContent } from './CameraConsole';
+import { prevNextCamera, selectCameras, CameraConsoleContent } from './CameraConsole';
 import { logger } from "../logging";
-
-/**
- * Returns previous and next camera names relative to the currently
- * active camera.
- */
-const prevNextCamera = (cameras, activeCamera) => {
-  if (!activeCamera) {
-    return [];
-  }
-  const index = cameras.findIndex(camera => (
-    camera.name === activeCamera.name
-  ));
-  return [
-    cameras[index - 1]?.name,
-    cameras[index + 1]?.name,
-  ];
-};
-
-/**
- * Camera selector.
- *
- * Filters cameras, applies search terms and sorts the alphabetically.
- */
-const selectCameras = (cameras, searchText = '') => {
-  const testSearch = createSearch(searchText, camera => camera.name);
-  return flow([
-    // Null camera filter
-    filter(camera => camera?.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy(camera => camera.name),
-  ])(cameras);
-};
 
 export const NtosSecurEye = (props, context) => {
   const { act, data, config } = useBackend(context);

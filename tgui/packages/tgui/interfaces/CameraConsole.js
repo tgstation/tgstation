@@ -11,7 +11,7 @@ import { Window } from '../layouts';
  * Returns previous and next camera names relative to the currently
  * active camera.
  */
-const prevNextCamera = (cameras, activeCamera) => {
+export const prevNextCamera = (cameras, activeCamera) => {
   if (!activeCamera) {
     return [];
   }
@@ -29,7 +29,7 @@ const prevNextCamera = (cameras, activeCamera) => {
  *
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
-const selectCameras = (cameras, searchText = '') => {
+export const selectCameras = (cameras, searchText = '') => {
   const testSearch = createSearch(searchText, camera => camera.name);
   return flow([
     // Null camera filter
