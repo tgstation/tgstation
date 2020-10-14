@@ -150,6 +150,45 @@
 	var/datum/gas_mixture/internal_buffer
 	var/datum/gas_mixture/internal_output
 	var/gas_efficiency = 0.015
+	///E=mc^2 with some addition to allow it gameplaywise
+	var/energy = 0
+	///Temperature of the center of the fusion reaction
+	var/core_temperature = T20C
+	/**Power emitted from the center of the fusion reaction: Internal power = densityH2 * densityTrit(Pi * (2 * rH2 * rTrit)**2) * Energy
+	* density is calculated with moles/volume, rH2 and rTrit are values calculated with moles/(radius of the gas)
+	both of the density can be varied by the power_modifier
+	**/
+	var/internal_power = 0
+	/**The effective power transmission of the fusion reaction, power_output = efficiency * (internal_power - conduction - radiation)
+	* Conduction is the heat value that is transmitted by the molecular interactions and it gets removed from the internal_power lowering the effective output
+	* Radiation is the irradiation released by the fusion reaction, it comprehends all wavelenghts in the spectrum, it lowers the effective output of the reaction
+	**/
+	var/power_output = 0
+	///Instability effects how chaotic the behavior of the reaction is
+	var/instability = 0
+
+	var/rad_power = 0
+	///Difference between the gases temperature and the internal temperature of the reaction
+	var/delta_temperature = 0
+	///Energy from the reaction lost from the molecule colliding between themselves.
+	var/conduction = 0
+	///The remaining wavelength that actually can do damage to mobs.
+	var/radiation = 0
+	///Efficiency of the reaction, it increases with the amount of plasma
+	var/efficiency = 0
+	///Hotter air is easier to heat up and cool down
+	var/heat_limiter_modifier = 0
+	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
+	var/heat_output = 0
+
+	var/tritium = 0
+	var/hydrogen = 0
+	var/plasma = 0
+	var/nitrogen = 0
+	var/co2 = 0
+	var/h2o = 0
+	var/bz= 0
+	var/freon = 0
 
 /obj/machinery/hypertorus/core/Initialize()
 	. = ..()
@@ -254,7 +293,6 @@
 		message_admins("Already connected")
 
 /obj/machinery/hypertorus/core/process()
-	. = ..()
 	if(!active)
 		return
 	if(!check_part_connectivity())
@@ -262,39 +300,24 @@
 		return
 
 	//Start by storing the gasmix of the inputs
-	internal_buffer = linked_input.airs[1].remove(gas_efficiency * linked_input.airs[1])
+	linked_input.airs[1].pump_gas_to(internal_buffer, 10000)
 	internal_fusion.merge(internal_buffer)
+	internal_buffer.clear()
 //	var/datum/gas_mixture/removed_buffer = linked_moderator.airs[1].remove(gas_efficiency * linked_moderator.airs[1])
-
-	var/list/cached_scan_results = internal_fusion.analyzer_results
 
 	///Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
-	///E=mc^2 with some addition to allow it gameplaywise
-	var/energy = 0
-	///Temperature of the center of the fusion reaction
-	var/core_temperature = T20C
-	/**Power emitted from the center of the fusion reaction: Internal power = densityH2 * densityTrit(Pi * (2 * rH2 * rTrit)**2) * Energy
-	* density is calculated with moles/volume, rH2 and rTrit are values calculated with moles/(radius of the gas)
-	both of the density can be varied by the power_modifier
-	**/
-	var/internal_power = 0
-	/**The effective power transmission of the fusion reaction, power_output = efficiency * (internal_power - conduction - radiation)
-	* Conduction is the heat value that is transmitted by the molecular interactions and it gets removed from the internal_power lowering the effective output
-	* Radiation is the irradiation released by the fusion reaction, it comprehends all wavelenghts in the spectrum, it lowers the effective output of the reaction
-	**/
-	var/power_output = 0
 
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/bz, /datum/gas/freon)
 
-	var/tritium = internal_fusion.gases[/datum/gas/tritium][MOLES]
-	var/hydrogen = internal_fusion.gases[/datum/gas/hydrogen][MOLES]
-	var/plasma = internal_fusion.gases[/datum/gas/plasma][MOLES]
-	var/nitrogen = internal_fusion.gases[/datum/gas/nitrogen][MOLES]
-	var/co2 = internal_fusion.gases[/datum/gas/carbon_dioxide][MOLES]
-	var/h2o = internal_fusion.gases[/datum/gas/water_vapor][MOLES]
-	var/bz= internal_fusion.gases[/datum/gas/bz][MOLES]
-	var/freon = internal_fusion.gases[/datum/gas/freon][MOLES]
+	tritium = internal_fusion.gases[/datum/gas/tritium][MOLES]
+	hydrogen = internal_fusion.gases[/datum/gas/hydrogen][MOLES]
+	plasma = internal_fusion.gases[/datum/gas/plasma][MOLES]
+	nitrogen = internal_fusion.gases[/datum/gas/nitrogen][MOLES]
+	co2 = internal_fusion.gases[/datum/gas/carbon_dioxide][MOLES]
+	h2o = internal_fusion.gases[/datum/gas/water_vapor][MOLES]
+	bz= internal_fusion.gases[/datum/gas/bz][MOLES]
+	freon = internal_fusion.gases[/datum/gas/freon][MOLES]
 
 	///We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/scale_factor = internal_fusion.volume * 0.5
@@ -317,8 +340,7 @@
 	for (var/gas_id in internal_fusion.gases)
 		gas_power += (internal_fusion.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * internal_fusion.gases[gas_id][MOLES])
 
-	///Instability effects how chaotic the behavior of the reaction is
-	var/instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size)
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size)
 	///Effective reaction instability
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -341,29 +363,22 @@
 	//upgrades vars are placeholders for gas interactions
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature / (max(100 / heat_modifier, 1)), 1)
-	cached_scan_results["energy"] = energy
 	internal_power = (scaled_hydrogen / max((100 / power_modifier), 1)) * (scaled_tritium / max((100 / power_modifier), 1)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
-	cached_scan_results["internal_power"] = internal_power
 	core_temperature = internal_power / max((1000 / power_modifier), 1)
 	core_temperature = max(TCMB, core_temperature)
-	cached_scan_results["core_temperature"] = core_temperature
 	///Difference between the gases temperature and the internal temperature of the reaction
-	var/delta_temperature = archived_heat - core_temperature
-	cached_scan_results["delta_temperature"] = delta_temperature
+	delta_temperature = archived_heat - core_temperature
 	///Energy from the reaction lost from the molecule colliding between themselves.
-	var/conduction = - delta_temperature
+	conduction = - delta_temperature
 	///The remaining wavelength that actually can do damage to mobs.
-	var/radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
-	cached_scan_results["radiation"] = radiation
+	radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
 	///Efficiency of the reaction, it increases with the amount of plasma
-	var/efficiency = VOID_CONDUCTION * clamp(scaled_plasma, 1, 100)
+	efficiency = VOID_CONDUCTION * clamp(scaled_plasma, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
-	cached_scan_results["power_output"] = power_output
 	///Hotter air is easier to heat up and cool down
-	var/heat_limiter_modifier = internal_fusion.temperature
+	heat_limiter_modifier = internal_fusion.temperature
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	var/heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
-	cached_scan_results["heat_output"] = heat_output
+	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
 	//better gas usage and consumption
 	//To do
@@ -385,7 +400,7 @@
 		var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
 		if(prob(PERCENT(particle_chance)))
 			loc.fire_nuclear_particle()
-		var/rad_power = clamp((radiation / 1e5), FUSION_RAD_MAX,0)
+		rad_power = clamp((radiation / 1e5), FUSION_RAD_MAX,0)
 		radiation_pulse(loc, rad_power)
 
 		if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
@@ -401,19 +416,35 @@
 	circuit = /obj/item/circuitboard/machine/hypertorus/interface
 	var/obj/machinery/hypertorus/core/connected_core
 
-/obj/machinery/hypertorus/interface/attack_hand(mob/living/user)
+/obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	var/turf/T = get_step(src,turn(dir,180))
 	var/obj/machinery/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		message_admins("NOPE")
-		return
+		return FALSE
 
 	connected_core = centre
 
 	connected_core.activate()
+	return TRUE
 
+/obj/machinery/hypertorus/interface/attack_hand(mob/living/user)
+	. = ..()
+	message_admins("energy [connected_core.energy]")
+	message_admins("core_temperature [connected_core.core_temperature]")
+	message_admins("internal_power [connected_core.internal_power]")
+	message_admins("power_output [connected_core.power_output]")
+	message_admins("instability [connected_core.instability]")
+	message_admins("rad_power [connected_core.rad_power]")
+	message_admins("delta_temperature [connected_core.delta_temperature]")
+	message_admins("conduction [connected_core.conduction]")
+	message_admins("radiation [connected_core.radiation]")
+	message_admins("efficiency [connected_core.efficiency]")
+	message_admins("power_output [connected_core.power_output]")
+	message_admins("heat_limiter_modifier [connected_core.heat_limiter_modifier]")
+	message_admins("heat_output [connected_core.heat_output]")
 
 /obj/machinery/hypertorus/corner
 	name = "hypertorus_corner"

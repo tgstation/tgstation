@@ -14257,7 +14257,7 @@
 	dir = 8;
 	name = "External Gas to Loop"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "aHc" = (
 /obj/structure/filingcabinet,
@@ -15094,12 +15094,6 @@
 "aJu" = (
 /turf/open/floor/plating,
 /area/engine/engineering)
-"aJv" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "aJB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
@@ -15494,26 +15488,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"aKG" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"aKH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Gas to Chamber"
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"aKI" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "aKL" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -16085,17 +16059,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"aMj" = (
-/obj/machinery/door/airlock/engineering/glass/critical{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_one_access_txt = "10;24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "aMk" = (
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -16103,7 +16066,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "aMo" = (
 /obj/structure/reflector/box/anchored{
@@ -16567,15 +16530,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"aNu" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Gas to Filter"
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "aNv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/hypertorus/corner{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aNw" = (
@@ -17695,7 +17653,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "aQg" = (
 /obj/machinery/door/poddoor{
@@ -18287,7 +18245,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "aRy" = (
 /turf/closed/wall/r_wall,
@@ -49197,10 +49155,6 @@
 	dir = 8;
 	network = list("ss13","engine")
 	},
-/obj/machinery/airalarm/engine{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 8
@@ -53827,8 +53781,8 @@
 /area/science/test_area)
 "cDz" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "cDD" = (
@@ -60641,17 +60595,8 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"daZ" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "dbb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/hypertorus/corner{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -61949,11 +61894,11 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "deD" = (
 /obj/machinery/status_display/evac,
-/turf/closed/wall/r_wall,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "deI" = (
 /obj/effect/turf_decal/stripes/line{
@@ -62003,15 +61948,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"deS" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "deU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -62022,10 +61958,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"deV" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "deW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -62053,19 +61985,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfa" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"dfb" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
+/obj/machinery/hypertorus/core{
+	anchored = 1
 	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dfc" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dfd" = (
 /obj/effect/turf_decal/stripes/line{
@@ -62111,32 +62034,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"dfj" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dfk" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"dfm" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "dfp" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -62145,7 +62042,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
 "dfq" = (
 /obj/machinery/camera{
@@ -63239,7 +63136,7 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "djx" = (
 /obj/item/crowbar,
@@ -63248,7 +63145,7 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "djz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -63325,13 +63222,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"dlI" = (
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
-"dlN" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
-/area/engine/supermatter)
 "dlP" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -64029,14 +63919,8 @@
 "dBx" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/engine,
 /area/engine/engineering)
-"dBy" = (
-/obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "dBz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -67465,6 +67349,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"hsI" = (
+/obj/machinery/hypertorus/corner{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "htB" = (
 /obj/machinery/door/window/northleft{
 	name = "monkey pen";
@@ -67841,7 +67731,7 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "hWR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -68361,6 +68251,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"iRV" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/waste_output,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "iUc" = (
 /obj/structure/chair{
 	dir = 4
@@ -71267,6 +71161,10 @@
 "mzU" = (
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"mAm" = (
+/obj/machinery/hypertorus/interface,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "mAO" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;5;39;25;28"
@@ -75128,6 +75026,10 @@
 "rJv" = (
 /turf/open/floor/plating,
 /area/hallway/primary/port)
+"rKv" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "rKS" = (
 /turf/closed/wall,
 /area/medical/surgery/room_c)
@@ -75143,6 +75045,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
+"rLm" = (
+/obj/machinery/hypertorus/corner,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "rMb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -76435,11 +76341,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/engineering/glass/critical{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_one_access_txt = "10;24"
-	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "tDQ" = (
@@ -77203,6 +77104,10 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"uMa" = (
+/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "uNe" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -122136,11 +122041,11 @@ aEr
 aFC
 aGZ
 aGZ
-dlI
-aKG
-aMj
-dBy
-dlI
+aMk
+aMk
+aMk
+aMk
+aMk
 aQe
 aRv
 dfE
@@ -122393,11 +122298,11 @@ dej
 aFC
 deC
 deC
-dlI
-aKH
 aMk
-aNu
-dlI
+aMk
+aMk
+aMk
+aMk
 dfp
 dfp
 dfE
@@ -122649,13 +122554,13 @@ aCY
 dek
 der
 deD
-dlI
-aJv
-aKI
+aMk
+aMk
+aMk
 tDM
-dfb
-dfj
-dlI
+aMk
+aMk
+aMk
 deD
 uIw
 dfT
@@ -122907,11 +122812,11 @@ del
 aFC
 djt
 aMk
-daZ
+daY
 dbb
-aMk
+uMa
 aNv
-dfk
+daY
 dfq
 djt
 dfF
@@ -123164,11 +123069,11 @@ aEr
 aFC
 hWp
 daY
-daZ
-dbb
+daY
+iRV
 dfa
-aNv
-dfk
+mAm
+daY
 daY
 djx
 sUG
@@ -123421,11 +123326,11 @@ aEr
 aKL
 djt
 aMk
-deS
-dbb
-aMk
-aNv
-dfm
+daY
+hsI
+rKv
+rLm
+daY
 aMk
 djt
 oos
@@ -123677,13 +123582,13 @@ pvL
 dem
 aFD
 deD
-dlI
-dlI
-deV
-dlN
-dfc
-dlI
-dlI
+aMk
+aMk
+aMk
+aMk
+aMk
+aMk
+aMk
 deD
 dbg
 dfR
