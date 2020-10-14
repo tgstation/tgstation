@@ -283,7 +283,7 @@
 
 		a_intent = possible_a_intents[current_intent]
 
-	if(hud_used && hud_used.action_intent)
+	if(hud_used?.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.

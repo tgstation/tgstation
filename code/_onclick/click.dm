@@ -461,7 +461,7 @@
 
 /mob/proc/check_click_intercept(params,A)
 	//Client level intercept
-	if(client && client.click_intercept)
+	if(client?.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return TRUE
 

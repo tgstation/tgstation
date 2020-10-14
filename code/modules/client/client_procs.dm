@@ -544,11 +544,19 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
-	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, CONFIG_GET(string/panic_bunker_message))
+
+	//If we aren't an admin, and the flag is set
+	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
+		var/living_recs = CONFIG_GET(number/panic_bunker_living)
+		//Relies on pref existing, but this proc is only called after that occurs, so we're fine.
+		var/minutes = get_exp_living(pure_numeric = TRUE)
+		if(minutes <= living_recs)
+			var/reject_message = "Failed Login: [key] - Account attempting to connect during panic bunker, but they do not have the required living time [minutes]/[living_recs]"
+			log_access(reject_message)
+			message_admins("<span class='adminnotice'>[reject_message]</span>")
+			var/message = CONFIG_GET(string/panic_bunker_message)
+			message = replacetext(message, "%minutes%", living_recs)
+			to_chat(src, message)
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
@@ -560,6 +568,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 
+	if(!query_client_in_db.NextRow())
 		new_player = 1
 		account_join_date = findJoinDate()
 		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"

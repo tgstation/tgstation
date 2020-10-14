@@ -261,7 +261,7 @@
 	return
 
 /obj/effect/chronos_cam/proc/create_target_ui()
-	if(holder && holder.client && chronosuit)
+	if(holder?.client && chronosuit)
 		if(target_ui)
 			remove_target_ui()
 		target_ui = new(src, holder)

@@ -98,7 +98,7 @@
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)

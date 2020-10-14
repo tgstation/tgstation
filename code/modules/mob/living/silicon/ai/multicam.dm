@@ -127,7 +127,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	ai_detector_color = COLOR_ORANGE
 
 /mob/camera/ai_eye/pic_in_pic/GetViewerClient()
-	if(screen && screen.ai)
+	if(screen?.ai)
 		return screen.ai.client
 
 /mob/camera/ai_eye/pic_in_pic/setLoc(turf/T)
@@ -135,7 +135,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		forceMove(T)
 	else
 		moveToNullspace()
-	if(screen && screen.ai)
+	if(screen?.ai)
 		screen.ai.camera_visibility(src)
 	else
 		GLOB.cameranet.visibility(src)

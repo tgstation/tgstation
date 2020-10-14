@@ -312,7 +312,7 @@
 	return null
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
-	if(M && M.current)
+	if(M?.current)
 		if(enforce_human)
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
@@ -369,7 +369,7 @@
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/M = GLOB.player_list[i]
-		if(M && M.client)
+		if(M?.client)
 			if(alive_check && M.stat)
 				continue
 			else if(afk_check && M.client.is_afk())
