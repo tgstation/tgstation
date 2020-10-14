@@ -96,7 +96,7 @@
 /datum/crafting_recipe/food/spidereggsham
 	name = "Spider eggs ham"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
 		/obj/item/food/meat/cutlet/spider = 2
 	)
@@ -108,7 +108,7 @@
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 5,
+		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/meat/steak = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 2
 	)

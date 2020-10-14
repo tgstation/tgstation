@@ -9,11 +9,24 @@
 	embedding = EMBED_HARMLESS
 	custom_materials = list(/datum/material/iron=1000)
 	hitsound = 'sound/weapons/bladeslice.ogg'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	attack_verb = list("poked", "jabbed", "pinned the tail on")
+	sharpness = IS_SHARP
+	max_integrity = 200
+	layer = 3.41 //Little trick to always stick itself above the poster.
+=======
+>>>>>>> master
 	attack_verb_continuous = list("pokes", "jabs", "pins the tail on")
 	attack_verb_simple = list("poke", "jab")
 	sharpness = SHARP_POINTY
 	max_integrity = 200
 	layer = CORGI_ASS_PIN_LAYER
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
+>>>>>>> master
 
 /obj/item/poster/tail_board
 	name = "party game poster"
@@ -22,6 +35,27 @@
 
 /obj/structure/sign/poster/party_game
 	name = "pin the tail on the corgi"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	desc = "The rules are simple, pin the tail on the corgi while blindfolded. Are you a bad enough dude to hit the target?"
+	icon_state = "pinningposter"
+
+/obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I,/obj/item/tail_pin))
+		if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT)) //We're using the same trick that tables use for placing objects x and y onto the click location.
+			if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+				var/list/click_params = params2list(params)
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				return TRUE
+	else
+		return ..()
+=======
+>>>>>>> master
 	desc = "The rules are simple, pin the tail on the corgi, while blindfolded. Are you a bad enough dude to hit the target?"
 	icon_state = "pinningposter"
 	poster_item_name = "party game poster"
@@ -41,3 +75,7 @@
 	I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 	return TRUE
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/master
+>>>>>>> master

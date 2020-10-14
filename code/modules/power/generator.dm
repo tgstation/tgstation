@@ -85,7 +85,7 @@
 
 		update_icon()
 
-	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
+	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
 		update_icon()

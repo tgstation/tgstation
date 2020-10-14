@@ -92,6 +92,65 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
+<<<<<<< HEAD
+=======
+
+
+/mob/living/simple_animal/hostile/space_dragon/Life(mapload)
+	. = ..()
+	tiredness = max(tiredness - 1, 0)
+	for(var/mob/living/consumed_mob in src)
+		if(consumed_mob.stat == DEAD)
+			continue
+		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
+		consumed_mob.forceMove(loc)
+		consumed_mob.Paralyze(50)
+	if(rifts_charged == 3 && !objective_complete)
+		victory()
+	if(riftTimer == -1)
+		return
+	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)
+	if(riftTimer == (maxRiftTimer - 60))
+		to_chat(src, "<span class='boldwarning'>You have a minute left to summon the rift!  Get to it!</span>")
+		return
+	if(riftTimer == maxRiftTimer)
+		to_chat(src, "<span class='boldwarning'>You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!</span>")
+		destroy_rifts()
+		QDEL_NULL(src)
+
+/mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
+	if(using_special)
+		return
+	if(target == src)
+		to_chat(src, "<span class='warning'>You almost bite yourself, but then decide against it.</span>")
+		return
+	if(istype(target, /turf/closed/wall))
+		var/turf/closed/wall/thewall = target
+		to_chat(src, "<span class='warning'>You begin tearing through the wall...</span>")
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		var/timetotear = 40
+		if(istype(target, /turf/closed/wall/r_wall))
+			timetotear = 120
+		if(do_after(src, timetotear, target = thewall))
+			if(istype(thewall, /turf/open))
+				return
+			thewall.dismantle_wall(1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		return
+	if(isliving(target)) //Swallows corpses like a snake to regain health.
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			to_chat(src, "<span class='warning'>You begin to swallow [L] whole...</span>")
+			if(do_after(src, 30, target = L))
+				if(eat(L))
+					adjustHealth(-L.maxHealth * 0.5)
+			return
+	. = ..()
+	if(istype(target, /obj/vehicle/sealed/mecha))
+		var/obj/vehicle/sealed/mecha/M = target
+		M.take_damage(50, BRUTE, MELEE, 1)
+>>>>>>> master
 
 /mob/living/simple_animal/hostile/space_dragon/Move()
 	if(!using_special)

@@ -857,7 +857,7 @@
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(pilot_mob && pilot_mob.Adjacent(src))
+	if(pilot_mob?.Adjacent(src))
 		if(occupants)
 			return
 		LAZYADD(occupants, src)

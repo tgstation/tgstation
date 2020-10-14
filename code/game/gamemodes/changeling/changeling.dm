@@ -110,6 +110,12 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	user.update_body()
 	user.domutcheck()
 
+	// get rid of any scars from previous changeling-ing
+	for(var/i in user.all_scars)
+		var/datum/scar/iter_scar = i
+		if(iter_scar.fake)
+			qdel(iter_scar)
+
 	// Do skillchip code after DNA code.
 	// There's a mutation that increases max chip complexity available, even though we force-implant skillchips.
 
@@ -172,5 +178,10 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
+
+	for(var/stored_scar_line in chosen_prof.stored_scars)
+		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
+		if(attempted_fake_scar)
+			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()

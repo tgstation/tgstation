@@ -90,6 +90,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
