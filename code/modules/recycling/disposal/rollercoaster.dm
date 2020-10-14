@@ -37,6 +37,7 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
+	movement_type = FLYING
 	var/front_coaster = FALSE
 	var/list/previous_coasters = list()
 	var/in_progress = FALSE
@@ -54,10 +55,6 @@
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-
-/obj/vehicle/ridden/rollercoaster/has_gravity(turf/T)
-	. = ..()
-	return TRUE
 
 /obj/vehicle/ridden/rollercoaster/driver_move(mob/living/user, direction)
 	if(!in_progress)
