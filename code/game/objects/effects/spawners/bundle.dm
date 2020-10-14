@@ -1,6 +1,6 @@
 /obj/effect/spawner/bundle
 	name = "bundle spawner"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	color = "#00FF00"
 

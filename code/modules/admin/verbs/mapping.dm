@@ -56,7 +56,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
 /obj/effect/debugging/mapfix_marker
 	name = "map fix marker"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "mapfixmarker"
 	desc = "I am a mappers mistake."
 
@@ -312,7 +312,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	qdel(D)
 	//Also add the x
 	for(var/x_number in 1 to 4)
-		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
 /client/proc/debug_z_levels()
