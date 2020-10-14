@@ -501,8 +501,7 @@
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	. = ..()
-	if(possible_destinations == initial(possible_destinations) || override)
-		possible_destinations = "pod_lavaland[idnum]"
+	possible_destinations += ";[port.id]_lavaland"
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
