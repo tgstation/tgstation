@@ -291,11 +291,11 @@
 	if(ishuman(ass))
 		var/mob/living/carbon/human/H = ass
 		var/datum/species/spec = H.dna.species
-		if(spec.assimage)
-			temp_img = spec.assimage
+		if(spec.ass_image)
+			temp_img = spec.ass_image
 		else
 			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 		temp_img = icon('icons/ass/assalien.png')
 	else if(issilicon(ass))
 		temp_img = icon('icons/ass/assmachine.png')

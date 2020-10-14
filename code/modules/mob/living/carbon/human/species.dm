@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/changesource_flags = NONE
 
 	///For custom overrides for species ass images
-	var/icon/assimage
+	var/icon/ass_image
 
 ///////////
 // PROCS //

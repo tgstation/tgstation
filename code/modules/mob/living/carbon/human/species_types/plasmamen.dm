@@ -34,7 +34,7 @@
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
-	assimage = 'icons/ass/assplasma.png'
+	ass_image = 'icons/ass/assplasma.png'
 
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
