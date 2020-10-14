@@ -1,5 +1,5 @@
 
-/obj/effect/rollercoaster_hin
+/obj/effect/rollercoaster_hint
 	name="rollercoaster hint"
 	invisibility = INVISIBILITY_ABSTRACT //nope, can't see this
 	anchored = TRUE
