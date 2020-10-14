@@ -5,6 +5,7 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
+import { formatSiUnit, formatSiBaseTenUnit } from '../format';
 
 export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);
@@ -71,7 +72,7 @@ export const Hypertorus = (props, context) => {
                   value={energy_level}
                   minValue={-1e40}
                   maxValue={1e40}>
-                  {toFixed(energy_level)+ ' K'}
+                  {formatSiUnit(energy_level, 1, 'J')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Core Temperature">
@@ -79,7 +80,7 @@ export const Hypertorus = (props, context) => {
                   value={core_temperature}
                   minValue={-1e40}
                   maxValue={1e30}>
-                  {toFixed(core_temperature)+ ' K'}
+                  {formatSiBaseTenUnit(core_temperature, 1, 'K')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Internal Power">
@@ -87,7 +88,7 @@ export const Hypertorus = (props, context) => {
                   value={internal_power}
                   minValue={-1e40}
                   maxValue={1e30}>
-                  {toFixed(internal_power)+ ' J'}
+                  {formatSiUnit(internal_power, 1, 'J')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Power Output">
@@ -95,7 +96,7 @@ export const Hypertorus = (props, context) => {
                   value={power_output}
                   minValue={-1e40}
                   maxValue={1e30}>
-                  {toFixed(power_output)+ ' J'}
+                  {formatSiUnit(power_output, 1, 'J')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Heat Limiter Modifier">
@@ -103,7 +104,7 @@ export const Hypertorus = (props, context) => {
                   value={heat_limiter_modifier}
                   minValue={-1e40}
                   maxValue={1e30}>
-                  {toFixed(heat_limiter_modifier)+ ' K'}
+                  {formatSiBaseTenUnit(heat_limiter_modifier, 1, 'K')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Heat Output">
@@ -111,7 +112,7 @@ export const Hypertorus = (props, context) => {
                   value={heat_output}
                   minValue={-1e40}
                   maxValue={1e30}>
-                  {toFixed(heat_output)+ ' K'}
+                  {formatSiBaseTenUnit(heat_output, 1, 'K')}
                 </ProgressBar>
               </LabeledList.Item>
               <LabeledList.Item label="Heating Conductor">
