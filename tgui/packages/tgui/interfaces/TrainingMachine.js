@@ -4,14 +4,6 @@ import { Window } from '../layouts';
 
 export const TrainingMachine = (props, context) => {
   const { act, data } = useBackend(context);
-  const [
-    speed,
-    setSpeed,
-  ] = useLocalState(context, 'speed', 1);
-  const [
-    range,
-    setRange,
-  ] = useLocalState(context, 'range', 1);
   return (
     <Window
       width={230}
@@ -26,13 +18,10 @@ export const TrainingMachine = (props, context) => {
                 size={1.2}
                 step={.5}
                 stepPixelSize={10}
-                value={speed}
+                value={data.movespeed}
                 minValue={1}
                 maxValue={10}
-                onDrag={(e, value) => {
-                  act("movespeed", { movespeed: value });
-                  setSpeed(value);
-                }} />
+                onDrag={(e, value) => act("movespeed", { movespeed: value })} />
             </LabeledControls.Item>
             <LabeledControls.Item label="Range">
               <Knob
@@ -40,13 +29,10 @@ export const TrainingMachine = (props, context) => {
                 size={1.2}
                 step={1}
                 stepPixelSize={51}
-                value={range}
+                value={data.range}
                 minValue={1}
                 maxValue={7}
-                onDrag={(e, value) => {
-                  act("range", { range: value });
-                  setRange(value);
-                }} />
+                onDrag={(e, value) => act("range", { range: value })} />
             </LabeledControls.Item>
             <Flex.Item>
               <Divider vertical />

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
 	density = FALSE
-	vis_flags = VIS_INHERIT_ID
+	vis_flags = VIS_INHERIT_ID | VIS_UNDERLAY
 	var/hp = 1800
 	//Lazylist to keep track of bullet-hole overlays
 	var/list/bullethole_overlays

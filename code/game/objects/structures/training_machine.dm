@@ -67,6 +67,9 @@
 /obj/structure/training_machine/ui_act(action, params)
 	if(..())
 		return
+	if (moving && obj_flags & EMAGGED)
+		visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
+		return
 	switch(action)
 		if("toggle")
 			toggle()
@@ -114,9 +117,6 @@
 
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
-		if (obj_flags & EMAGGED)
-			visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
-			return
 		moving = FALSE
 	else
 		start_moving()
@@ -165,8 +165,12 @@
 /obj/structure/training_machine/proc/try_attack()
 	if (world.time < last_attack_time + attack_cooldown)
 		return
-	var/mob/living/carbon/target = locate() in oview(1, src) //Find adjacent target
-	if (target?.stat != CONSCIOUS || !target.Adjacent(src))
+	var/list/targets
+	for(var/mob/living/carbon/target in oview(1, get_turf(src)) //Find adjacent target
+		if (target.stat != CONSCIOUS && target.Adjacent(src))
+			LAZYADD(targets, target)
+	var/mob/living/carbon/target = pick(targets)
+	if (!target)
 		return
 	do_attack_animation(target, null, secret_evil_toolbox)
 	target.apply_damage(secret_evil_toolbox.force, BRUTE, BODY_ZONE_CHEST)
