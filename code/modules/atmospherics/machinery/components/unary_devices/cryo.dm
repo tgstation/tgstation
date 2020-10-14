@@ -11,6 +11,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
+	/// The current occupant being presented
 	var/mob/living/occupant
 
 /atom/movable/visual/cryo_occupant/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/parent)
@@ -22,6 +23,7 @@
 	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
+/// COMSIG_MACHINERY_SET_OCCUPANT callback
 /atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
 	SIGNAL_HANDLER
 
@@ -42,6 +44,7 @@
 	occupant.set_body_position(STANDING_UP)
 	occupant.set_lying_angle(0)
 
+/// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
 	SIGNAL_HANDLER
 
