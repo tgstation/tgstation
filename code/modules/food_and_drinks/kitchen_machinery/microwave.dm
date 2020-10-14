@@ -7,7 +7,7 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	max_integrity = 9999 // normal is 200
+	max_integrity = 200 // normal is 200
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100

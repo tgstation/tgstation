@@ -139,6 +139,8 @@
 	icon_state = "tree"
 	desc = "It's seriously hampering your view of the festivities."
 	icon = 'icons/obj/flora/falljungletrees.dmi'
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	pixel_x = -48
 	pixel_y = -20
 
