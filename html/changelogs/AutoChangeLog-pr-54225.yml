@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "Adds a camera viewing app, SecurEye, available for download on laptops and modular consoles to those that have security access."
+  - tweak: "Camera console UIs (including for SecurEye) now have the search field locked on screen, rather than scrolling up with the camera list."
