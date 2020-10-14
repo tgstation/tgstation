@@ -40,9 +40,9 @@
 	var/last_attack_time = 0
 
 /obj/structure/training_machine/Destroy()
-	. = ..()
-	QDEL_NULL(attached_item)
-	playsound(src, "explosion", 80, TRUE)
+	remove_attached_item(throwing = TRUE)
+	explosion(src, 0,0,1, flame_range = 2)
+	return ..()
 
 /obj/structure/training_machine/ui_state(mob/user)
 	return GLOB.physical_state
@@ -115,7 +115,8 @@
 		user.put_in_hands(attached_item)
 	else
 		attached_item.forceMove(drop_location())
-	if (throwing) //Fun little thing where we throw out the old attached item when emagged
+	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged
+		//We do a QDELETED check here because we don't want to throw the syndi toolbox, if it exists
 		var/destination = get_edge_target_turf(get_turf(src), pick(GLOB.alldirs))
 		attached_item.throw_at(destination, 4, 1)
 	attached_item = null
@@ -242,7 +243,7 @@
   */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
-	desc = "AURUMILL-Brand Baby's first training toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
+	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
 	icon_state = "his_grace_ascended"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
