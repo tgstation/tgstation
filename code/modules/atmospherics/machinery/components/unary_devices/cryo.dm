@@ -22,7 +22,7 @@
 	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
-/atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/L)
+/atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
 	SIGNAL_HANDLER
 
 	if(occupant)
@@ -30,11 +30,11 @@
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 		if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
 			occupant.set_lying_down()
-	if(!L || !istype(L))
-		occupant = null
+
+	occupant = new_occupant
+	if(!occupant)
 		return
 
-	occupant = L
 	occupant.setDir(SOUTH)
 	vis_contents += occupant
 	pixel_y = 22
@@ -200,10 +200,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
 	if(on == new_value)
 		return
+	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
 	. = on
 	on = new_value
 	update_icon()
-	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
