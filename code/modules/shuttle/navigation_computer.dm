@@ -108,7 +108,6 @@
 
 		user.client.images += to_add
 		user.client.view_size.setTo(view_range)
-		the_eye.forceMove(locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z))
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
