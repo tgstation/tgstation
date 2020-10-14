@@ -516,26 +516,30 @@ const PageMain = (props, context) => {
         && sectors.length > 0
         && (
           <Section title="Allied Sectors">
-            <Flex>
+            <Flex
+              direction="column">
               {
                 sectors.map(sectorName => (
-                  <Button
-                    content={
-                      `Send a message to station in ${sectorName} sector`
-                    }
-                    disabled={!importantActionReady}
-                    key={sectorName}
-                    onClick={() => setMessagingSector(sectorName)}
-                  />
+                  <Flex.Item key={sectorName}>
+                    <Button
+                      content={
+                        `Send a message to station in ${sectorName} sector`
+                      }
+                      disabled={!importantActionReady}
+                      onClick={() => setMessagingSector(sectorName)}
+                    />
+                  </Flex.Item>
                 ))
               }
 
               {sectors.length > 2 && (
-                <Button
-                  content="Send a message to all allied stations"
-                  disabled={!importantActionReady}
-                  onClick={() => setMessagingSector("all")}
-                />
+                <Flex.Item>
+                  <Button
+                    content="Send a message to all allied stations"
+                    disabled={!importantActionReady}
+                    onClick={() => setMessagingSector("all")}
+                  />
+                </Flex.Item>
               )}
             </Flex>
           </Section>
