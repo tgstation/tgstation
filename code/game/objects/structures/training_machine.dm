@@ -105,11 +105,12 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
-	if (pinned_target)
-		remove_target(user)
-		handle_density()
-		to_chat(user, "<span class='notice'>You remove the target from the seat.</span>")
-		playsound(src, "rustle", 50, TRUE)
+	if (!pinned_target)
+		return
+	remove_target(user)
+	handle_density()
+	to_chat(user, "<span class='notice'>You remove the target from the seat.</span>")
+	playsound(src, "rustle", 50, TRUE)
 
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
