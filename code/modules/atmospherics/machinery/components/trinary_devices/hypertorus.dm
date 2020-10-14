@@ -376,7 +376,7 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_plasma, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	///Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = internal_fusion.temperature
+	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
