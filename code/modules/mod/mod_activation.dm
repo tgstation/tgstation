@@ -52,10 +52,10 @@
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	if(wearer.transferItemToLoc(piece, src, TRUE))
-		if(gauntlets.overslot)
+		if(piece == gauntlets && gauntlets.overslot)
 			wearer.equip_to_slot_if_possible(gauntlets.overslot,gauntlets.overslot.slot_flags,0,0,1)
 			gauntlets.overslot = null
-		if(boots.overslot)
+		if(piece == boots && boots.overslot)
 			wearer.equip_to_slot_if_possible(boots.overslot,boots.overslot.slot_flags,0,0,1)
 			boots.overslot = null
 	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
@@ -104,6 +104,7 @@
 		chestplate.worn_icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		if(active)
 			chestplate.clothing_flags &= ~chestplate.visor_flags
+			chestplate.flags_inv &= ~chestplate.visor_flags_inv
 		else
 			chestplate.clothing_flags |= chestplate.visor_flags
 		wearer.update_inv_wear_suit()
