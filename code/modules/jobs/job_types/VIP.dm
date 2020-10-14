@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 200
 	spawn_positions = 200
-	supervisors = "the gods"
+	supervisors = "<span class='danger'>the Gods</span>"
 	selection_color = "#ffd700"
 
 	outfit = /datum/outfit/job/vip
