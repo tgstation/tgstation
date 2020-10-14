@@ -173,6 +173,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
+	///For custom overrides for species ass images
+	var/icon/ass_image
+
 ///////////
 // PROCS //
 ///////////
