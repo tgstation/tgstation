@@ -1,0 +1,365 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks{
+	icon_state = "soda_dispenser";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"b" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"c" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"d" = (
+/turf/open/floor/plasteel/dark,
+/area/space)
+"e" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"f" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"g" = (
+/obj/structure/chair/wood,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"h" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"i" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/space)
+"j" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/space)
+"k" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/space)
+"l" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"m" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/dress/sundress,
+/obj/item/clothing/under/suit/waiter,
+/obj/item/clothing/under/dress/blacktango,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"n" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"o" = (
+/obj/structure/table/wood/fancy,
+/obj/item/gun/ballistic/revolver/russian{
+	pixel_y = 16
+	},
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/space)
+"p" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/small,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"q" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"r" = (
+/obj/item/clothing/shoes/sandal,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"s" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"t" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/plasteel/dark,
+/area/space)
+"u" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"v" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/kitchen/fork,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/space)
+"w" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/plasteel/dark,
+/area/space)
+
+(1,1,1) = {"
+d
+c
+d
+c
+d
+c
+d
+c
+"}
+(2,1,1) = {"
+c
+d
+c
+d
+c
+r
+c
+d
+"}
+(3,1,1) = {"
+d
+c
+d
+g
+m
+q
+d
+c
+"}
+(4,1,1) = {"
+c
+d
+c
+d
+c
+d
+c
+s
+"}
+(5,1,1) = {"
+a
+w
+d
+c
+i
+i
+d
+v
+"}
+(6,1,1) = {"
+c
+h
+e
+d
+j
+o
+c
+u
+"}
+(7,1,1) = {"
+d
+l
+f
+c
+k
+k
+d
+c
+"}
+(8,1,1) = {"
+c
+n
+e
+d
+c
+d
+c
+d
+"}
+(9,1,1) = {"
+d
+p
+f
+c
+i
+i
+d
+c
+"}
+(10,1,1) = {"
+c
+t
+e
+d
+j
+o
+c
+s
+"}
+(11,1,1) = {"
+b
+w
+d
+c
+k
+k
+d
+v
+"}
+(12,1,1) = {"
+c
+d
+c
+d
+c
+d
+c
+u
+"}
+(13,1,1) = {"
+d
+c
+d
+g
+m
+q
+d
+c
+"}
+(14,1,1) = {"
+c
+d
+c
+d
+c
+r
+c
+d
+"}
+(15,1,1) = {"
+d
+c
+d
+c
+d
+c
+d
+c
+"}

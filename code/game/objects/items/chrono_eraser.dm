@@ -111,7 +111,7 @@
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
 			var/mob/living/user = loc
-			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
+			if(currentpos == startpos && isliving(user) && user.body_position == STANDING_UP && !HAS_TRAIT(user, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
 				return TRUE
 		field_disconnect(F)
 		return FALSE

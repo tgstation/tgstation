@@ -101,6 +101,7 @@
 /turf/open/floor/astroturf
 	name = "astroturf patch"
 	desc = "This is definitely a cheap plastic imitation."
+	icon = 'icons/misc/back_to_the_lab_again.dmi'
 	icon_state = "old_grass"
 	floor_tile = /obj/item/stack/tile/astroturf
 	broken_states = list("sand")
@@ -134,9 +135,8 @@
 	icon_state = "snow"
 	broken_states = list("snow_dug")
 	ore_type = /obj/item/stack/sheet/mineral/snow
-	planetary_atmos = TRUE
+	planetary_atmos = FALSE
 	floor_tile = null
-	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND

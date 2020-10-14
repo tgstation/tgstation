@@ -222,6 +222,14 @@
 	throwforce = 15
 	custom_materials = null
 
+/obj/item/kitchen/knife/combat/bone/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps into pieces.</span>")
+		if(Master.current_runlevel) // If the game hasn't loaded yet, don't display this message
+			message_admins("A bone dagger was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -269,6 +277,7 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = 200
+	tool_behaviour = TOOL_ROLLINGPIN
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

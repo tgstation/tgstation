@@ -183,6 +183,7 @@
 
 /obj/effect/turf_decal/mining
 	icon_state = "mining"
+	layer = 3
 
 /obj/effect/turf_decal/mining/survival
 	icon_state = "survival"

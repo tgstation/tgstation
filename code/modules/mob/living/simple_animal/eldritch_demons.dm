@@ -59,7 +59,6 @@
 	maxHealth = 50
 	health = 50
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch)
 
 	var/list/linked_mobs = list()
 
@@ -98,7 +97,7 @@
 	action.Remove(mob_linked)
 	qdel(action)
 	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
-	mob_linked.emote("Scream")
+	INVOKE_ASYNC(mob_linked, /mob.proc/emote, "scream")
 	//micro stun
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
 	linked_mobs -= mob_linked
@@ -328,7 +327,6 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
     . = ..()
@@ -363,7 +361,6 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/pointed/cleave,/obj/effect/proc_holder/spell/targeted/fire_sworn)
 
 /mob/living/simple_animal/hostile/eldritch/stalker
 	name = "Flesh Stalker"
@@ -377,4 +374,3 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_MOBS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch,/obj/effect/proc_holder/spell/targeted/emplosion/eldritch)

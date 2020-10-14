@@ -5,6 +5,8 @@
 	desc = "Fluffier than a sheep. This shouldn't exist."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "minibar"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
@@ -298,9 +300,11 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+// ------------------- SIGNS
+
 /obj/structure/fluff/books_sign
 	name = "crude sign"
-	desc = "A crudely-made sign with the words 'books' written."
+	desc = "A crudely-made sign with the words 'books' written. What could it mean?"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "books"
 	max_integrity = 9999
@@ -311,7 +315,7 @@
 
 /obj/structure/fluff/hop_sign
 	name = "crude sign"
-	desc = "A crudely-made sign with the the symbol of a HoP's hat drawn."
+	desc = "A crudely-made sign with the the symbol of a HoP's hat drawn. Paperwork at a place meant for fun? Sounds even more fun!"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "paperwork"
 	max_integrity = 9999
@@ -375,9 +379,20 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/yeah_go_heck_yourself
+	name = "very important disclaimer"
+	desc = "The sign is telling you that, in an objectively truthful way, this is not canon. Lizards are now also kinda dumb for this one."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "inept_no_stop"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/spaghetti_sign
 	name = "crude sign"
-	desc = "A crudely-made sign with three letters standing for Do It Yourself. Well, go on!"
+	desc = "A crudely-made sign with a chef hat drawn onto it. Hope they brought lots of spaghetti!"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "foodghetti"
 	max_integrity = 9999
@@ -396,6 +411,41 @@
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/donuts_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with a donut symbol drawn onto it. Try not to eat too much!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "donuts"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/pastry_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with a pie symbol drawn onto it. Hope you had dinner first!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "pastry_goods"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/offtopic_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with a small popsicle drawn onto it. It doesn't seem to fit the stand at all, besides the color, however surely NO ONE would notice..."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "ice_cream"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+// -------------------
 
 /obj/structure/fluff/headstone
 	name = "headstone"
@@ -563,6 +613,99 @@
 	max_integrity = 9999
 	layer = 2.54
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/blue
+	name = "Blutopia Flag"
+	desc = "A banner with the logo of the color blue. Team-related violence has never been the same since this flag was made."
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner-blue"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/red
+	name = "Redemoracy Flag"
+	desc = "A banner with the logo of the color red. Team-related violence has never been the same since this flag was made."
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner-red"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/stop1
+	name = "Holobarrier Sign"
+	desc = "What do you mean we can't go on the really cool ferris wheel?!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign_sec"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/stop2
+	name = "Holobarrier Sign"
+	desc = "What do you mean we can't go on the really cool ferris wheel?!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign_engi"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/body1
+	name = "Body Outline"
+	desc = "Someone must've died. Did the ferris wheel do it? Murderers always return to the scene of the crime!"
+	icon = 'icons/effects/crayondecal.dmi'
+	icon_state = "body"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy1 // Ashe
+	name = "Bust of The Rat"
+	desc = "A bust that resembles the head of a rat. Don't worry, it won't chomp down on you!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "rat_bust"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/ferriswheel
+	name = "Old Swaying Relaxation Spinner" // i didn't come up with this name for nothing, tattlemothe.
+	desc = "You'd be surprised to learn that the most expensive thing for this year's Toolbox Tournament isn't the tents, the arena technology, the announcers' paychecks, or even the golden gate south of us. The most expensive thing is actually straight from Earth/Terra itself: The O.S.R.S. It's a highly advanc- Oh, for fucksake, it's just a ferris wheel. Hop in alre... Wait, we can't. Well, reading this was a waste of time."
+	icon = 'icons/misc/ferris1d.dmi'
+	icon_state = "ferris"
+	pixel_x = -64 //So the big ol' 160x160 sprite shows up right
+	max_integrity = 9999
+	layer = 4
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/eldritchbig
+	name = "Transmutation rune" // this is but a tribute!
+	desc = "Yeah, I guess that looks eldritch."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "eldritch_rune1"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	layer = 2.54
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
 	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE

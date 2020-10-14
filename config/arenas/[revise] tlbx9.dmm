@@ -1,0 +1,194 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/tdome/arena)
+"b" = (
+/turf/open/floor/mineral/titanium,
+/area/tdome/arena)
+"c" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/tdome/arena)
+"d" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/tdome/arena)
+"e" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"f" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/tdome/arena)
+"g" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium,
+/area/tdome/arena)
+"h" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/tdome/arena)
+"i" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(4,1,1) = {"
+b
+b
+d
+f
+c
+b
+d
+b
+"}
+(5,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(6,1,1) = {"
+b
+b
+d
+g
+c
+b
+d
+b
+"}
+(7,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(8,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+"}
+(9,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(10,1,1) = {"
+c
+b
+d
+h
+c
+b
+d
+b
+"}
+(11,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(12,1,1) = {"
+b
+b
+d
+i
+c
+b
+d
+b
+"}
+(13,1,1) = {"
+c
+b
+d
+e
+c
+b
+d
+b
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(15,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+"}

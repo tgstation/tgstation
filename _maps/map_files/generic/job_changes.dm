@@ -45,6 +45,7 @@ MAP_REMOVE_JOB(roboticist)
 MAP_REMOVE_JOB(hos) //job_types/security.dm
 MAP_REMOVE_JOB(warden)
 MAP_REMOVE_JOB(detective)
+MAP_REMOVE_JOB(officer)
 MAP_REMOVE_JOB(ai) //job_types/si
 MAP_REMOVE_JOB(prisoner)
 MAP_REMOVE_JOB(psychologist)

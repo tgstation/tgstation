@@ -420,6 +420,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Cafeteria"
 	icon_state = "cafeteria"
 
+/area/crew_quarters/tele1
+	name = "Petting Zoo"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele2
+	name = "Rollercoaster Ride"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele3
+	name = "BEHOLD: THE THUNDERTENT!!"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele4
+	name = "Memorial Cemetery"
+	icon_state = "cafeteria"
+
+/area/crew_quarters/tele5
+	name = "Corn Maze"
+	icon_state = "cafeteria"
+
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
@@ -430,10 +450,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "kitchen_cold"
 
 /area/crew_quarters/bar
-	name = "Bar"
+	name = "Thundertent"
 	icon_state = "bar"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
+	mood_message = "<span class='nicegreen'>I can't wait to witness some 3v3 fighting!\n</span>"
+	airlock_wires = /datum/wires/airlock/service
+
+/area/crew_quarters/bar/announcerroom
+	name = "Thundertent Announcer Room"
+	icon_state = "DJ"
+	mood_bonus = 10
+	mood_message = "<span class='nicegreen'>Let's get ready to rumble!\n</span>"
+	airlock_wires = /datum/wires/airlock/service
+
+/area/crew_quarters/bar/vip
+	name = "Thundertent V.I.P."
+	icon_state = "centcom"
+	mood_bonus = 10
+	mood_message = "<span class='nicegreen'>Woohoo! Front row seats!\n</span>"
 	airlock_wires = /datum/wires/airlock/service
 
 /area/crew_quarters/bar/atrium
@@ -454,10 +488,63 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "theatre"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/crew_quarters/theatre/abandoned
 	name = "Abandoned Theatre"
 	icon_state = "abandoned_theatre"
+
+// ----------- PETTING ZOO
+
+/area/crew_quarters/theatre/zoo_walt // objectively the best one.
+	name = "Walter Pen"
+	icon_state = "abandoned_theatre"
+
+/area/crew_quarters/theatre/zoo_jungle
+	name = "Jungle Pen"
+	icon_state = "spacecontent1"
+
+/area/crew_quarters/theatre/zoo_heretic
+	name = "Heretic Pen"
+	icon_state = "spacecontent2"
+
+/area/crew_quarters/theatre/zoo_vat
+	name = "Vat Pen"
+	icon_state = "spacecontent3"
+
+/area/crew_quarters/theatre/zoo_spess
+	name = "Spessman Pen"
+	icon_state = "spacecontent4"
+
+/area/crew_quarters/theatre/zoo_stick
+	name = "Stick Dog Pen"
+	icon_state = "spacecontent5"
+
+/area/crew_quarters/theatre/zoo_dragon
+	name = "Stick Dog Pen"
+	icon_state = "spacecontent6"
+
+/area/crew_quarters/theatre/zoo_reptile
+	name = "Reptile Pen"
+	icon_state = "spacecontent7"
+
+/area/crew_quarters/theatre/zoo_cow
+	name = "Cow Pen"
+	icon_state = "spacecontent8"
+
+/area/crew_quarters/theatre/zoo_gondola
+	name = "Gondola Pen"
+	icon_state = "spacecontent9"
+
+/area/crew_quarters/theatre/zoo_penguin
+	name = "Penguin Pen"
+	icon_state = "spacecontent10"
+
+/area/crew_quarters/theatre/zoo_chicken
+	name = "Chicken Pen"
+	icon_state = "spacecontent11"
+
+// -----------
 
 /area/library
 	name = "Library"
@@ -767,6 +854,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue/hauntedhouse
 	name = "Haunted Manor"
 	icon_state = "hauntedmorgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+
+/area/medical/morgue/hauntedhouse/Entered(atom/movable/M) // NOT WORKING FOR SOME REASON.
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/doomed = M
+		var/list/not_bones = doomed.GetAllContents()
+		for(var/obj/item/teleportation_scroll/way_out in not_bones)
+			qdel(way_out)
 
 /area/medical/morgue/tele
 	name = "Haunted Manor"
@@ -775,6 +872,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue/field
 	name = "Haunted Woods"
 	icon_state = "morgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -1029,6 +1127,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hydroponics/garden/cornmaze
 	name = "Corn Maze"
 	icon_state = "garden"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/hydroponics/garden/cornmaze/labyrinth
 	name = "Corn Labyrinth"

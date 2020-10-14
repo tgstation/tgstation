@@ -37,7 +37,7 @@
 //These vars are related to how mobs locate and target
 	var/robust_searching = 0 //By default, mobs have a simple searching method, set this to 1 for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
-	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
+	var/aggro_vision_range = 0 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
@@ -348,7 +348,7 @@
 	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
-	vision_range = aggro_vision_range
+	vision_range = 0
 	if(target && emote_taunt.len && prob(taunt_chance))
 		manual_emote("[pick(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
@@ -596,8 +596,8 @@
 /**
   * Proc that handles a charge attack windup for a mob.
   */
-/mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
+/mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
+	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return FALSE
 
 	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
@@ -608,7 +608,7 @@
 /**
   * Proc that throws the mob at the target after the windup.
   */
-/mob/living/simple_animal/hostile/proc/handle_charge_target(var/atom/target)
+/mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)
@@ -639,14 +639,12 @@
 				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 				L.Knockdown(knockdown_time)
 			else
-				Stun((knockdown_time * 2), 1, 1)
+				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
-			Stun((knockdown_time * 2), 1, 1)
+			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 
 		if(charge_state)
 			charge_state = FALSE
 			update_icons()
-			update_mobility()
-

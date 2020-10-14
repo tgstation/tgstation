@@ -1,0 +1,583 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"b" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"c" = (
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"d" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/caution{
+	icon_state = "caution";
+	dir = 8
+	},
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"m" = (
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"n" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"o" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"p" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"s" = (
+/obj/effect/turf_decal/caution{
+	icon_state = "caution";
+	dir = 4
+	},
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"t" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"u" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"v" = (
+/obj/machinery/power/supermatter_crystal/shard/engine,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"w" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"x" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"y" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"z" = (
+/obj/machinery/power/supermatter_crystal/shard/engine,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"A" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+"B" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"C" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"D" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"E" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"F" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"G" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"H" = (
+/obj/effect/turf_decal/box/white/corners{
+	icon_state = "box_corners_white";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"I" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"J" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"K" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"L" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"M" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"N" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"O" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"P" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"Q" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"R" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"S" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"T" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"U" = (
+/obj/effect/turf_decal/caution{
+	icon_state = "caution";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"V" = (
+/obj/effect/turf_decal/caution{
+	icon_state = "caution";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+"W" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"X" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/turf/open/floor/plasteel/bluespace,
+/area/tdome/arena)
+"Y" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/bluespace,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+g
+R
+c
+R
+c
+K
+M
+"}
+(2,1,1) = {"
+b
+c
+U
+i
+U
+i
+c
+N
+"}
+(3,1,1) = {"
+R
+c
+j
+t
+C
+D
+c
+R
+"}
+(4,1,1) = {"
+R
+c
+k
+u
+u
+E
+T
+Y
+"}
+(5,1,1) = {"
+d
+c
+k
+v
+v
+F
+c
+O
+"}
+(6,1,1) = {"
+R
+c
+l
+w
+w
+G
+c
+R
+"}
+(7,1,1) = {"
+R
+c
+m
+m
+m
+W
+c
+R
+"}
+(8,1,1) = {"
+d
+c
+n
+x
+n
+X
+c
+O
+"}
+(9,1,1) = {"
+R
+c
+m
+m
+m
+W
+c
+R
+"}
+(10,1,1) = {"
+R
+c
+o
+y
+y
+H
+c
+R
+"}
+(11,1,1) = {"
+S
+T
+p
+z
+z
+F
+c
+O
+"}
+(12,1,1) = {"
+R
+c
+q
+A
+A
+I
+T
+Y
+"}
+(13,1,1) = {"
+R
+c
+r
+B
+w
+J
+c
+R
+"}
+(14,1,1) = {"
+e
+c
+s
+V
+s
+s
+c
+P
+"}
+(15,1,1) = {"
+f
+h
+c
+R
+c
+c
+L
+Q
+"}
