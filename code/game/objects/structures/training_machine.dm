@@ -32,7 +32,7 @@
 	var/turf/starting_turf
 	///How fast the machine moves. Cannot be higher than MAX_SPEED
 	var/move_speed = 1
-	///Reference to a potentially attached object
+	///Reference to a potentially attached object, either a target, trainer toolbox, or syndicate toolbox
 	var/obj/item/attached_item
 	///Time between attacks when emagged
 	var/attack_cooldown = 50
@@ -41,8 +41,8 @@
 
 /obj/structure/training_machine/Destroy()
 	. = ..()
-	remove_attached_item()
-	explosion(src, 0, 0, 1)
+	QDEL_NULL(attached_item)
+	playsound(src, "explosion", 80, TRUE)
 
 /obj/structure/training_machine/ui_state(mob/user)
 	return GLOB.physical_state
@@ -84,12 +84,17 @@
 
 /obj/structure/training_machine/attackby(obj/item/target, mob/user)
 	. = ..()
+	if (user.a_intent == INTENT_HARM)
+		return
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return
 	if (length(buckled_mobs))
 		return
+	if (obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
+		return
 	attach_item(target)
-	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the seat.</span>")
+	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the training device.</span>")
 	playsound(src, "rustle", 50, TRUE)
 
 /obj/structure/training_machine/proc/attach_item(target)
@@ -100,7 +105,7 @@
 	vis_contents += attached_item
 	handle_density()
 
-/obj/structure/training_machine/proc/remove_attached_item(mob/user)
+/obj/structure/training_machine/proc/remove_attached_item(mob/user, throwing = FALSE)
 	if (!attached_item)
 		return
 	vis_contents.Cut()
@@ -109,7 +114,10 @@
 	else if (user)
 		user.put_in_hands(attached_item)
 	else
-		attached_item.forceMove(drop_location())
+		attached_item.forceMove(get_turf(src))
+	if (throwing) //Fun little thing where we throw out the old attached item when emagged
+		var/destination = get_edge_target_turf(get_turf(src), pick(GLOB.alldirs))
+		attached_item.throw_at(destination, 4, 1)
 	attached_item = null
 	handle_density()
 
@@ -120,8 +128,8 @@
 	if (obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
 		return
+	to_chat(user, "<span class='notice'>You remove \the [attached_item] from the training device.</span>")
 	remove_attached_item(user)
-	to_chat(user, "<span class='notice'>You remove \the [attached_item] from the seat.</span>")
 	playsound(src, "rustle", 50, TRUE)
 
 /obj/structure/training_machine/proc/toggle()
@@ -157,8 +165,7 @@
 	var/turf/nextStep = get_step_towards(src, target_position)
 	if (!Move(nextStep, get_dir(src, nextStep)))
 		target_position = null //We couldn't move towards the target turf, so find a new target turf
-	if (attached_item)
-		try_attack()
+	try_attack()
 	addtimer(CALLBACK(src, .proc/do_movement), max(MAX_SPEED - move_speed, 1)) // We want to ensure this is never <=0
 
 /obj/structure/training_machine/proc/find_target_position()
@@ -172,7 +179,7 @@
 	return pick(turfs)
 
 /obj/structure/training_machine/proc/try_attack()
-	if (istype(attached_item, /obj/item/target))
+	if (!attached_item || istype(attached_item, /obj/item/target))
 		return
 	if (world.time < last_attack_time + attack_cooldown)
 		return
@@ -214,9 +221,11 @@
 	if (obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
 	to_chat(user, "<span class='warning'>You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top.</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	add_overlay("evil_trainer")
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
@@ -253,19 +262,27 @@
 	. = ..()
 	if (!proximity || target == user)
 		return
+	if (check_hit(target))
+		user.changeNext_move(CLICK_CD_MELEE)
+
+/obj/item/training_toolbox/proc/check_hit(atom/target)
 	var/target_is_machine = istype(target, /obj/structure/training_machine)
 	if (!ismob(target) && !istype(target, /obj/item/target) && !target_is_machine)
-		return
+		return FALSE
 	if (target_is_machine)
 		var/obj/structure/training_machine/trainer = target
 		if (!trainer.attached_item)
-			return
+			return FALSE
 	total_hits++
 	lap_hits++
-	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
 	if (lap_hits % HITS_TO_KILL == 0)
 		playsound(src,'sound/machines/twobeep.ogg',25,FALSE)
+	return TRUE
+
+/obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	..()
+	check_hit(hit_atom)
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
