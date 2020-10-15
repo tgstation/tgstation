@@ -791,5 +791,5 @@
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	new /obj/effect/temp_visual/voidin(user.drop_location())
 	for(var/mob/living/livies in view(7,user)-user)
-		for(var/i in 0 to 2)
+		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
