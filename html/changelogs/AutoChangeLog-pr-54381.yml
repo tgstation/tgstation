@@ -1,6 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Cyborgs can now interact with the communications console just like the AI."
-  - bugfix: "Silicons are no longer given the option to recall. It didn't work in the first place, but now it gives a clear message."
-  - bugfix: "The allied sectors list now properly goes down, rather than horizontal."
