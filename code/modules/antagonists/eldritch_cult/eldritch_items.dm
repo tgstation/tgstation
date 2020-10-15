@@ -213,7 +213,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(src.loc))
 		return
-	var/mob/living/carbon/carbon_user = src.loc
+	var/mob/living/carbon/carbon_user = loc
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
 		. = ..()
 		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
