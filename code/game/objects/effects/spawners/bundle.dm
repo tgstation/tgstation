@@ -8,7 +8,7 @@
 
 /obj/effect/spawner/bundle/Initialize(mapload)
 	..()
-	if(items && items.len)
+	if(items?.len)
 		for(var/path in items)
 			new path(loc)
 	return INITIALIZE_HINT_QDEL

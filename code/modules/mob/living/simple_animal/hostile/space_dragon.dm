@@ -100,7 +100,7 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
-	
+
 
 /mob/living/simple_animal/hostile/space_dragon/Life(mapload)
 	. = ..()

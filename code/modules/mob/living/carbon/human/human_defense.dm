@@ -49,12 +49,12 @@
 	return covering_part
 
 /mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna && dna.species)
+	if(dna?.species)
 		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
 			return spec_return
@@ -141,7 +141,7 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
 			return spec_return

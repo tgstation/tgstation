@@ -51,7 +51,7 @@
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
 			var/obj/item/fireaxe/F = I
-			if(F && F.wielded)
+			if(F?.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))

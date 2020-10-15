@@ -14,6 +14,7 @@
 	species_language_holder = /datum/language_holder/felinid
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
+	ass_image = 'icons/ass/asscat.png'
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)

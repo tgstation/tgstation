@@ -73,7 +73,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
 

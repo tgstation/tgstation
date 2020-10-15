@@ -68,7 +68,7 @@ All foods are distributed among various categories. Use common sense.
 	return COMSIG_FRYING_HANDLED
 
 /obj/item/reagent_containers/food/snacks/add_initial_reagents()
-	if(tastes && tastes.len)
+	if(tastes?.len)
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
@@ -216,7 +216,7 @@ All foods are distributed among various categories. Use common sense.
 				qdel(A)
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
-	if(bonus_reagents && bonus_reagents.len)
+	if(bonus_reagents?.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)

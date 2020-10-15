@@ -343,7 +343,7 @@
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			var/area/A = get_area(src)
-			if(emergency_mode || (A && A.fire))
+			if(emergency_mode || (A?.fire))
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
@@ -374,7 +374,7 @@
 		if(color)
 			CO = color
 		var/area/A = get_area(src)
-		if (A && A.fire)
+		if (A?.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)
 			BR = nightshift_brightness

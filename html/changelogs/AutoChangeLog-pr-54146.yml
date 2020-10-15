@@ -1,0 +1,9 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "Shuttle hijacking has been completely reworked."
+  - rscadd: "To hijack the shuttle, you must Alt-Click the emergency shuttle console (the one you emag) to begin the hijack process after a timed delay. You must be hijack capable to do this."
+  - rscadd: "Each successful hack attempt (with a time based on antag role and whether or not you have the hijack objective) will push the hijack stage one step, up to 5."
+  - rscadd: "After five successful hack attempts, the shuttle will be redirected."
+  - rscadd: "The antagonists who can hijack include: traitor, blood brothers, wizard, nuke ops, highlanders, wizards, changelings and heretics."
+  - tweak: "Preserves the old hijack as the new 'Elimination' objective. Nobody but highlanders have this, and their version accounts for only their solo hijacking."
