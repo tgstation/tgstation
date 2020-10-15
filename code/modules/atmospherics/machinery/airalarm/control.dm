@@ -2,28 +2,28 @@
 	var/area/area
 
 	var/list/breathable_gas_ranges = list( // Breathable air.
-		AALARM_PRESSURE				= new/datum/gas_range(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min_danger, min_warning, max_warning, max_danger
-		AALARM_TEMPERATURE			= new/datum/gas_range(T0C, T0C+10, T0C+40, T0C+66),
-		/datum/gas/oxygen			= new/datum/gas_range(16, 19, 135, 140), // Partial pressure, kpa
-		/datum/gas/nitrogen			= new/datum/gas_range(-1, -1, 1000, 1000),
-		/datum/gas/carbon_dioxide	= new/datum/gas_range(-1, -1, 5, 10),
-		/datum/gas/miasma			= new/datum/gas_range/(-1, -1, 15, 30),
-		/datum/gas/plasma			= new/datum/gas_range/dangerous,
-		/datum/gas/nitrous_oxide	= new/datum/gas_range/dangerous,
-		/datum/gas/bz				= new/datum/gas_range/dangerous,
-		/datum/gas/hypernoblium		= new/datum/gas_range(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
-		/datum/gas/water_vapor		= new/datum/gas_range/dangerous,
-		/datum/gas/tritium			= new/datum/gas_range/dangerous,
-		/datum/gas/stimulum			= new/datum/gas_range/dangerous,
-		/datum/gas/nitryl			= new/datum/gas_range/dangerous,
-		/datum/gas/pluoxium			= new/datum/gas_range(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
-		/datum/gas/freon			= new/datum/gas_range/dangerous,
-		/datum/gas/hydrogen			= new/datum/gas_range/dangerous,
-		/datum/gas/healium			= new/datum/gas_range/dangerous,
-		/datum/gas/proto_nitrate	= new/datum/gas_range/dangerous,
-		/datum/gas/zauker			= new/datum/gas_range/dangerous,
-		/datum/gas/halon			= new/datum/gas_range/dangerous,
-		/datum/gas/hexane			= new/datum/gas_range/dangerous
+		AALARM_PRESSURE = new /datum/gas_range(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min_danger, min_warning, max_warning, max_danger
+		AALARM_TEMPERATURE = new /datum/gas_range(T0C, T0C+10, T0C+40, T0C+66),
+		/datum/gas/oxygen = new /datum/gas_range(16, 19, 135, 140), // Partial pressure, kpa
+		/datum/gas/nitrogen = new /datum/gas_range(-1, -1, 1000, 1000),
+		/datum/gas/carbon_dioxide = new /datum/gas_range(-1, -1, 5, 10),
+		/datum/gas/miasma = new /datum/gas_range/(-1, -1, 15, 30),
+		/datum/gas/plasma = new /datum/gas_range/dangerous,
+		/datum/gas/nitrous_oxide = new /datum/gas_range/dangerous,
+		/datum/gas/bz = new /datum/gas_range/dangerous,
+		/datum/gas/hypernoblium = new /datum/gas_range(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
+		/datum/gas/water_vapor = new /datum/gas_range/dangerous,
+		/datum/gas/tritium = new /datum/gas_range/dangerous,
+		/datum/gas/stimulum = new /datum/gas_range/dangerous,
+		/datum/gas/nitryl = new /datum/gas_range/dangerous,
+		/datum/gas/pluoxium = new /datum/gas_range(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/freon = new /datum/gas_range/dangerous,
+		/datum/gas/hydrogen = new /datum/gas_range/dangerous,
+		/datum/gas/healium = new /datum/gas_range/dangerous,
+		/datum/gas/proto_nitrate = new /datum/gas_range/dangerous,
+		/datum/gas/zauker = new /datum/gas_range/dangerous,
+		/datum/gas/halon = new /datum/gas_range/dangerous,
+		/datum/gas/hexane = new /datum/gas_range/dangerous,
 	)
 
 	var/list/sensors
