@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving two mobs, the user and the target.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, ignore_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -217,11 +217,11 @@ GLOBAL_LIST_EMPTY(species_list)
 
 		if(
 			QDELETED(user) || QDELETED(target) \
-			|| (!(ignore_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters)) \
-			|| (!(ignore_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
-			|| (!(ignore_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
-			|| (!(ignore_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
-			|| (!(ignore_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
+			|| (!(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters)) \
+			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
+			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
+			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
 			|| (extra_checks && !extra_checks.Invoke()) \
 			)
 			. = FALSE
@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving one mob user. Target is optional.
-/proc/do_after(mob/user, delay, atom/target, ignore_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -291,16 +291,16 @@ GLOBAL_LIST_EMPTY(species_list)
 
 		if(
 			QDELETED(user) \
-			|| (!(ignore_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
-			|| (!(ignore_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
-			|| (!(ignore_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
+			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
+			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
 			|| (extra_checks && !extra_checks.Invoke()) \
 		)
 			. = FALSE
 			break
 
 		if(
-			!(ignore_flags & IGNORE_TARGET_LOC_CHANGE) \
+			!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) \
 			&& !drifting \
 			&& !QDELETED(target_loc) \
 			&& (QDELETED(target) || target_loc != target.loc) \
@@ -309,7 +309,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 
-		if(target && !(ignore_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters))
+		if(target && !(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters))
 			. = FALSE
 			break
 
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving at least one mob user and a list of targets.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, ignore_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
@@ -365,9 +365,9 @@ GLOBAL_LIST_EMPTY(species_list)
 			user_loc = user.loc
 
 		if(
-			!((ignore_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user_loc != user.loc) \
-			|| (!(ignore_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
-			|| (!(ignore_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
+			!((timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user_loc != user.loc) \
+			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
+			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && user.incapacitated()) \
 			|| (extra_checks && !extra_checks.Invoke()) \
 			)
 			. = FALSE
@@ -377,7 +377,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			var/atom/target = t
 			if(
 				(QDELETED(target)) \
-				|| (!(ignore_flags & IGNORE_TARGET_LOC_CHANGE) && originalloc[target] != target.loc) \
+				|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && originalloc[target] != target.loc) \
 				)
 				. = FALSE
 				break

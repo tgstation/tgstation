@@ -77,7 +77,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
-	if(!do_mob(user, src, 12 SECONDS, ignore_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
+	if(!do_mob(user, src, 12 SECONDS, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		return
 	// you are still in the bag? time to go unless you KO'd, honey!
 	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
