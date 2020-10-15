@@ -280,6 +280,14 @@
 /obj/item/clothing/glasses/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/glasses/welding/brand // aiia
+	name = "Nar Nar's Welding Goggles"
+	desc = "It's Nar Nar the Moth's welding goggles! You never see him without these on! Well, I guess NOW you wouldn't. How did these even get in here?"
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_helm2.dmi'
+	icon_state = "welding-g"
+	inhand_icon_state = "welding-g"
+	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
