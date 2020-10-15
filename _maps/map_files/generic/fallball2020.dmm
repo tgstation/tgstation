@@ -7115,7 +7115,12 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/crew_quarters/theatre/zoo_stick)
 "oZ" = (
-/obj/machinery/medical_kiosk,
+/obj/machinery/medical_kiosk{
+	active_price = 0;
+	default_price = 0;
+	fair_market_price = 0;
+	max_integrity = 9999
+	},
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
@@ -129218,7 +129223,7 @@ FH
 FH
 FJ
 jk
-lE
+jk
 qR
 qR
 qR
