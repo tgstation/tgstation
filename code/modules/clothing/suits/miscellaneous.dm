@@ -378,6 +378,14 @@
 	inhand_icon_state = "nerdshirt"
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/armsyshirt
+	name = "armsy shirt"
+	desc = "It says \"I survived the Terror of the Tracks.\" Exclusive Terror of the Tracks merchandise!"
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "armsy_shirt"
+	inhand_icon_state = "armsy_shirt"
+
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
 	name = "Vape Naysh shirt"
 	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"

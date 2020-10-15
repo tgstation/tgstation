@@ -6970,7 +6970,7 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "oF" = (
-/obj/structure/chair/plastic{
+/obj/structure/chair/greyscale{
 	dir = 4
 	},
 /turf/open/floor/oldshuttle,
@@ -6983,7 +6983,7 @@
 /turf/open/floor/pod/light,
 /area/awaymission/cabin/snowforest/forest)
 "oH" = (
-/obj/structure/chair/plastic,
+/obj/structure/chair/greyscale,
 /turf/open/floor/oldshuttle,
 /area/crew_quarters/theatre/zoo_spess)
 "oI" = (
@@ -9074,6 +9074,7 @@
 "sY" = (
 /obj/structure/table/abductor,
 /obj/structure/window/plasma/reinforced,
+/obj/item/toy/plush/armsyplushie,
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "sZ" = (
@@ -9082,6 +9083,7 @@
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
+/obj/item/toy/plush/armsyplushie,
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "ta" = (
@@ -17323,6 +17325,16 @@
 /obj/structure/fluff/stop1,
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"Mk" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+/turf/open/floor/plasteel/cult{
+	icon = 'icons/obj/clockwork_objects.dmi';
+	icon_state = "clockwork_floor"
+	},
+/area/awaymission/cabin/snowforest/forest)
 "Ni" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17334,6 +17346,23 @@
 /obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
+"NB" = (
+/obj/structure/table/abductor,
+/obj/structure/window/plasma/reinforced,
+/obj/item/toy/plush/armsyplushie{
+	icon = 'icons/misc/tourny_items.dmi'
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"NX" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "Ot" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
@@ -17344,6 +17373,158 @@
 	},
 /obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Pi" = (
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest/forest)
+"PC" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"PE" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/white{
+	color = "#15F4EE";
+	desc = "A pool of horrible slime.";
+	icon = 'icons/turf/floors/lava.dmi';
+	icon_state = "unsmooth";
+	name = "horrifying ooze"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Qd" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Sw" = (
+/obj/structure/flora/tree/jungle/fall{
+	alpha = 255;
+	max_integrity = 8888;
+	mouse_opacity = 0;
+	name = "dense tree";
+	opacity = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ta" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/white{
+	color = "#15F4EE";
+	desc = "A pool of horrible slime.";
+	icon = 'icons/turf/floors/lava.dmi';
+	icon_state = "unsmooth";
+	name = "horrifying ooze"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Uc" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest/forest)
+"Uh" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest/forest)
+"UF" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Vl" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/water,
+/area/awaymission/cabin/snowforest/forest)
+"VB" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/white{
+	color = "#15F4EE";
+	desc = "A pool of horrible slime.";
+	icon = 'icons/turf/floors/lava.dmi';
+	icon_state = "unsmooth";
+	name = "horrifying ooze"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Xm" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/white{
+	color = "#15F4EE";
+	desc = "A pool of horrible slime.";
+	icon = 'icons/turf/floors/lava.dmi';
+	icon_state = "unsmooth";
+	name = "horrifying ooze"
+	},
 /area/awaymission/cabin/snowforest/forest)
 "XP" = (
 /obj/structure/disposalpipe/segment{
@@ -51626,7 +51807,7 @@ an
 qX
 an
 an
-an
+PC
 an
 an
 et
@@ -51864,26 +52045,26 @@ rR
 sr
 rR
 sv
-an
-an
-an
-an
-an
+uc
+uc
+uc
+uc
+uc
 ss
 rR
 sS
-sX
-sV
-ar
-ar
-tC
+Uc
+Pi
+Uh
+Uh
+Vl
 tJ
 rj
 rj
 rQ
 an
 an
-an
+PC
 an
 qK
 et
@@ -52140,7 +52321,7 @@ an
 an
 an
 an
-an
+PC
 an
 an
 et
@@ -52397,7 +52578,7 @@ qK
 an
 an
 an
-an
+PC
 an
 an
 et
@@ -52654,7 +52835,7 @@ an
 an
 an
 an
-an
+PC
 an
 an
 et
@@ -54687,7 +54868,7 @@ qZ
 qZ
 rk
 rk
-rk
+Mk
 rl
 rk
 qZ
@@ -54944,7 +55125,7 @@ rk
 rk
 rk
 rk
-rk
+Mk
 rk
 rk
 rl
@@ -55201,7 +55382,7 @@ rk
 rk
 rk
 rk
-rk
+Mk
 rk
 qZ
 qZ
@@ -55458,7 +55639,7 @@ qZ
 qZ
 rl
 rk
-rk
+Mk
 rk
 qZ
 qZ
@@ -59325,7 +59506,7 @@ sD
 rA
 et
 ro
-sY
+NB
 ti
 tr
 tz
@@ -65232,7 +65413,7 @@ an
 an
 sy
 sC
-sH
+Ta
 sC
 sC
 sC
@@ -65489,7 +65670,7 @@ an
 an
 sy
 sC
-sH
+Ta
 sO
 sH
 sC
@@ -65746,7 +65927,7 @@ an
 an
 sy
 sC
-sH
+Ta
 sO
 sH
 sH
@@ -66003,7 +66184,7 @@ an
 an
 sy
 sC
-sH
+Ta
 sO
 sH
 sH
@@ -66019,7 +66200,7 @@ sC
 sH
 sH
 sC
-sH
+Ta
 sH
 et
 uO
@@ -66260,7 +66441,7 @@ an
 an
 sy
 sC
-sH
+Ta
 sO
 sH
 sH
@@ -66276,7 +66457,7 @@ sH
 sH
 sC
 sC
-sH
+Ta
 sH
 et
 uO
@@ -66533,7 +66714,7 @@ sH
 sH
 sO
 sH
-sH
+Ta
 sH
 et
 uO
@@ -67555,9 +67736,9 @@ tv
 sP
 sP
 tR
-sH
-sH
-sH
+Xm
+Xm
+Xm
 uo
 sP
 tH
@@ -68326,9 +68507,9 @@ sK
 tB
 tB
 tS
-sC
-sH
-sH
+NX
+Xm
+Xm
 up
 sP
 uv
@@ -68561,9 +68742,9 @@ an
 rh
 qS
 rz
-an
-an
-an
+Qd
+Qd
+Qd
 sd
 qR
 su
@@ -69336,22 +69517,22 @@ qR
 qR
 qR
 sf
-an
-an
-an
-an
-an
-an
-an
-an
-sy
-an
-sC
-sC
-sC
-sH
-sH
-sO
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Sw
+Qd
+UF
+UF
+UF
+PE
+PE
+VB
 tI
 sP
 tI

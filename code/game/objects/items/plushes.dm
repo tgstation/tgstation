@@ -517,7 +517,7 @@
 /obj/item/toy/plush/armsyplushie
 	name = "armsy plushie"
 	desc = "An unsettling stuffed toy that resembles armsy. Exclusive Terror of the Tracks merchandise!"
-	icon = 'icons/misc/tourney_items.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "plushie_armsy"
 	inhand_icon_state = "plushie_armsy"
 	attack_verb_continuous = list("bites", "hisses", "tail slaps")
