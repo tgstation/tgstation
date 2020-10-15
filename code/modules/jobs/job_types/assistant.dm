@@ -27,6 +27,7 @@ Assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
 	box = /obj/item/storage/box/tournament
+	backpack_contents = list(/obj/item/storage/box/syndie_kit/chameleon = 1)
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

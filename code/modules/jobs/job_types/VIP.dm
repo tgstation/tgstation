@@ -22,6 +22,7 @@
 	name = "Donator"
 	jobtype = /datum/job/vip
 	box = /obj/item/storage/box/tournament/vip
+	backpack_contents = list(/obj/item/storage/box/syndie_kit/chameleon = 1)
 
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
