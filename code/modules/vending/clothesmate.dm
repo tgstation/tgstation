@@ -149,10 +149,11 @@
 	icon_state = "starkist"
 	product_slogans = "WHY NOT BUY A SOUVENIR?;ONLY MILDLY OVERPRICED!;BUY OUR CHEAP CRAPPY MERCHANDICE, CONSUMER!"
 	vend_reply = "REMEMBER, NO REFUNDS, NO EXCEPTIONS!"
-	products = list(/obj/item/clothing/suit/armsyshirt = 30,
-		            /obj/item/toy/plush/armsyplushie = 30)
+	products = list(/obj/item/clothing/suit/armsyshirt = 50,
+		            /obj/item/toy/plush/armsyplushie = 50)
 	contraband = list(/obj/item/toy/plush/lizardplushie = 1)
 	premium = null
+	refill_canister = null
 	default_price = 60
 	extra_price = 120
 	payment_department = NO_FREEBIES

@@ -2238,14 +2238,14 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "fe" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/slow_down,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "ff" = (
@@ -2417,31 +2417,13 @@
 "fA" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/stone_tile/elderslab,
+/obj/structure/railing{
+	dir = 4
+	},
 /obj/effect/rollercoaster_hint/slow_down,
-/turf/open/water,
-/area/awaymission/cabin/snowforest/forest)
-"fC" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/white{
-	color = "#15F4EE";
-	desc = "A pool of horrible slime.";
-	icon = 'icons/turf/floors/lava.dmi';
-	icon_state = "unsmooth";
-	name = "horrifying ooze"
-	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "fD" = (
 /obj/structure/disposalpipe/segment{
@@ -2555,23 +2537,6 @@
 /area/awaymission/cabin/snowforest/forest)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
-"fR" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/white{
-	color = "#15F4EE";
-	desc = "A pool of horrible slime.";
-	icon = 'icons/turf/floors/lava.dmi';
-	icon_state = "unsmooth";
-	name = "horrifying ooze"
-	},
 /area/awaymission/cabin/snowforest/forest)
 "fS" = (
 /obj/structure/disposalpipe/segment{
@@ -2893,7 +2858,6 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "gC" = (
@@ -3654,18 +3618,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"ie" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/rollercoaster_hint/go_down,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "if" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -3718,18 +3670,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cult,
-/area/awaymission/cabin/snowforest/forest)
-"il" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/obj/effect/rollercoaster_hint/speed_up,
-/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "im" = (
 /obj/structure/lattice/catwalk,
@@ -3968,17 +3908,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
-"iR" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "iS" = (
 /obj/structure/chair/pew/right{
@@ -17414,18 +17343,6 @@
 /obj/machinery/telecomms/allinone/indestructable,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
-"NK" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
 "Ox" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
@@ -17441,23 +17358,6 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
-"OM" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/white{
-	color = "#15F4EE";
-	desc = "A pool of horrible slime.";
-	icon = 'icons/turf/floors/lava.dmi';
-	icon_state = "unsmooth";
-	name = "horrifying ooze"
-	},
-/area/awaymission/cabin/snowforest/forest)
 "OU" = (
 /obj/structure/fluff{
 	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
@@ -17470,25 +17370,6 @@
 "TT" = (
 /obj/machinery/vending/clothing/armsy,
 /turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
-"WN" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 6
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/white{
-	color = "#15F4EE";
-	desc = "A pool of horrible slime.";
-	icon = 'icons/turf/floors/lava.dmi';
-	icon_state = "unsmooth";
-	name = "horrifying ooze"
-	},
 /area/awaymission/cabin/snowforest/forest)
 "ZA" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
@@ -53557,7 +53438,7 @@ an
 an
 gi
 hY
-fA
+hY
 hY
 hY
 gr
@@ -57667,7 +57548,7 @@ an
 an
 an
 fg
-hN
+ft
 an
 fa
 br
@@ -65895,9 +65776,9 @@ hr
 hu
 hu
 hu
-fb
-hs
-fn
+hu
+hu
+if
 gV
 he
 hu
@@ -66152,9 +66033,9 @@ hr
 hu
 hu
 hu
-fd
-he
-he
+hu
+if
+gV
 he
 hu
 hu
@@ -66409,12 +66290,12 @@ hr
 hu
 hu
 hu
-ff
-fn
-iR
-fC
-fC
-NK
+if
+it
+he
+hu
+hu
+hu
 he
 hj
 hu
@@ -66657,7 +66538,7 @@ an
 an
 ha
 he
-hk
+fe
 he
 he
 hu
@@ -66666,12 +66547,12 @@ hr
 hu
 hu
 hu
-he
-he
+jp
 he
 hu
 hu
-OM
+hu
+hu
 hu
 hj
 hu
@@ -66923,12 +66804,12 @@ he
 he
 hu
 if
-hs
-hv
-iN
-iN
-fR
-WN
+gV
+he
+hu
+hu
+hu
+hu
 hu
 jr
 he
@@ -67173,18 +67054,18 @@ ha
 an
 hm
 hs
-fe
+fA
 hs
-fe
+fA
 hs
-fe
+fA
 hs
 it
 he
+hu
+hu
+hu
 he
-hu
-hu
-hu
 he
 he
 jp
@@ -69493,7 +69374,7 @@ hV
 hV
 im
 iu
-jc
+fn
 iu
 fn
 fn
@@ -132459,11 +132340,11 @@ ES
 ES
 ES
 ES
-ie
-Gd
-Gd
-Gd
-Gd
+ES
+ES
+ES
+ES
+ES
 ES
 ES
 FZ
@@ -200559,7 +200440,7 @@ Fu
 Fu
 Fu
 Lf
-il
+Fu
 Lg
 Fq
 ES
