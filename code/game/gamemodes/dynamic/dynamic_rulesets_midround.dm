@@ -557,6 +557,7 @@
 //           ABDUCTORS    (GHOST)           //
 //                                          //
 //////////////////////////////////////////////
+#define ABDUCTOR_MAX_TEAMS 4
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
@@ -575,7 +576,7 @@
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	new_team = new
-	if(new_team.team_number > 4)
+	if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
 		return MAP_ERROR
 	return ..()
 
@@ -586,3 +587,5 @@
 	else // Our second guy is the agent
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
+
+#undef ABDUCTOR_MAX_TEAMS
