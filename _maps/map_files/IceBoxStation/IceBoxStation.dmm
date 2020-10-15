@@ -6613,7 +6613,7 @@
 "aog" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 8;
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -10951,7 +10951,7 @@
 "ayw" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 4;
-	id = "pod_lavaland3";
+	id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -22769,7 +22769,7 @@
 "baC" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 8;
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -31608,7 +31608,7 @@
 "bvM" = (
 /obj/docking_port/stationary/random/icemoon{
 	dir = 4;
-	id = "pod_lavaland4";
+	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
