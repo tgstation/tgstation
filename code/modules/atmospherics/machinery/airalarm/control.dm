@@ -430,7 +430,7 @@
 /datum/airalarm_control/kitchen_cold_room
 	breathable_gas_ranges = list(
 		AALARM_PRESSURE				= new/datum/gas_range(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		AALARM_TEMPERATURE			= new/datum/tlv(COLD_ROOM_TEMP-40, COLD_ROOM_TEMP-20, COLD_ROOM_TEMP+20, COLD_ROOM_TEMP+40),
+		AALARM_TEMPERATURE			= new/datum/gas_range(COLD_ROOM_TEMP-40, COLD_ROOM_TEMP-20, COLD_ROOM_TEMP+20, COLD_ROOM_TEMP+40),
 		/datum/gas/oxygen			= new/datum/gas_range(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/gas_range(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/gas_range(-1, -1, 5, 10),
