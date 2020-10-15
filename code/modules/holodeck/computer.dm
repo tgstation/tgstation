@@ -83,19 +83,7 @@
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
-	//load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
-
-/obj/machinery/computer/holodeck/Destroy()
-	emergency_shutdown()
-	if(linked)
-		linked.linked = null
-		linked.power_usage = new /list(AREA_USAGE_LEN)
-	return ..()
-
-/obj/machinery/computer/holodeck/power_change()
-	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
-	//toggle_power(!machine_stat)
+	load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)//portable
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -187,6 +175,17 @@
 /obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()
 	return ..()
+
+/obj/machinery/computer/holodeck/Destroy()
+	emergency_shutdown()
+	if(linked)
+		linked.linked = null
+		linked.power_usage = new /list(AREA_USAGE_LEN)
+	return ..()
+
+/obj/machinery/computer/holodeck/power_change()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
