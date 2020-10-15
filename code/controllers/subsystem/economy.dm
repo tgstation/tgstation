@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(economy)
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
 		bank_account.payday(1)
-		if(bank_account && bank_account.account_job)
+		if(bank_account?.account_job)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance

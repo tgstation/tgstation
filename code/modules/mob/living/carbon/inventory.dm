@@ -39,7 +39,7 @@
 	I.screen_loc = null
 	if(client)
 		client.screen -= I
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client)
@@ -126,7 +126,7 @@
 			update_inv_neck(I)
 	else if(I == handcuffed)
 		set_handcuffed(null)
-		if(buckled && buckled.buckle_requires_restraints)
+		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()

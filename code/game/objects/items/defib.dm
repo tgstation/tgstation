@@ -573,8 +573,6 @@
 				switch (defib_result)
 					if (DEFIB_FAIL_SUICIDE)
 						fail_reason = "Recovery of patient impossible. Further attempts futile."
-					if (DEFIB_FAIL_HELLBOUND)
-						fail_reason = "Patient's soul appears to be on another plane of existence. Further attempts futile."
 					if (DEFIB_FAIL_NO_HEART)
 						fail_reason = "Patient's heart is missing."
 					if (DEFIB_FAIL_FAILING_HEART)

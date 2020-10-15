@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Temporal Scarring now has separate scar slots for each of your character slots, meaning scars saved to Character 1 will no longer be loaded by Character 2."
-  - tweak: "Changelings now save the scars someone has when DNA stinging them, and will recreate those scars when using that disguise. These fake scars are removed when the disguise is changed or dropped, though real scars that the Changeling has suffered will remain through disguises and still need to be removed via fleshmend or carpotoxin"

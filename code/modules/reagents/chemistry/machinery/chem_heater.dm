@@ -61,7 +61,7 @@
 	if(machine_stat & NOPOWER)
 		return
 	if(on)
-		if(beaker && beaker.reagents.total_volume)
+		if(beaker?.reagents.total_volume)
 			//keep constant with the chemical acclimator please
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
