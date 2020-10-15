@@ -83,7 +83,7 @@
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
-	load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
+	//load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
