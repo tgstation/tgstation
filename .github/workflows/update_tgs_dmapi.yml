@@ -8,12 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Update the TGS DMAPI
     steps:
-    - name: Checkout
+    - name: Clone
       uses: actions/checkout@v2
     - name: Branch
       run: |
-        git branch -D tgs-dmpai-update
-        git checkout -b tgs-dmapi-update
+        git branch -f tgs-dmapi-update
+        git checkout tgs-dmapi-update
+        git reset --hard master
     - name: Apply DMAPI update
       uses: tgstation/tgs-dmapi-updater@v2
       with:
