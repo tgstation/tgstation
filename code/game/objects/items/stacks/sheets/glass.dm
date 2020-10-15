@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	return (BRUTELOSS)
 
 
-/obj/item/shard/Initialize()
+/obj/item/shard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
 	AddComponent(/datum/component/butchering, 150, 65)
@@ -288,6 +288,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+	if(!(istype(get_area(src), /area/tdome/arena)) && !mapload)
+		visible_message("<span class='warning'>...Just kidding. [src] explodes, causing a miniature black hole.</span>")
+		message_admins("A glass shard was created out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
 
 /obj/item/shard/Destroy()
 	. = ..()
