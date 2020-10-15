@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Added the Nanotrasen Internal Requisition Network (NIRN) modular computer app, for heads of staff to download."
-  - rscadd: "Use NIRN to order departmentally-related cargo crates using your department's budget funds, without all the hassle!"

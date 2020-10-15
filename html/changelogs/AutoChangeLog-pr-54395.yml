@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "tweaked some shuttle code"
-  - bugfix: "fixed lavaland podding"

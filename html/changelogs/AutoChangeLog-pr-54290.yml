@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Fixes bolt action guns having a mysterious additional bullet chambered upon initialization."
