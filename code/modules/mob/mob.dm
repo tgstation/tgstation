@@ -1327,7 +1327,6 @@
 	stat = new_stat
 
 
-/// Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, control_object))
