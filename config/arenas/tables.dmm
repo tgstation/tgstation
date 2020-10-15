@@ -22,7 +22,7 @@
 /area/tdome/arena)
 "e" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical/old/clean,
+/obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "f" = (
