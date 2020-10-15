@@ -401,7 +401,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			antag.cult_team.blood_target = null
 		else
 			blood_target = antag.cult_team.blood_target
-	if(Cviewer && Cviewer.seeking && Cviewer.master)
+	if(Cviewer?.seeking && Cviewer.master)
 		blood_target = Cviewer.master
 		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)

@@ -10,7 +10,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
-
+	hijack_speed = 0.5
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
@@ -149,7 +149,7 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
@@ -294,6 +294,10 @@
 	prof.socks = H.socks
 
 	prof.skillchips = H.clone_skillchip_list(TRUE)
+
+	for(var/i in H.all_scars)
+		var/datum/scar/iter_scar = i
+		LAZYADD(prof.stored_scars, iter_scar.format())
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -529,9 +533,12 @@
 	var/socks
 
 	var/list/skillchips = list()
+	/// What scars the target had when we copied them, in string form (like persistent scars)
+	var/list/stored_scars
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
+	LAZYCLEARLIST(stored_scars)
 	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
@@ -552,6 +559,7 @@
 	newprofile.worn_icon_list = worn_icon_list.Copy()
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
 	newprofile.skillchips = skillchips.Copy()
+	newprofile.stored_scars = stored_scars.Copy()
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"

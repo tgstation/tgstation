@@ -12,24 +12,18 @@ pluox_formation = 2
 nitrylformation = 3
 bzformation = 4
 freonformation = 5
-stimformation = 5
-nobiliumformation = 6
-stimball = 7
-ammoniacrystals = 8
-hexane_plasma_filtering = 9
-hexane_n2o_filtering = 10
-zauker_decomp = 11
-healium_production = 12
-proto_nitrate_production = 13
-zauker_production = 14
-halon_formation = 15
-hexane_formation = 16
-healium_crystal_production = 17
-proto_nitrate_crystal_production = 18
-zauker_crystal_production = 19
-proto_nitrate_response = 20 - 25
-fusion = 26
-metallic_hydrogen = 27
+stimformation = 6
+nobliumformation = 7
+hexane_plasma_filtering = 8
+zauker_decomp = 9
+healium_formation = 10
+proto_nitrate_formation = 11
+zauker_formation = 12
+halon_formation = 13
+hexane_formation = 14
+proto_nitrate_response = 15 - 18
+fusion = 19
+metallic_hydrogen = 20
 nobiliumsuppression = INFINITY
 */
 
@@ -96,10 +90,10 @@ nobiliumsuppression = INFINITY
 	var/turf/open/location = isturf(holder) ? holder : null
 	. = NO_REACTION
 	if (air.temperature <= WATER_VAPOR_FREEZE)
-		if(location && location.freon_gas_act())
+		if(location?.freon_gas_act())
 			. = REACTING
 	else if(air.temperature <= T20C + 10)
-		if(location && location.water_vapor_gas_act())
+		if(location?.water_vapor_gas_act())
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 			. = REACTING
 
@@ -387,49 +381,13 @@ nobiliumsuppression = INFINITY
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
-/datum/gas_reaction/ammoniacrystals
-	priority = 8
-	name = "Ammonia crystals formation"
-	id = "nh4crystals"
-
-/datum/gas_reaction/ammoniacrystals/init_reqs()
-	min_requirements = list(
-		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
-		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
-		"TEMP" = 150,
-		"MAX_TEMP" = 273
-	)
-
-/datum/gas_reaction/ammoniacrystals/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!isturf(holder))
-		return NO_REACTION
-	var/turf/open/location = holder
-	var/consumed_fuel = 0
-	if(cached_gases[/datum/gas/nitrogen][MOLES] > cached_gases[/datum/gas/hydrogen][MOLES])
-		consumed_fuel = (cached_gases[/datum/gas/hydrogen][MOLES] / AMMONIA_FORMATION_FACTOR)
-		if(cached_gases[/datum/gas/nitrogen][MOLES] - consumed_fuel < 0 || cached_gases[/datum/gas/hydrogen][MOLES] - consumed_fuel * 4 < 0)
-			return NO_REACTION
-		cached_gases[/datum/gas/nitrogen][MOLES] -= consumed_fuel
-		cached_gases[/datum/gas/hydrogen][MOLES] -= consumed_fuel * 4
-		if(prob(30 * consumed_fuel))
-			new /obj/item/stack/ammonia_crystals(location)
-		energy_released += consumed_fuel * AMMONIA_FORMATION_ENERGY
-	if(energy_released > 0)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released)/new_heat_capacity
-
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
-	priority = 26
+	priority = 19
 	name = "Plasmic Fusion"
 	id = "fusion"
 
@@ -615,7 +573,7 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/metalhydrogen
-	priority = 27
+	priority = 20
 	name = "Metal Hydrogen formation"
 	id = "metalhydrogen"
 
@@ -688,7 +646,7 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
-	priority = 5
+	priority = 6
 	name = "Stimulum formation"
 	id = "stimformation"
 
@@ -719,7 +677,7 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
-	priority = 6
+	priority = 7
 	name = "Hyper-Noblium condensation"
 	id = "nobformation"
 
@@ -774,49 +732,8 @@ nobiliumsuppression = INFINITY
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air * 0.002
 
-/datum/gas_reaction/stim_ball
-	priority = 7
-	name ="Stimulum Energy Ball"
-	id = "stimball"
-
-/datum/gas_reaction/stim_ball/init_reqs()
-	min_requirements = list(
-		/datum/gas/pluoxium = STIM_BALL_GAS_AMOUNT,
-		/datum/gas/stimulum = STIM_BALL_GAS_AMOUNT,
-		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
-		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	)
-/datum/gas_reaction/stim_ball/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/turf/open/location
-	var/old_heat_capacity = air.heat_capacity()
-	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
-		var/datum/pipeline/pipenet = holder
-		location = get_turf(pick(pipenet.members))
-	else
-		location = get_turf(holder)
-	air.assert_gases(/datum/gas/water_vapor, /datum/gas/nitryl, /datum/gas/carbon_dioxide, /datum/gas/nitrogen)
-	var/ball_shot_angle = 180 * cos(cached_gases[/datum/gas/water_vapor][MOLES] / cached_gases[/datum/gas/nitryl][MOLES]) + 180
-	var/stim_used = min(STIM_BALL_GAS_AMOUNT / cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/stimulum][MOLES])
-	var/pluox_used = min(STIM_BALL_GAS_AMOUNT / cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/pluoxium][MOLES])
-	if ((cached_gases[/datum/gas/pluoxium][MOLES] - pluox_used < 0 ) || (cached_gases[/datum/gas/stimulum][MOLES] - stim_used < 0) || (cached_gases[/datum/gas/plasma][MOLES] - min(stim_used * pluox_used, 30) < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	var/energy_released = stim_used * STIMULUM_HEAT_SCALE//Stimulum has a lot of stored energy, and breaking it up releases some of it
-	location.fire_nuclear_particle(ball_shot_angle)
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] += 0.5 * pluox_used
-	cached_gases[/datum/gas/nitrogen][MOLES] += 2 * stim_used
-	cached_gases[/datum/gas/pluoxium][MOLES] -= pluox_used
-	cached_gases[/datum/gas/stimulum][MOLES] -= stim_used
-	cached_gases[/datum/gas/plasma][MOLES] -= min(stim_used * pluox_used, 30)
-	if(energy_released)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = clamp((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB, INFINITY)
-		return REACTING
-
 /datum/gas_reaction/halon_formation
-	priority = 15
+	priority = 13
 	name = "Halon formation"
 	id = "halon_formation"
 
@@ -848,7 +765,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/hexane_formation
-	priority = 16
+	priority = 14
 	name = "Hexane formation"
 	id = "hexane_formation"
 
@@ -880,7 +797,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/healium_formation
-	priority = 12
+	priority = 10
 	name = "Healium formation"
 	id = "healium_formation"
 
@@ -912,7 +829,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_formation
-	priority = 13
+	priority = 11
 	name = "Proto Nitrate formation"
 	id = "proto_nitrate_formation"
 
@@ -944,7 +861,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/zauker_formation
-	priority = 14
+	priority = 12
 	name = "Zauker formation"
 	id = "zauker_formation"
 
@@ -1007,7 +924,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/hexane_plasma_filtering
-	priority = 9
+	priority = 8
 	name = "Hexane plasma filtering"
 	id = "hexane_plasma_filtering"
 
@@ -1037,40 +954,8 @@ nobiliumsuppression = INFINITY
 			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
 	return REACTING
 
-/datum/gas_reaction/hexane_n2o_filtering
-	priority = 10
-	name = "Hexane n2o filtering"
-	id = "hexane_n2o_filtering"
-
-/datum/gas_reaction/hexane_n2o_filtering/init_reqs()
-	min_requirements = list(
-		/datum/gas/hexane = MINIMUM_MOLE_COUNT,
-		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT,
-	)
-
-/datum/gas_reaction/hexane_n2o_filtering/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/hexane][MOLES], cached_gases[/datum/gas/nitrous_oxide][MOLES])
-	var/energy_used = heat_efficency * 100
-	ASSERT_GAS(/datum/gas/oxygen, air)
-	ASSERT_GAS(/datum/gas/nitrogen, air)
-	if ((cached_gases[/datum/gas/hexane][MOLES] - heat_efficency * 0.2 < 0 ) || (cached_gases[/datum/gas/nitrous_oxide][MOLES] - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/hexane][MOLES] -= heat_efficency * 0.2
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= heat_efficency * 0.6
-	cached_gases[/datum/gas/oxygen][MOLES] += heat_efficency * 0.2
-	cached_gases[/datum/gas/nitrogen][MOLES] += heat_efficency * 0.6
-
-	if(energy_used)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
-	return REACTING
-
 /datum/gas_reaction/zauker_decomp
-	priority = 11
+	priority = 9
 	name = "Zauker decomposition"
 	id = "zauker_decomp"
 
@@ -1105,153 +990,8 @@ nobiliumsuppression = INFINITY
 		return REACTING
 	return NO_REACTION
 
-/datum/gas_reaction/healium_crystal_formation
-	priority = 17
-	name = "healium crystal formation"
-	id = "healium_crystal_formation"
-
-/datum/gas_reaction/healium_crystal_formation/init_reqs()
-	min_requirements = list(
-		/datum/gas/oxygen = 50,
-		/datum/gas/healium = 10,
-		"TEMP" = 1000,
-		"MAX_TEMP" = 2500
-	)
-
-/datum/gas_reaction/healium_crystal_formation/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!isturf(holder))
-		return NO_REACTION
-	var/turf/open/location = holder
-	var/consumed_fuel = 0
-	consumed_fuel = min(cached_gases[/datum/gas/healium][MOLES] * 2.5, 20 * (temperature * 0.001))
-	if ((cached_gases[/datum/gas/healium][MOLES] - consumed_fuel * 0.4 < 0 ) || (cached_gases[/datum/gas/oxygen][MOLES] - consumed_fuel * 0.1 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/oxygen][MOLES] -= consumed_fuel * 0.1
-	cached_gases[/datum/gas/healium][MOLES] -= consumed_fuel * 0.4
-	if(prob(2 * consumed_fuel))
-		new /obj/item/grenade/gas_crystal/healium_crystal(location)
-	energy_released += consumed_fuel * 800
-	if(energy_released)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-	return REACTING
-
-/datum/gas_reaction/proto_nitrate_crystal_formation
-	priority = 18
-	name = "hydrogen pluoxide crystal formation"
-	id = "proto_nitrate_crystal_formation"
-
-/datum/gas_reaction/proto_nitrate_crystal_formation/init_reqs()
-	min_requirements = list(
-		/datum/gas/nitrogen = 50,
-		/datum/gas/proto_nitrate = 10,
-		"TEMP" = 100,
-		"MAX_TEMP" = 150
-	)
-
-/datum/gas_reaction/proto_nitrate_crystal_formation/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!isturf(holder))
-		return NO_REACTION
-	var/turf/open/location = holder
-	var/consumed_fuel = 0
-	consumed_fuel = min(cached_gases[/datum/gas/proto_nitrate][MOLES] * 0.15, 20 * (temperature * 0.01))
-	if ((cached_gases[/datum/gas/proto_nitrate][MOLES] - consumed_fuel * 0.15 < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - consumed_fuel * 0.01 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/nitrogen][MOLES] -= consumed_fuel * 0.01
-	cached_gases[/datum/gas/proto_nitrate][MOLES] -= consumed_fuel * 0.15
-	if(prob(5 * consumed_fuel))
-		new /obj/item/grenade/gas_crystal/proto_nitrate_crystal(location)
-	energy_released += consumed_fuel * 800
-	if(energy_released)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-	return REACTING
-
-/datum/gas_reaction/zauker_crystal_formation
-	priority = 19
-	name = "zauker crystal formation"
-	id = "zauker_crystal_formation"
-
-/datum/gas_reaction/zauker_crystal_formation/init_reqs()
-	min_requirements = list(
-		/datum/gas/plasma = 50,
-		/datum/gas/zauker = 10,
-		"TEMP" = 270,
-		"MAX_TEMP" = 280
-	)
-
-/datum/gas_reaction/zauker_crystal_formation/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!isturf(holder))
-		return NO_REACTION
-	var/turf/open/location = holder
-	var/consumed_fuel = 0
-	consumed_fuel = min(cached_gases[/datum/gas/zauker][MOLES] * 0.1, 20 * (temperature * 0.02))
-	if ((cached_gases[/datum/gas/zauker][MOLES] - consumed_fuel * 0.05 < 0 ) || (cached_gases[/datum/gas/plasma][MOLES] - consumed_fuel * 5 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/plasma][MOLES] -= consumed_fuel * 5
-	cached_gases[/datum/gas/zauker][MOLES] -= consumed_fuel * 0.05
-	if(prob(10 * consumed_fuel))
-		new /obj/item/grenade/gas_crystal/zauker_crystal(location)
-	energy_released += consumed_fuel * 800
-	if(energy_released)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-	return REACTING
-
-/datum/gas_reaction/proto_nitrate_plasma_response
-	priority = 20
-	name = "Proto Nitrate plasma response"
-	id = "proto_nitrate_plasma_response"
-
-/datum/gas_reaction/proto_nitrate_plasma_response/init_reqs()
-	min_requirements = list(
-		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
-		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
-		"TEMP" = 250,
-		"MAX_TEMP" = 300
-	)
-
-/datum/gas_reaction/proto_nitrate_plasma_response/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!isturf(holder))
-		return NO_REACTION
-	var/turf/open/location = holder
-	if(cached_gases[/datum/gas/plasma][MOLES] > 10)
-		return NO_REACTION
-	var produced_amount = min(5, cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
-	if(cached_gases[/datum/gas/plasma][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.1 < 0)
-		return NO_REACTION
-	cached_gases[/datum/gas/plasma][MOLES] -= produced_amount
-	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.1
-	energy_released -= produced_amount * 1500
-	if(prob(produced_amount * 15))
-		new/obj/item/stack/sheet/mineral/plasma(location)
-	if(energy_released)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-	return REACTING
-
 /datum/gas_reaction/proto_nitrate_bz_response
-	priority = 21
+	priority = 15
 	name = "Proto Nitrate bz response"
 	id = "proto_nitrate_bz_response"
 
@@ -1290,41 +1030,8 @@ nobiliumsuppression = INFINITY
 			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
 	return REACTING
 
-/datum/gas_reaction/proto_nitrate_freon_fire_response
-	priority = 22
-	name = "Proto Nitrate freon fire response"
-	id = "proto_nitrate_freon_fire_response"
-
-/datum/gas_reaction/proto_nitrate_freon_fire_response/init_reqs()
-	min_requirements = list(
-		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
-		/datum/gas/freon = MINIMUM_MOLE_COUNT,
-		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		"TEMP" = 270,
-		"MAX_TEMP" = 310
-	)
-
-/datum/gas_reaction/proto_nitrate_freon_fire_response/react(datum/gas_mixture/air, datum/holder)
-	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(cached_gases[/datum/gas/freon][MOLES] > 100 && cached_gases[/datum/gas/oxygen][MOLES] > 100)
-		var fuel_consumption = min(5, temperature * 0.03, cached_gases[/datum/gas/freon][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
-		if(cached_gases[/datum/gas/proto_nitrate][MOLES] - fuel_consumption < 0)
-			return NO_REACTION
-		cached_gases[/datum/gas/proto_nitrate][MOLES] -= fuel_consumption
-		cached_gases[/datum/gas/freon][MOLES] += fuel_consumption * 0.01
-		energy_released -= fuel_consumption * 1500
-		if(energy_released)
-			var/new_heat_capacity = air.heat_capacity()
-			if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-				air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-		return REACTING
-	return NO_REACTION
-
 /datum/gas_reaction/proto_nitrate_tritium_response
-	priority = 23
+	priority = 16
 	name = "Proto Nitrate tritium response"
 	id = "proto_nitrate_tritium_response"
 
@@ -1357,7 +1064,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response
-	priority = 24
+	priority = 17
 	name = "Proto Nitrate hydrogen response"
 	id = "proto_nitrate_hydrogen_response"
 
@@ -1385,7 +1092,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_zauker_response
-	priority = 25
+	priority = 18
 	name = "Proto Nitrate Zauker response"
 	id = "proto_nitrate_zauker_response"
 

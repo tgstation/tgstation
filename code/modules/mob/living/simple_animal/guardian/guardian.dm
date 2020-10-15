@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
-	if(summoner && hud_used && hud_used.healths)
+	if(summoner && hud_used?.healths)
 		var/resulthealth
 		if(iscarbon(summoner))
 			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
