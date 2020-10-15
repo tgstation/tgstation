@@ -1,0 +1,4 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - bugfix: "Abductor spawns in Dynamic actually function now"
