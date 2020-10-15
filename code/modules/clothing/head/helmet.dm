@@ -207,6 +207,7 @@
 	inhand_icon_state = "constable"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	custom_price = 350
 
 /obj/item/clothing/head/helmet/swat/nanotrasen

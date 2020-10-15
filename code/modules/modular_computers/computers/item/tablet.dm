@@ -14,6 +14,7 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
+	looping_sound = FALSE
 	var/has_variants = TRUE
 	var/finish_color = null
 
@@ -114,35 +115,20 @@
 	.["light_on"] = borgo?.lamp_enabled
 	.["comp_light_color"] = borgo?.lamp_color
 
-//Overrides the ui_act to make the flashlight controls link to the borg instead
-/obj/item/modular_computer/tablet/integrated/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+//Makes the flashlight button affect the borg rather than the tablet
+/obj/item/modular_computer/tablet/integrated/toggle_flashlight()
+	if(!borgo || QDELETED(borgo))
+		return FALSE
+	borgo.toggle_headlamp()
+	return TRUE
 
-	switch(action)
-		if("PC_toggle_light")
-			if(!borgo)
-				return FALSE
-			borgo.toggle_headlamp()
-			return TRUE
-
-		if("PC_light_color")
-			if(!borgo)
-				return FALSE
-			var/mob/user = usr
-			var/new_color
-			while(!new_color)
-				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
-				if(!new_color || QDELETED(borgo))
-					return
-				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
-					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
-					new_color = null
-			borgo.lamp_color = new_color
-			borgo.toggle_headlamp(FALSE, TRUE)
-			return TRUE
-	return ..()
+//Makes the flashlight color setting affect the borg rather than the tablet
+/obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
+	if(!borgo || QDELETED(borgo) || !color)
+		return FALSE
+	borgo.lamp_color = color
+	borgo.toggle_headlamp(FALSE, TRUE)
+	return TRUE
 
 /obj/item/modular_computer/tablet/integrated/syndicate
 	icon_state = "tablet-silicon-syndicate"

@@ -8,7 +8,7 @@
 
 /obj/effect/spawner/bundle/Initialize(mapload)
 	..()
-	if(items && items.len)
+	if(items?.len)
 		for(var/path in items)
 			new path(loc)
 	return INITIALIZE_HINT_QDEL
@@ -18,7 +18,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/reagent_containers/food/snacks/egg)
+		/obj/item/food/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"

@@ -1,3 +1,8 @@
+#define AI_WIRE_NORMAL 0
+#define AI_WIRE_DISABLED 1
+#define AI_WIRE_HACKED 2
+#define AI_WIRE_DISABLED_HACKED -1
+
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Generic Airlock"
@@ -108,16 +113,11 @@
 					A.emergency = FALSE
 					A.update_icon()
 		if(WIRE_AI) // Pulse to disable WIRE_AI control for 10 ticks (follows same rules as cutting).
-			if(A.aiControlDisabled == 0)
-				A.aiControlDisabled = 1
-			else if(A.aiControlDisabled == -1)
-				A.aiControlDisabled = 2
-			sleep(10)
-			if(A)
-				if(A.aiControlDisabled == 1)
-					A.aiControlDisabled = 0
-				else if(A.aiControlDisabled == 2)
-					A.aiControlDisabled = -1
+			if(A.aiControlDisabled == AI_WIRE_NORMAL)
+				A.aiControlDisabled = AI_WIRE_DISABLED
+			else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
+				A.aiControlDisabled = AI_WIRE_HACKED
+			addtimer(CALLBACK(A, /obj/machinery/door/airlock.proc/reset_ai_wire), 1 SECONDS)
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
@@ -131,6 +131,12 @@
 		if(WIRE_LIGHT)
 			A.lights = !A.lights
 			A.update_icon()
+
+/obj/machinery/door/airlock/proc/reset_ai_wire()
+	if(aiControlDisabled == AI_WIRE_DISABLED)
+		aiControlDisabled = AI_WIRE_NORMAL
+	else if(aiControlDisabled == AI_WIRE_HACKED)
+		aiControlDisabled = AI_WIRE_DISABLED_HACKED
 
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
@@ -154,15 +160,15 @@
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
 			if(mend)
-				if(A.aiControlDisabled == 1) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
-					A.aiControlDisabled = 0
-				else if(A.aiControlDisabled == 2)
-					A.aiControlDisabled = -1
+				if(A.aiControlDisabled == AI_WIRE_DISABLED) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
+					A.aiControlDisabled = AI_WIRE_NORMAL
+				else if(A.aiControlDisabled == AI_WIRE_HACKED)
+					A.aiControlDisabled = AI_WIRE_DISABLED_HACKED
 			else
-				if(A.aiControlDisabled == 0)
-					A.aiControlDisabled = 1
-				else if(A.aiControlDisabled == -1)
-					A.aiControlDisabled = 2
+				if(A.aiControlDisabled == AI_WIRE_NORMAL)
+					A.aiControlDisabled = AI_WIRE_DISABLED
+				else if(A.aiControlDisabled == AI_WIRE_DISABLED_HACKED)
+					A.aiControlDisabled = AI_WIRE_HACKED
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
 				if(A.secondsElectrified)

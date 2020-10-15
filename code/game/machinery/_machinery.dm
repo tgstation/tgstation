@@ -164,7 +164,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	drop_contents()
+	dump_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -214,17 +214,17 @@ Class Procs:
 	state_open = TRUE
 	density = FALSE
 	if(drop)
-		drop_stored_items()
+		dump_inventory_contents()
 	update_icon()
 	updateUsrDialog()
 
 /**
-  * Drop every movable atom in the machine's contents list.
+  * Drop every movable atom in the machine's contents list, including any components and circuit.
   */
-/obj/machinery/proc/drop_contents()
-	// Start by calling the drop_stored_items proc. Will allow machines with special contents
+/obj/machinery/dump_contents()
+	// Start by calling the dump_inventory_contents proc. Will allow machines with special contents
 	// to handle their dropping.
-	drop_stored_items()
+	dump_inventory_contents()
 
 	// Then we can clean up and drop everything else.
 	var/turf/this_turf = get_turf(src)
@@ -237,14 +237,14 @@ Class Procs:
 	LAZYCLEARLIST(component_parts)
 
 /**
-  * Drop every movable atom in the machine's contents list.
+  * Drop every movable atom in the machine's contents list that is not a component_part.
   *
   * Proc does not drop components and will skip over anything in the component_parts list.
-  * Call drop_contents() to drop all contents including components.
+  * Call dump_contents() to drop all contents including components.
   * Arguments:
   * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
   */
-/obj/machinery/proc/drop_stored_items(list/subset = null)
+/obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
 		if(subset && !(movable_atom in subset))
@@ -254,9 +254,6 @@ Class Procs:
 			continue
 
 		movable_atom.forceMove(this_turf)
-		if(isliving(movable_atom))
-			var/mob/living/living_mob = movable_atom
-			living_mob.update_mobility()
 
 		if(occupant == movable_atom)
 			occupant = null

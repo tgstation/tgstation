@@ -46,10 +46,7 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "ah" = (
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/reinforced_wall.dmi';
-	icon_state = "r_wall"
-	},
+/turf/closed/indestructible/reinforced,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "ai" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -61,10 +58,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer4{
 	dir = 8
 	},
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/reinforced_wall.dmi';
-	icon_state = "r_wall"
-	},
+/turf/closed/indestructible/reinforced,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aj" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
