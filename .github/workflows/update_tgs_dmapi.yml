@@ -1,7 +1,7 @@
 name: Update TGS DMAPI
 
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   update-dmapi:
