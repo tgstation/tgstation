@@ -61,7 +61,8 @@
 	return data
 
 /obj/structure/training_machine/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if (moving && obj_flags & EMAGGED)
 		visible_message("<span class='warning'>The [src]'s control panel fizzles slightly.</span>")
@@ -108,7 +109,7 @@
 /obj/structure/training_machine/proc/remove_attached_item(mob/user, throwing = FALSE)
 	if (!attached_item)
 		return
-	vis_contents.Cut()
+	vis_contents -= attached_item
 	if (istype(attached_item, /obj/item/storage/toolbox/syndicate))
 		qdel(attached_item)
 	else if (user)
