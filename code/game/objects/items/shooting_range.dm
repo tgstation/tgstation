@@ -5,7 +5,7 @@
 	icon_state = "target_h"
 	density = FALSE
 	var/hp = 1800
-	//Lazylist to keep track of bullet-hole overlays
+	/// Lazylist to keep track of bullet-hole overlays.
 	var/list/bullethole_overlays
 
 /obj/item/target/Initialize()
@@ -16,7 +16,7 @@
 	if(I.use_tool(src, user, 0, volume=40))
 		for (var/bullethole in bullethole_overlays)
 			cut_overlay(bullethole)
-		LAZYCLEARLIST(bullethole_overlays)
+		bullethole_overlays = null
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
 	return TRUE
 
