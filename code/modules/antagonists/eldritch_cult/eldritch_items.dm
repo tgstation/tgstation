@@ -211,7 +211,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
-	if(!iscarbon(src.loc))
+	if(!iscarbon(loc))
 		return
 	var/mob/living/carbon/carbon_user = loc
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
