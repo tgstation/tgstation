@@ -87,7 +87,7 @@
 
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
 	// Check for darkness
-	if(location && location.lighting_object)
+	if(location?.lighting_object)
 		if(location.get_lumcount()<0.1) // No one can see us in the darkness, right?
 			return null
 

@@ -146,7 +146,7 @@
 					H = contract.owner.current
 					C = H.get_idcard(TRUE)
 
-				if(C && C.registered_account)
+				if(C?.registered_account)
 					C.registered_account.adjust_money(ransom * 0.35)
 
 					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \

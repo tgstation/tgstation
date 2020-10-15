@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Delta time probability code improved. This should stop the socially anxious from eternally stuttering when nobody is around. It may also impact laser pointer recharge times which could potentially have suffered or benefitted from a similar issue."

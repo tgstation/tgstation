@@ -182,7 +182,7 @@ RSF
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if(((obj_flags & EMAGGED) || (P && P.emagged)) && !toxin)
+	if(((obj_flags & EMAGGED) || (P?.emagged)) && !toxin)
 		toxin = TRUE
 		to_dispense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
