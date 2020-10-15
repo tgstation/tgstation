@@ -406,6 +406,15 @@
 	title = "Brain Surgery for Dummies"
 	page_link = "Surgery"
 
+
+/obj/item/book/manual/wiki/surgery/mothblocks // this will likely appear in bookcases and such later.
+	name = "Mothblocks' Guide to Medical Wounds"
+	desc = "Man, this book has everything! Fractures, lacerations, dislocations, and more? It's so easy, even a human could do it! Wait..."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "guidebook"
+	author = "Mothblocks"
+	title = "Mothblocks' Guide to Medical Wounds"
+
 /obj/item/book/manual/wiki/grenades
 	name = "DIY Chemical Grenades"
 	icon_state = "book2"
