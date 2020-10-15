@@ -83,13 +83,10 @@
 	ui_interact(user)
 
 /obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	. = ..()
 	if (user.a_intent == INTENT_HARM)
-		return
+		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
-		return
-	if (length(buckled_mobs))
-		return
+		return ..()
 	if (obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The toolbox is somehow stuck on! It won't budge!</span>")
 		return
