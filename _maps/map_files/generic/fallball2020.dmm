@@ -9978,24 +9978,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin/snowforest/forest)
-"ve" = (
-/obj/structure/sink{
-	dir = 1
-	},
-/obj/structure/mirror{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/tile{
-	color = "#FFB6C1";
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/awaymission/cabin/snowforest/forest)
 "vf" = (
 /obj/structure/sink{
 	dir = 1
 	},
 /obj/structure/mirror{
+	max_integrity = 9999;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -10020,23 +10008,12 @@
 /obj/structure/water_source/puddle,
 /turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
-"vk" = (
-/obj/structure/sink{
-	pixel_y = 16
-	},
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/awaymission/cabin/snowforest/forest)
 "vl" = (
 /obj/structure/sink{
 	pixel_y = 16
 	},
 /obj/structure/mirror{
+	max_integrity = 9999;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -10542,7 +10519,8 @@
 "wf" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
-	dir = 8
+	dir = 8;
+	max_integrity = 9999
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -10557,7 +10535,8 @@
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8;
-	dispensable_reagents = list(/datum/reagent/consumable/pumpkinjuice,/datum/reagent/water,/datum/reagent/consumable/ice,/datum/reagent/consumable/coffee,/datum/reagent/consumable/cream,/datum/reagent/consumable/tea,/datum/reagent/consumable/icetea,/datum/reagent/consumable/space_cola,/datum/reagent/consumable/spacemountainwind,/datum/reagent/consumable/dr_gibb,/datum/reagent/consumable/space_up,/datum/reagent/consumable/tonic,/datum/reagent/consumable/sodawater,/datum/reagent/consumable/lemon_lime,/datum/reagent/consumable/pwr_game,/datum/reagent/consumable/shamblers,/datum/reagent/consumable/sugar,/datum/reagent/consumable/pineapplejuice,/datum/reagent/consumable/orangejuice,/datum/reagent/consumable/grenadine,/datum/reagent/consumable/limejuice,/datum/reagent/consumable/tomatojuice,/datum/reagent/consumable/lemonjuice,/datum/reagent/consumable/menthol)
+	dispensable_reagents = list(/datum/reagent/consumable/pumpkinjuice,/datum/reagent/water,/datum/reagent/consumable/ice,/datum/reagent/consumable/coffee,/datum/reagent/consumable/cream,/datum/reagent/consumable/tea,/datum/reagent/consumable/icetea,/datum/reagent/consumable/space_cola,/datum/reagent/consumable/spacemountainwind,/datum/reagent/consumable/dr_gibb,/datum/reagent/consumable/space_up,/datum/reagent/consumable/tonic,/datum/reagent/consumable/sodawater,/datum/reagent/consumable/lemon_lime,/datum/reagent/consumable/pwr_game,/datum/reagent/consumable/shamblers,/datum/reagent/consumable/sugar,/datum/reagent/consumable/pineapplejuice,/datum/reagent/consumable/orangejuice,/datum/reagent/consumable/grenadine,/datum/reagent/consumable/limejuice,/datum/reagent/consumable/tomatojuice,/datum/reagent/consumable/lemonjuice,/datum/reagent/consumable/menthol);
+	max_integrity = 9999
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -17536,6 +17515,15 @@
 /obj/structure/railing/wooden,
 /obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Zl" = (
+/obj/structure/sink{
+	pixel_y = 16
+	},
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin/snowforest/forest)
 
 (1,1,1) = {"
@@ -51915,9 +51903,9 @@ jS
 uT
 uZ
 uZ
-ve
+vf
 jS
-vk
+Zl
 vo
 vo
 vr
@@ -62097,9 +62085,9 @@ jS
 uT
 uZ
 uZ
-ve
+vf
 jS
-vk
+vl
 vo
 vo
 vr
