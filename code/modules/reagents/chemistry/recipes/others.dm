@@ -586,3 +586,13 @@
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
+
+/datum/chemical_reaction/silverolidification
+	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
+	required_temp = 630
+	mob_react = FALSE
+
+/datum/chemical_reaction/silversolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/stack/sheet/mineral/silver(location)
