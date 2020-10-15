@@ -352,11 +352,11 @@
 		"zone" = get_area_name(src, TRUE),
 		"type" = "Atmospheric"
 	))
-	if(alert_level==2)
+	if(alert_level == AALARM_ALERT_SEVERE)
 		alert_signal.data["alert"] = "severe"
-	else if (alert_level==1)
+	else if (alert_level == AALARM_ALERT_MINOR)
 		alert_signal.data["alert"] = "minor"
-	else if (alert_level==0)
+	else if (alert_level == AALARM_ALERT_CLEAR)
 		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(source, alert_signal, range = -1)
