@@ -20,7 +20,7 @@
 	var/drain = 0 //Drain amount from batteries
 	var/drain_total = 0
 
-	if(cell && cell.charge)
+	if(cell?.charge)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
