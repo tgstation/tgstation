@@ -1,5 +1,5 @@
 /obj/screen/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
+	icon = 'icons/hud/screen_cyborg.dmi'
 
 /obj/screen/robot/module
 	name = "cyborg module"
@@ -69,7 +69,7 @@
 	R.uneq_active()
 
 /datum/hud/robot
-	ui_style = 'icons/mob/screen_cyborg.dmi'
+	ui_style = 'icons/hud/screen_cyborg.dmi'
 
 /datum/hud/robot/New(mob/owner)
 	..()
@@ -165,7 +165,7 @@
 	module_store_icon.hud = src
 
 	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = 'icons/mob/screen_cyborg.dmi'
+	pull_icon.icon = 'icons/hud/screen_cyborg.dmi'
 	pull_icon.screen_loc = ui_borg_pull
 	pull_icon.hud = src
 	pull_icon.update_icon()
@@ -301,7 +301,7 @@
 
 /obj/screen/robot/alerts
 	name = "Alert Panel"
-	icon = 'icons/mob/screen_ai.dmi'
+	icon = 'icons/hud/screen_ai.dmi'
 	icon_state = "alerts"
 
 /obj/screen/robot/alerts/Click()

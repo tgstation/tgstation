@@ -24,9 +24,9 @@
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
-	var/static/radial_examine = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_examine")
-	var/static/radial_eject = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")
-	var/static/radial_use = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_use")
+	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
+	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
+	var/static/radial_use = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use")
 
 	// we show the button even if the proc will not work
 	var/static/list/radial_options = list("eject" = radial_eject, "use" = radial_use)

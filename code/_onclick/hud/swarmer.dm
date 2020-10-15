@@ -1,5 +1,5 @@
 /obj/screen/swarmer
-	icon = 'icons/mob/swarmer.dmi'
+	icon = 'icons/hud/swarmer.dmi'
 
 /obj/screen/swarmer/fabricate_trap
 	icon_state = "ui_trap"
