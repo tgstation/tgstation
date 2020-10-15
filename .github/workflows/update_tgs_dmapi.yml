@@ -1,7 +1,10 @@
 name: Update TGS DMAPI
 
 on:
-  push:
+  on:
+    schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   update-dmapi:
