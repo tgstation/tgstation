@@ -235,7 +235,7 @@
 			C.Paralyze(paralyze_amount)
 			C.stop_pulling()
 		else
-			C.Paralyze(20)
+			C.Immobilize(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
