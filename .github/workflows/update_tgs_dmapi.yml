@@ -40,3 +40,4 @@ jobs:
         pr_label: "Tools"
         pr_assignee: "Cyberboss"
         pr_allow_empty: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
