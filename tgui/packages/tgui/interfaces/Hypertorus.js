@@ -20,6 +20,8 @@ export const Hypertorus = (props, context) => {
     magnetic_constrictor,
     fuel_injection_rate,
     moderator_injection_rate,
+    current_damper,
+    fusion_started,
   } = data;
   const fusion_gases = flow([
     fusion_gases => fusion_gases.filter(gas => gas.amount >= 0.01),
@@ -41,6 +43,14 @@ export const Hypertorus = (props, context) => {
         <Flex>
           <Flex.Item grow={1} basis={0}>
             <LabeledList>
+              <LabeledList.Item label="Tag">
+                <Button
+                  disabled={data.power_level > 2}
+                  icon={data.fusion_started ? 'power-off' : 'times'}
+                  content={data.fusion_started ? 'On' : 'Off'}
+                  selected={data.fusion_started}
+                  onClick={() => act('fusion_started')}/>
+              </LabeledList.Item>
               {fusion_gases.map(gas => (
                 <LabeledList.Item
                   key={gas.name}
@@ -161,6 +171,18 @@ export const Hypertorus = (props, context) => {
                   maxValue={150}
                   onDrag={(e, value) => act('moderator_injection_rate', {
                     moderator_injection_rate: value,
+                  })} />
+              </LabeledList.Item>
+              <LabeledList.Item label="Current Damper">
+                <NumberInput
+                  animated
+                  value={parseFloat(data.current_damper)}
+                  width="63px"
+                  unit="mol/s"
+                  minValue={0}
+                  maxValue={5}
+                  onDrag={(e, value) => act('current_damper', {
+                    current_damper: value,
                   })} />
               </LabeledList.Item>
             </LabeledList>

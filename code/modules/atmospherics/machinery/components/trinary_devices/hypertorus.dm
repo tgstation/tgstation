@@ -141,7 +141,7 @@
 	icon_state = "core"
 	circuit = /obj/item/circuitboard/machine/hypertorus/core
 
-	var/fusing = FALSE
+	var/fusion_started = FALSE
 	var/obj/machinery/hypertorus/interface/linked_interface
 	var/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input/linked_moderator
 	var/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input/linked_input
@@ -199,6 +199,8 @@
 	var/waste_remove = FALSE
 	var/heating_conductor = 1
 	var/magnetic_constrictor  = 1
+	var/current_damper = 0
+	var/power_level = 0
 
 	var/fuel_injection_rate = 25
 	var/moderator_injection_rate = 25
@@ -280,7 +282,6 @@
 	if(!active)
 		message_admins("YES")
 		active = TRUE
-		fusing = TRUE
 		linked_interface.active = TRUE
 		linked_input.active = TRUE
 		linked_output.active = TRUE
@@ -315,15 +316,17 @@
 		deactivate()
 		return
 
+	if(!check_fuel())
+		return
+
+	if(!fusion_started)
+		return
+
 	//Start by storing the gasmix of the inputs
 	buffer = linked_input.airs[1].remove(fuel_injection_rate)
 	internal_fusion.merge(buffer)
-	if(buffer)
-		buffer.clear()
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
 	moderator_internal.merge(buffer)
-	if(buffer)
-		buffer.clear()
 
 	///Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -369,8 +372,10 @@
 	var/gas_power = 0
 	for (var/gas_id in internal_fusion.gases)
 		gas_power += (internal_fusion.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * internal_fusion.gases[gas_id][MOLES])
+	for (var/gas_id in moderator_internal.gases)
+		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size)
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper
 	///Effective reaction instability
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -406,10 +411,20 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	///Hotter air is easier to heat up and cool down
-	if(internal_fusion.total_moles() > 0) //prevent initial division by zero runtime
-		heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
+	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+
+	if(heat_output < 10000)
+		power_level = 0
+	else if(heat_output < 100000)
+		power_level = 1
+	else if(heat_output < 1e6)
+		power_level = 2
+	else if(heat_output < 1e7)
+		power_level = 3
+	else
+		power_level = 4
 
 	//better gas usage and consumption
 	//To do
@@ -536,6 +551,8 @@
 	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
 	data["fuel_injection_rate"] = connected_core.fuel_injection_rate
 	data["moderator_injection_rate"] = connected_core.moderator_injection_rate
+	data["current_damper"] = connected_core.current_damper
+	data["fusion_started"] = connected_core.fusion_started
 
 	return data
 
@@ -544,6 +561,9 @@
 	if(.)
 		return
 	switch(action)
+		if("fusion_started")
+			connected_core.fusion_started = !connected_core.fusion_started
+			. = TRUE
 		if("heating_conductor")
 			var/heating_conductor = params["heating_conductor"]
 			if(text2num(heating_conductor) != null)
@@ -572,6 +592,13 @@
 				. = TRUE
 			if(.)
 				connected_core.moderator_injection_rate = clamp(0.5, moderator_injection_rate, 150)
+		if("current_damper")
+			var/current_damper = params["current_damper"]
+			if(text2num(current_damper) != null)
+				current_damper = text2num(current_damper)
+				. = TRUE
+			if(.)
+				connected_core.current_damper = clamp(0, current_damper, 5)
 
 /obj/machinery/hypertorus/corner
 	name = "hypertorus_corner"
