@@ -442,3 +442,36 @@
 	attack_verb_simple = list("pumps", "siphons")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+
+/obj/item/orbitoclast
+	name = "orbitoclast"
+	desc = "a modern spin on the infamous device, now able to project holo-spikes."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "orbitoclast"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=3000, /datum/material/silver=500)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL | EYE_STAB
+	force = 8
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb_continuous = list("tries to lobotomize", "stabs")
+	attack_verb_simple = list("try to lobotomize", "stab")
+	tool_behaviour = TOOL_ORBITOCLAST
+	toolspeed = 1
+
+/obj/item/hammer
+	name = "hammer"
+	desc = "hammer."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hammer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=5000)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	force = 5
+	attack_verb_continuous = list("bonks", "hammers")
+	attack_verb_simple = list("bonk", "hammer")
+	tool_behaviour = TOOL_HAMMER
+	tool_speed = 1
