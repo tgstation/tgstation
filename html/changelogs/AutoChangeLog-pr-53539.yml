@@ -1,0 +1,12 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a lot of animal masks not counting as small objects."
+  - bugfix: "Fixed horse / pig / cow masks not being counter as face coverings in mask checks."
+  - bugfix: "Fixed a consistency issue where picking up some cursed masks and equipping it wasn't sending the playing a message that the mask was cursed."
+  - bugfix: "Fixed a minor inconsistency between the descriptions of cursed masks."
+  - bugfix: "Fixed cow masks not fully covering a player's head in certain directions."
+  - admin: "Admins are now able to varedit an animal masks' cursed var to change if it's cursed or not!"
+  - admin: "Admins can now change the phrases that cursed masks say."
+  - admin: "Admins can now enable and disable a mask's speech effects by editing it's modifies_speech variable."
+  - rscadd: "Added more animal masks to the pool for wizard mask spells!"
