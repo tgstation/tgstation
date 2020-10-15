@@ -475,7 +475,7 @@
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
 	var/static/datum/callback/rest_checks = CALLBACK(src, .proc/rest_checks_callback)
-	if(!instant && !do_mob(src, src, 1 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
+	if(!instant && !do_mob(src, src, 1 SECONDS, ignore_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = rest_checks))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
