@@ -10,22 +10,26 @@ jobs:
     steps:
     - name: Clone
       uses: actions/checkout@v2
+
     - name: Branch
       run: |
         git branch -f tgs-dmapi-update
         git checkout tgs-dmapi-update
         git reset --hard master
+
     - name: Apply DMAPI update
       uses: tgstation/tgs-dmapi-updater@v2
       with:
         header-path: 'code/__DEFINES/tgs.dm'
         library-path: 'code/modules/tgs'
+
     - name: Commit and Push
       run: |
         git config user.name tgstation-server
         git config user.email tgstation-server@users.noreply.github.Commit
         git commit -a -m 'Update TGS DMAPI'
         git push -f -u origin tgs-dmapi-update
+
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
       with:
