@@ -111,8 +111,6 @@
 
 /// Proc to hook user-enacted teleporting behavior and keep logging of the event.
 /atom/movable/proc/admin_teleport(atom/new_location)
-	if(IsAdminAdvancedProcCall())
-		return
 	if(isnull(new_location))
 		log_admin("[key_name(usr)] teleported [key_name(src)] to nullspace")
 		moveToNullspace()
