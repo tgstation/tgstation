@@ -49,7 +49,7 @@ export const Hypertorus = (props, context) => {
                   icon={data.fusion_started ? 'power-off' : 'times'}
                   content={data.fusion_started ? 'On' : 'Off'}
                   selected={data.fusion_started}
-                  onClick={() => act('fusion_started')}/>
+                  onClick={() => act('fusion_started')} />
               </LabeledList.Item>
               {fusion_gases.map(gas => (
                 <LabeledList.Item
