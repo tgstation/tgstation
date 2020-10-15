@@ -587,7 +587,7 @@
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
 
-/datum/chemical_reaction/silverolidification
+/datum/chemical_reaction/silversolidification
 	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
 	required_temp = 630
 	mob_react = FALSE
