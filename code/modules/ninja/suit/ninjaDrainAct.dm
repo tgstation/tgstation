@@ -287,3 +287,20 @@
 		var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
 		if(objective)
 			objective.completed = TRUE
+
+//CARBON MOBS//
+/mob/living/carbon/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
+	if(!ninja_suit || !ninja || !ninja_gloves)
+		return INVALID_DRAIN
+
+	. = DRAIN_MOB_SHOCK_FAILED
+
+	//Default cell = 10,000 charge, 10,000/1000 = 10 uses without charging/upgrading
+	if(ninja_suit.cell?.charge && ninja_suit.cell.use(1000))
+		. = DRAIN_MOB_SHOCK
+		//Got that electric touch
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+		spark_system.set_up(5, 0, loc)
+		playsound(src, "sparks", 50, TRUE)
+		visible_message("<span class='danger'>[ninja] electrocutes [src] with [ninja.p_their()] touch!</span>", "<span class='userdanger'>[ninja] electrocutes you with [ninja.p_their()] touch!</span>")
+		Knockdown(3 SECONDS)
