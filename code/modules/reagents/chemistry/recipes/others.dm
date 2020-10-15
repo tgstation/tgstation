@@ -594,5 +594,5 @@
 
 /datum/chemical_reaction/silversolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
