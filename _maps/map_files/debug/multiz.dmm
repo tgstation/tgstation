@@ -40,7 +40,6 @@
 /area/engine/gravity_generator)
 "al" = (
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -62,7 +61,6 @@
 /area/space/nearstation)
 "ap" = (
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -83,7 +81,6 @@
 	charge = 5e+006
 	},
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -397,7 +394,6 @@
 	pixel_x = -25
 	},
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -427,7 +423,6 @@
 /area/hallway/primary/central)
 "bG" = (
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -491,7 +486,6 @@
 /area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -752,7 +746,6 @@
 /area/construction)
 "da" = (
 /obj/machinery/airalarm{
-	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
