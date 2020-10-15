@@ -22,7 +22,7 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_offline.dmm"
 
-/datum/map_template/holodeck/lounge//the l in lounge starts after space 29
+/datum/map_template/holodeck/lounge
 	name = "Holodeck - Lounge"
 	template_id = "holodeck_lounge"
 	description = "benis"

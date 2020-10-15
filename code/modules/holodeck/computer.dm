@@ -7,9 +7,10 @@
 	If you don't wish this, set it to the offline program or another of your choosing.
 
 	You can use this to add holodecks with minimal code:
-	1) Define new areas for the holodeck programs
-	2) Map them
-	3) Create a new control console that uses those areas
+	1) Define new areas for the holodeck programs in code/game/area/areas/holodeck
+	2) Define new map template datums in code/modules/holodeck/holodeck
+	3) Create the new map templates in _maps/templates
+	4) Create a new control console that uses those templates
 
 	Non-mapped areas should be skipped but you should probably comment them out anyway.
 	The base of program_type will always be ignored; only subtypes will be loaded.
@@ -26,8 +27,9 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
+	var/area/mappedstartarea = /area/holodeck/rec_center/offline //var edit this to a different area if youre making a second holodeck different from the station one
 	var/area/holodeck/loaded
-	var/program = "holodeck_offline"//should these still be area vars after refactoring? what else can i use?
+	var/program = "holodeck_offline"
 	var/last_program
 	var/offline_program = "holodeck_offline"
 
@@ -55,7 +57,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
-	linked = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
+	linked = GLOB.areas_by_type[mappedstartarea]
 	bottom_left = locate(linked.x, linked.y, src.z)
 
 	var/area/AS = get_area(src)
@@ -190,7 +192,7 @@
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	return ..()
-//FUCKING DO IT PUSSY
+
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/A = typekey
@@ -300,12 +302,10 @@
 
 	for(var/L in turfs)
 		var/turf/B = L
-		//atoms += B
 		areas |= B.loc
 		for(var/atom/A in B)
-			if (!(A.flags_1 & INITIALIZED_1))
+			if (!(A.flags_1 & INITIALIZED_1))//anything in the parsed map that hasnt been initialized is something spawned from the holodeck, so add it to newatoms
 				newatoms += A
-
 			else
 				atoms += A
 
@@ -318,7 +318,7 @@
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(turfs)
 	SSatoms.InitializeAtoms(atoms)
-	SSatoms.InitializeAtoms(newatoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
+	SSatoms.InitializeAtoms(newatoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
@@ -356,28 +356,30 @@
 
 	use_power = active + IDLE_POWER_USE
 	program = map_id
-	if (spawned)
+
+	if (spawned)//clear the items from the previous program
 		for (var/atom/item in spawned)
 			derez(item)
 
 	template = SSmapping.holodeck_templates[map_id]
-	template.load(bottom_left, FALSE)//this actually loads the holodeck simulation into the map
+	template.load(bottom_left, FALSE)//this is what actually loads the holodeck simulation into the map
 	spawned += template.spawned_atoms
 
-	for (var/atom/atom in spawned)
-		if (atom.flags_1 & INITIALIZED_1)
-			atom.flags_1 |= HOLOGRAM_1
 	linked = get_area(bottom_left)
 	linked.linked = src
-	for (var/obj/obbies in spawned)
-		if (istype(obbies, /obj))
+
+	for (var/atom/atoms in spawned)//TODO: merge this ugly codeblock with finish_spawn()
+		if (atoms.flags_1 & INITIALIZED_1)
+			atoms.flags_1 |= HOLOGRAM_1
+		if (istype(atoms, /obj))
+			var/obj/obbies = atoms
 			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 			if (ismachinery(obbies))
-				var/obj/machinery/M = obbies
-				M.power_change()
-				if(istype(M, /obj/machinery/button))
-					var/obj/machinery/button/B = M
-					B.setup_device()
+				var/obj/machinery/machines = obbies
+				machines.power_change()
+				if(istype(machines, /obj/machinery/button))
+					var/obj/machinery/button/buttons = machines
+					buttons.setup_device()
 
 	finish_spawn()
 
@@ -395,7 +397,7 @@
 	for(var/obj/structure/S in added)
 		S.flags_1 |= NODECONSTRUCT_1
 
-/obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
+/obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
 	if(!O)
 		return
 

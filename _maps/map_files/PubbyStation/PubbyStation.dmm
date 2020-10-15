@@ -7966,7 +7966,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "aus" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -40855,8 +40855,8 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cjx" = (
@@ -41807,8 +41807,8 @@
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cnr" = (
@@ -54937,7 +54937,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "qLp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -57991,7 +57991,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "uTI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

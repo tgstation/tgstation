@@ -33160,7 +33160,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "bnT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -70867,7 +70867,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "cFG" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck - Fore 1";
@@ -70876,7 +70876,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "cFH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -77650,7 +77650,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "cTj" = (
 /obj/structure/table,
 /obj/item/extinguisher/mini,
@@ -115227,7 +115227,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "xXn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,

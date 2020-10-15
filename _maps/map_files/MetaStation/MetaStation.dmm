@@ -2342,7 +2342,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "afE" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -53827,8 +53827,8 @@
 /area/science/test_area)
 "cDz" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "cDD" = (
@@ -73264,7 +73264,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "pwn" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -73840,7 +73840,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "qif" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/morgue";

@@ -7886,7 +7886,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "arp" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -37007,8 +37007,8 @@
 /area/icemoon/surface/outdoors)
 "bLq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "bLr" = (
@@ -53720,7 +53720,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "pHl" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
@@ -54548,7 +54548,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center/offline)
 "sgR" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green,
