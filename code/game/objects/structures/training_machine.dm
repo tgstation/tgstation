@@ -34,10 +34,8 @@
 	var/move_speed = 1
 	///Reference to a potentially attached object, either a target, trainer toolbox, or syndicate toolbox
 	var/obj/item/attached_item
-	///Time between attacks when emagged
-	var/attack_cooldown = 50
 	///Helper for timing attacks when emagged
-	var/last_attack_time = 0
+	COOLDOWN_DECLARE(attack_cooldown)
 
 /obj/structure/training_machine/Destroy()
 	remove_attached_item(throwing = TRUE)
@@ -183,7 +181,7 @@
 /obj/structure/training_machine/proc/try_attack()
 	if (!attached_item || istype(attached_item, /obj/item/target))
 		return
-	if (world.time < last_attack_time + attack_cooldown)
+	if (!COOLDOWN_FINISHED(src, attack_cooldown))
 		return
 	var/list/targets
 	for(var/mob/living/carbon/target in oview(1, get_turf(src))) //Find adjacent target
@@ -196,8 +194,7 @@
 	if (obj_flags & EMAGGED)
 		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST)
 	playsound(src, 'sound/weapons/smash.ogg', 25, TRUE)
-	last_attack_time = world.time
-	attack_cooldown = rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY)
+	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || attached_item)
