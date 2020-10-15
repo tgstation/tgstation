@@ -18,6 +18,8 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
+	pipe_state = "uvent"
+
 	var/id_tag = null
 	var/pump_direction = RELEASING
 
@@ -30,25 +32,36 @@
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
 
-	pipe_state = "uvent"
+	var/datum/airalarm_control/control
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
+		// If we do not have a name, assign one.
+		// Produces names like "Port Quarter Solar vent pump hZ2l6".
+		var/area/vent_area = get_area(src)
+		name = "\proper [vent_area.name] vent pump [assign_random_name()]"
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/atmospherics/components/unary/vent_pump/LateInitialize()
+	register_with_area_control()
+	RegisterSignal(src, COMSIG_AREA_ENTERED, .proc/on_area_change)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	var/area/vent_area = get_area(src)
-	if(vent_area)
-		vent_area.air_vent_info -= id_tag
-		GLOB.air_vent_names -= id_tag
-
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
+	control.unregister_vent(src)
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/on_area_change()
+	control.unregister_vent(src)
+	register_with_area_control()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/register_with_area_control()
+	var/area/current_area = get_area(src)
+	current_area.ensure_air_control()
+	current_area.air_control.register_vent(src)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
@@ -141,7 +154,7 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency,radio_filter_in)
+		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -160,22 +173,11 @@
 		"sigtype" = "status"
 	))
 
-	var/area/vent_area = get_area(src)
-	if(!GLOB.air_vent_names[id_tag])
-		// If we do not have a name, assign one.
-		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		name = "\proper [vent_area.name] vent pump [assign_random_name()]"
-		GLOB.air_vent_names[id_tag] = name
-
-	vent_area.air_vent_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	radio_connection.post_signal(src, signal)
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
-	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()

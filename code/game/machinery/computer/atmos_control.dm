@@ -2,129 +2,143 @@
 // AIR SENSOR (found in gas tanks)
 /////////////////////////////////////////////////////////////
 
-/obj/machinery/air_sensor
-	name = "gas sensor"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "gsensor1"
-	resistance_flags = FIRE_PROOF
-
-	var/on = TRUE
-
+/obj/machinery/air_sensor/atmos
 	var/id_tag
+	var/on = TRUE
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/air_sensor/atmos/toxin_tank
-	name = "plasma tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOX
-/obj/machinery/air_sensor/atmos/toxins_mixing_tank
-	name = "toxins mixing gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB
-/obj/machinery/air_sensor/atmos/oxygen_tank
-	name = "oxygen tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_O2
-/obj/machinery/air_sensor/atmos/nitrogen_tank
-	name = "nitrogen tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2
-/obj/machinery/air_sensor/atmos/mix_tank
-	name = "mix tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIX
-/obj/machinery/air_sensor/atmos/nitrous_tank
-	name = "nitrous oxide tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2O
-/obj/machinery/air_sensor/atmos/air_tank
-	name = "air mix tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_AIR
-/obj/machinery/air_sensor/atmos/carbon_tank
-	name = "carbon dioxide tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
-/obj/machinery/air_sensor/atmos/bz_tank
-	name = "bz tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_BZ
-/obj/machinery/air_sensor/atmos/freon_tank
-	name = "freon tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_FREON
-/obj/machinery/air_sensor/atmos/halon_tank
-	name = "halon tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HALON
-/obj/machinery/air_sensor/atmos/healium_tank
-	name = "healium tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEALIUM
-/obj/machinery/air_sensor/atmos/hexane_tank
-	name = "hexane tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEXANE
-/obj/machinery/air_sensor/atmos/hydrogen_tank
-	name = "hydrogen tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2
-/obj/machinery/air_sensor/atmos/hypernoblium_tank
-	name = "hypernoblium tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM
-/obj/machinery/air_sensor/atmos/miasma_tank
-	name = "miasma tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIASMA
-/obj/machinery/air_sensor/atmos/nitryl_tank
-	name = "nitryl tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_NO2
-/obj/machinery/air_sensor/atmos/pluoxium_tank
-	name = "pluoxium tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM
-/obj/machinery/air_sensor/atmos/proto_nitrate_tank
-	name = "proto-nitrate tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE
-/obj/machinery/air_sensor/atmos/stimulum_tank
-	name = "stimulum tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_STIMULUM
-/obj/machinery/air_sensor/atmos/tritium_tank
-	name = "tritium tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_TRITIUM
-/obj/machinery/air_sensor/atmos/water_vapor_tank
-	name = "water vapor tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2O
-/obj/machinery/air_sensor/atmos/zauker_tank
-	name = "zauker tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_ZAUKER
-/obj/machinery/air_sensor/atmos/incinerator_tank
-	name = "incinerator chamber gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
+/obj/machinery/air_sensor/atmos/Initialize()
+	. = ..()
+	set_frequency(frequency)
 
-/obj/machinery/air_sensor/update_icon_state()
-	icon_state = "gsensor[on]"
+/obj/machinery/air_sensor/atmos/Destroy()
+	SSradio.remove_object(src, frequency)
+	return ..()
 
-/obj/machinery/air_sensor/process_atmos()
-	if(on)
-		var/datum/gas_mixture/air_sample = return_air()
+/obj/machinery/air_sensor/atmos/register_with_area_control()
+	// No-op, these sensors aren't used for air alarms
+	return
 
+/obj/machinery/air_sensor/atmos/process_atmos()
+	..()
+	if(on && last_read)
 		var/datum/signal/signal = new(list(
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
-			"pressure" = air_sample.return_pressure(),
-			"temperature" = air_sample.temperature,
+			"pressure" = last_read.return_pressure(),
+			"temperature" = last_read.temperature,
 			"gases" = list()
 		))
-		var/total_moles = air_sample.total_moles()
+		var/total_moles = last_read.total_moles()
 		if(total_moles)
-			for(var/gas_id in air_sample.gases)
-				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
-				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
+			for(var/gas_id in last_read.gases)
+				var/gas_name = last_read.gases[gas_id][GAS_META][META_GAS_NAME]
+				signal.data["gases"][gas_name] = last_read.gases[gas_id][MOLES] / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-
-/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
+/obj/machinery/air_sensor/atmos/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/air_sensor/Initialize()
-	. = ..()
-	SSair.start_processing_machine(src)
-	set_frequency(frequency)
+/obj/machinery/air_sensor/atmos/toxin_tank
+	name = "plasma tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOX
 
-/obj/machinery/air_sensor/Destroy()
-	SSair.stop_processing_machine(src)
-	SSradio.remove_object(src, frequency)
-	return ..()
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank
+	name = "toxins mixing gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB
+
+/obj/machinery/air_sensor/atmos/oxygen_tank
+	name = "oxygen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_O2
+
+/obj/machinery/air_sensor/atmos/nitrogen_tank
+	name = "nitrogen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2
+
+/obj/machinery/air_sensor/atmos/mix_tank
+	name = "mix tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIX
+
+/obj/machinery/air_sensor/atmos/nitrous_tank
+	name = "nitrous oxide tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2O
+
+/obj/machinery/air_sensor/atmos/air_tank
+	name = "air mix tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_AIR
+
+/obj/machinery/air_sensor/atmos/carbon_tank
+	name = "carbon dioxide tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
+
+/obj/machinery/air_sensor/atmos/bz_tank
+	name = "bz tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_BZ
+
+/obj/machinery/air_sensor/atmos/freon_tank
+	name = "freon tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_FREON
+
+/obj/machinery/air_sensor/atmos/halon_tank
+	name = "halon tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HALON
+
+/obj/machinery/air_sensor/atmos/healium_tank
+	name = "healium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEALIUM
+
+/obj/machinery/air_sensor/atmos/hexane_tank
+	name = "hexane tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEXANE
+
+/obj/machinery/air_sensor/atmos/hydrogen_tank
+	name = "hydrogen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2
+
+/obj/machinery/air_sensor/atmos/hypernoblium_tank
+	name = "hypernoblium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM
+
+/obj/machinery/air_sensor/atmos/miasma_tank
+	name = "miasma tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIASMA
+
+/obj/machinery/air_sensor/atmos/nitryl_tank
+	name = "nitryl tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_NO2
+
+/obj/machinery/air_sensor/atmos/pluoxium_tank
+	name = "pluoxium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM
+
+/obj/machinery/air_sensor/atmos/proto_nitrate_tank
+	name = "proto-nitrate tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE
+
+/obj/machinery/air_sensor/atmos/stimulum_tank
+	name = "stimulum tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_STIMULUM
+
+/obj/machinery/air_sensor/atmos/tritium_tank
+	name = "tritium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TRITIUM
+
+/obj/machinery/air_sensor/atmos/water_vapor_tank
+	name = "water vapor tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2O
+
+/obj/machinery/air_sensor/atmos/zauker_tank
+	name = "zauker tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_ZAUKER
+
+/obj/machinery/air_sensor/atmos/incinerator_tank
+	name = "incinerator chamber gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
 /////////////////////////////////////////////////////////////
 // GENERAL AIR CONTROL (a.k.a atmos computer)
@@ -419,7 +433,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		name = "[uppertext(S)] Supply Control"
 		var/list/new_devices = freq.devices["atmosia"]
 		sensors.Cut()
-		for(var/obj/machinery/air_sensor/U in new_devices)
+		for(var/obj/machinery/air_sensor/atmos/U in new_devices)
 			var/list/text = splittext(U.id_tag, "_")
 			if(text[1] == S)
 				sensors = list("[S]_sensor" = "[S] Tank")

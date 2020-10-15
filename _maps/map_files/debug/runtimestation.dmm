@@ -2147,6 +2147,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"if" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2242,6 +2248,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/science)
+"pD" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pI" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2253,6 +2263,11 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"qI" = (
+/obj/structure/cable,
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/science)
 "qQ" = (
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -2381,6 +2396,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"AN" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/construction)
 "AP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -2410,6 +2429,10 @@
 /obj/structure/closet/syndicate/resources/everything,
 /turf/open/floor/plasteel,
 /area/science)
+"CN" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/medical/medbay)
 "CQ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line{
@@ -2461,6 +2484,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
+"EJ" = (
+/obj/structure/cable,
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/bridge)
 "ES" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2475,6 +2503,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"GE" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/engine/atmos)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2520,6 +2552,10 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"Lv" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "Ly" = (
 /obj/machinery/chem_dispenser/chem_synthesizer,
 /turf/open/floor/plasteel/dark,
@@ -2556,6 +2592,14 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/plasteel,
 /area/science)
+"PC" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
+"Qe" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "Qt" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2590,6 +2634,10 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
+"SP" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "Td" = (
 /obj/machinery/light{
 	dir = 4
@@ -2603,6 +2651,13 @@
 /obj/machinery/door/poddoor,
 /turf/open/floor/engine,
 /area/hallway/secondary/entry)
+"Tq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningoffice)
 "Tt" = (
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -2671,6 +2726,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"Xh" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "Xp" = (
 /obj/machinery/light,
 /obj/structure/tank_dispenser{
@@ -2704,10 +2763,22 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science)
+"Zr" = (
+/obj/structure/cable,
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"ZE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 
 (1,1,1) = {"
 aa
@@ -3742,7 +3813,7 @@ rK
 un
 rK
 rK
-rK
+Tq
 vy
 em
 eh
@@ -4021,7 +4092,7 @@ qQ
 qQ
 CQ
 em
-eh
+pD
 eh
 LW
 lc
@@ -4033,7 +4104,7 @@ lc
 lc
 wB
 eh
-eh
+pD
 dY
 aa
 aa
@@ -4962,7 +5033,7 @@ aa
 aa
 en
 eh
-eh
+pD
 dY
 aa
 aa
@@ -5683,7 +5754,7 @@ eh
 eV
 eh
 eh
-eh
+pD
 eh
 eh
 eV
@@ -5765,7 +5836,7 @@ aD
 bH
 ci
 ci
-ci
+if
 ci
 ci
 eg
@@ -6129,7 +6200,7 @@ aa
 ah
 am
 ax
-aw
+GE
 ba
 jE
 MY
@@ -6228,7 +6299,7 @@ zo
 ah
 Yy
 bD
-XC
+qI
 gY
 jb
 ES
@@ -6516,7 +6587,7 @@ dn
 dn
 dn
 dn
-dn
+AN
 dn
 dn
 dn
@@ -6780,7 +6851,7 @@ sE
 ab
 bv
 BG
-cf
+EJ
 BD
 bu
 dU
@@ -6876,7 +6947,7 @@ cf
 cq
 cw
 Wq
-bE
+Lv
 bE
 ef
 cY
@@ -7416,7 +7487,7 @@ aa
 aa
 aj
 aq
-Vy
+Zr
 Vy
 aE
 aT
@@ -7609,7 +7680,7 @@ ak
 ak
 bQ
 Ce
-Ce
+PC
 cj
 vP
 Mh
@@ -7787,7 +7858,7 @@ af
 ak
 at
 Wx
-bh
+ZE
 bh
 br
 ak
@@ -7806,7 +7877,7 @@ dD
 dJ
 dI
 dJ
-dJ
+Qe
 dJ
 dJ
 dJ
@@ -8089,7 +8160,7 @@ dJ
 dN
 cS
 gH
-fO
+SP
 fO
 fb
 fp
@@ -8254,7 +8325,7 @@ by
 bW
 cm
 cm
-cm
+CN
 cm
 cm
 cL
@@ -8629,7 +8700,7 @@ by
 by
 eu
 eu
-eu
+Xh
 eQ
 eu
 fa

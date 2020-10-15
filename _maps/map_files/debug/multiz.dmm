@@ -40,7 +40,7 @@
 /area/engine/gravity_generator)
 "al" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -62,7 +62,7 @@
 /area/space/nearstation)
 "ap" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -83,7 +83,7 @@
 	charge = 5e+006
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -397,7 +397,7 @@
 	pixel_x = -25
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -427,7 +427,7 @@
 /area/hallway/primary/central)
 "bG" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -491,7 +491,7 @@
 /area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -752,7 +752,7 @@
 /area/construction)
 "da" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
+	!INVALID_VAR! = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -821,6 +821,10 @@
 	},
 /turf/open/floor/plating,
 /area/storage/primary)
+"dv" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/engine/atmos)
 "dx" = (
 /obj/machinery/light{
 	dir = 4
@@ -1160,6 +1164,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"hh" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
@@ -1357,6 +1365,10 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"qC" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9;
@@ -1487,6 +1499,10 @@
 /obj/structure/lattice,
 /turf/open/transparent/openspace,
 /area/engine/storage)
+"xY" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/construction)
 "yl" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1670,6 +1686,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"If" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"Il" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "In" = (
 /obj/structure/railing{
 	dir = 4
@@ -1785,6 +1809,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Qp" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "Qw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1804,6 +1832,10 @@
 /obj/item/construction/plumbing,
 /turf/open/floor/plasteel,
 /area/construction)
+"SH" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/bridge)
 "SN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1816,6 +1848,10 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"TE" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plating,
+/area/engine/storage)
 "TH" = (
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1874,6 +1910,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Ze" = (
+/obj/machinery/air_sensor,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "Zk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2670,7 +2710,7 @@ Dm
 ah
 am
 ax
-aw
+dv
 ba
 bk
 bt
@@ -2730,7 +2770,7 @@ bl
 ah
 bD
 bO
-bO
+Il
 bO
 gY
 bO
@@ -2903,7 +2943,7 @@ Fs
 Fs
 iq
 dn
-dn
+xY
 dn
 dn
 dn
@@ -3054,7 +3094,7 @@ ag
 bv
 bI
 cf
-eb
+SH
 bu
 cD
 bE
@@ -3426,7 +3466,7 @@ af
 aj
 aq
 yl
-yl
+If
 yl
 yl
 bx
@@ -3594,7 +3634,7 @@ bq
 ak
 bR
 bE
-bE
+Il
 bO
 gY
 bO
@@ -3655,7 +3695,7 @@ bE
 bE
 cV
 dJ
-dJ
+Qp
 dB
 dl
 dE
@@ -3858,7 +3898,7 @@ Dm
 ak
 dV
 aK
-dV
+Ze
 bi
 dV
 by
@@ -3919,7 +3959,7 @@ by
 bW
 eo
 eo
-eo
+hh
 eo
 eo
 cL
@@ -5712,7 +5752,7 @@ Gb
 Gb
 nF
 Gb
-Gb
+qC
 Gb
 Gb
 Gb
@@ -8522,7 +8562,7 @@ TH
 Vm
 TH
 TH
-TH
+TE
 TH
 TH
 Pz
