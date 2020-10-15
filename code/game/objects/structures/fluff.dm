@@ -679,7 +679,7 @@
 	icon_state = "rat_bust"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
 
@@ -707,5 +707,16 @@
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
 	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy2 // nalzul
+	name = "\improper Reliquia De La Antigua Casa"
+	desc = "An ancient artpiece that has been redrawn over and over again until we received this as a final product. Still looks very prestigious!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "i_am_not_good_at_art"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
