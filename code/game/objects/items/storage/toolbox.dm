@@ -183,6 +183,9 @@
 	desc = "<span class='greentext'>You're winner!</span> <span class='small'>Warning: not intended for combat purposes.</span>"
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
+	max_integrity = 9999
+	armor = list(MELEE = 90, BULLET = 90, LASER = 90, ENERGY = 90, BOMB = 100, BIO = 100, RAD = 0, FIRE = 100, ACID = 100)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	force = 20 // 20
 	throwforce = 24 // old trophy toolbox force damage.
 	w_class = WEIGHT_CLASS_NORMAL
