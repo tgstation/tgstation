@@ -1,5 +1,5 @@
 /atom/movable/screen/swarmer
-	icon = 'icons/mob/swarmer.dmi'
+	icon = 'icons/hud/swarmer.dmi'
 
 /atom/movable/screen/swarmer/fabricate_trap
 	icon_state = "ui_trap"

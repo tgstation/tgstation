@@ -1,5 +1,5 @@
 /datum/hud/guardian
-	ui_style = 'icons/mob/guardian.dmi'
+	ui_style = 'icons/hud/guardian.dmi'
 
 /datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
 	..()
@@ -69,7 +69,7 @@
 		static_inventory += using
 
 	pull_icon = new /atom/movable/screen/pull()
-	pull_icon.icon = 'icons/mob/guardian.dmi'
+	pull_icon.icon = 'icons/hud/guardian.dmi'
 	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_living_pull
 	pull_icon.hud = src
@@ -116,7 +116,7 @@
 	..()
 
 /atom/movable/screen/guardian
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'icons/hud/guardian.dmi'
 
 /atom/movable/screen/guardian/manifest
 	icon_state = "manifest"

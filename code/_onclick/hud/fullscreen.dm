@@ -57,7 +57,7 @@
 				client.screen -= screen
 
 /atom/movable/screen/fullscreen
-	icon = 'icons/mob/screen_full.dmi'
+	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
@@ -115,22 +115,22 @@
 	icon_state = "impairedoverlay"
 
 /atom/movable/screen/fullscreen/flash
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
 /atom/movable/screen/fullscreen/flash/static
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
 /atom/movable/screen/fullscreen/color_vision
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	alpha = 80
@@ -145,7 +145,7 @@
 	color = "#0000ff"
 
 /atom/movable/screen/fullscreen/cinematic_backdrop
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
@@ -154,7 +154,7 @@
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/lighting_backdrop
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "flash"
 	transform = matrix(200, 0, 0, 0, 200, 0)
 	plane = LIGHTING_PLANE

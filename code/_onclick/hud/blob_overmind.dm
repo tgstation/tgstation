@@ -1,6 +1,6 @@
 
 /atom/movable/screen/blob
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/hud/blob.dmi'
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")

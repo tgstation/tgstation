@@ -85,10 +85,10 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_icon()
 
-/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[idnum][i]"
+		network += "[port.id]_[i]"
 
 /obj/machinery/proc/create_prox_monitor()
 	if(!proximity_monitor)

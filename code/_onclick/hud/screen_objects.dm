@@ -8,7 +8,7 @@
 */
 /atom/movable/screen
 	name = ""
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 	animate_movement = SLIDE_STEPS
@@ -76,7 +76,7 @@
 
 /atom/movable/screen/skills
 	name = "skills"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "skills"
 	screen_loc = ui_skill_menu
 
@@ -87,13 +87,13 @@
 
 /atom/movable/screen/craft
 	name = "crafting menu"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
 /atom/movable/screen/area_creator
 	name = "create new area"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "area_edit"
 	screen_loc = ui_building
 
@@ -108,7 +108,7 @@
 
 /atom/movable/screen/language_menu
 	name = "language menu"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
 
@@ -193,7 +193,7 @@
 
 /atom/movable/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
-	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
+	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
 /atom/movable/screen/inventory/hand/update_overlays()
@@ -201,7 +201,7 @@
 
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
+		handcuff_overlay = mutable_appearance('icons/hud/screen_gen.dmi', state)
 
 	if(!hud?.mymob)
 		return
@@ -257,7 +257,7 @@
 
 /atom/movable/screen/drop
 	name = "drop"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -294,11 +294,11 @@
 		return ..()
 
 /atom/movable/screen/act_intent/alien
-	icon = 'icons/mob/screen_alien.dmi'
+	icon = 'icons/hud/screen_alien.dmi'
 	screen_loc = ui_movi
 
 /atom/movable/screen/act_intent/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
+	icon = 'icons/hud/screen_cyborg.dmi'
 	screen_loc = ui_borg_intents
 
 /atom/movable/screen/internals
@@ -368,7 +368,7 @@
 
 /atom/movable/screen/mov_intent
 	name = "run/walk toggle"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "running"
 
 /atom/movable/screen/mov_intent/Click()
@@ -388,7 +388,7 @@
 
 /atom/movable/screen/pull
 	name = "stop pulling"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
 
 /atom/movable/screen/pull/Click()
@@ -404,7 +404,7 @@
 
 /atom/movable/screen/resist
 	name = "resist"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -416,7 +416,7 @@
 
 /atom/movable/screen/rest
 	name = "rest"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -461,7 +461,7 @@
 
 /atom/movable/screen/throw_catch
 	name = "throw/catch"
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_throw_off"
 
 /atom/movable/screen/throw_catch/Click()
@@ -473,7 +473,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/overlay_icon = 'icons/mob/screen_gen.dmi'
+	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
 
@@ -515,7 +515,7 @@
 	vis_contents += overlay_object
 
 /obj/effect/overlay/zone_sel
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
@@ -582,11 +582,11 @@
 	. += mutable_appearance(overlay_icon, "[hud.mymob.zone_selected]")
 
 /atom/movable/screen/zone_sel/alien
-	icon = 'icons/mob/screen_alien.dmi'
+	icon = 'icons/hud/screen_alien.dmi'
 	overlay_icon = 'icons/mob/screen_alien.dmi'
 
 /atom/movable/screen/zone_sel/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
+	icon = 'icons/hud/screen_cyborg.dmi'
 
 /atom/movable/screen/flash
 	name = "flash"
@@ -597,7 +597,7 @@
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/damageoverlay
-	icon = 'icons/mob/screen_full.dmi'
+	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "oxydamageoverlay0"
 	name = "dmg"
 	blend_mode = BLEND_MULTIPLY
@@ -612,11 +612,11 @@
 	screen_loc = ui_health
 
 /atom/movable/screen/healths/alien
-	icon = 'icons/mob/screen_alien.dmi'
+	icon = 'icons/hud/screen_alien.dmi'
 	screen_loc = ui_alien_health
 
 /atom/movable/screen/healths/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
+	icon = 'icons/hud/screen_cyborg.dmi'
 	screen_loc = ui_borg_health
 
 /atom/movable/screen/healths/blob
@@ -627,7 +627,7 @@
 
 /atom/movable/screen/healths/blob/naut
 	name = "health"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/hud/blob.dmi'
 	icon_state = "nauthealth"
 
 /atom/movable/screen/healths/blob/naut/core
@@ -648,7 +648,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/healths/construct
-	icon = 'icons/mob/screen_construct.dmi'
+	icon = 'icons/hud/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -1,5 +1,5 @@
 /datum/hud/constructs
-	ui_style = 'icons/mob/screen_construct.dmi'
+	ui_style = 'icons/hud/screen_construct.dmi'
 
 /datum/hud/constructs/New(mob/owner)
 	..()

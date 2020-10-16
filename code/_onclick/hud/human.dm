@@ -1,5 +1,5 @@
 /atom/movable/screen/human
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 
 /atom/movable/screen/human/toggle
 	name = "toggle"
@@ -34,7 +34,7 @@
 	H.quick_equip()
 
 /atom/movable/screen/ling
-	icon = 'icons/mob/screen_changeling.dmi'
+	icon = 'icons/hud/screen_changeling.dmi'
 	invisibility = INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/ling/sting

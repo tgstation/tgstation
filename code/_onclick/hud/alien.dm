@@ -1,5 +1,5 @@
 /atom/movable/screen/alien
-	icon = 'icons/mob/screen_alien.dmi'
+	icon = 'icons/hud/screen_alien.dmi'
 
 /atom/movable/screen/alien/leap
 	name = "toggle leap"
@@ -22,7 +22,7 @@
 	screen_loc = ui_alien_queen_finder
 
 /datum/hud/alien
-	ui_style = 'icons/mob/screen_alien.dmi'
+	ui_style = 'icons/hud/screen_alien.dmi'
 
 /datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
 	..()

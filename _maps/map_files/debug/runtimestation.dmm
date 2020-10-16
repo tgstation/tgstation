@@ -2279,7 +2279,7 @@
 /area/storage/primary)
 "tG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
