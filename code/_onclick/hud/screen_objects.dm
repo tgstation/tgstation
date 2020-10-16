@@ -583,7 +583,7 @@
 
 /atom/movable/screen/zone_sel/alien
 	icon = 'icons/hud/screen_alien.dmi'
-	overlay_icon = 'icons/mob/screen_alien.dmi'
+	overlay_icon = 'icons/hud/screen_alien.dmi'
 
 /atom/movable/screen/zone_sel/robot
 	icon = 'icons/hud/screen_cyborg.dmi'
