@@ -58,7 +58,6 @@
 	name = "lobotomy kit"
 
 /obj/item/storage/briefcase/case/lobotomy/PopulateContents()
-	..()
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/orbitoclast(src)
 	new /obj/item/hammer(src)

@@ -28,7 +28,7 @@
 	pda_slot = ITEM_SLOT_BELT
 	l_hand = /obj/item/clipboard
 
-	backpack_contents = list(/obj/item/storage/box/prescriptions)
+	backpack_contents = list(/obj/item/storage/box/prescriptions, /obj/item/storage/briefcase/case/lobotomy)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

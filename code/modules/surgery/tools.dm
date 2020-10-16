@@ -475,4 +475,4 @@
 	attack_verb_continuous = list("bonks", "hammers")
 	attack_verb_simple = list("bonk", "hammer")
 	tool_behaviour = TOOL_HAMMER
-	tool_speed = 1
+	toolspeed = 1

@@ -64,8 +64,8 @@
 		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
 		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
 		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter"),
-		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter")
-		"Orbitoclast" = image(icon = 'icons/obj/surgery.dmi', icon_state = "orbitoclast")
+		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter"),
+		"Orbitoclast" = image(icon = 'icons/obj/surgery.dmi', icon_state = "orbitoclast"),
 		"Hammer" = image(icon = 'icons/obj/surgery.dmi', icon_state = "hammer")
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
