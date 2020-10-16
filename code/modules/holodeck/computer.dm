@@ -12,12 +12,11 @@
 	3) Create the new map templates in _maps/templates
 	4) Create a new control console that uses those templates
 
-	Non-mapped areas should be skipped but you should probably comment them out anyway.
-	The base of program_type will always be ignored; only subtypes will be loaded.
 */
 
 #define HOLODECK_CD 25
 #define HOLODECK_DMG_CD 500
+
 
 /obj/machinery/computer/holodeck
 	name = "holodeck control console"
@@ -32,7 +31,8 @@
 	var/program = "holodeck_offline"
 	var/last_program
 	var/offline_program = "holodeck_offline"
-	var/holodeck_access = 1
+	var/holodeck_access = STATION_HOLODECK
+	//var/holoaccess_flag = (1<<holodeck_access)
 
 	var/list/program_cache
 	var/list/emag_programs
@@ -96,9 +96,9 @@
 		var/list/info_this = list()
 		info_this["id"] = initial(A.template_id)
 		info_this["name"] = initial(A.name)
-		if(initial(A.restricted))
+		if(initial(A.restricted) && (initial(A.access_flags) & holodeck_access))
 			LAZYADD(emag_programs, list(info_this))
-		else
+		else if (initial(A.access_flags) & holodeck_access)
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)

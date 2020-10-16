@@ -127,3 +127,8 @@
 /area/holodeck/rec_center/refuel
 	name = "Holodeck - Refueling Station"
 	restricted = TRUE
+
+//debug
+
+/area/holodeck/rec_center/gamer
+	name = "Holodeck - Gamer Simulation"
