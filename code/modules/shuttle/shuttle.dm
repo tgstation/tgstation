@@ -357,6 +357,8 @@
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
+	var/obj/shuttle_projector/inbound_shuttle_projector
+
 	var/engine_coeff = 1
 	var/current_engines = 0
 	var/initial_engines = 0
@@ -610,11 +612,11 @@
 	for(var/t in turfs)
 		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
-	var/obj/docking_port/stationary/current_dock = get_docked()
-	new /obj/shuttle_projector(null, current_dock, S1, TRUE, animate_time)
+	inbound_shuttle_projector = new /obj/shuttle_projector(null, src, S1, TRUE, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	QDEL_LIST(ripples)
+	QDEL_NULL(inbound_shuttle_projector)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)

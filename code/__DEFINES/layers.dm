@@ -22,6 +22,7 @@
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
 
 #define SPACE_LAYER 1.8
+#define SHUTTLE_MOVEMENT_LAYER 1.9
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
