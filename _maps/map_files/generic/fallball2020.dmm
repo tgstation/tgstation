@@ -196,6 +196,17 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"aw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
 "ax" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/water,
@@ -1483,6 +1494,17 @@
 	},
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
+"dg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
 "dh" = (
 /obj/structure/closet/crate{
 	anchored = 1
@@ -1514,6 +1536,16 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"dj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
 "dk" = (
 /obj/structure/closet/crate{
 	anchored = 1
@@ -1532,6 +1564,16 @@
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
+"dl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
 "dm" = (
 /obj/structure/closet/secure_closet/freezer/fridge{
 	anchored = 1;
@@ -1545,6 +1587,18 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
+"do" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
 "dp" = (
 /obj/structure/sink/kitchen{
 	dir = 1;
@@ -1552,8 +1606,29 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
+"dq" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
 "dr" = (
 /turf/open/floor/carpet/royalblue,
+/area/awaymission/cabin/snowforest/forest)
+"ds" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "dt" = (
 /obj/structure/fluff/books_sign,
@@ -2189,6 +2264,23 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
+"fc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/fluff{
+	desc = "Yes, the portal itself is spooky!";
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "anom";
+	name = "spooky portal"
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
 "fd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2376,6 +2468,39 @@
 "fz" = (
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
+"fA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"fB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"fC" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
 "fD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -2477,17 +2602,28 @@
 /area/awaymission/cabin/snowforest/forest)
 "fP" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"fR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "fS" = (
 /obj/structure/disposalpipe/segment{
@@ -2637,21 +2773,27 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gj" = (
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"gk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/fluff{
-	desc = "Yes, the portal itself is spooky!";
-	icon = 'icons/obj/objects.dmi';
-	icon_state = "anom";
-	name = "spooky portal"
-	},
-/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "gl" = (
 /obj/structure/disposalpipe/segment{
@@ -2662,6 +2804,16 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"gm" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "gn" = (
 /obj/structure/railing{
@@ -2766,6 +2918,17 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"gz" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "gA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -2776,6 +2939,15 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
+/area/awaymission/cabin/snowforest/forest)
+"gB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "gC" = (
 /obj/machinery/door/airlock/centcom{
@@ -2985,13 +3157,13 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gU" = (
-/obj/structure/fluff{
-	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
-	icon = 'icons/mob/eldritch_mobs.dmi';
-	icon_state = "stalker";
-	name = "\improper SOUVENIRS"
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
-/turf/open/floor/plating/asteroid,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "gV" = (
 /obj/structure/disposalpipe/segment{
@@ -3019,15 +3191,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gX" = (
-/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
+/obj/effect/rollercoaster_hint/go_up,
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "gY" = (
 /obj/structure/railing{
@@ -3532,6 +3704,17 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
+"ie" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "if" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -3584,6 +3767,17 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"il" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "im" = (
 /obj/structure/lattice/catwalk,
@@ -3659,15 +3853,15 @@
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iu" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iv" = (
 /obj/structure/disposalpipe/segment,
@@ -3720,6 +3914,51 @@
 /area/awaymission/cabin/snowforest/forest)
 "iB" = (
 /turf/closed/wall/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iC" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/speed_up,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iD" = (
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iE" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iG" = (
 /obj/structure/stone_tile/elderblock{
@@ -3814,6 +4053,15 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"iR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "iS" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -3876,12 +4124,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating,
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "ja" = (
 /obj/structure/chair/pew/left{
@@ -3897,26 +4144,26 @@
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
 "jc" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/speed_up,
-/turf/open/floor/plating,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "jd" = (
-/obj/effect/rollercoaster_hint/go_up,
 /obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "je" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -3951,15 +4198,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "ji" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/slow_down,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+/obj/effect/rollercoaster_hint/go_down,
+/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jj" = (
 /obj/effect/turf_decal/arrows/red{
@@ -3976,6 +4223,27 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"jl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"jm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
 "jn" = (
 /obj/structure/stone_tile/elder{
 	dir = 1
@@ -3991,25 +4259,36 @@
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
 "jp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/railing{
+	dir = 8
 	},
 /obj/structure/railing{
-	dir = 1
+	dir = 4
 	},
-/obj/structure/railing,
-/turf/open/floor/plating,
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_down,
+/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/effect/rollercoaster_hint/go_down,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"jr" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/structure/railing,
-/turf/open/floor/plating,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "js" = (
 /obj/structure/fluff/support{
@@ -14383,6 +14662,17 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
+"Fk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
 "Fl" = (
 /obj/structure/curtain/cloth/fancy,
 /turf/closed/indestructible/fakeglass,
@@ -14507,26 +14797,35 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
 "FH" = (
-/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/railing/wooden{
-	dir = 1
+/obj/structure/railing{
+	dir = 8
 	},
-/obj/structure/railing/wooden,
-/obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"FI" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FJ" = (
-/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/railing/wooden{
-	dir = 1
+/obj/structure/railing{
+	dir = 8
 	},
-/obj/structure/railing/wooden,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FK" = (
@@ -14600,63 +14899,66 @@
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FW" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
 /obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FX" = (
 /obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/railing,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"FY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/table/abductor,
+/obj/structure/fluff/playertrophy1{
+	density = 0;
+	layer = 3.1;
+	pixel_x = -16;
+	pixel_y = -4
 	},
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
+/obj/item/clothing/glasses/welding/brand{
+	pixel_y = 5
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Gb" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 4
+/obj/structure/fluff/playertrophy3{
+	layer = 3.1;
+	pixel_x = 16;
+	pixel_y = -4
 	},
-/obj/structure/railing{
-	dir = 8
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar/announcerroom)
+"Ga" = (
+/obj/structure/table/abductor,
+/obj/item/book/manual/wiki/surgery/mothblocks{
+	pixel_x = -2;
+	pixel_y = 5
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
-"Gd" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar/announcerroom)
 "Ge" = (
 /turf/open/floor/white{
 	color = "#8c2323";
@@ -14745,9 +15047,6 @@
 	name = "tent"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"Gw" = (
-/turf/open/floor/plasteel/rockvault,
-/area/crew_quarters/bar)
 "Gx" = (
 /turf/open/floor/white{
 	color = "#6e6e6e";
@@ -17009,19 +17308,6 @@
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
-"LJ" = (
-/obj/structure/table/abductor,
-/obj/structure/fluff/playertrophy1{
-	density = 0;
-	layer = 3.1;
-	pixel_x = -16;
-	pixel_y = -4
-	},
-/obj/item/clothing/glasses/welding/brand{
-	pixel_y = 5
-	},
-/turf/open/transparent/glass/reinforced,
-/area/crew_quarters/bar/announcerroom)
 "LK" = (
 /obj/structure/table/abductor,
 /obj/item/toy/plush/bobbahbee,
@@ -17040,13 +17326,6 @@
 	},
 /obj/item/lighter/slime{
 	pixel_x = -6
-	},
-/turf/open/transparent/glass/reinforced,
-/area/crew_quarters/bar/announcerroom)
-"LN" = (
-/obj/structure/table/abductor,
-/obj/item/book/manual/wiki/surgery/mothblocks{
-	pixel_y = 6
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
@@ -17246,25 +17525,6 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"Mp" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
-"Mr" = (
-/obj/effect/turf_decal/trimline/red/arrow_cw{
-	dir = 1
-	},
-/turf/open/floor/plasteel/stairs{
-	dir = 4
-	},
-/area/awaymission/cabin/snowforest/forest)
 "Mx" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
@@ -17292,18 +17552,6 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"NA" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
 "Ok" = (
 /obj/structure/sign/barsign{
 	pixel_y = -32
@@ -17311,17 +17559,6 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"Ou" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "OR" = (
 /obj/structure/flora/stump,
@@ -17342,13 +17579,6 @@
 /turf/open/floor/plating/grass/fall{
 	color = "#68524D"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"PL" = (
-/obj/machinery/door/window/survival_pod,
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "PZ" = (
 /obj/effect/turf_decal/bot/right{
@@ -17371,15 +17601,6 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"QQ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
 "QS" = (
 /obj/item/extinguisher/mini{
 	force = 0
@@ -17404,12 +17625,6 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"RH" = (
-/obj/effect/turf_decal/trimline/red/arrow_cw{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "RU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -17452,45 +17667,6 @@
 	color = "#68524D"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"UJ" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"UO" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"UV" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"Vc" = (
-/obj/machinery/vending/clothing/armsy,
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
 "VT" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	color = "#68524D"
@@ -17520,30 +17696,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/bar)
-"WI" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Xg" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
-	},
-/area/awaymission/cabin/snowforest/forest)
 "Xt" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/mineral/titanium/white,
@@ -17561,17 +17713,6 @@
 /obj/machinery/door/window/northright,
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"Yg" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "Yu" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
@@ -44937,7 +45078,7 @@ br
 br
 br
 br
-an
+br
 an
 an
 Ok
@@ -45194,8 +45335,8 @@ br
 br
 br
 br
-an
-an
+br
+br
 an
 an
 Zo
@@ -45451,8 +45592,8 @@ br
 br
 br
 br
-an
-an
+br
+br
 an
 an
 ah
@@ -45708,8 +45849,8 @@ br
 br
 br
 br
-an
-an
+br
+br
 br
 an
 Zo
@@ -46223,7 +46364,7 @@ br
 br
 br
 br
-br
+an
 br
 br
 Nn
@@ -46480,7 +46621,7 @@ br
 br
 br
 br
-br
+an
 br
 br
 Nn
@@ -46736,8 +46877,8 @@ br
 br
 br
 br
-br
-br
+an
+an
 br
 an
 Zo
@@ -46993,7 +47134,7 @@ br
 br
 br
 br
-br
+an
 an
 an
 an
@@ -47488,7 +47629,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -48002,10 +48143,10 @@ an
 an
 an
 an
-bw
 an
 an
 bw
+an
 an
 an
 an
@@ -48517,7 +48658,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -48806,7 +48947,7 @@ Uz
 an
 an
 an
-mL
+bR
 mZ
 nm
 nt
@@ -49037,7 +49178,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -49297,7 +49438,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -49548,7 +49689,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -52124,7 +52265,7 @@ an
 fg
 eY
 an
-bw
+an
 an
 an
 an
@@ -57249,7 +57390,7 @@ an
 an
 ha
 an
-hN
+ft
 an
 fa
 br
@@ -61099,12 +61240,12 @@ an
 an
 an
 ha
-gU
+an
 hg
 fL
+fL
 hG
-hG
-PL
+hQ
 ib
 ij
 fL
@@ -61356,9 +61497,9 @@ an
 an
 an
 ha
-Vc
+an
 hg
-Mr
+fl
 eY
 fL
 hQ
@@ -61613,9 +61754,9 @@ an
 an
 an
 ha
-gU
+an
 hg
-Mr
+fl
 eY
 eY
 hR
@@ -61872,11 +62013,11 @@ an
 ha
 an
 hp
-RH
+br
 gx
 an
 an
-fd
+ft
 an
 an
 an
@@ -62129,15 +62270,15 @@ an
 ha
 an
 fa
-RH
+br
 hy
 hH
 hS
-fd
+ft
 an
 an
 an
-an
+fg
 an
 an
 an
@@ -62390,7 +62531,7 @@ br
 br
 br
 hy
-fd
+ft
 fX
 fX
 fX
@@ -62647,7 +62788,7 @@ ga
 hz
 br
 gE
-fd
+gk
 hI
 hT
 br
@@ -62904,7 +63045,7 @@ an
 hq
 ga
 ga
-fd
+ft
 ga
 ga
 ga
@@ -63150,9 +63291,9 @@ an
 fu
 fG
 fG
-Xg
-Xg
-Xg
+fG
+fG
+fG
 fG
 fG
 gA
@@ -63161,13 +63302,13 @@ ha
 an
 an
 an
-ff
-fn
-fn
-fn
-fn
-fn
-fD
+fu
+fG
+fG
+fG
+fG
+fG
+fS
 an
 iV
 an
@@ -63424,7 +63565,7 @@ fX
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -63681,7 +63822,7 @@ hT
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -63914,14 +64055,14 @@ an
 an
 an
 an
-fb
-fo
-fo
-fo
-fo
-fW
-fo
-gX
+gi
+gr
+gr
+gr
+gr
+gT
+gr
+gj
 an
 an
 ha
@@ -63935,10 +64076,10 @@ hU
 hU
 hU
 hU
-fn
-fn
-fn
-gV
+fG
+fG
+fG
+gq
 an
 an
 an
@@ -64171,7 +64312,7 @@ an
 an
 fg
 an
-fd
+ft
 an
 an
 an
@@ -64428,7 +64569,7 @@ an
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -64685,7 +64826,7 @@ br
 fj
 fj
 fj
-gj
+fc
 fj
 fj
 fj
@@ -64942,7 +65083,7 @@ br
 fj
 fN
 fQ
-fd
+fA
 fN
 fN
 fj
@@ -65199,7 +65340,7 @@ br
 fj
 fO
 fQ
-fd
+fA
 fQ
 fN
 fj
@@ -65223,11 +65364,11 @@ an
 an
 an
 an
-QQ
-fn
-ji
-fn
-fD
+gB
+hs
+iE
+hs
+iF
 hu
 eY
 an
@@ -65456,7 +65597,7 @@ br
 fj
 fN
 fQ
-fd
+fA
 fQ
 fN
 fj
@@ -65480,11 +65621,11 @@ he
 an
 an
 an
-fd
+hl
 he
 jj
 he
-jp
+iZ
 hu
 eY
 an
@@ -65713,7 +65854,7 @@ fj
 fj
 fN
 fQ
-fd
+fA
 fQ
 fQ
 fQ
@@ -65737,11 +65878,11 @@ he
 he
 he
 he
-iZ
+iu
 he
 he
 hr
-jp
+iZ
 hu
 eY
 an
@@ -65967,15 +66108,15 @@ eY
 an
 br
 fj
-fb
-fP
+dj
+dq
 fQ
-fd
+fA
 fL
-iu
-fn
-fn
-fD
+fC
+fP
+fP
+fR
 fL
 fj
 an
@@ -65992,13 +66133,13 @@ hu
 hu
 hu
 hu
-hu
+he
 if
-gV
+it
 he
 hu
 hr
-jq
+jc
 hu
 eY
 jG
@@ -66224,15 +66365,15 @@ eY
 an
 br
 fj
-jp
+dl
 fQ
 fL
-fd
+gl
 fL
 fL
 fQ
 gR
-fd
+gl
 fL
 fj
 an
@@ -66248,9 +66389,9 @@ hr
 hu
 hu
 hu
-hu
-if
-gV
+gB
+hs
+it
 he
 hu
 hu
@@ -66481,15 +66622,15 @@ eY
 an
 br
 fj
-jp
+dl
 fQ
 fL
-fd
+gl
 fL
 fQ
 fQ
 fL
-fd
+gl
 fL
 fj
 an
@@ -66505,12 +66646,12 @@ hr
 hu
 hu
 hu
-if
-it
+gU
+hs
+il
+hu
+hu
 he
-hu
-hu
-hu
 he
 hj
 hu
@@ -66738,22 +66879,22 @@ eY
 an
 br
 fj
-ff
-fn
-fn
-gV
+do
+ds
+ds
+fB
 fQ
 fQ
 fL
 fL
-fd
+gl
 fL
 fj
 an
 an
 ha
 he
-fe
+hk
 he
 he
 hu
@@ -66762,12 +66903,12 @@ hr
 hu
 hu
 hu
-jp
+he
+he
 he
 hu
 hu
-hu
-hu
+hr
 hu
 hj
 hu
@@ -67003,7 +67144,7 @@ fL
 fL
 fL
 fQ
-fd
+gl
 fN
 fj
 an
@@ -67019,14 +67160,14 @@ he
 he
 hu
 if
-gV
-he
+hs
+gz
 hu
 hu
 hu
+hr
 hu
-hu
-Ou
+fe
 he
 eY
 an
@@ -67260,7 +67401,7 @@ fL
 fQ
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67269,21 +67410,21 @@ ha
 an
 hm
 hs
-UV
 hs
-UV
 hs
-UV
+hs
+hs
+hs
 hs
 it
 he
+he
 hu
 hu
 hu
 he
 he
-he
-jp
+iZ
 he
 eY
 an
@@ -67517,7 +67658,7 @@ fN
 fN
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67539,8 +67680,8 @@ hr
 hr
 he
 he
-fb
-gV
+if
+it
 he
 eY
 an
@@ -67774,7 +67915,7 @@ fN
 fN
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67787,16 +67928,16 @@ he
 hu
 hu
 hu
-fb
-fn
-fn
-gD
+if
+hs
+hs
+gX
 iN
 iN
 iN
-jc
-fn
-gV
+iC
+hs
+it
 he
 he
 eY
@@ -68031,7 +68172,7 @@ fj
 fj
 gC
 fj
-gj
+fc
 fj
 fj
 an
@@ -68044,7 +68185,7 @@ he
 hu
 hu
 he
-fd
+hl
 he
 he
 he
@@ -68301,7 +68442,7 @@ he
 hu
 he
 he
-fd
+hl
 he
 he
 he
@@ -68558,16 +68699,16 @@ he
 hu
 hu
 he
-ff
-fo
-fo
-fW
+hm
+gm
+gm
+ie
 iO
 iN
 iN
-jd
-fn
-fD
+iD
+hs
+iF
 an
 an
 eY
@@ -68791,7 +68932,7 @@ an
 an
 an
 eY
-fd
+aw
 an
 an
 fE
@@ -68824,7 +68965,7 @@ hu
 hu
 hu
 he
-fd
+hl
 an
 an
 eY
@@ -69081,7 +69222,7 @@ hu
 hu
 hu
 he
-fd
+hl
 an
 an
 eY
@@ -69338,7 +69479,7 @@ hu
 hu
 he
 he
-fd
+hl
 fg
 an
 eY
@@ -69562,7 +69703,7 @@ an
 bw
 an
 eY
-fd
+dg
 an
 an
 fb
@@ -69588,14 +69729,14 @@ hv
 hV
 hV
 im
-iu
-fn
-iu
-fn
-fn
-fn
-fn
-fF
+gz
+hs
+gz
+hs
+hs
+hs
+hs
+iR
 an
 an
 eY
@@ -109450,11 +109591,11 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 ES
 ES
@@ -109707,11 +109848,11 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 ES
 ES
@@ -109964,11 +110105,11 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 ES
 ES
@@ -110220,13 +110361,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gz
 Gz
@@ -110477,13 +110618,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gz
 Gz
@@ -110734,13 +110875,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gy
 Gy
@@ -110991,13 +111132,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gy
 Gy
 Gy
@@ -111248,13 +111389,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gz
 Gz
 Gz
@@ -111505,13 +111646,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gz
 Gz
 Gz
@@ -111762,13 +111903,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gy
 Gy
 Gy
@@ -112019,13 +112160,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gy
 Gy
 Gy
@@ -112276,13 +112417,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gz
 Gz
 Gz
@@ -112533,13 +112674,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gz
 Gz
 Gz
@@ -112790,13 +112931,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 Gy
 Gy
 Gy
@@ -113047,13 +113188,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gy
 Gy
@@ -113304,13 +113445,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gz
 Gz
@@ -113561,13 +113702,13 @@ ES
 ES
 ES
 ES
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
-Gw
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
+Gp
 ES
 Gz
 Gz
@@ -117141,7 +117282,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -117398,7 +117539,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -117635,27 +117776,27 @@ ES
 ES
 ES
 ES
-WI
-WI
-WI
-WI
-WI
-WI
-UO
+Fu
+Fu
+Fu
+jd
+Fu
+Fu
+Fq
 ES
-WI
-Gd
-Gd
-Gd
-Gd
-Gd
-UO
-ES
-ES
+Fu
+FH
+FH
+FJ
+FH
+FH
+Fq
 ES
 ES
 ES
-FZ
+ES
+ES
+jr
 ES
 ES
 ES
@@ -117912,7 +118053,7 @@ ES
 ES
 ES
 ES
-FZ
+Fk
 ES
 ES
 ES
@@ -118169,7 +118310,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -118426,7 +118567,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -118683,7 +118824,7 @@ ES
 ES
 ES
 ES
-FX
+jq
 ES
 ES
 ES
@@ -120202,7 +120343,7 @@ ES
 ES
 ES
 ES
-FH
+ji
 ES
 ES
 ES
@@ -120459,7 +120600,7 @@ ES
 ES
 ES
 ES
-FJ
+jl
 ES
 ES
 ES
@@ -120716,7 +120857,7 @@ ES
 ES
 ES
 ES
-FJ
+jl
 ES
 ES
 ES
@@ -120973,7 +121114,7 @@ ES
 ES
 ES
 ES
-FJ
+jm
 ES
 ES
 ES
@@ -121230,7 +121371,7 @@ ES
 ES
 ES
 ES
-FJ
+jl
 ES
 ES
 ES
@@ -121487,7 +121628,7 @@ ES
 ES
 ES
 ES
-FJ
+jl
 ES
 ES
 ES
@@ -129457,16 +129598,16 @@ Fz
 Fz
 Fz
 Fz
-FW
-WI
-WI
-WI
-WI
-WI
-WI
-WI
-WI
-Yg
+jp
+Fu
+Fu
+fn
+fn
+fn
+fn
+fn
+fn
+hU
 ES
 ES
 ES
@@ -130747,7 +130888,7 @@ ES
 ES
 ES
 ES
-FX
+jq
 ES
 ES
 ES
@@ -131004,7 +131145,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -131261,7 +131402,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -131504,11 +131645,11 @@ ES
 ES
 fj
 ES
-WI
-WI
-WI
-WI
-UO
+Fu
+Fu
+jd
+Fu
+Fq
 ES
 ES
 ES
@@ -131518,7 +131659,7 @@ ES
 ES
 ES
 ES
-FZ
+Fk
 ES
 ES
 ES
@@ -131534,7 +131675,7 @@ ES
 ES
 ES
 ES
-FX
+jq
 ES
 ES
 ES
@@ -131775,7 +131916,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -131791,7 +131932,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -132032,7 +132173,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -132043,12 +132184,12 @@ ES
 ES
 ES
 ES
+FH
+FH
+FH
+FX
 ES
-ES
-ES
-ES
-ES
-FZ
+Fk
 ES
 ES
 ES
@@ -132289,7 +132430,7 @@ ES
 ES
 ES
 ES
-FZ
+jr
 ES
 ES
 ES
@@ -132303,9 +132444,9 @@ ES
 ES
 ES
 ES
+Fk
 ES
-ES
-FZ
+jr
 ES
 ES
 ES
@@ -132556,13 +132697,13 @@ ES
 ES
 ES
 ES
+FW
+FH
+FH
+FH
+FY
 ES
-ES
-ES
-ES
-ES
-ES
-FZ
+jr
 ES
 ES
 ES
@@ -133326,11 +133467,11 @@ ES
 ES
 ES
 ES
-WI
-WI
-WI
-WI
-UO
+Fu
+Fu
+jd
+Fu
+Fq
 ES
 ES
 ES
@@ -134097,11 +134238,11 @@ ES
 ES
 ES
 ES
-UO
-Gd
-Gd
-Gd
-WI
+Fq
+FH
+FJ
+FH
+Fu
 ES
 ES
 ES
@@ -134332,11 +134473,11 @@ ES
 ES
 ES
 ES
-UO
-WI
-WI
-WI
-WI
+Fq
+Fu
+jd
+Fu
+Fu
 ES
 ES
 ES
@@ -135107,12 +135248,12 @@ ES
 ES
 ES
 ES
-WI
-Yg
-Yg
-Yg
-Yg
-UJ
+Fu
+hU
+hU
+hU
+hU
+gF
 ES
 ES
 ES
@@ -135121,10 +135262,10 @@ ES
 ES
 ES
 ES
-Gb
-Mp
-Gb
-NA
+FI
+FH
+FI
+Fq
 ES
 ES
 ES
@@ -181432,8 +181573,8 @@ Lt
 Lz
 Lz
 LF
-LJ
-LN
+FZ
+Ga
 LP
 Lz
 Lz

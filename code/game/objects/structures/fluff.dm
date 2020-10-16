@@ -710,7 +710,7 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
-/obj/structure/fluff/playertrophy2 // nalzul
+/obj/structure/fluff/playertrophy2 // Nalzul
 	name = "\improper Reliquia De La Antigua Casa"
 	desc = "An ancient artpiece that has been redrawn over and over again until we received this as a final product. Still looks very prestigious!"
 	icon = 'icons/misc/tourny_items.dmi'
@@ -718,5 +718,16 @@
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy3 // Swept
+	name = "The Watermark"
+	desc = "A neat statue of a single letter 'S' that seems very fancy, but I really hope this isn't someone's weird NTnet page watermark..."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "swhold"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
