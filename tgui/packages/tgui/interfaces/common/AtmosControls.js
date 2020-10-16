@@ -1,8 +1,8 @@
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../../components';
+import { useBackend } from '../../backend';
+import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
-
+import { toFixed } from 'common/math';
 
 export const Vent = (props, context) => {
   const { vent } = props;
@@ -172,6 +172,67 @@ export const Scrubber = (props, context) => {
             ))
             || 'N/A'}
         </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+export const dangerMap = {
+  0: {
+    color: 'good',
+    localStatusText: 'Optimal',
+  },
+  1: {
+    color: 'average',
+    localStatusText: 'Caution',
+  },
+  2: {
+    color: 'bad',
+    localStatusText: 'Danger (Internals Required)',
+  },
+};
+
+export const EnvironmentReadout = (props, context) => {
+  const { environment_data } = props;
+  const entries = (environment_data || [])
+    .filter(entry => entry.value >= 0.01);
+  if (entries.length === 0) {
+    return (
+      <LabeledList.Item
+        label="Warning"
+        color="bad">
+        Cannot obtain air sample for analysis.
+      </LabeledList.Item>
+    );
+  }
+
+  return entries.map(entry => {
+    const status = dangerMap[entry.danger_level] || dangerMap[0];
+    return (
+      <LabeledList.Item
+        key={entry.name}
+        label={entry.name}
+        color={status.color}>
+        {toFixed(entry.value, 2)}{entry.unit}
+      </LabeledList.Item>
+    );
+  });
+};
+
+export const Sensor = (props, context) => {
+  const { sensor } = props;
+  const {
+    long_name,
+    environment_data,
+  } = sensor;
+  return (
+    <Section
+      level={2}
+      title={decodeHtmlEntities(long_name)}>
+      <LabeledList>
+        <EnvironmentReadout
+          environment_data={environment_data}
+        />
       </LabeledList>
     </Section>
   );

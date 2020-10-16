@@ -328,7 +328,12 @@
 	name = "pipes"
 
 /datum/asset/spritesheet/pipes/register()
-	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
+	for (var/each in list(
+		'icons/obj/atmospherics/pipes/pipe_item.dmi',
+		'icons/obj/atmospherics/pipes/disposal.dmi',
+		'icons/obj/atmospherics/pipes/transit_tube.dmi',
+		'icons/obj/plumbing/fluid_ducts.dmi',
+		'icons/obj/atmospherics/components/sensor.dmi'))
 		InsertAll("", each, GLOB.alldirs)
 	..()
 

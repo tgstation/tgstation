@@ -54,6 +54,10 @@
 		if(wait < world.time )
 			new /obj/item/pipe_meter(loc)
 			wait = world.time + 15
+	if(href_list["makesensor"])
+		if(wait < world.time )
+			new /obj/item/air_sensor(drop_location())
+			wait = world.time + 15
 	if(href_list["layer_up"])
 		piping_layer = clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])

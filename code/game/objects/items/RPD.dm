@@ -38,6 +38,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Temperature Gate",	/obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
 		new /datum/pipe_info/pipe("Temperature Pump",	/obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
 		new /datum/pipe_info/meter("Meter"),
+		new /datum/pipe_info/sensor("Air Sensor"),
 	),
 	"Heat Exchange" = list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
@@ -157,6 +158,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=[id]&type=[dirtype]"
+
+/datum/pipe_info/sensor
+	icon_state = "gsensor1"
+	dirtype = PIPE_ONEDIR
+
+/datum/pipe_info/sensor/New(label)
+	name = label
+
+/datum/pipe_info/sensor/Params()
+	return "makesensor=[id]&type=[dirtype]"
 
 /datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
@@ -421,6 +432,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
+				else if (recipe.type == /datum/pipe_info/sensor)
+					to_chat(user, "<span class='notice'>You start building an air sensor...</span>")
+					if(do_after(user, atmos_build_speed, target = A))
+						activate()
+						var/obj/item/air_sensor/AS = new /obj/item/air_sensor(get_turf(A))
+						if(mode & WRENCH_MODE)
+							AS.wrench_act(user, src)
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")

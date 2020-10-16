@@ -40,16 +40,14 @@
 			addtimer(CALLBACK(A, /obj/machinery/airalarm.proc/reset, wire), 100)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
-				if(A.mode == 1) // AALARM_MODE_SCRUB
-					A.mode = 3 // AALARM_MODE_PANIC
+				var/new_mode
+				if(A.control?.mode == 1) // AALARM_MODE_SCRUB
+					new_mode = 3 // AALARM_MODE_PANIC
 				else
-					A.mode = 1 // AALARM_MODE_SCRUB
-				A.apply_mode(usr)
+					new_mode = 1 // AALARM_MODE_SCRUB
+				A.control?.apply_mode(new_mode, usr)
 		if(WIRE_ALARM) // Clear alarms.
-			var/area/AA = get_area(A)
-			if(AA.atmosalert(FALSE, holder))
-				A.post_alert(0)
-			A.update_icon()
+			A.control?.atmosalert(FALSE)
 
 /datum/wires/airalarm/on_cut(wire, mend)
 	var/obj/machinery/airalarm/A = holder
@@ -65,10 +63,7 @@
 			A.aidisabled = mend // Enable/disable AI control.
 		if(WIRE_PANIC) // Force panic syphon on.
 			if(!mend && !A.shorted)
-				A.mode = 3 // AALARM_MODE_PANIC
-				A.apply_mode(usr)
+				// AALARM_MODE_PANIC
+				A.control?.apply_mode(3, usr)
 		if(WIRE_ALARM) // Post alarm.
-			var/area/AA = get_area(A)
-			if(AA.atmosalert(TRUE, holder))
-				A.post_alert(2)
-			A.update_icon()
+			A.control?.atmosalert(TRUE)

@@ -15,6 +15,8 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
+	pipe_state = "scrubber"
+
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
@@ -25,31 +27,40 @@
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
 
-	pipe_state = "scrubber"
+	var/datum/airalarm_control/control
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
+		var/area/scrub_area = get_area(src)
+		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
 
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/scrub_area = get_area(src)
-	if(scrub_area)
-		scrub_area.air_scrub_info -= id_tag
-		GLOB.air_scrub_names -= id_tag
+	return INITIALIZE_HINT_LATELOAD
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
+/obj/machinery/atmospherics/components/unary/vent_scrubber/LateInitialize()
+	register_with_area_control()
+	RegisterSignal(src, COMSIG_AREA_ENTERED, .proc/on_area_change)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
+	control.unregister_scrubber(src)
 	adjacent_turfs.Cut()
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/on_area_change()
+	control.unregister_scrubber(src)
+	register_with_area_control()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/register_with_area_control()
+	var/area/current_area = get_area(src)
+	current_area.ensure_air_control()
+	current_area.air_control.register_scrubber(src)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!on || welded || !is_operational || !powered(power_channel))
@@ -94,7 +105,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
+	radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
@@ -117,21 +128,11 @@
 		"sigtype" = "status"
 	))
 
-	var/area/scrub_area = get_area(src)
-	if(!GLOB.air_scrub_names[id_tag])
-		// If we do not have a name, assign one
-		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
-		GLOB.air_scrub_names[id_tag] = name
-
-	scrub_area.air_scrub_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	radio_connection.post_signal(src, signal)
 
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()
@@ -308,7 +309,7 @@
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2

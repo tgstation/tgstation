@@ -1,12 +1,10 @@
 import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../components';
-import { getGasLabel } from '../constants';
+import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { Vent, Scrubber } from './common/AtmosControls';
+import { Vent, Scrubber, EnvironmentReadout, Sensor, dangerMap } from './common/AtmosControls';
 
 export const AirAlarm = (props, context) => {
   const { act, data } = useBackend(context);
@@ -29,59 +27,25 @@ export const AirAlarm = (props, context) => {
 
 const AirAlarmStatus = (props, context) => {
   const { data } = useBackend(context);
-  const entries = (data.environment_data || [])
-    .filter(entry => entry.value >= 0.01);
-  const dangerMap = {
-    0: {
-      color: 'good',
-      localStatusText: 'Optimal',
-    },
-    1: {
-      color: 'average',
-      localStatusText: 'Caution',
-    },
-    2: {
-      color: 'bad',
-      localStatusText: 'Danger (Internals Required)',
-    },
-  };
   const localStatus = dangerMap[data.danger_level] || dangerMap[0];
   return (
     <Section title="Air Status">
       <LabeledList>
-        {entries.length > 0 && (
-          <Fragment>
-            {entries.map(entry => {
-              const status = dangerMap[entry.danger_level] || dangerMap[0];
-              return (
-                <LabeledList.Item
-                  key={entry.name}
-                  label={entry.name}
-                  color={status.color}>
-                  {toFixed(entry.value, 2)}{entry.unit}
-                </LabeledList.Item>
-              );
-            })}
-            <LabeledList.Item
-              label="Local status"
-              color={localStatus.color}>
-              {localStatus.localStatusText}
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Area status"
-              color={data.atmos_alarm || data.fire_alarm ? 'bad' : 'good'}>
-              {data.atmos_alarm && 'Atmosphere Alarm'
-                || data.fire_alarm && 'Fire Alarm'
-                || 'Nominal'}
-            </LabeledList.Item>
-          </Fragment>
-        ) || (
-          <LabeledList.Item
-            label="Warning"
-            color="bad">
-            Cannot obtain air sample for analysis.
-          </LabeledList.Item>
-        )}
+        <EnvironmentReadout
+          environment_data={data.environment_data}
+        />
+        <LabeledList.Item
+          label="Local status"
+          color={localStatus.color}>
+          {localStatus.localStatusText}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Area status"
+          color={data.atmos_alarm || data.fire_alarm ? 'bad' : 'good'}>
+          {data.atmos_alarm && 'Atmosphere Alarm'
+            || data.fire_alarm && 'Fire Alarm'
+            || 'Nominal'}
+        </LabeledList.Item>
         {!!data.emagged && (
           <LabeledList.Item
             label="Warning"
@@ -98,6 +62,10 @@ const AIR_ALARM_ROUTES = {
   home: {
     title: 'Air Controls',
     component: () => AirAlarmControlHome,
+  },
+  sensors: {
+    title: 'Sensor Readouts',
+    component: () => AirAlarmControlSensors,
   },
   vents: {
     title: 'Vent Controls',
@@ -167,6 +135,11 @@ const AirAlarmControlHome = (props, context) => {
         })} />
       <Box mt={2} />
       <Button
+        icon="adjust"
+        content="Sensor Readouts"
+        onClick={() => setScreen('sensors')} />
+      <Box mt={1} />
+      <Button
         icon="sign-out-alt"
         content="Vent Controls"
         onClick={() => setScreen('vents')} />
@@ -187,6 +160,22 @@ const AirAlarmControlHome = (props, context) => {
         onClick={() => setScreen('thresholds')} />
     </Fragment>
   );
+};
+
+// Sensors
+// --------------------------------------------------------
+
+const AirAlarmControlSensors = (props, context) => {
+  const { data } = useBackend(context);
+  const { sensors } = data;
+  if (!sensors || sensors.length === 0) {
+    return 'Nothing to show';
+  }
+  return sensors.map(sensor => (
+    <Sensor
+      key={sensor.long_name}
+      sensor={sensor} />
+  ));
 };
 
 
@@ -258,10 +247,10 @@ const AirAlarmControlThresholds = (props, context) => {
       <thead>
         <tr>
           <td />
-          <td className="color-bad">min2</td>
-          <td className="color-average">min1</td>
-          <td className="color-average">max1</td>
-          <td className="color-bad">max2</td>
+          <td className="color-bad">min_danger</td>
+          <td className="color-average">min_warning</td>
+          <td className="color-average">max_warning</td>
+          <td className="color-bad">max_danger</td>
         </tr>
       </thead>
       <tbody>
