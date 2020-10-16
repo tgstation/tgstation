@@ -88,7 +88,7 @@
 		animate(src, transform = undock_transform, alpha = docking_alpha, time = dock_animation_time)
 		animate(transform = move_transform, easing = CIRCULAR_EASING | EASE_IN, alpha = 0, time = move_animation_time)
 
-	addtimer(CALLBACK(/proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
 
 /obj/shuttle_projector/Destroy(force)
 	transit_port = null
