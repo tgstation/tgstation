@@ -49,10 +49,8 @@
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
 "ah" = (
-/obj/machinery/door/airlock/wood{
-	name = "Catering"
-	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/crew_quarters/bar)
 "ai" = (
 /obj/structure/fluff/support{
@@ -151,14 +149,35 @@
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
 "as" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
+/obj/structure/closet/secure_closet/freezer/meat{
 	anchored = 1;
 	req_access = null
 	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "at" = (
-/turf/open/floor/plasteel/cafeteria,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	anchored = 1;
+	req_access = null
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "au" = (
 /obj/effect/turf_decal/siding/wood{
@@ -176,10 +195,6 @@
 	},
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/wood,
-/area/crew_quarters/bar)
-"aw" = (
-/obj/machinery/conveyor_switch/oneway,
-/turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/bar)
 "ax" = (
 /obj/structure/flora/ausbushes/stalkybush,
@@ -332,16 +347,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "aP" = (
-/obj/machinery/conveyor{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/window/southleft,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "aQ" = (
-/obj/machinery/conveyor{
-	dir = 6
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	max_integrity = 9999
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "aR" = (
 /obj/structure/fluff/support{
@@ -519,15 +533,20 @@
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
 "ba" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	anchored = 1;
-	req_access = null
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "bb" = (
-/obj/machinery/conveyor,
-/turf/open/floor/plasteel/cafeteria,
+/obj/structure/table/reinforced,
+/obj/item/choice_beacon/ingredient,
+/obj/item/kitchen/knife{
+	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay dull for years to come.";
+	force = 0;
+	name = "safety kitchen knife"
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /obj/item/kitchen/knife
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "bc" = (
 /obj/structure/curtain/cloth{
@@ -1464,16 +1483,22 @@
 	},
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
-"dg" = (
-/obj/machinery/grill,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dh" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	max_integrity = 9999
+/obj/structure/closet/crate{
+	anchored = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/carnivore,
+/obj/item/storage/box/ingredients/delights,
+/obj/item/storage/box/ingredients/exotic,
+/obj/item/storage/box/ingredients/fiesta,
+/obj/item/storage/box/ingredients/fruity,
+/obj/item/storage/box/ingredients/grains,
+/obj/item/storage/box/ingredients/italian,
+/obj/item/storage/box/ingredients/sweets,
+/obj/item/storage/box/ingredients/vegetarian,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
 "di" = (
 /obj/structure/table/wood,
@@ -1489,30 +1514,7 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"dj" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dk" = (
-/obj/structure/table/reinforced,
-/obj/item/choice_beacon/ingredient,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dl" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	anchored = 1;
-	req_access = null
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dm" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -14
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dn" = (
 /obj/structure/closet/crate{
 	anchored = 1
 	},
@@ -1526,60 +1528,33 @@
 /obj/item/storage/box/ingredients/italian,
 /obj/item/storage/box/ingredients/sweets,
 /obj/item/storage/box/ingredients/vegetarian,
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/turf_decal/bot/left,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
-"do" = (
-/obj/structure/closet/crate{
-	anchored = 1
+"dm" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
 	},
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"dn" = (
+/obj/machinery/conveyor{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dp" = (
-/obj/machinery/conveyor{
-	dir = 8
+/obj/structure/sink/kitchen{
+	dir = 1;
+	pixel_y = -8
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dq" = (
-/obj/machinery/conveyor{
-	dir = 10
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dr" = (
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest/forest)
-"ds" = (
-/obj/machinery/conveyor,
-/obj/structure/plasticflaps/opaque,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dt" = (
 /obj/structure/fluff/books_sign,
 /turf/open/floor/plating/grass{
@@ -2214,19 +2189,6 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"fc" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
-	},
-/area/awaymission/cabin/snowforest/forest)
 "fd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2413,17 +2375,6 @@
 /area/awaymission/cabin/snowforest/forest)
 "fz" = (
 /turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest/forest)
-"fA" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "fD" = (
 /obj/structure/disposalpipe/segment{
@@ -2702,17 +2653,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"gk" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "gl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2722,18 +2662,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/cult,
-/area/awaymission/cabin/snowforest/forest)
-"gm" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "gn" = (
 /obj/structure/railing{
@@ -2848,17 +2776,6 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"gB" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "gC" = (
 /obj/machinery/door/airlock/centcom{
@@ -3068,16 +2985,13 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gU" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
+/obj/structure/fluff{
+	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
+	icon = 'icons/mob/eldritch_mobs.dmi';
+	icon_state = "stalker";
+	name = "\improper SOUVENIRS"
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "gV" = (
 /obj/structure/disposalpipe/segment{
@@ -3807,15 +3721,6 @@
 "iB" = (
 /turf/closed/wall/rust,
 /area/awaymission/cabin/snowforest/forest)
-"iC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
 "iG" = (
 /obj/structure/stone_tile/elderblock{
 	dir = 4
@@ -4104,17 +4009,6 @@
 	dir = 1
 	},
 /obj/structure/railing,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
-"jr" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "js" = (
@@ -14522,7 +14416,6 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fr" = (
@@ -14546,7 +14439,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fv" = (
@@ -15493,8 +15385,8 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/oneway{
-	dir = 8;
-	icon_state = "field_dir"
+	icon_state = "field_dir";
+	dir = 8
 	},
 /turf/open/floor/plating/rust,
 /area/medical/morgue/hauntedhouse)
@@ -16905,7 +16797,6 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lg" = (
@@ -16917,7 +16808,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lh" = (
@@ -17343,7 +17233,31 @@
 /obj/machinery/telecomms/allinone/indestructable,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
-"Ox" = (
+"Mk" = (
+/obj/structure/table/reinforced,
+/obj/item/choice_beacon/ingredient,
+/obj/item/kitchen/rollingpin{
+	desc = "Used to softly kneed the Bartender.";
+	force = 0;
+	name = "safety rolling pin"
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /obj/item/kitchen/rollingpin
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Mp" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
+"Mr" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
 	},
@@ -17351,32 +17265,333 @@
 	dir = 4
 	},
 /area/awaymission/cabin/snowforest/forest)
-"Oy" = (
+"Mx" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"Nf" = (
+/obj/structure/fluff{
+	color = "#FFA500";
+	icon = 'icons/turf/shuttleold.dmi';
+	icon_state = "corner";
+	name = "tent wall"
+	},
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Nn" = (
+/obj/machinery/door/airlock/shuttle/glass{
+	name = "Big Sheed's FTL Food Delivery Service"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"NA" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
+"Ok" = (
+/obj/structure/sign/barsign{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ou" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
+"OR" = (
+/obj/structure/flora/stump,
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"OX" = (
+/obj/machinery/door/window/northleft,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Py" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"PL" = (
 /obj/machinery/door/window/survival_pod,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
-"OU" = (
-/obj/structure/fluff{
-	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
-	icon = 'icons/mob/eldritch_mobs.dmi';
-	icon_state = "stalker";
-	name = "\improper SOUVENIRS"
+"PZ" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
 /area/awaymission/cabin/snowforest/forest)
-"TT" = (
-/obj/machinery/vending/clothing/armsy,
-/turf/open/floor/plating/asteroid,
+"Ql" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Qw" = (
+/obj/machinery/conveyor{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"QQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"ZA" = (
+"QS" = (
+/obj/item/extinguisher/mini{
+	force = 0
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ry" = (
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"Rz" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 16
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"RG" = (
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"RH" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"RU" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"SA" = (
+/obj/machinery/sleeper/party,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Th" = (
+/obj/machinery/grill,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"TW" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uq" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Ur" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uu" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Uz" = (
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"UJ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"UO" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"UV" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Vc" = (
+/obj/machinery/vending/clothing/armsy,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"VT" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Wh" = (
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Wq" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Wr" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"WI" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Xg" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Xt" = (
+/obj/machinery/door/window/southright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"XC" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"XF" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Yg" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Yu" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"YN" = (
+/obj/machinery/conveyor_switch/oneway,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Zo" = (
+/turf/closed/wall/mineral/titanium,
+/area/crew_quarters/bar)
+"ZD" = (
+/obj/machinery/conveyor,
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
 
 (1,1,1) = {"
 ae
@@ -43698,12 +43913,12 @@ an
 an
 eo
 ea
-ea
-eo
-an
-an
-an
-ea
+eH
+Zo
+ah
+ah
+ah
+Zo
 ea
 eo
 eo
@@ -43955,13 +44170,13 @@ an
 an
 ea
 ea
-eH
 eo
+Zo
+Ur
+TW
+Wr
+Zo
 an
-an
-an
-bw
-ea
 ea
 an
 dx
@@ -44212,12 +44427,12 @@ br
 an
 an
 eo
-eo
-bw
 an
-an
-an
-an
+Zo
+Wq
+Ql
+Wq
+Zo
 an
 an
 dx
@@ -44469,13 +44684,13 @@ br
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Zo
+Zo
+SA
+Uu
+Uu
+Zo
+Zo
 an
 ao
 mq
@@ -44722,18 +44937,18 @@ br
 br
 br
 br
-br
 an
 an
 an
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-an
+Ok
+Zo
+Zo
+Zo
+Uq
+Zo
+Zo
+Zo
+RG
 ao
 dY
 dY
@@ -44979,17 +45194,17 @@ br
 br
 br
 br
-br
-br
-br
-br
-lu
+an
+an
+an
+an
+Zo
 as
 ba
 ba
-dl
+ba
 dm
-lu
+Zo
 dx
 ak
 mr
@@ -45236,19 +45451,19 @@ br
 br
 br
 br
-br
-br
-br
-br
+an
+an
+an
+an
 ah
 at
-at
-at
-at
-at
-lu
+ba
+ba
+ba
+Qw
+ah
 ak
-cV
+mj
 ms
 mI
 mI
@@ -45493,19 +45708,19 @@ br
 br
 br
 br
+an
+an
 br
-br
-br
-br
-lu
-aw
+an
+Zo
 at
-dg
-at
+ba
+ba
+YN
 dn
-lu
-ao
-di
+ZD
+av
+mi
 dY
 dY
 mI
@@ -45754,15 +45969,15 @@ br
 an
 an
 an
-lu
-aP
-at
+Zo
+Zo
+ba
 dh
-at
-do
-lu
+ba
+Zo
+Zo
 ao
-dX
+mk
 dY
 dY
 mI
@@ -46008,16 +46223,16 @@ br
 br
 br
 br
-an
-an
-an
-lu
+br
+br
+br
+Nn
 aP
-at
-dj
-at
-at
-at
+ba
+ba
+ba
+OX
+Nn
 au
 dY
 dY
@@ -46265,16 +46480,16 @@ br
 br
 br
 br
-an
-an
-an
-lu
-aP
-at
-dk
-at
-at
-at
+br
+br
+br
+Nn
+Xt
+ba
+ba
+ba
+XF
+Nn
 au
 dY
 dY
@@ -46521,19 +46736,19 @@ br
 br
 br
 br
+br
+br
+br
 an
-an
-an
-an
-lu
-aP
-at
+Zo
+Zo
+ba
 dk
-at
-bb
-ds
-av
-mi
+ba
+Zo
+Zo
+ak
+cV
 dY
 dY
 mI
@@ -46778,19 +46993,19 @@ br
 br
 br
 br
+br
 an
 an
 an
-an
-lu
-aP
-at
-dg
-at
-dp
-lu
+Zo
+Th
+ba
+ba
+ba
+Th
+Zo
 ao
-mj
+di
 dY
 dY
 mI
@@ -47039,15 +47254,15 @@ an
 an
 an
 an
-lu
-aP
-at
-at
-at
+Zo
+Rz
+ba
+ba
+ba
 dp
-lu
+Zo
 ak
-mk
+dX
 dY
 mI
 mI
@@ -47273,7 +47488,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -47295,15 +47510,15 @@ br
 br
 an
 an
-an
-lu
+Ok
+Zo
 aQ
 bb
-bb
-bb
-dq
-lu
-dR
+Wh
+Mk
+aQ
+Zo
+Nf
 ak
 mr
 mI
@@ -47553,13 +47768,13 @@ br
 an
 an
 an
-lu
-lu
-lu
-lu
-lu
-lu
-lu
+Zo
+Zo
+Zo
+Zo
+Zo
+Zo
+Zo
 an
 ao
 dY
@@ -47787,10 +48002,10 @@ an
 an
 an
 an
+bw
 an
 an
 bw
-an
 an
 an
 an
@@ -47810,13 +48025,13 @@ br
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Zo
+XC
+RU
+Zo
+XC
+RU
+Zo
 an
 ao
 mt
@@ -48068,11 +48283,11 @@ an
 an
 an
 an
-bw
-bw
-ea
-ea
-an
+VT
+VT
+Uz
+PZ
+Uz
 an
 an
 dR
@@ -48302,7 +48517,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -48324,12 +48539,12 @@ an
 an
 an
 bw
-an
-eo
-eo
-ea
-eo
-bw
+QS
+Py
+VT
+Ry
+VT
+VT
 bw
 an
 an
@@ -48581,13 +48796,13 @@ an
 an
 an
 an
-an
-ea
-ea
-et
-ea
-bw
-an
+Uz
+Uz
+Mx
+OR
+Ry
+VT
+Uz
 an
 an
 an
@@ -48822,7 +49037,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -48838,12 +49053,12 @@ an
 an
 an
 an
-bw
-eo
-eo
-ea
-ea
-an
+VT
+VT
+VT
+Ry
+Uz
+PZ
 an
 an
 an
@@ -49082,7 +49297,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -49094,13 +49309,13 @@ br
 an
 an
 an
-an
+Yu
 bw
+VT
 bw
+VT
 bw
-bw
-bw
-an
+Uz
 an
 an
 an
@@ -49333,7 +49548,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -51909,7 +52124,7 @@ an
 fg
 eY
 an
-an
+bw
 an
 an
 an
@@ -57564,7 +57779,7 @@ gx
 eY
 an
 an
-OU
+an
 br
 br
 br
@@ -57821,7 +58036,7 @@ gx
 eY
 an
 an
-TT
+an
 br
 br
 br
@@ -58078,7 +58293,7 @@ gx
 eY
 an
 an
-OU
+an
 br
 br
 br
@@ -58335,7 +58550,7 @@ gx
 eY
 an
 an
-TT
+an
 br
 br
 br
@@ -58592,7 +58807,7 @@ gx
 eY
 an
 an
-OU
+an
 br
 br
 br
@@ -60884,12 +61099,12 @@ an
 an
 an
 ha
-OU
+gU
 hg
 fL
 hG
 hG
-Oy
+PL
 ib
 ij
 fL
@@ -61141,9 +61356,9 @@ an
 an
 an
 ha
-TT
+Vc
 hg
-Ox
+Mr
 eY
 fL
 hQ
@@ -61398,9 +61613,9 @@ an
 an
 an
 ha
-OU
+gU
 hg
-Ox
+Mr
 eY
 eY
 hR
@@ -61657,7 +61872,7 @@ an
 ha
 an
 hp
-ZA
+RH
 gx
 an
 an
@@ -61914,7 +62129,7 @@ an
 ha
 an
 fa
-ZA
+RH
 hy
 hH
 hS
@@ -62935,9 +63150,9 @@ an
 fu
 fG
 fG
-fc
-fc
-fc
+Xg
+Xg
+Xg
 fG
 fG
 gA
@@ -65008,7 +65223,7 @@ an
 an
 an
 an
-iC
+QQ
 fn
 ji
 fn
@@ -66811,7 +67026,7 @@ hu
 hu
 hu
 hu
-jr
+Ou
 he
 eY
 an
@@ -67054,11 +67269,11 @@ ha
 an
 hm
 hs
-fA
+UV
 hs
-fA
+UV
 hs
-fA
+UV
 hs
 it
 he
@@ -109235,11 +109450,11 @@ ES
 ES
 ES
 ES
-ES
-ES
-ES
-ES
-ES
+Gw
+Gw
+Gw
+Gw
+Gw
 ES
 ES
 ES
@@ -109492,11 +109707,11 @@ ES
 ES
 ES
 ES
-ES
-ES
-ES
-ES
-ES
+Gw
+Gw
+Gw
+Gw
+Gw
 ES
 ES
 ES
@@ -109749,11 +109964,11 @@ ES
 ES
 ES
 ES
-ES
-ES
-ES
-ES
-ES
+Gw
+Gw
+Gw
+Gw
+Gw
 ES
 ES
 ES
@@ -110005,13 +110220,13 @@ ES
 ES
 ES
 ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
 ES
 Gz
 Gz
@@ -113346,13 +113561,13 @@ ES
 ES
 ES
 ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
 ES
 Gz
 Gz
@@ -117420,21 +117635,21 @@ ES
 ES
 ES
 ES
-Fu
-Fu
-Fu
-Fu
-Fu
-Fu
-Fq
+WI
+WI
+WI
+WI
+WI
+WI
+UO
 ES
-Fu
+WI
 Gd
 Gd
 Gd
 Gd
 Gd
-Fq
+UO
 ES
 ES
 ES
@@ -129243,15 +129458,15 @@ Fz
 Fz
 Fz
 FW
-Fu
-Fu
-Fu
-Fu
-Fu
-Fu
-Fu
-Fu
-gk
+WI
+WI
+WI
+WI
+WI
+WI
+WI
+WI
+Yg
 ES
 ES
 ES
@@ -131289,11 +131504,11 @@ ES
 ES
 fj
 ES
-Fu
-Fu
-Fu
-Fu
-Fq
+WI
+WI
+WI
+WI
+UO
 ES
 ES
 ES
@@ -133111,11 +133326,11 @@ ES
 ES
 ES
 ES
-Fu
-Fu
-Fu
-Fu
-Fq
+WI
+WI
+WI
+WI
+UO
 ES
 ES
 ES
@@ -133882,11 +134097,11 @@ ES
 ES
 ES
 ES
-Fq
+UO
 Gd
 Gd
 Gd
-Fu
+WI
 ES
 ES
 ES
@@ -134117,11 +134332,11 @@ ES
 ES
 ES
 ES
-Fq
-Fu
-Fu
-Fu
-Fu
+UO
+WI
+WI
+WI
+WI
 ES
 ES
 ES
@@ -134892,12 +135107,12 @@ ES
 ES
 ES
 ES
-Fu
-gk
-gk
-gk
-gk
-gm
+WI
+Yg
+Yg
+Yg
+Yg
+UJ
 ES
 ES
 ES
@@ -134907,9 +135122,9 @@ ES
 ES
 ES
 Gb
-gB
+Mp
 Gb
-gU
+NA
 ES
 ES
 ES
@@ -200434,11 +200649,11 @@ ES
 ES
 ES
 Fu
-Fu
-Fu
-Fu
-Fu
-Fu
+fn
+fn
+fn
+fn
+fn
 Lf
 Fu
 Lg
