@@ -140,15 +140,16 @@
 			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
 				O.armor = O.armor.setRating(fire = 50)
 			O.fire_act(10000, 1000 * delta_time)
-
+			if(istype(O, /obj/structure/closet))
+				var/obj/structure/closet/C = O
+				for(var/I in C.contents)
+					burn_stuff(I)
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue	//YOU'RE FLYING OVER IT
-			var/buckle_check = L.buckling
-			if(!buckle_check)
-				buckle_check = L.buckled
+			var/buckle_check = L.buckled
 			if(isobj(buckle_check))
 				var/obj/O = buckle_check
 				if(O.resistance_flags & LAVA_PROOF)

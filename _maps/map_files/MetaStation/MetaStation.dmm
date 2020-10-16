@@ -25642,7 +25642,7 @@
 "bii" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland3";
+	id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -36744,7 +36744,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/clothing/mask/pig,
+/obj/item/clothing/mask/animal/pig,
 /obj/item/bikehorn,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -38246,7 +38246,7 @@
 /area/maintenance/port)
 "bPJ" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/animal/horsehead,
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -43797,13 +43797,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/machinery/airalarm/kitchen_cold_room{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/medical/coldroom)
@@ -53826,10 +53826,9 @@
 	},
 /area/science/test_area)
 "cDz" = (
-/turf/closed/indestructible{
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	icon_state = "riveted";
-	name = "hyper-reinforced wall"
+/turf/closed/indestructible/riveted{
+	name = "hyper-reinforced wall";
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
 	},
 /area/science/test_area)
 "cDD" = (
@@ -59648,7 +59647,7 @@
 /area/science/xenobiology)
 "cSP" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -62928,7 +62927,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/animal/horsehead,
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -78040,7 +78039,7 @@
 "vWu" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -78858,7 +78857,7 @@
 /area/maintenance/starboard)
 "xcN" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,

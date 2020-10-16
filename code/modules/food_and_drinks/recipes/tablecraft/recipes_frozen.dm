@@ -301,7 +301,7 @@
 	reqs = list(
 		/obj/item/popsicle_stick = 1,
 		/datum/reagent/consumable/blumpkinjuice = 4, //natural source of ammonium chloride
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/cream = 2,
 		/datum/reagent/consumable/vanilla = 2,

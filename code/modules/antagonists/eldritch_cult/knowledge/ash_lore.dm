@@ -149,13 +149,13 @@
 	. = ..()
 	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
 	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-	chosen_mob.update_mobility()
+
 
 /datum/eldritch_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
 	. = ..()
 	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
 	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-	chosen_mob.update_mobility()
+
 
 /datum/eldritch_knowledge/spell/cleave
 	name = "Blood Cleave"

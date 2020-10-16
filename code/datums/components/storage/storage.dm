@@ -1,11 +1,3 @@
-#define COLLECT_ONE 0
-#define COLLECT_EVERYTHING 1
-#define COLLECT_SAME 2
-
-#define DROP_NOTHING 0
-#define DROP_AT_PARENT 1
-#define DROP_AT_LOCATION 2
-
 // External storage-related logic:
 // /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
@@ -123,10 +115,10 @@
 	can_hold_description = generate_hold_desc(can_hold_list)
 
 	if (can_hold_list != null)
-		can_hold = typecacheof(can_hold_list)
+		can_hold = string_list(typecacheof(can_hold_list))
 
 	if (cant_hold_list != null)
-		cant_hold = typecacheof(cant_hold_list)
+		cant_hold = string_list(typecacheof(cant_hold_list))
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
 	var/list/desc = list()
@@ -643,7 +635,7 @@
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
 	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
-	if(biggerfish && biggerfish.max_w_class < max_w_class)//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
+	if(biggerfish && biggerfish.max_w_class < max_w_class) //return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] can't fit in [host] while [real_location.loc] is in the way!</span>")
 		return FALSE
