@@ -48,3 +48,24 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
 
+/obj/item/storage/briefcase/case
+	name = "case"
+	icon_state = "case"
+	force = 2
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/briefcase/case/lobotomy
+	name = "lobotomy kit"
+
+/obj/item/storage/briefcase/case/lobotomy/PopulateContents()
+	..()
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/orbitoclast(src)
+	new /obj/item/hammer(src)
+	new /obj/item/cautery(src)
+	new /obj/item/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/paper/guides/lobotomy(src)
+
+/obj/item/paper/guides/lobotomy
+	name = "Lobotomies For Dummies"
+	info = "Doing a Lobotomy is easy.<br> Target the eyes, use your drapes, orbitoclast, hammer, then finish off with a cautery.<br> However, to retrieve special powers from this is a little harder.<br> You must fail the lobotomizing step (hammer) to cause some traumas.<br> If these traumas are too bad, do the step correctly then fail it again.<br> To fail a step on purpose, you must be on disarm intent."

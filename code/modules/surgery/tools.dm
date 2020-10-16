@@ -471,6 +471,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 5
+	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("bonks", "hammers")
 	attack_verb_simple = list("bonk", "hammer")
 	tool_behaviour = TOOL_HAMMER
