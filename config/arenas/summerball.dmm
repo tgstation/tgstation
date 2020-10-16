@@ -9,7 +9,7 @@
 "i" = (/obj/structure/chair/stool/bar{pixel_y = 10},/turf/open/floor/plasteel/dark,/area/tdome/arena)
 "j" = (/obj/machinery/chem_dispenser/drinks/fullupgrade{dir = 4; max_integrity = 9999; pixel_x = 12},/obj/structure/table/wood/bar,/turf/open/floor/carpet/royalblue,/area/tdome/arena)
 "k" = (/obj/structure/table/wood/bar,/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{dir = 8; max_integrity = 9999; pixel_x = -12; pixel_y = 7},/turf/open/floor/carpet/royalblue,/area/tdome/arena)
-"l" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil/five,/turf/open/floor/plasteel/dark,/area/tdome/arena)
+"l" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil/five,/obj/item/shard,/turf/open/floor/plasteel/dark,/area/tdome/arena)
 
 (1,1,1) = {"
 abcabbbabbbabba
