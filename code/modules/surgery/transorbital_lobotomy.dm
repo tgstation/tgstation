@@ -21,10 +21,6 @@
 	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
 		"<span class='notice'>[user] begins to perform a lobotomy on [target]'s brain.</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
-/datum/surgery_step/tlobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
-		"<span class='notice'>[user] begins to perform a lobotomy on [target]'s brain.</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
 /datum/surgery_step/tlobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You succeed in lobotomizing [target].</span>",
