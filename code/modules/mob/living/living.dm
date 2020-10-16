@@ -1675,7 +1675,6 @@
 			if(old_buckled.buckle_lying == 0 && (resting || HAS_TRAIT(src, TRAIT_FLOORED))) // The buckle forced us to stay up (like a chair)
 				set_lying_down() // We want to rest or are otherwise floored, so let's drop on the ground.
 
-
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
 	if(. == FALSE) //null is a valid value here, we only want to return if FALSE is explicitly passed.
