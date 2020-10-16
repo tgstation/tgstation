@@ -83,7 +83,7 @@
 		if(href_list["menu"])
 			screen = text2num(href_list["menu"])
 
-		if(href_list["category"])
+		if(href_list["category"] in categories) //Don't let people send invalid categories, selected_category is displayed to anyone who looks at the machine in several places
 			selected_category = href_list["category"]
 
 		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake

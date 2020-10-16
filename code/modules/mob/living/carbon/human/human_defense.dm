@@ -49,12 +49,12 @@
 	return covering_part
 
 /mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna && dna.species)
+	if(dna?.species)
 		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
 			return spec_return
@@ -141,7 +141,7 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
 			return spec_return
@@ -174,7 +174,7 @@
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
 		var/zone_hit_chance = 80
-		if(!(mobility_flags & MOBILITY_STAND)) // half as likely to hit a different zone if they're on the ground
+		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
 			zone_hit_chance += 10
 		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
@@ -656,10 +656,6 @@
 
 		..()
 
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	. = ..()
-	if(src == A)
-		check_self_for_injuries()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)

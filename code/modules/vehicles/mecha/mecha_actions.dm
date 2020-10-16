@@ -1,4 +1,4 @@
-//////////////////////MECHA ACTIONS\\\\\\\\\\\\\\\\\\\\\
+/***************** MECHA ACTIONS *****************/
 
 /obj/vehicle/sealed/mecha/generate_action_type()
 	. = ..()

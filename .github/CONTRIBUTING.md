@@ -95,7 +95,7 @@ The previous code made compliant:
 /datum/datum1/datum2/proc/proc3()
 	code
 /datum/datum1/datum2/proc2()
-	..()
+	. = ..()
 	code
 ```
 
@@ -152,7 +152,7 @@ There are two key points here:
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
 ### Prefer `Initialize()` over `New()` for atoms
-Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
+Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
 ### No magic numbers or strings
@@ -181,7 +181,7 @@ This is clearer and enhances readability of your code! Get used to doing it!
 ### Control statements
 (if, while, for, etc)
 
-* All control statements must not contain code on the same line as the statement (`if (blah) return`)
+* No control statement may contain code on the same line as the statement (`if (blah) return`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
 ### Use early return
@@ -229,6 +229,47 @@ This is good:
 	if(do_after(mob, 1.5 SECONDS))
 		mob.dothing()
 ````
+
+### Getters and setters
+
+* Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
+
+This is bad:
+```DM
+/datum/datum1/proc/simple_getter()
+	return gotten_variable
+```
+Prefer to either access the variable directly or use a macro/define.
+
+
+* Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
+
+These are bad:
+```DM
+/datum/datum1/proc/complex_getter()
+	return condition ? VALUE_A : VALUE_B
+
+/datum/datum1/child_datum/complex_getter()
+	return condition ? VALUE_C : VALUE_D
+```
+
+This is good:
+```DM
+/datum/datum1
+	var/getter_turned_into_variable
+
+/datum/datum1/proc/set_condition(new_value)
+	if(condition == new_value)
+		return
+	condition = new_value
+	on_condition_change()
+
+/datum/datum1/proc/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_A : VALUE_B
+
+/datum/datum1/child_datum/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
+```
 
 
 ### Develop Secure Code

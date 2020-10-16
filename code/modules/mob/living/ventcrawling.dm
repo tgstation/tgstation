@@ -11,11 +11,11 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(stat)
 		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
 		return
-	if(IsStun() || IsParalyzed())
-		to_chat(src, "<span class='warning'>You can't vent crawl while you're stunned!</span>")
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+		to_chat(src, "<span class='warning'>You can't move into the vent!</span>")
 		return
-	if(restrained())
-		to_chat(src, "<span class='warning'>You can't vent crawl while you're restrained!</span>")
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		to_chat(src, "<span class='warning'>You need to be able to use your hands to ventcrawl!</span>")
 		return
 	if(has_buckled_mobs())
 		to_chat(src, "<span class='warning'>You can't vent crawl with other creatures on you!</span>")
@@ -56,8 +56,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 				return
 
 			if(iscarbon(src) && ventcrawler == VENTCRAWLER_NUDE)
-				var/list/items_list = get_equipped_items(include_pockets = TRUE)
-				if(items_list.len || held_items.len)
+				if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
 					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 
@@ -70,7 +69,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(buckled)
 		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
-	..()
+	return ..()
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)

@@ -334,3 +334,15 @@
 	smoke.effect_type = smoke_type
 	smoke.set_up(range, location)
 	smoke.start()
+
+/////////////////////////////////////////////
+// Bad Smoke (But Green)
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/bad/green
+	name = "green smoke"
+	color = "#00FF00"
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/bad/green
+	effect_type = /obj/effect/particle_effect/smoke/bad/green

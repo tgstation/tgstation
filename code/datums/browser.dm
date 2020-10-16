@@ -445,7 +445,7 @@
 // otherwise, just reset the client mob's machine var.
 //
 /client/verb/windowclose(atomref as text)
-	set hidden = 1						// hide this verb from the user's panel
+	set hidden = TRUE						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
 	if(atomref!="null")				// if passed a real atomref
@@ -458,5 +458,5 @@
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
+	if(src?.mob)
 		src.mob.unset_machine()

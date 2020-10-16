@@ -142,7 +142,8 @@
 	return data
 
 /obj/item/radio/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("frequency")
@@ -198,6 +199,8 @@
 			if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
 				return FALSE
 			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
+				return FALSE
+			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
 				return FALSE
 	if(!spans)
 		spans = list(M.speech_span)

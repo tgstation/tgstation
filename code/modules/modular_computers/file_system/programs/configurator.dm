@@ -13,6 +13,7 @@
 	available_on_ntnet = 0
 	requires_ntnet = 0
 	tgui_id = "NtosConfiguration"
+	program_icon = "cog"
 
 	var/obj/item/modular_computer/movable = null
 
@@ -34,11 +35,11 @@
 	data["disk_used"] = hard_drive.used_capacity
 	data["power_usage"] = movable.last_power_usage
 	data["battery_exists"] = battery_module ? 1 : 0
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		data["battery_rating"] = battery_module.battery.maxcharge
 		data["battery_percent"] = round(battery_module.battery.percent())
 
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		data["battery"] = list("max" = battery_module.battery.maxcharge, "charge" = round(battery_module.battery.charge))
 
 	var/list/all_entries[0]
@@ -57,7 +58,8 @@
 
 
 /datum/computer_file/program/computerconfig/ui_act(action,params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PC_toggle_component")

@@ -37,6 +37,7 @@
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/officer/blueshirt
@@ -85,6 +86,7 @@
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/warden/formal
@@ -115,6 +117,7 @@
 	inhand_icon_state = "det"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/detective/grey
@@ -131,6 +134,7 @@
 	inhand_icon_state = "greydet"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /*
@@ -154,6 +158,7 @@
 	inhand_icon_state = "r_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/head_of_security/grey
@@ -175,6 +180,7 @@
 	inhand_icon_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
@@ -228,6 +234,7 @@
 	inhand_icon_state = "o_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/security/officer/beatcop
