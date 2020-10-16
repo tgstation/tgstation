@@ -9,10 +9,8 @@
 /**
   * Machine that runs around wildly so people can practice clickin on things
   *
-  * Can have a mob buckled on or a obj/item/target attached. Uses timers to move, which is necessary because it's movespeed
-  * needs to both be variable and potentially faster than SSFastProcess's tick speed, so hey this is what we got. 
-  * As a note, there generally shouldn't be too many timers in existance at a time, so there will only ever be
-  * one or two of these on the station.
+  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess, 
+  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
   */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
@@ -30,14 +28,26 @@
 	var/turf/target_position
 	///The turf the machine was on when it was activated
 	var/turf/starting_turf
-	///How fast the machine moves. Cannot be higher than MAX_SPEED
+	///Delay between process() calls. Cannot be higher than MAX_SPEED. Smaller value represents faster movement.
 	var/move_speed = 1
 	///Reference to a potentially attached object, either a target, trainer toolbox, or syndicate toolbox
-	var/obj/item/attached_item
+	var/obj/attached_item
 	///Helper for timing attacks when emagged
 	COOLDOWN_DECLARE(attack_cooldown)
+	///Cooldown macro to control how fast this will move. Used in process()
+	COOLDOWN_DECLARE(move_cooldown)
 
+/**
+ * Called on qdel(), so we don't want a cool explosion to happen
+ */
 /obj/structure/training_machine/Destroy()
+	remove_attached_item()
+	return ..()
+
+/**
+ * Called on a normal destruction, so we have a cool explosion and toss whatever's attached
+ */
+/obj/structure/training_machine/obj_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
 	explosion(src, 0,0,1, flame_range = 2)
 	return ..()
@@ -51,6 +61,11 @@
 		ui = new(user, src, "TrainingMachine", name)
 		ui.open()
 
+/**
+ * Send data to the UI
+ *
+ * Include's the machine's movement range, speed, and whether or not it's active
+ */
 /obj/structure/training_machine/ui_data(mob/user)
 	var/list/data = list()
 	data["range"] = range
@@ -58,6 +73,11 @@
 	data["moving"] = moving
 	return data
 
+/**
+ * Control the attached variables. 
+ *
+ * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
+ */
 /obj/structure/training_machine/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -81,8 +101,14 @@
 /obj/structure/training_machine/attack_hand(mob/user)
 	ui_interact(user)
 
+/**
+ * Called when the machien is attacked by something
+ *
+ * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
+ * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
+ */
 /obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	if (user.a_intent == INTENT_HARM)
+	if (user.a_intent != INTENT_HELP)
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
@@ -93,19 +119,48 @@
 	to_chat(user, "<span class='notice'>You attach \the [attached_item] to the training device.</span>")
 	playsound(src, "rustle", 50, TRUE)
 
-/obj/structure/training_machine/proc/attach_item(target)
+/**
+ * Attach an item to the machine
+ *
+ * This proc technically works with any obj. Currently is only used for objects of type item/target and item/training_toolbox
+ * Will make the attached item appear visually on the machine
+ * Arguments
+ * * target - The object to attach
+ */
+/obj/structure/training_machine/proc/attach_item(obj/target)
 	remove_attached_item()
 	attached_item = target
 	attached_item.forceMove(src)
 	attached_item.vis_flags |= VIS_INHERIT_ID
 	vis_contents += attached_item
+	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, .proc/on_attached_delete)
 	handle_density()
 
+/**
+ * Called when the attached item is deleted.
+ *
+ * Cleans up behavior for when the attached item is deleted or removed.
+ */
+/obj/structure/training_machine/proc/on_attached_delete()
+	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
+	vis_contents -= attached_item
+	attached_item = null
+	handle_density()
+
+/**
+ * Remove the attached item from the machine
+ *
+ * Called when a user removes the item by hand or by swapping it out with another, when the machine breaks, or
+ * when the machine is emagged.
+ * Arguments
+ * * user - The peson , if any, removing the attached item
+ * * throwing - If we should make the item fly off the machine
+ */
 /obj/structure/training_machine/proc/remove_attached_item(mob/user, throwing = FALSE)
 	if (!attached_item)
 		return
-	vis_contents -= attached_item
 	if (istype(attached_item, /obj/item/storage/toolbox/syndicate))
+		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 		qdel(attached_item)
 	else if (user)
 		user.put_in_hands(attached_item)
@@ -115,8 +170,7 @@
 		//We do a QDELETED check here because we don't want to throw the syndi toolbox, if it exists
 		var/destination = get_edge_target_turf(get_turf(src), pick(GLOB.alldirs))
 		attached_item.throw_at(destination, 4, 1)
-	attached_item = null
-	handle_density()
+	on_attached_delete()
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
@@ -129,26 +183,51 @@
 	remove_attached_item(user)
 	playsound(src, "rustle", 50, TRUE)
 
+/**
+ * Toggle the machine's movement 
+ */
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
-		moving = FALSE
+		stop_moving()
 	else
 		start_moving()
 
+/**
+ * Stop the machine's movement
+ *
+ * Will call STOP_PROCESSING, play a sound, and say an appropriate message
+ * Arguments
+ * * Message - the message the machine says when stopping
+ */
 /obj/structure/training_machine/proc/stop_moving(message = "Ending training simulation.")
 	moving = FALSE
 	starting_turf = null
 	say(message)
 	playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
+	STOP_PROCESSING(SSfastprocess, src)
 
+/**
+ * Start the machine's movement
+ *
+ * Says a message, plays a sound, then starts processing
+ */
 /obj/structure/training_machine/proc/start_moving()
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
 	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
-	do_movement()
+	START_PROCESSING(SSfastprocess, src)
 
-/obj/structure/training_machine/proc/do_movement()
+/**
+ * Main movement method for the machine
+ *
+ * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started. 
+ * Will only move if the move_cooldown cooldown macro is finished. 
+ * If it can't find a place to go, it will stop moving.
+ */
+/obj/structure/training_machine/process()
+	if(!COOLDOWN_FINISHED(src, move_cooldown))
+		return
 	var/turf/current_turf = get_turf(src)
 	if (!moving || !starting_turf || isspaceturf(current_turf))
 		stop_moving()
@@ -163,8 +242,11 @@
 	if (!Move(nextStep, get_dir(src, nextStep)))
 		target_position = null //We couldn't move towards the target turf, so find a new target turf
 	try_attack()
-	addtimer(CALLBACK(src, .proc/do_movement), max(MAX_SPEED - move_speed, 1)) // We want to ensure this is never <=0
+	COOLDOWN_START(src, move_cooldown, max(MAX_SPEED - move_speed, 1))
 
+/**
+ * Find a suitable turf to move towards
+ */
 /obj/structure/training_machine/proc/find_target_position()
 	var/list/turfs = list()
 	for(var/turf/potential_turf in view(range, starting_turf))
@@ -175,6 +257,13 @@
 		return
 	return pick(turfs)
 
+/**
+ * Try to attack a nearby mob
+ *
+ * Called whenever the machine moves, this will look for mobs adjacent to the machine to attack.
+ * Will attack with either a training toolbox (if attached), or a much more deadly syndicate toolbox (if emagged).
+ * A cooldown macro (attack_cooldown) ensures it doesn't attack too quickly
+ */
 /obj/structure/training_machine/proc/try_attack()
 	if (!attached_item || istype(attached_item, /obj/item/target))
 		return
@@ -190,9 +279,12 @@
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
 		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST)
-	playsound(src, 'sound/weapons/smash.ogg', 25, TRUE)
+	playsound(src, 'sound/weapons/smash.ogg', 15, TRUE)
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
+/**
+ * Make sure the machine can't be walked through if something is attached
+ */
 /obj/structure/training_machine/proc/handle_density()
 	if(length(buckled_mobs) || attached_item)
 		density = TRUE
@@ -212,6 +304,9 @@
 	handle_density()
 	return ..()
 
+/**
+ * Emagging causes a deadly, unremovable syndicate toolbox to be attached to the machine
+ */
 /obj/structure/training_machine/emag_act(mob/user)
 	. = ..()
 	if (obj_flags & EMAGGED)
@@ -256,11 +351,19 @@
 
 /obj/item/training_toolbox/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if (!proximity || target == user)
+	if (!proximity || target == user || user.a_intent == INTENT_HELP)
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)
 
+/**
+ * Check if we should increment the hit counter
+ *
+ * Increments the 'hit' counter if the target we're attacking is a mob, target, or training machine with an attached item.
+ * Will beep every 9 hits, as 9 hits usually signifies a KO with a normal toolbox
+ * Arguments
+ * * target - the atom we're hitting
+ */
 /obj/item/training_toolbox/proc/check_hit(atom/target)
 	var/target_is_machine = istype(target, /obj/structure/training_machine)
 	if (!ismob(target) && !istype(target, /obj/item/target) && !target_is_machine)
@@ -277,8 +380,9 @@
 	return TRUE
 
 /obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
-	check_hit(hit_atom)
+	. = ..()
+	if (!.)
+		check_hit(hit_atom)
 
 /obj/item/training_toolbox/AltClick(mob/user)
 	. = ..()
