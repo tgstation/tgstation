@@ -15,7 +15,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune
 	name = "rune"
-	var/cultist_name = "basic rune"
+	var/cultist_name = "Basic"
 	desc = "An odd collection of symbols drawn in what seems to be blood."
 	var/cultist_desc = "a basic rune with no function." //This is shown to cultists who examine the rune in order to determine its true purpose.
 	anchored = TRUE
@@ -34,6 +34,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/scribe_damage = 0.1 //how much damage you take doing it
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
+	var/bigrune = FALSE //is this a big, important rune whose destruction could be important/annoying?
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
@@ -58,11 +59,21 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		SEND_SOUND(user,'sound/items/sheath.ogg')
-		if(do_after(user, 15, target = src))
+		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing the [lowertext(cultist_name)] rune...</span>") //The message shown to other people will use the generic name of the rune (because I can't be bothered to add some sort of snowflakey cultist check for everyone who's supposed to see this message), but the person removing the rune should definitely be a cultist, so it should be safe to use the real name of the rune in the message to them.
+		if(bigrune)
+			if(do_after(user, 50, target = src))	//Prevents accidental erasures.
+				log_game("[lowertext(cultist_name)] rune erased by [key_name(user)] with [I.name]")
+				message_admins("[ADMIN_LOOKUPFLW(user)] erased a [lowertext(cultist_name)] rune with [I.name]")
+				to_chat(user, "<span class='notice'>You successfully erase the [lowertext(cultist_name)] rune.</span>")
+				qdel(src)
+		else if(do_after(user, 15, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+		if(bigrune)
+			log_game("[lowertext(cultist_name)] rune erased by [key_name(user)] with [I.name] (a null rod)")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a [lowertext(cultist_name)] rune with [I.name] (a null rod)")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 		qdel(src)
@@ -162,7 +173,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
-	cultist_name = "malformed rune"
+	cultist_name = "Malformed"
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 	invoke_damage = 30
@@ -463,6 +474,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used = FALSE
+	bigrune = TRUE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
@@ -501,18 +513,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(src)
 		color = RUNE_COLOR_RED
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar'Sie to spawn even if the rune has been removed
-
-/obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
-	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
-		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
-		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
-			log_game("Summon Narsie rune erased by [key_name(user)] with [I.name]")
-			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with [I.name]")
-	else if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
-		log_game("Summon Narsie rune erased by [key_name(user)] using a null rod")
-		message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
-	else
-		..()
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
@@ -884,6 +884,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100
+	bigrune = TRUE
 
 /obj/effect/rune/apocalypse/invoke(list/invokers)
 	if(rune_in_use)
