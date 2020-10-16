@@ -277,5 +277,5 @@
 	name = "Illiteracy"
 	desc = "Patient is unable to understand or comprehend written language."
 	scan_desc = "illiterate"
-	gain_text = "<span class='notice'>Your grasp of written language slips away."
+	gain_text = "<span class='notice'>Your grasp of written language slips away.</span>"
 	lose_text = "<span class='notice'>You once again remember how to read and write.</span>"
