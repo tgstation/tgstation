@@ -48,7 +48,7 @@
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			return user_unbuckle_mob(unbuckled,user)
 		else
-			return(user_unbuckle_mob(buckled_mobs[1],user))
+			return user_unbuckle_mob(buckled_mobs[1], user)
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
