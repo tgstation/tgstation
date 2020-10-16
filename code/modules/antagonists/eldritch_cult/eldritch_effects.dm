@@ -8,6 +8,12 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
+/obj/effect/eldritch/Initialize()
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
+
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -194,6 +200,9 @@
 /obj/effect/broken_illusion/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
 
 ///Makes this obj appear out of nothing
 /obj/effect/broken_illusion/proc/show_presence()
@@ -248,6 +257,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	invisibility = INVISIBILITY_OBSERVER
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?
