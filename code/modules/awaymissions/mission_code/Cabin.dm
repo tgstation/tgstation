@@ -22,6 +22,29 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 
+/area/awaymission/cabin/snowforest/hauntedhouse
+	name = "Haunted Manor"
+	icon_state = "hauntedmorgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+
+/area/awaymission/cabin/snowforest/hauntedhouse/Entered(atom/movable/M)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/doomed = M
+		var/list/not_bones = doomed.GetAllContents()
+		for(var/obj/item/teleportation_scroll/way_out in not_bones)
+			qdel(way_out)
+
+/area/awaymission/cabin/snowforest/tele
+	name = "Haunted Manor"
+	icon_state = "spacecontent10"
+
+/area/awaymission/cabin/snowforest/field
+	name = "Haunted Woods"
+	icon_state = "morgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
 /area/awaymission/cabin/lumbermill
 	name = "Lumbermill"
 	icon_state = "away3"
