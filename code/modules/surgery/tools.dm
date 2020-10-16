@@ -459,6 +459,7 @@
 	attack_verb_simple = list("try to lobotomize", "stab")
 	tool_behaviour = TOOL_ORBITOCLAST
 	toolspeed = 1
+	sharpness = SHARP_POINTY
 
 /obj/item/hammer
 	name = "hammer"
