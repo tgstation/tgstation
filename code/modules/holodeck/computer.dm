@@ -32,6 +32,7 @@
 	var/program = "holodeck_offline"
 	var/last_program
 	var/offline_program = "holodeck_offline"
+	var/holodeck_access = 1
 
 	var/list/program_cache
 	var/list/emag_programs
@@ -87,10 +88,23 @@
 	generate_program_list()
 	load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
 
-/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)//portable
+/obj/machinery/computer/holodeck/proc/generate_program_list()
+	for(var/typekey in subtypesof(program_type))
+		var/datum/map_template/holodeck/A = typekey
+		//if(!A)
+			//continue
+		var/list/info_this = list()
+		info_this["id"] = initial(A.template_id)
+		info_this["name"] = initial(A.name)
+		if(initial(A.restricted))
+			LAZYADD(emag_programs, list(info_this))
+		else
+			LAZYADD(program_cache, list(info_this))
+
+/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Holodeck", name)//this creates the holodeck ui
+		ui = new(user, src, "Holodeck", name)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)
@@ -154,58 +168,6 @@
 
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
-
-/obj/machinery/computer/holodeck/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	if(!LAZYLEN(emag_programs))
-		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
-		return
-	playsound(src, "sparks", 75, TRUE)
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
-	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
-	log_game("[key_name(user)] emagged the Holodeck Control Console")
-	nerf(!(obj_flags & EMAGGED))
-
-/obj/machinery/computer/holodeck/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	emergency_shutdown()
-
-/obj/machinery/computer/holodeck/ex_act(severity, target)
-	emergency_shutdown()
-	return ..()
-
-/obj/machinery/computer/holodeck/Destroy()
-	emergency_shutdown()
-	if(linked)
-		linked.linked = null
-		linked.power_usage = new /list(AREA_USAGE_LEN)
-	return ..()
-
-/obj/machinery/computer/holodeck/power_change()
-	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
-
-/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
-	emergency_shutdown()
-	return ..()
-
-/obj/machinery/computer/holodeck/proc/generate_program_list()
-	for(var/typekey in subtypesof(program_type))
-		var/datum/map_template/holodeck/A = typekey
-		//if(!A)
-			//continue
-		var/list/info_this = list()
-		info_this["id"] = initial(A.template_id)
-		info_this["name"] = initial(A.name)
-		if(initial(A.restricted))
-			LAZYADD(emag_programs, list(info_this))
-		else
-			LAZYADD(program_cache, list(info_this))
-
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
 		return
@@ -213,7 +175,6 @@
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
 			load_program(last_program)
-			//addtimer(CALLBACK(src, .proc/load_program(last_program), TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -231,12 +192,9 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/holodeck/proc/nerf(active)
+/obj/machinery/computer/holodeck/proc/nerf(active)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
 	for(var/obj/item/I in spawned)
 		I.damtype = active ? STAMINA : initial(I.damtype)
-	for(var/e in effects)
-		var/obj/effect/holodeck_effect/HE = e
-		HE.safety(active)
 
 /datum/map_template/holodeck/load(turf/T, centered = FALSE, )
 	if(centered)
@@ -363,22 +321,23 @@
 
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left, FALSE)//this is what actually loads the holodeck simulation into the map
-	spawned += template.spawned_atoms
+
+	spawned += template.spawned_atoms//parsed_map.holodeckTemplateBounds has newatoms, which is passed to template as spawned_atoms, which is passed to this as spawned
 
 	linked = get_area(bottom_left)
 	linked.linked = src
-
-
 
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
 	var/list/added = list()
 
-	for (var/atom/atoms in spawned)//TODO: merge this ugly codeblock with finish_spawn()
+	for (var/atom/atoms in spawned)
+
 		if (atoms.flags_1 & INITIALIZED_1)
 			atoms.flags_1 |= HOLOGRAM_1
-		if (istype(atoms, /obj/effect/holodeck_effect/))
+
+		if (istype(atoms, /obj/effect/holodeck_effect/))//this is what makes holoeffects work
 			var/obj/effect/holodeck_effect/HE = atoms
 			effects += HE
 			spawned -= HE
@@ -402,33 +361,59 @@
 	for(var/obj/structure/S in added)
 		S.flags_1 |= NODECONSTRUCT_1
 
-	/*for(var/obj/effect/holodeck_effect/HE in spawned)
-		effects += HE
-		spawned -= HE
-		var/atom/x = HE.activate(src)
-		if(istype(x) || islist(x))
-			spawned += x // holocarp are not forever
-			added += x
-	for(var/obj/machinery/M in added)
-		M.flags_1 |= NODECONSTRUCT_1
-	for(var/obj/structure/S in added)
-		S.flags_1 |= NODECONSTRUCT_1*/
-
-/obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
-	if(!O)
+/obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
+	if(!object)
 		return
 
-	spawned -= O
-	var/turf/T = get_turf(O)
-	for(var/atom/movable/AM in O) // these should be derezed if they were generated
+	spawned -= object
+	var/turf/T = get_turf(object)
+	for(var/atom/movable/AM in object) // these should be derezed if they were generated
 		AM.forceMove(T)
 		if(ismob(AM))
 			silent = FALSE // otherwise make sure they are dropped
 
 	if(!silent)
-		visible_message("<span class='notice'>[O] fades away!</span>")
+		visible_message("<span class='notice'>[object] fades away!</span>")
 
-	qdel(O)
+	qdel(object)
+
+/obj/machinery/computer/holodeck/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	if(!LAZYLEN(emag_programs))
+		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
+		return
+	playsound(src, "sparks", 75, TRUE)
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
+	log_game("[key_name(user)] emagged the Holodeck Control Console")
+	nerf(!(obj_flags & EMAGGED))
+
+/obj/machinery/computer/holodeck/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	emergency_shutdown()
+
+/obj/machinery/computer/holodeck/ex_act(severity, target)
+	emergency_shutdown()
+	return ..()
+
+/obj/machinery/computer/holodeck/Destroy()
+	emergency_shutdown()
+	if(linked)
+		linked.linked = null
+		linked.power_usage = new /list(AREA_USAGE_LEN)
+	return ..()
+
+/obj/machinery/computer/holodeck/power_change()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
+
+/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
+	emergency_shutdown()
+	return ..()
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
