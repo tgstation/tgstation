@@ -2,8 +2,6 @@
 	name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
-	icon = 'icons/mob/monkey.dmi'
-	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
