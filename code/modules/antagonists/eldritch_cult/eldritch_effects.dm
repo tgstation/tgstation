@@ -256,7 +256,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	invisibility = INVISIBILITY_MAXIMUM
+	invisibility = INVISIBILITY_OBSERVER
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?
