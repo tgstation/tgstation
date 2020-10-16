@@ -1,118 +1,166 @@
-/// Projects a shuttle while it docks/launches with vis_contents
+/// Projects a shuttle with visual juice while it docks/launches with vis_contents
 /obj/shuttle_projector
 	layer = SPACE_LAYER
+	appearance_flags = KEEP_TOGETHER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-	var/obj/docking_port/stationary/transit_port
+	/// The mobile port we're projecting
+	var/obj/docking_port/mobile/shuttle_port
+	/// The bkttom left turf of the stationary port being projected to
 	var/turf/bottom_left
 
-/obj/shuttle_projector/Initialize(mapload, obj/docking_port/stationary/transit_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
+/obj/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
 	. = ..()
-	if(!istype(transit_port))
-		stack_trace("Invalid transit_port for shuttle_projector!")
+	if (!istype(shuttle_port))
+		stack_trace("Invalid shuttle_port for shuttle_projector!")
 		return INITIALIZE_HINT_QDEL
-	if(!istype(stationary_port))
+	if (!istype(stationary_port))
 		stack_trace("Invalid stationary_port for shuttle_projector!")
 		return INITIALIZE_HINT_QDEL
-	src.transit_port = transit_port
+	src.shuttle_port = shuttle_port
 
-	var/list/all_dest_turfs = transit_port.return_ordered_turfs(transit_port.x, transit_port.y, transit_port.z, transit_port.dir)
+	// Get the mobile ports turfs to project
+	var/list/all_dest_turfs = shuttle_port.return_ordered_turfs(shuttle_port.x, shuttle_port.y, shuttle_port.z, shuttle_port.dir)
+
 	var/list/initial_shuttle_turfs = list()
-	for(var/T in all_dest_turfs)
+	for (var/T in all_dest_turfs)
 		var/turf/dest_turf = T
 		RegisterSignal(dest_turf, COMSIG_TURF_CHANGE, .proc/TurfUpdated)
-		if(!istype(dest_turf, /turf/open/space/transit))
+		// We don't want to project any empty space turfs
+		if(!istype(dest_turf, /turf/open/space/transit) || dest_turf.contents.len > 0)
 			initial_shuttle_turfs += dest_turf
-			if(!bottom_left || bottom_left.x >= dest_turf.x || bottom_left.y >= dest_turf.y)
-				bottom_left = dest_turf
 
-	var/turf/open/stationary_turf = stationary_port.loc
+	// If we're projecting on lavaland the shuttle goes above instead of below the game view
+	var/turf/open/stationary_turf = get_turf(stationary_port)
 	var/above_layer = !istype(stationary_turf) || stationary_turf.planetary_atmos
+
 	var/matrix/undock_transform = matrix()
 	var/docking_alpha
-	if(above_layer)
-		undock_transform.Scale(1.6, 1.6)
+	var/scale_factor
+	var/translate_factor
+	if (above_layer)
+		scale_factor = 1.6
+		translate_factor = 1 - (scale_factor - 1)
+
+		// make it slightly invisible so we don't obstruct the full game view
 		docking_alpha = 100
 		layer = ABOVE_LIGHTING_LAYER
 	else
-		undock_transform.Scale(0.4, 0.4)
+		scale_factor = 0.4
+		translate_factor = 1 - scale_factor
 		docking_alpha = 255
 
+	// pixel factor, half the width/height of the shuttle
+	translate_factor *= TURF_PIXEL_DIAMETER / 2
+
+	// shrink / grow
+	undock_transform.Scale(scale_factor, scale_factor)
+
 	var/matrix/move_transform = matrix()
-	var/launch_dir = transit_port.dir
+	var/dir_from_dock_to_edge = shuttle_port.dir
 	if (inbound)
-		switch (launch_dir)
+		// invert
+		switch (dir_from_dock_to_edge)
 			if (WEST)
-				launch_dir = EAST
+				dir_from_dock_to_edge = EAST
 			if (EAST)
-				launch_dir = WEST
+				dir_from_dock_to_edge = WEST
 			if (SOUTH)
-				launch_dir = NORTH
+				dir_from_dock_to_edge = NORTH
 			if (NORTH)
-				launch_dir = SOUTH
+				dir_from_dock_to_edge = SOUTH
 
-	switch(launch_dir)
-		if(WEST)
-			move_transform.Translate((-stationary_port.x - stationary_port.dwidth) * 256, 0)
-		if(EAST)
-			move_transform.Translate((512 - (stationary_port.x + stationary_port.dwidth)) * 256, 0)
-		if(SOUTH)
-			move_transform.Translate(0, (-stationary_port.y - stationary_port.dheight) * 256)
-		if(NORTH)
-			move_transform.Translate(0, (512 - (stationary_port.y + stationary_port.dheight)) * 256)
+	// move from/to offscreen in the appropriate direction
+	// I don't understand shuttle coords, do this the easy way
+	var/list/stationary_coords = stationary_port.return_coords()
+	var/stationary_port_width = abs(stationary_coords[3] - stationary_coords[1])
+	var/stationary_port_height = abs(stationary_coords[4] - stationary_coords[2])
+	switch (dir_from_dock_to_edge)
+		if (WEST)
+			move_transform.Translate((-stationary_port.x - stationary_port_width) * TURF_PIXEL_DIAMETER, 0)
+		if (EAST)
+			move_transform.Translate((world.maxx - stationary_port_height) * TURF_PIXEL_DIAMETER, 0)
+		if (SOUTH)
+			move_transform.Translate(0, (-stationary_port.y - stationary_port_width) * TURF_PIXEL_DIAMETER)
+		if (NORTH)
+			move_transform.Translate(0, (world.maxy - stationary_port_height) * TURF_PIXEL_DIAMETER)
 
+	// rotate to/from the movement direction
 	var/dock_animation_time = 2 SECONDS
-	if (launch_dir != stationary_port.dir)
-		var/a_rotation = dir2angle(launch_dir) - dir2angle(stationary_port.dir)
-		var/b_rotation = dir2angle(stationary_port.dir) - dir2angle(launch_dir)
+	if (shuttle_port.dir != stationary_port.dir)
+		var/a_rotation = dir2angle(shuttle_port.dir) - dir2angle(stationary_port.dir)
+		var/b_rotation = dir2angle(stationary_port.dir) - dir2angle(shuttle_port.dir)
 
 		var/rotate_degrees = abs(b_rotation) > abs(a_rotation) ? a_rotation : b_rotation
+
+		// little weird but, we need to "center" the vis_contents before rotating so it works properly instead of going around the shuttle_projector obj
+		var/width_factor = stationary_port_width * TURF_PIXEL_DIAMETER / 2
+		var/height_factor = stationary_port_height * TURF_PIXEL_DIAMETER / 2
+		undock_transform.Translate(-width_factor, -height_factor)
 		undock_transform.Turn(rotate_degrees)
+		undock_transform.Translate(width_factor, height_factor)
 
 		dock_animation_time += (abs(rotate_degrees) == 180 ? 2 : 1) SECONDS
 
-	loc = bottom_left
-	vis_contents = initial_shuttle_turfs
+	// stay centered after scaling/turning
+	undock_transform.Translate(stationary_port_width * translate_factor, stationary_port_height * translate_factor)
 
 	if (!total_animate_time)
 		total_animate_time = 10 SECONDS
 
 	var/move_animation_time = total_animate_time - dock_animation_time
-	if (inbound)
-		transform = move_transform * undock_transform
-		move_transform *= -1
-		undock_transform *= -1
-		alpha = 0
-		animate(src, transform = move_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
-		animate(transform = undock_transform, alpha = 255, time = dock_animation_time)
-	else
-		animate(src, transform = undock_transform, alpha = docking_alpha, time = dock_animation_time)
-		animate(transform = move_transform, easing = CIRCULAR_EASING | EASE_IN, alpha = 0, time = move_animation_time)
 
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
+	// Get the bottom left of the stationary port
+	for (var/I in stationary_port.return_turfs())
+		var/turf/T = I
+		if(!bottom_left || (bottom_left.x >= T.x && bottom_left.y >= T.y))
+			bottom_left = T
+
+	var/matrix/combined_transform = undock_transform * move_transform
+	if (inbound)
+		// start at the end position
+		transform = combined_transform
+		alpha = 0
+
+	// split up the rotating part otherwise BYOND does this really fucky thing where it shrinks to a point then grows in the other direction for 180deg rotations
+	// should be as low as possible to avoid tick splitting
+	var/docking_segments = 2
+	var/segment_time = dock_animation_time / docking_segments
+	var/matrix/undock_transform_segments = undock_transform / docking_segments
+
+	forceMove(bottom_left)
+	vis_contents = initial_shuttle_turfs
+
+	if (inbound)
+		animate(src, transform = undock_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
+		for(var/i in 1 to docking_segments)
+			if(i == docking_segments)
+				animate(transform = matrix(), alpha = 255, time = segment_time)
+			else
+				var/target_alpha = (((255 - docking_alpha) / docking_segments) * i) + docking_alpha
+				animate(transform = undock_transform_segments[docking_segments - i], alpha = target_alpha, time = segment_time)
+	else
+		for(var/i in 1 to docking_segments)
+			var/target_alpha = (docking_alpha / docking_segments) * i
+			animate(src, transform = undock_transform_segments[i], alpha = target_alpha, time = segment_time)
+		animate(transform = combined_transform, easing = CIRCULAR_EASING | EASE_IN, alpha = 0, time = move_animation_time)
+
+	//TODO: Remove
+	to_chat(world, "Shuttle projector: [ADMIN_JMP(src)]")
+
+	if(!inbound)
+		// rely on initiate_docking to delete us otherwise
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
 
 /obj/shuttle_projector/Destroy(force)
-	transit_port = null
+	shuttle_port = null
 	return ..()
 
+/// Adds or removes turfs in vis_contents based on changes in the shuttle
 /obj/shuttle_projector/proc/TurfUpdated(turf/sender, new_path, ...)
-	if (ispath(new_path, /turf/open/space/transit))
+	// This won't add a turf if someone builds a grill but who cares
+	if (ispath(new_path, /turf/open/space/transit) && sender.contents.len == 0)
 		vis_contents -= sender
-		if (sender != loc)
-			return
-
-		bottom_left = null
-		for (var/I in vis_contents)
-			var/turf/T = I
-			if (!bottom_left || bottom_left.x >= T.x || bottom_left.y >= T.y)
-				bottom_left = T
-
-		loc = bottom_left
-		return
-
-	if (!istype(src, /turf/open/space))
 		return
 
 	vis_contents += sender
-	if (bottom_left.x >= sender.x || bottom_left.y >= sender.y)
-		bottom_left = sender
-		loc = sender
