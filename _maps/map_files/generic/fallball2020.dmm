@@ -14680,6 +14680,13 @@
 /obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
+"FY" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/toy/plush/moth,
+/turf/open/transparent/glass/reinforced,
+/area/awaymission/cabin/snowforest/forest)
 "FZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17307,6 +17314,26 @@
 "TT" = (
 /obj/machinery/vending/clothing/armsy,
 /turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"WI" = (
+/obj/structure/table/greyscale{
+	base_icon_state = "glass_table";
+	icon = 'icons/obj/smooth_structures/glass_table.dmi';
+	icon_state = "glass_table-0"
+	},
+/obj/item/food/candy_corn{
+	pixel_y = 7
+	},
+/obj/item/binoculars,
+/obj/item/food/candy_corn{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/candycornliquor{
+	icon_state = "tequilasunriseglass";
+	pixel_x = -9;
+	pixel_y = 13
+	},
+/turf/open/transparent/glass/reinforced,
 /area/awaymission/cabin/snowforest/forest)
 "ZA" = (
 /obj/effect/turf_decal/trimline/red/arrow_cw{
@@ -66995,7 +67022,7 @@ fA
 hs
 fA
 hs
-fA
+hs
 hs
 it
 he
@@ -67517,7 +67544,7 @@ iN
 iN
 iN
 fn
-gI
+fn
 gV
 he
 he
@@ -68282,7 +68309,7 @@ hu
 he
 ff
 fo
-fW
+fo
 fo
 iO
 iN
@@ -69311,7 +69338,7 @@ hV
 hV
 im
 fn
-gI
+fn
 fn
 gI
 fn
@@ -85827,7 +85854,7 @@ ES
 ES
 ES
 Hz
-HC
+FY
 HC
 HF
 ES
@@ -86084,7 +86111,7 @@ ES
 ES
 ES
 Hz
-HC
+WI
 HC
 HF
 ES

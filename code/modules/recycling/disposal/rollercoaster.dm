@@ -13,11 +13,11 @@
 
 /obj/effect/rollercoaster_hint/slow_down/action(var/obj/vehicle/ridden/rollercoaster/coaster)
 	if(coaster.front_coaster)
-		coaster.change_speed_all(0.5)
+		coaster.change_speed_all(0.25)
 
 /obj/effect/rollercoaster_hint/speed_up/action(var/obj/vehicle/ridden/rollercoaster/coaster)
 	if(coaster.front_coaster)
-		coaster.change_speed_all(-0.5)
+		coaster.change_speed_all(-0.25)
 
 
 //huge reason why i'm not using the trailer variable: coasters go up one at a time
@@ -116,7 +116,7 @@
 	if(hint)
 		hint.action(src)
 
-/obj/vehicle/ridden/rollercoaster/Bump(atom/clong)
+/obj/vehicle/ridden/rollercoaster/Bumped(atom/clong)
 
 	if(isturf(clong) || isobj(clong))
 		if(clong.density && !isturf(clong))
@@ -124,6 +124,6 @@
 	else if(isliving(clong))
 		penetrate(clong)
 
-/obj/vehicle/ridden/rollercoaster/proc/penetrate(mob/living/smeared_mob)
+/obj/vehicle/ridden/rollercoaster/ASYNC/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is smashed by [src]!</span>" , "<span class='userdanger'>The coaster smashes you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
 	smeared_mob.gib()
