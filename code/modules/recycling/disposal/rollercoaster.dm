@@ -22,10 +22,10 @@
 
 //huge reason why i'm not using the trailer variable: coasters go up one at a time
 /obj/effect/rollercoaster_hint/go_up/action(var/obj/vehicle/ridden/rollercoaster/coaster)
-	coaster.z += 1
+	coaster.Move(locate(coaster.x,coaster.y,coaster.z+1))
 
 /obj/effect/rollercoaster_hint/go_down/action(var/obj/vehicle/ridden/rollercoaster/coaster)
-	coaster.z -= 1
+	coaster.Move(locate(coaster.x,coaster.y,coaster.z-1))
 
 /obj/vehicle/ridden/rollercoaster
 	name = "Terror of the Tracks"
@@ -43,6 +43,8 @@
 	var/in_progress = FALSE
 	var/obj/structure/disposalpipe/current_pipe
 	var/coaster_speed = 2 //how long in deciseconds the rollercoaster waits before moving
+
+var/hint_movement = FALSE
 
 /obj/vehicle/ridden/rollercoaster/Initialize()
 	. = ..()
@@ -80,7 +82,7 @@
 		rider.Stun(666 HOURS)//JANK ALERT
 	current_pipe = locate() in get_turf(src)
 	in_progress = TRUE
-	INVOKE_ASYNC(current_pipe, /obj/structure/disposalpipe/proc/coaster_travel, src)
+	INVOKE_ASYNC(src, .proc/coaster_travel)
 	if(start_previous)
 		front_coaster = TRUE
 		for(var/i in previous_coasters)
@@ -97,27 +99,48 @@
 	var/search_direction = turn(dir, 180)//behind us
 	var/turf/trailerturf = get_step(src, search_direction)//turf behind us
 	in_progress = FALSE
+	unload_rider()
 	for(var/i in previous_coasters) //stops movement, and since some parts will not have reached the final terminus we need to move them there ourselves
 		var/obj/vehicle/ridden/rollercoaster/coaster = i
 		coaster.in_progress = FALSE
-		var/mob/living/rider = occupants[1]
-		if(rider)
-			rider.forceMove(trailerturf)
-		coaster.forceMove(trailerturf)
+		coaster.Move(trailerturf)
 		coaster.dir = dir
 		trailerturf = get_step(coaster, search_direction)//turf behind now corrected coaster
+		coaster.unload_rider()
+
 	addtimer(CALLBACK(src, .proc/start), 30 SECONDS) //auto restart 30 secs!
 
-/obj/vehicle/ridden/rollercoaster/Move(newloc, dir)
+/obj/vehicle/ridden/rollercoaster/proc/unload_rider()
+    if(length(occupants))
+        var/mob/living/rider = occupants[1]
+        if(rider)
+            rider.forceMove(get_turf(src))
+			var/datum/status_effect/incapacitating/stun/S = rider.IsStun()
+       		if(S)
+            	qdel(S)
+
+/obj/vehicle/ridden/rollercoaster/Move(oldloc, dir)
 	. = ..()
 	var/turf/destination = get_turf(src)
 	var/obj/effect/rollercoaster_hint/hint
 	hint = locate() in destination
 	if(hint)
 		hint.action(src)
+	if(in_progress && destination == get_turf(src))
+		current_pipe = locate() in destination
+		if(current_pipe)
+			addtimer(CALLBACK(src, .proc/coaster_travel),coaster_speed)
+
+/obj/vehicle/ridden/rollercoaster/proc/coaster_travel()
+	if(!in_progress)
+		return
+	setDir(nextdir_coaster())
+	step(src, dir)
+
+/obj/vehicle/ridden/rollercoaster/proc/nextdir_coaster()
+	return current_pipe.dpdir & (~turn(dir, 180))
 
 /obj/vehicle/ridden/rollercoaster/Bumped(atom/clong)
-
 	if(isturf(clong) || isobj(clong))
 		if(clong.density && !isturf(clong))
 			qdel(clong)
