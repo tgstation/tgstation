@@ -14775,7 +14775,7 @@
 /obj/item/clothing/glasses/welding/brand{
 	pixel_y = 5
 	},
-/obj/structure/fluff/empty_terrarium{
+/obj/structure/fluff/beach_umbrella{
 	layer = 3.1;
 	pixel_x = 16;
 	pixel_y = -4
