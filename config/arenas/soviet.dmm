@@ -1,432 +1,54 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/yellowsiding/corner,
-/area/tdome/arena)
-"b" = (
-/obj/structure/table,
-/obj/item/trash/can/food,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"c" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"d" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"e" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"f" = (
-/obj/machinery/deepfryer,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"g" = (
-/obj/machinery/deepfryer,
-/obj/item/reagent_containers/food/snacks/badrecipe,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"h" = (
-/obj/structure/table,
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"i" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/yellowsiding,
-/area/tdome/arena)
-"j" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 8
-	},
-/area/tdome/arena)
-"k" = (
-/turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 4
-	},
-/area/tdome/arena)
-"l" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 6
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"m" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 1
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"n" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 1
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"o" = (
-/obj/item/clothing/head/chicken,
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 1
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"p" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 10
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"q" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
-	},
-/area/tdome/arena)
-"r" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 8
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"s" = (
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"t" = (
-/obj/structure/table,
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"u" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"v" = (
-/obj/item/clothing/suit/chickensuit,
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 4
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"w" = (
-/turf/open/floor/plasteel/yellowsiding{
-	icon_state = "yellowsiding";
-	dir = 8
-	},
-/area/tdome/arena)
-"x" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 8
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"y" = (
-/obj/item/chair,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"z" = (
-/obj/effect/decal/hammerandsickle,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"A" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 4
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"B" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"C" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 5
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"D" = (
-/obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"E" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"F" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 9
-	},
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"G" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 4
-	},
-/area/tdome/arena)
-"H" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"I" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"J" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"K" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/soylentgreen,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"L" = (
-/obj/structure/table,
-/obj/item/food/burger/human,
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"M" = (
-/obj/structure/table,
-/obj/item/trash/can/food,
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"N" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/yellowsiding/corner{
-	icon_state = "yellowcornersiding";
-	dir = 1
-	},
-/area/tdome/arena)
-"Q" = (
-/obj/effect/turf_decal/stripes/red/line,
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"T" = (
-/obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
-	dir = 1
-	},
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"V" = (
-/obj/item/reagent_containers/food/snacks/deadmouse,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
-"W" = (
-/obj/structure/table,
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
-"Z" = (
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plasteel/telecomms,
-/area/tdome/arena)
+"a" = (/obj/structure/chair{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/yellowsiding/corner,/area/tdome/arena)
+"b" = (/obj/structure/table,/obj/item/trash/can/food,/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"c" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"d" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"e" = (/obj/structure/table,/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"f" = (/obj/machinery/deepfryer,/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"g" = (/obj/machinery/deepfryer,/obj/item/reagent_containers/food/snacks/badrecipe,/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"h" = (/obj/structure/table,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"i" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/yellowsiding,/area/tdome/arena)
+"j" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/yellowsiding/corner{icon_state = "yellowcornersiding"; dir = 8},/area/tdome/arena)
+"k" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 4},/area/tdome/arena)
+"l" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 6},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"m" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 1},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"n" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 1},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"o" = (/obj/item/clothing/head/chicken,/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 1},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"p" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 10},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"q" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 8},/area/tdome/arena)
+"r" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 8},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"s" = (/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"t" = (/obj/structure/table,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"u" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"v" = (/obj/item/clothing/suit/chickensuit,/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 4},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"w" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 8},/area/tdome/arena)
+"x" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 8},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"y" = (/obj/item/chair,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"z" = (/obj/effect/decal/hammerandsickle,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"A" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 4},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"B" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"C" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 5},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"D" = (/obj/effect/turf_decal/stripes/red/line,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"E" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/red/line,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"F" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 9},/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"G" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/yellowsiding/corner{icon_state = "yellowcornersiding"; dir = 4},/area/tdome/arena)
+"H" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"I" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"J" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"K" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/soylentgreen,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"L" = (/obj/structure/table,/obj/item/food/burger/human,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"M" = (/obj/structure/table,/obj/item/trash/can/food,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/tdome/arena)
+"N" = (/obj/structure/chair{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/yellowsiding/corner{icon_state = "yellowcornersiding"; dir = 1},/area/tdome/arena)
+"Q" = (/obj/effect/turf_decal/stripes/red/line,/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"T" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 1},/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
+"V" = (/obj/item/reagent_containers/food/snacks/deadmouse,/turf/open/floor/plasteel/telecomms,/area/tdome/arena)
 
 (1,1,1) = {"
-a
-k
-k
-k
-k
-k
-k
-G
-"}
-(2,1,1) = {"
-b
-l
-x
-r
-x
-x
-C
-H
-"}
-(3,1,1) = {"
-c
-m
-Z
-s
-y
-s
-D
-I
-"}
-(4,1,1) = {"
-d
-n
-s
-s
-s
-s
-D
-J
-"}
-(5,1,1) = {"
-e
-m
-s
-s
-s
-s
-E
-M
-"}
-(6,1,1) = {"
-f
-m
-t
-s
-Z
-s
-D
-I
-"}
-(7,1,1) = {"
-g
-m
-u
-B
-s
-s
-D
-J
-"}
-(8,1,1) = {"
-e
-m
-K
-s
-z
-s
-D
-L
-"}
-(9,1,1) = {"
-f
-T
-K
-s
-s
-s
-Q
-I
-"}
-(10,1,1) = {"
-f
-m
-t
-s
-s
-B
-D
-J
-"}
-(11,1,1) = {"
-h
-m
-s
-s
-s
-s
-D
-M
-"}
-(12,1,1) = {"
-c
-o
-B
-s
-V
-s
-D
-I
-"}
-(13,1,1) = {"
-d
-m
-s
-s
-y
-B
-D
-J
-"}
-(14,1,1) = {"
-i
-p
-A
-v
-A
-A
-F
-W
-"}
-(15,1,1) = {"
-j
-q
-w
-w
-w
-q
-w
-N
+abcdefgeffecdij
+klmnmmmmTmmompq
+kxssshuKKhsBsAw
+krssssBssssssvw
+kxysssszsssVyAw
+kxsssssssBssBAq
+kCDDEDDDQDDDDFw
+GHIJMIJLIJMIJtN
 "}
