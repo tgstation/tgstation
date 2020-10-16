@@ -49,10 +49,8 @@
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
 "ah" = (
-/obj/machinery/door/airlock/wood{
-	name = "Catering"
-	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/crew_quarters/bar)
 "ai" = (
 /obj/structure/fluff/support{
@@ -151,14 +149,35 @@
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
 "as" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
+/obj/structure/closet/secure_closet/freezer/meat{
 	anchored = 1;
 	req_access = null
 	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "at" = (
-/turf/open/floor/plasteel/cafeteria,
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	anchored = 1;
+	req_access = null
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "au" = (
 /obj/effect/turf_decal/siding/wood{
@@ -176,10 +195,6 @@
 	},
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/wood,
-/area/crew_quarters/bar)
-"aw" = (
-/obj/machinery/conveyor_switch/oneway,
-/turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/bar)
 "ax" = (
 /obj/structure/flora/ausbushes/stalkybush,
@@ -332,16 +347,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "aP" = (
-/obj/machinery/conveyor{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/window/southleft,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "aQ" = (
-/obj/machinery/conveyor{
-	dir = 6
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	max_integrity = 9999
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "aR" = (
 /obj/structure/fluff/support{
@@ -519,15 +533,20 @@
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
 "ba" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	anchored = 1;
-	req_access = null
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "bb" = (
-/obj/machinery/conveyor,
-/turf/open/floor/plasteel/cafeteria,
+/obj/structure/table/reinforced,
+/obj/item/choice_beacon/ingredient,
+/obj/item/kitchen/knife{
+	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay dull for years to come.";
+	force = 0;
+	name = "safety kitchen knife"
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /obj/item/kitchen/knife
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "bc" = (
 /obj/structure/curtain/cloth{
@@ -1464,16 +1483,22 @@
 	},
 /turf/open/floor/astroturf,
 /area/awaymission/cabin/snowforest/forest)
-"dg" = (
-/obj/machinery/grill,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dh" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	max_integrity = 9999
+/obj/structure/closet/crate{
+	anchored = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/carnivore,
+/obj/item/storage/box/ingredients/delights,
+/obj/item/storage/box/ingredients/exotic,
+/obj/item/storage/box/ingredients/fiesta,
+/obj/item/storage/box/ingredients/fruity,
+/obj/item/storage/box/ingredients/grains,
+/obj/item/storage/box/ingredients/italian,
+/obj/item/storage/box/ingredients/sweets,
+/obj/item/storage/box/ingredients/vegetarian,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
 "di" = (
 /obj/structure/table/wood,
@@ -1489,30 +1514,7 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"dj" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dk" = (
-/obj/structure/table/reinforced,
-/obj/item/choice_beacon/ingredient,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dl" = (
-/obj/structure/closet/secure_closet/freezer/meat{
-	anchored = 1;
-	req_access = null
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dm" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	pixel_x = -14
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dn" = (
 /obj/structure/closet/crate{
 	anchored = 1
 	},
@@ -1526,60 +1528,33 @@
 /obj/item/storage/box/ingredients/italian,
 /obj/item/storage/box/ingredients/sweets,
 /obj/item/storage/box/ingredients/vegetarian,
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/turf_decal/bot/left,
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
-"do" = (
-/obj/structure/closet/crate{
-	anchored = 1
+"dm" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
 	},
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/stack/sheet/mineral/coal/ten,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"dn" = (
+/obj/machinery/conveyor{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dp" = (
-/obj/machinery/conveyor{
-	dir = 8
+/obj/structure/sink/kitchen{
+	dir = 1;
+	pixel_y = -8
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
-"dq" = (
-/obj/machinery/conveyor{
-	dir = 10
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dr" = (
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest/forest)
-"ds" = (
-/obj/machinery/conveyor,
-/obj/structure/plasticflaps/opaque,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/bar)
 "dt" = (
 /obj/structure/fluff/books_sign,
 /turf/open/floor/plating/grass{
@@ -2214,17 +2189,6 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"fc" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/slow_down,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
 "fd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2239,12 +2203,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/speed_up,
+/obj/effect/rollercoaster_hint/go_up,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "ff" = (
 /obj/structure/disposalpipe/segment{
@@ -2412,38 +2376,6 @@
 "fz" = (
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
-"fA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 9
-	},
-/obj/structure/railing/corner,
-/turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
-"fB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing,
-/turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
-"fC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/railing{
-	dir = 5
-	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
 "fD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -2556,16 +2488,6 @@
 /area/awaymission/cabin/snowforest/forest)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
-"fR" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "fS" = (
 /obj/structure/disposalpipe/segment{
@@ -2731,34 +2653,12 @@
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
-"gk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
 "gl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/railing,
 /obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cult,
-/area/awaymission/cabin/snowforest/forest)
-"gm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 6
-	},
-/obj/structure/railing/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cult,
@@ -2866,17 +2766,6 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"gz" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt,
-/area/awaymission/cabin/snowforest/forest)
 "gA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -2887,16 +2776,6 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"gB" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "gC" = (
 /obj/machinery/door/airlock/centcom{
@@ -3104,18 +2983,6 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"gU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "gV" = (
 /obj/structure/disposalpipe/segment{
@@ -3658,16 +3525,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
-"ie" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
 "if" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -3720,16 +3577,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cult,
-/area/awaymission/cabin/snowforest/forest)
-"il" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "im" = (
 /obj/structure/lattice/catwalk,
@@ -3813,7 +3660,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "iv" = (
 /obj/structure/disposalpipe/segment,
@@ -3866,46 +3713,6 @@
 /area/awaymission/cabin/snowforest/forest)
 "iB" = (
 /turf/closed/wall/rust,
-/area/awaymission/cabin/snowforest/forest)
-"iC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/structure/railing{
-	dir = 9
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"iD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"iE" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"iF" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iG" = (
 /obj/structure/stone_tile/elderblock{
@@ -3999,17 +3806,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
-"iR" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iS" = (
 /obj/structure/chair/pew/right{
@@ -4173,27 +3969,6 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"jl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"jm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 6
-	},
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
 "jn" = (
 /obj/structure/stone_tile/elder{
 	dir = 1
@@ -4216,7 +3991,7 @@
 	dir = 1
 	},
 /obj/structure/railing,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "jq" = (
 /obj/structure/disposalpipe/segment{
@@ -4227,17 +4002,6 @@
 	dir = 1
 	},
 /obj/structure/railing,
-/turf/open/floor/plating/rust,
-/area/awaymission/cabin/snowforest/forest)
-"jr" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/go_up,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "js" = (
@@ -14612,16 +14376,6 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
-"Fk" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "Fl" = (
 /obj/structure/curtain/cloth/fancy,
 /turf/closed/indestructible/fakeglass,
@@ -14672,7 +14426,6 @@
 /area/awaymission/cabin/snowforest/forest)
 "Fu" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -14757,21 +14510,10 @@
 /obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
-"FI" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing/wooden{
-	dir = 1
-	},
-/obj/structure/railing/wooden,
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "FJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing/wooden{
 	dir = 1
 	},
@@ -14870,51 +14612,19 @@
 /obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
-"FY" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
 "FZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
-	},
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Ga" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
 	},
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Gb" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Gc" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/slow_down,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -14931,7 +14641,6 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/effect/rollercoaster_hint/go_down,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Ge" = (
@@ -14963,30 +14672,6 @@
 	color = "#DC143C";
 	name = "tent"
 	},
-/area/awaymission/cabin/snowforest/forest)
-"Gj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Gk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/structure/railing{
-	dir = 6
-	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Gl" = (
 /turf/open/floor/white{
@@ -17534,6 +17219,517 @@
 /obj/machinery/telecomms/allinone/indestructable,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
+"Mk" = (
+/obj/structure/table/reinforced,
+/obj/item/choice_beacon/ingredient,
+/obj/item/kitchen/rollingpin{
+	desc = "Used to softly kneed the Bartender.";
+	force = 0;
+	name = "safety rolling pin"
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /obj/item/kitchen/rollingpin
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Mx" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"MA" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/rollercoaster_hint/go_down,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"MM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Nf" = (
+/obj/structure/fluff{
+	color = "#FFA500";
+	icon = 'icons/turf/shuttleold.dmi';
+	icon_state = "corner";
+	name = "tent wall"
+	},
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Nn" = (
+/obj/machinery/door/airlock/shuttle/glass{
+	name = "Big Sheed's FTL Food Delivery Service"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Ok" = (
+/obj/structure/sign/barsign{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ol" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"OR" = (
+/obj/structure/flora/stump,
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"OX" = (
+/obj/machinery/door/window/northleft,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"OZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Py" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"PT" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"PZ" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ql" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Qw" = (
+/obj/machinery/conveyor{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"QC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
+"QH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"QQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"QS" = (
+/obj/item/extinguisher/mini{
+	force = 0
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"QU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Ry" = (
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"Rz" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 16
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"RB" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"RG" = (
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"RJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"RK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin/snowforest/forest)
+"RL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"RO" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"RU" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"RX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Sq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"SA" = (
+/obj/machinery/sleeper/party,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"SS" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"Th" = (
+/obj/machinery/grill,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"TR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"TW" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uq" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Ur" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uu" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Uz" = (
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Vg" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Vi" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"Vz" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"VR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"VT" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"VZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"Wh" = (
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Wq" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Wr" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Xn" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"Xt" = (
+/obj/machinery/door/window/southright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"XC" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"XF" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"XW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"Yu" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"YG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"YN" = (
+/obj/machinery/conveyor_switch/oneway,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Zo" = (
+/turf/closed/wall/mineral/titanium,
+/area/crew_quarters/bar)
+"Zp" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"ZD" = (
+/obj/machinery/conveyor,
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
 
 (1,1,1) = {"
 ae
@@ -43855,12 +44051,12 @@ an
 an
 eo
 ea
-ea
-eo
-an
-an
-an
-ea
+eH
+Zo
+ah
+ah
+ah
+Zo
 ea
 eo
 eo
@@ -44112,13 +44308,13 @@ an
 an
 ea
 ea
-eH
 eo
+Zo
+Ur
+TW
+Wr
+Zo
 an
-an
-an
-bw
-ea
 ea
 an
 dx
@@ -44369,12 +44565,12 @@ br
 an
 an
 eo
-eo
-bw
 an
-an
-an
-an
+Zo
+Wq
+Ql
+Wq
+Zo
 an
 an
 dx
@@ -44626,13 +44822,13 @@ br
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Zo
+Zo
+SA
+Uu
+Uu
+Zo
+Zo
 an
 ao
 mq
@@ -44879,18 +45075,18 @@ br
 br
 br
 br
-br
 an
 an
 an
-lu
-lu
-lu
-lu
-lu
-lu
-lu
-an
+Ok
+Zo
+Zo
+Zo
+Uq
+Zo
+Zo
+Zo
+RG
 ao
 dY
 dY
@@ -45136,17 +45332,17 @@ br
 br
 br
 br
-br
-br
-br
-br
-lu
+an
+an
+an
+an
+Zo
 as
 ba
 ba
-dl
+ba
 dm
-lu
+Zo
 dx
 ak
 mr
@@ -45393,19 +45589,19 @@ br
 br
 br
 br
-br
-br
-br
-br
+an
+an
+an
+an
 ah
 at
-at
-at
-at
-at
-lu
+ba
+ba
+ba
+Qw
+ah
 ak
-cV
+mj
 ms
 mI
 mI
@@ -45650,19 +45846,19 @@ br
 br
 br
 br
+an
+an
 br
-br
-br
-br
-lu
-aw
+an
+Zo
 at
-dg
-at
+ba
+ba
+YN
 dn
-lu
-ao
-di
+ZD
+av
+mi
 dY
 dY
 mI
@@ -45911,15 +46107,15 @@ br
 an
 an
 an
-lu
-aP
-at
+Zo
+Zo
+ba
 dh
-at
-do
-lu
+ba
+Zo
+Zo
 ao
-dX
+mk
 dY
 dY
 mI
@@ -46165,16 +46361,16 @@ br
 br
 br
 br
-an
-an
-an
-lu
+br
+br
+br
+Nn
 aP
-at
-dj
-at
-at
-at
+ba
+ba
+ba
+OX
+Nn
 au
 dY
 dY
@@ -46422,16 +46618,16 @@ br
 br
 br
 br
-an
-an
-an
-lu
-aP
-at
-dk
-at
-at
-at
+br
+br
+br
+Nn
+Xt
+ba
+ba
+ba
+XF
+Nn
 au
 dY
 dY
@@ -46678,19 +46874,19 @@ br
 br
 br
 br
+br
+br
+br
 an
-an
-an
-an
-lu
-aP
-at
+Zo
+Zo
+ba
 dk
-at
-bb
-ds
-av
-mi
+ba
+Zo
+Zo
+ak
+cV
 dY
 dY
 mI
@@ -46935,19 +47131,19 @@ br
 br
 br
 br
+br
 an
 an
 an
-an
-lu
-aP
-at
-dg
-at
-dp
-lu
+Zo
+Th
+ba
+ba
+ba
+Th
+Zo
 ao
-mj
+di
 dY
 dY
 mI
@@ -47196,15 +47392,15 @@ an
 an
 an
 an
-lu
-aP
-at
-at
-at
+Zo
+Rz
+ba
+ba
+ba
 dp
-lu
+Zo
 ak
-mk
+dX
 dY
 mI
 mI
@@ -47430,7 +47626,7 @@ an
 an
 an
 an
-bw
+an
 an
 an
 an
@@ -47452,15 +47648,15 @@ br
 br
 an
 an
-an
-lu
+Ok
+Zo
 aQ
 bb
-bb
-bb
-dq
-lu
-dR
+Wh
+Mk
+aQ
+Zo
+Nf
 ak
 mr
 mI
@@ -47710,13 +47906,13 @@ br
 an
 an
 an
-lu
-lu
-lu
-lu
-lu
-lu
-lu
+Zo
+Zo
+Zo
+Zo
+Zo
+Zo
+Zo
 an
 ao
 dY
@@ -47944,10 +48140,10 @@ an
 an
 an
 an
+bw
 an
 an
 bw
-an
 an
 an
 an
@@ -47967,13 +48163,13 @@ br
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Zo
+XC
+RU
+Zo
+XC
+RU
+Zo
 an
 ao
 mt
@@ -48225,11 +48421,11 @@ an
 an
 an
 an
-bw
-bw
-ea
-ea
-an
+VT
+VT
+Uz
+PZ
+Uz
 an
 an
 dR
@@ -48459,7 +48655,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -48481,12 +48677,12 @@ an
 an
 an
 bw
-an
-eo
-eo
-ea
-eo
-bw
+QS
+Py
+VT
+Ry
+VT
+VT
 bw
 an
 an
@@ -48738,13 +48934,13 @@ an
 an
 an
 an
-an
-ea
-ea
-et
-ea
-bw
-an
+Uz
+Uz
+Mx
+OR
+Ry
+VT
+Uz
 an
 an
 an
@@ -48979,7 +49175,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -48995,12 +49191,12 @@ an
 an
 an
 an
-bw
-eo
-eo
-ea
-ea
-an
+VT
+VT
+VT
+Ry
+Uz
+PZ
 an
 an
 an
@@ -49239,7 +49435,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -49251,13 +49447,13 @@ br
 an
 an
 an
-an
+Yu
 bw
+VT
 bw
+VT
 bw
-bw
-bw
-an
+Uz
 an
 an
 an
@@ -49490,7 +49686,7 @@ an
 an
 an
 an
-an
+bw
 an
 an
 an
@@ -52066,7 +52262,7 @@ an
 fg
 eY
 an
-an
+bw
 an
 an
 an
@@ -62589,7 +62785,7 @@ ga
 hz
 br
 gE
-ie
+TR
 hI
 hT
 br
@@ -64884,7 +65080,7 @@ br
 fj
 fN
 fQ
-gk
+XW
 fN
 fN
 fj
@@ -65141,7 +65337,7 @@ br
 fj
 fO
 fQ
-gk
+XW
 fQ
 fN
 fj
@@ -65165,11 +65361,11 @@ an
 an
 an
 an
-iC
+QQ
 hs
 ji
 hs
-jl
+RX
 hu
 eY
 an
@@ -65398,7 +65594,7 @@ br
 fj
 fN
 fQ
-gk
+XW
 fQ
 fN
 fj
@@ -65426,7 +65622,7 @@ hl
 he
 jj
 he
-jp
+MM
 hu
 eY
 an
@@ -65655,7 +65851,7 @@ fj
 fj
 fN
 fQ
-gk
+XW
 fQ
 fQ
 fQ
@@ -65683,7 +65879,7 @@ iZ
 he
 he
 hr
-jp
+MM
 hu
 eY
 an
@@ -65909,15 +66105,15 @@ eY
 an
 br
 fj
-fA
+RJ
 fP
 fQ
-gk
+XW
 fL
-gz
-gB
-gB
-gU
+iu
+Vi
+Vi
+VR
 fL
 fj
 an
@@ -66166,7 +66362,7 @@ eY
 an
 br
 fj
-fB
+jp
 fQ
 fL
 gl
@@ -66190,7 +66386,7 @@ hr
 hu
 hu
 hu
-iC
+QQ
 hs
 it
 he
@@ -66423,7 +66619,7 @@ eY
 an
 br
 fj
-fB
+jp
 fQ
 fL
 gl
@@ -66447,9 +66643,9 @@ hr
 hu
 hu
 hu
-iD
+QU
 hs
-iR
+Xn
 hu
 hu
 he
@@ -66680,10 +66876,10 @@ eY
 an
 br
 fj
-fC
-fR
-fR
-gm
+QH
+SS
+SS
+RL
 fQ
 fQ
 fL
@@ -66962,13 +67158,13 @@ he
 hu
 if
 hs
-iu
+RO
 hu
 hu
 hu
 hr
 hu
-jr
+fe
 he
 eY
 an
@@ -67202,7 +67398,7 @@ fL
 fQ
 fQ
 fL
-gk
+XW
 fN
 fj
 an
@@ -67225,7 +67421,7 @@ hu
 hu
 he
 he
-jp
+MM
 he
 eY
 an
@@ -67459,7 +67655,7 @@ fN
 fN
 fQ
 fL
-gk
+XW
 fN
 fj
 an
@@ -67716,7 +67912,7 @@ fN
 fN
 fQ
 fL
-gk
+XW
 fN
 fj
 an
@@ -67732,7 +67928,7 @@ hu
 if
 hs
 hs
-iE
+RB
 iN
 iN
 iN
@@ -68501,15 +68697,15 @@ hu
 hu
 he
 hm
-il
-il
-iF
+Vz
+Vz
+PT
 iO
 iN
 iN
 jd
 hs
-jl
+RX
 an
 an
 eY
@@ -68733,7 +68929,7 @@ an
 an
 an
 eY
-fc
+RK
 an
 an
 fE
@@ -69504,7 +69700,7 @@ an
 bw
 an
 eY
-fe
+QC
 an
 an
 fb
@@ -69530,14 +69726,14 @@ hv
 hV
 hV
 im
-iu
+RO
 hs
-iu
-hs
-hs
+RO
 hs
 hs
-jm
+hs
+hs
+YG
 an
 an
 eY
@@ -117083,7 +117279,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -117340,7 +117536,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -117577,27 +117773,27 @@ ES
 ES
 ES
 ES
-Fk
-Fk
-Fk
 Fu
-Fk
-Fk
+Fu
+Fu
+Vg
+Fu
+Fu
 Fq
 ES
-Fk
-Ga
-Ga
-Gc
-Ga
-Ga
+Fu
+Gd
+Gd
+Zp
+Gd
+Gd
 Fq
 ES
 ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -117854,7 +118050,7 @@ ES
 ES
 ES
 ES
-FZ
+Sq
 ES
 ES
 ES
@@ -118111,7 +118307,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -118368,7 +118564,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -120401,7 +120597,7 @@ ES
 ES
 ES
 ES
-FI
+FJ
 ES
 ES
 ES
@@ -120658,7 +120854,7 @@ ES
 ES
 ES
 ES
-FI
+FJ
 ES
 ES
 ES
@@ -120915,7 +121111,7 @@ ES
 ES
 ES
 ES
-FJ
+VZ
 ES
 ES
 ES
@@ -121172,7 +121368,7 @@ ES
 ES
 ES
 ES
-FI
+FJ
 ES
 ES
 ES
@@ -121429,7 +121625,7 @@ ES
 ES
 ES
 ES
-FI
+FJ
 ES
 ES
 ES
@@ -129400,8 +129596,8 @@ Fz
 Fz
 Fz
 FW
-Fk
-Fk
+Fu
+Fu
 fn
 fn
 fn
@@ -130946,7 +131142,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -131203,7 +131399,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -131446,10 +131642,10 @@ ES
 ES
 fj
 ES
-Fk
-Fk
 Fu
-Fk
+Fu
+Vg
+Fu
 Fq
 ES
 ES
@@ -131460,7 +131656,7 @@ ES
 ES
 ES
 ES
-FZ
+Sq
 ES
 ES
 ES
@@ -131717,7 +131913,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -131733,7 +131929,7 @@ ES
 ES
 ES
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -131974,23 +132170,23 @@ ES
 ES
 ES
 ES
-FY
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-Ga
-Ga
-Ga
-Gj
-ES
 FZ
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+Gd
+Gd
+Gd
+Ol
+ES
+Sq
 ES
 ES
 ES
@@ -132231,23 +132427,23 @@ ES
 ES
 ES
 ES
-FY
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
 FZ
 ES
-FY
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+Sq
+ES
+FZ
 ES
 ES
 ES
@@ -132498,13 +132694,13 @@ ES
 ES
 ES
 ES
+MA
 Gd
-Ga
-Ga
-Ga
-Gk
+Gd
+Gd
+OZ
 ES
-FY
+FZ
 ES
 ES
 ES
@@ -133268,10 +133464,10 @@ ES
 ES
 ES
 ES
-Fk
-Fk
 Fu
-Fk
+Fu
+Vg
+Fu
 Fq
 ES
 ES
@@ -134040,10 +134236,10 @@ ES
 ES
 ES
 Fq
-Ga
-Gc
-Ga
-Fk
+Gd
+Zp
+Gd
+Fu
 ES
 ES
 ES
@@ -134275,10 +134471,10 @@ ES
 ES
 ES
 Fq
-Fk
 Fu
-Fk
-Fk
+Vg
+Fu
+Fu
 ES
 ES
 ES
@@ -135049,7 +135245,7 @@ ES
 ES
 ES
 ES
-Fk
+Fu
 hU
 hU
 hU
@@ -135064,7 +135260,7 @@ ES
 ES
 ES
 Gb
-Ga
+Gd
 Gb
 Fq
 ES
@@ -200590,14 +200786,14 @@ ES
 ES
 ES
 ES
-Fk
+Fu
 fn
 fn
 fn
 fn
 fn
 Lf
-Fk
+Fu
 Lg
 Fq
 ES
