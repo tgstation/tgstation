@@ -163,7 +163,7 @@
 	time = 30
 
 /datum/surgery_step/drive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to pick into the bone past [target]'s [parse_zone(target_zone)]...</span>",
+	display_results(user, target, "<span class='notice'>You begin to hammer through the bone past [target]'s [parse_zone(target_zone)]...</span>",
 		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>")
 
