@@ -34,9 +34,14 @@
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
 	. = ..()
-	if(var_name == NAMEOF(src, account_id))
+	if(var_name == NAMEOF(src, account_id) && add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[old_id]"
 		SSeconomy.bank_accounts_by_id["[account_id]"] = src
+	else if(var_name == NAMEOF(src, add_to_accounts))
+		if(var_value)
+			SSeconomy.bank_accounts_by_id["[account_id]"] = src
+		else
+			SSeconomy.bank_accounts_by_id -= "[account_id]"
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
