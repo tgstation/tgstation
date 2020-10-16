@@ -20,9 +20,9 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(istype(H.dna.species, /datum/species/skeleton))
+		if(isskeleton(H))
 			return //undeads are unaffected by the spook-pocalypse.
-		if(istype(H.dna.species, /datum/species/zombie))
+		if(iszombie(H))
 			H.adjustStaminaLoss(25)
 			H.Paralyze(15) //zombies can't resist the doot
 		C.Jitter(35)

@@ -10,7 +10,7 @@
 	var/mob/living/carbon/C = owner
 	if(C.status_flags & GODMODE)
 		return FALSE
-	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER) && !HAS_TRAIT_FROM(C, TRAIT_EASYDISMEMBER, SPECIES_TRAIT))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -54,7 +54,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER) && !HAS_TRAIT_FROM(C, TRAIT_EASYDISMEMBER, SPECIES_TRAIT))
 		return FALSE
 	. = list()
 	var/turf/T = get_turf(C)

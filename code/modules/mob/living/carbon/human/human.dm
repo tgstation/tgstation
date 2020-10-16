@@ -1314,6 +1314,9 @@
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
+/mob/living/carbon/human/species/krokodil_addict
+	race = /datum/species/krokodil_addict
+
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
 
@@ -1355,6 +1358,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/zombie/krokodil_addict
-	race = /datum/species/krokodil_addict

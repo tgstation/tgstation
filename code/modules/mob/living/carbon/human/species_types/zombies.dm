@@ -26,7 +26,7 @@
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
-	id = "memezombies"
+	id = "romerolzombies"
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
@@ -90,10 +90,10 @@
 		infection = new()
 		infection.Insert(C)
 
-// Your skin falls off
+// Your skin falls off (NOT A REAL ZOMBIE JUST LOOKS LIKE ONE)
 /datum/species/krokodil_addict
 	name = "Human"
-	id = "goofzombies"
+	id = "krokaddicts"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
