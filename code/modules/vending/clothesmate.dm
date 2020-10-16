@@ -142,3 +142,20 @@
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
+
+/obj/machinery/vending/clothing/armsy
+	name = "Terror of the Tracks Souvenir Vendor"
+	desc = "YOU SURVIVED THE TERROR OF THE TRACKS! NOW BUY A GAUDY T-SHIRT THAT MAKES PEOPLE THINK LESS OF YOU!"
+	icon_state = "starkist"
+	product_slogans = "WHY NOT BUY A SOUVENIR?;ONLY MILDLY OVERPRICED!;BUY OUR CHEAP CRAPPY MERCHANDICE, CONSUMER!"
+	vend_reply = "REMEMBER, NO REFUNDS, NO EXCEPTIONS!"
+	products = list(/obj/item/clothing/suit/armsyshirt = 50,
+		            /obj/item/toy/plush/armsyplushie = 50)
+	contraband = list(/obj/item/toy/plush/lizardplushie = 1)
+	premium = null
+	refill_canister = null
+	default_price = 60
+	extra_price = 120
+	payment_department = NO_FREEBIES
+	light_mask = "starkist-light-mask"
+	light_color = COLOR_LIGHT_ORANGE
