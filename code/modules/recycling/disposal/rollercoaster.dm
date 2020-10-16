@@ -124,6 +124,6 @@
 	else if(isliving(clong))
 		penetrate(clong)
 
-/obj/vehicle/ridden/rollercoaster/ASYNC/penetrate(mob/living/smeared_mob)
+/obj/vehicle/ridden/rollercoaster/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is smashed by [src]!</span>" , "<span class='userdanger'>The coaster smashes you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
 	smeared_mob.gib()
