@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(economy)
 							// tier 4
 							"rainbow" = 1000)
 	/**
-	  * List of normal accounts' ids (no department ones) with their associated datum references, for big Oh performance.
+	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
