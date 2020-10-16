@@ -19,6 +19,10 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
+/obj/structure/plaque/static_plaque/golden/mappergang
+	name = "Events-Bus Crew"
+	desc = "HOST = CitrusGender\nMAPPERS = Dragomagol, EOBGames, Ewwmewwgewd, Fikou, Gogo9001, Jerry Derpington, MMMiracles, Paxilmaniac\nSPRITERS = Jegub, Kryson, MrDoomBringer, Nabski, Prodirus, Yeeye\nCODERS = Anturke, ArcaneMusic, Armhulenn, CeaseofM, Claytcam, LemonInTheDark, The John Smith, Zxaber\nANNOUNCERS = BoatBomber and Texicus"
+
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
