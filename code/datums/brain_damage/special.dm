@@ -222,7 +222,8 @@
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
-	name = "Chemical Violent Psychosis"
+	name = "Chemical Violent Psychosis" //note that this DOESN'T change scan_desc, so this won't change what health analyzers refer to this brain trauma as (in comparison to non-chemical violent psychosis)
+	random_gain = FALSE
 
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
