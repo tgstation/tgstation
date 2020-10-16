@@ -1,5 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Timers wont kamikaze anymore
-removesound: normal computers no longer have looping audio"

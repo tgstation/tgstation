@@ -1,5 +1,0 @@
-author: "EdgeLordExe"
-delete-after: True
-changes: 
-  - bugfix: "Heretics can no longer get dagd and hijack at the same time."
-  - bugfix: "Protection objective now works as it should."
