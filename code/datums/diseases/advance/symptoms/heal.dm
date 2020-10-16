@@ -404,6 +404,10 @@
 
 	if(M.loc)
 		environment = M.loc.return_air()
+	if(iscarbon(A.affected_mob))
+		var/mob/living/carbon/carboy = A.affected_mob
+		if(carboy.internal && carboy.internal.loc == carboy && (carboy.getorganslot(ORGAN_SLOT_BREATHING_TUBE) || (carboy.wear_mask || (carboy.wear_mask.clothing_flags & MASKINTERNALS))))
+			environment = carboy.internal.return_air()
 	if(environment)
 		gases = environment.gases
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
