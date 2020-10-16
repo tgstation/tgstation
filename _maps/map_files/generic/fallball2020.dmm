@@ -2581,13 +2581,13 @@
 /area/awaymission/cabin/snowforest/forest)
 "fW" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "fX" = (
@@ -2923,20 +2923,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gI" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing/wooden,
-/obj/structure/railing/wooden{
-	dir = 1
-	},
-/turf/open/water{
-	color = "#2F4F4F";
-	desc = "A puddle of oil.";
-	name = "oil"
-	},
+/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "gJ" = (
 /obj/structure/railing/wooden{
@@ -3055,16 +3050,19 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gT" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
+/obj/structure/lattice/catwalk,
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 8
+/obj/structure/railing/wooden,
+/obj/structure/railing/wooden{
+	dir = 1
 	},
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
+/obj/effect/rollercoaster_hint/speed_up,
+/turf/open/water{
+	color = "#2F4F4F";
+	desc = "A puddle of oil.";
+	name = "oil"
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gU" = (
@@ -3105,15 +3103,17 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gX" = (
-/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/speed_up,
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
 /area/awaymission/cabin/snowforest/forest)
 "gY" = (
 /obj/structure/railing{
@@ -3264,19 +3264,14 @@
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "hn" = (
-/obj/structure/flora/tree/jungle/fall{
-	alpha = 255;
-	max_integrity = 8888;
-	mouse_opacity = 0;
-	name = "dense tree";
-	opacity = 1
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
@@ -3744,30 +3739,6 @@
 	},
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
-"iu" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
-"iv" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
-	},
-/area/awaymission/cabin/snowforest/forest)
 "iw" = (
 /obj/structure/stone_tile/block/eldercracked{
 	dir = 4
@@ -3991,17 +3962,6 @@
 	},
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
-"jc" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/speed_up,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
 "jd" = (
 /obj/effect/rollercoaster_hint/go_up,
 /obj/structure/disposalpipe/segment,
@@ -4089,17 +4049,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing,
-/turf/open/floor/plating,
-/area/awaymission/cabin/snowforest/forest)
-"jq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -14741,18 +14690,6 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
-/area/awaymission/cabin/snowforest/forest)
-"Gb" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
 "Gd" = (
 /obj/structure/disposalpipe/segment,
@@ -51890,16 +51827,16 @@ gY
 gY
 gY
 gY
-gT
 gr
+gS
 hx
 hC
 hJ
 hX
 hX
 io
-iv
 fG
+gX
 fG
 gq
 an
@@ -52932,7 +52869,7 @@ an
 an
 fg
 an
-gL
+ft
 an
 an
 eY
@@ -53189,7 +53126,7 @@ an
 an
 an
 an
-ft
+hn
 fg
 an
 eY
@@ -54194,7 +54131,7 @@ fv
 fv
 fv
 fv
-gH
+gT
 fv
 fv
 fv
@@ -54451,7 +54388,7 @@ fv
 fv
 fv
 fv
-gI
+gH
 fv
 fv
 fv
@@ -63703,10 +63640,10 @@ fb
 fo
 fo
 fo
+fW
 fo
 fW
 fo
-gX
 an
 an
 ha
@@ -65757,8 +65694,8 @@ fP
 fQ
 fd
 fL
-iu
 fn
+gI
 fn
 fD
 fL
@@ -65783,7 +65720,7 @@ gV
 he
 hu
 hr
-jq
+jp
 hu
 eY
 jG
@@ -67579,8 +67516,8 @@ gD
 iN
 iN
 iN
-jc
 fn
+gI
 gV
 he
 he
@@ -68345,8 +68282,8 @@ hu
 he
 ff
 fo
-fo
 fW
+fo
 iO
 iN
 iN
@@ -68580,8 +68517,8 @@ fd
 an
 an
 fE
-fo
 fW
+fo
 gn
 gn
 gn
@@ -69365,7 +69302,7 @@ gn
 gn
 gn
 gn
-hn
+gn
 gn
 hv
 hv
@@ -69373,10 +69310,10 @@ hv
 hV
 hV
 im
-iu
 fn
-iu
+gI
 fn
+gI
 fn
 fn
 fn
@@ -134906,9 +134843,9 @@ ES
 ES
 ES
 ES
-Gb
 gB
-Gb
+gB
+gB
 gU
 ES
 ES
