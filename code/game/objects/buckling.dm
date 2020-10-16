@@ -80,7 +80,7 @@
   * If you want to have a mob buckling another mob to something, or you want a chat message sent, use user_buckle_mob instead.
   * Arguments:
   * M - The mob to be buckled to src
-  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle()
+  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
   * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
   */
 /atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -123,14 +123,14 @@
   * The mob must actually be buckled to src or else bad things will happen.
   * Arguments:
   * buckled_mob - The mob to be unbuckled
-  * force - TRUE if we should ignore buckled_mob.can_unbuckle()
+  * force - TRUE if we should ignore buckled_mob.can_buckle_to
   */
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)
 		CRASH("[buckled_mob] called unbuckle_mob() for source while having buckled as [buckled_mob.buckled].")
-	if(!force && !buckled_mob.can_unbuckle())
+	if(!force && !buckled_mob.can_buckle_to)
 		return
 	. = buckled_mob
 	buckled_mob.set_buckled(null)
@@ -165,7 +165,7 @@
   * Called from [/atom/movable/proc/buckle_mob] and [/atom/movable/proc/is_user_buckle_possible].
   * Arguments:
   * * target - Target mob to check against buckling to src.
-  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle()
+  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle_to
   * * check_loc - TRUE if target and src have to be on the same tile, FALSE if they are allowed to just be adjacent
   */
 /atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
@@ -198,7 +198,7 @@
 		return FALSE
 
 	//If buckling is forbidden for the target, cancel
-	if(!target.can_buckle() && !force)
+	if(!target.can_buckle_to && !force)
 		return FALSE
 
 	return TRUE
