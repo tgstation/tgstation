@@ -13,17 +13,30 @@
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
-	if(add_to_accounts)
-		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
 	payday_modifier = modifier
+	if(add_to_accounts)
+		var/iterations = 100
+		while(SSeconomy.bank_accounts_by_id["[account_id]"] && iterations) //still more likely than winning a pulse rifle at the arcade
+			account_id++
+			iterations--
+			if(account_id > 999999)
+				account_id = 111111
+		SSeconomy.bank_accounts_by_id["[account_id]"] = src
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
-		SSeconomy.bank_accounts -= src
+		SSeconomy.bank_accounts_by_id -= "[account_id]"
 	return ..()
+
+/datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
+	var/old_id = account_id
+	. = ..()
+	if(var_name == NAMEOF(src, account_id))
+		SSeconomy.bank_accounts_by_id -= "[old_id]"
+		SSeconomy.bank_accounts_by_id["[account_id]"] = src
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE

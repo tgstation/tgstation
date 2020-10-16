@@ -21,7 +21,7 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
+		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 		var/mob/living/carbon/human/H = user
 		accounts_to_rob -= H.get_bank_account()
 		for(var/i in accounts_to_rob)
@@ -161,7 +161,7 @@
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = SSeconomy.bank_accounts.Copy()
+	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -172,7 +172,8 @@
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		if(!B.being_dumped)
+		if(!(B?.being_dumped))
+			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff.get_bank_account()
@@ -189,7 +190,8 @@
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.being_dumped = FALSE
+		if(B)
+			B.being_dumped = FALSE
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
