@@ -731,3 +731,14 @@
 	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy4 // Jackrip
+	name = "The Lich"
+	desc = "Ah, relax! It's just a really tall skeleton replica that has pyrotechnics coming out of the hands and eyes! It's not an actual lich, but unless it was pretending to be fake... Nah, I'm sure it's not real."
+	icon = 'icons/mob/32x64.dmi'
+	icon_state = "the_lich"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
