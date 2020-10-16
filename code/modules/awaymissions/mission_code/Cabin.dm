@@ -5,6 +5,7 @@
 	icon_state = "away2"
 	requires_power = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	ambientsounds = SPOOKY
 
 /area/awaymission/cabin/snowforest
 	name = "Snow Forest"
