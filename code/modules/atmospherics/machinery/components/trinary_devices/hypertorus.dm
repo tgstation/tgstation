@@ -720,3 +720,5 @@
 	desc = "hypertorus_corner"
 	icon_state = "corner"
 	circuit = /obj/item/circuitboard/machine/hypertorus/corner
+
+#undef HALLUCINATION_RANGE
