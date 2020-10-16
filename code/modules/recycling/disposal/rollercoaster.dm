@@ -111,13 +111,13 @@ var/hint_movement = FALSE
 	addtimer(CALLBACK(src, .proc/start), 30 SECONDS) //auto restart 30 secs!
 
 /obj/vehicle/ridden/rollercoaster/proc/unload_rider()
-    if(length(occupants))
-        var/mob/living/rider = occupants[1]
-        if(rider)
-            rider.forceMove(get_turf(src))
+	if(length(occupants))
+		var/mob/living/rider = occupants[1]
+		if(rider)
+			rider.forceMove(get_step(src, NORTH))
 			var/datum/status_effect/incapacitating/stun/S = rider.IsStun()
-       		if(S)
-            	qdel(S)
+			if(S)
+				qdel(S)
 
 /obj/vehicle/ridden/rollercoaster/Move(oldloc, dir)
 	. = ..()
