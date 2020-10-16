@@ -368,9 +368,25 @@
 	linked = get_area(bottom_left)
 	linked.linked = src
 
+
+
+	finish_spawn()
+
+/obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
+	var/list/added = list()
+
 	for (var/atom/atoms in spawned)//TODO: merge this ugly codeblock with finish_spawn()
 		if (atoms.flags_1 & INITIALIZED_1)
 			atoms.flags_1 |= HOLOGRAM_1
+		if (istype(atoms, /obj/effect/holodeck_effect/))
+			var/obj/effect/holodeck_effect/HE = atoms
+			effects += HE
+			spawned -= HE
+			var/atom/x = HE.activate(src)
+			if(istype(x) || islist(x))
+				spawned += x // holocarp are not forever
+				added += x
+
 		if (istype(atoms, /obj))
 			var/obj/obbies = atoms
 			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -381,11 +397,12 @@
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
 
-	finish_spawn()
+	for(var/obj/machinery/M in added)
+		M.flags_1 |= NODECONSTRUCT_1
+	for(var/obj/structure/S in added)
+		S.flags_1 |= NODECONSTRUCT_1
 
-/obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
-	var/list/added = list()
-	for(var/obj/effect/holodeck_effect/HE in spawned)
+	/*for(var/obj/effect/holodeck_effect/HE in spawned)
 		effects += HE
 		spawned -= HE
 		var/atom/x = HE.activate(src)
@@ -395,7 +412,7 @@
 	for(var/obj/machinery/M in added)
 		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in added)
-		S.flags_1 |= NODECONSTRUCT_1
+		S.flags_1 |= NODECONSTRUCT_1*/
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
 	if(!O)
