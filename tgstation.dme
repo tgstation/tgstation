@@ -3088,6 +3088,7 @@
 #include "code\modules\surgery\surgery_helpers.dm"
 #include "code\modules\surgery\surgery_step.dm"
 #include "code\modules\surgery\tools.dm"
+#include "code\modules\surgery\transorbital_lobotomy.dm"
 #include "code\modules\surgery\advanced\brainwashing.dm"
 #include "code\modules\surgery\advanced\lobotomy.dm"
 #include "code\modules\surgery\advanced\necrotic_revival.dm"

@@ -445,7 +445,7 @@
 
 /obj/item/orbitoclast
 	name = "orbitoclast"
-	desc = "a modern spin on the infamous device, now able to project holo-spikes."
+	desc = "a modern spin on the infamous device, now with a curved handle."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "orbitoclast"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

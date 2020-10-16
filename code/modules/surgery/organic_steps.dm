@@ -138,3 +138,37 @@
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>",
 		"<span class='notice'>[user] drills into [target]'s [parse_zone(target_zone)]!</span>")
 	return ..()
+
+//pick bone
+/datum/surgery_step/pick
+	name = "pick into bone"
+	implements = list(TOOL_ORBITOCLAST = 100, TOOL_SCREWDRIVER = 25, /obj/item/stack/rods = 10)
+	time = 30
+
+/datum/surgery_step/pick/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(user, target, "<span class='notice'>You begin to pick into the bone past [target]'s [parse_zone(target_zone)]...</span>",
+		"<span class='notice'>[user] begins to pick into the bone past [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] begins to pick into the bone past [target]'s [parse_zone(target_zone)].</span>")
+
+/datum/surgery_step/pick/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You pick past [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] picks into [target]'s [parse_zone(target_zone)]!</span>",
+		"<span class='notice'>[user] picks into [target]'s [parse_zone(target_zone)]!</span>")
+	return ..()
+
+//drive through bone
+/datum/surgery_step/drive
+	name = "drive through bone"
+	implements = list(TOOL_HAMMER = 100, /obj/item = 20)
+	time = 30
+
+/datum/surgery_step/drive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(user, target, "<span class='notice'>You begin to pick into the bone past [target]'s [parse_zone(target_zone)]...</span>",
+		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>")
+
+/datum/surgery_step/drive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(user, target, "<span class='notice'>You hammer past [target]'s [parse_zone(target_zone)].</span>",
+		"<span class='notice'>[user] hammers past [target]'s [parse_zone(target_zone)]!</span>",
+		"<span class='notice'>[user] hammers past [target]'s [parse_zone(target_zone)]!</span>")
+	return ..()
