@@ -462,7 +462,7 @@
 
 /obj/item/hammer
 	name = "hammer"
-	desc = "hammer."
+	desc = "stop; hammer time."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hammer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
