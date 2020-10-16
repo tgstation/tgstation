@@ -923,7 +923,7 @@
 	return ..()
 
 /mob/living/carbon/human/is_literate()
-	return TRUE
+	return !has_trauma_type(/datum/brain_trauma/mild/illiterate, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /mob/living/carbon/human/can_hold_items()
 	return TRUE
