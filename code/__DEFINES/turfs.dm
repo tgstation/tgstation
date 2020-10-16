@@ -6,3 +6,6 @@
 #define CHANGETURF_RECALC_ADJACENT 32 //Immediately recalc adjacent atmos turfs instead of queuing.
 
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
+
+/// Number of pixels in the width/height of a turf
+#define TURF_PIXEL_DIAMETER 32
