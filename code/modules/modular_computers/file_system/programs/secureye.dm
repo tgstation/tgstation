@@ -193,3 +193,14 @@
 		if(tempnetwork.len)
 			camlist["[cam.c_tag]"] = cam
 	return camlist
+
+/datum/computer_file/program/secureye/eventviewer
+	filename = "toolboxtv"
+	filedesc = "ToolboxTV"
+	ui_header = null
+	program_icon_state = "generic"
+	extended_desc = "This program allows access to cameras at certain sporting events."
+	usage_flags = PROGRAM_ALL
+	requires_ntnet = FALSE
+	size = 1
+	program_icon = "toolbox"

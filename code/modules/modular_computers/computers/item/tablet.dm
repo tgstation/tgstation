@@ -138,3 +138,8 @@
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
 	. = ..()
 	borgo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/obj/item/modular_computer/tablet/event_viewer
+	name = "Limited Edition Event Tablet"
+	desc = "A tablet computer that includes a program for viewing cameras."
+

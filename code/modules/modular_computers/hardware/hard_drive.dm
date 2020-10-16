@@ -191,3 +191,10 @@
 	max_capacity = 32
 	icon_state = "ssd_micro"
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/computer_hardware/hard_drive/small/event
+	max_capacity = 1024
+
+/obj/item/computer_hardware/hard_drive/small/event/install_default_programs()
+	. = ..()
+	store_file(new/datum/computer_file/program/secureye/eventviewer(src))
