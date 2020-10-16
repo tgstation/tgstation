@@ -931,7 +931,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	SHOULD_BE_PURE(TRUE)
-	return !(HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(owner,TRAIT_TENSED_ARMS))
+	return !(HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(stripper,TRAIT_TENSED_ARMS))
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)

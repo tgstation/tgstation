@@ -258,7 +258,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(I, TRAIT_NODROP)) && !force)
+	if((HAS_TRAIT(src, TRAIT_TENSED_ARMS) || HAS_TRAIT(I, TRAIT_NODROP)) && !force)
 		return FALSE
 	return TRUE
 
