@@ -3,8 +3,8 @@
 
 
 /obj/machinery/medical_kiosk
-	name = "medical kiosk"
-	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
+	name = "free medical kiosk"
+	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis. This one seems to be for intended for charity."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
@@ -12,8 +12,8 @@
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
-	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	var/active_price = 15           //Change by using a multitool on the board.
+	var/default_price = 0          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
+	var/active_price = 0           //Change by using a multitool on the board.
 	var/pandemonium = FALSE			//AKA: Emag mode.
 
 	var/scan_active_1 = FALSE       //Shows if the machine is being used for a general scan.
@@ -40,9 +40,6 @@
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
-		return
-	var/bonus_fee = pandemonium ? rand(10,30) : 0
-	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
 	use_power(20)
 	paying_customer = TRUE
