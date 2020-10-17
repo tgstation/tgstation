@@ -366,10 +366,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 
-
 	//Config that only allows players with previous play experience, requires a database to track
 	//living hours in the first place
-	if(!connecting_admin && CONFIG_GET(flag/allowlist_previous_players))
+	if(CONFIG_GET(flag/allowlist_previous_players) && !connecting_admin)
 		//Make sure the users exp is loaded
 		if(src.set_exp_from_db() != -1)
 			// check for living hours requirement
@@ -380,7 +379,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return 0
 
-			if(living_minutes < required_living_minutes && !(src.ckey in GLOB.interviews.approved_ckeys))
+			if(living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
 				if(!CONFIG_GET(flag/allowlist_interview))
 					to_chat(src, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
 					+ "playtime on tg servers to play on this server. You have [living_minutes] minutes. Play more!</span>")
@@ -390,7 +389,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, "The experienced players allow list is configured, but is not setup correctly and user exp cannot be loaded")
 			qdel(src)
 			return 0
-
 
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
