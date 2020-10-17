@@ -521,3 +521,12 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Add the ID of the role you want assigning here
 #DISCORD_ROLEID 000000000000000000
+
+## Uncomment to require previous living hours on the servers to join this server
+#ALLOWLIST_PREVIOUS_PLAYERS
+
+## Set how many living hours are required to join this server
+ALLOWLIST_PREVIOUS_HOURS_COUNT 0
+
+## Uncomment to enable the interview system for players who are below the living hour requirement
+#ALLOWLIST_INTERVIEW
