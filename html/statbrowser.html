@@ -952,9 +952,14 @@ function draw_interviews() {
 	statcontentdiv[textContentKey] = "";
 	var body = document.createElement("div");
 	var interviewData = interviewManager.status.split("%@%");
+	// i apologize for this sin i have 20 minutes to make this functional
+	var actions = ["active", "queue", "closed"]
 	for (var i = 0; i < interviewData.length; i++) {
 		var d = document.createElement("div");
-		d[textContentKey] = interviewData[i];
+		var a = document.createElement("a");
+		a[textContentKey] = interviewData[i];
+		a.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=1";
+		d.appendChild(a);
 		body.appendChild(d);
 	}
 	document.getElementById("statcontent").appendChild(body);
