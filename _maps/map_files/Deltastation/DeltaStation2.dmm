@@ -71930,7 +71930,7 @@
 	id = "evashutters";
 	name = "E.V.A. Shutters";
 	pixel_x = 26;
-	req_access_txt = "18"
+	req_access_txt = "19"
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "evashutters";

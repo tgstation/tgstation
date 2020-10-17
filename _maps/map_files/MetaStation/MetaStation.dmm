@@ -39403,7 +39403,7 @@
 	id = "evashutter";
 	name = "E.V.A. Storage Shutter Control";
 	pixel_x = 30;
-	req_access_txt = "18"
+	req_access_txt = "19"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
