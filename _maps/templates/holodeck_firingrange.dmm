@@ -26,10 +26,6 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
-"g" = (
-/obj/item/paper/guides/jobs/security/range,
-/turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
 "j" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -104,9 +100,6 @@
 /area/holodeck/rec_center/firingrange)
 "E" = (
 /obj/structure/table/reinforced,
-/obj/machinery/magnetic_controller{
-	autolink = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -117,6 +110,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/item/training_toolbox{
+	pixel_y = 4
+	},
+/obj/item/training_toolbox,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "F" = (
@@ -201,8 +198,7 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "S" = (
-/obj/structure/target_stake,
-/obj/machinery/magnetic_module,
+/obj/structure/training_machine,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -295,7 +291,7 @@ Q
 Q
 Q
 Q
-g
+Q
 Z
 N
 "}

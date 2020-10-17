@@ -8,9 +8,6 @@
 "ad" = (
 /turf/open/space,
 /area/space)
-"ag" = (
-/turf/open/floor/plasteel,
-/area/space)
 "at" = (
 /obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
@@ -38,11 +35,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tdome/arena_source)
-"dr" = (
-/obj/machinery/igniter/on,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/space)
 "dy" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -15202,10 +15194,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Qa" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/space)
 "Qd" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/syndicate{
@@ -75578,7 +75566,7 @@ aa
 aa
 "}
 (232,1,1) = {"
-IO
+ab
 at
 NN
 Mo
@@ -75586,7 +75574,7 @@ Rt
 Rt
 Yc
 NN
-dr
+at
 ab
 aa
 aa
@@ -75835,7 +75823,7 @@ aa
 aa
 "}
 (233,1,1) = {"
-IO
+ab
 Rp
 Rp
 Rp
@@ -75843,7 +75831,7 @@ Rp
 Rp
 Rp
 Rp
-ag
+Rp
 ab
 aa
 aa
@@ -76092,7 +76080,7 @@ aa
 aa
 "}
 (234,1,1) = {"
-IO
+ab
 au
 aF
 aF
@@ -76100,7 +76088,7 @@ aF
 aF
 aF
 aF
-Qa
+au
 ab
 aa
 aa
@@ -76349,7 +76337,7 @@ aa
 aa
 "}
 (235,1,1) = {"
-IO
+ab
 Rp
 ZD
 ZD
@@ -76357,7 +76345,7 @@ ZD
 ZD
 ZD
 ZD
-ag
+Rp
 ab
 aa
 aa
@@ -76606,7 +76594,7 @@ aa
 aa
 "}
 (236,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -76614,7 +76602,7 @@ eg
 eg
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -76863,7 +76851,7 @@ aa
 aa
 "}
 (237,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -76871,7 +76859,7 @@ eg
 eg
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -77120,7 +77108,7 @@ aa
 aa
 "}
 (238,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -77128,7 +77116,7 @@ eH
 eH
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -77377,7 +77365,7 @@ aa
 aa
 "}
 (239,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -77385,7 +77373,7 @@ RN
 eH
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -77634,7 +77622,7 @@ aa
 aa
 "}
 (240,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -77642,7 +77630,7 @@ eH
 eH
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -77891,7 +77879,7 @@ aa
 aa
 "}
 (241,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -77899,7 +77887,7 @@ eg
 eg
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -78148,7 +78136,7 @@ aa
 aa
 "}
 (242,1,1) = {"
-IO
+ab
 Rp
 eg
 eg
@@ -78156,7 +78144,7 @@ eg
 eg
 eg
 eg
-ag
+Rp
 ab
 aa
 aa
@@ -78405,7 +78393,7 @@ aa
 aa
 "}
 (243,1,1) = {"
-IO
+ab
 Rp
 NM
 NM
@@ -78413,7 +78401,7 @@ NM
 NM
 NM
 NM
-ag
+Rp
 ab
 aa
 aa
@@ -78662,7 +78650,7 @@ aa
 aa
 "}
 (244,1,1) = {"
-IO
+ab
 au
 aF
 aF
@@ -78670,7 +78658,7 @@ aF
 aF
 aF
 aF
-Qa
+au
 ab
 aa
 aa
@@ -78919,7 +78907,7 @@ aa
 aa
 "}
 (245,1,1) = {"
-IO
+ab
 Rp
 Rp
 Rp
@@ -78927,7 +78915,7 @@ Rp
 Rp
 Rp
 Rp
-ag
+Rp
 ab
 aa
 aa
@@ -79176,7 +79164,7 @@ aa
 aa
 "}
 (246,1,1) = {"
-IO
+ab
 at
 SO
 eq
@@ -79184,7 +79172,7 @@ OR
 OR
 JK
 SO
-dr
+at
 ab
 aa
 aa
