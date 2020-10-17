@@ -731,7 +731,7 @@ nobiliumsuppression = INFINITY
 	air.temperature += cleaned_air * 0.002
 
 /datum/gas_reaction/halon_formation
-	priority = 13
+	priority = 12
 	name = "Halon formation"
 	id = "halon_formation"
 
@@ -763,7 +763,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/healium_formation
-	priority = 10
+	priority = 9
 	name = "Healium formation"
 	id = "healium_formation"
 
@@ -795,7 +795,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_formation
-	priority = 11
+	priority = 10
 	name = "Proto Nitrate formation"
 	id = "proto_nitrate_formation"
 
@@ -827,7 +827,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/zauker_formation
-	priority = 12
+	priority = 11
 	name = "Zauker formation"
 	id = "zauker_formation"
 
@@ -890,7 +890,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/zauker_decomp
-	priority = 9
+	priority = 8
 	name = "Zauker decomposition"
 	id = "zauker_decomp"
 
@@ -926,7 +926,7 @@ nobiliumsuppression = INFINITY
 	return NO_REACTION
 
 /datum/gas_reaction/proto_nitrate_bz_response
-	priority = 15
+	priority = 13
 	name = "Proto Nitrate bz response"
 	id = "proto_nitrate_bz_response"
 
