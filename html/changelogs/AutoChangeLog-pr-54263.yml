@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscdel: "hexane no longer grand you dchat hearing"
-  - rscadd: "hexane makes you heat resistant (can still die due to pressure)"
-  - rscdel: "Hexane no longer deals brain damage"
