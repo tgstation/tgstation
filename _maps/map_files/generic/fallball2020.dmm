@@ -17843,9 +17843,7 @@
 /obj/item/training_toolbox{
 	pixel_y = 5
 	},
-/obj/item/training_toolbox{
-	pixel_y = 0
-	},
+/obj/item/training_toolbox,
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
 "Mx" = (
@@ -17868,11 +17866,11 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "MS" = (
-/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/trimline/yellow/line,
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
 "MT" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 8
 	},
@@ -17893,7 +17891,7 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "Nh" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 6
 	},
@@ -18002,7 +18000,7 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "Ru" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 9
 	},
@@ -18025,14 +18023,6 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"RN" = (
-/obj/structure/table/wood,
-/obj/item/training_toolbox{
-	pixel_y = 6
-	},
-/obj/item/training_toolbox,
-/turf/open/floor/plating/asteroid,
-/area/crew_quarters/bar)
 "RU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
@@ -18074,17 +18064,8 @@
 	color = "#68524D"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"UK" = (
-/obj/effect/turf_decal/trimline/brown/line{
-	icon_state = "trimline";
-	dir = 1
-	},
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
-	},
-/area/awaymission/cabin/snowforest/forest)
 "UL" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 4
 	},
@@ -18132,14 +18113,14 @@
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "Xu" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 5
 	},
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
 "Xy" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 1
 	},
@@ -18172,7 +18153,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "YZ" = (
-/obj/effect/turf_decal/trimline/brown/line{
+/obj/effect/turf_decal/trimline/yellow/line{
 	icon_state = "trimline";
 	dir = 10
 	},
@@ -53507,7 +53488,7 @@ kT
 an
 an
 an
-UK
+an
 an
 ao
 mv
@@ -54794,7 +54775,7 @@ an
 an
 an
 ak
-NP
+Mp
 mv
 Xy
 mv
@@ -55051,7 +55032,7 @@ an
 an
 an
 ak
-RN
+Mp
 mv
 Xu
 UL
@@ -55308,7 +55289,7 @@ an
 an
 an
 ao
-RN
+Mp
 mv
 mv
 mv
@@ -55565,7 +55546,7 @@ an
 an
 an
 ao
-RN
+Mp
 mv
 Ru
 MT
