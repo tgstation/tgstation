@@ -7,7 +7,7 @@
 
 	/// The mobile port we're projecting
 	var/obj/docking_port/mobile/shuttle_port
-	/// The bkttom left turf of the stationary port being projected to
+	/// The bottom left turf of the bounding box where the shuttle will dock in the stationary port
 	var/turf/bottom_left
 
 /obj/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
