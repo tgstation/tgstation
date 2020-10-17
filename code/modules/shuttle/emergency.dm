@@ -587,10 +587,9 @@
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
-/obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
-	if(possible_destinations == initial(possible_destinations) || override)
-		possible_destinations = "pod_lavaland[idnum]"
+	possible_destinations += ";[port.id]_lavaland"
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -598,6 +597,7 @@
 	dwidth = 1
 	width = 3
 	height = 4
+	hidden = TRUE
 	var/target_area = /area/lavaland/surface/outdoors
 	var/edge_distance = 16
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
