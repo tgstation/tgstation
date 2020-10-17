@@ -2771,13 +2771,13 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
 "gh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
+/obj/structure/fluff{
+	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
+	icon = 'icons/mob/eldritch_mobs.dmi';
+	icon_state = "stalker";
+	name = "\improper SOUVENIRS"
 	},
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/floor/carpet/red,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "gi" = (
 /obj/structure/disposalpipe/segment{
@@ -3601,21 +3601,30 @@
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
 	},
-/obj/machinery/door/window/survival_pod,
+/obj/structure/railing{
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "windoor"
+	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "hQ" = (
-/obj/machinery/door/window/survival_pod,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/obj/structure/railing{
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "windoor"
+	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "hR" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'STAY SEATED UNTIL THE RIDE HAS COME TO A COMPLETE STOP'.";
 	name = "\improper STAY SEATED sign";
 	pixel_y = 32
+	},
+/obj/structure/railing{
+	dir = 6
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
@@ -4182,6 +4191,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "je" = (
@@ -4225,6 +4235,7 @@
 	},
 /obj/structure/railing/wooden,
 /obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jj" = (
@@ -4250,6 +4261,7 @@
 	dir = 1
 	},
 /obj/structure/railing/wooden,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jm" = (
@@ -4261,6 +4273,7 @@
 	dir = 1
 	},
 /obj/structure/railing/wooden,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jn" = (
@@ -4286,6 +4299,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jq" = (
@@ -4297,6 +4311,7 @@
 	dir = 1
 	},
 /obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jr" = (
@@ -4307,6 +4322,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "js" = (
@@ -14709,6 +14725,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fl" = (
@@ -14744,6 +14761,7 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fr" = (
@@ -14767,6 +14785,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fv" = (
@@ -14842,6 +14861,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FI" = (
@@ -14853,6 +14873,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FJ" = (
@@ -14864,6 +14885,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FK" = (
@@ -14945,6 +14967,7 @@
 	dir = 8
 	},
 /obj/effect/rollercoaster_hint/go_down,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FX" = (
@@ -14957,6 +14980,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FY" = (
@@ -14969,6 +14993,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FZ" = (
@@ -15870,8 +15895,8 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/oneway{
-	icon_state = "field_dir";
-	dir = 8
+	dir = 8;
+	icon_state = "field_dir"
 	},
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/hauntedhouse)
@@ -17315,6 +17340,7 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lg" = (
@@ -17326,6 +17352,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lh" = (
@@ -17886,14 +17913,10 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"NP" = (
-/obj/structure/table/wood,
-/obj/item/training_toolbox{
-	pixel_y = 5
-	},
-/obj/item/training_toolbox,
+"NY" = (
+/obj/machinery/vending/clothing/armsy,
 /turf/open/floor/plating/asteroid,
-/area/crew_quarters/bar)
+/area/awaymission/cabin/snowforest/forest)
 "Ok" = (
 /obj/structure/sign/barsign{
 	pixel_y = -32
@@ -17901,6 +17924,26 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
+/area/awaymission/cabin/snowforest/forest)
+"Ot" = (
+/obj/structure/table/greyscale{
+	base_icon_state = "glass_table";
+	icon = 'icons/obj/smooth_structures/glass_table.dmi';
+	icon_state = "glass_table-0"
+	},
+/obj/item/food/candy_corn{
+	pixel_y = 7
+	},
+/obj/item/binoculars,
+/obj/item/food/candy_corn{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/candycornliquor{
+	icon_state = "tequilasunriseglass";
+	pixel_x = -9;
+	pixel_y = 13
+	},
+/turf/open/transparent/glass/reinforced,
 /area/awaymission/cabin/snowforest/forest)
 "OR" = (
 /obj/structure/flora/stump,
@@ -17937,6 +17980,13 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/crew_quarters/bar)
+"Qq" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/toy/plush/moth,
+/turf/open/transparent/glass/reinforced,
+/area/awaymission/cabin/snowforest/forest)
 "Qw" = (
 /obj/machinery/conveyor{
 	dir = 4
@@ -18070,6 +18120,13 @@
 "Wq" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/bar)
+"Xl" = (
+/obj/structure/railing{
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "windoor"
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
 "Xt" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/mineral/titanium/white,
@@ -60852,7 +60909,7 @@ fr
 fy
 fJ
 fJ
-gh
+gO
 fz
 fz
 fz
@@ -61635,7 +61692,7 @@ an
 an
 an
 ha
-an
+gh
 hg
 fL
 fL
@@ -61892,12 +61949,12 @@ an
 an
 an
 ha
-an
+NY
 hg
 fl
 eY
 fL
-hQ
+Xl
 ic
 ij
 fL
@@ -62149,7 +62206,7 @@ an
 an
 an
 ha
-an
+gh
 hg
 fl
 eY
@@ -86641,7 +86698,7 @@ ES
 ES
 ES
 Hz
-HC
+Qq
 HC
 HF
 ES
@@ -86898,7 +86955,7 @@ ES
 ES
 ES
 Hz
-HC
+Ot
 HC
 HF
 ES
