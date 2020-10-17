@@ -241,7 +241,6 @@
 	if (get_dist(current_turf, starting_turf) > 6 || z != start_z)
 		stop_moving("ERROR! Too far away from starting position!")
 		return
-
 	if (!moving || isspaceturf(current_turf))
 		stop_moving()
 		return
