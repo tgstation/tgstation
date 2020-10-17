@@ -37,7 +37,7 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
-	movement_type = FLYING
+	movement_type = FLYING & UNSTOPPABLE
 	var/front_coaster = FALSE
 	var/list/previous_coasters = list()
 	var/in_progress = FALSE
@@ -61,8 +61,6 @@ var/hint_movement = FALSE
 /obj/vehicle/ridden/rollercoaster/driver_move(mob/living/user, direction)
 	if(!in_progress)
 		to_chat(user, "<span class='notice'>The coaster will start when it is full!</span>")
-	else
-		to_chat(user, "<span class='notice'>Just sit still and enjoy the ride, jesus christ.</span>")
 	return TRUE
 
 /obj/vehicle/ridden/rollercoaster/proc/find_previous_coasters(start_previous = TRUE)
@@ -77,6 +75,14 @@ var/hint_movement = FALSE
 			trailercoaster = locate() in trailerturf
 
 /obj/vehicle/ridden/rollercoaster/proc/start(start_previous = TRUE)
+	if(start_previous)
+		var/turf/trailerturf = get_step(src, dir)
+		var/obj/vehicle/ridden/rollercoaster/trailercoaster = locate() in trailerturf
+		if(trailercoaster)
+			trailercoaster.start(TRUE)
+			return
+	if(in_progress)
+		return
 	for(var/m in occupants)
 		var/mob/living/rider = m
 		rider.Stun(666 HOURS)//JANK ALERT
@@ -107,8 +113,9 @@ var/hint_movement = FALSE
 		coaster.dir = dir
 		trailerturf = get_step(coaster, search_direction)//turf behind now corrected coaster
 		coaster.unload_rider()
-
-	addtimer(CALLBACK(src, .proc/start), 30 SECONDS) //auto restart 30 secs!
+		coaster.coaster_speed = 2
+	coaster_speed = 2
+	addtimer(CALLBACK(src, .proc/start), 30 SECONDS, TIMER_UNIQUE) //auto restart 30 secs!
 
 /obj/vehicle/ridden/rollercoaster/proc/unload_rider()
 	if(length(occupants))
@@ -120,16 +127,17 @@ var/hint_movement = FALSE
 				qdel(S)
 
 /obj/vehicle/ridden/rollercoaster/Move(oldloc, dir)
+	var/turf/current = get_turf(src)
 	. = ..()
 	var/turf/destination = get_turf(src)
 	var/obj/effect/rollercoaster_hint/hint
 	hint = locate() in destination
-	if(hint)
+	if(hint && current != destination)
 		hint.action(src)
 	if(in_progress && destination == get_turf(src))
 		current_pipe = locate() in destination
 		if(current_pipe)
-			addtimer(CALLBACK(src, .proc/coaster_travel),coaster_speed)
+			addtimer(CALLBACK(src, .proc/coaster_travel), coaster_speed, TIMER_UNIQUE)
 
 /obj/vehicle/ridden/rollercoaster/proc/coaster_travel()
 	if(!in_progress)
@@ -140,7 +148,18 @@ var/hint_movement = FALSE
 /obj/vehicle/ridden/rollercoaster/proc/nextdir_coaster()
 	return current_pipe.dpdir & (~turn(dir, 180))
 
+/obj/vehicle/ridden/rollercoaster/Bump(atom/clong)
+	if(!in_progress || istype(clong, /obj/vehicle/ridden/rollercoaster))
+		return
+	if(isturf(clong) || isobj(clong))
+		if(clong.density && !isturf(clong))
+			qdel(clong)
+	else if(isliving(clong))
+		penetrate(clong)
+
 /obj/vehicle/ridden/rollercoaster/Bumped(atom/clong)
+	if(!in_progress || istype(clong, /obj/vehicle/ridden/rollercoaster))
+		return
 	if(isturf(clong) || isobj(clong))
 		if(clong.density && !isturf(clong))
 			qdel(clong)
@@ -148,5 +167,7 @@ var/hint_movement = FALSE
 		penetrate(clong)
 
 /obj/vehicle/ridden/rollercoaster/proc/penetrate(mob/living/smeared_mob)
-	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is smashed by [src]!</span>" , "<span class='userdanger'>The coaster smashes you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
-	smeared_mob.gib()
+	if(istype(smeared_mob.buckled, /obj/vehicle/ridden/rollercoaster))
+		return
+	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is deatomized into a mist of blood and popcorn by [src]!</span>" , "<span class='userdanger'>The coaster moves through you! It screeches something about buying tee-shirts</span>" , "<span class='danger'>You hear a FWOOSH and a loud POP!</span>")
+	smeared_mob.forceMove(locate(128, 36, 2)) //Shut up
