@@ -3622,13 +3622,13 @@
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "hR" = (
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'STAY SEATED UNTIL THE RIDE HAS COME TO A COMPLETE STOP'.";
 	name = "\improper STAY SEATED sign";
 	pixel_y = 32
+	},
+/obj/structure/railing{
+	dir = 6
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
@@ -17881,12 +17881,9 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"Og" = (
-/obj/structure/railing{
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
-	icon_state = "windoor"
-	},
-/turf/open/floor/plasteel/cult,
+"NY" = (
+/obj/machinery/vending/clothing/armsy,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "Ok" = (
 /obj/structure/sign/barsign{
@@ -17896,7 +17893,7 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"ON" = (
+"Ot" = (
 /obj/structure/table/greyscale{
 	base_icon_state = "glass_table";
 	icon = 'icons/obj/smooth_structures/glass_table.dmi';
@@ -17951,6 +17948,13 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/crew_quarters/bar)
+"Qq" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/toy/plush/moth,
+/turf/open/transparent/glass/reinforced,
+/area/awaymission/cabin/snowforest/forest)
 "Qw" = (
 /obj/machinery/conveyor{
 	dir = 4
@@ -18031,13 +18035,6 @@
 	color = "#68524D"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"VW" = (
-/obj/structure/chair/plastic{
-	dir = 4
-	},
-/obj/item/toy/plush/moth,
-/turf/open/transparent/glass/reinforced,
-/area/awaymission/cabin/snowforest/forest)
 "Wh" = (
 /obj/structure/closet/crate{
 	anchored = 1
@@ -18055,14 +18052,17 @@
 "Wq" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/bar)
+"Xl" = (
+/obj/structure/railing{
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon_state = "windoor"
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
 "Xt" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"XB" = (
-/obj/machinery/vending/clothing/armsy,
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
 "XC" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 4
@@ -61860,12 +61860,12 @@ an
 an
 an
 ha
-XB
+NY
 hg
 fl
 eY
 fL
-Og
+Xl
 ic
 ij
 fL
@@ -86609,7 +86609,7 @@ ES
 ES
 ES
 Hz
-VW
+Qq
 HC
 HF
 ES
@@ -86866,7 +86866,7 @@ ES
 ES
 ES
 Hz
-ON
+Ot
 HC
 HF
 ES

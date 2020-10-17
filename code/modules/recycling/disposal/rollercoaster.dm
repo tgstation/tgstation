@@ -13,11 +13,11 @@
 
 /obj/effect/rollercoaster_hint/slow_down/action(var/obj/vehicle/ridden/rollercoaster/coaster)
 	if(coaster.front_coaster)
-		coaster.change_speed_all(0.5)
+		coaster.change_speed_all(0.35)
 
 /obj/effect/rollercoaster_hint/speed_up/action(var/obj/vehicle/ridden/rollercoaster/coaster)
 	if(coaster.front_coaster)
-		coaster.change_speed_all(-0.5)
+		coaster.change_speed_all(-0.35)
 
 
 //huge reason why i'm not using the trailer variable: coasters go up one at a time
