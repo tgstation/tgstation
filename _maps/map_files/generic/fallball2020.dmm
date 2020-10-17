@@ -17814,10 +17814,10 @@
 "Mp" = (
 /obj/structure/table/wood,
 /obj/item/training_toolbox{
-	step_y = 5
+	pixel_y = 5
 	},
 /obj/item/training_toolbox{
-	step_y = 0
+	pixel_y = 0
 	},
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
@@ -17875,7 +17875,7 @@
 "Ni" = (
 /obj/structure/table/wood,
 /obj/item/target{
-	step_y = 5
+	pixel_y = 5
 	},
 /obj/item/target/clown,
 /turf/open/floor/plating/asteroid,
@@ -17889,7 +17889,7 @@
 "NP" = (
 /obj/structure/table/wood,
 /obj/item/training_toolbox{
-	step_y = 5
+	pixel_y = 5
 	},
 /obj/item/training_toolbox,
 /turf/open/floor/plating/asteroid,
@@ -17978,7 +17978,7 @@
 "RN" = (
 /obj/structure/table/wood,
 /obj/item/training_toolbox{
-	step_y = 6
+	pixel_y = 6
 	},
 /obj/item/training_toolbox,
 /turf/open/floor/plating/asteroid,
