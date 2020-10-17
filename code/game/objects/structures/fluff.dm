@@ -381,7 +381,7 @@
 
 /obj/structure/fluff/yeah_go_heck_yourself
 	name = "very important disclaimer"
-	desc = "The sign is telling you that, in an objectively truthful way, this is not canon. Lizards are now also kinda dumb for this one."
+	desc = "The sign is telling you that, in an objectively truthful way, this frozen abductor is not canon. Lizards are now also kinda dumb for this one."
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "inept_no_stop"
 	max_integrity = 9999
