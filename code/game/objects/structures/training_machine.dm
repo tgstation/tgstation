@@ -1,6 +1,6 @@
 #define MIN_RANGE 1
 #define MIN_SPEED 1
-#define MAX_RANGE 7
+#define MAX_RANGE 2
 #define MAX_SPEED 10
 #define HITS_TO_KILL 9
 #define MIN_ATTACK_DELAY 10
@@ -36,6 +36,13 @@
 	COOLDOWN_DECLARE(attack_cooldown)
 	///Cooldown macro to control how fast this will move. Used in process()
 	COOLDOWN_DECLARE(move_cooldown)
+
+/obj/structure/training_machine/Initialize()
+	. = ..()
+	starting_turf = get_turf(src)
+	var/obj/item/target/targ = locate() in starting_turf
+	if (targ)
+		attach_item(targ)
 
 /**
  * Called on qdel(), so we don't want a cool explosion to happen
@@ -201,7 +208,6 @@
  */
 /obj/structure/training_machine/proc/stop_moving(message = "Ending training simulation.")
 	moving = FALSE
-	starting_turf = null
 	say(message)
 	playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 	STOP_PROCESSING(SSfastprocess, src)
@@ -213,7 +219,6 @@
  */
 /obj/structure/training_machine/proc/start_moving()
 	moving = TRUE
-	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
 	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 	START_PROCESSING(SSfastprocess, src)
@@ -229,7 +234,7 @@
 	if(!COOLDOWN_FINISHED(src, move_cooldown))
 		return
 	var/turf/current_turf = get_turf(src)
-	if (!moving || !starting_turf || isspaceturf(current_turf))
+	if (!moving || isspaceturf(current_turf))
 		stop_moving()
 		return
 	if (current_turf == target_position) //We've reached our target turf, now find a new one
@@ -334,8 +339,9 @@
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
-	icon_state = "his_grace_ascended"
-	inhand_icon_state = "toolbox_gold"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "yellow"
+	inhand_icon_state = "toolbox_yellow"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
