@@ -382,7 +382,7 @@
 	name = "armsy shirt"
 	desc = "It says \"I survived the Terror of the Tracks.\" Exclusive Terror of the Tracks merchandise!"
 	icon = 'icons/misc/tourny_items.dmi'
-	worn_icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_armor.dmi'
 	icon_state = "armsy_shirt"
 	inhand_icon_state = "armsy_shirt"
 

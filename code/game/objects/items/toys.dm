@@ -128,7 +128,22 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-	var/random_color = TRUE
+	var/random_color = FALSE
+
+/obj/item/toy/balloon/random
+	name = "balloon"
+	desc = "No birthday is complete without it."
+	icon = 'icons/obj/balloons.dmi'
+	icon_state = "balloon"
+	inhand_icon_state = "balloon"
+	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	force = 0
+	random_color = TRUE
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
