@@ -54,6 +54,32 @@ SUBSYSTEM_DEF(statpanels)
 			if(target.stat_tab == "Tickets")
 				var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
+			if(target.stat_tab == "Interviews")
+				var/datum/interview_manager/m = GLOB.interviews
+
+				// get open interview count
+				var/dc = 0
+				for (var/ckey in m.open_interviews)
+					var/datum/interview/I = m.open_interviews[ckey]
+					if (I && !I.owner)
+						dc++
+				var/stat_string = "([m.open_interviews.len - dc] online / [dc] disconnected)"
+
+				// Prepare each queued interview
+				var/list/queued = list()
+				for (var/datum/interview/I in m.interview_queue)
+					queued += list(list(
+						"id" = I.id,
+						"status" = "\[[I.pos_in_queue]\]: [I.owner_ckey][!I.owner ? " (DC)": ""] \[INT-[I.id]\]"
+					))
+
+				var/list/data = list(
+					"status" = "Active Interviews: [m.open_interviews.len] [stat_string]%@%Queued Interviews: [m.interview_queue.len]%@%Closed Interviews: [m.closed_interviews.len]",
+					"interviews" = queued
+				)
+
+				// Push update
+				target << output("[url_encode(json_encode(data))];", "statbrowser:update_interviews")
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
 				target << output("", "statbrowser:remove_sdql2")
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)))

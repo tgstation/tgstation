@@ -202,11 +202,14 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		open_interviews -= to_close.owner_ckey
 		closed_interviews += to_close
 
-/datum/interview_manager/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = TRUE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/interview_manager/ui_interact(mob/user, datum/tgui/ui = null)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, ui_key, "InterviewManager", "Interview Manager", 500, 600, master_ui, state)
+		ui = new(user, src, "InterviewManager")
 		ui.open()
+
+/datum/interview_manager/ui_state(mob/user)
+	return GLOB.admin_state
 
 /datum/interview_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
