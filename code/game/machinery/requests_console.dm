@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)
 			return
-		if(!(announceAuth || IsAdminGhost(usr)))
+		if(!(announceAuth || isAdminGhostAI(usr)))
 			return
 		if(isliving(usr))
 			var/mob/living/L = usr
