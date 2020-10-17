@@ -36,6 +36,7 @@
 	COOLDOWN_DECLARE(attack_cooldown)
 	///Cooldown macro to control how fast this will move. Used in process()
 	COOLDOWN_DECLARE(move_cooldown)
+	var/start_z
 
 /obj/structure/training_machine/Initialize()
 	. = ..()
@@ -43,6 +44,7 @@
 	var/obj/item/target/targ = locate() in starting_turf
 	if (targ)
 		attach_item(targ)
+	start_z = z
 
 /**
  * Called on qdel(), so we don't want a cool explosion to happen
@@ -234,6 +236,10 @@
 	if(!COOLDOWN_FINISHED(src, move_cooldown))
 		return
 	var/turf/current_turf = get_turf(src)
+	if (get_dist(current_turf, starting_turf) > 6 || z != start_z)
+		stop_moving("ERROR! Too far away from starting position!")
+		return
+
 	if (!moving || isspaceturf(current_turf))
 		stop_moving()
 		return
