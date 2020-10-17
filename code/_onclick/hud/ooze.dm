@@ -13,7 +13,7 @@
 	infodisplay += alien_plasma_display
 
 /obj/screen/ooze_nutrition_display
-	icon = 'icons/mob/screen_alien.dmi'
+	icon = 'icons/hud/screen_alien.dmi'
 	icon_state = "power_display"
 	name = "nutrition"
 	screen_loc = ui_alienplasmadisplay

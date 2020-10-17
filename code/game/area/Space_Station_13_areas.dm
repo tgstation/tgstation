@@ -857,14 +857,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 
-/area/medical/morgue/hauntedhouse/Entered(atom/movable/M) // NOT WORKING FOR SOME REASON.
-	. = ..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/doomed = M
-		var/list/not_bones = doomed.GetAllContents()
-		for(var/obj/item/teleportation_scroll/way_out in not_bones)
-			qdel(way_out)
-
 /area/medical/morgue/tele
 	name = "Haunted Manor"
 	icon_state = "spacecontent10"

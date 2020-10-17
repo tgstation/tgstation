@@ -177,6 +177,19 @@
 	anchored = 1;
 	req_access = null
 	},
+<<<<<<< HEAD
+=======
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/soysauce,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "au" = (
@@ -197,6 +210,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aw" = (
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -211,6 +225,17 @@
 	desc = "A puddle of oil.";
 	name = "oil"
 	},
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "ax" = (
 /obj/structure/flora/ausbushes/stalkybush,
@@ -753,7 +778,8 @@
 /area/awaymission/cabin/snowforest/forest)
 "by" = (
 /turf/closed/indestructible/oldshuttle{
-	color = "#6e6e6e"
+	color = "#6e6e6e";
+	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
 "bz" = (
@@ -830,10 +856,11 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/hydroponics/garden/cornmaze)
 "bO" = (
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
+/obj/structure/chair/pew/left{
+	dir = 1
 	},
-/area/medical/morgue/field)
+/turf/open/floor/plating/grass/fall,
+/area/awaymission/cabin/snowforest/forest)
 "bP" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/space/hardsuit/spellcostume,
@@ -872,10 +899,10 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/hydroponics/garden/cornmaze/labyrinth)
 "bW" = (
-/turf/closed/indestructible/oldshuttle{
-	color = "#DC143C";
-	name = "tent wall"
+/obj/structure/chair/pew{
+	dir = 1
 	},
+/turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
 "bX" = (
 /obj/structure/curtain/cloth{
@@ -989,10 +1016,10 @@
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
 "cf" = (
-/turf/closed/indestructible/oldshuttle{
-	color = "#26b9c8";
-	name = "tent wall"
+/obj/structure/chair/pew/right{
+	dir = 1
 	},
+/turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
 "cg" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1062,8 +1089,9 @@
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
 "cl" = (
-/turf/open/floor/plating/sandy_dirt,
-/area/medical/morgue/field)
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/grass/fall,
+/area/awaymission/cabin/snowforest/field)
 "cm" = (
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
@@ -1503,6 +1531,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/fluff{
 	desc = "Yes, the portal itself is spooky!";
 	icon = 'icons/obj/objects.dmi';
@@ -1510,6 +1539,9 @@
 	name = "spooky portal"
 	},
 /obj/effect/rollercoaster_hint/slow_down,
+=======
+/obj/effect/rollercoaster_hint/speed_up,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
@@ -1548,6 +1580,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "dj" = (
+<<<<<<< HEAD
 /obj/structure/fluff{
 	desc = "GET YOUR OFFICIAL ARMSY MERCHANDISE HERE!";
 	icon = 'icons/mob/eldritch_mobs.dmi';
@@ -1555,6 +1588,16 @@
 	name = "\improper SOUVENIRS"
 	},
 /turf/open/floor/plating/asteroid,
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/plating/asteroid/basalt,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "dk" = (
 /obj/structure/closet/crate{
@@ -1574,11 +1617,39 @@
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/mineral/titanium,
 /area/crew_quarters/bar)
+<<<<<<< HEAD
 "dm" = (
 /obj/structure/closet/secure_closet/freezer/fridge{
 	anchored = 1;
 	req_access = null
 	},
+=======
+"dl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"dm" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	anchored = 1;
+	req_access = null
+	},
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/rice,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/soysauce,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dn" = (
@@ -1588,6 +1659,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "do" = (
+<<<<<<< HEAD
 /obj/machinery/vending/clothing/armsy,
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
@@ -1596,6 +1668,24 @@
 	dir = 1;
 	pixel_y = -8
 	},
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"dp" = (
+/obj/structure/sink/kitchen{
+	dir = 1;
+	pixel_y = -8
+	},
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "dq" = (
@@ -1607,7 +1697,11 @@
 /obj/structure/railing{
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/asteroid/basalt,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "dr" = (
 /turf/open/floor/carpet/royalblue,
@@ -1615,6 +1709,7 @@
 "ds" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
+<<<<<<< HEAD
 	dir = 4
 	},
 /obj/structure/railing{
@@ -1624,6 +1719,14 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
+=======
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "dt" = (
 /obj/structure/fluff/books_sign,
@@ -2269,11 +2372,19 @@
 	icon_state = "anom";
 	name = "spooky portal"
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/rollercoaster_hint/slow_down,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
+<<<<<<< HEAD
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plasteel/cult,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "fd" = (
 /obj/structure/disposalpipe/segment{
@@ -2463,6 +2574,7 @@
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
 "fA" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/trimline/red/arrow_cw{
 	dir = 1
 	},
@@ -2475,17 +2587,39 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt,
+/area/awaymission/cabin/snowforest/forest)
+"fB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cult,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "fC" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/effect/rollercoaster_hint/slow_down,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "fD" = (
 /obj/structure/disposalpipe/segment{
@@ -2594,16 +2728,31 @@
 /obj/structure/railing{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/asteroid/basalt,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "fQ" = (
 /turf/open/floor/plating/asteroid/basalt,
 /area/awaymission/cabin/snowforest/forest)
 "fR" = (
+<<<<<<< HEAD
 /obj/structure/railing{
 	icon = 'icons/obj/lavaland/survival_pod.dmi';
 	icon_state = "windoor"
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/railing/corner{
+	dir = 4
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 	},
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
@@ -2756,13 +2905,22 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gj" = (
-/obj/structure/disposalpipe/segment{
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/railing,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/structure/railing{
-	dir = 1
+	dir = 8
 	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+<<<<<<< HEAD
 /obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
@@ -2772,13 +2930,24 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 8
-	},
-/obj/structure/railing{
+=======
+/area/awaymission/cabin/snowforest/forest)
+"gk" = (
+/obj/structure/disposalpipe/segment{
 	dir = 4
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /obj/effect/rollercoaster_hint/slow_down,
 /turf/open/transparent/openspace,
+=======
+/turf/open/floor/plating/asteroid,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gl" = (
 /obj/structure/disposalpipe/segment{
@@ -2798,8 +2967,12 @@
 /obj/structure/railing{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/effect/rollercoaster_hint/speed_up,
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/rust,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gn" = (
 /obj/structure/railing{
@@ -2905,6 +3078,7 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "gz" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2915,6 +3089,17 @@
 /obj/structure/lattice/catwalk,
 /obj/effect/rollercoaster_hint/slow_down,
 /turf/open/transparent/openspace,
+=======
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gA" = (
 /obj/structure/disposalpipe/segment{
@@ -2934,7 +3119,11 @@
 /obj/structure/railing{
 	dir = 9
 	},
+<<<<<<< HEAD
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/rust,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gC" = (
 /obj/machinery/door/airlock/centcom{
@@ -3141,16 +3330,19 @@
 /turf/open/transparent/glass/reinforced,
 /area/awaymission/cabin/snowforest/forest)
 "gU" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
 /obj/structure/railing{
-	dir = 4
+	dir = 5
 	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /obj/effect/rollercoaster_hint/slow_down,
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/rust,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gV" = (
 /obj/structure/disposalpipe/segment{
@@ -3179,14 +3371,19 @@
 /area/awaymission/cabin/snowforest/forest)
 "gX" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
 /obj/structure/railing{
 	dir = 8
 	},
 /obj/structure/railing{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
+=======
+/turf/open/floor/plating/rust,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "gY" = (
 /obj/structure/railing{
@@ -3667,6 +3864,17 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/forest)
+"ie" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "if" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -3719,6 +3927,17 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
+"il" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "im" = (
 /obj/structure/lattice/catwalk,
@@ -3793,6 +4012,33 @@
 	},
 /turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
+=======
+"iu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/rollercoaster_hint/slow_down,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iv" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "iw" = (
 /obj/structure/stone_tile/block/eldercracked{
 	dir = 4
@@ -3832,8 +4078,9 @@
 "iB" = (
 /turf/closed/wall/rust,
 /area/awaymission/cabin/snowforest/forest)
-"iD" = (
-/obj/effect/rollercoaster_hint/go_up,
+<<<<<<< HEAD
+=======
+"iC" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 8
@@ -3841,7 +4088,49 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/rollercoaster_hint/speed_up,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+"iD" = (
+/obj/effect/rollercoaster_hint/go_up,
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing{
+	dir = 8
+<<<<<<< HEAD
+	},
+/obj/structure/railing{
+	dir = 4
+=======
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iE" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"iF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 10
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
 /area/awaymission/cabin/snowforest/forest)
 "iG" = (
 /obj/structure/stone_tile/elderblock{
@@ -3936,6 +4225,15 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"iR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
 "iS" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -3994,6 +4292,19 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
+=======
+"iZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "ja" = (
 /obj/structure/chair/pew/left{
 	dir = 4
@@ -4011,11 +4322,31 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/rollercoaster_hint/speed_up,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/railing,
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/forest)
+"jd" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/slow_down,
+/obj/structure/railing{
+	dir = 8
+	},
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/obj/structure/railing{
+	dir = 1
+	},
+<<<<<<< HEAD
+/obj/structure/railing,
 /turf/open/floor/plating,
+=======
+/turf/open/transparent/openspace,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /area/awaymission/cabin/snowforest/forest)
 "je" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -4058,7 +4389,10 @@
 	},
 /obj/structure/railing/wooden,
 /obj/effect/rollercoaster_hint/go_down,
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jj" = (
@@ -4076,7 +4410,9 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
-"jm" = (
+<<<<<<< HEAD
+=======
+"jl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4084,7 +4420,25 @@
 	dir = 1
 	},
 /obj/structure/railing/wooden,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+"jm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+<<<<<<< HEAD
+=======
+/obj/effect/rollercoaster_hint/slow_down,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/railing/wooden,
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jn" = (
@@ -4102,6 +4456,11 @@
 /turf/open/water,
 /area/awaymission/cabin/snowforest/forest)
 "jp" = (
+<<<<<<< HEAD
+/obj/structure/railing{
+	dir = 8
+	},
+=======
 /obj/structure/railing{
 	dir = 8
 	},
@@ -4110,7 +4469,24 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/rollercoaster_hint/go_down,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"jq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/railing,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/obj/structure/railing{
+	dir = 4
+	},
+<<<<<<< HEAD
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/go_down,
 /obj/structure/lattice/catwalk,
+=======
+/obj/effect/rollercoaster_hint/go_down,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "jq" = (
@@ -4121,8 +4497,11 @@
 /obj/structure/railing{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/rollercoaster_hint/go_down,
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "js" = (
@@ -4276,22 +4655,16 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "jO" = (
-/obj/structure/chair/pew/left{
-	dir = 1
-	},
-/turf/open/floor/plating/grass/fall,
+/obj/structure/chair/pew/left,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "jP" = (
-/obj/structure/chair/pew{
-	dir = 1
-	},
-/turf/open/floor/plating/grass/fall,
+/obj/structure/chair/pew,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "jQ" = (
-/obj/structure/chair/pew/right{
-	dir = 1
-	},
-/turf/open/floor/plating/grass/fall,
+/obj/structure/chair/pew/right,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "jR" = (
 /obj/structure/curtain/cloth{
@@ -4424,16 +4797,53 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin/snowforest/forest)
 "kj" = (
-/obj/structure/chair/pew/left,
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/arena_spawn/green,
+/obj/machinery/camera/autoname{
+	c_tag = "West Preparation Room";
+	dir = 2;
+	network = list("thunder","ss13");
+	resistance_flags = 115
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "kk" = (
-/obj/structure/chair/pew,
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/arena_spawn/red,
+/obj/machinery/camera/autoname{
+	c_tag = "East Preparation Room";
+	dir = 2;
+	network = list("thunder","ss13");
+	resistance_flags = 115
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "kl" = (
-/obj/structure/chair/pew/right,
-/turf/open/floor/plating/asteroid,
+/obj/structure/sign/warning/coldtemp,
+/turf/closed/indestructible/oldshuttle{
+	color = "#DC143C";
+	name = "tent wall"
+	},
 /area/awaymission/cabin/snowforest/forest)
 "km" = (
 /obj/machinery/door/airlock{
@@ -4808,10 +5218,13 @@
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
 "kZ" = (
-/turf/closed/indestructible/oldshuttle{
-	color = "#DC143C"
+/obj/structure/plaque/static_plaque/golden/mappergang{
+	layer = 2.5;
+	max_integrity = 777;
+	resistance_flags = 115
 	},
-/area/awaymission/cabin/snowforest/forest)
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/tele3)
 "la" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/talking/ai{
@@ -4902,7 +5315,8 @@
 /area/awaymission/cabin/snowforest/forest)
 "lj" = (
 /turf/closed/indestructible/oldshuttle{
-	color = "#8B4513"
+	color = "#8B4513";
+	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
 "lk" = (
@@ -5365,7 +5779,8 @@
 "lV" = (
 /obj/machinery/newscaster,
 /turf/closed/indestructible/oldshuttle{
-	color = "#6e6e6e"
+	color = "#6e6e6e";
+	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
 "lW" = (
@@ -6124,10 +6539,17 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "nF" = (
-/turf/closed/indestructible/oldshuttle{
-	color = "#26b9c8"
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
-/area/awaymission/cabin/snowforest/forest)
+/obj/structure/plaque/static_plaque/golden/mappergang{
+	layer = 2.5;
+	max_integrity = 777;
+	pixel_y = -32;
+	resistance_flags = 115
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar/announcerroom)
 "nG" = (
 /obj/structure/fluff/dough_sign,
 /turf/open/floor/plating/grass{
@@ -6175,6 +6597,7 @@
 	pixel_x = -13;
 	pixel_y = 16
 	},
+/obj/structure/dresser,
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
 "nM" = (
@@ -6748,49 +7171,17 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "pa" = (
-/obj/machinery/camera{
-	c_tag = "Red Team";
-	network = list("thunder");
-	pixel_x = 11;
-	pixel_y = -9;
-	resistance_flags = 64
+/obj/machinery/camera/motion/thunderdome{
+	c_tag = "Upper Center Arena";
+	network = list("thunder","ss13");
+	pixel_x = 10
 	},
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/arena_spawn/green,
-/turf/open/indestructible,
-/area/tdome/arena)
+/turf/open/transparent/openspace,
+/area/crew_quarters/bar/vip)
 "pb" = (
-/obj/machinery/camera{
-	c_tag = "Green Team";
-	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10;
-	resistance_flags = 64
-	},
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/arena_spawn/red,
-/turf/open/indestructible,
-/area/tdome/arena)
+/obj/effect/landmark/start/assistant/override,
+/turf/open/floor/carpet/orange,
+/area/awaymission/cabin/snowforest/forest)
 "pc" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/waffles,
@@ -6994,14 +7385,15 @@
 /turf/open/indestructible,
 /area/tdome/arena)
 "pr" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname{
-	dir = 1;
-	network = list("Arena Main")
+	c_tag = "Northern Arena";
+	dir = 2;
+	network = list("thunder","ss13");
+	pixel_x = 10;
+	resistance_flags = 115
 	},
-/turf/open/indestructible,
-/area/tdome/arena)
+/turf/closed/indestructible/fakeglass,
+/area/crew_quarters/bar/vip)
 "ps" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -8903,8 +9295,8 @@
 	max_integrity = 9999
 	},
 /obj/item/toy/plush/lizardplushie,
-/obj/item/clothing/mask/frog,
-/obj/item/clothing/mask/frog,
+/obj/item/clothing/mask/animal/frog,
+/obj/item/clothing/mask/animal/frog,
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "to" = (
@@ -9659,8 +10051,9 @@
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/tele3)
 "vk" = (
-/turf/open/floor/plating/asteroid,
-/area/crew_quarters/tele3)
+/obj/structure/chair/comfy/black,
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar)
 "vl" = (
 /obj/effect/turf_decal/trimline/blue/warning{
 	color = "#FFA500";
@@ -10185,11 +10578,10 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "wC" = (
-/obj/structure/sign/warning/coldtemp,
-/turf/closed/indestructible/oldshuttle{
-	color = "#DC143C"
-	},
-/area/awaymission/cabin/snowforest/forest)
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/tree/jungle/fall,
+/turf/open/floor/plating/grass/fall,
+/area/awaymission/cabin/snowforest/field)
 "wD" = (
 /obj/structure/table/greyscale,
 /obj/item/food/honkdae{
@@ -10931,26 +11323,25 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "xy" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xz" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/tree/jungle/fall,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xA" = (
-/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xB" = (
-/obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/tree/jungle/fall,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xC" = (
+/obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xD" = (
 /obj/structure/fluff/support{
 	pixel_x = 16;
@@ -11018,9 +11409,9 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "xI" = (
-/obj/structure/flora/tree/jungle/fall,
+/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xJ" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/reagent_containers/food/drinks/bottle/wine{
@@ -11105,9 +11496,9 @@
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest/forest)
 "xP" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xQ" = (
 /obj/structure/curtain/cloth{
 	color = "#DC143C"
@@ -11170,9 +11561,9 @@
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest/forest)
 "xV" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "xW" = (
 /obj/structure/fluff/support{
 	pixel_x = 16;
@@ -11288,9 +11679,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest/forest)
 "yc" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/tree/jungle/fall,
+/obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "yd" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/clothing/mask/bandana/skull{
@@ -11400,7 +11792,8 @@
 /area/awaymission/cabin/snowforest/forest)
 "yo" = (
 /turf/closed/indestructible/oldshuttle{
-	color = "#9370DB"
+	color = "#9370DB";
+	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
 "yp" = (
@@ -11410,9 +11803,10 @@
 /turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
 "yq" = (
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "yr" = (
 /obj/item/scythe{
 	anchored = 1;
@@ -11629,9 +12023,9 @@
 /area/awaymission/cabin/snowforest/forest)
 "yH" = (
 /obj/structure/flora/tree/jungle/fall,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "yI" = (
 /obj/item/clothing/head/cone{
 	anchored = 1;
@@ -11686,15 +12080,13 @@
 /turf/open/floor/pod,
 /area/awaymission/cabin/snowforest/forest)
 "yP" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/field)
 "yQ" = (
-/obj/structure/flora/tree/jungle/fall,
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/turf/open/floor/plating/sandy_dirt,
+/area/awaymission/cabin/snowforest/tele)
 "yR" = (
 /obj/structure/sign/poster/official/ian,
 /turf/closed/indestructible/oldshuttle{
@@ -11916,14 +12308,14 @@
 /turf/open/floor/pod/light,
 /area/awaymission/cabin/snowforest/forest)
 "zk" = (
-/turf/open/floor/plating/sandy_dirt,
-/area/medical/morgue/tele)
-"zl" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
+"zl" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/awaymission/cabin/snowforest/field)
 "zm" = (
 /obj/item/clothing/head/hardhat/pumpkinhead,
 /turf/open/floor/plating/grass{
@@ -11943,13 +12335,13 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zq" = (
 /obj/structure/flora/tree/jungle/fall,
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -12026,7 +12418,7 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zy" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -12099,7 +12491,7 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zG" = (
 /obj/item/reagent_containers/food/snacks/grown/pumpkin,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -12152,13 +12544,13 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zM" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zN" = (
 /obj/structure/curtain/cloth{
 	color = "#FFA500"
@@ -12170,22 +12562,22 @@
 /turf/open/floor/plating/grass{
 	color = "#cccc00"
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zP" = (
 /turf/open/floor/plasteel/stairs/left{
 	dir = 1
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zQ" = (
 /turf/open/floor/plasteel/stairs/medium{
 	dir = 1
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zR" = (
 /turf/open/floor/plasteel/stairs/right{
 	dir = 1
 	},
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zS" = (
 /obj/structure/fluff/support{
 	pixel_x = -13;
@@ -12252,7 +12644,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "zZ" = (
 /obj/structure/railing/wooden{
 	dir = 1;
@@ -12262,7 +12654,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Aa" = (
 /obj/structure/railing/wooden{
 	dir = 1
@@ -12271,13 +12663,13 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ab" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ac" = (
 /obj/structure/railing/wooden{
 	dir = 5
@@ -12286,7 +12678,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ad" = (
 /obj/structure/sign/poster/contraband/borg_fancy_2,
 /turf/closed/indestructible/oldshuttle{
@@ -12324,10 +12716,10 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ai" = (
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Aj" = (
 /obj/structure/railing/wooden{
 	dir = 4
@@ -12336,7 +12728,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ak" = (
 /obj/structure/railing/wooden{
 	dir = 1
@@ -12394,10 +12786,10 @@
 /area/awaymission/cabin/snowforest/forest)
 "An" = (
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ao" = (
 /turf/closed/indestructible/faketintedglass,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ap" = (
 /obj/item/toy/plush/pkplush,
 /obj/structure/table/wood/fancy/green,
@@ -12454,26 +12846,26 @@
 	name = "butcher's blade"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Av" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Aw" = (
 /obj/machinery/door/airlock/wood_large{
 	aiControlDisabled = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ax" = (
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ay" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/camera/spooky,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Az" = (
 /obj/structure/sign/warning/fire{
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
@@ -12485,14 +12877,14 @@
 	},
 /mob/living/simple_animal/bot/mulebot/paranormal,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AA" = (
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AC" = (
 /obj/item/kirbyplants{
 	anchored = 1;
@@ -12501,17 +12893,17 @@
 	pixel_y = 3
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AD" = (
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AE" = (
 /obj/item/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-22"
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AF" = (
 /obj/structure/sign/warning/fire{
 	desc = "They look like tracks left by wheels.";
@@ -12523,7 +12915,7 @@
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AG" = (
 /obj/item/trash/pistachios,
 /turf/open/floor/plating/sandy_dirt,
@@ -12543,7 +12935,7 @@
 	},
 /obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AI" = (
 /obj/item/trash/chips,
 /turf/open/floor/plating/sandy_dirt,
@@ -12560,7 +12952,7 @@
 	name = "meat spike"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AL" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/bouquet{
@@ -12568,29 +12960,29 @@
 	pixel_y = 3
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AM" = (
 /obj/structure/table/wood/fancy/royalblack,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AN" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/storage/fancy/candle_box{
 	pixel_y = 6
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AO" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/trash/candle{
 	pixel_y = 6
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AP" = (
 /obj/effect/turf_decal,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AQ" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 4;
@@ -12601,7 +12993,7 @@
 "AR" = (
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/plasteel/freezer,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AS" = (
 /obj/structure/mineral_door/wood{
 	max_integrity = 9999
@@ -12614,16 +13006,16 @@
 	name = "maze stopper"
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AT" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint,
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AU" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AV" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plating/sandy_dirt,
@@ -12644,7 +13036,7 @@
 	name = "heart?"
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AX" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12653,7 +13045,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AY" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12669,7 +13061,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "AZ" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12685,7 +13077,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ba" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12700,20 +13092,20 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bb" = (
 /obj/item/statuebust/hippocratic{
 	anchored = 1;
 	density = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bc" = (
 /obj/structure/camera_assembly{
 	pixel_x = 9
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bd" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12723,16 +13115,16 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Be" = (
 /obj/structure/mineral_door/wood{
 	max_integrity = 9999
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bf" = (
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bg" = (
 /obj/structure/sign/warning/fire{
 	desc = "They look like tracks left by wheels.";
@@ -12744,7 +13136,7 @@
 	pass_flags = 64
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bh" = (
 /obj/structure/sign/warning/fire{
 	desc = "They look like tracks left by wheels.";
@@ -12756,7 +13148,7 @@
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bi" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 8;
@@ -12773,7 +13165,7 @@
 	},
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bk" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12812,7 +13204,7 @@
 	name = "oozy donut"
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bl" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12827,7 +13219,7 @@
 	name = "oozeburger"
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bm" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12842,19 +13234,19 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bn" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bo" = (
 /obj/structure/chair/sofa/left,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bp" = (
 /obj/structure/fluff/divine/convertaltar,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bq" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12868,7 +13260,7 @@
 	pixel_x = -11
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Br" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 4
@@ -12878,7 +13270,7 @@
 	},
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bs" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/tile/bar{
@@ -12889,7 +13281,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bt" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/tile/bar{
@@ -12899,7 +13291,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bu" = (
 /obj/structure/table/wood,
 /obj/structure/fluff/haunted_tv{
@@ -12907,11 +13299,11 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bv" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bw" = (
 /turf/open/floor/plating/sandy_dirt,
 /area/crew_quarters/tele5)
@@ -12927,7 +13319,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "By" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -12940,7 +13332,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Bz" = (
 /turf/open/floor/white{
 	color = "#15F4EE";
@@ -12950,33 +13342,33 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BA" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BB" = (
 /obj/structure/sign/poster/ripped{
 	pixel_x = -32;
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BC" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/tree/jungle/fall,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "BD" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BE" = (
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BF" = (
 /obj/structure/fluff{
 	color = "#93E9BE";
@@ -12989,7 +13381,7 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BG" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
 	base_icon_state = "curse";
@@ -13001,26 +13393,26 @@
 	shot_delay = 600
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BH" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BI" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/trash/candle{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BJ" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "BK" = (
 /turf/closed/indestructible/wood,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "BL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -13033,7 +13425,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BM" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/white{
@@ -13044,7 +13436,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BN" = (
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/library/warning,
 /obj/item/toy/toy_dagger{
@@ -13054,7 +13446,7 @@
 	},
 /obj/structure/fluff/spookedaltar,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BO" = (
 /obj/structure/sign/warning/fire{
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
@@ -13073,11 +13465,11 @@
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BP" = (
 /obj/structure/falsewall/wood,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BQ" = (
 /obj/structure/sign/warning/fire{
 	desc = "WHOSE FOOTPRINTS ARE THESE?";
@@ -13089,7 +13481,7 @@
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BR" = (
 /obj/structure/sign/warning/fire{
 	desc = "WHOSE FOOTPRINTS ARE THESE?";
@@ -13101,7 +13493,7 @@
 	pass_flags = 64
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BS" = (
 /obj/structure/fluff/hop_sign,
 /turf/open/floor/plating/grass{
@@ -13115,7 +13507,7 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -13128,7 +13520,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -13149,12 +13541,12 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BX" = (
 /obj/structure/chair/comfy/black,
 /obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "BY" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
@@ -13200,6 +13592,7 @@
 	icon_state = "widechair_l";
 	name = "bench"
 	},
+/obj/effect/landmark/start/assistant/override,
 /turf/open/floor/carpet,
 /area/awaymission/cabin/snowforest/forest)
 "Ce" = (
@@ -13208,6 +13601,7 @@
 	icon_state = "widechair_r";
 	name = "bench"
 	},
+/obj/effect/landmark/start/assistant/override,
 /turf/open/floor/carpet,
 /area/awaymission/cabin/snowforest/forest)
 "Cf" = (
@@ -13222,7 +13616,7 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cg" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -13235,13 +13629,13 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ch" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ci" = (
 /obj/item/scrying{
 	anchored = 1;
@@ -13263,13 +13657,13 @@
 	},
 /obj/structure/fluff/narsie,
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cj" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ck" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -13299,13 +13693,13 @@
 	name = "blob"
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Co" = (
 /obj/item/wisp_lantern{
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -13319,7 +13713,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -13332,7 +13726,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cr" = (
 /obj/structure/fluff{
 	color = "#93E9BE";
@@ -13350,17 +13744,17 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cs" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ct" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cu" = (
 /obj/structure/table/reinforced,
 /obj/item/stamp{
@@ -13399,20 +13793,22 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cy" = (
 /obj/structure/camera_assembly{
-	dir = 10
+	anchored = 1;
+	dir = 10;
+	max_integrity = 8666
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Cz" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/tome/haunted{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CA" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -13438,26 +13834,26 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CD" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CE" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CF" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CG" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CH" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/collectable/hop,
@@ -13487,7 +13883,7 @@
 "CK" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CL" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/food/cakeslice/apple{
@@ -13496,24 +13892,26 @@
 	name = "ooze cake slice"
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CM" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CN" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CO" = (
 /obj/structure/camera_assembly{
+	anchored = 1;
 	dir = 8;
+	max_integrity = 8666;
 	pixel_y = -12
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CP" = (
 /obj/structure/chair,
 /turf/open/floor/carpet,
@@ -13538,7 +13936,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CR" = (
 /obj/item/chair/wood/wings,
 /turf/open/floor/white{
@@ -13549,13 +13947,13 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CS" = (
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CT" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/food/cake/apple{
@@ -13565,24 +13963,24 @@
 	name = "ooze cake"
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CU" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CV" = (
 /obj/structure/fireplace{
 	pixel_x = 0
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CW" = (
 /obj/structure/bed/dogbed{
 	anchored = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "CX" = (
 /obj/structure/chair{
 	dir = 8
@@ -13612,7 +14010,7 @@
 	},
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Db" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -13626,7 +14024,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dc" = (
 /obj/structure/chair/comfy{
 	color = "#d40f0f";
@@ -13634,7 +14032,7 @@
 	name = "reading chair"
 	},
 /turf/open/floor/carpet/royalblack,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dd" = (
 /obj/machinery/door/airlock/centcom{
 	desc = "Come here to catch some AC before the next trip.";
@@ -13654,7 +14052,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Df" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -13662,13 +14060,13 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dg" = (
 /obj/structure/flora/tree/jungle/fall,
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass/fall,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Dh" = (
 /obj/structure/fluff/bus/dense,
 /turf/open/floor/plating/asteroid,
@@ -13699,7 +14097,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -13720,7 +14118,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dl" = (
 /obj/effect/decal/cleanable/xenoblood,
 /obj/item/wisp_lantern{
@@ -13729,7 +14127,7 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dm" = (
 /obj/structure/fluff/spookedclue{
 	desc = "One of the many Blue's Clues. It says, 'For each clue you find, a puzzle piece is revealed.'";
@@ -13738,7 +14136,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dn" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
@@ -13809,7 +14207,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dv" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -13830,7 +14228,7 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dw" = (
 /obj/structure/fluff/spookedclue{
 	desc = "One of the many Blue's Clues. It says, 'All who enter must work together or be entombed.'";
@@ -13846,14 +14244,14 @@
 	icon_state = "unsmooth";
 	name = "horrifying ooze"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dx" = (
 /obj/structure/table/wood,
 /obj/item/candle/infinite{
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Dy" = (
 /obj/structure/fluff/bus/passable,
 /obj/effect/decal/cleanable/dirt,
@@ -13908,35 +14306,35 @@
 "DE" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DF" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DG" = (
 /turf/open/floor/plasteel/stairs/left{
 	dir = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DH" = (
 /turf/open/floor/plasteel/stairs/right{
 	dir = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DI" = (
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DJ" = (
 /obj/structure/closet/crate/coffin{
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DK" = (
 /obj/structure/fluff/spooky_skeleton{
 	icon_state = "spookedya1";
@@ -13947,7 +14345,7 @@
 	x_axis = 0
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DL" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "frontwallbottomrear"
@@ -13990,24 +14388,24 @@
 "DR" = (
 /obj/structure/stairs/north,
 /turf/open/floor/plasteel/stairs/left,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DS" = (
 /obj/structure/stairs/north,
 /turf/open/floor/plasteel/stairs/right,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DT" = (
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DU" = (
 /obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DV" = (
 /turf/open/floor/plasteel/stairs/left,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DW" = (
 /turf/open/floor/plasteel/stairs/right,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DX" = (
 /obj/structure/fluff/skeletal_bodybody,
 /obj/item/keycard/library{
@@ -14015,19 +14413,19 @@
 	desc = "Oooo! Shiny!"
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DY" = (
 /obj/structure/stairs/south,
 /turf/open/floor/plasteel/stairs/left{
 	dir = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "DZ" = (
 /obj/structure/stairs/south,
 /turf/open/floor/plasteel/stairs/right{
 	dir = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ea" = (
 /obj/structure/fluff/spookedclue{
 	desc = "One of the many Blue's Clues. It says, 'Each clue, when the first letter in each sentence is read, shall reveal how to exit through the doors.'";
@@ -14036,7 +14434,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Eb" = (
 /obj/effect/spooky_skeleton_pressurepad{
 	spook_var = "FrankWestIsBack3"
@@ -14045,10 +14443,10 @@
 	spook_var = "FrankWestIsBack3b"
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ec" = (
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ed" = (
 /obj/structure/fluff/spooky_skeleton{
 	icon_state = "spookedya1";
@@ -14058,7 +14456,7 @@
 	spook_var = "FrankWestIsBack3"
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ee" = (
 /obj/machinery/door/airlock/wood{
 	name = "Closet"
@@ -14071,7 +14469,7 @@
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ef" = (
 /obj/structure/fluff/spooky_skeleton{
 	pixel_distance = -64;
@@ -14080,26 +14478,26 @@
 	spook_var = "FrankWestIsBack3b"
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Eg" = (
 /obj/structure/mineral_door/wood{
 	max_integrity = 9999
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Eh" = (
 /turf/open/floor/wood{
 	desc = "Stylish dark wood. Something is off about it.";
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ei" = (
 /obj/structure/fluff/spookedclue{
 	pixel_x = -32
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/medical/morgue/field)
+/area/awaymission/cabin/snowforest/field)
 "Ej" = (
 /obj/structure/fluff/bus/passable,
 /obj/effect/decal/cleanable/dirt,
@@ -14150,11 +14548,11 @@
 	spook_var = "FrankWestIsBack2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ep" = (
 /obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Eq" = (
 /obj/structure/table/wood/bar,
 /turf/open/floor/wood{
@@ -14162,7 +14560,7 @@
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Er" = (
 /obj/structure/table/wood/bar,
 /obj/item/gun/ballistic/revolver/russian{
@@ -14175,7 +14573,7 @@
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Es" = (
 /obj/structure/table/wood/bar,
 /turf/open/floor/carpet/red{
@@ -14183,14 +14581,14 @@
 	name = "old carpet";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Et" = (
 /turf/open/floor/carpet/red{
 	desc = "Soft velvet carpeting. Seems a bit ancient!";
 	name = "old carpet";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Eu" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	closingLayer = 5;
@@ -14206,7 +14604,7 @@
 	icon_state = "field_dir"
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ev" = (
 /obj/item/reagent_containers/food/snacks/grown/pumpkin,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -14230,11 +14628,11 @@
 "Ey" = (
 /obj/structure/fluff/spookedya,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ez" = (
 /obj/structure/falsewall/wood,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "EA" = (
 /obj/structure/table/wood/bar,
 /obj/machinery/button/door/indestructible{
@@ -14253,7 +14651,7 @@
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "EB" = (
 /obj/structure/lazy_mr_bones{
 	dir = 4
@@ -14263,7 +14661,7 @@
 	name = "wooden floor";
 	slowdown = 1
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "EC" = (
 /obj/structure/fluff/spooky_skeleton{
 	pixel_distance = -32;
@@ -14272,7 +14670,7 @@
 	spook_var = "FrankWestIsBack2"
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "ED" = (
 /obj/effect/spooky_skeleton_pressurepad{
 	spook_var = "FrankWestIsBack1"
@@ -14281,7 +14679,7 @@
 	max_integrity = 9999
 	},
 /turf/open/floor/plasteel/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "EE" = (
 /obj/structure/fluff/spooky_skeleton{
 	icon_state = "spookedya1";
@@ -14291,7 +14689,7 @@
 	x_axis = 0
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "EF" = (
 /obj/structure/flora/tree/jungle/fall{
 	alpha = 255;
@@ -14501,11 +14899,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/rollercoaster_hint/slow_down,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fl" = (
@@ -14541,7 +14946,6 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fr" = (
@@ -14565,7 +14969,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Fv" = (
@@ -14633,6 +15036,26 @@
 /obj/item/toy/cards/deck/kotahi,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
+"FI" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/rollercoaster_hint/speed_up,
+=======
+"FH" = (
+/obj/structure/disposalpipe/segment,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+<<<<<<< HEAD
+	},
+/obj/structure/lattice/catwalk,
+=======
+	},
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
 "FI" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/rollercoaster_hint/speed_up,
@@ -14642,18 +15065,25 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/lattice/catwalk,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FJ" = (
 /obj/structure/disposalpipe/segment,
+<<<<<<< HEAD
+=======
+/obj/effect/rollercoaster_hint/slow_down,
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/structure/railing{
 	dir = 4
 	},
 /obj/structure/railing{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FK" = (
@@ -14735,7 +15165,6 @@
 	dir = 8
 	},
 /obj/effect/rollercoaster_hint/go_down,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FX" = (
@@ -14748,7 +15177,10 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FY" = (
@@ -14761,7 +15193,6 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "FZ" = (
@@ -14771,6 +15202,7 @@
 	layer = 3.1;
 	pixel_x = -16;
 	pixel_y = -4
+<<<<<<< HEAD
 	},
 /obj/item/clothing/glasses/welding/brand{
 	pixel_y = 5
@@ -14790,6 +15222,94 @@
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
+=======
+	},
+/obj/item/clothing/glasses/welding/brand{
+	pixel_y = 5
+	},
+/obj/structure/fluff/playertrophy3{
+	layer = 3.1;
+	pixel_x = 16;
+	pixel_y = -4
+	},
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar/announcerroom)
+"Ga" = (
+/obj/structure/table/abductor,
+/obj/item/book/manual/wiki/surgery/mothblocks{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar/announcerroom)
+"Gb" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/snacks/muffin/booberry{
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/muffin/booberry{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/muffin/booberry{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/muffin/booberry{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"Gc" = (
+/obj/item/reagent_containers/food/snacks/caramel_corn{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/caramel_corn,
+/obj/item/reagent_containers/food/snacks/caramel_corn{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/snacks/caramel_corn{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/caramel_corn,
+/obj/item/reagent_containers/food/snacks/caramel_corn{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"Gd" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "Ge" = (
 /turf/open/floor/white{
 	color = "#8c2323";
@@ -14820,6 +15340,60 @@
 	name = "tent"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"Gj" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/smore{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"Gk" = (
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/corndog{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "Gl" = (
 /turf/open/floor/white{
 	color = "#26b9c8";
@@ -14878,6 +15452,28 @@
 	name = "tent"
 	},
 /area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
+=======
+"Gw" = (
+/obj/item/reagent_containers/food/snacks/donut/oreo{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/donut/oreo{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/donut/jelly/oreo{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/donut/jelly/oreo{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "Gx" = (
 /turf/open/floor/white{
 	color = "#6e6e6e";
@@ -15035,21 +15631,23 @@
 /area/crew_quarters/bar)
 "GZ" = (
 /obj/structure/chair/comfy/black,
-/turf/open/transparent/glass/reinforced,
-/area/crew_quarters/bar)
-"Ha" = (
-/obj/structure/chair/comfy/black,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"Hb" = (
+"Ha" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
+/area/crew_quarters/bar)
+"Hb" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar)
 "Hc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -15079,18 +15677,12 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/turf/open/transparent/glass/reinforced,
-/area/crew_quarters/bar)
-"Hh" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"Hi" = (
+"Hh" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
@@ -15099,6 +15691,18 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"Hi" = (
+/obj/structure/fluff/support{
+	pixel_x = 16;
+	pixel_y = -11
+	},
+/obj/structure/fluff/support{
+	pixel_x = -13;
+	pixel_y = -11
+	},
+/obj/structure/dresser,
+/turf/open/floor/carpet/orange,
+/area/awaymission/cabin/snowforest/forest)
 "Hj" = (
 /obj/structure/fluff{
 	color = "#800080";
@@ -15317,7 +15921,7 @@
 	pixel_x = 16
 	},
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HI" = (
 /obj/item/candle/infinite{
 	anchored = 1
@@ -15329,28 +15933,28 @@
 	resistance_flags = 115
 	},
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HJ" = (
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HK" = (
 /turf/open/floor/fakepit{
 	desc = "Whew! Good thing I can just choose to ignore gravity today!";
 	name = "elevator shaft"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HL" = (
 /turf/closed/wall/rust,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HM" = (
 /turf/closed/wall/r_wall/rust,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HN" = (
 /obj/structure/stone_tile/elderslab,
 /turf/open/floor/black{
 	mouse_opacity = 0
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HO" = (
 /obj/structure/mineral_door/wood{
 	max_integrity = 9999
@@ -15378,7 +15982,7 @@
 	pixel_y = 29
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HP" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -15392,10 +15996,10 @@
 	desc = "Whew! Good thing I can just choose to ignore gravity today!";
 	name = "elevator shaft"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HQ" = (
 /turf/open/floor/plasteel/elevatorshaft,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HR" = (
 /obj/structure/railing{
 	dir = 1
@@ -15403,7 +16007,7 @@
 /obj/structure/table/reinforced,
 /obj/item/food/cakeslice/chocolate,
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HS" = (
 /obj/structure/railing{
 	dir = 1
@@ -15411,7 +16015,7 @@
 /obj/structure/table/reinforced,
 /obj/item/kitchen/fork/plastic,
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HT" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
@@ -15422,20 +16026,20 @@
 	width = 4
 	},
 /turf/open/floor/plasteel/elevatorshaft,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HU" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigars/havana{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HV" = (
 /obj/structure/bed/dogbed{
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15450,37 +16054,37 @@
 	shuttleId = "snowdin_ball"
 	},
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "HZ" = (
 /obj/structure/musician/piano{
 	icon_state = "piano";
 	max_integrity = 9999
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ia" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ib" = (
 /obj/structure/falsewall/wood,
 /turf/closed/indestructible/fakeglass,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ic" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -15490,7 +16094,7 @@
 	pixel_x = -2
 	},
 /turf/open/transparent/glass,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Id" = (
 /obj/structure/fluff{
 	desc = "HA HA HA";
@@ -15501,13 +16105,13 @@
 	opacity = 1
 	},
 /turf/open/transparent/glass,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ie" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/transparent/openspace,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "If" = (
 /obj/structure/cable{
 	color = "red"
@@ -15515,11 +16119,11 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/oneway{
-	dir = 8;
-	icon_state = "field_dir"
+	icon_state = "field_dir";
+	dir = 8
 	},
 /turf/open/floor/plating/rust,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ig" = (
 /obj/structure/railing{
 	dir = 5
@@ -15528,11 +16132,11 @@
 	color = "red"
 	},
 /turf/open/floor/plating/rust,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ih" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ii" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -15546,32 +16150,8 @@
 	pixel_x = 32
 	},
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ij" = (
-/obj/structure/table/wood,
-/obj/item/lighter,
-/turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
-"Ik" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/cable{
-	color = "red"
-	},
-/turf/open/floor/plating/rust,
-/area/medical/morgue/hauntedhouse)
-"Il" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	color = "red"
-	},
-/turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
-"Im" = (
-/turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
-"In" = (
 /obj/structure/fluff/spooky_skeleton{
 	icon_state = "spookedya1";
 	pixel_distance = -32;
@@ -15580,20 +16160,44 @@
 	spook_var = "xd"
 	},
 /turf/closed/wall/rust,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"Ik" = (
+/obj/structure/table/wood,
+/obj/item/lighter,
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"Il" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/cable{
+	color = "red"
+	},
+/turf/open/floor/plating/rust,
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"Im" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	color = "red"
+	},
+/turf/open/floor/pod/dark,
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"In" = (
+/turf/open/floor/pod/dark,
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Io" = (
 /obj/structure/table/wood,
 /obj/item/trash/candle,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ip" = (
 /turf/open/indestructible/binary,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Iq" = (
 /turf/closed/wall/mineral/titanium/nodiagonal{
 	flags_ricochet = 0
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ir" = (
 /obj/machinery/door/poddoor{
 	id = "haunted"
@@ -15602,7 +16206,7 @@
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Is" = (
 /obj/machinery/door/poddoor{
 	id = "haunted"
@@ -15611,19 +16215,19 @@
 	spook_var = "xd"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "It" = (
 /obj/item/storage/fancy/candle_box,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Iu" = (
 /obj/structure/fluff/big_chain{
 	desc = "YOU'VE SEEN TOO MUCH, PUNY SPACEMAN!";
 	name = "chain of reality"
 	},
 /turf/open/indestructible/binary,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Iv" = (
 /obj/structure/fluff{
 	density = 1;
@@ -15635,7 +16239,7 @@
 	color = "red"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Iw" = (
 /obj/structure/dooropener{
 	anchored = 1;
@@ -15645,34 +16249,41 @@
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ix" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"Iy" = (
+/obj/structure/table/reinforced,
+/obj/item/food/burger/crazy{
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
 "Iz" = (
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IB" = (
 /obj/structure/cable{
 	color = "red"
 	},
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IC" = (
 /obj/structure/cable{
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "ID" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
@@ -15680,7 +16291,7 @@
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IE" = (
 /obj/structure/cable{
 	color = "red"
@@ -15690,20 +16301,23 @@
 	icon_state = "pile"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IF" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IG" = (
 /obj/structure/cable{
 	color = "red"
 	},
-/obj/machinery/camera{
-	dir = 4
+/obj/structure/camera_assembly{
+	anchored = 1;
+	dir = 4;
+	max_integrity = 8666;
+	pixel_y = -12
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IH" = (
 /obj/structure/cable{
 	color = "red"
@@ -15713,12 +16327,12 @@
 	icon_state = "singular"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "II" = (
 /obj/structure/bed,
 /obj/item/bedsheet/cosmos,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IJ" = (
 /obj/structure/cable{
 	color = "red"
@@ -15729,7 +16343,7 @@
 	name = "orange portal"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display{
@@ -15747,7 +16361,7 @@
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IL" = (
 /obj/structure/reflector/single/anchored{
 	dir = 1;
@@ -15755,17 +16369,17 @@
 	resistance_flags = 115
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IM" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IN" = (
 /obj/machinery/door/airlock/elder{
 	aiControlDisabled = 1;
 	max_integrity = 9999
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IO" = (
 /obj/structure/fluff/spooky_skeleton{
 	desc = "Is that a...?";
@@ -15778,7 +16392,7 @@
 	x_axis = 0
 	},
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IP" = (
 /obj/structure/closet/cabinet{
 	anchored = 1;
@@ -15791,7 +16405,7 @@
 /obj/item/clothing/under/suit/green,
 /obj/item/clothing/under/suit/tuxedo,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IQ" = (
 /obj/structure/cable{
 	color = "red"
@@ -15799,7 +16413,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal{
 	flags_ricochet = 0
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IR" = (
 /obj/structure/cable{
 	color = "red"
@@ -15817,7 +16431,7 @@
 	name = "robot"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IS" = (
 /obj/structure/fluff{
 	color = null;
@@ -15832,7 +16446,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IT" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible/booze{
@@ -15842,7 +16456,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IU" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = -32
@@ -15863,7 +16477,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IV" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = 32
@@ -15872,7 +16486,7 @@
 	density = 1;
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IW" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = 32
@@ -15889,7 +16503,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IX" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = 32
@@ -15906,7 +16520,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IY" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = 32
@@ -15926,7 +16540,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "IZ" = (
 /obj/structure/fluff/broken_flooring,
 /obj/structure/cable{
@@ -15939,21 +16553,24 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ja" = (
 /obj/item/reagent_containers/food/snacks/spiderling,
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jb" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/camera,
+/obj/structure/camera_assembly{
+	anchored = 1;
+	max_integrity = 8666
+	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jc" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jd" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = -32
@@ -15969,13 +16586,13 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Je" = (
 /turf/open/floor/fakespace{
 	density = 1;
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jf" = (
 /obj/structure/stone_tile/elder/fancymagic,
 /obj/structure/stone_tile/elder/fancymagic{
@@ -15989,7 +16606,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jg" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = 32
@@ -16009,14 +16626,14 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jh" = (
 /obj/item/stack/cable_coil/cut{
 	cable_color = "red";
 	color = "red"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ji" = (
 /obj/structure/cable{
 	color = "red"
@@ -16027,20 +16644,20 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jj" = (
 /obj/structure/cable{
 	color = "red"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jk" = (
 /obj/structure/cable{
 	color = "red"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jl" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -16054,7 +16671,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jm" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = -32
@@ -16071,7 +16688,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jn" = (
 /obj/structure/stone_tile/elder/fancymagic,
 /obj/structure/stone_tile/elder/fancymagic{
@@ -16081,7 +16698,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jo" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = 32
@@ -16094,7 +16711,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jp" = (
 /obj/structure/cable{
 	color = "red"
@@ -16107,7 +16724,7 @@
 	resistance_flags = 115
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jq" = (
 /obj/structure/cable{
 	color = "red"
@@ -16117,7 +16734,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jr" = (
 /obj/structure/cable{
 	color = "red"
@@ -16128,7 +16745,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Js" = (
 /obj/structure/cable{
 	color = "red"
@@ -16136,14 +16753,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jt" = (
 /obj/effect/portal/permanent{
 	id = "end";
 	name = "blue portal"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ju" = (
 /obj/effect/bump_teleporter{
 	id = "CultSpace2";
@@ -16157,7 +16774,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jv" = (
 /obj/structure/stone_tile/elder/fancymagic{
 	layer = 5
@@ -16196,7 +16813,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jw" = (
 /obj/effect/bump_teleporter{
 	id = "CultSpace1";
@@ -16213,7 +16830,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jx" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = 32
@@ -16226,14 +16843,14 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jy" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Jz" = (
 /obj/structure/cable{
 	color = "red"
@@ -16245,7 +16862,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JA" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible{
@@ -16256,7 +16873,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JB" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = -32
@@ -16272,7 +16889,7 @@
 	density = 1;
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JC" = (
 /obj/structure/fluff/fakespace{
 	pixel_y = -32
@@ -16281,7 +16898,7 @@
 	density = 1;
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JD" = (
 /obj/structure/stone_tile/elder/fancymagic,
 /obj/structure/stone_tile/elder/fancymagic{
@@ -16295,7 +16912,7 @@
 /turf/open/floor/fakespace{
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JE" = (
 /obj/structure/fluff/fakespace{
 	pixel_x = 32
@@ -16311,7 +16928,7 @@
 	density = 1;
 	name = "space"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JF" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing/corner,
@@ -16319,14 +16936,14 @@
 	sound = 'sound/misc/EvilLaugh.ogg'
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JG" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JH" = (
 /obj/structure/cable{
 	color = "red"
@@ -16334,7 +16951,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JI" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
@@ -16349,14 +16966,14 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JK" = (
 /obj/structure/fluff{
 	density = 1;
@@ -16365,7 +16982,7 @@
 	name = "unusual machine"
 	},
 /turf/open/floor/plasteel,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JL" = (
 /obj/structure/fluff{
 	density = 1;
@@ -16377,18 +16994,33 @@
 	color = "red"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"JM" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
+	},
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/soymilk,
+/obj/item/reagent_containers/food/condiment/mayonnaise,
+/obj/item/reagent_containers/food/condiment/mayonnaise,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
 "JN" = (
 /obj/structure/bed,
 /obj/item/bedsheet/cosmos,
 /obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JO" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JP" = (
 /obj/structure/cable{
 	color = "red"
@@ -16397,11 +17029,14 @@
 	dir = 4;
 	icon_state = "singular"
 	},
-/obj/machinery/camera{
-	dir = 8
+/obj/structure/camera_assembly{
+	anchored = 1;
+	dir = 8;
+	max_integrity = 8666;
+	pixel_y = -12
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JQ" = (
 /obj/structure/closet/cabinet{
 	anchored = 1;
@@ -16414,11 +17049,11 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch,
 /obj/item/clothing/suit/hooded/cultrobes/eldritch,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JR" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JS" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/railing{
@@ -16427,11 +17062,11 @@
 /obj/item/reagent_containers/food/snacks/spiderling,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JT" = (
 /obj/structure/falsewall/titanium,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JU" = (
 /obj/structure/table/reinforced,
 /obj/item/food/cake/brain,
@@ -16440,7 +17075,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -16450,7 +17085,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16460,7 +17095,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -16473,24 +17108,24 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JY" = (
 /turf/open/transparent/openspace,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "JZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ka" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kb" = (
 /obj/structure/table/wood,
 /obj/structure/railing/wooden{
@@ -16500,7 +17135,7 @@
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kc" = (
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -16517,17 +17152,17 @@
 	reward = /mob/living/simple_animal/pet/cat/space
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kd" = (
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ke" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kf" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/structure/railing{
@@ -16537,7 +17172,7 @@
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kg" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/structure/railing{
@@ -16547,36 +17182,36 @@
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kh" = (
 /obj/structure/showcase/cyborg/old{
 	dir = 4;
 	name = "Inactive Robot"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ki" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kk" = (
 /obj/effect/decal/cleanable/robot_debris/gib,
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kl" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Km" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 1
@@ -16585,11 +17220,11 @@
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kn" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ko" = (
 /obj/structure/sign/plaques/kiddie/perfect_drone{
 	desc = "Hasn't failed a single inspection since last Tuesday!";
@@ -16599,14 +17234,14 @@
 	pixel_y = 16
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kp" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kq" = (
 /turf/open/floor/pod,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kr" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 4
@@ -16616,7 +17251,7 @@
 	name = "blue portal"
 	},
 /turf/open/floor/pod/light,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ks" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/reagent_containers/food/snacks/spiderling,
@@ -16625,13 +17260,13 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kt" = (
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ku" = (
 /obj/structure/stone_tile/eldersurrounding,
 /obj/structure/fluff/starspawn,
@@ -16639,18 +17274,18 @@
 /turf/open/floor/black{
 	mouse_opacity = 0
 	},
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kv" = (
 /obj/structure/window/plasma/reinforced,
 /turf/open/floor/pod/dark,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kw" = (
 /obj/structure/window/plasma/reinforced,
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
 /turf/open/floor/pod,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kx" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -16666,21 +17301,21 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Ky" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/toy/eightball{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "Kz" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/reagent_containers/food/snacks/grown/harebell{
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KA" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/bouquet/poppy{
@@ -16688,14 +17323,14 @@
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KB" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/toy/dummy{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KC" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/portal/permanent{
@@ -16704,23 +17339,25 @@
 	name = "orange portal"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KD" = (
-/obj/machinery/camera{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/camera_assembly{
+	anchored = 1;
+	dir = 10;
+	max_integrity = 8666
+	},
 /turf/open/floor/plating,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KE" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KF" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KG" = (
 /obj/item/storage/book/bible{
 	deity_name = "Cthulhu";
@@ -16731,7 +17368,7 @@
 	},
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KH" = (
 /obj/item/toy/toy_dagger{
 	anchored = 1;
@@ -16747,22 +17384,22 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KI" = (
 /obj/item/storage/fancy/candle_box{
 	pixel_y = 4
 	},
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KJ" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/carpet/green,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KK" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/closed/indestructible/wood,
-/area/medical/morgue/hauntedhouse)
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "KL" = (
 /obj/item/clothing/head/hardhat/pumpkinhead,
 /turf/open/floor/wood,
@@ -16927,7 +17564,6 @@
 	dir = 4
 	},
 /obj/effect/rollercoaster_hint/speed_up,
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lg" = (
@@ -16939,7 +17575,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/awaymission/cabin/snowforest/forest)
 "Lh" = (
@@ -17034,14 +17669,17 @@
 	name = "Toolbox Tournament 2018";
 	pixel_y = 8
 	},
+/obj/structure/window/plasma,
+/obj/structure/window/plasma{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/announcerroom)
 "Lt" = (
 /obj/structure/table/abductor,
-/obj/item/clothing/mask/joy{
-	name = "ADD TOOLBOX BACK LATER"
-	},
 /obj/effect/turf_decal/siding/wood,
+/obj/item/storage/toolbox/toolbox_trophy,
+/obj/structure/window/plasma,
 /turf/open/floor/wood,
 /area/crew_quarters/bar/announcerroom)
 "Lu" = (
@@ -17052,6 +17690,10 @@
 	desc = "A good year for a Toolbox Tournament! Too bad Ian Smith accidently deleted the original trophy from existence somehow...";
 	name = "Toolbox Tournament 2018";
 	pixel_y = 8
+	},
+/obj/structure/window/plasma,
+/obj/structure/window/plasma{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/announcerroom)
@@ -17141,6 +17783,17 @@
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
+<<<<<<< HEAD
+=======
+"LJ" = (
+/obj/structure/fluff/bus/passable/seat,
+/obj/effect/landmark/latejoin,
+/obj/effect/landmark/start/assistant/override,
+/turf/open/floor/plasteel/dark{
+	icon_state = "bus"
+	},
+/area/shuttle/arrival)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "LK" = (
 /obj/structure/table/abductor,
 /obj/item/toy/plush/bobbahbee,
@@ -17162,6 +17815,17 @@
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
+<<<<<<< HEAD
+=======
+"LN" = (
+/obj/machinery/camera/motion/thunderdome{
+	c_tag = "Center Arena";
+	network = list("thunder","ss13");
+	pixel_x = 10
+	},
+/turf/open/floor/plating,
+/area/tdome/arena)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "LO" = (
 /obj/structure/table/abductor,
 /obj/item/phone{
@@ -17271,12 +17935,8 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "Mb" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/mob/living/simple_animal/bot/cleanbot/medbay{
-	on = 1
-	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/fluff/playertrophy4,
 /turf/open/floor/wood,
 /area/crew_quarters/bar/announcerroom)
 "Mc" = (
@@ -17345,6 +18005,7 @@
 /obj/machinery/telecomms/allinone/indestructable,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
 "Mk" = (
 /obj/structure/table/reinforced,
 /obj/item/choice_beacon/ingredient,
@@ -17353,11 +18014,42 @@
 	force = 0;
 	name = "safety rolling pin"
 	},
+=======
+"Mi" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/camera/autoname{
+	c_tag = "West Preparation Room";
+	dir = 1;
+	network = list("thunder","ss13");
+	resistance_flags = 115
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"Mj" = (
+/obj/structure/fluff/bus/passable/seat,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/latejoin,
+/obj/effect/landmark/start/assistant/override,
+/turf/open/floor/plasteel/dark{
+	icon_state = "bus"
+	},
+/area/shuttle/arrival)
+"Mk" = (
+/obj/structure/table/reinforced,
+/obj/item/choice_beacon/ingredient,
+/obj/item/kitchen/rollingpin{
+	desc = "Used to softly kneed the Bartender.";
+	force = 0;
+	name = "safety rolling pin"
+	},
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 /obj/effect/mapping_helpers/component_injector/areabound{
 	target_type = /obj/item/kitchen/rollingpin
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
+<<<<<<< HEAD
 "Mx" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
@@ -17547,6 +18239,238 @@
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
 "Yu" = (
+=======
+"Ml" = (
+/obj/machinery/camera/autoname{
+	c_tag = "Southern Arena";
+	dir = 1;
+	network = list("thunder","ss13");
+	pixel_x = 10
+	},
+/turf/closed/indestructible/fakeglass,
+/area/crew_quarters/bar/vip)
+"Mm" = (
+/obj/effect/turf_decal/siding/wood,
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/floor/wood,
+/area/crew_quarters/bar/announcerroom)
+"Mn" = (
+/obj/structure/fluff/bus/passable/seat{
+	pixel_y = 15
+	},
+/obj/effect/landmark/latejoin,
+/obj/effect/landmark/start/assistant/override,
+/turf/open/floor/plasteel/dark{
+	icon_state = "bus"
+	},
+/area/shuttle/arrival)
+"Mo" = (
+/obj/effect/landmark/start/assistant/override,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"Mx" = (
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"My" = (
+/turf/closed/indestructible/oldshuttle{
+	color = "#DC143C";
+	name = "tent wall"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Mz" = (
+/turf/closed/indestructible/oldshuttle{
+	color = "#26b9c8";
+	name = "tent wall"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Nf" = (
+/obj/structure/fluff{
+	color = "#FFA500";
+	icon = 'icons/turf/shuttleold.dmi';
+	icon_state = "corner";
+	name = "tent wall"
+	},
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Nn" = (
+/obj/machinery/door/airlock/shuttle/glass{
+	name = "Big Sheed's FTL Food Delivery Service"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Ok" = (
+/obj/structure/sign/barsign{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"OR" = (
+/obj/structure/flora/stump,
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"OX" = (
+/obj/machinery/door/window/northleft,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Py" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"PZ" = (
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/obj/effect/turf_decal/bot/right{
+	icon = 'icons/obj/objects.dmi';
+	icon_state = "ash"
+	},
+<<<<<<< HEAD
+=======
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Ql" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Qw" = (
+/obj/machinery/conveyor{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"QS" = (
+/obj/item/extinguisher/mini{
+	force = 0
+	},
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+<<<<<<< HEAD
+=======
+"Ry" = (
+/turf/open/floor/plating/ashplanet,
+/area/awaymission/cabin/snowforest/forest)
+"Rz" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 16
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"RG" = (
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"RU" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"SA" = (
+/obj/machinery/sleeper/party,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Th" = (
+/obj/machinery/grill,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"TW" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uq" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Ur" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Uu" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/crew_quarters/bar)
+"Uz" = (
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"VT" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	color = "#68524D"
+	},
+/turf/open/floor/plating/grass/fall{
+	color = "#68524D"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"Wh" = (
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Wq" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/crew_quarters/bar)
+"Xt" = (
+/obj/machinery/door/window/southright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"XC" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	can_be_unanchored = 0
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
+"XF" = (
+/obj/machinery/door/window/northright,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"Yu" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
 	icon_state = "ash"
@@ -17555,6 +18479,7 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 "YN" = (
 /obj/machinery/conveyor_switch/oneway,
 /turf/open/floor/mineral/titanium/white,
@@ -25880,11 +26805,11 @@ an
 an
 an
 an
-bW
-cf
+My
+Mz
 cO
-cf
-bW
+Mz
+My
 an
 an
 an
@@ -26136,13 +27061,13 @@ an
 an
 an
 an
-cf
-bW
+Mz
+My
 cA
 cP
 cZ
-bW
-cf
+My
+Mz
 an
 an
 br
@@ -26392,15 +27317,15 @@ an
 an
 an
 an
-bW
-cf
+My
+Mz
 cp
 cq
 cs
 da
 dy
-cf
-bW
+Mz
+My
 an
 br
 br
@@ -26649,7 +27574,7 @@ an
 an
 an
 an
-bW
+My
 cg
 cq
 cs
@@ -26657,7 +27582,7 @@ cs
 cs
 da
 dE
-bW
+My
 br
 br
 br
@@ -27163,7 +28088,7 @@ an
 an
 an
 an
-bW
+My
 cj
 ct
 cs
@@ -27171,7 +28096,7 @@ cs
 cs
 dc
 dG
-bW
+My
 br
 br
 br
@@ -27420,15 +28345,15 @@ an
 an
 an
 an
-bW
-cf
+My
+Mz
 cu
 ct
 cs
 dc
 dz
-cf
-bW
+Mz
+My
 an
 br
 br
@@ -27678,16 +28603,16 @@ an
 an
 an
 an
-cf
-bW
+Mz
+My
 cC
 cR
 dd
-bW
-cf
+My
+Mz
 an
 an
-kj
+jO
 br
 br
 br
@@ -27936,15 +28861,15 @@ an
 an
 an
 an
-bW
-cf
+My
+Mz
 cS
-cf
-bW
+Mz
+My
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -28201,7 +29126,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -28458,7 +29383,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -31540,7 +32465,7 @@ br
 br
 br
 br
-jO
+bO
 kb
 eb
 ea
@@ -31797,7 +32722,7 @@ br
 br
 br
 br
-jP
+bW
 ea
 ea
 ea
@@ -32054,7 +32979,7 @@ br
 br
 br
 br
-jQ
+cf
 ea
 ea
 eb
@@ -36994,7 +37919,7 @@ an
 an
 an
 an
-kj
+jO
 br
 br
 br
@@ -37222,15 +38147,15 @@ an
 an
 an
 nE
-nF
+Mz
 nE
-nF
+Mz
 nE
 oL
 nE
-nF
+Mz
 nE
-nF
+Mz
 nE
 an
 an
@@ -37251,7 +38176,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -37478,7 +38403,7 @@ an
 an
 an
 an
-nF
+Mz
 nO
 nW
 nW
@@ -37488,7 +38413,7 @@ nW
 nW
 nW
 pg
-nF
+Mz
 an
 an
 bw
@@ -37508,7 +38433,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -37765,7 +38690,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -37967,7 +38892,7 @@ an
 an
 an
 an
-kj
+jO
 br
 br
 br
@@ -37992,7 +38917,7 @@ an
 an
 an
 an
-nF
+Mz
 nQ
 nX
 nX
@@ -38002,7 +38927,7 @@ nX
 nX
 nX
 pi
-nF
+Mz
 bw
 eo
 ea
@@ -38224,7 +39149,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -38481,7 +39406,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -38506,7 +39431,7 @@ an
 an
 an
 an
-nF
+Mz
 nS
 nX
 nX
@@ -38516,7 +39441,7 @@ nX
 nX
 nX
 pk
-nF
+Mz
 an
 ea
 eo
@@ -38738,7 +39663,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -41117,7 +42042,7 @@ cm
 ca
 ck
 cy
-ca
+js
 ck
 cy
 lJ
@@ -41372,11 +42297,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lK
 bR
 an
@@ -41886,11 +42811,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lM
 bR
 an
@@ -42145,7 +43070,7 @@ cm
 kO
 co
 cz
-cJ
+jt
 co
 cz
 lN
@@ -43098,11 +44023,11 @@ an
 an
 bH
 cb
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 cm
 cm
 br
@@ -43612,11 +44537,11 @@ an
 an
 bH
 cd
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 cm
 cm
 br
@@ -43676,7 +44601,7 @@ eH
 eo
 ea
 an
-kj
+jO
 br
 br
 br
@@ -43933,7 +44858,7 @@ eo
 eo
 an
 an
-kk
+jP
 br
 br
 br
@@ -44148,7 +45073,11 @@ eo
 Zo
 Ur
 TW
+<<<<<<< HEAD
 Wr
+=======
+Iy
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Zo
 an
 ea
@@ -44190,7 +45119,7 @@ ea
 ea
 an
 bw
-kk
+jP
 br
 br
 br
@@ -44447,7 +45376,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -45177,12 +46106,16 @@ as
 ba
 ba
 ba
+<<<<<<< HEAD
 dm
+=======
+JM
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Zo
 dx
 ak
 mr
-mI
+Gd
 dY
 dY
 ns
@@ -45439,8 +46372,8 @@ ah
 ak
 mj
 ms
-mI
-mI
+Gc
+Gj
 ni
 ns
 mv
@@ -45687,7 +46620,11 @@ br
 br
 an
 Zo
+<<<<<<< HEAD
 at
+=======
+dm
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ba
 ba
 YN
@@ -45697,7 +46634,7 @@ av
 mi
 dY
 dY
-mI
+Gk
 ni
 ns
 mv
@@ -45954,7 +46891,7 @@ ao
 mk
 dY
 dY
-mI
+Gw
 ni
 ns
 mv
@@ -46468,7 +47405,7 @@ au
 dY
 dY
 dY
-mI
+Gb
 dY
 ns
 mv
@@ -46725,7 +47662,7 @@ ak
 cV
 dY
 dY
-mI
+Gw
 ni
 ns
 mv
@@ -46982,7 +47919,7 @@ ao
 di
 dY
 dY
-mI
+Gk
 ni
 ns
 mv
@@ -47024,11 +47961,11 @@ br
 br
 br
 wo
-nF
+Mz
 wQ
-nF
+Mz
 wQ
-nF
+Mz
 an
 an
 an
@@ -47238,8 +48175,8 @@ Zo
 ak
 dX
 dY
-mI
-mI
+Gc
+Gj
 ni
 ns
 mv
@@ -47495,7 +48432,7 @@ Zo
 Nf
 ak
 mr
-mI
+Gd
 dY
 dY
 ns
@@ -47507,10 +48444,10 @@ nm
 mY
 oy
 oR
-pa
+kj
 oR
 oR
-pn
+Mi
 mY
 nm
 lu
@@ -47542,7 +48479,7 @@ wz
 nX
 nX
 nX
-nF
+Mz
 an
 an
 an
@@ -48056,25 +48993,25 @@ wz
 nX
 nX
 nX
-nF
+Mz
 an
 an
 bx
-kZ
+My
 bx
 xQ
 bx
-kZ
+My
 bx
 an
 an
 an
 bH
-kZ
+My
 bH
 mz
 yR
-kZ
+My
 bH
 an
 an
@@ -48302,7 +49239,7 @@ eo
 ea
 ea
 an
-kj
+jO
 br
 br
 br
@@ -48316,23 +49253,23 @@ xj
 wQ
 an
 an
-kZ
+My
 xD
 xJ
 fz
 xS
 xW
-kZ
+My
 an
 an
 an
-kZ
+My
 yt
 cm
 cm
 yS
 yX
-kZ
+My
 an
 an
 kD
@@ -48559,18 +49496,18 @@ eo
 ea
 eo
 ea
-kk
+jP
 br
 br
 br
 br
 br
 wo
-nF
+Mz
 wQ
-nF
+Mz
 wQ
-nF
+Mz
 an
 an
 bx
@@ -48761,7 +49698,7 @@ an
 an
 an
 an
-kj
+jO
 br
 br
 br
@@ -48777,9 +49714,15 @@ OR
 Ry
 VT
 Uz
+<<<<<<< HEAD
 an
 an
 an
+=======
+an
+an
+an
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 bR
 mZ
 nm
@@ -48816,7 +49759,7 @@ eH
 ea
 ea
 an
-kk
+jP
 br
 br
 br
@@ -48830,23 +49773,23 @@ an
 an
 an
 an
-kZ
+My
 xF
 fz
 fz
 fz
 xY
-kZ
+My
 an
 an
 an
-kZ
+My
 yv
 cm
 cm
 cm
 yZ
-kZ
+My
 an
 an
 kD
@@ -49018,7 +49961,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -49073,7 +50016,7 @@ eo
 ea
 an
 an
-kl
+jQ
 br
 br
 br
@@ -49275,7 +50218,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -49284,11 +50227,19 @@ an
 an
 an
 Yu
+<<<<<<< HEAD
 bw
 VT
 bw
 VT
 bw
+=======
+bw
+VT
+bw
+VT
+bw
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Uz
 an
 an
@@ -49532,7 +50483,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -49800,7 +50751,7 @@ cm
 ca
 ck
 cy
-ca
+js
 ck
 cy
 lJ
@@ -49937,9 +50888,9 @@ br
 br
 br
 br
+Mo
 br
-br
-br
+Mo
 br
 br
 br
@@ -50055,11 +51006,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lK
 bR
 an
@@ -50195,7 +51146,7 @@ br
 br
 br
 br
-br
+Mo
 br
 br
 br
@@ -50330,16 +51281,16 @@ nx
 nx
 nm
 nx
-ob
+pr
 ok
 ok
 ok
 ok
+LN
 ok
 ok
 ok
-ok
-ob
+Ml
 pJ
 nm
 pK
@@ -50360,7 +51311,7 @@ uj
 an
 br
 uZ
-vk
+kZ
 vq
 br
 uN
@@ -50452,7 +51403,7 @@ br
 br
 br
 br
-br
+Mo
 br
 br
 br
@@ -50569,11 +51520,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lM
 bR
 an
@@ -50709,7 +51660,7 @@ br
 br
 br
 br
-br
+Mo
 br
 br
 br
@@ -50828,7 +51779,7 @@ cm
 kO
 co
 cz
-cJ
+jt
 co
 cz
 lN
@@ -50965,9 +51916,9 @@ br
 br
 br
 br
+Mo
 br
-br
-br
+Mo
 br
 br
 br
@@ -51643,7 +52594,7 @@ eo
 eo
 an
 bw
-kj
+jO
 br
 br
 br
@@ -51726,12 +52677,12 @@ Dy
 DL
 br
 Dh
-Dn
+Mj
 Dy
 DL
 br
 Dh
-Dn
+Mj
 Dy
 Ew
 br
@@ -51900,7 +52851,7 @@ eH
 eo
 ea
 an
-kk
+jP
 br
 br
 br
@@ -51955,9 +52906,9 @@ an
 an
 bH
 nJ
+pb
 cm
-cm
-cm
+pb
 oK
 bH
 an
@@ -51978,17 +52929,17 @@ Dz
 DM
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
@@ -52157,7 +53108,7 @@ eo
 eo
 ea
 an
-kk
+jP
 br
 br
 br
@@ -52212,9 +53163,9 @@ an
 an
 bR
 nK
+pb
 cm
-cm
-cm
+pb
 cz
 bR
 an
@@ -52230,12 +53181,12 @@ an
 an
 br
 Dh
-Do
+LJ
 Dz
 DN
 br
 Dh
-Do
+LJ
 Dz
 DN
 br
@@ -52414,7 +53365,7 @@ ea
 ea
 ea
 an
-kl
+jQ
 br
 br
 br
@@ -52472,7 +53423,7 @@ nL
 cm
 cm
 cm
-lN
+Hi
 bH
 an
 an
@@ -52487,7 +53438,7 @@ an
 an
 br
 Dh
-Dn
+Mj
 Dz
 DM
 br
@@ -52726,9 +53677,9 @@ an
 an
 bR
 nM
+pb
 cm
-cm
-cm
+pb
 co
 bR
 an
@@ -52983,9 +53934,9 @@ an
 an
 bH
 nK
+pb
 cm
-cm
-cm
+pb
 cz
 bH
 an
@@ -53016,7 +53967,7 @@ Dz
 DM
 br
 Dh
-Dq
+Mn
 Dz
 DM
 br
@@ -53161,10 +54112,10 @@ nm
 mY
 oD
 oV
-pb
+kk
 oV
 oV
-pr
+pq
 mY
 nm
 lu
@@ -53263,7 +54214,7 @@ DB
 DM
 br
 Dh
-Dn
+Mj
 DB
 DM
 br
@@ -53273,7 +54224,7 @@ DB
 DQ
 br
 Dh
-Dn
+Mj
 DB
 DQ
 br
@@ -53515,17 +54466,17 @@ br
 br
 br
 Dh
-Do
+LJ
 Dy
 DM
 br
 Dh
-Do
+LJ
 Dy
 DM
 br
 Dh
-Do
+LJ
 Dy
 DM
 br
@@ -53772,7 +54723,7 @@ jL
 jL
 br
 Dh
-Dn
+Mj
 Dz
 DM
 br
@@ -53782,7 +54733,7 @@ Dz
 DM
 br
 Dh
-Dn
+Mj
 Dz
 DM
 br
@@ -54158,7 +55109,7 @@ an
 an
 an
 an
-kj
+jO
 br
 br
 br
@@ -54222,11 +55173,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lK
 bR
 an
@@ -54415,7 +55366,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -54672,7 +55623,7 @@ an
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -54736,11 +55687,11 @@ br
 br
 cm
 cm
+pb
+pb
 cm
-cm
-cm
-cm
-cm
+pb
+pb
 lM
 bR
 an
@@ -54810,12 +55761,12 @@ Ej
 Ew
 br
 Dh
-Dn
+Mj
 Dy
 Ew
 br
 Dh
-Dn
+Mj
 Dy
 DL
 br
@@ -54929,7 +55880,7 @@ an
 an
 an
 an
-kl
+jQ
 br
 br
 br
@@ -55057,7 +56008,7 @@ lg
 jL
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
@@ -55067,12 +56018,12 @@ Ek
 DM
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
 Dh
-Do
+LJ
 Dz
 DM
 br
@@ -55314,12 +56265,12 @@ rR
 Dd
 br
 Dh
-Do
+LJ
 Dz
 DN
 br
 Dh
-Do
+LJ
 Ek
 DN
 br
@@ -55576,7 +56527,7 @@ Dz
 DM
 br
 Dh
-Dn
+Mj
 Ek
 DM
 br
@@ -55755,7 +56706,7 @@ an
 bw
 an
 an
-kj
+jO
 br
 br
 br
@@ -55964,11 +56915,11 @@ br
 br
 br
 cE
-kZ
+My
 bH
-kZ
+My
 bH
-kZ
+My
 an
 an
 an
@@ -56012,7 +56963,7 @@ ea
 an
 an
 an
-kk
+jP
 br
 br
 br
@@ -56085,7 +57036,7 @@ Cc
 BT
 br
 Dh
-Dq
+Mn
 Dz
 DM
 br
@@ -56269,7 +57220,7 @@ eo
 ea
 an
 an
-kk
+jP
 br
 br
 br
@@ -56342,7 +57293,7 @@ CP
 BT
 br
 Dh
-Dn
+Mj
 DB
 DQ
 br
@@ -56352,12 +57303,12 @@ Em
 DQ
 br
 Dh
-Dn
+Mj
 DB
 DM
 br
 Dh
-Dn
+Mj
 DB
 DQ
 br
@@ -56482,7 +57433,7 @@ lb
 fz
 fz
 aW
-kZ
+My
 an
 an
 an
@@ -56526,18 +57477,18 @@ ea
 an
 an
 an
-kl
+jQ
 br
 br
 br
 br
 br
 an
-wC
+kl
 lU
-kZ
+My
 lU
-kZ
+My
 an
 an
 an
@@ -56604,17 +57555,17 @@ Dy
 DM
 br
 Dh
-Do
+LJ
 Ej
 DM
 br
 Dh
-Do
+LJ
 Dy
 DM
 br
 Dh
-Do
+LJ
 Dy
 DM
 br
@@ -56861,7 +57812,7 @@ Dz
 DM
 br
 Dh
-Dn
+Mj
 Ek
 DM
 br
@@ -56996,7 +57947,7 @@ ld
 fz
 fz
 fz
-kZ
+My
 an
 an
 ea
@@ -57051,7 +58002,7 @@ wE
 wX
 wX
 xm
-kZ
+My
 an
 an
 bw
@@ -57223,7 +58174,7 @@ an
 an
 ha
 an
-hN
+ft
 an
 fa
 br
@@ -57506,11 +58457,11 @@ br
 br
 br
 cE
-kZ
+My
 bH
-kZ
+My
 bH
-kZ
+My
 an
 an
 an
@@ -57565,7 +58516,7 @@ wG
 wX
 wX
 xn
-kZ
+My
 an
 bw
 an
@@ -58075,11 +59026,11 @@ br
 br
 br
 an
-wC
+kl
 lU
-kZ
+My
 lU
-kZ
+My
 an
 ea
 ea
@@ -58286,11 +59237,11 @@ an
 an
 an
 bH
-kZ
+My
 bH
 mz
 bH
-kZ
+My
 bH
 an
 an
@@ -58542,13 +59493,13 @@ an
 an
 an
 an
-kZ
+My
 dS
 dZ
 cm
 mN
 nb
-kZ
+My
 an
 an
 an
@@ -59056,13 +60007,13 @@ an
 an
 an
 an
-kZ
+My
 dT
 cm
 cm
 cm
 cJ
-kZ
+My
 an
 an
 an
@@ -61073,11 +62024,19 @@ an
 an
 an
 ha
+<<<<<<< HEAD
 dj
+=======
+an
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hg
 fL
+fL
 hG
+<<<<<<< HEAD
 hG
+=======
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hQ
 ib
 ij
@@ -61330,9 +62289,15 @@ an
 an
 an
 ha
+<<<<<<< HEAD
 do
 hg
 fA
+=======
+an
+hg
+fl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 eY
 fL
 fR
@@ -61587,9 +62552,15 @@ an
 an
 an
 ha
+<<<<<<< HEAD
 dj
 hg
 fA
+=======
+an
+hg
+fl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 eY
 eY
 hR
@@ -61680,79 +62651,79 @@ ea
 ea
 eo
 eb
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xC
-xC
-xC
-xC
-xC
-xC
 cl
 cl
 cl
 cl
 cl
-xA
-xA
-yH
+cl
+cl
+cl
+cl
+cl
+cl
 xy
 xy
 xA
-xy
-xA
-xC
-xI
-xC
-xC
-xC
 xA
 xA
+xA
+xA
+xA
+zl
+zl
+zl
+zl
+zl
 xy
 xy
+yc
+cl
+cl
+xy
+cl
+xy
+xA
+xB
+xA
+xA
+xA
 xy
 xy
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+wC
+xy
+xA
+xy
+xA
+xy
+xA
+xA
+xA
+xA
+cl
+cl
+cl
+cl
+cl
+cl
+xA
 xy
 xy
 xz
-xy
-xy
-xy
+xA
 xz
 xA
-xC
 xA
-xC
-xA
-xC
-xC
-xC
-xC
-xy
-xy
-xy
-xy
-xy
-xy
-xC
-xA
-xA
-xB
-xC
-xB
-xC
-xC
 ea
 ea
 ea
@@ -61846,11 +62817,19 @@ an
 ha
 an
 hp
+<<<<<<< HEAD
 fB
 gx
 an
 an
 fW
+=======
+br
+gx
+an
+an
+ft
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 an
 an
 an
@@ -61937,79 +62916,79 @@ ea
 es
 eb
 eb
-xy
+cl
+cl
+wC
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
 xy
 xz
 xy
 xy
+xA
+xy
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+xy
+xy
+xy
+cl
+wC
+cl
+cl
+xy
+xA
+xC
+xA
+xA
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+xy
+xy
 xy
 xz
+xA
+xA
+xA
 xy
-xy
-xy
-xy
+xA
+xA
+cl
+cl
+cl
+wC
+cl
 xA
 xB
 xA
 xA
-xC
-xA
-xC
-bO
-cl
-cl
-cl
-cl
-cl
 xA
 xA
 xA
-xy
-xz
-xy
-xy
-xA
-xC
-xP
-xC
-xC
-xy
-xz
-xy
-xy
-xy
-xy
-xy
-xz
-xy
-xy
-xy
 xA
 xA
 xA
-xB
-xC
-xC
-xC
 xA
-xC
-xC
-xy
-xy
-xy
-xz
-xy
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
 ea
 ea
 eo
@@ -62103,15 +63082,19 @@ an
 ha
 an
 fa
+<<<<<<< HEAD
 fB
+=======
+br
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hy
 hH
 hS
-fd
+ft
 an
 an
 an
-an
+fg
 an
 an
 an
@@ -62151,9 +63134,9 @@ an
 an
 bH
 nJ
+pb
 cm
-cm
-cm
+pb
 oK
 bH
 an
@@ -62194,79 +63177,79 @@ ea
 eo
 eb
 eb
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xy
+xA
+xy
+xB
+xA
+zl
+zl
+zl
+zl
+xA
+xy
+xy
+yc
+cl
+cl
+cl
+wC
+xy
+xA
+xC
+xC
+xA
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xy
+xy
 xz
 xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
 xA
 xA
 xA
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+cl
+cl
+cl
+xA
+xy
+xA
+xA
+xB
 xC
 xA
-xI
-xC
-cl
-cl
-cl
-cl
-xC
 xA
-xA
-yH
-xy
-xy
-xy
+xz
 xz
 xA
-xC
-xP
-xP
-xC
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xA
-xA
-xB
-xA
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xy
-xy
-xy
-xC
-xA
-xC
-xC
-xI
-xP
-xC
-xC
-xB
-xB
-xC
 ea
 ea
 eo
@@ -62364,7 +63347,7 @@ br
 br
 br
 hy
-fd
+ft
 fX
 fX
 fX
@@ -62408,9 +63391,9 @@ an
 an
 bR
 nK
+pb
 cm
-cm
-cm
+pb
 cz
 bR
 an
@@ -62451,79 +63434,79 @@ eo
 eo
 eb
 eb
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
 xy
 xy
 xy
 xy
+xA
+xA
+xA
+zl
+zl
+zl
+zl
+xA
+xy
+xA
 xy
 xy
+cl
+cl
+cl
 xy
 xy
-xy
+xC
+xA
+xA
 xz
 xy
 xy
-xA
-xA
-xA
-xA
-xC
-xC
-xC
+xy
 cl
 cl
 cl
 cl
-xC
-xA
-xC
+xy
 xA
 xA
+xA
+xA
+xA
+xA
+xB
 xy
 xy
 xy
 xA
 xA
-xP
-xC
-xC
+xy
+xA
+xA
 xB
 xA
 xA
-xA
 xy
-xy
-xy
+xB
 xy
 xA
-xC
-xC
-xC
-xC
-xC
-xC
-xI
 xA
 xA
 xA
-xC
-xC
 xA
-xC
-xC
-xI
-xC
-xC
 xA
-xI
 xA
-xC
-xC
-xC
-xC
-xC
-xC
-xC
 ea
 et
 ea
@@ -62621,7 +63604,7 @@ ga
 hz
 br
 gE
-fd
+gk
 hI
 hT
 br
@@ -62668,7 +63651,7 @@ nL
 cm
 cm
 cm
-lN
+Hi
 bH
 an
 an
@@ -62708,79 +63691,79 @@ ea
 ea
 eb
 eb
-xy
-xy
-xy
-xy
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
 xz
 xy
 xy
 xy
 xy
-xy
-xy
-xy
-xB
-xA
-xA
-xA
-xA
-yH
-xC
-cl
-cl
-cl
-cl
-xC
-xC
-xC
-xC
-xA
-xy
-xy
-xB
-xB
-xA
-xC
-xC
-xC
-xC
-xI
-xy
-xy
-xy
-xy
-xz
-xy
-xA
-xC
-xC
-xP
-xP
-xC
-xI
-xC
-xA
-xA
-xA
 yc
-xI
 xA
-xC
-xC
-xI
-xC
-xC
-xC
-xC
+zl
+zl
+zl
+zl
 xA
-xC
-xC
-xC
-xC
+xA
 xA
 xA
 xy
+cl
+cl
+xz
+xz
+xy
+xA
+xA
+xA
+xA
+xB
+cl
+cl
+cl
+cl
+wC
+cl
+xy
+xA
+xA
+xC
+xC
+xA
+xB
+xA
+xy
+xy
+xy
+xP
+xB
+xy
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+xy
+xA
+xA
+xA
+xA
+xy
+xy
+cl
 eo
 es
 eo
@@ -62878,7 +63861,7 @@ an
 hq
 ga
 ga
-fd
+ft
 ga
 ga
 ga
@@ -62922,9 +63905,9 @@ an
 an
 bR
 nM
+pb
 cm
-cm
-cm
+pb
 co
 bR
 an
@@ -62965,79 +63948,79 @@ eo
 eo
 eo
 eb
-xz
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+wC
+cl
 xy
 xy
 xy
 xy
 xy
 xy
-xz
-xy
-xy
-xz
-xy
-xA
-xA
-xA
-xA
-xA
-xA
-bO
+yP
+zk
 zl
-cl
-cl
-cl
-cl
-xC
-xC
-xC
-yH
+zl
+zl
+zl
 xA
 xA
+xA
+yc
+xy
+xy
+cl
+cl
+wC
+xy
+xA
+xA
+xy
+xA
+xy
+xy
+cl
+cl
+cl
+xy
+xy
+xA
+BC
+xC
+xC
+xA
+xA
+xy
 xy
 xy
 xz
 xA
-xC
-xC
 xA
-xC
 xA
+xA
+xy
 xA
 xy
 xy
 xy
-xA
-xA
-xC
-BC
-xP
-xP
-xC
-xC
-xA
 xA
 xA
 xB
-xC
-xC
-xC
-xC
-xA
-xC
-xA
-xA
-xA
-xC
-xC
-xI
-xA
-xA
-xB
-xA
 xy
 xy
+xz
+xy
+cl
+cl
 eb
 eo
 eo
@@ -63135,13 +64118,13 @@ ha
 an
 an
 an
-ff
-fn
-fn
-fn
-fn
-fn
-fD
+fu
+fG
+fG
+fG
+fG
+fG
+fS
 an
 iV
 an
@@ -63179,9 +64162,9 @@ an
 an
 bH
 nK
+pb
 cm
-cm
-cm
+pb
 cz
 bH
 an
@@ -63222,79 +64205,79 @@ eo
 eo
 eo
 ep
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+wC
+cl
 xy
 xy
 xy
+xB
 xy
-xy
-xy
-xz
-xy
-xy
-xy
-xz
 xy
 xA
-xA
-xA
-xI
-xA
-xA
-xC
+zk
 zl
-cl
-cl
-cl
-cl
-xC
-xC
-xC
-xC
+zl
+zl
+zl
+xA
+xA
 xA
 xA
 xy
 xy
+cl
+cl
+cl
 xy
-xA
-xA
-xC
-xA
-xC
-xI
-xA
+xy
 xA
 xy
 xA
 xB
+xy
+xy
+cl
+xy
+xz
+xy
 xA
-xC
-xC
+xA
 BJ
 BJ
-xC
-xB
 xA
-xC
-xC
-xC
+xz
+xy
 xA
 xA
-xC
-xC
-xI
-xC
+xA
+xy
+xy
 xA
 xA
 xB
-xC
 xA
-xC
-yc
 xy
 xy
+xz
+xA
 xy
-xy
-xy
+xA
+xP
+cl
+cl
+cl
+cl
+cl
 eb
 eb
 eo
@@ -63398,7 +64381,7 @@ fX
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -63479,79 +64462,79 @@ eo
 eo
 eo
 eo
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+wC
 xy
+xy
+xy
+xA
+xA
+xB
+xA
+yP
+zl
+zl
+zl
+zl
+xA
+xB
+xA
+xA
+xy
+xy
+cl
+cl
+cl
+xz
+xz
+xA
+xA
+xA
+xA
 xz
 xy
 xy
 xy
 xy
-xy
-xy
-xy
-xy
-xy
-xz
 xA
 xA
-xA
-xC
-xC
-xI
-xC
-bO
-cl
-cl
-cl
-cl
-xC
-xI
-xC
-xC
-xA
+xB
+xy
+xy
 xA
 xy
 xy
+xA
+xA
+xB
+xy
+xy
+xA
+xy
+xy
+xA
+xA
+xA
+xA
+xA
 xy
 xB
-xB
-xC
-xC
-xC
-xC
-xB
-xA
-xA
-xA
-xA
-xC
-xC
-xI
-xA
-xA
-xC
-xA
-xA
-xC
-xC
-xI
-xA
-xA
-xC
-xA
-xA
-xC
-xC
-xC
-xC
-xC
-xA
-xI
-xy
-xy
-xy
-xy
-xy
-xy
+cl
+cl
+cl
+cl
+cl
+cl
 eb
 eb
 eb
@@ -63655,7 +64638,7 @@ hT
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -63736,34 +64719,50 @@ eo
 en
 eo
 eb
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xA
+xA
+xA
+yQ
+yQ
+yQ
+yP
+zx
+zl
+zl
+zl
+xA
+xy
+xy
+xA
+xy
+cl
+cl
+cl
+cl
+xy
+xy
+xA
+xB
+xA
+xy
+xA
 xy
 xy
 xy
 xz
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xC
-xC
-xC
-zk
-zk
-zk
-bO
-zx
-cl
-cl
-cl
-xC
-xA
-xA
-xC
 xA
 xy
 xy
@@ -63771,44 +64770,28 @@ xy
 xy
 xA
 xA
-xC
-xI
-xC
-xA
-xC
 xA
 xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xy
 xA
 xB
-xC
-xA
-xA
-xA
-xA
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xA
-xC
-xI
-xC
-xC
-xA
 xA
 xA
 xy
-xB
 xy
 xy
+cl
+xz
+cl
+cl
 eb
 ep
 ea
@@ -63888,6 +64871,7 @@ an
 an
 an
 an
+<<<<<<< HEAD
 fb
 fo
 fo
@@ -63896,6 +64880,16 @@ gm
 fo
 gm
 fo
+=======
+gi
+gr
+gr
+gr
+gr
+gT
+gr
+gj
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 an
 an
 ha
@@ -63909,10 +64903,10 @@ hU
 hU
 hU
 hU
-fn
-fn
-fn
-gV
+fG
+fG
+fG
+gq
 an
 an
 an
@@ -63993,79 +64987,79 @@ ea
 er
 eo
 eb
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+xy
+xy
+xB
+xA
+xB
+yQ
+yQ
+yQ
+yP
+yP
+zl
+zl
+zl
+xA
+xy
+xy
+xA
+xy
+yH
+cl
+cl
 xy
 xy
 xy
-xy
-xy
-xy
-xy
-xy
+xB
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 xz
 xy
+xA
+xA
+xA
+xA
+xz
+xA
+xA
+cl
 xy
-xA
-xA
-xI
-xC
-xI
-zk
-zk
-zk
-bO
-bO
 cl
 cl
-cl
-xC
 xA
-xA
-xC
-xA
-yQ
-xy
-xy
-xA
-xA
-xA
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
 xB
 xA
-xC
-xC
-xC
-xC
-xB
-xC
-xC
-xy
+xA
+xA
 xA
 xy
 xy
-xC
-xI
-xC
-xC
-xC
-xC
 xA
 xA
-xC
-xC
-xC
-xC
 xA
 xA
 xy
+xy
+cl
 eb
 ea
 ea
@@ -64145,7 +65139,7 @@ an
 an
 fg
 an
-fd
+ft
 an
 an
 an
@@ -64250,79 +65244,79 @@ ea
 et
 eo
 eb
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+xz
+xy
+xA
+xA
+xA
+yQ
+yQ
+yQ
+yP
+zl
+zl
+zl
+zl
+zl
+xA
+xA
+xB
+xy
+cl
+cl
+wC
 xy
 xy
+xA
+xA
 xy
 xy
+xA
+xA
+xB
+xy
+xA
+xA
+xA
+xA
+xA
+xy
+xy
+xA
+xA
+xB
+xA
+xA
+xy
+xz
+cl
+cl
+cl
+cl
+xA
 xz
 xy
 xy
 xy
 xy
-xy
-xy
-xB
-xA
-xC
-xC
-xC
-zk
-zk
-zk
-bO
-cl
-cl
-cl
-cl
-cl
-xC
-xC
-xI
-xA
-xy
-xy
 xz
 xA
 xA
-xC
-xC
-xA
-xA
-xC
-xC
-xI
-xA
-xC
-xC
-xC
-xC
-xC
-xA
-xA
-xC
-xC
-xI
-xC
-xC
 xA
 xB
 xy
 xy
-xy
-xy
-xC
-xB
-xA
-xA
-xA
-xA
-xB
-xC
-xC
-xC
-xI
-xA
-xA
 ea
 ea
 ea
@@ -64402,7 +65396,7 @@ an
 an
 an
 an
-fd
+ft
 an
 an
 an
@@ -64507,6 +65501,61 @@ ea
 eo
 eo
 eb
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xy
+xA
+xy
+xy
+xy
+yc
+xA
+xA
+xA
+zl
+zl
+zl
+zl
+zl
+xA
+xA
+xA
+xA
+xA
+xy
+xy
+xy
+xy
+xy
+xy
+xz
+xy
+xy
+xA
+xA
+xy
+xB
+xA
+cl
+cl
+xA
+xz
+xy
+xA
+xA
+xA
+xA
+xy
+xy
 xy
 xy
 xz
@@ -64516,70 +65565,15 @@ xy
 xy
 xy
 xy
-xA
-xA
-xA
-xC
-xA
-xA
-xA
-yH
-xC
-xC
-xC
 cl
-cl
-cl
-cl
-cl
-xC
-xC
-xC
-xC
-xC
+wC
+xy
 xA
-xA
-xA
-xA
-xA
-xA
-xB
-xA
-xA
-xC
-xC
-xA
-xI
-xC
 xy
 xy
-xC
-xB
-xA
-xC
-xC
-xC
-xC
-xA
-xA
-xA
-xA
-xB
-xA
-xA
-xA
-xA
-xA
 xA
 xy
-xz
 xA
-xC
-xA
-xA
-xC
-xA
-xC
 ea
 ea
 ea
@@ -64764,79 +65758,79 @@ ea
 eo
 eo
 eb
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xz
-xA
-xA
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-bO
-cl
-bO
 cl
 cl
-xC
-xA
+cl
+cl
+cl
+cl
+cl
+wC
 xy
-xC
-xC
-xC
-yQ
-xy
-xz
-xA
-xA
-xy
-xy
-xy
-xy
-xC
-xC
-xC
-xy
-xz
-xy
-xC
-xC
-xC
-xI
-xC
-xC
 xy
 xA
+xB
+xA
+xA
+xA
+xA
+xA
+xA
+xB
+xA
+yP
+zl
+yP
+zl
+zl
+xA
+xy
+cl
+xA
+xA
+xA
+yH
+cl
+wC
 xy
 xy
-xy
-xy
+cl
+cl
+cl
+cl
+xA
+xA
+xA
+cl
+wC
+cl
 xA
 xA
 xA
 xB
 xA
 xA
+cl
+xy
+cl
+cl
+cl
+cl
 xy
 xy
+xy
+xz
+xy
+xy
+cl
+cl
+xy
 xA
-xC
-xC
 xA
-xC
-xC
-xC
+xy
+xA
+xA
+xA
 ea
 ea
 et
@@ -64916,7 +65910,7 @@ br
 fj
 fN
 fQ
-fd
+fA
 fN
 fN
 fj
@@ -65021,79 +66015,79 @@ ea
 et
 eo
 eo
+wC
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xA
+xA
+xB
+xA
+xA
+xA
+xB
+xA
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+xA
+xy
+xA
+xA
+xA
+cl
+cl
+cl
+cl
+xy
+xy
+wC
+cl
+cl
+cl
+xz
+xA
+xA
+xA
+cl
+cl
+xA
+xA
+xA
+xA
+xA
 xz
 xy
+xy
+xy
+xy
+xy
 xz
 xy
 xy
-xy
-xy
-xy
-xA
-xA
-xC
-xC
-xI
-xC
-xC
-xC
-xI
-xC
-xC
-bO
 cl
 cl
 cl
-cl
-cl
-xC
-xA
-xC
-xC
-xC
 xy
 xy
 xy
-xy
-xA
-xA
 xz
-xy
-xy
-xy
-xB
-xC
-xC
-xC
-xy
-xy
-xC
-xC
-xC
-xC
-xC
-xB
 xA
 xA
 xA
 xA
 xA
 xB
-xA
-xA
-xy
-xy
-xy
-xA
-xA
-xA
-xB
-xC
-xC
-xC
-xC
-xC
-xI
 eo
 eo
 ea
@@ -65173,7 +66167,7 @@ br
 fj
 fO
 fQ
-fd
+fA
 fQ
 fN
 fj
@@ -65198,10 +66192,17 @@ an
 an
 an
 gB
+<<<<<<< HEAD
 fn
 fn
 fn
 fD
+=======
+hs
+iE
+hs
+iF
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hu
 eY
 an
@@ -65278,70 +66279,47 @@ ea
 ea
 eo
 eo
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xC
-xA
-xC
-xC
-xI
-xC
-xC
-xC
-xA
-xC
-xC
-bO
 cl
 cl
 cl
 cl
 cl
 cl
-bO
-xC
-xI
-xC
-xy
-xy
-xy
-xz
-xC
-xy
-xy
-xy
 xy
 xy
 xA
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
+xy
+xA
+xA
+xB
 xA
 xA
 xA
 xy
 xA
 xA
-xy
-xy
-xy
-xy
-xy
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+yP
 xA
+xB
+xA
+cl
+cl
+cl
+wC
+xA
+cl
+cl
+cl
+cl
+cl
+xy
 xA
 xA
 xA
@@ -65349,8 +66327,31 @@ xA
 xA
 xA
 xB
-xC
-xC
+xA
+xA
+xA
+xA
+xy
+xy
+xy
+cl
+xy
+xy
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xy
+xy
+xy
+xy
+xy
+xz
+xA
+xA
 eo
 eo
 eo
@@ -65430,7 +66431,7 @@ br
 fj
 fN
 fQ
-fd
+fA
 fQ
 fN
 fj
@@ -65454,11 +66455,15 @@ he
 an
 an
 an
-fd
+hl
 he
 jj
 he
+<<<<<<< HEAD
 jc
+=======
+iZ
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hu
 eY
 an
@@ -65535,79 +66540,79 @@ xp
 ea
 et
 eo
-xA
-xA
 xy
 xy
-xy
+cl
+cl
+cl
+cl
+xz
 xy
 xB
 xA
-xI
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-xC
 xA
-xC
-xC
-xy
-xy
-xy
-xC
-xA
-xz
-xy
-xy
-xy
-xA
-xI
-xC
-xC
-xC
-xA
-xC
-xC
-xC
 xA
 xA
 xA
 xB
+xA
+xA
+xA
+xA
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+xA
+xy
+xA
+xA
+cl
+cl
+cl
+xA
+xy
+wC
+cl
+cl
+cl
+xy
+xB
+xA
+xA
+xA
+xy
+xA
+xA
+xA
 xy
 xy
 xy
 xz
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+wC
+cl
 xy
 xy
-xy
-xy
-xy
-xz
+cl
+cl
+wC
 xy
 xA
 xA
-xy
-xy
-xz
 xA
-xC
-xC
-xC
 ea
 ea
 es
@@ -65687,7 +66692,7 @@ fj
 fj
 fN
 fQ
-fd
+fA
 fQ
 fQ
 fQ
@@ -65711,11 +66716,19 @@ he
 he
 he
 he
+<<<<<<< HEAD
 fd
 he
 he
 hr
 jc
+=======
+iu
+he
+he
+hr
+iZ
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hu
 eY
 an
@@ -65792,79 +66805,79 @@ ea
 ea
 es
 eo
+xz
+xy
+cl
+xA
+wC
+xy
+xy
+xy
+xA
+xA
 xB
+xC
+xC
 xA
 xy
-xC
-xz
 xA
 xA
 xA
-xC
-xC
-xI
-xP
-xP
-xC
+xB
 xA
-xC
-xC
-xC
-xI
-xC
+zk
+yP
 zl
-bO
+zl
+zl
+zl
+zl
+zl
+xA
+xA
+xA
+xB
+cl
+cl
+xB
+xA
 cl
 cl
 cl
 cl
-cl
-cl
-xC
-xC
-xC
-xI
-xy
-xy
-xI
-xC
-xy
-xy
-xy
 xy
 xA
-xC
-xC
-xC
-xI
 xA
-xI
-xC
-xC
-xC
+xA
 xB
 xy
-xy
-xy
-xy
-xy
-xy
+xB
+xA
+xA
+xA
 xz
-xz
+cl
+cl
+cl
+cl
+cl
+cl
+wC
+wC
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+cl
+cl
+cl
 xy
 xy
 xy
 xy
-xy
-xA
-xA
-xy
-xy
-xy
-xA
-xA
-xA
-xA
 ea
 et
 eo
@@ -65941,15 +66954,26 @@ eY
 an
 br
 fj
+<<<<<<< HEAD
 fb
+=======
+dj
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 dq
 fQ
-fd
+fA
 fL
+<<<<<<< HEAD
 fn
 fP
 fn
 fD
+=======
+fC
+fP
+fP
+fR
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 fL
 fj
 an
@@ -65966,9 +66990,9 @@ hu
 hu
 hu
 hu
-hu
+he
 if
-gV
+it
 he
 hu
 hr
@@ -66049,79 +67073,79 @@ ea
 et
 ea
 eo
-xA
-xA
-xC
-xA
 xy
 xy
 xA
+xy
+cl
+cl
+xy
+xy
 xA
+xz
+xV
 xC
-xB
-yq
-xP
-xP
-xP
+xC
+xC
+xy
 xA
-xC
-xC
-xC
-xC
-xC
+xA
+xA
+xA
+xA
+zk
+zk
+yP
 zl
 zl
-bO
+zl
+zl
+zl
+xA
+xA
+xy
+xA
+cl
+cl
+xA
+xA
+xy
+cl
+cl
+xz
+xA
+xy
+xA
+xA
+xA
+xA
+xA
+xy
+xy
+xA
+xy
+cl
+xy
 cl
 cl
 cl
 cl
 cl
-xC
-xC
-xA
-xC
-xy
-xy
-xC
-xC
-xA
-xy
-xy
-xB
-xC
-xA
-xC
-xC
-xC
-xC
-xC
-xA
-xA
-xC
-xA
-xy
-xA
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
+cl
+cl
+cl
+cl
+cl
+wC
 xy
 xy
 xz
+xy
+xy
+xy
 xA
-xA
-xB
-xA
-xA
-xA
-xC
-xA
-xA
+xy
+xy
 ea
 ea
 et
@@ -66198,15 +67222,19 @@ eY
 an
 br
 fj
+<<<<<<< HEAD
 jc
+=======
+dl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 fQ
 fL
-fd
+gl
 fL
 fL
 fQ
 gR
-fd
+gl
 fL
 fj
 an
@@ -66222,9 +67250,9 @@ hr
 hu
 hu
 hu
-hu
-if
-gV
+gB
+hs
+it
 he
 hu
 hu
@@ -66306,79 +67334,79 @@ et
 ea
 ea
 et
+xy
+xy
+xB
+xy
+cl
+xy
+xy
+xA
+xB
+xy
+xA
+xC
+xC
+xA
+xy
+xB
 xA
 xA
-xI
+xA
+xA
+xA
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
 xA
 xy
 xA
 xA
-xC
-xI
+xB
 xA
-xC
 xP
-xP
-xC
+xy
+cl
+cl
+xy
+xB
+xy
 xA
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-bO
+xA
+cl
+xA
+xA
+xy
+xy
+xA
+xy
+xA
+xy
+xy
+xy
+cl
+cl
+xy
 cl
 cl
 cl
+wC
 cl
 cl
-cl
-xC
-xA
-xC
-xC
-xI
-xC
-yc
-xA
 xy
 xy
-xA
-xI
-xA
-xC
-xC
 xy
-xC
-xC
-xA
-xA
-xC
-xA
-xC
-xA
-xA
-xA
 xy
 xy
 xA
 xy
-xy
-xy
-xz
-xy
-xy
+xB
 xA
-xA
-xA
-xA
-xA
-xC
-xA
-xI
-xC
 ea
 ea
 eo
@@ -66455,15 +67483,19 @@ eY
 an
 br
 fj
+<<<<<<< HEAD
 jc
+=======
+dl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 fQ
 fL
-fd
+gl
 fL
 fQ
 fQ
 fL
-fd
+gl
 fL
 fj
 an
@@ -66479,12 +67511,12 @@ hr
 hu
 hu
 hu
-if
-it
+gU
+hs
+il
+hu
+hu
 he
-hu
-hu
-hu
 he
 hj
 hu
@@ -66563,79 +67595,79 @@ ea
 ea
 ea
 ea
-xA
-xA
-xC
-xA
+xy
 xy
 xA
-xA
-xI
-xC
-xA
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xI
-xC
-xI
-xC
-bO
+xy
 cl
-cl
-cl
-bO
-cl
-cl
-cl
-xC
-xC
-xC
-xC
-xC
-xC
-xA
+xy
+xy
 xB
 xA
-xC
-xI
-xC
 xy
-xy
-xy
-xy
-xy
-xC
-xI
-xC
-xC
-xC
-xC
+xA
+xA
+xA
 xB
 xA
 xA
 xA
+xA
 xB
-xy
-xy
-xy
-xy
-xy
+xA
+xB
+xA
+yP
+zl
+zl
+zl
+yP
+zl
+zl
+zl
 xA
 xA
-yc
-xV
-xC
-xC
-xC
-xC
-xC
-xC
+xA
+xA
+xA
+xA
+xy
+xz
+xy
+xA
+xB
+xA
+cl
+cl
+cl
+cl
+cl
+xA
+xB
+xA
+xA
+xA
+xA
+xz
+xy
+xy
+xy
+xz
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xP
+xI
+xA
+xA
+xA
+xA
+xA
+xA
 eo
 eo
 eo
@@ -66712,15 +67744,22 @@ eY
 an
 br
 fj
+<<<<<<< HEAD
 ff
 fn
 fZ
 gV
+=======
+do
+ds
+ds
+fB
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 fQ
 fQ
 fL
 fL
-fd
+gl
 fL
 fj
 an
@@ -66736,12 +67775,16 @@ hr
 hu
 hu
 hu
+<<<<<<< HEAD
 jc
+=======
+he
+he
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 he
 hu
 hu
-hu
-hu
+hr
 hu
 hj
 hu
@@ -66820,62 +67863,72 @@ et
 ea
 ea
 ea
-xC
-xC
-xI
-xC
 xA
-xC
-xC
-xC
-xC
+xA
 xB
 xA
-xA
-xA
-xC
-xC
-xB
-xC
-xC
-xC
-xA
-xA
-xC
-bO
-bO
-cl
-cl
-zx
-bO
-cl
-cl
-cl
-xC
+xy
 xA
 xA
 xA
-xC
-xC
-xC
+xA
+xz
+xy
+xy
+xy
+xA
+xA
+xz
+xA
 xA
 xA
 xy
-xC
+xy
+xA
+yP
+yP
+zl
+zl
+zx
+yP
+zl
+zl
+zl
+xA
+xy
+xy
+xy
+xA
+xA
+xA
+xy
+xy
+cl
+xA
+cl
+cl
+wC
+cl
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+xA
+xy
+xy
+xy
+xy
+xy
 xy
 xy
 xz
+xz
 xy
-xC
-xC
-xC
 xI
-xC
-xC
-xC
-xC
-xC
-xA
 xA
 xA
 xA
@@ -66883,16 +67936,6 @@ xA
 xA
 xA
 xB
-xB
-xA
-xV
-xC
-xC
-xC
-xC
-xC
-xC
-xI
 eo
 eo
 eb
@@ -66977,7 +68020,7 @@ fL
 fL
 fL
 fQ
-fd
+gl
 fN
 fj
 an
@@ -66993,12 +68036,12 @@ he
 he
 hu
 if
-gV
-he
+hs
+gz
 hu
 hu
 hu
-hu
+hr
 hu
 fe
 he
@@ -67077,79 +68120,79 @@ ea
 ea
 ea
 ea
-xC
-xI
-xC
-xI
-xC
-xC
 xA
-xA
-xA
-xA
-xy
-xA
-xA
-xC
-xC
-xA
-xC
-xC
-xC
-xA
-yH
-xC
-zl
-cl
-cl
-cl
-cl
-bO
-cl
-cl
-cl
-xC
-xy
-xI
-xA
+xB
 xA
 xB
 xA
 xA
-xC
-xy
-xC
-xC
-xC
-xC
-xA
-xA
-xC
-xC
-An
-Ao
-Ao
-An
-An
-An
-Ao
-Ao
-An
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
 xy
 xy
-xI
-xC
+xy
+xy
+cl
+xy
+xy
 xA
-xC
 xA
+xy
+xA
+xA
+xA
+xy
+yc
+xA
+zk
+zl
+zl
+zl
+zl
+yP
+zl
+zl
+zl
+xA
+cl
+xB
+xy
+xy
+xz
+xy
+xy
+xA
+cl
+xA
+xA
+xA
+xA
+xy
+xy
+xA
+xA
+An
+Ao
+Ao
+An
+An
+An
+Ao
+Ao
+An
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+cl
+cl
+xB
+xA
+xy
+xA
+xy
 eo
 ea
 eb
@@ -67234,7 +68277,7 @@ fL
 fQ
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67245,19 +68288,28 @@ hm
 hs
 hs
 hs
+<<<<<<< HEAD
 fC
+=======
+hs
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 hs
 hs
 hs
 it
 he
+he
 hu
 hu
 hu
 he
 he
+<<<<<<< HEAD
 he
 jc
+=======
+iZ
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 he
 eY
 an
@@ -67334,54 +68386,54 @@ et
 er
 ea
 ea
-xC
-xC
-xC
-xA
-xV
-xV
 xA
 xA
 xA
-xA
-xz
-xA
-xA
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-xC
-xA
-xA
-xB
-xy
-xy
-xy
-xA
-xA
-xA
-xC
-xA
-xy
 xy
 xI
+xI
 xy
-xC
+xy
+xy
+xy
+wC
+xy
+xy
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+xA
+xy
+xy
+xz
+cl
+cl
+cl
+xy
+xy
+xy
+xA
+xy
+cl
+cl
+xB
+cl
+xA
 An
 An
 Cn
@@ -67393,20 +68445,20 @@ BL
 Cp
 An
 An
-xC
-xC
-xC
-xI
-xy
-xy
-xC
-xC
-xC
-xC
-xC
 xA
-xC
 xA
+xA
+xB
+cl
+cl
+xA
+xA
+xA
+xA
+xA
+xy
+xA
+xy
 eo
 ep
 eb
@@ -67491,7 +68543,7 @@ fN
 fN
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67513,8 +68565,8 @@ hr
 hr
 he
 he
-fb
-gV
+if
+it
 he
 eY
 an
@@ -67591,53 +68643,53 @@ ea
 ea
 xp
 ea
-xC
-xC
-xC
-xA
-xB
-xA
-xA
 xA
 xA
 xA
 xy
+xz
+xy
+xy
+xy
+xy
+xy
+cl
+xy
+xy
 xA
 xA
-xC
-xC
-xI
+xB
+xy
+xy
+xy
+xA
+xA
+xB
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+xA
+xy
+xA
+xA
+An
+An
+An
+An
+xA
+An
+An
+An
 xA
 xA
 xA
-xC
-xC
-xI
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-xC
-xA
-xC
-xC
-An
-An
-An
-An
-xC
-An
-An
-An
-xC
-xC
-xC
 BK
 An
 Cf
@@ -67651,19 +68703,19 @@ De
 Bx
 An
 BK
-xy
-xC
-xC
-An
-An
-Ao
-Ao
-An
-An
-xC
+cl
 xA
-xC
-xC
+xA
+An
+An
+Ao
+Ao
+An
+An
+xA
+xy
+xA
+xA
 eb
 eb
 eb
@@ -67748,7 +68800,7 @@ fN
 fN
 fQ
 fL
-fd
+fA
 fN
 fj
 an
@@ -67761,16 +68813,22 @@ he
 hu
 hu
 hu
-fb
-fn
-fn
-gD
+if
+hs
+hs
+gX
 iN
 iN
 iN
+<<<<<<< HEAD
 fn
 fn
 gV
+=======
+iC
+hs
+it
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 he
 he
 eY
@@ -67848,40 +68906,40 @@ et
 ea
 ea
 ea
-xC
-xC
-xC
 xA
 xA
 xA
-xA
-xB
 xy
 xy
 xy
 xy
+xz
+cl
+cl
+cl
+cl
+xy
+xy
 xA
 xA
-xC
-xC
+xy
+xy
+xy
 xA
 xA
 xA
-xC
-xC
-xC
-xC
+xA
+zk
 zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+xA
 cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-xC
-xy
 An
 An
 An
@@ -67893,7 +68951,7 @@ An
 Bj
 An
 An
-xC
+xA
 An
 An
 Bz
@@ -67918,9 +68976,9 @@ Ec
 Ec
 An
 An
-xA
-xI
-xA
+xy
+xB
+xy
 eo
 eb
 eb
@@ -68005,7 +69063,11 @@ fj
 fj
 gC
 fj
+<<<<<<< HEAD
 dg
+=======
+fc
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 fj
 fj
 an
@@ -68018,7 +69080,7 @@ he
 hu
 hu
 he
-fd
+hl
 he
 he
 he
@@ -68105,40 +69167,40 @@ ea
 ea
 et
 et
-xC
-xI
-xC
 xA
-xA
+xB
 xA
 xy
 xy
 xy
-xy
-xz
+cl
+cl
+cl
+cl
+wC
+cl
+cl
 xy
 xy
 xA
 xA
-xC
-xC
-xC
-xC
-xI
 xA
-xI
-xC
+xA
+xB
+xy
+xB
+xA
+zk
+yP
 zl
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-xC
-xC
+zl
+zl
+zl
+zl
+zl
+yP
+xA
+xA
 Ao
 Au
 AA
@@ -68175,9 +69237,9 @@ Ec
 Ec
 Ec
 An
-xC
-xC
 xA
+xA
+xy
 eo
 eo
 eb
@@ -68275,7 +69337,7 @@ he
 hu
 he
 he
-fd
+hl
 he
 he
 he
@@ -68362,40 +69424,40 @@ ea
 ea
 ea
 ea
+xA
+xA
 xC
-xC
-xP
+xy
+xy
+xy
+cl
+wC
+cl
+cl
+cl
+cl
+wC
+xy
+xy
 xA
 xA
 xA
 xy
-xz
+xA
 xy
+xA
 xy
-xy
-xy
-xz
-xA
-xA
-xC
-xC
-xC
-xA
-xC
-xA
-xC
-xA
+zk
+zk
 zl
 zl
-cl
-cl
-cl
-cl
-bO
-cl
-bO
-bO
-bO
+zl
+zl
+yP
+zl
+yP
+yP
+yP
 Ao
 Av
 AB
@@ -68432,9 +69494,9 @@ An
 EC
 Ec
 An
-xC
-xC
 xA
+xA
+xy
 es
 eo
 eb
@@ -68532,16 +69594,28 @@ he
 hu
 hu
 he
+<<<<<<< HEAD
 ff
 fo
 gm
 fo
+=======
+hm
+gm
+gm
+ie
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 iO
 iN
 iN
 iD
+<<<<<<< HEAD
 fn
 fD
+=======
+hs
+iF
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 an
 an
 eY
@@ -68619,37 +69693,37 @@ ea
 ea
 ea
 ea
-xC
-xA
-xA
 xA
 xy
 xy
 xy
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xI
-xC
-xC
-xA
-xC
-xA
-xC
-xA
-bO
-bO
-cl
-bO
 cl
 cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xB
+xA
+xA
+xy
+xA
+xy
+xA
+xy
+yP
+yP
 zl
-cl
+yP
+zl
+zl
+zk
+zl
 zO
 zY
 Ah
@@ -68689,9 +69763,9 @@ Ey
 An
 Ec
 An
-xC
 xA
-xC
+xy
+xA
 ea
 eo
 ea
@@ -68765,7 +69839,7 @@ an
 an
 an
 eY
-fd
+aw
 an
 an
 fE
@@ -68798,7 +69872,7 @@ hu
 hu
 hu
 he
-fd
+hl
 an
 an
 eY
@@ -68876,38 +69950,38 @@ ea
 ea
 et
 ea
-xC
+xA
+xy
+xy
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xy
+xA
+cl
 xA
 xA
-xz
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
 xA
+xB
 xA
-xA
-xC
 xy
-xC
-xC
-xC
-xI
-xC
-xA
-bO
+yP
+zk
 zl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
+zl
+zl
+zl
+zl
+zl
+zl
 zZ
 Ai
 Ai
@@ -68946,9 +70020,9 @@ Ez
 An
 Ec
 An
-xC
 xA
-xC
+xy
+xA
 ea
 ea
 ea
@@ -69055,7 +70129,7 @@ hu
 hu
 hu
 he
-fd
+hl
 an
 an
 eY
@@ -69133,38 +70207,38 @@ eo
 ea
 ea
 eo
-xA
-xA
+xy
+xy
+xz
+cl
+cl
+cl
+cl
+cl
+wC
+cl
+wC
+cl
 xB
-xy
-xy
-xy
-xy
-xy
-xz
-xy
-xz
-xy
-xI
-xC
-xC
-xy
-xy
-xC
-xC
-xC
-xC
-xC
-xC
-bO
-bO
-bO
+xA
+xA
 cl
 cl
-cl
-cl
-cl
-cl
+xA
+xA
+xA
+xA
+xA
+xA
+yP
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zl
 Aa
 Ai
 Ai
@@ -69203,9 +70277,9 @@ Ec
 Ec
 Ec
 An
-xC
-xC
-xC
+xA
+xA
+xA
 eo
 ea
 ea
@@ -69312,7 +70386,7 @@ hu
 hu
 he
 he
-fd
+hl
 fg
 an
 eY
@@ -69390,38 +70464,38 @@ eo
 ea
 et
 eo
-xA
-xA
-xA
-xy
-xz
 xy
 xy
 xy
-xy
-xy
-xC
-xC
-xC
-xA
-xA
-xC
-xA
-xy
-xC
-xC
-xC
-xC
-xI
-xC
-bO
-bO
 cl
-bO
+wC
+cl
+cl
+cl
+cl
+cl
+xA
+xA
+xA
+xy
+xy
+xA
+xy
+cl
+xA
+xA
+xA
+xA
+xB
+xA
+yP
+yP
+zl
+yP
 zx
-cl
-cl
-cl
+zl
+zl
+zl
 Aa
 Ai
 Ai
@@ -69460,9 +70534,9 @@ Ec
 Ec
 An
 An
-xC
-xC
-xI
+xA
+xA
+xB
 eo
 ea
 eo
@@ -69536,7 +70610,7 @@ an
 bw
 an
 eY
-fd
+dg
 an
 an
 fb
@@ -69562,6 +70636,7 @@ hv
 hV
 hV
 im
+<<<<<<< HEAD
 fn
 fP
 fn
@@ -69570,6 +70645,16 @@ fn
 fn
 fn
 fF
+=======
+gz
+hs
+gz
+hs
+hs
+hs
+hs
+iR
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 an
 an
 eY
@@ -69647,37 +70732,37 @@ eo
 ea
 ea
 eo
+xy
+xy
+xy
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xA
+xz
+xA
+xy
+xy
+xA
+xz
+cl
+xA
+xA
+xy
 xA
 xA
 xA
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xC
-xB
-xC
 xA
-xA
-xC
-xB
-xy
-xC
-xC
-xA
-xC
-xC
-xC
-xC
 zL
-cl
-cl
-bO
-bO
-cl
+zl
+zl
+yP
+yP
+zl
 zP
 Ab
 Ai
@@ -69716,10 +70801,10 @@ An
 An
 ED
 An
-xC
-xC
-xC
-xC
+xA
+xA
+xA
+xA
 ea
 ea
 eo
@@ -69904,37 +70989,37 @@ eo
 ea
 eo
 eo
-xA
+xy
+xy
+xy
+cl
+cl
+cl
+wC
+cl
 xA
 xA
 xy
 xy
+cl
+yq
 xy
-xz
-xy
-xC
-xC
 xA
 xA
-xy
+xA
+xA
+xA
 yP
+xB
 xA
-xC
-xC
-xC
-xC
-xC
-bO
-xI
-xC
-xC
-xC
+xA
+xA
 zq
-bO
-cl
-cl
-cl
-cl
+yP
+zl
+zl
+zl
+zl
 zQ
 Ab
 Ai
@@ -69973,10 +71058,10 @@ Ep
 An
 Ec
 An
-xC
 xA
-xB
-xC
+xy
+xz
+xA
 ea
 eo
 eo
@@ -70161,37 +71246,37 @@ ea
 et
 ea
 ea
-xC
-xC
-xI
-xC
-xy
-xy
-xy
-xy
+xA
+xA
 xB
 xA
-xA
-xC
+cl
+cl
+cl
+cl
+xz
 xy
 xy
-xC
 xA
-xC
-xC
-xC
-xC
-bO
-xC
-xC
-xC
-xC
-xC
-bO
-bO
 cl
 cl
-cl
+xA
+xy
+xA
+xA
+xA
+xA
+yP
+xA
+xA
+xA
+xA
+xA
+yP
+yP
+zl
+zl
+zl
 zQ
 Ab
 Ai
@@ -70230,10 +71315,10 @@ Ec
 Ec
 Ec
 EE
-xC
 xA
-xA
-xA
+xy
+xy
+xy
 ea
 ea
 eb
@@ -70418,37 +71503,37 @@ ea
 ea
 ea
 ea
-xC
-xI
-xA
-xA
-xy
-xy
-xy
-xy
-xA
-xA
-xA
-xC
 xA
 xB
-xC
+xy
+xy
+cl
+cl
+cl
+cl
+xy
+xy
+xy
 xA
-xC
-xC
-xC
-xI
-bO
-xC
-xC
-xC
-xC
-bO
-bO
-bO
-bO
-cl
-cl
+xy
+xz
+xA
+xy
+xA
+xA
+xA
+xB
+yP
+xA
+xA
+xA
+xA
+yP
+yP
+yP
+yP
+zl
+zl
 zR
 Ab
 Ai
@@ -70487,10 +71572,10 @@ An
 An
 An
 An
-xC
-xA
 xA
 xy
+xy
+cl
 ea
 es
 eb
@@ -70675,38 +71760,38 @@ ea
 eo
 eo
 ea
+xy
 xA
-xC
+xy
+xy
+xA
+xy
+xz
+xy
+xy
+xy
+xy
 xA
 xA
-xC
+xy
 xA
+xA
+xA
+yP
+yP
+yP
+yP
+yP
+yP
 xB
-xA
-xA
-xA
-xA
-xC
-xC
-xA
-xC
-xC
-xC
-bO
-bO
-bO
-bO
-bO
-bO
-xI
-bO
-bO
-bO
-bO
-bO
-bO
-cl
-cl
+yP
+yP
+yP
+yP
+yP
+yP
+zl
+zl
 Aa
 Ai
 Ai
@@ -70745,9 +71830,9 @@ EA
 Eh
 An
 BK
-xC
 xA
 xy
+cl
 eo
 eo
 eb
@@ -70932,38 +72017,38 @@ es
 eo
 eo
 ea
+xz
+xA
+xy
+xy
+xA
+xy
+xy
+xy
 xB
-xC
-xA
-xA
-xC
+xB
 xA
 xA
 xA
-xI
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-bO
-bO
-bO
-cl
-cl
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-cl
+xA
+xA
+xA
+xB
+yP
+yP
+yP
+zl
+zl
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+zl
 Aa
 Ai
 Ai
@@ -71002,9 +72087,9 @@ EB
 Eh
 Eh
 BK
-xC
-xC
-xB
+xA
+xA
+xz
 eo
 eo
 eb
@@ -71189,38 +72274,38 @@ eo
 xt
 es
 ea
+xA
+xA
+xB
+xA
 xC
-xC
-xI
-xC
-xP
+xy
+xy
+xy
 xA
 xA
 xA
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
+xA
+xA
+xB
+xA
+xA
+xA
+zk
 zl
-cl
+zk
 zl
-cl
-bO
-bO
-zl
-zl
-zl
-bO
-bO
-bO
-bO
-bO
-bO
+yP
+yP
+zk
+zk
+zk
+yP
+yP
+yP
+yP
+yP
+yP
 Aa
 Ai
 Ai
@@ -71259,9 +72344,9 @@ Es
 Es
 Eh
 BK
-xC
-xC
-xC
+xA
+xA
+xA
 eo
 et
 eo
@@ -71446,37 +72531,37 @@ eo
 eo
 ea
 et
-xC
+xA
+xy
+xy
+xA
+xB
+xA
+xy
+xB
+xA
+xB
 xA
 xA
-xC
-xI
-xC
 xA
-xI
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xI
 xA
-bO
-cl
-cl
-cl
-cl
-bO
-bO
-bO
-bO
-xC
-xC
-xC
-xI
-bO
+xA
+xB
+xy
+yP
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+yP
+xA
+xA
+xA
+xB
+yP
 zO
 Ac
 Aj
@@ -71516,9 +72601,9 @@ Et
 Et
 Eh
 BK
+xy
+yc
 xA
-yH
-xC
 ea
 ea
 eo
@@ -71703,40 +72788,40 @@ et
 ea
 ea
 es
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xA
-xI
-xC
-xC
-xC
-xC
-xA
-xC
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-xC
-xI
-xC
-xC
-xC
-xC
-xI
 xA
 xA
+xA
+xA
+xA
+xA
+xA
+xA
+xy
+xB
+xA
+xA
+xA
+xA
+xy
+xA
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+xA
+xB
+xA
+xA
+xA
+xA
+xB
+xy
+xy
 Ao
 Ay
 Ax
@@ -71773,9 +72858,9 @@ Et
 Et
 Eh
 BK
+xy
+xy
 xA
-xA
-xC
 es
 ea
 ea
@@ -71960,40 +73045,40 @@ ea
 eo
 ea
 ea
-xC
-xI
 xA
-xC
+xB
+xy
+xA
+cl
+xy
+xy
+xA
+xy
+xA
 xy
 xA
 xA
-xC
-xA
-xC
-xA
-xC
-xC
-xI
-xC
-bO
-zl
-zl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-xC
-xA
-xA
-xA
-xC
-xA
-xA
-xA
 xB
+xA
+yP
+zk
+zk
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+xA
+xy
+xy
+xy
+xA
+xy
+xy
+xy
+xz
 Ao
 Az
 AF
@@ -72030,9 +73115,9 @@ Eh
 Eh
 Eh
 BK
+xy
+xy
 xA
-xA
-xC
 ea
 ea
 et
@@ -72217,40 +73302,40 @@ et
 eo
 ea
 ea
-xA
-xC
-xC
-xC
 xy
 xA
-xB
-xC
-xC
-xI
 xA
-xC
-xC
-xC
 xA
-bO
-zl
 cl
-cl
-cl
-cl
-cl
-cl
-bO
-xA
-yH
-xy
-xy
 xy
 xz
 xA
 xA
+xB
+xy
+xA
+xA
+xA
+xy
+yP
+zk
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+xy
+yc
+cl
+cl
+cl
+wC
 xy
 xy
+cl
+cl
 An
 An
 An
@@ -72262,34 +73347,34 @@ An
 Bp
 An
 An
-xC
-An
-An
-Ax
-Ax
-Bf
-Bf
-CF
-Bf
-CF
-Bf
-CF
-Ax
-Ax
-An
-An
-An
-An
-An
-Eh
-Eh
-Eh
-Eh
-An
-xC
 xA
-yH
-xC
+An
+An
+Ax
+Ax
+Bf
+Bf
+CF
+Bf
+CF
+Bf
+CF
+Ax
+Ax
+An
+An
+An
+An
+An
+Eh
+Eh
+Eh
+Eh
+An
+xA
+xy
+yc
+xA
 ea
 eo
 ea
@@ -72474,53 +73559,53 @@ ea
 ea
 ea
 es
-xA
-xA
-xI
-xC
 xy
+xy
+xB
 xA
-xA
-xC
-xC
-xC
+cl
+xy
+xy
 xA
 xA
 xA
 xy
+xy
+xy
+cl
+xy
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+yP
 xA
-bO
+xy
+xy
 cl
 cl
 cl
 cl
+xy
+xy
+xB
 cl
-cl
-bO
-xC
 xA
 xA
-xy
-xy
-xy
-xy
+An
+An
+An
+An
+xA
+An
+An
+An
 xA
 xA
-xI
-xy
-xC
-xC
-An
-An
-An
-An
-xC
-An
-An
-An
-xC
-xC
-xC
+xA
 An
 An
 Ax
@@ -72534,19 +73619,19 @@ Ax
 Ax
 An
 An
-xC
-xC
-xC
+xA
+xA
+xA
 An
 An
 Eu
 Eu
 An
 An
-xC
-xC
-xC
-xI
+xA
+xA
+xA
+xB
 ea
 ea
 eo
@@ -72731,54 +73816,54 @@ ea
 ea
 ea
 eo
-xA
-xA
-xC
 xy
+xy
+xA
+cl
+cl
+xP
+xA
+xA
+xz
+xA
+xA
 xy
 yc
-xC
-xC
-xB
-xC
-xC
-xA
 yH
-yQ
+xA
+yP
+yP
+zl
+zl
+zl
+yP
+yP
+yP
+xB
+xy
+xy
+wC
+xA
+xA
 xC
-bO
-bO
+wC
+cl
+xA
 cl
 cl
+xy
+xA
+xA
+xy
+xy
+xy
+xy
+xB
 cl
-bO
-bO
-bO
-xI
+cl
 xA
-xA
-xz
-xC
-xC
-xP
-xz
-xy
-xC
-xy
-xy
-xA
-xC
-xC
-xA
-xA
-xA
-xA
-xI
-xy
-xy
-xC
-xz
-xy
+wC
+cl
 An
 An
 Ct
@@ -72790,20 +73875,20 @@ BI
 CG
 An
 An
-xC
-xy
-xy
-xB
-xC
-Ei
-cl
-cl
-cl
-xC
-xC
-xI
-xC
 xA
+cl
+cl
+xz
+xA
+Ei
+zl
+zl
+zl
+xA
+xA
+xB
+xA
+xy
 ea
 er
 ea
@@ -72988,79 +74073,79 @@ ea
 ea
 eo
 eb
-xy
-xy
-xC
-xy
-xy
-xy
+cl
+cl
 xA
-xC
-xA
-xC
-xC
-xA
-xA
-xC
-bO
-bO
-bO
 cl
 cl
 cl
+xy
+xA
+xy
+xA
+xA
+xy
+xy
+xA
+yP
+yP
+yP
+zl
+zl
+zl
+zl
+yP
+yP
+xy
+yc
+xA
 cl
-bO
-bO
-xA
-yH
-xC
+xy
 xy
 xA
 xA
-xC
-xC
+xy
+xy
 xA
-xA
-xC
-xI
-xC
-xI
-xy
-xy
-xI
-xy
-xy
-xC
-xC
-xC
-xC
-xy
-xy
-xC
-An
-Ao
-Ao
-An
-An
-An
-Ao
-Ao
-An
-xC
 xB
-xy
-xy
-xC
-cl
-cl
-cl
-cl
-cl
-xC
-xC
-xC
-xC
 xA
+xB
+cl
+cl
+xB
+cl
+cl
+xA
+xA
+xA
+xA
+cl
+cl
+xA
+An
+Ao
+Ao
+An
+An
+An
+Ao
+Ao
+An
+xA
+xz
+cl
+cl
+xA
+zl
+zl
+zl
+zl
+zl
+xA
+xA
+xA
+xA
+xy
 ea
 ea
 eo
@@ -73245,79 +74330,79 @@ eo
 es
 eo
 eb
-xy
-xy
-xC
-xz
-xz
+cl
+cl
+xA
+wC
+wC
+cl
 xy
 xA
-xC
-xC
-xC
-xC
 xA
-xC
+xA
+xA
 xy
-xC
-bO
+xA
+cl
+xA
+yP
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+xA
+xy
+xA
+xA
+xy
+xA
+wC
+cl
+xy
 cl
 cl
 cl
-cl
-bO
-bO
-bO
-xC
-xA
-xC
-xC
-xA
-xC
-xz
 xy
-xA
+xy
+xy
 xy
 xy
 xy
 xA
-xA
-xA
-xA
-xA
-xA
-xC
-xA
-xA
-xI
-xA
-xA
-xC
-xA
+xy
+xy
+xB
+xy
+xy
 xA
 xy
 xy
-xC
-xC
-xC
-xI
-xC
-xC
-xy
-xy
-xC
-xA
-xC
 cl
 cl
+xA
+xA
+xA
+xB
+xA
+xA
 cl
 cl
-bO
-xC
-xC
-xC
-xI
-xC
+xA
+xy
+xA
+zl
+zl
+zl
+zl
+yP
+xA
+xA
+xA
+xB
+xA
 ea
 et
 et
@@ -73502,79 +74587,79 @@ eo
 eo
 eo
 ep
-xy
-xy
-xC
-xy
-xy
-xy
+cl
+cl
 xA
-xC
-xA
-xI
-xC
-xC
-xC
-yQ
-xC
-bO
-bO
 cl
 cl
 cl
-cl
-zp
-zp
-bO
-xC
-xC
-xI
-xA
-xA
-xy
 xy
 xA
+xy
+xB
 xA
-xA
-xA
-bO
-xC
-xI
 xA
 xA
 yH
-xy
-xC
-xC
-xC
+xA
+yP
+yP
+zl
+zl
+zl
+zl
+zp
+zp
+yP
+xA
+xA
 xB
-xA
-xC
-xI
+xy
+xy
+cl
+cl
+xy
+xy
+xy
+xy
+yP
 xA
 xB
-xA
-xC
-xC
-xC
-xC
-xC
-xC
 xy
-yQ
+xy
+yc
+cl
+xA
+xA
+xA
 xz
-xI
+xy
+xA
+xB
+xy
+xz
+xy
+xA
+xA
+xA
+xA
+xA
+xA
 cl
-cl
-cl
-cl
-bO
-bO
-xC
-xC
-xC
-xC
-xC
+yH
+wC
+xB
+zl
+zl
+zl
+zl
+yP
+yP
+xA
+xA
+xA
+xA
+xA
 ea
 eo
 eo
@@ -73759,79 +74844,79 @@ ea
 ep
 eb
 eb
-xA
+xy
+xy
+xy
+cl
+cl
+cl
+xy
+xz
 xA
 xA
 xy
-xy
+xA
+xA
+xA
+xA
+xA
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zF
+xA
+xA
+xA
 xy
 xA
 xB
-xC
-xC
-xA
-xC
-xC
-xC
-xC
-xC
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-zF
-xC
-xC
-xC
-xA
-xC
-xI
-xC
-xC
 xA
 xA
-yH
-xC
-xI
-xC
-xA
-xA
-xA
-xI
-xC
-cl
-bO
-bO
-cl
-cl
-xC
-xy
-xC
-xC
-xC
-xC
-xI
 xy
 xy
-xC
+yc
+xA
+xB
+xA
+xy
+xy
+xy
+xB
+xA
+zl
+yP
+yP
+zl
+zl
+xA
+cl
 xA
 xA
-xC
-xC
+xA
+xA
+xB
 cl
 cl
-cl
+xA
+xy
+xy
+xA
+xA
+zl
+zl
+zl
 zM
-bO
-cl
-xC
-xC
-xC
-xI
-xC
+yP
+zl
+xA
+xA
+xA
+xB
+xA
 et
 ea
 ea
@@ -74016,79 +75101,79 @@ eo
 eb
 eb
 eb
-xA
-xA
-xA
+xy
+xy
+xy
+cl
+cl
+xy
+xy
+xy
+xB
 xy
 xy
 xA
 xA
+xB
 xA
-xI
+cl
 xA
-xA
-xC
-xC
-xI
-xC
-xy
-xC
-bO
+yP
+zk
 zl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-bO
-bO
-xI
-xC
-xC
-xC
-xI
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+yP
+xB
 xA
 xA
-xC
 xA
-bO
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-xC
-xC
-xI
-xC
-xI
-xC
-xC
-xC
+xB
+xy
+xy
+xA
+xy
+yP
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
 xA
 xA
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-cl
-cl
-xC
-xC
-xI
+xB
+xA
+xB
+xA
+xA
+xA
+xy
+xy
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+zl
+zl
+xA
+xA
+xB
 eo
 eo
 eo
@@ -74273,79 +75358,79 @@ eo
 eb
 eb
 eb
-xz
-xC
-xy
-xz
-xy
-xy
+wC
+xA
+cl
+wC
+cl
+cl
+cl
 xy
 xA
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xy
-xI
-xC
+xA
+xA
+xA
+xA
+xA
+xA
+cl
+xB
+xA
 zp
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-bO
-bO
-bO
-xC
-xC
-xC
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+yP
+yP
 xA
 xA
-bO
-bO
-bO
-bO
-cl
-cl
-cl
+xA
+xy
+xy
+yP
+yP
+yP
+yP
+zl
+zl
+zl
 zF
-bO
+yP
 zp
 zp
 zp
-cl
-cl
-cl
-bO
-xC
-xC
-xC
-xC
-xI
-xC
+zl
+zl
+zl
+yP
+xA
+xA
+xA
+xA
+xB
+xA
 Dg
-xA
-bO
-cl
-cl
-cl
-cl
-bO
+xy
+yP
+zl
+zl
+zl
+zl
+yP
 zF
-bO
-cl
-cl
-cl
-xC
-xI
+yP
+zl
+zl
+zl
 xA
+xB
+xy
 eb
 eb
 eo
@@ -74530,79 +75615,79 @@ eo
 eb
 eb
 ep
+cl
+xy
+cl
+cl
+cl
+cl
+cl
+xy
 xy
 xA
-xy
-xy
-xy
-xy
-xy
+xA
+xB
 xA
 xA
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-bO
+xA
+xA
+xA
+yP
 zp
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
 zp
 zM
-bO
-bO
-cl
-cl
-cl
-cl
-bO
-bO
-cl
-cl
-cl
-cl
-bO
+yP
+yP
+zl
+zl
+zl
+zl
+yP
+yP
+zl
+zl
+zl
+zl
+yP
 zM
-cl
-cl
-cl
-cl
-cl
-cl
-cl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
 zM
-bO
-xC
+yP
+xA
+cl
+xA
 xy
-xC
 xA
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-bO
-cl
-cl
-cl
-cl
-bO
-xC
-xC
+yP
+zl
+zl
+zl
+zl
+zl
+yP
+zl
+zl
+zl
+zl
+yP
 xA
+xA
+xy
 ep
 eb
 eb
@@ -74787,79 +75872,79 @@ eb
 eb
 eb
 eb
+cl
 xy
-xA
-xy
+cl
+cl
+wC
+cl
+cl
 xy
 xz
 xy
 xy
 xA
+xA
+xA
+xA
 xB
 xA
 xA
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-bO
-bO
+yP
+yP
 zp
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
 zL
-bO
-cl
-cl
+yP
+zl
+zl
 zp
 zp
-cl
-cl
+zl
+zl
 zp
-cl
-cl
-bO
-cl
-cl
-cl
-cl
-bO
+zl
+zl
+yP
+zl
+zl
+zl
+zl
+yP
+xA
 xC
-xP
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-bO
-bO
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+yP
+yP
 zF
-cl
-cl
-bO
-bO
-yc
-xA
-xA
+zl
+zl
+yP
+yP
+xP
+xy
+xy
 eb
 eb
 eb
@@ -75044,79 +76129,79 @@ eb
 eb
 eb
 eb
+cl
+xy
+wC
+cl
+cl
+cl
+xy
+xy
 xy
 xA
-xz
-xy
-xy
-xy
+xA
+xB
 xA
 xA
 xA
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xI
-bO
-bO
-bO
-cl
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
+xA
+xA
+xB
+yP
+yP
+yP
+zl
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
 zp
-cl
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-bO
+zl
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+yP
 zp
 zp
-cl
-cl
-cl
-cl
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-cl
+zl
+zl
+zl
+zl
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zl
 zL
-bO
-cl
-cl
-cl
-cl
-bO
-bO
-xC
-xC
+yP
+zl
+zl
+zl
+zl
+yP
+yP
 xA
+xA
+xy
 ep
 eb
 eo
@@ -75301,79 +76386,79 @@ eb
 eo
 es
 eo
-xA
+xy
+xy
+cl
+cl
+cl
+cl
+xy
+xy
 xA
 xy
 xy
+xA
 xy
 xy
 xA
 xA
-xC
 xA
 xA
-xC
+yP
 xA
+xB
 xA
-xC
-xC
-xC
-xC
-bO
-xC
-xI
-xC
-bO
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-bO
+yP
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+yP
 zp
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-bO
-bO
-xC
-yH
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+yP
 xA
+yc
+xy
 eo
 eo
 eo
@@ -75558,79 +76643,79 @@ ea
 et
 eo
 eo
-xA
 xy
+cl
+wC
+cl
+cl
+xy
+xy
+xA
+xA
 xz
 xy
-xy
 xA
 xA
-xC
-xC
+xA
+xA
+xA
 xB
+cl
+yP
+yP
 xA
-xC
-xC
-xC
-xC
-xC
-xI
-xy
-bO
-bO
-xC
-xC
-xC
-xC
-xC
+xA
+xA
+xA
+xA
 zF
-cl
-cl
-cl
 zl
 zl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
 zl
+zk
+zk
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zk
+zl
+zl
+zl
+zl
+zl
+xA
+xA
+xA
+xB
 cl
 cl
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+yP
+yP
+yP
+xA
+xB
 cl
 cl
-cl
-xC
-xC
-xC
-xI
-xy
-xy
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-bO
-bO
-bO
-xC
-xI
-xy
-xy
 eb
 eo
 es
@@ -75815,79 +76900,79 @@ ea
 ea
 ea
 eo
+wC
+cl
+cl
+cl
 xz
 xy
-xy
-xy
+xA
 xB
+xy
+xy
+xy
 xA
-xC
-xI
 xA
-xA
-xA
-xC
-xC
-xC
-xB
-xC
-xC
-xy
-bO
-bO
-xC
-xI
-xy
-yQ
-xI
-xC
-bO
-bO
-xC
-xy
-xy
-xy
-xC
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-xC
-xy
-xC
-xC
-xC
-xC
-xy
-xy
-zM
-zM
-zM
-bO
-bO
-cl
-cl
-cl
-cl
-cl
-cl
-cl
-bO
-bO
-xC
-xC
-xC
-xI
-xC
 xA
 xz
+xA
+xA
+cl
+yP
+yP
+xA
+xB
+cl
+yH
+xB
+xA
+yP
+yP
+xA
+cl
+cl
+cl
+xA
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+xA
+cl
+xA
+xA
+xA
+xA
+cl
+cl
+zM
+zM
+zM
+yP
+yP
+zl
+zl
+zl
+zl
+zl
+zl
+zl
+yP
+yP
+xA
+xA
+xA
+xB
+xA
 xy
+wC
+cl
 eb
 eo
 eo
@@ -76072,79 +77157,79 @@ eo
 eo
 ea
 eo
+cl
+cl
+cl
+cl
+xy
+xP
 xy
 xy
-xy
+cl
+cl
+cl
+xz
 xy
 xA
-yc
 xA
 xA
-xy
-xy
-xy
+xA
+xA
+zq
+yP
+yP
+yP
+xA
+cl
+cl
+cl
+yP
+yP
+xA
+cl
+cl
+yH
+xA
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+cl
+cl
+xA
+xA
+xA
+xA
+xB
+cl
 xB
 xA
-xC
-xC
-xC
-xC
-xC
-zq
-bO
-bO
-bO
-xC
-xy
-xy
-xy
-bO
-bO
-xC
-xy
-xy
-yQ
-xC
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-xy
-xy
-xC
-xC
-xC
-xC
-xI
-xy
-xI
-xC
-xC
-xI
-xC
-bO
-bO
-bO
-bO
-bO
-cl
-cl
-bO
-bO
-bO
-bO
-bO
-xC
-xC
-xI
+xA
+xB
+xA
+yP
+yP
+yP
+yP
+yP
+zl
+zl
+yP
+yP
+yP
+yP
+yP
 xA
 xA
+xB
 xy
 xy
-xy
+cl
+cl
+cl
 eb
 eb
 es
@@ -76329,79 +77414,79 @@ eo
 eo
 ea
 eo
-xy
-xy
-xy
-xy
-xA
-xB
-xA
-xA
+cl
+cl
+cl
+cl
 xy
 xz
 xy
 xy
+cl
+wC
+cl
+cl
+cl
 xy
 xA
-xC
-xC
-xC
-xC
-xC
-xy
-bO
-bO
-xC
-xy
-xy
-xy
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-bO
-bO
-xC
-xC
-xy
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xy
-xC
-xC
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-bO
-xC
-xI
-xI
-xC
-xI
-xy
-xy
-xy
-xy
-xy
+xA
+xA
+xA
+xA
+cl
+yP
+yP
+xA
+cl
+cl
+cl
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+xA
+yP
+yP
+xA
+xA
+cl
+xA
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+cl
+xA
+xA
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+yP
+xA
+xB
+xB
+xA
+xB
+cl
+cl
+cl
+cl
+cl
 ep
 eb
 eo
@@ -76586,79 +77671,79 @@ eo
 eo
 ea
 et
-xA
+xy
+xy
+xz
+xy
+xy
+cl
+cl
+cl
+cl
+wC
+cl
+xy
+xy
 xA
 xB
 xA
 xA
 xy
-xy
-xy
-xy
-xz
-xy
 xA
 xA
-xC
-xI
-xC
-xC
 xA
-xC
-xC
-xC
-xC
-xC
-xy
-xy
-yQ
-xC
-xC
-xC
-xC
-xI
-yQ
-yQ
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xy
-xy
-xC
-xC
-xI
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xy
-xy
-xy
-yQ
-xy
-xy
+xA
+xA
+cl
+cl
+yH
+xA
+xA
+xA
+xA
+xB
+yH
+yH
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+xA
+xA
+xB
+cl
+cl
+xA
+xA
+xB
+xA
+xB
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+cl
+cl
+cl
+yH
+cl
+cl
 eb
 ep
 eo
@@ -76843,79 +77928,79 @@ eo
 eo
 ea
 ea
+xy
+xy
+cl
+cl
+cl
+cl
+cl
+cl
+xz
+xy
+xy
+xy
 xA
 xA
+xA
 xy
-xy
-xy
-xy
-xy
-xy
+xA
 xB
 xA
 xA
 xA
-xC
-xC
-xC
-xA
-xC
-xI
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xy
-xy
-yQ
-xy
-xC
-xC
-xI
-xC
-xy
-xC
+xB
 xA
 xA
 xA
 xA
 xA
-xC
-xC
-xI
-xC
-xC
-xy
-xy
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xI
-xC
-xC
-xI
-xC
+xA
+xA
+cl
+cl
+yH
+cl
+xA
+xA
+xB
+xA
+cl
 xA
 xy
 xy
 xy
 xy
 xy
+xA
+xA
+xB
+xA
+xA
+cl
+cl
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xB
+xA
+xA
+xB
+xA
 xy
+cl
+cl
+cl
+cl
+cl
+cl
 eb
 eb
 eo
@@ -77100,79 +78185,79 @@ ea
 ea
 et
 ea
-xC
-xy
-xy
-xy
-xy
 xA
-xA
-xA
-xA
-xA
-xB
-xA
-xC
-xC
-xC
-xB
-xI
-xA
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xA
-yH
-xA
-xy
-xy
-xC
-xC
-xC
-xC
-xC
-xC
-xy
-xC
-xy
-yQ
+cl
+cl
+cl
+cl
 xy
 xy
 xy
-xI
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
 xy
-xy
-xC
-xC
-xC
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xC
-yH
 xy
 xz
 xy
+xA
+xA
+xA
+xz
+xB
 xy
+xA
+xA
+xA
+xA
+xA
+xB
+xA
+xA
 xy
+yc
+xy
+cl
+cl
+xA
+xA
+xA
+xA
+xA
+xA
+cl
+xA
+cl
+yH
+cl
+cl
+cl
+xB
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+cl
+cl
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xA
+yc
+cl
+wC
+cl
+cl
+cl
 ep
 eb
 eo
@@ -77357,79 +78442,79 @@ ea
 eo
 ea
 eo
-xB
-xA
-xA
+xz
 xy
-xA
-xB
-xA
-xA
+xy
+cl
 xy
 xz
 xy
+xy
+cl
+wC
+cl
+xy
+xy
+xy
 xA
 xA
 xA
-xC
-xC
-xC
-xA
-xC
-xC
-xC
-xC
-xI
-xA
-xA
-xA
+xy
 xA
 xA
 xA
 xA
-xC
-xA
-xA
-xC
-xC
-xC
-xI
-xC
-xC
+xB
+xy
+xy
 xy
 xy
 xy
 xy
 xy
 xA
-xA
-xC
-xI
-xC
-xC
-xC
-xC
-xI
-xC
-xC
-xC
-xI
-xC
-xC
-xI
-xC
-xC
+xy
+xy
 xA
 xA
 xA
-xC
-xC
+xB
+xA
+xA
+cl
+cl
+cl
+cl
+cl
+xy
+xy
+xA
+xB
+xA
+xA
+xA
+xA
+xB
+xA
+xA
+xA
+xB
+xA
+xA
+xB
+xA
 xA
 xy
 xy
 xy
+xA
+xA
 xy
-xy
+cl
+cl
+cl
+cl
+cl
 eb
 eo
 eo
@@ -77614,79 +78699,79 @@ ea
 eo
 ea
 eo
-xA
-xC
-xA
-xA
-xA
+xy
 xA
 xy
 xy
 xy
 xy
+cl
+cl
+cl
+cl
+cl
+wC
 xy
-xz
-xA
-xA
-xA
-xA
-xA
-xC
-xI
-xC
-xC
-xC
-xC
-xA
-xA
-xA
-xy
-xy
-xy
-xz
-xy
-xA
-xB
-xC
-xC
-xC
-xC
-xC
-xy
-xy
-xy
-xz
 xy
 xy
 xy
 xy
 xA
 xB
-xC
-xC
-xC
-xC
-xC
-xy
-xy
-xy
-xy
-xy
-xC
-xy
+xA
+xA
 xA
 xA
 xy
 xy
 xy
-xA
-xC
-xA
-xA
-xA
+cl
+cl
+cl
+wC
+cl
 xy
 xz
+xA
+xA
+xA
+xA
+xA
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+xy
 xz
+xA
+xA
+xA
+xA
+xA
+cl
+cl
+cl
+cl
+cl
+xA
+cl
+xy
+xy
+cl
+cl
+cl
+xy
+xA
+xy
+xy
+xy
+cl
+wC
+wC
 eb
 eo
 eo
@@ -77871,42 +78956,24 @@ ea
 eo
 eo
 ea
-xC
-xI
-xA
-xA
-xA
-xA
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xz
-xC
-xC
-xC
-xC
 xA
 xB
+xy
+xy
+xy
+xy
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+wC
 xA
 xA
-xA
-xA
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xC
 xA
 xA
 xy
@@ -77915,35 +78982,53 @@ xy
 xy
 xy
 xy
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
 xy
-xy
-xA
-xA
-xC
-xI
-xC
-xC
-xC
-xy
-yQ
-xy
-xy
-yQ
-xC
-xC
 xA
 xy
 xy
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
 xy
 xy
-xy
+xA
 xB
-xI
+xA
+xA
+xA
+cl
+yH
+cl
+cl
+yH
 xA
 xA
 xy
-xA
-xA
+cl
+cl
+cl
+cl
+cl
+xz
+xB
+xy
+xy
+cl
+xy
+xy
 ea
 eo
 ea
@@ -78128,79 +79213,79 @@ ea
 es
 eo
 ea
-xC
 xA
+xy
+xy
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+xB
+xy
+xy
 xA
+xy
+xy
 xy
 xy
 xz
+wC
+cl
+cl
+cl
+cl
+wC
+cl
+xy
+xA
+xA
 xy
 xy
+xA
 xy
-xy
+cl
+cl
+wC
+cl
 xz
 xy
 xy
-xy
-xy
-xy
-xy
-xI
-xA
-xA
-xC
 xA
 xA
 xA
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
 xA
 xB
-xz
+cl
+cl
+cl
+yH
+wC
+cl
+cl
 xy
 xy
 xy
-xy
-xz
-xy
-xA
-xC
-xC
-xA
-xA
-xC
-xA
+cl
 xy
 xy
-xz
-xy
-xB
-xA
-xA
-xC
-xC
-xC
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xC
-xI
-xy
-xy
-xy
-yQ
-xz
-xy
-xy
-xA
-xA
-xA
-xy
-xA
-xA
 ea
 eo
 eo
@@ -78385,79 +79470,79 @@ ea
 ea
 ea
 ea
-xC
-xA
-xB
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xy
-xA
-xA
-xC
-xC
-xA
-xB
-xC
-xC
-xA
 xA
 xy
+xz
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+cl
 xy
 xy
-xy
-xy
-xy
-xy
-xB
 xA
-xC
-xC
-xI
 xA
-xC
-xA
-xy
 xy
 xz
 xA
 xA
-xA
-xC
-xI
-xC
-xC
 xy
+xy
+cl
+cl
+cl
+cl
+cl
+cl
+cl
 xz
 xy
+xA
+xA
+xB
 xy
-xy
-xy
-xy
-xy
-xy
-xC
 xA
 xy
-xy
-xy
-xy
+cl
+cl
+wC
 xy
 xy
 xy
 xA
-xI
-xC
-xz
+xB
 xA
 xA
+cl
+wC
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xA
+xy
+cl
+cl
+cl
+cl
+cl
+cl
+cl
+xy
+xB
+xA
+wC
+xy
+xy
 et
 ea
 eo
@@ -113298,12 +114383,12 @@ dY
 dY
 dY
 ns
-GZ
+vk
 Hd
-Hg
-GZ
+Hb
+vk
 Hd
-Hg
+Hb
 nZ
 dY
 dY
@@ -113555,12 +114640,12 @@ dY
 dY
 dY
 py
-Ha
+GZ
 He
-Hh
-Ha
+Hg
+GZ
 He
-Hh
+Hg
 oh
 dY
 dY
@@ -115871,7 +116956,7 @@ GX
 GX
 GX
 GX
-GX
+pa
 GX
 GX
 GX
@@ -117115,7 +118200,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -117372,7 +118461,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 gI
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -117613,6 +118706,7 @@ Fu
 gk
 Fu
 Fu
+<<<<<<< HEAD
 Fu
 gk
 Fq
@@ -117623,13 +118717,30 @@ FJ
 FJ
 gP
 FJ
+=======
+jd
+Fu
+Fu
+Fq
+ES
+Fu
+FH
+FH
+FJ
+FH
+FH
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Fq
 ES
 ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -118143,7 +119254,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -118181,12 +119296,12 @@ dY
 dY
 dY
 pB
-Hb
+Ha
 Hf
-Hi
-Hb
+Hh
+Ha
 Hf
-Hi
+Hh
 on
 dY
 dY
@@ -118400,7 +119515,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -118438,12 +119557,12 @@ dY
 dY
 dY
 ns
-GZ
+vk
 Hd
-Hg
-GZ
+Hb
+vk
 Hd
-Hg
+Hb
 nZ
 dY
 dY
@@ -120433,7 +121552,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 jm
+=======
+jl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -120690,7 +121813,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 jm
+=======
+jl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -121204,7 +122331,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 gz
+=======
+jl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -121461,7 +122592,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 jm
+=======
+jl
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -130978,7 +132113,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -131235,7 +132374,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -131479,8 +132622,13 @@ ES
 fj
 ES
 Fu
+<<<<<<< HEAD
 gk
 Fu
+=======
+Fu
+jd
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Fu
 Fq
 ES
@@ -131749,7 +132897,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -131765,7 +132917,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -132006,7 +133162,11 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 gI
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -132017,9 +133177,15 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
 FJ
 gP
 FJ
+=======
+FH
+FH
+FH
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 FX
 ES
 Fk
@@ -132263,23 +133429,31 @@ ES
 ES
 ES
 ES
+<<<<<<< HEAD
+Fk
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
+ES
 Fk
 ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-ES
-Fk
-ES
+<<<<<<< HEAD
 gI
+=======
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -132531,12 +133705,21 @@ ES
 ES
 ES
 FW
+<<<<<<< HEAD
 FJ
 FJ
 FJ
 FY
 ES
 Fk
+=======
+FH
+FH
+FH
+FY
+ES
+jr
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 ES
 ES
 ES
@@ -133301,8 +134484,13 @@ ES
 ES
 ES
 Fu
+<<<<<<< HEAD
 gk
 Fu
+=======
+Fu
+jd
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Fu
 Fq
 ES
@@ -133684,7 +134872,7 @@ HJ
 An
 HU
 Ia
-Ij
+Ik
 An
 An
 An
@@ -134072,9 +135260,15 @@ ES
 ES
 ES
 Fq
+<<<<<<< HEAD
 FJ
 FJ
 gP
+=======
+FH
+FJ
+FH
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Fu
 ES
 ES
@@ -134308,8 +135502,13 @@ ES
 ES
 Fq
 Fu
+<<<<<<< HEAD
 Fu
 gk
+=======
+jd
+Fu
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Fu
 ES
 ES
@@ -135096,7 +136295,11 @@ ES
 ES
 ES
 FI
+<<<<<<< HEAD
 FJ
+=======
+FH
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 FI
 Fq
 ES
@@ -136511,7 +137714,7 @@ HQ
 HQ
 HW
 Ig
-Ik
+Il
 Iq
 Iw
 Iz
@@ -136768,7 +137971,7 @@ HQ
 HT
 HX
 Ih
-Il
+Im
 Ir
 Ix
 IA
@@ -137025,7 +138228,7 @@ HQ
 HQ
 HY
 Ii
-Im
+In
 Is
 Ix
 IB
@@ -137281,7 +138484,7 @@ HQ
 HQ
 HQ
 HM
-In
+Ij
 HL
 Iq
 Iq
@@ -179612,7 +180815,7 @@ Lz
 Lz
 Lz
 Lz
-Mb
+Mf
 Lj
 Gg
 Gg
@@ -180897,7 +182100,7 @@ LH
 Lz
 Lz
 Lz
-LW
+nF
 Lk
 Gh
 Gh
@@ -181925,7 +183128,7 @@ LL
 Lz
 Lz
 Lz
-LW
+nF
 Lk
 Gh
 Gh
@@ -182173,7 +183376,7 @@ Gg
 Gg
 Gg
 Li
-Lp
+Mb
 Lz
 Lz
 Lz
@@ -183201,7 +184404,7 @@ Gg
 Gg
 Gg
 Lj
-Lo
+Mm
 Lz
 Lz
 Lz
@@ -200623,11 +201826,19 @@ ES
 ES
 ES
 Fu
+<<<<<<< HEAD
 gU
 gX
 gU
 gX
 gX
+=======
+fn
+fn
+fn
+fn
+fn
+>>>>>>> d798c1c2b5fa736a3543f1b854029b4832954eba
 Lf
 Fu
 Lg

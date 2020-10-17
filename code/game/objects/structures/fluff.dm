@@ -710,11 +710,33 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
-/obj/structure/fluff/playertrophy2 // nalzul
+/obj/structure/fluff/playertrophy2 // Nalzul
 	name = "\improper Reliquia De La Antigua Casa"
 	desc = "An ancient artpiece that has been redrawn over and over again until we received this as a final product. Still looks very prestigious!"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "i_am_not_good_at_art"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy3 // Swept
+	name = "The Watermark"
+	desc = "A neat statue of a single letter 'S' that seems very fancy, but I really hope this isn't someone's weird NTnet page watermark..."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "swhold"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy4 // Jackrip
+	name = "The Lich"
+	desc = "Ah, relax! It's just a really tall skeleton replica that has pyrotechnics coming out of the hands and eyes! It's not an actual lich, but unless it was pretending to be fake... Nah, I'm sure it's not real."
+	icon = 'icons/mob/32x64.dmi'
+	icon_state = "the_lich"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE

@@ -178,6 +178,21 @@
 	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
+/obj/item/storage/toolbox/toolbox_trophy
+	name = "The 2020 Tournament Toolbox" //this will be named "X family toolbox"
+	desc = "<span class='greentext'>You're winner!</span> <span class='small'>Warning: not intended for combat purposes.</span>"
+	icon_state = "gold"
+	inhand_icon_state = "toolbox_gold"
+	max_integrity = 9999
+	armor = list(MELEE = 90, BULLET = 90, LASER = 90, ENERGY = 90, BOMB = 100, BIO = 100, RAD = 0, FIRE = 100, ACID = 100)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	force = 20 // 20
+	throwforce = 24 // old trophy toolbox force damage.
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/toolbox/toolbox_trophy/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
 	icon_state = "blue"
