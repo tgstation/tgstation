@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Adds an emergency shuttle console to the BYO Shuttle."
