@@ -21,6 +21,7 @@
 	held_rh = 'icons/mob/pai_item_rh.dmi'
 	head_icon = 'icons/mob/pai_item_head.dmi'
 	radio = /obj/item/radio/headset/silicon/pai
+	can_buckle_to = FALSE
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -84,12 +85,6 @@
 	var/overload_maxhealth = 0
 	var/silent = FALSE
 	var/brightness_power = 5
-
-/mob/living/silicon/pai/can_unbuckle()
-	return FALSE
-
-/mob/living/silicon/pai/can_buckle()
-	return FALSE
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return

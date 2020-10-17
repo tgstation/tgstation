@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(traumas)
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
 					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
 
-						"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox))
+						"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/animal/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
