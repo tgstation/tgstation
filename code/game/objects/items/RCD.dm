@@ -308,10 +308,10 @@ RLD
 	if(!user)
 		return
 	var/list/computer_dirs = list(
-		"NORTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "cnorth"),
-		"EAST" = image(icon = 'icons/mob/radial.dmi', icon_state = "ceast"),
-		"SOUTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "csouth"),
-		"WEST" = image(icon = 'icons/mob/radial.dmi', icon_state = "cwest")
+		"NORTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "cnorth"),
+		"EAST" = image(icon = 'icons/hud/radial.dmi', icon_state = "ceast"),
+		"SOUTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "csouth"),
+		"WEST" = image(icon = 'icons/hud/radial.dmi', icon_state = "cwest")
 		)
 	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -333,8 +333,8 @@ RLD
 	var/list/solid_or_glass_choices = list(
 		"Solid" = get_airlock_image(/obj/machinery/door/airlock),
 		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass),
-		"Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "windoor"),
-		"Secure Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "secure_windoor")
+		"Windoor" = image(icon = 'icons/hud/radial.dmi', icon_state = "windoor"),
+		"Secure Windoor" = image(icon = 'icons/hud/radial.dmi', icon_state = "secure_windoor")
 	)
 
 	var/list/solid_choices = list(
@@ -470,10 +470,10 @@ RLD
 	if(!user)
 		return
 	var/static/list/choices = list(
-		"Chair" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair"),
-		"Stool" = image(icon = 'icons/mob/radial.dmi', icon_state = "stool"),
-		"Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "table"),
-		"Glass Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "glass_table")
+		"Chair" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair"),
+		"Stool" = image(icon = 'icons/hud/radial.dmi', icon_state = "stool"),
+		"Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "table"),
+		"Glass Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "glass_table")
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -528,15 +528,15 @@ RLD
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
 	var/list/choices = list(
-		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
-		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
-		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
+		"Airlock" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/hud/radial.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/hud/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/hud/radial.dmi', icon_state = "wallfloor")
 	)
 	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
-		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
-		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
+		"Machine Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "machine"),
+		"Computer Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "computer_dir"),
 		)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		choices += list(
@@ -544,21 +544,21 @@ RLD
 		)
 	if(upgrade & RCD_UPGRADE_FURNISHING)
 		choices += list(
-		"Furnishing" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
+		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
-		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
+		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-		"Change Window Glass" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype"),
-		"Change Window Size" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowsize")
+		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
+		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
 		)
 	else if(mode == RCD_FURNISHING)
 		choices += list(
-		"Change Furnishing Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
+		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))

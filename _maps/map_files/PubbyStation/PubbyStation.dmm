@@ -27449,9 +27449,8 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bvW" = (
-/obj/machinery/magnetic_module,
 /obj/effect/landmark/blobstart,
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -31537,6 +31536,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bGP" = (
@@ -49486,10 +49486,10 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "iQW" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "iRs" = (
@@ -53813,8 +53813,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "pds" = (
-/mob/living/simple_animal/pet/dog/corgi/puppy,
 /obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/psychology)
 "pdW" = (
@@ -58153,10 +58153,10 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "vcJ" = (
@@ -59370,6 +59370,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"wKP" = (
+/obj/structure/table,
+/obj/item/training_toolbox{
+	pixel_y = 5
+	},
+/obj/item/training_toolbox,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "wLl" = (
 /obj/machinery/door_buttons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -59512,6 +59520,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"wRG" = (
+/obj/structure/training_machine,
+/obj/item/target,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "wRI" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -60432,7 +60445,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "ycr" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
@@ -102282,8 +102295,8 @@ aqZ
 atn
 awB
 axw
-axw
-axw
+wRG
+wKP
 axw
 aBX
 atn
