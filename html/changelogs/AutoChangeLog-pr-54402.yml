@@ -1,4 +1,0 @@
-author: "Yenwodyah"
-delete-after: True
-changes: 
-  - tweak: "Borgs take slightly longer to load people from adjacent tiles but can load people instantly from the same tile"

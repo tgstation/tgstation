@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Shuttle navigation computers can no longer switch to z-levels the shuttle is not present on."
