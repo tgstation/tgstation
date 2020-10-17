@@ -356,7 +356,7 @@
 	name = "Hypertorus Core(Machine Board)"
 	icon_state = "engineering"
 	desc = "You can use a screwdriver to switch between heater and freezer."
-	build_path = /obj/machinery/hypertorus/core
+	build_path = /obj/machinery/atmospherics/components/binary/hypertorus/core
 
 /obj/item/circuitboard/machine/hypertorus/corner
 	name = "Hypertorus Corner(Machine Board)"

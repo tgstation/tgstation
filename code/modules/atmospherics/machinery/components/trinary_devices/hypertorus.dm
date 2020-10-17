@@ -130,21 +130,27 @@
 	else
 		message_admins("Is active")
 
-/obj/machinery/hypertorus/proc/check_part_connectivity()
-	return TRUE
-
 /obj/machinery/hypertorus/proc/activate()
 	return
 
 /obj/machinery/hypertorus/proc/deactivate()
 	return
 
-/obj/machinery/hypertorus/core
+/obj/machinery/atmospherics/components/binary/hypertorus
+
+/obj/machinery/atmospherics/components/binary/hypertorus/proc/check_part_connectivity()
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
+	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "core"
 	circuit = /obj/item/circuitboard/machine/hypertorus/core
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	density = TRUE
 
+	var/active = FALSE
 	var/fusion_started = FALSE
 	var/obj/machinery/hypertorus/interface/linked_interface
 	var/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input/linked_moderator
@@ -206,11 +212,12 @@
 	var/magnetic_constrictor  = 1
 	var/current_damper = 0
 	var/power_level = 0
+	var/iron_content = 0
 
 	var/fuel_injection_rate = 25
 	var/moderator_injection_rate = 25
 
-/obj/machinery/hypertorus/core/Initialize()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
@@ -218,7 +225,69 @@
 	internal_output = new
 	moderator_internal = new
 
-/obj/machinery/hypertorus/core/check_part_connectivity()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/SetInitDirections()
+	switch(dir)
+		if(NORTH, SOUTH)
+			initialize_directions = EAST|WEST
+		if(EAST, WEST)
+			initialize_directions = NORTH|SOUTH
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
+	return list(turn(dir, 90), turn(dir, 270))
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/can_be_node(obj/machinery/atmospherics/target)
+	if(anchored)
+		return ..(target)
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/wrench_act(mob/living/user, obj/item/I)
+	if(!panel_open)
+		return
+	set_anchored(!anchored)
+	I.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+
+
+	var/obj/machinery/atmospherics/node1 = nodes[1]
+	var/obj/machinery/atmospherics/node2 = nodes[2]
+
+	if(node1)
+		node1.disconnect(src)
+		nodes[1] = null
+		nullifyPipenet(parents[1])
+	if(node2)
+		node2.disconnect(src)
+		nodes[2] = null
+		nullifyPipenet(parents[2])
+
+	if(anchored)
+		SetInitDirections()
+		atmosinit()
+		node1 = nodes[1]
+		if(node1)
+			node1.atmosinit()
+			node1.addMember(src)
+		node2 = nodes[2]
+		if(node2)
+			node2.atmosinit()
+			node2.addMember(src)
+		SSair.add_to_rebuild_queue(src)
+
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/screwdriver_act(mob/user, obj/item/I)
+	if(..())
+		return TRUE
+	panel_open = !panel_open
+	I.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/check_part_connectivity()
 	. = ..()
 	if(!anchored)
 		return FALSE
@@ -283,7 +352,7 @@
 				. =  FALSE
 			linked_moderator = object
 
-/obj/machinery/hypertorus/core/activate()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/activate()
 	if(!active)
 		message_admins("YES")
 		active = TRUE
@@ -296,7 +365,7 @@
 	else
 		message_admins("Already connected")
 
-/obj/machinery/hypertorus/core/deactivate()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
 	if(active)
 		message_admins("YES")
 		active = FALSE
@@ -314,7 +383,12 @@
 	else
 		message_admins("Already connected")
 
-/obj/machinery/hypertorus/core/process()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
+	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
+		return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
@@ -322,9 +396,6 @@
 		return
 	if(!check_part_connectivity())
 		deactivate()
-		return
-
-	if(!check_fuel())
 		return
 
 	if(!fusion_started)
@@ -386,7 +457,7 @@
 	for (var/gas_id in moderator_internal.gases)
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper + iron_content
 	///Effective reaction instability
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -428,7 +499,8 @@
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
 
-	moderator_internal.temperature += METALLIC_VOID_CONDUCTIVITY * ((internal_fusion.temperature / internal_fusion.heat_capacity()) * moderator_internal.heat_capacity())
+	var/internal_heat_capacity = internal_fusion.heat_capacity() ? internal_fusion.heat_capacity() : 1
+	moderator_internal.temperature += METALLIC_VOID_CONDUCTIVITY * ((internal_fusion.temperature / internal_heat_capacity) * moderator_internal.heat_capacity())
 
 	var/fusion_temperature = internal_fusion.temperature
 	switch(fusion_temperature) //need to find a better way
@@ -450,9 +522,9 @@
 	//better gas usage and consumption
 	//To do
 	if(check_fuel())
-		internal_fusion.gases[/datum/gas/tritium][MOLES] -= clamp((heat_output / 45) * power_level, 0.15, fuel_injection_rate)
-		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= clamp((heat_output / 50) * power_level, 0.25, fuel_injection_rate)
-		internal_fusion.gases[/datum/gas/helium][MOLES] += clamp((heat_output / 40) * power_level, 0, fuel_injection_rate)
+		tritium -= min(tritium, clamp((heat_output / 45) * power_level, 0.15, fuel_injection_rate))
+		hydrogen -= min(hydrogen, clamp((heat_output / 50) * power_level, 0.25, fuel_injection_rate))
+		helium += clamp((heat_output / 40) * power_level, 0, fuel_injection_rate)
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 		//Also dependant on what is the power level and what moderator gases are present
 		if(power_output)
@@ -556,14 +628,40 @@
 					if(moderator_internal.temperature < 1e6)
 						m_antinoblium += 0.01 * (scaled_helium / (fuel_injection_rate / 15))
 
+	linked_output.airs[1].merge(internal_output)
+
 	if(moderator_internal.total_moles())
 		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
+		if(power_level > 5)
+			iron_content += 0.05
 
 	if(waste_remove)
-		internal_output = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
+		var/datum/gas_mixture/internal_remove
+		internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
 		internal_fusion.garbage_collect()
-		linked_output.airs[1].merge(internal_output)
-		internal_output.clear()
+		linked_output.airs[1].merge(internal_remove)
+
+	if(airs[1].total_moles() > 0)
+		var/datum/gas_mixture/cooling_in = airs[1]
+		var/datum/gas_mixture/cooling_out = airs[2]
+		var/datum/gas_mixture/cooling_remove = cooling_in.remove(gas_efficiency * cooling_in.total_moles())
+		var/cooling_heat_capacity = cooling_remove.heat_capacity()
+		var/moderator_heat_capacity = moderator_internal.heat_capacity()
+		var/combined_heat_capacity = cooling_heat_capacity + moderator_heat_capacity
+		var/old_cooling_temperature = cooling_remove.temperature
+		var/old_moderator_temperature = moderator_internal.temperature
+		if(combined_heat_capacity > 0)
+			var/combined_energy = old_cooling_temperature * cooling_heat_capacity + moderator_heat_capacity * old_moderator_temperature
+			var/new_temperature = combined_energy/combined_heat_capacity
+			cooling_remove.temperature = new_temperature
+			moderator_internal.temperature = new_temperature
+
+		cooling_out.merge(cooling_remove)
+
+	update_parents()
+	linked_input.update_parents()
+	linked_output.update_parents()
+	linked_moderator.update_parents()
 
 	//better heat and rads emission
 	//To do
@@ -574,22 +672,17 @@
 		rad_power = clamp((radiation / 1e5), FUSION_RAD_MAX,0)
 		radiation_pulse(loc, rad_power)
 
-/obj/machinery/hypertorus/core/proc/check_fuel()
-	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
-		return TRUE
-	return FALSE
-
 /obj/machinery/hypertorus/interface
 	name = "hypertorus_interface"
 	desc = "hypertorus_interface"
 	icon_state = "interface"
 	circuit = /obj/item/circuitboard/machine/hypertorus/interface
-	var/obj/machinery/hypertorus/core/connected_core
+	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	var/turf/T = get_step(src,turn(dir,180))
-	var/obj/machinery/hypertorus/core/centre = locate() in T
+	var/obj/machinery/atmospherics/components/binary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		message_admins("NOPE")
