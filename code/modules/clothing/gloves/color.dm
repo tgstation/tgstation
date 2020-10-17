@@ -80,6 +80,20 @@
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
+/obj/item/clothing/gloves/cut
+	desc = "These gloves would protect the wearer from electric shock.. if the fingers were covered."
+	name = "fingerless insulated gloves"
+	icon_state = "yellowcut"
+	inhand_icon_state = "ygloves"
+	siemens_coefficient = 1
+	permeability_coefficient = 1
+	resistance_flags = NONE
+	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/cut/heirloom
+	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
+	name = "fingerless insulated gloves"
+
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
