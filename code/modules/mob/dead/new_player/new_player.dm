@@ -44,6 +44,9 @@
   * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
   */
 /mob/dead/new_player/proc/new_player_panel()
+	if (client?.interviewee)
+		return
+
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
 	asset_datum.send(client)
 	var/list/output = list("<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>")
@@ -112,6 +115,9 @@
 
 	if(!client)
 		return
+
+	if(client.interviewee)
+		return FALSE
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -528,3 +534,21 @@
 
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE
+
+/**
+  * Prepares a client for the interview system, and provides them with a new interview
+  *
+  * This proc will both prepare the user by removing all verbs from them, as well as
+  * giving them the interview form and forcing it to appear.
+  */
+/mob/dead/new_player/proc/register_for_interview()
+	// first we detain them
+	for (var/v in client.verbs)
+		client.verbs -= v
+	verbs.Cut()
+
+	// then we create the interview form and give them the verb to open it
+	var/datum/interview/I = GLOB.interviews.interview_for_client(client)
+	if (I)
+		I.ui_interact(src)
+	verbs += /mob/dead/new_player/proc/open_interview

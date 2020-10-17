@@ -274,7 +274,6 @@
 				if(!already_logged) //Reply to an existing ticket
 					SSblackbox.LogAhelp(recipient.current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 
-
 				//always play non-admin recipients the adminhelp sound
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 

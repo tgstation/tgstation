@@ -497,3 +497,15 @@
 
 /datum/config_entry/string/centcom_source_whitelist
 
+
+// A time based allowlist, this only allows clients who have the required number
+// of hours as a living player on the servers linked to the database this server
+// is linked to. Clients without the appropriate hours are disconnected with a
+// message about playing more on other db linked servers
+/datum/config_entry/flag/allowlist_previous_players
+
+/datum/config_entry/number/allowlist_previous_hours_count
+
+// Toggles the interview system to allow new players to apply to bypass limits
+// enforced by the time based allowlist
+/datum/config_entry/flag/allowlist_interview

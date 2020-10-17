@@ -210,6 +210,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel = new(src)
 
 	GLOB.ahelp_tickets.ClientLogin(src)
+	GLOB.interviews.client_login(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	holder = GLOB.admin_datums[ckey]
@@ -365,6 +366,30 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 
+	//Config that only allows players with previous play experience, requires a database to track
+	//living hours in the first place
+	if(CONFIG_GET(flag/allowlist_previous_players) && !connecting_admin)
+		//Make sure the users exp is loaded
+		if(src.set_exp_from_db() != -1)
+			// check for living hours requirement
+			var/required_living_minutes = CONFIG_GET(number/allowlist_previous_hours_count) * 60
+			var/living_minutes = src.get_exp_living(TRUE)
+			if(required_living_minutes <= 0)
+				to_chat(src, "Administrators have set the experienced players allow list on, but have not set a minimum hours requirement, this is not a valid configuration")
+				qdel(src)
+				return 0
+
+			if(living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
+				if(!CONFIG_GET(flag/allowlist_interview))
+					to_chat(src, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
+					+ "playtime on tg servers to play on this server. You have [living_minutes] minutes. Play more!</span>")
+					qdel(src)
+					return 0
+		else
+			to_chat(src, "The experienced players allow list is configured, but is not setup correctly and user exp cannot be loaded")
+			qdel(src)
+			return 0
+
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
 		world.update_status()
@@ -424,26 +449,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
-	for (var/thing in topmenus)
-		var/datum/verbs/menu/topmenu = thing
-		var/topmenuname = "[topmenu]"
-		if (topmenuname == "[topmenu.type]")
-			var/list/tree = splittext(topmenuname, "/")
-			topmenuname = tree[tree.len]
-		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
-		var/list/entries = topmenu.Generate_list(src)
-		for (var/child in entries)
-			winset(src, "[child]", "[entries[child]]")
-			if (!ispath(child, /datum/verbs/menu))
-				var/procpath/verbpath = child
-				if (verbpath.name[1] != "@")
-					new child(src)
-
-	for (var/thing in prefs.menuoptions)
-		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
-		if (menuitem)
-			menuitem.Load_checked(src)
+	if (!interviewee)
+		initialize_menus()
 
 	view_size = new(src, getScreenSize(prefs.widescreenpref))
 	view_size.resetFormat()
@@ -465,6 +472,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
+	GLOB.interviews.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
@@ -1056,3 +1064,28 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(statbrowser_ready)
 		return
 	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
+
+/**
+  * Initializes dropdown menus on client
+  */
+/client/proc/initialize_menus()
+	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
+	for (var/thing in topmenus)
+		var/datum/verbs/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[child]", "[entries[child]]")
+			if (!ispath(child, /datum/verbs/menu))
+				var/procpath/verbpath = child
+				if (verbpath.name[1] != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)
