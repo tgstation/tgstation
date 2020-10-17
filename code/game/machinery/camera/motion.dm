@@ -78,7 +78,7 @@
 
 /obj/machinery/camera/motion/thunderdome
 	name = "entertainment camera"
-	network = list("thunder")
+	network = list("thunder", "ss13")
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
@@ -110,3 +110,12 @@
 		detectTime = 0
 		for(var/obj/machinery/computer/security/telescreen/entertainment/TV in GLOB.machines)
 			TV.notify(FALSE)
+
+/obj/machinery/camera/motion/thunderdome/drone
+	name = "aerial entertainment camera"
+	icon_state = "camera_flying"
+	desc = "Gives an overhead view of the action."
+	point_down = TRUE
+
+/obj/machinery/camera/motion/thunderdome/drone/update_icon_state()
+	return

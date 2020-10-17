@@ -128,8 +128,8 @@
 /obj/machinery/camera/proc/upgradeMotion()
 	if(isMotion())
 		return
-	if(name == initial(name))
-		name = "motion-sensitive security camera"
+//	if(name == initial(name))
+//		name = "motion-sensitive security camera"
 	if(!assembly.proxy_module)
 		assembly.proxy_module = new(assembly)
 	upgrades |= CAMERA_UPGRADE_MOTION

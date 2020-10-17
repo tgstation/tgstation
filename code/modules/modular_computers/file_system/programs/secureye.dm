@@ -145,6 +145,8 @@
 
 	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
 	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+	if(active_camera.point_down)
+		cam_location = SSmapping.get_turf_below(get_turf(cam_location))
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
