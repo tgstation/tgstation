@@ -1937,10 +1937,6 @@
 /obj/item/book/manual/wiki/telescience,
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
-"dV" = (
-/obj/structure/table/wood,
-/turf/open/floor/plating/asteroid,
-/area/crew_quarters/bar)
 "dW" = (
 /obj/structure/fluff{
 	color = "#FFA500";
@@ -17842,6 +17838,14 @@
 /obj/effect/landmark/start/assistant/override,
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"Mp" = (
+/obj/structure/table/wood,
+/obj/item/training_toolbox{
+	pixel_y = 5
+	},
+/obj/item/training_toolbox,
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "Mx" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
@@ -17861,6 +17865,17 @@
 	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"MS" = (
+/obj/effect/turf_decal/trimline/yellow/line,
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
+"MT" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "Nf" = (
 /obj/structure/fluff{
 	color = "#FFA500";
@@ -17875,6 +17890,21 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"Nh" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 6
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
+"Ni" = (
+/obj/structure/table/wood,
+/obj/item/target{
+	pixel_y = 5
+	},
+/obj/item/target/clown,
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "Nn" = (
 /obj/machinery/door/airlock/shuttle/glass{
 	name = "Big Sheed's FTL Food Delivery Service"
@@ -17969,6 +17999,13 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"Ru" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 9
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "Ry" = (
 /turf/open/floor/plating/ashplanet,
 /area/awaymission/cabin/snowforest/forest)
@@ -18027,6 +18064,18 @@
 	color = "#68524D"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"UL" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
+"VA" = (
+/obj/structure/training_machine,
+/obj/item/target/syndicate,
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "VT" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	color = "#68524D"
@@ -18063,6 +18112,20 @@
 /obj/machinery/door/window/southright,
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
+"Xu" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 5
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
+"Xy" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/bar)
 "XC" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 4
@@ -18088,6 +18151,13 @@
 "YN" = (
 /obj/machinery/conveyor_switch/oneway,
 /turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
+"YZ" = (
+/obj/effect/turf_decal/trimline/yellow/line{
+	icon_state = "trimline";
+	dir = 10
+	},
+/turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
 "Zo" = (
 /turf/closed/wall/mineral/titanium,
@@ -53165,11 +53235,11 @@ an
 an
 ao
 mu
+mx
 mv
+mw
 mv
-mv
-mv
-mv
+mx
 nB
 mv
 lu
@@ -53424,7 +53494,7 @@ ao
 mv
 mx
 mv
-mx
+mw
 mv
 mx
 nB
@@ -53679,11 +53749,11 @@ an
 dx
 ak
 mv
-mx
 mv
-mx
 mv
-mx
+mv
+mv
+mv
 nB
 mv
 lu
@@ -53936,11 +54006,11 @@ an
 ak
 ml
 mv
-mv
-mv
-mv
-mv
-mv
+Ru
+MT
+MT
+MT
+YZ
 nB
 mv
 nU
@@ -54191,13 +54261,13 @@ an
 an
 an
 ao
-dV
-mw
+Mp
 mv
-mw
+Xy
 mv
-mw
 mv
+mv
+MS
 nB
 mv
 lu
@@ -54448,13 +54518,13 @@ an
 an
 an
 ao
-dV
-mw
+Mp
 mv
-mw
+Xy
 mv
-mw
+VA
 mv
+MS
 nB
 mv
 lu
@@ -54705,13 +54775,13 @@ an
 an
 an
 ak
-dV
+Mp
+mv
+Xy
 mv
 mv
 mv
-mv
-mv
-mv
+MS
 nB
 mv
 lu
@@ -54962,13 +55032,13 @@ an
 an
 an
 ak
-dV
+Mp
 mv
-mv
-mv
-mv
-mv
-mv
+Xu
+UL
+UL
+UL
+Nh
 nB
 mv
 lu
@@ -55219,12 +55289,12 @@ an
 an
 an
 ao
-dV
-mx
+Mp
 mv
-mx
 mv
-mx
+mv
+mv
+mv
 mv
 nB
 mv
@@ -55476,13 +55546,13 @@ an
 an
 an
 ao
-dV
-mx
+Mp
 mv
-mx
-mv
-mx
-mv
+Ru
+MT
+MT
+MT
+YZ
 nB
 mv
 mv
@@ -55735,11 +55805,11 @@ an
 ak
 dW
 mv
+Xy
 mv
 mv
 mv
-mv
-mv
+MS
 nB
 mv
 mv
@@ -55991,12 +56061,12 @@ an
 an
 dR
 ak
+Ni
+Xy
 mv
-mw
+VA
 mv
-mw
-mv
-mw
+MS
 nB
 mv
 mv
@@ -56248,12 +56318,12 @@ an
 an
 an
 ao
+Ni
+Xy
 mv
-mw
 mv
-mw
 mv
-mw
+MS
 nB
 mv
 mv
@@ -56506,11 +56576,11 @@ an
 an
 ao
 my
-mv
-mv
-mv
-mv
-mv
+Xu
+UL
+UL
+UL
+Nh
 nB
 mv
 np
@@ -57022,8 +57092,8 @@ bw
 dR
 ak
 mv
-mv
-mv
+mw
+mw
 mv
 nB
 mv
