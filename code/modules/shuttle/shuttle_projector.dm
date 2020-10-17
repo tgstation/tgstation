@@ -1,9 +1,10 @@
 /// Projects a shuttle with visual juice while it docks/launches with vis_contents
 /obj/shuttle_projector
 	layer = SHUTTLE_MOVEMENT_LAYER
-	plane = OPENSPACE_PLANE
+	plane = SHUTTLE_MOVEMENT_PLANE
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = null
 
 	/// The mobile port we're projecting
 	var/obj/docking_port/mobile/shuttle_port
@@ -12,6 +13,15 @@
 
 /obj/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
 	. = ..()
+
+	// If we're projecting on lavaland the shuttle goes above instead of below the game view
+	var/turf/open/stationary_turf = get_turf(stationary_port)
+	var/above_layer = !istype(stationary_turf) || stationary_turf.planetary_atmos
+	if(above_layer)
+		// doesn't work currently: https://cdn.discordapp.com/attachments/484280891158560778/767044613558370364/zsZapWE9jz.mp4
+		// objs on the shuttle don't get projected for some reason and some other overlay (lighting?) goes completely wack
+		return INITIALIZE_HINT_QDEL
+
 	if (!istype(shuttle_port))
 		stack_trace("Invalid shuttle_port for shuttle_projector!")
 		return INITIALIZE_HINT_QDEL
@@ -28,12 +38,8 @@
 		var/turf/transit_turf = T
 		RegisterSignal(transit_turf, COMSIG_TURF_CHANGE, .proc/TurfUpdated)
 		// We don't want to project any empty space turfs
-		if(!istype(transit_turf, /turf/open/space))
+		if(istype(transit_turf.loc, /area/shuttle))
 			initial_shuttle_turfs += transit_turf
-
-	// If we're projecting on lavaland the shuttle goes above instead of below the game view
-	var/turf/open/stationary_turf = get_turf(stationary_port)
-	var/above_layer = !istype(stationary_turf) || stationary_turf.planetary_atmos
 
 	var/docking_alpha
 	var/scale_factor
@@ -134,7 +140,7 @@
 
 	bottom_left = locate(minx, miny, stationary_port.z)
 
-	var/matrix/combined_transform = docked_transform * undock_transform * move_transform
+	var/matrix/combined_transform = undock_transform * move_transform
 
 	if (inbound)
 		// make sure we turn correctly while docked
@@ -166,7 +172,7 @@
 /// Adds or removes turfs in vis_contents based on changes in the shuttle
 /obj/shuttle_projector/proc/TurfUpdated(turf/sender, new_path, ...)
 	// This won't add a turf if someone builds a grill but who cares
-	if (ispath(new_path, /turf/open/space))
+	if (istype(sender, /turf/open/space))
 		vis_contents -= sender
 		return
 

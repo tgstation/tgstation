@@ -8,6 +8,7 @@
 #define PLANE_SPACE_PARALLAX -90
 #define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
+#define SHUTTLE_MOVEMENT_PLANE -5
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
 #define OPENSPACE_PLANE -4 //Openspace plane below all turfs
