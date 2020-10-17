@@ -85,9 +85,6 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
-	siemens_coefficient = 1
-	permeability_coefficient = 1
-	resistance_flags = NONE
 	transfer_prints = TRUE
 
 /obj/item/clothing/gloves/cut/heirloom
