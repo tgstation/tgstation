@@ -155,7 +155,7 @@
 
 	else // if they're someone else's shoes, go knot-wards
 		var/mob/living/L = user
-		if(istype(L) && (L.mobility_flags & MOBILITY_STAND))
+		if(istype(L) && L.body_position == STANDING_UP)
 			to_chat(user, "<span class='warning'>You must be on the floor to interact with [src]!</span>")
 			return
 		if(tied == SHOES_KNOTTED)
