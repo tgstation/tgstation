@@ -92,7 +92,6 @@
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
-	name = "fingerless insulated gloves"
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
