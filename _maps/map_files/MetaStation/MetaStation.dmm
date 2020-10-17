@@ -36474,7 +36474,7 @@
 	dir = 8;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -37743,7 +37743,7 @@
 	dir = 8;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -39403,7 +39403,7 @@
 	id = "evashutter";
 	name = "E.V.A. Storage Shutter Control";
 	pixel_x = 30;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -53823,8 +53823,8 @@
 /area/science/test_area)
 "cDz" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "cDD" = (
