@@ -10,47 +10,47 @@
 /obj/item/pneumatic_cannon,
 /obj/item/pneumatic_cannon,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "d" = (
 /obj/machinery/computer/arcade/battle,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "n" = (
 /obj/structure/table,
 /obj/machinery/readybutton,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "t" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
 /obj/item/gun/energy/taser,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "x" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "C" = (
 /obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "D" = (
 /obj/machinery/computer/arcade/amputation,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "I" = (
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "P" = (
 /obj/structure/window{
 	dir = 1
 	},
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 "Z" = (
 /obj/structure/window,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/gamer)
+/area/template_noop)
 
 (1,1,1) = {"
 n

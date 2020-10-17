@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "j" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "n" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -15,57 +15,57 @@
 /obj/item/clothing/under/costume/schoolgirl,
 /obj/item/toy/katana,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "s" = (
 /obj/structure/table/wood,
 /obj/item/toy/crayon/white,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "x" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
 /obj/item/clothing/under/costume/schoolgirl/orange,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "E" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/grown/apple,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "H" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
 /obj/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "R" = (
 /obj/structure/chair{
 	pixel_y = -2
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "S" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
 /obj/item/clothing/under/costume/schoolgirl/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "T" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
 /obj/item/clothing/under/costume/schoolgirl/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 "Y" = (
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/melee/classic_baton/telescopic,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/school)
+/area/template_noop)
 
 (1,1,1) = {"
 a

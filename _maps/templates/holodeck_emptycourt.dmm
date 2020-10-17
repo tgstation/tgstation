@@ -8,7 +8,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "e" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -17,14 +17,14 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "j" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -34,7 +34,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "s" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -44,7 +44,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "y" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -53,24 +53,24 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "D" = (
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "E" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "L" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -79,7 +79,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 "X" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -91,7 +91,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/court)
+/area/template_noop)
 
 (1,1,1) = {"
 X

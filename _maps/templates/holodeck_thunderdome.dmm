@@ -2,13 +2,13 @@
 "a" = (
 /obj/structure/table,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "c" = (
 /obj/structure/window{
 	dir = 1
 	},
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "h" = (
 /obj/structure/table,
 /obj/item/clothing/head/helmet/thunderdome,
@@ -16,7 +16,7 @@
 /obj/item/clothing/under/color/green,
 /obj/item/holo/esword/green,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "q" = (
 /obj/structure/table,
 /obj/item/clothing/head/helmet/thunderdome,
@@ -24,19 +24,19 @@
 /obj/item/clothing/under/color/red,
 /obj/item/holo/esword/red,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "x" = (
 /obj/structure/window,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "B" = (
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 "Q" = (
 /obj/structure/table,
 /obj/machinery/readybutton,
 /turf/open/floor/holofloor/basalt,
-/area/holodeck/rec_center/thunderdome)
+/area/template_noop)
 
 (1,1,1) = {"
 Q

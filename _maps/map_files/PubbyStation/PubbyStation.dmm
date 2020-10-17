@@ -7966,7 +7966,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "aus" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -54937,7 +54937,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "qLp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -57991,7 +57991,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "uTI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

@@ -2,23 +2,23 @@
 "a" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/anthophila)
+/area/template_noop)
 "v" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/beekeeper_suit,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/anthophila)
+/area/template_noop)
 "U" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
 /obj/item/clothing/head/beekeeper_head,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/anthophila)
+/area/template_noop)
 "W" = (
 /obj/effect/holodeck_effect/mobspawner/bee,
 /obj/item/melee/flyswatter,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/anthophila)
+/area/template_noop)
 
 (1,1,1) = {"
 a

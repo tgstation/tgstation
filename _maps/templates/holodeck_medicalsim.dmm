@@ -13,7 +13,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "aL" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/color/latex/nitrile,
@@ -33,7 +33,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "ba" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/green,
@@ -53,7 +53,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "bw" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -64,7 +64,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "cI" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/structure/window{
@@ -80,7 +80,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "cO" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/green,
@@ -100,7 +100,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "cR" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -113,7 +113,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "cT" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -126,7 +126,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "dx" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
@@ -142,7 +142,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "dX" = (
 /obj/structure/window{
 	dir = 1
@@ -158,7 +158,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "gp" = (
 /obj/structure/window,
 /obj/effect/turf_decal/tile/blue,
@@ -171,7 +171,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "gr" = (
 /obj/structure/table/glass,
 /obj/item/retractor,
@@ -184,7 +184,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "hK" = (
 /obj/structure/window{
 	dir = 1
@@ -203,7 +203,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "hQ" = (
 /obj/structure/window{
 	dir = 1
@@ -219,13 +219,13 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "jr" = (
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "kJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -239,7 +239,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "lU" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -253,7 +253,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "nj" = (
 /obj/structure/window{
 	dir = 1
@@ -268,7 +268,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "pe" = (
 /obj/structure/window,
 /obj/effect/turf_decal/tile/blue,
@@ -281,7 +281,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "pY" = (
 /obj/machinery/computer/operating{
 	dir = 8
@@ -293,7 +293,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "qw" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -310,7 +310,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "qV" = (
 /obj/machinery/shower{
 	dir = 4
@@ -324,7 +324,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "qX" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -349,12 +349,12 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "tI" = (
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "uj" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow{
@@ -366,7 +366,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "wu" = (
 /obj/structure/filingcabinet,
 /obj/effect/turf_decal/tile/blue{
@@ -378,7 +378,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "wV" = (
 /obj/structure/window{
 	dir = 1
@@ -393,7 +393,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "xf" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/red,
@@ -403,7 +403,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "xz" = (
 /obj/structure/closet/wardrobe/white,
 /obj/effect/turf_decal/tile/blue{
@@ -415,7 +415,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "yk" = (
 /obj/structure/window{
 	dir = 8
@@ -432,7 +432,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "zd" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -446,7 +446,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ac" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
@@ -458,7 +458,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "An" = (
 /obj/machinery/computer/operating{
 	dir = 4
@@ -470,7 +470,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "BI" = (
 /obj/structure/window{
 	dir = 4
@@ -482,7 +482,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "BS" = (
 /obj/machinery/computer/pandemic,
 /obj/effect/turf_decal/tile/yellow,
@@ -495,7 +495,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "BT" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -514,7 +514,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ck" = (
 /obj/machinery/shower{
 	dir = 4
@@ -529,7 +529,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ct" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -543,7 +543,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "CQ" = (
 /obj/structure/table,
 /obj/item/clothing/neck/stethoscope,
@@ -556,7 +556,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "DT" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -568,7 +568,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "DW" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -579,7 +579,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ea" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -597,7 +597,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ga" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -608,7 +608,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "GN" = (
 /obj/machinery/door/window/westleft{
 	dir = 2
@@ -620,7 +620,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ig" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/green,
@@ -634,7 +634,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Ke" = (
 /obj/structure/window,
 /obj/effect/turf_decal/tile/blue,
@@ -644,7 +644,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "KD" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -656,7 +656,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Lt" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -665,7 +665,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "LW" = (
 /obj/structure/window{
 	dir = 1
@@ -682,7 +682,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "NV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -690,7 +690,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "PJ" = (
 /obj/structure/window{
 	dir = 1
@@ -707,7 +707,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Qu" = (
 /obj/structure/table/glass,
 /obj/item/stack/medical/gauze,
@@ -721,7 +721,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "RA" = (
 /obj/structure/window{
 	dir = 8
@@ -738,7 +738,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "RJ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -751,7 +751,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Sb" = (
 /obj/structure/table/glass,
 /obj/item/scalpel{
@@ -767,7 +767,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Sj" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -776,7 +776,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Tt" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/green,
@@ -790,7 +790,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "TI" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -809,7 +809,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "WK" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
@@ -826,7 +826,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Xm" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -837,7 +837,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "XM" = (
 /obj/structure/window,
 /obj/effect/turf_decal/tile/blue,
@@ -850,7 +850,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 "Zq" = (
 /obj/structure/table/glass,
 /obj/item/surgical_drapes,
@@ -865,7 +865,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/medical)
+/area/template_noop)
 
 (1,1,1) = {"
 WK

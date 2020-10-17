@@ -7886,7 +7886,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "arp" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -53741,7 +53741,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "pHl" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
@@ -54569,7 +54569,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "sgR" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green,

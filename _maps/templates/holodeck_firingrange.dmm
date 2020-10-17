@@ -8,14 +8,14 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "b" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -25,7 +25,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "j" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -35,7 +35,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "k" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -46,7 +46,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "n" = (
 /obj/item/target,
 /obj/item/target/clown,
@@ -55,14 +55,14 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "s" = (
 /obj/item/target,
 /obj/item/target/syndicate,
@@ -71,7 +71,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "t" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -82,7 +82,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "y" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -91,13 +91,13 @@
 	dir = 8;
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "z" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "E" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -115,7 +115,7 @@
 	},
 /obj/item/training_toolbox,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "F" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -124,7 +124,7 @@
 	dir = 10;
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "G" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -141,14 +141,14 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "H" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "J" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -157,12 +157,12 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "K" = (
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "L" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -174,7 +174,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "N" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
@@ -184,7 +184,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "P" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -193,22 +193,22 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "Q" = (
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "S" = (
 /obj/structure/training_machine,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "T" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "U" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -216,7 +216,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "Y" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -224,7 +224,7 @@
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -233,7 +233,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
+/area/template_noop)
 
 (1,1,1) = {"
 J

@@ -2342,7 +2342,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "afE" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -73270,7 +73270,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "pwn" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -73846,7 +73846,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center/offline)
+/area/holodeck/rec_center)
 "qif" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/morgue";

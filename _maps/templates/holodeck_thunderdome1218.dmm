@@ -4,32 +4,32 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "f" = (
 /obj/structure/window/reinforced,
 /obj/item/banner/red,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "g" = (
 /obj/structure/window/reinforced,
 /obj/item/banner/blue,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "k" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/armor/riot/knight/blue,
 /obj/item/clothing/head/helmet/knight/blue,
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "n" = (
 /obj/machinery/door/window/westleft{
 	dir = 2
 	},
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "p" = (
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/scythe,
@@ -38,17 +38,17 @@
 	name = "chain whip"
 	},
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "s" = (
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	icon_state = "right"
 	},
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "x" = (
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "y" = (
 /obj/structure/table/wood,
 /obj/item/melee/chainofcommand{
@@ -56,61 +56,61 @@
 	},
 /obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "B" = (
 /turf/open/floor/holofloor{
 	icon_state = "stairs-old"
 	},
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "C" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/head/crown/fancy{
 	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "E" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "H" = (
 /obj/structure/statue/diamond/captain,
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "J" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "N" = (
 /obj/structure/table/wood,
 /obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "Q" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/armor/riot/knight/blue,
 /obj/item/clothing/head/helmet/knight/blue,
 /obj/item/claymore/weak,
 /turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "R" = (
 /obj/machinery/door/window/westleft{
 	dir = 2
 	},
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "T" = (
 /obj/structure/table/wood,
 /obj/item/tailclub,
 /obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 "X" = (
 /obj/structure/table/wood,
 /obj/item/scythe,
 /obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/thunderdome1218)
+/area/template_noop)
 
 (1,1,1) = {"
 H

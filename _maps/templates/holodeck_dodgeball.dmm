@@ -8,7 +8,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "b" = (
 /obj/structure/window{
 	dir = 1
@@ -22,7 +22,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "c" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
@@ -34,7 +34,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "f" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -43,21 +43,21 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "n" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -67,7 +67,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "p" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
@@ -81,7 +81,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "q" = (
 /obj/structure/window{
 	dir = 1
@@ -95,14 +95,14 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "t" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "y" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
@@ -113,7 +113,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "C" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -122,7 +122,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -131,7 +131,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "G" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -140,7 +140,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "J" = (
 /obj/machinery/readybutton,
 /obj/effect/turf_decal/tile/green{
@@ -151,14 +151,14 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "K" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "V" = (
 /obj/structure/window{
 	dir = 1
@@ -169,7 +169,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "W" = (
 /obj/machinery/readybutton,
 /obj/effect/turf_decal/tile/red{
@@ -182,10 +182,10 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 "X" = (
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/dodgeball)
+/area/template_noop)
 
 (1,1,1) = {"
 W

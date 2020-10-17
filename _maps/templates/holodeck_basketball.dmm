@@ -2,7 +2,7 @@
 "a" = (
 /obj/structure/table,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "b" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -13,7 +13,7 @@
 	layer = 4.1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -23,7 +23,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "e" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -32,14 +32,14 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "f" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -51,7 +51,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "i" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -61,7 +61,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "j" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -71,7 +71,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "k" = (
 /obj/structure/holohoop{
 	layer = 3.9
@@ -83,7 +83,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "l" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -92,14 +92,14 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "m" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "n" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -111,12 +111,12 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "q" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "r" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -125,30 +125,30 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "s" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "u" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "w" = (
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "y" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -160,7 +160,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "B" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -169,7 +169,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "E" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -179,7 +179,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -189,7 +189,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "J" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -199,7 +199,7 @@
 	},
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "L" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -208,7 +208,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "M" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -218,7 +218,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "R" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -227,13 +227,13 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "T" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "U" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -243,14 +243,14 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "V" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "W" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -260,14 +260,14 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -277,7 +277,7 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
+/area/template_noop)
 
 (1,1,1) = {"
 a

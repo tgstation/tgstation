@@ -5,33 +5,33 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "b" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
 	dir = 4
 	},
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "l" = (
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "t" = (
 /obj/structure/foamedmetal,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "u" = (
 /obj/structure/table,
 /obj/machinery/recharger,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "v" = (
 /obj/structure/table,
 /obj/item/stack/medical/ointment{
 	heal_burn = 10
 	},
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "x" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
@@ -39,12 +39,12 @@
 	},
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "I" = (
 /obj/structure/table,
 /obj/item/gun/energy/laser,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 "J" = (
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack{
@@ -52,7 +52,7 @@
 	},
 /obj/item/soap,
 /turf/open/floor/holofloor/asteroid,
-/area/holodeck/rec_center/bunker)
+/area/template_noop)
 
 (1,1,1) = {"
 a

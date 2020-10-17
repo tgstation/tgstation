@@ -8,7 +8,7 @@
 	},
 /obj/structure/closet/secure_closet/courtroom,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "b" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -23,7 +23,7 @@
 /obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/item/reagent_containers/food/snacks/grown/harebell,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "c" = (
 /obj/structure/chair{
 	dir = 1
@@ -31,7 +31,7 @@
 /turf/open/floor/holofloor/chapel{
 	direction = 8
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "d" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/suit/chaplainsuit/nun,
@@ -48,15 +48,15 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "f" = (
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "g" = (
 /turf/open/floor/holofloor/chapel{
 	direction = 1
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -81,10 +81,10 @@
 	pixel_y = 2
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "i" = (
 /turf/open/floor/holofloor/chapel,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "k" = (
 /obj/structure/chair{
 	dir = 1
@@ -92,7 +92,7 @@
 /turf/open/floor/holofloor/chapel{
 	direction = 4
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "l" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -104,7 +104,7 @@
 /obj/item/folder/blue,
 /obj/item/pen/red,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "m" = (
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat,
 /obj/effect/turf_decal/tile/neutral,
@@ -119,7 +119,7 @@
 	},
 /obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -130,7 +130,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "p" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -138,7 +138,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "q" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -150,7 +150,7 @@
 /obj/item/folder/red,
 /obj/item/pen/red,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "r" = (
 /obj/item/gavelblock,
 /obj/item/gavelhammer,
@@ -160,7 +160,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "s" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -169,7 +169,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "u" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/book/bible,
@@ -184,14 +184,14 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "w" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -204,7 +204,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "y" = (
 /obj/item/toy/figure/chaplain,
 /obj/effect/turf_decal/tile/neutral,
@@ -219,18 +219,18 @@
 	},
 /obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "A" = (
 /turf/open/floor/holofloor/chapel{
 	direction = 8
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "C" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/holofloor/chapel,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "F" = (
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
@@ -246,7 +246,7 @@
 	},
 /obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "H" = (
 /obj/structure/table/wood/fancy,
 /obj/item/book/manual/wiki/security_space_law,
@@ -261,7 +261,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "I" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -270,12 +270,12 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "K" = (
 /turf/open/floor/holofloor/chapel{
 	direction = 4
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "L" = (
 /obj/structure/chair{
 	dir = 1
@@ -287,7 +287,7 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "N" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -297,7 +297,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "O" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -308,11 +308,11 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "Q" = (
 /obj/structure/chair,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "S" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -325,7 +325,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "T" = (
 /obj/structure/chair{
 	dir = 1
@@ -333,7 +333,7 @@
 /turf/open/floor/holofloor/chapel{
 	direction = 1
 	},
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "U" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -344,7 +344,7 @@
 /obj/structure/table/wood,
 /obj/item/hand_labeler,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "W" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -354,7 +354,7 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 "X" = (
 /obj/item/clothing/suit/chaplainsuit/bishoprobe,
 /obj/effect/turf_decal/tile/neutral,
@@ -369,7 +369,7 @@
 	},
 /obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
-/area/holodeck/rec_center/chapelcourt)
+/area/template_noop)
 
 (1,1,1) = {"
 x

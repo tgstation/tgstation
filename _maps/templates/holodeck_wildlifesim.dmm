@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/holofloor/plating,
-/area/holodeck/rec_center/wildlife)
+/area/template_noop)
 "H" = (
 /obj/effect/holodeck_effect/mobspawner,
 /turf/open/floor/holofloor/plating,
-/area/holodeck/rec_center/wildlife)
+/area/template_noop)
 
 (1,1,1) = {"
 a

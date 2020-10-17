@@ -26,7 +26,7 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
-	var/area/mappedstartarea = /area/holodeck/rec_center/offline //var edit this to a different area if youre making a second holodeck different from the station one
+	var/area/mappedstartarea = /area/holodeck/rec_center //var edit this to a different area if youre making a second holodeck different from the station one
 	var/area/holodeck/loaded
 	var/program = "holodeck_offline"
 	var/last_program
@@ -165,7 +165,6 @@
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.tick()
-
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
@@ -356,9 +355,9 @@
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
 
-	for(var/obj/machinery/M in added)
+	for(var/obj/machinery/M in spawned)
 		M.flags_1 |= NODECONSTRUCT_1
-	for(var/obj/structure/S in added)
+	for(var/obj/structure/S in spawned)
 		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
