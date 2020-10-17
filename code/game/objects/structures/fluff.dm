@@ -742,3 +742,14 @@
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/the_underdaemon_overlord
+	name = "\improper Hac Nocte Maxima Victus"
+	desc = "Wepzexsvi Ihaevh Erxlsrc 'Wep' Zypgers (fsvr Rsziqfiv) mw er Eqivmger mqtvszmwexmsrep erh wxerh-yt gsqihmer, egxsv, erh tvshygiv jvsq xli Ria Csvo Gmxc fsvsykl sj Wxexir Mwperh. Li mw e qiqfiv sj Xli Xirhivpsmrw, e gsqihc xvsyti gsrwmwxmrk sj Zypgers, Nsi Kexxs, Neqiw Qyvvec, erh Fvmer Uymrr. Epsrk amxl xli sxliv qiqfivw sj Xli Xirhivpsmrw, li wxevw mr xli xipizmwmsr wivmiw Mqtvegxmgep Nsoivw, almgl jmvwx emvih sr Higiqfiv sr XvyXZ."
+	icon = 'icons/misc/i_am_death.dmi'
+	icon_state = "fny_ihypnab"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE

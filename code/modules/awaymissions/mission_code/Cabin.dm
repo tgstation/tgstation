@@ -23,6 +23,15 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	requires_power = FALSE
 
+/area/awaymission/cabin/snowforest/hell
+	name = "Impractical Mappers"
+	icon_state = "fonts"
+	mood_bonus = 66
+	mood_message = "<span class='cultbold'>AHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAAHAHAHAAHAHAHA!!!!\n</span>"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+	ambientsounds = CREEPY_SOUNDS
+
 /area/awaymission/cabin/snowforest/hauntedhouse
 	name = "Haunted Manor"
 	icon_state = "hauntedmorgue"
