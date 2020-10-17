@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(nightshift)
 		else
 			announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
 	for(var/A in GLOB.apcs_list)
-		var/obj/machinery/power/apc/APC = A
+		var/obj/machinery/power/apc/APC = GLOB.apcs_list[A]
 		if (APC.area && (APC.area.type in GLOB.the_station_areas))
 			APC.set_nightshift(active)
 			CHECK_TICK

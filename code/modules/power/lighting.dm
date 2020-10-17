@@ -304,7 +304,7 @@
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
-		var/obj/machinery/power/apc/temp_apc = A.get_apc()
+		var/obj/machinery/power/apc/temp_apc = GLOB.apcs_list[A]
 		nightshift_enabled = temp_apc?.nightshift_lights
 
 	if(start_with_cell && !no_emergency)

@@ -517,7 +517,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	button.desc = desc
 
 /datum/action/innate/ai/blackout/Activate()
-	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
+	for(var/A in GLOB.apcs_list)
+		var/obj/machinery/power/apc/apc = GLOB.apcs_list[A]
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else

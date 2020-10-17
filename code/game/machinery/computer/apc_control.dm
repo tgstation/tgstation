@@ -36,8 +36,7 @@
 		return
 	..()
 
-/obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !(APC.area.area_flags & NO_ALERTS)
+
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	operator = user
@@ -45,6 +44,7 @@
 	if(!ui)
 		ui = new(user, src, "ApcControl")
 		ui.open()
+
 
 /obj/machinery/computer/apc_control/ui_data(mob/user)
 	var/list/data = list()
@@ -59,25 +59,26 @@
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
 
-	for(var/apc in GLOB.apcs_list)
-		if(check_apc(apc))
-			var/obj/machinery/power/apc/A = apc
-			var/has_cell = (A.cell) ? TRUE : FALSE
+	for(var/A in GLOB.apcs_list)
+		var/obj/machinery/power/apc/APC = GLOB.apcs_list[A]
+		if(APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !(APC.area.area_flags & NO_ALERTS))
+			var/has_cell = (APC.cell) ? TRUE : FALSE
 			data["apcs"] += list(list(
-					"name" = A.area.name,
-					"operating" = A.operating,
-					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
-					"load" = DisplayPower(A.lastused_total),
-					"charging" = A.charging,
-					"chargeMode" = A.chargemode,
-					"eqp" = A.equipment,
-					"lgt" = A.lighting,
-					"env" = A.environ,
-					"responds" = A.aidisabled || A.panel_open,
-					"ref" = REF(A)
+					"name" = APC.area.name,
+					"operating" = APC.operating,
+					"charge" = (has_cell) ? APC.cell.percent() : "NOCELL",
+					"load" = DisplayPower(APC.lastused_total),
+					"charging" = APC.charging,
+					"chargeMode" = APC.chargemode,
+					"eqp" = APC.equipment,
+					"lgt" = APC.lighting,
+					"env" = APC.environ,
+					"responds" = APC.aidisabled || APC.panel_open,
+					"ref" = REF(APC)
 				)
 			)
 	return data
+
 
 /obj/machinery/computer/apc_control/ui_act(action, params)
 	. = ..()

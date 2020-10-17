@@ -158,7 +158,7 @@
 	if (!armor)
 		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
 	..()
-	GLOB.apcs_list += src
+
 
 	wires = new /datum/wires/apc(src)
 	// offset 24 pixels in direction of dir
@@ -187,6 +187,7 @@
 			pixel_x = -25
 	if (building)
 		area = get_area(src)
+		GLOB.apcs_list[area] = src
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "\improper [get_area_name(area, TRUE)] APC"
@@ -195,14 +196,19 @@
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
-	GLOB.apcs_list -= src
+	area.power_light = initial(A.power_light)
+	area.power_equip = initial(A.power_equip)
+	area.power_environ = initial(A.power_environ)
+	area.power_change()
+
+	GLOB.apcs_list[area] = null
+	GLOB.apcs_list.Remove(src)
+	area = null
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	area.power_light = FALSE
-	area.power_equip = FALSE
-	area.power_environ = FALSE
-	area.power_change()
+
+
 	if(occupier)
 		malfvacate(1)
 	qdel(wires)
@@ -229,24 +235,35 @@
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
 	if(!mapload)
+		// Area SHOULD of been set in new, but just in case
+		if(!area)
+			area = get_area(src)
+			GLOB.apcs_list[area] = src
+			stack_trace("Area not set on apc([src]) after building!")
 		return
+
 	has_electronics = APC_ELECTRONICS_SECURED
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
 		cell = new cell_type
 		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
 
-	var/area/A = loc.loc
-
 	//if area isn't specified use current
 	if(areastring)
 		area = get_area_instance_from_text(areastring)
 		if(!area)
-			area = A
 			stack_trace("Bad areastring path for [src], [areastring]")
-	else if(isarea(A) && areastring == null)
-		area = A
 
+	if(!area)
+		var/area/A = get_area(loc)
+	 	if(A)
+			area = A
+
+	// finaly if after ALL that we are still not valid, just crash
+	if(!area)
+		CRASH("THIS APC([src]) IS NOT IN AN AREA, WTF? areastring='[areastring]'")
+
+	GLOB.apcs_list[area] = src
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
 

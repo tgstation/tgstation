@@ -279,10 +279,9 @@
 
 /// Extracts the powernet and cell of the provided power source
 /proc/get_powernet_info_from_source(power_source)
-	var/area/source_area
 	if (isarea(power_source))
-		source_area = power_source
-		power_source = source_area.get_apc()
+		var/area/source_area = power_source
+		power_source = GLOB.apcs_list[source_area]
 	else if (istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -375,7 +374,4 @@
 			return C
 	return null
 
-/area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
-			return APC
+

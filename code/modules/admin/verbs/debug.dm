@@ -354,11 +354,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			areas_all.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		var/area/A = APC.area
-		if(!A)
-			dat += "Skipped over [APC] in invalid location, [APC.loc]."
-			continue
+	for(var/area/A in GLOB.apcs_list)
+		var/obj/machinery/power/apc/APC = GLOB.apcs_list[A]
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 		else if(A.type in areas_all)

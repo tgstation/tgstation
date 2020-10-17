@@ -43,7 +43,7 @@
 				if(A.nuking)
 					target = A
 			for(var/V in GLOB.apcs_list)
-				var/obj/machinery/power/apc/A = V
+				var/obj/machinery/power/apc/A = GLOB.apcs_list[V]
 				if(A.malfhack && A.occupier)
 					target = A
 		if(TRACK_INFILTRATOR)

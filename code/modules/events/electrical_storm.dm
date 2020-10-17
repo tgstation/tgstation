@@ -27,7 +27,7 @@
 		return
 
 	for(var/centre in epicentreList)
-		for(var/a in GLOB.apcs_list)
-			var/obj/machinery/power/apc/A = a
-			if(get_dist(centre, A) <= lightsoutRange)
-				A.overload_lighting()
+		for(var/A in GLOB.apcs_list)
+			var/obj/machinery/power/apc/APC = GLOB.apcs_list[A]
+			if(get_dist(centre, APC) <= lightsoutRange)
+				APC.overload_lighting()
