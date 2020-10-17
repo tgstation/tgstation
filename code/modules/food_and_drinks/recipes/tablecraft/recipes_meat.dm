@@ -236,5 +236,5 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/food/spaghetti = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/lasagna
+	result = /obj/item/food/lasagna
 	subcategory = CAT_MEAT

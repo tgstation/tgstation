@@ -295,15 +295,13 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 30)
 
-/obj/item/reagent_containers/food/snacks/lasagna
+/obj/item/food/lasagna
 	name = "Lasagna"
 	desc = "A slice of lasagna. Perfect for a Monday afternoon."
 	icon_state = "lasagna"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
-	foodtype = MEAT | DAIRY | GRAIN
-	value = FOOD_JUNK
+	foodtypes = MEAT | DAIRY | GRAIN
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
