@@ -2,7 +2,7 @@
 
 /obj/structure/fluff
 	name = "fluff structure"
-	desc = "Fluffier than a sheep. This shouldn't exist."
+	desc = "Effectively impervious to conventional methods of destruction."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "minibar"
 	max_integrity = 9999
