@@ -24,7 +24,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(iscarbon(A) && A.reagents?.total_volume)
+	if(iscarbon(A) && reagents?.total_volume)
 		var/mob/living/carbon/C = A
 		var/reagentlist = pretty_string_from_reagent_list(reagents)
 		var/log_object = "containing [reagentlist]"
