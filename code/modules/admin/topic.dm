@@ -2355,6 +2355,13 @@
 		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
 		button.force_war()
 
+	else if (href_list["interview"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/interview/I = locate(href_list["interview"])
+		if (I)
+			I.ui_interact(usr)
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return

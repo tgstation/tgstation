@@ -967,27 +967,10 @@ function draw_interviews() {
 		var td = document.createElement("td");
 		var a = document.createElement("a");
 		a[textContentKey] = part["status"];
+		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=1";
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
-		// td1[textContentKey] = part[0];
-		// var td2 = document.createElement("td");
-		// if(part[2]) {
-		// 	var a = document.createElement("a");
-		// 	a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
-		// 	a[textContentKey] = part[1];
-		// 	td2.appendChild(a);
-		// } else if(part[3]){
-		// 	var a = document.createElement("a");
-		// 	a.href = "?src=" + part[3] + ";statpanel_item_click=1";
-		// 	a[textContentKey] = part[1];
-		// 	td2.appendChild(a);
-		// } else {
-		// 	td2[textContentKey] = part[1];
-		// }
-		// tr.appendChild(td1);
-		// tr.appendChild(td2);
-		// table.appendChild(tr);
 	}
 	document.getElementById("statcontent").appendChild(table);
 }

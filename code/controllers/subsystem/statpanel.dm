@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(statpanels)
 				var/list/queued = list()
 				for (var/datum/interview/I in m.interview_queue)
 					queued += list(list(
-						"id" = I.id,
+						"ref" = REF(I),
 						"status" = "\[[I.pos_in_queue]\]: [I.owner_ckey][!I.owner ? " (DC)": ""] \[INT-[I.id]\]"
 					))
 
