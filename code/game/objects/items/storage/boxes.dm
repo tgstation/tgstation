@@ -133,6 +133,10 @@
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
+/obj/item/storage/box/survival/icebox/PopulateContents()
+	..()
+	new /obj/item/pickaxe/emergency(src)
+
 // Mining survival box
 /obj/item/storage/box/survival/mining
 	mask_type = /obj/item/clothing/mask/gas/explorer

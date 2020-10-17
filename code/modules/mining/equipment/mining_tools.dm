@@ -117,6 +117,20 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=12050) //metal needed for a crowbar and for a knife, why the FUCK does a knife cost 6 metal sheets while a crowbar costs 0.025 sheets? shit makes no sense fuck this
 
+/obj/item/pickaxe/emergency
+	name = "emergency excavation tool"
+	desc = "A miniature shovel meant for emergency situations. Wasn't commonplace until Nanotrasen decided it had lost enough employees on it's lunar and planetary outposts."
+	icon_state = "eet"
+	inhand_icon_state = "eet"
+	worn_icon_state = "eet"
+	force = 5
+	throwforce = 7
+	toolspeed = 3
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
+	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
+	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
+
 /obj/item/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
