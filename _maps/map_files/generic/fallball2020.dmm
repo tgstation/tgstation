@@ -1937,6 +1937,13 @@
 /obj/item/book/manual/wiki/telescience,
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
+"dV" = (
+/obj/item/reagent_containers/food/snacks/cheesewedge{
+	anchored = 1;
+	name = "mice attractor"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/hauntedhouse)
 "dW" = (
 /obj/structure/fluff{
 	color = "#FFA500";
@@ -4364,6 +4371,7 @@
 	desc = "A terrifying sign of what's to come.";
 	icon = 'icons/mob/eldritch_mobs.dmi';
 	icon_state = "armsy_start";
+	layer = 5;
 	name = "\improper ARMSY: TERROR OF THE TRACKS"
 	},
 /turf/closed/indestructible/riveted/boss,
@@ -4507,8 +4515,9 @@
 /turf/open/floor/vault,
 /area/crew_quarters/tele2)
 "jU" = (
-/turf/open/floor/vault,
-/area/crew_quarters/tele2)
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/grass/fall,
+/area/awaymission/cabin/snowforest/forest)
 "jV" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4;
@@ -6160,15 +6169,9 @@
 /turf/closed/indestructible/wood,
 /area/crew_quarters/bar/vip)
 "mZ" = (
-/obj/structure/fluff{
-	color = "#800080";
-	dir = 4;
-	icon = 'icons/turf/shuttleold.dmi';
-	icon_state = "corner";
-	name = "tent wall"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar/vip)
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/tele4)
 "na" = (
 /obj/structure/fluff{
 	color = "#800080";
@@ -7812,14 +7815,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar/vip)
 "qH" = (
-/obj/structure/fluff{
-	color = "#800080";
-	icon = 'icons/turf/shuttleold.dmi';
-	icon_state = "corner";
-	name = "tent wall"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar/vip)
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/vault,
+/area/crew_quarters/tele2)
 "qI" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -9589,11 +9587,9 @@
 /turf/open/floor/oldshuttle,
 /area/crew_quarters/theatre/zoo_spess)
 "ut" = (
-/obj/structure/railing/wooden{
-	dir = 10
-	},
-/turf/open/floor/plating/sandy_dirt,
-/area/crew_quarters/theatre/zoo_stick)
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/mineral/titanium/white,
+/area/crew_quarters/bar)
 "uu" = (
 /obj/structure/fluff/paper/stack{
 	dir = 8
@@ -9639,11 +9635,9 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/crew_quarters/theatre/zoo_stick)
 "uz" = (
-/obj/structure/railing/wooden{
-	dir = 10
-	},
-/turf/open/floor/plating/sandy_dirt,
-/area/crew_quarters/theatre/zoo_reptile)
+/obj/effect/baseturf_helper/plating,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
 "uA" = (
 /obj/structure/railing/wooden,
 /turf/open/floor/plating/grass,
@@ -9906,11 +9900,16 @@
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/tele3)
 "vq" = (
-/obj/effect/turf_decal/trimline/blue/warning{
-	color = "#FFA500"
+/obj/structure/fluff{
+	color = "#800080";
+	dir = 4;
+	icon = 'icons/turf/shuttleold.dmi';
+	icon_state = "corner";
+	name = "tent wall"
 	},
-/turf/open/floor/plating/asteroid,
-/area/crew_quarters/tele3)
+/obj/effect/baseturf_helper/plating,
+/turf/open/floor/wood,
+/area/crew_quarters/bar/vip)
 "vr" = (
 /obj/effect/turf_decal/trimline/blue/line{
 	color = "#800080";
@@ -11968,7 +11967,6 @@
 /obj/item/food/meat/slab/meatproduct,
 /obj/item/food/meat/slab/meatproduct,
 /obj/item/food/meat/slab/human/mutant/skeleton,
-/mob/living/simple_animal/pet/dog/corgi,
 /turf/open/floor/carpet/orange,
 /area/awaymission/cabin/snowforest/forest)
 "yY" = (
@@ -14448,6 +14446,7 @@
 /area/awaymission/cabin/snowforest/forest)
 "Ey" = (
 /obj/structure/fluff/spookedya,
+/obj/effect/baseturf_helper/plating,
 /turf/open/floor/plating,
 /area/awaymission/cabin/snowforest/hauntedhouse)
 "Ez" = (
@@ -17846,6 +17845,47 @@
 /obj/item/training_toolbox,
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
+"Mq" = (
+/obj/effect/baseturf_helper/plating,
+/turf/open/floor/wood,
+/area/crew_quarters/bar/vip)
+"Mr" = (
+/obj/structure/fluff{
+	color = "#800080";
+	icon = 'icons/turf/shuttleold.dmi';
+	icon_state = "corner";
+	name = "tent wall"
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar/vip)
+"Ms" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/basketball/three{
+	color = null
+	})
+"Mt" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"Mu" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"Mv" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_walt)
+"Mw" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
 "Mx" = (
 /obj/effect/turf_decal/bot/right{
 	icon = 'icons/obj/objects.dmi';
@@ -17865,6 +17905,95 @@
 	name = "tent wall"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"MA" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"MB" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"MC" = (
+/obj/effect/turf_decal/trimline/blue/warning{
+	color = "#FFA500"
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/asteroid,
+/area/crew_quarters/tele3)
+"MD" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"ME" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"MF" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"MG" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"MH" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"MI" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/awaymission/cabin/snowforest/tele)
+"MJ" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/hydroponics/garden/cornmaze/labyrinth)
+"MK" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/hydroponics/garden/cornmaze)
+"ML" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/tele5)
+"MM" = (
+/obj/effect/baseturf_helper/asteroid,
+/turf/open/transparent/openspace,
+/area/awaymission/cabin/snowforest/forest)
+"MN" = (
+/obj/effect/baseturf_helper/plating,
+/turf/closed/indestructible/fakeglass,
+/area/crew_quarters/bar)
+"MO" = (
+/obj/effect/baseturf_helper/plating,
+/turf/open/transparent/glass/reinforced,
+/area/crew_quarters/bar/announcerroom)
+"MP" = (
+/obj/effect/baseturf_helper/plating,
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/hauntedhouse)
+"MQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/plating,
+/turf/open/floor/plasteel/dark{
+	icon_state = "bus"
+	},
+/area/shuttle/arrival)
+"MR" = (
+/obj/item/candle/infinite{
+	anchored = 1
+	},
+/turf/open/floor/engine/cult,
+/area/awaymission/cabin/snowforest/hell)
 "MS" = (
 /obj/effect/turf_decal/trimline/yellow/line,
 /turf/open/floor/plating/asteroid,
@@ -17876,6 +18005,27 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/crew_quarters/bar)
+"MU" = (
+/obj/structure/fluff/the_underdaemon_overlord,
+/turf/closed/indestructible/necropolis{
+	desc = "A seemingly impenetrable protrusion from the underdepths of hell.";
+	name = "The Impractical Altar";
+	opacity = 0
+	},
+/area/awaymission/cabin/snowforest/hell)
+"MV" = (
+/obj/structure/healingfountain{
+	desc = "He fell for our pleasure...";
+	name = "Offerings from He"
+	},
+/turf/open/floor/engine/cult,
+/area/awaymission/cabin/snowforest/hell)
+"MW" = (
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/hell)
+"MX" = (
+/turf/open/floor/engine/cult,
+/area/awaymission/cabin/snowforest/hell)
 "Nf" = (
 /obj/structure/fluff{
 	color = "#FFA500";
@@ -21657,7 +21807,7 @@ an
 an
 an
 sx
-sP
+Mt
 tN
 sP
 br
@@ -21924,7 +22074,7 @@ br
 br
 vu
 vW
-vv
+ME
 vs
 an
 an
@@ -23970,7 +24120,7 @@ ea
 an
 an
 sy
-sV
+Mu
 tP
 ur
 br
@@ -24494,7 +24644,7 @@ br
 br
 vz
 vz
-vz
+MF
 wI
 an
 an
@@ -24776,7 +24926,7 @@ bK
 bJ
 bJ
 bJ
-bK
+MJ
 bK
 bK
 bJ
@@ -26542,7 +26692,7 @@ an
 sz
 tc
 tR
-ut
+MA
 br
 br
 br
@@ -27834,7 +27984,7 @@ br
 br
 br
 vE
-we
+MD
 we
 wJ
 an
@@ -28062,10 +28212,10 @@ eo
 eb
 eb
 eb
-eo
-eb
-eb
-eb
+MR
+MR
+MR
+MR
 ea
 eo
 ea
@@ -28318,13 +28468,13 @@ eo
 es
 eb
 eb
-eb
-es
-eb
-eb
-eb
+MR
+MU
+MV
+MW
+MX
+MX
 ea
-es
 ea
 eo
 eo
@@ -28576,10 +28726,10 @@ et
 eb
 eb
 eb
-eo
-eb
-eb
-eb
+MR
+MR
+MR
+MR
 ea
 eo
 ea
@@ -28836,7 +28986,7 @@ eo
 ea
 eb
 eb
-ep
+ea
 ea
 ea
 ea
@@ -29369,7 +29519,7 @@ an
 sA
 ti
 tV
-uz
+MB
 br
 br
 br
@@ -29891,7 +30041,7 @@ br
 br
 vG
 vH
-vH
+MG
 wK
 an
 an
@@ -32975,7 +33125,7 @@ br
 br
 vK
 wj
-vL
+MH
 wL
 an
 an
@@ -33479,7 +33629,7 @@ ea
 an
 an
 sB
-ts
+Mv
 ts
 uG
 br
@@ -33903,7 +34053,7 @@ an
 an
 an
 af
-af
+mZ
 af
 an
 an
@@ -36049,7 +36199,7 @@ an
 an
 an
 sC
-ty
+Mw
 ue
 uJ
 uR
@@ -36882,7 +37032,7 @@ bI
 bI
 bI
 bt
-bI
+MK
 bI
 bt
 bI
@@ -41252,7 +41402,7 @@ br
 br
 an
 Bw
-Bw
+ML
 Bw
 yi
 an
@@ -45774,7 +45924,7 @@ an
 an
 Zo
 as
-ba
+ut
 ba
 ba
 JM
@@ -48351,7 +48501,7 @@ Zo
 Zo
 an
 ao
-dY
+uz
 dY
 mW
 dY
@@ -48626,7 +48776,7 @@ oS
 oS
 po
 mY
-nm
+Mq
 lu
 mv
 pX
@@ -49381,7 +49531,7 @@ an
 an
 an
 bR
-mZ
+vq
 nm
 nt
 nt
@@ -50961,7 +51111,7 @@ an
 br
 uZ
 kZ
-vq
+MC
 br
 uN
 br
@@ -52488,7 +52638,7 @@ pL
 pO
 pO
 nm
-qH
+Mr
 mL
 an
 an
@@ -56428,7 +56578,7 @@ CY
 jL
 br
 Dh
-Dp
+MQ
 DA
 DM
 br
@@ -61181,7 +61331,7 @@ jA
 jF
 br
 jJ
-jU
+qH
 kf
 br
 br
@@ -64610,7 +64760,7 @@ xB
 xA
 xB
 yQ
-yQ
+MI
 yQ
 yP
 yP
@@ -68683,7 +68833,7 @@ qQ
 qF
 rh
 ru
-rD
+Ms
 rD
 rD
 rC
@@ -74196,7 +74346,7 @@ ae
 (219,1,1) = {"
 ae
 ae
-ea
+jU
 ea
 ea
 ea
@@ -110304,7 +110454,7 @@ dY
 GJ
 GJ
 GJ
-GJ
+GT
 dY
 dY
 dY
@@ -110561,7 +110711,7 @@ dY
 GG
 GG
 GG
-GG
+GN
 dY
 dY
 dY
@@ -114410,7 +114560,7 @@ dY
 dY
 dY
 dY
-GW
+MN
 GW
 GW
 GW
@@ -122383,7 +122533,7 @@ dY
 GG
 GG
 GG
-GG
+GN
 dY
 dY
 dY
@@ -122640,7 +122790,7 @@ dY
 GH
 GH
 GH
-GH
+GO
 dY
 dY
 dY
@@ -138144,7 +138294,7 @@ An
 An
 An
 Ax
-Ax
+dV
 IM
 IR
 IC
@@ -138401,7 +138551,7 @@ An
 ES
 An
 An
-Ax
+MP
 IM
 IS
 Ja
@@ -145898,7 +146048,7 @@ ES
 ES
 "}
 (243,1,2) = {"
-ES
+MM
 ES
 ES
 ES
@@ -178922,7 +179072,7 @@ Lj
 Lp
 Lz
 Lz
-Lz
+MO
 Lz
 Lz
 Lz
@@ -208096,7 +208246,7 @@ ES
 ES
 ES
 ES
-ES
+MM
 ES
 ES
 ES

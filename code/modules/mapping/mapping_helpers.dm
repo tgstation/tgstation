@@ -58,6 +58,10 @@
 	name = "asteroid baseturf editor"
 	baseturf = /turf/open/floor/plating/asteroid
 
+/obj/effect/baseturf_helper/plating
+	name = "plating baseturf editor"
+	baseturf = /turf/open/floor/plating
+
 /obj/effect/baseturf_helper/asteroid/airless
 	name = "asteroid airless baseturf editor"
 	baseturf = /turf/open/floor/plating/asteroid/airless
