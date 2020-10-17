@@ -134,12 +134,6 @@
 
 	bottom_left = locate(minx, miny, stationary_port.z)
 
-	var/matrix/docked_transform = matrix()
-	if(rotate_degrees != 0)
-		undock_transform.Translate(-rotate_width_factor, -rotate_height_factor)
-		docked_transform.Turn(-rotate_degrees)
-		undock_transform.Translate(rotate_width_factor, rotate_height_factor)
-
 	var/matrix/combined_transform = docked_transform * undock_transform * move_transform
 
 	if (inbound)
@@ -147,17 +141,15 @@
 		// start at the end position
 		transform = combined_transform
 		alpha = 0
-	else
-		transform = docked_transform
 
 	forceMove(bottom_left)
 	vis_contents = initial_shuttle_turfs
 
 	if (inbound)
 		animate(src, transform = undock_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
-		animate(transform = docked_transform, alpha = 255, time = dock_animation_time)
+		animate(transform = matrix(), alpha = 255, time = dock_animation_time)
 	else
-		animate(src, transform = docked_transform * undock_transform, alpha = docking_alpha, time = dock_animation_time)
+		animate(src, transform = undock_transform, alpha = docking_alpha, time = dock_animation_time)
 		animate(transform = combined_transform, easing = CIRCULAR_EASING | EASE_IN, alpha = 0, time = move_animation_time)
 
 	//TODO: Remove
