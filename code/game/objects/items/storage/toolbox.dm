@@ -110,32 +110,14 @@
 	icon_state = "oldtoolboxclean"
 	inhand_icon_state = "toolbox_blue"
 	has_latches = FALSE
-	force = 19
-	throwforce = 22
+	force = 12
+	throwforce = 12
+	custom_materials = list(/datum/material/iron = 500) //Toolboxes by default use iron as their core, custom material.
+	material_flags = NONE
 
-/obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
-	var/power = 0
-	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
-		power += TC.amount
-	force = 19 + power
-	throwforce = 22 + power
-
-/obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
-	calc_damage()
-	..()
-
-/obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	calc_damage()
-	..()
 
 /obj/item/storage/toolbox/mechanical/old/clean/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/wirecutters(src)
-	new /obj/item/multitool(src)
-	new /obj/item/clothing/gloves/color/yellow(src)
+	return
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
