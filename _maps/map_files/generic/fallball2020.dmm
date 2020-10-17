@@ -4639,12 +4639,6 @@
 	dir = 8
 	},
 /obj/machinery/arena_spawn/green,
-/obj/machinery/camera/autoname{
-	c_tag = "West Preparation Room";
-	dir = 2;
-	network = list("thunder","ss13");
-	resistance_flags = 115
-	},
 /turf/open/indestructible,
 /area/tdome/arena)
 "kk" = (
@@ -4660,12 +4654,6 @@
 	dir = 8
 	},
 /obj/machinery/arena_spawn/red,
-/obj/machinery/camera/autoname{
-	c_tag = "East Preparation Room";
-	dir = 2;
-	network = list("thunder","ss13");
-	resistance_flags = 115
-	},
 /turf/open/indestructible,
 /area/tdome/arena)
 "kl" = (
@@ -6995,10 +6983,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "pa" = (
-/obj/machinery/camera/motion/thunderdome{
-	c_tag = "Upper Center Arena";
-	network = list("thunder","ss13");
-	pixel_x = 10
+/obj/machinery/camera/motion/thunderdome/drone{
+	c_tag = "Arena Overhead"
 	},
 /turf/open/transparent/openspace,
 /area/crew_quarters/bar/vip)
@@ -7208,16 +7194,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/indestructible,
 /area/tdome/arena)
-"pr" = (
-/obj/machinery/camera/autoname{
-	c_tag = "Northern Arena";
-	dir = 2;
-	network = list("thunder","ss13");
-	pixel_x = 10;
-	resistance_flags = 115
-	},
-/turf/closed/indestructible/fakeglass,
-/area/crew_quarters/bar/vip)
 "ps" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -17589,14 +17565,6 @@
 	},
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/bar/announcerroom)
-"LN" = (
-/obj/machinery/camera/motion/thunderdome{
-	c_tag = "Center Arena";
-	network = list("thunder","ss13");
-	pixel_x = 10
-	},
-/turf/open/floor/plating,
-/area/tdome/arena)
 "LO" = (
 /obj/structure/table/abductor,
 /obj/item/phone{
@@ -17779,11 +17747,11 @@
 "Mi" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/autoname{
-	c_tag = "West Preparation Room";
+/obj/machinery/camera/motion/thunderdome{
+	c_tag = "West Prep Room - Green";
 	dir = 1;
-	network = list("thunder","ss13");
-	resistance_flags = 115
+	icon_state = "camera";
+	network = list("thunder","ss13")
 	},
 /turf/open/indestructible,
 /area/tdome/arena)
@@ -17809,15 +17777,6 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/crew_quarters/bar)
-"Ml" = (
-/obj/machinery/camera/autoname{
-	c_tag = "Southern Arena";
-	dir = 1;
-	network = list("thunder","ss13");
-	pixel_x = 10
-	},
-/turf/closed/indestructible/fakeglass,
-/area/crew_quarters/bar/vip)
 "Mm" = (
 /obj/effect/turf_decal/siding/wood,
 /mob/living/simple_animal/bot/cleanbot,
@@ -18182,6 +18141,17 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
+"Sj" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/camera/motion/thunderdome{
+	c_tag = "East Prep Room - Red";
+	dir = 1;
+	icon_state = "camera";
+	network = list("thunder","ss13")
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "SA" = (
 /obj/machinery/sleeper/party,
 /turf/open/floor/mineral/titanium/purple,
@@ -51080,16 +51050,16 @@ nx
 nx
 nm
 nx
-pr
+ob
 ok
 ok
 ok
 ok
-LN
 ok
 ok
 ok
-Ml
+ok
+ob
 pJ
 nm
 pK
@@ -53914,7 +53884,7 @@ oV
 kk
 oV
 oV
-pq
+Sj
 mY
 nm
 lu
