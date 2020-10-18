@@ -15,8 +15,6 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS
-	/// Handles an internal ore box for Clarke
-	var/obj/structure/ore_box/box
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()
 	. = ..()
