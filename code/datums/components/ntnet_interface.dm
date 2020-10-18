@@ -1,66 +1,93 @@
-//Thing meant for allowing datums and objects to access an NTnet network datum.
 /datum/proc/ntnet_receive(datum/netdata/data)
 	return
 
-/datum/proc/ntnet_receive_broadcast(datum/netdata/data)
-	return
-
-/datum/proc/ntnet_send(datum/netdata/data, netid)
+// helper function.  So you don't have to get the component
+/datum/proc/ntnet_send(datum/netdata/data)
 	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return FALSE
-	return NIC.__network_send(data, netid)
+	data.sender_id = NIC.hardware_id
+	data.network_id = NIC.network.network_id
+	return SSnetworks.transmit(data)
+
 
 /datum/component/ntnet_interface
-	var/hardware_id			//text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
-	var/network_name = ""			//text
-	var/list/networks_connected_by_id = list()		//id = datum/ntnet
-	var/differentiate_broadcast = TRUE				//If false, broadcasts go to ntnet_receive. NOT RECOMMENDED.
+	var/hardware_id = null				// text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
+	var/id_tag = null  					// named tag for looking up on mapping objects
+	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
+	var/list/registered_sockets = null	// list of ports opened up on devices
+	var/list/network_alias = null 		// if we live in more than one network branch TODO
 
-/datum/component/ntnet_interface/Initialize(force_name = "NTNet Device", autoconnect_station_network = TRUE)			//Don't force ID unless you know what you're doing!
+/datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
+	if(!network_name)
+		stack_trace("Bad network '[network_name]' for '[parent]', going to limbo it")
+		network_name = NETWORK_LIMBO
+
+	if(network_tag != null && text2num(network_tag) == text2num(num2text(network_tag)))
+		// numbers are not allowed as lookups for interfaces
+		stack_trace("Tag cannot be a number?  '[network_name]' for '[parent]', going to limbo it")
+		network_tag = "BADTAG_" + network_tag
+
 	hardware_id = "[SSnetworks.get_next_HID()]"
-	network_name = force_name
-	if(!SSnetworks.register_interface(src))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Unable to register NTNet interface. Interface deleted.")
-	if(autoconnect_station_network)
-		register_connection(SSnetworks.station_network)
+	id_tag = network_tag
+	SSnetworks.interfaces_by_hardware_id[src.hardware_id] = src
+	registered_sockets = list()
+
+	join_network(network_name)
+
+
+// Port connection system
+// The basic idea is that two or more objects share a list and transfer data between the list
+// The list keeps a flag called "_updated", if that flag is set to "true" then something was
+// changed.  Now I COULD send a signal, but that would require the parent object to be shoved
+// in datum/netlink.  I am trying my best to not have hard references in any of these data
+// objects
+/datum/component/ntnet_interface/proc/connect_port(hid_or_tag, port, mob/user=null)
+	ASSERT(hid_or_tag && port)
+	var/datum/component/ntnet_interface/target = network.root_devices[hid_or_tag]
+	if(target && target.registered_sockets[port])
+		var/list/datalink = target.registered_sockets[port]
+		return datalink
+	if(user)
+		to_chat(user,"Port [port] does not exist on [hid_or_tag]!")
+
+
+/datum/component/ntnet_interface/proc/deregister_port(port)
+	if(registered_sockets[port]) // should I runtime if this isn't in here?
+		var/list/datalink = registered_sockets[port]
+		NETWORK_PORT_DISCONNECT(datalink)
+		// this should remove all outstanding ports
+		registered_sockets.Remove(port)
+
+
+/datum/component/ntnet_interface/proc/register_port(port, list/data)
+	if(!port || !length(data))
+		log_runtime("port is null or data is empty")
+		return
+	if(registered_sockets[port])
+		log_runtime("port already regestered")
+		return
+	data["_updated"] = FALSE
+	registered_sockets[port] = data
 
 /datum/component/ntnet_interface/Destroy()
-	unregister_all_connections()
-	SSnetworks.unregister_interface(src)
+	if(network)
+		leave_network()
+	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
+	for(var/port in registered_sockets)
+		deregister_port(port)
+	registered_sockets = null
 	return ..()
 
-/datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
-	SEND_SIGNAL(parent, COMSIG_COMPONENT_NTNET_RECEIVE, data)
-	if(differentiate_broadcast && data.broadcast)
-		parent.ntnet_receive_broadcast(data)
-	else
-		parent.ntnet_receive(data)
+/datum/component/ntnet_interface/proc/join_network(network_name, list/extra = null)
+	if(network)
+		leave_network()
+	var/datum/ntnet/net = SSnetworks.create_network_simple(network_name)
+	ASSERT(net)
+	net.interface_connect(src,extra)
+	ASSERT(network)
 
-/datum/component/ntnet_interface/proc/__network_send(datum/netdata/data, netid)			//Do not directly proccall!
 
-	if(netid)
-		if(networks_connected_by_id[netid])
-			var/datum/ntnet/net = networks_connected_by_id[netid]
-			return net.process_data_transmit(src, data)
-		return FALSE
-	for(var/i in networks_connected_by_id)
-		var/datum/ntnet/net = networks_connected_by_id[i]
-		net.process_data_transmit(src, data)
-	return TRUE
-
-/datum/component/ntnet_interface/proc/register_connection(datum/ntnet/net)
-	if(net.interface_connect(src))
-		networks_connected_by_id[net.network_id] = net
-	return TRUE
-
-/datum/component/ntnet_interface/proc/unregister_all_connections()
-	for(var/i in networks_connected_by_id)
-		unregister_connection(networks_connected_by_id[i])
-	return TRUE
-
-/datum/component/ntnet_interface/proc/unregister_connection(datum/ntnet/net)
-	net.interface_disconnect(src)
-	networks_connected_by_id -= net.network_id
-	return TRUE
+/datum/component/ntnet_interface/proc/leave_network()
+	if(network)
+		network.interface_disconnect(src)

@@ -39,6 +39,11 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
+	/// Network ID this machine joins
+	var/network_id = null
+	/// Network Tag/Map tag for easy searching and finding
+	var/id_tag = null
+
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
@@ -69,6 +74,13 @@
 	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
+
+	if(network_id)
+		var/area/A = get_area(src)
+		if(A && A.network_root_id)
+			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id)
+		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))

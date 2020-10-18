@@ -99,6 +99,8 @@
 
 	var/static/list/airlock_overlays = list()
 
+	network_id = NETWORK_AIRLOCKS
+
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
 	wires = set_wires()
@@ -153,9 +155,6 @@
 				panel_open = TRUE
 	update_icon()
 
-/obj/machinery/door/airlock/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)

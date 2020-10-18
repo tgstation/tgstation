@@ -10,7 +10,6 @@
 
 	var/on = TRUE
 
-	var/id_tag
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
