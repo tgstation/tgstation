@@ -31,7 +31,7 @@
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	switch(rand(1,4))//Now let's see what hopefully-not-important part of the brain we cut off
 		if(1)
-			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
+			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
 		if(2)
 			if(HAS_TRAIT(target, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
 				target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
