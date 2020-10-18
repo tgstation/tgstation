@@ -167,6 +167,11 @@
 		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] begins to hammer through the bone past [target]'s [parse_zone(target_zone)].</span>")
 
+/datum/surgery_step/drive/tool_check(mob/user, obj/item/tool)
+	if(implement_type == /obj/item && tool.force > 4)
+		return FALSE
+	return TRUE
+
 /datum/surgery_step/drive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You hammer past [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] hammers past [target]'s [parse_zone(target_zone)]!</span>",

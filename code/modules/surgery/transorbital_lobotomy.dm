@@ -13,7 +13,7 @@
 
 /datum/surgery_step/tlobotomize
 	name = "perform transorbital lobotomy"
-	implements = list(TOOL_ORBITOCLAST = 75, /obj/item/melee/transforming/energy/sword = 50, /obj/item/stack/rods = 10)
+	implements = list(TOOL_ORBITOCLAST = 75, /obj/item/melee/transforming/energy/sword = 50, TOOL_SCREWDRIVER = 15, /obj/item/stack/rods = 10)
 	time = 7.5 SECONDS
 
 /datum/surgery_step/tlobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -42,14 +42,14 @@
 	return ..()
 
 /datum/surgery_step/tlobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/Brian = target.getorganslot(ORGAN_SLOT_BRAIN) //Brian is the patient's brain, Brain, Brian.
-	if(!Brian)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!target_brain)
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.</span>", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
 		return FALSE
 	display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
 		"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
-	Brian.applyOrganDamage(80)
+	target_brain.applyOrganDamage(80)
 	switch(rand(1,3))
 		if(1)
 			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
