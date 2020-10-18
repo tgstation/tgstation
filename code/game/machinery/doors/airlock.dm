@@ -15,6 +15,20 @@
 	shock - has a chance of electrocuting its target.
 */
 
+/// Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
+/// tiny bit in door_assembly.dm  Refactored so you don't have to make a null copy of airlock
+/// to get to the damn thing
+/// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
+/// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
+/// everything
+/proc/get_airlock_overlay(icon_state, icon_file)
+	var/static/list/airlock_overlays = list()
+	var/iconkey = "[icon_state][icon_file]"
+	if((!(. = airlock_overlays[iconkey])))
+		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
+// Before you say this is a bad implmentation, look at what it was before then ask yourself
+// "Would this be better with a global var"
+
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
 #define AIRLOCK_CLOSED	1
@@ -96,8 +110,6 @@
 
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
-
-	var/static/list/airlock_overlays = list()
 
 	network_id = NETWORK_AIRLOCKS
 
@@ -572,14 +584,6 @@
 	add_overlay(note_overlay)
 	add_overlay(seal_overlay)
 	check_unres()
-
-/proc/get_airlock_overlay(icon_state, icon_file)
-	var/obj/machinery/door/airlock/A
-	pass(A)	//suppress unused warning
-	var/list/airlock_overlays = A.airlock_overlays
-	var/iconkey = "[icon_state][icon_file]"
-	if((!(. = airlock_overlays[iconkey])))
-		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
 
 /obj/machinery/door/airlock/proc/check_unres() //unrestricted sides. This overlay indicates which directions the player can access even without an ID
 	if(hasPower() && unres_sides)
