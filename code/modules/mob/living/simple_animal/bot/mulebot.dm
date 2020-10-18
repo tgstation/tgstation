@@ -32,6 +32,7 @@
 	bot_core_type = /obj/machinery/bot_core/mulebot
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
+	var/network_id = NETWORK_BOTS_CARGO
 	/// unique identifier in case there are multiple mulebots.
 	var/id
 
@@ -54,6 +55,8 @@
 	var/cell_move_power_usage = 1///How much power we use when we move.
 	var/bloodiness = 0 ///If we've run over a mob, how many tiles will we leave tracks on while moving
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
+
+
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
@@ -79,9 +82,9 @@
 	D.set_vehicle_dir_layer(WEST, layer)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
+	if(network_id)
+		AddComponent(/datum/component/ntnet_interface, network_id)
+
 
 /mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
 	if(A == load)

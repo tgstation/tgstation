@@ -15,7 +15,7 @@
 	var/region_access = 1 //See access.dm
 	var/list/access_list
 	network_id = NETWORK_AIRLOCKS
-	
+
 /obj/item/door_remote/Initialize()
 	. = ..()
 	access_list = get_region_accesses(region_access)
@@ -25,8 +25,9 @@
 	if(!user)
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
-		to_chat(user, "<span class='notice'>This remote cannot modify this door.</span>")
-
+		to_chat(user, "<span class='notice'>This remote is not authorized to modify this door.</span>")
+	else
+		to_chat(user, "<span class='notice'>Error: [error_code]</span>")
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -52,6 +53,7 @@
 	data.receiver_id = target_interface.hardware_id
 	data.passkey = access_list
 	data.user = user
+
 
 	ntnet_send(data)
 

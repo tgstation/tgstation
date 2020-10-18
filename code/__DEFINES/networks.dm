@@ -28,8 +28,8 @@
 #define SS13_NETWORK_CARDS 		"SS13.CARDS"
 
 #define NETWORK_NAME_COMBINE(L,R)   ((L) + "." + (R))
-
-GLOBAL_LIST_EMPTY(map_to_station_root_id)
+// Network name should be all caps and no punctuation except for _ and . between domains
+#define simple_network_name_fix(N) replacetext(uppertext(N), @"[ \-]", "_")
 
 // Port protocol.  A port is just a list with a few vars that are used to tell if
 // its been updated.  Used for things that are updated ALOT like vents and scrubbers

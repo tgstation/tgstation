@@ -38,7 +38,7 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 		parent.children[network_id] = src
 		root_devices = parent.root_devices
 		networks = parent.networks
-		network_node_id = findtext(network_id, @"\.[^\.]+$")
+		network_node_id = findtext(net_id, @"[^\.]+$")
 	else
 		parent = null
 		networks = list()
@@ -54,21 +54,11 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	//		cyclelinkairlock()
 
 
-// we shouldn't ever need to delete networks.  If we ever have a interface or debug menu to show networks
-// they should just return it as non existent
+// we shouldn't ever EVER delete networks.  ESPECIALLY if there are devices in them
 /datum/ntnet/Destroy()
-	if(linked_devices.len > 0)
-		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
-		for(var/hid in linked_devices)
-			var/datum/component/ntnet_interface/device = linked_devices[hid]
-			interface_disconnect(device)
-		linked_devices.Cut()
+	if(children.len > 0 || linked_devices.len > 0)
+		CRASH("Trying to delete a network with devices still in them")
 
-	if(length(children))
-		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
-		for(var/child in children)
-			qdel(children[child])
-		children.Cut()
 
 	if(parent)
 		parent.children.Remove(network_id)
@@ -77,7 +67,8 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	SSnetworks.networks.Remove(network_id)
 	return ..()
 
-// collect all interfaces as well as children.  It looks wonky to save on calls
+// collect all interfaces as well as children.  It looks wonky so not
+// to use recursion
 /datum/ntnet/proc/collect_interfaces(include_children=TRUE)
 	var/list/devices
 	if(children.len == 0 || !include_children)
@@ -103,48 +94,6 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	if(create_if_not_found && findtext(network_id,child_id) == 1)
 		return SSnetworks.create_network_simple(child_id)
 
-/// connects the component to the network
-/datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device, list/alias = null)
-	if(device.network)
-		device.network.interface_disconnect(device)
-	linked_devices[device.hardware_id] = device
-	root_devices[device.hardware_id] = device
-	device.network = src
-	if(device.id_tag)
-		// if we have a tag just put it in root devices
-		if(!root_devices[device.id_tag])
-			root_devices[device.id_tag] = device
-#ifdef DEBUG_NETWORKS
-		else
-			debug_world("interface_connect: [device.id_tag] already exists")
-#endif
-	if(alias)
-		for(var/name in alias)
-			if(name == network_id)
-				continue
-			var/datum/ntnet/net = networks[name]
-			if(!net)
-				debug_world( "Bad alias network.  Networks cannot be created in alias")
-				continue
-			net.linked_devices[device.hardware_id] = device
-		device.network_alias = alias
-
-
-/datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
-	linked_devices.Remove(device.hardware_id)
-	root_devices.Remove(device.hardware_id)
-	if(device.id_tag)
-		if(root_devices[device.id_tag] && root_devices[device.id_tag] == device)
-			root_devices.Remove(device.id_tag)
-	if(device.network_alias)
-		for(var/name in device.network_alias)
-			if(name == network_id)
-				continue
-			var/datum/ntnet/net = networks[name]
-			net.linked_devices.Remove(device.hardware_id)
-		device.network_alias = null
-
-	device.network = null
 
 /datum/ntnet/proc/interface_find(tag_or_hid)
 	return root_devices[tag_or_hid]

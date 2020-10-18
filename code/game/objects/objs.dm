@@ -39,10 +39,12 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
-	/// Network ID this machine joins
-	var/network_id = null
-	/// Network Tag/Map tag for easy searching and finding
+	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
+	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
+	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
+	/// broadcasted to as long as the other guys network is on the same branch or above.
+	var/network_id = null
 
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
@@ -50,7 +52,7 @@
 			return FALSE
 	return ..()
 
-/obj/Initialize()
+/obj/Initialize(mapload)
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
@@ -77,9 +79,17 @@
 
 	if(network_id)
 		var/area/A = get_area(src)
-		if(A && A.network_root_id)
+		if(mapload && A && A.network_root_id)
+			// got to love how map loading works
+			// The area name is the root network for this device.  This way
+			// all devices in the area join the same base network, or whatever
+			// network is set up in the map template object
 			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id)
+		else
+			// This should cover areas made after the map loading.  
+			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
 		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+	/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
 /obj/Destroy(force=FALSE)

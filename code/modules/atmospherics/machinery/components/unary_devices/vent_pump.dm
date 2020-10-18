@@ -36,8 +36,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
-		id_tag = assign_random_name()
-	..()
+		id_tag = SSnetworks.assign_random_name()
+	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)

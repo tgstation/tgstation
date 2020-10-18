@@ -1,5 +1,6 @@
 /datum/proc/ntnet_receive(datum/netdata/data)
-	return
+	SEND_SIGNAL(src, COMSIG_COMPONENT_NTNET_RECEIVE, data)
+
 
 // helper function.  So you don't have to get the component
 /datum/proc/ntnet_send(datum/netdata/data)
@@ -16,7 +17,7 @@
 	var/id_tag = null  					// named tag for looking up on mapping objects
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
 	var/list/registered_sockets = null	// list of ports opened up on devices
-	var/list/network_alias = null 		// if we live in more than one network branch TODO
+	var/list/network_alias = list() 		// if we live in more than one network branch TODO
 
 /datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
 	if(!network_name)
@@ -30,7 +31,7 @@
 
 	hardware_id = "[SSnetworks.get_next_HID()]"
 	id_tag = network_tag
-	SSnetworks.interfaces_by_hardware_id[src.hardware_id] = src
+	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
 	registered_sockets = list()
 
 	join_network(network_name)
@@ -71,23 +72,65 @@
 	registered_sockets[port] = data
 
 /datum/component/ntnet_interface/Destroy()
-	if(network)
-		leave_network()
+	leave_network(TRUE)
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
 	for(var/port in registered_sockets)
 		deregister_port(port)
-	registered_sockets = null
+	registered_sockets.Cut()
 	return ..()
 
-/datum/component/ntnet_interface/proc/join_network(network_name, list/extra = null)
+/datum/component/ntnet_interface/proc/leave_network(clear_alias=FALSE)
+	var/datum/ntnet/net
+	if(network)
+		network.linked_devices.Remove(hardware_id)
+		network.root_devices.Remove(hardware_id)
+		if(id_tag)
+			network.root_devices.Remove(id_tag)
+		if(network_alias.len)
+			for(var/NA in network_alias)
+				net = network.networks[NA]
+				net.linked_devices.Remove(hardware_id)
+			if(clear_alias)
+				network_alias.Cut()
+		network = null
+/// Joins an existing network
+/datum/component/ntnet_interface/proc/join_network(network_name)
+	var/datum/ntnet/net
 	if(network)
 		leave_network()
-	var/datum/ntnet/net = SSnetworks.create_network_simple(network_name)
-	ASSERT(net)
-	net.interface_connect(src,extra)
-	ASSERT(network)
 
+	// remember we MUST have a network so don't leave without joining
+	network = SSnetworks.create_network_simple(network_name)
+	if(!network) // we crash here because there should be no way this can be null unless someone fucked up
+		CRASH("Network '[network_name]' could not be created")
+	network.linked_devices[hardware_id] = src
+	network.root_devices[hardware_id] = src
+	if(id_tag)
+		// if we have an id_tag only put it in root_devices.
+		if(network.root_devices[id_tag])
+			stack_trace("Device tried to join the network with an existing tag '[id_tag]' [parent]")
+			id_tag = null // tag is hard cleared so we can continue
+		else
+			network.root_devices[id_tag] = src
 
-/datum/component/ntnet_interface/proc/leave_network()
-	if(network)
-		network.interface_disconnect(src)
+	// Add the network alias back up
+	for(var/NA in network_alias)
+		net = network.networks[NA]
+		if(!net)
+			network_alias.Remove(NA)
+		else
+			net.linked_devices[hardware_id] = TRUE
+
+/// This is used if you want to add the interface over to other branches to broadcast
+/// in like areas, ships etc
+/datum/component/ntnet_interface/proc/add_alias(alias_id, replace_with = null)
+	var/datum/ntnet/net
+	if(replace_with && network_alias[replace_with]) // make sure it exists
+		net = network.networks[replace_with]
+		net.linked_devices.Remove(hardware_id)
+		network_alias.Remove(hardware_id)
+
+	if(alias_id && !network_alias[alias_id])
+		net = network.networks[alias_id]
+		net.linked_devices[hardware_id] = TRUE
+		network_alias[hardware_id] = TRUE

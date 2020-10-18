@@ -6,7 +6,7 @@
 	var/loaded = 0 // Times loaded this round
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
-	var/station_id = NETWORK_LIMBO // used to override the root id when generating
+	var/station_id = null // used to override the root id when generating
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -47,10 +47,7 @@
 	for(var/L in turfs)
 		var/turf/B = L
 		var/area/G = B.loc
-		// has to be assigned before InitializeAtoms is run
-		// Either its here or maybe in reg_in_areas_in_z?
-		G.network_root_id = SSnetworks.lookup_root_id(G, template)
-		areas |= B.loc
+		areas |= G
 
 		for(var/A in B)
 			atoms += A
@@ -61,6 +58,7 @@
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
+	SSnetworks.assign_areas_root_ids(areas, template)
 	SSatoms.InitializeAtoms(areas + turfs + atoms)
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?

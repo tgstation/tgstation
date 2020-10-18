@@ -30,6 +30,10 @@ SUBSYSTEM_DEF(networks)
 	var/setting_maxlogcount = 100
 	var/list/logs = list()
 
+	/// Random name search to make sure we have unique names.
+	/// DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOUR DOING
+	var/list/used_names = list()
+
 
 /datum/controller/subsystem/networks/stat_entry(msg)
 	msg = "NET: QUEUE([packet_count]) FAILS([count_failed_packets]) BROADCAST([count_broadcasts_packets])"
@@ -63,7 +67,7 @@ SUBSYSTEM_DEF(networks)
 		count_failed_packets++
 		add_log("Bad target device '[receiver_id]'", target_network, data.sender_id)
 		if(!QDELETED(sending_interface))
-			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, , data.user, NETWORK_ERROR_BAD_RECEIVER_ID)
+			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, data.user, NETWORK_ERROR_BAD_RECEIVER_ID)
 		return
 
 	if(data.passkey) // got to check permissions
@@ -72,11 +76,10 @@ SUBSYSTEM_DEF(networks)
 			count_failed_packets++
 			add_log("Bad target network '[data.network_id]'", null, data.sender_id)
 			if(!QDELETED(sending_interface))
-				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK,  data, data.user, NETWORK_ERROR_UNAUTHORIZED)
+				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, data.user, NETWORK_ERROR_UNAUTHORIZED)
 		return
 
-	if(!SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_RECEIVE, data))
-		target_interface.parent.ntnet_receive(data)
+	target_interface.parent.ntnet_receive(data)
 	if(!QDELETED(sending_interface))
 		SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_ACK, data, data.user)
 	count_good_packets++
@@ -88,7 +91,11 @@ SUBSYSTEM_DEF(networks)
 	var/datum/netdata/current
 	while(first)
 		current = first
-		if(islist(current.receiver_id)) // are we a broadcast list, not logged
+		// check if we are a broadcast and fix the packet
+		if(current.receiver_id == null)
+			var/datum/ntnet/target_network = networks[current.network_id]
+			current.receiver_id = target_network.collect_interfaces()
+		else if(islist(current.receiver_id)) // are we a broadcast list, not logged
 			var/list/receivers = current.receiver_id
 			var/receiver_id = receivers[receivers.len--] // pop it
 			_process_packet(receiver_id, current)
@@ -104,31 +111,7 @@ SUBSYSTEM_DEF(networks)
 #undef POP_PACKET
 
 /datum/controller/subsystem/networks/proc/transmit(datum/netdata/data)
-	set waitfor = FALSE // don't wait for
 	data.next = null // sanity check
-
-	// This is just for sending NAKS
-	var/datum/component/ntnet_interface/sending_interface = interfaces_by_hardware_id[data.sender_id]
-
-	var/datum/ntnet/target_network = networks[data.network_id]
-	if(!target_network)
-		add_log("Bad network '[data.network_id]'",null, data.sender_id)
-		if(!QDELETED(sending_interface))
-			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data , data.user, NETWORK_ERROR_BAD_NETWORK)
-		qdel(data)
-		return
-
-	// Packets are just dropped if not found
-	if(data.receiver_id && !target_network.root_devices[data.receiver_id])
-		add_log("Receiver '[data.receiver_id]' not in network", target_network, data.sender_id)
-		if(!QDELETED(sending_interface))
-			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data , data.user, NETWORK_ERROR_BAD_RECEIVER_ID)
-		qdel(data)
-		return
-
-	// check if we are a broadcast and fix the packet
-	if(data.receiver_id == null)
-		data.receiver_id = target_network.collect_interfaces()
 
 	// finally add to queue
 	if(!last)
@@ -177,7 +160,11 @@ SUBSYSTEM_DEF(networks)
 		log_text += "*SYSTEM*"
 	log_text += " - "
 	log_text += log_string
-	logs.Add(log_text.Join())
+	log_string = log_text.Join()
+#ifdef DEBUG_NETWORKS
+	to_chat(world, "<span class='notice'>NetLog: [log_string]</span>")
+#endif
+	logs.Add(log_string)
 
 	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
@@ -204,33 +191,43 @@ SUBSYSTEM_DEF(networks)
 	return istext(name) && length(name) > 0 && findtext(name, @"[^\.][A-Z0-9_\.]+[^\.]") == 0
 
 // Fixes a network name by replacing the spaces and making eveything uppercase
-/datum/controller/subsystem/networks/proc/_simple_network_name_fix(net_name)
-	return replacetext(uppertext(net_name),"\[ -\]", "_")
+
+
 
 /// Ok, so instead of going though all the maps and making sure all the tags
 /// are set up properly, we can use THIS to set a root id to an area so when the
 /// atom loads it joins the right local network.  neat!
 /datum/controller/subsystem/networks/proc/lookup_root_id(area/A, datum/map_template/M=null)
-	/// Alright boys, lets cycle though a few special cases
+	// Alright boys, lets cycle though a few special cases
 	if(M)
-		if(M.station_id && M.station_id != NETWORK_LIMBO)
-			return M.station_id // override due to template
-		if(istype(M, /datum/map_template/shuttle))
+		// if we have a template, try to get the network id from the template
+		if(M.station_id && M.station_id != NETWORK_LIMBO)				// check if the template specifies it
+			A.network_root_id = simple_network_name_fix(M.station_id)
+		else if(istype(M, /datum/map_template/shuttle))					 // if not, then check if its a shuttle type
 			var/datum/map_template/shuttle/T = M	// we are a shuttle so use shuttle id
-			return _simple_network_name_fix(T.shuttle_id)
-		else if(istype(M,/datum/map_template/ruin))
-			var/datum/map_template/ruin/R = M	// ruins have an id var?  why so many var names
-			return _simple_network_name_fix(R.id)
-	// ok so template overrides over
-	if(A)
-		if(SSmapping.level_trait(A.z, ZTRAIT_STATION))
-			return STATION_NETWORK_ROOT
-		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
-			return CENTCOM_NETWORK_ROOT
+			A.network_root_id = simple_network_name_fix(T.shuttle_id)
+		else if(istype(M,/datum/map_template/ruin))						// if not again, check if its a ruin type
+			var/datum/map_template/ruin/R = M
+			A.network_root_id = simple_network_name_fix(R.id)
 
-	to_chat(world, "Limbo? Area '[A.name]' is going to limbo?")
-	return NETWORK_LIMBO // shouldn't get here often...hopefully
+	if(!A.network_root_id) // not assigned?  Then lets use some defaults
+		// Anything in Centcom is completely isolated
+		if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
+			A.network_root_id =  CENTCOM_NETWORK_ROOT
+		// Otherwise the default is the station
+		else
+			A.network_root_id =  STATION_NETWORK_ROOT
 
+
+
+/datum/controller/subsystem/networks/proc/assign_areas_root_ids(list/areas, datum/map_template/M=null)
+	for(var/area/A in areas)
+		if(!A.network_root_id)
+			lookup_root_id(A, M)
+		// finally  set the network area id, bit copy paste from area Initialize
+		// This is done in case we have more than one area type, each area instance has its own network name
+		A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
+		A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
 
 
 // create a network name from a list containing the network tree
@@ -321,3 +318,29 @@ SUBSYSTEM_DEF(networks)
 		. = "[copytext_char(string, 1, 9)]"		//16 ^ 8 possibilities I think.
 	while(interfaces_by_hardware_id[.])
 
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices5
+ * The length of the generated name can be set by passing in an int
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * * prefix (string)(Optional) static text in front of the random name
+ * * postfix (string)(Optional) static text in back of the random name
+ * Returns (string) The generated name
+ */
+/datum/controller/subsystem/networks/proc/assign_random_name(len=5, prefix="", postfix="")
+	var/static/valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	var/list/new_name = list()
+	var/text
+	// machine id's should be fun random chars hinting at a larger world
+	do
+		new_name.Cut()
+		new_name += prefix
+		for(var/i = 1 to len)
+			new_name += valid_chars[rand(1,length(valid_chars))]
+		new_name += postfix
+		text = new_name.Join()
+	while(used_names[text])
+	used_names[text] = TRUE
+	return text
