@@ -14,7 +14,7 @@
 /datum/surgery_step/tlobotomize
 	name = "perform transorbital lobotomy"
 	implements = list(TOOL_ORBITOCLAST = 75, /obj/item/melee/transforming/energy/sword = 50, /obj/item/stack/rods = 10)
-	time = 75
+	time = 7.5 SECONDS
 
 /datum/surgery_step/tlobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
