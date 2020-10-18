@@ -19,7 +19,7 @@
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	///Whether the key must be trict type and not a subtype to put it in the car
+	///Whether the key must be strict type and not a subtype to put it in the car
 	var/key_type_exact = TRUE
 	/// Whether the vehicle os currently able to move
 	var/canmove = TRUE
