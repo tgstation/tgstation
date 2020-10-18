@@ -143,7 +143,7 @@
 /datum/surgery_step/pick
 	name = "pick into bone"
 	implements = list(TOOL_ORBITOCLAST = 100, TOOL_SCREWDRIVER = 25, /obj/item/stack/rods = 10)
-	time = 30
+	time = 3 SECONDS
 
 /datum/surgery_step/pick/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to pick into the bone past [target]'s [parse_zone(target_zone)]...</span>",
