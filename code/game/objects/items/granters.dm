@@ -269,7 +269,7 @@
 /obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HORSIE HAS RISEN</b></font>")
-		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
+		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/animal/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, TRUE, TRUE)
