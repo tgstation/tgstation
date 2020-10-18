@@ -42,8 +42,8 @@
 	return ..()
 
 /datum/surgery_step/tlobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/Brian = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!Brain)
+	var/obj/item/organ/brain/Brian = target.getorganslot(ORGAN_SLOT_BRAIN) //Brian is the patient's brain, Brain, Brian.
+	if(!Brian)
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.</span>", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
 		return FALSE
 	display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
