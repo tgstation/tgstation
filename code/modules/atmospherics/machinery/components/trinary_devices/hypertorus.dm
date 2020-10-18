@@ -30,9 +30,9 @@
 #define TOROID_VOLUME_BREAKEVEN			1000
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
-
+///Conduction of heat
 #define METALLIC_VOID_CONDUCTIVITY	0.05
-
+///Sets the range of the hallucinations
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
 /obj/machinery/atmospherics/components/unary/hypertorus
@@ -150,17 +150,29 @@
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	density = TRUE
 
+	///Checks if the machine state is active (all parts are connected)
 	var/active = FALSE
+	///Checks if the user has started the machine
 	var/fusion_started = FALSE
+	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
+	///Stores the information of the moderator input
 	var/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input/linked_moderator
+	///Stores the information of the fuel input
 	var/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input/linked_input
+	///Stores the information of the waste output
 	var/obj/machinery/atmospherics/components/unary/hypertorus/waste_output/linked_output
+	///Stores the information of the corners of the machine
 	var/list/corners = list()
+	///Stores the information of the fusion gasmix
 	var/datum/gas_mixture/internal_fusion
+	///Stores the information of the buffer gasmix (used to move gases around, may be removed)
 	var/datum/gas_mixture/buffer
+	///Stores the information of the output gasmix (used to move gases around, may be removed)
 	var/datum/gas_mixture/internal_output
+	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
+	///Used to define the gas transfer between mixes
 	var/gas_efficiency = 0.015
 	///E=mc^2 with some addition to allow it gameplaywise
 	var/energy = 0
@@ -178,7 +190,7 @@
 	var/power_output = 0
 	///Instability effects how chaotic the behavior of the reaction is
 	var/instability = 0
-
+	///Amount of radiation that the machine can output
 	var/rad_power = 0
 	///Difference between the gases temperature and the internal temperature of the reaction
 	var/delta_temperature = 0
@@ -193,6 +205,7 @@
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	var/heat_output = 0
 
+	///Stores the moles of the gases (the ones with m_ are of the moderator mix)
 	var/tritium = 0
 	var/hydrogen = 0
 	var/helium = 0
@@ -207,14 +220,21 @@
 	var/m_antinoblium = 0
 	var/m_hypernoblium = 0
 
+	///Check if the user want to remove the waste gases
 	var/waste_remove = FALSE
+	///User controlled variable to control the flow of the fusion by changing the contact of the material
 	var/heating_conductor = 1
+	///User controlled variable to control the flow of the fusion by changing the volume of the gasmix by controlling the power of the magnetic fields
 	var/magnetic_constrictor  = 1
+	///User controlled variable to control the flow of the fusion by changing the instability of the reaction
 	var/current_damper = 0
+	///Stores the current fusion mix power level
 	var/power_level = 0
+	///Stores the iron content produced by the fusion
 	var/iron_content = 0
-
+	///User controlled variable to control the flow of the fusion by changing the amount of fuel injected
 	var/fuel_injection_rate = 25
+	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
 	var/moderator_injection_rate = 25
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
@@ -388,36 +408,50 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/process()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
+	/*
+	 *Pre-checks
+	 */
+	//first check if the machine is active
 	if(!active)
 		return
+
+	//then check if the other machines are still there
 	if(!check_part_connectivity())
 		deactivate()
 		return
 
+	//now check if the machine has been turned on by the user
 	if(!fusion_started)
 		return
 
-	//Start by storing the gasmix of the inputs
+	/*
+	 *Storing variables such as gas mixes, temperature, volume, moles
+	 */
+	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
 	buffer = linked_input.airs[1].remove(fuel_injection_rate)
 	internal_fusion.merge(buffer)
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
 	moderator_internal.merge(buffer)
 
-	///Store the temperature of the gases after one cicle of the fusion reaction
+	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
+	//Store the volume of the fusion reaction multiplied by the force of the magnets that controls how big it will be
 	var/volume = internal_fusion.volume * magnetic_constrictor
 
+	//Assert the gases that will be used/created during the process
 	internal_fusion.assert_gases(/datum/gas/helium)
 	moderator_internal.assert_gases(/datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/bz, /datum/gas/proto_nitrate, /datum/gas/hypernoblium, /datum/gas/antinoblium)
 
+	//Store the fuel gases and the product gas moles
 	tritium = internal_fusion.gases[/datum/gas/tritium][MOLES]
 	hydrogen = internal_fusion.gases[/datum/gas/hydrogen][MOLES]
 	helium = internal_fusion.gases[/datum/gas/helium][MOLES]
 
+	//Store the moderators gases moles
 	m_plasma = moderator_internal.gases[/datum/gas/plasma][MOLES]
 	m_nitrogen = moderator_internal.gases[/datum/gas/nitrogen][MOLES]
 	m_co2 = moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES]
@@ -428,10 +462,10 @@
 	m_antinoblium = moderator_internal.gases[/datum/gas/antinoblium][MOLES]
 	m_hypernoblium = moderator_internal.gases[/datum/gas/hypernoblium][MOLES]
 
-	///We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
+	//We scale it down by volume/2 because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/scale_factor = volume * 0.5
 
-	///Scaled down moles of gases, no less than 0
+	//Scaled down moles of gases, no less than 0
 	var/scaled_tritium = max((tritium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_hydrogen = max((hydrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_helium = max((helium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
@@ -446,11 +480,13 @@
 	var/scaled_m_antinoblium = max((m_antinoblium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_m_hypernoblium = max((m_hypernoblium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
-
+	/*
+	 *FUSION MAIN PROCESS
+	 */
 	//This section is used for the instability calculation for the fusion reaction
-	///The size of the phase space hypertorus
+	//The size of the phase space hypertorus
 	var/toroidal_size = (2 * PI) + TORADIANS(arctan((volume - TOROID_VOLUME_BREAKEVEN) / TOROID_VOLUME_BREAKEVEN))
-	///Calculation of the gas power, only for theoretical instability calculations
+	//Calculation of the gas power, only for theoretical instability calculations
 	var/gas_power = 0
 	for (var/gas_id in internal_fusion.gases)
 		gas_power += (internal_fusion.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * internal_fusion.gases[gas_id][MOLES])
@@ -458,14 +494,16 @@
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
 	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper + iron_content
-	///Effective reaction instability
+	//Effective reaction instability (determines if the energy is used/released)
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
 		internal_instability = 1
 	else
 		internal_instability = -1
 
-	//here go the other gas interactions
+	/*
+	 *Modifiers
+	 */
 	///Those are the scaled gases that gets consumed and releases energy or help increase that energy
 	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_m_nitrogen * 0.35 + scaled_m_co2 * 0.55 + scaled_m_antinoblium * 10 - scaled_m_hypernoblium * 10
 	///Those are the scaled gases that gets produced and consumes energy or help decrease that energy
@@ -477,31 +515,41 @@
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
 	var/radiation_modifier = clamp(scaled_helium * 0.55 - scaled_m_freon * 1.15 - scaled_m_nitrogen * 0.45 - scaled_m_plasma * 0.95 + scaled_m_bz * 1.9 + scaled_m_proto_nitrate * 0.1 + scaled_m_antinoblium * 10, 0.005, 1000)
 
+	/*
+	 *Main calculations (energy, internal power, core temperature, delta temperature,
+	 *conduction, radiation, efficiency, power output, heat limiter modifier and heat output)
+	 */
 	//Can go either positive or negative depending on the instability and the negative_modifiers
+	//E=mc^2 with some changes for gameplay purposes
 	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature / (max(100 / heat_modifier, 1)), 1)
+	//Power of the gas mixture
 	internal_power = (scaled_hydrogen / max((100 / power_modifier), 1)) * (scaled_tritium / max((100 / power_modifier), 1)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
+	//Temperature inside the center of the gas mixture
 	core_temperature = internal_power / max((1000 / power_modifier), 1)
 	core_temperature = max(TCMB, core_temperature)
-	///Difference between the gases temperature and the internal temperature of the reaction
+	//Difference between the gases temperature and the internal temperature of the reaction
 	delta_temperature = archived_heat - core_temperature
-	///Energy from the reaction lost from the molecule colliding between themselves.
+	//Energy from the reaction lost from the molecule colliding between themselves.
 	conduction = - delta_temperature
-	///The remaining wavelength that actually can do damage to mobs.
+	//The remaining wavelength that actually can do damage to mobs.
 	radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
-	///Efficiency of the reaction, it increases with the amount of plasma
+	//Efficiency of the reaction, it increases with the amount of helium
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
-	///Hotter air is easier to heat up and cool down
+	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
-	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
+	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
+	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
 
+	//Modifies the moderator_internal temperature based on energy conduction (could be made better)
 	var/internal_heat_capacity = internal_fusion.heat_capacity() ? internal_fusion.heat_capacity() : 1
 	moderator_internal.temperature += METALLIC_VOID_CONDUCTIVITY * ((internal_fusion.temperature / internal_heat_capacity) * moderator_internal.heat_capacity())
 
+	//Set the power level of the fusion process
 	var/fusion_temperature = internal_fusion.temperature
 	switch(fusion_temperature) //need to find a better way
 		if(-INFINITY to 10000)
@@ -628,19 +676,23 @@
 					if(moderator_internal.temperature < 1e6)
 						m_antinoblium += 0.01 * (scaled_helium / (fuel_injection_rate / 15))
 
+	//Output what's in the internal_output into the linked_output port
 	linked_output.airs[1].merge(internal_output)
 
+	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen (to do)
 	if(moderator_internal.total_moles())
 		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
-		if(power_level > 5)
+		if(power_level > 5 && prob(17 * power_level)//at power level 6 is 100%
 			iron_content += 0.05
 
+	//Waste gas can be remove by the interface, can spill if temperature is too high (to do)
 	if(waste_remove)
 		var/datum/gas_mixture/internal_remove
 		internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
 		internal_fusion.garbage_collect()
 		linked_output.airs[1].merge(internal_remove)
 
+	//Cooling of the moderator gases with the cooling loop in and out the core (should make it cool the internal fusion mix too)
 	if(airs[1].total_moles() > 0)
 		var/datum/gas_mixture/cooling_in = airs[1]
 		var/datum/gas_mixture/cooling_out = airs[2]
@@ -658,6 +710,7 @@
 
 		cooling_out.merge(cooling_remove)
 
+	//Update pipenets
 	update_parents()
 	linked_input.update_parents()
 	linked_output.update_parents()
