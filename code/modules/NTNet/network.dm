@@ -59,7 +59,6 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	if(children.len > 0 || linked_devices.len > 0)
 		CRASH("Trying to delete a network with devices still in them")
 
-
 	if(parent)
 		parent.children.Remove(network_id)
 		parent = null
