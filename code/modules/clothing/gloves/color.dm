@@ -81,7 +81,7 @@
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
 /obj/item/clothing/gloves/cut
-	desc = "These gloves would protect the wearer from electric shock...if the fingers were covered."
+	desc = "These gloves would protect the wearer from electric shock.. if the fingers were covered."
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
@@ -89,6 +89,24 @@
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
+
+/obj/item/clothing/gloves/color/yellow/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_WIRECUTTER)
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			I.play_tool_sound(src)
+			new /obj/item/clothing/gloves/cut(drop_location())
+			qdel(src)
+	..()
+
+/obj/item/clothing/gloves/color/fyellow/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_WIRECUTTER)
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			I.play_tool_sound(src)
+			new /obj/item/clothing/gloves/cut(drop_location())
+			qdel(src)
+	..()
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
