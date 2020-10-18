@@ -589,3 +589,40 @@
 		new_character.mind.add_antag_datum(new_role, new_team)
 
 #undef ABDUCTOR_MAX_TEAMS
+
+//////////////////////////////////////////////
+//                                          //
+//            SPIDERS     (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/spiders
+	name = "Spiders"
+	antag_flag = "Spider"
+	antag_flag_override = ROLE_ALIEN
+	required_type = /mob/dead/observer
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/spawncount = 2
+
+/datum/dynamic_ruleset/midround/spiders/execute()
+	var/list/spawn_locs = list()
+	for(var/x in GLOB.xeno_spawn)
+		var/turf/spawn_turf = x
+		var/light_amount = spawn_turf.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			spawn_locs += spawn_turf
+	if(spawn_locs.len < spawncount)
+		message_admins("Not enough valid spawn locations found in GLOB.xeno_spawn, aborting spider spawning...")
+		return MAP_ERROR
+	while(spawncount > 0)
+		var/obj/structure/spider/eggcluster/midwife/new_eggs = new /obj/structure/spider/eggcluster/midwife(pick_n_take(spawn_locs))
+		new_eggs.amount_grown = 98
+		spawncount--
+	log_game("Midwife spider eggs were spawned via an event.")
+	return ..()
