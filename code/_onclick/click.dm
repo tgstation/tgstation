@@ -449,9 +449,7 @@
 	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
 
-	var/obj/item/I = get_active_held_item()
-	if (I)
-		SEND_SIGNAL(I, COMSIG_MOUSE_SCROLL, src, delta_x, delta_y, params)
+	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL, delta_x, delta_y, params)
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifier = params2list(params)
