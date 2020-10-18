@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target && !isturf(target))
 		Tloc = target.loc
 
-	if(LAZYLEN(do_afters) >= 5)
+	if(LAZYLEN(user.do_afters) >= 5)
 		return FALSE
 
 	if(target)

@@ -44,6 +44,9 @@
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='hear'>You hear drilling.</span>")
 
+	if(source.do_afters)
+		return
+
 	if(do_after_cooldown(target, source))
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
