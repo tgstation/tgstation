@@ -36,18 +36,18 @@
 	return ..()
 
 /obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
-	if(!(key_type && !is_key(inserted_key) && is_key(I)))
+	if(!key_type || is_key(inserted_key) || !is_key(I))
 		return ..()
-	if(user.transferItemToLoc(I, src))
-		to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-		if(inserted_key)	//just in case there's an invalid key
-			inserted_key.forceMove(drop_location())
-		inserted_key = I
-	else
+	if(!user.transferItemToLoc(I, src))
 		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
+		return
+	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
+	if(inserted_key)	//just in case there's an invalid key
+		inserted_key.forceMove(drop_location())
+	inserted_key = I
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(!(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user))))
+	if(!inserted_key || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return ..()
 	if(!is_occupant(user))
 		to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
