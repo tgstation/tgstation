@@ -176,6 +176,8 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
+			if(istype(src, /obj/machinery/computer/cargo/express)) //prevents running this in the wrong way
+				return . = FALSE
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
