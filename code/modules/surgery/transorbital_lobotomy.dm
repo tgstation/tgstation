@@ -5,8 +5,9 @@
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 
 /datum/surgery/transorbital_lobotomy/can_start(mob/user, mob/living/carbon/target)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
 		return FALSE
