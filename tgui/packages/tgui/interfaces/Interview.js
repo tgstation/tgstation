@@ -27,7 +27,9 @@ export const Interview = (props, context) => {
   };
 
   return (
-    <Window>
+    <Window
+      width={500}
+      height={600}>
       <Window.Content scrollable>
         {(!read_only && (
           <Section title="Welcome!">
