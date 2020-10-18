@@ -694,16 +694,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Apply configurations to rule.
 /datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
-	// Wouldn't it be funny if you wanted to make a multiline if statement to make it more readable you had to escape the newlines?
-	if( configuration \
-	 && configuration[ruleset.ruletype] \
-	 && configuration[ruleset.ruletype][ruleset.name])
-		var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
-		for(var/variable in rule_conf)
-			if(!(variable in ruleset.vars))
-				stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
-				continue
-			ruleset.vars[variable] = rule_conf[variable]
+	var/rule_conf = LAZYACCESSASSOC(configuration, ruleset.ruletype, ruleset.name)
+	for(var/variable in rule_conf)
+		if(!(variable in ruleset.vars))
+			stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+			continue
+		ruleset.vars[variable] = rule_conf[variable]
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
