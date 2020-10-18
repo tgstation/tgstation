@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - code_imp: "SSeconomy/var/bank_accounts is now an association list of account identifiers and datums and also was renamed to bank_accounts_by_id."
