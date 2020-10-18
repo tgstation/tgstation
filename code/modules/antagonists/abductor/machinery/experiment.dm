@@ -99,7 +99,7 @@
 			var/mob/living/mob_occupant = occupant
 			if(mob_occupant.stat == DEAD)
 				return
-			flash = experiment(occupant, params["experiment_type"], usr)
+			flash = experiment(mob_occupant, params["experiment_type"], usr)
 			return TRUE
 
 /**
