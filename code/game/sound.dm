@@ -25,17 +25,12 @@ falloff_distance - Distance at which falloff begins.
 	if (!turf_source)
 		return
 
-	if(falloff_exponent == SOUND_FALLOFF_EXPONENT) // test var for default
-		falloff_exponent = SSsounds.sound_exponent
-	if(falloff_distance == SOUND_DEFAULT_FALLOFF_DISTANCE) // test var for default
-		falloff_distance = SSsounds.falloff_start
-
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
-	var/maxdistance = (SOUND_RANGE + extrarange + SSsounds.offset_range)
+	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
