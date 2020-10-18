@@ -160,7 +160,7 @@
 /datum/surgery_step/drive
 	name = "drive through bone"
 	implements = list(TOOL_HAMMER = 100, /obj/item = 20)
-	time = 30
+	time = 3 SECONDS
 
 /datum/surgery_step/drive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to hammer through the bone past [target]'s [parse_zone(target_zone)]...</span>",
