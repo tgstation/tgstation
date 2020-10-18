@@ -320,9 +320,9 @@ SUBSYSTEM_DEF(air)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/list/turf_packet = currentrun[currentrun.len]
-		var/breakdown = turf_packet[1]
-		var/dismantle = turf_packet[2]
-		var/list/turf_list = turf_packet[3]
+		var/breakdown = turf_packet[EX_CLEANUP_BREAKDOWN]
+		var/dismantle = turf_packet[EX_CLEANUP_DISMANTLE]
+		var/list/turf_list = turf_packet[EX_CLEANUP_TURFS]
 		while(turf_list.len) //The turf list
 			var/turf/open/T = turf_list[turf_list.len]
 			if(T && !istype(T.air, /datum/gas_mixture/immutable))
