@@ -377,18 +377,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(required_living_minutes <= 0)
 				to_chat(src, "Administrators have set the experienced players allow list on, but have not set a minimum hours requirement, this is not a valid configuration")
 				qdel(src)
-				return 0
+				return
 
 			if(living_minutes < required_living_minutes && !(ckey in GLOB.interviews.approved_ckeys))
 				if(!CONFIG_GET(flag/allowlist_interview))
 					to_chat(src, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
 					+ "playtime on tg servers to play on this server. You have [living_minutes] minutes. Play more!</span>")
 					qdel(src)
-					return 0
+					return
 		else
 			to_chat(src, "The experienced players allow list is configured, but is not setup correctly and user exp cannot be loaded")
 			qdel(src)
-			return 0
+			return
 
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
