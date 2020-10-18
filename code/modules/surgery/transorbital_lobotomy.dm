@@ -8,10 +8,8 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
-		return FALSE
-	return TRUE
+	return target.getorganslot(ORGAN_SLOT_BRAIN) ? TRUE : FALSE
+
 
 /datum/surgery_step/tlobotomize
 	name = "perform transorbital lobotomy"
