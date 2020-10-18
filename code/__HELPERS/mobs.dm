@@ -250,6 +250,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target && !isturf(target))
 		Tloc = target.loc
 
+	if(LAZYLEN(do_afters) >= 5)
+		return FALSE
+
 	if(target)
 		LAZYADD(user.do_afters, target)
 		LAZYADD(target.targeted_by, user)
