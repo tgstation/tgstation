@@ -230,6 +230,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	recipe = first_atmos
 
+	RegisterSignal(src, COMSIG_MOUSE_SCROLL, .proc/mouse_wheeled)
+
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
 	spark_system = null
@@ -478,6 +480,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+
+/obj/item/pipe_dispenser/proc/mouse_wheeled(datum/source, mob/user, delta_x, delta_y, params)
+	SIGNAL_HANDLER
+
+	if(delta_y > 0)
+		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
+	else
+		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
+	to_chat(user, "<span class='notice'>You set the layer to [piping_layer].</span>")
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

@@ -219,6 +219,8 @@
 	#define COMPONENT_NO_MOUSEDROP (1<<0)
 ///from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+///from base of mob/MouseWheelOn(): (delta_x, delta_y, params)
+#define COMSIG_MOUSE_SCROLL "mousescroll"
 
 // /area signals
 
