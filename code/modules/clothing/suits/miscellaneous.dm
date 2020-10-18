@@ -851,6 +851,12 @@
 	icon_state = "cloak"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
+/obj/item/clothing/suit/voidcloak
+	name = "mysterious cloak"
+	desc = "What are you hiding? Because you're doing a really bad job at it"
+	icon_state = "voidcloak"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
 /obj/item/clothing/suit/hooded/travelercloak
 	name = "Traveler's Cloak"
 	desc = "A durable cloak that shelters its wearer from the elements, the collar seems to be made from decayed flowers."

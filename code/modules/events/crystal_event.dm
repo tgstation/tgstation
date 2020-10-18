@@ -33,7 +33,7 @@ This section is for the event controller
 	typepath = /datum/round_event/crystal_invasion
 	weight = 8
 	min_players = 35
-	max_occurrences = 1
+	max_occurrences = 0
 	earliest_start = 25 MINUTES
 
 /datum/round_event/crystal_invasion

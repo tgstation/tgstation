@@ -370,3 +370,15 @@ obj/item/clothing/under/costume/servicesuit
 	resistance_flags = NONE
 	strip_delay = 99180
 	can_be_bloody = FALSE
+
+/obj/item/clothing/under/costume/voidstranger
+	name = "flesh gift"
+	desc = "This is just a test. Don't disappoint."
+	icon_state = "void"
+	inhand_icon_state = "void"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	can_adjust = FALSE
+	resistance_flags = NONE
+	strip_delay = 99180
+	can_be_bloody = FALSE

@@ -179,6 +179,20 @@
 	pet_bonus = TRUE
 	pet_bonus_emote = "squeaks happily!"
 
+//Uhm,
+/mob/living/simple_animal/mouse/brown/cheas
+	name = "Cheas Chameecha"
+	desc = "Uhm..."
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "splats"
+	response_harm_simple = "splat"
+	gold_core_spawnable = NO_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "squeaks happily!"
+
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."

@@ -466,3 +466,13 @@
 		/obj/item/gun/energy/laser/ghost=1,\
 		/obj/item/gun/energy/laser/ghost=1,\
 		)
+
+/datum/outfit/voidstranger
+	name = "Void Stranger"
+	uniform = /obj/item/clothing/under/costume/voidstranger
+	suit = /obj/item/clothing/suit/voidcloak
+	ears = /obj/item/radio/headset/headset_cent/commander
+	back = /obj/item/storage/backpack/invis
+	backpack_contents = list(
+		/obj/item/gun/energy/laser/ghost=2,\
+		)
