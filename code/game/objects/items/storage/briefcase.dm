@@ -68,4 +68,4 @@
 
 /obj/item/paper/guides/lobotomy
 	name = "Lobotomies For Dummies"
-	info = "Doing a Lobotomy is easy.<br> Target the eyes, use your drapes, orbitoclast, hammer, orbitoclast, then finish off with a cautery.<br> However, to retrieve special powers from this is a little harder.<br> You must fail the lobotomizing step (second orbitoclast) to cause some traumas.<br> If these traumas are too bad, do the step correctly then fail it again.<br> To fail a step on purpose, you must be on disarm intent."
+	info = "Doing a Lobotomy is easy.<br> Target the eyes, use your drapes, orbitoclast, hammer, orbitoclast, then finish off with a cautery.<br> However, to retrieve special powers from this is a little harder.<br> You must fail the lobotomizing step (second orbitoclast) to cause some traumas.<br> If these traumas are too bad, do the step correctly (Removes Severe Traumas by just cutting off more of the Brain) then fail it again.<br> To fail a step on purpose, you must be on disarm intent."
