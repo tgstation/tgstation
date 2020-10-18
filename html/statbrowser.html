@@ -174,6 +174,10 @@
 		-ms-interpolation-mode: nearest-neighbor;
 		image-rendering: pixelated;
 	}
+
+	.interview_panel_controls {
+		margin-bottom: 10px;
+	}
 </style>
 </head>
 <body>
@@ -951,19 +955,34 @@ function draw_tickets() {
 function draw_interviews() {
 	statcontentdiv[textContentKey] = "";
 	var body = document.createElement("div");
-	var interviewData = interviewManager.status.split("%@%");
-	// i apologize for this sin i have 20 minutes to make this functional
-	var actions = ["active", "queue", "closed"]
-	for (var i = 0; i < interviewData.length; i++) {
+	var manDiv = document.createElement("div");
+	manDiv.className = "interview_panel_controls"
+	var manLink = document.createElement("a");
+	manLink[textContentKey] = "Open Interview Manager Panel";
+	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=1";
+	manDiv.appendChild(manLink);
+	body.appendChild(manDiv);
+
+	// List interview stats
+	var statsDiv = document.createElement("table");
+	statsDiv.className="interview_panel_stats";
+	for (var key in interviewManager.status) {
 		var d = document.createElement("div");
-		var a = document.createElement("a");
-		a[textContentKey] = interviewData[i];
-		a.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=1";
-		d.appendChild(a);
-		body.appendChild(d);
+		var tr = document.createElement("tr");
+		var stat_name = document.createElement("td");
+		var stat_text = document.createElement("td");
+		stat_name[textContentKey] = key;
+		stat_text[textContentKey] = interviewManager.status[key];
+		tr.appendChild(stat_name);
+		tr.appendChild(stat_text);
+		statsDiv.appendChild(tr);
 	}
+	body.appendChild(statsDiv);
 	document.getElementById("statcontent").appendChild(body);
+
+	// List interviews if any are open
 	var table = document.createElement("table");
+	table.className = "interview_panel_table";
 	if(!interviewManager)
 		return;
 	for(var i = 0; i < interviewManager.interviews.length; i++) {

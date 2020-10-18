@@ -74,7 +74,10 @@ SUBSYSTEM_DEF(statpanels)
 					))
 
 				var/list/data = list(
-					"status" = "Active Interviews: [m.open_interviews.len] [stat_string]%@%Queued Interviews: [m.interview_queue.len]%@%Closed Interviews: [m.closed_interviews.len]",
+					"status" = list(
+						"Active:" = "[m.open_interviews.len] [stat_string]",
+						"Queued:" = "[m.interview_queue.len]",
+						"Closed:" = "[m.closed_interviews.len]"),
 					"interviews" = queued
 				)
 
