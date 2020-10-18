@@ -42,22 +42,22 @@
 	return ..()
 
 /datum/surgery_step/tlobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-    var/obj/item/organ/brain/Brian = target.getorganslot(ORGAN_SLOT_BRAIN)
-    if(!Brain)
-        user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.</span>", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
-        return FALSE
-    display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
-        "<span class='notice'>[user] successfully lobotomizes [target]!</span>",
-        "<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
-    Brian.applyOrganDamage(80)
-    switch(rand(1,3))
-        if(1)
-            target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
-        if(2)
-            if(HAS_TRAIT(target, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
-                target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
-            else
-                target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-        if(3)
-            target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
-    return FALSE
+	var/obj/item/organ/brain/Brian = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!Brain)
+		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.</span>", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
+		return FALSE
+	display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
+		"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
+		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
+	Brian.applyOrganDamage(80)
+	switch(rand(1,3))
+		if(1)
+			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
+		if(2)
+			if(HAS_TRAIT(target, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
+				target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
+			else
+				target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+		if(3)
+			target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
+	return FALSE
