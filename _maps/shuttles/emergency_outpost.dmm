@@ -8,6 +8,7 @@
 "bn" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"ce" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
