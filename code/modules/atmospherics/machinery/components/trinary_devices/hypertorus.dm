@@ -682,7 +682,7 @@
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen (to do)
 	if(moderator_internal.total_moles())
 		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
-		if(power_level > 5 && prob(17 * power_level)//at power level 6 is 100%
+		if(power_level > 5 && prob(17 * power_level))//at power level 6 is 100%
 			iron_content += 0.05
 
 	//Waste gas can be remove by the interface, can spill if temperature is too high (to do)
