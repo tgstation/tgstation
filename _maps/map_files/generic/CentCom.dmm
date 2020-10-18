@@ -1418,8 +1418,7 @@
 	},
 /area/holodeck/rec_center/firingrange)
 "eb" = (
-/obj/structure/target_stake,
-/obj/machinery/magnetic_module,
+/obj/structure/training_machine,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1774,15 +1773,8 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
-"fh" = (
-/obj/item/paper/guides/jobs/security/range,
-/turf/open/floor/holofloor,
-/area/holodeck/rec_center/firingrange)
 "fi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/magnetic_controller{
-	autolink = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1793,6 +1785,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/item/training_toolbox{
+	pixel_y = 4
+	},
+/obj/item/training_toolbox,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "fj" = (
@@ -7413,8 +7409,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/carp/cayenne,
 /obj/structure/bed/dogbed/cayenne,
+/mob/living/simple_animal/hostile/carp/cayenne,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "rh" = (
@@ -70896,7 +70892,7 @@ eF
 eF
 eF
 eF
-fh
+eF
 cW
 fw
 bj

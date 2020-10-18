@@ -2,7 +2,7 @@
 	if(check_click_intercept(params, A))
 		return
 
-	if(can_reenter_corpse && mind && mind.current)
+	if(can_reenter_corpse && mind?.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
 			reenter_corpse()						// (body bag, closet, mech, etc)
 			return									// seems legit.
@@ -76,6 +76,6 @@
 	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
-	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
+	if(power_station?.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
 		user.forceMove(get_turf(power_station.teleporter_console.target))
 	return ..()
