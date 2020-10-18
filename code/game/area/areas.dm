@@ -41,9 +41,6 @@
 
 	///Will objects this area be needing power?
 	var/requires_power = TRUE
-
-	// we have an apc here
-	var/obj/machinery/power/apc/apc = null
 	/// This gets overridden to 1 for space in area/Initialize().
 	var/always_unpowered = FALSE
 
@@ -70,7 +67,7 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-
+    
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
