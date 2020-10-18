@@ -24,6 +24,10 @@ map pubbystation
 	votable
 endmap
 
+map outpoststation
+	votable
+endmap
+
 map deltastation
 	minplayers 50
 	votable

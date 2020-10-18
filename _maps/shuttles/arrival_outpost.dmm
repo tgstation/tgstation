@@ -1,0 +1,291 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"b" = (
+/obj/machinery/light,
+/obj/machinery/requests_console{
+	department = "Arrival shuttle";
+	name = "Arrivals Shuttle console";
+	pixel_y = -30
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"c" = (
+/obj/structure/table,
+/obj/structure/table,
+/obj/structure/table,
+/obj/structure/table,
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"d" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 30
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"f" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"h" = (
+/turf/template_noop,
+/area/space)
+"k" = (
+/obj/structure/closet/wardrobe/black,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"q" = (
+/obj/structure/table,
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"s" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/obj/docking_port/mobile/arrivals{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"u" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"y" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"A" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"C" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"D" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"E" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"H" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"I" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"M" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"R" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"S" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"T" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/closet/wardrobe/green,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"V" = (
+/obj/machinery/door/airlock/titanium/glass,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"W" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"Y" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+h
+h
+C
+s
+C
+h
+h
+"}
+(2,1,1) = {"
+h
+a
+A
+A
+A
+a
+h
+"}
+(3,1,1) = {"
+a
+a
+W
+W
+W
+a
+a
+"}
+(4,1,1) = {"
+a
+E
+M
+M
+M
+c
+a
+"}
+(5,1,1) = {"
+a
+y
+U
+U
+U
+R
+a
+"}
+(6,1,1) = {"
+a
+d
+M
+M
+M
+b
+a
+"}
+(7,1,1) = {"
+V
+M
+U
+U
+U
+M
+V
+"}
+(8,1,1) = {"
+a
+u
+M
+M
+M
+M
+a
+"}
+(9,1,1) = {"
+W
+Y
+U
+U
+U
+M
+W
+"}
+(10,1,1) = {"
+W
+k
+M
+M
+M
+M
+W
+"}
+(11,1,1) = {"
+a
+T
+U
+U
+U
+I
+a
+"}
+(12,1,1) = {"
+V
+M
+M
+M
+M
+M
+V
+"}
+(13,1,1) = {"
+a
+a
+a
+V
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+R
+D
+M
+S
+R
+a
+"}
+(15,1,1) = {"
+a
+H
+M
+f
+M
+q
+a
+"}
+(16,1,1) = {"
+a
+a
+W
+R
+W
+a
+a
+"}
+(17,1,1) = {"
+h
+h
+W
+W
+W
+h
+h
+"}

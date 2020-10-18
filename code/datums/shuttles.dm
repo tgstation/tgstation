@@ -232,6 +232,12 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
+/datum/map_template/shuttle/emergency/outpost
+	suffix = "outpost"
+	name = "Outpost Station Shuttle"
+	description = "A big shuttle for big monsters. Barely retrofitted for modern docking standards."
+	credit_cost = 10000
+
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"
 	name = "Disco Inferno"
@@ -530,6 +536,10 @@
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
+
+/datum/map_template/shuttle/arrival/outpost
+	suffix = "outpost"
+	name = "arrival shuttle (Outpost)"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
