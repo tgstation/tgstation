@@ -114,26 +114,22 @@ export const formatDb = value => {
 };
 
 const SI_BASE_TEN_UNIT = [
-  '* 10^-15', // femto
-  '* 10^-12', // pico
-  '* 10^-9', // nano
-  '* 10^-6', // micro
-  '* 10^-3', // milli
-  // NOTE: This is a space for a reason. When we right align si numbers,
-  // in monospace mode, we want to units and numbers stay in their respective
-  // columns. If rendering in HTML mode, this space will collapse into
-  // a single space anyway.
-  ' ',
-  '* 10^3', // kilo
-  '* 10^6', // mega
-  '* 10^9', // giga
-  '* 10^12', // tera
-  '* 10^15', // peta
-  '* 10^18', // exa
-  '* 10^21', // zetta
-  '* 10^24', // yotta
-  '* 10^27', // ronna
-  '* 10^30', // quecca
+  '· 10⁻¹⁵', // femto
+  '· 10⁻¹²', // pico
+  '· 10⁻⁹', // nano
+  '· 10⁻⁶', // micro
+  '· 10⁻³', // milli
+  '',
+  '· 10³', // kilo
+  '· 10⁶', // mega
+  '· 10⁹', // giga
+  '· 10¹²', // tera
+  '· 10¹⁵', // peta
+  '· 10¹⁸', // exa
+  '· 10²¹', // zetta
+  '· 10²⁴', // yotta
+  '· 10²⁷', // ronna
+  '· 10³⁰', // quecca
 ];
 
 const SI_BASE_TEN_INDEX = SI_BASE_TEN_UNIT.indexOf(' ');
