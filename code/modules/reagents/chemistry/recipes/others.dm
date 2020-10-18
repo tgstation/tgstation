@@ -36,29 +36,29 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
 
-/datum/chemical_reaction/plasmasolidification
+/datum/chemical_reaction/plasma_solidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
 
-/datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 
-/datum/chemical_reaction/goldsolidification
+/datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
 
-/datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
-/datum/chemical_reaction/uraniumsolidification
+/datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
 	mob_react = FALSE
 
-/datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/uranium(location)
@@ -587,12 +587,12 @@
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
 
-/datum/chemical_reaction/silverolidification
+/datum/chemical_reaction/silver_solidification
 	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
 	required_temp = 630
 	mob_react = FALSE
 
-/datum/chemical_reaction/silversolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
