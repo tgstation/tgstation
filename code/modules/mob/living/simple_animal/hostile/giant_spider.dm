@@ -22,7 +22,7 @@
   * * living_target - The targeted mob
   */
 /mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/living_target)
-	if(poison_per_bite != 0 && living_target.reagents)
+	if(poison_per_bite != 0 && living_target?.reagents)
 		living_target.reagents.add_reagent(poison_type, poison_per_bite)
 
 /**
