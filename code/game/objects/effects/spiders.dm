@@ -135,6 +135,11 @@
 	directive = "You are the spawn of a visicious changeling.  You have no ambitions except to wreak havoc and ensure your own survival."
 	potentialspawns = list(/mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh)
 
+/obj/structure/spider/eggcluster/midwife
+	name = "midwife egg cluster"
+	potentialspawns = list(/mob/living/simple_animal/hostile/poison/giant_spider/midwife)
+	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
+
 /obj/structure/spider/spiderling
 	name = "spiderling"
 	desc = "It never stays still for long."
