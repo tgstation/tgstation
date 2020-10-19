@@ -67,7 +67,9 @@
 #define LARVA_BODYPART "larva"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
-// Health/damage defines for carbon mobs
+// Health/damage defines
+#define MAX_LIVING_HEALTH 100
+
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 
