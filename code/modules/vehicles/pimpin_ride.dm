@@ -20,7 +20,7 @@
 	if(mybag)
 		qdel(mybag)
 		mybag = null
-	. = ..()
+	return ..()
 
 /obj/item/janiupgrade
 	name = "floor buffer upgrade"
@@ -29,7 +29,7 @@
 	icon_state = "upgrade"
 
 /obj/vehicle/ridden/janicart/examine(mob/user)
-	. += ..()
+	. = ..()
 	if(floorbuffer)
 		. += "It has been upgraded with a floor buffer."
 
@@ -52,8 +52,6 @@
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
 		update_icon()
-	else if(istype(I, /obj/item/key/janitor))
-		..()
 	else if(mybag)
 		mybag.attackby(I, user)
 	else
