@@ -34,8 +34,6 @@
 	var/pos_in_queue
 	/// Contains the state of the form, used for rendering and sanity checking
 	var/status = INTERVIEW_PENDING
-	/// The statclick effect used for the stats panel of admins
-	var/obj/effect/statclick/interview/statclick
 
 /datum/interview/New(client/interviewee)
 	if(!interviewee)
@@ -47,7 +45,6 @@
 	questions = global.config.interview_questions.Copy()
 	responses.len = questions.len
 	welcome_message = global.config.interview_welcome_message
-	statclick = new(null, src)
 
 /**
   * Approves the interview, forces reconnect of owner if relevant.
@@ -163,26 +160,3 @@
 			"response" = responses.len < i ? null : responses[i]
 		)
 		.["questions"] += list(data)
-
-/**
-  * # Interview StatClick
-  *
-  * Object used for handling the statclick events for administrators on the stat panel for interviews
-  */
-/obj/effect/statclick/interview
-	var/datum/interview/interview_datum
-
-/obj/effect/statclick/interview/Initialize(mapload, datum/interview/I)
-	interview_datum = I
-	. = ..()
-
-/obj/effect/statclick/interview/update()
-	var/datum/interview/I = interview_datum
-	return ..("[I.owner_ckey][!I.owner ? " (DC)": ""] \[INT-[I.id]\]")
-
-/obj/effect/statclick/interview/Click()
-	interview_datum.ui_interact(usr)
-
-/obj/effect/statclick/interview/Destroy(force)
-	interview_datum = null
-	. = ..()

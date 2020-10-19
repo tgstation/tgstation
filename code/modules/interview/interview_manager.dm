@@ -17,12 +17,6 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	var/list/approved_ckeys = list()
 	/// Ckeys which are currently in the cooldown system, they will be unable to create new interviews
 	var/list/cooldown_ckeys = list()
-	/// The statclick effect for supporting viewing the list of open and closed interviews
-	var/obj/effect/statclick/interview_list/statclick
-
-/datum/interview_manager/New()
-	statclick = new(null, src)
-	. = ..()
 
 /datum/interview_manager/Destroy(force, ...)
 	QDEL_LIST(open_interviews)
@@ -31,31 +25,6 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	QDEL_LIST(approved_ckeys)
 	QDEL_LIST(cooldown_ckeys)
 	return ..()
-
-/**
-  * Produces the content of the stat panel entry for administrators who are viewing the interview
-  * system
-  */
-/datum/interview_manager/proc/stat_entry()
-	stat("Active Interviews:", statclick.update("[open_interviews.len] [active_interview_count()]"))
-	stat("Queued Interviews:", statclick.update("[interview_queue.len]"))
-	stat("Closed Interviews:", statclick.update("[closed_interviews.len]"))
-	if (interview_queue.len)
-		stat("Interview Queue:", null)
-		for(var/datum/interview/I in interview_queue)
-			stat("\[[I.pos_in_queue]\]:", I.statclick.update())
-
-/**
-  * Produces a string reprsenting the number of active tickets specifically by online and disconnected
-  * players, used for stat panel
-  */
-/datum/interview_manager/proc/active_interview_count()
-	var/dc = 0
-	for(var/ckey in open_interviews)
-		var/datum/interview/I = open_interviews[ckey]
-		if (I && !I.owner)
-			dc++
-	return "([open_interviews.len - dc] online / [dc] disconnected)"
 
 /**
   * Used in the new client pipeline to catch when clients are reconnecting and need to have their
@@ -244,22 +213,3 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 			"disconnected" = !I.owner
 		)
 		.["closed_interviews"] += list(data)
-
-/**
-  * # Interview Manager StatClick
-  *
-  * Object used for handling the statclick events for administrators on the stat panel for interviews
-  */
-/obj/effect/statclick/interview_list
-	var/datum/interview_manager/manager
-
-/obj/effect/statclick/interview_list/Initialize(mapload, datum/interview_manager/M)
-	manager = M
-	. = ..()
-
-/obj/effect/statclick/interview_list/Click()
-	manager.ui_interact(usr)
-
-/obj/effect/statclick/interview_list/Destroy(force)
-	manager = null
-	. = ..()
