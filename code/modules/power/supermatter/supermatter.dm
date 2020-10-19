@@ -65,6 +65,8 @@
 #define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+/// How the efficiency of supermatter electrolysis scales with power. Should _always_ be >0. Higher == less water electrolyzed at high power levels.
+#define WATER_ELECTROLYSIS_MODIFIER 500
 
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
@@ -698,6 +700,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 		//Varies based on power, gas content, and heat
 		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		//Aboce certain power thresholds the supermatter crystal can electrolyze water vapor.
+		if(power > POWER_PENALTY_THRESHOLD)
+			var/h2o_moles = removed.gases[/datum/gas/water_vapor][MOLES]
+			var/electrolysis_moles = max(h2o_moles * (power - POWER_PENALTY_THRESHOLD)/(power + WATER_ELECTROLYSIS_MODIFIER), 0)
+			if(electrolysis_moles)
+				removed.gases[/datum/gas/water_vapor][MOLES] -= electrolysis_moles
+				removed.gases[/datum/gas/hydrogen][MOLES] += electrolysis_moles
+				removed.gases[/datum/gas/oxygen][MOLES] += electrolysis_moles / 2
 
 		if(produces_gas)
 			env.merge(removed)
