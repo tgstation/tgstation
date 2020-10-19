@@ -3247,8 +3247,5 @@
 #include "interface\skin.dmf"
 #include "modular_skyrat\modules\cryosleep\code\cryopod.dm"
 #include "modular_skyrat\modules\gunsafety\code\gun_safety.dm"
-#include "modular_skyrat\modules\horrorform\code\modules\antagonists\changeling\powers\horror_form.dm"
-#include "modular_skyrat\modules\horrorform\code\modules\mob\hostile\true_changeling.dm"
 #include "modular_skyrat\modules\radiosound\code\game\objects\items\devices\radio\headset.dm"
-#include "modular_skyrat\modules\typing_indicator\code\mob.dm"
 // END_INCLUDE
