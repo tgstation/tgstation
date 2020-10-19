@@ -1,16 +1,21 @@
 /*
-	Holodeck Update
+	Map Template Holodeck
 
-	The on-station holodeck area is of type [holodeck_type].
-	All subtypes of [program_type] are loaded into the program cache or emag programs list.
-	If init_program is null, a random program will be loaded on startup.
-	If you don't wish this, set it to the offline program or another of your choosing.
+	Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the same holodeck_access
+	flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this flag), these program templates are then
+	given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the ui calls load_program with the id of the selected program.
+	There are two modified map template procs for the holodeck, map_template/holodeck/load and parsed_map/holodeckTemplateBounds. These are similar to their
+	non holodeck counterparts, map_template/load and parsed_map/initTemplateBounds. the main difference is that holodeckTemplateBounds records how many non turf
+	atoms it created, and passes this to map_template/holodeck/load, which passes it to load_program as the spawned list. if something spawned by the holodeck
+	doesnt get deleted when it should, then for whatever reason it is not being put inside the spawned list. usually this is because it was created by an object
+	that was inside the spawned list (like how deconstructing a dresser spawns 10 wood planks, which are themselves not put into spawned)
 
-	You can use this to add holodecks with minimal code:
-	1) Define new areas for the holodeck programs in code/game/area/areas/holodeck
-	2) Define new map template datums in code/modules/holodeck/holodeck
-	3) Create the new map templates in _maps/templates
-	4) Create a new control console that uses those templates
+
+	Easiest way to add new holodeck programs
+	1) Define new map template datums in code/modules/holodeck/holodeck
+	2) Create the new map templates in _maps/templates (remember theyre 9x10)
+	3) Create a new control console that uses those templates
+
 
 */
 
@@ -26,20 +31,15 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
-	var/area/mappedstartarea = /area/holodeck/rec_center //var edit this to a different area if youre making a second holodeck different from the station one
-	var/area/holodeck/loaded
+	var/area/mappedstartarea = /area/holodeck/rec_center //change this to a different area if youre making a second holodeck different from the station one
 	var/program = "holodeck_offline"
 	var/last_program
 	var/offline_program = "holodeck_offline"
 	var/holodeck_access = STATION_HOLODECK
-	//var/holoaccess_flag = (1<<holodeck_access)
 
 	var/list/program_cache
 	var/list/emag_programs
 
-	// Splitting this up allows two holodecks of the same size
-	// to use the same source patterns.  Y'know, if you want to.
-	var/holodeck_type = /datum/map_template/holodeck
 	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
 
 	var/active = FALSE
@@ -48,10 +48,7 @@
 	var/list/effects = list()
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
-	var/turf/spawn_tile
 	var/turf/bottom_left
-	var/list/before_load = list()
-	var/list/after_load = list()
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -91,8 +88,6 @@
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/A = typekey
-		//if(!A)
-			//continue
 		var/list/info_this = list()
 		info_this["id"] = initial(A.template_id)
 		info_this["name"] = initial(A.name)
@@ -128,7 +123,7 @@
 			var/program_to_load = params["id"]
 			//load the map_template that program_to_load represents
 			if(program_to_load)
-				load_program(program_to_load)//do i only need to replace this? NO EASYNESS, ONLY PAIN
+				load_program(program_to_load)
 		if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
@@ -136,65 +131,10 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/obj/machinery/computer/holodeck/process(delta_time)
-	if(damaged && DT_PROB(5, delta_time))
-		for(var/turf/T in linked)
-			if(DT_PROB(2.5, delta_time))
-				do_sparks(2, 1, T)
-				return
-
-	if(!..() || !active)
-		return
-
-	if(!floorcheck())
-		emergency_shutdown()
-		damaged = TRUE
-		for(var/mob/M in urange(10,src))
-			M.show_message("The holodeck overloads!")
-
-		for(var/turf/T in linked)
-			if(prob(30))
-				do_sparks(2, 1, T)
-			SSexplosions.lowturf += T
-			T.hotspot_expose(1000,500,1)
-
-	if(!(obj_flags & EMAGGED))
-		for(var/item in spawned)
-			if(!(get_turf(item) in linked))
-				derez(item)
-	for(var/e in effects)
-		var/obj/effect/holodeck_effect/HE = e
-		HE.tick()
-	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
-
-/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
-	if(active == toggleOn)
-		return
-
-	if(toggleOn)
-		if(last_program && (last_program != offline_program))
-			load_program(last_program)
-		active = TRUE
-	else
-		last_program = program
-		load_program("holodeck_offline")
-		active = FALSE
-
-/obj/machinery/computer/holodeck/proc/emergency_shutdown()
-	last_program = program
-	load_program("holodeck_offline", TRUE)
-	active = FALSE
-
-/obj/machinery/computer/holodeck/proc/floorcheck()
-	for(var/turf/T in linked)
-		if(!T.intact || isspaceturf(T))
-			return FALSE
-	return TRUE
-
-/obj/machinery/computer/holodeck/proc/nerf(active)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
-	for(var/obj/item/I in spawned)
-		I.damtype = active ? STAMINA : initial(I.damtype)
-
+/*
+	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the basetuf list)
+	and passes spawned_atoms from p to the holodeck template datum
+*/
 /datum/map_template/holodeck/load(turf/T, centered = FALSE, )
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
@@ -228,7 +168,8 @@
 	//initialize things that are normally initialized after map load
 
 	spawned_atoms = parsed.holodeckTemplateBounds()
-	for (var/obj/base_container in spawned_atoms)
+
+	for (var/obj/base_container in spawned_atoms)//this didnt seem to work when i put this in holodeckTemplateBounds
 		if (length(base_container.contents) > 0)
 			spawned_atoms -= base_container
 			spawned_atoms += base_container.GetAllContents()
@@ -237,6 +178,9 @@
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
+/*
+	similar to initTemplateBounds except it keeps track of all new objects it creates and passes it to map_template/holodeck/load
+*/
 /datum/parsed_map/proc/holodeckTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
@@ -297,6 +241,9 @@
 
 	return newatoms//this is what will become the spawned list for the holodeck
 
+/*
+	the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
+*/
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
 	if(program == map_id)
@@ -323,8 +270,8 @@
 
 	spawned += template.spawned_atoms//parsed_map.holodeckTemplateBounds has newatoms, which is passed to template as spawned_atoms, which is passed to this as spawned
 
-	linked = get_area(bottom_left)
-	linked.linked = src
+	//linked = get_area(bottom_left)
+	//linked.linked = src
 
 	finish_spawn()
 
@@ -375,6 +322,65 @@
 		visible_message("<span class='notice'>[object] fades away!</span>")
 
 	qdel(object)
+
+/obj/machinery/computer/holodeck/process(delta_time)
+	if(damaged && DT_PROB(5, delta_time))
+		for(var/turf/T in linked)
+			if(DT_PROB(2.5, delta_time))
+				do_sparks(2, 1, T)
+				return
+
+	if(!..() || !active)
+		return
+
+	if(!floorcheck())
+		emergency_shutdown()
+		damaged = TRUE
+		for(var/mob/M in urange(10,src))
+			M.show_message("The holodeck overloads!")
+
+		for(var/turf/T in linked)
+			if(prob(30))
+				do_sparks(2, 1, T)
+			SSexplosions.lowturf += T
+			T.hotspot_expose(1000,500,1)
+
+	if(!(obj_flags & EMAGGED))
+		for(var/item in spawned)
+			if(!(get_turf(item) in linked))
+				derez(item)
+	for(var/e in effects)
+		var/obj/effect/holodeck_effect/HE = e
+		HE.tick()
+	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
+
+/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
+	if(active == toggleOn)
+		return
+
+	if(toggleOn)
+		if(last_program && (last_program != offline_program))
+			load_program(last_program)
+		active = TRUE
+	else
+		last_program = program
+		load_program("holodeck_offline")
+		active = FALSE
+
+/obj/machinery/computer/holodeck/proc/emergency_shutdown()
+	last_program = program
+	load_program("holodeck_offline", TRUE)
+	active = FALSE
+
+/obj/machinery/computer/holodeck/proc/floorcheck()
+	for(var/turf/T in linked)
+		if(!T.intact || isspaceturf(T))
+			return FALSE
+	return TRUE
+
+/obj/machinery/computer/holodeck/proc/nerf(active)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
+	for(var/obj/item/I in spawned)
+		I.damtype = active ? STAMINA : initial(I.damtype)
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
