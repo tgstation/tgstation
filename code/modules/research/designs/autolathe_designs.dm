@@ -1210,3 +1210,11 @@
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/chisel
 	category = list("initial","Tools")
+
+/datum/design/toner
+	name = "Toner Cartridge"
+	id = "toner"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100)
+	build_path = /obj/item/toner
+	category = list("initial","Misc")
