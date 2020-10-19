@@ -16,7 +16,8 @@
 	var/list/preview = list()
 	for(var/S in template.get_affected_turfs(T,centered = TRUE))
 		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
-		item.plane = ABOVE_LIGHTING_PLANE
+		item.plane = LIGHTING_PLANE
+		item.layer = ABOVE_LIGHTING_LAYER
 		preview += item
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")

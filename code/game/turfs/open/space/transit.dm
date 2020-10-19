@@ -5,6 +5,7 @@
 	baseturfs = /turf/open/space/transit
 	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
+	vis_flags = VIS_HIDE|VIS_INHERIT_ID|VIS_INHERIT_PLANE
 
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()

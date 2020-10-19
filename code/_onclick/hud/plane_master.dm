@@ -82,6 +82,8 @@
 	filters += filter(type="alpha", render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE)
 	filters += filter(type="alpha", render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE)
 	filters += filter(type="alpha", render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE)
+	filters += filter(type="alpha", render_source = LOWER_SHUTTLE_MOVEMENT_RENDER_TARGET, flags = MASK_INVERSE)
+	filters += filter(type="alpha", render_source = UPPER_SHUTTLE_MOVEMENT_RENDER_TARGET, flags = MASK_INVERSE)
 
 /**
   * Things placed on this mask the lighting plane. Doesn't render directly.
@@ -153,3 +155,17 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
+
+/obj/screen/plane_master/shuttle_movement_below
+	name = "Lower shuttle movement plane master"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = LOWER_SHUTTLE_MOVEMENT_PLANE
+	appearance_flags = PLANE_MASTER
+	render_target = LOWER_SHUTTLE_MOVEMENT_RENDER_TARGET
+
+/obj/screen/plane_master/shuttle_movement_above
+	name = "Upper shuttle movement plane master"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = UPPER_SHUTTLE_MOVEMENT_PLANE
+	appearance_flags = PLANE_MASTER
+	render_target = UPPER_SHUTTLE_MOVEMENT_RENDER_TARGET
