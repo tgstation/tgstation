@@ -446,10 +446,7 @@
 
 /// MouseWheelOn
 /mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
-	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
-		return
-
-	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL, delta_x, delta_y, params)
+	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL, A, delta_x, delta_y, params)
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifier = params2list(params)
