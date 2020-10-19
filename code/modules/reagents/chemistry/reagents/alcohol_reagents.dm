@@ -1754,7 +1754,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor."
 	color = "#DBD5AE"
 	boozepwr = 35
-	quality = DRINK_FANTASTIC
+	quality = DRINK_VERYGOOD
 	taste_description = "sweet, creamy cacao"
 	glass_icon_state = "alexanderam"
 	glass_name = "Amaretto Alexander"
@@ -2297,7 +2297,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A delightfully simple cocktail that pleases the senses."
 	boozepwr = 30
 	color = "#EFB42A"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_GOOD
 	taste_description = "sweetness followed by a soft sourness and warmth"
 	glass_icon_state = "gingeramaretto"
 	glass_name = "Ginger Amaretto"
@@ -2308,7 +2308,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A rough cocktail with illegal connections."
 	boozepwr = 50
 	color = "#E68F00"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_GOOD
 	taste_description = "a delightful softened punch"
 	glass_icon_state = "godfather"
 	glass_name = "Godfather"
@@ -2319,7 +2319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A twist on a classic, liked more by mature women."
 	boozepwr = 50
 	color = "#E68F00"
-	quality = DRINK_FANTASTIC
+	quality = DRINK_GOOD
 	taste_description = "sweetness and a zesty twist"
 	glass_icon_state = "godmother"
 	glass_name = "Godmother"
