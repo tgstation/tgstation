@@ -12,7 +12,7 @@
 	liked_food = GROSS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
-	payday_modifier = 0.75
+	payday_modifier = 1
 
 	mutantheart = /obj/item/organ/heart/fly
 	mutantlungs = /obj/item/organ/lungs/fly
