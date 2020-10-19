@@ -257,7 +257,6 @@
 	density = FALSE
 	circuit = null
 	light_power = 0
-	looping_sound = FALSE
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
