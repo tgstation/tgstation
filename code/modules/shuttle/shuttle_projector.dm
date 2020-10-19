@@ -46,8 +46,8 @@
 
 		// make it slightly invisible so we don't obstruct the full game view
 		docking_alpha = 100
-		layer = UPPER_SHUTTLE_MOVEMENT_LAYER
-		plane = UPPER_SHUTTLE_MOVEMENT_PLANE
+		layer = ABOVE_LIGHTING_LAYER
+		plane = ABOVE_LIGHTING_PLANE
 	else
 		scale_factor = 0.4
 		translate_factor = 1 - scale_factor
