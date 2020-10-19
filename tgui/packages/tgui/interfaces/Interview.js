@@ -5,6 +5,7 @@ import { useBackend } from '../backend';
 export const Interview = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    welcome_message,
     questions,
     read_only,
     queue_pos,
@@ -34,11 +35,7 @@ export const Interview = (props, context) => {
         {(!read_only && (
           <Section title="Welcome!">
             <p>
-              Welcome to our server. As you have not played here before, or
-              played very little, we&apos;ll need you to answer a few questions
-              below. After you submit your answers they will be reviewed
-              and you may be asked further questions before being allowed to
-              play. Please be patient as there may be others ahead of you.
+              {welcome_message}
             </p>
           </Section>)) || rendered_status(status)}
         <Section
@@ -49,7 +46,7 @@ export const Interview = (props, context) => {
                 content={read_only ? "Submitted" : "Submit"}
                 onClick={() => act('submit')}
                 disabled={read_only} />
-              {is_admin && status === "interview_pending" && (
+              {!!is_admin && status === "interview_pending" && (
                 <span>
                   <Button content="Admin PM"
                     enabled={connected} onClick={() => act('adminpm')} />

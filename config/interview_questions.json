@@ -1,0 +1,9 @@
+{
+	"welcome_message": "Welcome to our server. As you have not played here before, or played very little, we'll need you to answer a few questions below. After you submit your answers they will be reviewed and you may be asked further questions before being allowed to play. Please be patient as there may be others ahead of you.",
+	"questions": [
+		"Why have you joined the server today?",
+		"Have you played space-station 13 before? If so, on what servers?",
+		"Do you know anybody on the server today? If so, who?",
+		"Do you have any additional comments?"
+	]
+}

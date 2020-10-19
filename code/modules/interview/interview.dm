@@ -22,13 +22,10 @@
 	var/client/owner
 	/// The Ckey of the owner, used for when a client could disconnect
 	var/owner_ckey
+	/// The welcome message shown at the top of the interview panel
+	var/welcome_message
 	/// The questions to display on the questionnaire of the interview
-	var/list/questions = list(
-		"Why have you joined the server today?",
-		"Have you played space-station 13 before? If so, on what servers?",
-		"Do you know anybody on the server today? If so, who?",
-		"Do you have any additional comments?"
-	)
+	var/list/questions
 	/// The stored responses, will be filled as the questionnaire is answered
 	var/list/responses = list()
 	/// Boolean operator controlling if the questionnaire's contents can be edited
@@ -47,7 +44,9 @@
 	id = ++atomic_id
 	owner = interviewee
 	owner_ckey = owner.ckey
+	questions = global.config.interview_questions.Copy()
 	responses.len = questions.len
+	welcome_message = global.config.interview_welcome_message
 	statclick = new(null, src)
 
 /**
@@ -150,6 +149,7 @@
 
 /datum/interview/ui_data(mob/user)
 	. = list(
+		"welcome_message" = welcome_message,
 		"questions" = list(),
 		"read_only" = read_only,
 		"queue_pos" = pos_in_queue,
