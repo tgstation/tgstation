@@ -5876,7 +5876,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "pp" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -5887,7 +5887,7 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "pJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
@@ -5926,7 +5926,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "rF" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/plastitanium,
@@ -5945,7 +5945,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "sc" = (
 /turf/open/floor/engine/o2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -6009,7 +6009,7 @@
 	pixel_y = 33
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "xa" = (
 /obj/machinery/button/door{
 	id = "lavalandsyndisci";
@@ -6024,14 +6024,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "xn" = (
 /turf/open/floor/engine/n2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "xV" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "yg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
@@ -6074,7 +6074,7 @@
 	},
 /obj/structure/closet/syndicate,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Cg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -6123,9 +6123,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"Fl" = (
-/turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
 "FF" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -6133,7 +6130,7 @@
 	},
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Gw" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -6144,7 +6141,7 @@
 	},
 /obj/structure/closet/syndicate,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "GP" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -6153,7 +6150,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Hu" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6192,7 +6189,7 @@
 	id = "lavalandsyndisci"
 	},
 /turf/open/floor/plating,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "KY" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -6204,7 +6201,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Lg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -6227,7 +6224,7 @@
 	},
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "MS" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -6239,7 +6236,7 @@
 /obj/structure/table,
 /obj/item/stamp/syndicate,
 /turf/open/floor/plasteel,
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Ng" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
 	dir = 4
@@ -7593,11 +7590,11 @@ nt
 nW
 aW
 mT
-Vq
-Vq
-Vq
-Vq
-Vq
+mT
+mT
+mT
+mT
+mT
 ab
 ab
 ab
@@ -7694,8 +7691,8 @@ aQ
 mT
 mT
 xa
-Fl
-Fl
+nW
+nW
 oR
 KH
 ab
@@ -7744,7 +7741,7 @@ nZ
 mT
 Vq
 pp
-Fl
+nW
 xV
 MM
 KH
@@ -7794,8 +7791,8 @@ kR
 kQ
 kQ
 wE
-Fl
-Fl
+nW
+nW
 oR
 KH
 ab
@@ -7893,11 +7890,11 @@ nz
 ob
 al
 kQ
-Vq
-Vq
-Vq
-Vq
-Vq
+mT
+mT
+mT
+mT
+mT
 ab
 ab
 ab

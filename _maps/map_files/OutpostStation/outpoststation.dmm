@@ -209,6 +209,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"ajf" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "ajz" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/wood,
@@ -1041,6 +1052,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMc" = (
@@ -2372,6 +2384,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"bQF" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "bQJ" = (
 /obj/machinery/camera/autoname{
 	dir = 1
@@ -2567,6 +2583,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cbP" = (
@@ -3411,6 +3428,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"cUa" = (
+/obj/effect/turf_decal/stripes,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "cUe" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -3469,6 +3493,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/central)
+"cXi" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plasteel/dark,
+/area/engine/supermatter)
 "cYc" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3512,6 +3540,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/engine/supermatter)
 "dba" = (
@@ -5823,6 +5852,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"eVk" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
+/obj/machinery/light,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "eVl" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
@@ -6125,6 +6162,7 @@
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/engine/supermatter)
 "fhi" = (
@@ -7037,6 +7075,10 @@
 "fXn" = (
 /turf/closed/wall,
 /area/medical/storage)
+"fXA" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "fXO" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -10125,6 +10167,13 @@
 /obj/machinery/gateway/centerstation,
 /turf/open/floor/plasteel/dark,
 /area/gateway)
+"iRK" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "iRR" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2,
@@ -11176,6 +11225,7 @@
 /obj/structure/window/plasma/reinforced/spawner/north,
 /obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/engine/supermatter)
 "jQO" = (
@@ -13426,6 +13476,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/server)
+"lLr" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "lLG" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -14064,6 +14124,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"mxm" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/supermatter)
 "mxs" = (
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -15029,7 +15095,6 @@
 /obj/structure/closet,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/item/clothing/shoes/combat,
 /obj/item/clothing/gloves/color/black,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
@@ -15709,6 +15774,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/engine/supermatter)
 "nGV" = (
@@ -17877,6 +17943,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "psp" = (
@@ -19303,6 +19370,11 @@
 /obj/machinery/light,
 /turf/open/floor/wood,
 /area/lawoffice)
+"qCJ" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "qDo" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger{
@@ -21919,10 +21991,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"sJd" = (
-/obj/machinery/door/poddoor/shutters,
-/turf/open/floor/plating,
-/area/engine/atmos)
 "sJi" = (
 /obj/structure/cable,
 /obj/machinery/navbeacon{
@@ -22529,6 +22597,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"tkG" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 "tlg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
@@ -23934,6 +24006,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"uAi" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "uAz" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -24577,6 +24653,7 @@
 /obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/effect/spawner/lootdrop/aimodule_harmful,
+/obj/item/ai_module/core/full/antimov,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "vfZ" = (
@@ -25474,6 +25551,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"vRr" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "vSF" = (
 /obj/machinery/computer/card/minor/cmo{
 	dir = 4
@@ -26754,6 +26837,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"wYt" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/landmark/start/captain,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "wYL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -26871,6 +26961,14 @@
 "xfn" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"xgb" = (
+/obj/effect/turf_decal/stripes,
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "xgf" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -27148,6 +27246,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"xsF" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste,
+/turf/open/space/basic,
+/area/engine/supermatter)
 "xsL" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -27221,6 +27324,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/carpet/blue,
 /area/crew_quarters/heads/hop)
 "xxp" = (
@@ -54251,7 +54355,7 @@ mou
 sNp
 dse
 nYx
-pSh
+wYt
 dse
 tyL
 dse
@@ -69453,8 +69557,8 @@ ikD
 kET
 dNl
 dNl
-sJd
-sJd
+sKJ
+sKJ
 sKJ
 dNl
 hKH
@@ -74100,7 +74204,7 @@ bDt
 awO
 jSC
 jSC
-jSC
+mxm
 jSC
 jSC
 jSC
@@ -74113,7 +74217,7 @@ mZP
 jSC
 jSC
 jSC
-jSC
+mxm
 gZW
 cHb
 arI
@@ -74358,17 +74462,17 @@ awO
 awO
 jSC
 jSC
-jSC
-jSC
-jSC
-jSC
-jSC
-jSC
-jSC
-jSC
-mZP
-jSC
-jSC
+awO
+aHH
+bUA
+vRr
+vRr
+bUA
+vRr
+rYG
+bQF
+awO
+awO
 jSC
 jSC
 jSC
@@ -74609,20 +74713,20 @@ oIV
 oIV
 oIV
 xHQ
-xHQ
-bDt
-awO
-awO
-jSC
-jSC
-awO
-aHH
+xsF
+tkG
 bUA
 bUA
+cXi
+cXi
 bUA
+iRK
 bUA
+fXA
+fXA
 bUA
-bUA
+fXA
+uAi
 niQ
 bUA
 rYG
@@ -75130,7 +75234,7 @@ awO
 jSC
 jSC
 awO
-bqu
+ajf
 ciI
 bDt
 bDt
@@ -75138,7 +75242,7 @@ gbn
 bDt
 bDt
 ciI
-pOb
+xgb
 awO
 tcv
 tcv
@@ -75387,7 +75491,7 @@ awO
 jSC
 jSC
 awO
-bqu
+lLr
 day
 fgU
 fni
@@ -75395,7 +75499,7 @@ gfb
 iwv
 jQf
 nFN
-pOb
+qCJ
 aHH
 tya
 tya
@@ -76158,7 +76262,7 @@ awO
 jSC
 auU
 aBO
-bAg
+eVk
 ekk
 bDt
 bDt
@@ -76166,7 +76270,7 @@ hcE
 bDt
 bDt
 ekk
-pOb
+cUa
 awO
 tcv
 tcv
