@@ -66,10 +66,10 @@
 		return
 
 	var/rotation = 0
-	if(pic.dir != old_dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+	if(pic.dir != old_dir)
 		rotation = dir2angle(new_dir)-dir2angle(old_dir)
-		if ((rotation % 90) != 0)
-			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		if ((rotation % 45) != 0)
+			rotation += (rotation % 45)
 		rotation = SIMPLIFY_DEGREES(rotation)
 		new_dir = angle2dir(rotation+dir2angle(pic.dir))
 
