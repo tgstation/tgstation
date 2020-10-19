@@ -170,7 +170,7 @@
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user?.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return

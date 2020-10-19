@@ -10,7 +10,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
-
+	hijack_speed = 0.5
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
@@ -206,6 +206,9 @@
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
 		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
+		return
+	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
+		to_chat(owner.current, "<span class='warning'>We are too busy reforming ourselves to readapt right now!</span>")
 		return
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")

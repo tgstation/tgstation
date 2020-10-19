@@ -238,4 +238,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/rat/bee
+	mask = /obj/item/clothing/mask/animal/rat/bee

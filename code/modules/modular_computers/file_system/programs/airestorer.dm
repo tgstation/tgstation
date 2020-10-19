@@ -20,7 +20,7 @@
 	if(computer)
 		ai_slot = computer.all_components[MC_AI]
 
-	if(computer && ai_slot && ai_slot.check_functionality())
+	if(computer && ai_slot?.check_functionality())
 		if(cardcheck == 1)
 			return ai_slot
 		if(ai_slot.enabled && ai_slot.stored_card)
@@ -49,7 +49,7 @@
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
-				if(ai_slot && ai_slot.stored_card)
+				if(ai_slot?.stored_card)
 					ai_slot.try_eject(usr)
 					return TRUE
 

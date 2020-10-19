@@ -27,7 +27,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	. = 0
 
-	if(cell && cell.charge)
+	if(cell?.charge)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
@@ -227,7 +227,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
-	if(cell && cell.charge)
+	if(cell?.charge)
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
