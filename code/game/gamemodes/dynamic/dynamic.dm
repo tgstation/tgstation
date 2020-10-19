@@ -364,6 +364,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	for (var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
+		configure_ruleset(rule)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
