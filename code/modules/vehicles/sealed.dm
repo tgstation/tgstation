@@ -40,7 +40,7 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_after(M, get_enter_delay(M), FALSE, src, TRUE))
+	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM))
 		mob_enter(M)
 		return TRUE
 	return FALSE
