@@ -25,11 +25,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "ah" = (
-/turf/closed/indestructible{
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
+/turf/closed/indestructible/cult,
 /area/awaymission/wildwest/vault)
 "ai" = (
 /obj/structure/table/wood,
@@ -359,11 +355,11 @@
 /area/awaymission/wildwest/mines)
 "bN" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -730,7 +726,7 @@
 /area/awaymission/wildwest/gov)
 "cV" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/soup/monkeysdelight,
+/obj/item/food/soup/monkeysdelight,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -744,7 +740,7 @@
 /area/awaymission/wildwest/gov)
 "cX" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/soup/stew,
+/obj/item/food/soup/stew,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

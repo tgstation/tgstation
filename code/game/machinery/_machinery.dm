@@ -146,6 +146,12 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/proc/set_occupant(atom/movable/new_occupant)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_MACHINERY_SET_OCCUPANT, new_occupant)
+	occupant = new_occupant
+
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
@@ -164,7 +170,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	drop_contents()
+	dump_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -214,17 +220,17 @@ Class Procs:
 	state_open = TRUE
 	density = FALSE
 	if(drop)
-		drop_stored_items()
+		dump_inventory_contents()
 	update_icon()
 	updateUsrDialog()
 
 /**
-  * Drop every movable atom in the machine's contents list.
+  * Drop every movable atom in the machine's contents list, including any components and circuit.
   */
-/obj/machinery/proc/drop_contents()
-	// Start by calling the drop_stored_items proc. Will allow machines with special contents
+/obj/machinery/dump_contents()
+	// Start by calling the dump_inventory_contents proc. Will allow machines with special contents
 	// to handle their dropping.
-	drop_stored_items()
+	dump_inventory_contents()
 
 	// Then we can clean up and drop everything else.
 	var/turf/this_turf = get_turf(src)
@@ -232,19 +238,19 @@ Class Procs:
 		movable_atom.forceMove(this_turf)
 
 	// We'll have dropped the occupant, circuit and component parts as part of this.
-	occupant = null
+	set_occupant(null)
 	circuit = null
 	LAZYCLEARLIST(component_parts)
 
 /**
-  * Drop every movable atom in the machine's contents list.
+  * Drop every movable atom in the machine's contents list that is not a component_part.
   *
   * Proc does not drop components and will skip over anything in the component_parts list.
-  * Call drop_contents() to drop all contents including components.
+  * Call dump_contents() to drop all contents including components.
   * Arguments:
   * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
   */
-/obj/machinery/proc/drop_stored_items(list/subset = null)
+/obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
 		if(subset && !(movable_atom in subset))
@@ -254,12 +260,9 @@ Class Procs:
 			continue
 
 		movable_atom.forceMove(this_turf)
-		if(isliving(movable_atom))
-			var/mob/living/living_mob = movable_atom
-			living_mob.update_mobility()
 
 		if(occupant == movable_atom)
-			occupant = null
+			set_occupant(null)
 
 /**
  * Puts passed object in to user's hand
@@ -298,7 +301,7 @@ Class Procs:
 
 	var/mob/living/mobtarget = target
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
-		occupant = target
+		set_occupant(target)
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
@@ -375,19 +378,19 @@ Class Procs:
 				var/datum/bank_account/insurance = I.registered_account
 				if(!insurance)
 					say("[market_verb] NAP Violation: No bank account found.")
-					nap_violation(occupant)
+					nap_violation(H)
 					return FALSE
 				else
 					if(!insurance.adjust_money(-fair_market_price))
 						say("[market_verb] NAP Violation: Unable to pay.")
-						nap_violation(occupant)
+						nap_violation(H)
 						return FALSE
 					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 					if(D)
 						D.adjust_money(fair_market_price)
 			else
 				say("[market_verb] NAP Violation: No ID card found.")
-				nap_violation(occupant)
+				nap_violation(H)
 				return FALSE
 	return TRUE
 
@@ -512,12 +515,11 @@ Class Procs:
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
-	if(occupant)
-		occupant.ex_act(severity, target)
+	occupant?.ex_act(severity, target)
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)
-		occupant = null
+		set_occupant(null)
 		update_icon()
 		updateUsrDialog()
 		return ..()
@@ -685,7 +687,7 @@ Class Procs:
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if(AM == occupant)
-		occupant = null
+		set_occupant(null)
 	if(AM == circuit)
 		circuit = null
 
@@ -699,6 +701,13 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, MELEE, 1)
+
+/obj/machinery/vv_edit_var(vname, vval)
+	if(vname == "occupant")
+		set_occupant(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
 
 /**
  * Generate a name devices

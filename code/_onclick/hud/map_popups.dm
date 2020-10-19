@@ -14,7 +14,7 @@
  */
 /obj/screen/background
 	name = "background"
-	icon = 'icons/mob/map_backgrounds.dmi'
+	icon = 'icons/hud/map_backgrounds.dmi'
 	icon_state = "clear"
 	layer = GAME_PLANE
 	plane = GAME_PLANE

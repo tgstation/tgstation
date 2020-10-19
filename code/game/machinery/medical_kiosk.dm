@@ -211,7 +211,7 @@
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
-	if(LAZYLEN(user.get_traumas()))
+	if(LAZYLEN(altPatient.get_traumas()))
 		var/list/trauma_text = list()
 		for(var/datum/brain_trauma/B in altPatient.get_traumas())
 			var/trauma_desc = ""
@@ -243,8 +243,9 @@
 			chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
 			if(bit.overdosed)
 				overdose_list += list(list("name" = bit.name))
-	if(altPatient.reagents.addiction_list.len)
-		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
+	var/list/addictions = altPatient.get_addiction_list()
+	if(addictions.len)
+		for(var/datum/reagent/R in addictions)
 			addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."

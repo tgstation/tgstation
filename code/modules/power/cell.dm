@@ -1,6 +1,6 @@
-#define CELL_DRAIN_TIME 20
-#define CELL_POWER_GAIN 3
-#define CELL_POWER_DRAIN 100
+#define CELL_DRAIN_TIME 35
+#define CELL_POWER_GAIN 60
+#define CELL_POWER_DRAIN 750
 
 /obj/item/stock_parts/cell
 	name = "power cell"
@@ -22,7 +22,6 @@
 	var/rigged = FALSE	/// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
 	var/corrupted = FALSE /// If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/chargerate = 100 //how much power is given every tick in a recharger
-	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
@@ -31,7 +30,6 @@
 
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
-	START_PROCESSING(SSobj, src)
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
@@ -39,25 +37,6 @@
 	if(ratingdesc)
 		desc += " This one has a rating of [DisplayEnergy(maxcharge)], and you should not swallow it."
 	update_icon()
-
-/obj/item/stock_parts/cell/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/stock_parts/cell/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if(NAMEOF(src, self_recharge))
-			if(var_value)
-				START_PROCESSING(SSobj, src)
-			else
-				STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/stock_parts/cell/process(delta_time)
-	if(self_recharge)
-		give(chargerate * 0.125 * delta_time)
-	else
-		return PROCESS_KILL
 
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
@@ -168,13 +147,13 @@
 		if(stomach.crystal_charge > charge_limit)
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
-		to_chat(H, "<span class='notice'>You clumsily channel power through [src] and into your body, wasting some in the process.</span>")
+		to_chat(H, "<span class='notice'>You begin clumsily channeling power from [src] into your body.</span>")
 		E.drain_time = world.time + CELL_DRAIN_TIME
 		if(do_after(user, CELL_DRAIN_TIME, target = src))
 			if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
 				return
 			if(istype(stomach))
-				to_chat(H, "<span class='notice'>You receive some charge from [src].</span>")
+				to_chat(H, "<span class='notice'>You receive some charge from [src], wasting some in the process.</span>")
 				stomach.adjust_charge(CELL_POWER_GAIN)
 				charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
 			else
@@ -345,18 +324,6 @@
 	maxcharge = 300
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
-
-/obj/item/stock_parts/cell/high/slime
-	name = "charged slime core"
-	desc = "A yellow slime core infused with plasma, it crackles with power."
-	icon = 'icons/mob/slimes.dmi'
-	icon_state = "yellow slime extract"
-	custom_materials = null
-	rating = 5 //self-recharge makes these desirable
-	self_recharge = 1 // Infused slime cores self-recharge, over time
-
-/*Hypercharged slime cell - located in /code/modules/research/xenobiology/crossbreeding/_misc.dm
-/obj/item/stock_parts/cell/high/slime/hypercharged */
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

@@ -46,7 +46,10 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(HAS_BLOOD_DNA(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			if(clothing_flags & LARGE_WORN_ICON)
+				. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
+			else
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()
@@ -152,7 +155,7 @@
 
 	else // if they're someone else's shoes, go knot-wards
 		var/mob/living/L = user
-		if(istype(L) && (L.mobility_flags & MOBILITY_STAND))
+		if(istype(L) && L.body_position == STANDING_UP)
 			to_chat(user, "<span class='warning'>You must be on the floor to interact with [src]!</span>")
 			return
 		if(tied == SHOES_KNOTTED)

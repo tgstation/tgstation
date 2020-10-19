@@ -92,13 +92,13 @@
 		return
 	return ..()
 
-/obj/machinery/skill_station/drop_contents()
+/obj/machinery/skill_station/dump_contents()
 	. = ..()
 	inserted_skillchip = null
 
-/obj/machinery/skill_station/drop_stored_items(list/subset = null)
+/obj/machinery/skill_station/dump_inventory_contents(list/subset = null)
 	// Don't drop the skillchip, it's directly inserted into the machine.
-	// drop_contents() will drop everything including the skillchip.
+	// dump_contents() will drop everything including the skillchip as an alternative to this.
 	subset = contents - inserted_skillchip
 	return ..()
 
@@ -124,9 +124,9 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
 	else
-		to_chat(occupant,"<span class='notice'>Operation complete!</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
 	update_icon()

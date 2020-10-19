@@ -270,7 +270,7 @@
 	)
 
 /datum/asset/spritesheet/simple/pills
-	name ="pills"
+	name = "pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
@@ -294,6 +294,27 @@
 		"pill20" = 'icons/UI_Icons/Pills/pill20.png',
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
+	)
+
+/datum/asset/spritesheet/simple/condiments
+	name = "condiments"
+	assets = list(
+		CONDIMASTER_STYLE_FALLBACK = 'icons/UI_Icons/Condiments/emptycondiment.png',
+		"enzyme" = 'icons/UI_Icons/Condiments/enzyme.png',
+		"flour" = 'icons/UI_Icons/Condiments/flour.png',
+		"mayonnaise" = 'icons/UI_Icons/Condiments/mayonnaise.png',
+		"milk" = 'icons/UI_Icons/Condiments/milk.png',
+		"blackpepper" = 'icons/UI_Icons/Condiments/peppermillsmall.png',
+		"rice" = 'icons/UI_Icons/Condiments/rice.png',
+		"sodiumchloride" = 'icons/UI_Icons/Condiments/saltshakersmall.png',
+		"soymilk" = 'icons/UI_Icons/Condiments/soymilk.png',
+		"soysauce" = 'icons/UI_Icons/Condiments/soysauce.png',
+		"sugar" = 'icons/UI_Icons/Condiments/sugar.png',
+		"ketchup" = 'icons/UI_Icons/Condiments/ketchup.png',
+		"capsaicin" = 'icons/UI_Icons/Condiments/hotsauce.png',
+		"frostoil" = 'icons/UI_Icons/Condiments/coldsauce.png',
+		"bbqsauce" = 'icons/UI_Icons/Condiments/bbqsauce.png',
+		"cornoil" = 'icons/UI_Icons/Condiments/oliveoil.png',
 	)
 
 //this exists purely to avoid meta by pre-loading all language icons.

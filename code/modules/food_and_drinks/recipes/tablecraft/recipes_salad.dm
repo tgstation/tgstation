@@ -10,7 +10,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris = 3,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/herbsalad
+	result = /obj/item/food/salad/herbsalad
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/aesirsalad
@@ -20,7 +20,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus = 3,
 		/obj/item/reagent_containers/food/snacks/grown/apple/gold = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/aesirsalad
+	result = /obj/item/food/salad/aesirsalad
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/validsalad
@@ -29,22 +29,22 @@
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris = 3,
 		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1
+		/obj/item/food/meatball = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/validsalad
+	result = /obj/item/food/salad/validsalad
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/monkeysdelight
 	name = "Monkeys delight"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/monkeycube = 1,
+		/obj/item/food/monkeycube = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/soup/monkeysdelight
+	result = /obj/item/food/soup/monkeysdelight
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/oatmeal
@@ -54,7 +54,7 @@
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/oatmeal
+	result = /obj/item/food/salad/oatmeal
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/fruitsalad
@@ -67,7 +67,7 @@
 		/obj/item/reagent_containers/food/snacks/watermelonslice = 2
 
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/fruit
+	result = /obj/item/food/salad/fruit
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/junglesalad
@@ -80,7 +80,7 @@
 		/obj/item/reagent_containers/food/snacks/watermelonslice = 2
 
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/jungle
+	result = /obj/item/food/salad/jungle
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/citrusdelight
@@ -92,5 +92,5 @@
 		/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 1
 
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/citrusdelight
+	result = /obj/item/food/salad/citrusdelight
 	subcategory = CAT_SALAD
