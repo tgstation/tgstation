@@ -102,7 +102,7 @@
 
 	var/should_project = !istype(old_turfs[1], /turf/open/space/transit)
 	if (should_project)
-		new /obj/shuttle_projector(null, src, old_dock, FALSE)
+		new /obj/effect/abstract/shuttle_projector(null, src, old_dock, FALSE)
 
 	return DOCKING_SUCCESS
 

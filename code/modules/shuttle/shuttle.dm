@@ -358,7 +358,7 @@
 
 	var/list/ripples = list()
 	/// The shuttle projector we create with ripples and should be deleted with ripples
-	var/obj/shuttle_projector/inbound_shuttle_projector
+	var/obj/effect/abstract/shuttle_projector/inbound_shuttle_projector
 
 	var/engine_coeff = 1
 	var/current_engines = 0
@@ -613,7 +613,7 @@
 	for(var/t in turfs)
 		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
-	inbound_shuttle_projector = new /obj/shuttle_projector(null, src, S1, TRUE, animate_time)
+	inbound_shuttle_projector = new /obj/effect/abstract/shuttle_projector(null, src, S1, TRUE, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	QDEL_LIST(ripples)

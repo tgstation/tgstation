@@ -1,18 +1,18 @@
 /// Projects a shuttle with visual juice while it docks/launches with vis_contents
-/obj/shuttle_projector
+/obj/effect/abstract/shuttle_projector
 	layer = LOWER_SHUTTLE_MOVEMENT_LAYER
 	plane = LOWER_SHUTTLE_MOVEMENT_PLANE
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/alphacolors.dmi'
-	icon_state = "transparent"
+	icon_state = "nothing"
 
 	/// The mobile port we're projecting
 	var/obj/docking_port/mobile/shuttle_port
 	/// The bottom left turf of the bounding box where the shuttle will dock in the stationary port
 	var/turf/bottom_left
 
-/obj/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
+/obj/effect/abstract/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
 	. = ..()
 
 	if (!istype(shuttle_port))
@@ -160,6 +160,6 @@
 		// rely on remove_ripples to delete us otherwise
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
 
-/obj/shuttle_projector/Destroy(force)
+/obj/effect/abstract/shuttle_projector/Destroy(force)
 	shuttle_port = null
 	return ..()
