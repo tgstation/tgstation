@@ -184,7 +184,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
 		message_admins("[key_name(usr)] executed the [added_rule] ruleset.", 1)
-		picking_specific_rule(added_rule,1)
+		picking_specific_rule(added_rule, TRUE)
 
 	admin_panel() // Refreshes the window
 
