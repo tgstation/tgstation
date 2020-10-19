@@ -309,7 +309,7 @@
 	icon_state = "protosuit"
 	hardsuit_type = "protosuit"
 	armor = list(MELEE = 30, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 30, BIO = 100, RAD = 25, FIRE = 75, ACID = 75, WOUND = 15)
-	allowed = allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/protosuit
 
 /obj/item/clothing/head/helmet/space/hardsuit/protosuit
@@ -339,19 +339,25 @@
 			display_visor_message("<span class='notice'>Initialization complete. User recognised. Hello, [user.dna.real_name].</span>")
 			ADD_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
 			ADD_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+			var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+			H.add_hud_to(user)
 			initialized = TRUE
 	else
 		if(initialized)
 			REMOVE_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
 			REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+			var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+			H.remove_hud_from(user)
 			display_visor_message("<span class='notice'>De-initializing HUD system. Have a great shift.</span>")
 			initialized = FALSE
 
-/obj/item/clothing/head/helmet/space/hardsuit/protosuit/dropped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/helmet/space/hardsuit/protosuit/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(initialized)
 		REMOVE_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
 		REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+		var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		H.remove_hud_from(user)
 		display_visor_message("<span class='notice'>De-initializing HUD system. Have a great shift.</span>")
 		initialized = FALSE
 

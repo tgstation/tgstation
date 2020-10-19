@@ -172,8 +172,10 @@
 		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	for(var/mob/living/carbon/human/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
+	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
+			continue
+		if(istype(C, /mob/living/carbon/alien))
 			continue
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)

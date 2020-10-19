@@ -120,11 +120,11 @@
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
-		else
-			devour(L)
-			return
 
-		if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+		else if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+			devour(L)
+
+		else
 			devour(L)
 
 /// Devours a target and restores health to the megafauna

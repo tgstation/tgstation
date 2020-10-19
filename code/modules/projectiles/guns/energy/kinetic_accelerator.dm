@@ -127,7 +127,7 @@
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
 			if(!K.unique_frequency)
-				carried += 0.75 //Right now KA players really have some tough times so lets help em out with at least a slight DPS buff
+				carried += 1
 
 		carried = max(carried, 1)
 	else
