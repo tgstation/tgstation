@@ -95,7 +95,7 @@
 	name = "Ghost burger"
 	reqs = list(
 		/obj/item/ectoplasm = 1,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/food/burger/ghost
@@ -230,7 +230,7 @@
 /datum/crafting_recipe/food/superbiteburger
 	name = "Super bite burger"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 5,
+		/datum/reagent/consumable/salt = 5,
 		/datum/reagent/consumable/blackpepper = 5,
 		/obj/item/food/meat/steak/plain = 5,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 4,

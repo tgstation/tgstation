@@ -44,36 +44,37 @@
 
 /obj/vehicle/ridden/atv/turret/Moved()
 	. = ..()
-	if(turret)
-		turret.forceMove(get_turf(src))
-		switch(dir)
-			if(NORTH)
-				turret.pixel_x = 0
-				turret.pixel_y = 4
-				turret.layer = ABOVE_MOB_LAYER
-			if(EAST)
-				turret.pixel_x = -12
-				turret.pixel_y = 4
-				turret.layer = OBJ_LAYER
-			if(SOUTH)
-				turret.pixel_x = 0
-				turret.pixel_y = 4
-				turret.layer = OBJ_LAYER
-			if(WEST)
-				turret.pixel_x = 12
-				turret.pixel_y = 4
-				turret.layer = OBJ_LAYER
+	if(!turret)
+		return
+	turret.forceMove(get_turf(src))
+	switch(dir)
+		if(NORTH)
+			turret.pixel_x = 0
+			turret.pixel_y = 4
+			turret.layer = ABOVE_MOB_LAYER
+		if(EAST)
+			turret.pixel_x = -12
+			turret.pixel_y = 4
+			turret.layer = OBJ_LAYER
+		if(SOUTH)
+			turret.pixel_x = 0
+			turret.pixel_y = 4
+			turret.layer = OBJ_LAYER
+		if(WEST)
+			turret.pixel_x = 12
+			turret.pixel_y = 4
+			turret.layer = OBJ_LAYER
 
-/obj/vehicle/ridden/atv/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
-		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume=50, amount=1))
-				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
-				obj_integrity += min(10, max_integrity-obj_integrity)
-				if(obj_integrity == max_integrity)
-					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+/obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
+	if(obj_integrity >= max_integrity)
 		return TRUE
-	return ..()
+	if(!I.use_tool(src, user, 0, volume=50, amount=1))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
+	obj_integrity += min(10, max_integrity-obj_integrity)
+	if(obj_integrity == max_integrity)
+		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+	return TRUE
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)
@@ -89,11 +90,12 @@
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
-	if(prob(50) && buckled_mobs)
-		for(var/mob/M in buckled_mobs)
-			M.bullet_act(P)
-		return TRUE
-	return ..()
+	if(prob(50) || !buckled_mobs)
+		return ..()
+	for(var/m in buckled_mobs)
+		var/mob/buckled_mob = m
+		buckled_mob.bullet_act(P)
+	return TRUE
 
 /obj/vehicle/ridden/atv/obj_destruction()
 	explosion(src, -1, 0, 2, 4, flame_range = 3)

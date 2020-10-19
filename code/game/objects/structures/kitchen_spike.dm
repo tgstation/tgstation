@@ -102,7 +102,7 @@
 				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
 				"<span class='hear'>You hear a squishy wet noise.</span>")
 			if(!do_after(user, 300, target = src))
-				if(M && M.buckled)
+				if(M?.buckled)
 					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
 					"<span class='notice'>[user] fails to pull you off of [src].</span>")
 				return
@@ -113,7 +113,7 @@
 			"<span class='hear'>You hear a wet squishing noise..</span>")
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
-				if(M && M.buckled)
+				if(M?.buckled)
 					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
 				return
 		if(!M.buckled)

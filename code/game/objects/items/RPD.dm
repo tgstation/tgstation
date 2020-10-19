@@ -215,6 +215,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	/// Bitflags for upgrades
+	var/upgrade_flags
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -237,6 +239,28 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
+
+/obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rpd_upgrade))
+		install_upgrade(W, user)
+		return TRUE
+	return ..()
+
+/**
+  * Installs an upgrade into the RPD
+  *
+  * Installs an upgrade into the RPD checking if it is already installed
+  * Arguments:
+  * * rpd_up - RPD upgrade
+  * * user - mob that use upgrade on RPD
+  */
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
+	if(rpd_up.upgrade_flags& upgrade_flags)
+		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		return
+	upgrade_flags |= rpd_up.upgrade_flags
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(rpd_up)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -342,6 +366,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
+
+	//Unwrench pipe before we build one over/paint it.
+	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
+		A = A.wrench_act(user, src)	
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
@@ -487,3 +515,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef DESTROY_MODE
 #undef PAINT_MODE
 #undef WRENCH_MODE
+
+/obj/item/rpd_upgrade
+	name = "RPD advanced design disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	/// Bitflags for upgrades
+	var/upgrade_flags
+
+/obj/item/rpd_upgrade/unwrench
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	upgrade_flags = RPD_UPGRADE_UNWRENCH
