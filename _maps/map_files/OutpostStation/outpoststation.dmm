@@ -3688,7 +3688,7 @@
 /area/crew_quarters/bar/atrium)
 "djY" = (
 /obj/machinery/ai_slipper,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "dka" = (
 /obj/effect/turf_decal/tile/purple{
@@ -4745,7 +4745,7 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "eco" = (
 /obj/structure/cable,
@@ -5296,7 +5296,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "eyJ" = (
 /obj/machinery/camera{
@@ -5762,7 +5762,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "eTN" = (
 /obj/structure/cable,
@@ -6609,7 +6609,7 @@
 "fCu" = (
 /obj/structure/cable,
 /obj/machinery/porta_turret/ai,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "fCL" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -7727,7 +7727,7 @@
 /area/maintenance/starboard/central)
 "gII" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "gIQ" = (
 /obj/structure/displaycase,
@@ -10362,7 +10362,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "jiS" = (
 /obj/structure/table,
@@ -11016,7 +11016,7 @@
 "jJK" = (
 /obj/structure/cable,
 /obj/machinery/ai_slipper,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "jJQ" = (
 /obj/machinery/camera{
@@ -12938,9 +12938,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"lqV" = (
-/turf/closed/wall/r_wall,
-/area/solar/starboard/aft)
 "lqY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13992,7 +13989,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating/airless,
-/area/solar/starboard/aft)
+/area/maintenance/solars/port/aft)
 "msl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/plasteel/white,
@@ -16111,7 +16108,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "nVG" = (
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "nWa" = (
 /obj/docking_port/stationary{
@@ -16500,7 +16497,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "onH" = (
 /obj/structure/disposalpipe/segment,
@@ -16742,7 +16739,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "oyZ" = (
 /obj/structure/cable,
@@ -18536,7 +18533,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "pSH" = (
 /obj/structure/cable,
@@ -20780,7 +20777,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "rQG" = (
 /turf/closed/wall,
@@ -24265,7 +24262,7 @@
 	pixel_x = -1;
 	pixel_y = 42
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "uPn" = (
 /turf/open/floor/plasteel,
@@ -27989,9 +27986,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"ybC" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "ybZ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -73362,7 +73356,7 @@ pdP
 sRB
 bDt
 wkM
-ybC
+eXh
 xHQ
 xHQ
 xHQ
@@ -74392,7 +74386,7 @@ jSC
 jSC
 twp
 sHd
-lqV
+eXh
 fte
 vtn
 fte
@@ -74649,7 +74643,7 @@ tcv
 awO
 twp
 sHd
-lqV
+eXh
 fte
 geZ
 geZ
@@ -74906,7 +74900,7 @@ tya
 wxr
 twp
 sHd
-lqV
+eXh
 guE
 xHQ
 xHQ
@@ -75163,7 +75157,7 @@ tcv
 som
 twp
 sHd
-lqV
+eXh
 fte
 geZ
 geZ
@@ -75677,7 +75671,7 @@ tcv
 awO
 twp
 sHd
-lqV
+eXh
 fte
 geZ
 geZ
@@ -75934,7 +75928,7 @@ tya
 rYG
 twp
 sHd
-lqV
+eXh
 guE
 xHQ
 xHQ
@@ -76191,7 +76185,7 @@ tcv
 som
 twp
 sHd
-lqV
+eXh
 fte
 geZ
 geZ
@@ -76448,7 +76442,7 @@ tya
 wPK
 twp
 nub
-lqV
+eXh
 fte
 vtn
 fte
