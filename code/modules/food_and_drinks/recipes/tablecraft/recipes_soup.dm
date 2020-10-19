@@ -287,7 +287,7 @@
 	name = "Electron Soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/datum/reagent/consumable/sodiumchloride = 5,
+		/datum/reagent/consumable/salt = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 1
 	)

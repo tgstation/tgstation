@@ -442,7 +442,7 @@
   * * target: optional arg used in Mech PvP battles (if used, attacker is target's toy)
   */
 /obj/item/toy/prize/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/prize/attacker, mob/living/carbon/target)
-	if(attacker && attacker.in_combat)
+	if(attacker?.in_combat)
 		to_chat(user, "<span class='notice'>[target?target.p_their() : "Your" ] [attacker.name] is in combat.</span>")
 		target?.to_chat(target, "<span class='notice'>Your [attacker.name] is in combat.</span>")
 		return FALSE

@@ -302,7 +302,7 @@
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
 	if(prob(3))
 		to_chat(M, "<span class='warning'>You feel salty.</span>")
-		holder.add_reagent(/datum/reagent/consumable/sodiumchloride, 1)
+		holder.add_reagent(/datum/reagent/consumable/salt, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	else if(prob(3))
 		to_chat(M, "<span class='warning'>You feel sweet.</span>")
