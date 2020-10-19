@@ -110,13 +110,6 @@
 	reward = 1500
 	wanted_types = list(/obj/item/stack/sheet/animalhide/monkey)
 
-/datum/bounty/item/assistant/shard
-	name = "Shards"
-	description = "A killer clown has been stalking CentCom, and staff have been unable to catch her because she's not wearing shoes. Please ship some shards so that a booby trap can be constructed."
-	reward = 1500
-	required_count = 15
-	wanted_types = list(/obj/item/shard)
-
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfy Chairs"
 	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."

@@ -72,5 +72,5 @@
 	if(.)
 		return
 	var/mob/living/living_mob = user.mob
-	living_mob.lay_down()
+	living_mob.toggle_resting()
 	return TRUE

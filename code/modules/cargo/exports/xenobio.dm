@@ -20,15 +20,10 @@
 	unit_name = "rare slime core"
 	export_types = list(/obj/item/slime_extract/silver,/obj/item/slime_extract/darkblue,/obj/item/slime_extract/darkpurple,/obj/item/slime_extract/yellow)
 
-/datum/export/slime/charged
-	cost = 200
-	unit_name = "charged slime core"
-	export_types = list(/obj/item/stock_parts/cell/high/slime)
-
 /datum/export/slime/hypercharged
 	cost = 600
 	unit_name = "hypercharged slime core"
-	export_types = list(/obj/item/stock_parts/cell/high/slime/hypercharged)
+	export_types = list(/obj/item/stock_parts/cell/high/slime_hypercharged)
 
 /datum/export/slime/epic //EPIIIIIIC
 	cost = 220

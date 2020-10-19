@@ -412,8 +412,8 @@ function verbs_cat_check(cat) {
 	}
 	for(var v = 0; v < verbs.length; v++){
 		var part = verbs[v];
-		verbcat = part[0].indexOf(".") != -1 ? part[0].split(".") : part[0];
-		if(verbcat != cat || verbcat.trim() == ""){
+		verbcat = part[0].indexOf(".") != -1 ? part[0].split(".")[0] : part[0];
+		if(verbcat != tabCat || verbcat.trim() == ""){
 			continue;
 		}
 		else{
@@ -446,9 +446,9 @@ function add_verb_list(v) {
 	to_add.sort(); // sort what we're adding
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
-		if (!part[0])
+		if(!part[0])
 			continue;
-		var category = part[0].indexOf(".") == -1 ? part[0] : part[0].split(".")[0]
+		var category = part[0].indexOf(".") == -1 ? part[0] : part[0].split(".")[0];
 		if(findVerbindex(part[1], verbs))
 			continue;
 		if(verb_tabs.includes(category)){

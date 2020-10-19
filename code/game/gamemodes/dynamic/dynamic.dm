@@ -304,20 +304,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
-		// Wouldn't it be funny if you wanted to make a multiline if to make it more readable you needed to escape the newlines?
-		if( configuration \
-		 && configuration[ruleset.ruletype] \
-		 && configuration[ruleset.ruletype][ruleset.name])
-			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
-			for(var/variable in rule_conf)
-				if(!(variable in ruleset.vars))
-					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
-					continue
-				ruleset.vars[variable] = rule_conf[variable]
-		if(CONFIG_GET(flag/protect_roles_from_antagonist))
-			ruleset.restricted_roles |= ruleset.protected_roles
-		if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-			ruleset.restricted_roles |= "Assistant"
+		configure_ruleset(ruleset)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -519,6 +506,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
+		configure_ruleset(new_rule) // This makes sure the rule is set up properly.
 	else if(istype(ruletype, /datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
@@ -703,6 +691,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+
+/// Apply configurations to rule.
+/datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
+	var/rule_conf = LAZYACCESSASSOC(configuration, ruleset.ruletype, ruleset.name)
+	for(var/variable in rule_conf)
+		if(!(variable in ruleset.vars))
+			stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+			continue
+		ruleset.vars[variable] = rule_conf[variable]
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+		ruleset.restricted_roles |= ruleset.protected_roles
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		ruleset.restricted_roles |= "Assistant"
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

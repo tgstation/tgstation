@@ -52,7 +52,7 @@
 
 /datum/chemical_reaction/multiver
 	results = list(/datum/reagent/medicine/c2/multiver = 2)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/sodiumchloride = 1)
+	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
 	mix_message = "The mixture yields a fine black powder."
 	required_temp = 380
 

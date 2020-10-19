@@ -213,6 +213,7 @@
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_MEDICAL
 	available_on_ntnet = TRUE
+	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
 	return locate(selected) in GLOB.human_list
@@ -229,7 +230,7 @@
 		var/crewmember_name = "Unknown"
 		if(humanoid.wear_id)
 			var/obj/item/card/id/ID = humanoid.wear_id.GetID()
-			if(ID && ID.registered_name)
+			if(ID?.registered_name)
 				crewmember_name = ID.registered_name
 		var/list/crewinfo = list(
 			ref = REF(humanoid),
@@ -263,6 +264,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"
+	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 
