@@ -1222,6 +1222,19 @@
 					/obj/item/roller)
 	crate_name = "surgical supplies crate"
 
+/datum/supply_pack/medical/lobotomy
+	name = "Lobotomy Tools Crate"
+	desc = "Comes with an Health Scanner, Orbitoclast, Hammer, Cautery and some surgical drapes (as well as some instructions, and morphine)!"
+	cost = 1500
+	contains = list(/obj/item/surgical_drapes,
+					/obj/item/orbitoclast,
+					/obj/item/hammer,
+					/obj/item/cautery,
+					/obj/item/reagent_containers/glass/bottle/morphine,
+					/obj/item/paper/guides/lobotomy,
+					/obj/item/healthanalyzer)
+	crate_name = "lobotomy tools crate"
+
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
 	desc = "Contains a bulk supply of saline-glucose condensed into a single canister that should last several days, with a large pump to fill containers with. Direct injection of saline should be left to medical professionals as the pump is capable of overdosing patients. Requires medbay access to open."
