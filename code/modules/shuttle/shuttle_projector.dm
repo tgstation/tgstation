@@ -11,7 +11,6 @@
 	var/obj/docking_port/mobile/shuttle_port
 	/// The bottom left turf of the bounding box where the shuttle will dock in the stationary port
 	var/turf/bottom_left
-	var/turf/potential_transit_turf_we_cant_avoid_including
 
 /obj/shuttle_projector/Initialize(mapload, obj/docking_port/mobile/shuttle_port, obj/docking_port/stationary/stationary_port, inbound, total_animate_time = null)
 	. = ..()
@@ -67,9 +66,8 @@
 	// mobile/port_direction is the direction FROM the from front of the shuttle that points towards the station
 	// we only care about the two below, these are SANE and are where the FRONT of the shuttle will point
 	var/direction_shuttle_will_move = shuttle_port.preferred_direction
+	// IMPORTANT TO REMEMBR turn() goes retardedly counter clockwise
 	var/direction_shuttle_will_dock = turn(turn(stationary_port.dir, 180), dir2angle(shuttle_port.port_direction))
-
-	to_chat(world, "Projection Dirs: [direction_shuttle_will_move], [direction_shuttle_will_dock]")
 
 	var/matrix/move_transform = matrix()
 	var/direction_from_dock_to_map_edge_that_we_animate = direction_shuttle_will_move
@@ -155,8 +153,8 @@
 	else
 		transform = docked_transform
 
-	forceMove(bottom_left)
 	vis_contents = initial_shuttle_turfs
+	forceMove(bottom_left)
 
 	if (inbound)
 		animate(src, transform = undock_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
@@ -165,15 +163,10 @@
 		animate(src, transform = undock_transform, alpha = docking_alpha, time = dock_animation_time)
 		animate(transform = combined_transform, easing = CIRCULAR_EASING | EASE_IN, alpha = 0, time = move_animation_time)
 
-	//TODO: Remove
-	to_chat(world, "Shuttle projector: [ADMIN_JMP(src)]")
-
 	if(!inbound)
 		// rely on remove_ripples to delete us otherwise
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
 
 /obj/shuttle_projector/Destroy(force)
 	shuttle_port = null
-	if (potential_transit_turf_we_cant_avoid_including)
-		potential_transit_turf_we_cant_avoid_including.vis_flags = initial(potential_transit_turf_we_cant_avoid_including.vis_flags)
 	return ..()
