@@ -53823,8 +53823,8 @@
 /area/science/test_area)
 "cDz" = (
 /turf/closed/indestructible/riveted{
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	name = "hyper-reinforced wall"
+	name = "hyper-reinforced wall";
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
 	},
 /area/science/test_area)
 "cDD" = (
