@@ -136,7 +136,7 @@
   *Spawns a new regal rat, says some good jazz, and if sentient, transfers the relivant mind.
   */
 /mob/living/simple_animal/mouse/proc/evolve()
-	var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
+	var/mob/living/simple_animal/hostile/regalrat/regalrat = new /mob/living/simple_animal/hostile/regalrat/controlled(loc)
 	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
 	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)

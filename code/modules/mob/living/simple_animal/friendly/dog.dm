@@ -343,7 +343,7 @@
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add, /obj/item/grenade/c4)) // last thing he ever wears, I guess
-		item_to_add.afterattack(src,user,1)
+		INVOKE_ASYNC(item_to_add, /obj/item.proc/afterattack, src, user, 1)
 		return
 
 	if(inventory_head)
@@ -399,11 +399,11 @@
 	desc = initial(desc)
 	set_light(0)
 
-	if(inventory_head && inventory_head.dog_fashion)
+	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
 		DF.apply(src)
 
-	if(inventory_back && inventory_back.dog_fashion)
+	if(inventory_back?.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
 

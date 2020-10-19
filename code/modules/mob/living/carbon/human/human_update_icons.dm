@@ -107,7 +107,7 @@ There are several things that need to be remembered:
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = w_uniform
 		U.screen_loc = ui_iclothing
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)
 				client.screen += w_uniform
 		update_observer_view(w_uniform,1)
@@ -125,7 +125,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
-		if(dna && dna.species.sexes)
+		if(dna?.species.sexes)
 			if(body_type == FEMALE && U.fitted != NO_FEMALE_UNIFORM)
 				uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, femaleuniform = U.fitted, override_state = target_overlay)
 
@@ -152,7 +152,7 @@ There are several things that need to be remembered:
 
 	if(wear_id)
 		wear_id.screen_loc = ui_id
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			client.screen += wear_id
 		update_observer_view(wear_id)
 
@@ -169,7 +169,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1])
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1])
 		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
 		inv.update_icon()
 
@@ -186,7 +186,7 @@ There are several things that need to be remembered:
 	var/mutable_appearance/gloves_overlay = overlays_standing[GLOVES_LAYER]
 	if(gloves)
 		gloves.screen_loc = ui_gloves
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)
 				client.screen += gloves
 		update_observer_view(gloves,1)
@@ -211,7 +211,7 @@ There are several things that need to be remembered:
 
 	if(glasses)
 		glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				client.screen += glasses				//Either way, add the item to the HUD
 		update_observer_view(glasses,1)
@@ -239,7 +239,7 @@ There are several things that need to be remembered:
 
 	if(ears)
 		ears.screen_loc = ui_ears	//move the item to the appropriate screen loc
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += ears					//add it to the client's screen
 		update_observer_view(ears,1)
@@ -264,7 +264,7 @@ There are several things that need to be remembered:
 
 	if(shoes)
 		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
@@ -287,7 +287,7 @@ There are several things that need to be remembered:
 
 	if(s_store)
 		s_store.screen_loc = ui_sstore1
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			client.screen += s_store
 		update_observer_view(s_store)
 		overlays_standing[SUIT_STORE_LAYER]	= s_store.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
@@ -320,7 +320,7 @@ There are several things that need to be remembered:
 
 	if(belt)
 		belt.screen_loc = ui_belt
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			client.screen += belt
 		update_observer_view(belt)
 		overlays_standing[BELT_LAYER] = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/mob/clothing/belt.dmi')
@@ -343,7 +343,7 @@ There are several things that need to be remembered:
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		wear_suit.screen_loc = ui_oclothing
-		if(client && hud_used && hud_used.hud_shown)
+		if(client && hud_used?.hud_shown)
 			if(hud_used.inventory_shown)
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
@@ -435,7 +435,7 @@ There are several things that need to be remembered:
 //update whether our head item appears on our hud.
 /mob/living/carbon/human/update_hud_head(obj/item/I)
 	I.screen_loc = ui_head
-	if(client && hud_used && hud_used.hud_shown)
+	if(client && hud_used?.hud_shown)
 		if(hud_used.inventory_shown)
 			client.screen += I
 	update_observer_view(I,1)
@@ -443,7 +443,7 @@ There are several things that need to be remembered:
 //update whether our mask item appears on our hud.
 /mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
 	I.screen_loc = ui_mask
-	if(client && hud_used && hud_used.hud_shown)
+	if(client && hud_used?.hud_shown)
 		if(hud_used.inventory_shown)
 			client.screen += I
 	update_observer_view(I,1)
@@ -451,7 +451,7 @@ There are several things that need to be remembered:
 //update whether our neck item appears on our hud.
 /mob/living/carbon/human/update_hud_neck(obj/item/I)
 	I.screen_loc = ui_neck
-	if(client && hud_used && hud_used.hud_shown)
+	if(client && hud_used?.hud_shown)
 		if(hud_used.inventory_shown)
 			client.screen += I
 	update_observer_view(I,1)
@@ -459,7 +459,7 @@ There are several things that need to be remembered:
 //update whether our back item appears on our hud.
 /mob/living/carbon/human/update_hud_back(obj/item/I)
 	I.screen_loc = ui_back
-	if(client && hud_used && hud_used.hud_shown)
+	if(client && hud_used?.hud_shown)
 		client.screen += I
 	update_observer_view(I)
 
@@ -512,7 +512,7 @@ generate/load female uniform sprites matching all previously decided variables
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(isinhands, file2use)
-	if(worn_overlays && worn_overlays.len)
+	if(worn_overlays?.len)
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -588,7 +588,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client && observe.client.eye == src)

@@ -27,6 +27,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
+	///Audio for when the gravgen is on
+	var/datum/looping_sound/gravgen/soundloop
+
+/obj/machinery/gravity_generator/main/Initialize()
+	. = ..()
+	soundloop = new(list(src), TRUE)
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
@@ -65,6 +71,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(main_part)
 		qdel(main_part)
 	set_broken()
+	QDEL_NULL(soundloop)
 	return ..()
 
 //
@@ -282,11 +289,13 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/alert = FALSE
 	if(SSticker.IsRoundInProgress())
 		if(on) // If we turned on and the game is live.
+			soundloop.start()
 			if(gravity_in_level() == FALSE)
 				alert = TRUE
 				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 				message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
 		else
+			soundloop.stop()
 			if(gravity_in_level() == TRUE)
 				alert = TRUE
 				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)

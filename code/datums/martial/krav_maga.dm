@@ -136,7 +136,7 @@
 	var/armor_block = D.run_armor_check(affecting, MELEE)
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(rand(5,10) + bonus_damage, A.dna.species.attack_type, affecting, armor_block)
@@ -157,7 +157,7 @@
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, MELEE)
-	if((D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == STANDING_UP)
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're slapped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You jab [D]!</span>")
@@ -165,7 +165,7 @@
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 		D.apply_damage(rand(5,10), STAMINA, affecting, armor_block)
 		log_combat(A, D, "punched nonlethally")
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == LYING_DOWN)
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
 					"<span class='userdanger'>You're manhandled by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You stomp [D]!</span>")

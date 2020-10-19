@@ -51,6 +51,10 @@
   * * module_num - the slot number being equipped to.
   */
 /mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/item_module, module_num)
+	var/storage_was_closed = FALSE //Just to be consistant and all
+	if(!shown_robot_modules) //Tools may be invisible if the collection is hidden
+		hud_used.toggle_show_robot_modules()
+		storage_was_closed = TRUE
 	switch(module_num)
 		if(1)
 			item_module.screen_loc = inv1.screen_loc
@@ -72,6 +76,9 @@
 		update_sight()
 
 	observer_screen_update(item_module, TRUE)
+
+	if(storage_was_closed)
+		hud_used.toggle_show_robot_modules()
 	return TRUE
 
 /**
@@ -238,7 +245,7 @@
   * * add - whether or not the item is being added, or removed.
   */
 /mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module, add = TRUE)
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client && observe.client.eye == src)

@@ -4,7 +4,7 @@
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
-
+	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
 
 	var/icon_living = ""
@@ -266,12 +266,12 @@
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
+			if(speak?.len)
+				if((emote_hear?.len) || (emote_see?.len))
 					var/length = speak.len
-					if(emote_hear && emote_hear.len)
+					if(emote_hear?.len)
 						length += emote_hear.len
-					if(emote_see && emote_see.len)
+					if(emote_see?.len)
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
@@ -285,11 +285,11 @@
 				else
 					say(pick(speak), forced = "poly")
 			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if(!(emote_hear?.len) && (emote_see?.len))
 					manual_emote(pick(emote_see))
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
+				if((emote_hear?.len) && !(emote_see?.len))
 					manual_emote(pick(emote_hear))
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if((emote_hear?.len) && (emote_see?.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
@@ -481,15 +481,16 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
+
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
-	if(..()) //successfully ressuscitated from death
-		icon = initial(icon)
-		icon_state = icon_living
-		density = initial(density)
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-		update_mobility()
-		. = TRUE
-		setMovetype(initial(movement_type))
+	. = ..()
+	if(!.)
+		return
+	icon = initial(icon)
+	icon_state = icon_living
+	density = initial(density)
+	setMovetype(initial(movement_type))
+
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -551,23 +552,6 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)
 	return ..()
 
-
-/mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT))
-		drop_all_held_items()
-		mobility_flags = NONE
-	else if(buckled)
-		mobility_flags = MOBILITY_FLAGS_INTERACTION
-	else
-		if(value_otherwise)
-			mobility_flags = MOBILITY_FLAGS_DEFAULT
-		else
-			mobility_flags = NONE
-	if(!(mobility_flags & MOBILITY_MOVE))
-		walk(src, 0) //stop mid walk
-
-	update_transform()
-	update_action_buttons_icon()
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

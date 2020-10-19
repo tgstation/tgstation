@@ -81,6 +81,7 @@
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE 8
+#define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
@@ -142,11 +143,11 @@
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID 20
+#define SHOVE_KNOCKDOWN_HUMAN 20
+#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_COLLATERAL 1
+#define SHOVE_CHAIN_PARALYZE 30
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier

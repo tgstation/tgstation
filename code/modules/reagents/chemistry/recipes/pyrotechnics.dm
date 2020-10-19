@@ -3,6 +3,9 @@
 	var/modifier = 0
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
+	explode(holder, created_volume)
+
+/datum/chemical_reaction/reagent_explosion/proc/explode(datum/reagents/holder, created_volume)
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
@@ -22,7 +25,6 @@
 		e.set_up(power , T, 0, 0)
 		e.start()
 	holder.clear_reagents()
-
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
@@ -146,15 +148,16 @@
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
-		sleep(20)
-		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
-			if(iscultist(C))
-				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Paralyze(40)
-				C.adjust_fire_stacks(5)
-				C.IgniteMob()
+		addtimer(CALLBACK(src, .proc/divine_explosion, round(created_volume/48,1),get_turf(holder.my_atom)), 2 SECONDS)
 	..()
 
+/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/proc/divine_explosion(size, turf/T)
+	for(var/mob/living/carbon/C in get_hearers_in_view(size,T))
+		if(iscultist(C))
+			to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
+			C.Paralyze(40)
+			C.adjust_fire_stacks(5)
+			C.IgniteMob()
 
 /datum/chemical_reaction/gunpowder
 	results = list(/datum/reagent/gunpowder = 3)
@@ -168,8 +171,7 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
-	sleep(rand(50,100))
-	..()
+	addtimer(CALLBACK(src, .proc/explode, holder, created_volume), rand(5,10) SECONDS)
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -337,7 +339,7 @@
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		holder.clear_reagents()
 
 /datum/chemical_reaction/smoke_powder_smoke
@@ -354,7 +356,7 @@
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		holder.clear_reagents()
 
 /datum/chemical_reaction/sonic_powder
@@ -452,19 +454,22 @@
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
-	sleep(5)
+	var/added_delay = 0.5 SECONDS
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
-		sleep(15)
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T1), added_delay)
+		added_delay += 1.5 SECONDS
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
-		sleep(15)
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T2), added_delay)
+		added_delay += 1.5 SECONDS
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, zap_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
-	..()
+		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T3), added_delay)
+	addtimer(CALLBACK(src, .proc/explode, holder, created_volume), added_delay)
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
+	if(QDELETED(holder.my_atom))
+		return
+	tesla_zap(holder.my_atom, 7, power, zap_flags)
+	playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474

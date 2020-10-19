@@ -12,6 +12,7 @@
 	usage_flags = PROGRAM_TABLET
 	size = 5
 	tgui_id = "NtosRobotact"
+	program_icon = "terminal"
 	///A typed reference to the computer, specifying the borg tablet type
 	var/obj/item/modular_computer/tablet/integrated/tablet
 
@@ -51,7 +52,7 @@
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
 	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
 	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
-	data["printerPictures"] = borgo.aicamera.stored.len //Number of pictures taken
+	data["printerPictures"] =  borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = borgo.toner //amount of toner
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
@@ -117,7 +118,10 @@
 			borgo.toggle_sensors()
 
 		if("viewImage")
-			borgo.aicamera?.viewpictures(usr)
+			if(borgo.connected_ai)
+				borgo.connected_ai.aicamera?.viewpictures(usr)
+			else
+				borgo.aicamera?.viewpictures(usr)
 
 		if("printImage")
 			var/obj/item/camera/siliconcam/robot_camera/borgcam = borgo.aicamera

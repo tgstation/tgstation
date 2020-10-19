@@ -646,7 +646,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
 
-	if(T && T.mind)
+	if(T?.mind)
 		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in sortList(T.mind.spell_list)
 		if(S)
 			T.mind.RemoveSpell(S)

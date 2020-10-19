@@ -3,6 +3,7 @@
 	desc = "Portable Ice-cream in its own packaging."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "icecreamsandwich"
+	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
@@ -12,6 +13,7 @@
 	desc = "Portable ice-cream in its own packaging of the strawberry variety."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "strawberryicecreamsandwich"
+	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -22,6 +24,7 @@
 	desc = "The best icecream in space."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "spacefreezy"
+	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/bluecherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -31,6 +34,7 @@
 	desc = "A classic dessert."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "sundae"
+	w_class = WEIGHT_CLASS_SMALL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -40,6 +44,7 @@
 	desc = "The clown's favorite dessert."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "honkdae"
+	w_class = WEIGHT_CLASS_SMALL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -53,6 +58,7 @@
 	desc = "It's just shaved ice. Still fun to chew on."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "flavorless_sc"
+	w_class = WEIGHT_CLASS_SMALL
 	trash_type = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
@@ -263,7 +269,7 @@
 /obj/item/food/popsicle/nogga_black
 	name = "nogga black"
 	desc = "A salty licorice icecream recently reintroduced due to all the records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sodiumchloride = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"
 
