@@ -357,6 +357,7 @@
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
+	/// The shuttle projector we create with ripples and should be deleted with ripples
 	var/obj/shuttle_projector/inbound_shuttle_projector
 
 	var/engine_coeff = 1
