@@ -305,7 +305,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/protosuit
 	name = "protosuit hardsuit"
-	desc = "A failed NanoTrasen experiment, intended to be a unique medical hardsuit based on stolen Syndicate samples."
+	desc = "A failed Nanotrasen experiment, intended to be a unique medical hardsuit based on stolen Syndicate samples."
 	icon_state = "protosuit"
 	hardsuit_type = "protosuit"
 	armor = list(MELEE = 30, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 30, BIO = 100, RAD = 25, FIRE = 75, ACID = 75, WOUND = 15)
@@ -314,7 +314,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/protosuit
 	name = "protosuit hardsuit helmet"
-	desc = "A helmet, made in old failed NanoTrasen experiment, which was intended to create a medical hardsuit based of stolen Syndicate ones. You can see a small DNA-sampler on the bottom of it."
+	desc = "A helmet, made in old failed Nanotrasen experiment, which was intended to create a medical hardsuit based of stolen Syndicate ones. You can see a small DNA-sampler on the bottom of it."
 	icon_state = "protosuit"
 	hardsuit_type = "protosuit"
 	armor = list(MELEE = 30, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 30, BIO = 100, RAD = 25, FIRE = 75, ACID = 75, WOUND = 15)
