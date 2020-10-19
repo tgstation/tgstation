@@ -34,7 +34,7 @@
 			initial_shuttle_turfs += transit_turf
 
 	// If we're projecting on lavaland the shuttle goes above instead of below the game view
-	var/turf/open/stationary_turf = get_turf(stationary_port)
+	var/turf/open/space/stationary_turf = get_turf(stationary_port)
 	var/above_layer = !istype(stationary_turf) || stationary_turf.planetary_atmos
 
 	var/docking_alpha
