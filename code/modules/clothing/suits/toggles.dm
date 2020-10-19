@@ -4,6 +4,7 @@
 	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	var/toggle_slot = ITEM_SLOT_OCLOTHING
 
 /obj/item/clothing/suit/hooded/Initialize()
 	. = ..()
@@ -53,7 +54,7 @@
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if(H.wear_suit != src)
+			if(H.get_item_by_slot(toggle_slot) != src)
 				to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
 				return
 			if(H.head)
