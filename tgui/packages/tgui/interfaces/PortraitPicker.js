@@ -1,5 +1,4 @@
 import { resolveAsset } from '../assets';
-import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -41,12 +40,12 @@ export const PortraitPicker = (props, context) => {
             <Section fitted>
               <Tabs fluid={1}>
                 {TABS.map((tabObj, i) => (
-                  !!tabObj.list != 0 && (
+                  !!tabObj.list !== 0 && (
                     <Tabs.Tab
-                    key={i}
-                    selected={i === tabIndex}
-                    onClick={() => { setListIndex(0); setTabIndex(i); }}>
-                    {tabObj.name}
+                      key={i}
+                      selected={i === tabIndex}
+                      onClick={() => { setListIndex(0); setTabIndex(i); }}>
+                      {tabObj.name}
                     </Tabs.Tab>
                   )
                 ))}
@@ -121,20 +120,18 @@ export const PortraitPicker = (props, context) => {
             </Flex>
             <Flex.Item mt={1}>
               <NoticeBox info>
-                {multiline`
-                  Only the 23x23 or 24x24 canvas size art can be
-                  displayed. Make sure you read the warning below
-                  before embracing the wide wonderful world of
-                  artistic expression!`}
+                Only the 23x23 or 24x24 canvas size art can be
+                displayed. Make sure you read the warning below
+                before embracing the wide wonderful world of
+                artistic expression!
               </NoticeBox>
             </Flex.Item>
             <Flex.Item>
               <NoticeBox danger>
-                {multiline`
-                  WARNING: While Central Command loves art as much as you do,
-                  choosing lewd art will lead to severe consequences.
-                  Additionally, Central Command reserves the right to request
-                  you change your display portrait, for any reason.`}
+                WARNING: While Central Command loves art as much as you do,
+                choosing erotic art will lead to severe consequences.
+                Additionally, Central Command reserves the right to request
+                you change your display portrait, for any reason.
               </NoticeBox>
             </Flex.Item>
           </Flex.Item>
