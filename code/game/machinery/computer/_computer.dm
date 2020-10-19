@@ -20,6 +20,9 @@
 
 	power_change()
 
+/obj/machinery/computer/Destroy()
+	. = ..()
+
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE

@@ -19,7 +19,6 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -30,6 +29,7 @@
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
+	can_buckle_to = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
@@ -171,6 +171,7 @@
 	builtInCamera.network = list("ss13")
 
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 
 /mob/living/silicon/ai/key_down(_key, client/user)
@@ -313,7 +314,9 @@
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 
-	if(!SSshuttle.canEvac(src))
+	var/can_evac_or_fail_reason = SSshuttle.canEvac(src)
+	if(can_evac_or_fail_reason != TRUE)
+		to_chat(usr, "<span class='alert'>[can_evac_or_fail_reason]</span>")
 		return
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
@@ -377,12 +380,6 @@
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
-
-/mob/living/silicon/ai/update_mobility() //If the AI dies, mobs won't go through it anymore
-	if(stat != CONSCIOUS)
-		mobility_flags = NONE
-	else
-		mobility_flags = ALL
 
 
 /mob/living/silicon/ai/Topic(href, href_list)
@@ -526,9 +523,9 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
-		if (C && C.can_use())
+		if (C?.can_use())
 			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
-		else if (CL && CL.len)
+		else if (CL?.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
@@ -798,10 +795,6 @@
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
-/mob/living/silicon/ai/can_buckle()
-	return FALSE
-
-
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(control_disabled || incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
@@ -1044,3 +1037,10 @@
 			ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	else if(.)
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+
+
+/mob/living/silicon/on_handsblocked_start()
+	return // AIs have no hands
+
+/mob/living/silicon/on_handsblocked_end()
+	return // AIs have no hands

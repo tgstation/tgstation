@@ -98,7 +98,7 @@
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
-				occupant = C
+				set_occupant(C)
 				update_icon()
 	else
 		startgibbing(user)
@@ -136,14 +136,14 @@
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
-	if(src.operating)
+	if(operating)
 		return
-	if(!src.occupant)
+	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
 
@@ -199,7 +199,8 @@
 	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
-	qdel(src.occupant)
+	set_occupant(null)
+	qdel(mob_occupant)
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)

@@ -1,9 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - rscadd: "replace button to shuttle panel, load button now only load new shuttle"
-  - tweak: "shuttle template loads as shuttle"
-  - rscadd: "new shuttle console connects to shuttle on construction/spawn"
-  - rscadd: "new navigation computer connect to shuttle on construction/spawn"
-  - tweak: "docking_port id now unique, adds count to id if id already in work"
-  - bugfix: "ports from one template now work"
