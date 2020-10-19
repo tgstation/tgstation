@@ -158,8 +158,12 @@
 
 	if(!inbound)
 		// rely on remove_ripples to delete us otherwise
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), total_animate_time, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, .proc/on_initialization_end), total_animate_time, TIMER_CLIENT_TIME)
 
+
+/// Handles the aftermath of initializing, after all the deeds are done.
+/obj/effect/abstract/shuttle_projector/proc/on_initialization_end()
+	qdel(src)
 /obj/effect/abstract/shuttle_projector/Destroy(force)
 	shuttle_port = null
 	return ..()
