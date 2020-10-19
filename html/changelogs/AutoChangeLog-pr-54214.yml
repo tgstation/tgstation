@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - tweak: "lower amount of lavaland bz/miasma"
+  - tweak: "lower amount of icemoon miasma"
