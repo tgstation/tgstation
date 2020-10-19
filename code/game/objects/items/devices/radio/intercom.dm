@@ -143,6 +143,6 @@
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
-	anonimize = TRUE
+	anonymize = TRUE
 	frequency = 1481
 	broadcasting = TRUE

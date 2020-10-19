@@ -34,7 +34,7 @@
 	var/command = FALSE  // If true, use_command can be toggled at will.
 
 	///makes anyone who is talking through this anonymous.
-	var/anonimize = FALSE
+	var/anonymize = FALSE
 
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
