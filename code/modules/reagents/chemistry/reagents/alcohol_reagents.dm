@@ -1749,7 +1749,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
 	..()
 
-/datum/reagent/consumable/ethanol/amarettoalexander
+/datum/reagent/consumable/ethanol/amaretto_alexander
 	name = "Amaretto Alexander"
 	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor."
 	color = "#DBD5AE"
