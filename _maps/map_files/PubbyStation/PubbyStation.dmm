@@ -285,16 +285,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "aaJ" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
+/obj/machinery/computer/security/qm{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/freezer,
-/area/medical/virology)
+/turf/open/floor/wood,
+/area/quartermaster/qm)
 "aaK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -302,12 +297,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "aaL" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
 	},
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/freezer,
-/area/medical/virology)
+/area/quartermaster/qm)
 "aaM" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -359,11 +352,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
-"aaS" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/mob/living/simple_animal/pet/dog/corgi/puppy,
-/turf/open/floor/grass,
-/area/medical/psychology)
 "aaT" = (
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/wood,
@@ -21460,9 +21448,6 @@
 "beI" = (
 /turf/closed/wall,
 /area/science/robotics/mechbay)
-"beJ" = (
-/turf/open/floor/wood,
-/area/quartermaster/qm)
 "beK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel,
@@ -49501,8 +49486,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-<<<<<<< HEAD
-=======
 "iQW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -49510,7 +49493,6 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
->>>>>>> upstream/master
 "iRs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -53831,14 +53813,11 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-<<<<<<< HEAD
-=======
 "pds" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/psychology)
->>>>>>> upstream/master
 "pdW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -55645,14 +55624,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
-"rIl" = (
-/obj/machinery/computer/security/qm{
-	dir = 8
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/quartermaster/qm)
 "rJg" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -58167,8 +58138,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-<<<<<<< HEAD
-=======
 "vbv" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -58180,7 +58149,6 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
->>>>>>> upstream/master
 "vcJ" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -84133,9 +84101,9 @@ bEr
 bEr
 bEr
 ozc
-aaJ
+vbv
 bFJ
-aaL
+iQW
 bFL
 bEr
 aaa
@@ -85678,7 +85646,7 @@ bsu
 wGM
 pTy
 kYt
-aaS
+pds
 rhT
 bSs
 aht
@@ -101050,8 +101018,8 @@ bcI
 wDZ
 aPb
 bcS
-beJ
-rIl
+aaJ
+aaL
 aTo
 aUx
 aVA
