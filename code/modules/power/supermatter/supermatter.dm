@@ -703,7 +703,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Aboce certain power thresholds the supermatter crystal can electrolyze water vapor.
 		if(power > POWER_PENALTY_THRESHOLD)
 			var/h2o_moles = removed.gases[/datum/gas/water_vapor][MOLES]
-			var/electrolysis_moles = max(h2o_moles * (power - POWER_PENALTY_THRESHOLD)/(power + WATER_ELECTROLYSIS_MODIFIER), 0)
+			var/electrolysis_moles = clamp(h2o_moles * (power - POWER_PENALTY_THRESHOLD)/(power + WATER_ELECTROLYSIS_MODIFIER), 0, h2o_moles)
 			if(electrolysis_moles)
 				removed.gases[/datum/gas/water_vapor][MOLES] -= electrolysis_moles
 				removed.gases[/datum/gas/hydrogen][MOLES] += electrolysis_moles
