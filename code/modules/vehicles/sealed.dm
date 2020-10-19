@@ -1,5 +1,5 @@
 /obj/vehicle/sealed
-	var/enter_delay = 20
+	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 
 /obj/vehicle/sealed/generate_actions()
@@ -111,17 +111,17 @@
 	return ..()
 
 /obj/vehicle/sealed/Destroy()
-	DumpMobs()
+	dump_mobs()
 	return ..()
 
-/obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
+/obj/vehicle/sealed/proc/dump_mobs(randomstep = TRUE)
 	for(var/i in occupants)
 		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
 			Carbon.Paralyze(40)
 
-/obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
+/obj/vehicle/sealed/proc/dump_specific_mobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
 		if((occupants[i] & flag))
 			mob_exit(i, null, randomstep)

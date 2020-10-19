@@ -30,7 +30,7 @@
 /obj/vehicle/ridden/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		new /obj/effect/temp_visual/dir_setting/speedbike_trail(loc,move_dir)
-	. = ..()
+	return ..()
 
 /obj/vehicle/ridden/space/speedbike/red
 	icon_state = "speedbike_red"
