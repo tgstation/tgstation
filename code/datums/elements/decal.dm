@@ -21,12 +21,13 @@
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
 		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
+		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer_rotateable,TRUE)
+	else
+		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
-
-	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
@@ -88,10 +89,21 @@
 
 	examine_list += description
 
-/datum/element/decal/proc/shuttle_move_react(datum/source, turf/newT)
+///Transfer rotateable decal to new place
+/datum/element/decal/proc/decal_transfer_rotateable(datum/source, datum/target)
 	SIGNAL_HANDLER
 
-	if(newT == source)
+	if(target == source)
 		return
 	Detach(source)
-	newT.AddElement(/datum/element/decal, pic.icon, pic.icon_state, pic.dir, cleanable, pic.color, pic.layer, description, pic.alpha)
+	target.AddElement(/datum/element/decal, pic.icon, pic.icon_state, pic.dir, cleanable, pic.color, pic.layer, description, pic.alpha)
+
+///Transfer fixed decal to new place
+/datum/element/decal/proc/decal_transfer(datum/source, datum/target)
+	SIGNAL_HANDLER
+
+	if(target == source)
+		return
+	Detach(source)
+	target.AddElement(/datum/element/decal, pic.icon, pic.icon_state, cleanable, pic.color, pic.layer, description, pic.alpha)
+
