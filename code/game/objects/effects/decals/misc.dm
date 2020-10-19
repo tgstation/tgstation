@@ -1,6 +1,6 @@
 /obj/effect/temp_visual/point
 	name = "pointer"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "arrow"
 	layer = POINT_LAYER
 	duration = 25

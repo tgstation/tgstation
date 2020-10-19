@@ -80,7 +80,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
-		if(V && V.can_speak_with())
+		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
 	return FALSE

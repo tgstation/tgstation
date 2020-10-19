@@ -101,7 +101,7 @@
 /datum/chemical_reaction/imitationcarpmeat/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/carpmeat/imitation(location)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		qdel(holder.my_atom)
 
 /datum/chemical_reaction/dough
@@ -133,7 +133,7 @@
 /datum/chemical_reaction/ricebowl/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/salad/ricebowl(location)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		qdel(holder.my_atom)
 
 /datum/chemical_reaction/nutriconversion
