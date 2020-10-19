@@ -98,6 +98,7 @@
 	var/obj/vehicle/vehicle_target
 
 /datum/action/vehicle/sealed
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/sealed/vehicle_entered_target
 
 /datum/action/vehicle/sealed/climb_out
