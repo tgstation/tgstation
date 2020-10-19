@@ -731,7 +731,7 @@
 /obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
 	. = ..()
 	var/target = targets[1]
-	var/turf/targeted_turf = isturf(target) ? target : get_turf(target)
+	var/turf/targeted_turf = get_turf(target)
 
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	playsound(targeted_turf,'sound/magic/voidblink.ogg',100)
@@ -791,6 +791,5 @@
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	new /obj/effect/temp_visual/voidin(user.drop_location())
 	for(var/mob/living/livies in view(7,user)-user)
-		for(var/i in 0 to 2)
+		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
-
