@@ -15,7 +15,7 @@
 	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
-
+	express = TRUE
 	var/message
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
 	var/list/meme_pack_data

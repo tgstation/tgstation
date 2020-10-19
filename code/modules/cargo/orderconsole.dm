@@ -22,7 +22,7 @@
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
-
+	var/express = FALSE
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -176,7 +176,7 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
-			if(istype(src, /obj/machinery/computer/cargo/express)) //prevents running this in the wrong way
+			if(express) //prevents running this in the wrong way
 				return . = FALSE
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
