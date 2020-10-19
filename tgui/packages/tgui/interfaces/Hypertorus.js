@@ -1,4 +1,4 @@
-import { sortBy, map } from 'common/collections';
+import { sortBy, map, filter } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
@@ -24,33 +24,35 @@ export const Hypertorus = (props, context) => {
     fusion_started,
   } = data;
   const fusion_gases = flow([
-    fusion_gases => fusion_gases.filter(gas => gas.amount >= 0.01),
+    filter(gas => gas.amount >= 0.01),
     sortBy(gas => -gas.amount),
   ])(data.fusion_gases || []);
   const moderator_gases = flow([
-    moderator_gases => moderator_gases.filter(gas => gas.amount >= 0.01),
+    filter(gas => gas.amount >= 0.01),
     sortBy(gas => -gas.amount),
   ])(data.moderator_gases || []);
   const fusionMax = Math.max(1, ...fusion_gases.map(gas => gas.amount));
   const moderatorMax = Math.max(1, ...moderator_gases.map(gas => gas.amount));
   return (
     <Window
-      width={800}
+      width={500}
       height={600}
       scrollable
       resizable>
       <Window.Content>
-        <Flex>
-          <Flex.Item grow={1} basis={0}>
-            <LabeledList>
-              <LabeledList.Item label="Tag">
-                <Button
-                  disabled={data.power_level > 2}
-                  icon={data.fusion_started ? 'power-off' : 'times'}
-                  content={data.fusion_started ? 'On' : 'Off'}
-                  selected={data.fusion_started}
-                  onClick={() => act('fusion_started')} />
-              </LabeledList.Item>
+        <Section title="Fusion Reactor">
+          <LabeledList>
+            <LabeledList.Item label="Powered">
+              <Button
+                disabled={data.power_level > 2}
+                icon={data.fusion_started ? 'power-off' : 'times'}
+                content={data.fusion_started ? 'On' : 'Off'}
+                selected={data.fusion_started}
+                onClick={() => act('fusion_started')} />
+            </LabeledList.Item>
+          </LabeledList>
+          <Section>
+            <Section title="Internal Fusion Gases">
               {fusion_gases.map(gas => (
                 <LabeledList.Item
                   key={gas.name}
@@ -64,6 +66,8 @@ export const Hypertorus = (props, context) => {
                   </ProgressBar>
                 </LabeledList.Item>
               ))}
+            </Section>
+            <Section title="Moderator Gases">
               {moderator_gases.map(gas => (
                 <LabeledList.Item
                   key={gas.name}
@@ -77,117 +81,127 @@ export const Hypertorus = (props, context) => {
                   </ProgressBar>
                 </LabeledList.Item>
               ))}
-              <LabeledList.Item label="Energy Levels">
-                <ProgressBar
-                  value={energy_level}
-                  minValue={-1e40}
-                  maxValue={1e40}>
-                  {formatSiUnit(energy_level, 1, 'J')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Core Temperature">
-                <ProgressBar
-                  value={core_temperature}
-                  minValue={-1e40}
-                  maxValue={1e30}>
-                  {formatSiBaseTenUnit(core_temperature, 1, 'K')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Internal Power">
-                <ProgressBar
-                  value={internal_power}
-                  minValue={-1e40}
-                  maxValue={1e30}>
-                  {formatSiUnit(internal_power, 1, 'J')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Power Output">
-                <ProgressBar
-                  value={power_output}
-                  minValue={-1e40}
-                  maxValue={1e30}>
-                  {formatSiUnit(power_output, 1, 'J')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Heat Limiter Modifier">
-                <ProgressBar
-                  value={heat_limiter_modifier}
-                  minValue={-1e40}
-                  maxValue={1e30}>
-                  {formatSiBaseTenUnit(heat_limiter_modifier, 1, 'K')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Heat Output">
-                <ProgressBar
-                  value={heat_output}
-                  minValue={-1e40}
-                  maxValue={1e30}>
-                  {formatSiBaseTenUnit(heat_output, 1, 'K')}
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Heating Conductor">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.heating_conductor)}
-                  width="63px"
-                  unit="J/cm"
-                  minValue={0.5}
-                  maxValue={10}
-                  onDrag={(e, value) => act('heating_conductor', {
-                    heating_conductor: value,
-                  })} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Magnetic Constrictor">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.magnetic_constrictor)}
-                  width="63px"
-                  unit="m^3/B"
-                  minValue={0.5}
-                  maxValue={10}
-                  onDrag={(e, value) => act('magnetic_constrictor', {
-                    magnetic_constrictor: value,
-                  })} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Fuel Injection Rate">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.fuel_injection_rate)}
-                  width="63px"
-                  unit="mol/s"
-                  minValue={1}
-                  maxValue={150}
-                  onDrag={(e, value) => act('fuel_injection_rate', {
-                    fuel_injection_rate: value,
-                  })} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Moderator Injection Rate">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.moderator_injection_rate)}
-                  width="63px"
-                  unit="mol/s"
-                  minValue={1}
-                  maxValue={150}
-                  onDrag={(e, value) => act('moderator_injection_rate', {
-                    moderator_injection_rate: value,
-                  })} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Current Damper">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.current_damper)}
-                  width="63px"
-                  unit="mol/s"
-                  minValue={0}
-                  maxValue={5}
-                  onDrag={(e, value) => act('current_damper', {
-                    current_damper: value,
-                  })} />
-              </LabeledList.Item>
-            </LabeledList>
-          </Flex.Item>
-        </Flex>
+            </Section>
+          </Section>
+          <Section title="Reactor Parameters">
+            <LabeledList.Item label="Energy Levels">
+              <ProgressBar
+                color={'yellow'}
+                value={energy_level}
+                minValue={-1e40}
+                maxValue={1e40}>
+                {formatSiUnit(energy_level, 1, 'J')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Internal Power">
+              <ProgressBar
+                color={'orange'}
+                value={internal_power}
+                minValue={-1e40}
+                maxValue={1e30}>
+                {formatSiUnit(internal_power, 1, 'J')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Core Temperature">
+              <ProgressBar
+                color={'red'}
+                value={core_temperature}
+                minValue={-1e40}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(core_temperature, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Power Output">
+              <ProgressBar
+                color={'green'}
+                value={power_output}
+                minValue={-1e40}
+                maxValue={1e30}>
+                {formatSiUnit(power_output, 1, 'J')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Heat Limiter Modifier">
+              <ProgressBar
+                color={'blue'}
+                value={heat_limiter_modifier}
+                minValue={-1e40}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(heat_limiter_modifier, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Heat Output">
+              <ProgressBar
+                color={'grey'}
+                value={heat_output}
+                minValue={-1e40}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(heat_output, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+          </Section>
+          <Section title="Tweakable Inputs">
+            <LabeledList.Item label="Heating Conductor">
+              <NumberInput
+                animated
+                value={parseFloat(data.heating_conductor)}
+                width="63px"
+                unit="J/cm"
+                minValue={0.5}
+                maxValue={10}
+                onDrag={(e, value) => act('heating_conductor', {
+                  heating_conductor: value,
+                })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Magnetic Constrictor">
+              <NumberInput
+                animated
+                value={parseFloat(data.magnetic_constrictor)}
+                width="63px"
+                unit="m^3/B"
+                minValue={0.5}
+                maxValue={10}
+                onDrag={(e, value) => act('magnetic_constrictor', {
+                  magnetic_constrictor: value,
+                })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Fuel Injection Rate">
+              <NumberInput
+                animated
+                value={parseFloat(data.fuel_injection_rate)}
+                width="63px"
+                unit="mol/s"
+                minValue={1}
+                maxValue={150}
+                onDrag={(e, value) => act('fuel_injection_rate', {
+                  fuel_injection_rate: value,
+                })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Moderator Injection Rate">
+              <NumberInput
+                animated
+                value={parseFloat(data.moderator_injection_rate)}
+                width="63px"
+                unit="mol/s"
+                minValue={1}
+                maxValue={150}
+                onDrag={(e, value) => act('moderator_injection_rate', {
+                  moderator_injection_rate: value,
+                })} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Current Damper">
+              <NumberInput
+                animated
+                value={parseFloat(data.current_damper)}
+                width="63px"
+                unit="mol/s"
+                minValue={0}
+                maxValue={5}
+                onDrag={(e, value) => act('current_damper', {
+                  current_damper: value,
+                })} />
+            </LabeledList.Item>
+          </Section>
+        </Section>
       </Window.Content>
     </Window>
   );
