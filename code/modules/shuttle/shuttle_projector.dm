@@ -24,14 +24,7 @@
 	src.shuttle_port = shuttle_port
 
 	// Get the mobile ports turfs to project
-	var/list/all_transit_turfs = shuttle_port.return_ordered_turfs(shuttle_port.x, shuttle_port.y, shuttle_port.z, shuttle_port.dir)
-
-	var/list/initial_shuttle_turfs = list()
-	for (var/T in all_transit_turfs)
-		var/turf/transit_turf = T
-		// We don't want to project any empty space turfs
-		if (!istype(transit_turf, /turf/open/space))
-			initial_shuttle_turfs += transit_turf
+	var/list/projected_turfs = shuttle_port.return_ordered_turfs(shuttle_port.x, shuttle_port.y, shuttle_port.z, shuttle_port.dir)
 
 	// If we're projecting on lavaland the shuttle goes above instead of below the game view
 	var/turf/open/space/stationary_turf = get_turf(stationary_port)
@@ -153,7 +146,7 @@
 	else
 		transform = docked_transform
 
-	vis_contents = initial_shuttle_turfs
+	vis_contents = projected_turfs
 	forceMove(bottom_left)
 
 	if (inbound)
