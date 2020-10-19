@@ -577,8 +577,8 @@
 	results = list(/datum/reagent/consumable/ethanol/godmother = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/vodka = 1)
 
-/datum/chemical_reaction/amarettoalexander
-	results = list(/datum/reagent/consumable/ethanol/amarettoalexander = 3)
+/datum/chemical_reaction/amaretto_alexander
+	results = list(/datum/reagent/consumable/ethanol/amaretto_alexander = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/creme_de_cacao = 1, /datum/reagent/consumable/cream = 1)
 
 /datum/chemical_reaction/ginger_amaretto
