@@ -71,7 +71,7 @@
 	if(rename)
 		name = "rotting [initial(name)]"
 		desc += " They smell terrible."
-	SEND_SIGNAL(src, COMSIG_START_MIASMA_GENERATION)
+	trigger_rot()
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return

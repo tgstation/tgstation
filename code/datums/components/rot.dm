@@ -9,7 +9,6 @@
 		amount = new_amount
 
 	RegisterSignal(parent, COMSIG_START_MIASMA_GENERATION, .proc/start_processing)
-	RegisterSignal(parent, COMSIG_STOP_MIASMA_GENERATION, .proc/stop_processing)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/rot/proc/start_processing()

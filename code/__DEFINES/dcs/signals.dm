@@ -831,10 +831,8 @@
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
 // /datum/component/rot component
-///to rot start_processing()
+///to rot start_processing() from atom/trigger_rot()
 #define COMSIG_START_MIASMA_GENERATION "rot_start"
-///to rot stop_processing()
-#define COMSIG_STOP_MIASMA_GENERATION "rot_stop"
 
 // /datum/component/atmos_sensitive
 //from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature): (datum/component/atmos_sensitive)

@@ -28,7 +28,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		SEND_SIGNAL(src, COMSIG_START_MIASMA_GENERATION)
+		trigger_rot()
 	else
 		var/bprv = handle_bodyparts()
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
