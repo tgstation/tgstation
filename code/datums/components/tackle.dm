@@ -204,6 +204,7 @@
 			to_chat(target, "<span class='userdanger'>[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -217,6 +218,7 @@
 			to_chat(target, "<span class='userdanger'>[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)

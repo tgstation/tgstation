@@ -211,7 +211,7 @@
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
-	if(LAZYLEN(user.get_traumas()))
+	if(LAZYLEN(altPatient.get_traumas()))
 		var/list/trauma_text = list()
 		for(var/datum/brain_trauma/B in altPatient.get_traumas())
 			var/trauma_desc = ""
