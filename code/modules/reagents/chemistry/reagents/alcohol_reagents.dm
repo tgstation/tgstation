@@ -2324,3 +2324,4 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "godmother"
 	glass_name = "Godmother"
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
+	
