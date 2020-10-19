@@ -169,4 +169,5 @@
 
 /obj/shuttle_projector/Destroy(force)
 	shuttle_port = null
+	vis_contents.Cut()
 	return ..()
