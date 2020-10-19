@@ -414,7 +414,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "fruity and nutty sweetness"
 	glass_icon_state = "amarettoglass"
 	glass_name = "glass of amaretto"
-	glass_desc = "A sweet and syrupy looking drink"
+	glass_desc = "A sweet and syrupy looking drink."
 	shot_glass_icon_state = "shotglassgold"
 
 /datum/reagent/consumable/ethanol/cognac
@@ -1751,14 +1751,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/amarettoalexander
 	name = "Amaretto Alexander"
-	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor"
+	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor."
 	color = "#DBD5AE"
 	boozepwr = 35
 	quality = DRINK_FANTASTIC
 	taste_description = "sweet, creamy cacao"
 	glass_icon_state = "alexanderam"
 	glass_name = "Amaretto Alexander"
-	glass_desc = "A creamy, indulgent delight that is in fact as gentle as it seems"
+	glass_desc = "A creamy, indulgent delight that is in fact as gentle as it seems."
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
@@ -2294,18 +2294,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/ginger_amaretto
 	name = "Ginger Amaretto"
-	description = "A delightfully simple cocktail that pleases the senses"
+	description = "A delightfully simple cocktail that pleases the senses."
 	boozepwr = 30
 	color = "#EFB42A"
 	quality = DRINK_FANTASTIC
 	taste_description = "sweetness followed by a soft sourness and warmth"
 	glass_icon_state = "gingeramaretto"
 	glass_name = "Ginger Amaretto"
-	glass_desc = "The sprig of rosemary adds a nice aroma to drink, and isn't just to be pretentious afterall!"
+	glass_desc = "The sprig of rosemary adds a nice aroma to the drink, and isn't just to be pretentious afterall!"
 
 /datum/reagent/consumable/ethanol/godfather
 	name = "Godfather"
-	description = "A rough cocktail with illegal connections"
+	description = "A rough cocktail with illegal connections."
 	boozepwr = 50
 	color = "#E68F00"
 	quality = DRINK_FANTASTIC
@@ -2316,7 +2316,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			
 /datum/reagent/consumable/ethanol/godmother
 	name = "Godmother"
-	description = "A twist on a classic, liked more by mature women "
+	description = "A twist on a classic, liked more by mature women."
 	boozepwr = 50
 	color = "#E68F00"
 	quality = DRINK_FANTASTIC
