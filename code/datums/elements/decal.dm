@@ -23,12 +23,13 @@
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
 		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
+		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer_rotateable,TRUE)
+	else
+		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
-
-	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
@@ -67,10 +68,10 @@
 		return
 
 	var/rotation = 0
-	if(pic.dir != old_dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+	if(pic.dir != old_dir)
 		rotation = dir2angle(new_dir)-dir2angle(old_dir)
-		if ((rotation % 90) != 0)
-			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		if ((rotation % 45) != 0)
+			rotation += (rotation % 45)
 		rotation = SIMPLIFY_DEGREES(rotation)
 		new_dir = angle2dir(rotation+dir2angle(pic.dir))
 
@@ -90,10 +91,20 @@
 
 	examine_list += description
 
-/datum/element/decal/proc/shuttle_move_react(datum/source, turf/newT)
+///Transfer rotateable decal to new place
+/datum/element/decal/proc/decal_transfer_rotateable(datum/source, datum/target)
 	SIGNAL_HANDLER
 
-	if(newT == source)
+	if(target == source)
 		return
 	Detach(source)
-	newT.AddElement(/datum/element/decal, _dir = pic.dir, _cleanable = cleanable, _description = description, _pic = pic)
+	target.AddElement(/datum/element/decal, _dir = pic.dir, _cleanable = cleanable, _description = description, _pic = pic)
+
+///Transfer fixed decal to new place
+/datum/element/decal/proc/decal_transfer(datum/source, datum/target)
+	SIGNAL_HANDLER
+
+	if(target == source)
+		return
+	Detach(source)
+	target.AddElement(/datum/element/decal, _cleanable = cleanable, _description = description, _pic = pic)
