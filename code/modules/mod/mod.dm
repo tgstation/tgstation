@@ -384,7 +384,6 @@
 			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
-	overslot = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -404,4 +403,3 @@
 			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.boots = null
 		QDEL_NULL(mod)
-	overslot = null
