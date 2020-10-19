@@ -142,14 +142,14 @@
 /area/science/robotics/lab)
 "aas" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "aat" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -26385,7 +26385,7 @@
 "bbz" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -62403,9 +62403,6 @@
 /area/security/range)
 "coP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/magnetic_controller{
-	autolink = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -71632,11 +71629,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHa" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/training_toolbox,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHb" = (
@@ -88756,7 +88754,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dpX" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
@@ -111758,6 +111756,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oUc" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/target,
+/obj/structure/training_machine,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "oUW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -169703,7 +169710,7 @@ cAC
 cCn
 cDL
 cxy
-cHa
+oUc
 cIm
 cCn
 cCn

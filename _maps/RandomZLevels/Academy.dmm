@@ -467,14 +467,14 @@
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "bY" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "bZ" = (
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "ca" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/alien,
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
@@ -1546,7 +1546,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fW" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fX" = (

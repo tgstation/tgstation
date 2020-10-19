@@ -96,9 +96,9 @@
 
 ///Attempts to unlock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/unlock_vault()
-	if(door1 && door1.density)
+	if(door1?.density)
 		cycle_open(door1)
-	if(door2 && door2.density)
+	if(door2?.density)
 		cycle_open(door2)
 	if(!door1.density && door1.locked && !door2.density && door2.locked)
 		locked = FALSE
