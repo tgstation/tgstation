@@ -132,8 +132,8 @@
 			say("Safeties restored. Restarting...")
 
 /*
-	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the basetuf list)
-	and passes spawned_atoms from p to the holodeck template datum
+	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the baseturf list)
+	and passes spawned_atoms from parsed to the holodeck template datum
 */
 /datum/map_template/holodeck/load(turf/T, centered = FALSE, )
 	if(centered)
