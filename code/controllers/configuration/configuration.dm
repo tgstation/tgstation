@@ -285,6 +285,9 @@ Example config:
 		else
 			policy = parsed
 
+/**
+  * Loads the configured interview welcome message and questions from interview_questions.json
+  */
 /datum/controller/configuration/proc/LoadInterviewQuestions()
 	interview_questions = list()
 	var/raw_questions = file2text("[directory]/interview_questions.json")
