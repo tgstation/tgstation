@@ -170,6 +170,10 @@
 	if(!receiving)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
+
+	if(istype(receiving, /obj/item/slapper))
+		visible_message("<span class='notice'>[src] holds up [p_their()] hand, looking for a high-five!</span>", \
+							"<span class='notice'>You offer up a high-five.</span>")
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
 	for(var/mob/living/carbon/C in orange(1, src))

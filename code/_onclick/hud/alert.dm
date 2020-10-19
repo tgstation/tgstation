@@ -315,6 +315,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
 
+/obj/screen/alert/highfive
+	icon_state = "default"
+	var/mob/living/carbon/giver
+	var/obj/item/receiving
+
+/obj/screen/alert/highfive/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+	name = "[giver] is offering a high-five"
+	desc = "[giver] wants a high-five! Click this alert to take it."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.giver = giver
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
+
+/obj/screen/alert/highfive/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+
+	if (!giver.CanReach(taker))
+		to_chat(owner, "<span class='warning'>You left [giver] hanging!</span>")
+		owner.clear_alert("[giver]")
+
+/obj/screen/alert/highfive/Click(location, control, params)
+	. = ..()
+	var/mob/living/carbon/C = owner
+	C.take(giver, receiving)
+
 /// Gives the player the option to succumb while in critical condition
 /obj/screen/alert/succumb
 	name = "Succumb"
