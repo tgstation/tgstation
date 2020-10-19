@@ -380,8 +380,6 @@
 /obj/item/clothing/gloves/mod/Destroy()
 	..()
 	if(mod)
-		if(mod.wearer)
-			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
@@ -399,7 +397,5 @@
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
 	if(mod)
-		if(mod.wearer)
-			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.boots = null
 		QDEL_NULL(mod)
