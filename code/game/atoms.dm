@@ -1603,6 +1603,6 @@
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
 
-//Sends a signal to the atom to start its rot, assuming it has the component
+/// Starts decomposing the atom, generating miasma if a rotting component is present.
 /atom/proc/trigger_rot()
 	SEND_SIGNAL(src, COMSIG_START_MIASMA_GENERATION)
