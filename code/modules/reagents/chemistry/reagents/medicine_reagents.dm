@@ -65,11 +65,11 @@
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetKnockdown(0, FALSE)
-	M.SetStun(0, FALSE)
-	M.SetUnconscious(0, FALSE)
-	M.SetParalyzed(0, FALSE)
-	M.SetImmobilized(0, FALSE)
+	M.SetKnockdown(0)
+	M.SetStun(0)
+	M.SetUnconscious(0)
+	M.SetParalyzed(0)
+	M.SetImmobilized(0)
 	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
@@ -77,7 +77,7 @@
 	M.stuttering = 0
 	M.slurring = 0
 	M.set_confusion(0)
-	M.SetSleeping(0, 0)
+	M.SetSleeping(0)
 	M.jitteriness = 0
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = BLOOD_VOLUME_NORMAL
@@ -106,11 +106,11 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustStun(-20, FALSE)
-	M.AdjustKnockdown(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.AdjustImmobilized(-20, FALSE)
-	M.AdjustParalyzed(-20, FALSE)
+	M.AdjustStun(-20)
+	M.AdjustKnockdown(-20)
+	M.AdjustUnconscious(-20)
+	M.AdjustImmobilized(-20)
+	M.AdjustParalyzed(-20)
 	if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
 		M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -302,7 +302,7 @@
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
 	if(prob(3))
 		to_chat(M, "<span class='warning'>You feel salty.</span>")
-		holder.add_reagent(/datum/reagent/consumable/sodiumchloride, 1)
+		holder.add_reagent(/datum/reagent/consumable/salt, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	else if(prob(3))
 		to_chat(M, "<span class='warning'>You feel sweet.</span>")
@@ -490,7 +490,7 @@
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
 
-	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustAllImmobility(-20)
 	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
 	return TRUE
@@ -599,7 +599,7 @@
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(40, 0)
+			M.Sleeping(40)
 			. = 1
 	..()
 
@@ -744,7 +744,7 @@
 		M.losebreath = 0
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	if(prob(20))
-		M.AdjustAllImmobility(-20, FALSE)
+		M.AdjustAllImmobility(-20)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -885,7 +885,7 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustAllImmobility(-60, FALSE)
+	M.AdjustAllImmobility(-60)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -906,7 +906,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
-	if(M.AdjustSleeping(-20, FALSE))
+	if(M.AdjustSleeping(-20))
 		. = 1
 	M.remove_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
@@ -1054,7 +1054,7 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	..()
-	M.AdjustAllImmobility(-20, FALSE)
+	M.AdjustAllImmobility(-20)
 	M.adjustStaminaLoss(-10, 0)
 	M.Jitter(10)
 	M.Dizzy(10)
@@ -1161,7 +1161,7 @@
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustAllImmobility(-5, FALSE)
+		M.AdjustAllImmobility(-5)
 		M.adjustStaminaLoss(-0.5*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
@@ -1192,13 +1192,13 @@
 			if(prob(20))
 				to_chat(M, "<span class='userdanger'>You have a sudden fit!</span>")
 				M.emote("moan")
-				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+				M.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "<span class='userdanger'>You feel too exhausted to continue!</span>") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)
-			M.Sleeping(100, FALSE)
+			M.Sleeping(100)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()

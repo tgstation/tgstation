@@ -134,10 +134,12 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define SCAR_SAVE_SEVERITY			5
 /// Whether this is a BIO_JUST_BONE scar, a BIO_JUST_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)
 #define SCAR_SAVE_BIOLOGY			6
+/// Which character slot this was saved to
+#define SCAR_SAVE_CHAR_SLOT			7
 ///how many fields we save for each scar (so the number of above fields)
-#define SCAR_SAVE_LENGTH			6
+#define SCAR_SAVE_LENGTH			7
 
 /// saved scars with a version lower than this will be discarded, increment when you update the persistent scarring format in a way that invalidates previous saved scars (new fields, reordering, etc)
-#define SCAR_CURRENT_VERSION		2
-/// how many scar slots we have to cycle through for persistent scarring, if enabled in character prefs
+#define SCAR_CURRENT_VERSION		3
+/// how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs
 #define PERSISTENT_SCAR_SLOTS		3

@@ -65,6 +65,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
+	custom_materials = list(/datum/material/alloy/alien=MINERAL_MATERIAL_AMOUNT*0.25)
 	turf_type = /turf/open/floor/mineral/abductor
 	mineralType = "abductor"
 
@@ -86,7 +87,7 @@
 	inhand_icon_state = "tile-darkshuttle"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
-	custom_materials = list(/datum/material/titanium=250, /datum/material/plasma=250)
+	custom_materials = list(/datum/material/alloy/plastitanium=MINERAL_MATERIAL_AMOUNT*0.25)
 	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/stack/tile/mineral/snow

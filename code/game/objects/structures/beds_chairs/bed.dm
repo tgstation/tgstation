@@ -97,11 +97,13 @@
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
+
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
-	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
+	M.pixel_x = M.get_standard_pixel_x_offset(M.body_position == LYING_DOWN)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.body_position == LYING_DOWN)
+
 
 /obj/item/roller
 	name = "roller bed"

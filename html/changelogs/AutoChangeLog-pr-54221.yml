@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - tweak: "Admins and byond users can now set their OOC (and ASAY) color to light values and it will save in the preferences."

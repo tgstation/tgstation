@@ -6,7 +6,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
-	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 0.5
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -92,41 +92,45 @@
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
-	var/choose_list = list("assasinate","hjiack","protect","glory")
-	for(var/i in 1 to 2)
-		var/pck = pick(choose_list)
-		switch(pck)
-			if("assasinate")
-				var/datum/objective/assassinate/A = new
-				A.owner = owner
-				var/list/owners = A.get_owners()
-				A.find_target(owners,protection)
-				assasination += A.target
-				objectives += A
-			if("hjiack")
-				var/datum/objective/hijack/hijack = new
-				hijack.owner = owner
-				objectives += hijack
-				choose_list -= "hijack"
-				choose_list -=  "glory"
-			if("glory")
-				var/datum/objective/martyr/martyrdom = new
-				martyrdom.owner = owner
-				objectives += martyrdom
-				choose_list -= "hijack"
-				choose_list -=  "glory"
-			if("protect")
-				var/datum/objective/protect/P = new
-				P.owner = owner
-				var/list/owners = P.get_owners()
-				P.find_target(owners,assasination)
-				protection += P.target
-				objectives += P
+
+	var/choose_list_begin = list("assassinate","protect")
+	var/choose_list_end = list("assassinate","hijack","protect","glory")
+
+	var/pck1 = pick(choose_list_begin)
+	var/pck2 = pick(choose_list_end)
+
+	forge_objective(pck1,assasination,protection)
+	forge_objective(pck2,assasination,protection)
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
+
+/datum/antagonist/heretic/proc/forge_objective(string,assasination,protection)
+	switch(string)
+		if("assassinate")
+			var/datum/objective/assassinate/A = new
+			A.owner = owner
+			var/list/owners = A.get_owners()
+			A.find_target(owners,protection)
+			assasination += A.target
+			objectives += A
+		if("hijack")
+			var/datum/objective/hijack/hijack = new
+			hijack.owner = owner
+			objectives += hijack
+		if("glory")
+			var/datum/objective/martyr/martyrdom = new
+			martyrdom.owner = owner
+			objectives += martyrdom
+		if("protect")
+			var/datum/objective/protect/P = new
+			P.owner = owner
+			var/list/owners = P.get_owners()
+			P.find_target(owners,assasination)
+			protection += P.target
+			objectives += P
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()

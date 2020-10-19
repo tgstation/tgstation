@@ -218,7 +218,7 @@
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 
-	if(pulledby && pulledby.grab_state)
+	if(pulledby?.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
 
 	if(nutrition < NUTRITION_LEVEL_STARVING - 50)

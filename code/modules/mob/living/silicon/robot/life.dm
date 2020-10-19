@@ -9,13 +9,13 @@
 /mob/living/silicon/robot/proc/handle_robot_cell()
 	if(stat != DEAD)
 		if(low_power_mode)
-			if(cell && cell.charge)
+			if(cell?.charge)
 				low_power_mode = FALSE
 		else if(stat == CONSCIOUS)
 			use_power()
 
 /mob/living/silicon/robot/proc/use_power()
-	if(cell && cell.charge)
+	if(cell?.charge)
 		if(cell.charge <= 100)
 			uneq_all()
 		var/amt = clamp((lamp_enabled * lamp_intensity),1,cell.charge) //Lamp will use a max of 5 charge, depending on brightness of lamp. If lamp is off, borg systems consume 1 point of charge, or the rest of the cell if it's lower than that.
@@ -88,11 +88,3 @@
 		add_overlay(fire_overlay)
 	else
 		cut_overlay(fire_overlay)
-
-/mob/living/silicon/robot/update_mobility()
-	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
-		mobility_flags &= ~MOBILITY_MOVE
-	else
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-	update_transform()
-	update_action_buttons_icon()
