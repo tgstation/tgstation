@@ -258,7 +258,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
+	if((HAS_TRAIT(src, TRAIT_TENSED_ARMS) || HAS_TRAIT(I, TRAIT_NODROP)) && !force)
 		return FALSE
 	return TRUE
 
@@ -306,7 +306,7 @@
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
-	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
+	if((HAS_TRAIT(I, TRAIT_NODROP) || HAS_TRAIT(src,TRAIT_TENSED_ARMS)) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)

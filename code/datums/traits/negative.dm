@@ -489,69 +489,10 @@
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
-	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
-	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+	quirk_holder.mind.add_disorder(/datum/disorder/anxiety,TRUE)
 
 /datum/quirk/social_anxiety/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
-
-/datum/quirk/social_anxiety/on_process(delta_time)
-	var/nearby_people = 0
-	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
-		if(H.client)
-			nearby_people++
-	var/mob/living/carbon/human/H = quirk_holder
-	if(DT_PROB(2 + nearby_people, delta_time))
-		H.stuttering = max(3, H.stuttering)
-	else if(DT_PROB(min(3, nearby_people), delta_time) && !H.silent)
-		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-		H.silent = max(10, H.silent)
-	else if(DT_PROB(0.5, delta_time) && dumb_thing)
-		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
-		dumb_thing = FALSE //only once per life
-		if(prob(1))
-			new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
-
-// small chance to make eye contact with inanimate objects/mindless mobs because of nerves
-/datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
-	SIGNAL_HANDLER
-
-	var/mob/living/mind_check = A
-	if(prob(85) || (istype(mind_check) && mind_check.mind))
-		return
-
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
-
-/datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
-	SIGNAL_HANDLER
-
-	if(prob(75))
-		return
-	var/msg
-	if(triggering_examiner)
-		msg = "You make eye contact with [other_mob], "
-	else
-		msg = "[other_mob] makes eye contact with you, "
-
-	switch(rand(1,3))
-		if(1)
-			quirk_holder.Jitter(10)
-			msg += "causing you to start fidgeting!"
-		if(2)
-			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
-			msg += "causing you to start stuttering!"
-		if(3)
-			quirk_holder.Stun(2 SECONDS)
-			msg += "causing you to freeze up!"
-
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='userdanger'>[msg]</span>"), 3) // so the examine signal has time to fire and this will print after
-	return COMSIG_BLOCK_EYECONTACT
-
-/datum/mood_event/anxiety_eyecontact
-	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
-	mood_change = -5
-	timeout = 3 MINUTES
+	quirk_holder.mind.remove_disorder(/datum/disorder/anxiety,TRUE)
 
 /datum/quirk/junkie
 	name = "Junkie"

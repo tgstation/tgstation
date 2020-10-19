@@ -123,8 +123,8 @@
 	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/sodium = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
 
-/datum/chemical_reaction/haloperidol
-	results = list(/datum/reagent/medicine/haloperidol = 5)
+/datum/chemical_reaction/psyloperidol
+	results = list(/datum/reagent/medicine/psyloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
 
 /datum/chemical_reaction/regen_jelly
@@ -154,6 +154,14 @@
 	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
 
+/datum/chemical_reaction/psylprazolam
+	results = list(/datum/reagent/medicine/psylprazolam = 4)
+	required_reagents = list(/datum/reagent/medicine/mannitol = 1, /datum/reagent/carbon = 1 ,  /datum/reagent/hydrogen = 1 , /datum/reagent/phenol = 1)
+
+/datum/chemical_reaction/psylith_carbonate
+	results = list(/datum/reagent/medicine/psylith_carbonate = 3)
+	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/carbon = 1)
+
 ///medical stacks
 
 /datum/chemical_reaction/medsuture
@@ -179,3 +187,5 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/poultice(location)
+
+

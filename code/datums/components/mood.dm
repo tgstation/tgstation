@@ -1,5 +1,6 @@
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
+#define PSYCHOLOGICAL_CHANCE_MULTIPLIER 0.1
 
 /datum/component/mood
 	var/mood //Real happiness
@@ -11,6 +12,8 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
+	///Trauma level, this thing signifies how fucked up your character is mentally, getting shocked has a chance to make some of it disappear, but it will generally only go up. Being revived, getting heavily shocked and recieving critical wounds increase it.
+	var/trauma = 0
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -25,6 +28,9 @@
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
+
+	RegisterSignal(parent,COMSIG_LIVING_ELECTROCUTE_ACT, .proc/electrocute)
+	RegisterSignal(parent,COMSIG_CARBON_GAIN_WOUND,.proc/on_wound)
 
 	var/mob/living/owner = parent
 	if(owner.hud_used)
@@ -173,23 +179,23 @@
 /datum/component/mood/process(delta_time)
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.3*delta_time, SANITY_INSANE)
-		if(2)
 			setSanity(sanity-0.15*delta_time, SANITY_INSANE)
+		if(2)
+			setSanity(sanity-0.1*delta_time, SANITY_INSANE)
 		if(3)
-			setSanity(sanity-0.1*delta_time, SANITY_CRAZY)
+			setSanity(sanity-0.05*delta_time, SANITY_CRAZY)
 		if(4)
-			setSanity(sanity-0.05*delta_time, SANITY_UNSTABLE)
+			setSanity(sanity-0.025*delta_time, SANITY_UNSTABLE)
 		if(5)
 			setSanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSanity(sanity+0.2*delta_time, SANITY_UNSTABLE)
+			setSanity(sanity+0.1*delta_time, SANITY_UNSTABLE)
 		if(7)
-			setSanity(sanity+0.3*delta_time, SANITY_UNSTABLE)
+			setSanity(sanity+0.2*delta_time, SANITY_UNSTABLE)
 		if(8)
-			setSanity(sanity+0.4*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.3*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
-			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.5*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
 
 ///Sets sanity to the specified amount and applies effects.
@@ -204,17 +210,22 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 6
+			if(prob(max(trauma,5)*PSYCHOLOGICAL_CHANCE_MULTIPLIER))
+				roll_add_disorder()
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 5
+			if(prob(max(trauma/5,1)*PSYCHOLOGICAL_CHANCE_MULTIPLIER))
+				roll_add_disorder()
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
@@ -235,6 +246,10 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 1
+			//negative trauma makes it easier to cure by chance.
+			if(prob(max(-trauma,1)*PSYCHOLOGICAL_CHANCE_MULTIPLIER))
+				roll_cure_disorder()
+
 	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)
@@ -398,7 +413,60 @@
 	if(!full_heal)
 		return
 	remove_temp_moods()
+	trauma++
 	setSanity(initial(sanity), override = TRUE)
+	if(trauma > 5)
+		roll_add_disorder()
+
+/datum/component/mood/proc/roll_add_disorder()
+	var/mob/living/owner = parent
+	owner.mind.add_disorder(pick(subtypesof(/datum/disorder)))
+	setSanity(SANITY_NEUTRAL)
+
+/datum/component/mood/proc/roll_cure_disorder()
+	var/mob/living/owner = parent
+	if(!owner.mind || !owner.mind.disorder_list.len)
+		return
+
+	var/list/lst = list()
+	for(var/D in owner.mind.disorder_list)
+		var/datum/disorder/disorder_check = D
+		if(!disorder_check.permanent)
+			lst += disorder_check
+
+	var/datum/disorder/disorder = pick(lst)
+	if(!disorder)
+		return
+
+	setSanity(SANITY_NEUTRAL)
+	owner.mind.remove_disorder(disorder.type)
+
+/datum/component/mood/proc/electrocute(datum/source , shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION)
+		return
+	if(shock_damage * siemens_coeff < 1)
+		return
+
+	//low damage - good for you most of the time, high damage - bad for you
+	switch(shock_damage * siemens_coeff)
+		if(1 to 25)
+			trauma += rand(-2,1)
+			setSanity(sanity + rand(-10,20))
+		if(26 to 50)
+			trauma += rand(-1,5)
+			setSanity(sanity + rand(-20,10))
+		if(51 to INFINITY)
+			trauma += rand(0,10)
+			setSanity(sanity + rand(-40,0))
+			if(prob(shock_damage/5))
+				roll_add_disorder()
+
+/datum/component/mood/proc/on_wound(datum/source,obj/item/bodypart/limb)
+	var/datum/wound/wound = source
+	if(wound.severity != WOUND_SEVERITY_CRITICAL)
+		return
+	trauma++
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+
