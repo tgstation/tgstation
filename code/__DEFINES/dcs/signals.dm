@@ -229,8 +229,6 @@
 ///from base of area/Exited(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited"
 
-#define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
-
 // /turf signals
 
 ///from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
@@ -239,6 +237,8 @@
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
 ///from base of turf/New(): (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
+///from base of turf/proc/onShuttleMove(): (turf/newT)
+#define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 
 // /atom/movable signals
 
