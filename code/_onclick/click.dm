@@ -446,7 +446,7 @@
 
 /// MouseWheelOn
 /mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
-	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL, A, delta_x, delta_y, params)
+	SEND_SIGNAL(src, COMSIG_MOUSE_SCROLL_ON, A, delta_x, delta_y, params)
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifier = params2list(params)
