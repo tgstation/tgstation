@@ -30,8 +30,10 @@
 #define TOROID_VOLUME_BREAKEVEN			1000
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
-///Conduction of heat
-#define METALLIC_VOID_CONDUCTIVITY	0.05
+///Conduction of heat inside the fusion reactor
+#define METALLIC_VOID_CONDUCTIVITY	0.005
+///Conduction of heat near the external cooling loop
+#define HIGH_EFFICIENCY_CONDUCTIVITY 0.85
 ///Sets the range of the hallucinations
 #define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -237,6 +239,8 @@
 	var/fuel_injection_rate = 25
 	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
 	var/moderator_injection_rate = 25
+	///Used for debug, maybe will be ported into the final phase
+	COOLDOWN_DECLARE(hypertorus_reactor)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
 	. = ..()
@@ -414,9 +418,9 @@
 	return FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
-	if(next_slowprocess < world.time)
+	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
 		slowprocess()
-		next_slowprocess = world.time + 1 SECONDS //Set to wait for another second before processing again, we don't need to process more than once a second
+		COOLDOWN_START(src, hypertorus_reactor, 1 SECONDS) //Set to wait for another second before processing again, we don't need to process more than once a second
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/slowprocess()
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
@@ -446,6 +450,9 @@
 	internal_fusion.merge(buffer)
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
 	moderator_internal.merge(buffer)
+
+	if(!check_fuel())
+		return
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -555,9 +562,8 @@
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
 
-	//Modifies the moderator_internal temperature based on energy conduction (could be made better)
-	var/internal_heat_capacity = internal_fusion.heat_capacity() ? internal_fusion.heat_capacity() : 1
-	moderator_internal.temperature += METALLIC_VOID_CONDUCTIVITY * ((internal_fusion.temperature / internal_heat_capacity) * moderator_internal.heat_capacity())
+	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+	moderator_internal.temperature_share(internal_fusion, METALLIC_VOID_CONDUCTIVITY)
 
 	//Set the power level of the fusion process
 	var/fusion_temperature = internal_fusion.temperature
@@ -700,23 +706,13 @@
 		internal_fusion.garbage_collect()
 		linked_output.airs[1].merge(internal_remove)
 
-	//Cooling of the moderator gases with the cooling loop in and out the core (should make it cool the internal fusion mix too)
+	//Cooling of the moderator gases with the cooling loop in and out the core
 	if(airs[1].total_moles() > 0)
 		var/datum/gas_mixture/cooling_in = airs[1]
 		var/datum/gas_mixture/cooling_out = airs[2]
-		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.5 * cooling_in.total_moles())
-		var/cooling_heat_capacity = cooling_remove.heat_capacity()
-		var/moderator_heat_capacity = moderator_internal.heat_capacity()
-		var/combined_heat_capacity = cooling_heat_capacity + moderator_heat_capacity
-		var/old_cooling_temperature = cooling_remove.temperature
-		var/old_moderator_temperature = moderator_internal.temperature
-		if(combined_heat_capacity > 0)
-			var/combined_energy = old_cooling_temperature * cooling_heat_capacity + moderator_heat_capacity * old_moderator_temperature
-			var/new_temperature = combined_energy/combined_heat_capacity
-			cooling_remove.temperature = new_temperature
-			moderator_internal.temperature = new_temperature
-
-		cooling_out.merge(cooling_remove) //AHHHH WHY YOU DON'T WORK
+		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
+		moderator_internal.temperature_share(cooling_remove, HIGH_EFFICIENCY_CONDUCTIVITY)
+		cooling_out.merge(cooling_remove)
 
 	//Update pipenets
 	update_parents()
@@ -770,10 +766,11 @@
 	message_admins("heat_output [connected_core.heat_output]")
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Hypertorus", name)
-		ui.open()
+	if(active)
+		ui = SStgui.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Hypertorus", name)
+			ui.open()
 
 /obj/machinery/hypertorus/interface/ui_data()
 	var/data = list()

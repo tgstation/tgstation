@@ -207,15 +207,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 
-/datum/gas/hexane
-	id = "hexane"
-	specific_heat = 5
-	name = "Hexane"
-	dangerous = TRUE
-	gas_overlay = "hexane"
-	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 500
-
 /datum/gas/helium
 	id = "helium"
 	specific_heat = 15
