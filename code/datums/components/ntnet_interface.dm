@@ -108,8 +108,9 @@
 	if(id_tag)
 		// if we have an id_tag only put it in root_devices.
 		if(network.root_devices[id_tag])
-			stack_trace("Device tried to join the network with an existing tag '[id_tag]' [parent]")
-			id_tag = null // tag is hard cleared so we can continue
+			var/datum/component/ntnet_interface/prev = network.root_devices[id_tag]
+			log_mapping("Device tried to join the network with an existing tag '[id_tag]' with [parent] while '[prev.id_tag]' with [prev.parent] all ready exists")
+			id_tag = null // tag is hard cleared on both this
 		else
 			network.root_devices[id_tag] = src
 
