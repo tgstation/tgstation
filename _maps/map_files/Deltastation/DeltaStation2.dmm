@@ -68838,7 +68838,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cCb" = (
-/obj/structure/closet/wardrobe/green,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -68847,6 +68846,13 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 29
+	},
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -69712,7 +69718,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cDB" = (
-/obj/structure/closet/wardrobe/white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69721,6 +69726,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -70775,7 +70783,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cFv" = (
-/obj/structure/closet/wardrobe/grey,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -70783,7 +70790,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -71530,15 +71537,11 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGS" = (
-/obj/structure/closet/wardrobe/black,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,

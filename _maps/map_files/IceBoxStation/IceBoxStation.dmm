@@ -11819,6 +11819,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
+/obj/machinery/cryopod{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "aAp" = (
@@ -37007,8 +37010,8 @@
 /area/icemoon/surface/outdoors)
 "bLq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "bLr" = (
@@ -50050,6 +50053,13 @@
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
+	},
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	dir = 1;
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)

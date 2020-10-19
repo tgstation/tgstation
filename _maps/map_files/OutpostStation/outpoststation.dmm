@@ -14339,6 +14339,13 @@
 /obj/structure/sign/departments/examroom,
 /turf/closed/wall,
 /area/medical/exam_room)
+"mFe" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "mFm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -18855,6 +18862,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"qdO" = (
+/obj/machinery/light,
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	dir = 1;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "qdP" = (
 /obj/machinery/camera/autoname{
 	dir = 8
@@ -23390,6 +23408,12 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"tVC" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "tVN" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -75189,7 +75213,7 @@ eid
 eid
 tvj
 tvj
-tvj
+mFe
 fnK
 lXF
 lXF
@@ -75446,7 +75470,7 @@ eid
 wif
 eid
 eid
-gck
+qdO
 fnK
 lXF
 lXF
@@ -75703,7 +75727,7 @@ eid
 eid
 eid
 eid
-eid
+tVC
 fnK
 lXF
 lXF
@@ -75960,7 +75984,7 @@ eid
 eid
 eid
 eid
-eid
+tVC
 fnK
 lXF
 lXF

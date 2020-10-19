@@ -6337,6 +6337,13 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+"Ze" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/ruin/unpowered/syndicate_lava_base/main)
 "ZN" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -7515,7 +7522,7 @@ ae
 ae
 ae
 oP
-fH
+Ze
 gG
 he
 hz

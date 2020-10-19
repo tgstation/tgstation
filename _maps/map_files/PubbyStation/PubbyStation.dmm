@@ -8398,6 +8398,7 @@
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -11601,6 +11602,13 @@
 /turf/open/floor/plasteel/white/side,
 /area/crew_quarters/dorms)
 "aDk" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	dir = 1;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -40855,8 +40863,8 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cjx" = (
@@ -41807,8 +41815,8 @@
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cnr" = (
