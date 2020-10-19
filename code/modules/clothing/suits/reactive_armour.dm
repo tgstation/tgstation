@@ -10,7 +10,9 @@
 	var/static/list/anomaly_armour_types = list(
 		/obj/effect/anomaly/grav	                = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux 	           		= /obj/item/clothing/suit/armor/reactive/tesla,
-		/obj/effect/anomaly/bluespace 	            = /obj/item/clothing/suit/armor/reactive/teleport
+		/obj/effect/anomaly/bluespace 	            = /obj/item/clothing/suit/armor/reactive/teleport,
+		/obj/effect/anomaly/pyro					= /obj/item/clothing/suit/armor/reactive/fire,
+		/obj/effect/anomaly/bhole					= /obj/item/clothing/suit/armor/reactive/stealth
 		)
 
 	if(istype(I, /obj/item/assembly/signaler/anomaly))
@@ -112,11 +114,16 @@
 			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</span>")
 			return FALSE
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
-		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-		for(var/mob/living/carbon/C in range(6, owner))
-			if(C != owner)
-				C.adjust_fire_stacks(8)
-				C.IgniteMob()
+		playsound(get_turf(src), 'sound/items/welder.ogg', 75, TRUE)
+		var/_range = 1
+		for(var/i = 0, i <= 2,i++)
+			for(var/turf/T in spiral_range_turfs(_range,get_turf(src)))
+				new /obj/effect/hotspot(T)
+				T.hotspot_expose(700,50,1)
+				for(var/mob/living/livies in T.contents - get_turf(src))
+					livies.adjustFireLoss(5)
+			_range++
+			sleep(3)
 		owner.set_fire_stacks(-20)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
