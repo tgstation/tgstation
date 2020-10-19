@@ -440,7 +440,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "arV" = (
 /obj/machinery/camera{
@@ -3131,8 +3131,13 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "cFc" = (
-/turf/open/floor/plating/airless,
-/area/engine/supermatter)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "cFm" = (
 /obj/structure/cable,
 /obj/machinery/light{
@@ -11989,7 +11994,7 @@
 /area/crew_quarters/toilet)
 "kyZ" = (
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "kzZ" = (
 /obj/structure/closet,
@@ -15405,7 +15410,7 @@
 	name = "Starboard Quarter Solar Control"
 	},
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "nuN" = (
 /obj/machinery/holopad,
@@ -15943,16 +15948,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"nNz" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/machinery/door/airlock/engineering/glass/critical{
-	req_access_txt = "11"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "nNK" = (
 /obj/machinery/ore_silo,
 /obj/machinery/light,
@@ -21868,10 +21863,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"sHd" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/maintenance/solars/port/aft)
 "sHk" = (
 /turf/closed/wall,
 /area/vacant_room/office)
@@ -22768,9 +22759,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"twp" = (
-/turf/open/floor/plating/airless,
-/area/maintenance/solars/port/aft)
 "twu" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -24548,7 +24536,7 @@
 /area/storage/tech)
 "vdC" = (
 /obj/machinery/power/smes,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "vdZ" = (
 /turf/closed/wall/r_wall,
@@ -56318,7 +56306,7 @@ rRr
 iIu
 rRr
 rRr
-rRr
+cFc
 qeF
 mkK
 uPN
@@ -72828,7 +72816,7 @@ kET
 aMc
 jxU
 wND
-nNz
+oNR
 rrc
 bpv
 eSC
@@ -73852,7 +73840,7 @@ hEb
 xHQ
 xHQ
 bDt
-cFc
+awO
 tYL
 evj
 bDt
@@ -74109,7 +74097,7 @@ oIV
 xHQ
 lXF
 bDt
-cFc
+awO
 jSC
 jSC
 jSC
@@ -74366,8 +74354,8 @@ oIV
 xHQ
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 jSC
@@ -74384,8 +74372,8 @@ jSC
 jSC
 jSC
 jSC
-twp
-sHd
+vAk
+aCB
 eXh
 fte
 vtn
@@ -74623,8 +74611,8 @@ oIV
 xHQ
 xHQ
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -74641,8 +74629,8 @@ rYG
 tcv
 tcv
 awO
-twp
-sHd
+vAk
+aCB
 eXh
 fte
 geZ
@@ -74880,8 +74868,8 @@ xHQ
 xHQ
 xHQ
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -74898,8 +74886,8 @@ sok
 tya
 tya
 wxr
-twp
-sHd
+vAk
+aCB
 eXh
 guE
 xHQ
@@ -75137,8 +75125,8 @@ xHQ
 xHQ
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -75155,8 +75143,8 @@ awO
 tcv
 tcv
 som
-twp
-sHd
+vAk
+aCB
 eXh
 fte
 geZ
@@ -75394,8 +75382,8 @@ lXF
 lXF
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -75412,7 +75400,7 @@ aHH
 tya
 tya
 wPK
-twp
+vAk
 kyZ
 msk
 fte
@@ -75651,8 +75639,8 @@ lXF
 lXF
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -75669,8 +75657,8 @@ som
 tcv
 tcv
 awO
-twp
-sHd
+vAk
+aCB
 eXh
 fte
 geZ
@@ -75908,8 +75896,8 @@ lXF
 lXF
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 jSC
 awO
@@ -75926,8 +75914,8 @@ sok
 tya
 tya
 rYG
-twp
-sHd
+vAk
+aCB
 eXh
 guE
 xHQ
@@ -76165,8 +76153,8 @@ lXF
 lXF
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 auU
 aBO
@@ -76183,8 +76171,8 @@ awO
 tcv
 tcv
 som
-twp
-sHd
+vAk
+aCB
 eXh
 fte
 geZ
@@ -76422,8 +76410,8 @@ lXF
 lXF
 lXF
 bDt
-cFc
-cFc
+awO
+awO
 jSC
 auU
 aBO
@@ -76440,7 +76428,7 @@ bUA
 tya
 tya
 wPK
-twp
+vAk
 nub
 eXh
 fte
