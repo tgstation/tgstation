@@ -772,7 +772,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
 	to_chat(user, "<span class='info'>PDA message sent to [target_text]: \"[message]\"</span>")
 	if(!silent)
-		playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 	// Reset the photo
 	picture = null
 	last_text = world.time
