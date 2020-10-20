@@ -66,7 +66,7 @@
 	if(specific_type)
 		paralysis_type = specific_type
 	if(!paralysis_type)
-		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
+		paralysis_type = pick("left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
 	var/subject
 	switch(paralysis_type)
 		if("left")
