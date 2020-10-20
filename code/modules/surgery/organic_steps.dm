@@ -159,7 +159,7 @@
 //drive through bone
 /datum/surgery_step/drive
 	name = "drive through bone"
-	implements = list(TOOL_HAMMER = 100, TOOL_DRILL = 35, TOOL_WRENCH = 20)
+	implements = list(TOOL_HAMMER = 100, TOOL_DRILL = 35, TOOL_MINING = 25)
 	time = 3 SECONDS
 
 /datum/surgery_step/drive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
