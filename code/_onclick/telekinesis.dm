@@ -63,7 +63,7 @@
   * * This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.
   * * It is used for manipulating things at range, for example, opening and closing closets..
   * * Defined at the `/atom` level but only used at the `/obj/item` one.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it preforms any action, to further acts on the attack chain.
+  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
   */
 /atom/proc/attack_self_tk(mob/user)
 	return
