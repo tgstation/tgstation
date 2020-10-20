@@ -273,6 +273,13 @@
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
 
+//Science
+
+/obj/item/clothing/head/beret/science
+	name = "science beret"
+	desc = "A science-themed beret for our hardworking scientists."
+	icon_state = "sciberet"
+
 //Curator
 /obj/item/clothing/head/fedora/curator
 	name = "treasure hunter's fedora"

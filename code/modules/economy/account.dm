@@ -13,17 +13,42 @@
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
-	if(add_to_accounts)
-		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
-	account_id = rand(111111,999999)
 	payday_modifier = modifier
+	setup_unique_account_id()
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
-		SSeconomy.bank_accounts -= src
+		SSeconomy.bank_accounts_by_id -= "[account_id]"
 	return ..()
+
+/// Proc guarantees the account_id possesses a unique number. If it doesn't, it tries to find a unique alternative. It then adds it to the `SSeconomy.bank_accounts_by_id` global list.
+/datum/bank_account/proc/setup_unique_account_id()
+	if(account_id && !SSeconomy.bank_accounts_by_id["[account_id]"])
+		SSeconomy.bank_accounts_by_id["[account_id]"] = src
+		return //Already unique
+	for(var/i in 1 to 1000)
+		account_id = rand(111111, 999999)
+		if(!SSeconomy.bank_accounts_by_id["[account_id]"])
+			break
+	if(SSeconomy.bank_accounts_by_id["[account_id]"])
+		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
+	SSeconomy.bank_accounts_by_id["[account_id]"] = src
+
+/datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
+	var/old_id = account_id
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, account_id))
+			if(add_to_accounts)
+				SSeconomy.bank_accounts_by_id -= "[old_id]"
+				setup_unique_account_id()
+		if(NAMEOF(src, add_to_accounts))
+			if(add_to_accounts)
+				setup_unique_account_id()
+			else
+				SSeconomy.bank_accounts_by_id -= "[account_id]"
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE

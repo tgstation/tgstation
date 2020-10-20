@@ -39,6 +39,8 @@
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
+	///Minimum amount of hexane needed to start having effect
+	var/hexane_min = 2
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -120,8 +122,7 @@
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
 						/datum/gas/zauker,
-						/datum/gas/halon,
-						/datum/gas/hexane
+						/datum/gas/halon
 						)
 
 	//Partial pressures in our breath
@@ -375,14 +376,6 @@
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
 
-	// Hexane
-		var/hexane_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/hexane][MOLES])
-		if(hexane_pp > gas_stimulation_min)
-			H.hallucination += 50
-			H.reagents.add_reagent(/datum/reagent/hexane,5)
-			if(prob(33))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
-
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
@@ -531,7 +524,7 @@
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()
-	if (breath && breath.gases[/datum/gas/plasma])
+	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
 		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 

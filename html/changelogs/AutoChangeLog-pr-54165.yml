@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Thick material checks (like syringes and such) are now applied on a bodypart by bodypart basis, rather than just depending on your suit."

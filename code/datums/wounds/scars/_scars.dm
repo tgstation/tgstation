@@ -16,7 +16,7 @@
 	/// A string detailing the specific part of the bodypart the scar is on, for fluff purposes. See [/datum/scar/proc/generate]
 	var/precise_location
 
-	/// In case we ever want to make scars that won't be saved for persistent scarring (formerly used by the now-removed longtimer quirk)
+	/// These scars are assumed to come from changeling disguises, rather than from persistence or wounds. As such, they are deleted by dropping changeling disguises, and are ignored by persistence
 	var/fake=FALSE
 	/// How many tiles away someone can see this scar, goes up with severity. Clothes covering this limb will decrease visibility by 1 each, except for the head/face which is a binary "is mask obscuring face" check
 	var/visibility = 2
@@ -24,6 +24,8 @@
 	var/coverable = TRUE
 	/// Obviously, scars that describe damaged flesh wouldn't apply to a skeleton (in some cases like bone wounds, there can be different descriptions for skeletons and fleshy humanoids)
 	var/biology = BIO_FLESH_BONE
+	/// If we're a persistent scar or may become one, we go in this character slot
+	var/persistent_character_slot = 0
 
 /datum/scar/Destroy(force, ...)
 	if(limb)
@@ -47,6 +49,7 @@
 	severity = W.severity
 	if(limb.owner)
 		victim = limb.owner
+		persistent_character_slot = victim.mind?.original_character_slot_index
 	if(add_to_scars)
 		LAZYADD(limb.scars, src)
 		if(victim)
@@ -79,7 +82,7 @@
 		LAZYADD(victim.all_scars, src)
 
 /// Used to "load" a persistent scar
-/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE)
+/datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE, biology=BIO_FLESH_BONE, char_slot)
 	if(!BP.is_organic_limb())
 		qdel(src)
 		return
@@ -94,6 +97,7 @@
 
 	src.severity = severity
 	src.biology = biology
+	persistent_character_slot = char_slot
 	LAZYADD(limb.scars, src)
 
 	src.description = description
@@ -107,7 +111,7 @@
 			visibility = 5
 		if(WOUND_SEVERITY_LOSS)
 			visibility = 7
-	return TRUE
+	return src
 
 /// What will show up in examine_more() if this scar is visible
 /datum/scar/proc/get_examine_description(mob/viewer)
@@ -148,11 +152,11 @@
 
 	return TRUE
 
-/// Used to format a scar to save in preferences for persistent scars
+/// Used to format a scar to save for either persistent scars, or for changeling disguises
 /datum/scar/proc/format()
-	return fake ? null : "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[biology]"
+	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[biology]|[persistent_character_slot]"
 
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone)
-	description = pick(list("is several skintone shades paler than the rest of the body", "is a gruesome patchwork of artificial flesh", "has a large series of attachment scars at the articulation points"))
-	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_FLESH_BONE]"
+	description = pick_list(FLESH_SCAR_FILE, "dismemberment")
+	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_FLESH_BONE]|[persistent_character_slot]"

@@ -35,11 +35,11 @@
 	data["disk_used"] = hard_drive.used_capacity
 	data["power_usage"] = movable.last_power_usage
 	data["battery_exists"] = battery_module ? 1 : 0
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		data["battery_rating"] = battery_module.battery.maxcharge
 		data["battery_percent"] = round(battery_module.battery.percent())
 
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		data["battery"] = list("max" = battery_module.battery.maxcharge, "charge" = round(battery_module.battery.charge))
 
 	var/list/all_entries[0]
