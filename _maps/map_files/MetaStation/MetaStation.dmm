@@ -2676,7 +2676,7 @@
 /turf/open/floor/plasteel,
 /area/security/range)
 "ago" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plasteel,
 /area/security/range)
@@ -4338,10 +4338,6 @@
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
-	},
-/obj/machinery/magnetic_controller{
-	autolink = 1;
-	pixel_y = 3
 	},
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/sunglasses{
@@ -71595,6 +71591,11 @@
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"nhT" = (
+/obj/item/target,
+/obj/structure/training_machine,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "niJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -72632,6 +72633,11 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"oDq" = (
+/obj/structure/table,
+/obj/item/training_toolbox,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "oEx" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -116975,9 +116981,9 @@ afz
 agz
 dBY
 ahl
-ahl
-ahg
-alk
+oDq
+nhT
+oDq
 alk
 alk
 aoZ
