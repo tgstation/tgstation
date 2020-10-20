@@ -54,6 +54,10 @@
 	. = ..()
 	initialize_directions = dir
 
+/obj/machinery/atmospherics/components/unary/hypertorus/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+
 /obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
@@ -87,24 +91,24 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
-	name = "fuel_input"
-	desc = "fuel_input"
+	name = "HFR fuel input port"
+	desc = "Input port for the Hypertorus Fusion Reactor, designed to take in only Hydrogen and Tritium in gas forms."
 	icon_state = "fuel_input"
 	icon_state_open = "fuel_input"
 	icon_state_off = "fuel_input"
 	circuit = /obj/item/circuitboard/machine/hypertorus/fuel_input
 
 /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
-	name = "waste_output"
-	desc = "waste_output"
+	name = "HFR waste output port"
+	desc = "Waste port for the Hypertorus Fusion Reactor, designed to output the hot waste gases coming from the core of the machine."
 	icon_state = "waste_output"
 	icon_state_open = "waste_output"
 	icon_state_off = "waste_output"
 	circuit = /obj/item/circuitboard/machine/hypertorus/waste_output
 
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
-	name = "moderator_input"
-	desc = "moderator_input"
+	name = "HFR moderator input port"
+	desc = "Moderator port for the Hypertorus Fusion Reactor, designed to move gases inside the machine to cool and control the flow of the reaction."
 	icon_state = "moderator_input"
 	icon_state_open = "moderator_input"
 	icon_state_off = "moderator_input"
@@ -138,14 +142,9 @@
 /obj/machinery/hypertorus/proc/deactivate()
 	return
 
-/obj/machinery/atmospherics/components/binary/hypertorus
-
-/obj/machinery/atmospherics/components/binary/hypertorus/proc/check_part_connectivity()
-	return TRUE
-
 /obj/machinery/atmospherics/components/binary/hypertorus/core
-	name = "hypertorus_core"
-	desc = "hypertorus_core"
+	name = "HFR core"
+	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "core"
 	circuit = /obj/item/circuitboard/machine/hypertorus/core
@@ -257,13 +256,13 @@
 /obj/machinery/atmospherics/components/binary/hypertorus/core/SetInitDirections()
 	switch(dir)
 		if(SOUTH)
-			initialize_directions = WEST|EAST
-		if(NORTH)
 			initialize_directions = EAST|WEST
+		if(NORTH)
+			initialize_directions = WEST|EAST
 		if(EAST)
-			initialize_directions = SOUTH|NORTH
-		if(WEST)
 			initialize_directions = NORTH|SOUTH
+		if(WEST)
+			initialize_directions = SOUTH|NORTH
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 90), turn(dir, 270))
@@ -316,8 +315,8 @@
 	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/check_part_connectivity()
-	. = ..()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_part_connectivity()
+	. = TRUE
 	if(!anchored)
 		return FALSE
 
@@ -549,7 +548,7 @@
 	//Energy from the reaction lost from the molecule colliding between themselves.
 	conduction = - delta_temperature
 	//The remaining wavelength that actually can do damage to mobs.
-	radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
+	radiation = max(- (PLANK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * abs(delta_temperature), 0)
 	//Efficiency of the reaction, it increases with the amount of helium
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
@@ -606,6 +605,8 @@
 					if(m_proto_nitrate)
 						radiation *= 1.55
 						heat_output *= 1.025
+						internal_output.assert_gases(/datum/gas/stimulum)
+						internal_output.gases[/datum/gas/stimulum][MOLES] += clamp(heat_output / 1e7, 0, MAX_MODERATOR_USAGE)
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 5e7, 0, MAX_MODERATOR_USAGE) * 0.45
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], clamp(heat_output / 5e7, 0, MAX_MODERATOR_USAGE) * 0.35)
 				if(3, 4)
@@ -615,6 +616,8 @@
 						moderator_internal.gases[/datum/gas/bz][MOLES] += clamp(heat_output / 2e10, 0, MAX_MODERATOR_USAGE)
 						internal_output.assert_gases(/datum/gas/freon)
 						internal_output.gases[/datum/gas/freon][MOLES] += clamp(heat_output / 5e10, 0, MAX_MODERATOR_USAGE)
+						internal_output.assert_gases(/datum/gas/stimulum)
+						internal_output.gases[/datum/gas/stimulum][MOLES] += clamp(heat_output / 1e10, 0, MAX_MODERATOR_USAGE)
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], clamp(heat_output / 5e10, 0, MAX_MODERATOR_USAGE) * 0.45)
 					if(m_freon > 50)
 						heat_output *= 0.9
@@ -730,8 +733,8 @@
 		radiation_pulse(loc, rad_power)
 
 /obj/machinery/hypertorus/interface
-	name = "hypertorus_interface"
-	desc = "hypertorus_interface"
+	name = "HFR interface"
+	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface"
 	circuit = /obj/item/circuitboard/machine/hypertorus/interface
 	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
@@ -752,18 +755,19 @@
 
 /obj/machinery/hypertorus/interface/attack_hand(mob/living/user)
 	. = ..()
-	message_admins("energy [connected_core.energy]")
-	message_admins("core_temperature [connected_core.core_temperature]")
-	message_admins("internal_power [connected_core.internal_power]")
-	message_admins("power_output [connected_core.power_output]")
-	message_admins("instability [connected_core.instability]")
-	message_admins("rad_power [connected_core.rad_power]")
-	message_admins("delta_temperature [connected_core.delta_temperature]")
-	message_admins("conduction [connected_core.conduction]")
-	message_admins("radiation [connected_core.radiation]")
-	message_admins("efficiency [connected_core.efficiency]")
-	message_admins("heat_limiter_modifier [connected_core.heat_limiter_modifier]")
-	message_admins("heat_output [connected_core.heat_output]")
+	if(connected_core)
+		message_admins("energy [connected_core.energy]")
+		message_admins("core_temperature [connected_core.core_temperature]")
+		message_admins("internal_power [connected_core.internal_power]")
+		message_admins("power_output [connected_core.power_output]")
+		message_admins("instability [connected_core.instability]")
+		message_admins("rad_power [connected_core.rad_power]")
+		message_admins("delta_temperature [connected_core.delta_temperature]")
+		message_admins("conduction [connected_core.conduction]")
+		message_admins("radiation [connected_core.radiation]")
+		message_admins("efficiency [connected_core.efficiency]")
+		message_admins("heat_limiter_modifier [connected_core.heat_limiter_modifier]")
+		message_admins("heat_output [connected_core.heat_output]")
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
 	if(active)
@@ -867,8 +871,8 @@
 				connected_core.current_damper = clamp(0, current_damper, 10)
 
 /obj/machinery/hypertorus/corner
-	name = "hypertorus_corner"
-	desc = "hypertorus_corner"
+	name = "HFR corner"
+	desc = "Structural piece of the machine."
 	icon_state = "corner"
 	circuit = /obj/item/circuitboard/machine/hypertorus/corner
 

@@ -195,7 +195,7 @@ export const Hypertorus = (props, context) => {
                 width="63px"
                 unit="mol/s"
                 minValue={0}
-                maxValue={5}
+                maxValue={10}
                 onDrag={(e, value) => act('current_damper', {
                   current_damper: value,
                 })} />
