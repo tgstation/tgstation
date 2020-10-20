@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You remove [inserted_item] from [src].</span>")
 		inserted_item = null
 		update_icon()
-		user.playsound_local(src, 'sound/machines/pda_button2.ogg', 50, 1)
+		user.playsound_local(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
 		to_chat(user, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
