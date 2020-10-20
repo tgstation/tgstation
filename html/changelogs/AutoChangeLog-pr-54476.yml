@@ -1,0 +1,5 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - rscadd: "Adds support to anonimizing radios"
+  - rscadd: "Chapel confession intercom now anonimizes the speaker."
