@@ -158,24 +158,24 @@ Difficulty: Medium
 		var/turf/T = pick(RANGE_TURFS(1,TT))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		SLEEP_CHECK_DEATH(delay)
+		SLEEP_CHECK_DEATH(delay, src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(amount = 30)
 	if(health < maxHealth * 0.5)
 		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 60)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(0, src)
 	fire_cone()
 	if(health < maxHealth*0.5)
-		SLEEP_CHECK_DEATH(10)
+		SLEEP_CHECK_DEATH(10, src)
 		fire_cone()
-		SLEEP_CHECK_DEATH(10)
+		SLEEP_CHECK_DEATH(10, src)
 		fire_cone()
 	SetRecoveryTime(40)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(spiral_count = 12, range = 15, times = 3)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(0, src)
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
 		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
@@ -183,7 +183,7 @@ Difficulty: Medium
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
 			INVOKE_ASYNC(src, .proc/fire_line, turfs)
-		SLEEP_CHECK_DEATH(25)
+		SLEEP_CHECK_DEATH(25, src)
 	SetRecoveryTime(30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
@@ -204,7 +204,7 @@ Difficulty: Medium
 			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
-	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
+	SLEEP_CHECK_DEATH(10, src) // give them a bit of time to realize what attack is actually happening
 
 	var/list/turfs = RANGE_TURFS(2, center)
 	while(amount > 0)
@@ -228,18 +228,18 @@ Difficulty: Medium
 			else if(!istype(T, /turf/closed/indestructible))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
-		SLEEP_CHECK_DEATH(24)
+		SLEEP_CHECK_DEATH(24, src)
 	return TRUE // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(0, src)
 	SetRecoveryTime(80)
 	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	light_range = 10
-	SLEEP_CHECK_DEATH(10) // run.
+	SLEEP_CHECK_DEATH(10, src) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
@@ -247,7 +247,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(0, src)
 	if(prob(50) && meteors)
 		INVOKE_ASYNC(src, .proc/fire_rain)
 	var/range = 15
@@ -266,7 +266,7 @@ Difficulty: Medium
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(list/turfs)
-	SLEEP_CHECK_DEATH(0)
+	SLEEP_CHECK_DEATH(0, src)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
@@ -331,11 +331,11 @@ Difficulty: Medium
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	SLEEP_CHECK_DEATH(7)
+	SLEEP_CHECK_DEATH(7, src)
 
 	while(target && loc != get_turf(target))
 		forceMove(get_step(src, get_dir(src, target)))
-		SLEEP_CHECK_DEATH(0.5)
+		SLEEP_CHECK_DEATH(0.5, src)
 
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10
@@ -354,7 +354,7 @@ Difficulty: Medium
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, alpha = 255, transform = oldtransform, descentTime)
-	SLEEP_CHECK_DEATH(descentTime)
+	SLEEP_CHECK_DEATH(descentTime, src)
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
@@ -379,7 +379,7 @@ Difficulty: Medium
 		shake_camera(M, 15, 1)
 
 	density = TRUE
-	SLEEP_CHECK_DEATH(1)
+	SLEEP_CHECK_DEATH(1, src)
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
 	if(!lava_success)

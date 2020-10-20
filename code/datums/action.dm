@@ -131,7 +131,7 @@
 			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 		else
 			button.color = rgb(255,255,255,255)
-			return 1
+			return TRUE
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
@@ -607,6 +607,9 @@
 	transparent_when_unavailable = FALSE
 	var/cooldown_time = 0
 	var/next_use_time = 0
+	var/text_cooldown = TRUE
+	var/click_to_activate = FALSE
+	var/shared_cooldown
 
 /datum/action/cooldown/New()
 	..()
@@ -619,23 +622,58 @@
 /datum/action/cooldown/IsAvailable()
 	return next_use_time <= world.time
 
-/datum/action/cooldown/proc/StartCooldown()
-	next_use_time = world.time + cooldown_time
-	button.maptext = "<b>[round(cooldown_time/10, 0.1)]</b>"
+/datum/action/cooldown/proc/StartCooldown(shared_cooldown_time)
+	if(shared_cooldown && !isnum(shared_cooldown_time))
+		for(var/datum/action/cooldown/C in owner.actions - src)
+			if(shared_cooldown == C.shared_cooldown)
+				C.StartCooldown(cooldown_time)
+	if(shared_cooldown_time)
+		next_use_time = world.time + shared_cooldown_time
+	else
+		next_use_time = world.time + cooldown_time
 	UpdateButtonIcon()
 	START_PROCESSING(SSfastprocess, src)
 
+/datum/action/cooldown/Trigger(atom/A)
+	. = ..()
+	if(.)
+		if(!owner)
+			return
+		if(click_to_activate)
+			if(A)
+				InterceptClickOn(owner, null, A)
+				return
+			owner.click_intercept = src
+			to_chat(owner, "<b>You are now prepared to use [src]</b>")
+			return
+		Activate(owner)
+
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+	if(!IsAvailable())
+		return FALSE
+	if(!A)
+		return FALSE
+	Activate(A)
+	caller.click_intercept = null
+	return TRUE
+
+/datum/action/cooldown/proc/Activate(atom/target_atom)
+	return
+
+/datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	. = ..()
+	var/time_left = max(next_use_time - world.time, 0)
+	if(button)
+		if(text_cooldown)
+			button.maptext = "<b>[round(time_left/10, 0.1)]</b>"
+	if(!owner || time_left == 0)
+		button.maptext = ""
+
 /datum/action/cooldown/process()
-	if(!owner)
-		button.maptext = ""
+	var/time_left = max(next_use_time - world.time, 0)
+	if(!owner || time_left == 0)
 		STOP_PROCESSING(SSfastprocess, src)
-	var/timeleft = max(next_use_time - world.time, 0)
-	if(timeleft == 0)
-		button.maptext = ""
-		UpdateButtonIcon()
-		STOP_PROCESSING(SSfastprocess, src)
-	else
-		button.maptext = "<b>[round(timeleft/10, 0.1)]</b>"
+	UpdateButtonIcon()
 
 /datum/action/cooldown/Grant(mob/M)
 	..()

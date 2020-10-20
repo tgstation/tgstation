@@ -184,7 +184,7 @@ Difficulty: Hard
 		L.Dizzy(6)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
 	SetRecoveryTime(30, 0)
-	SLEEP_CHECK_DEATH(12)
+	SLEEP_CHECK_DEATH(12, src)
 	can_move = TRUE
 	teleport()
 

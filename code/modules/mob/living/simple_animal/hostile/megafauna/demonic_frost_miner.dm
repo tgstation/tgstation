@@ -179,7 +179,7 @@ Difficulty: Extremely Hard
 		P.set_homing_target(target)
 		P.fire(rand(0, 360))
 		addtimer(CALLBACK(P, /obj/projectile/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
-		SLEEP_CHECK_DEATH(added_delay)
+		SLEEP_CHECK_DEATH(added_delay, src)
 	SetRecoveryTime(40, 60)
 
 /// Called when the orb is exploding, shoots out projectiles
@@ -213,7 +213,7 @@ Difficulty: Extremely Hard
 		if(target)
 			P.original = target
 		P.fire()
-		SLEEP_CHECK_DEATH(1)
+		SLEEP_CHECK_DEATH(1, src)
 	SetRecoveryTime(15, 15)
 
 /// Shoots out ice blasts in a shotgun like pattern
@@ -232,7 +232,7 @@ Difficulty: Extremely Hard
 			if(target)
 				P.original = target
 			P.fire()
-		SLEEP_CHECK_DEATH(8)
+		SLEEP_CHECK_DEATH(8, src)
 	SetRecoveryTime(15, 20)
 
 /// Checks if the demonic frost miner is ready to be enraged
@@ -247,12 +247,12 @@ Difficulty: Extremely Hard
 	enraging = TRUE
 	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
 	spin(100, 10)
-	SLEEP_CHECK_DEATH(60)
+	SLEEP_CHECK_DEATH(60, src)
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
-	SLEEP_CHECK_DEATH(8)
+	SLEEP_CHECK_DEATH(8, src)
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
