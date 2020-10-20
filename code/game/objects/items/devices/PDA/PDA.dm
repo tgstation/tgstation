@@ -980,14 +980,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		updateSelfDialog()
 		update_icon()
-		playsound(src, 'sound/machines/pda_button1.ogg', 50, 1)
+		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 	else if(istype(C, /obj/item/card/id))
 		var/obj/item/card/id/idcard = C
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			if(!silent)
-				playsound(src, 'sound/machines/terminal_error.ogg', 50, 1)
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, TRUE)
 			return
 		if(!owner)
 			owner = idcard.registered_name
@@ -995,7 +995,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			update_label()
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 			if(!silent)
-				playsound(src, 'sound/machines/terminal_success.ogg', 50, 1)
+				playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
 		else
 			if(!id_check(user, idcard))
 				return
