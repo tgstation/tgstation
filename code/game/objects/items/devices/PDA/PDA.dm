@@ -753,7 +753,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (!signal.data["done"])
 		to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
 		if(!silent)
-			playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
+			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return
 
 	var/target_text = signal.format_target()
