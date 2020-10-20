@@ -62,16 +62,16 @@
 
 
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	dissipate = FALSE
+	move_self = FALSE
+	grav_pull = TRUE
 
 /obj/singularity/academy/admin_investigate_setup()
 	return
 
-/obj/singularity/academy/process()
+/obj/singularity/academy/process(delta_time)
 	eat()
-	if(prob(1))
+	if(DT_PROB(0.5, delta_time))
 		mezzer()
 
 
@@ -79,7 +79,7 @@
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
 	icon_state = "monocle"
-	item_state = "headset"
+	inhand_icon_state = "headset"
 
 
 /obj/structure/academy_wizard_spawner
@@ -221,13 +221,12 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
-			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death
@@ -235,7 +234,7 @@
 			user.death()
 		if(3)
 			//Swarm of creatures
-			T.visible_message("<span class='userdanger'>A swarm of creatures surround [user]!</span>")
+			T.visible_message("<span class='userdanger'>A swarm of creatures surrounds [user]!</span>")
 			for(var/direction in GLOB.alldirs)
 				new /mob/living/simple_animal/hostile/netherworld(get_step(get_turf(user),direction))
 		if(4)
@@ -262,7 +261,7 @@
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
-			//Fueltank Explosion
+			//Fuel tank Explosion
 			T.visible_message("<span class='userdanger'>An explosion bursts into existence around [user]!</span>")
 			explosion(get_turf(user),-1,0,2, flame_range = 2)
 		if(9)
@@ -331,7 +330,7 @@
 		if(17)
 			//Tator Kit
 			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
-			new /obj/item/storage/box/syndicate/bundle_A(drop_location())
+			new /obj/item/storage/box/syndicate/bundle_a(drop_location())
 			do_smoke(0, drop_location())
 		if(18)
 			//Captain ID
@@ -363,7 +362,7 @@
 	charge_max = 100
 	clothes_req = 0
 	invocation = "JE VES"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100

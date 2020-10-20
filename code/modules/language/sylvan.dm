@@ -2,10 +2,6 @@
 /datum/language/sylvan
 	name = "Sylvan"
 	desc = "A complicated, ancient language spoken by sentient plants."
-	speech_verb = "expresses"
-	ask_verb = "inquires"
-	exclaim_verb = "declares"
-	sing_verb = "serenades"
 	key = "h"
 	space_chance = 20
 	syllables = list(

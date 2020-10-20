@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
-			if(!cardinal_cache["[dir]"] || checkT.blocks_air || !CANATMOSPASS(sourceT, checkT))
+			if(!cardinal_cache["[dir]"] || !TURFS_CAN_SHARE(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 		var/area/place = get_area(turfs[i])
 		if(blacklisted_areas[place.type])
 			continue
-		if(!place.requires_power || place.noteleport || place.hidden)
+		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
 			continue // No expanding powerless rooms etc
 		areas[place.name] = place
 	var/area_choice = input(creator, "Choose an area to expand or make a new area.", "Area Expansion") as null|anything in areas

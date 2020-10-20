@@ -71,7 +71,7 @@
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
-	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
 /datum/mutation/human/paranoia/on_life()
 	if(prob(5) && owner.stat == CONSCIOUS)
@@ -93,7 +93,9 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 0.8)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 0.8)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
@@ -101,10 +103,11 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 1.25)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 1.25)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
-
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
@@ -192,6 +195,7 @@
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 2.5
 	var/range = 2.5
+	var/glow_color
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 
@@ -199,6 +203,7 @@
 	. = ..()
 	if(.)
 		return
+	glow_color = glow_color()
 	glowth = new(owner)
 	modify()
 
@@ -206,7 +211,13 @@
 	if(!glowth)
 		return
 	var/power = GET_MUTATION_POWER(src)
-	glowth.set_light(range * power, glow * power, "#[dna.features["mcolor"]]")
+
+	glowth.set_light_range_power_color(range * power, glow, glow_color)
+
+
+/// Returns the color for the glow effect
+/datum/mutation/human/glow/proc/glow_color()
+	return pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
@@ -218,9 +229,12 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
-	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
+	glow = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+
+/datum/mutation/human/glow/anti/glow_color()
+	return COLOR_VERY_LIGHT_GRAY
 
 /datum/mutation/human/strong
 	name = "Strength"
@@ -260,7 +274,7 @@
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
-	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
+	text_lose_indication = "<span class='notice'>You feel a lot cooler.</span>"
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
@@ -285,7 +299,7 @@
 	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
-	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
+	text_lose_indication = "<span class='notice'>The space around you settles back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and abuse
 	instability = 10
 	synchronizer_coeff = 1
@@ -315,7 +329,7 @@
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
-	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
+	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
 
@@ -357,7 +371,7 @@
 	desc = "Subject suffers from muscle spasms."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You flinch.</span>"
-	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
+	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
 	difficulty = 16
 
 /datum/mutation/human/spastic/on_acquiring()
@@ -375,7 +389,7 @@
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
-	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
+	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
 	difficulty = 16
 
 /datum/mutation/human/extrastun/on_acquiring()
@@ -392,9 +406,11 @@
 
 ///Triggers on moved(). Randomly makes the owner trip
 /datum/mutation/human/extrastun/proc/on_move()
+	SIGNAL_HANDLER
+
 	if(prob(99.5)) //The brawl mutation
 		return
-	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
+	if(owner.buckled || owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
 	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
 	owner.Knockdown(30)
@@ -405,7 +421,7 @@
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
 	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
-	text_lose_indication = "<span class'notice'>Your internal organs feel at ease.</span>"
+	text_lose_indication = "<span class='notice'>Your internal organs feel at ease.</span>"
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
@@ -419,13 +435,15 @@
 		return TRUE
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
-/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
-	if(new_stat != UNCONSCIOUS)
+/datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat != HARD_CRIT)
 		return
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(owner, TRUE)
+		qdel(I)
 
 	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in view(2,owner))
@@ -437,7 +455,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.confused += 3
+		H.add_confusion(3)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Paralyze(60)
@@ -445,7 +463,7 @@
 
 /datum/mutation/human/headless
 	name = "H.A.R.S."
-	desc = "A mutation that makes the body reject the head. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate head organs."
+	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>"
@@ -455,9 +473,8 @@
 	if(.)//cant add
 		return TRUE
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	if(brain) //so this doesn't instantly kill you
-		brain.organ_flags &= ~ORGAN_VITAL
-		qdel(brain)
+	if(brain)
+		brain.zone = BODY_ZONE_CHEST
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -467,13 +484,16 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB, .proc/abortattachment)
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
-	UnregisterSignal(owner, COMSIG_LIVING_ATTACH_LIMB)
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
+		brain.zone = BODY_ZONE_HEAD
+	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
@@ -485,5 +505,7 @@
 
 
 /datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+	SIGNAL_HANDLER
+
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH

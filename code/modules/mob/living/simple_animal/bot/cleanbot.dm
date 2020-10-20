@@ -61,7 +61,7 @@
 		weapon_orig_force = weapon.force
 		if(!emagged)
 			weapon.force = weapon.force / 2
-		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
+		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
@@ -160,7 +160,7 @@
 		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
+	if(W.GetID())
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -190,7 +190,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && !(C.mobility_flags & MOBILITY_STAND))
+		if(C.stat != DEAD && C.body_position == LYING_DOWN)
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A
@@ -312,18 +312,14 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(is_cleanable(A))
+	if(ismopable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
 
 		var/turf/T = get_turf(A)
 		if(do_after(src, 1, target = T))
-			SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			T.wash(CLEAN_SCRUB)
 			visible_message("<span class='notice'>[src] cleans \the [T].</span>")
-			for(var/atom/dirtything in T)
-				if(is_cleanable(dirtything))
-					qdel(dirtything)
-
 			target = null
 
 		mode = BOT_IDLE
@@ -397,7 +393,7 @@
 Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
+	if(!locked || issilicon(user)|| isAdminGhostAI(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"

@@ -23,7 +23,8 @@
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
 #define MIDNIGHT_ROLLOVER_CHECK ( GLOB.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : GLOB.midnight_rollovers )
 
-#define SIGN(x) ( (x)!=0 ? (x) / abs(x) : 0 )
+/// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
+#define SIGN(x) ( ((x) > 0) - ((x) < 0) )
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
@@ -82,6 +83,11 @@
 
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
+
+/// Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
+/// delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
+/// See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths
+#define LPFILTER(memory, signal, delta_time, RC) (delta_time / (RC + delta_time)) * signal + (1 - delta_time / (RC + delta_time)) * memory
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
@@ -205,4 +211,13 @@
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
+
+/// Converts a probability/second chance to probability/delta_time chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*DT_PROB_RATE(0.1, 5)))`
+#define DT_PROB_RATE(prob_per_second, delta_time) (1 - (1 - (prob_per_second)) ** (delta_time))
+
+/// Like DT_PROB_RATE but easier to use, simply put `if(DT_PROB(10, 5))`
+#define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE((prob_per_second_percent)/100, (delta_time))))
 // )
+
+#define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))

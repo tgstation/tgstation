@@ -68,8 +68,6 @@
 
 /datum/config_entry/flag/disable_warops
 
-/datum/config_entry/flag/economy	//money money money money money money money money money money money money
-
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
 	integer = FALSE
@@ -85,13 +83,13 @@
 	integer = FALSE
 	min_val = 1
 
-/datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
-	config_entry_value = 8
+/datum/config_entry/number/ecult_scaling_coeff	//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
 	integer = FALSE
 	min_val = 1
 
-/datum/config_entry/number/abductor_scaling_coeff	//how many players per abductor team
-	config_entry_value = 15
+/datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
+	config_entry_value = 8
 	integer = FALSE
 	min_val = 1
 
@@ -195,14 +193,15 @@
 
 /datum/config_entry/flag/revival_pod_plants
 
-/datum/config_entry/flag/revival_cloning
-
 /datum/config_entry/number/revival_brain_life
 	config_entry_value = -1
 	integer = FALSE
 	min_val = -1
 
 /datum/config_entry/flag/ooc_during_round
+
+/datum/config_entry/number/commendations
+	integer = FALSE
 
 /datum/config_entry/flag/emojis
 
@@ -334,6 +333,11 @@
 	integer = FALSE
 	min_val = 0
 
+/datum/config_entry/number/icemoon_budget
+	config_entry_value = 90
+	integer = FALSE
+	min_val = 0
+
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
 	integer = FALSE
@@ -372,8 +376,6 @@
 	min_val = 0
 	max_val = 1
 	integer = FALSE
-
-/datum/config_entry/flag/ic_printing
 
 /datum/config_entry/flag/roundstart_traits
 

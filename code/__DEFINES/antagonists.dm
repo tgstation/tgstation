@@ -48,13 +48,13 @@
 #define DEATHSQUAD "ds"
 #define DEATHSQUAD_LEADER "ds_leader"
 
-//Shuttle hijacking
-/// Does not stop hijacking but itself won't hijack
-#define HIJACK_NEUTRAL 0
-/// Needs to be present for shuttle to be hijacked
-#define HIJACK_HIJACKER 1
-/// Prevents hijacking same way as non-antags
-#define HIJACK_PREVENT 2
+//Shuttle elimination hijacking
+/// Does not stop elimination hijacking but itself won't elimination hijack
+#define ELIMINATION_NEUTRAL 0
+/// Needs to be present for shuttle to be elimination hijacked
+#define ELIMINATION_ENABLED 1
+/// Prevents elimination hijack same way as non-antags
+#define ELIMINATION_PREVENT 2
 
 //Syndicate Contracts
 #define CONTRACT_STATUS_INACTIVE 1
@@ -70,3 +70,13 @@
 
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
+
+///It is faster as a macro than a proc
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+
+#define PATH_SIDE "Side"
+
+#define PATH_ASH "Ash"
+#define PATH_RUST "Rust"
+#define PATH_FLESH "Flesh"

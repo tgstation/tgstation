@@ -10,9 +10,9 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
+	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
+	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
-	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 15
 	var/mopspeed = 15
@@ -26,13 +26,16 @@
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
-		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-		for(var/obj/effect/O in A)
-			if(is_cleanable(O))
-				var/obj/effect/decal/cleanable/C = O
-				cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT,1),0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
-				qdel(O)
-	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
+		// If there's a cleaner with a mind, let's gain some experience!
+		if(cleaner?.mind)
+			var/total_experience_gain = 0
+			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
+				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
+				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
+			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
+		A.wash(CLEAN_SCRUB)
+
+	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
@@ -55,7 +58,9 @@
 
 	if(T)
 		user.visible_message("<span class='notice'>[user] begins to clean \the [T] with [src].</span>", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-		var/clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+		var/clean_speedies = 1
+		if(user.mind)
+			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
 			clean(T, user)
@@ -85,7 +90,7 @@
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
-	item_state = "mop"
+	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 12
@@ -93,7 +98,8 @@
 	throw_range = 4
 	mopspeed = 8
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
-	var/refill_rate = 1 //Rate per process() tick mop refills itself
+	/// Amount of reagent to refill per second
+	var/refill_rate = 0.5
 	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
 /obj/item/mop/advanced/New()
@@ -109,10 +115,10 @@
 	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
-/obj/item/mop/advanced/process()
-
-	if(reagents.total_volume < mopcap)
-		reagents.add_reagent(refill_reagent, refill_rate)
+/obj/item/mop/advanced/process(delta_time)
+	var/amadd = min(mopcap - reagents.total_volume, refill_rate * delta_time)
+	if(amadd > 0)
+		reagents.add_reagent(refill_reagent, amadd)
 
 /obj/item/mop/advanced/examine(mob/user)
 	. = ..()

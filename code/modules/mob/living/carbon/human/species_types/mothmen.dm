@@ -3,14 +3,14 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES)
+	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_wings", "moth_markings")
-	default_features = list("moth_wings" = "Plain", "moth_markings" = "None")
+	mutant_bodyparts = list("moth_wings", "moth_antennae", "moth_markings")
+	default_features = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+	meat = /obj/item/food/meat/slab/human/mutant/moth
 	liked_food = VEGETABLES | DAIRY | CLOTH
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
@@ -19,6 +19,7 @@
 	species_language_holder = /datum/language_holder/moth
 	wings_icon = "Megamoth"
 	has_innate_wings = TRUE
+	payday_modifier = 0.75
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()
@@ -43,7 +44,10 @@
 		return
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
+		H.dna.features["original_moth_wings"] = H.dna.features["moth_wings"] //Fire apparently destroys DNA, so let's preserve that elsewhere
 		H.dna.features["moth_wings"] = "Burnt Off"
+		H.dna.features["original_moth_antennae"] = H.dna.features["moth_antennae"]
+		H.dna.features["moth_antennae"] = "Burnt Off"
 		if(flying_species) //This is all exclusive to if the person has the effects of a potion of flight
 			if(H.movement_type & FLYING)
 				ToggleFlight(H)
@@ -61,8 +65,8 @@
 
 /datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 9 //flyswatters deal 10x damage to moths
-	return 0
+		return 10 //flyswatters deal 10x damage to moths
+	return 1
 
 /datum/species/moth/space_move(mob/living/carbon/human/H)
 	. = ..()
@@ -70,3 +74,19 @@
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
+
+
+/datum/species/moth/spec_fully_heal(mob/living/carbon/human/H)
+	. = ..()
+	if(H.dna.features["original_moth_wings"] != null)
+		H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
+
+	if(H.dna.features["original_moth_wings"] == null && H.dna.features["moth_wings"] == "Burnt Off")
+		H.dna.features["moth_wings"] = "Plain"
+
+	if(H.dna.features["original_moth_antennae"] != null)
+		H.dna.features["moth_antennae"] = H.dna.features["original_moth_antennae"]
+
+	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae" == "Burnt Off"])
+		H.dna.features["moth_antennae"] = "Plain"
+	handle_mutant_bodyparts(H)

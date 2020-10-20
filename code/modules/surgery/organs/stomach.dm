@@ -4,7 +4,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
-	attack_verb = list("gored", "squished", "slapped", "digested")
+	attack_verb_continuous = list("gores", "squishes", "slaps", "digests")
+	attack_verb_simple = list("gore", "squish", "slap", "digest")
 	desc = "Onaka ga suite imasu."
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -17,33 +18,45 @@
 
 	var/disgust_metabolism = 1
 
-/obj/item/organ/stomach/on_life()
-	var/mob/living/carbon/human/H = owner
-	var/datum/reagent/Nutri
+/obj/item/organ/stomach/Initialize()
+	. = ..()
+	create_reagents(1000)
 
-	..()
-	if(istype(H))
+/obj/item/organ/stomach/on_life()
+	. = ..()
+
+	//Manage species digestion
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			H.dna.species.handle_digestion(H)
-		handle_disgust(H)
+			humi.dna.species.handle_digestion(humi)
+
+	//digest food
+	var/mob/living/carbon/body = owner
+	var/obj/item/organ/liver/liver = body.getorganslot(ORGAN_SLOT_LIVER)
+	var/liverless = (!liver || (liver.organ_flags & ORGAN_FAILING))
+	reagents.metabolize(body, can_overdose=TRUE, liverless=liverless)
+	if(body)
+		handle_disgust(body)
 
 	if(damage < low_threshold)
 		return
 
-	Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
+	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	if(!nutri)
+		return
 
-	if(Nutri)
-		if(prob((damage/40) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+	if(prob(damage * 0.025 * nutri.volume * nutri.volume))
+		body.vomit(damage)
+		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+		return
 
-	else if(Nutri && damage > high_threshold)
-		if(prob((damage/10) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+	if(damage > high_threshold && prob(damage * 0.1 * nutri.volume * nutri.volume))
+		body.vomit(damage)
+		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
-	return !(NOSTOMACH in S.species_traits)
+	return !(NOSTOMACH in S.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -51,13 +64,13 @@
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
 			if(prob(10))
 				H.stuttering += 1
-				H.confused += 2
+				H.add_confusion(2)
 			if(prob(10) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
 			H.jitteriness = max(H.jitteriness - 3, 0)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
-				H.confused += 2.5
+				H.add_confusion(2.5)
 				H.stuttering += 1
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)
@@ -87,15 +100,41 @@
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
 
-/obj/item/organ/stomach/fly
-	name = "insectoid stomach"
-	icon_state = "stomach-x" //xenomorph liver? It's just a black liver so it fits.
-	desc = "A mutant stomach designed to handle the unique diet of a flyperson."
+/obj/item/organ/stomach/bone
+	desc = "You have no idea what this strange ball of bones does."
+
+/obj/item/organ/stomach/bone/on_life()
+	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
+	if(milk)
+		var/mob/living/carbon/body = owner
+		if(milk.volume > 10)
+			reagents.remove_reagent(milk.type, milk.volume - 10)
+			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
+		body.heal_bodypart_damage(1.5,0, 0)
+		for(var/i in body.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
+		reagents.remove_reagent(milk.type, milk.metabolization_rate)
+	return ..()
 
 /obj/item/organ/stomach/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/plasmaman/on_life()
+	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
+	if(milk)
+		var/mob/living/carbon/body = owner
+		if(milk.volume > 10)
+			reagents.remove_reagent(milk.type, milk.volume - 10)
+			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
+		body.heal_bodypart_damage(1.5,0, 0)
+		for(var/i in body.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_xadone(2)
+		reagents.remove_reagent(milk.type, milk.metabolization_rate)
+	return ..()
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
@@ -118,7 +157,7 @@
 	..()
 
 /obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
-	adjust_charge(amount / 70)
+	adjust_charge(amount / 3.5)
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	if(flags & SHOCK_ILLUSION)
@@ -128,3 +167,37 @@
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+
+/obj/item/organ/stomach/cybernetic
+	name = "basic cybernetic stomach"
+	icon_state = "stomach-c"
+	desc = "A basic device designed to mimic the functions of a human stomach"
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+
+/obj/item/organ/stomach/cybernetic/tier2
+	name = "cybernetic stomach"
+	icon_state = "stomach-c-u"
+	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 2
+	emp_vulnerability = 40
+
+/obj/item/organ/stomach/cybernetic/tier3
+	name = "upgraded cybernetic stomach"
+	icon_state = "stomach-c-u2"
+	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 3
+	emp_vulnerability = 20
+
+/obj/item/organ/stomach/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.vomit(stun = FALSE)
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

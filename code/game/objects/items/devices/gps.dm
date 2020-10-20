@@ -4,6 +4,8 @@
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
@@ -12,6 +14,9 @@
 /obj/item/gps/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps/item, gpstag)
+
+/obj/item/gps/spaceruin
+	gpstag = SPACE_SIGNAL_GPSTAG
 
 /obj/item/gps/science
 	icon_state = "gps-s"

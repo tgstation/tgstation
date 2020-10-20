@@ -7,8 +7,6 @@
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
-	ui_x = 350
-	ui_y = 470
 
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
@@ -63,10 +61,13 @@
 				sbed.op_computer = src
 				break
 
-/obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/operating/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
+/obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OperatingComputer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "OperatingComputer", name)
 		ui.open()
 
 /obj/machinery/computer/operating/ui_data(mob/user)
@@ -89,7 +90,7 @@
 	else
 		if(sbed)
 			data["table"] = sbed
-			if(!ishuman(sbed.occupant) &&  !ismonkey(sbed.occupant))
+			if(!ishuman(sbed.occupant) && !ismonkey(sbed.occupant))
 				return data
 			data["patient"] = list()
 			patient = sbed.occupant
@@ -103,7 +104,7 @@
 		if(SOFT_CRIT)
 			data["patient"]["stat"] = "Conscious"
 			data["patient"]["statstate"] = "average"
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			data["patient"]["stat"] = "Unconscious"
 			data["patient"]["statstate"] = "average"
 		if(DEAD)
@@ -143,7 +144,8 @@
 
 
 /obj/machinery/computer/operating/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("sync")

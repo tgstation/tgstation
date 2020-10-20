@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -210,13 +215,13 @@ Difficulty: Medium
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
 					any_attack = 1
-			for(var/obj/mecha/M in T.contents)
+			for(var/obj/vehicle/sealed/mecha/M in T.contents)
 				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
 				any_attack = 1
 		if(!any_attack)
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)
-			return 0 // nothing to attack in the arena time for enraged attack if we still have a target
+			return FALSE // nothing to attack in the arena time for enraged attack if we still have a target
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -224,7 +229,7 @@ Difficulty: Medium
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		SLEEP_CHECK_DEATH(24)
-	return 1 // attack finished completely
+	return TRUE // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0)
@@ -257,40 +262,34 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
-	var/angle = ATAN2(at.x - src.x, at.y - src.y) + offset
-	var/turf/T = get_turf(src)
-	for(var/i in 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check)
-			break
-		T = check
+	var/turf/T = get_ranged_target_turf_direct(src, at, range, offset)
 	return (getline(src, T) - get_turf(src))
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(list/turfs)
 	SLEEP_CHECK_DEATH(0)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
-			if(L in hit_list || L == source)
+			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
 
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BRUTE, "melee", 1)
+			M.take_damage(45, BRUTE, MELEE, 1)
 		sleep(1.5)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = FALSE, atom/movable/manual_target, swoop_cooldown = 30)
@@ -373,8 +372,8 @@ Difficulty: Medium
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
-	for(var/obj/mecha/M in orange(1, src))
-		M.take_damage(75, BRUTE, "melee", 1)
+	for(var/obj/vehicle/sealed/mecha/M in orange(1, src))
+		M.take_damage(75, BRUTE, MELEE, 1)
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
@@ -396,7 +395,7 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
@@ -432,7 +431,7 @@ Difficulty: Medium
 	src.alpha = 63.75
 	animate(src, alpha = 255, time = duration)
 
-/obj/effect/temp_visual/lava_warning/proc/fall(var/reset_time)
+/obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
 	sleep(duration)
@@ -445,8 +444,8 @@ Difficulty: Medium
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 
 	// deals damage to mechs
-	for(var/obj/mecha/M in T.contents)
-		M.take_damage(45, BRUTE, "melee", 1)
+	for(var/obj/vehicle/sealed/mecha/M in T.contents)
+		M.take_damage(45, BRUTE, MELEE, 1)
 
 	// changes turf to lava temporarily
 	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
@@ -461,7 +460,7 @@ Difficulty: Medium
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	duration = 82
@@ -521,7 +520,7 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
 
-obj/effect/temp_visual/fireball
+/obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
@@ -559,7 +558,7 @@ obj/effect/temp_visual/fireball
 		M.gets_drilled()
 	playsound(T, "explosion", 80, TRUE)
 	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
+	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue

@@ -33,7 +33,7 @@
 		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
 	if(start)
-		timestop()
+		INVOKE_ASYNC(src, .proc/timestop)
 
 /obj/effect/timestop/Destroy()
 	qdel(chronofield)
@@ -84,7 +84,7 @@
 		freeze_mob(A)
 	else if(istype(A, /obj/projectile))
 		freeze_projectile(A)
-	else if(istype(A, /obj/mecha))
+	else if(istype(A, /obj/vehicle/sealed/mecha))
 		freeze_mecha(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
@@ -112,13 +112,15 @@
 		unfreeze_turf(T)
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_atom(atom/movable/A)
+	SIGNAL_HANDLER
+
 	if(A.throwing)
 		unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
 	else if(istype(A, /obj/projectile))
 		unfreeze_projectile(A)
-	else if(istype(A, /obj/mecha))
+	else if(istype(A, /obj/vehicle/sealed/mecha))
 		unfreeze_mecha(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
@@ -129,10 +131,10 @@
 	global_frozen_atoms -= A
 
 
-/datum/proximity_monitor/advanced/timestop/proc/freeze_mecha(obj/mecha/M)
+/datum/proximity_monitor/advanced/timestop/proc/freeze_mecha(obj/vehicle/sealed/mecha/M)
 	M.completely_disabled = TRUE
 
-/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/mecha/M)
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/vehicle/sealed/mecha/M)
 	M.completely_disabled = FALSE
 
 
@@ -162,7 +164,7 @@
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
 		var/mob/living/m = i
-		m.Stun(20, 1, 1)
+		m.Stun(20, ignore_canstun = TRUE)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
 	for(var/i in T.contents)
@@ -179,7 +181,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	frozen_mobs += L
-	L.Stun(20, 1, 1)
+	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
 	walk(L, 0) //stops them mid pathing even if they're stunimmune
 	if(isanimal(L))
@@ -190,7 +192,7 @@
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
-	L.AdjustStun(-20, 1, 1)
+	L.AdjustStun(-20, ignore_canstun = TRUE)
 	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
 	frozen_mobs -= L
 	if(isanimal(L))

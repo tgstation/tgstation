@@ -3,15 +3,17 @@
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	heat = 3500
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
-	var/brightness_on = 3
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_power = 1
+	light_on = FALSE
 	var/sword_color
 
 /obj/item/melee/transforming/energy/Initialize()
 	. = ..()
 	if(active)
-		set_light(brightness_on)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/melee/transforming/energy/Destroy()
@@ -40,10 +42,10 @@
 			if(sword_color)
 				icon_state = "sword[sword_color]"
 			START_PROCESSING(SSobj, src)
-			set_light(brightness_on)
 		else
 			STOP_PROCESSING(SSobj, src)
-			set_light(0)
+		set_light_on(active)
+
 
 /obj/item/melee/transforming/energy/get_temperature()
 	return active * heat
@@ -78,9 +80,9 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")
+	attack_verb_off = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_on = list()
-	light_color = "#40ceff"
+	light_color = LIGHT_COLOR_LIGHT_CYAN
 
 /obj/item/melee/transforming/energy/axe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -95,10 +97,10 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit" //it starts deactivated
-	attack_verb_off = list("tapped", "poked")
+	attack_verb_off = list("taps", "pokes")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	block_chance = 50
@@ -138,8 +140,8 @@
 	sword_color = null //stops icon from breaking when turned on.
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = IS_SHARP
-	light_color = "#40ceff"
+	sharpness = SHARP_EDGED
+	light_color = LIGHT_COLOR_LIGHT_CYAN
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7 //faster as a saw
 
@@ -152,7 +154,7 @@
 	return 0
 
 /obj/item/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	var/list/possible_colors = list("red" = COLOR_SOFT_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE
 
 /obj/item/melee/transforming/energy/sword/saber/Initialize(mapload)
@@ -160,17 +162,16 @@
 	if(LAZYLEN(possible_colors))
 		var/set_color = pick(possible_colors)
 		sword_color = set_color
-		light_color = possible_colors[set_color]
+		set_light_color(possible_colors[set_color])
 
 /obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
 	if(hacked)
 		var/set_color = pick(possible_colors)
-		light_color = possible_colors[set_color]
-		update_light()
+		set_light_color(possible_colors[set_color])
 
 /obj/item/melee/transforming/energy/sword/saber/red
-	possible_colors = list("red" = LIGHT_COLOR_RED)
+	possible_colors = list("red" = COLOR_SOFT_RED)
 
 /obj/item/melee/transforming/energy/sword/saber/blue
 	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
@@ -203,7 +204,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	icon_state_on = "cutlass1"
-	light_color = "#ff0000"
+	light_color = COLOR_RED
 
 /obj/item/melee/transforming/energy/blade
 	name = "energy blade"
@@ -219,7 +220,7 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/melee/transforming/energy/blade/Initialize()
@@ -235,4 +236,4 @@
 	name = "hardlight blade"
 	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
 	icon_state = "lightblade"
-	item_state = "lightblade"
+	inhand_icon_state = "lightblade"

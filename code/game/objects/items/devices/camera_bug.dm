@@ -11,7 +11,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
 	w_class		= WEIGHT_CLASS_TINY
-	item_state	= "camera_bug"
+	inhand_icon_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
 	item_flags = NOBLUDGEON
@@ -62,15 +62,15 @@
 /obj/item/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
-		return 0
+		return FALSE
 	var/turf/T_user = get_turf(user.loc)
 	var/turf/T_current = get_turf(current)
 	if(T_user.z != T_current.z || !current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /obj/item/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 
@@ -142,7 +142,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current && current.can_use())
+	if(current?.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
@@ -163,7 +163,7 @@
 			dat += " (Stage [stage])"
 			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
-		for(var/obj/mecha/M in seen)
+		for(var/obj/vehicle/sealed/mecha/M in seen)
 			if(M.name in names)
 				names[M.name]++
 				dat += "[M.name] ([names[M.name]])"
@@ -180,7 +180,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(!(M.mobility_flags & MOBILITY_STAND))
+			if(M.body_position == LYING_DOWN)
 				if(M.buckled)
 					dat += " (Sitting)"
 				else
@@ -298,7 +298,7 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/camera_bug/proc/same_z_level(var/obj/machinery/camera/C)
+/obj/item/camera_bug/proc/same_z_level(obj/machinery/camera/C)
 	var/turf/T_cam = get_turf(C)
 	var/turf/T_bug = get_turf(loc)
 	if(!T_bug || T_cam.z != T_bug.z)

@@ -21,13 +21,20 @@
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
-	item_state = "banana"
+	inhand_icon_state = "banana"
 	trash = /obj/item/grown/bananapeel
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+
+/obj/item/reagent_containers/food/snacks/grown/banana/generate_trash(atom/location)
+	. = ..()
+	var/obj/item/grown/bananapeel/peel = .
+	if(istype(peel))
+		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
+		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -50,7 +57,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
-	item_state = "banana_peel"
+	inhand_icon_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -89,7 +96,7 @@
 	name = "mimana peel"
 	desc = "A mimana peel."
 	icon_state = "mimana_peel"
-	item_state = "mimana_peel"
+	inhand_icon_state = "mimana_peel"
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
@@ -111,7 +118,7 @@
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
 	icon_state = "banana_blue"
-	item_state = "bluespace_peel"
+	inhand_icon_state = "bluespace_peel"
 	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	tastes = list("banana" = 1)

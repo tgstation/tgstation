@@ -8,7 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
@@ -20,7 +20,7 @@
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
-	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+	var/spawn_fast = FALSE //if TRUE, ignores checking for mobs on loc before spawning
 
 /obj/item/veilrender/attack_self(mob/user)
 	if(charges > 0)
@@ -39,7 +39,7 @@
 	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
-	var/spawn_fast = 0
+	var/spawn_fast = FALSE
 
 /obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
 	src.spawn_path = spawn_type
@@ -197,7 +197,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -276,7 +276,7 @@
 	desc = "Something creepy about it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
@@ -293,14 +293,16 @@
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
-		else if(is_pointed(I))
+		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			target.adjustEarDamage(0,3)
+			var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				ears.adjustEarDamage(0, 3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return
@@ -400,7 +402,6 @@
 	heal_oxy = 25
 
 //Warp Whistle: Provides uncontrolled long distance teleportation.
-
 /obj/item/warpwhistle
 	name = "warp whistle"
 	desc = "One toot on this whistle will send you to a far away land!"
@@ -418,7 +419,8 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.update_mobility()
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
+
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -427,10 +429,11 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
-	user.mobility_flags &= ~MOBILITY_MOVE
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
+		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
@@ -443,7 +446,6 @@
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1

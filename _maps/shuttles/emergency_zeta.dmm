@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/abductor,
 /area/shuttle/escape)
@@ -68,7 +68,7 @@
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
 /obj/item/melee/baton/abductor{
-	desc = "Even aliens can see the use of a good old fashioned beating stick."
+	desc = "Even aliens can see the use of a good old-fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
@@ -113,7 +113,7 @@
 /area/shuttle/escape)
 "v" = (
 /obj/machinery/door/airlock/abductor{
-	name = "Transport Ship Theta"
+	name = "Transport Ship Zeta"
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Zeta emergency shuttle"
@@ -150,7 +150,7 @@
 /area/shuttle/escape)
 "A" = (
 /obj/machinery/door/airlock/abductor{
-	name = "Transport Ship Theta"
+	name = "Transport Ship Zeta"
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
@@ -218,7 +218,22 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "J" = (
-/obj/machinery/sleeper/survival_pod,
+/obj/machinery/stasis/survival_pod,
+/turf/open/floor/plating/abductor,
+/area/shuttle/escape)
+"K" = (
+/obj/machinery/harvester,
+/turf/open/floor/plating/abductor,
+/area/shuttle/escape)
+"L" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/abductor,
+/obj/item/clothing/under/misc/pj/blue,
+/obj/item/clothing/shoes/sneakers/white,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/glasses/eyepatch,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "N" = (
@@ -244,18 +259,6 @@
 "Q" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape)
-"R" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/closet/abductor,
-/obj/item/clothing/under/misc/pj/blue,
-/obj/item/clothing/under/misc/pj,
-/obj/item/clothing/shoes/sneakers/white,
-/obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/glasses/eyepatch,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "S" = (
@@ -489,7 +492,7 @@ s
 b
 J
 J
-R
+L
 U
 b
 "}
@@ -625,7 +628,7 @@ l
 q
 s
 b
-l
+K
 O
 S
 Z

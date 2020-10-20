@@ -26,12 +26,20 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"ai" = (
+/obj/structure/lattice,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "ak" = (
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+"al" = (
+/obj/machinery/ntnet_relay,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "am" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
@@ -46,24 +54,21 @@
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
-/obj/machinery/airalarm/unlocked{
-	pixel_y = 23
-	},
 /obj/structure/closet/secure_closet/engineering_electrical{
 	locked = 0
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aq" = (
-/obj/machinery/computer/monitor,
 /obj/machinery/camera/autoname,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/computer/monitor,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ar" = (
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 23
+	},
 /obj/structure/closet/secure_closet/engineering_welding{
 	locked = 0
 	},
@@ -122,6 +127,13 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"aA" = (
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"aB" = (
+/obj/machinery/newscaster/security_unit,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "aC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -157,6 +169,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aH" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "aI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -174,6 +192,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
+"aK" = (
+/obj/structure/table,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/construction/rcd/combat,
+/obj/item/construction/plumbing,
+/turf/open/floor/plasteel,
+/area/bridge)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -418,7 +445,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/science)
 "bG" = (
@@ -470,14 +497,6 @@
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
-/turf/open/floor/plasteel,
-/area/bridge)
-"bL" = (
-/obj/structure/table,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/construction/rcd/combat,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -826,18 +845,28 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay)
 "cK" = (
+/obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cL" = (
-/obj/structure/table,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/item/disk/surgery/debug,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
 "cN" = (
@@ -1277,12 +1306,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "es" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
@@ -2250,7 +2279,7 @@
 /area/storage/primary)
 "tG" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space/basic,
@@ -2359,7 +2388,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "BD" = (
-/obj/structure/closet/secure_closet/CMO{
+/obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -2393,11 +2422,26 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"DW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/scan_consolenew{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner,
+/area/medical/medbay)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
+"EB" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay)
 "EG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2436,7 +2480,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "Iy" = (
-/obj/structure/closet/secure_closet/RD{
+/obj/structure/closet/secure_closet/research_director{
 	locked = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -6637,9 +6681,9 @@ aa
 ae
 ab
 sE
-an
 sE
-an
+sE
+sE
 sE
 ab
 bv
@@ -6729,9 +6773,9 @@ aa
 ae
 ab
 sE
-ao
-ao
-ao
+an
+sE
+an
 sE
 ab
 bv
@@ -6820,11 +6864,11 @@ aa
 aa
 ae
 ab
-ab
-ab
+sE
+an
 ao
-ab
-ab
+an
+sE
 ab
 bv
 bJ
@@ -6912,11 +6956,11 @@ aa
 aa
 ae
 ac
-ac
+ab
 ab
 ao
 ab
-ac
+ab
 ac
 bv
 bK
@@ -7011,7 +7055,7 @@ aj
 ac
 ac
 bv
-bL
+aK
 cf
 RM
 bv
@@ -7094,9 +7138,9 @@ aa
 aa
 aa
 aa
-ae
-ac
-ac
+ai
+aj
+aj
 aj
 VA
 aj
@@ -7186,10 +7230,10 @@ aa
 aa
 aa
 aa
-ad
-bY
 aj
-aj
+al
+aA
+aB
 WT
 aj
 aj
@@ -7278,10 +7322,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 ap
+aA
+aA
 Vy
 aS
 bd
@@ -7370,10 +7414,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 aq
+Vy
+Vy
 aE
 aT
 be
@@ -7462,10 +7506,10 @@ aa
 aa
 aa
 aa
-ad
-af
 aj
 ar
+aA
+aH
 aF
 lg
 bf
@@ -7555,7 +7599,7 @@ aa
 aa
 aa
 ad
-af
+ad
 ak
 ak
 ak
@@ -7738,7 +7782,7 @@ aa
 aa
 aa
 aa
-ad
+bY
 af
 ak
 at
@@ -8396,8 +8440,8 @@ dH
 by
 Qt
 by
-cm
-cK
+EB
+DW
 by
 cS
 cS

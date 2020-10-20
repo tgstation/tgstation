@@ -7,8 +7,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -29,7 +28,7 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
-/area/centcom/supplypod/flyMeToTheMoon
+/area/centcom/supplypod/supplypod_temp_holding
 	name = "Supplypod Shipping lane"
 	icon_state = "supplypod_flight"
 
@@ -38,28 +37,42 @@
 	icon_state = "supplypod"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-/area/centcom/supplypod/podStorage
+/area/centcom/supplypod/pod_storage
 	name = "Supplypod Storage"
 	icon_state = "supplypod_holding"
 
 /area/centcom/supplypod/loading
 	name = "Supplypod Loading Facility"
 	icon_state = "supplypod_loading"
+	var/loading_id = ""
+
+/area/centcom/supplypod/loading/Initialize()
+	. = ..() 
+	if(!loading_id)
+		CRASH("[type] created without a loading_id")
+	if(GLOB.supplypod_loading_bays[loading_id])
+		CRASH("Duplicate loading bay area: [type] ([loading_id])")
+	GLOB.supplypod_loading_bays[loading_id] = src
 
 /area/centcom/supplypod/loading/one
 	name = "Bay #1"
+	loading_id = "1"
 
 /area/centcom/supplypod/loading/two
 	name = "Bay #2"
+	loading_id = "2"
 
 /area/centcom/supplypod/loading/three
 	name = "Bay #3"
+	loading_id = "3"
 
 /area/centcom/supplypod/loading/four
 	name = "Bay #4"
+	loading_id = "4"
 
 /area/centcom/supplypod/loading/ert
 	name = "ERT Bay"
+	loading_id = "5"
 //THUNDERDOME
 
 /area/tdome
@@ -106,7 +119,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 //Abductors
@@ -114,7 +127,7 @@
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
@@ -124,8 +137,7 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambientsounds = HIGHSEC
 

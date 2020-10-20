@@ -2,7 +2,7 @@
 	name = "alien"
 	icon_state = "alien"
 	pass_flags = PASSTABLE
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
@@ -18,15 +18,19 @@
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/drooling = 0 //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
-	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
-					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
+	bodyparts = list(
+		/obj/item/bodypart/chest/alien,
+		/obj/item/bodypart/head/alien,
+		/obj/item/bodypart/l_arm/alien,
+		/obj/item/bodypart/r_arm/alien,
+		/obj/item/bodypart/r_leg/alien,
+		/obj/item/bodypart/l_leg/alien,
+		)
 
 /mob/living/carbon/alien/humanoid/Initialize()
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
 
-/mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	return handcuffed
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
@@ -100,7 +104,7 @@
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(var/alienpath)
+/proc/get_alien_type(alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in GLOB.alive_mob_list)
 		if(!istype(A, alienpath))
 			continue

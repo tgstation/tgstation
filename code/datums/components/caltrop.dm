@@ -3,8 +3,8 @@
 	var/max_damage
 	var/probability
 	var/flags
+	COOLDOWN_DECLARE(caltrop_cooldown)
 
-	var/cooldown = 0
 
 /datum/component/caltrop/Initialize(_min_damage = 0, _max_damage = 0, _probability = 100,  _flags = NONE)
 	min_damage = _min_damage
@@ -15,6 +15,8 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
 /datum/component/caltrop/proc/Crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(!prob(probability))
 		return
 
@@ -31,7 +33,7 @@
 			return							//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		if(H.buckled) //if they're buckled to something, that something should be checked instead.
 			return
-		if(!(H.mobility_flags & MOBILITY_STAND)) //if were not standing we cant step on the caltrop
+		if(H.body_position == LYING_DOWN) //if were not standing we cant step on the caltrop
 			return
 
 		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -50,7 +52,9 @@
 		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
 
-		if(cooldown < world.time - 10) //cooldown to avoid message spam.
+
+		if(!(flags & CALTROP_SILENT) && COOLDOWN_FINISHED(src, caltrop_cooldown))
+			COOLDOWN_START(src, caltrop_cooldown, 1 SECONDS) //cooldown to avoid message spam.
 			var/atom/A = parent
 			if(!H.incapacitated(ignore_restraints = TRUE))
 				H.visible_message("<span class='danger'>[H] steps on [A].</span>", \
@@ -59,6 +63,5 @@
 				H.visible_message("<span class='danger'>[H] slides on [A]!</span>", \
 						"<span class='userdanger'>You slide on [A]!</span>")
 
-			cooldown = world.time
-		H.apply_damage(damage, BRUTE, picked_def_zone)
+		H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 		H.Paralyze(60)

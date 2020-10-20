@@ -15,17 +15,17 @@
 	var/puzzle_id = null
 
 //Two test keys for use alongside the two test doors.
-/obj/item/keycard/cheese
-	name = "cheese keycard"
-	desc = "Look, I still don't understand the reference. What the heck is a keyzza?"
+/obj/item/keycard/yellow
+	name = "yellow keycard"
+	desc = "A yellow keycard. How fantastic. Looks like it belongs to a high security door."
 	color = "#f0da12"
-	puzzle_id = "cheese"
+	puzzle_id = "yellow"
 
-/obj/item/keycard/swordfish
-	name = "titanic keycard"
-	desc = "Smells like it was at the bottom of a harbor."
+/obj/item/keycard/blue
+	name = "blue keycard"
+	desc = "A blue keycard. How terrific. Looks like it belongs to a high security door."
 	color = "#3bbbdb"
-	puzzle_id = "swordfish"
+	puzzle_id = "blue"
 
 //***************
 //*****Doors*****
@@ -34,15 +34,18 @@
 /obj/machinery/door/keycard
 	name = "locked door"
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructable."
-	icon = 'icons/obj/doors/doorpuzzle.dmi'
+	icon = 'icons/obj/doors/puzzledoor/default.dmi'
 	icon_state = "door_closed"
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
-	var/puzzle_id = null	//Make sure that the key has the same puzzle_id as the keycard door!
+	/// Make sure that the key has the same puzzle_id as the keycard door!
+	var/puzzle_id = null
+	/// Message that occurs when the door is opened
+	var/open_message = "The door beeps, and slides opens."
 
 //Standard Expressions to make keycard doors basically un-cheeseable
 /obj/machinery/door/keycard/Bumped(atom/movable/AM)
@@ -64,7 +67,8 @@
 	if(istype(I,/obj/item/keycard))
 		var/obj/item/keycard/key = I
 		if((!puzzle_id || puzzle_id == key.puzzle_id)  && density)
-			to_chat(user, "<span class='notice'>The door beeps, and slides opens.</span>")
+			if(open_message)
+				to_chat(user, "<span class='notice'>[open_message]</span>")
 			open()
 			return
 		else if(puzzle_id != key.puzzle_id)
@@ -74,16 +78,16 @@
 			to_chat(user, "<span class='notice'>This door doesn't appear to close.</span>")
 			return
 
-//Test doors. Gives admins a few doors to use quickly should they so choose.
-/obj/machinery/door/keycard/cheese
+//Test doors. Gives admins a few doors to use quickly should they so choose for events.
+/obj/machinery/door/keycard/yellow_required
 	name = "blue airlock"
-	desc = "Smells like... pizza?"
-	puzzle_id = "cheese"
+	desc = "It looks like it requires a yellow keycard."
+	puzzle_id = "yellow"
 
-/obj/machinery/door/keycard/swordfish
+/obj/machinery/door/keycard/blue_required
 	name = "blue airlock"
-	desc = "If nautical nonsense be something you wish."
-	puzzle_id = "swordfish"
+	desc = "It looks like it requires a blue keycard."
+	puzzle_id = "blue"
 
 //*************************
 //***Box Pushing Puzzles***
@@ -136,8 +140,7 @@
 /obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
-		AM.anchored = TRUE
+		AM.set_anchored(TRUE)
 		flick("laserbox_burn", AM)
 		trigger()
-		sleep(15)
-		qdel(AM)
+		QDEL_IN(AM, 15)

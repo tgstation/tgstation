@@ -35,7 +35,7 @@
 /datum/plant_gene/core/proc/apply_stat(obj/item/seeds/S)
 	return
 
-/datum/plant_gene/core/New(var/i = null)
+/datum/plant_gene/core/New(i = null)
 	..()
 	if(!isnull(i))
 		value = i
@@ -155,9 +155,23 @@
 	if(!..())
 		return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id)
+		if(R.reagent_id == reagent_id && R.rate <= rate)
 			return FALSE
 	return TRUE
+
+/**
+  * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+  *
+  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+  */
+
+/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
+	for(var/datum/plant_gene/reagent/reagent in seed.genes)
+		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
+			continue
+		rate = reagent.rate
+		return TRUE
+	return FALSE
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
@@ -219,6 +233,11 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+
+/datum/plant_gene/trait/squash/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/sticky))
+		return FALSE
+	. = ..()
 
 /datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	// Squash the plant on slip.
@@ -300,8 +319,9 @@
 	return max(S.potency*(rate + 0.01), 0.1)
 
 /datum/plant_gene/trait/glow/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	..()
-	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
+	. = ..()
+	G.light_system = MOVABLE_LIGHT
+	G.AddComponent(/datum/component/overlay_lighting, glow_range(G.seed), glow_power(G.seed), glow_color)
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
@@ -373,7 +393,12 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
 
-
+/**
+  * A plant trait that causes the plant's capacity to double.
+  *
+  * When harvested, the plant's individual capacity is set to double it's default.
+  * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+  */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
@@ -407,7 +432,7 @@
 
 			// The secret of potato supercells!
 			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
-			if(CG) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace powercells)
+			if(CG) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
 				pocell.maxcharge *= CG.rate*100
 			pocell.charge = pocell.maxcharge
 			pocell.name = "[G.name] battery"
@@ -432,9 +457,7 @@
 		var/mob/living/L = target
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
-			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
-			G.reagents.reaction(L, INJECT, fraction)
-			G.reagents.trans_to(L, injecting_amount)
+			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
@@ -461,7 +484,7 @@
 	if(!(G.resistance_flags & FIRE_PROOF))
 		G.resistance_flags |= FIRE_PROOF
 
-///Invasive spreading lets the plant jump to other trays, the spreadinhg plant won't replace plants of the same type.
+///Invasive spreading lets the plant jump to other trays, the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
@@ -484,6 +507,51 @@
 			HY.pestlevel = 0 // Reset
 			HY.update_icon()
 			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
+			if(HY.myseed)
+				HY.name = "[initial(HY.name)] ([HY.myseed.plantname])"
+			else
+				HY.name = initial(HY.name)
+
+/**
+  * A plant trait that causes the plant's food reagents to ferment instead.
+  *
+  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+  * This exception is executed in seeds.dm under 'prepare_result'.
+  */
+/datum/plant_gene/trait/brewing
+	name = "Auto-Distilling Composition"
+
+/**
+  * A plant trait that causes the plant to gain aesthetic googly eyes.
+  *
+  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
+  */
+/datum/plant_gene/trait/eyes
+	name = "Oculary Mimicry"
+	var/mutable_appearance/googly
+
+/datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	. = ..()
+	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly.appearance_flags = RESET_COLOR
+	G.add_overlay(googly)
+
+/datum/plant_gene/trait/sticky
+	name = "Prickly Adhesion"
+
+/datum/plant_gene/trait/sticky/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	. = ..()
+	if(G.seed.get_gene(/datum/plant_gene/trait/stinging))
+		G.embedding = EMBED_POINTY
+	else
+		G.embedding = EMBED_HARMLESS
+	G.updateEmbedding()
+	G.throwforce = (G.seed.potency/20)
+
+/datum/plant_gene/trait/sticky/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/squash))
+		return FALSE
+	. = ..()
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

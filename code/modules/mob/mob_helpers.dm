@@ -45,9 +45,10 @@
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
+
 /**
   * Convert random parts of a passed in message to stars
   *
@@ -255,7 +256,7 @@
   */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!possible_a_intents || !possible_a_intents.len)
 		return
@@ -282,7 +283,7 @@
 
 		a_intent = possible_a_intents[current_intent]
 
-	if(hud_used && hud_used.action_intent)
+	if(hud_used?.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
@@ -296,52 +297,18 @@
 
 
 // moved out of admins.dm because things other than admin procs were calling this.
-/**
-  * Is this mob special to the gamemode?
-  *
-  * returns 1 for special characters and 2 for heroes of gamemode
-  *
-  */
+/// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
 /proc/is_special_character(mob/M)
 	if(!SSticker.HasRoundStarted())
 		return FALSE
 	if(!istype(M))
 		return FALSE
-	if(issilicon(M))
-		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
-			return FALSE
-		else if(isAI(M))
-			var/mob/living/silicon/ai/A = M
-			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				return TRUE
+	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
 		return FALSE
-	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		switch(SSticker.mode.config_tag)
-			if("revolution")
-				if(is_revolutionary(M))
-					return 2
-			if("cult")
-				if(M.mind in SSticker.mode.cult)
-					return 2
-			if("nuclear")
-				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
-					return 2
-			if("changeling")
-				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))
-					return 2
-			if("wizard")
-				if(iswizard(M))
-					return 2
-			if("apprentice")
-				if(M.mind in SSticker.mode.apprentices)
-					return 2
-			if("monkey")
-				if(isliving(M))
-					var/mob/living/L = M
-					if(L.diseases && (locate(/datum/disease/transformation/jungle_fever) in L.diseases))
-						return 2
-		return TRUE
-	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
+	if(isAI(M))
+		var/mob/living/silicon/ai/A = M
+		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
+	if(M.mind?.special_role || !isnull(M.mind?.antag_datums)) //they have an antag datum!
 		return TRUE
 	return FALSE
 
@@ -420,8 +387,8 @@
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
 
-///Is the passed in mob an admin ghost
-/proc/IsAdminGhost(var/mob/user)
+///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
+/proc/isAdminObserver(mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
@@ -429,6 +396,12 @@
 	if(!isobserver(user)) // Are they a ghost?
 		return
 	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	return TRUE
+
+///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+/proc/isAdminGhostAI(mob/user)
+	if(!isAdminObserver(user))
 		return
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return
@@ -461,6 +434,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(0)
 		M.key = C.key
+		M.client?.init_verbs()
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -474,7 +448,6 @@
 ///Is the mob a floating mob
 /mob/proc/is_floating()
 	return (movement_type & FLOATING)
-
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()
@@ -537,6 +510,8 @@
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+	if(HAS_TRAIT(src,TRAIT_HUSK))
+		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
 
 /**
   * Get the list of keywords for policy config

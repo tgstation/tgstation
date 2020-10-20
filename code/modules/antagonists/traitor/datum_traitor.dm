@@ -9,6 +9,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
+	hijack_speed = 0.5				//10 seconds per hijack stage by default
 	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
@@ -16,7 +17,6 @@
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/contractor_hub/contractor_hub
-	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
@@ -67,14 +67,7 @@
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-		if(!SSticker.mode.exchange_red)
-			SSticker.mode.exchange_red = owner
-		else
-			SSticker.mode.exchange_blue = owner
-			assign_exchange_role(SSticker.mode.exchange_red)
-			assign_exchange_role(SSticker.mode.exchange_blue)
-		objective_count += 1					//Exchange counts towards number of objectives
+
 	var/toa = CONFIG_GET(number/traitor_objectives_amount)
 	for(var/i = objective_count, i < toa, i++)
 		forge_single_objective()
@@ -255,48 +248,9 @@
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()
 
-/datum/antagonist/traitor/proc/equip(var/silent = FALSE)
+/datum/antagonist/traitor/proc/equip(silent = FALSE)
 	if(traitor_kind == TRAITOR_HUMAN)
 		owner.equip_traitor(employer, silent, src)
-
-/datum/antagonist/traitor/proc/assign_exchange_role()
-	//set faction
-	var/faction = "red"
-	if(owner == SSticker.mode.exchange_blue)
-		faction = "blue"
-
-	//Assign objectives
-	var/datum/objective/steal/exchange/exchange_objective = new
-	exchange_objective.set_faction(faction,((faction == "red") ? SSticker.mode.exchange_blue : SSticker.mode.exchange_red))
-	exchange_objective.owner = owner
-	add_objective(exchange_objective)
-
-	if(prob(20))
-		var/datum/objective/steal/exchange/backstab/backstab_objective = new
-		backstab_objective.set_faction(faction)
-		backstab_objective.owner = owner
-		add_objective(backstab_objective)
-
-	//Spawn and equip documents
-	var/mob/living/carbon/human/mob = owner.current
-
-	var/obj/item/folder/syndicate/folder
-	if(owner == SSticker.mode.exchange_red)
-		folder = new/obj/item/folder/syndicate/red(mob.loc)
-	else
-		folder = new/obj/item/folder/syndicate/blue(mob.loc)
-
-	var/list/slots = list (
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"left pocket" = ITEM_SLOT_LPOCKET,
-		"right pocket" = ITEM_SLOT_RPOCKET
-	)
-
-	var/where = "At your feet"
-	var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
-	if (equipped_slot)
-		where = "In your [equipped_slot]"
-	to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 
 //TODO Collate
 /datum/antagonist/traitor/roundend_report()
@@ -351,8 +305,8 @@
 
 /// Proc detailing contract kit buys/completed contracts/additional info
 /datum/antagonist/traitor/proc/contractor_round_end()
-	var result = ""
-	var total_spent_rep = 0
+	var/result = ""
+	var/total_spent_rep = 0
 
 	var/completed_contracts = contractor_hub.contracts_completed
 	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
@@ -389,7 +343,7 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
+	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
 					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message

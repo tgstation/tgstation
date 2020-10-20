@@ -1,11 +1,6 @@
 /datum/language/calcic
 	name = "Calcic"
 	desc = "The disjointed and staccato language of plasmamen. Also understood by skeletons."
-	speech_verb = "rattles"
-	ask_verb = "queries"
-	exclaim_verb = "screeches"
-	whisper_verb = "clicks"
-	sing_verb = "chimes"
 	key = "b"
 	space_chance = 10
 	syllables = list(

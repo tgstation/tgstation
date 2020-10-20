@@ -7,7 +7,7 @@
 
 	clothes_req = TRUE
 	invocation = "CAVERE INSIDIAS"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 3
 
 	summon_type = list(

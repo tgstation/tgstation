@@ -56,15 +56,13 @@
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
-	var/stopthrow = 0
+	var/stopthrow = FALSE
 	for(var/obj/effect/step_trigger/thrower/T in orange(2, src))
 		if(AM in T.affecting)
 			return
 
-	if(isliving(AM))
-		var/mob/living/M = AM
-		if(immobilize)
-			M.mobility_flags &= ~MOBILITY_MOVE
+	if(immobilize)
+		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, src)
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -82,11 +80,11 @@
 		if(!nostop)
 			for(var/obj/effect/step_trigger/T in get_step(AM, direction))
 				if(T.stopper && T != src)
-					stopthrow = 1
+					stopthrow = TRUE
 		else
 			for(var/obj/effect/step_trigger/teleporter/T in get_step(AM, direction))
 				if(T.stopper)
-					stopthrow = 1
+					stopthrow = TRUE
 
 		if(AM)
 			var/predir = AM.dir
@@ -98,11 +96,8 @@
 
 	affecting.Remove(AM)
 
-	if(isliving(AM))
-		var/mob/living/M = AM
-		if(immobilize)
-			M.mobility_flags |= MOBILITY_MOVE
-		M.update_mobility()
+	REMOVE_TRAIT(AM, TRAIT_IMMOBILIZED, src)
+
 
 /* Stops things thrown by a thrower, doesn't do anything */
 

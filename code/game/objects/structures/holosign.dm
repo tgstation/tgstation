@@ -6,23 +6,20 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 	var/obj/item/holosign_creator/projector
 
-/obj/structure/holosign/New(loc, source_projector)
-	if(source_projector)
-		projector = source_projector
-		projector.signs += src
-	..()
-
-/obj/structure/holosign/Initialize()
+/obj/structure/holosign/Initialize(loc, source_projector)
 	. = ..()
 	alpha = 0
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	if(source_projector)
+		projector = source_projector
+		LAZYADD(projector.signs, src)
 
 /obj/structure/holosign/Destroy()
 	if(projector)
-		projector.signs -= src
+		LAZYREMOVE(projector.signs, src)
 		projector = null
 	return ..()
 
@@ -32,7 +29,7 @@
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	take_damage(5 , BRUTE, "melee", 1)
+	take_damage(5 , BRUTE, MELEE, 1)
 
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -86,7 +83,7 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
@@ -97,7 +94,7 @@
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 	alpha = 150
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/Initialize()
@@ -112,11 +109,11 @@
 	allow_walk = FALSE
 
 /obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
-	take_damage((P.damage / 5) , BRUTE, "melee", 1)	//Doesn't really matter what damage flag it is.
+	take_damage((P.damage / 5) , BRUTE, MELEE, 1)	//Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/projectile/energy/electrode))
-		take_damage(10, BRUTE, "melee", 1)	//Tasers aren't harmful.
+		take_damage(10, BRUTE, MELEE, 1)	//Tasers aren't harmful.
 	if(istype(P, /obj/projectile/beam/disabler))
-		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
+		take_damage(5, BRUTE, MELEE, 1)	//Disablers aren't harmful.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/medical
@@ -173,7 +170,7 @@
 	var/shockcd = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
-	take_damage(P.damage, BRUTE, "melee", 1)	//Yeah no this doesn't get projectile resistance.
+	take_damage(P.damage, BRUTE, MELEE, 1)	//Yeah no this doesn't get projectile resistance.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()

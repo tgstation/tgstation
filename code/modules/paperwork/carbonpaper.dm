@@ -1,7 +1,8 @@
 /obj/item/paper/carbon
 	name = "sheet of carbon"
 	icon_state = "paper_stack"
-	item_state = "paper"
+	inhand_icon_state = "paper"
+	show_written_words = FALSE
 	var/copied = FALSE
 	var/iscopy = FALSE
 
@@ -27,8 +28,6 @@
 			Copy.info += copycontents
 			Copy.info += "</font>"
 			Copy.name = "Copy - [C.name]"
-			Copy.fields = C.fields
-			Copy.updateinfolinks()
 		to_chat(user, "<span class='notice'>You tear off the carbon-copy!</span>")
 		C.copied = TRUE
 		Copy.iscopy = TRUE

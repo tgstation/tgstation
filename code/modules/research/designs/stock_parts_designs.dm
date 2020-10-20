@@ -2,7 +2,7 @@
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
 
-/datum/design/RPED
+/datum/design/rped
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	id = "rped"
@@ -12,7 +12,7 @@
 	category = list("Stock Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/BS_RPED
+/datum/design/bs_rped
 	name = "Bluespace RPED"
 	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
 	id = "bs_rped"
@@ -370,3 +370,13 @@
 	materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
 	category = list("Stock Parts")
+
+/datum/design/water_recycler
+	name = "Water Recycler"
+	desc = "A small hydrostatic reclaimer, it takes moisture out of the air and returns it back to the source."
+	id = "w-recycler"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 200, /datum/material/iron = 50)
+	build_path = /obj/item/stock_parts/water_recycler
+	category = list("Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL

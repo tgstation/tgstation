@@ -11,6 +11,8 @@ $bg-map: colors.$bg-map !default;
 $fg-map: colors.$fg-map !default;
 $ring-color: #6a96c9 !default;
 $knob-color: #333333 !default;
+$popup-background-color: #000000 !default;
+$popup-text-color: #ffffff !default;
 
 $inner-padding: 0.1em;
 
@@ -71,7 +73,8 @@ $inner-padding: 0.1em;
   font-size: 1rem;
   text-align: center;
   padding: 0.25rem 0.5rem;
-  background-color: #000;
+  color: $popup-text-color;
+  background-color: $popup-background-color;
   transform: translateX(50%);
   white-space: nowrap;
 }
@@ -124,41 +127,3 @@ $pi: 3.1416;
     }
   }
 }
-
-// .Slider__cursorOffset {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   transition: none !important;
-// }
-
-// .Slider__cursor {
-//   position: absolute;
-//   top: 0;
-//   right: -1px;
-//   bottom: 0;
-//   width: 0;
-//   border-left: 2px solid #fff;
-// }
-
-// .Slider__pointer {
-//   position: absolute;
-//   right: -5px;
-//   bottom: -4px;
-//   width: 0;
-//   height: 0;
-//   border-left: 5px solid transparent;
-//   border-right: 5px solid transparent;
-//   border-bottom: 5px solid #fff;
-// }
-
-// .Slider__popupValue {
-//   position: absolute;
-//   right: 0;
-//   top: -22px;
-//   padding: 2px 4px;
-//   background-color: #000;
-//   transform: translateX(50%);
-//   white-space: nowrap;
-// }

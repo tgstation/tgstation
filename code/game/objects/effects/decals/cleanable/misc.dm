@@ -52,9 +52,12 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
+	icon = 'icons/effects/dirt.dmi'
 	icon_state = "dirt"
-	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
-	smooth = SMOOTH_FALSE
+	base_icon_state = "dirt"
+	smoothing_flags = NONE
+	smoothing_groups = list(SMOOTH_GROUP_CLEANABLE_DIRT)
+	canSmoothWith = list(SMOOTH_GROUP_CLEANABLE_DIRT, SMOOTH_GROUP_WALLS)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 
@@ -62,14 +65,14 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
-		smooth = SMOOTH_MORE
-		icon = 'icons/effects/dirt.dmi'
-		icon_state = ""
-		queue_smooth(src)
-	queue_smooth_neighbors(src)
+		smoothing_flags = SMOOTH_BITMASK
+		QUEUE_SMOOTH(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	queue_smooth_neighbors(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/decal/cleanable/dirt/dust
@@ -158,6 +161,8 @@
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old"
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
+
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
@@ -237,3 +242,15 @@
 	desc = "Torn pieces of cardboard and paper, left over from a package."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
+
+/obj/effect/decal/cleanable/garbage
+	name = "decomposing garbage"
+	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "garbage"
+	layer = OBJ_LAYER //To display the decal over wires.
+	beauty = -150
+
+/obj/effect/decal/cleanable/garbage/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)

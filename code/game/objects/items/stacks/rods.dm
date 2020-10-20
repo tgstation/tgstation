@@ -1,9 +1,10 @@
 GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_floor = FALSE), \
-	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
-	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = 0), \
+	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = FALSE), \
+	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = FALSE), \
 	new/datum/stack_recipe("railing", /obj/structure/railing, 3, time = 18, window_checks = TRUE), \
+	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_floor = FALSE), \
 	))
 
 /obj/item/stack/rods
@@ -11,7 +12,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	desc = "Some rods. Can be used for building or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
@@ -20,10 +21,12 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=1000)
 	max_amount = 50
-	attack_verb = list("hit", "bludgeoned", "whacked")
+	attack_verb_continuous = list("hits", "bludgeons", "whacks")
+	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	embedding = list()
 	novariants = TRUE
+	matter_amount = 2
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
@@ -61,16 +64,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)
-
-	else if(istype(W, /obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/S = W
-		if(amount != 1)
-			to_chat(user, "<span class='warning'>You must use a single rod!</span>")
-		else if(S.w_class > WEIGHT_CLASS_SMALL)
-			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
-		else
-			var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
-			A.initialize_custom_food(src, S, user)
 	else
 		return ..()
 
@@ -97,7 +90,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
 	icon_state = "rods"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL

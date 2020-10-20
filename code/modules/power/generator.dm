@@ -5,6 +5,8 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 
+	circuit = /obj/item/circuitboard/machine/generator
+
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
 
@@ -17,9 +19,8 @@
 	. = ..()
 	find_circs()
 	connect_to_network()
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	update_icon()
-	component_parts = list(new /obj/item/circuitboard/machine/generator)
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
@@ -27,7 +28,7 @@
 
 /obj/machinery/power/generator/Destroy()
 	kill_circs()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/power/generator/update_overlays()
@@ -84,7 +85,7 @@
 
 		update_icon()
 
-	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
+	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
 		update_icon()
@@ -139,7 +140,6 @@
 	. = ..()
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/power/generator/Topic(href, href_list)
@@ -189,7 +189,7 @@
 	. = ..()
 	if(!panel_open)
 		return
-	anchored = !anchored
+	set_anchored(!anchored)
 	I.play_tool_sound(src)
 	if(!anchored)
 		kill_circs()

@@ -2,17 +2,23 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
@@ -40,6 +46,11 @@
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
+		if(CONFIG_GET(string/centcom_ban_db))
+			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[M.client.ckey]'>Search</a>"
+		else
+			body += "<i>Disabled</i>"
 		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
 		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
@@ -60,6 +71,7 @@
 	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
 	if(M.mind)
 		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(M)]'>SKILLS</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
 	if (iscyborg(M))
@@ -183,6 +195,7 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(M)]'>Commend Behavior</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
@@ -192,7 +205,7 @@
 
 
 /datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
@@ -417,13 +430,6 @@
 					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
 				dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
-		else if (SSticker.IsRoundInProgress())
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin=1'>(Force Next Latejoin Ruleset)</A><br>"
-			if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
-				var/datum/game_mode/dynamic/mode = SSticker.mode
-				if (mode.forced_latejoin_rule)
-					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin_clear=1'>-> [mode.forced_latejoin_rule.name] <-</A><br>"}
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_midround=1'>(Execute Midround Ruleset!)</A><br>"
 		dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
@@ -715,7 +721,7 @@
 		var/obj/structure/closet/supplypod/centcompod/pod = new()
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
-		new /obj/effect/DPtarget(T, pod)
+		new /obj/effect/pod_landingzone(T, pod)
 
 	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -738,22 +744,35 @@
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
-	set category = "Admin - Game"
+/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
+	set category = "Admin.Game"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
-
-	if(!istype(M))
-		to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
-		return
-	if(!M.mind)
+	var/datum/mind/target_mind = target_mob.mind
+	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
-
-	M.mind.traitor_panel()
+	if(!istype(target_mob) && !istype(target_mind))
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skill_panel(target)
+	set category = "Admin.Game"
+	set desc = "Edit mobs's experience and skill levels"
+	set name = "Show Skill Panel"
+	var/datum/mind/target_mind
+	if(ismob(target))
+		var/mob/target_mob = target
+		target_mind = target_mob.mind
+	else if (istype(target, /datum/mind))
+		target_mind = target
+	else
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	var/datum/skill_panel/SP  = new(usr, target_mind)
+	SP.ui_interact(usr)
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -804,21 +823,6 @@
 	if(!ai_number)
 		to_chat(usr, "<b>No AIs located</b>" , confidential = TRUE)
 
-/datum/admins/proc/output_all_devil_info()
-	var/devil_number = 0
-	for(var/datum/mind/D in SSticker.mode.devils)
-		devil_number++
-		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + devil.printdevilinfo(), confidential = TRUE)
-	if(!devil_number)
-		to_chat(usr, "<b>No Devils located</b>" , confidential = TRUE)
-
-/datum/admins/proc/output_devil_info(mob/living/M)
-	if(is_devil(M))
-		var/datum/antagonist/devil/devil = M.mind.has_antag_datum(/datum/antagonist/devil)
-		to_chat(usr, devil.printdevilinfo(), confidential = TRUE)
-	else
-		to_chat(usr, "<b>[M] is not a devil.", confidential = TRUE)
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -878,8 +882,6 @@
 		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>
-		<b>High population limit:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_high_pop_limit=1'><b>[GLOB.dynamic_high_pop_limit]</b></a>.
-		<br/>The threshold at which "high population override" will be in effect. <br/>
 		<br/>
 		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
 		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
@@ -962,6 +964,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
 
 	tomob.ckey = frommob.ckey
+	tomob.client?.init_verbs()
 	qdel(frommob)
 
 	return TRUE

@@ -22,52 +22,52 @@
 	. = ..()
 	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
 
-/obj/item/computer_hardware/hard_drive/diagnostics(var/mob/user)
+/obj/item/computer_hardware/hard_drive/diagnostics(mob/user)
 	..()
 	// 999 is a byond limit that is in place. It's unlikely someone will reach that many files anyway, since you would sooner run out of space.
 	to_chat(user, "NT-NFS File Table Status: [stored_files.len]/999")
 	to_chat(user, "Storage capacity: [used_capacity]/[max_capacity]GQ")
 
 // Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/computer_hardware/hard_drive/proc/store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/store_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(!can_store_file(F))
-		return 0
+		return FALSE
 
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	if(!stored_files)
-		return 0
+		return FALSE
 
 	// This file is already stored. Don't store it again.
 	if(F in stored_files)
-		return 0
+		return FALSE
 
 	F.holder = src
 	stored_files.Add(F)
 	recalculate_size()
-	return 1
+	return TRUE
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
-/obj/item/computer_hardware/hard_drive/proc/remove_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/remove_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(!stored_files)
-		return 0
+		return FALSE
 
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	if(F in stored_files)
 		stored_files -= F
 		recalculate_size()
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Loops through all stored files and recalculates used_capacity of this drive
 /obj/item/computer_hardware/hard_drive/proc/recalculate_size()
@@ -78,30 +78,30 @@
 	used_capacity = total_size
 
 // Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
-/obj/item/computer_hardware/hard_drive/proc/can_store_file(var/datum/computer_file/F)
+/obj/item/computer_hardware/hard_drive/proc/can_store_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(F in stored_files)
-		return 0
+		return FALSE
 
 	var/name = F.filename + "." + F.filetype
 	for(var/datum/computer_file/file in stored_files)
 		if((file.filename + "." + file.filetype) == name)
-			return 0
+			return FALSE
 
 	// In the unlikely event someone manages to create that many files.
 	// BYOND is acting weird with numbers above 999 in loops (infinite loop prevention)
 	if(stored_files.len >= 999)
-		return 0
+		return FALSE
 	if((used_capacity + F.size) > max_capacity)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 // Tries to find the file by filename. Returns null on failure
-/obj/item/computer_hardware/hard_drive/proc/find_file_by_name(var/filename)
+/obj/item/computer_hardware/hard_drive/proc/find_file_by_name(filename)
 	if(!check_functionality())
 		return null
 
@@ -159,12 +159,30 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = 150
 
+// For borg integrated tablets. No downloader.
+/obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
+	store_file(new /datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/robotact(src))
+
+
 // Syndicate variant - very slight better
 /obj/item/computer_hardware/hard_drive/small/syndicate
 	desc = "An efficient SSD for portable devices developed by a rival organisation."
 	power_usage = 8
 	max_capacity = 70
 	var/datum/antagonist/traitor/traitor_data // Syndicate hard drive has the user's data baked directly into it on creation
+
+/// For tablets given to nuke ops
+/obj/item/computer_hardware/hard_drive/small/nukeops
+	power_usage = 8
+	max_capacity = 70
+
+/obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
+	store_file(new/datum/computer_file/program/computerconfig(src))
+	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
+	store_file(new/datum/computer_file/program/filemanager(src))
+	store_file(new/datum/computer_file/program/radar/fission360(src)) //I am legitimately afraid if I don't do this, Ops players will think they just don't get a pinpointer anymore.
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"

@@ -1,16 +1,27 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
+
+/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
+#define DEVIATION_NONE 0
+/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
+#define DEVIATION_PARTIAL 1
+/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
+#define DEVIATION_FULL 2
+
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
 	icon_state = "flash"
-	item_state = "flashtool"
+	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
-	light_color = LIGHT_COLOR_WHITE
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = FLASH_LIGHT_RANGE
+	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	light_on = FALSE
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
@@ -18,6 +29,7 @@
 	var/last_used = 0 //last world.time it was used.
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
+
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -97,7 +109,8 @@
 		return FALSE
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	flash_recharge()
 	update_icon(TRUE)
@@ -105,6 +118,21 @@
 		return FALSE
 	return TRUE
 
+
+/obj/item/assembly/flash/proc/flash_end()
+	set_light_on(FALSE)
+
+/**
+  * Handles actual flashing part of the attack
+  *
+  *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  *	* power - handles the amount of confusion it gives you
+  * * targeted - determines if it was aoe or targeted
+  * * generic_message - checks if it should display default message.
+  */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -112,31 +140,95 @@
 		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
+
+	var/deviation = calculate_deviation(M, user ? user : src)
+
+	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
+
+	//If you face away from someone they shouldnt notice any effects.
+	if(deviation == DEVIATION_FULL && !converter)
+		return
+
 	if(targeted)
 		if(M.flash_act(1, 1))
-			if(M.confused < power)
-				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-				M.confused += min(power, diff)
-			if(user)
-				terrible_conversion_proc(M, user)
-				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
-				to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
-			else
-				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Paralyze(rand(80,120))
+			if(M.get_confusion() < power)
+				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+				M.add_confusion(min(power, diff))
+				// Special check for if we're a revhead. Special cases to attempt conversion.
+				if(converter)
+					// Did we try to flash them from behind?
+					if(deviation == DEVIATION_FULL)
+						// If we did and we're on help intent, fail with a feedback message and return.
+						if(converter.owner.current.a_intent == INTENT_HELP)
+							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
+							visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
+							return
+						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
+						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
+						deviation = DEVIATION_PARTIAL
+					// Convert them. Terribly.
+					terrible_conversion_proc(M, user)
+					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
+			//easy way to make sure that you can only long stun someone who is facing in your direction
+			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
+			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
+
 		else if(user)
-			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>")
-			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-			M.confused += min(power, diff)
+			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+			M.add_confusion(min(power, diff))
+
+/**
+  * Handles the directionality of the attack
+  *
+  *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+  * Arguments:
+  * * victim - Victim
+  * * attacker - Attacker
+  */
+/obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
+	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
+	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
+	// In short, combat spinning is silly and you should feel silly for doing it.
+	if(victim.flags_1 & IS_SPINNING_1)
+		return DEVIATION_NONE
+
+	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
+	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
+	if(victim.loc == attacker.loc)
+		return DEVIATION_PARTIAL
+
+	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
+	var/victim_to_attacker = get_dir(victim, attacker)
+	// The victim's dir is necessarily a cardinal value.
+	var/victim_dir = victim.dir
+
+	// - - -
+	// - V - Victim facing south
+	// # # #
+	// Attacker within 45 degrees of where the victim is facing.
+	if(victim_dir & victim_to_attacker)
+		return DEVIATION_NONE
+
+	// # # #
+	// - V - Victim facing south
+	// - - -
+	// Attacker at 135 or more degrees of where the victim is facing.
+	if(victim_dir & REVERSE_DIR(victim_to_attacker))
+		return DEVIATION_FULL
+
+	// - - -
+	// # V # Victim facing south
+	// - - -
+	// Attacker lateral to the victim.
+	return DEVIATION_PARTIAL
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -149,8 +241,8 @@
 		log_combat(user, R, "flashed", src)
 		update_icon(1)
 		R.Paralyze(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-		R.confused += min(5, diff)
+		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+		R.add_confusion(min(5, diff))
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='warning'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
@@ -178,24 +270,32 @@
 		return
 	AOE_flash()
 
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
-	if(istype(H) && H.stat != DEAD)
-		if(user.mind)
-			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
-			if(!converter)
-				return
-			if(!H.client)
-				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
-				return
-			if(H.stat != CONSCIOUS)
-				to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
-				return
-			if(converter.add_revolutionary(H.mind))
-				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-					H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-			else
-				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
+/**
+  * Converts the victim to revs
+  *
+  * Arguments:
+  * * victim - Victim
+  * * aggressor - Attacker
+  */
+/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
+	if(!istype(victim) || victim.stat == DEAD)
+		return
+	if(!aggressor.mind)
+		return
+	if(!victim.client)
+		to_chat(aggressor, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+		return
+	if(victim.stat != CONSCIOUS)
+		to_chat(aggressor, "<span class='warning'>They must be conscious before you can convert [victim.p_them()]!</span>")
+		return
+	//If this proc fires the mob must be a revhead
+	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
+	if(converter.add_revolutionary(victim.mind))
+		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+	else
+		to_chat(aggressor, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/assembly/flash/cyborg
@@ -218,7 +318,7 @@
 	desc = "If you see this, you're not likely to remember it any time soon."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
-	item_state = "nullrod"
+	inhand_icon_state = "nullrod"
 
 /obj/item/assembly/flash/handheld //this is now the regular pocket flashes
 
@@ -230,7 +330,7 @@
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	if(I && I.owner)
+	if(I?.owner)
 		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
 	overheat = TRUE
@@ -238,7 +338,7 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		if(I && I.owner)
+		if(I?.owner)
 			to_chat(I.owner, "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>")
 		return FALSE
 	overheat = TRUE
@@ -279,7 +379,7 @@
 
 			if(!hypnosis)
 				to_chat(M, "<span class='hypnophrase'>The light makes you feel oddly relaxed...</span>")
-				M.confused += min(M.confused + 10, 20)
+				M.add_confusion(min(M.get_confusion() + 10, 20))
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
 				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
@@ -293,7 +393,12 @@
 
 	else if(M.flash_act())
 		to_chat(M, "<span class='notice'>Such a pretty light...</span>")
-		M.confused += min(M.confused + 4, 20)
+		M.add_confusion(min(M.get_confusion() + 4, 20))
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+
+#undef CONFUSION_STACK_MAX_MULTIPLIER
+#undef DEVIATION_NONE
+#undef DEVIATION_PARTIAL
+#undef DEVIATION_FULL

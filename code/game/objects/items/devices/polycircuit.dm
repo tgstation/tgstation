@@ -2,7 +2,7 @@
 	name = "polycircuit aggregate"
 	desc = "A dense, overdesigned cluster of electronics which attempted to function as a multipurpose circuit electronic. Circuits can be removed from it... if you don't bleed out in the process."
 	icon_state = "circuit_mess"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
 	var/circuit_type = /obj/item/electronics/airlock

@@ -3,14 +3,14 @@
 	name = "explorer suit"
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
-	item_state = "explorer"
+	inhand_icon_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
-	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF
 
@@ -20,9 +20,11 @@
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/explorer/Initialize()
@@ -41,7 +43,7 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 20, "acid" = 40)
+	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 40, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
@@ -59,23 +61,19 @@
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	item_state = "hostile_env"
+	inhand_icon_state = "hostile_env"
 	clothing_flags = THICKMATERIAL //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	slowdown = 0
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
-/obj/item/clothing/suit/space/hostile_environment/Initialize()
-	. = ..()
-	AddComponent(/datum/component/spraycan_paintable)
-
-/obj/item/clothing/suit/space/hostile_environment/process()
+/obj/item/clothing/suit/space/hostile_environment/process(delta_time)
 	. = ..()
 	var/mob/living/carbon/C = loc
-	if(istype(C) && prob(2)) //cursed by bubblegum
-		if(prob(15))
+	if(istype(C) && DT_PROB(1, delta_time)) //cursed by bubblegum
+		if(DT_PROB(7.5, delta_time))
 			new /datum/hallucination/oh_yeah(C)
 			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 		else
@@ -85,16 +83,15 @@
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	item_state = "hostile_env"
+	inhand_icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL // no space protection
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()
-	AddComponent(/datum/component/spraycan_paintable)
 	update_icon()
 
 /obj/item/clothing/head/helmet/space/hostile_environment/update_overlays()

@@ -25,7 +25,6 @@
 	implements = list(TOOL_SCALPEL = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
-	experience_given = (MEDICAL_SKILL_ORGAN_FIX*0.8) //for consistency across organ surgeries
 
 /datum/surgery_step/gastrectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to cut out a damaged piece of [target]'s stomach...</span>",

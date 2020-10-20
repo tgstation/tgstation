@@ -16,12 +16,17 @@
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
 
-
-#define TOUCH			1	// splashing
-#define INGEST			2	// ingestion
-#define VAPOR			3	// foam, spray, blob attack
-#define PATCH			4	// patches
-#define INJECT			5	// injection
+// Reagent exposure methods.
+/// Used for splashing.
+#define TOUCH			(1<<0)
+/// Used for ingesting the reagents. Food, drinks, inhaling smoke.
+#define INGEST			(1<<1)
+/// Used by foams, sprays, and blob attacks.
+#define VAPOR			(1<<2)
+/// Used by medical patches and gels.
+#define PATCH			(1<<3)
+/// Used for direct injection of reagents.
+#define INJECT			(1<<4)
 
 
 //defines passed through to the on_reagent_change proc
@@ -31,8 +36,17 @@
 #define CLEAR_REAGENTS	4	// all reagents were cleared
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
-#define THRESHOLD_UNHUSK 50 //Health treshold for instabitaluri and rezadone to unhusk someone
+///Health threshold for synthflesh and rezadone to unhusk someone
+#define UNHUSK_DAMAGE_THRESHOLD 50
+///Amount of synthflesh required to unhusk someone
+#define SYNTHFLESH_UNHUSK_AMOUNT 100
 
 //used by chem masters and pill presses
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
+
+//used by chem master
+#define CONDIMASTER_STYLE_AUTO "auto"
+#define CONDIMASTER_STYLE_FALLBACK "_"
+
+#define ALLERGIC_REMOVAL_SKIP "Allergy"

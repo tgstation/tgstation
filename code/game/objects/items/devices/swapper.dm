@@ -3,7 +3,7 @@
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "swapper"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

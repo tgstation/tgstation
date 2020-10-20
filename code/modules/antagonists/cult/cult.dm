@@ -91,7 +91,7 @@
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
+		return FALSE
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
@@ -152,12 +152,12 @@
 /datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has cult'ed [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has cult'ed [key_name(new_owner)].")
+	message_admins("[key_name_admin(admin)] has cult-ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has cult-ed [key_name(new_owner)].")
 
 /datum/antagonist/cult/admin_remove(mob/user)
-	message_admins("[key_name_admin(user)] has decult'ed [key_name_admin(owner)].")
-	log_admin("[key_name(user)] has decult'ed [key_name(owner)].")
+	message_admins("[key_name_admin(user)] has decult-ed [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has decult-ed [key_name(owner)].")
 	SSticker.mode.remove_cultist(owner,silent=TRUE) //disgusting
 
 /datum/antagonist/cult/get_admin_commands()
@@ -361,9 +361,9 @@
 	..()
 	var/sanity = 0
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
-		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
-		if(summon && is_station_level(summon.z) && summon.valid_territory)
-			summon_spots += summon
+		var/area/summon_area = pick(GLOB.sortedAreas - summon_spots)
+		if(summon_area && is_station_level(summon_area.z) && (summon_area.area_flags & VALID_TERRITORY))
+			summon_spots += summon_area
 		sanity++
 	update_explanation_text()
 

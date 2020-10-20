@@ -2,7 +2,7 @@
 	name = "ridden vehicle"
 	can_buckle = TRUE
 	max_buckled_mobs = 1
-	buckle_lying = FALSE
+	buckle_lying = 0
 	default_driver_move = FALSE
 	var/legs_required = 2
 	var/arms_required = 1	//why not?
@@ -11,7 +11,7 @@
 
 /obj/vehicle/ridden/Initialize()
 	. = ..()
-	LoadComponent(/datum/component/riding)
+	AddComponent(/datum/component/riding)
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
@@ -36,44 +36,41 @@
 	return ..()
 
 /obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
-	if(key_type && !is_key(inserted_key) && is_key(I))
-		if(user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-			if(inserted_key)	//just in case there's an invalid key
-				inserted_key.forceMove(drop_location())
-			inserted_key = I
-		else
-			to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
+	if(!key_type || is_key(inserted_key) || !is_key(I))
+		return ..()
+	if(!user.transferItemToLoc(I, src))
+		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
-	return ..()
+	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
+	if(inserted_key)	//just in case there's an invalid key
+		inserted_key.forceMove(drop_location())
+	inserted_key = I
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		if(!is_occupant(user))
-			to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
-			return
-		to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
-		inserted_key.forceMove(drop_location())
-		user.put_in_hands(inserted_key)
-		inserted_key = null
-	return ..()
+	if(!inserted_key || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return ..()
+	if(!is_occupant(user))
+		to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
+		return
+	to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
+	inserted_key.forceMove(drop_location())
+	user.put_in_hands(inserted_key)
+	inserted_key = null
 
-/obj/vehicle/ridden/driver_move(mob/user, direction)
+/obj/vehicle/ridden/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		if(message_cooldown < world.time)
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
 	if(legs_required)
-		var/how_many_legs = user.get_num_legs()
-		if(how_many_legs < legs_required)
+		if(user.usable_legs < legs_required)
 			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_legs ? " your leg[how_many_legs > 1 ? "s" : null]" : "out legs"]...</span>")
+				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_legs ? " your leg[user.usable_legs > 1 ? "s" : null]" : "out legs"]...</span>")
 				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	if(arms_required)
-		var/how_many_arms = user.get_num_arms()
-		if(how_many_arms < arms_required)
+		if(user.usable_hands < arms_required)
 			if(fall_off_if_missing_arms)
 				unbuckle_mob(user, TRUE)
 				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
@@ -84,7 +81,7 @@
 				return FALSE
 
 			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_arms ? " your arm[how_many_arms > 1 ? "s" : null]" : "out arms"]...</span>")
+				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_hands ? " your arm[user.usable_hands > 1 ? "s" : null]" : "out arms"]...</span>")
 				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
@@ -101,6 +98,6 @@
 		return FALSE
 	return ..()
 
-/obj/vehicle/ridden/zap_act(zap_str, zap_flags, shocked_targets)
-	zap_buckle_check(zap_str)
-	. = ..()
+/obj/vehicle/ridden/zap_act(power, zap_flags)
+	zap_buckle_check(power)
+	return ..()

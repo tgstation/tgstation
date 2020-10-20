@@ -14,9 +14,10 @@
 	throw_speed = 2
 	throw_range = 4
 	custom_materials = list(/datum/material/iron=13000)
-	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
+	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = "swing_hit"
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
@@ -35,10 +36,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/chainsaw/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
@@ -73,10 +78,6 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/chainsaw/get_dismemberment_chance()
-	if(wielded)
-		. = ..()
-
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
@@ -87,5 +88,5 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		return 1
-	return 0
+		return TRUE
+	return FALSE

@@ -8,7 +8,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/food/meat/slab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -151,7 +151,7 @@
 		return
 	if(prob(25))
 		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
-		emote("me", 1, "gags!")
+		manual_emote("gags!")
 		addtimer(CALLBACK(src, .proc/vomit), 300)
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)

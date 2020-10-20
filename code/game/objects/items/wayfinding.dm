@@ -16,7 +16,7 @@
 	var/expression_timer
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
-	..()
+	. = ..()
 	var/datum/bank_account/civ_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
 	if(civ_acc)
 		synth_acc.transfer_money(civ_acc, start_bal) //float has to come from somewhere, right?
@@ -126,7 +126,6 @@
 	name = "wayfinding pinpointer"
 	desc = "A handheld tracking device that points to useful places."
 	icon_state = "pinpointer_way"
-	resistance_flags = NONE
 	var/owner = null
 	var/list/beacons = list()
 	var/roundstart = FALSE

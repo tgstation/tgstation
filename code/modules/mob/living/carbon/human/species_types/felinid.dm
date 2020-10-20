@@ -11,10 +11,10 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/felinid
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
-
-/datum/species/human/felinid/qualifies_for_rank(rank, list/features)
-	return TRUE
+	payday_modifier = 0.75
+	ass_image = 'icons/ass/asscat.png'
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)

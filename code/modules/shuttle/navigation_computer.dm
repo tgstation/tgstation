@@ -2,6 +2,12 @@
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
+	should_supress_view_changes  = FALSE
+
+	// Docking cameras should only interact with their current z-level.
+	move_up_action = null
+	move_down_action = null
+
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
@@ -11,7 +17,7 @@
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
 	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY) //traits forbided for custom docking
-	var/view_range = 7
+	var/view_range = 0
 	var/x_offset = 0
 	var/y_offset = 0
 	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
@@ -20,9 +26,18 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/port_id in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+			if(S.id == shuttleId)
+				jumpto_ports[S.id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
@@ -34,6 +49,14 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
 	GLOB.navigation_computers -= src
+
+	if(my_port?.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = null
+		my_port.name = "Old [my_port.name]"
+		my_port = null
+	else
+		QDEL_NULL(my_port)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
@@ -65,8 +88,8 @@
 		shuttle_port = null
 		return
 
-	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker(null, src)
-	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+	eyeobj = new /mob/camera/ai_eye/remote/shuttle_docker(null, src)
+	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
 	for(var/V in shuttle_port.shuttle_areas)
@@ -86,7 +109,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
 	if(!QDELETED(user) && user.client)
-		var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 		var/list/to_add = list()
 		to_add += the_eye.placement_images
 		to_add += the_eye.placed_images
@@ -94,12 +117,12 @@
 			to_add += SSshuttle.hidden_shuttle_turf_images
 
 		user.client.images += to_add
-		user.client.change_view(view_range)
+		user.client.view_size.setTo(view_range)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
 	if(!QDELETED(user) && user.client)
-		var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 		var/list/to_remove = list()
 		to_remove += the_eye.placement_images
 		to_remove += the_eye.placed_images
@@ -107,18 +130,18 @@
 			to_remove += SSshuttle.hidden_shuttle_turf_images
 
 		user.client.images -= to_remove
-		user.client.change_view(CONFIG_GET(string/default_view))
+		user.client.view_size.resetToDefault()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/placeLandingSpot()
 	if(designating_target_loc || !current_user)
 		return
 
-	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 	var/landing_clear = checkLandingSpot()
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
 		to_chat(current_user, "<span class='warning'>Targeting transit location, please wait [DisplayTimeText(designate_time)]...</span>")
 		designating_target_loc = the_eye.loc
-		var/wait_completed = do_after(current_user, designate_time, FALSE, designating_target_loc, TRUE, CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
+		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
 		designating_target_loc = null
 		if(!current_user)
 			return
@@ -136,7 +159,8 @@
 		return
 
 	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
-	if(my_port && my_port.get_docked())
+	if(my_port?.get_docked())
+		my_port.unregister()
 		my_port.delete_after = TRUE
 		my_port.id = null
 		my_port.name = "Old [my_port.name]"
@@ -144,6 +168,7 @@
 
 	if(!my_port)
 		my_port = new()
+		my_port.unregister()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
@@ -151,6 +176,7 @@
 		my_port.dheight = shuttle_port.dheight
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
+		my_port.register(TRUE)
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 
@@ -179,7 +205,7 @@
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
-	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
 	the_eye.setDir(turn(the_eye.dir, -90))
 	for(var/i in 1 to image_cache.len)
@@ -195,7 +221,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingSpot()
-	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
+	var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
@@ -258,33 +284,33 @@
 				return SHUTTLE_DOCKER_BLOCKED
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/update_hidden_docking_ports(list/remove_images, list/add_images)
-	if(!see_hidden && current_user && current_user.client)
+	if(!see_hidden && current_user?.client)
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	if(port && (shuttleId == initial(shuttleId) || override))
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(port)
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
 	if(dock)
 		jumpto_ports[dock.id] = TRUE
 
-/mob/camera/aiEye/remote/shuttle_docker
+/mob/camera/ai_eye/remote/shuttle_docker
 	visible_icon = FALSE
 	use_static = USE_STATIC_NONE
 	var/list/placement_images = list()
 	var/list/placed_images = list()
 
-/mob/camera/aiEye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
+/mob/camera/ai_eye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
 	src.origin = origin
 	return ..()
 
-/mob/camera/aiEye/remote/shuttle_docker/setLoc(T)
+/mob/camera/ai_eye/remote/shuttle_docker/setLoc(T)
 	..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	console.checkLandingSpot()
 
-/mob/camera/aiEye/remote/shuttle_docker/update_remote_sight(mob/living/user)
+/mob/camera/ai_eye/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	user.sight = BLIND|SEE_TURFS
 	user.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	user.sync_lighting_plane_alpha()
@@ -299,7 +325,7 @@
 	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	origin.rotateLandingSpot()
 
@@ -312,7 +338,7 @@
 	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	origin.placeLandingSpot(target)
 
@@ -324,7 +350,7 @@
 	if(QDELETED(target) || !isliving(target))
 		return
 	var/mob/living/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
 
 	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)

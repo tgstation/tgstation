@@ -1,21 +1,37 @@
 /obj/machinery/computer/pod
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
+	processing_flags = START_PROCESSING_MANUALLY
+	/// Connected mass driver
 	var/obj/machinery/mass_driver/connected = null
-	var/title = "Mass Driver Controls"
+	/// ID of the launch control
 	var/id = 1
-	var/timing = 0
+	/// If the launch timer counts down
+	var/timing = FALSE
+	/// Time before auto launch
 	var/time = 30
+	/// Range in which we search for a mass drivers and poddoors nearby
 	var/range = 4
-
+	/// Countdown timer for the mass driver's delayed launch functionality.
+	COOLDOWN_DECLARE(massdriver_countdown)
 
 /obj/machinery/computer/pod/Initialize()
 	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
+			break
 
+/obj/machinery/computer/pod/process(delta_time)
+	if(COOLDOWN_FINISHED(src, massdriver_countdown))
+		timing = FALSE
+		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
+		end_processing()
+		alarm()
 
+/**
+  * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
+  */
 /obj/machinery/computer/pod/proc/alarm()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -39,93 +55,97 @@
 		if(M.id == id)
 			M.close()
 
-/obj/machinery/computer/pod/ui_interact(mob/user)
+/obj/machinery/computer/pod/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MassDriverControl", name)
+		ui.open()
+
+/obj/machinery/computer/pod/ui_data(mob/user)
+	var/list/data = list()
+	// If the cooldown has finished, just display the time. If the cooldown hasn't finished, display the cooldown.
+	var/display_time = COOLDOWN_FINISHED(src, massdriver_countdown) ? time : COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
+	data["connected"] = connected ? TRUE : FALSE
+	data["seconds"] = round(display_time % 60)
+	data["minutes"] = round((display_time - data["seconds"]) / 60)
+	data["timing"] = timing
+	data["power"] = connected ? connected.power : 0.25
+	data["poddoor"] = FALSE
+	for(var/obj/machinery/door/poddoor/door in range(range, src))
+		if(door.id == id)
+			data["poddoor"] = TRUE
+			break
+	return data
+
+/obj/machinery/computer/pod/ui_act(action, list/params)
 	. = ..()
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+	if(.)
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 
-	var/dat = ""
-	if(connected)
-		var/d2
-		if(timing)	//door controls do not need timers.
-			d2 = "<A href='?src=[REF(src)];time=0'>Stop Time Launch</A>"
-		else
-			d2 = "<A href='?src=[REF(src)];time=1'>Initiate Time Launch</A>"
-		dat += "<HR>\nTimer System: [d2]\nTime Left: [DisplayTimeText((time SECONDS))] <A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
-		var/temp = ""
-		var/list/L = list( 0.25, 0.5, 1, 2, 4, 8, 16 )
-		for(var/t in L)
-			if(t == connected.power)
-				temp += "[t] "
+	switch(action)
+		if("set_power")
+			if(!connected)
+				return
+			var/value = text2num(params["power"])
+			if(!value)
+				return
+			value = clamp(value, 0.25, 16)
+			connected.power = value
+			return TRUE
+		if("launch")
+			alarm()
+			return TRUE
+		if("time")
+			timing = !timing
+			if(timing)
+				COOLDOWN_START(src, massdriver_countdown, time SECONDS)
+				begin_processing()
 			else
-				temp += "<A href = '?src=[REF(src)];power=[t]'>[t]</A> "
-		dat += "<HR>\nPower Level: [temp]<BR>\n<A href = '?src=[REF(src)];alarm=1'>Firing Sequence</A><BR>\n<A href = '?src=[REF(src)];drive=1'>Test Fire Driver</A><BR>\n<A href = '?src=[REF(src)];door=1'>Toggle Outer Door</A><BR>"
-	else
-		dat += "<BR>\n<A href = '?src=[REF(src)];door=1'>Toggle Outer Door</A><BR>"
-	dat += "<BR><BR><A href='?src=[REF(user)];mach_close=computer'>Close</A>"
-	add_fingerprint(usr)
-	var/datum/browser/popup = new(user, "computer", title, 400, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
-
-/obj/machinery/computer/pod/process()
-	if(!..())
-		return
-	if(timing)
-		if(time > 0)
-			time = round(time) - 1
-		else
-			alarm()
-			time = 0
-			timing = 0
-		updateDialog()
-
-
-/obj/machinery/computer/pod/Topic(href, href_list)
-	if(..())
-		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
-		usr.set_machine(src)
-		if(href_list["power"])
-			var/t = text2num(href_list["power"])
-			t = min(max(0.25, t), 16)
-			if(connected)
-				connected.power = t
-		if(href_list["alarm"])
-			alarm()
-		if(href_list["time"])
-			timing = text2num(href_list["time"])
-		if(href_list["tp"])
-			var/tp = text2num(href_list["tp"])
-			time += tp
-			time = min(max(round(time), 0), 120)
-		if(href_list["door"])
+				time = COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
+				COOLDOWN_RESET(src, massdriver_countdown)
+				end_processing()
+			return TRUE
+		if("input")
+			var/value = text2num(params["adjust"])
+			if(!value)
+				return
+			value = round(time + value)
+			time = clamp(value, 0, 120)
+			return TRUE
+		if("door")
 			for(var/obj/machinery/door/poddoor/M in range(range, src))
 				if(M.id == id)
 					if(M.density)
 						M.open()
 					else
 						M.close()
-		if(href_list["drive"])
+			return TRUE
+		if("driver_test")
 			for(var/obj/machinery/mass_driver/M in range(range, src))
 				if(M.id == id)
-					M.power = connected.power
+					M.power = connected?.power
 					M.drive()
-		updateUsrDialog()
+			return TRUE
 
 /obj/machinery/computer/pod/old
 	name = "\improper DoorMex control console"
-	title = "Door Controls"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
+
+/obj/machinery/computer/pod/old/mass_driver_controller
+	name = "\improper Mass Driver Controller"
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "airlock_control_standby"
+	icon_keyboard = "no_keyboard"
+	density = FALSE
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
-	title = "External Airlock Controls"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/pod/old/swf

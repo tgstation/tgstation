@@ -11,7 +11,7 @@
 
 /obj/machinery/plate_press/update_icon()
 	. = ..()
-	if(!is_operational())
+	if(!is_operational)
 		icon_state = "offline"
 	else if(pressing)
 		icon_state = "loop"
@@ -25,10 +25,10 @@
 	. = ..()
 
 /obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
-	if(!is_operational())
+	if(!is_operational)
 		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
 		return FALSE
-	if(pressing)
+	if(current_plate)
 		to_chat(user, "<span class='warning'>[src] already has a plate in it!</span>")
 		return FALSE
 	if(istype(I, /obj/item/stack/license_plates/empty))

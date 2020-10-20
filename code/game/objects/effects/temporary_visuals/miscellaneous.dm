@@ -7,7 +7,7 @@
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -372,6 +372,13 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/temp_visual/impact_effect/energy
+	icon_state = "impact_energy"
+	duration = 6
+
+/obj/effect/temp_visual/impact_effect/neurotoxin
+	icon_state = "impact_neurotoxin"
+
 /obj/effect/temp_visual/heart
 	name = "heart"
 	icon = 'icons/mob/animal.dmi'
@@ -402,7 +409,7 @@
 /obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "heart", I, seer)
 	I.alpha = 255
 	I.appearance_flags = RESET_ALPHA
 	animate(I, alpha = 0, time = duration)

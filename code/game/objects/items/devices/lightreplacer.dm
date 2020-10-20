@@ -45,7 +45,8 @@
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "light_replacer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -178,7 +179,7 @@
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
-/obj/item/lightreplacer/proc/Charge(var/mob/user)
+/obj/item/lightreplacer/proc/Charge(mob/user)
 	charge += 1
 	if(charge > 3)
 		AddUses(1)

@@ -2,14 +2,14 @@
 	name = "Birthday Cake"
 	description = "Nanotrasen's birthday is coming up! Ship them a birthday cake to celebrate!"
 	reward = 4000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday, /obj/item/reagent_containers/food/snacks/cakeslice/birthday)
+	wanted_types = list(/obj/item/food/cake/birthday, /obj/item/food/cakeslice/birthday)
 
 /datum/bounty/item/chef/soup
 	name = "Soup"
 	description = "To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/soup)
+	wanted_types = list(/obj/item/food/soup)
 
 /datum/bounty/item/chef/popcorn
 	name = "Popcorn Bags"
@@ -30,20 +30,20 @@
 	description = "Upper management has been screaming non-stop for ice cream. Please send some."
 	reward = 4000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/icecreamsandwich)
+	wanted_types = list(/obj/item/food/icecreamsandwich)
 
 /datum/bounty/item/chef/strawberryicecreamsandwich
 	name = " Strawberry Ice Cream Sandwiches"
 	description = "Upper management has been screaming non-stop for more flavourful ice cream. Please send some."
 	reward = 5000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich)
+	wanted_types = list(/obj/item/food/strawberryicecreamsandwich)
 
 /datum/bounty/item/chef/bread
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
+	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
@@ -56,7 +56,7 @@
 	description = "CentCom management is going on a health binge. Your order is to ship salad or rice bowls."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/salad)
+	wanted_types = list(/obj/item/food/salad)
 
 /datum/bounty/item/chef/carrotfries
 	name = "Carrot Fries"
@@ -69,7 +69,7 @@
 	name = "Super Bite Burger"
 	description = "Commander Tubbs thinks he can set a competitive eating world record. All he needs is a super bite burger shipped to him."
 	reward = 12000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/burger/superbite)
+	wanted_types = list(/obj/item/food/burger/superbite)
 
 /datum/bounty/item/chef/poppypretzel
 	name = "Poppy Pretzel"
@@ -81,7 +81,7 @@
 	name = "Cuban Carp"
 	description = "To celebrate the birth of Castro XXVII, ship one cuban carp to CentCom."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/cubancarp)
+	wanted_types = list(/obj/item/food/cubancarp)
 
 /datum/bounty/item/chef/hotdog
 	name = "Hot Dog"
@@ -94,7 +94,7 @@
 	description = "A famous singer will be arriving at CentCom, and their contract demands that they only be served Eggplant Parmigiana. Ship some, please!"
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/eggplantparm)
+	wanted_types = list(/obj/item/food/eggplantparm)
 
 /datum/bounty/item/chef/muffin
 	name = "Muffins"
@@ -114,7 +114,7 @@
 	description = "Remove all kebab from station you are best food. Ship to CentCom to remove from the premises."
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/kebab)
+	wanted_types = list(/obj/item/food/kebab)
 
 /datum/bounty/item/chef/soylentgreen
 	name = "Soylent Green"
@@ -134,5 +134,11 @@
 	description = "The vice president's son won't shut up about chicken nuggies. Would you mind shipping some?"
 	reward = 4000
 	required_count = 6
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/nugget)
+	wanted_types = list(/obj/item/food/nugget)
 
+/datum/bounty/item/chef/corgifarming //Butchering is a chef's job.
+	name = "Corgi Hides"
+	description = "Admiral Weinstein's space yacht needs new upholstery. A dozen Corgi furs should do just fine."
+	reward = 30000 //that's a lot of dead dogs
+	required_count = 12
+	wanted_types = list(/obj/item/stack/sheet/animalhide/corgi)

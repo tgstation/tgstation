@@ -180,15 +180,7 @@
 
 	for(var/V in listeners)
 		var/mob/living/L = V
-		var/datum/antagonist/devil/devilinfo = is_devil(L)
-		if(devilinfo && findtext(message, devilinfo.truename))
-			var/start = findtext(message, devilinfo.truename)
-			listeners = list(L) //Devil names are unique.
-			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
-			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 1, start) + copytext(message, start + length(devilinfo.truename))
-			break
-		else if(findtext(message, L.real_name, 1, length(L.real_name) + 1))
+		if(findtext(message, L.real_name, 1, length(L.real_name) + 1))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.real_name
@@ -312,13 +304,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += (5 * power_multiplier)
+			var/obj/item/bodypart/BP = pick(H.bodyparts)
+			BP.generic_bleedstacks += 5
 
 	//FIRE
 	else if((findtext(message, burn_words)))
@@ -362,13 +355,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			var/text = ""
-			if(is_devil(L))
-				var/datum/antagonist/devil/devilinfo = is_devil(L)
-				text = devilinfo.truename
-			else
-				text = L.real_name
-			addtimer(CALLBACK(L, /atom/movable/proc/say, text), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, L.real_name), 5 * i)
 			i++
 
 	//SAY MY NAME

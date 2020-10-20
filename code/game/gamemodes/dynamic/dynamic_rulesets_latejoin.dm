@@ -6,26 +6,20 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	for(var/mob/P in candidates)
-		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
+		if(!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
-			continue
-		if(!mode.check_age(P.client, minimum_required_age))
+		else if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
-			continue
-		if(antag_flag_override)
+		else if(P.mind.assigned_role in restricted_roles) // Does their job allow for it?
+			candidates.Remove(P)
+		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+			candidates.Remove(P)
+		else if(antag_flag_override)
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 		else
 			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
-		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
-			candidates.Remove(P)
-			continue
-		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
-			candidates.Remove(P)
-			continue
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
 	if (!forced)
@@ -65,7 +59,6 @@
 	weight = 7
 	cost = 5
 	requirements = list(40,30,20,10,10,10,10,10,10,10)
-	high_population_requirement = 10
 	repeatable = TRUE
 	flags = TRAITOR_RULESET
 
@@ -89,7 +82,6 @@
 	delay = 1 MINUTES	// Prevents rule start while head is offstation.
 	cost = 20
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
-	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
@@ -153,7 +145,7 @@
 
 
 /// Checks for revhead loss conditions and other antag datums.
-/datum/dynamic_ruleset/latejoin/provocateur/proc/check_eligible(var/datum/mind/M)
+/datum/dynamic_ruleset/latejoin/provocateur/proc/check_eligible(datum/mind/M)
 	var/turf/T = get_turf(M.current)
 	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return TRUE
@@ -186,3 +178,21 @@
 	else if(finished == STATION_VICTORY)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
+
+//////////////////////////////////////////////
+//                                          //
+//           HERETIC SMUGGLER          		//
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler
+	name = "Heretic Smuggler"
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = ROLE_HERETIC
+	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
+	restricted_roles = list("AI","Cyborg")
+	required_candidates = 1
+	weight = 4
+	cost = 10
+	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	repeatable = TRUE

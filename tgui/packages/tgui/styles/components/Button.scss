@@ -45,25 +45,26 @@ $bg-map: colors.$bg-map !default;
 .Button {
   position: relative;
   display: inline-block;
-  line-height: 20px;
-  padding: 0 6px;
-  margin-right: 2px;
+  line-height: 1.667em;
+  padding: 0 0.5em;
+  margin-right: base.em(2px);
   white-space: nowrap;
   outline: 0;
   border-radius: $border-radius;
-  margin-bottom: 2px;
+  margin-bottom: base.em(2px);
   // Disable selection in buttons
   user-select: none;
   -ms-user-select: none;
 
   &:last-child {
     margin-right: 0;
+    margin-bottom: 0;
   }
 
   .fa, .fas, .far {
-    margin-left: -3px;
-    margin-right: -3px;
-    min-width: 16px;
+    margin-left: -0.25em;
+    margin-right: -0.25em;
+    min-width: 1.333em;
     text-align: center;
   }
 }
@@ -71,7 +72,7 @@ $bg-map: colors.$bg-map !default;
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
-    margin-right: 3px;
+    margin-right: 0.25em;
   }
 }
 
@@ -84,7 +85,15 @@ $bg-map: colors.$bg-map !default;
   display: block;
   margin-left: 0;
   margin-right: 0;
-  // padding: 3px 6px;
+}
+
+.Button--circular {
+  border-radius: 50%;
+}
+
+.Button--compact {
+  padding: 0 0.25em;
+  line-height: 1.333em;
 }
 
 @each $color-name, $color-value in $bg-map {

@@ -13,56 +13,64 @@
 	infectable_biotypes = MOB_ORGANIC|MOB_ROBOTIC
 	process_dead = TRUE
 
+
 /datum/disease/magnitis/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
 			if(prob(2))
-				for(var/obj/M in orange(2,affected_mob))
-					if(!M.anchored && (M.flags_1 & CONDUCT_1))
-						step_towards(M,affected_mob)
-				for(var/mob/living/silicon/S in orange(2,affected_mob))
-					if(isAI(S))
+				for(var/obj/nearby_object in orange(2, affected_mob))
+					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
-					step_towards(S,affected_mob)
+					var/move_dir = get_dir(nearby_object, affected_mob)
+					nearby_object.Move(get_step(nearby_object, move_dir), move_dir)
+				for(var/mob/living/silicon/nearby_silicon in orange(2, affected_mob))
+					if(isAI(nearby_silicon))
+						continue
+					var/move_dir = get_dir(nearby_silicon, affected_mob)
+					nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir)
 		if(3)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a strong shock course through your body.</span>")
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel like clowning around.</span>")
 			if(prob(4))
-				for(var/obj/M in orange(4,affected_mob))
-					if(!M.anchored && (M.flags_1 & CONDUCT_1))
-						var/i
-						var/iter = rand(1,2)
-						for(i=0,i<iter,i++)
-							step_towards(M,affected_mob)
-				for(var/mob/living/silicon/S in orange(4,affected_mob))
-					if(isAI(S))
+				for(var/obj/nearby_object in orange(4, affected_mob))
+					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
-					var/i
-					var/iter = rand(1,2)
-					for(i=0,i<iter,i++)
-						step_towards(S,affected_mob)
+					for(var/i in 1 to rand(1, 2))
+						var/move_dir = get_dir(nearby_object, affected_mob)
+						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
+							break
+				for(var/mob/living/silicon/nearby_silicon in orange(4, affected_mob))
+					if(isAI(nearby_silicon))
+						continue
+					for(var/i in 1 to rand(1, 2))
+						var/move_dir = get_dir(nearby_silicon, affected_mob)
+						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
+							break
 		if(4)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a powerful shock course through your body.</span>")
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You query upon the nature of miracles.</span>")
 			if(prob(8))
-				for(var/obj/M in orange(6,affected_mob))
-					if(!M.anchored && (M.flags_1 & CONDUCT_1))
-						var/i
-						var/iter = rand(1,3)
-						for(i=0,i<iter,i++)
-							step_towards(M,affected_mob)
-				for(var/mob/living/silicon/S in orange(6,affected_mob))
-					if(isAI(S))
+				for(var/obj/nearby_object in orange(6, affected_mob))
+					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
-					var/i
-					var/iter = rand(1,3)
-					for(i=0,i<iter,i++)
-						step_towards(S,affected_mob)
-	return
+					for(var/i in 1 to rand(1, 3))
+						var/move_dir = get_dir(nearby_object, affected_mob)
+						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
+							break
+				for(var/mob/living/silicon/nearby_silicon in orange(6, affected_mob))
+					if(isAI(nearby_silicon))
+						continue
+					for(var/i in 1 to rand(1, 3))
+						var/move_dir = get_dir(nearby_silicon, affected_mob)
+						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
+							break

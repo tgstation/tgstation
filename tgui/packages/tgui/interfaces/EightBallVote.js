@@ -9,7 +9,9 @@ export const EightBallVote = (props, context) => {
     shaking,
   } = data;
   return (
-    <Window>
+    <Window
+      width={400}
+      height={600}>
       <Window.Content>
         {!shaking && (
           <NoticeBox>

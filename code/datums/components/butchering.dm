@@ -2,7 +2,7 @@
 	var/speed = 80 //time in deciseconds taken to butcher something
 	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
 	var/bonus_modifier = 0 //percentage increase to bonus item chance
-	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
+	var/butcher_sound = 'sound/effects/butcher.ogg' //sound played when butchering
 	var/butchering_enabled = TRUE
 	var/can_be_blunt = FALSE
 
@@ -23,6 +23,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(user.a_intent != INTENT_HARM)
 		return
 	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
@@ -47,6 +49,10 @@
 		Butcher(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
+	if(INTERACTING_WITH(user, H))
+		to_chat(user, "<span class='warning'>You're already interacting with [H]!</span>")
+		return
+
 	user.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
 					"<span class='danger'>You start slicing [H]'s throat!</span>", \
 					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
@@ -64,8 +70,11 @@
 		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		log_combat(user, H, "finishes slicing the throat of")
-		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
-		H.bleed_rate = clamp(H.bleed_rate + 20, 0, 30)
+		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
+		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
+		if(slit_throat)
+			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
+			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
@@ -115,6 +124,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
 /datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
+	SIGNAL_HANDLER
+
 	if(!istype(L))
 		return
 	var/obj/machinery/recycler/eater = parent

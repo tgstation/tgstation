@@ -3,6 +3,8 @@
 	desc = "A miniature machine that tracks suit sensors across the station."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = 1750

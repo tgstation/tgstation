@@ -3,6 +3,7 @@
 	desc = "I guess someone didn't like it."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	worn_icon_state = "book"
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
@@ -34,7 +35,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	desc = "Apply to head repeatedly."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "bible"
-	item_state = "bible"
+	inhand_icon_state = "bible"
+	worn_icon_state = "bible"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	var/mob/affecting = null
@@ -49,47 +51,63 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
-	if(!istype(H))
-		return
-	if(!H.can_read(src))
+/obj/item/storage/book/bible/attack_self(mob/living/carbon/human/user)
+	if(GLOB.bible_icon_state)
 		return FALSE
-	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!GLOB.bible_icon_state && H.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
-		for(var/i in 1 to GLOB.biblestates.len)
-			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
-			var/nicename = GLOB.biblenames[i]
-			H << browse_rsc(bibleicon, nicename)
-			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=[REF(src)];seticon=[i]">[nicename]</a></td></tr>"}
-		dat += "</table></body></html>"
-		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
+	if(user?.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+		return FALSE
 
-/obj/item/storage/book/bible/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		return
-	if(href_list["seticon"] && !GLOB.bible_icon_state)
-		var/iconi = text2num(href_list["seticon"])
-		var/biblename = GLOB.biblenames[iconi]
-		icon_state = GLOB.biblestates[iconi]
-		item_state = GLOB.bibleitemstates[iconi]
+	var/list/skins = list()
+	for(var/i in 1 to GLOB.biblestates.len)
+		var/image/bible_image = image(icon = 'icons/obj/storage.dmi', icon_state = GLOB.biblestates[i])
+		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
-		if(icon_state == "honk1" || icon_state == "honk2")
-			var/mob/living/carbon/human/H = usr
-			H.dna.add_mutation(CLOWNMUT)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), ITEM_SLOT_MASK)
-		if(icon_state == "insuls")
-			var/mob/living/carbon/human/H =usr
+	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	var/bible_index = GLOB.biblenames.Find(choice)
+	if(!bible_index)
+		return FALSE
+	icon_state = GLOB.biblestates[bible_index]
+	inhand_icon_state = GLOB.bibleitemstates[bible_index]
+
+	switch(icon_state)
+		if("honk1")
+			user.dna.add_mutation(CLOWNMUT)
+			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
+		if("honk2")
+			user.dna.add_mutation(CLOWNMUT)
+			user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(user), ITEM_SLOT_MASK)
+		if("insuls")
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
 			insuls.name = "insuls"
 			insuls.desc = "A mere copy of the true insuls."
 			insuls.siemens_coefficient = 0.99999
-			H.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
-		GLOB.bible_icon_state = icon_state
-		GLOB.bible_item_state = item_state
+			user.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
+	GLOB.bible_icon_state = icon_state
+	GLOB.bible_inhand_icon_state = inhand_icon_state
+	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")
 
-		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
-		usr << browse(null, "window=editicon")
+/**
+  * Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
+	if(GLOB.bible_icon_state)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(!user.is_holding(src))
+		return FALSE
+	if(!user.can_read(src))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
+		return FALSE
+	return TRUE
 
 /obj/item/storage/book/bible/proc/bless(mob/living/L, mob/living/user)
 	if(GLOB.religious_sect)
@@ -141,7 +159,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if (!heal_mode)
 		return ..()
 
-	var/smack = 1
+	var/smack = TRUE
 
 	if (M.stat != DEAD)
 		if(chaplain && user == M)
@@ -149,7 +167,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			return
 
 		if(prob(60) && bless(M, user))
-			smack = 0
+			smack = FALSE
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
@@ -191,7 +209,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			var/obj/item/storage/book/bible/B = A
 			B.name = name
 			B.icon_state = icon_state
-			B.item_state = item_state
+			B.inhand_icon_state = inhand_icon_state
 	if(istype(A, /obj/item/cult_bastard) && !iscultist(user))
 		var/obj/item/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
@@ -260,7 +278,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	name = "Syndicate Tome"
-	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
+	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches")
+	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch")
 	var/uses = 1
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)

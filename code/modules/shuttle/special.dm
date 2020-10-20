@@ -174,6 +174,8 @@
 	. = ..()
 
 /mob/living/simple_animal/proc/check_barstaff_godmode()
+	SIGNAL_HANDLER
+
 	if(istype(get_area(loc), /area/shuttle/escape))
 		status_flags |= GODMODE
 	else
@@ -190,15 +192,15 @@
 	var/boot_dir = 1
 
 /obj/structure/table/wood/bar/Crossed(atom/movable/AM)
-	if(isliving(AM) && !is_barstaff(AM))
+	var/mob/living/M = AM
+	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
 		// No climbing on the bar please
-		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
-		. = ..()
+		return ..()
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE

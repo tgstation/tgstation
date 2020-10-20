@@ -120,7 +120,7 @@
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
-	if(species && species.inert_mutation)
+	if(species?.inert_mutation)
 		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	if(!LAZYLEN(mutations_temp))
@@ -221,8 +221,8 @@
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/dna/proc/update_instability(alert=TRUE)
 	stability = 100
@@ -370,7 +370,7 @@
 		for(var/M in mutations)
 			var/datum/mutation/human/HM = M
 			if(HM.allow_transfer || force_transfer_mutations)
-				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
+				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise won't be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
@@ -438,7 +438,7 @@
 
 /datum/dna/proc/check_block_string(mutation)
 	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))
-		return 0
+		return FALSE
 	return is_gene_active(mutation)
 
 /datum/dna/proc/is_gene_active(mutation)
@@ -549,7 +549,7 @@
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!M.has_dna())
-		return 0
+		return FALSE
 	if(se)
 		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
@@ -560,7 +560,7 @@
 			if(prob(probability))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
 		M.updateappearance(mutations_overlay_update=1)
-	return 1
+	return TRUE
 
 //value in range 1 to values. values must be greater than 0
 //all arguments assumed to be positive integers
@@ -620,7 +620,7 @@
 				if(elligible_organs.len)
 					var/obj/item/organ/O = pick(elligible_organs)
 					O.Remove(src)
-					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]</span>") //no "vomit up your the heart"
+					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]</span>") //no "vomit up your heart"
 					O.forceMove(drop_location())
 					if(prob(20))
 						O.animate_atom_living()
@@ -652,8 +652,6 @@
 				set_species(/datum/species/skeleton)
 				if(prob(90))
 					addtimer(CALLBACK(src, .proc/death), 30)
-					if(mind)
-						mind.hasSoul = FALSE
 			if(5)
 				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
 				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)

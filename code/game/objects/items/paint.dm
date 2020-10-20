@@ -8,7 +8,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "paint_neutral"
 	var/paint_color = "FFFFFF"
-	item_state = "paintcan"
+	inhand_icon_state = "paintcan"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -57,7 +57,7 @@
 
 /obj/item/paint/anycolor/attack_self(mob/user)
 	var/t1 = input(user, "Please select a color:", "[src]", null) in sortList(list( "red", "blue", "green", "yellow", "violet", "black", "white"))
-	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
+	if ((user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)))
 		return
 	switch(t1)
 		if("red")

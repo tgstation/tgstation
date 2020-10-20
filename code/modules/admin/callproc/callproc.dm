@@ -83,8 +83,6 @@ GLOBAL_VAR(LastAdminCalledTarget)
 GLOBAL_PROTECT(LastAdminCalledTarget)
 GLOBAL_VAR(LastAdminCalledProc)
 GLOBAL_PROTECT(LastAdminCalledProc)
-GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
-GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 /// Wrapper for proccalls where the datum is flagged as vareditted
 /proc/WrapAdminProcCall(datum/target, procname, list/arguments)
@@ -99,15 +97,11 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/ckey = usr ? usr.client.ckey : GLOB.AdminProcCaller
 	if(!ckey)
 		CRASH("WrapAdminProcCall with no ckey: [target] [procname] [english_list(arguments)]")
+
 	if(current_caller && current_caller != ckey)
-		if(!GLOB.AdminProcCallSpamPrevention[ckey])
-			to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>", confidential = TRUE)
-			GLOB.AdminProcCallSpamPrevention[ckey] = TRUE
-			UNTIL(!GLOB.AdminProcCaller)
-			to_chat(usr, "<span class='adminnotice'>Running your proc</span>", confidential = TRUE)
-			GLOB.AdminProcCallSpamPrevention -= ckey
-		else
-			UNTIL(!GLOB.AdminProcCaller)
+		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running. Try again later.</span>", confidential = TRUE)
+		return
+
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
 		GLOB.LastAdminCalledTargetRef = REF(target)
@@ -136,7 +130,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
-	set waitfor = 0
+	set waitfor = FALSE
 
 	if(!check_rights(R_DEBUG))
 		return
@@ -205,4 +199,4 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		. += "</font>"
 
 	else
-		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
+		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? html_encode(returnval) : "null"]</font>"

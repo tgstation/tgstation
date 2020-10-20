@@ -154,7 +154,7 @@
 	var/did_we_charge = FALSE
 	var/obj/item/organ/stomach/ethereal/eth_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
-		eth_stomach.adjust_charge(3)
+		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
 
 	//if we're not targetting a robot part we stop early
@@ -183,10 +183,10 @@
 	var/obj/item/stock_parts/cell/the_cell = I
 	if(!istype(the_cell)) //how...
 		return
-	if(the_cell.charge < 3000)
+	if(the_cell.charge < 300)
 		to_chat(L,"<span class='notice'>[GLOB.deity] does not accept pity amounts of power.</span>")
 		return
-	adjust_favor(round(the_cell.charge/3000), L)
+	adjust_favor(round(the_cell.charge/300), L)
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
 	return TRUE

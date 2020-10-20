@@ -8,9 +8,9 @@
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
-/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+/obj/item/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	create_reagents(50)
+	create_reagents(100)
 
 	if(new_seed)
 		seed = new_seed.Copy()
@@ -24,7 +24,7 @@
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, newloc)
+			T.on_new(src, loc)
 
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)
@@ -44,8 +44,8 @@
 
 /obj/item/grown/proc/add_juice()
 	if(reagents)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?

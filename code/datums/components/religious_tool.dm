@@ -51,6 +51,8 @@
   * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
   */
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	/**********Sect Selection**********/
 	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
@@ -126,6 +128,8 @@
   * Appends to examine so the user knows it can be used for religious purposes.
   */
 /datum/component/religious_tool/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	var/can_i_see = FALSE
 	if(isobserver(user))
 		can_i_see = TRUE

@@ -49,14 +49,10 @@
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
 	var/datum/techweb/stored_research
-	/// Maximum number of mutations that DNA Consoles are able to store
-	var/max_storage = 6
 	/// Duration for enzyme radiation pulses
 	var/radduration = 2
 	/// Strength for enzyme radiation pulses
 	var/radstrength = 1
-	/// Maximum number of chromosomes that DNA Consoles are able to store.
-	var/max_chromosomes = 6
 	/// Maximum number of enzymes we can store
 	var/list/genetic_makeup_buffer[NUMBER_OF_BUFFERS]
 	/// List of all mutations stored on the DNA Console
@@ -100,6 +96,8 @@
 	var/is_joker_ready = FALSE
 	/// Used for setting tgui data - Whether injectors are ready to be printed
 	var/is_injector_ready = FALSE
+	/// Used for setting tgui data - Is CRISPR ready?
+	var/is_crispr_ready = FALSE
 	/// Used for setting tgui data - Wheher an enzyme pulse operation is ongoing
 	var/is_pulsing_rads = FALSE
 	/// Used for setting tgui data - Time until scramble is ready
@@ -133,6 +131,9 @@
 	/// State of tgui view, i.e. which tab is currently active, or which genome we're currently looking at.
 	var/list/list/tgui_view_state = list()
 
+	///Counter for CRISPR charges
+	var/crispr_charges = 0
+
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
 
@@ -145,22 +146,21 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	// Store chromosomes in the console if there's room
 	if (istype(I, /obj/item/chromosome))
-		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
-			I.forceMove(src)
-			stored_chromosomes += I
-			to_chat(user, "<span class='notice'>You insert [I].</span>")
-		else
-			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+		I.forceMove(src)
+		stored_chromosomes += I
+		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
 
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		// Insert disk into DNA Console
 		if (!user.transferItemToLoc(I,src))
 			return
+		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(user)
+		// Set the new diskette.
 		diskette = I
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
@@ -174,20 +174,25 @@
 			if(A.research)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
-					var/obj/item/chromosome/CM = new c_typepath (drop_location())
-					if(LAZYLEN(stored_chromosomes) < max_chromosomes)
-						CM.forceMove(src)
-						stored_chromosomes += CM
-						to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
-					else
-						to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
-						to_chat(user, "<span class='notice'>[capitalize(CM.name)] added on top of the console.</span>")
+					var/obj/item/chromosome/CM = new c_typepath (src)
+					stored_chromosomes += CM
+					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
 				else
 					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
+				if(A.crispr_charge)
+					crispr_charges++
 			qdel(I)
 			return
 
 	return ..()
+
+
+/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
+	// Make sure the user can interact with the machine.
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+
+	eject_disk(user)
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
@@ -207,12 +212,7 @@
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
 
-/obj/machinery/computer/scan_consolenew/examine(mob/user)
-	. = ..()
-
-/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
 	// We can also do some general state processing here too as it's a good
@@ -226,7 +226,10 @@
 		can_use_scanner = TRUE
 	else
 		can_use_scanner = FALSE
-		connected_scanner = null
+		if(connected_scanner)
+			if(connected_scanner.linked_console == src)
+				connected_scanner.linked_console = null
+			connected_scanner = null
 		is_viable_occupant = FALSE
 
 	// Check for a viable occupant in the scanner.
@@ -253,12 +256,17 @@
 	is_pulsing_rads = ((rad_pulse_index > 0) && (rad_pulse_timer > world.time))
 	time_to_pulse = round((rad_pulse_timer - world.time)/10)
 
-	// Attempt to update tgui ui, open and update if needed.
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	is_crispr_ready = (crispr_charges > 0)
 
+	// Attempt to update tgui ui, open and update if needed.
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "DnaConsole", name, 539, 710, master_ui, state)
+		ui = new(user, src, "DnaConsole")
 		ui.open()
+
+/obj/machinery/computer/scan_consolenew/ui_assets()
+	. = ..() || list()
+	. += get_asset_datum(/datum/asset/simple/genetics)
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()
@@ -313,6 +321,8 @@
 	data["isScrambleReady"] = is_scramble_ready
 	data["isJokerReady"] = is_joker_ready
 	data["isInjectorReady"] = is_injector_ready
+	data["isCrisprReady"] = is_crispr_ready
+	data["crisprCharges"] = crispr_charges
 	data["scrambleSeconds"] = time_to_scramble
 	data["jokerSeconds"] = time_to_joker
 	data["injectorSeconds"] = time_to_injector
@@ -336,10 +346,8 @@
 		data["diskHasMakeup"] = FALSE
 		data["diskMakeupBuffer"] = null
 
-	data["mutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
 	//data["mutationStorage"] = tgui_console_mutations
 	data["storage"]["console"] = tgui_console_mutations
-	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
 	data["chromoStorage"] = tgui_console_chromosomes
 	data["makeupCapacity"] = NUMBER_OF_BUFFERS
 	data["makeupStorage"] = tgui_genetic_makeup
@@ -350,9 +358,10 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
-	if(..())
-		return TRUE
+/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
 
 	. = TRUE
 
@@ -555,6 +564,143 @@
 
 			return
 
+		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
+		// So AA means the AT pair stays the same, AT means AT becomes TA. This requires both knowing the
+		// solved full DNA of the subject mutation and the full DNA of the replacement genes. Applies probable disease
+		// of probable strengths as well. If you mess it up, you might end up getting undesirable genes, including
+		// unstable DNA. This could lead to permanent monkey. When you get it right, some will be swapped out, on a
+		// probability scale.
+		// ---------------------------------------------------------------------- //
+		// params["mutref"] - ATOM Ref of specific mutation to swap out
+		// params["source"] - The source the request came from.
+		//	Expected results:
+		//   "occupant" - From genetic sequencer
+		//   "console" - From DNA Console storage
+		//   "disk" - From inserted diskette
+		if("crispr")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(scanner_occupant != connected_scanner.occupant)
+				return
+
+			//GUARD CHECK
+			//Make sure there's charges available.
+			if(crispr_charges < 1)
+				return
+			var/search_flags = 0
+
+			// Only continue if applying to occupant - all replacements in-vitro.
+			switch(params["source"])
+				if("occupant")
+					if(can_modify_occupant())
+						search_flags |= SEARCH_OCCUPANT
+				if("console")
+					search_flags |= SEARCH_STORED
+					return
+				if("disk")
+					search_flags |= SEARCH_DISKETTE
+					return
+
+			//Currently selected mutation
+			var/bref = params["mutref"]
+
+			//Valid gene-pairs
+			var/at_str = "AT"
+			var/cg_str = "CG"
+
+			// GUARD CHECK - Only search occupant for this specific ref, since you
+			//  can only CRISPR existing mutations in a target
+			var/datum/mutation/human/target_mutation = get_mut_by_ref(bref, search_flags)
+
+			// Prompt for modifier string
+			var/new_sequence_input = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
+			// Drop out if the string is the wrong length
+			if(length(new_sequence_input) != 32)
+				return
+
+			//Generate the original and new gene sequences from the CRISPR string
+			//vars to hold the 2 sequences
+			var/old_sequence
+			var/new_sequence
+
+			//Unzip the modification string
+			for(var/i = 1 to length(new_sequence_input))
+				var/char = new_sequence_input[i]
+				var/pair_str
+				var/new_pair
+				//figure out which pair type the character belongs to
+				pair_str = ((at_str[1] == char || at_str[2] == char) ? at_str : ((cg_str[1] == char || cg_str[2] == char) ? cg_str : null))
+				//Valid pair from character
+				new_pair = (pair_str ? char + (pair_str[1]==char?pair_str[2]:pair_str[1]) : null)
+				// every second letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
+				if(new_pair)
+					if(i%2==0)
+						new_sequence+=new_pair
+					else
+						old_sequence+=new_pair
+				else
+					return //drop out, no pair
+
+			//decrement CRISPR charge
+			crispr_charges--
+
+			//Apply sequence
+			if(new_sequence)
+				//to hold the found mutation, if found
+				var/datum/mutation/human/matched_mutation = null
+				//Go through all sequences for matching gene, and set the mutation
+				for (var/M in subtypesof(/datum/mutation/human))
+					var/true_sequence = GET_SEQUENCE(M)
+					if (new_sequence == true_sequence)
+						matched_mutation = M
+				//First check is for the more-likely, weaker random virus. Second is for a tougher one. There's a chance both checks fail and you get nothing.
+				//This change was to bring it more in line with what I originally imagined, that the virus risk was from the virus misbehaving somehow - it
+				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
+				if(prob(60))
+					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
+					random_disease.try_infect(scanner_occupant, FALSE)
+				else if (prob(30))
+					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
+					random_disease.try_infect(scanner_occupant, FALSE)
+				//Instantiate list to hold resulting mutation_index
+				var/mutation_data[0]
+				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
+				//assures BAD END is the natural state if things go wrong
+				//I think this should be like with viruses, probability cascade or switch/case on random?
+				var/result_mutation = ACIDFLESH
+				//If we found the replacement mutation
+				if(matched_mutation)
+					//and the old sequence matches the real sequence of the old mutation
+					if(old_sequence == GET_SEQUENCE(target_mutation.type))
+						//Set the replacement mutation to the desired mutation
+						result_mutation = matched_mutation
+				//Remove the current active mutations - let's say doing this triggers DNA repair or something
+				//This is admittedly because I couldn't figure out how to only remove the targeted mutation
+				//Not touching MUT_EXTRA will hopefully leave the added mutations alone
+				scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL))
+				//Add the resulting mutation to the active mutations
+				scanner_occupant.dna.add_mutation(result_mutation,MUT_NORMAL, 0)
+				//Rebuild the mutation_index into mutation_data, replacing the sequence entry with the solved
+				//entry for the result mutation
+				for(var/mutation_type in scanner_occupant.dna.mutation_index)
+					if(mutation_type == target_mutation.type)
+						mutation_data[result_mutation] = new_sequence
+					else
+						mutation_data[mutation_type]=scanner_occupant.dna.mutation_index[mutation_type]
+				//Overwrite the mutation_index list with the rebuild mutation_data
+				scanner_occupant.dna.mutation_index = mutation_data
+				//Not sure what this does but it seems to be a sanity check and this needs a sanity check
+				scanner_occupant.domutcheck()
+
+
+			return
+
+
 		// Print any type of standard injector, limited right now to activators that
 		//  activate a dormant mutation and mutators that forcibly create a new
 		//  MUT_EXTRA mutation
@@ -654,11 +800,6 @@
 						search_flags |= SEARCH_OCCUPANT
 				if("disk")
 					search_flags |= SEARCH_DISKETTE
-
-			// GUARD CHECK - Is mutation storage full?
-			if(LAZYLEN(stored_mutations) >= max_storage)
-				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
-				return
 
 			var/bref = params["mutref"]
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
@@ -806,12 +947,6 @@
 		// params["secondref"] -  ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_console")
-			// GUaRD CHECK - Make sure mutation storage isn't full. If it is, we won't
-			//  be able to store the new combo mutation
-			if(LAZYLEN(stored_mutations) >= max_storage)
-				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
-				return
-
 			// GUARD CHECK - We're running a research-type operation. If, for some
 			//  reason, somehow the DNA Console has been disconnected from the research
 			//  network - Or was never in it to begin with - don't proceed
@@ -1048,13 +1183,7 @@
 
 		// Eject stored diskette from console
 		if("eject_disk")
-			// GUARD CHECK - This code shouldn't even be callable without a diskette
-			//  inserted. Unexpected result
-			if(!diskette)
-				return
-
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(usr)
 			return
 
 		// Create a Genetic Makeup injector. These injectors are timed and thus are
@@ -1482,10 +1611,7 @@
   * Checks if there is a connected DNA Scanner that is operational
   */
 /obj/machinery/computer/scan_consolenew/proc/scanner_operational()
-	if(!connected_scanner)
-		return FALSE
-
-	return (connected_scanner && connected_scanner.is_operational())
+	return connected_scanner?.is_operational
 
 /**
   * Checks if there is a valid DNA Scanner occupant for genetic modification
@@ -1512,7 +1638,7 @@
 		//	   this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
 		return TRUE
 
 	return FALSE
@@ -1535,7 +1661,7 @@
 	for(var/direction in GLOB.cardinals)
 		test_scanner = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 		if(!isnull(test_scanner))
-			if(test_scanner.is_operational())
+			if(test_scanner.is_operational)
 				connected_scanner = test_scanner
 				connected_scanner.linked_console = src
 				return
@@ -1986,6 +2112,29 @@
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
+/**
+  * Ejects the DNA Disk from the console.
+	*
+	* Will insert into the user's hand if possible, otherwise will drop it at the
+	* console's location.
+	*
+	* Arguments:
+  * * user - The mob that is attempting to eject the diskette.
+  */
+/obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
+	// Check for diskette.
+	if(!diskette)
+		return
+
+	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// Reset the state to console storage.
+	tgui_view_state["storageMode"] = "console"
+
+	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
+		diskette.forceMove(drop_location())
+	diskette = null
 
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS

@@ -13,7 +13,7 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/mouse = 1)
+	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -40,7 +40,10 @@
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
+	add_cell_sample()
 
+/mob/living/simple_animal/mouse/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -59,7 +62,17 @@
 				M.desc = "It's toast."
 		qdel(src)
 	else
+		SSmobs.cheeserats -= src // remove play controlled mouse also
 		..(gibbed)
+
+/mob/living/simple_animal/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
+	var/cap = CONFIG_GET(number/ratcap)
+	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
+		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		return FALSE
+	. = ..()
+	if(.)
+		SSmobs.cheeserats += src
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
@@ -95,6 +108,18 @@
 		evolve()
 		return
 
+/mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity)
+	. = ..()
+	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+		if(health == maxHealth)
+			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
+			return
+		to_chat(src,"<span class='green'>You nibble some cheese, restoring your health.</span>")
+		adjustHealth(-(maxHealth-health))
+		qdel(A)
+		return
+	return ..()
+
 /**
   *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
   */
@@ -111,7 +136,7 @@
   *Spawns a new regal rat, says some good jazz, and if sentient, transfers the relivant mind.
   */
 /mob/living/simple_animal/mouse/proc/evolve()
-	var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
+	var/mob/living/simple_animal/hostile/regalrat/regalrat = new /mob/living/simple_animal/hostile/regalrat/controlled(loc)
 	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
 	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)
@@ -141,7 +166,7 @@
 	return ..()
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
-/mob/living/simple_animal/mouse/brown/Tom
+/mob/living/simple_animal/mouse/brown/tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help_continuous = "pets"
@@ -151,6 +176,8 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "squeaks happily!"
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
@@ -163,6 +190,10 @@
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
+/obj/item/reagent_containers/food/snacks/deadmouse/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
+
 /obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
@@ -171,7 +202,7 @@
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
-			new /obj/item/reagent_containers/food/snacks/meat/slab/mouse(loc)
+			new /obj/item/food/meat/slab/mouse(loc)
 			to_chat(user, "<span class='notice'>You butcher [src].</span>")
 			qdel(src)
 		else

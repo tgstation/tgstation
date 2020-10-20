@@ -1,3 +1,5 @@
+
+#define FINAL_BUD_GROWTH_ICON 3
 /**
   * Kudzu Flower Bud
   *
@@ -8,20 +10,27 @@
   * Once it grows a venus human trap, the bud itself will destroy itself.
   *
   */
-/obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
+/obj/structure/alien/resin/flower_bud //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
 	desc = "A large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
-	icon_state = "flower_bud"
+	icon_state = "bud0"
 	layer = SPACEVINE_MOB_LAYER
-	opacity = 0
-	canSmoothWith = list()
-	smooth = SMOOTH_FALSE
-	/// The amount of time it takes to create a venus human trap, in deciseconds
-	var/growth_time = 1200
+	opacity = FALSE
+	canSmoothWith = null
+	smoothing_flags = NONE
+	/// The amount of time it takes to create a venus human trap.
+	var/growth_time = 120 SECONDS
+	var/growth_icon = 0
 
-/obj/structure/alien/resin/flower_bud_enemy/Initialize()
+	/// Used by countdown to check time, this is when the timer will complete and the venus trap will spawn.
+	var/finish_time
+	/// The countdown ghosts see to when the plant will hatch
+	var/obj/effect/countdown/flower_bud/countdown
+
+/obj/structure/alien/resin/flower_bud/Initialize()
 	. = ..()
+	countdown = new(src)
 	var/list/anchors = list()
 	anchors += locate(x-2,y+2,z)
 	anchors += locate(x+2,y+2,z)
@@ -31,17 +40,27 @@
 	for(var/turf/T in anchors)
 		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
+	finish_time = world.time + growth_time
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
+	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
+	countdown.start()
 
 /**
   * Spawns a venus human trap, then qdels itself.
   *
   * Displays a message, spawns a human venus trap, then qdels itself.
-  */	
-/obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
+  */
+/obj/structure/alien/resin/flower_bud/proc/bear_fruit()
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
+
+/obj/structure/alien/resin/flower_bud/proc/progress_growth()
+	growth_icon++
+	icon_state = "bud[growth_icon]"
+	if(growth_icon == FINAL_BUD_GROWTH_ICON)
+		return
+	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
@@ -71,6 +90,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
+	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "venus_human_trap"
 	health_doll_icon = "venus_human_trap"
 	layer = SPACEVINE_MOB_LAYER
@@ -82,13 +102,18 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	a_intent = INTENT_HARM
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	del_on_death = TRUE
+	deathmessage = "collapses into bits of plant matter."
+	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
+	deathsound = 'sound/creatures/venus_trap_death.ogg'
+	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
+	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
+	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	faction = list("hostile","vines","plants")
 	initial_language_holder = /datum/language_holder/venus
-	del_on_death = TRUE
 	/// A list of all the plant's vines
 	var/list/vines = list()
 	/// The maximum amount of vines a plant can have at one time
@@ -101,7 +126,11 @@
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
 	pull_vines()
-	
+
+/mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/OldLoc, Dir)
+	. = ..()
+	pixel_x = dir & (NORTH|WEST) ? 2 : -2
+
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()
 	if(isliving(target))
@@ -115,7 +144,7 @@
 			pull_vines()
 			ranged_cooldown = world.time + (ranged_cooldown_time * 0.5)
 			return
-	if(get_dist(src,the_target) > vine_grab_distance || vines.len == max_vines)
+	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
 		return
 	for(var/turf/T in getline(src,target))
 		if (T.density)
@@ -123,7 +152,7 @@
 		for(var/obj/O in T)
 			if(O.density)
 				return
-	
+
 	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
 	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
 	vines += newVine
@@ -134,11 +163,11 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/Login()
 	. = ..()
-	to_chat(src, "<span class='boldwarning'>You a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!</span>")
+	to_chat(src, "<span class='boldwarning'>You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!</span>")
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
-	if(.)
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	humanize_plant(user)
 
@@ -186,5 +215,5 @@
   * Arguments:
   * * datum/beam/vine - The vine to be removed from the list.
   */
-mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
+/mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
 	vines -= vine

@@ -47,7 +47,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/proc/post_summon(atom/summoned_object, mob/user)
 	return
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes - Also a lot of fun
+/obj/effect/proc_holder/spell/aoe_turf/conjure/summon_ed_swarm //test purposes - Also a lot of fun
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
@@ -55,7 +55,7 @@
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
+/obj/effect/proc_holder/spell/aoe_turf/conjure/link_worlds
 	name = "Link Worlds"
 	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
 	invocation = "WTF"

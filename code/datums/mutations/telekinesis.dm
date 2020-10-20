@@ -30,4 +30,6 @@
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(datum/source, atom/target)
-	target.attack_tk(owner)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(target, /atom.proc/attack_tk, owner)
