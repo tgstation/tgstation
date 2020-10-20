@@ -176,10 +176,8 @@
 		if(!CanReach(C))
 			continue
 
-		if(istype(C, /mob/living/carbon/alien))
-			var/mob/living/carbon/alien/A = C
-			if(!A.has_fine_manipulation)
-				continue
+		if(!C.can_hold_items())
+			continue
 
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
