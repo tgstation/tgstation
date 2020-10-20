@@ -122,8 +122,7 @@
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
 						/datum/gas/zauker,
-						/datum/gas/halon,
-						/datum/gas/hexane
+						/datum/gas/halon
 						)
 
 	//Partial pressures in our breath
@@ -376,12 +375,6 @@
 			H.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
-
-	// Hexane
-		var/hexane_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/hexane][MOLES])
-		if(hexane_pp > hexane_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/hexane)
-			H.reagents.add_reagent(/datum/reagent/hexane,max(0, 5 - existing))
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

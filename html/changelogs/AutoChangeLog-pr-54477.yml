@@ -1,0 +1,5 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "Forced dynamic rulesets no longer ignore configurations."
+  - admin: "Moved dynamic forced midround/latejoin ruleset execution buttons from game panel to game mode panel."

@@ -196,7 +196,7 @@
 	suit = null
 	mask = null
 	storage = null
-	occupant = null
+	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -353,7 +353,7 @@
 		uv = TRUE
 		locked = TRUE
 		update_icon()
-		if(occupant)
+		if(mob_occupant)
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -380,7 +380,7 @@
 			// The wires get damaged too.
 			wires.cut_all()
 		else
-			if(!occupant)
+			if(!mob_occupant)
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
@@ -399,14 +399,14 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.GetAllContents()
-			if(occupant)
-				things_to_clear += occupant
-				things_to_clear += occupant.GetAllContents()
+			if(mob_occupant)
+				things_to_clear += mob_occupant
+				things_to_clear += mob_occupant.GetAllContents()
 			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				var/atom/movable/dirty_movable = am
 				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
-		if(occupant)
+		if(mob_occupant)
 			dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/process(delta_time)
