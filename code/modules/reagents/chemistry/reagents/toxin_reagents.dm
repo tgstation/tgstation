@@ -894,6 +894,19 @@
 	. = TRUE
 	..()
 
+/datum/reagent/toxin/acid/fluantiacid
+	name = "Fluoroantimonic acid"
+	description = "Fluoroantimonic acid is the strongest corrosive chemical substance ever discovered."
+	color = "#5050FF"
+	toxpwr = 15
+	acidpwr = 200000000000000.0 //Yes, 200 quintillion, Fluoroantimonic acid is 2x10^19 times stronger than sulphuric acid. Don't worry, the antimony will be quite rare.
+
+/datum/reagent/toxin/acid/fluantiacid/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(volume/10, FALSE) //here you go nervar
+	. = TRUE
+	..()
+
+
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
