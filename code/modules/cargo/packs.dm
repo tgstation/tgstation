@@ -2451,6 +2451,15 @@
 					/obj/item/toner)
 	crate_name = "toner crate"
 
+/datum/supply_pack/misc/training_toolbox
+	name = "Training Toolbox Crate"
+	desc = "Hone your combat abiltities with two AURUMILL-Brand Training Toolboxes! Guarenteed to count hits made against living beings!"
+	cost = 1000
+	contains = list(/obj/item/training_toolbox,
+					/obj/item/training_toolbox
+					)
+	crate_name = "training toolbox crate"
+
 /datum/supply_pack/misc/blackmarket_telepad
 	name = "Black Market LTSRBT"
 	desc = "Need a faster and better way of transporting your illegal goods from and to the station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."

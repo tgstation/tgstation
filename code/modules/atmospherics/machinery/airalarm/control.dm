@@ -22,8 +22,7 @@
 		/datum/gas/healium = new /datum/gas_range/dangerous,
 		/datum/gas/proto_nitrate = new /datum/gas_range/dangerous,
 		/datum/gas/zauker = new /datum/gas_range/dangerous,
-		/datum/gas/halon = new /datum/gas_range/dangerous,
-		/datum/gas/hexane = new /datum/gas_range/dangerous,
+		/datum/gas/halon = new /datum/gas_range/dangerous
 	)
 
 	var/list/sensors
@@ -155,8 +154,7 @@
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
 						/datum/gas/zauker,
-						/datum/gas/halon,
-						/datum/gas/hexane,
+						/datum/gas/halon
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
@@ -423,8 +421,7 @@
 		/datum/gas/healium			= new/datum/gas_range/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/gas_range/dangerous,
 		/datum/gas/zauker			= new/datum/gas_range/dangerous,
-		/datum/gas/halon			= new/datum/gas_range/dangerous,
-		/datum/gas/hexane			= new/datum/gas_range/dangerous
+		/datum/gas/halon			= new/datum/gas_range/dangerous
 	)
 
 /datum/airalarm_control/kitchen_cold_room
@@ -449,6 +446,5 @@
 		/datum/gas/healium			= new/datum/gas_range/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/gas_range/dangerous,
 		/datum/gas/zauker			= new/datum/gas_range/dangerous,
-		/datum/gas/halon			= new/datum/gas_range/dangerous,
-		/datum/gas/hexane			= new/datum/gas_range/dangerous
+		/datum/gas/halon			= new/datum/gas_range/dangerous
 	)

@@ -2697,7 +2697,7 @@
 /turf/open/floor/plasteel,
 /area/security/range)
 "ago" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plasteel,
 /area/security/range)
@@ -4361,10 +4361,6 @@
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
-	},
-/obj/machinery/magnetic_controller{
-	autolink = 1;
-	pixel_y = 3
 	},
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/sunglasses{
@@ -25698,7 +25694,7 @@
 "bii" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland3";
+	id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -36824,7 +36820,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/clothing/mask/pig,
+/obj/item/clothing/mask/animal/pig,
 /obj/item/bikehorn,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -38326,7 +38322,7 @@
 /area/maintenance/port)
 "bPJ" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/animal/horsehead,
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -53928,8 +53924,8 @@
 /area/science/test_area)
 "cDz" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/science/test_area)
 "cDD" = (
@@ -57591,13 +57587,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cNz" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -25
-	},
 /obj/structure/chair,
+/obj/item/radio/intercom/chapel{
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNA" = (
@@ -58136,16 +58129,13 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cOL" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = 25
-	},
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/landmark/start/chaplain,
+/obj/item/radio/intercom/chapel{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cOM" = (
@@ -59755,7 +59745,7 @@
 /area/science/xenobiology)
 "cSP" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -63046,7 +63036,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/clothing/mask/horsehead,
+/obj/item/clothing/mask/animal/horsehead,
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -71921,6 +71911,11 @@
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"nhT" = (
+/obj/item/target,
+/obj/structure/training_machine,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "niJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -72963,6 +72958,11 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"oDq" = (
+/obj/structure/table,
+/obj/item/training_toolbox,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "oEx" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -78515,7 +78515,7 @@
 "vWu" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -79357,7 +79357,7 @@
 /area/maintenance/starboard)
 "xcN" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -117504,9 +117504,9 @@ afz
 agz
 dBY
 ahl
-ahl
-ahg
-alk
+oDq
+nhT
+oDq
 alk
 alk
 aoZ

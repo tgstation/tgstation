@@ -36,29 +36,29 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
 
-/datum/chemical_reaction/plasmasolidification
+/datum/chemical_reaction/plasma_solidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
 
-/datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 
-/datum/chemical_reaction/goldsolidification
+/datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
 
-/datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
-/datum/chemical_reaction/uraniumsolidification
+/datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
 	mob_react = FALSE
 
-/datum/chemical_reaction/uraniumsolidification/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/uranium(location)
@@ -431,19 +431,22 @@
 
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
-	results = list(/datum/reagent/monkey_powder = 3)
+	results = list(/datum/reagent/monkey_powder = 5)
 	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/nutriment=2,/datum/reagent/liquidgibs = 1)
 
 /datum/chemical_reaction/monkey
-	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
+	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/food/monkeycube/cube = holder.my_atom
-	if(istype(cube))
-		cube.Expand()
-	else
-		var/location = get_turf(holder.my_atom)
-		new /mob/living/carbon/monkey(location, TRUE)
+	var/mob/living/carbon/M = holder.my_atom
+	var/location = get_turf(M)
+	if(istype(M, /mob/living/carbon))
+		if(ismonkey(M))
+			M.gib()
+		else
+			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
+	new /mob/living/carbon/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -586,3 +589,13 @@
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
+
+/datum/chemical_reaction/silver_solidification
+	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
+	required_temp = 630
+	mob_react = FALSE
+
+/datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/stack/sheet/mineral/silver(location)
