@@ -698,7 +698,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	id = null
 	updateSelfDialog()
 	update_icon()
-	playsound(src, 'sound/machines/terminal_eject.ogg', 50, 1)
+	playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
