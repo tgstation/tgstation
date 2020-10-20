@@ -94,7 +94,7 @@
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
 	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
-	var/next_salute_check = 0
+	COOLDOWN_DECLARE(next_salute_check)
 	var/salute_delay = 60 SECONDS
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
