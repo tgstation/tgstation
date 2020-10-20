@@ -40855,8 +40855,8 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cjx" = (
@@ -41807,8 +41807,8 @@
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cnr" = (
@@ -58577,11 +58577,8 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = 26
+/obj/item/radio/intercom/chapel{
+	pixel_x = 29
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -58986,11 +58983,8 @@
 /area/medical/virology)
 "whH" = (
 /obj/structure/chair/wood,
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
+/obj/item/radio/intercom/chapel{
+	pixel_x = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
