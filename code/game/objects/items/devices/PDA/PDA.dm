@@ -489,7 +489,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					owner = id.registered_name
 				update_label()
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_processing.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
 			if("Eject")//Ejects the cart, only done from hub.
 				eject_cart(U)
