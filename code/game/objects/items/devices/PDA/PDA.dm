@@ -446,7 +446,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("Refresh")//Refresh, goes to the end of the proc.
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 
 			if ("Toggle_Font")
 				//CODE REVISION 2
