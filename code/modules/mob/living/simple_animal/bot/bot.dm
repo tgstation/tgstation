@@ -94,7 +94,7 @@
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
 	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
-	var/can_get_salute = TRUE
+	var/next_salute_check = 0
 	var/salute_delay = 60 SECONDS
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
@@ -273,9 +273,8 @@
 	if(!on || client)
 		return
 
-	if(commissioned && can_get_salute)
-		can_get_salute = FALSE
-		addtimer(VARSET_CALLBACK(src, can_get_salute, TRUE), salute_delay)
+	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
+		COOLDOWN_START(src, next_salute_check, salute_delay)
 		for(var/mob/living/simple_animal/bot/B in view(5, src))
 			if(!B.commissioned && B.on)
 				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
