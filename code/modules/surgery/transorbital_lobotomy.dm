@@ -11,17 +11,17 @@
 	return target.getorganslot(ORGAN_SLOT_BRAIN) ? TRUE : FALSE
 
 
-/datum/surgery_step/tlobotomize
+/datum/surgery_step/lobotomize
 	name = "perform transorbital lobotomy"
 	implements = list(TOOL_ORBITOCLAST = 75, /obj/item/melee/transforming/energy/sword = 50, TOOL_SCREWDRIVER = 15, /obj/item/stack/rods = 10)
 	time = 7.5 SECONDS
 
-/datum/surgery_step/tlobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/lobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
 		"<span class='notice'>[user] begins to perform a lobotomy on [target]'s brain.</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
-/datum/surgery_step/tlobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You succeed in lobotomizing [target].</span>",
 			"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
 			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
@@ -41,7 +41,7 @@
 			target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 	return ..()
 
-/datum/surgery_step/tlobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.</span>", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
