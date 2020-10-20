@@ -1,6 +1,6 @@
 /datum/surgery/transorbital_lobotomy
 	name = "Transorbital Lobotomy"
-	steps = list(/datum/surgery_step/pick, /datum/surgery_step/drive, /datum/surgery_step/tlobotomize, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/pick, /datum/surgery_step/drive, /datum/surgery_step/lobotomize, /datum/surgery_step/close)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 
