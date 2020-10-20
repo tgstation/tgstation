@@ -193,9 +193,12 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	max_share = max(last_share, max_share);\
 	if(last_share > MINIMUM_AIR_TO_SUSPEND){\
 		our_excited_group.reset_cooldowns();\
+		cached_ticker = 0;\
+		enemy_tile.significant_share_ticker = 0;\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
 		cached_ticker = 0;\
+		enemy_tile.significant_share_ticker = 0;\
 	}
 #else
 #define LAST_SHARE_CHECK \
@@ -287,7 +290,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		SSair.active_super_conductivity += src
 	else if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
-	if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
+	if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES && !active_hotspot) //If you're stalling out, take a rest
 		SSair.remove_from_active(src, FALSE)
 
 	significant_share_ticker = cached_ticker //Save our changes
@@ -456,13 +459,15 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		for(var/id in A_gases)
 			A_gases[id][MOLES] /= turflen
 
+	var/ticker_cache = 0
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
 		T.update_visuals()
 		if(!T.excited && poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to this code and slow space + vent things, increase the wait time for breakdowns
+			ticker_cache = T.significant_share_ticker
 			SSair.add_to_active(T, FALSE) //Maybe check molar diff or something? IDK
-
+			T.significant_share_ticker = ticker_cache
 	if(roundstart)
 		var/datum/gas_mixture/cache = new()
 		cache.copy_from(A)
@@ -481,6 +486,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/turf/open/T = t
 		T.excited = FALSE
 		T.excited_group = null
+		T.significant_share_ticker = 0
 		SSair.active_turfs -= T
 		#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
 		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
