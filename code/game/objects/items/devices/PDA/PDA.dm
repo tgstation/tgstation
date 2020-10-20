@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if ("Toggle_Underline")
 				underline_flag = !underline_flag
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 
 			if("Return")//Return
 				if(mode<=9)
