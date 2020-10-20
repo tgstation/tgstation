@@ -106367,12 +106367,6 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106382,6 +106376,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -106393,12 +106390,6 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106408,6 +106399,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)

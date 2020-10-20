@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - soundadd: "It is no longer possible to rupture someone's eardrums by spam clicking on the Jukebox's music selection while the cooldown is active."
