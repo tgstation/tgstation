@@ -45,7 +45,6 @@
 	desc = "Heats or cools gas in connected pipes."
 	anchored = TRUE
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/thermomachine
 	var/icon_state_open = "moderator_input"
 	var/icon_state_off = "moderator_input"
 	var/active = FALSE
@@ -96,7 +95,7 @@
 	icon_state = "fuel_input"
 	icon_state_open = "fuel_input"
 	icon_state_off = "fuel_input"
-	circuit = /obj/item/circuitboard/machine/hypertorus/fuel_input
+	circuit = /obj/item/circuitboard/machine/HFR_fuel_input
 
 /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 	name = "HFR waste output port"
@@ -104,7 +103,7 @@
 	icon_state = "waste_output"
 	icon_state_open = "waste_output"
 	icon_state_off = "waste_output"
-	circuit = /obj/item/circuitboard/machine/hypertorus/waste_output
+	circuit = /obj/item/circuitboard/machine/HFR_waste_output
 
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 	name = "HFR moderator input port"
@@ -112,7 +111,7 @@
 	icon_state = "moderator_input"
 	icon_state_open = "moderator_input"
 	icon_state_off = "moderator_input"
-	circuit = /obj/item/circuitboard/machine/hypertorus/moderator_input
+	circuit = /obj/item/circuitboard/machine/HFR_moderator_input
 
 /obj/machinery/hypertorus
 	name = "hypertorus_core"
@@ -122,7 +121,6 @@
 	move_resist = INFINITY
 	anchored = FALSE
 	density = TRUE
-	circuit = /obj/item/circuitboard/machine/thermomachine
 	var/active = FALSE
 
 /obj/machinery/hypertorus/ComponentInitialize()
@@ -147,7 +145,7 @@
 	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "core"
-	circuit = /obj/item/circuitboard/machine/hypertorus/core
+	circuit = /obj/item/circuitboard/machine/HFR_core
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	density = TRUE
 
@@ -736,7 +734,7 @@
 	name = "HFR interface"
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface"
-	circuit = /obj/item/circuitboard/machine/hypertorus/interface
+	circuit = /obj/item/circuitboard/machine/HFR_interface
 	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
@@ -874,6 +872,6 @@
 	name = "HFR corner"
 	desc = "Structural piece of the machine."
 	icon_state = "corner"
-	circuit = /obj/item/circuitboard/machine/hypertorus/corner
+	circuit = /obj/item/circuitboard/machine/HFR_corner
 
 #undef HALLUCINATION_RANGE
