@@ -501,7 +501,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("0")//Hub
 				mode = 0
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("1")//Notes
 				mode = 1
 				if(!silent)
