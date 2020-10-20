@@ -494,7 +494,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Eject")//Ejects the cart, only done from hub.
 				eject_cart(U)
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_eject.ogg', 50, 1)
+					playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 //MENU FUNCTIONS===================================
 
