@@ -40,6 +40,15 @@
 
 	return
 
+/**
+  * Used to allow the circuitboard to configure a machine in some way, shape or form.
+  *
+  * Arguments:
+  * * machine - The machine to attempt to configure.
+  */
+/obj/item/circuitboard/proc/configure_machine(obj/machinery/machine)
+	return
+
 // Circuitboard/machine
 /*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.

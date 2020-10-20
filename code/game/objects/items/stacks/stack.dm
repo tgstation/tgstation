@@ -12,7 +12,7 @@
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
-	material_modifier = 0.01
+	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -58,7 +58,7 @@
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
-	if(custom_materials && custom_materials.len)
+	if(custom_materials?.len)
 		mats_per_unit = list()
 		var/in_process_mat_list = custom_materials.Copy()
 		for(var/i in custom_materials)
@@ -242,7 +242,7 @@
 				O.setDir(usr.dir)
 			use(R.req_amount * multiplier)
 
-			if(R.applies_mats && custom_materials && custom_materials.len)
+			if(R.applies_mats && custom_materials?.len)
 				var/list/used_materials = list()
 				for(var/i in custom_materials)
 					used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)

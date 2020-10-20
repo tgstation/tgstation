@@ -17,7 +17,7 @@
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(!(mobility_flags & MOBILITY_STAND))
+	else if(body_position == LYING_DOWN)
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
@@ -41,8 +41,8 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = get_standard_pixel_x_offset(mobility_flags & MOBILITY_STAND)
-		pixel_y = get_standard_pixel_y_offset(mobility_flags & MOBILITY_STAND)
+		pixel_x = get_standard_pixel_x_offset(body_position == LYING_DOWN)
+		pixel_y = get_standard_pixel_y_offset(body_position == LYING_DOWN)
 	update_inv_hands()
 	update_inv_handcuffed()
 

@@ -168,7 +168,6 @@
 				visible_message("<span class='danger'>[user] grabs [src] by the neck!</span>",\
 								"<span class='userdanger'>[user] grabs you by the neck!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 				to_chat(user, "<span class='danger'>You grab [src] by the neck!</span>")
-				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
@@ -176,7 +175,6 @@
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
 								"<span class='userdanger'>[user] is strangling you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 				to_chat(user, "<span class='danger'>You're strangling [src]!</span>")
-				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 		user.set_pull_offsets(src, grab_state)
@@ -404,6 +402,26 @@
 		used_item = get_active_held_item()
 	..()
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+/**
+  * Does a slap animation on an atom
+  *
+  * Uses do_attack_animation to animate the attacker attacking
+  * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+  * Arguments:
+  * * atom/A - atom being slapped
+  */
+/mob/living/proc/do_slap_animation(atom/slapped)
+	do_attack_animation(slapped, no_effect=TRUE)
+	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
+	gloveimg.pixel_y = 10 // should line up with head
+	gloveimg.pixel_x = 10
+	flick_overlay(gloveimg, GLOB.clients, 10)
+
+	// And animate the attack!
+	animate(gloveimg, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /** Handles exposing a mob to reagents.
   *
