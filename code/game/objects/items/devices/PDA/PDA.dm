@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					_alert_drones(msg, TRUE, U)
 					to_chat(U, msg)
 					if(!silent)
-						playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
+						playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 
 //NOTEKEEPER FUNCTIONS===================================
