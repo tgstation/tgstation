@@ -29,7 +29,7 @@ jobs:
       run: |
         git config user.name tgstation-server
         git config user.email tgstation-server@users.noreply.github.com
-        git add *
+        git add .
         git commit -m 'Update TGS DMAPI'
         git push -f -u origin tgs-dmapi-update
 
