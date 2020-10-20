@@ -509,19 +509,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("2")//Messenger
 				mode = 2
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("21")//Read messeges
 				mode = 21
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("3")//Atmos scan
 				mode = 3
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("4")//Redirects to hub
 				mode = 0
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 
 
 //MAIN FUNCTIONS===================================
