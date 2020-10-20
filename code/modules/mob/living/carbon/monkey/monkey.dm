@@ -2,14 +2,12 @@
 	name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
-	icon = 'icons/mob/monkey.dmi'
-	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
+	butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	type_of_meat = /obj/item/food/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = TRUE
 	can_be_shoved_into = TRUE
@@ -26,7 +24,7 @@
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)

@@ -13,7 +13,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

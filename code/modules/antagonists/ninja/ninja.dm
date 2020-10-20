@@ -13,7 +13,7 @@
 
 /datum/antagonist/ninja/New()
 	if(helping_station)
-		can_hijack = HIJACK_PREVENT
+		can_elimination_hijack = ELIMINATION_PREVENT
 	. = ..()
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
@@ -145,7 +145,7 @@
 		else
 			return
 	if(helping_station)
-		can_hijack = HIJACK_PREVENT
+		can_elimination_hijack = ELIMINATION_PREVENT
 	new_owner.assigned_role = ROLE_NINJA
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)

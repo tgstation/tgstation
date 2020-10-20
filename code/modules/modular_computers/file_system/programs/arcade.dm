@@ -6,6 +6,7 @@
 	requires_ntnet = FALSE
 	size = 6
 	tgui_id = "NtosArcade"
+	program_icon = "gamepad"
 
 	///Returns TRUE if the game is being played.
 	var/game_active = TRUE
@@ -91,14 +92,19 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
+
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
-	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/gamerSkillLevel = 0
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+		gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
 			var/attackamt = 0 //Spam prevention.

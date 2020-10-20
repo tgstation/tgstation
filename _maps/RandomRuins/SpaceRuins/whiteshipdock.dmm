@@ -1,20 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/obj/docking_port/stationary{
-	dheight = 0;
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_away";
-	name = "Deep Space";
-	width = 35;
-	json_key = "whiteship"
-	},
-/turf/open/space,
-/area/space)
+/obj/docking_port/stationary/picked/whiteship,
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 a

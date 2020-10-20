@@ -25,10 +25,10 @@
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/secway/process()
+/obj/vehicle/ridden/secway/process(delta_time)
 	if(obj_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, src)
@@ -47,7 +47,7 @@
 	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
 		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
-		if(do_after(user, 30, TRUE, src))
+		if(do_after(user, 3 SECONDS, src))
 			if(user.transferItemToLoc(W, src))
 				user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
 				eddie_murphy = W

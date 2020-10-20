@@ -88,7 +88,7 @@
 	qdel(alert)
 
 /obj/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -377,7 +377,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/Initialize()
 	. = ..()
-	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /obj/screen/alert/bloodsense/Destroy()
@@ -401,7 +401,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			antag.cult_team.blood_target = null
 		else
 			blood_target = antag.cult_team.blood_target
-	if(Cviewer && Cviewer.seeking && Cviewer.master)
+	if(Cviewer?.seeking && Cviewer.master)
 		blood_target = Cviewer.master
 		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)

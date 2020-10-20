@@ -15,7 +15,7 @@
 
 /datum/pipeline/Destroy()
 	SSair.networks -= src
-	if(air && air.volume)
+	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
@@ -46,7 +46,7 @@
 	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
 			var/list/result = borderline.pipeline_expansion(src)
-			if(result && result.len)
+			if(result?.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P

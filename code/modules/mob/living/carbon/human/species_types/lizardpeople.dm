@@ -17,7 +17,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 	disliked_food = GRAIN | DAIRY
@@ -29,6 +29,8 @@
 	// Lizards are coldblooded and can stand a greater temperature range than humans
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
+
+	ass_image = 'icons/ass/asslizard.png'
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)

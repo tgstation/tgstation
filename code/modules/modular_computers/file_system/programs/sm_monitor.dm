@@ -8,6 +8,7 @@
 	transfer_access = ACCESS_CONSTRUCTION
 	size = 5
 	tgui_id = "NtosSupermatterMonitor"
+	program_icon = "radiation"
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
 	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
@@ -105,8 +106,9 @@
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("PRG_clear")

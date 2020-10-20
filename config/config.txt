@@ -342,8 +342,12 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##	Requires database
 #PANIC_BUNKER
 
+## If a player connects during a bunker with less then or this amount of living time (Minutes), we deny the connection
+#PANIC_BUNKER_LIVING 90
+
 ## The message the Panic Bunker gives when someone is rejected by it
-#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
+## %minutes% is replaced with PANIC_BUNKER_LIVING on runtime, remove it if you don't want this
+#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from players with less than %minutes% minutes of living time.
 
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS
@@ -508,9 +512,6 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
 #ENABLE_DISCORD_AUTOROLE
-
-## Set to a value greater than zero to require a user to have at least this many hours of living role time to be assigned the role
-REQUIRED_LIVING_HOURS 0
 
 ## Add your discord bot token here. Make sure it has the ability to manage roles
 #DISCORD_TOKEN someDiscordToken

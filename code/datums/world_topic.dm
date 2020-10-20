@@ -91,9 +91,15 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/comms_console/Run(list/input)
+	// Reject comms messages from other servers that are not on our configured network,
+	// if this has been configured. (See CROSS_COMMS_NETWORK in comms.txt)
+	var/configured_network = CONFIG_GET(string/cross_comms_network)
+	if (configured_network && configured_network != input["network"])
+		return
+
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.overrideCooldown()
+		CM.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
@@ -177,7 +183,7 @@
 	.["extreme_popcap"] = CONFIG_GET(number/extreme_popcap) || 0
 	.["popcap"] = max(CONFIG_GET(number/soft_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/extreme_popcap)) //generalized field for this concept for use across ss13 codebases
 	.["bunkered"] = CONFIG_GET(flag/panic_bunker) || FALSE
-	if(SSshuttle && SSshuttle.emergency)
+	if(SSshuttle?.emergency)
 		.["shuttle_mode"] = SSshuttle.emergency.mode
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()

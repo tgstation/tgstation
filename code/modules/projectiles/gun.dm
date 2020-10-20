@@ -288,7 +288,7 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
@@ -513,22 +513,33 @@
 	return TRUE
 
 
-///Called when gun_light value changes.
+/**
+  * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
+  *
+  * Returns the former gun_light that has now been replaced by this proc.
+  * Arguments:
+  * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
+  */
 /obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
+	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
 	if(gun_light == new_light)
-		return
-	. = gun_light
-	gun_light = new_light
-	if(gun_light)
-		gun_light.set_light_flags(gun_light.light_flags | LIGHT_ATTACHED)
-		if(gun_light.loc != src)
-			gun_light.forceMove(src)
-	else if(.)
-		var/obj/item/flashlight/seclite/old_gun_light = .
-		old_gun_light.set_light_flags(old_gun_light.light_flags & ~LIGHT_ATTACHED)
-		if(old_gun_light.loc == src)
-			old_gun_light.forceMove(get_turf(src))
+		CRASH("Tried to set a new gun light when the old gun light was also the new gun light.")
 
+	. = gun_light
+
+	// If there's an old gun light that isn't being QDELETED, detatch and drop it to the floor.
+	if(!QDELETED(gun_light))
+		gun_light.set_light_flags(gun_light.light_flags & ~LIGHT_ATTACHED)
+		if(gun_light.loc == src)
+			gun_light.forceMove(get_turf(src))
+
+	// If there's a new gun light to be added, attach and move it to the gun.
+	if(new_light)
+		new_light.set_light_flags(new_light.light_flags | LIGHT_ATTACHED)
+		if(new_light.loc != src)
+			new_light.forceMove(src)
+
+	gun_light = new_light
 
 /obj/item/gun/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, alight))
@@ -609,7 +620,7 @@
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
-			else if(target && target.Adjacent(user))
+			else if(target?.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
 		semicd = FALSE
 		return
@@ -618,7 +629,7 @@
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
 
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		chambered.BB.damage *= 5
 		if(chambered.BB.wound_bonus != CANT_WOUND)
 			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
@@ -644,7 +655,7 @@
 
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	var/obj/item/gun/gun = null

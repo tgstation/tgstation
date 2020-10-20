@@ -3,7 +3,7 @@
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
-	worn_icon_state = null
+	worn_icon_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_STANDARD
@@ -73,7 +73,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
 

@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
-	if((istype(W, /obj/item/card/id) || istype(W, /obj/item/pda)) && allowed(user))
+	if(W.GetID() && allowed(user))
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 		return
@@ -128,6 +128,10 @@
 	return data
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE
@@ -189,7 +193,7 @@
 								continue
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
-						if(empty_turfs && empty_turfs.len)
+						if(empty_turfs?.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
@@ -205,7 +209,7 @@
 							continue
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
-					if(empty_turfs && empty_turfs.len)
+					if(empty_turfs?.len)
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 

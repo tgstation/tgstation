@@ -30,7 +30,7 @@
 		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
@@ -172,7 +172,7 @@
   *
   * Use for atoms performing visible actions
   *
-  * message is output to anyone who can see, e.g. "The [src] does something!"
+  * message is output to anyone who can see, e.g. `"The [src] does something!"`
   *
   * Vars:
   * * self_message (optional) is what the src mob sees e.g. "You do something!"
@@ -207,7 +207,7 @@
 			msg = blind_message
 		else if(T != loc && T != src) //if src is inside something and not a turf.
 			msg = blind_message
-		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //if it is too dark.
+		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 		if(!msg)
 			continue
@@ -283,9 +283,6 @@
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
-///Is the mob restrained
-/mob/proc/restrained(ignore_grab)
-	return
 
 ///Is the mob incapacitated
 /mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
@@ -589,6 +586,16 @@
 
 	return TRUE
 
+/**
+  * Called by using Activate Held Object with an empty hand/limb
+  *
+  * Does nothing by default. The intended use is to allow limbs to call their
+  * own attack_self procs. It is up to the individual mob to override this
+  * parent and actually use it.
+  */
+/mob/proc/limb_attack_self()
+	return
+
 ///Can this mob resist (default FALSE)
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -599,6 +606,8 @@
 	var/D = dir
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
+
+	flags_1 |= IS_SPINNING_1
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -612,6 +621,7 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
+	flags_1 &= ~IS_SPINNING_1
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
@@ -641,6 +651,10 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+		return
+
+	limb_attack_self()
+
 
 /**
   * Get the notes of this mob
@@ -865,7 +879,7 @@
 		return FALSE
 	if(notransform)
 		return FALSE
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return FALSE
 	return TRUE
 
@@ -979,7 +993,7 @@
 		return src
 
 /**
-  * Buckle to another mob
+  * Buckle a living mob to this mob
   *
   * You can buckle on mobs if you're next to them since most are dense
   *
@@ -1016,14 +1030,6 @@
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
 			return 0
 	return 9
-
-///can the mob be buckled to something by default?
-/mob/proc/can_buckle()
-	return TRUE
-
-///can the mob be unbuckled from something by default?
-/mob/proc/can_unbuckle()
-	return TRUE
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
@@ -1162,7 +1168,9 @@
 	if (!client)
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if (ismecha(loc))
+	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
+		client.mouse_pointer_icon = examine_cursor_icon
+	else if (ismecha(loc))
 		var/obj/vehicle/sealed/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
@@ -1175,7 +1183,6 @@
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
-
 ///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
 	if(is_blind())
@@ -1304,19 +1311,6 @@
 	update_movespeed(FALSE)
 
 
-/// Updates the grab state of the mob and updates movespeed
-/mob/setGrabState(newstate)
-	. = ..()
-	switch(grab_state)
-		if(GRAB_PASSIVE)
-			remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
-		if(GRAB_AGGRESSIVE)
-			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/aggressive)
-		if(GRAB_NECK)
-			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/neck)
-		if(GRAB_KILL)
-			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
-
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()
 	if(!speedies)
@@ -1337,3 +1331,47 @@
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
 	. = stat
 	stat = new_stat
+
+
+/mob/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, control_object))
+			var/obj/O = var_value
+			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
+				return FALSE
+		if(NAMEOF(src, machine))
+			set_machine(var_value)
+			. =  TRUE
+		if(NAMEOF(src, focus))
+			set_focus(var_value)
+			. =  TRUE
+		if(NAMEOF(src, nutrition))
+			set_nutrition(var_value)
+			. =  TRUE
+		if(NAMEOF(src, stat))
+			set_stat(var_value)
+			. =  TRUE
+		if(NAMEOF(src, dizziness))
+			set_dizziness(var_value)
+			. =  TRUE
+		if(NAMEOF(src, eye_blind))
+			set_blindness(var_value)
+			. =  TRUE
+		if(NAMEOF(src, eye_blurry))
+			set_blurriness(var_value)
+			. =  TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
+	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
+	var/diff
+	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
+		remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
+		diff = var_value - cached_multiplicative_slowdown
+
+	. = ..()
+
+	if(. && slowdown_edit && isnum(diff))
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)

@@ -20,6 +20,9 @@
 		O.brute_reduction = 5
 		O.burn_reduction = 4
 
+	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
+	C.set_safe_hunger_level()
+
 /datum/species/android/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	for(var/X in C.bodyparts)

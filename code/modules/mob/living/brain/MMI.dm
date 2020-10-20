@@ -14,6 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
+/obj/item/mmi/Initialize()
+	. = ..()
+	radio = new(src) //Spawns a radio inside the MMI.
+	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	laws.set_laws_config()
+
+/obj/item/mmi/Destroy()
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/borg = loc
+		borg.mmi = null
+	set_mecha(null)
+	QDEL_NULL(brainmob)
+	QDEL_NULL(brain)
+	QDEL_NULL(radio)
+	QDEL_NULL(laws)
+	return ..()
+
 /obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
@@ -31,12 +48,6 @@
 		. += "mmi_alive"
 	else if(brain)
 		. += "mmi_dead"
-
-/obj/item/mmi/Initialize()
-	. = ..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-	laws.set_laws_config()
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -56,15 +67,13 @@
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
 		user.visible_message("<span class='notice'>[user] sticks \a [newbrain] into [src].</span>", "<span class='notice'>[src]'s indicator light turn on as you insert [newbrain].</span>")
 
-		brainmob = newbrain.brainmob
+		set_brainmob(newbrain.brainmob)
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
 		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
-			brainmob.remove_from_dead_mob_list()
-			brainmob.add_to_alive_mob_list()
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
 			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
@@ -108,8 +117,6 @@
 	brainmob.set_stat(DEAD)
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	brainmob.remove_from_alive_mob_list() //Get outta here
-	brainmob.add_to_dead_mob_list()
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
 	brainmob = null //Set mmi brainmob var to null
@@ -122,7 +129,7 @@
 
 /obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)
-		brainmob = new(src)
+		set_brainmob(new /mob/living/brain(src))
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	if(L.has_dna())
@@ -148,6 +155,41 @@
 		braintype = "Xenoborg" //HISS....Beep.
 	else
 		braintype = "Cyborg"
+
+
+/// Proc to hook behavior associated to the change in value of the [/obj/item/mmi/var/brainmob] variable.
+/obj/item/mmi/proc/set_brainmob(mob/living/brain/new_brainmob)
+	if(brainmob == new_brainmob)
+		return FALSE
+	. = brainmob
+	brainmob = new_brainmob
+	if(new_brainmob)
+		if(mecha)
+			REMOVE_TRAIT(new_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+			REMOVE_TRAIT(new_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+		else
+			ADD_TRAIT(new_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+			ADD_TRAIT(new_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+	if(.)
+		var/mob/living/brain/old_brainmob = .
+		ADD_TRAIT(old_brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+		ADD_TRAIT(old_brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+
+
+/// Proc to hook behavior associated to the change in value of the [obj/vehicle/sealed/var/mecha] variable.
+/obj/item/mmi/proc/set_mecha(obj/vehicle/sealed/mecha/new_mecha)
+	if(mecha == new_mecha)
+		return FALSE
+	. = mecha
+	mecha = new_mecha
+	if(new_mecha)
+		if(!. && brainmob) // There was no mecha, there now is, and we have a brain mob that is no longer unaided.
+			REMOVE_TRAIT(brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+			REMOVE_TRAIT(brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+	else if(. && brainmob) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
+		ADD_TRAIT(brainmob, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+		ADD_TRAIT(brainmob, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
@@ -183,23 +225,6 @@
 			if(3)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
-
-/obj/item/mmi/Destroy()
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/borg = loc
-		borg.mmi = null
-	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
-	if(brain)
-		qdel(brain)
-		brain = null
-	if(mecha)
-		mecha = null
-	if(radio)
-		qdel(radio)
-		radio = null
-	return ..()
 
 /obj/item/mmi/deconstruct(disassembled = TRUE)
 	if(brain)

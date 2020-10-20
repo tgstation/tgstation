@@ -1,4 +1,4 @@
-//////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
+/***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
   * Mechs are now (finally) vehicles, this means you can make them multicrew
@@ -371,23 +371,23 @@
 						break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
-/obj/vehicle/sealed/mecha/process()
+/obj/vehicle/sealed/mecha/process(delta_time)
 	var/internal_temp_regulation = 1
 
 	if(internal_damage)
 		if(internal_damage & MECHA_INT_FIRE)
-			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
+			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && DT_PROB(2.5, delta_time))
 				clearInternalDamage(MECHA_INT_FIRE)
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
 					setInternalDamage(MECHA_INT_TANK_BREACH)
 				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*delta_time)
 			if(cabin_air && cabin_air.return_volume()>0)
-				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
+				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*delta_time)
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
+					take_damage(delta_time*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			internal_temp_regulation = 0
@@ -395,7 +395,7 @@
 		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.1)
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
 				if(loc)
 					loc.assume_air(leaked_gas)
 					air_update_turf()
@@ -405,13 +405,13 @@
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
 				spark_system.start()
-				cell.charge -= min(20,cell.charge)
-				cell.maxcharge -= min(20,cell.maxcharge)
+				cell.charge -= min(10 * delta_time, cell.charge)
+				cell.maxcharge -= min(10 * delta_time, cell.maxcharge)
 
 	if(internal_temp_regulation)
 		if(cabin_air && cabin_air.return_volume() > 0)
 			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
+			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * delta_time
 
 	if(internal_tank)
 		var/datum/gas_mixture/tank_air = internal_tank.return_air()
@@ -551,13 +551,13 @@
 			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			selected.action(user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-			selected.action(user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !istype(target, /atom) || !Adjacent(target))
 		return
@@ -589,7 +589,7 @@
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
-		return TRUE
+		return
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
@@ -615,31 +615,42 @@
 	if(!direction)
 		return FALSE
 	if(internal_tank?.connected_port)
-		if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to move while connected to the air system port!</span>")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(construction_state)
-		if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Maintenance protocols in effect.</span>")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
 	if(!Process_Spacemove(direction))
 		return FALSE
-	if(!has_charge(step_energy_drain))
-		return FALSE
 	if(zoom_mode)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to move while in zoom mode!</span>")
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to move while in zoom mode!</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(!cell)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing power cell.</span>")
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing power cell.</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(!scanmod || !capacitor)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+	if(!use_power(step_energy_drain))
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Insufficient power to move!</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 	if(lavaland_only && is_mining_level(z))
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Invalid Environment.</span>")
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Invalid Environment.</span>")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
 	var/olddir = dir
@@ -839,7 +850,6 @@
 	AI.cancel_camera()
 	AI.controlled_mech = src
 	AI.remote_control = src
-	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
@@ -847,7 +857,7 @@
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(pilot_mob && pilot_mob.Adjacent(src))
+	if(pilot_mob?.Adjacent(src))
 		if(occupants)
 			return
 		LAZYADD(occupants, src)
@@ -993,12 +1003,11 @@
 		to_chat(user, "<span class='warning'>\the [M] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return FALSE
 
-	M.mecha = src
+	M.set_mecha(src)
 	add_occupant(B)//Note this forcemoves the brain into the mech to allow relaymove
 	mecha_flags |= SILICON_PILOT
 	B.reset_perspective(src)
 	B.remote_control = src
-	B.update_mobility()
 	B.update_mouse_pointer()
 	setDir(dir_in)
 	log_message("[M] moved in as pilot.", LOG_MECHA)
@@ -1066,9 +1075,8 @@
 				L.forceMove(mmi)
 				L.reset_perspective()
 				remove_occupant(L)
-			mmi.mecha = null
+			mmi.set_mecha(null)
 			mmi.update_icon()
-			L.mobility_flags = NONE
 		setDir(dir_in)
 	return ..()
 

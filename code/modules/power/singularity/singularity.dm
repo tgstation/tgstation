@@ -15,7 +15,7 @@
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
-	var/dissipate = 1 //Do we lose energy over time?
+	var/dissipate = TRUE //Do we lose energy over time?
 	var/dissipate_delay = 10
 	var/dissipate_track = 0
 	var/dissipate_strength = 1 //How much energy do we lose?
@@ -399,11 +399,11 @@
 		return FALSE
 	else if(locate(/obj/machinery/field/generator) in T)
 		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
-		if(G && G.active)
+		if(G?.active)
 			return FALSE
 	else if(locate(/obj/machinery/power/shieldwallgen) in T)
 		var/obj/machinery/power/shieldwallgen/S = locate(/obj/machinery/power/shieldwallgen) in T
-		if(S && S.active)
+		if(S?.active)
 			return FALSE
 	return TRUE
 

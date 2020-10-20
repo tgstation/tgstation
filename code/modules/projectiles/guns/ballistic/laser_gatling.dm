@@ -15,7 +15,7 @@
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
-	var/heat_diffusion = 1
+	var/heat_diffusion = 0.5
 
 /obj/item/minigunpack/Initialize()
 	. = ..()
@@ -26,8 +26,8 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/minigunpack/process()
-	overheat = max(0, overheat - heat_diffusion)
+/obj/item/minigunpack/process(delta_time)
+	overheat = max(0, overheat - heat_diffusion * delta_time)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(mob/living/carbon/user)

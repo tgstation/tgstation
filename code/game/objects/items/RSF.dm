@@ -182,7 +182,7 @@ RSF
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if(((obj_flags & EMAGGED) || (P && P.emagged)) && !toxin)
+	if(((obj_flags & EMAGGED) || (P?.emagged)) && !toxin)
 		toxin = TRUE
 		to_dispense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
@@ -191,8 +191,8 @@ RSF
 		to_dispense = /obj/item/reagent_containers/food/snacks/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
-/obj/item/rsf/cookiesynth/process()
-	matter = min(matter + 1, max_matter) //We add 1 up to a point
+/obj/item/rsf/cookiesynth/process(delta_time)
+	matter = min(matter += delta_time, max_matter) //We add 1 up to a point
 	if(matter >= max_matter)
 		STOP_PROCESSING(SSprocessing, src)
 
