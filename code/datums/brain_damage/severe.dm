@@ -38,18 +38,18 @@
 	..()
 
 /datum/brain_trauma/severe/blindness
-	name = "Cerebral Blindness"
-	desc = "Patient's brain is no longer connected to its eyes."
+	name = "Partial Cerebral Blindness"
+	desc = "Patient's brain cannot focus on objects more than a few metres away."
 	scan_desc = "extensive damage to the brain's occipital lobe"
-	gain_text = "<span class='warning'>You can't see!</span>"
+	gain_text = "<span class='warning'>You can't see! Oh, it's just blurry.</span>"
 	lose_text = "<span class='notice'>Your vision returns.</span>"
 
-/datum/brain_trauma/severe/blindness/on_gain()
-	owner.become_blind(TRAUMA_TRAIT)
+/datum/brain_trauma/severe/nearsightedness/on_gain()
+	owner.become_nearsighted(TRAUMA_TRAIT)
 	..()
 
-/datum/brain_trauma/severe/blindness/on_lose()
-	owner.cure_blind(TRAUMA_TRAIT)
+/datum/brain_trauma/severe/nearsightedness/on_lose()
+	owner.cure_nearsighted(TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/paralysis
@@ -69,9 +69,6 @@
 		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
 	var/subject
 	switch(paralysis_type)
-		if("full")
-			subject = "your body"
-			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG)
 		if("left")
 			subject = "the left side of your body"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_L_LEG)
