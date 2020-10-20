@@ -1224,7 +1224,7 @@
 
 /datum/supply_pack/medical/lobotomy
 	name = "Lobotomy Tools Crate"
-	desc = "Comes with an Health Scanner, Orbitoclast, Hammer, Cautery and some surgical drapes (as well as some instructions, and morphine)!"
+	desc = "Comes with a health scanner, orbitoclast, hammer, cautery, and some surgical drapes (as well as some instructions and morphine)!"
 	cost = 1500
 	contains = list(/obj/item/surgical_drapes,
 					/obj/item/orbitoclast,
