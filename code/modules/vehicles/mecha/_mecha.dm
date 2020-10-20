@@ -362,10 +362,11 @@
 			. += "You can see [occupante] inside."
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			for(var/O in H.held_items)
-				if(istype(O, /obj/item/gun))
-					. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
-					break //in case user is holding two guns
+			for(var/held_item in H.held_items)
+				if(!isgun(held_item))
+					continue
+				. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
+				break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(delta_time)
