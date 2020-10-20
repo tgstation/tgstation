@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "Gold walls actually have icons now"
