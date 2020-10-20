@@ -380,3 +380,6 @@
 #define STANDING_UP 0
 /// Mob is lying down, usually associated with lying_angle values of 90 or 270.
 #define LYING_DOWN 1
+
+///Maximum amount of do_afters we can have going at once
+#define MAX_DO_AFTERS 5
