@@ -74,6 +74,8 @@
 		AddElement(/datum/element/light_blocking)
 	if(light_system == MOVABLE_LIGHT)
 		AddComponent(/datum/component/overlay_lighting)
+	if(light_system == MOVABLE_LIGHT_DIRECTIONAL)
+		AddComponent(/datum/component/directional_lighting)
 
 
 /atom/movable/Destroy(force)
