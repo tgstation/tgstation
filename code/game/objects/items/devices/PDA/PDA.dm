@@ -927,7 +927,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return FALSE
 		insert_id(I, user)
 		update_icon()
-		playsound(src, 'sound/machines/pda_button1.ogg', 50, 1)
+		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	return TRUE
 
 
