@@ -480,7 +480,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
 				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
