@@ -41,7 +41,7 @@
   * Telekinesis object grab act.
   *
   * * Called by `/obj/attack_tk()`.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it preforms any action, to further acts on the attack chain.
+  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
   */
 /obj/proc/attack_tk_grab(mob/user)
 	var/obj/item/tk_grab/O = new(src)
