@@ -12,7 +12,7 @@
   *
   * * By default, emulates the user's unarmed attack.
   * * Called indirectly by the `COMSIG_MOB_ATTACK_RANGED` signal.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it preforms any action, to further acts on the attack chain.
+  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
   */
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
