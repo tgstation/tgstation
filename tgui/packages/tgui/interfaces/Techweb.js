@@ -24,30 +24,20 @@ export const Techweb = (props, context) => {
     setSearchText,
   ] = useLocalState(context, 'searchText');
 
-  let displayedNodes = [];
-  switch (tabIndex) {
-    case 0:
-      displayedNodes = nodes.filter(x => x.researched);
-      break;
-    case 1:
-      displayedNodes = nodes.filter(x => x.available);
-      break;
-    case 2:
-      displayedNodes = nodes.filter(x => x.visible);
-      break;
-  }
-
+  let displayedNodes = nodes.filter(x => x.tier === tabIndex);
   displayedNodes.sort((a, b) => {
     const an = node_cache[a.id];
     const bn = node_cache[b.id];
     return an.name.localeCompare(bn.name);
   });
 
-  if (searchText?.trim() !== '') {
+  if (searchText && searchText.trim() !== '') {
     displayedNodes = displayedNodes.filter(x => {
       const n = node_cache[x.id];
       return n.name.toLowerCase().includes(searchText)
-        || n.description.toLowerCase().includes(searchText);
+        || n.description.toLowerCase().includes(searchText)
+        || Object.keys(n.design_ids).some(e =>
+          design_cache[e].name.toLowerCase().includes(searchText));
     });
   }
 
@@ -112,52 +102,59 @@ const TechNode = (props, context) => {
   const {
     id,
     can_unlock,
-    researched,
-    available,
-    visible,
+    tier,
   } = node;
-
   let thisNode = node_cache[id];
   let reqExp = thisNode?.required_experiments;
+
+  const expcompl = reqExp.filter(x => experiments[x]?.completed).length;
+  const experimentProgress = (
+    <ProgressBar
+      ranges={{
+        good: [0.5, Infinity],
+        average: [0.25, 0.5],
+        bad: [-Infinity, 0.25],
+      }}
+      value={expcompl / reqExp.length}>
+      Experiments ({expcompl}/{reqExp.length})
+    </ProgressBar>
+  );
+
   return (
     <Section title={thisNode.name}
-      buttons={!researched && (
+      buttons={tier === 1 && (
         <Button
           icon="lightbulb"
-          disabled={researched || !can_unlock}
+          disabled={!can_unlock}
           onClick={() => act("researchNode", { node_id: thisNode.id })}>
           Research
         </Button>
       )}>
-      {!researched && (
-        <div className="Techweb__NodeProgress">
+      {tier !== 0 && (
+        <Flex className="Techweb__NodeProgress">
           {Object.keys(thisNode.costs).map((k, i) => {
+            const nodeProg = Math.min(thisNode.costs[k], points[k]) || 0;
             return (
-              <ProgressBar
-                key={`n${thisNode.id}p${i}`}
-                ranges={{
-                  good: [0.5, Infinity],
-                  average: [0.25, 0.5],
-                  bad: [-Infinity, 0.25],
-                }}
-                value={Math.min(1, points[k] / thisNode.costs[k] || 1)}>
-                {k} ({Math.min(thisNode.costs[k], points[k])}/{thisNode.costs[k]})
-              </ProgressBar>
+              <Flex.Item grow={1} basis={0}
+                key={`n${thisNode.id}p${i}`}>
+                <ProgressBar
+                  ranges={{
+                    good: [0.5, Infinity],
+                    average: [0.25, 0.5],
+                    bad: [-Infinity, 0.25],
+                  }}
+                  value={Math.min(1, points[k] / thisNode.costs[k])}>
+                  {k} ({nodeProg}/{thisNode.costs[k]})
+                </ProgressBar>
+              </Flex.Item>
             );
           })}
           {reqExp?.length > 0 && (
-            <ProgressBar
-              key={`n${thisNode.id}pexp`}
-              ranges={{
-                good: [0.5, Infinity],
-                average: [0.25, 0.5],
-                bad: [-Infinity, 0.25],
-              }}
-              value={reqExp.filter(x => experiments[x].completed).length / reqExp.length}>
-              Experiments ({reqExp.filter(x => experiments[x].completed).length}/{reqExp.length})
-            </ProgressBar>
+            <Flex.Item grow={1} basis={0}>
+              {experimentProgress}
+            </Flex.Item>
           )}
-        </div>
+        </Flex>
       )}
       <div className="Techweb__NodeDescription">{thisNode.description}</div>
       <Box className="Techweb__NodeUnlockedDesigns">
@@ -177,6 +174,11 @@ const TechNode = (props, context) => {
             title="Required Experiments">
             {thisNode.required_experiments.map((k, i) => {
               const thisExp = experiments[k];
+              if (thisExp === null || thisExp === undefined) {
+                return (
+                  <div>Failed to find experiment &apos;{k}&apos;</div>
+                );
+              }
               return (
                 <Experiment key={`n${thisNode.id}e${i}`} exp={thisExp} />
               );

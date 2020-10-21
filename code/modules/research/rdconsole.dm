@@ -560,28 +560,18 @@ Nothing else in the console has ID requirements.
 		"sec_protocols" = obj_flags & EMAGGED
 	)
 
-	// Get nodes to send to UI
-	var/list/selectedNodes = list()
-	for(var/v in stored_research.researched_nodes)
-		selectedNodes += v
-	for(var/v in stored_research.available_nodes)
-		if(stored_research.researched_nodes[v] || stored_research.hidden_nodes[v])
-			continue
-		selectedNodes += v
-	for(var/v in stored_research.visible_nodes)
-		if(stored_research.available_nodes[v])
-			continue
-		selectedNodes += v
-
-	// Serialize said nodes
-	for(var/v in selectedNodes)
+	// Serialize all nodes to display
+	for(var/v in stored_research.tiers)
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
+
+		// Ensure node is supposed to be visible
+		if (stored_research.hidden_nodes[v])
+			continue
+
 		.["nodes"] += list(list(
 			"id" = n.id,
 			"can_unlock" = stored_research.can_unlock_node(n),
-			"researched" = stored_research.researched_nodes[v],
-			"available" = stored_research.available_nodes[v],
-			"visible" = stored_research.visible_nodes[v],
+			"tier" = stored_research.tiers[n.id]
 		))
 
 	// Get experiments and serialize them
