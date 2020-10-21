@@ -101,13 +101,13 @@
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
-	var/list/equipment = new
+	var/list/equipment = list()
 	///Current active equipment
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	///Maximum amount of equipment we can have
 	var/max_equip = 3
 
-	///Whether our steps are silent, for example in zero-G
+	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
 	var/stepsound = 'sound/mecha/mechstep.ogg'
@@ -670,7 +670,7 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
-		if(!(mecha_flags & QUIET_STEPS) && dir != direction)
+		if(dir != direction && !(mecha_flags & QUIET_STEPS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
 		return TRUE
