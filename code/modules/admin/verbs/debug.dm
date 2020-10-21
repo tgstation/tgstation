@@ -320,6 +320,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/areas_with_APC = list()
 	var/list/areas_with_multiple_APCs = list()
 	var/list/areas_with_air_alarm = list()
+	var/list/areas_with_air_sensor = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
 	var/list/areas_with_LS = list()
@@ -374,6 +375,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			areas_with_air_alarm.Add(A.type)
 		CHECK_TICK
 
+	for(var/obj/machinery/air_sensor/AS in GLOB.machines)
+		var/area/A = get_area(AS)
+		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
+			dat += "Skipped over [AS] in invalid location, [AS.loc].<br>"
+			continue
+		if(!(A.type in areas_with_air_sensor))
+			areas_with_air_sensor.Add(A.type)
+		CHECK_TICK
+
 	for(var/obj/machinery/requests_console/RC in GLOB.machines)
 		var/area/A = get_area(RC)
 		if(!A)
@@ -421,6 +431,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/list/areas_without_APC = areas_all - areas_with_APC
 	var/list/areas_without_air_alarm = areas_all - areas_with_air_alarm
+	var/list/areas_without_air_sensor = areas_all - areas_with_air_sensor
 	var/list/areas_without_RC = areas_all - areas_with_RC
 	var/list/areas_without_light = areas_all - areas_with_light
 	var/list/areas_without_LS = areas_all - areas_with_LS
@@ -441,6 +452,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(areas_without_air_alarm.len)
 		dat += "<h1>AREAS WITHOUT AN AIR ALARM:</h1>"
+		for(var/areatype in areas_without_air_alarm)
+			dat += "[areatype]<br>"
+			CHECK_TICK
+
+	if(areas_without_air_alarm.len)
+		dat += "<h1>AREAS WITHOUT AN AIR SENSOR:</h1>"
 		for(var/areatype in areas_without_air_alarm)
 			dat += "[areatype]<br>"
 			CHECK_TICK
