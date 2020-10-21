@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Malf AIs no longer fail their survive objective if piloting a shell when the round ends."
