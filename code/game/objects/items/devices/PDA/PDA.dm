@@ -192,9 +192,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return attack_self(M)
 	return ..()
 
+
 /obj/item/pda/attack_self_tk(mob/user)
 	to_chat(user, "<span class='warning'>The PDA's capacitive touch screen doesn't seem to respond!</span>")
-	return
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/pda/interact(mob/user)
 	if(!user.IsAdvancedToolUser())
