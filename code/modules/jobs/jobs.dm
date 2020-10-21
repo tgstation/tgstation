@@ -31,7 +31,9 @@ GLOBAL_LIST_INIT(science_positions, list(
 GLOBAL_LIST_INIT(supply_positions, list(
 	"Quartermaster",
 	"Cargo Technician",
-	"Shaft Miner"))
+	"Shaft Miner",
+	"Mining Foreman",
+	"Mining Technician"))
 
 
 GLOBAL_LIST_INIT(service_positions, list(

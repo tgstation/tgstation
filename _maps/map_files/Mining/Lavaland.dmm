@@ -75,48 +75,52 @@
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
 "ao" = (
-/obj/machinery/computer/shuttle/labor/one_way{
+/obj/machinery/light/small,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/mine/laborcamp)
+"ap" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"ap" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/mine/laborcamp)
 "aq" = (
 /turf/closed/wall,
 /area/mine/laborcamp)
 "ar" = (
-/turf/open/floor/plasteel/freezer,
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Labor Camp External Airlock";
+	opacity = 0
+	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "as" = (
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/laborcamp)
+/obj/structure/closet/crate,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "at" = (
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/obj/item/soap/nanotrasen,
-/obj/item/bikehorn/rubberducky/plasticducky,
-/turf/open/floor/plasteel/freezer,
-/area/mine/laborcamp)
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "au" = (
-/obj/structure/table,
-/obj/machinery/computer/bookmanagement,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "av" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/obj/item/seeds/tomato,
+/obj/item/seeds/onion,
+/obj/item/seeds/garlic,
+/obj/item/seeds/carrot,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/apple,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
@@ -136,85 +140,14 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "ay" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 8;
-	name = "old sink";
-	pixel_x = 12
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/microwave{
+	pixel_y = 6
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "az" = (
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "Labor Camp Library";
-	dir = 8;
-	network = list("labor")
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aB" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Showers"
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/laborcamp)
-"aD" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"aE" = (
-/obj/machinery/vending/sustenance,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aF" = (
-/obj/machinery/door/airlock{
-	name = "Labor Camp Library"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aG" = (
-/obj/structure/table,
-/obj/item/trash/plate,
-/obj/item/kitchen/fork,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aH" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aJ" = (
-/obj/machinery/door/airlock{
-	name = "Unisex Restroom"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"aO" = (
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = 32
 	},
@@ -227,28 +160,117 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"aQ" = (
+"aA" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aB" = (
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aD" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"aE" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aF" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/seeds/redbeet,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"aG" = (
+/obj/structure/sign/warning/docking{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aH" = (
+/obj/structure/gulag_beacon,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"aM" = (
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "gulag1";
+	name = "Cell 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aN" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"aO" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/mine/laborcamp)
+"aQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aS" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"aT" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/flashlight,
+/obj/item/clothing/glasses/meson,
+/obj/item/mining_scanner,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/seeds/wheat,
-/obj/item/seeds/wheat,
-/obj/item/seeds/tomato,
-/obj/item/seeds/onion,
-/obj/item/seeds/garlic,
-/obj/item/seeds/carrot,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/apple,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"aT" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
 "aV" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -257,82 +279,78 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "aW" = (
-/obj/machinery/biogenerator,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
+/turf/closed/wall,
+/area/mine/laborcamp/security)
 "aX" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"aY" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"aY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "aZ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "labor";
-	name = "Labor Camp Lockdown";
-	pixel_y = 28;
-	req_access_txt = "2"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"ba" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "labor";
-	name = "labor camp blast door"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bc" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/carrot,
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
-"bd" = (
-/obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall,
-/area/mine/laborcamp)
-"be" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/item/seeds/soya,
-/turf/open/floor/plasteel/dark,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"bc" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Labor Camp Security APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"bd" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/mine/laborcamp)
+"be" = (
+/obj/machinery/computer/secure_data,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "bf" = (
 /turf/closed/wall,
 /area/mine/eva)
@@ -341,55 +359,54 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
+/obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/foremanoffice)
 "bi" = (
-/obj/structure/gulag_beacon,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bj" = (
-/obj/machinery/status_display/evac{
-	pixel_y = 32
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bk" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"bl" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/plant_analyzer,
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
-"bm" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/onion,
-/turf/open/floor/plasteel/dark,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"bj" = (
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp/security)
+"bk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"bl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"bm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "bn" = (
 /turf/closed/wall,
 /area/mine/mechbay)
@@ -461,35 +478,38 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
 "bw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/table/wood,
+/obj/item/clothing/mask/cigarette/cigar/cohiba,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/foremanoffice)
 "bx" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "by" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp APC";
-	pixel_y = 23
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Monitoring";
+	req_access_txt = "2"
 	},
-/turf/open/floor/plating,
-/area/mine/laborcamp)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "bB" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "bC" = (
@@ -570,18 +590,22 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bL" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Labor Camp Monitoring";
-	req_access_txt = "2"
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel,
+/area/foremanoffice)
+"bM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"bM" = (
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "bN" = (
 /obj/structure/sign/warning/docking,
 /obj/effect/spawner/structure/window/reinforced,
@@ -684,51 +708,43 @@
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
 "ca" = (
-/turf/closed/wall,
-/area/mine/laborcamp/security)
-"cb" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
+/obj/structure/sign/warning/gasmask{
+	pixel_y = 32
 	},
-/obj/structure/table,
-/obj/item/restraints/handcuffs,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/laborcamp)
 "cc" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "Powered by the tears and sweat of laborers.";
-	name = "Prison Ofitser"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/foreman,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/chair/office/light,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/foremanoffice)
 "cf" = (
-/obj/machinery/computer/secure_data,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/obj/effect/turf_decal/loading_area{
+	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cg" = (
-/obj/machinery/computer/security/labor,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/laborcamp)
 "ch" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/living_quarters)
 "cj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -814,19 +830,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cB" = (
-/obj/structure/chair/office{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cC" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red,
-/obj/item/paper_bin,
-/obj/item/pen,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cD" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -848,19 +851,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"cG" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/freezer/gulag_fridge,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cH" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -930,7 +920,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "cT" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -941,19 +931,20 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "cV" = (
+/obj/effect/landmark/start/minetech,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "cW" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "cX" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -1111,7 +1102,7 @@
 	anchored = 1
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dp" = (
 /obj/machinery/meter,
 /obj/structure/cable,
@@ -1119,19 +1110,19 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dq" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dr" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "ds" = (
 /obj/machinery/mineral/equipment_vendor,
 /obj/effect/turf_decal/tile/purple,
@@ -1249,18 +1240,18 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dJ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -1352,7 +1343,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/miningtech)
 "dT" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -1792,6 +1783,7 @@
 	pixel_y = 32
 	},
 /obj/structure/chair,
+/obj/effect/landmark/start/minetech,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fb" = (
@@ -1981,6 +1973,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/minetech,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fv" = (
@@ -2265,13 +2258,8 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gp" = (
+/obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "gr" = (
@@ -2300,6 +2288,21 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"gv" = (
+/obj/structure/chair/stool,
+/obj/machinery/flasher{
+	id = "GulagCell 3";
+	pixel_x = -28
+	},
+/obj/structure/sign/poster/official/obey{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "gy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -2375,22 +2378,30 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gY" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_away";
-	name = "labor camp";
-	width = 9
+/obj/machinery/camera{
+	c_tag = "Labor Camp External North";
+	dir = 1;
+	network = list("labor")
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
+/area/mine/laborcamp)
 "hg" = (
 /obj/structure/stone_tile/surrounding,
 /obj/structure/stone_tile/center/cracked,
 /mob/living/simple_animal/hostile/megafauna/legion,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"hk" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "hs" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -2406,6 +2417,14 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"hD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -2427,28 +2446,24 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "hL" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/structure/sign/warning/gasmask{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"hN" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"hN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "ia" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -2525,14 +2540,20 @@
 /area/lavaland/surface/outdoors)
 "iM" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/living_quarters)
 "iX" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -2562,6 +2583,21 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"jd" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/cultivator,
+/obj/item/seeds/potato,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
 "jg" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
@@ -2626,11 +2662,15 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "ju" = (
 /obj/effect/turf_decal/tile/brown{
@@ -2649,16 +2689,16 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jz" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "jF" = (
@@ -2745,30 +2785,46 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"kk" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "labor";
+	name = "labor camp blast door"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "kl" = (
 /obj/structure/fluff/drake_statue/falling,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "km" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 1;
-	name = "old sink";
-	pixel_y = -5
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
-"kn" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "gulag";
-	name = "labor camp conveyor"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"kn" = (
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Labor Camp Infirmary";
+	dir = 8;
+	network = list("labor")
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "ko" = (
 /obj/structure/stone_tile/block/cracked{
@@ -3041,11 +3097,15 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lK" = (
+/obj/structure/sign/departments/medbay/alt{
+	pixel_x = -32
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "Labor Camp Operations";
-	dir = 8;
-	network = list("labor")
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -3496,28 +3556,14 @@
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "nj" = (
-/obj/structure/chair/stool,
-/obj/machinery/flasher{
-	id = "GulagCell 1";
-	pixel_x = -28
+/obj/machinery/computer/prisoner,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/obj/structure/sign/poster/official/obey{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"nm" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "nt" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -3533,37 +3579,36 @@
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "nF" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Infirmary"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/bot,
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "nH" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp External South";
-	dir = 4;
-	network = list("labor")
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp)
+/obj/effect/turf_decal/tile/red,
+/obj/structure/closet/secure_closet/labor_camp_security,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "nI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "nU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Labor Camp Operations";
+	dir = 8;
+	network = list("labor")
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"ob" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "gulag"
@@ -3571,13 +3616,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
-/area/mine/laborcamp)
-"ob" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "oL" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3595,34 +3633,21 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "oS" = (
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"oU" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"oW" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/plant_analyzer,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
 "po" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -3630,13 +3655,19 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/production)
 "pr" = (
-/obj/structure/toilet{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/paper,
+/obj/item/pen,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Labor Camp Cell 1";
+	dir = 4;
+	network = list("labor")
+	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ps" = (
 /obj/structure/table,
@@ -3662,54 +3693,33 @@
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "pR" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"pV" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock{
-	name = "Restroom"
+/obj/machinery/mineral/unloading_machine{
+	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 1;
+	output_dir = 2
 	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"qk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
-	name = "Labor Camp Cellblock"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"qk" = (
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/flashlight,
+/obj/item/pickaxe,
+/obj/item/clothing/glasses/meson,
+/obj/item/mining_scanner,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "qm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
 "qs" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/machinery/shower{
+	pixel_y = 22
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
 "qt" = (
 /obj/structure/table,
@@ -3717,52 +3727,30 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "qI" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 8
+/obj/machinery/shower{
+	pixel_y = 22
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"qP" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/obj/item/soap/nanotrasen,
+/obj/item/bikehorn/rubberducky/plasticducky,
+/turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
 "ri" = (
+/obj/structure/table,
+/obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "rj" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"rG" = (
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag1";
-	name = "Cell 1"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "rH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
-/obj/machinery/camera{
-	c_tag = "Labor Camp Cellblock";
-	dir = 4;
-	network = list("labor")
-	},
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "rR" = (
@@ -3771,10 +3759,13 @@
 /area/mine/mechbay)
 "sa" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/living_quarters)
 "sj" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -3782,13 +3773,15 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/production)
-"sq" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Labor Camp External Airlock";
-	opacity = 0
-	},
+"sp" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
+/area/foremanoffice)
+"sq" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ss" = (
 /obj/machinery/button/door{
@@ -3807,11 +3800,18 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "su" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer/gulag_fridge,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "sH" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -3821,21 +3821,41 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/mine/production)
-"sK" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
+"sI" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"sK" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Restroom"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"sU" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock"
+	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"sM" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/laborcamp/security)
+"sY" = (
+/obj/machinery/computer/security/mining,
+/turf/open/floor/plasteel,
+/area/foremanoffice)
+"tD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "tI" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3846,43 +3866,53 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "tP" = (
-/obj/structure/chair/stool,
+/obj/structure/bookcase,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "tZ" = (
-/obj/structure/table,
+/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/microwave{
-	pixel_y = 6
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"ut" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"uB" = (
-/obj/structure/chair/stool,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_x = -32
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"uG" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/laborcamp)
+"uv" = (
+/obj/structure/chair/stool,
+/obj/machinery/flasher{
+	id = "GulagCell 2";
+	pixel_x = -28
+	},
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"uz" = (
+/turf/closed/wall,
+/area/miningtech)
+"uB" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"uG" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance";
+	req_access_txt = "48"
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "uJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -3899,19 +3929,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "vg" = (
-/obj/effect/turf_decal/delivery,
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "gulag"
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/mine/laborcamp)
-"vh" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/structure/sign/poster/official/twelve_gauge{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "vj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -3920,13 +3944,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"vs" = (
-/obj/structure/sign/warning/docking{
-	pixel_x = -32
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "vy" = (
 /obj/machinery/computer/mechpad{
 	dir = 8
@@ -3937,24 +3954,22 @@
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "vH" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
+/obj/machinery/conveyor_switch/oneway{
+	id = "gulag";
+	name = "labor camp conveyor"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "vM" = (
-/obj/machinery/mineral/processing_unit{
-	dir = 1
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/cafeteria,
 /area/mine/laborcamp)
 "wj" = (
 /obj/structure/closet/emcloset,
@@ -3980,61 +3995,108 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
-"wE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
-"wQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light{
+"wp" = (
+/obj/machinery/seed_extractor,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"ws" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"wE" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"wQ" = (
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "gulag3";
+	name = "Cell 3"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "xi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/mine/living_quarters)
-"xW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"xX" = (
-/obj/structure/sign/departments/medbay/alt{
-	pixel_x = -32
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+"xo" = (
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"yh" = (
-/obj/structure/sign/poster/official/safety_report{
-	pixel_x = -32
+/mob/living/simple_animal/bot/secbot/beepsky{
+	desc = "Powered by the tears and sweat of laborers.";
+	name = "Prison Ofitser"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "Labor Camp Central";
-	dir = 4;
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"yi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"xF" = (
+/obj/machinery/vending/security{
+	onstation_override = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"xW" = (
+/obj/machinery/biogenerator,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"xX" = (
+/obj/machinery/mineral/processing_unit_console,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"yh" = (
+/obj/machinery/mineral/processing_unit{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"yi" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/item/seeds/soya,
+/turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "yk" = (
 /obj/structure/cable,
@@ -4047,35 +4109,46 @@
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp)
 "yw" = (
-/obj/structure/table,
-/obj/item/paper,
-/obj/item/pen,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Labor Camp Cell 3";
+	c_tag = "Labor Camp External West";
+	dir = 4;
+	network = list("labor")
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/mine/laborcamp)
+"yL" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Labor Camp Monitoring";
+	req_access_txt = "2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"yM" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Labor Camp APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"za" = (
+/turf/closed/wall/r_wall,
+/area/foremanoffice)
+"zf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants{
+	icon_state = "plant-05"
+	},
+/obj/machinery/camera{
+	c_tag = "Labor Camp Cellblock";
 	dir = 4;
 	network = list("labor")
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"za" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp Security APC";
-	pixel_y = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "zn" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -4087,15 +4160,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"zo" = (
-/obj/machinery/computer/prisoner,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "zT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/loading_area{
@@ -4103,14 +4167,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
-"zX" = (
+"zZ" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/structure/closet/secure_closet/labor_camp_security,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"Ac" = (
+/obj/machinery/camera/autoname{
+	network = list("mine")
+	},
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel,
+/area/foremanoffice)
 "Aw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -4128,23 +4202,36 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "AH" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/machinery/light/small,
+/obj/machinery/camera{
+	c_tag = "Labor Camp Showers";
+	dir = 1;
+	network = list("labor")
+	},
+/turf/open/floor/plasteel/freezer,
 /area/mine/laborcamp)
-"AW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+"AM" = (
+/obj/structure/chair/office{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"Bd" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp External West";
-	dir = 4;
-	network = list("labor")
+"AW" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 8;
+	name = "old sink";
+	pixel_x = 12
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plasteel/freezer,
+/area/mine/laborcamp)
+"Bd" = (
+/obj/structure/chair/stool,
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Be" = (
 /obj/structure/cable,
@@ -4159,48 +4246,44 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Bj" = (
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag2";
-	name = "Cell 2"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Bq" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Bt" = (
+/obj/machinery/door/airlock{
+	name = "Labor Camp Library"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Bt" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
 "BA" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Labor Camp Library";
+	dir = 8;
+	network = list("labor")
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "BL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Co" = (
@@ -4209,6 +4292,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Dc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "Dh" = (
 /obj/machinery/light{
 	dir = 4
@@ -4216,18 +4306,19 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"Dr" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp)
-"Dv" = (
-/obj/structure/sign/poster/official/obey{
-	pixel_y = 32
+"Dj" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Dw" = (
+/area/mine/laborcamp/security)
+"Dk" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
@@ -4236,16 +4327,44 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Labor Camp Cell 1";
+	c_tag = "Labor Camp Cell 3";
 	dir = 4;
 	network = list("labor")
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Dp" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Dr" = (
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Dv" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Showers"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/laborcamp)
+"Dw" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "Ef" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "cellblock1";
+	name = "Labor Camp Operations"
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
@@ -4274,18 +4393,17 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "EK" = (
-/obj/machinery/conveyor{
-	id = "gulag"
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
 /area/mine/laborcamp)
 "EY" = (
-/obj/structure/closet/secure_closet/brig,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Fd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -4298,6 +4416,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"Fd" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/foremanoffice)
 "Fe" = (
 /obj/structure/sink{
 	dir = 4;
@@ -4308,25 +4432,29 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
-"FF" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/mine/laborcamp/security)
 "FO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
-	name = "Labor Camp Operations"
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Ga" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "Gf" = (
-/obj/structure/ore_box,
+/obj/machinery/conveyor{
+	id = "gulag"
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/mine/laborcamp)
 "Gh" = (
 /obj/structure/table,
@@ -4342,12 +4470,10 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Gz" = (
-/obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag3";
-	name = "Cell 3"
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -4358,8 +4484,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/foremanoffice)
 "GJ" = (
 /obj/item/bikehorn{
 	color = "#000";
@@ -4379,22 +4509,19 @@
 /area/mine/living_quarters)
 "Hd" = (
 /turf/closed/wall/r_wall,
-/area/mine/laborcamp/security)
+/area/mine/living_quarters)
 "Hi" = (
-/obj/machinery/washing_machine,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/structure/sign/poster/official/obey{
+	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Hj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 9
+/obj/machinery/vending/sustenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -4411,14 +4538,17 @@
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "Hx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/chair/comfy{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/foremanoffice)
 "HO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
@@ -4426,68 +4556,81 @@
 /area/mine/living_quarters)
 "Iq" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Monitoring";
-	req_access_txt = "2"
+/obj/machinery/camera/autoname{
+	dir = 5;
+	network = list("mine")
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/living_quarters)
 "Iv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"IJ" = (
-/obj/structure/fence{
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
+/obj/effect/decal/cleanable/dirt,
+/obj/item/seeds/onion,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"IJ" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/laborcamp)
 "IK" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"Jc" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/mine/laborcamp/security)
 "Jd" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
-"Je" = (
-/obj/machinery/light/small{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Je" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Jf" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Jh" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
 	},
-/obj/item/cultivator,
-/obj/item/seeds/potato,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Jx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
+"JY" = (
+/obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 9
-	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Kb" = (
@@ -4499,33 +4642,23 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Kv" = (
+/obj/structure/closet/secure_closet/brig,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Kz" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp External North";
-	dir = 1;
-	network = list("labor")
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/laborcamp)
-"KD" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/fence{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/cafeteria,
-/area/mine/laborcamp)
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"KD" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/obj/effect/turf_decal/mining,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "Lg" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown{
@@ -4549,6 +4682,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"My" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "Na" = (
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors/explored)
@@ -4574,6 +4718,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Nu" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "labor";
+	name = "Labor Camp Lockdown";
+	pixel_y = 28;
+	req_access_txt = "2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "NC" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -4594,19 +4751,97 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Om" = (
+/obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mineral/labor_points_checker{
-	pixel_y = 25
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Oz" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"OB" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_away";
+	name = "labor camp";
+	width = 9
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"OI" = (
+/obj/machinery/status_display/evac{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"OQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"OX" = (
+/obj/structure/table,
+/obj/item/toy/cards/deck,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Pa" = (
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"Pl" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Pp" = (
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Pr" = (
+/obj/machinery/computer/shuttle/labor/one_way{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Pt" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Px" = (
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "gulag2";
+	name = "Cell 2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"PE" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
@@ -4621,100 +4856,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"OI" = (
-/obj/structure/table,
-/obj/item/toy/cards/deck,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"OQ" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"OX" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Pa" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/recharger,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"Pl" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Pp" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Labor Camp Infirmary";
-	dir = 8;
-	network = list("labor")
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/mine/laborcamp)
-"Pr" = (
-/obj/structure/chair/stool,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Pt" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Px" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/ore_box,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"PE" = (
-/obj/structure/closet/crate/internals,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "PL" = (
 /obj/machinery/suit_storage_unit/mining,
 /obj/machinery/suit_storage_unit/mining,
@@ -4727,63 +4868,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
-"Qg" = (
-/obj/structure/rack,
-/obj/item/storage/bag/ore,
-/obj/item/flashlight,
-/obj/item/pickaxe,
-/obj/item/clothing/glasses/meson,
-/obj/item/mining_scanner,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Qo" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"QN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"QO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"QQ" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"QW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"QX" = (
+"PZ" = (
 /obj/structure/chair/stool,
 /obj/machinery/flasher{
-	id = "GulagCell 3";
+	id = "GulagCell 1";
 	pixel_x = -28
 	},
 /obj/structure/sign/poster/official/obey{
@@ -4795,6 +4883,62 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Qg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"QN" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Foreman's Office";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/foremanoffice)
+"QO" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/item/bedsheet/random,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"QQ" = (
+/turf/open/floor/plasteel,
+/area/foremanoffice)
+"QW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"QX" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restroom"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"Rt" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -4819,34 +4963,19 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"RY" = (
-/obj/structure/chair/stool,
-/obj/machinery/flasher{
-	id = "GulagCell 2";
-	pixel_x = -28
-	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
+"RU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"RY" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Sd" = (
-/obj/machinery/hydroponics/constructable,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/redbeet,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/mine/laborcamp)
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "SJ" = (
 /obj/structure/statue{
 	desc = "A lifelike statue of a horrifying monster.";
@@ -4858,14 +4987,18 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Tb" = (
-/obj/item/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	name = "Prison Intercom (General)";
-	pixel_y = 24;
-	prison_radio = 1
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/green,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 1;
+	name = "old sink";
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "Tn" = (
 /obj/machinery/light/small,
@@ -4883,16 +5016,9 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "TJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/trash/plate,
+/obj/item/kitchen/fork,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "TP" = (
@@ -4922,19 +5048,18 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Ur" = (
-/obj/structure/bookcase,
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Uv" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "UA" = (
 /obj/structure/lattice/catwalk,
@@ -4951,34 +5076,35 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
-"UH" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+"UD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/laborcamp)
+"UH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "UJ" = (
-/obj/machinery/vending/security{
-	onstation_override = 1
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium{
+	pixel_x = 4;
+	pixel_y = 9
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/turf/open/floor/plasteel,
+/area/foremanoffice)
+"UO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"UO" = (
-/obj/machinery/mineral/unloading_machine{
-	dir = 1;
-	icon_state = "unloader-corner";
-	input_dir = 1;
-	output_dir = 2
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
 /area/mine/laborcamp)
 "UQ" = (
 /obj/effect/turf_decal/tile/brown,
@@ -5004,63 +5130,78 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "UV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/newscaster{
-	pixel_y = 32
+/obj/machinery/camera{
+	c_tag = "Labor Camp External South";
+	dir = 4;
+	network = list("labor")
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/laborcamp)
 "UX" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/toilet{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/laborcamp)
+"Va" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/seeds/carrot,
+/turf/open/floor/plasteel/dark,
+/area/mine/laborcamp)
+"Vb" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Vb" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
+"Vc" = (
+/turf/open/floor/plating,
+/area/miningtech)
+"Vq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "VA" = (
-/obj/machinery/seed_extractor,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"VB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"VF" = (
+/obj/machinery/computer/security/labor,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"VM" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "VP" = (
 /obj/effect/turf_decal/tile/purple{
@@ -5081,7 +5222,7 @@
 "We" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -5097,24 +5238,30 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "WB" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	id_tag = "cellblock1";
+	name = "Labor Camp Cellblock"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WC" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WD" = (
@@ -5140,16 +5287,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"Xa" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "Xb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "Xx" = (
 /obj/structure/sign/poster/official/random{
@@ -5157,10 +5301,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"XU" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "Ym" = (
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "YA" = (
@@ -5174,30 +5325,36 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "YG" = (
-/obj/structure/fence{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mineral/labor_points_checker{
+	pixel_y = 25
 	},
-/obj/effect/turf_decal/mining,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored)
-"YJ" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"YJ" = (
+/obj/item/radio/intercom{
+	desc = "Talk through this. It looks like it has been modified to not broadcast.";
+	name = "Prison Intercom (General)";
+	pixel_y = 24;
+	prison_radio = 1
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "YV" = (
-/obj/structure/rack,
-/obj/item/storage/bag/ore,
-/obj/item/pickaxe,
-/obj/item/flashlight,
-/obj/item/clothing/glasses/meson,
-/obj/item/mining_scanner,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "YY" = (
@@ -5230,38 +5387,54 @@
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "Zk" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "gulag"
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Zn" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/donkpockets,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
-"Zs" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/structure/sign/poster/official/twelve_gauge{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"Zs" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ZD" = (
-/obj/machinery/light/small,
+/obj/structure/sign/poster/official/safety_report{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "Labor Camp Showers";
-	dir = 1;
+	c_tag = "Labor Camp Central";
+	dir = 4;
 	network = list("labor")
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ZO" = (
-/obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cafeteria,
 /area/mine/laborcamp)
 
 (1,1,1) = {"
@@ -8293,12 +8466,6 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
 aw
 aw
 aw
@@ -8308,10 +8475,16 @@ aw
 aw
 aw
 aw
-aD
 aw
 aw
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aw
 aw
@@ -8542,12 +8715,6 @@ an
 an
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 aj
 aj
@@ -8560,15 +8727,21 @@ aj
 aw
 aw
 aw
+aw
 aD
 aD
 aD
 aD
 aD
-aD
-aD
-aD
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aj
 aj
@@ -8798,12 +8971,6 @@ an
 an
 an
 aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 ab
 aj
@@ -8824,8 +8991,14 @@ aD
 aD
 aD
 aD
-aD
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aw
 ab
@@ -9059,12 +9232,6 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
 ab
 aj
 aj
@@ -9082,7 +9249,13 @@ aD
 aD
 aD
 aD
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aw
 aw
@@ -9322,12 +9495,6 @@ aj
 aj
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-aj
 aw
 aw
 aw
@@ -9339,7 +9506,13 @@ aD
 aD
 aD
 aD
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aj
 aj
@@ -9568,12 +9741,6 @@ an
 an
 an
 an
-ab
-aj
-aj
-aj
-aj
-aj
 aj
 aj
 aj
@@ -9594,10 +9761,16 @@ aD
 aD
 aD
 aD
-gY
+OB
 aD
-aD
-aD
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 aj
 aj
 aj
@@ -9825,12 +9998,6 @@ an
 an
 an
 an
-ab
-ab
-aj
-aj
-aj
-aj
 aj
 aD
 aj
@@ -9842,17 +10009,23 @@ aj
 aj
 aj
 yr
-ap
-ap
-ap
-ap
+aJ
+aJ
+aJ
+aJ
 yr
-aY
+Dp
 yr
 yr
 yr
-bx
+sU
 yr
+aw
+aw
+aw
+aw
+aw
+aw
 aw
 aw
 aj
@@ -10082,12 +10255,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-aD
 aD
 aD
 aD
@@ -10100,16 +10267,22 @@ aj
 aj
 yr
 vj
-Pr
-Pr
+Om
+Om
 vj
 aq
-aZ
+Nu
 aq
-ao
+Pr
 aq
-Je
+Bq
 yr
+aw
+aw
+aw
+aw
+aw
+aw
 aD
 bZ
 aj
@@ -10339,12 +10512,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-aD
 aD
 aD
 aD
@@ -10356,17 +10523,23 @@ aj
 aj
 aD
 yr
-Dv
+Hi
+Oz
+RY
+Vq
+aq
+hk
+aq
 aH
-ZO
+aq
 aQ
-aq
-WB
-aq
-bi
-aq
-WC
 yr
+aw
+aw
+aw
+aw
+aw
+aw
 bZ
 bZ
 bZ
@@ -10596,11 +10769,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -10608,27 +10776,32 @@ aD
 aD
 aD
 aD
-aD
-ap
-ap
-ap
+aJ
+aJ
+aJ
 yr
 vj
+OX
+TJ
+vj
+aq
+kk
+aq
 OI
 aG
 vj
-aq
-ba
-aq
-bj
-vs
-vj
 yr
-Hd
-Hd
-Hd
-FF
-Hd
+bj
+bj
+bj
+Jx
+bj
+za
+za
+za
+za
+za
+za
 nI
 TC
 TC
@@ -10853,11 +11026,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -10865,27 +11033,32 @@ aD
 aD
 aD
 aD
-aD
-ap
-ar
-ZD
+aJ
+qm
+AH
 aq
 vj
 vj
-tP
+Ur
 vj
-yh
-az
+ZD
+Dr
 vj
-su
+UD
 vj
-aQ
+Vq
 yr
-cb
-UJ
-cG
+My
+xF
+su
+Dj
+bj
+Ac
 QQ
-Hd
+UJ
+QQ
+QQ
+za
 qt
 rj
 Gn
@@ -11110,39 +11283,39 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
 aD
 aD
-aD
-Kz
+gY
 yr
-as
-ar
-aB
+qs
+qm
+Dv
 vj
 vj
-ut
+Uv
 En
 En
 En
 En
+VM
+OQ
+En
+yL
+xo
+VB
 hN
-Iv
-En
+zZ
+bj
 bL
 cc
 bw
 Hx
-oU
-Hd
+QQ
+sp
 Ym
 rj
 eM
@@ -11367,39 +11540,39 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
 aD
 aD
-aX
+as
 yr
-at
-ay
+qI
+AW
 aq
+Hj
+vj
+UO
+vj
+ay
+JY
 aE
-vj
+ws
 Kv
-vj
-tZ
+Kv
+yr
 Zn
-Qo
+Sd
 bk
 EY
-EY
-yr
-vh
+bj
+sY
+QQ
 bh
 GI
 Fd
-Hd
+za
 Xx
 rj
 dZ
@@ -11624,39 +11797,39 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
-ap
-ap
-ap
+aJ
+aJ
+aJ
 yr
 aq
 aq
 aq
 aq
-oS
-BL
+Pp
+Vb
 vj
-VA
+wp
+Va
+jd
+oS
+yr
+yr
+yr
 bc
-Jh
+Sd
 bl
-yr
-yr
-yr
+Rt
+Jc
 za
-bh
+za
+za
 QN
-oW
-sM
+za
+za
 eL
 gn
 ec
@@ -11881,34 +12054,34 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
-ap
-Vb
-YJ
+aJ
+aN
+hL
 aq
-au
+ri
+Bd
+FO
+aq
+YJ
+UO
+vj
 uB
 Xb
-aq
+RU
 Tb
-Kv
-vj
+yr
+yM
 sK
 Jd
 wE
 km
-yr
+Ga
 by
-pV
+UH
 UH
 ch
 iM
@@ -12138,39 +12311,39 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
-ap
+aJ
+aO
+jt
+aq
+rH
+Bj
+Gz
 Bt
 OQ
-aq
+VA
 av
 xW
 yi
 aF
 Iv
-aN
+yr
 aS
 aW
 be
 Sd
 bm
-yr
+Xa
 bB
-ca
-cf
-bh
-AW
-bM
-sM
+dZ
+dZ
+dZ
+dZ
+dZ
+dZ
 dZ
 dZ
 Dh
@@ -12395,26 +12568,20 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
 aD
-aD
-ap
+aJ
+aY
+kn
+aq
+tP
 BA
-Pp
-aq
-Ur
-aA
 aq
 aq
 aq
-qk
+WB
 aq
 aq
 aq
@@ -12422,10 +12589,16 @@ aq
 aq
 yr
 yr
+bj
+VF
+AM
+Sd
+sI
 Hd
-cg
-cB
-bh
+Hd
+Hd
+Hd
+Hd
 uG
 cQ
 cQ
@@ -12652,38 +12825,38 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-aD
 aD
 aD
 aD
 aD
 yr
+aZ
+aq
+aq
+aq
+aq
+aq
 UX
 aq
+WC
+zf
 aq
-aq
-aq
-aq
+PZ
 pr
-aq
+aJ
 UV
-rH
-aq
+aw
+Jx
 nj
 Dw
-ap
+XU
 nH
-aw
-FF
-zo
-cC
+Hd
 Pa
-zX
+Pa
+Pa
+Pa
+Pa
 cQ
 dg
 dg
@@ -12909,38 +13082,38 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-aT
+at
 yr
-UX
+aZ
 aq
-YV
-YV
-YV
+aT
+aT
+aT
 aq
-nm
-aJ
-gp
+IJ
+QX
+YV
 En
-rG
-Jx
-qP
-ap
+aM
+hD
+QO
+aJ
 aD
 aw
-FF
-FF
-FF
-FF
-FF
+Jx
+Jx
+Jx
+Jx
+Jx
+Hd
+Hd
+Hd
+Hd
+Hd
+Hd
 cQ
 dh
 dx
@@ -13166,32 +13339,32 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-aD
-aT
+at
 yr
-nF
+bi
+aq
+qk
+vj
+vj
+aq
+aq
 aq
 Qg
-vj
-vj
-aq
-aq
-aq
-OX
-jt
+tD
 aq
 aq
 aq
 yr
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -13423,31 +13596,31 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
-aD
-aD
+ao
+yr
+yr
+yr
+bx
+lK
 Dr
-yr
-yr
-yr
+vj
+vj
+vj
 jz
-xX
+aq
 az
 vj
-vj
-vj
+aq
+uv
 PE
-aq
-aO
-vj
-aq
-RY
-Oz
-ap
+aJ
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -13680,32 +13853,32 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
-aD
-aD
+ar
+au
+ar
+bM
+nt
+sq
 sq
 Zs
-sq
-vH
-nt
-Jf
-Jf
-Px
 vj
 vj
 aq
-TJ
+Jf
 En
-Bj
-Hj
-qP
-ap
+Px
+Dc
+QO
+aJ
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -13937,32 +14110,32 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
-aD
-aD
-Dr
+ao
 yr
 yr
 yr
-hL
-Ef
-Ef
-qI
-pR
+ca
+nF
+nF
+tZ
+BL
 En
 En
-FO
-aN
+Ef
+VA
 vj
 aq
 aq
 aq
 yr
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -14194,32 +14367,32 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
-aD
-aD
+as
+aJ
+aA
+vj
+Dr
+vj
 aX
-ap
-AH
 vj
-az
 vj
+vj
+aq
+YG
 We
-vj
-vj
-vj
 aq
-Om
-ri
-aq
-QX
-yw
-ap
+gv
+Dk
+aJ
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -14451,33 +14624,33 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-aD
+aJ
+vj
+vj
+nU
+vj
+vH
 ap
-vj
-vj
-lK
-vj
-kn
-wQ
-az
-QO
+Dr
+Je
 aq
-qm
+Zk
 En
-Gz
-Jx
-qP
-ap
+wQ
+hD
+QO
+aJ
 aD
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -14708,33 +14881,33 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-ap
-Gf
+aJ
+aB
+cf
+aq
+aq
+xX
+aq
+aq
 ob
-aq
-aq
+yr
+ZO
 bd
-aq
-aq
-nU
-yr
-qs
-KD
 yr
 yr
 yr
 yr
 aD
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -14965,34 +15138,34 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-ap
+aJ
+aB
+gp
+pR
+Gf
+yh
+Gf
 Gf
 vg
-UO
+yr
 EK
 vM
-EK
-EK
-Zk
-yr
-Uv
-Hi
-ap
+aJ
 aD
 aD
 aD
 aD
 aD
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 ai
@@ -15222,18 +15395,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
-aD
-ap
-ap
-ap
+aJ
+aJ
+aJ
 yr
 yr
 yr
@@ -15241,23 +15408,29 @@ yr
 yr
 yr
 yr
-ap
-ap
-ap
+aJ
+aJ
+aJ
 aD
 aD
 aD
 aD
 aD
 aD
+aj
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 ai
-cM
-cM
-cM
-cM
-cM
+uz
+uz
+uz
+uz
+uz
 eg
 et
 eN
@@ -15479,11 +15652,6 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -15492,11 +15660,10 @@ aD
 aD
 aD
 aD
+yw
 aD
-Bd
 aD
-aD
-IJ
+Kz
 aD
 aD
 aD
@@ -15510,11 +15677,17 @@ aj
 aj
 aj
 aj
-cM
+aj
+aj
+aj
+aj
+aj
+aj
+uz
 cS
 do
 dF
-cM
+uz
 eh
 EG
 fp
@@ -15736,10 +15909,6 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -15751,9 +15920,7 @@ aD
 aD
 aD
 aD
-aD
-aD
-YG
+KD
 aD
 aD
 aD
@@ -15767,11 +15934,17 @@ aj
 aj
 aj
 aj
-cM
+aj
+aj
+aj
+aj
+aj
+aj
+uz
 cT
-cV
-cV
-cM
+Vc
+Vc
+uz
 ea
 YA
 eM
@@ -15993,10 +16166,6 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -16008,9 +16177,7 @@ aD
 aD
 aD
 aD
-aD
-aD
-IJ
+Kz
 aD
 aD
 aD
@@ -16024,7 +16191,13 @@ aj
 aj
 aj
 aj
-cM
+aj
+aj
+aj
+aj
+aj
+aj
+uz
 cU
 dp
 dH
@@ -16250,10 +16423,6 @@ an
 an
 an
 an
-an
-an
-an
-an
 aD
 aD
 aD
@@ -16265,9 +16434,7 @@ aD
 aD
 aD
 aD
-aD
-aD
-IJ
+Kz
 aD
 aD
 aD
@@ -16278,14 +16445,20 @@ aj
 aj
 aj
 ab
+aj
+aj
+aj
+aj
+aj
+aj
 ab
 aj
 ab
-cM
+uz
 cV
 dq
 dI
-cM
+uz
 ej
 et
 kv
@@ -16507,12 +16680,6 @@ an
 an
 an
 ab
-an
-an
-an
-an
-aD
-aD
 aD
 aD
 aD
@@ -16535,14 +16702,20 @@ aj
 ab
 ab
 ab
+aj
+aj
+aj
 ab
 ab
 ab
-cM
+ab
+ab
+ab
+uz
 cW
 dr
 dr
-cM
+uz
 vq
 Kb
 eL
@@ -16795,11 +16968,11 @@ ab
 ab
 ab
 ab
-cM
-cM
-cM
-cM
-cM
+uz
+uz
+uz
+uz
+uz
 dZ
 YA
 dZ
