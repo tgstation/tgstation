@@ -1,5 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "fixed a few mech bugs"
-  - admin: "Moved mecha gun logging to attacklog instead of mechalog"

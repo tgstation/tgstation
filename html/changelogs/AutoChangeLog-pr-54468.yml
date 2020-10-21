@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "The sentient disease status panel is no longer a 1x1 line of letters, and works properly again."
