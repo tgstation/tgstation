@@ -14,6 +14,7 @@ Format:
 endmap
 
 map metastation
+	#default
 	minplayers 25
 	#voteweight 0.5
 	votable
@@ -37,5 +38,4 @@ map runtimestation
 endmap
 
 map multiz_debug
-	default
 endmap
