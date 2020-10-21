@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You remove [inserted_item] from [src].</span>")
 		inserted_item = null
 		update_icon()
-		user.playsound_local(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
 		to_chat(user, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
@@ -1020,7 +1020,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
-			user.playsound_local(user, 'sound/machines/pda_button1.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C
 		picture = P.picture
