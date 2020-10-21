@@ -21,11 +21,11 @@
 	name = "Mining Technician"
 	jobtype = /datum/job/minetech
 
-	belt = /obj/item/pda/shaftminer
+	belt = /obj/item/pda/minetech
 	ears = /obj/item/radio/headset/minetech
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	uniform = /obj/item/clothing/under/rank/cargo/miner/tech
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
 	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
