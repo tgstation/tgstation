@@ -203,3 +203,13 @@
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/high_five
+	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
+	mood_change = 5 // heh 5
+	timeout = 1 MINUTES
+
+/datum/mood_event/high_ten
+	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
+	mood_change = 10 // heh 10
+	timeout = 1.5 MINUTES

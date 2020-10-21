@@ -239,6 +239,21 @@
 	mood_change = -25
 	timeout = 4 MINUTES
 
+/datum/mood_event/high_five_alone
+	description = "<span class='boldwarning'>I tried getting a high-five with no one around, how embarassing!</span>\n"
+	mood_change = -5
+	timeout = 1 MINUTES
+
+/datum/mood_event/high_five_full_hand
+	description = "<span class='boldwarning'>Oh God, I don't even know how to high-five correctly...</span>\n"
+	mood_change = -20
+	timeout = 2 MINUTES
+
+/datum/mood_event/left_hanging
+	description = "<span class='boldwarning'>But everyone loves high fives! Maybe people just... hate me?</span>\n"
+	mood_change = -10
+	timeout = 2 MINUTES
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"

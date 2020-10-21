@@ -318,29 +318,22 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/highfive
 	icon_state = "default"
 	var/mob/living/carbon/giver
-	var/obj/item/receiving
+	var/obj/item/slapper/slapper_item
 
-/obj/screen/alert/highfive/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
+/obj/screen/alert/highfive/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/slapper/slap)
 	name = "[giver] is offering a high-five"
 	desc = "[giver] wants a high-five! Click this alert to take it."
 	icon_state = "template"
 	cut_overlays()
-	add_overlay(receiving)
-	src.receiving = receiving
+	add_overlay(slap)
+	src.slapper_item = slap
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
-
-/obj/screen/alert/highfive/proc/check_in_range(atom/taker)
-	SIGNAL_HANDLER
-
-	if (!giver.CanReach(taker))
-		to_chat(owner, "<span class='warning'>You left [giver] hanging!</span>")
-		owner.clear_alert("[giver]")
 
 /obj/screen/alert/highfive/Click(location, control, params)
 	. = ..()
-	var/mob/living/carbon/C = owner
-	C.take(giver, receiving)
+	var/datum/status_effect/high_fiving/high_five_effect = giver.has_status_effect(STATUS_EFFECT_HIGHFIVE)
+	if(high_five_effect)
+		high_five_effect.we_did_it(owner)
 
 /// Gives the player the option to succumb while in critical condition
 /obj/screen/alert/succumb
