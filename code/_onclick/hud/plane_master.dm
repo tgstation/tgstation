@@ -162,5 +162,5 @@
 
 /obj/screen/plane_master/runechat/backdrop(mob/mymob)
 	filters = list()
-	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
+	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
