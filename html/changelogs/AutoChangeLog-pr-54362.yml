@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "Improves fall-off code and moves away from byond's inbuilt falloff as much as possible."
