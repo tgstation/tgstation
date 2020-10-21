@@ -1,0 +1,4 @@
+author: "Azarak"
+delete-after: True
+changes: 
+  - tweak: "Bots have now slightly less respect for authority bots"
