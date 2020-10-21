@@ -481,7 +481,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
-/turf/open/floor/plasteel,
+/turf/open/floor/carpet,
 /area/foremanoffice)
 "bx" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -727,7 +727,7 @@
 /obj/effect/landmark/start/foreman,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/carpet,
 /area/foremanoffice)
 "cf" = (
 /obj/effect/turf_decal/loading_area{
@@ -4547,7 +4547,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/carpet,
 /area/foremanoffice)
 "HO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
@@ -4641,6 +4641,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Kh" = (
+/turf/open/floor/carpet,
+/area/foremanoffice)
 "Kv" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/decal/cleanable/dirt,
@@ -4797,6 +4800,12 @@
 /area/mine/laborcamp)
 "Pa" = (
 /turf/open/floor/plating,
+/area/mine/living_quarters)
+"Pk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Pl" = (
 /obj/effect/turf_decal/tile/brown{
@@ -5094,7 +5103,10 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet,
 /area/foremanoffice)
 "UO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -11054,9 +11066,9 @@ su
 Dj
 bj
 Ac
-QQ
+Kh
 UJ
-QQ
+Kh
 QQ
 za
 qt
@@ -12340,7 +12352,7 @@ Xa
 bB
 dZ
 dZ
-dZ
+Pk
 dZ
 dZ
 dZ
