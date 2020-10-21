@@ -578,20 +578,24 @@ Nothing else in the console has ID requirements.
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
 		.["nodes"] += list(list(
 			"id" = n.id,
-			"can_afford" = stored_research.can_afford(n.get_price(stored_research)),
+			"can_unlock" = stored_research.can_unlock_node(n),
 			"researched" = stored_research.researched_nodes[v],
 			"available" = stored_research.available_nodes[v],
 			"visible" = stored_research.visible_nodes[v],
 		))
 
 	// Get experiments and serialize them
-	for (var/e in stored_research.available_experiments + stored_research.completed_experiments)
+	var/list/exp_to_process = stored_research.available_experiments.Copy()
+	for (var/e in stored_research.completed_experiments)
+		exp_to_process += stored_research.completed_experiments[e]
+	for (var/e in exp_to_process)
 		var/datum/experiment/ex = e
 		.["experiments"][ex.type] = list(
-			name = ex.name,
-			description = ex.description,
-			tag = ex.exp_tag,
-			progress = ex.check_progress()
+			"name" = ex.name,
+			"description" = ex.description,
+			"tag" = ex.exp_tag,
+			"progress" = ex.check_progress(),
+			"completed" = ex.completed
 		)
 
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
@@ -623,7 +627,7 @@ Nothing else in the console has ID requirements.
 	for (var/did in SSresearch.techweb_designs)
 		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
 		.["design_cache"][d.id] = list(
-			d.name
+			"name" = d.name
 		)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)

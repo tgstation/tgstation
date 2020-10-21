@@ -31,7 +31,7 @@
   * Checks if the experiment is complete
   *
   * This proc should be overridden such that it returns TRUE/FALSE to
-  * state if the experiment is complete or not.sound
+  * state if the experiment is complete or not.
   */
 /datum/experiment/proc/is_complete()
 	return

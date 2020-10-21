@@ -1,8 +1,16 @@
+.Techweb__NodeProgress {
+  margin-bottom: 1rem;
+}
+
+.Techweb__NodeProgress > *:not(:last-child) {
+  margin-bottom: 0.4rem;
+}
+
 .Techweb__NodeDescription {
   margin-bottom: 1rem;
 }
 
-.Techweb__NodeProgress {
+.Techweb__NodeUnlockedDesigns {
   margin-bottom: 1rem;
 }
 

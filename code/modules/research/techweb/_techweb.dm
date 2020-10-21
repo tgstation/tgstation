@@ -232,6 +232,9 @@
 		if (!completed_experiments[experiment_type])
 			return FALSE
 
+/datum/techweb/proc/can_unlock_node(datum/techweb_node/node)
+	return can_afford(node.get_price(src)) && have_experiments_for_node(node)
+
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE
 	// check active experiments for experiment of this type
@@ -254,7 +257,7 @@
 
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
-	completed_experiments[completed_experiment.type] += completed_experiment
+	completed_experiments[completed_experiment.type] = completed_experiment
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)

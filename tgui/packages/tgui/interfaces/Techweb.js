@@ -1,4 +1,4 @@
-import { Button, Section, NoticeBox, Tabs, Box, Input, Flex, ProgressBar } from '../components';
+import { Button, Section, NoticeBox, Tabs, Box, Input, Flex, ProgressBar, Collapsible } from '../components';
 import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
@@ -8,6 +8,7 @@ export const Techweb = (props, context) => {
   const {
     nodes,
     node_cache,
+    design_cache,
     experiments,
     points,
     points_last_tick,
@@ -57,7 +58,7 @@ export const Techweb = (props, context) => {
       <Window.Content>
         <Section title={`${web_org} Research and Development Network`}
           buttons={
-            `${points && points["General Research"] || 0} points (+${points_last_tick && points_last_tick["General Research"] || 0}/t)`
+            `GEN: ${points && points["General Research"] || 0} points (+${points_last_tick && points_last_tick["General Research"] || 0}/t)`
           }>
           <Flex justify={"space-between"}>
             <Flex.Item>
@@ -103,61 +104,85 @@ const TechNode = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     node_cache,
+    design_cache,
     experiments,
     points,
   } = data;
   const { node } = props;
   const {
     id,
-    can_afford,
+    can_unlock,
     researched,
     available,
     visible,
   } = node;
 
   let thisNode = node_cache[id];
+  let reqExp = thisNode?.required_experiments;
   return (
     <Section title={thisNode.name}
       buttons={!researched && (
         <Button
           icon="lightbulb"
-          disabled={researched || !can_afford}
+          disabled={researched || !can_unlock}
           onClick={() => act("researchNode", { node_id: thisNode.id })}>
           Research
         </Button>
       )}>
-      <div className="Techweb__NodeProgress">
-        {Object.keys(thisNode.costs).map((k, i) => {
-          return (
+      {!researched && (
+        <div className="Techweb__NodeProgress">
+          {Object.keys(thisNode.costs).map((k, i) => {
+            return (
+              <ProgressBar
+                key={`n${thisNode.id}p${i}`}
+                ranges={{
+                  good: [0.5, Infinity],
+                  average: [0.25, 0.5],
+                  bad: [-Infinity, 0.25],
+                }}
+                value={Math.min(1, points[k] / thisNode.costs[k] || 1)}>
+                {k} ({Math.min(thisNode.costs[k], points[k])}/{thisNode.costs[k]})
+              </ProgressBar>
+            );
+          })}
+          {reqExp?.length > 0 && (
             <ProgressBar
-              key={`n${thisNode.id}p${i}`}
+              key={`n${thisNode.id}pexp`}
               ranges={{
                 good: [0.5, Infinity],
                 average: [0.25, 0.5],
                 bad: [-Infinity, 0.25],
               }}
-              value={Math.min(1, points[k] / thisNode.costs[k] || 1)}>
-              {k} ({Math.min(thisNode.costs[k], points[k])}/{thisNode.costs[k]})
+              value={reqExp.filter(x => experiments[x].completed).length / reqExp.length}>
+              Experiments ({reqExp.filter(x => experiments[x].completed).length}/{reqExp.length})
             </ProgressBar>
-          );
-        })}
-      </div>
+          )}
+        </div>
+      )}
       <div className="Techweb__NodeDescription">{thisNode.description}</div>
       <Box className="Techweb__NodeUnlockedDesigns">
         {Object.keys(thisNode.design_ids).map((k, i) => {
           return (
-            <span key={`${thisNode.id}${i}`}
-              className={`design32x32 ${k} Techweb__DesignIcon`} />
+            <Button key={`${thisNode.id}${i}`}
+              className={`design32x32 ${k} Techweb__DesignIcon`}
+              tooltip={design_cache[k].name}
+              tooltipPosition={i % 15 < 7 ? "right" : "left"} />
           );
         })}
       </Box>
-      {thisNode.required_experiments
-        && thisNode.required_experiments.map((k, i) => {
-          const thisExp = experiments[k];
-          return (
-            <Experiment key={`n${thisNode.id}e${i}`} exp={thisExp} />
-          );
-        })}
+      {thisNode.required_experiments?.length > 0
+        && (
+          <Collapsible
+            className="Techweb__NodeExperimentsRequired"
+            title="Required Experiments">
+            {thisNode.required_experiments.map((k, i) => {
+              const thisExp = experiments[k];
+              return (
+                <Experiment key={`n${thisNode.id}e${i}`} exp={thisExp} />
+              );
+            })}
+          </Collapsible>
+        )}
     </Section>
   );
 };
