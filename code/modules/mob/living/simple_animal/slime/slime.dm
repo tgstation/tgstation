@@ -100,7 +100,7 @@
 	set_colour(new_colour)
 	. = ..()
 	set_nutrition(700)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 	add_cell_sample()
 
 /mob/living/simple_animal/slime/Destroy()
@@ -477,12 +477,6 @@
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
-
-/mob/living/simple_animal/slime/can_unbuckle()
-	return FALSE
-
-/mob/living/simple_animal/slime/can_buckle()
-	return FALSE
 
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# REPO MAINTAINERS: KEEP CHANGES TO THIS IN SYNC WITH /tools/tgs4_scripts/PreCompile.sh
+
 set -e
 set -x
 
@@ -26,7 +28,7 @@ if ! [ -x "$has_cargo" ]; then
 	. ~/.profile
 fi
 
-# apt packages
+# apt packages, libssl needed by rust-g but not included in TGS barebones install
 if ! { [ -x "$has_git" ] && [ -x "$has_grep" ] && [ -f "/usr/lib/i386-linux-gnu/libssl.so" ] && [ -f "/usr/bin/mysql" ] && [ -d "/usr/include/mysql" ]; }; then
 	echo "Installing apt dependencies..."
 	if ! [ -x "$has_sudo" ]; then

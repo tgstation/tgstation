@@ -66,10 +66,10 @@
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
 	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click this button to reset all buttons to their default positions."
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/hud/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = FALSE
-	var/hide_icon = 'icons/mob/actions.dmi'
+	var/hide_icon = 'icons/hud/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
 	var/mutable_appearance/hide_appearance
@@ -174,7 +174,7 @@
 	.["bg_state"] = "template"
 
 	//TODO : Make these fit theme
-	.["toggle_icon"] = 'icons/mob/actions.dmi'
+	.["toggle_icon"] = 'icons/hud/actions.dmi'
 	.["toggle_hide"] = "hide"
 	.["toggle_show"] = "show"
 

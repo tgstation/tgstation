@@ -4,7 +4,7 @@
 GLOBAL_LIST_EMPTY(radial_menus)
 
 /obj/screen/radial
-	icon = 'icons/mob/radial.dmi'
+	icon = 'icons/hud/radial.dmi'
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
