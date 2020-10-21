@@ -1610,24 +1610,28 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * environment handler for species
+ * Environment handler for species
  *
  * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
+ * * environment (required) The environment gas mix
+ * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
-	var/areatemp = H.get_temperature(environment)
+/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/humi)
+	handle_environment_pressure(environment, humi)
 
-	if(H.stat != DEAD) // If you are dead your body does not stabilize naturally
-		natural_bodytemperature_stabilization(environment, H)
 
-	if(!H.on_fire || areatemp > H.bodytemperature) // If we are not on fire or the area is hotter
-		H.adjust_bodytemperature((areatemp - H.bodytemperature), use_insulation=TRUE, use_steps=TRUE)
+/datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi)
+	if(humi.stat != DEAD) // If you are dead none of this matters
+		body_temperature_core(humi)
+		body_temperature_skin(humi)
+		body_temperature_alerts(humi)
+		body_temperature_damage(humi)
 
-/// Handle the body temperature status effects for the species
-/// Traits for resitance to heat or cold are handled here.
-/datum/species/proc/handle_body_temperature(mob/living/carbon/human/H)
+
+/**
+ * TODO
+ */
+/datum/species/proc/body_temperature_alerts(mob/living/carbon/human/H)
 	// Body temperature is too hot, and we do not have resist traits
 	if(H.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
@@ -1692,6 +1696,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
+/**
+ * TODO
+ */
+/datum/species/proc/body_temperature_damage(mob/living/carbon/human/H)
+	return
+
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/pressure = environment.return_pressure()
@@ -1738,10 +1748,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * Used to stabilize the body temperature back to normal on living mobs
  *
  * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
+ * * H (required) The mob we will stabilize
  */
-/datum/species/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+/datum/species/proc/body_temperature_core(mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 	var/body_temp = H.bodytemperature // Get current body temperature
 	var/body_temperature_difference = H.get_body_temp_normal() - body_temp
@@ -1789,6 +1798,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	// Apply the natural stabilization changes
 	H.adjust_bodytemperature(natural_change)
+
+/**
+ * Used to normalize the skin temperature on living mobs
+ *
+ * vars:
+ * * H (required) The mob we will targeting
+ */
+/datum/species/proc/body_temperature_skin(mob/living/carbon/human/H)
+	return
 
 //////////
 // FIRE //

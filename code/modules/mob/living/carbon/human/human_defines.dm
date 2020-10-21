@@ -70,3 +70,6 @@
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
 
+	/// Default skin temperature, should match body at round start
+	var/skintemperature = BODYTEMP_NORMAL
+

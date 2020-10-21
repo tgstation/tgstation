@@ -37,6 +37,8 @@
 			//heart attack stuff
 			handle_heart()
 			handle_liver()
+			//Body temperature stability and damage
+			dna.species.handle_body_temperature(src)
 
 		dna.species.spec_life(src) // for mutantraces
 	else
@@ -111,8 +113,37 @@
 		return
 
 	dna.species.handle_environment(environment, src)
-	dna.species.handle_environment_pressure(environment, src)
-	dna.species.handle_body_temperature(src)
+
+/**
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional)(default: True) Caps the step size
+ * * use_skin (option)(default: True) Applies changes to the skin not the core
+ */
+/mob/living/carbon/human/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE, use_skin=TRUE)
+	if(!use_skin)
+		return ..()
+
+	// apply insulation to the amount of change
+	if(use_insulation)
+		amount *= (1 - get_insulation_protection(skintemperature + amount))
+
+	// Use the bodytemp divisors to get the change step, with max step size
+	if(use_steps)
+		amount = (amount > 0) ? (amount / BODYTEMP_HEAT_DIVISOR) : (amount / BODYTEMP_COLD_DIVISOR)
+		// Clamp the results to the min and max step size
+		if(capped)
+			amount = (amount > 0) ? min(amount, BODYTEMP_HEATING_MAX) : max(amount, BODYTEMP_COOLING_MAX)
+
+	if(skintemperature >= min_temp && skintemperature <= max_temp)
+		skintemperature = clamp(skintemperature + amount, min_temp, max_temp)
 
 /**
  * get_body_temperature Returns the body temperature with any modifications applied
