@@ -59,12 +59,12 @@
 		var/obj/clamptarget = target
 		if(istype(clamptarget, /obj/machinery/door/firedoor))
 			var/obj/machinery/door/firedoor/targetfiredoor = clamptarget
-			playsound(chassis, clampsound, 50, TRUE, -6)
+			playsound(chassis, clampsound, 50, FALSE, -6)
 			targetfiredoor.try_to_crowbar(src, source)
 			return
 		if(istype(clamptarget, /obj/machinery/door/airlock/))
 			var/obj/machinery/door/airlock/targetairlock = clamptarget
-			playsound(chassis, clampsound, 50, TRUE, -6)
+			playsound(chassis, clampsound, 50, FALSE, -6)
 			targetairlock.try_to_crowbar(src, source)
 			return
 		if(clamptarget.anchored)
@@ -73,7 +73,7 @@
 		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)]<span class='warning'>Not enough room in cargo compartment!</span>")
 			return
-		playsound(chassis, clampsound, 50, TRUE, -6)
+		playsound(chassis, clampsound, 50, FALSE, -6)
 		chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
