@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - rscadd: "PDA now has sounds for interacting with it, aswell as inserting or ejecting items, such as the ID"
