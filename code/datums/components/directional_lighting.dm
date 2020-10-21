@@ -11,6 +11,7 @@
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	vis_flags = NONE
+	alpha = 110
 
 /datum/component/directional_lighting
 	var/obj/effect/abstract/directional_lighting/light_holder_atom
@@ -25,6 +26,7 @@
 	. = ..()
 	light_holder_atom = new()
 	cone = new()
+	cone.transform = cone.transform.Translate(-32, -32)
 	if(_range)
 		set_range(parent, _range)
 	if(_power)
@@ -34,6 +36,7 @@
 
 /datum/component/directional_lighting/Destroy()
 	set_holder(null)
+	QDEL_NULL(cone)
 	QDEL_NULL(light_holder_atom)
 	return ..()
 
@@ -47,10 +50,10 @@
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_FLAGS, .proc/on_light_flags_change)
 	var/atom/movable/movable_parent = parent
 	check_holder()
-	light_holder_atom.set_light_range(movable_parent.light_range)
-	light_holder_atom.set_light_power(movable_parent.light_power)
-	light_holder_atom.set_light_color(movable_parent.light_color)
-	on_toggle(movable_parent, movable_parent.light_on)
+	set_range(parent, movable_parent.light_range)
+	set_power(parent, movable_parent.light_power)
+	set_color(parent, movable_parent.light_color)
+	on_toggle(parent, movable_parent.light_on)
 
 /datum/component/directional_lighting/UnregisterFromParent()
 	set_holder(null)
@@ -83,10 +86,10 @@
 		if(current_holder != parent)
 			UnregisterSignal(current_holder, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
 	current_holder = new_holder
-	if(light_enabled)
-		new_holder.vis_contents += cone
 	if(new_holder == null)
 		return
+	if(light_enabled)
+		new_holder.vis_contents += cone
 	if(new_holder != parent)
 		RegisterSignal(new_holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 		RegisterSignal(new_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
@@ -116,8 +119,8 @@
 
 /datum/component/directional_lighting/proc/update_visual()
 	var/final_distance = cast_distance
-	//Lower the distance by 1 if we're not looking at a cardinal direction
-	if(!(ALL_CARDINALS & direction))
+	//Lower the distance by 1 if we're not looking at a cardinal direction, and we're not a short cast
+	if(final_distance > 2 && !(ALL_CARDINALS & direction))
 		final_distance -= 1
 	var/turf/scanning = get_turf(current_holder)
 	for(var/i in 1 to cast_distance)
@@ -156,6 +159,7 @@
 
 /datum/component/directional_lighting/proc/set_power(atom/source, new_power)
 	SIGNAL_HANDLER
+	cone.alpha = min(200, (abs(new_power) * 110))
 	light_holder_atom.set_light_power(new_power)
 
 /datum/component/directional_lighting/proc/set_color(atom/source, new_color)
@@ -165,10 +169,10 @@
 
 /datum/component/directional_lighting/proc/on_toggle(atom/source, new_value)
 	SIGNAL_HANDLER
+	light_holder_atom.set_light_on(new_value)
 	if(light_enabled == new_value)
 		return
 	light_enabled = new_value
-	light_holder_atom.set_light_on(new_value)
 	//We hide the atom if we dont need it at the moment
 	if(!new_value)
 		light_holder_atom.moveToNullspace()
