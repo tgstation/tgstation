@@ -10,14 +10,17 @@
 
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -6 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -6 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
 
-#define FLOOR_PLANE -2
+#define FLOOR_PLANE -4
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
-#define GAME_PLANE -1
+#define GAME_PLANE -3
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
+#define FRILL_SHADOW_PLANE -2
+#define FRILL_PLANE -1
+#define FRILL_PLANE_RENDER_TARGET "*FRILL_PLANE"
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
 

@@ -17,6 +17,11 @@
 	var/d_state = INTACT
 
 
+/turf/closed/wall/r_wall/Initialize(mapload)
+	. = ..()
+	setup_frill()
+
+
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
@@ -231,6 +236,11 @@
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/closed/wall/r_wall/rust)
+
+
+/turf/closed/wall/r_wall/proc/setup_frill()
+	AddElement(/datum/element/frill, 'icons/effects/frills/reinforced_wall_frill.dmi')
+
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"

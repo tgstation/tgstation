@@ -39,17 +39,20 @@
 /obj/screen/plane_master/proc/clear_filters()
 	filters = list()
 
+
 ///Contains just the floor
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+	render_target = FLOOR_PLANE_RENDER_TARGET
 
 /obj/screen/plane_master/floor/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
+
 
 ///Contains most things in the game world
 /obj/screen/plane_master/game_world
@@ -57,6 +60,7 @@
 	plane = GAME_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
+	render_target = GAME_PLANE_RENDER_TARGET
 
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
 	filters = list()
@@ -64,6 +68,19 @@
 		filters += AMBIENT_OCCLUSION
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(clamp(mymob.eye_blurry*0.1,0.6,3))
+
+
+///Contains wall frills,
+/obj/screen/plane_master/frill
+	name = "frill plane master"
+	plane = FRILL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_target = FRILL_PLANE_RENDER_TARGET
+
+/obj/screen/plane_master/frill/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 
 
 ///Contains all lighting objects
