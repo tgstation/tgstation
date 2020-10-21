@@ -5,7 +5,7 @@
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/alphacolors.dmi'
-	icon_state = "nothing"
+	icon_state = "transparent"
 
 	/// The mobile port we're projecting
 	var/obj/docking_port/mobile/shuttle_port
