@@ -36,27 +36,63 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel/attack(mob/living/M, mob/living/user)
 	if(M.mind)
 		to_chat(user, "<span class='notice'>You invite [M] to the hotel.</span>")
-		promptAndCheckIn(M)
+		promptAndCheckIn(user, M)
 	else
 		to_chat(user, "<span class='warning'>[M] is not intelligent enough to understand how to use this device!</span>")
 
 /obj/item/hilbertshotel/attack_self(mob/user)
 	. = ..()
-	promptAndCheckIn(user)
+	promptAndCheckIn(user, user)
 
-/obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
-	var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
+/obj/item/hilbertshotel/attack_tk(mob/user)
+	to_chat(user, "<span class='notice'>\The [src] actively rejects your mind as the bluespace energies surrounding it disrupt your telekinesis.</span>")
+	return
+
+/obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user, mob/target)
+	var/chosenRoomNumber
+
+	// Input text changes depending on if you're using this in yourself or someone else.
+	if(user == target)
+		chosenRoomNumber = input(target, "What number room will you be checking into?", "Room Number") as null|num
+	else
+		chosenRoomNumber = input(target, "[user] is inviting you to enter \the [src]. What number room will you be checking into?", "Room Number") as null|num
+
 	if(!chosenRoomNumber)
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
-		to_chat(user, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
+		to_chat(target, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
 		return
 	if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
-		to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
+		to_chat(target, "<span class='warning'>That is not a valid room number!</span>")
 		return
-	if(ismob(loc))
-		if(user == loc) //Not always the same as user
-			forceMove(get_turf(user))
+
+	// Orb is not adjacent to the target. No teleporties.
+	if(!src.Adjacent(target))
+		to_chat(target, "<span class='warning'>You too far away from \the [src] to enter it!</span>")
+
+	// If the target is incapacitated after selecting a room, they're not allowed to teleport.
+	if(target.incapacitated())
+		to_chat(target, "<span class='warning'>You aren't able to activate \the [src] anymore!</span>")
+
+	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
+	if(!(get_atom_on_turf(src, /mob) == user))
+		if(user == target)
+			to_chat(user, "<span class='warning'>\The [src] is no longer in your possession!</span>")
+		else
+			to_chat(target, "<span class='warning'>\The [src] is no longer in the possession of [user]!</span>")
+		return
+
+	// If the player is using it on themselves, we've got some logic to deal with.
+	// The user should drop the item before teleporting, but we're not going to force the item to be dropped if it can't be done normally...
+	if(user == target)
+		// The item should be on the user or in the user's inventory somewhere.
+		// However, if they're not holding it, it may be in a pocket? In a backpack? Who knows! Still, they can't just drop it to the floor anymore...
+		if(!user.get_held_index_of_item(src))
+			to_chat(user, "<span class='warning'>You try to drop \the [src], but it's too late! It's no longer in your hands! Prepare for unforeseen consequences...</span>")
+		// Okay, so they HAVE to be holding it here, because it's in their hand from the above check. Try to drop the item and if it fails, oh dear...
+		else if(!user.dropItemToGround(src))
+			to_chat(user, "<span class='warning'>You can't seem to drop \the [src]! It must be stuck to your hand somehow! Prepare for unforeseen consequences...</span>")
+
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
 			var/datum/map_template/hilbertshotelstorage/storageTemp = new()
@@ -65,12 +101,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
 		else
 			storageTurf = GLOB.hhStorageTurf
-	if(tryActiveRoom(chosenRoomNumber, user))
+	if(tryActiveRoom(chosenRoomNumber, target))
 		return
-	if(tryStoredRoom(chosenRoomNumber, user))
+	if(tryStoredRoom(chosenRoomNumber, target))
 		return
-	sendToNewRoom(chosenRoomNumber, user)
-
+	sendToNewRoom(chosenRoomNumber, target)
 
 /obj/item/hilbertshotel/proc/tryActiveRoom(roomNumber, mob/user)
 	if(activeRooms["[roomNumber]"])
@@ -334,6 +369,16 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(prob(0.135685)) //Because screw you
 		qdel(H)
 		return
+
+	// Prepare for...
+	var/mob/unforeseen_consequences = get_atom_on_turf(H, /mob)
+
+	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
+	// Let's gib the last person to have selected a room number in it.
+	if(unforeseen_consequences)
+		to_chat(unforeseen_consequences, "<span class='warning'>\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart.</span>")
+		unforeseen_consequences.gib()
+
 	var/turf/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)

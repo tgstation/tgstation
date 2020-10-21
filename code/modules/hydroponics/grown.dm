@@ -97,7 +97,7 @@
 
 // Various gene procs
 /obj/item/reagent_containers/food/snacks/grown/attack_self(mob/user)
-	if(seed && seed.get_gene(/datum/plant_gene/trait/squash))
+	if(seed?.get_gene(/datum/plant_gene/trait/squash))
 		squash(user)
 	..()
 
@@ -156,7 +156,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/on_grind()
 	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	if(grind_results&&grind_results.len)
+	if(grind_results?.len)
 		for(var/i in 1 to grind_results.len)
 			grind_results[grind_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
@@ -164,7 +164,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/on_juice()
 	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-	if(juice_results&&juice_results.len)
+	if(juice_results?.len)
 		for(var/i in 1 to juice_results.len)
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)

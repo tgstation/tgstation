@@ -90,7 +90,7 @@
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey

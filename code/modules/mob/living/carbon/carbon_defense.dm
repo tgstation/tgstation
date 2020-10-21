@@ -240,9 +240,18 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
+			do_slap_animation(target)
+			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
+				"<span class='notice'>You slap [target] in the face! </span>",\
+			"You hear a slap.")
+			target.dna?.species?.stop_wagging_tail(target)
+			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -473,6 +482,8 @@
 	AdjustParalyzed(-60)
 	AdjustImmobilized(-60)
 	set_resting(FALSE)
+	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
+		get_up(TRUE)
 
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 

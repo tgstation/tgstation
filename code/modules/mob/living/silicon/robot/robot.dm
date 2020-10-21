@@ -193,8 +193,6 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.set_stat(CONSCIOUS)
-				mmi.brainmob.remove_from_dead_mob_list()
-				mmi.brainmob.add_to_alive_mob_list()
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -379,6 +377,8 @@
 	return !cleared
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
+	if (A == modularInterface)
+		return TRUE //bypass for borg tablets
 	if (low_power_mode)
 		return FALSE
 	var/turf/T0 = get_turf(src)
@@ -1015,9 +1015,9 @@
 	cell = null
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
+	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
-		if(buckle_mob(M))
-			return TRUE
+		return user_buckle_mob(M, user, check_loc = FALSE)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
@@ -1037,9 +1037,6 @@
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-	M.visible_message("<span class='boldwarning'>[M] is being loaded onto [src]!</span>")//if you have better flavor text for this by all means change it
-	if(!do_after(src, 5, target = M))
-		return
 	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
 		if(M.usable_hands == 0)
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
@@ -1075,7 +1072,7 @@
 	return FALSE
 
 /mob/living/silicon/robot/proc/picturesync()
-	if(connected_ai && connected_ai.aicamera && aicamera)
+	if(connected_ai?.aicamera && aicamera)
 		for(var/i in aicamera.stored)
 			connected_ai.aicamera.stored[i] = TRUE
 		for(var/i in connected_ai.aicamera.stored)

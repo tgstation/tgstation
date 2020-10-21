@@ -474,8 +474,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	var/static/datum/callback/rest_checks = CALLBACK(src, .proc/rest_checks_callback)
-	if(!instant && !do_mob(src, src, 2 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
+	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, /mob/living/proc/rest_checks_callback)))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -579,7 +578,7 @@
 			var/icon/mob_mask = icon(icon, icon_state)
 			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
-				mob_mask = icon('icons/mob/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
+				mob_mask = icon('icons/hud/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
 			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
@@ -609,11 +608,11 @@
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
-		remove_from_dead_mob_list()
-		add_to_alive_mob_list()
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
+		if(admin_revive)
+			get_up(TRUE)
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -625,6 +624,10 @@
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
+	else if(admin_revive)
+		updatehealth()
+		get_up(TRUE)
+
 
 /mob/living/proc/remove_CC()
 	SetStun(0)
@@ -907,7 +910,7 @@
 	if(throwing)
 		return
 	var/fixed = 0
-	if(anchored || (buckled && buckled.anchored))
+	if(anchored || (buckled?.anchored))
 		fixed = 1
 	if(on && !(movement_type & FLOATING) && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
@@ -1229,7 +1232,7 @@
 	C.Paralyze(40)
 
 /mob/living/can_be_pulled()
-	return ..() && !(buckled && buckled.buckle_prevents_pull)
+	return ..() && !(buckled?.buckle_prevents_pull)
 
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
@@ -1261,7 +1264,7 @@
 			if(changeling.changeling_speak)
 				return LINGHIVE_LING
 			return LINGHIVE_OUTSIDER
-	if(mind && mind.linglink)
+	if(mind?.linglink)
 		return LINGHIVE_LINK
 	return LINGHIVE_NONE
 
@@ -1366,35 +1369,62 @@
 
 /mob/living/update_mouse_pointer()
 	..()
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+	if (client && ranged_ability?.ranged_mousepointer)
 		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
+
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if(NAMEOF(src, stat))
-			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				remove_from_dead_mob_list()
-				add_to_alive_mob_list()
-			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				remove_from_alive_mob_list()
-				add_to_dead_mob_list()
 		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
 			return FALSE
+		if(NAMEOF(src, druggy))
+			set_drugginess(var_value)
+			. = TRUE
+		if(NAMEOF(src, resting))
+			set_resting(var_value)
+			. = TRUE
+		if(NAMEOF(src, fire_stacks))
+			set_fire_stacks(var_value)
+			. = TRUE
+		if(NAMEOF(src, lying_angle))
+			set_lying_angle(var_value)
+			. = TRUE
+		if(NAMEOF(src, buckled))
+			set_buckled(var_value)
+			. = TRUE
+		if(NAMEOF(src, num_legs))
+			set_num_legs(var_value)
+			. = TRUE
+		if(NAMEOF(src, usable_legs))
+			set_usable_legs(var_value)
+			. = TRUE
+		if(NAMEOF(src, num_hands))
+			set_num_hands(var_value)
+			. = TRUE
+		if(NAMEOF(src, usable_hands))
+			set_usable_hands(var_value)
+			. = TRUE
+		if(NAMEOF(src, body_position))
+			set_body_position(var_value)
+			. = TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
 	. = ..()
+
 	switch(var_name)
-		if(NAMEOF(src, eye_blind))
-			set_blindness(var_value)
-		if(NAMEOF(src, eye_blurry))
-			set_blurriness(var_value)
 		if(NAMEOF(src, maxHealth))
 			updatehealth()
 		if(NAMEOF(src, resize))
 			update_transform()
 		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
+
 
 /mob/living/vv_get_header()
 	. = ..()
@@ -1597,15 +1627,13 @@
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_FLOORED, UNCONSCIOUS_TRAIT)
+			ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
+			ADD_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(stat >= UNCONSCIOUS)
-				ADD_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
-				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			if(pulledby)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
 		if(UNCONSCIOUS)
@@ -1614,21 +1642,22 @@
 		if(HARD_CRIT)
 			if(stat != UNCONSCIOUS)
 				cure_blind(UNCONSCIOUS_TRAIT)
+		if(DEAD)
+			remove_from_dead_mob_list()
+			add_to_alive_mob_list()
 	switch(stat) //Current stat.
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
-			REMOVE_TRAIT(src, TRAIT_FLOORED, UNCONSCIOUS_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAT_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_FLOORED, STAT_TRAIT)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
-				REMOVE_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-				REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
@@ -1643,6 +1672,8 @@
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 		if(DEAD)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			remove_from_alive_mob_list()
+			add_to_dead_mob_list()
 
 
 ///Reports the event of the change in value of the buckled variable.
@@ -1659,6 +1690,7 @@
 				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
 			if(0) // Forcing to a standing position.
 				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				set_body_position(STANDING_UP)
 				set_lying_angle(0)
 			else // Forcing to a lying position.
 				ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
@@ -1671,7 +1703,6 @@
 			var/atom/movable/old_buckled = .
 			if(old_buckled.buckle_lying == 0 && (resting || HAS_TRAIT(src, TRAIT_FLOORED))) // The buckle forced us to stay up (like a chair)
 				set_lying_down() // We want to rest or are otherwise floored, so let's drop on the ground.
-
 
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()

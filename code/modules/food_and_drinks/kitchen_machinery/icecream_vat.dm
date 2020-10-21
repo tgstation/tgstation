@@ -111,7 +111,7 @@
 			if(product_types[dispense_flavour] > 0)
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
-				if(beaker && beaker.reagents.total_volume)
+				if(beaker?.reagents.total_volume)
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
 					I.add_ice_cream(flavour_name)

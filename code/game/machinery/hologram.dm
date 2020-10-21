@@ -113,13 +113,13 @@ Possible to do for anyone motivated enough:
 		return
 	if(replay_mode)
 		replay_stop()
-	else if(disk && disk.record)
+	else if(disk?.record)
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
-	if(!replay_mode && (disk && disk.record))
+	if(!replay_mode && (disk?.record))
 		replay_start()
 
 /obj/machinery/holopad/Initialize()
@@ -660,7 +660,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		record_user = null
 
 /obj/machinery/holopad/proc/record_clear()
-	if(disk && disk.record)
+	if(disk?.record)
 		QDEL_NULL(disk.record)
 
 /obj/effect/overlay/holo_pad_hologram

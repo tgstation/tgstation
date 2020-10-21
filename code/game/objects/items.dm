@@ -72,6 +72,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/pickup_sound
 	///Sound uses when dropping the item, or when its thrown.
 	var/drop_sound
+	///Whether or not we use stealthy audio levels for this item's attack sounds
+	var/stealthy_audio = FALSE
 
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
@@ -190,9 +192,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
-		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
-		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
+		attack_verb_simple = string_list(attack_verb_simple)
+	if(species_exception)
+		species_exception = string_list(species_exception)
 
 	. = ..()
 	for(var/path in actions_types)
@@ -360,7 +364,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		else
 			to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
 			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+			if(affecting?.receive_damage( 0, 5 ))		// 5 burn damage
 				C.update_damage_overlays()
 			return
 
