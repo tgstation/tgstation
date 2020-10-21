@@ -199,6 +199,7 @@
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
+
 /obj/item/small_delivery/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
@@ -214,6 +215,8 @@
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	unwrap_contents()
 	qdel(src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/small_delivery/examine(mob/user)
 	. = ..()

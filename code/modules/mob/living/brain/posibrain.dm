@@ -149,8 +149,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		to_chat(brainmob, policy)
 	brainmob.mind.assigned_role = new_role
 	brainmob.set_stat(CONSCIOUS)
-	brainmob.remove_from_dead_mob_list()
-	brainmob.add_to_alive_mob_list()
 
 	visible_message(new_mob_message)
 	check_success()

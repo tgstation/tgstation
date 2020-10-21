@@ -309,6 +309,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Disables the sm's proccessing totally.
 	var/processes = TRUE
 
+
+
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -385,11 +387,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/alarm()
 	switch(get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100)
+			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(SUPERMATTER_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100)
+			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100)
+			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
@@ -509,9 +511,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(last_accent_sound < world.time && prob(20))
 		var/aggression = min(((damage / 800) * (power / 2500)), 1.0) * 100
 		if(damage >= 300)
-			playsound(src, "smdelam", max(50, aggression), FALSE, 10)
+			playsound(src, "smdelam", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 		else
-			playsound(src, "smcalm", max(50, aggression), FALSE, 10)
+			playsound(src, "smcalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
 		var/next_sound = round((100 - aggression) * 5)
 		last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
@@ -848,14 +850,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 			Consume(B)
 
+
 /obj/machinery/power/supermatter_crystal/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		to_chat(C, "<span class='userdanger'>That was a really dense idea.</span>")
-		C.ghostize()
-		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
-		rip_u.Remove(C)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/jedi = user
+	to_chat(jedi, "<span class='userdanger'>That was a really dense idea.</span>")
+	jedi.ghostize()
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.internal_organs
+	if(rip_u)
+		rip_u.Remove(jedi)
 		qdel(rip_u)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/machinery/power/supermatter_crystal/attack_paw(mob/user)
 	dust_mob(user, cause = "monkey attack")

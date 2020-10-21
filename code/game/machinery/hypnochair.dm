@@ -40,13 +40,14 @@
 
 /obj/machinery/hypnochair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	var/mob/living/mob_occupant = occupant
+
+	data["occupied"] = mob_occupant ? 1 : 0
 	data["open"] = state_open
 	data["interrogating"] = interrogating
 
 	data["occupant"] = list()
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 
