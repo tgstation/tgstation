@@ -79,7 +79,7 @@
 			continue
 
 		flick("[icon_state]_active",src)
-		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
+		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
 		var/list/atoms_to_disappear = selected_atoms.Copy()
 		for(var/to_disappear in atoms_to_disappear)
