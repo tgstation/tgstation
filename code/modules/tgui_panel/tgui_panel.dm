@@ -56,6 +56,7 @@
 /datum/tgui_panel/proc/on_initialize_timed_out()
 	// Currently does nothing but sending a message to old chat.
 	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
+	SEND_TEXT(client, "<span class='userdanger'><a href='byond://winset?command=\"Fix Chat\"'>CLICK THIS</a> to attempt to fix it.</span>")
 
 /**
  * private
