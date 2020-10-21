@@ -127,7 +127,7 @@
 	data["sending"] = sending
 	data["status_report"] = status_report
 	data["id_inserted"] = inserted_scan_id
-	if(inserted_scan_id && inserted_scan_id.registered_account)
+	if(inserted_scan_id?.registered_account)
 		data["id_bounty_info"] = inserted_scan_id.registered_account.bounty_text()
 		data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
 		data["id_bounty_value"] = inserted_scan_id.registered_account.bounty_value()
@@ -229,7 +229,7 @@
 	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	playsound(src, "sparks", 80, TRUE)
+	playsound(src, "sparks", 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

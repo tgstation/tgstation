@@ -11,6 +11,7 @@
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
+	program_icon = "download"
 
 	var/datum/computer_file/program/downloaded_file = null
 	var/hacked_download = FALSE
@@ -184,7 +185,7 @@
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
 	var/hardflag = computer.hardware_flag
 
-	if(P && P.is_supported_by_hardware(hardflag,0))
+	if(P?.is_supported_by_hardware(hardflag,0))
 		return "Compatible"
 	return "Incompatible!"
 

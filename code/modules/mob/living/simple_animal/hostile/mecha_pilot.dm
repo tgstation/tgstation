@@ -65,7 +65,7 @@
 	if(spawn_mecha_type)
 		var/obj/vehicle/sealed/mecha/M = new spawn_mecha_type (get_turf(src))
 		if(istype(M))
-			enter_mecha(M)
+			INVOKE_ASYNC(src, .proc/enter_mecha, M)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)

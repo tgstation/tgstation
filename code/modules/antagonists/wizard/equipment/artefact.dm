@@ -420,7 +420,7 @@
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
-	user.update_mobility()
+
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)

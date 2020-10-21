@@ -21,7 +21,7 @@
 	var/boxtag = ""
 	var/list/boxes = list()
 
-	var/obj/item/reagent_containers/food/snacks/pizza/pizza
+	var/obj/item/food/pizza/pizza
 
 	var/obj/item/bombcore/miniature/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
@@ -179,7 +179,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>Close [open ? src : newbox] first!</span>")
-	else if(istype(I, /obj/item/reagent_containers/food/snacks/pizza) || istype(I, /obj/item/reagent_containers/food/snacks/customizable/pizza))
+	else if(istype(I, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
 				to_chat(user, "<span class='warning'>[src] already has \a [pizza.name]!</span>")
@@ -272,7 +272,7 @@
 
 /obj/item/pizzabox/bomb/Initialize()
 	. = ..()
-	var/randompizza = pick(subtypesof(/obj/item/reagent_containers/food/snacks/pizza))
+	var/randompizza = pick(subtypesof(/obj/item/food/pizza))
 	pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
@@ -283,29 +283,29 @@
 	boxtag = "Margherita Deluxe"
 
 /obj/item/pizzabox/margherita/proc/AddPizza()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+	pizza = new /obj/item/food/pizza/margherita(src)
 
 /obj/item/pizzabox/margherita/robo/AddPizza()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita/robo(src)
+	pizza = new /obj/item/food/pizza/margherita/robo(src)
 
 /obj/item/pizzabox/vegetable/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
+	pizza = new /obj/item/food/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
 
 /obj/item/pizzabox/mushroom/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
+	pizza = new /obj/item/food/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
 
 /obj/item/pizzabox/meat/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
+	pizza = new /obj/item/food/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
 
 /obj/item/pizzabox/pineapple/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
+	pizza = new /obj/item/food/pizza/pineapple(src)
 	boxtag = "Honolulu Chew"
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
@@ -313,14 +313,14 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
 	var/list/pizza_types = list(
-		/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
-		/obj/item/reagent_containers/food/snacks/pizza/mushroom = 1,
-		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
-		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
-		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
-   		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
-		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
-		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
+		/obj/item/food/pizza/meat = 1,
+		/obj/item/food/pizza/mushroom = 1,
+		/obj/item/food/pizza/margherita = 1,
+		/obj/item/food/pizza/sassysage = 0.8,
+		/obj/item/food/pizza/vegetable = 0.8,
+   		/obj/item/food/pizza/pineapple = 0.5,
+		/obj/item/food/pizza/donkpocket = 0.3,
+		/obj/item/food/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
 
 /obj/item/pizzabox/infinite/Initialize()
@@ -343,14 +343,14 @@
 	if(!pizza_preferences[noms.ckey])
 		pizza_preferences[noms.ckey] = pickweight(pizza_types)
 		if(noms.has_quirk(/datum/quirk/pineapple_liker))
-			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/pineapple
+			pizza_preferences[noms.ckey] = /obj/item/food/pizza/pineapple
 		else if(noms.has_quirk(/datum/quirk/pineapple_hater))
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
-			pineapple_pizza_liker -= /obj/item/reagent_containers/food/snacks/pizza/pineapple
+			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
 			pizza_preferences[noms.ckey] = pickweight(pineapple_pizza_liker)
 		else if(noms.mind && noms.mind.assigned_role == "Botanist")
-			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
+			pizza_preferences[noms.ckey] = /obj/item/food/pizza/dank
 
 	var/obj/item/pizza_type = pizza_preferences[noms.ckey]
 	pizza = new pizza_type (src)
-	pizza.foodtype = noms.dna.species.liked_food //it's our favorite!
+	pizza.foodtypes = noms.dna.species.liked_food //it's our favorite!

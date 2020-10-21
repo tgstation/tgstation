@@ -23,6 +23,5 @@
 			if(stat == UNCONSCIOUS)
 				set_resting(FALSE)
 			set_stat(CONSCIOUS)
-	update_mobility()
 	update_damage_hud()
 	update_health_hud()

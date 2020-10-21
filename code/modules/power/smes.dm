@@ -238,11 +238,6 @@
 	var/last_chrg = inputting
 	var/last_onln = outputting
 
-	//check for self-recharging cells in stock parts and use them to self-charge
-	for(var/obj/item/stock_parts/cell/C in component_parts)
-		if(C.self_recharge)
-			charge += min(capacity-charge, C.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
-
 	//inputting
 	if(terminal && input_attempt)
 		input_available = terminal.surplus()

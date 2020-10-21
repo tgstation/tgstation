@@ -127,7 +127,7 @@
 
 /obj/item/clothing/head/beret/archaic
 	name = "archaic beret"
-	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a NanoTrasen station."
+	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a Nanotrasen station."
 	icon_state = "archaicberet"
 	dog_fashion = null
 
@@ -272,6 +272,13 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+
+//Science
+
+/obj/item/clothing/head/beret/science
+	name = "science beret"
+	desc = "A science-themed beret for our hardworking scientists."
+	icon_state = "sciberet"
 
 //Curator
 /obj/item/clothing/head/fedora/curator

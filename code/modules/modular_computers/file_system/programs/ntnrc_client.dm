@@ -9,6 +9,7 @@
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
 	tgui_id = "NtosNetChat"
+	program_icon = "comment-alt"
 	var/last_message				// Used to generate the toolbar icon
 	var/username
 	var/active_channel
@@ -183,7 +184,7 @@
 	var/list/all_channels = list()
 	for(var/C in SSnetworks.station_network.chat_channels)
 		var/datum/ntnet_conversation/conv = C
-		if(conv && conv.title)
+		if(conv?.title)
 			all_channels.Add(list(list(
 				"chan" = conv.title,
 				"id" = conv.id

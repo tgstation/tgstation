@@ -16909,7 +16909,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -19060,7 +19060,7 @@
 "aYw" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -27449,9 +27449,8 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bvW" = (
-/obj/machinery/magnetic_module,
 /obj/effect/landmark/blobstart,
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -31537,6 +31536,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bGP" = (
@@ -40854,9 +40854,8 @@
 	desc = "A warning sign which reads 'BOMB RANGE";
 	name = "BOMB RANGE"
 	},
-/turf/closed/indestructible{
+/turf/closed/indestructible/riveted{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
@@ -41807,9 +41806,8 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
-/turf/closed/indestructible{
+/turf/closed/indestructible/riveted{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
-	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
@@ -49488,10 +49486,10 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "iQW" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "iRs" = (
@@ -52887,8 +52885,8 @@
 "nTU" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	req_access_txt = "31"
+	name = "Cargo Bay";
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -53815,8 +53813,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "pds" = (
-/mob/living/simple_animal/pet/dog/corgi/puppy,
 /obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/psychology)
 "pdW" = (
@@ -54156,7 +54154,7 @@
 "pIa" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -58155,10 +58153,10 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "vcJ" = (
@@ -58579,11 +58577,8 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = 26
+/obj/item/radio/intercom/chapel{
+	pixel_x = 29
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -58988,11 +58983,8 @@
 /area/medical/virology)
 "whH" = (
 /obj/structure/chair/wood,
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
+/obj/item/radio/intercom/chapel{
+	pixel_x = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -59372,6 +59364,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"wKP" = (
+/obj/structure/table,
+/obj/item/training_toolbox{
+	pixel_y = 5
+	},
+/obj/item/training_toolbox,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "wLl" = (
 /obj/machinery/door_buttons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -59514,6 +59514,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"wRG" = (
+/obj/structure/training_machine,
+/obj/item/target,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "wRI" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -60434,7 +60439,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "ycr" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
@@ -102284,8 +102289,8 @@ aqZ
 atn
 awB
 axw
-axw
-axw
+wRG
+wKP
 axw
 aBX
 atn

@@ -5,7 +5,12 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
 
+	///Can the supply console send the shuttle back and forth? Used in the UI backend.
+	var/can_send = TRUE
+	///Can this console only send requests?
 	var/requestonly = FALSE
+	///Can you approve requests placed for cargo? Works differently between the app and the computer.
+	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -17,6 +22,8 @@
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
+	/// var that makes express console use rockets
+	var/is_express = FALSE
 
 
 /obj/machinery/computer/cargo/request
@@ -24,17 +31,13 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
+	can_send = FALSE
+	can_approve_requests = FALSE
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
-	var/obj/item/circuitboard/computer/cargo/board = circuit
-	contraband = board.contraband
-	if (board.obj_flags & EMAGGED)
-		obj_flags |= EMAGGED
-	else
-		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -63,6 +66,10 @@
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
 
+/obj/machinery/computer/cargo/on_construction()
+	. = ..()
+	circuit.configure_machine(src)
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -80,6 +87,7 @@
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
+	data["can_send"] = can_send
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -170,6 +178,8 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
+			if(is_express)
+				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))

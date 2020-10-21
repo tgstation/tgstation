@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(request_list)
   */
 /obj/machinery/bounty_board
 	name = "bounty board"
-	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
+	desc = "Allows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "request_kiosk"
 	light_color = LIGHT_COLOR_GREEN

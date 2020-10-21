@@ -142,14 +142,14 @@
 /area/science/robotics/lab)
 "aas" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "aat" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -324,6 +324,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/wood,
 /area/library)
 "aaL" = (
@@ -26384,7 +26385,7 @@
 "bbz" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -62402,9 +62403,6 @@
 /area/security/range)
 "coP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/magnetic_controller{
-	autolink = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -62724,6 +62722,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/tank_holder/oxygen/red,
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
 "cpJ" = (
@@ -68256,12 +68255,6 @@
 /area/maintenance/port)
 "cAX" = (
 /obj/structure/table/reinforced,
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 6
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = -6
-	},
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/structure/sign/warning/nosmoking{
@@ -69166,6 +69159,7 @@
 /area/maintenance/port)
 "cCF" = (
 /obj/effect/turf_decal/bot,
+/obj/structure/tank_holder/emergency_oxygen,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cCG" = (
@@ -71635,11 +71629,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHa" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/training_toolbox,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHb" = (
@@ -74448,8 +74443,6 @@
 /area/science/xenobiology)
 "cMZ" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -75269,6 +75262,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cOM" = (
@@ -80263,6 +80257,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cYd" = (
@@ -84930,6 +84925,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "dhw" = (
@@ -88758,7 +88754,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dpX" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
@@ -106153,8 +106149,8 @@
 /area/hallway/secondary/exit/departure_lounge)
 "edf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "edg" = (
@@ -106371,12 +106367,6 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106386,6 +106376,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -106397,12 +106390,6 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106412,6 +106399,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -109022,6 +109012,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"hBB" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "hFL" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
@@ -111755,6 +111750,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oUc" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/target,
+/obj/structure/training_machine,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "oUW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -112133,10 +112137,10 @@
 /area/medical/chemistry)
 "pND" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/extinguisher,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "pQm" = (
@@ -112899,6 +112903,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
+"rLP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard)
 "rMk" = (
 /obj/machinery/newscaster{
 	pixel_y = -32
@@ -112996,6 +113008,20 @@
 /obj/machinery/telecomms/broadcaster/preset_left,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
+"rXu" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "rYU" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -113068,6 +113094,20 @@
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"sfH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "sfN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -114175,6 +114215,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"vec" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "vjn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/hydroponics/constructable,
@@ -144473,7 +144518,7 @@ caE
 cAZ
 cCF
 cEm
-ceb
+vec
 cHy
 caE
 cKo
@@ -147315,7 +147360,7 @@ cXk
 cYZ
 cXk
 dcs
-ddT
+hBB
 dfd
 dgz
 cQM
@@ -152674,7 +152719,7 @@ bMw
 bOF
 bQG
 bIH
-bUF
+rXu
 bWW
 kxh
 bUF
@@ -155758,7 +155803,7 @@ bMG
 bOP
 bQP
 bIV
-bUF
+sfH
 bXb
 bUF
 bUF
@@ -165790,7 +165835,7 @@ cff
 cgT
 ciE
 bgZ
-clz
+rLP
 cnj
 cuE
 cqf
@@ -169659,7 +169704,7 @@ cAC
 cCn
 cDL
 cxy
-cHa
+oUc
 cIm
 cCn
 cCn

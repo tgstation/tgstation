@@ -21,7 +21,7 @@
 	exotic_blood = /datum/reagent/lube
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(istype(chem,/datum/reagent/consumable/sodiumchloride))
+	if(istype(chem,/datum/reagent/consumable/salt))
 		H.adjustFireLoss(2)
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
