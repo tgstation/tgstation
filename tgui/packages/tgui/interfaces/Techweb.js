@@ -24,7 +24,9 @@ export const Techweb = (props, context) => {
     setSearchText,
   ] = useLocalState(context, 'searchText');
 
-  let displayedNodes = nodes.filter(x => x.tier === tabIndex);
+  let displayedNodes = tabIndex < 2
+    ? nodes.filter(x => x.tier === tabIndex)
+    : nodes.filter(x => x.tier >= tabIndex);
   displayedNodes.sort((a, b) => {
     const an = node_cache[a.id];
     const bn = node_cache[b.id];
@@ -44,46 +46,62 @@ export const Techweb = (props, context) => {
   return (
     <Window
       width={640}
-      height={880}>
+      height={880}
+      scrollable>
       <Window.Content>
         <Section title={`${web_org} Research and Development Network`}
-          buttons={
-            `GEN: ${points && points["General Research"] || 0} points (+${points_last_tick && points_last_tick["General Research"] || 0}/t)`
-          }>
-          <Flex justify={"space-between"}>
-            <Flex.Item>
-              <Tabs>
-                <Tabs.Tab
-                  selected={tabIndex === 0}
-                  onClick={() => setTabIndex(0)}>
-                  Researched
-                </Tabs.Tab>
-                <Tabs.Tab
-                  selected={tabIndex === 1}
-                  onClick={() => setTabIndex(1)}>
-                  Available
-                </Tabs.Tab>
-                <Tabs.Tab
-                  selected={tabIndex === 2}
-                  onClick={() => setTabIndex(2)}>
-                  Future
-                </Tabs.Tab>
-              </Tabs>
+          className="Techweb__ViewportContainer">
+          <Flex direction="column" className="Techweb__Viewport">
+            <Flex.Item className="Techweb__HeaderSection">
+              <Box className="Techweb__HeaderContent">
+                Available points:
+                <ul className="Techweb__PointSummary">
+                  {Object.keys(points).map((k, i) => (
+                    <li key={`ps${i}`}>
+                      <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+              <Flex justify={"space-between"} className="Techweb__HeaderSectionTabs">
+                <Flex.Item align="center" className="Techweb__HeaderTabTitle">
+                  <span>Nodes</span>
+                </Flex.Item>
+                <Flex.Item grow={1}>
+                  <Tabs>
+                    <Tabs.Tab
+                      selected={tabIndex === 0}
+                      onClick={() => setTabIndex(0)}>
+                      Researched
+                    </Tabs.Tab>
+                    <Tabs.Tab
+                      selected={tabIndex === 1}
+                      onClick={() => setTabIndex(1)}>
+                      Available
+                    </Tabs.Tab>
+                    <Tabs.Tab
+                      selected={tabIndex === 2}
+                      onClick={() => setTabIndex(2)}>
+                      Future
+                    </Tabs.Tab>
+                  </Tabs>
+                </Flex.Item>
+                <Flex.Item align={"center"}>
+                  <Input
+                    value={searchText}
+                    onInput={(e, value) => setSearchText(value)}
+                    placeholder={"Search..."} />
+                </Flex.Item>
+              </Flex>
             </Flex.Item>
-            <Flex.Item align={"center"}>
-              <Input
-                value={searchText}
-                onInput={(e, value) => setSearchText(value)}
-                placeholder={"Search..."} />
+            <Flex.Item grow={1} className={"Techweb__NodesSection"}>
+              {displayedNodes.map((n, idx) => {
+                return (
+                  <TechNode node={n} key={`n${idx}`} />
+                );
+              })}
             </Flex.Item>
           </Flex>
-          <Box scrollable>
-            {displayedNodes.map((n, idx) => {
-              return (
-                <TechNode node={n} key={`n${idx}`} />
-              );
-            })}
-          </Box>
         </Section>
       </Window.Content>
     </Window>
@@ -129,7 +147,9 @@ const TechNode = (props, context) => {
           onClick={() => act("researchNode", { node_id: thisNode.id })}>
           Research
         </Button>
-      )}>
+      )}
+      level={1}
+      className="Techweb__NodeContainer">
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
           {Object.keys(thisNode.costs).map((k, i) => {
