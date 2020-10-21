@@ -213,3 +213,8 @@
 	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
 	mood_change = 10 // heh 10
 	timeout = 1.5 MINUTES
+
+/datum/mood_event/down_low
+	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
+	mood_change = 20
+	timeout = 1.5 MINUTES

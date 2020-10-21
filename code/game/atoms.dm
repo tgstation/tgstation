@@ -619,9 +619,9 @@
   * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
   */
 /atom/proc/examine_more(mob/user)
-	. = list()
+	. = list("")
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
-	if(!LAZYLEN(.)) // lol ..length
+	if(. == list("")) // lol ..length
 		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
 /// Updates the icon of the atom

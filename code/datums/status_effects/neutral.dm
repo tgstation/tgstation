@@ -172,6 +172,7 @@
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
 	RegisterSignal(slap_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_slap)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /datum/status_effect/high_fiving/Destroy()
 	for(var/i in possible_takers)
@@ -214,11 +215,15 @@
 		to_chat(successful_taker, "<span class='warning'>You can't high-five [owner] with no open hands!</span>")
 		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_full_hand) // not so successful now!
 		return
-	else if(open_hands_taker >= 2) // not gonna bother with high-15's and such
-		for(var/i in owner.held_items)
-			var/obj/item/slapper/slap_check = i
-			if(istype(slap_check))
-				slappers_owner++
+
+	for(var/i in owner.held_items)
+		var/obj/item/slapper/slap_check = i
+		if(istype(slap_check))
+			slappers_owner++
+
+	if(!slappers_owner) // THE PRANKAGE
+		too_slow_p1(successful_taker)
+		return
 
 	if(slappers_owner >= 2) // we only check this if it's already established the taker has 2+ hands free
 		owner.visible_message("<span class='notice'>[successful_taker] enthusiastically high-tens [owner]!</span>", "<span class='nicegreen'>Wow! You're high-tenned [successful_taker]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=successful_taker)
@@ -233,6 +238,32 @@
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
 		SEND_SIGNAL(successful_taker, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five)
 	qdel(src)
+
+/// If we don't have any slappers in hand when someone goes to high-five us, we prank the hell out of them
+/datum/status_effect/high_fiving/proc/too_slow_p1(mob/living/carbon/rube)
+	owner.visible_message("<span class='notice'>[rube] rushes in to high-five [owner], but-</span>", "<span class='nicegreen'>[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!</span>", ignored_mobs=rube)
+	to_chat(rube, "<span class='nicegreen'>You go in for [owner]'s high-five, but-</span>")
+	addtimer(CALLBACK(src, .proc/too_slow_p2, rube), 0.5 SECONDS)
+
+/// Part two of the ultimate prank
+/datum/status_effect/high_fiving/proc/too_slow_p2(mob/living/carbon/rube)
+	if(!owner || !rube)
+		qdel(src)
+		return
+	owner.visible_message("<span class='danger'>[owner] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!</span>", "<span class='nicegreen'>[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!</span>", "<span class='hear'>You hear a disappointing sound of flesh not hitting flesh!</span>", ignored_mobs=rube)
+	to_chat(rube, "<span class='userdanger'>NO! [owner] PULLS [owner.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!</span>")
+	playsound(owner, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+	rube.Knockdown(1 SECONDS)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	qdel(src)
+
+/// If someone examine_more's us while we don't have a slapper in hand, it'll tip them off to our trickster ways
+/datum/status_effect/high_fiving/proc/check_fake_out(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!slap_item)
+		examine_list += "<span class='warning'>[owner]'s arm appears tensed up, as if [owner.p_they()] plan on pulling it back suddenly...</span>\n"
 
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/high_fiving/proc/check_taker_in_range(mob/living/carbon/taker)
@@ -257,6 +288,6 @@
 	if(!possible_takers)
 		fail()
 
-/// Can't slap with no slapper
+/// Something fishy is going on here...
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
-	fail()
+	slap_item = null
