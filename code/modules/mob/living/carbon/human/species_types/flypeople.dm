@@ -78,7 +78,8 @@
 			continue
 		var/mob/living/carbon/body = owner
 		var/turf/pos = get_turf(owner)
-		body.vomit(reagents.total_volume, FALSE, FALSE, 2, TRUE)
+		// we do not loss any nutrition as a fly when vomiting out food
+		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge=TRUE)
 		playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
 		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
