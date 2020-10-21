@@ -8,10 +8,23 @@
 	slot = ORGAN_SLOT_TAIL
 	var/tail_type = "None"
 
+/obj/item/organ/tail/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(istype(H))
+		RegisterSignal(H, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
 /obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
 	if(H && H.dna && H.dna.species)
+		UnregisterSignal(H, COMSIG_SPECIES_GAIN)
 		H.dna.species.stop_wagging_tail(H)
+
+/**
+  * Used to transfer mutant_bodyparts keys between species.
+  * Normally only reachable if neither old and new species had their own tail, which presumes it was implanted to begin with.
+  */
+/obj/item/organ/tail/proc/on_species_gain(mob/living/carbon/human/source, datum/species/new_species, datum/species/old_species)
+	return
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
@@ -21,10 +34,14 @@
 /obj/item/organ/tail/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
-		if(!("tail_human" in H.dna.species.mutant_bodyparts))
-			H.dna.species.mutant_bodyparts |= "tail_human"
-			H.dna.features["tail_human"] = tail_type
+		var/default_part = H.dna.species.mutant_bodyparts["tail_human"]
+		if(!default_part || default_part == "None")
+			H.dna.features["tail_human"] = H.dna.species.mutant_bodyparts["tail_human"] = tail_type
 			H.update_body()
+
+/obj/item/organ/tail/cat/on_species_gain(mob/living/carbon/human/source, datum/species/new_species, datum/species/old_species)
+	new_species.mutant_bodyparts["tail_human"] = tail_type
+	old_species.mutant_bodyparts -= "tail_human"
 
 /obj/item/organ/tail/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
@@ -49,13 +66,13 @@
 	..()
 	if(istype(H))
 		// Checks here are necessary so it wouldn't overwrite the tail of a lizard it spawned in
-		if(!("tail_lizard" in H.dna.species.mutant_bodyparts))
-			H.dna.features["tail_lizard"] = tail_type
-			H.dna.species.mutant_bodyparts |= "tail_lizard"
+		var/default_part = H.dna.species.mutant_bodyparts["tail_lizard"]
+		if(!default_part || default_part == "None")
+			H.dna.features["tail_lizard"] = H.dna.species.mutant_bodyparts["tail_lizard"] = tail_type
 
-		if(!("spines" in H.dna.species.mutant_bodyparts))
-			H.dna.features["spines"] = spines
-			H.dna.species.mutant_bodyparts |= "spines"
+		default_part = H.dna.species.mutant_bodyparts["spines"]
+		if(!default_part || default_part == "None")
+			H.dna.features["spines"] = H.dna.species.mutant_bodyparts["spines"] = spines
 		H.update_body()
 
 /obj/item/organ/tail/lizard/Remove(mob/living/carbon/human/H,  special = 0)
@@ -67,6 +84,12 @@
 		tail_type = H.dna.features["tail_lizard"]
 		spines = H.dna.features["spines"]
 		H.update_body()
+
+/obj/item/organ/tail/lizard/on_species_gain(mob/living/carbon/human/source, datum/species/new_species, datum/species/old_species)
+	new_species.mutant_bodyparts["tail_lizard"] = tail_type
+	new_species.mutant_bodyparts["spines"] = spines
+	old_species.mutant_bodyparts -= "tail_lizard"
+	old_species.mutant_bodyparts -= "spines"
 
 /obj/item/organ/tail/lizard/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
