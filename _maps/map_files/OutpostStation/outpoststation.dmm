@@ -2676,7 +2676,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "chu" = (
-/obj/machinery/computer/shuttle/mining/common{
+/obj/machinery/computer/shuttle/monastery_shuttle{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -20628,8 +20628,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "rDw" = (
-/obj/docking_port/stationary/public_mining_dock{
-	dir = 4
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 2;
+	height = 6;
+	id = "monastery_shuttle_station";
+	name = "Station";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/large;
+	width = 5
 	},
 /turf/open/space/basic,
 /area/space)
@@ -25945,6 +25951,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"woW" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_home";
+	name = "port bay 2";
+	width = 5
+	},
+/turf/open/space/basic,
+/area/space)
 "wpq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -74685,7 +74702,7 @@ lXF
 lXF
 lXF
 lXF
-lXF
+woW
 lXF
 lXF
 lXF
