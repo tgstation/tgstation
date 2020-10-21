@@ -534,12 +534,106 @@ Nothing else in the console has ID requirements.
 
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/ui_interact(mob/user)
-	. = ..()
-	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
-	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
-	popup.set_content(generate_ui())
-	popup.open()
+/obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Techweb")
+		ui.open()
+	// var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
+	// popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
+	// popup.set_content(generate_ui())
+	// popup.open()
+
+/obj/machinery/computer/rdconsole/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
+	)
+
+// heavy data from this proc should be moved to static data when possible
+/obj/machinery/computer/rdconsole/ui_data(mob/user)
+	. = list(
+		"nodes" = list(),
+		"experiments" = list(),
+		"points" = stored_research.research_points,
+		"points_last_tick" = stored_research.last_bitcoins,
+		"web_org" = stored_research.organization,
+		"sec_protocols" = obj_flags & EMAGGED
+	)
+
+	// Get nodes to send to UI
+	var/list/selectedNodes = list()
+	for(var/v in stored_research.researched_nodes)
+		selectedNodes += v
+	for(var/v in stored_research.available_nodes)
+		if(stored_research.researched_nodes[v] || stored_research.hidden_nodes[v])
+			continue
+		selectedNodes += v
+	for(var/v in stored_research.visible_nodes)
+		if(stored_research.available_nodes[v])
+			continue
+		selectedNodes += v
+
+	// Serialize said nodes
+	for(var/v in selectedNodes)
+		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
+		.["nodes"] += list(list(
+			"id" = n.id,
+			"can_afford" = stored_research.can_afford(n.get_price(stored_research)),
+			"researched" = stored_research.researched_nodes[v],
+			"available" = stored_research.available_nodes[v],
+			"visible" = stored_research.visible_nodes[v],
+		))
+
+	// Get experiments and serialize them
+	for (var/e in stored_research.available_experiments + stored_research.completed_experiments)
+		var/datum/experiment/ex = e
+		.["experiments"][ex.type] = list(
+			name = ex.name,
+			description = ex.description,
+			tag = ex.exp_tag,
+			progress = ex.check_progress()
+		)
+
+/obj/machinery/computer/rdconsole/ui_static_data(mob/user)
+	. = list(
+		"node_cache" = list(),
+		"design_cache" = list()
+	)
+
+	// Build node cache
+	for (var/nid in SSresearch.techweb_nodes)
+		var/datum/techweb_node/n = SSresearch.techweb_nodes[nid] || SSresearch.error_node
+		.["node_cache"][n.id] = list(
+			"id" = n.id,
+			"name" = n.display_name,
+			"description" = n.description,
+			"category" = n.category,
+			"costs" = n.research_costs,
+			"starting_node" = n.starting_node,
+			"prereq_ids" = n.prereq_ids,
+			"design_ids" = n.design_ids,
+			"unlock_ids" = n.unlock_ids,
+			"boost_item_paths" = n.boost_item_paths,
+			"autounlock_by_boost" = n.autounlock_by_boost,
+			"required_experiments" = n.required_experiments,
+			"discount_experiments" = n.discount_experiments
+		)
+
+	// Build design cache
+	for (var/did in SSresearch.techweb_designs)
+		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
+		.["design_cache"][d.id] = list(
+			d.name
+		)
+
+/obj/machinery/computer/rdconsole/ui_act(action, list/params)
+	if (..())
+		return
+	switch (action)
+		if ("researchNode")
+			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
+				return
+			research_node(params["node_id"], usr)
 
 /obj/machinery/computer/rdconsole/proc/tdisk_uple_complete()
 	tdisk_uple = FALSE

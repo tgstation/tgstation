@@ -132,46 +132,58 @@ export const ExperimentConfigure = (props, context) => {
                 ? "Select one of the following experiments..."
                 : "No experiments found on this web"}
             </Box>
-            {experiments.map(exp => {
+            {experiments.map((exp, i) => {
               return (
-                <Box m={1} key={exp.ref}
-                  className="ExperimentConfigure__ExperimentPanel">
-                  <Button fluid
-                    onClick={() => exp.selected
-                      ? act("clear_experiment")
-                      : act("select_experiment", { "ref": exp.ref })}
-                    backgroundColor={exp.selected ? "good" : "#40628a"}
-                    className="ExperimentConfigure__ExperimentName"
-                    disabled={!exp.selectable}>
-                    <Flex align="center" justify="space-between">
-                      <Flex.Item
-                        color={exp.selectable
-                          ? "white"
-                          : "rgba(0, 0, 0, 0.6)"}>
-                        {exp.name}
-                      </Flex.Item>
-                      <Flex.Item
-                        color={exp.selectable
-                          ? "rgba(255, 255, 255, 0.5)"
-                          : "rgba(0, 0, 0, 0.5)"}>
-                        {exp.tag}
-                      </Flex.Item>
-                    </Flex>
-                  </Button>
-                  <Box className={"ExperimentConfigure__ExperimentContent"}>
-                    {exp.description} <br /><br />
-                    {exp.progress?.map((progressItem, index) => {
-                      return (
-                        <ExperimentStage key={index} {...progressItem} />
-                      );
-                    })}
-                  </Box>
-                </Box>
+                <Experiment key={`e${i}`} exp={exp} controllable />
               );
             })}
           </Section>
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+export const Experiment = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    exp,
+    controllable,
+  } = props;
+
+  return (
+    <Box m={1} key={exp.ref}
+      className="ExperimentConfigure__ExperimentPanel">
+      <Button fluid
+        onClick={() => controllable && (exp.selected
+          ? act("clear_experiment")
+          : act("select_experiment", { "ref": exp.ref }))}
+        backgroundColor={exp.selected ? "good" : "#40628a"}
+        className="ExperimentConfigure__ExperimentName"
+        disabled={controllable && !exp.selectable}>
+        <Flex align="center" justify="space-between">
+          <Flex.Item
+            color={!controllable || exp.selectable
+              ? "white"
+              : "rgba(0, 0, 0, 0.6)"}>
+            {exp.name}
+          </Flex.Item>
+          <Flex.Item
+            color={!controllable || exp.selectable
+              ? "rgba(255, 255, 255, 0.5)"
+              : "rgba(0, 0, 0, 0.5)"}>
+            {exp.tag}
+          </Flex.Item>
+        </Flex>
+      </Button>
+      <Box className={"ExperimentConfigure__ExperimentContent"}>
+        {exp.description} <br /><br />
+        {exp.progress?.map((progressItem, index) => {
+          return (
+            <ExperimentStage key={index} {...progressItem} />
+          );
+        })}
+      </Box>
+    </Box>
   );
 };
