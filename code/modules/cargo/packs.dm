@@ -2419,7 +2419,7 @@
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supply crate"
 	desc = "At the end of the day, someone's gonna want someone dead. Give them a proper send-off with these funeral supplies! Contains a coffin with burial garmets and flowers."
-	cost = 600
+	cost = 800
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/clothing/under/misc/burial,
 					/obj/item/reagent_containers/food/snacks/grown/harebell,
