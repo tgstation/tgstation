@@ -18285,7 +18285,6 @@
 /area/space/nearstation)
 "aMQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den/secondary)
 "aMR" = (
@@ -63518,11 +63517,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "crC" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "crD" = (
@@ -75061,8 +75060,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cOs" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cOt" = (
@@ -80467,7 +80466,6 @@
 /area/maintenance/department/electrical)
 "cYD" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/electrical,
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
@@ -80515,7 +80513,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cYJ" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cYK" = (
@@ -88663,7 +88661,7 @@
 /area/maintenance/starboard/aft)
 "dpN" = (
 /obj/structure/table/wood/poker,
-/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/toy/cards/deck,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpO" = (
@@ -88678,9 +88676,7 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dpP" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck/syndicate{
-	pixel_y = 6
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpQ" = (
@@ -92421,11 +92417,11 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzm" = (
-/obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_one_access_txt = "12;47"
 	},
+/obj/structure/barricade/wooden,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -92436,6 +92432,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
