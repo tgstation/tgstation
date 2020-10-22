@@ -4,6 +4,7 @@
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "reinforced_wall-0"
 	base_icon_state = "reinforced_wall"
+	plane = WALL_PLANE
 	opacity = TRUE
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK

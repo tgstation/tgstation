@@ -14,8 +14,9 @@
 #define OPENSPACE_BACKDROP_PLANE -6 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
 
-#define FLOOR_PLANE -4
+#define FLOOR_PLANE -5
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
+#define WALL_PLANE -4
 #define GAME_PLANE -3
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
 #define FRILL_SHADOW_PLANE -2

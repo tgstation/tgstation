@@ -1798,6 +1798,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(parent?.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 						PM.backdrop(parent.mob)
+						var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in parent.screen
+						frill.backdrop(parent.mob)
 
 				if("auto_fit_viewport")
 					auto_fit_viewport = !auto_fit_viewport

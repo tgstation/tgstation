@@ -78,10 +78,19 @@
 	blend_mode = BLEND_OVERLAY
 	render_target = FRILL_PLANE_RENDER_TARGET
 
-/obj/screen/plane_master/frill/Initialize()
-	. = ..()
-	//I have no idea why this is offset by default, but without these the filter won't match the sprites.
-	filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
+
+/obj/screen/plane_master/frill/backdrop(mob/mymob)
+	if(!mymob)
+		return
+	for(var/f in filters)
+		var/dm_filter/filter = f
+		if(filter.type != "alpha")
+			continue
+		filters -= filter
+	if(mymob.client?.prefs?.ambientocclusion)
+		filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
+	else
+		filters += filter(type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 
 
 ///Contains all lighting objects
