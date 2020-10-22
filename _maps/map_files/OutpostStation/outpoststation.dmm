@@ -27864,15 +27864,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"xPX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
-/obj/item/storage/backpack/duffelbag/med,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "xQf" = (
 /obj/structure/cable,
 /obj/machinery/photocopier,
@@ -58676,7 +58667,7 @@ bCl
 aLP
 ggr
 gMD
-xPX
+xhb
 dxI
 cJV
 qOx
