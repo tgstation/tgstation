@@ -45,17 +45,12 @@ SUBSYSTEM_DEF(economy)
 							"oil" = 75,
 							"adamantine" = 75,
 							// tier 4
-<<<<<<< HEAD
 							"rainbow" = 100)
-	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
-=======
-							"rainbow" = 1000)
 	/**
 	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
->>>>>>> upstream/master
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
