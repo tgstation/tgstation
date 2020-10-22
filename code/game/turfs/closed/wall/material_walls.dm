@@ -8,6 +8,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_MATERIAL_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	frill_icon = null
 
 /turf/closed/wall/material/break_wall()
 	for(var/i in custom_materials)

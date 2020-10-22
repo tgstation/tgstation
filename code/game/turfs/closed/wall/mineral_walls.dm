@@ -4,6 +4,7 @@
 	icon_state = ""
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
+	frill_icon = null
 	var/last_event = 0
 	var/active = null
 

@@ -22,7 +22,8 @@
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
-	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
 
@@ -489,8 +490,8 @@
 		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
-	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	name = "airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE

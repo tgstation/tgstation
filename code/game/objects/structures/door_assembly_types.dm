@@ -63,7 +63,7 @@
 
 /obj/structure/door_assembly/door_assembly_mai
 	name = "maintenance airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
 	base_name = "maintenance airlock"
 	glass_type = /obj/machinery/door/airlock/maintenance/glass
 	airlock_type = /obj/machinery/door/airlock/maintenance

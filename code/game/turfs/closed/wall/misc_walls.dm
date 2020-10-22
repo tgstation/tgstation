@@ -41,6 +41,7 @@
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
+	frill_icon = null
 
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
@@ -52,6 +53,7 @@
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
+	frill_icon = null
 
 /turf/closed/wall/rust
 	name = "rusted wall"
@@ -61,6 +63,7 @@
 	base_icon_state = "rusty_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
+	frill_icon = null
 
 /turf/closed/wall/rust/rust_heretic_act()
 	ScrapeAway()
@@ -73,6 +76,7 @@
 	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
+	frill_icon = null
 
 /turf/closed/wall/r_wall/rust/rust_heretic_act()
 	if(prob(50))
