@@ -4,7 +4,6 @@
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "reinforced_wall-0"
 	base_icon_state = "reinforced_wall"
-	plane = WALL_PLANE
 	opacity = TRUE
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
@@ -16,11 +15,6 @@
 	rad_insulation = RAD_HEAVY_INSULATION
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
-
-
-/turf/closed/wall/r_wall/Initialize(mapload)
-	. = ..()
-	setup_frill()
 
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
@@ -239,7 +233,7 @@
 	ChangeTurf(/turf/closed/wall/r_wall/rust)
 
 
-/turf/closed/wall/r_wall/proc/setup_frill()
+/turf/closed/wall/r_wall/setup_frill()
 	AddElement(/datum/element/frill, 'icons/effects/frills/reinforced_wall_frill.dmi')
 
 

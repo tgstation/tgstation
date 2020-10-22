@@ -82,15 +82,13 @@
 /obj/screen/plane_master/frill/backdrop(mob/mymob)
 	if(!mymob)
 		return
-	for(var/f in filters)
-		var/dm_filter/filter = f
-		if(filter.type != "alpha")
-			continue
-		filters -= filter
+	remove_filter("frill cut")
 	if(mymob.client?.prefs?.ambientocclusion)
-		filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
+		add_filter("frill cut", 1, list("type" = "alpha", "x" = 6, "y" = -7, "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+		//filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 	else
-		filters += filter(type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
+		add_filter("frill cut", 1, list("type" = "alpha", "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+		//filters += filter(type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 
 
 ///Contains all lighting objects
