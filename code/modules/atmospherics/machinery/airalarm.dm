@@ -230,6 +230,11 @@
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	set_frequency(frequency)
+
+
+/obj/machinery/airalarm/setDir(newdir)
+	. = ..()
 	switch(dir)
 		if(NORTH)
 			plane = OVER_FRILL_PLANE
@@ -247,7 +252,7 @@
 			plane = WALL_PLANE
 			pixel_x = 2
 			pixel_y = 0
-	set_frequency(frequency)
+
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()

@@ -66,6 +66,28 @@
 	QDEL_NULL(cell)
 	return ..()
 
+
+/obj/machinery/light_construct/setDir(newdir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			plane = OVER_FRILL_PLANE
+			pixel_x = 0
+			pixel_y = 24
+		if(SOUTH)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 16
+		if(EAST)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 0
+		if(WEST)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 0
+
+
 /obj/structure/light_construct/get_cell()
 	return cell
 
@@ -251,6 +273,28 @@
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
 	var/obj/effect/overlay/vis/glowybit		// the light overlay
+
+
+/obj/machinery/light/setDir(newdir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			plane = OVER_FRILL_PLANE
+			pixel_x = 0
+			pixel_y = 24
+		if(SOUTH)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 16
+		if(EAST)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 0
+		if(WEST)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 0
+
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN

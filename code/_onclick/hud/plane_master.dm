@@ -85,10 +85,8 @@
 	remove_filter("frill cut")
 	if(mymob.client?.prefs?.ambientocclusion)
 		add_filter("frill cut", 1, list("type" = "alpha", "x" = 6, "y" = -7, "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
-		//filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 	else
 		add_filter("frill cut", 1, list("type" = "alpha", "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
-		//filters += filter(type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 
 
 ///Contains all lighting objects
