@@ -83,7 +83,7 @@
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.7
 /// a hack to help make vacuums "cold", sacrificing realism for gameplay
-#define HEAT_CAPACITY_VACUUM				7000
+#define HEAT_CAPACITY_VACUUM				5000
 
 //FIRE
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	(150+T0C)
@@ -282,7 +282,6 @@
 #define ATMOS_TANK_FREON			"freon=100000;TEMP=293.15"
 #define ATMOS_TANK_HALON			"halon=100000;TEMP=293.15"
 #define ATMOS_TANK_HEALIUM			"healium=100000;TEMP=293.15"
-#define ATMOS_TANK_HEXANE			"hexane=100000;TEMP=293.15"
 #define ATMOS_TANK_H2				"hydrogen=100000;TEMP=293.15"
 #define ATMOS_TANK_HYPERNOBLIUM		"nob=100000;TEMP=293.15"
 #define ATMOS_TANK_MIASMA			"miasma=100000;TEMP=293.15"
@@ -347,10 +346,6 @@
 #define ATMOS_GAS_MONITOR_INPUT_HEALIUM "healium_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_HEALIUM "healium_out"
 #define ATMOS_GAS_MONITOR_SENSOR_HEALIUM "healium_sensor"
-
-#define ATMOS_GAS_MONITOR_INPUT_HEXANE "hexane_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_HEXANE "hexane_out"
-#define ATMOS_GAS_MONITOR_SENSOR_HEXANE "hexane_sensor"
 
 #define ATMOS_GAS_MONITOR_INPUT_H2 "h2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_H2 "h2_out"
