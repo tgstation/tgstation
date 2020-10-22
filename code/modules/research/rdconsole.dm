@@ -557,7 +557,7 @@ Nothing else in the console has ID requirements.
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
 		"web_org" = stored_research.organization,
-		"sec_protocols" = obj_flags & EMAGGED
+		"sec_protocols" = !(obj_flags & EMAGGED)
 	)
 
 	// Serialize all nodes to display
@@ -614,10 +614,12 @@ Nothing else in the console has ID requirements.
 		)
 
 	// Build design cache
+	var/datum/asset/spritesheet/research_designs/ss = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	for (var/did in SSresearch.techweb_designs)
 		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
 		.["design_cache"][d.id] = list(
-			"name" = d.name
+			"name" = d.name,
+			"class" = ss.icon_class_name(d.id)
 		)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)

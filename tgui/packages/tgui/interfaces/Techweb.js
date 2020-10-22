@@ -62,6 +62,11 @@ export const Techweb = (props, context) => {
                     </li>
                   ))}
                 </ul>
+                Security protocols:
+                <span
+                  className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
+                  {sec_protocols ? "Engaged" : "Disengaged"}
+                </span>
               </Box>
               <Flex justify={"space-between"} className="Techweb__HeaderSectionTabs">
                 <Flex.Item align="center" className="Techweb__HeaderTabTitle">
@@ -181,7 +186,7 @@ const TechNode = (props, context) => {
         {Object.keys(thisNode.design_ids).map((k, i) => {
           return (
             <Button key={`${thisNode.id}${i}`}
-              className={`design32x32 ${k} Techweb__DesignIcon`}
+              className={`${design_cache[k].class} Techweb__DesignIcon`}
               tooltip={design_cache[k].name}
               tooltipPosition={i % 15 < 7 ? "right" : "left"} />
           );
