@@ -325,7 +325,8 @@ SUBSYSTEM_DEF(air)
 		var/list/turf_list = turf_packet[EX_CLEANUP_TURFS]
 		while(turf_list.len) //The turf list
 			var/turf/open/T = turf_list[turf_list.len]
-			if(T && !istype(T.air, /datum/gas_mixture/immutable))
+			//I'd normally check for nulls here, but turfs are dumb with refs, so it's not an issue
+			if(istype(T) && !istype(T.air, /datum/gas_mixture/immutable))
 				T.cleanup_group(fire_count, breakdown, dismantle)
 			turf_list.len--
 			if (MC_TICK_CHECK)
