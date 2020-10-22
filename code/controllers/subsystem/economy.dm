@@ -86,16 +86,9 @@ SUBSYSTEM_DEF(economy)
 	car_payout()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
-<<<<<<< HEAD
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
-		if(bank_account && bank_account.account_job)
-=======
-	for(var/account in bank_accounts_by_id)
-		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
-		bank_account.payday(1)
 		if(bank_account?.account_job)
->>>>>>> upstream/master
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance
