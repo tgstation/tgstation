@@ -270,9 +270,6 @@
 
 	spawned += template.spawned_atoms//parsed_map.holodeckTemplateBounds has newatoms, which is passed to template as spawned_atoms, which is passed to this as spawned
 
-	//linked = get_area(bottom_left)
-	//linked.linked = src
-
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
