@@ -62,6 +62,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/security/main)
+"abV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/circuitboard/computer/operating{
+	pixel_y = 7
+	},
+/turf/open/floor/plasteel/white,
+/area/maintenance/aft/upper)
 "acb" = (
 /obj/structure/closet/radiation,
 /obj/item/clothing/suit/radiation,
@@ -598,6 +608,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/maintenance/aft/upper)
 "ayk" = (
@@ -632,9 +643,9 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/central)
 "ayP" = (
-/obj/structure/sign/painting/library,
-/turf/closed/wall,
-/area/library)
+/obj/machinery/light,
+/turf/open/floor/plasteel/checker,
+/area/crew_quarters/theatre)
 "ayT" = (
 /obj/machinery/light,
 /turf/open/floor/engine,
@@ -5405,9 +5416,18 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "eCK" = (
-/obj/structure/sign/painting/library,
-/turf/closed/wall,
-/area/chapel/main)
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/medical/morgue)
 "eDC" = (
 /obj/machinery/vending/cola/blue,
 /turf/open/floor/plasteel,
@@ -9387,6 +9407,9 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/library)
 "ikD" = (
@@ -11732,6 +11755,15 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"kla" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/medical/paramedic)
 "klK" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -13291,6 +13323,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"lFh" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/library)
 "lFo" = (
 /obj/machinery/button/door{
 	id = "executionspaceblast";
@@ -13560,6 +13598,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/maintenance/aft/upper)
 "lPN" = (
@@ -16383,6 +16422,13 @@
 "oeB" = (
 /turf/open/floor/plasteel,
 /area/storage/tools)
+"oeG" = (
+/obj/structure/displaycase,
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/library)
 "ofj" = (
 /obj/effect/landmark/start/security_officer,
 /obj/machinery/navbeacon{
@@ -18180,6 +18226,10 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med{
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/aft/upper)
@@ -21219,6 +21269,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"sbi" = (
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/library)
 "sbr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
@@ -22657,6 +22713,9 @@
 "tnh" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/library)
 "tnk" = (
@@ -23291,6 +23350,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"tME" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/medical/morgue)
 "tNQ" = (
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -27419,6 +27488,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/maintenance/aft/upper)
 "xyy" = (
@@ -27794,6 +27864,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"xPX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4,
+/obj/item/storage/backpack/duffelbag/med,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "xQf" = (
 /obj/structure/cable,
 /obj/machinery/photocopier,
@@ -58597,7 +58676,7 @@ bCl
 aLP
 ggr
 gMD
-xhb
+xPX
 dxI
 cJV
 qOx
@@ -59843,7 +59922,7 @@ vTz
 dgQ
 qaL
 qWG
-aJK
+kla
 dgQ
 hEu
 ocq
@@ -62203,7 +62282,7 @@ aaW
 aaW
 bRC
 rhA
-xnr
+abV
 ckZ
 bRC
 pSH
@@ -62892,7 +62971,7 @@ jrR
 qJq
 oKO
 vHj
-vHj
+ayP
 hkM
 iNQ
 iNQ
@@ -64967,7 +65046,7 @@ lXF
 hMY
 kFc
 kki
-kki
+eCK
 pLy
 nEz
 hMY
@@ -66766,7 +66845,7 @@ cuW
 cPh
 jHX
 wWs
-wWs
+tME
 wWs
 rDl
 blp
@@ -68101,12 +68180,12 @@ uFh
 tlw
 tlw
 tlw
-ayP
+tlw
 tlw
 sPQ
 prs
 tlw
-ayP
+tlw
 tlw
 xuP
 sco
@@ -69906,8 +69985,8 @@ bPo
 qBe
 qBe
 bPo
-qBe
-eCK
+lFh
+xuP
 jCM
 sco
 sco
@@ -70415,8 +70494,8 @@ hUP
 hUP
 hUP
 ycI
-ayP
-gIQ
+tlw
+oeG
 qBe
 gIQ
 qBe
@@ -71188,9 +71267,9 @@ aGn
 tlw
 tlw
 djc
+sbi
 qBe
-qBe
-qBe
+sbi
 oLw
 xuP
 xWY
@@ -71445,9 +71524,9 @@ aGn
 lBt
 tlw
 tlw
-ayP
 tlw
-ayP
+tlw
+tlw
 tlw
 vMp
 iJp
