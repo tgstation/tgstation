@@ -60,7 +60,7 @@
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/air_alarm.dmi'
 	icon_state = "alarm0"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -216,8 +216,6 @@
 	if(nbuild)
 		buildstage = 0
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
@@ -230,8 +228,25 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/Initialize(mapload)
+/obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
+	switch(dir)
+		if(NORTH)
+			plane = OVER_FRILL_PLANE
+			pixel_x = 0
+			pixel_y = 0
+		if(SOUTH)
+			plane = WALL_PLANE
+			pixel_x = 0
+			pixel_y = 29
+		if(EAST)
+			plane = WALL_PLANE
+			pixel_x = -2
+			pixel_y = 0
+		if(WEST)
+			plane = WALL_PLANE
+			pixel_x = 2
+			pixel_y = 0
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/examine(mob/user)
