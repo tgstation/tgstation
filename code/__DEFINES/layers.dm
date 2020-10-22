@@ -10,7 +10,7 @@
 
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -6 //Openspace plane below all turfs
+#define OPENSPACE_PLANE -7 //Openspace plane below all turfs
 #define OPENSPACE_BACKDROP_PLANE -6 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
 
