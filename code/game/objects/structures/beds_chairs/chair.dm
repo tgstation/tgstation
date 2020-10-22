@@ -89,11 +89,13 @@
 	else
 		return ..()
 
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
-		..()
-	else
-		setDir(turn(dir,-90))
+		return ..()
+	setDir(turn(dir,-90))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
