@@ -119,10 +119,6 @@
 	name = "Healium Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/healium_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
-	name = "Hexane Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/hexane_tank
-
 /obj/item/circuitboard/computer/atmos_control/tank/hydrogen_tank
 	name = "Hydrogen Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/hydrogen_tank

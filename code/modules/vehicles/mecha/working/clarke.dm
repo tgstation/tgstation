@@ -14,7 +14,7 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()
 	. = ..()
@@ -27,12 +27,12 @@
 
 /obj/vehicle/sealed/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	if(.)
+	if(. && !HAS_TRAIT(H, TRAIT_DIAGNOSTIC_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.add_hud_to(H)
 
 /obj/vehicle/sealed/mecha/working/clarke/remove_occupant(mob/M)
-	if(isliving(M))
+	if(isliving(M) && HAS_TRAIT_FROM(M, TRAIT_DIAGNOSTIC_HUD, src))
 		var/mob/living/L = M
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.remove_hud_from(L)

@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "As a changeling, you can no longer readapt your mutations while in fakedeath stasis, which would cause you to stay in sleepies forever"

@@ -1,5 +1,6 @@
 /obj/vehicle/sealed
-	var/enter_delay = 20
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 
 /obj/vehicle/sealed/generate_actions()
@@ -40,7 +41,7 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-	if(do_after(M, get_enter_delay(M), FALSE, src, TRUE))
+	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM))
 		mob_enter(M)
 		return TRUE
 	return FALSE
@@ -108,20 +109,21 @@
 
 /obj/vehicle/sealed/obj_destruction(damage_flag)
 	explosion(loc, 0, 1, 2, 3, 0)
+	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 
 /obj/vehicle/sealed/Destroy()
-	DumpMobs()
+	dump_mobs()
 	return ..()
 
-/obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
+/obj/vehicle/sealed/proc/dump_mobs(randomstep = TRUE)
 	for(var/i in occupants)
 		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
 			Carbon.Paralyze(40)
 
-/obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
+/obj/vehicle/sealed/proc/dump_specific_mobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
 		if((occupants[i] & flag))
 			mob_exit(i, null, randomstep)
