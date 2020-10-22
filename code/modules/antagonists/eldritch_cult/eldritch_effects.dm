@@ -223,26 +223,29 @@
 		else
 			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
 
+
 /obj/effect/broken_illusion/attack_tk(mob/user)
 	if(!ishuman(user))
 		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
 		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+		return
+	//a very elaborate way to suicide
+	to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+	human_user.ghostize()
+	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+	if(head)
+		head.dismember()
+		qdel(head)
 	else
-		//a very elaborate way to suicide
-		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
-		human_user.ghostize()
-		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
-		if(head)
-			head.dismember()
-			qdel(head)
-		else
-			human_user.gib()
+		human_user.gib()
 
-		var/datum/effect_system/reagents_explosion/explosion = new()
-		explosion.set_up(1, get_turf(human_user), 1, 0)
-		explosion.start()
+	var/datum/effect_system/reagents_explosion/explosion = new()
+	explosion.set_up(1, get_turf(human_user), TRUE, 0)
+	explosion.start()
+
 
 /obj/effect/broken_illusion/examine(mob/user)
 	. = ..()
