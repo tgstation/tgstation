@@ -20,10 +20,6 @@
 
 	var/motd
 	var/policy
-	/// Contains a list of strings which are questions provided to every new interview that is generated during a panic bunker
-	var/list/interview_questions
-	/// Contains a message that is shown at the top of each interview generated during a panic bunker
-	var/interview_welcome_message
 
 	var/static/regex/ic_filter_regex
 
@@ -55,7 +51,6 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	LoadPolicy()
-	LoadInterviewQuestions()
 	LoadChatFilter()
 
 	if (Master)
@@ -284,25 +279,6 @@ Example config:
 			DelayedMessageAdmins("JSON parsing failure for policy.json")
 		else
 			policy = parsed
-
-/**
-  * Loads the configured interview welcome message and questions from interview_questions.json
-  */
-/datum/controller/configuration/proc/LoadInterviewQuestions()
-	interview_questions = list()
-	var/raw_questions = file2text("[directory]/interview_questions.json")
-	if (raw_questions)
-		var/parsed = safe_json_decode(raw_questions)
-		if (!parsed)
-			log_config("JSON parsing failure for interview_questions.json")
-			DelayedMessageAdmins("JSON parsing failure for interview_questions.json")
-		else
-			if (!(parsed["welcome_message"] || parsed["questions"]))
-				log_config("Malformed data in interview_questions.json")
-				DelayedMessageAdmins("Malformed data in interview_questions.json")
-				return
-			interview_questions = parsed["questions"]
-			interview_welcome_message = parsed["welcome_message"]
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")

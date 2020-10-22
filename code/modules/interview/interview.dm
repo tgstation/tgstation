@@ -42,9 +42,9 @@
 	id = ++atomic_id
 	owner = interviewee
 	owner_ckey = owner.ckey
-	questions = global.config.interview_questions.Copy()
+	questions = CONFIG_GET(str_list/interview_questions)
 	responses.len = questions.len
-	welcome_message = global.config.interview_welcome_message
+	welcome_message = CONFIG_GET(string/interview_welcome_msg)
 
 /**
   * Approves the interview, forces reconnect of owner if relevant.
