@@ -80,7 +80,8 @@
 
 /obj/screen/plane_master/frill/Initialize()
 	. = ..()
-	filters += filter(type="alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
+	//I have no idea why this is offset by default, but without these the filter won't match the sprites.
+	filters += filter(x = 6, y = -7, type = "alpha", render_source = GAME_PLANE_RENDER_TARGET, flags = MASK_INVERSE)
 
 
 ///Contains all lighting objects
