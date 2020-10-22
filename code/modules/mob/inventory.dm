@@ -394,8 +394,8 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, swap=FALSE)
-	if(src != M.get_active_held_item())
+/obj/item/proc/equip_to_best_slot(mob/M, swap = FALSE, check_hand = TRUE)
+	if(check_hand && src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
