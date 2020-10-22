@@ -57,7 +57,7 @@
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
-	return COMPONENT_NO_ATTACK
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 //This proc exists because Jared Fogle really likes async
