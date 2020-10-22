@@ -561,7 +561,7 @@
 		uses--
 		if(uses <= 0)
 			icon_state ="shifter_drained"
-		playsound(mobloc, "sparks", 50, TRUE)
+		playsound(mobloc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
@@ -569,8 +569,8 @@
 			if(pulled)
 				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE)
-			playsound(destination, "sparks", 50, TRUE)
+			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(destination, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	else
 		to_chat(C, "<span class='warning'>The veil cannot be torn here!</span>")

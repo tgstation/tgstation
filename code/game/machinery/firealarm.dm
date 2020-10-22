@@ -120,7 +120,7 @@
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && detecting && !machine_stat

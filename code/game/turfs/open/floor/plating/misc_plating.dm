@@ -168,6 +168,7 @@
 	gender = PLURAL
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
+	icon_state = "ironsand1"
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND

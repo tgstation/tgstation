@@ -241,7 +241,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -433,7 +433,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 //////////////Containment Field START
