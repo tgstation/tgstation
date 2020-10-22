@@ -279,3 +279,36 @@
 
 	else if(integrity < 3)
 		integrity++
+
+/obj/item/tank/attack_hand(mob/living/carbon/human/user)
+	var/celsius_temperature = air_contents.temperature-T0C					//i know i could make the above one public but im too afraid to mess with it
+
+	//recycled code from light bulbs because im too dumb myself
+	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits (recycled comment as it still fits)
+	if(celsius_temperature >= 50)
+		var/prot = 0
+		var/mob/living/carbon/human/H = user
+		if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.max_heat_protection_temperature)
+				prot = (G.max_heat_protection_temperature > 360)
+		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
+			to_chat(user, "<span class='notice'>The tank feels very hot.</span>")
+		else if(istype(user) && user.dna.check_mutation(TK))
+			to_chat(user, "<span class='notice'>You can feel the searing heat in your mind.</span>")
+		else
+			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			if (celsius_temperature >= 1000)
+				affecting.force_wound_upwards(/datum/wound/burn/critical)
+				affecting.receive_damage( 0, 5 )					//5 burn damage
+				return
+			else if (celsius_temperature >= 250 && celsius_temperature < 1000)			//checks how high the temp is and gives wounds according to that
+				affecting.force_wound_upwards(/datum/wound/burn/severe)
+				affecting.receive_damage( 0, 5 )
+				return
+			else if (celsius_temperature >= 80 && celsius_temperature < 250) 		//according to google 80°C will give you first degree burns pretty quickly, the other values are just pulled out of my ass
+				affecting.force_wound_upwards(/datum/wound/burn/moderate)
+				affecting.receive_damage( 0, 5 )					//i repeated it 3 times because it wouldnt work otherwise
+				return
+			to_chat(user, "<span class='warning'>You burn your hand on the tank!</span>")
+	return ..()
