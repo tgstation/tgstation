@@ -1984,6 +1984,7 @@
 /area/quartermaster/miningoffice)
 "gn" = (
 /obj/machinery/camera/autoname,
+/obj/machinery/nanite_programmer,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "go" = (
@@ -2472,6 +2473,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"Gt" = (
+/obj/item/disk/nanite_program,
+/obj/item/disk/nanite_program,
+/obj/item/disk/nanite_program,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2553,6 +2560,17 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/plasteel,
 /area/science)
+"PN" = (
+/obj/machinery/computer/nanite_cloud_controller,
+/turf/open/floor/plasteel,
+/area/security/brig)
+"Qi" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/nanite_program_hub,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "Qt" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2570,6 +2588,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"RH" = (
+/mob,
+/turf/open/space/basic,
+/area/space)
 "RM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2650,6 +2672,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"WQ" = (
+/obj/machinery/public_nanite_chamber,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "WT" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -5119,7 +5145,7 @@ aa
 aa
 aa
 aa
-aa
+RH
 aa
 dY
 eh
@@ -5664,8 +5690,8 @@ aa
 aa
 aa
 ag
-dR
-aD
+Qi
+Gt
 aD
 bC
 de
@@ -5848,9 +5874,9 @@ aa
 aa
 aa
 ag
+PN
 aD
-aD
-aD
+WQ
 bT
 cI
 dg

@@ -29,6 +29,25 @@
 		host_mob.adjustBruteLoss(-0.5, TRUE)
 		host_mob.adjustFireLoss(-0.5, TRUE)
 
+/datum/nanite_program/preserving
+	name = "Organ Preservation"
+	desc = "The nanites preserve the host's organs in case of death, preventing their decay."
+	use_rate = 0.4
+	rogue_types = list(/datum/nanite_program/necrotic)
+
+/datum/nanite_program/preserving/check_conditions()
+	if(!(host_mob.stat == DEAD))
+		return FALSE
+	return ..()
+
+/datum/nanite_program/preserving/enable_passive_effect()
+	. = ..()
+	ADD_TRAIT(host_mob, TRAIT_ORGAN_PRESERVATION, "nanites")
+
+/datum/nanite_program/preserving/disable_passive_effect()
+	. = ..()
+	REMOVE_TRAIT(host_mob, TRAIT_ORGAN_PRESERVATION, "nanites")
+
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
 	desc = "The nanites adjust the host's internal temperature to an ideal level."

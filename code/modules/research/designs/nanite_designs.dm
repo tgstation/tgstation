@@ -141,6 +141,13 @@
 	program_type = /datum/nanite_program/regenerative
 	category = list("Medical Nanites")
 
+/datum/design/nanites/regenerative
+	name = "Organ Preservation"
+	desc = "The nanites preserve the host's organs in case of death, preventing their decay."
+	id = "preserving_nanites"
+	program_type = /datum/nanite_program/preserving
+	category = list("Medical Nanites")
+
 /datum/design/nanites/regenerative_advanced
 	name = "Bio-Reconstruction"
 	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration. \
