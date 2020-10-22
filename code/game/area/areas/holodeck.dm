@@ -47,4 +47,8 @@
 /area/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
 
+/area/holodeck/rec_center/offstation_one
+	name = "\improper Recreational Holodeck"
 
+/area/holodeck/rec_center/offstation_two
+	name = "\improper Recreational Holodeck"

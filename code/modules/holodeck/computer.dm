@@ -420,5 +420,18 @@
 	emergency_shutdown()
 	return ..()
 
+
+
+/obj/machinery/computer/holodeck/offstation
+	name = "holodeck control console"
+	desc = "A computer used to control a nearby holodeck."
+	offline_program = "holodeck_gamer"
+	holodeck_access = HOLODECK_DEBUG
+	mappedstartarea = /area/holodeck/rec_center/offstation_one
+
+/obj/machinery/computer/holodeck/offstation/LateInitialize()
+	holodeck_access |= STATION_HOLODECK
+	. = ..()
+
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
