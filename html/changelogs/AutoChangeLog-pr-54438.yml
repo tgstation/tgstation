@@ -1,4 +1,0 @@
-author: "alphanerdd"
-delete-after: True
-changes: 
-  - rscadd: "Adds lasagna as a food item, including a craftable recipe and sprite."
