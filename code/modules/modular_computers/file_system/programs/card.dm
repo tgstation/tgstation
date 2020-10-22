@@ -15,6 +15,7 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
+	program_icon = "id-card"
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
@@ -131,7 +132,7 @@
 			if(!authenticated)
 				return
 			var/contents = {"<h4>Access Report</h4>
-						<u>Prepared By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
 						<u>Assignment:</u> [target_id_card.assignment]<br>

@@ -39,7 +39,7 @@
 	I.screen_loc = null
 	if(client)
 		client.screen -= I
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client)
@@ -126,7 +126,7 @@
 			update_inv_neck(I)
 	else if(I == handcuffed)
 		set_handcuffed(null)
-		if(buckled && buckled.buckle_requires_restraints)
+		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()
@@ -172,9 +172,13 @@
 		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	for(var/mob/living/carbon/C in orange(1, src))
+	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue
+
+		if(!C.can_hold_items())
+			continue
+
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
 			continue

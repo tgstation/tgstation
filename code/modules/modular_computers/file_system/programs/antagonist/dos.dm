@@ -8,6 +8,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosNetDos"
+	program_icon = "satellite-dish"
 
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0

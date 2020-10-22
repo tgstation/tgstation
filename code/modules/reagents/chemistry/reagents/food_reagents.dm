@@ -188,11 +188,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(600, FALSE)
+	M.AdjustSleeping(600)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(40, FALSE)
+	M.AdjustSleeping(40)
 	..()
 	. = 1
 
@@ -347,7 +347,7 @@
 			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
 
-/datum/reagent/consumable/sodiumchloride
+/datum/reagent/consumable/salt
 	name = "Table Salt"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
@@ -355,7 +355,7 @@
 	taste_description = "salt"
 	penetrates_skin = NONE
 
-/datum/reagent/consumable/sodiumchloride/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
+/datum/reagent/consumable/salt/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
@@ -757,7 +757,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, TRUE)
+		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /datum/reagent/consumable/astrotame

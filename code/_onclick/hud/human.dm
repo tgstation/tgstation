@@ -1,5 +1,5 @@
 /obj/screen/human
-	icon = 'icons/mob/screen_midnight.dmi'
+	icon = 'icons/hud/screen_midnight.dmi'
 
 /obj/screen/human/toggle
 	name = "toggle"
@@ -34,7 +34,7 @@
 	H.quick_equip()
 
 /obj/screen/ling
-	icon = 'icons/mob/screen_changeling.dmi'
+	icon = 'icons/hud/screen_changeling.dmi'
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling/sting

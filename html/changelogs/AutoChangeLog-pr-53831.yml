@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - admin: "Fixed advanced proc calls not sanitizing returned html correctly."

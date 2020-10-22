@@ -780,7 +780,7 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			playsound(src, "sparks", 75, TRUE)
+			playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
@@ -1168,7 +1168,7 @@
 		return 0
 
 /obj/machinery/power/apc/add_load(amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.add_load(amount)
 
 /obj/machinery/power/apc/avail(amount)

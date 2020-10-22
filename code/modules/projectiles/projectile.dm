@@ -249,7 +249,7 @@
 		L.on_hit(src)
 
 	var/reagent_note
-	if(reagents && reagents.reagent_list)
+	if(reagents?.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
 			reagent_note += "[R.name] ([num2text(R.volume)])"
@@ -629,10 +629,11 @@
 			return FALSE
 	else
 		var/mob/living/L = target
-		if(!direct_target)
-			var/checking = MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE
-			if((!hit_stunned_targets && !(L.mobility_flags & checking)) || L.stat == DEAD)	// If target not able to use items, move and stand - or if they're just dead, pass over.
-				return FALSE
+		if(direct_target)
+			return TRUE
+		// If target not able to use items, move and stand - or if they're just dead, pass over.
+		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
+			return FALSE
 	return TRUE
 
 //Spread is FORCED!

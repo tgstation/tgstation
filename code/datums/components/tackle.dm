@@ -85,7 +85,7 @@
 		to_chat(user, "<span class='warning'>You need free use of your hands to tackle!</span>")
 		return
 
-	if(!(user.mobility_flags & MOBILITY_STAND))
+	if(user.body_position == LYING_DOWN)
 		to_chat(user, "<span class='warning'>You must be standing to tackle!</span>")
 		return
 
@@ -116,7 +116,7 @@
 	if(get_dist(user, A) < min_distance)
 		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
-	user.Knockdown(base_knockdown, TRUE, TRUE)
+	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
@@ -204,6 +204,7 @@
 			to_chat(target, "<span class='userdanger'>[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -217,6 +218,7 @@
 			to_chat(target, "<span class='userdanger'>[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!</span>")
 
 			user.SetKnockdown(0)
+			user.get_up(TRUE)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
 			target.Paralyze(5)
@@ -410,7 +412,7 @@
 			user.adjustBruteLoss(30)
 			user.Unconscious(100)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			shake_camera(user, 6, 6)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 3.5)
@@ -422,7 +424,7 @@
 			user.add_confusion(15)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
 			user.Knockdown(40)
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)

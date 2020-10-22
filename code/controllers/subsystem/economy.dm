@@ -45,8 +45,17 @@ SUBSYSTEM_DEF(economy)
 							"oil" = 75,
 							"adamantine" = 75,
 							// tier 4
+<<<<<<< HEAD
 							"rainbow" = 100)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
+=======
+							"rainbow" = 1000)
+	/**
+	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
+	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
+	  */
+	var/list/bank_accounts_by_id = list()
+>>>>>>> upstream/master
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
@@ -77,13 +86,20 @@ SUBSYSTEM_DEF(economy)
 	car_payout()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
+<<<<<<< HEAD
 	for(var/account in bank_accounts)
 		var/datum/bank_account/bank_account = account
 		if(bank_account && bank_account.account_job)
+=======
+	for(var/account in bank_accounts_by_id)
+		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
+		bank_account.payday(1)
+		if(bank_account?.account_job)
+>>>>>>> upstream/master
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance
-	station_target = max(round(temporary_total / max(bank_accounts.len * 2, 1)) + station_target_buffer, 1)
+	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 	if(!market_crashing)
 		price_update()
 
@@ -203,7 +219,7 @@ SUBSYSTEM_DEF(economy)
   * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
   **/
 /datum/controller/subsystem/economy/proc/inflation_value()
-	if(!bank_accounts.len)
+	if(!bank_accounts_by_id.len)
 		return 1
-	inflation_value = max(round(((station_total / bank_accounts.len) / station_target), 0.1), 1.0)
+	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value

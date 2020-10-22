@@ -88,8 +88,10 @@
 				user.stop_pulling()
 	return ..()
 
-/obj/structure/table/attack_tk()
-	return FALSE
+
+/obj/structure/table/attack_tk(mob/user)
+	return
+
 
 /obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -552,7 +554,7 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	can_buckle = 1
-	buckle_lying = -1
+	buckle_lying = NO_BUCKLE_LYING
 	buckle_requires_restraints = TRUE
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
@@ -649,7 +651,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) || user.usable_legs < 2)
+	if(user.body_position == LYING_DOWN || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

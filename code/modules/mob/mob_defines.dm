@@ -41,6 +41,8 @@
 	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
+	///Cursor icon used when holding shift over things
+	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
@@ -116,8 +118,6 @@
 
 	/// movable atom we are buckled to
 	var/atom/movable/buckled = null//Living
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckling
 
 	//Hands
 	///What hand is the active hand
