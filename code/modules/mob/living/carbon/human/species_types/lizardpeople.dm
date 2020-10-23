@@ -33,7 +33,7 @@
 	ass_image = 'icons/ass/asslizard.png'
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)

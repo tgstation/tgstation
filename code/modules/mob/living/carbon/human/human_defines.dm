@@ -70,6 +70,9 @@
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
 
-	/// Default skin temperature, should match body at round start
-	var/skintemperature = BODYTEMP_NORMAL
+	/// The core temperature of the human compaired to the skin temp of the body
+	var/coretemperature = BODYTEMP_NORMAL
+
+	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
+	var/heat_exposure_stacks = 0
 

@@ -37,7 +37,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi)
 	return
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
