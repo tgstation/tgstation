@@ -75,7 +75,7 @@
 		regen_ticks_current += 0.5
 
 
-	if(prob(severity * 2))
+	if(prob(severity * 3))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")
