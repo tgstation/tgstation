@@ -259,7 +259,7 @@
 		return
 	if(!disassembled)
 		playsound(src, breaksound, 70, TRUE)
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(destroy_drop(src))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)

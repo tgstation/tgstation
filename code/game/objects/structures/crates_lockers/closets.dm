@@ -227,12 +227,12 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
-		new material_drop(loc, material_drop_amount)
+	if(ispath(material_drop) && material_drop_amount)
+		destroy_drop(src,material_drop,material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)

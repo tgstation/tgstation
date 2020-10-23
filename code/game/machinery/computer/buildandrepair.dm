@@ -159,7 +159,7 @@
 
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(state == 4)
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())

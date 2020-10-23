@@ -97,8 +97,7 @@
 			return FALSE
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/plastic/five(loc)
+	destroy_drop(src,/obj/item/stack/sheet/plastic/five)
 	qdel(src)
 
 /obj/structure/plasticflaps/Initialize()

@@ -32,7 +32,7 @@
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(default_unfasten_wrench(user, W))
 			return
 		if(W.tool_behaviour == TOOL_WELDER)
@@ -49,7 +49,7 @@
 	return ..()
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(mat)

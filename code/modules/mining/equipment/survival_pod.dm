@@ -232,7 +232,7 @@
 	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)

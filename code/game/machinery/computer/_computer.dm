@@ -91,7 +91,7 @@
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.setDir(dir)

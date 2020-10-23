@@ -157,7 +157,7 @@
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
-	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
+	destroy_drop(src,/obj/item/stack/sheet/mineral/wood,4)
 	for(var/obj/item/I in contents)
 		if(!isbook(I))
 			continue

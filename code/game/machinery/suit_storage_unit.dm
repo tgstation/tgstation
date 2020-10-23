@@ -199,7 +199,7 @@
 	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		open_machine()
 		dump_inventory_contents()
 		new /obj/item/stack/sheet/metal(loc, 2)
@@ -523,7 +523,7 @@
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
 /obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && uv)
+	if(destroy_drop(src) && I.tool_behaviour == TOOL_SCREWDRIVER && uv)
 		to_chat(user, "<span class='warning'>It might not be wise to fiddle with [src] while it's running...</span>")
 		return TRUE
 	return ..()

@@ -304,9 +304,8 @@
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
-		new remains(loc)
+	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
+	destroy_drop(src,remains)
 	qdel(src)
 
 /obj/structure/girder/narsie_act()
@@ -379,8 +378,7 @@
 	return
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
+	destroy_drop(src,/obj/item/stack/sheet/runed_metal,1)
 	qdel(src)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

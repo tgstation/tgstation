@@ -306,7 +306,7 @@
 	qdel(source)
 
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/turf/T = get_turf(src)
 		if(!disassembled)
 			material_amt = rand(2,4)

@@ -255,7 +255,7 @@
 				queen_bee = null
 
 /obj/structure/beebox/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood (loc, 20)
+	destroy_drop(src,/obj/item/stack/sheet/mineral/wood,20)
 	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
 		if(B.loc == src)
 			B.forceMove(drop_location())

@@ -276,8 +276,7 @@
 	return FALSE
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc)
+	destroy_drop(src,/obj/item/stack/sheet/metal)
 	qdel(src)
 
 

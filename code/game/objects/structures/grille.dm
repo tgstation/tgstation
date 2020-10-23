@@ -212,14 +212,14 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags_1&NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/obj/R = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	..()
 
 /obj/structure/grille/obj_break()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		new broken_type(src.loc)
 		var/obj/R = new rods_type(drop_location(), rods_broken)
 		transfer_fingerprints_to(R)

@@ -1329,7 +1329,7 @@
 
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(loc)

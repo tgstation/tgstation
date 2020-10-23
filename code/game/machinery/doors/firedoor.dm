@@ -187,7 +187,7 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/turf/T = get_turf(src)
 		if(disassembled || prob(40))
 			var/obj/structure/firelock_frame/F = new assemblytype(T)

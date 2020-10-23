@@ -112,8 +112,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/cable_coil(drop_location(), 1)
+	destroy_drop(src,/obj/item/stack/cable_coil,1)
 	qdel(src)
 
 ///////////////////////////////////

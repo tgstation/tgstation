@@ -28,9 +28,8 @@
 		. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
+	if(buildstacktype)
+		destroy_drop(src,buildstacktype,buildstackamount)
 	..()
 
 /obj/structure/bed/attack_paw(mob/user)

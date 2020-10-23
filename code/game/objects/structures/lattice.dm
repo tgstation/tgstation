@@ -47,8 +47,7 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new build_material(get_turf(src), number_of_mats)
+	destroy_drop(src,build_material,number_of_mats)
 	qdel(src)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

@@ -297,7 +297,7 @@
 		LAZYREMOVE(myarea.firealarms, src)
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		new /obj/item/stack/sheet/metal(loc, 1)
 		if(!(machine_stat & BROKEN))
 			var/obj/item/I = new /obj/item/electronics/firealarm(loc)

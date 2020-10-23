@@ -241,7 +241,7 @@
 
 /// Pipe deconstruction proc. Return created pipe fitting.
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(can_unwrench)
 			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src)
 			stored.setPipingLayer(piping_layer)

@@ -54,7 +54,7 @@
 
 /obj/structure/tank_holder/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
-	new /obj/item/stack/rods(Tsec, 2)
+	destroy_drop(src,/obj/item/stack/rods,2)
 	if(tank)
 		tank.forceMove(Tsec)
 		after_detach_tank()

@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	update_icon()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
 		M.update_icon()

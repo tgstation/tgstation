@@ -54,7 +54,7 @@
 	return ..()
 
 /obj/structure/mirror/obj_break(damage_flag, mapload)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		icon_state = "mirror_broke"
 		if(!mapload)
 			playsound(src, "shatter", 70, TRUE)
@@ -63,9 +63,8 @@
 		broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
-			new /obj/item/shard( src.loc )
+	if(!disassembled)
+		destroy_drop(src,/obj/item/shard)
 	qdel(src)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)

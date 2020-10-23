@@ -224,7 +224,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(stored)
 			stored.forceMove(T)
 			src.transfer_fingerprints_to(stored)

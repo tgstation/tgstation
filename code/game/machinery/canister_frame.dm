@@ -24,7 +24,7 @@
 	var/atom/finished_obj
 
 /obj/structure/canister_frame/machine/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (destroy_drop(src))
 		// Spawn 5 sheets for the tier 0 frame
 		new /obj/item/stack/sheet/metal(loc, 5)
 

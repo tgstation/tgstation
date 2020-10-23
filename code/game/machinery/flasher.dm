@@ -151,7 +151,7 @@
 		power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(bulb)
 			bulb.forceMove(loc)
 			bulb = null

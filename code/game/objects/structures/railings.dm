@@ -51,7 +51,7 @@
 	. = ..()
 	if(!loc) //quick check if it's qdeleted already.
 		return
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
 		transfer_fingerprints_to(rod)
 		qdel(src)

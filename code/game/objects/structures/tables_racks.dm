@@ -158,7 +158,7 @@
 	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
-	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
+	if(destroy_drop(src) && user.a_intent != INTENT_HELP)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
@@ -229,18 +229,16 @@
 	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = get_turf(src)
-		if(buildstack)
-			new buildstack(T, buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
-		if(!wrench_disassembly)
-			new frame(T)
-		else
-			new framestack(T, framestackamount)
+	if(buildstack)
+		destroy_drop(src,buildstack,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			destroy_drop(src,M.sheet_type,FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	if(!wrench_disassembly)
+		destroy_drop(src,frame)
+	else
+		destroy_drop(src,framestack,framestackamount)
 	qdel(src)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -360,7 +358,7 @@
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(disassembled)
 			..()
 			return
@@ -673,7 +671,7 @@
  */
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(flags_1&NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		density = FALSE
 		var/obj/item/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)

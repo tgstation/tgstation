@@ -85,8 +85,7 @@
 			usr.examinate(I)
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal (loc, 1)
+	destroy_drop(src,/obj/item/stack/sheet/metal)
 	qdel(src)
 
 // Notice boards for the heads of staff (plus the qm)

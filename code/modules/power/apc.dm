@@ -761,7 +761,7 @@
 		set_broken()
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(!(machine_stat & BROKEN))
 			set_broken()
 		if(opened != APC_COVER_REMOVED)

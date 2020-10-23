@@ -239,7 +239,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(destroy_drop(src))
 			new /obj/item/stack/sheet/metal(loc, 3)
 		qdel(src)
 	else

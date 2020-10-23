@@ -480,13 +480,13 @@ Class Procs:
 		open_machine()
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
+	. = (panel_open || ignore_panel) && destroy_drop(src) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		on_deconstruction()
 		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
@@ -508,7 +508,7 @@ Class Procs:
 /obj/machinery/obj_break(damage_flag)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(machine_stat & BROKEN) && destroy_drop(src))
 		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_icon()
@@ -540,7 +540,7 @@ Class Procs:
 		return TRUE
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(destroy_drop(src) && I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src, 50)
 		if(!panel_open)
 			panel_open = TRUE
@@ -568,7 +568,7 @@ Class Procs:
 	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
+	if(destroy_drop(src) && I.tool_behaviour == TOOL_WRENCH)
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten

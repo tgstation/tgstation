@@ -190,7 +190,7 @@
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1) && !disassembled)
+	if(destroy_drop(src) && !disassembled)
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
 			transfer_fingerprints_to(fragment)

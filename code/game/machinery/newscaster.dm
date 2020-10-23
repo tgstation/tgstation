@@ -749,7 +749,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		new /obj/item/stack/sheet/metal(loc, 2)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)

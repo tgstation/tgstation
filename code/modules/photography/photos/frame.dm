@@ -155,7 +155,7 @@
 		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
 		if(framed)
 			F.displayed = framed

@@ -364,3 +364,20 @@
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
+/*
+only drops anything if the src doesnt have the NODECONSTRUCT_1 or HOLOGRAM_1 flags
+*/
+/obj/proc/destroy_drop(var/obj/destroyed, var/obj/to_drop = null, var/amount = 1)
+	//you can also call it as destroy_drop(src) and it will just return whether it can drop items without dropping any itself
+	var/can_drop = TRUE
+	if((flags_1 & NODECONSTRUCT_1) && (ismachinery(destroyed) || isstructure(destroyed)))
+		can_drop = FALSE
+
+	if (destroyed.flags_1 & HOLOGRAM_1)
+		can_drop = FALSE
+
+	if (can_drop)
+		if (to_drop != null)
+			new to_drop(destroyed.loc, amount)
+		return TRUE
+	return FALSE

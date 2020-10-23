@@ -154,8 +154,7 @@
 	return
 
 /obj/machinery/food_cart/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 4)
+	destroy_drop(src,/obj/item/stack/sheet/metal,4)
 	qdel(src)
 
 #undef STORAGE_CAPACITY

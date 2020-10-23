@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return ..()
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 5)
+	destroy_drop(src,/obj/item/stack/sheet/metal,5)
 	recursive_organ_check(src)
 	qdel(src)
 
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/tray/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 2)
+	destroy_drop(src,/obj/item/stack/sheet/metal,2)
 	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user)

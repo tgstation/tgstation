@@ -43,12 +43,12 @@
 			return set_sign(new_sign)
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		broken = TRUE
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	destroy_drop(src,/obj/item/stack/sheet/metal,2)
+	destroy_drop(src,/obj/item/stack/cable_coil,2)
 	qdel(src)
 
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

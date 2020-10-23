@@ -54,7 +54,7 @@
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else

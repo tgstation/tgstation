@@ -78,7 +78,7 @@
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else
@@ -399,7 +399,7 @@
 		return ..()
 
 /obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		drop_materials()
 	..()
 
@@ -669,9 +669,10 @@
 	toggle()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 2)
-	new /obj/item/stack/sheet/plastic (loc, 2)
-	new /obj/item/stack/rods (loc, 1)
+	if (destroy_drop(src))
+		new /obj/item/stack/sheet/cloth (loc, 2)
+		new /obj/item/stack/sheet/plastic (loc, 2)
+		new /obj/item/stack/rods (loc, 1)
 	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -697,8 +698,9 @@
 	opaque_closed = TRUE
 
 /obj/structure/curtain/cloth/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 4)
-	new /obj/item/stack/rods (loc, 1)
+	if (destroy_drop(src))
+		new /obj/item/stack/sheet/cloth (loc, 4)
+		new /obj/item/stack/rods (loc, 1)
 	qdel(src)
 
 /obj/structure/curtain/cloth/fancy

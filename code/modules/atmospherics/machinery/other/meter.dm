@@ -129,8 +129,7 @@
 	return TRUE
 
 /obj/machinery/meter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/pipe_meter(loc)
+	destroy_drop(src,/obj/item/pipe_meter)
 	qdel(src)
 
 /obj/machinery/meter/interact(mob/user)

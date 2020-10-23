@@ -14,11 +14,10 @@
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
-		if(circuit)
-			circuit.forceMove(loc)
-			circuit = null
+	destroy_drop(src,/obj/item/stack/sheet/metal,5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
 	qdel(src)
 
 
@@ -288,7 +287,7 @@
 		return ..()
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(state >= 2)
 			new /obj/item/stack/cable_coil(loc , 5)
 		for(var/X in components)

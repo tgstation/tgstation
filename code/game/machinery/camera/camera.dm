@@ -363,7 +363,7 @@
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(disassembled)
 			if(!assembly)
 				assembly = new()

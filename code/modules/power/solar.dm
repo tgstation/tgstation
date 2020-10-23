@@ -97,7 +97,7 @@
 		unset_control()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		if(disassembled)
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)

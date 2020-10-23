@@ -75,7 +75,7 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		dump()
 		if(!disassembled)
 			new /obj/item/shard(drop_location())
@@ -83,7 +83,7 @@
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		density = FALSE
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -565,7 +565,7 @@
 		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
 
 /obj/structure/displaycase/forsale/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && destroy_drop(src))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()

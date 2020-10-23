@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_icon()
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
+	destroy_drop(src,/obj/item/stack/sheet/metal,2)
 	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)

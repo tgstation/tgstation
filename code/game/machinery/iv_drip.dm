@@ -113,7 +113,7 @@
 		return ..()
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(destroy_drop(src))
 		new /obj/item/stack/sheet/metal(loc)
 	qdel(src)
 
