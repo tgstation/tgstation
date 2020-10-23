@@ -253,3 +253,12 @@
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 2)
+
+/obj/item/reagent_containers/food/snacks/soup/peasoup
+	name = "pea soup"
+	desc = "A humble split pea soup."
+	icon_state = "peasoup"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
+	tastes = list("creamy peas"= 2, "parsnip" = 1)
+	filling_color = "#9dc530"
+	foodtypes = VEGETABLES

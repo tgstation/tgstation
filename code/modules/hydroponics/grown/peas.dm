@@ -48,6 +48,7 @@
 	mutatelist = list (/obj/item/seeds/peas/laugh/peace)
 	reagents_add = list (/datum/reagent/consumable/laughter = 0.05, /datum/reagent/consumable/sugar = 0.05, /datum/reagent/consumable/nutriment = 0.07)
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
+	graft_gene = /datum/plant_gene/trait/glow/purple
 
 /obj/item/reagent_containers/food/snacks/grown/laugh
 	seed = /obj/item/seeds/peas/laugh
@@ -81,6 +82,7 @@
 	genes = list (/datum/plant_gene/trait/glow/blue)
 	reagents_add = list (/datum/reagent/pax = 0.1, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax.
+	graft_gene = /datum/plant_gene/trait/glow/blue
 
 /obj/item/reagent_containers/food/snacks/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
