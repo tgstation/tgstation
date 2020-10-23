@@ -246,5 +246,5 @@
 		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
 		/obj/item/food/meat/cutlet = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/gumbo
+	result = /obj/item/food/salad/gumbo
 	subcategory = CAT_MEAT

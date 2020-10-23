@@ -260,5 +260,4 @@
 	icon_state = "peasoup"
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
-	filling_color = "#9dc530"
 	foodtypes = VEGETABLES

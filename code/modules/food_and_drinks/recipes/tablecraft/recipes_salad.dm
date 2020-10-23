@@ -104,5 +104,5 @@
 		/obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia = 1,
 		/obj/item/reagent_containers/food/snacks/grown/peace = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/salad/edensalad
+	result = /obj/item/food/salad/edensalad
 	subcategory = CAT_SALAD
