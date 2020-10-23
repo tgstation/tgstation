@@ -49,7 +49,7 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 
-/obj/item/reagent_containers/food/snacks/fishfry
+/obj/item/food/fishfry
 	name = "fish fry"
 	desc = "All that and no bag of chips..."
 	icon_state = "fish_fry"

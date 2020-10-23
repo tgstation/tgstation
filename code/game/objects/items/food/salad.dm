@@ -107,7 +107,7 @@
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 
-/obj/item/reagent_containers/food/snacks/salad/edensalad
+/obj/item/food/salad/edensalad
 	name = "\improper Salad of Eden"
 	desc = "A salad brimming with untapped potential."
 	icon_state = "eden_salad"
@@ -115,7 +115,7 @@
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/salad/gumbo
+/obj/item/food/salad/gumbo
 	name = "black eyed gumbo"
 	desc = "A spicy and savory meat and rice dish."
 	icon_state = "gumbo"
