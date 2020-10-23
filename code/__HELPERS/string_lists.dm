@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(string_lists)
 	if(!islist(values))
 		values = list(values)
 	//	return values
-	if(length(values) > 100)
+	if(length(values) > 10)
 		stack_trace("The baseturfs list of [T] at [T.x], [T.y], [T.x] is [length(values)], it should never be this long, investigate. I've set baseturfs to a chasm as a visual queue")
 		return string_list(list(/turf/closed/indestructible/baseturfs_ded)) //I want this reported god damn it
 	return string_list(values)
