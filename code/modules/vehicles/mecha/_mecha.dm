@@ -166,9 +166,6 @@
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE
 
-	///Bool for if the mech's step sound should vary in audio
-	var/stepsound_varies = TRUE
-
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -579,7 +576,7 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
 	if(stepsound)
-		playsound(src, stepsound, 40, stepsound_varies)
+		playsound(src, stepsound, 40, 1)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
 	SIGNAL_HANDLER

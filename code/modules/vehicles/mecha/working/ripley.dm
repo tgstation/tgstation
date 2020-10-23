@@ -28,7 +28,6 @@
 	/// Custom Ripley step and turning sounds (from TGMC)
 	stepsound = 'sound/mecha/powerloader_step.ogg'
 	turnsound = 'sound/mecha/powerloader_turn2.ogg'
-	stepsound_varies = TRUE
 
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()
