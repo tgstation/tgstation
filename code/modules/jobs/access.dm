@@ -366,7 +366,7 @@
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
 
 /proc/get_all_job_icons() //For all existing HUD icons
-	return get_all_jobs() + list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
+	return get_all_jobs() + list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Operative", "Tradepost Officer", "CentCom Psychologist")
 
 /proc/get_all_centcom_jobs()
 	return list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
