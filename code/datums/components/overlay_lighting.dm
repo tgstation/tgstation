@@ -439,7 +439,7 @@
 	if(current_direction == newdir)
 		return
 	current_direction = newdir
-	cone.dir = newdir
+	cone.setDir(newdir)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
 
