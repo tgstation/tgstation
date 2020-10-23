@@ -611,7 +611,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/abstract/ripple(t, animate_time)
+		ripples += new /obj/effect/abstract/ripple(t, src, animate_time)
 
 	inbound_shuttle_projector = new /obj/effect/abstract/shuttle_projector(null, src, S1, TRUE, animate_time)
 
