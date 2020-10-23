@@ -14,7 +14,7 @@
 	if (l_color != NONSENSICAL_VALUE)
 		light_color = l_color
 
-	if(l_on != null)
+	if(!isnull(l_on))
 		light_on = l_on
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
