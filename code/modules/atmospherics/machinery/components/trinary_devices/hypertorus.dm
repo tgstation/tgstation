@@ -5,37 +5,41 @@
 ///Maximum reachable fusion temperature
 #define FUSION_MAXIMUM_TEMPERATURE			1e30
 ///Speed of light, in m/s
-#define LIGHT_SPEED 299792458
+#define LIGHT_SPEED 						299792458
 ///Calculation between the plank constant and the lambda of the lightwave
-#define PLANCK_LIGHT_CONSTANT 2e-16
+#define PLANCK_LIGHT_CONSTANT 				2e-16
 ///Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
-#define CALCULATED_H2RADIUS 120e-4
+#define CALCULATED_H2RADIUS 				120e-4
 ///Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
-#define CALCULATED_TRITRADIUS 230e-3
+#define CALCULATED_TRITRADIUS 				230e-3
 ///Power conduction in the void, used to calculate the efficiency of the reaction
-#define VOID_CONDUCTION 1e-2
+#define VOID_CONDUCTION 					1e-2
 ///Max reaction point per reaction cycle
-#define MAX_FUSION_RESEARCH 1000
+#define MAX_FUSION_RESEARCH 				1000
 ///Min amount of allowed heat change
-#define MIN_HEAT_VARIATION -1e5
+#define MIN_HEAT_VARIATION 					-1e5
 ///Max amount of allowed heat change
-#define MAX_HEAT_VARIATION 1e5
+#define MAX_HEAT_VARIATION 					1e5
 ///Max mole consumption per reaction cycle
-#define MAX_MODERATOR_USAGE 20
+#define MAX_MODERATOR_USAGE 				20
 ///Mole count required (tritium/hydrogen) to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				25
 ///Used to reduce the gas_power to a more useful amount
 #define INSTABILITY_GAS_POWER_FACTOR 		0.003
 ///Used to calculate the toroidal_size for the instability
-#define TOROID_VOLUME_BREAKEVEN			1000
+#define TOROID_VOLUME_BREAKEVEN				1000
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY	0.005
+#define METALLIC_VOID_CONDUCTIVITY			0.005
 ///Conduction of heat near the external cooling loop
-#define HIGH_EFFICIENCY_CONDUCTIVITY 0.85
+#define HIGH_EFFICIENCY_CONDUCTIVITY 		0.85
 ///Sets the range of the hallucinations
-#define HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
+#define HALLUCINATION_RANGE(P) 				(min(7, round(P ** 0.25)))
+///Sets the minimum amount of power the machine uses
+#define MIN_POWER_USAGE						50000
+
+#define DAMAGE_HARDCAP						0.002
 
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
@@ -68,8 +72,9 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if(!anchored)
 		return FALSE
 	SetInitDirections()
@@ -148,12 +153,18 @@
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	density = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 50
 
 	///Checks if the machine state is active (all parts are connected)
 	var/active = FALSE
 	///Checks if the user has started the machine
 	var/fusion_started = FALSE
 	var/next_slowprocess = 0
+	var/damage = 0
+	var/damage_archived = 0
+	var/melting_point = 900
+	var/integrity = 400
 	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
 	///Stores the information of the moderator input
@@ -166,8 +177,6 @@
 	var/list/corners = list()
 	///Stores the information of the fusion gasmix
 	var/datum/gas_mixture/internal_fusion
-	///Stores the information of the buffer gasmix (used to move gases around, may be removed)
-	var/datum/gas_mixture/buffer
 	///Stores the information of the output gasmix (used to move gases around, may be removed)
 	var/datum/gas_mixture/internal_output
 	///Stores the information of the moderators gasmix
@@ -243,7 +252,6 @@
 	. = ..()
 	internal_fusion = new
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
-	buffer = new
 	internal_output = new
 	moderator_internal = new
 
@@ -262,12 +270,25 @@
 		if(WEST)
 			initialize_directions = SOUTH|NORTH
 
+/obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
+	if(linked_input)
+		linked_input = null
+	if(linked_output)
+		linked_output = null
+	if(linked_moderator)
+		linked_moderator = null
+	if(linked_interface)
+		linked_interface = null
+	if(corners.len)
+		for(var/corner in corners)
+			corner = null
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 90), turn(dir, 270))
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/can_be_node(obj/machinery/atmospherics/target)
 	if(anchored)
-		return ..(target)
+		return ..()
 	return FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/wrench_act(mob/living/user, obj/item/I)
@@ -306,8 +327,9 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/screwdriver_act(mob/user, obj/item/I)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 	panel_open = !panel_open
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
@@ -378,41 +400,43 @@
 				. =  FALSE
 			linked_moderator = object
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/activate()
-	if(!active)
-		message_admins("YES")
-		active = TRUE
-		linked_interface.active = TRUE
-		linked_input.active = TRUE
-		linked_output.active = TRUE
-		linked_moderator.active = TRUE
-		for(var/obj/machinery/hypertorus/corner/corner in corners)
-			corner.active = TRUE
-	else
-		message_admins("Already connected")
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/activate(mob/living/user)
+	if(active)
+		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
+		return
+	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
+	active = TRUE
+	linked_interface.active = TRUE
+	linked_input.active = TRUE
+	linked_output.active = TRUE
+	linked_moderator.active = TRUE
+	for(var/obj/machinery/hypertorus/corner/corner in corners)
+		corner.active = TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
-	if(active)
-		message_admins("YES")
-		active = FALSE
-		if(linked_interface)
-			linked_interface.active = FALSE
-		if(linked_input)
-			linked_input.active = FALSE
-		if(linked_output)
-			linked_output.active = FALSE
-		if(linked_moderator)
-			linked_moderator.active = FALSE
-		if(corners.len)
-			for(var/obj/machinery/hypertorus/corner/corner in corners)
-				corner.active = FALSE
-	else
-		message_admins("Already connected")
+	if(!active)
+		return
+	active = FALSE
+	if(linked_interface)
+		linked_interface.active = FALSE
+	if(linked_input)
+		linked_input.active = FALSE
+	if(linked_output)
+		linked_output.active = FALSE
+	if(linked_moderator)
+		linked_moderator.active = FALSE
+	if(corners.len)
+		for(var/obj/machinery/hypertorus/corner/corner in corners)
+			corner.active = FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
 	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
 		return TRUE
 	return FALSE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_power_use()
+	if(use_power == ACTIVE_POWER_USE)
+		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
@@ -443,6 +467,7 @@
 	 *Storing variables such as gas mixes, temperature, volume, moles
 	 */
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
+	var/datum/gas_mixture/buffer
 	buffer = linked_input.airs[1].remove(fuel_injection_rate)
 	internal_fusion.merge(buffer)
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
@@ -450,6 +475,15 @@
 
 	if(!check_fuel())
 		return
+	damage_archived = damage
+	damage = max(damage + max((round((internal_fusion.total_moles() * 1e16 + internal_fusion.temperature) / 1e16, 1) - 1500) / 200, 0), 0)
+
+	if(internal_fusion.total_moles() < 500 && power_level < 4)
+		damage = max(damage + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
+
+	damage = min(damage_archived + (DAMAGE_HARDCAP * melting_point), damage)
+
+	check_power_use()
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -519,15 +553,40 @@
 	 *Modifiers
 	 */
 	///Those are the scaled gases that gets consumed and releases energy or help increase that energy
-	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_m_nitrogen * 0.35 + scaled_m_co2 * 0.55 + scaled_m_antinoblium * 10 - scaled_m_hypernoblium * 10
+	var/positive_modifiers = 	scaled_hydrogen + \
+								scaled_tritium + \
+								scaled_m_nitrogen * 0.35 + \
+								scaled_m_co2 * 0.55 + \
+								scaled_m_antinoblium * 10 - \
+								scaled_m_hypernoblium * 10 //Hypernob decreases the amount of energy
 	///Those are the scaled gases that gets produced and consumes energy or help decrease that energy
-	var/negative_modifiers = scaled_helium + scaled_m_h2o * 0.75 + scaled_m_freon * 1.15 - scaled_m_antinoblium * 10
+	var/negative_modifiers = 	scaled_helium + \
+								scaled_m_h2o * 0.75 + \
+								scaled_m_freon * 1.15 - \
+								scaled_m_antinoblium * 10
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
-	var/power_modifier = clamp(scaled_tritium * 1.05 + scaled_m_co2 * 0.95 + scaled_m_plasma * 0.05 - scaled_helium * 0.55 - scaled_m_freon * 0.75, 0.25, 100)
+	var/power_modifier = clamp(	scaled_tritium * 1.05 + \
+								scaled_m_co2 * 0.95 + \
+								scaled_m_plasma * 0.05 - \
+								scaled_helium * 0.55 - \
+								scaled_m_freon * 0.75, \
+								0.25, 100)
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
-	var/heat_modifier = max(scaled_hydrogen * 1.15 + scaled_helium * 1.05 + scaled_m_plasma * 1.25 - scaled_m_nitrogen * 0.75 - scaled_m_freon * 0.95, 0.25)
+	var/heat_modifier = 		scaled_hydrogen * 1.15 + \
+								scaled_helium * 1.05 + \
+								scaled_m_plasma * 1.25 - \
+								scaled_m_nitrogen * 0.75 - \
+								scaled_m_freon * 0.95
+	heat_modifier = clamp(heat_modifier, 0.25, 100)
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
-	var/radiation_modifier = clamp(scaled_helium * 0.55 - scaled_m_freon * 1.15 - scaled_m_nitrogen * 0.45 - scaled_m_plasma * 0.95 + scaled_m_bz * 1.9 + scaled_m_proto_nitrate * 0.1 + scaled_m_antinoblium * 10, 0.005, 1000)
+	var/radiation_modifier = clamp(	scaled_helium * 0.55 - \
+									scaled_m_freon * 1.15 - \
+									scaled_m_nitrogen * 0.45 - \
+									scaled_m_plasma * 0.95 + \
+									scaled_m_bz * 1.9 + \
+									scaled_m_proto_nitrate * 0.1 + \
+									scaled_m_antinoblium * 10, \
+									0.005, 1000)
 
 	/*
 	 *Main calculations (energy, internal power, core temperature, delta temperature,
@@ -535,25 +594,26 @@
 	 */
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	//E=mc^2 with some changes for gameplay purposes
-	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature / (max(100 / heat_modifier, 1)), 1)
+	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
+	energy = clamp(energy, -1e36, 1e36) //ugly way to prevent NaN error
 	//Power of the gas mixture
-	internal_power = (scaled_hydrogen / max((100 / power_modifier), 1)) * (scaled_tritium / max((100 / power_modifier), 1)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
+	internal_power = (scaled_hydrogen * power_modifier / 100) * (scaled_tritium * power_modifier / 100) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	//Temperature inside the center of the gas mixture
-	core_temperature = internal_power / max((1000 / power_modifier), 1)
+	core_temperature = internal_power * power_modifier / 1000
 	core_temperature = max(TCMB, core_temperature)
 	//Difference between the gases temperature and the internal temperature of the reaction
 	delta_temperature = archived_heat - core_temperature
 	//Energy from the reaction lost from the molecule colliding between themselves.
 	conduction = - delta_temperature * (magnetic_constrictor / 10)
 	//The remaining wavelength that actually can do damage to mobs.
-	radiation = max(- (PLANCK_LIGHT_CONSTANT / (((0.0005) * 1e-14) / radiation_modifier)) * delta_temperature, 0)
+	radiation = max(-(PLANCK_LIGHT_CONSTANT / 5e-18) * radiation_modifier * delta_temperature, 0)
 	//Efficiency of the reaction, it increases with the amount of helium
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+	heat_output = clamp(power_output * heat_modifier / 100, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
@@ -615,9 +675,8 @@
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.1
-						internal_output.assert_gases(/datum/gas/freon)
+						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.5
-						internal_output.assert_gases(/datum/gas/stimulum)
 						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
 					if(m_freon > 50)
@@ -751,20 +810,20 @@
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, "<span class='notice'><B>The following parts are missing or misplaced:</B></span>")
 		if(!centre.linked_input)
-			to_chat(user, "<span class='notice'>Missing or misplaced fuel input</span>")
+			to_chat(user, "<span class='notice'>Missing or misplaced fuel input.</span>")
 		if(!centre.linked_output)
-			to_chat(user, "<span class='notice'>Missing or misplaced waste output</span>")
+			to_chat(user, "<span class='notice'>Missing or misplaced waste output.</span>")
 		if(!centre.linked_moderator)
-			to_chat(user, "<span class='notice'>Missing or misplaced moderator gas input</span>")
+			to_chat(user, "<span class='notice'>Missing or misplaced moderator gas input.</span>")
 		if(!centre.linked_interface)
-			to_chat(user, "<span class='notice'>Missing or misplaced interface</span>")
+			to_chat(user, "<span class='notice'>Missing or misplaced interface.</span>")
 		if(centre.corners.len != 4)
-			to_chat(user, "<span class='notice'>Missing or misplaced corner</span>")
+			to_chat(user, "<span class='notice'>Missing or misplaced corner.</span>")
 		return TRUE
 
 	connected_core = centre
 
-	connected_core.activate()
+	connected_core.activate(user)
 	return TRUE
 
 /obj/machinery/hypertorus/interface/attack_hand(mob/living/user)
@@ -789,6 +848,8 @@
 		if(!ui)
 			ui = new(user, src, "Hypertorus", name)
 			ui.open()
+	else
+		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
 
 /obj/machinery/hypertorus/interface/ui_data()
 	var/data = list()
@@ -847,6 +908,7 @@
 	switch(action)
 		if("fusion_started")
 			connected_core.fusion_started = !connected_core.fusion_started
+			connected_core.use_power = connected_core.fusion_started ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			. = TRUE
 		if("heating_conductor")
 			var/heating_conductor = params["heating_conductor"]
