@@ -432,6 +432,7 @@
 	SIGNAL_HANDLER
 	set_direction(newdir)
 
+///Sets a new direction for the directional cast, then updates luminosity
 /datum/component/overlay_lighting/proc/set_direction(newdir)
 	if(!newdir)
 		return
