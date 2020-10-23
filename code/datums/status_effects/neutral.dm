@@ -157,9 +157,8 @@
 	owner.visible_message("<span class='notice'>[owner] raises [owner.p_their()] arm, looking for a high-five!</span>", \
 		"<span class='notice'>You post up, looking for a high-five!</span>", null, 2)
 
-	for(var/i in orange(1, owner))
-		var/mob/living/carbon/possible_taker = i
-		if(!istype(possible_taker) || !owner.CanReach(possible_taker) || possible_taker.incapacitated())
+	for(var/mob/living/carbon/possible_taker in orange(1, owner))
+		if(!owner.CanReach(possible_taker) || possible_taker.incapacitated())
 			continue
 		register_candidate(possible_taker)
 
@@ -175,6 +174,7 @@
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /datum/status_effect/high_fiving/Destroy()
+	QDEL_NULL(slap_item)
 	for(var/i in possible_takers)
 		var/mob/living/carbon/lost_hope = i
 		remove_candidate(lost_hope)

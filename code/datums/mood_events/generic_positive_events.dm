@@ -206,15 +206,15 @@
 
 /datum/mood_event/high_five
 	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
-	mood_change = 5 // heh 5
-	timeout = 1 MINUTES
+	mood_change = 2
+	timeout = 45 SECONDS
 
 /datum/mood_event/high_ten
 	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
-	mood_change = 10 // heh 10
-	timeout = 1.5 MINUTES
+	mood_change = 3
+	timeout = 45 SECONDS
 
 /datum/mood_event/down_low
 	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
-	mood_change = 20
+	mood_change = 4
 	timeout = 1.5 MINUTES
