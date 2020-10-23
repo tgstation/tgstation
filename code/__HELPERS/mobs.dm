@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target && !isturf(target))
 		target_loc = target.loc
 
-	if(!(timed_action_flags & IGNORE_DO_AFTER_CAP) && LAZYLEN(user.do_afters) >= 5)
+	if(!(timed_action_flags & IGNORE_DO_AFTER_CAP) && LAZYLEN(user.do_afters) >= MAX_DO_AFTERS)
 		return FALSE
 
 	if(target)
