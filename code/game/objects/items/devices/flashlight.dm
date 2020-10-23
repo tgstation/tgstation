@@ -32,6 +32,8 @@
 	else
 		icon_state = initial(icon_state)
 	set_light_on(on)
+	if(light_system == STATIC_LIGHT)
+		update_light()
 
 
 /obj/item/flashlight/attack_self(mob/user)
