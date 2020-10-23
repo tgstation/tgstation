@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscdel: "removes hexane"
-  - bugfix: "fixes halon's speed thing being removed by consuming tiny amounts of hexane"

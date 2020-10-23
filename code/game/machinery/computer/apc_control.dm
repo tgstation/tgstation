@@ -180,7 +180,7 @@
 		return
 	obj_flags |= EMAGGED
 	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
