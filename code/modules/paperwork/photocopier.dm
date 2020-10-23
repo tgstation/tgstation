@@ -486,8 +486,8 @@
 	name = "large toner cartridge"
 	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	charges = 50
-	max_charges = 50
+	charges = 25
+	max_charges = 25
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"
