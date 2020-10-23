@@ -182,10 +182,10 @@
 
 ///Adds the luminosity and source for the afected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
-	var/atom/movable/A = GET_LIGHT_SOURCE
-	LAZYSET(A.affected_dynamic_lights, src, lumcount_range + 1)
-	A.vis_contents += visible_mask
-	A.update_dynamic_luminosity()
+	var/atom/movable/light_source = GET_LIGHT_SOURCE
+	LAZYSET(light_source.affected_dynamic_lights, src, lumcount_range + 1)
+	light_source.vis_contents += visible_mask
+	light_source.update_dynamic_luminosity()
 	if(directional)
 		current_holder.vis_contents += cone
 
