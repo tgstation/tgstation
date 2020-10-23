@@ -402,7 +402,9 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
 /datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	SIGNAL_HANDLER
 	setSanity(sanity + amount, override = TRUE)
 
 #undef MINOR_INSANITY_PEN

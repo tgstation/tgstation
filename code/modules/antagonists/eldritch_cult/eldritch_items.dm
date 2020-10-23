@@ -112,7 +112,7 @@
 		if(proximity_flag)
 			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 		else
-			eldritch_knowledge_datum.on_distant_eldritch_blade(target,user,proximity_flag,click_parameters)
+			eldritch_knowledge_datum.on_distant_eldritch_blade(target,user,click_parameters)
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"

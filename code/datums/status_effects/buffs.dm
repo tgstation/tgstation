@@ -385,6 +385,7 @@
 	owner.alpha = initial(owner.alpha)
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB)
 	owner.forceMove(location)
+	location = null
 	return ..()
 
 /datum/status_effect/duskndawn

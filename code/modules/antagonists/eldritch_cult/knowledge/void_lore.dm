@@ -120,7 +120,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
 	route = PATH_VOID
 
-/datum/eldritch_knowledge/void_blade_upgrade/on_distant_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/void_blade_upgrade/on_distant_eldritch_blade(atom/target, mob/user, click_parameters)
 	. = ..()
 	if(!ishuman(target) || !iscarbon(user))
 		return
@@ -194,9 +194,5 @@
 			A.start()
 	else
 		A = new /datum/weather/snow_storm(list(user_turf.z))
-		A.name = "void storm"
 		A.area_type = user_area.type
-		A.telegraph_duration =  2 SECONDS
-		A.end_duration = 60 SECONDS
-		A.protect_indoors = FALSE
 		A.telegraph()
