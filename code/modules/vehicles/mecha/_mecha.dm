@@ -576,7 +576,7 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
 	if(stepsound)
-		playsound(src, stepsound, 40, 1)
+		playsound(src,stepsound,40,1)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
 	SIGNAL_HANDLER
