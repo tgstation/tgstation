@@ -244,7 +244,7 @@
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
 	effectmod = "burning"
-	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_1
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
