@@ -1804,39 +1804,39 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * humi (required) The mob we will targeting
  */
 /datum/species/proc/apply_burn_wounds(mob/living/carbon/human/humi)
+	// If we are resistant to heat exit
 	if(HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		return
 
-	// Skin temp is very high we need to apply some burns
-	if(humi.bodytemperature > bodytemp_heat_damage_limit)
-		var/datum/wound/burn_type
-		var/burn_damage = HEAT_DAMAGE_LEVEL_1
+	// If our body temp is to low for a wound exit
+	if(humi.bodytemperature < bodytemp_heat_damage_limit)
+		return
 
-		switch(humi.bodytemperature)
-			if(0 to 400)
-				burn_type = /datum/wound/burn
-			if(401 to 600)
-				burn_type = /datum/wound/burn/moderate
-				burn_damage = HEAT_DAMAGE_LEVEL_2
-			if(601 to 2200)
-				burn_type = /datum/wound/burn/severe
-				burn_damage = HEAT_DAMAGE_LEVEL_2
-			else
-				burn_type = /datum/wound/burn/critical
-				burn_damage = HEAT_DAMAGE_LEVEL_3
+	// Lets pick a random body part and check for an existing burn
+	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
+	var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
 
-		var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
-		var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
+	// If we have an existing burn try to upgrade it
+	if(existing_burn)
+		switch(existing_burn.severity)
+			if(WOUND_SEVERITY_MODERATE)
+				if(humi.bodytemperature > 400)
+					bodypart.force_wound_upwards(/datum/wound/burn/severe)
+			if(WOUND_SEVERITY_SEVERE)
+				if(humi.bodytemperature > 2200)
+					bodypart.force_wound_upwards(/datum/wound/burn/critical)
+	// If we have no burn apply the lowest level burn
+	else
+		bodypart.force_wound_upwards(/datum/wound/burn/moderate)
 
-		//Apply the burn wounds, replace existing burns we do not want stacks
-		if(existing_burn)
-			if(existing_burn.severity < initial(burn_type.severity))
-				existing_burn.replace_wound(burn_type)
-		else
-			var/datum/wound/burn/new_burn = new burn_type
-			new_burn.apply_wound(bodypart)
+	// Burns cause some damage even if they did not upgrade
+	var/burn_damage = HEAT_DAMAGE_LEVEL_1
+	if(humi.bodytemperature > 400)
+		burn_damage = HEAT_DAMAGE_LEVEL_2
+	if(humi.bodytemperature > 2200)
+		burn_damage = HEAT_DAMAGE_LEVEL_3
 
-		humi.apply_damage(burn_damage, BURN, bodypart)
+	humi.apply_damage(burn_damage, BURN, bodypart)
 
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(datum/gas_mixture/environment, mob/living/carbon/human/H)
