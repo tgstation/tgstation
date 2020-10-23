@@ -25,6 +25,8 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/LinuxOneShot/ @Cyberboss
+/tools/tgs4_scripts/ @Cyberboss
 
 # Jared-Fogle
 
@@ -50,6 +52,8 @@
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
+/code/controllers/configuration/entries @MrStonedOne
+/config/ @MrStonedOne
 
 # ninjanomnom
 

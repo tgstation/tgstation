@@ -5,18 +5,17 @@
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-
-	var/list/items_list = list()
-	// Used to store a list of all items inside, for multi-item implants.
-	// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
-
-	var/obj/item/holder = null
-	// You can use this var for item path, it would be converted into an item on New()
+	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
+	var/obj/hand
+	/// Used to store a list of all items inside, for multi-item implants.
+	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
+	/// You can use this var for item path, it would be converted into an item on New().
+	var/obj/item/active_item
 
 /obj/item/organ/cyberimp/arm/Initialize()
 	. = ..()
-	if(ispath(holder))
-		holder = new holder(src)
+	if(ispath(active_item))
+		active_item = new active_item(src)
 
 	update_icon()
 	SetSlotFromZone()
@@ -54,8 +53,17 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_icon()
 
+/obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
+	hand = owner.hand_bodyparts[side]
+	if(hand)
+		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
+	if(hand)
+		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
 	..()
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
@@ -68,40 +76,33 @@
 		Retract()
 
 /obj/item/organ/cyberimp/arm/proc/Retract()
-	if(!holder || (holder in src))
+	if(!active_item || (active_item in src))
 		return
 
-	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
+		"<span class='notice'>[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='hear'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(0)
-
-	owner.transferItemToLoc(holder, src, TRUE)
-	holder = null
+	owner.transferItemToLoc(active_item, src, TRUE)
+	UnregisterSignal(active_item, COMSIG_ITEM_DROPPED)
+	active_item = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
 	if(!(item in src))
 		return
 
-	holder = item
+	active_item = item
+	RegisterSignal(active_item, COMSIG_ITEM_DROPPED, .proc/Retract) //Drop it to put away.
 
-	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	holder.slot_flags = null
-	holder.set_custom_materials(null)
-
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(7)
+	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	active_item.slot_flags = null
+	active_item.set_custom_materials(null)
 
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	var/hand = owner.get_empty_held_index_for_side(side)
 	if(hand)
-		owner.put_in_hand(holder, hand)
+		owner.put_in_hand(active_item, hand)
 	else
 		var/list/hand_items = owner.get_held_items_for_side(side, all = TRUE)
 		var/success = FALSE
@@ -112,24 +113,24 @@
 				failure_message += "<span class='warning'>Your [I] interferes with [src]!</span>"
 				continue
 			to_chat(owner, "<span class='notice'>You drop [I] to activate [src]!</span>")
-			success = owner.put_in_hand(holder, owner.get_empty_held_index_for_side(side))
+			success = owner.put_in_hand(active_item, owner.get_empty_held_index_for_side(side))
 			break
 		if(!success)
 			for(var/i in failure_message)
 				to_chat(owner, i)
 			return
-	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
+	owner.visible_message("<span class='notice'>[owner] extends [active_item] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
+		"<span class='notice'>You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='hear'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
-	if((organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
+	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
-	if(!holder || (holder in src))
-		holder = null
+	if(!active_item || (active_item in src))
+		active_item = null
 		if(contents.len == 1)
 			Extend(contents[1])
 		else
@@ -137,7 +138,7 @@
 			for(var/obj/item/I in items_list)
 				choice_list[I] = image(I)
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
-			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
+			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !active_item && (choice in contents))
 				// This monster sanity check is a nice example of how bad input is.
 				Extend(choice)
 	else
@@ -168,6 +169,11 @@
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
+/obj/item/organ/cyberimp/arm/gun/laser/Initialize()
+	. = ..()
+	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/gun/energy/laser/mounted) in contents
+	laserphasergun.icon = icon //No invisible laser guns kthx
+	laserphasergun.icon_state = icon_state
 
 /obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
@@ -215,6 +221,15 @@
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
+
+/obj/item/organ/cyberimp/arm/flash/Extend()
+	. = ..()
+	active_item.set_light_range(7)
+	active_item.set_light_on(TRUE)
+
+/obj/item/organ/cyberimp/arm/flash/Retract()
+	active_item.set_light_on(FALSE)
+	return ..()
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"

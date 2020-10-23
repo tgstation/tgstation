@@ -96,7 +96,7 @@
 /datum/crafting_recipe/food/spidereggsham
 	name = "Spider eggs ham"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
 		/obj/item/food/meat/cutlet/spider = 2
 	)
@@ -108,7 +108,7 @@
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 5,
+		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/meat/steak = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 2
 	)
@@ -226,4 +226,15 @@
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/lasagna
+	name = "Lasagna"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/food/spaghetti = 1
+	)
+	result = /obj/item/food/lasagna
 	subcategory = CAT_MEAT

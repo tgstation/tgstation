@@ -4,6 +4,8 @@
 #define CHARGE_FINALWARNING		1
 /// The carp rift is now fully charged.
 #define CHARGE_COMPLETED		2
+/// The darkness threshold for space dragon when choosing a color
+#define DARKNESS_THRESHOLD		0.5
 
 /**
   * # Space Dragon
@@ -79,6 +81,8 @@
 	var/datum/action/innate/space_dragon/gust_attack/gust
 	/// The innate ability to summon rifts
 	var/datum/action/innate/space_dragon/summon_rift/rift
+	/// The color of the space dragon.
+	var/chosen_color
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
@@ -91,9 +95,23 @@
 	rift = new
 	rift.Grant(src)
 
+/mob/living/simple_animal/hostile/space_dragon/Login()
+	. = ..()
+	if(!chosen_color)
+		dragon_name()
+		color_selection()
+
+
 /mob/living/simple_animal/hostile/space_dragon/Life(mapload)
 	. = ..()
 	tiredness = max(tiredness - 1, 0)
+	for(var/mob/living/consumed_mob in src)
+		if(consumed_mob.stat == DEAD)
+			continue
+		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
+		consumed_mob.forceMove(loc)
+		consumed_mob.Paralyze(50)
 	if(rifts_charged == 3 && !objective_complete)
 		victory()
 	if(riftTimer == -1)
@@ -153,11 +171,71 @@
 	empty_contents()
 	if(!objective_complete)
 		destroy_rifts()
+	add_overlay()
 	..()
 
 /mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
 	empty_contents()
 	. = ..()
+
+/**
+  * Allows space dragon to choose its own name.
+  *
+  * Prompts the space dragon to choose a name, which it will then apply to itself.
+  * If the name is invalid, will re-prompt the dragon until a proper name is chosen.
+  */
+/mob/living/simple_animal/hostile/space_dragon/proc/dragon_name()
+	var/chosen_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	if(!chosen_name)
+		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
+		dragon_name()
+		return
+	visible_message("<span class='notice'>Your name is now <span class='name'>[chosen_name]</span>, the feared Space Dragon.</span>")
+	fully_replace_character_name(null, chosen_name)
+
+/**
+  * Allows space dragon to choose a color for itself.
+  *
+  * Prompts the space dragon to choose a color, from which it will then apply to itself.
+  * If an invalid color is given, will re-prompt the dragon until a proper color is chosen.
+  */
+/mob/living/simple_animal/hostile/space_dragon/proc/color_selection()
+	chosen_color = input(src,"What would you like your color to be?","Choose Your Color", COLOR_WHITE) as color|null
+	if(!chosen_color) //redo proc until we get a color
+		to_chat(src, "<span class='warning'>Not a valid color, please try again.</span>")
+		color_selection()
+		return
+	var/temp_hsv = RGBtoHSV(chosen_color)
+	if(chosen_color == COLOR_BLACK)
+		chosen_color = COLOR_WHITE
+	else if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
+		to_chat(src, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+		color_selection()
+		return
+	add_atom_colour(chosen_color, FIXED_COLOUR_PRIORITY)
+	add_dragon_overlay()
+
+/**
+  * Adds the proper overlay to the space dragon.
+  *
+  * Clears the current overlay on space dragon and adds a proper one for whatever animation he's in.
+  */
+/mob/living/simple_animal/hostile/space_dragon/proc/add_dragon_overlay()
+	cut_overlays()
+	if(stat == DEAD)
+		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_dead")
+		overlay.appearance_flags = RESET_COLOR
+		add_overlay(overlay)
+		return
+	if(!using_special)
+		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_base")
+		overlay.appearance_flags = RESET_COLOR
+		add_overlay(overlay)
+		return
+	if(using_special)
+		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_gust")
+		overlay.appearance_flags = RESET_COLOR
+		add_overlay(overlay)
 
 /**
   * Determines a line of turfs from sources's position to the target with length range.
@@ -273,6 +351,7 @@
 	if(stat != DEAD)
 		icon_state = "spacedragon"
 	using_special = FALSE
+	add_dragon_overlay()
 
 /**
   * Handles Space Dragon's temporary empowerment after boosting a rift.
@@ -284,11 +363,11 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_empowered)
 	if(is_empowered)
 		fully_heal()
-		color = "#FF0000"
+		add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
 		set_varspeed(-0.5)
 		addtimer(CALLBACK(src, .proc/rift_empower, FALSE), 300)
 	else
-		color = "#FFFFFF"
+		remove_filter("anger_glow")
 		set_varspeed(0)
 
 /**
@@ -323,6 +402,10 @@
 		return
 	pixel_y = 0
 	icon_state = "spacedragon_gust_2"
+	cut_overlays()
+	var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_gust_2")
+	overlay.appearance_flags = RESET_COLOR
+	add_overlay(overlay)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 	var/gust_locs = spiral_range_turfs(3, get_turf(src))
 	var/list/hit_things = list()
@@ -378,6 +461,7 @@
 		return
 	S.using_special = TRUE
 	S.icon_state = "spacedragon_gust"
+	S.add_dragon_overlay()
 	S.useGust(0)
 
 /datum/action/innate/space_dragon/summon_rift
@@ -480,9 +564,13 @@
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
 			H.color = "#0000FF"
 
-	// If we're fully charged, just start mass spawning carp.
-	if(charge_state == CHARGE_COMPLETED && DT_PROB(1.25, delta_time))
-		new /mob/living/simple_animal/hostile/carp(loc)
+	// If we're fully charged, just start mass spawning carp and move around.
+	if(charge_state == CHARGE_COMPLETED)
+		if(DT_PROB(1.25, delta_time))
+			new /mob/living/simple_animal/hostile/carp(loc)
+		if(DT_PROB(1.5, delta_time))
+			var/rand_dir = pick(GLOB.cardinals)
+			Move(get_step(src, rand_dir), rand_dir)
 		return
 
 	// Increase time trackers and check for any updated states.
@@ -577,3 +665,4 @@
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING
 #undef CHARGE_COMPLETED
+#undef DARKNESS_THRESHOLD

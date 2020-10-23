@@ -105,6 +105,8 @@
 #define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
 #define ADMIN_PUNISHMENT_DOCK "Dock Pay"
 #define ADMIN_PUNISHMENT_BREAD "Bread"
+/// Applies [/datum/component/omen] to the target, optionally permanently.
+#define ADMIN_PUNISHMENT_BADLUCK "Bad Luck"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
