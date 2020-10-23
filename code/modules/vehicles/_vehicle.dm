@@ -9,19 +9,28 @@
 	anchored = FALSE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
+	///Maximum amount of passengers plus drivers
 	var/max_occupants = 1
+	////Maximum amount of drivers
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
+	///The typepath for the key we use to turn on this car if it has one
 	var/key_type
+	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	var/key_type_exact = TRUE		//can subtypes work
-	var/canmove = TRUE //If this is false the vehicle cant drive. (thanks for making this actually functional kevinz :^) )
-	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
-	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
+	///Whether the key must be strict type and not a subtype to put it in the car
+	var/key_type_exact = TRUE
+	/// Whether the vehicle os currently able to move
+	var/canmove = TRUE
+	///Whether the occupants will bump into a door when the car bumps it
+	var/emulate_door_bumps = TRUE
+	///Whether we handle driving normally or through other things like riding components
+	var/default_driver_move = TRUE
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
 

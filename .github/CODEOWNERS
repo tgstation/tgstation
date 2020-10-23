@@ -25,6 +25,8 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/LinuxOneShot/ @Cyberboss
+/tools/tgs4_scripts/ @Cyberboss
 
 # Jared-Fogle
 

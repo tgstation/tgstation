@@ -123,7 +123,7 @@
 /obj/machinery/stasis/post_buckle_mob(mob/living/L)
 	if(!can_be_occupant(L))
 		return
-	occupant = L
+	set_occupant(L)
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
@@ -131,7 +131,7 @@
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
-		occupant = null
+		set_occupant(null)
 	update_icon()
 
 /obj/machinery/stasis/process()

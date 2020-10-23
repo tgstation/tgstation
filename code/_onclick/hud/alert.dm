@@ -88,7 +88,7 @@
 	qdel(alert)
 
 /obj/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -315,6 +315,26 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
 
+/obj/screen/alert/highfive
+	icon_state = "default"
+	var/mob/living/carbon/giver
+	var/obj/item/slapper/slapper_item
+
+/obj/screen/alert/highfive/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/slapper/slap)
+	name = "[giver] is offering a high-five"
+	desc = "[giver] wants a high-five! Click this alert to take it."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(slap)
+	src.slapper_item = slap
+	src.giver = giver
+
+/obj/screen/alert/highfive/Click(location, control, params)
+	. = ..()
+	var/datum/status_effect/high_fiving/high_five_effect = giver.has_status_effect(STATUS_EFFECT_HIGHFIVE)
+	if(high_five_effect)
+		high_five_effect.we_did_it(owner)
+
 /// Gives the player the option to succumb while in critical condition
 /obj/screen/alert/succumb
 	name = "Succumb"
@@ -377,7 +397,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/Initialize()
 	. = ..()
-	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /obj/screen/alert/bloodsense/Destroy()

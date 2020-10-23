@@ -469,10 +469,11 @@
 	var/station_vault = 0
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
-	for(var/i in SSeconomy.bank_accounts)
-		if(istype(i, /datum/bank_account/department) || istype(i, /datum/bank_account/remote))
+	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	for(var/i in SSeconomy.bank_accounts_by_id)
+		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
+		if(typecache_bank[current_acc.type])
 			continue
-		var/datum/bank_account/current_acc = i
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
