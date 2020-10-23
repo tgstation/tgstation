@@ -39,7 +39,7 @@
 		translate_factor = scale_factor - 2
 
 		// make it slightly invisible so we don't obstruct the full game view
-		docking_alpha = 100
+		docking_alpha = 80
 		layer = ABOVE_LIGHTING_LAYER
 		plane = ABOVE_LIGHTING_PLANE
 	else
@@ -149,6 +149,8 @@
 
 	vis_contents = projected_turfs
 	forceMove(bottom_left)
+
+	to_chat(world, "Projector: [ADMIN_JMP(src)]")
 
 	if (inbound)
 		animate(src, transform = undock_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
