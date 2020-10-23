@@ -18,8 +18,8 @@
 	nuke_chat()
 
 	// Failed to fix
-	action = alert(src, "Did that work?", "", "No, thanks anyways", "Switch to old UI")
-	if (action == "Switch to old UI")
+	action = alert(src, "Did that work?", "", "Yes", "No, switch to old ui")
+	if (action == "No, switch to old ui")
 		winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
 		winset(src, "browseroutput", "is-disabled=1;is-visible=0")
 	log_tgui(src, "Failed to fix.",
