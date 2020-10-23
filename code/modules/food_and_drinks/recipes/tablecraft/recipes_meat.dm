@@ -238,6 +238,17 @@
 	result = /obj/item/food/meatclown
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/lasagna
+	name = "Lasagna"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/food/spaghetti = 1
+	)
+	result = /obj/item/food/lasagna
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/gumbo
 	name = "Black eyed gumbo"
 	reqs = list(
