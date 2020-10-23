@@ -1720,9 +1720,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
-			if(bodytemp_heat_damage_limit to (bodytemp_heat_damage_limit + 100))
+			if(0 to 461)
 				humi.throw_alert("temp", /obj/screen/alert/hot, 1)
-			if((bodytemp_heat_damage_limit + 100) to (bodytemp_heat_damage_limit + 500))
+			if(460 to 700)
 				humi.throw_alert("temp", /obj/screen/alert/hot, 2)
 			else
 				humi.throw_alert("temp", /obj/screen/alert/hot, 3)
@@ -1736,7 +1736,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
 		switch(humi.bodytemperature)
-			if(200 to bodytemp_cold_damage_limit)
+			if(201 to bodytemp_cold_damage_limit)
 				humi.throw_alert("temp", /obj/screen/alert/cold, 1)
 			if(120 to 200)
 				humi.throw_alert("temp", /obj/screen/alert/cold, 2)
@@ -1757,11 +1757,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  */
 /datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi)
 	if(humi.bodytemperature > bodytemp_heat_damage_limit)
-		humi.heat_exposure_stacks = min(humi.heat_exposure_stacks + 1, 1000)
+		humi.heat_exposure_stacks = min(humi.heat_exposure_stacks + 1, 40)
 	else
-		humi.heat_exposure_stacks -= 5
+		humi.heat_exposure_stacks = max(humi.heat_exposure_stacks - 4, 0)
 
-	if(humi.heat_exposure_stacks > (400 + rand(0, 900)))
+	if(humi.heat_exposure_stacks > (10 + rand(0, 20)))
 		apply_burn_wounds(humi)
 		humi.heat_exposure_stacks = 0
 
@@ -1788,7 +1788,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Apply some burn damage to the body
 	if(humi.coretemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		switch(humi.coretemperature)
-			if(200 to bodytemp_cold_damage_limit)
+			if(201 to bodytemp_cold_damage_limit)
 				humi.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * humi.physiology.cold_mod, BURN)
 			if(120 to 200)
 				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * humi.physiology.cold_mod, BURN)
@@ -1810,24 +1810,33 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Skin temp is very high we need to apply some burns
 	if(humi.bodytemperature > bodytemp_heat_damage_limit)
 		var/datum/wound/burn_type
+		var/burn_damage = HEAT_DAMAGE_LEVEL_1
+
 		switch(humi.bodytemperature)
-			if(bodytemp_heat_damage_limit to (bodytemp_heat_damage_limit + 100))
+			if(0 to 400)
 				burn_type = /datum/wound/burn
-			if((bodytemp_heat_damage_limit + 100) to (bodytemp_heat_damage_limit + 200))
+			if(401 to 600)
 				burn_type = /datum/wound/burn/moderate
-			if((bodytemp_heat_damage_limit + 200) to (bodytemp_heat_damage_limit + 800))
+				burn_damage = HEAT_DAMAGE_LEVEL_2
+			if(601 to 2200)
 				burn_type = /datum/wound/burn/severe
+				burn_damage = HEAT_DAMAGE_LEVEL_2
 			else
 				burn_type = /datum/wound/burn/critical
+				burn_damage = HEAT_DAMAGE_LEVEL_3
 
 		var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
-		var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart
+		var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
+
+		//Apply the burn wounds, replace existing burns we do not want stacks
 		if(existing_burn)
 			if(existing_burn.severity < initial(burn_type.severity))
 				existing_burn.replace_wound(burn_type)
 		else
 			var/datum/wound/burn/new_burn = new burn_type
 			new_burn.apply_wound(bodypart)
+
+		humi.apply_damage(burn_damage, BURN, bodypart)
 
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(datum/gas_mixture/environment, mob/living/carbon/human/H)

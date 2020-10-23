@@ -173,7 +173,7 @@
 	var/core_temp = ""
 	if(ishuman(patient))
 		var/mob/living/carbon/human/humi = patient
-		core_temp = {"<font color="[patient.coretemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />"}
+		core_temp = {"<font color="[humi.coretemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [humi.bodytemperature-T0C]&deg;C ([humi.bodytemperature*1.8-459.67]&deg;F)</font><br />"}
 	return {"<font color="[patient.health > 50 ? "#3d5bc3" : "#c51e1e"]"><b>Health:</b> [patient.stat > 1 ? "[t1]" : "[patient.health]% ([t1])"]</font><br />
 				[core_temp]
 				<font color="[patient.bodytemperature > 300 ? "#3d5bc3" : "#c51e1e"]"><b>Body Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />
