@@ -568,3 +568,20 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/godfather
+	results = list(/datum/reagent/consumable/ethanol/godfather = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/whiskey = 1)
+
+/datum/chemical_reaction/godmother
+	results = list(/datum/reagent/consumable/ethanol/godmother = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/vodka = 1)
+
+/datum/chemical_reaction/amaretto_alexander
+	results = list(/datum/reagent/consumable/ethanol/amaretto_alexander = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/creme_de_cacao = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/ginger_amaretto
+	results = list(/datum/reagent/consumable/ethanol/ginger_amaretto = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/sol_dry = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/lemonjuice = 1)
+	

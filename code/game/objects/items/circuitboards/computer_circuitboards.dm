@@ -470,11 +470,6 @@
 
 //Supply
 
-/obj/item/circuitboard/computer/bounty
-	name = "\improper Nanotrasen Bounty Console (Computer Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/computer/bounty
-
 /obj/item/circuitboard/computer/cargo
 	name = "Supply Console (Computer Board)"
 	icon_state = "supply"

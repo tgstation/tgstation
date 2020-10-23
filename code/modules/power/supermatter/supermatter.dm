@@ -53,7 +53,7 @@
 #define MOLE_HEAT_PENALTY 350                 //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
 //Along with damage_penalty_point, makes flux anomalies.
 /// The cutoff for the minimum amount of power required to trigger the crystal invasion delamination event.
-#define EVENT_POWER_PENALTY_THRESHOLD 2500
+#define EVENT_POWER_PENALTY_THRESHOLD 4500
 #define POWER_PENALTY_THRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
