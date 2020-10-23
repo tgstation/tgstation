@@ -319,7 +319,7 @@
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
-	regen_ticks_needed = 100 // ticks every 2 seconds, 200 seconds, so roughly 3.33 minutes default
+	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/critical
@@ -343,7 +343,7 @@
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
-	regen_ticks_needed = 200 // ticks every 2 seconds, 400 seconds, so roughly 6.66 minutes default
+	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)
