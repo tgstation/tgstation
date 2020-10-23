@@ -150,8 +150,6 @@
 	vis_contents = projected_turfs
 	forceMove(bottom_left)
 
-	to_chat(world, "Projector: [ADMIN_JMP(src)]")
-
 	if (inbound)
 		animate(src, transform = undock_transform, easing = CIRCULAR_EASING | EASE_OUT, alpha = docking_alpha, time = move_animation_time)
 		animate(transform = docked_transform, alpha = 255, time = dock_animation_time)
