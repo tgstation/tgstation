@@ -164,8 +164,8 @@
 /datum/component/overlay_lighting/proc/get_new_turfs()
 	if(!current_holder)
 		return
-	var/atom/movable/A = GET_LIGHT_SOURCE
-	for(var/turf/lit_turf in view(lumcount_range, get_turf(A)))
+	var/atom/movable/light_source = GET_LIGHT_SOURCE
+	for(var/turf/lit_turf in view(lumcount_range, get_turf(light_source)))
 		lit_turf.dynamic_lumcount += lum_power
 		LAZYADD(affected_turfs, lit_turf)
 
