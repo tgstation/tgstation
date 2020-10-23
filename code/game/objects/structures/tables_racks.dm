@@ -88,8 +88,10 @@
 				user.stop_pulling()
 	return ..()
 
-/obj/structure/table/attack_tk()
-	return FALSE
+
+/obj/structure/table/attack_tk(mob/user)
+	return
+
 
 /obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
