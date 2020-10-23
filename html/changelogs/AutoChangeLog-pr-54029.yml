@@ -1,8 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Completing a bounty now rewards a hardlight, bounty cube that must be exported for your payout."
-  - rscdel: "Cargo no longer has static, roundstart bounties."
-  - rscdel: "In addition, the Bounty App and Bounty Console have been removed."
-  - balance: "Civilian bounties have a higher payout now, but require larger quantities of their target object, as before."
-  - balance: "Cargo Tech, QM, and HOP bounties are now fully random bounties, as opposed to assistant bounties."

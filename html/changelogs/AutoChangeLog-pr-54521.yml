@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - rscadd: "Flashlights now make a sound whenever they're toggled on or off"

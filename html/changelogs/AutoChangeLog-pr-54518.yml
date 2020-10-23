@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "fixed dynamic lighting not counting for things such as emote visibility"
