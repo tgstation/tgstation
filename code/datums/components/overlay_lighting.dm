@@ -330,6 +330,8 @@
 	var/matrix/transform = new
 	transform.Translate(-offset, -offset)
 	visible_mask.transform = transform
+	if(directional)
+		cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
 
