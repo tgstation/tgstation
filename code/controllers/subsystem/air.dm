@@ -364,11 +364,9 @@ SUBSYSTEM_DEF(air)
 			//TODO: Make this whole chain suck less ass.
 			T.excited_group.garbage_collect()
 
-//Might need to add a ticker reset for all sources of this except excited groups, we'll see
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		if(T.excited)
-			T.significant_share_ticker = 0 //Reset the ticker, need to think about this
 			if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
 				T.excited_group.garbage_collect(FALSE) //Nuke it
 			return
@@ -376,11 +374,6 @@ SUBSYSTEM_DEF(air)
 		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = TRUE
-		//TEST THIS HEAVILY
-		//PROFILE ALL PERUMTATIONS
-		//TEST TEST TEST MOTHERFUCKER
-		//We really ought to reset the ticker so we get accurate numbers, but it's slower, much slower
-		T.significant_share_ticker = 0
 		active_turfs += T
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun += T
