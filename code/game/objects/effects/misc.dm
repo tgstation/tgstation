@@ -96,5 +96,4 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/abstract/directional_lighting
-	light_system = MOVABLE_LIGHT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

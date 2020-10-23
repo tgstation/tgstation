@@ -419,7 +419,6 @@
 #include "code\datums\components\creamed.dm"
 #include "code\datums\components\deadchat_control.dm"
 #include "code\datums\components\dejavu.dm"
-#include "code\datums\components\directional_lighting.dm"
 #include "code\datums\components\earprotection.dm"
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\embedded.dm"

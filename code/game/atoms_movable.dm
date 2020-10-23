@@ -75,7 +75,7 @@
 	if(light_system == MOVABLE_LIGHT)
 		AddComponent(/datum/component/overlay_lighting)
 	if(light_system == MOVABLE_LIGHT_DIRECTIONAL)
-		AddComponent(/datum/component/directional_lighting)
+		AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 
 
 /atom/movable/Destroy(force)
