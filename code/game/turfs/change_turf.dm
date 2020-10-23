@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			assemble_baseturfs(fake_turf_type)
 			if(!length(baseturfs))
 				baseturfs = list(baseturfs)
-			baseturfs = baseturfs_string_list((baseturfs - baseturfs & GLOB.blacklisted_automated_baseturfs) + old_baseturfs, src)
+			baseturfs = baseturfs_string_list((baseturfs - (baseturfs & GLOB.blacklisted_automated_baseturfs)) + old_baseturfs, src)
 			return
 		else if(!length(new_baseturfs))
 			new_baseturfs = list(new_baseturfs, fake_turf_type)
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(!length(baseturfs))
 			baseturfs = list(baseturfs)
 		if(!istype(src, /turf/closed))
-			new_baseturfs = (type + new_baseturfs)
+			new_baseturfs = list(type) + new_baseturfs
 		baseturfs = baseturfs_string_list(baseturfs + new_baseturfs, src)
 		return ChangeTurf(fake_turf_type, null, flags)
 	if(!length(baseturfs))
