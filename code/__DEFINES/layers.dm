@@ -20,7 +20,8 @@
 #define WALL_PLANE -5
 #define GAME_PLANE -4
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
-#define FRILL_SHADOW_PLANE -3
+/// Doors, windows, frill shadow.
+#define UNDER_FRILL_PLANE -3
 #define FRILL_PLANE -2
 #define FRILL_PLANE_RENDER_TARGET "FRILL_PLANE"
 #define OVER_FRILL_PLANE -1

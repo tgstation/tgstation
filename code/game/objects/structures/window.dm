@@ -3,6 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = TRUE
+	plane = UNDER_FRILL_PLANE
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing

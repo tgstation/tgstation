@@ -7,6 +7,7 @@
 	opacity = TRUE
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
+	plane = UNDER_FRILL_PLANE
 	layer = OPEN_DOOR_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	max_integrity = 350

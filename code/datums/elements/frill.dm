@@ -64,5 +64,5 @@ GLOBAL_VAR_INIT(frill_shadow_object, new /atom/movable/visual/frill_shadow(null)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = NONE
 	layer = ABOVE_MOB_LAYER
-	plane = FRILL_SHADOW_PLANE
+	plane = UNDER_FRILL_PLANE
 	vis_flags = VIS_UNDERLAY
