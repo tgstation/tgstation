@@ -30959,6 +30959,7 @@
 	},
 /obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "toxinsdriver";
+	range = 6;
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
