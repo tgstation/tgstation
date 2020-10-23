@@ -161,8 +161,9 @@
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/proc/lick_wounds(mob/living/carbon/human/user)
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
-	for(var/datum/disease/iter_disease in victim.diseases)
-		if((iter_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (iter_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+	for(var/i in victim.diseases)
+		var/datum/disease/iter_disease = i
+		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 			continue
 		user.ForceContractDisease(iter_disease)
 
