@@ -161,8 +161,8 @@
 	///Checks if the user has started the machine
 	var/fusion_started = FALSE
 	var/next_slowprocess = 0
-	var/damage = 0
-	var/damage_archived = 0
+	var/critical_threshold_proximity = 0
+	var/critical_threshold_proximity_archived = 0
 	var/melting_point = 900
 	var/integrity = 400
 	///Stores the informations of the interface machine
@@ -475,13 +475,13 @@
 
 	if(!check_fuel())
 		return
-	damage_archived = damage
-	damage = max(damage + max((round((internal_fusion.total_moles() * 1e16 + internal_fusion.temperature) / 1e16, 1) - 1500) / 200, 0), 0)
+	critical_threshold_proximity_archived = critical_threshold_proximity
+	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e16 + internal_fusion.temperature) / 1e16, 1) - 1500) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() < 500 && power_level < 4)
-		damage = max(damage + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
 
-	damage = min(damage_archived + (DAMAGE_HARDCAP * melting_point), damage)
+	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_HARDCAP * melting_point), critical_threshold_proximity)
 
 	check_power_use()
 
@@ -572,12 +572,12 @@
 								scaled_m_freon * 0.75, \
 								0.25, 100)
 	///Minimum 0.25, this value is used to modify the behaviour of the energy emission based on the gases present in the mix
-	var/heat_modifier = 		scaled_hydrogen * 1.15 + \
+	var/heat_modifier = clamp(	scaled_hydrogen * 1.15 + \
 								scaled_helium * 1.05 + \
 								scaled_m_plasma * 1.25 - \
 								scaled_m_nitrogen * 0.75 - \
-								scaled_m_freon * 0.95
-	heat_modifier = clamp(heat_modifier, 0.25, 100)
+								scaled_m_freon * 0.95, \
+								0.25, 100)
 	///Between 0.005 and 1000, this value modify the radiation emission of the reaction, higher values increase the emission
 	var/radiation_modifier = clamp(	scaled_helium * 0.55 - \
 									scaled_m_freon * 1.15 - \
