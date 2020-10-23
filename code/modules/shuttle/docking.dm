@@ -50,6 +50,11 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
+	// prevent ripple gibbing after this point
+	for(var/I in ripples)
+		var/obj/effect/abstract/ripple/R = I
+		R.can_gib = FALSE
+
 	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation)
 	if(.)
 		remove_ripples()
