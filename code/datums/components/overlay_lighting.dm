@@ -419,7 +419,7 @@
 	var/turf/scanning = get_turf(current_holder)
 	for(var/i in 1 to final_distance)
 		var/turf/next_turf = get_step(scanning, current_direction)
-		if(isnull(next_turf ) || IS_OPAQUE_TURF(next_turf))
+		if(isnull(next_turf) || IS_OPAQUE_TURF(next_turf))
 			break
 		scanning = next_turf
 	directional_atom.forceMove(scanning)
