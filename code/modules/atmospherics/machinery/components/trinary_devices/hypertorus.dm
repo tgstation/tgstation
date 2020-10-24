@@ -171,10 +171,7 @@
 	///Checks if the user has started the machine
 	var/fusion_started = FALSE
 	var/next_slowprocess = 0
-	var/critical_threshold_proximity = 0
-	var/critical_threshold_proximity_archived = 0
-	var/melting_point = 900
-	var/integrity = 400
+
 	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
 	///Stores the information of the moderator input
@@ -258,13 +255,11 @@
 	///Used for debug, maybe will be ported into the final phase
 	COOLDOWN_DECLARE(hypertorus_reactor)
 
-	///The amount of damage we have currently
-	var/damage = 0
-	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
-	var/damage_archived = 0
-	///Our "Shit is no longer fucked" message. We send it when damage is less then damage_archived
+	var/critical_threshold_proximity = 0
+	var/critical_threshold_proximity_archived = 0
+	///Our "Shit is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
 	var/safe_alert = "Main containment field returning to safe operating parameters."
-	///The point at which we should start sending messeges about the damage to the engi channels.
+	///The point at which we should start sending messeges about the critical_threshold_proximity to the engi channels.
 	var/warning_point = 50
 	///The alert we send when we've reached warning_point
 	var/warning_alert = "Danger! Magnetic containment field faltering!"
@@ -273,7 +268,7 @@
 	///The alert we send when we've reached emergency_point
 	var/emergency_alert = "HYPERTORUS MELTDOWN IMMINENT."
 	///The point at which we melt
-	var/explosion_point = 900
+	var/melting_point = 900
 	///Boolean used for logging if we've passed the emergency point
 	var/has_reached_emergency = FALSE
 	///Time in 1/10th of seconds since the last sent warning
@@ -334,6 +329,7 @@
 		for(var/corner in corners)
 			QDEL_NULL(corner)
 	QDEL_NULL(radio)
+	return..()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 90), turn(dir, 270))
@@ -520,25 +516,25 @@
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_integrity()
-	var/integrity = damage / explosion_point
+	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_alert()
-	if(damage < warning_point)
+	if(critical_threshold_proximity < warning_point)
 		return
 	if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_TIME_DELAY)
 		alarm()
 
-		if(damage > emergency_point)
+		if(critical_threshold_proximity > emergency_point)
 			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
-		else if(damage >= damage_archived) // The damage is still going up
+		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
 			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
 
@@ -547,7 +543,7 @@
 			lastwarning = REALTIMEOFDAY
 
 	//Melt(To be done)
-/*	if(damage > explosion_point)
+/*	if(critical_threshold_proximity > melting_point)
 		countdown()*/
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
@@ -575,10 +571,10 @@
 	if(!fusion_started)
 		return
 
-	//We play delam/neutral sounds at a rate determined by power and damage
+	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
 	if(last_accent_sound < world.time && prob(20))
-		var/aggression = min(((damage / 800) * ((power_level + 1) / 5)), 1.0) * 100
-		if(damage >= 300)
+		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level + 1) / 5)), 1.0) * 100
+		if(critical_threshold_proximity >= 300)
 			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 		else
 			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
@@ -598,7 +594,7 @@
 	if(!check_fuel())
 		return
 	critical_threshold_proximity_archived = critical_threshold_proximity
-	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e16 + internal_fusion.temperature) / 1e16, 1) - 1500) / 200, 0), 0)
+	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e14 + internal_fusion.temperature) / 1e14, 1) - 1500) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() < 500 && power_level < 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
