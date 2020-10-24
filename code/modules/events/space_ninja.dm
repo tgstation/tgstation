@@ -2,7 +2,7 @@
 	name = "Spawn Space Ninja"
 	typepath = /datum/round_event/ghost_role/space_ninja
 	max_occurrences = 1
-	weight = 15
+	weight = 10
 	earliest_start = 20 MINUTES
 	min_players = 20
 
