@@ -31,7 +31,18 @@
 		return NETWORK_ERROR_NOT_ON_NETWORK
 	return SSnetworks.transmit(data)
 
-
+/**
+  * # /datum/component/ntnet_interface
+  *
+  * This component connects a obj/datum to the station network.
+  *
+  * Anything can be connected to the station network.  Any obj can auto connect as long as its network_id
+  * var is set before the parent new is called.  This allows map objects to be connected.  Technically the
+  * component only handles getting you on the network while SSnetwork and datum/ntnet does all the real work.
+  * There are quite a few stack_traces in here.  This is because error checking should be done before this component is
+  * added.  Also, there never should be a component that has no network.  If it needs a network assign it to LIMBO
+  *
+  */
 /datum/component/ntnet_interface
 	var/hardware_id = null				// text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
 	var/id_tag = null  					// named tag, mainly used to look up mapping objects
@@ -39,6 +50,15 @@
 	var/list/registered_sockets = list()// list of ports opened up on devices
 	var/list/alias = list() 			// if we live in more than one network branch
 
+/**
+  * Initialize for the interface
+  *
+  * Assigns a hardware id and gets your object onto the network
+  *
+  * Arguments:
+  * * network_name - Fully qualified network id of the network we are joining
+  * * network_tag - The objects id_tag.  Used for finding the device at mapload time
+  */
 /datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
 	if(network_name == null || !istext(network_name))
 		stack_trace("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
@@ -56,7 +76,6 @@
 	hardware_id = SSnetworks.get_next_HID()
 	id_tag = network_tag
 	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
-
 
 	network = SSnetworks.create_network_simple(network_name)
 	network.add_interface(src)
