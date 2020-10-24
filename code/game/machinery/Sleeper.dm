@@ -32,7 +32,7 @@
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		component_parts -= circuit
+		LAZYREMOVE(component_parts, circuit)
 		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
@@ -83,7 +83,7 @@
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "[enter_message]")
+			to_chat(mob_occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
 	. = ..()
@@ -92,14 +92,13 @@
 	if(is_operational && occupant)
 		open_machine()
 
+
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
-			return
+
 	close_machine(target)
+
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -207,8 +206,10 @@
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/mob/living/mob_occupant = occupant
 	check_nap_violations()
 	switch(action)
@@ -267,12 +268,18 @@
 
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts
+
 	component_parts = list()
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 2)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/sleeper/old

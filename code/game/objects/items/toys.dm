@@ -460,6 +460,10 @@
 /obj/item/dualsaber/toy/IsReflect() //Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
 
+/obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
+	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
+	user.adjustStaminaLoss(25)
+
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
@@ -599,6 +603,7 @@
 	icon_state = "demonomicon"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
@@ -607,16 +612,6 @@
 		"<span class='notice'>[user] presses the button on \the [src].</span>",
 		"<span class='notice'>You press the button on \the [src].</span>",
 		"<span class='notice'>You hear a soft click.</span>")
-
-/obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/fake_devil/devil = new
-	var/list/messages = list()
-	messages += "Some fun facts about: [devil.truename]"
-	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
-	messages += "[GLOB.lawlorify[LORE][devil.obligation]]"
-	messages += "[GLOB.lawlorify[LORE][devil.ban]]"
-	messages += "[GLOB.lawlorify[LORE][devil.banish]]"
-	return messages
 
 /obj/item/toy/talking/owl
 	name = "owl action figure"
@@ -654,6 +649,15 @@
 	var/card_throw_range = 7
 	var/list/card_attack_verb_continuous = list("attacks")
 	var/list/card_attack_verb_simple = list("attack")
+
+
+/obj/item/toy/cards/Initialize()
+	. = ..()
+	if(card_attack_verb_continuous)
+		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
+	if(card_attack_verb_simple)
+		card_attack_verb_simple = string_list(card_attack_verb_simple)
+
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
@@ -853,8 +857,8 @@
 	newobj.card_throwforce = sourceobj.card_throwforce
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
@@ -973,10 +977,8 @@
 	newobj.throw_speed = newobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.throw_range = newobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
-	newobj.attack_verb_simple = newobj.card_attack_verb_simple
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
@@ -1087,8 +1089,9 @@
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
-				sleep(8) // Short delay to match up with the explosion sound
-				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
+				// Short delay to match up with the explosion sound
+				// Shakes player camera 2 squares for 1 second.
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/shake_camera, M, 2, 1), 0.8 SECONDS)
 
 	else
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
@@ -1476,8 +1479,7 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 300)
 		user.visible_message("<span class='notice'>[user] adjusts the dial on [src].</span>")
-		sleep(5)
-		playsound(src, 'sound/items/radiostatic.ogg', 50, FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>The dial on [src] jams up</span>")
 		return
@@ -1492,5 +1494,4 @@
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		sleep(5)
-		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)

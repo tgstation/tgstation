@@ -137,7 +137,8 @@ All the important duct code:
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
-	if(duct_layer != DUCT_LAYER_DEFAULT) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+
+	if(duct_layer != P.ducting_layer)
 		return FALSE
 
 	if(!P.active)

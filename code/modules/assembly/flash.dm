@@ -1,4 +1,12 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
+
+/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
+#define DEVIATION_NONE 0
+/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
+#define DEVIATION_PARTIAL 1
+/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
+#define DEVIATION_FULL 2
+
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -133,19 +141,16 @@
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
 
-
-
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
 
-	var/deviation = calculate_deviation(M,user)
+	var/deviation = calculate_deviation(M, user ? user : src)
 
 	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
 
 	//If you face away from someone they shouldnt notice any effects.
-	if(deviation == 2 && !converter)
+	if(deviation == DEVIATION_FULL && !converter)
 		return
-
 
 	if(targeted)
 		if(M.flash_act(1, 1))
@@ -155,7 +160,7 @@
 				// Special check for if we're a revhead. Special cases to attempt conversion.
 				if(converter)
 					// Did we try to flash them from behind?
-					if(deviation == 2)
+					if(deviation == DEVIATION_FULL)
 						// If we did and we're on help intent, fail with a feedback message and return.
 						if(converter.owner.current.a_intent == INTENT_HELP)
 							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
@@ -163,7 +168,7 @@
 							return
 						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
 						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
-						deviation = 1
+						deviation = DEVIATION_PARTIAL
 					// Convert them. Terribly.
 					terrible_conversion_proc(M, user)
 					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
@@ -185,21 +190,45 @@
   *
   *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
   * Arguments:
-  * * M - Victim
-  * * user - Attacker
+  * * victim - Victim
+  * * attacker - Attacker
   */
-/obj/item/assembly/flash/proc/calculate_deviation(mob/living/carbon/M, mob/user)
-	var/dir1 = M.dir
-	var/dir2 = turn(user.dir,180)
-	//Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
-	//What we actually check is we check if the inverted vector of the second mob is equal to the vector of the first one which indicates they they are looking in the same line
-	//The second check makes sure that the first user is actually facing the mob, since the first check will fail at it's job when the 2 mobs face away from each other.
-	if(dir1 == dir2 && get_dir(M,user) == dir1)
-		return 0
-	else if((turn(dir1,90) == dir2 || turn(dir1,-90) == dir2) || M.loc == user.loc)
-		return 1
-	else if(turn(dir1,180) == dir2)
-		return 2
+/obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
+	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
+	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
+	// In short, combat spinning is silly and you should feel silly for doing it.
+	if(victim.flags_1 & IS_SPINNING_1)
+		return DEVIATION_NONE
+
+	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
+	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
+	if(victim.loc == attacker.loc)
+		return DEVIATION_PARTIAL
+
+	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
+	var/victim_to_attacker = get_dir(victim, attacker)
+	// The victim's dir is necessarily a cardinal value.
+	var/victim_dir = victim.dir
+
+	// - - -
+	// - V - Victim facing south
+	// # # #
+	// Attacker within 45 degrees of where the victim is facing.
+	if(victim_dir & victim_to_attacker)
+		return DEVIATION_NONE
+
+	// # # #
+	// - V - Victim facing south
+	// - - -
+	// Attacker at 135 or more degrees of where the victim is facing.
+	if(victim_dir & REVERSE_DIR(victim_to_attacker))
+		return DEVIATION_FULL
+
+	// - - -
+	// # V # Victim facing south
+	// - - -
+	// Attacker lateral to the victim.
+	return DEVIATION_PARTIAL
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -301,7 +330,7 @@
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	if(I && I.owner)
+	if(I?.owner)
 		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
 	overheat = TRUE
@@ -309,7 +338,7 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		if(I && I.owner)
+		if(I?.owner)
 			to_chat(I.owner, "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>")
 		return FALSE
 	overheat = TRUE
@@ -368,3 +397,8 @@
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+
+#undef CONFUSION_STACK_MAX_MULTIPLIER
+#undef DEVIATION_NONE
+#undef DEVIATION_PARTIAL
+#undef DEVIATION_FULL

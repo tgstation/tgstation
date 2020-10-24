@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return

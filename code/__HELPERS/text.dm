@@ -71,9 +71,10 @@
 /**
   * Perform a whitespace cleanup on the text, similar to what HTML renderers do
   *
-  * This is useful if you want to better predict how text is going to look like when displaying it to a user
+  * This is useful if you want to better predict how text is going to look like when displaying it to a user.
   * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
-  * HTML5 defines whitespace pretty much exactly like regex defines the \s group, [ \t\r\n\f].
+  * HTML5 defines whitespace pretty much exactly like regex defines the `\s` group, `[ \t\r\n\f]`.
+  *
   * Arguments:
   * * t - The text to "render"
   */
@@ -916,3 +917,18 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/prefix = prefixes[prefix_index]
 	return "[coefficient] [prefix][unit]"
+
+/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
+/proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
+	var/list/out = list()
+	var/static/list/whitespace = list(" ", "\n", "\t")
+	for(var/i in 1 to length(original))
+		var/char = original[i]
+		if(!replace_whitespace && (char in whitespace))
+			out += char
+			continue
+		if(replace_letters_only && (!ISINRANGE(char, 65, 90) && !ISINRANGE(char, 97, 122)))
+			out += char
+			continue
+		out += prob(replaceprob)? pick(replacementchars) : char
+	return out.Join("")

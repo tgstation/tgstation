@@ -18,7 +18,8 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple, TRUE),
 		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold, TRUE),
 		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w, TRUE),
-		new /datum/pipe_info/pipe("Layer Manifold",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
+		new /datum/pipe_info/pipe("Layer Adapter",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
+		new /datum/pipe_info/pipe("Multi-Deck Adapter",	/obj/machinery/atmospherics/pipe/multiz, TRUE),
 	),
 	"Devices" = list(
 		new /datum/pipe_info/pipe("Connector",			/obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
@@ -214,6 +215,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	/// Bitflags for upgrades
+	var/upgrade_flags
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -236,6 +239,28 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
+
+/obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rpd_upgrade))
+		install_upgrade(W, user)
+		return TRUE
+	return ..()
+
+/**
+  * Installs an upgrade into the RPD
+  *
+  * Installs an upgrade into the RPD checking if it is already installed
+  * Arguments:
+  * * rpd_up - RPD upgrade
+  * * user - mob that use upgrade on RPD
+  */
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
+	if(rpd_up.upgrade_flags& upgrade_flags)
+		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		return
+	upgrade_flags |= rpd_up.upgrade_flags
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(rpd_up)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -285,8 +310,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	var/playeffect = TRUE
@@ -340,6 +367,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
+	//Unwrench pipe before we build one over/paint it.
+	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
+		A = A.wrench_act(user, src)	
+
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
@@ -359,21 +390,21 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 
 	if((mode & PAINT_MODE))
-		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
-			var/obj/machinery/atmospherics/pipe/P = A
-			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
+		var/obj/machinery/atmospherics/M = A
+		if(istype(M) && M.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [M] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = M))
+				M.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [M] [paint_color].</span>","<span class='notice'>You paint \the [M] [paint_color].</span>")
 			return
-		var/obj/item/pipe/P = A
-		if(istype(P) && findtext("[P.pipe_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[P.pipe_type]", "layer_manifold"))
-			to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
+		var/obj/item/pipe/I = A
+		if(istype(I) && I.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [I] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = I))
+				I.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [I] [paint_color].</span>","<span class='notice'>You paint \the [I] [paint_color].</span>")
 			return
 
 	if(mode & BUILD_MODE)
@@ -484,3 +515,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef DESTROY_MODE
 #undef PAINT_MODE
 #undef WRENCH_MODE
+
+/obj/item/rpd_upgrade
+	name = "RPD advanced design disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	/// Bitflags for upgrades
+	var/upgrade_flags
+
+/obj/item/rpd_upgrade/unwrench
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	upgrade_flags = RPD_UPGRADE_UNWRENCH

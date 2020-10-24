@@ -180,8 +180,8 @@
 	exposed_obj.extinguish()
 	exposed_obj.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
-	if(istype(exposed_obj, /obj/item/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = exposed_obj
+	if(istype(exposed_obj, /obj/item/food/monkeycube))
+		var/obj/item/food/monkeycube/cube = exposed_obj
 		cube.Expand()
 
 	// Dehydrated carp
@@ -340,7 +340,7 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustAllImmobility(-40, FALSE)
+		M.AdjustAllImmobility(-40)
 		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
@@ -782,7 +782,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
+	if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -887,7 +887,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -928,15 +928,6 @@
 		C.blood_volume += 0.5
 	..()
 
-/datum/reagent/iron/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!exposed_mob.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
-		return
-	if(!holder || (holder.chem_temp >= 100)) // COLD iron.
-		return
-
-	exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
-
 /datum/reagent/gold
 	name = "Gold"
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
@@ -952,11 +943,6 @@
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
 	material = /datum/material/silver
-
-/datum/reagent/silver/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(exposed_mob.has_bane(BANE_SILVER))
-		exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -1373,11 +1359,17 @@
 
 /datum/reagent/healium/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	L.PermaSleeping()
 
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	L.SetSleeping(10)
 	return ..()
+
+/datum/reagent/healium/on_mob_life(mob/living/L)
+	. = ..()
+	L.adjustFireLoss(-2, FALSE)
+	L.adjustToxLoss(-5, FALSE)
+	L.adjustBruteLoss(-2, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"
@@ -1395,26 +1387,6 @@
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
-	return ..()
-
-/datum/reagent/hexane
-	name = "Hexane"
-	description = "A filtering gas, don't breathe it if you suffer from brain conditions"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "fresh"
-
-/datum/reagent/hexane/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	ADD_TRAIT(L, TRAIT_SIXTHSENSE, type)
-
-/datum/reagent/hexane/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	REMOVE_TRAIT(L, TRAIT_SIXTHSENSE, type)
 	return ..()
 
 /////////////////////////Colorful Powder////////////////////////////
@@ -2401,7 +2373,7 @@
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
 	if(IS_HERETIC(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustAllImmobility(-40, FALSE)
+		M.AdjustAllImmobility(-40)
 		M.adjustStaminaLoss(-10, FALSE)
 		M.adjustToxLoss(-2, FALSE)
 		M.adjustOxyLoss(-2, FALSE)

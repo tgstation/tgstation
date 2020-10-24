@@ -614,6 +614,7 @@
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
 			exposed_carbon.dna.features["moth_wings"] = "None"
+			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
@@ -684,10 +685,10 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
-    if(!istype(A, /turf/closed/mineral))
-        return
-    A.attackby(src, H)
-    return COMPONENT_NO_ATTACK_HAND
+	if(!istype(A, /turf/closed/mineral))
+		return
+	A.attackby(src, H)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 ///Bosses
@@ -708,6 +709,7 @@
 	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
+	worn_icon_state = "cleaving_saw"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_on = list("cleaves", "swipes", "slashes", "chops")

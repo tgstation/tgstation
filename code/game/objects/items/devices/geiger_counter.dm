@@ -10,6 +10,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "geiger_off"
 	inhand_icon_state = "multitool"
+	worn_icon_state = "geiger_counter"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
