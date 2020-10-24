@@ -63,12 +63,8 @@
 	if(network_name == null || !istext(network_name))
 		stack_trace("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
 		network_name = NETWORK_LIMBO
-	// Why this? while in "theory" we have have text based numbers as a tag, in practice is a bad idea
-	// to have objects as plain numbers as the point of id_tags its to have clear readable text to help
-	// pair devices with one another.  So this checks to make sure that the mapper is not giving us a
-	// straight number OR a number converted to text.
-	// I wonder if this is slower than findtext(network_tag, "^\d") == 1
-	if(network_tag != null && text2num(network_tag) == text2num(num2text(network_tag)))
+	// Tags cannot be numbers and must be unique over the world
+	if(network_tag != null && !istext(network_tag))
 		// numbers are not allowed as lookups for interfaces
 		stack_trace("Tag cannot be a number?  '[network_name]' for '[parent]', going to limbo it")
 		network_tag = "BADTAG_" + network_tag
@@ -81,22 +77,40 @@
 	network.add_interface(src)
 
 
-// Port connection system
-// The basic idea is that two or more objects share a list and transfer data between the list
-// The list keeps a flag called "_updated", if that flag is set to "true" then something was
-// changed.  Now I COULD send a signal, but that would require the parent object to be shoved
-// in datum/netlink.  I am trying my best to not have hard references in any of these data
-// objects
-/datum/component/ntnet_interface/proc/connect_port(hid_or_tag, port, mob/user=null)
-	ASSERT(hid_or_tag && port)
-	var/datum/component/ntnet_interface/target = network.root_devices[hid_or_tag]
-	if(target && target.registered_sockets[port])
-		var/list/datalink = target.registered_sockets[port]
-		return datalink
-	if(user)
-		to_chat(user,"Port [port] does not exist on [hid_or_tag]!")
+/**
+  * Create a port for this interface
+  *
+  * A port is basicity a shared associated list() with some values that
+  * indicated its been updated.  (see _DEFINES/network.dm).  By using a shared
+  * we don't have to worry about qdeling this object if it goes out of scope.
+  *
+  * Once a port is created any number of devices can use the port, however only
+  * the creating interface can disconnect it.
+  *
+  * Arguments:
+  * * port - text, Name of the port installed on this interface
+  * * data - list, shared list of data.  Don't put objects in this
+  */
+/datum/component/ntnet_interface/proc/register_port(port, list/data)
+	if(!port || !length(data))
+		stack_trace("port is null or data is empty")
+		return
+	if(registered_sockets[port])
+		stack_trace("port already regestered")
+		return
+	data["_updated"] = FALSE
+	registered_sockets[port] = data
 
-
+/**
+  * Disconnects an existing port in the interface
+  *
+  * Removes a port from this interface and marks it that its
+  * has been disconnected
+  *
+  * Arguments:
+  * * port - text, Name of the port installed on this interface
+  * * data - list, shared list of data.  Don't put objects in this
+  */
 /datum/component/ntnet_interface/proc/deregister_port(port)
 	if(registered_sockets[port]) // should I runtime if this isn't in here?
 		var/list/datalink = registered_sockets[port]
@@ -105,20 +119,25 @@
 		registered_sockets.Remove(port)
 
 
-/datum/component/ntnet_interface/proc/register_port(port, list/data)
-	if(!port || !length(data))
-		log_runtime("port is null or data is empty")
-		return
-	if(registered_sockets[port])
-		log_runtime("port already regestered")
-		return
-	data["_updated"] = FALSE
-	registered_sockets[port] = data
+/**
+  * Connect to a port on this interface
+  *
+  * Returns the shared list that this interface uses to send
+  * data though a port.
+  *
+  * Arguments:
+  * * port - text, Name of the port installed on this interface
+  */
+/datum/component/ntnet_interface/proc/connect_port(port)
+	return registered_sockets[port]
+
+
 
 /datum/component/ntnet_interface/Destroy()
-	leave_network(TRUE)
+	network.remove_interface(src, TRUE)
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
 	for(var/port in registered_sockets)
-		deregister_port(port)
+		var/list/datalink = registered_sockets[port]
+		NETWORK_PORT_DISCONNECT(datalink)
 	registered_sockets.Cut()
 	return ..()
