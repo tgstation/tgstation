@@ -29,16 +29,17 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	var/list/children
 	var/datum/ntnet/parent
 
-/datum/ntnet/New(net_id, datum/ntnet/P = null)
+/datum/ntnet/New(net_id, net_part_id, datum/ntnet/P = null,)
 	linked_devices = list()
 	children = list()
 	network_id = net_id
+	
 	if(P)
 		parent = P
 		parent.children[network_id] = src
 		root_devices = parent.root_devices
 		networks = parent.networks
-		network_node_id = findtext(net_id, @"[^\.]+$")
+		network_node_id = net_part_id
 	else
 		parent = null
 		networks = list()
