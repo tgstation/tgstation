@@ -42359,9 +42359,6 @@
 /turf/closed/wall/rust,
 /area/quartermaster/storage)
 "bmo" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -42371,6 +42368,7 @@
 	pixel_x = 32;
 	pixel_y = -32
 	},
+/obj/machinery/rnd/bepis,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bmp" = (
