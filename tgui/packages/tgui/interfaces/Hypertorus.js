@@ -22,6 +22,10 @@ export const Hypertorus = (props, context) => {
     moderator_injection_rate,
     current_damper,
     fusion_started,
+    internal_fusion_temperature,
+    moderator_internal_temperature,
+    internal_output_temperature,
+    internal_coolant_temperature,
   } = data;
   const fusion_gases = flow([
     filter(gas => gas.amount >= 0.01),
@@ -139,6 +143,44 @@ export const Hypertorus = (props, context) => {
               </ProgressBar>
             </LabeledList.Item>
           </Section>
+          <Section title="Temperatures">
+            <LabeledList.Item label="Fusion gas temperature">
+              <ProgressBar
+                color={'yellow'}
+                value={internal_fusion_temperature}
+                minValue={0}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(internal_fusion_temperature, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Moderator gas temperature">
+              <ProgressBar
+                color={'red'}
+                value={moderator_internal_temperature}
+                minValue={0}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(moderator_internal_temperature, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Output gas temperature">
+              <ProgressBar
+                color={'pink'}
+                value={internal_output_temperature}
+                minValue={0}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(internal_output_temperature, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Coolant output temperature">
+              <ProgressBar
+                color={'green'}
+                value={internal_coolant_temperature}
+                minValue={0}
+                maxValue={1e30}>
+                {formatSiBaseTenUnit(internal_coolant_temperature, 1, 'K')}
+              </ProgressBar>
+            </LabeledList.Item>
+          </Section>
           <Section title="Tweakable Inputs">
             <LabeledList.Item label="Heating Conductor">
               <NumberInput
@@ -147,7 +189,7 @@ export const Hypertorus = (props, context) => {
                 width="63px"
                 unit="J/cm"
                 minValue={0.5}
-                maxValue={10}
+                maxValue={5}
                 onDrag={(e, value) => act('heating_conductor', {
                   heating_conductor: value,
                 })} />

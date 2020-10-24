@@ -27,6 +27,9 @@ const SI_SYMBOLS = [
   'Y', // yotta
   'R', // ronna
   'Q', // quecca
+  'F',
+  'N',
+  'H',
 ];
 
 const SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
@@ -114,11 +117,6 @@ export const formatDb = value => {
 };
 
 const SI_BASE_TEN_UNIT = [
-  '· 10⁻¹⁵', // femto
-  '· 10⁻¹²', // pico
-  '· 10⁻⁹', // nano
-  '· 10⁻⁶', // micro
-  '· 10⁻³', // milli
   '',
   '· 10³', // kilo
   '· 10⁶', // mega
@@ -130,6 +128,9 @@ const SI_BASE_TEN_UNIT = [
   '· 10²⁴', // yotta
   '· 10²⁷', // ronna
   '· 10³⁰', // quecca
+  '· 10³³',
+  '· 10³⁶',
+  '· 10³⁹',
 ];
 
 const SI_BASE_TEN_INDEX = SI_BASE_TEN_UNIT.indexOf(' ');

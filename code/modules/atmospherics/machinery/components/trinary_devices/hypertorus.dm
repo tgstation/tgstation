@@ -31,7 +31,7 @@
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY			0.005
+#define METALLIC_VOID_CONDUCTIVITY			0.05
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.85
 ///Sets the range of the hallucinations
@@ -165,12 +165,12 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-
+	var/icon_state_open = "core"
+	var/icon_state_off = "core"
 	///Checks if the machine state is active (all parts are connected)
 	var/active = FALSE
 	///Checks if the user has started the machine
 	var/fusion_started = FALSE
-	var/next_slowprocess = 0
 
 	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
@@ -188,8 +188,6 @@
 	var/datum/gas_mixture/internal_output
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
-	///Used to define the gas transfer between mixes
-	var/gas_efficiency = 0.015
 	///E=mc^2 with some addition to allow it gameplaywise
 	var/energy = 0
 	///Temperature of the center of the fusion reaction
@@ -288,6 +286,11 @@
 	///cooldown tracker for accent sounds
 	var/last_accent_sound = 0
 
+	var/fusion_temperature = 0
+	var/moderator_temperature = 0
+	var/coolant_temperature = 0
+	var/output_temperature = 0
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
@@ -307,14 +310,10 @@
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/SetInitDirections()
 	switch(dir)
-		if(SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = EAST|WEST
-		if(NORTH)
-			initialize_directions = WEST|EAST
-		if(EAST)
+		if(EAST, WEST)
 			initialize_directions = NORTH|SOUTH
-		if(WEST)
-			initialize_directions = SOUTH|NORTH
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
 	if(linked_input)
@@ -332,24 +331,31 @@
 	return..()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
-	return list(turn(dir, 90), turn(dir, 270))
+	return list(turn(dir, 270), turn(dir, 90))
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/can_be_node(obj/machinery/atmospherics/target)
 	if(anchored)
 		return ..()
 	return FALSE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/wrench_act(mob/living/user, obj/item/I)
-	if(!panel_open)
+/obj/machinery/atmospherics/components/binary/hypertorus/core/attackby(obj/item/I, mob/user, params)
+	if(!on)
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+			return
+	if(default_change_direction_wrench(user, I))
 		return
-	set_anchored(!anchored)
-	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
-
+/obj/machinery/atmospherics/components/binary/hypertorus/core/default_change_direction_wrench(mob/user, obj/item/I)
+	. = ..()
+	if(!.)
+		return
+	if(!anchored)
+		return FALSE
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
-
 	if(node1)
 		node1.disconnect(src)
 		nodes[1] = null
@@ -359,28 +365,17 @@
 		nodes[2] = null
 		nullifyPipenet(parents[2])
 
-	if(anchored)
-		SetInitDirections()
-		atmosinit()
-		node1 = nodes[1]
-		if(node1)
-			node1.atmosinit()
-			node1.addMember(src)
-		node2 = nodes[2]
-		if(node2)
-			node2.atmosinit()
-			node2.addMember(src)
-		SSair.add_to_rebuild_queue(src)
-
-	return TRUE
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/screwdriver_act(mob/user, obj/item/I)
-	. = ..()
-	if(.)
-		return
-	panel_open = !panel_open
-	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	SetInitDirections()
+	atmosinit()
+	node1 = nodes[1]
+	if(node1)
+		node1.atmosinit()
+		node1.addMember(src)
+	node2 = nodes[2]
+	if(node2)
+		node2.atmosinit()
+		node2.addMember(src)
+	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_part_connectivity()
@@ -546,6 +541,73 @@
 /*	if(critical_threshold_proximity > melting_point)
 		countdown()*/
 
+/obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
+	/*
+	 *Pre-checks
+	 */
+	//first check if the machine is active
+	if(!active)
+		return
+
+	//then check if the other machines are still there
+	if(!check_part_connectivity())
+		deactivate()
+		return
+
+	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
+	if(last_accent_sound < world.time && prob(20))
+		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
+		if(critical_threshold_proximity >= 300)
+			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		else
+			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		var/next_sound = round((100 - aggression) * 5) + 5
+		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+
+	/*
+	 *Storing variables such as gas mixes, temperature, volume, moles
+	 */
+	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
+	var/datum/gas_mixture/buffer
+	buffer = linked_input.airs[1].remove(fuel_injection_rate)
+	internal_fusion.merge(buffer)
+	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
+	moderator_internal.merge(buffer)
+
+	critical_threshold_proximity_archived = critical_threshold_proximity
+	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e15 + internal_fusion.temperature) / 1e15, 1) - 3000) / 200, 0), 0)
+
+	if(internal_fusion.total_moles() < 2500 && power_level < 4)
+		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 3000) / 200, 0), 0)
+
+	critical_threshold_proximity += iron_content * 0.5
+
+	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	check_power_use()
+
+	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+	moderator_internal.temperature_share(internal_fusion, METALLIC_VOID_CONDUCTIVITY)
+
+	//Cooling of the moderator gases with the cooling loop in and out the core
+	if(airs[1].total_moles() > 0)
+		var/datum/gas_mixture/cooling_in = airs[1]
+		var/datum/gas_mixture/cooling_out = airs[2]
+		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
+		cooling_remove.temperature_share(moderator_internal, HIGH_EFFICIENCY_CONDUCTIVITY)
+		cooling_out.merge(cooling_remove)
+
+	fusion_temperature = internal_fusion.temperature
+	moderator_temperature = moderator_internal.temperature
+	coolant_temperature = airs[2].temperature
+	output_temperature = linked_output.airs[1].temperature
+
+	//Update pipenets
+	update_parents()
+	linked_input.update_parents()
+	linked_output.update_parents()
+	linked_moderator.update_parents()
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
 		slowprocess()
@@ -571,39 +633,8 @@
 	if(!fusion_started)
 		return
 
-	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
-		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level + 1) / 5)), 1.0) * 100
-		if(critical_threshold_proximity >= 300)
-			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
-		else
-			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
-		var/next_sound = round((100 - aggression) * 5) + 5
-		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
-
-	/*
-	 *Storing variables such as gas mixes, temperature, volume, moles
-	 */
-	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
-	var/datum/gas_mixture/buffer
-	buffer = linked_input.airs[1].remove(fuel_injection_rate)
-	internal_fusion.merge(buffer)
-	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
-	moderator_internal.merge(buffer)
-
 	if(!check_fuel())
 		return
-	critical_threshold_proximity_archived = critical_threshold_proximity
-	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e14 + internal_fusion.temperature) / 1e14, 1) - 1500) / 200, 0), 0)
-
-	if(internal_fusion.total_moles() < 500 && power_level < 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
-
-	critical_threshold_proximity += iron_content * 0.5
-
-	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
-
-	check_power_use()
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -715,7 +746,7 @@
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	//E=mc^2 with some changes for gameplay purposes
 	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
-	energy = clamp(energy, -1e36, 1e36) //ugly way to prevent NaN error
+	energy = clamp(energy, -1e35, 1e35) //ugly way to prevent NaN error
 	//Power of the gas mixture
 	internal_power = (scaled_hydrogen * power_modifier / 100) * (scaled_tritium * power_modifier / 100) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	//Temperature inside the center of the gas mixture
@@ -731,16 +762,13 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles()) * heating_conductor
+	heat_limiter_modifier = (internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())) * heating_conductor
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(power_output * heat_modifier / 100, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
-
-	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-	moderator_internal.temperature_share(internal_fusion, METALLIC_VOID_CONDUCTIVITY)
 
 	//Set the power level of the fusion process
 	var/fusion_temperature = internal_fusion.temperature
@@ -771,11 +799,11 @@
 		if(power_output)
 			switch(power_level)
 				if(1)
-					var/scaled_production = clamp(heat_output * 1e-5, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-6, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 				if(2)
-					var/scaled_production = clamp(heat_output * 1e-7, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-8, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -786,18 +814,18 @@
 						radiation *= 1.55
 						heat_output *= 1.025
 						internal_output.assert_gases(/datum/gas/stimulum)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.45
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 0.65
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.35)
 				if(3, 4)
-					var/scaled_production = clamp(heat_output * 1e-10, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-12, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.1
 						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.5
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.05
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
 					if(m_freon > 50)
 						heat_output *= 0.9
@@ -819,7 +847,7 @@
 								l.hallucination += power_level * 50 * D
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
-					var/scaled_production = clamp(heat_output * 1e-15, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-16, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 1.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -851,7 +879,7 @@
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate / 15))
 				if(6)
-					var/scaled_production = clamp(heat_output * 1e-19, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-20, 0, MAX_MODERATOR_USAGE)
 					if(m_plasma > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
@@ -891,14 +919,6 @@
 		internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
 		internal_fusion.garbage_collect()
 		linked_output.airs[1].merge(internal_remove)
-
-	//Cooling of the moderator gases with the cooling loop in and out the core
-	if(airs[1].total_moles() > 0)
-		var/datum/gas_mixture/cooling_in = airs[1]
-		var/datum/gas_mixture/cooling_out = airs[2]
-		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
-		moderator_internal.temperature_share(cooling_remove, HIGH_EFFICIENCY_CONDUCTIVITY)
-		cooling_out.merge(cooling_remove)
 
 	//Update pipenets
 	update_parents()
@@ -1026,6 +1046,11 @@
 	data["current_damper"] = connected_core.current_damper
 	data["fusion_started"] = connected_core.fusion_started
 
+	data["internal_fusion_temperature"] = connected_core.fusion_temperature
+	data["moderator_internal_temperature"] = connected_core.moderator_temperature
+	data["internal_output_temperature"] = connected_core.coolant_temperature
+	data["internal_coolant_temperature"] = connected_core.output_temperature
+
 	return data
 
 /obj/machinery/hypertorus/interface/ui_act(action, params)
@@ -1043,7 +1068,7 @@
 				heating_conductor = text2num(heating_conductor)
 				. = TRUE
 			if(.)
-				connected_core.heating_conductor = clamp(heating_conductor, 0.5, 10)
+				connected_core.heating_conductor = clamp(heating_conductor, 0.5, 5)
 		if("magnetic_constrictor")
 			var/magnetic_constrictor = params["magnetic_constrictor"]
 			if(text2num(magnetic_constrictor) != null)
