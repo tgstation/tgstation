@@ -45,7 +45,6 @@ export const Photocopier = (props, context) => {
 const Toner = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    has_toner,
     max_toner,
     current_toner,
   } = data;
@@ -58,7 +57,7 @@ const Toner = (props, context) => {
       title="Toner"
       buttons={
         <Button
-          disabled={!has_toner}
+          disabled={!current_toner}
           onClick={() => act('remove_toner')}
           icon="eject">
           Eject

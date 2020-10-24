@@ -47,8 +47,7 @@
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	. = TRUE
 	switch(action)

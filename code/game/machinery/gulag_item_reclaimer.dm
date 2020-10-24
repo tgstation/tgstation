@@ -63,8 +63,7 @@
 	return data
 
 /obj/machinery/gulag_item_reclaimer/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

@@ -203,17 +203,15 @@
 	data["choiceB"] = ""
 	if(user && completed)
 		var/list/L = power_lottery[user]
-		if(L?.len)
+		if(L && L.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
 			data["choiceB"] = L[2]
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("gene")
 			upgrade(usr,params["choice"])

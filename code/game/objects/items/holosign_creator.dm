@@ -12,51 +12,49 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
-	var/list/signs
+	var/list/signs = list()
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
 	. = ..()
-	if(!proximity_flag)
-		return
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return
-	var/turf/target_turf = get_turf(target)
-	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
-	if(target_holosign)
-		to_chat(user, "<span class='notice'>You use [src] to deactivate [target_holosign].</span>")
-		qdel(target_holosign)
-		return
-	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
-		return
-	if(holocreator_busy)
-		to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
-		return
-	if(LAZYLEN(signs) >= max_signs)
-		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
-		return
-	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
-	if(creation_time)
-		holocreator_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
-			holocreator_busy = FALSE
+	if(flag)
+		if(!check_allowed_items(target, 1))
 			return
-		holocreator_busy = FALSE
-		if(LAZYLEN(signs) >= max_signs)
-			return
-		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-			return
-	target_holosign = new holosign_type(get_turf(target), src)
-	to_chat(user, "<span class='notice'>You create \a [target_holosign] with [src].</span>")
+		var/turf/T = get_turf(target)
+		var/obj/structure/holosign/H = locate(holosign_type) in T
+		if(H)
+			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
+			qdel(H)
+		else
+			if(!T.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
+				if(holocreator_busy)
+					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
+					return
+				if(signs.len < max_signs)
+					playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
+					if(creation_time)
+						holocreator_busy = TRUE
+						if(!do_after(user, creation_time, target = target))
+							holocreator_busy = FALSE
+							return
+						holocreator_busy = FALSE
+						if(signs.len >= max_signs)
+							return
+						if(T.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
+							return
+					H = new holosign_type(get_turf(target), src)
+					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
+				else
+					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/holosign_creator/attack_self(mob/user)
-	if(LAZYLEN(signs))
+	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
@@ -116,18 +114,26 @@
 			to_chat(user, "<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
-			for(var/sign in signs)
-				qdel(sign)
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
 			shock = 0
 			return
-		if(R.emagged&&!shock)
+		else if(R.emagged&&!shock)
 			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
-			for(var/sign in signs)
-				qdel(sign)
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
 			shock = 1
 			return
-	for(var/sign in signs)
-		qdel(sign)
-	to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+		else
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+				to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+	if(signs.len)
+		for(var/H in signs)
+			qdel(H)
+		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")

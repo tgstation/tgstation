@@ -20,8 +20,6 @@ Buildable meters
 	w_class = WEIGHT_CLASS_NORMAL
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
-	/// Whether it can be painted
-	var/paintable = FALSE
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
@@ -58,7 +56,6 @@ Buildable meters
 	pipename = make_from.name
 	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 	pipe_type = make_from.type
-	paintable = make_from.paintable
 
 /obj/item/pipe/trinary/flippable/make_from_existing(obj/machinery/atmospherics/components/trinary/make_from)
 	..()

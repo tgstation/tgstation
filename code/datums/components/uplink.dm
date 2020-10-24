@@ -122,8 +122,7 @@
 	if(user)
 		ui_interact(user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
+	return COMPONENT_NO_INTERACT
 
 /datum/component/uplink/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -184,9 +183,6 @@
 	return data
 
 /datum/component/uplink/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
 	if(!active)
 		return
 	switch(action)

@@ -1,10 +1,10 @@
 import { createSearch } from 'common/string';
-import { multiline } from 'common/string';
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Flex, Icon, Input, Section } from '../components';
+import { Box, Button, Flex, Icon, Input, Section } from '../components';
 import { Window } from '../layouts';
 
+const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
 
 const searchFor = searchText => createSearch(searchText, thing => thing.name);
@@ -43,7 +43,7 @@ const BasicSection = (props, context) => {
       {things.map(thing => (
         <Button
           key={thing.name}
-          content={thing.name}
+          content={thing.name.replace(PATTERN_DESCRIPTOR, "")}
           onClick={() => act("orbit", {
             ref: thing.ref,
           })} />
@@ -82,7 +82,6 @@ export const Orbit = (props, context) => {
   const {
     alive,
     antagonists,
-    auto_observe,
     dead,
     ghosts,
     misc,
@@ -141,27 +140,6 @@ export const Orbit = (props, context) => {
                 onInput={(_, value) => setSearchText(value)}
                 onEnter={(_, value) => orbitMostRelevant(value)} />
             </Flex.Item>
-            <Flex.Item>
-              <Divider vertical />
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                inline
-                color="transparent"
-                tooltip={multiline`Toggle Auto-Observe. When active, you'll
-                see the UI / full inventory of whoever you're orbiting. Neat!`}
-                tooltipPosition="bottom-left"
-                selected={auto_observe}
-                icon={auto_observe ? "toggle-on" : "toggle-off"}
-                onClick={() => act("toggle_observe")} />
-              <Button
-                inline
-                color="transparent"
-                tooltip="Refresh"
-                tooltipPosition="bottom-left"
-                icon="sync-alt"
-                onClick={() => act("refresh")} />
-            </Flex.Item>
           </Flex>
         </Section>
         {antagonists.length > 0 && (
@@ -183,7 +161,7 @@ export const Orbit = (props, context) => {
           </Section>
         )}
 
-        <Section title={`Alive - (${alive.length})`}>
+        <Section title="Alive">
           {alive
             .filter(searchFor(searchText))
             .sort(compareNumberedText)
@@ -195,17 +173,11 @@ export const Orbit = (props, context) => {
             ))}
         </Section>
 
-        <Section title={`Ghosts - (${ghosts.length})`}>
-          {ghosts
-            .filter(searchFor(searchText))
-            .sort(compareNumberedText)
-            .map(thing => (
-              <OrbitedButton
-                key={thing.name}
-                color="grey"
-                thing={thing} />
-            ))}
-        </Section>
+        <BasicSection
+          title="Ghosts"
+          source={ghosts}
+          searchText={searchText}
+        />
 
         <BasicSection
           title="Dead"

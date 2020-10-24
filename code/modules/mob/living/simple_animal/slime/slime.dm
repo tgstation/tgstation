@@ -100,7 +100,7 @@
 	set_colour(new_colour)
 	. = ..()
 	set_nutrition(700)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
 	add_cell_sample()
 
 /mob/living/simple_animal/slime/Destroy()
@@ -109,7 +109,8 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	Friends = null
+	Friends.Cut()
+	speech_buffer.Cut()
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
@@ -463,20 +464,25 @@
 
 	SStun = world.time + rand(20,60)
 
-	Stun(3)
+	mobility_flags &= ~MOBILITY_MOVE
 	if(user)
 		step_away(src,user,15)
 
-	addtimer(CALLBACK(src, .proc/slime_move, user), 0.3 SECONDS)
-
+	addtimer(CALLBACK(src, .proc/slime_move, user), 3)
 
 /mob/living/simple_animal/slime/proc/slime_move(mob/user)
 	if(user)
 		step_away(src,user,15)
-
+	update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
+
+/mob/living/simple_animal/slime/can_unbuckle()
+	return FALSE
+
+/mob/living/simple_animal/slime/can_buckle()
+	return FALSE
 
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())

@@ -132,26 +132,15 @@
 /**
   * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
   *
-  * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, see [/datum/component/pellet_cloud/proc/handle_martyrs]
-  * Landmines just have a small check for [/obj/effect/mine/shrapnel/var/shred_triggerer], and spawn extra shrapnel for them if so
-  *
-  * Arguments:
-  * * O- Our parent, the thing making the shrapnel obviously (grenade or landmine)
-  * * punishable_triggerer- For grenade lances or people who step on the landmines (if we shred the triggerer), we spawn extra shrapnel for them in addition to the normal spread
+  * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs]
   */
-/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/punishable_triggerer)
+/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by)
 	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
-		handle_martyrs(punishable_triggerer) // note that we can modify radius in this proc
-	else if(islandmine(parent))
-		var/obj/effect/mine/shrapnel/triggered_mine = parent
-		if(triggered_mine.shred_triggerer && istype(punishable_triggerer)) // free shrapnel for the idiot who stepped on it if we're a mine that shreds the triggerer
-			pellet_delta += radius // so they don't count against the later total
-			for(var/i in 1 to radius)
-				pew(punishable_triggerer, TRUE)
+		handle_martyrs(lanced_by) // note that we can modify radius in this proc
 
 	if(radius < 1)
 		return
@@ -172,18 +161,18 @@
   *
   * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
   */
-/datum/component/pellet_cloud/proc/handle_martyrs(mob/living/punishable_triggerer)
+/datum/component/pellet_cloud/proc/handle_martyrs(mob/living/lanced_by)
 	var/magnitude_absorbed
 	var/list/martyrs = list()
 
 	var/self_harm_radius_mult = 3
 
-	if(punishable_triggerer && prob(60))
-		to_chat(punishable_triggerer, "<span class='userdanger'>Your plan to whack someone with a grenade on a stick backfires on you, literally!</span>")
+	if(lanced_by && prob(60))
+		to_chat(lanced_by, "<span class='userdanger'>Your plan to whack someone with a grenade on a stick backfires on you, literally!</span>")
 		self_harm_radius_mult = 1 // we'll still give the guy who got hit some extra shredding, but not 3*radius
 		pellet_delta += radius
 		for(var/i in 1 to radius)
-			pew(punishable_triggerer) // thought you could be tricky and lance someone with no ill effects!!
+			pew(lanced_by) // thought you could be tricky and lance someone with no ill effects!!
 
 	for(var/mob/living/body in get_turf(parent))
 		if(body == shooter)
@@ -258,11 +247,11 @@
 		finalize()
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
-/datum/component/pellet_cloud/proc/pew(atom/target, landmine_victim)
+/datum/component/pellet_cloud/proc/pew(atom/target, spread=0)
 	var/obj/projectile/P = new projectile_type(get_turf(parent))
 
 	//Shooting Code:
-	P.spread = 0
+	P.spread = spread
 	P.original = target
 	P.fired_from = parent
 	P.firer = parent // don't hit ourself that would be really annoying
@@ -273,8 +262,6 @@
 	RegisterSignal(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
 	pellets += P
 	P.fire()
-	if(landmine_victim)
-		P.process_hit(get_turf(target), target)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
@@ -287,8 +274,8 @@
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))
 			hit_part = target
-			target = hit_part.owner
 			if(wound_info_by_part[hit_part])
+				target = hit_part.owner
 				var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
 				var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
 				var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]

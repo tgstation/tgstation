@@ -108,8 +108,7 @@
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	. = TRUE
 	switch(action)

@@ -31,33 +31,32 @@
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the paystand, protecting the bolts from [anchored ? "loosening" : "tightening"].</span>")
 			return
 		if(!my_card)
-			var/obj/item/card/id/new_card = W
-			if(!new_card.registered_account)
+			var/obj/item/card/id/assistant_mains_need_to_die = W
+			if(!assistant_mains_need_to_die.registered_account)
 				return
-			var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "Paystand (owned by [new_card.registered_account.account_holder])")
+			var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "[user]'s Awesome Paystand")
 			if(!msg)
 				return
 			name = msg
-			desc = "Owned by [new_card.registered_account.account_holder], pays directly into [user.p_their()] account."
-			my_card = new_card
+			desc = "Owned by [assistant_mains_need_to_die.registered_account.account_holder], pays directly into [user.p_their()] account."
+			my_card = assistant_mains_need_to_die
 			to_chat(user, "You link the stand to your account.")
 			return
-		var/obj/item/card/id/pay_card = W
-		if(pay_card.registered_account)
-			var/credit_amount = 0
+		var/obj/item/card/id/vbucks = W
+		if(vbucks.registered_account)
+			var/momsdebitcard = 0
 			if(!force_fee)
-				credit_amount = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
+				momsdebitcard = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
 			else
-				credit_amount = force_fee
+				momsdebitcard = force_fee
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
-			if(credit_amount < 1)
+			if(momsdebitcard < 1)
 				to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
 				return
-			if(pay_card.registered_account.adjust_money(-credit_amount))
-				purchase(pay_card.registered_account.account_holder, credit_amount)
-				say("Thank you for your patronage, [pay_card.registered_account.account_holder]!")
-				playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+			if(vbucks.registered_account.adjust_money(-momsdebitcard))
+				purchase(vbucks.registered_account.account_holder, momsdebitcard)
+				to_chat(user, "Thanks for purchasing! The vendor has been informed.")
 				return
 			else
 				to_chat(user, "<span class='warning'>ERROR: Account has insufficient funds to make transaction.</span>")

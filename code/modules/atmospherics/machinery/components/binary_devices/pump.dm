@@ -96,8 +96,7 @@
 	return data
 
 /obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("power")

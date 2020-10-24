@@ -5,8 +5,6 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 
-	circuit = /obj/item/circuitboard/machine/generator
-
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
 
@@ -19,8 +17,9 @@
 	. = ..()
 	find_circs()
 	connect_to_network()
-	SSair.start_processing_machine(src)
+	SSair.atmos_machinery += src
 	update_icon()
+	component_parts = list(new /obj/item/circuitboard/machine/generator)
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
@@ -28,7 +27,7 @@
 
 /obj/machinery/power/generator/Destroy()
 	kill_circs()
-	SSair.stop_processing_machine(src)
+	SSair.atmos_machinery -= src
 	return ..()
 
 /obj/machinery/power/generator/update_overlays()
@@ -85,7 +84,7 @@
 
 		update_icon()
 
-	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
+	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
 		update_icon()

@@ -13,7 +13,6 @@
 	var/datum/track/selection = null
 	/// Volume of the songs played
 	var/volume = 100
-	COOLDOWN_DECLARE(jukebox_error_cd)
 
 /obj/machinery/jukebox/disco
 	name = "radiant dance machine mark IV"
@@ -95,7 +94,7 @@
 		return UI_CLOSE
 	if(!songs.len && !isobserver(user))
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
+		playsound(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return UI_CLOSE
 	return ..()
 
@@ -136,10 +135,7 @@
 			if(!active)
 				if(stop > world.time)
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
-					if(!COOLDOWN_FINISHED(src, jukebox_error_cd))
-						return
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
-					COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
 					return
 				activate_music()
 				START_PROCESSING(SSobj, src)
@@ -396,7 +392,7 @@
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			for(var/mob/living/carbon/NS in rangers)
-				NS.set_resting(!NS.resting, TRUE, TRUE)
+				NS.set_resting(!NS.resting, TRUE)
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)

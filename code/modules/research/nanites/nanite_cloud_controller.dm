@@ -162,8 +162,7 @@
 	return data
 
 /obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("eject")
@@ -190,7 +189,7 @@
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
-			if(disk?.program)
+			if(disk && disk.program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)

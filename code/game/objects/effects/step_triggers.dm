@@ -61,8 +61,10 @@
 		if(AM in T.affecting)
 			return
 
-	if(immobilize)
-		ADD_TRAIT(AM, TRAIT_IMMOBILIZED, src)
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(immobilize)
+			M.mobility_flags &= ~MOBILITY_MOVE
 
 	affecting.Add(AM)
 	while(AM && !stopthrow)
@@ -96,8 +98,11 @@
 
 	affecting.Remove(AM)
 
-	REMOVE_TRAIT(AM, TRAIT_IMMOBILIZED, src)
-
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(immobilize)
+			M.mobility_flags |= MOBILITY_MOVE
+		M.update_mobility()
 
 /* Stops things thrown by a thrower, doesn't do anything */
 

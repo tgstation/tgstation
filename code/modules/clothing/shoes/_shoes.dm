@@ -46,10 +46,7 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(HAS_BLOOD_DNA(src))
-			if(clothing_flags & LARGE_WORN_ICON)
-				. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
-			else
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()
@@ -146,7 +143,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
 
-		if(do_after(user, lace_time, target = our_guy, extra_checks = CALLBACK(src, .proc/still_shoed, our_guy)))
+		if(do_after(user, lace_time, needhand=TRUE, target=our_guy, extra_checks=CALLBACK(src, .proc/still_shoed, our_guy)))
 			to_chat(user, "<span class='notice'>You [tied ? "unknot" : "tie"] the laces of your [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_TIED, user)
@@ -155,7 +152,7 @@
 
 	else // if they're someone else's shoes, go knot-wards
 		var/mob/living/L = user
-		if(istype(L) && L.body_position == STANDING_UP)
+		if(istype(L) && (L.mobility_flags & MOBILITY_STAND))
 			to_chat(user, "<span class='warning'>You must be on the floor to interact with [src]!</span>")
 			return
 		if(tied == SHOES_KNOTTED)
@@ -170,7 +167,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, .proc/still_shoed, our_guy)))
+		if(do_after(user, mod_time, needhand=TRUE, target=our_guy, extra_checks=CALLBACK(src, .proc/still_shoed, our_guy)))
 			to_chat(user, "<span class='notice'>You [tied ? "untie" : "knot"] the laces on [loc]'s [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -253,6 +250,6 @@
 
 	to_chat(user, "<span class='notice'>You begin [tied ? "untying" : "tying"] the laces on [src]...</span>")
 
-	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, .proc/still_shoed, user)))
+	if(do_after(user, lace_time, needhand=TRUE, target=src,extra_checks=CALLBACK(src, .proc/still_shoed, user)))
 		to_chat(user, "<span class='notice'>You [tied ? "untie" : "tie"] the laces on [src].</span>")
 		adjust_laces(tied ? SHOES_TIED : SHOES_UNTIED, user)

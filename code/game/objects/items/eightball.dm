@@ -59,7 +59,7 @@
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time))
+	if(do_after(user, shake_time, needhand=TRUE, target=user, progress=TRUE))
 		var/answer = get_answer()
 		say(answer)
 
@@ -217,10 +217,8 @@
 	return data
 
 /obj/item/toy/eightball/haunted/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	var/mob/user = usr
 
 	switch(action)

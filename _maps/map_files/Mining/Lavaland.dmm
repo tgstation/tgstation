@@ -130,7 +130,7 @@
 	dir = 8
 	},
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel,

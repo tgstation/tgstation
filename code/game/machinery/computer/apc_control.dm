@@ -80,10 +80,8 @@
 	return data
 
 /obj/machinery/computer/apc_control/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("log-in")
 			if(obj_flags & EMAGGED)
@@ -180,7 +178,7 @@
 		return
 	obj_flags |= EMAGGED
 	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 50, TRUE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)

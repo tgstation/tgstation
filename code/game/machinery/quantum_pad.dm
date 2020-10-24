@@ -159,9 +159,9 @@
 			target_pad.sparks()
 
 			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE, extrarange = 3, falloff = 5)
 			flick("qpad-beam", target_pad)
-			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
+			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK

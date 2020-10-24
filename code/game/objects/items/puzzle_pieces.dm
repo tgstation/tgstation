@@ -143,4 +143,5 @@
 		AM.set_anchored(TRUE)
 		flick("laserbox_burn", AM)
 		trigger()
-		QDEL_IN(AM, 15)
+		sleep(15)
+		qdel(AM)

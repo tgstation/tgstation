@@ -89,7 +89,7 @@
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if (istype(get_area(user), /area/security/range))
+	for(var/obj/machinery/magnetic_controller/M in range(user, 3))
 		return TRUE
 	return FALSE
 

@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),
+	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_OBSESSED = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
@@ -131,7 +134,7 @@ GLOBAL_LIST_INIT(huds, list(
 //MOB PROCS
 /mob/proc/reload_huds()
 	for(var/datum/atom_hud/hud in GLOB.all_huds)
-		if(hud?.hudusers[src])
+		if(hud && hud.hudusers[src])
 			for(var/atom/A in hud.hudatoms)
 				hud.add_to_single_hud(src, A)
 

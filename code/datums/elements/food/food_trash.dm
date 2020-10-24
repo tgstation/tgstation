@@ -23,14 +23,15 @@
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
+	var/datum/component/edible/edible_component = source
 
 	var/obj/item/trash_item = new trash()
 
-	var/atom/edible_object = source
+	var/atom/edible_object = edible_component.parent
 
 	var/mob/living/mob_location = edible_object.loc //The foods location
 
 	if(istype(mob_location))
 		mob_location.put_in_hands(trash_item)
 	else
-		trash_item.forceMove(get_turf(edible_object))
+		trash_item.forceMove(get_turf(edible_component.parent))

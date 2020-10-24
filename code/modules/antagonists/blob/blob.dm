@@ -61,7 +61,7 @@
 
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
-	if(owner?.current)
+	if(owner && owner.current)
 		var/mob/camera/blob/B = owner.current
 		if(istype(B))
 			. += "(Progress: [B.blobs_legit.len]/[B.blobwincount])"

@@ -60,8 +60,7 @@
 	return data
 
 /obj/machinery/computer/nanite_chamber_control/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("toggle_lock")

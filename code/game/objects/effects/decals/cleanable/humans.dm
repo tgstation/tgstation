@@ -78,14 +78,13 @@
 		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
 	. = ..()
 
-/obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
+/obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = FALSE
 	var/list/diseases = list()
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
 	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
-		if (!mapload)
-			sleep(2)
+		sleep(2)
 		if(i > 0)
 			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 		if(!step_to(src, get_step(src, direction), 0))

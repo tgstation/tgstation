@@ -3,28 +3,27 @@
 /obj/structure/statue/bone
 	anchored = TRUE
 	max_integrity = 120
+	material_drop_type = /obj/item/stack/sheet/bone
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
-	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
 	name = "collosal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
+	oreAmount = 4
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "collosal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
+	oreAmount = 12
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
+	oreAmount = 6
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
@@ -52,8 +51,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
-	base_icon_state = "rock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))

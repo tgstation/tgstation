@@ -50,9 +50,6 @@
 	temperature = -75
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
-	// Sentient ice demons teleporting has been linked to server crashes
-	if(client)
-		return ..()
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = list()

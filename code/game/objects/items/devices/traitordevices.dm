@@ -130,8 +130,7 @@ effective or pretty fucking useless.
 	return data
 
 /obj/item/healthanalyzer/rad_laser/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

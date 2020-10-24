@@ -1,5 +1,5 @@
 /obj/screen/ai
-	icon = 'icons/hud/screen_ai.dmi'
+	icon = 'icons/mob/screen_ai.dmi'
 
 /obj/screen/ai/Click()
 	if(isobserver(usr) || usr.incapacitated())
@@ -150,6 +150,9 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.viewpictures(usr)
+	else if(iscyborg(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.aicamera.viewpictures(usr)
 
 /obj/screen/ai/sensors
 	name = "Sensor Augmentation"
@@ -183,7 +186,7 @@
 
 
 /datum/hud/ai
-	ui_style = 'icons/hud/screen_ai.dmi'
+	ui_style = 'icons/mob/screen_ai.dmi'
 
 /datum/hud/ai/New(mob/owner)
 	..()

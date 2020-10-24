@@ -168,12 +168,12 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
-/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
+/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)
 	. = ..()
-	radio = _radio
+	radio = radio
 	source = M
-	if(istype(M))
-		name = radio.anonymize ? "Unknown" : M.GetVoice()
+	if (istype(M))
+		name = M.GetVoice()
 		verb_say = M.verb_say
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim

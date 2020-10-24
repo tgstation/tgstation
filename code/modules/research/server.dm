@@ -22,6 +22,8 @@
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
 	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
@@ -191,6 +193,6 @@
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

@@ -74,6 +74,14 @@
 	else
 		return ..()
 
+/obj/item/camera/siliconcam/robot_camera/verb/borgprinting()
+	set category ="Robot Commands"
+	set name = "Print Image"
+	set src in usr
+	if(usr.stat == DEAD)
+		return
+	borgprint(usr)
+
 /obj/item/camera/siliconcam/robot_camera/proc/borgprint(mob/user)
 	var/mob/living/silicon/robot/C = loc
 	if(!istype(C) || C.toner < 20)

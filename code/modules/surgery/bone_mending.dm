@@ -11,8 +11,6 @@
 	targetable_wound = /datum/wound/blunt/severe
 
 /datum/surgery/repair_bone_hairline/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		return(targeted_bodypart.get_wound_type(targetable_wound))
@@ -28,11 +26,11 @@
 	targetable_wound = /datum/wound/blunt/critical
 
 /datum/surgery/repair_bone_compound/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		return(targeted_bodypart.get_wound_type(targetable_wound))
+
+
 
 //SURGERY STEPS
 

@@ -161,7 +161,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/Destroy()
 	// Update our old body's medhud since we're abandoning it
-	if(mind?.current)
+	if(mind && mind.current)
 		mind.current.med_hud_set_status()
 
 	GLOB.ghost_images_default -= ghostimage_default
@@ -493,7 +493,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
+		dest += getpois(mobs_only=1) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
@@ -640,7 +640,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return FALSE
 
-	if(can_reenter_corpse && mind?.current)
+	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return FALSE
 	if(target.key)
@@ -778,7 +778,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 
 	set_ghost_appearance()
-	if(client?.prefs)
+	if(client && client.prefs)
 		deadchat_name = client.prefs.real_name
 		if(mind)
 			mind.ghostname = client.prefs.real_name
@@ -853,9 +853,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!eye_name)
 		return
 
-	do_observe(creatures[eye_name])
-
-/mob/dead/observer/proc/do_observe(mob/mob_eye)
+	var/mob/mob_eye = creatures[eye_name]
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
@@ -920,7 +918,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)
-	return TRUE
+	return 1
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()

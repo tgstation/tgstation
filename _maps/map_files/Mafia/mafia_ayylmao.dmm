@@ -3,7 +3,13 @@
 /turf/closed/indestructible/riveted,
 /area/mafia)
 "b" = (
-/turf/closed/indestructible/alien,
+/turf/closed/indestructible{
+	desc = "A wall with alien alloy plating.";
+	icon = 'icons/turf/walls/abductor_wall.dmi';
+	icon_state = "abductor";
+	name = "alien wall";
+	smooth = 5
+	},
 /area/mafia)
 "g" = (
 /obj/mafia_game_board,

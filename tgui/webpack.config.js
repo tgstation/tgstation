@@ -6,6 +6,7 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const PnpPlugin = require(`pnp-webpack-plugin`);
 
@@ -193,6 +194,12 @@ module.exports = (env = {}, argv) => {
 
   // Development server specific options
   if (argv.devServer) {
+    config.plugins = [
+      ...config.plugins,
+      new BuildNotifierPlugin({
+        suppressSuccess: true,
+      }),
+    ];
     config.devServer = {
       progress: false,
       quiet: false,

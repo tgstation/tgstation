@@ -98,8 +98,7 @@ Passive gate is similar to the regular pump except:
 	return data
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("power")

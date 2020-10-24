@@ -40,14 +40,13 @@
 
 /obj/machinery/hypnochair/ui_data()
 	var/list/data = list()
-	var/mob/living/mob_occupant = occupant
-
-	data["occupied"] = mob_occupant ? 1 : 0
+	data["occupied"] = occupant ? 1 : 0
 	data["open"] = state_open
 	data["interrogating"] = interrogating
 
 	data["occupant"] = list()
-	if(mob_occupant)
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 
@@ -56,10 +55,8 @@
 	return data
 
 /obj/machinery/hypnochair/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("door")
 			if(state_open)
@@ -196,9 +193,12 @@
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
-
 /obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
-
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	close_machine(target)
+

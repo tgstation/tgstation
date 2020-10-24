@@ -310,8 +310,7 @@
 	return data
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
@@ -457,7 +456,7 @@
 	safety = TRUE
 	update_icon()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	if(SSticker?.mode)
+	if(SSticker && SSticker.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 

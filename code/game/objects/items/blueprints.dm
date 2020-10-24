@@ -122,7 +122,7 @@
 			. += TT.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
-	if(user?.client)
+	if(user && user.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client

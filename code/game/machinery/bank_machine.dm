@@ -81,8 +81,7 @@
 	return data
 
 /obj/machinery/computer/bank_machine/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

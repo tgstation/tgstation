@@ -42,13 +42,13 @@
 	return
 
 /obj/item/antag_spawner/contract/Topic(href, href_list)
-	. = ..()
-
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-	if(!ishuman(usr))
-		return TRUE
+	..()
 	var/mob/living/carbon/human/H = usr
+
+	if(H.stat || H.restrained())
+		return
+	if(!ishuman(H))
+		return 1
 
 	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)

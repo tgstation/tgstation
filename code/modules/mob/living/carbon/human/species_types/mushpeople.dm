@@ -1,7 +1,8 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
 	id = "mush"
-	mutant_bodyparts = list("caps" = "Round")
+	mutant_bodyparts = list("caps")
+	default_features = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "DBBF92"

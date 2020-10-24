@@ -145,11 +145,7 @@ GENE SCANNER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
+	if(isliving(user) && (user.incapacitated() || user.is_blind()))
 		return
 
 	// the final list of strings to render
@@ -416,13 +412,6 @@ GENE SCANNER
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 
 /proc/chemscan(mob/living/user, mob/living/M)
-	if(user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
-		return
-
 	if(istype(M) && M.reagents)
 		var/render_list = list()
 		if(M.reagents.reagent_list.len)
@@ -440,12 +429,10 @@ GENE SCANNER
 					render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
-
-		var/list/addictions = M.get_addiction_list()
-		if(addictions.len)
+		if(M.reagents.addiction_list.len)
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
-			for(var/datum/reagent/reagent in addictions)
-				render_list += "<span class='alert ml-2'>[reagent.name]</span>\n"
+			for(var/datum/reagent/R in M.reagents.addiction_list)
+				render_list += "<span class='alert ml-2'>[R.name]</span>\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject is not addicted to any reagents.</span>\n"
 
@@ -469,11 +456,7 @@ GENE SCANNER
 
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
-	if(!istype(patient) || user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
+	if(!istype(patient))
 		return
 
 	var/render_list = ""

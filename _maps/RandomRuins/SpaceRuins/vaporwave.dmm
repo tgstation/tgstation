@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space)
 "b" = (
 /obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space,
+/area/space/nearstation)
 "c" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/airless,
@@ -105,7 +105,6 @@
 "x" = (
 /obj/structure/closet/crate/bin,
 /obj/item/tape/random,
-/obj/item/gps/spaceruin,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
@@ -131,7 +130,6 @@
 /area/ruin/unpowered/no_grav)
 "C" = (
 /obj/structure/statue/sandstone/venus{
-	anchored = 1;
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
@@ -152,7 +150,6 @@
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/statue/sandstone/venus{
-	anchored = 1;
 	dir = 4
 	},
 /obj/effect/turf_decal/sand/plating,
@@ -211,11 +208,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
-"Q" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/space/fancytech,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
 "R" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -315,7 +307,7 @@ a
 a
 a
 c
-Q
+d
 f
 h
 q

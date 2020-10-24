@@ -310,7 +310,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud?.infodisplay)
+	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
 	QDEL_NULL(screen_obj)
 

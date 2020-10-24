@@ -62,8 +62,6 @@
   */
 /obj/item/radio/intercom/attack_tk_grab(mob/user)
 	interact(user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 
 /obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
@@ -142,9 +140,3 @@
 	pixel_shift = 29
 	inverse = TRUE
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
-
-/obj/item/radio/intercom/chapel
-	name = "Confessional intercom"
-	anonymize = TRUE
-	frequency = 1481
-	broadcasting = TRUE

@@ -51,7 +51,6 @@
 	if(!new_team)
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
 			if(!H.owner)
-				stack_trace("Antagonist datum without owner in GLOB.antagonists: [H]")
 				continue
 			if(H.monkey_team)
 				monkey_team = H.monkey_team

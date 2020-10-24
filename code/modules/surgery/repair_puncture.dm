@@ -15,8 +15,6 @@
 	targetable_wound = /datum/wound/pierce
 
 /datum/surgery/repair_puncture/can_start(mob/living/user, mob/living/carbon/target)
-	if(!istype(target))
-		return FALSE
 	. = ..()
 	if(.)
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)

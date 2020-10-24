@@ -145,19 +145,14 @@
 /obj/singularity/energy_ball/Bumped(atom/movable/AM)
 	dust_mobs(AM)
 
-
 /obj/singularity/energy_ball/attack_tk(mob/user)
-	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/jedi = user
-	to_chat(jedi, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
-	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.internal_organs
-	jedi.ghostize(jedi)
-	if(rip_u)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		to_chat(C, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
+		C.ghostize(0)
 		qdel(rip_u)
-	jedi.death()
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
+		C.death()
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))

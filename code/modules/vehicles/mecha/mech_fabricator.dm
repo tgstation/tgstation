@@ -64,7 +64,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = SSresearch.science_tech
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, breakdown_flags=BREAKDOWN_FLAGS_LATHE)
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
@@ -512,9 +512,8 @@
 	return data
 
 /obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	. = TRUE
 

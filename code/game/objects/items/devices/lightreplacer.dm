@@ -46,7 +46,6 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
 	inhand_icon_state = "electronic"
-	worn_icon_state = "light_replacer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -221,7 +220,7 @@
 
 /obj/item/lightreplacer/proc/Emag()
 	obj_flags ^= EMAGGED
-	playsound(src.loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src.loc, "sparks", 100, TRUE)
 	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else

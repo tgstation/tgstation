@@ -275,7 +275,7 @@
 "aY" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aZ" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -768,7 +768,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bY" = (
-/obj/item/gps/spaceruin,
+/obj/item/gps{
+	gpstag = "Distress Signal"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
@@ -1703,6 +1705,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dS" = (
+/obj/item/ammo_box/magazine/m45,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
@@ -1877,7 +1880,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/space/fancytool,
+/obj/item/crowbar,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "er" = (
@@ -1957,9 +1960,9 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
+/obj/item/paicard,
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eC" = (

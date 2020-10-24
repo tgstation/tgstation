@@ -109,8 +109,7 @@
 	return data
 
 /obj/machinery/nanite_program_hub/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("eject")
@@ -135,7 +134,7 @@
 			detail_view = !detail_view
 			. = TRUE
 		if("clear")
-			if(disk?.program)
+			if(disk && disk.program)
 				qdel(disk.program)
 				disk.program = null
 				disk.name = initial(disk.name)

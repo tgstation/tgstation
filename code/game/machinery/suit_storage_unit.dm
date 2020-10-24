@@ -187,22 +187,22 @@
 	. = ..()
 	if(!is_operational && state_open)
 		open_machine()
-		dump_inventory_contents()
+		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/dump_inventory_contents()
-	. = ..()
+/obj/machinery/suit_storage_unit/dump_contents()
+	dropContents()
 	helmet = null
 	suit = null
 	mask = null
 	storage = null
-	set_occupant(null)
+	occupant = null
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
-		dump_inventory_contents()
-		new /obj/item/stack/sheet/metal(loc, 2)
+		dump_contents()
+		new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
@@ -226,9 +226,9 @@
 	var/list/choices = list()
 
 	if (locked)
-		choices["unlock"] = icon('icons/hud/radial.dmi', "radial_unlock")
+		choices["unlock"] = icon('icons/mob/radial.dmi', "radial_unlock")
 	else if (state_open)
-		choices["close"] = icon('icons/hud/radial.dmi', "radial_close")
+		choices["close"] = icon('icons/mob/radial.dmi', "radial_close")
 
 		for (var/item_key in items)
 			var/item = vars[item_key]
@@ -238,16 +238,15 @@
 				// If the item doesn't exist, put a silhouette in its place
 				choices[item_key] = items[item_key]
 	else
-		choices["open"] = icon('icons/hud/radial.dmi', "radial_open")
-		choices["disinfect"] = icon('icons/hud/radial.dmi', "radial_disinfect")
-		choices["lock"] = icon('icons/hud/radial.dmi', "radial_lock")
+		choices["open"] = icon('icons/mob/radial.dmi', "radial_open")
+		choices["disinfect"] = icon('icons/mob/radial.dmi', "radial_disinfect")
+		choices["lock"] = icon('icons/mob/radial.dmi', "radial_lock")
 
 	var/choice = show_radial_menu(
 		user,
 		src,
 		choices,
 		custom_check = CALLBACK(src, .proc/check_interactable, user),
-		require_near = !issilicon(user),
 	)
 
 	if (!choice)
@@ -258,7 +257,7 @@
 			if (!state_open)
 				open_machine(drop = FALSE)
 				if (occupant)
-					dump_inventory_contents()
+					dump_contents()
 		if ("close")
 			if (state_open)
 				close_machine()
@@ -280,14 +279,13 @@
 			if (item_to_dispense)
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
-			else
-				var/obj/item/in_hands = user.get_active_held_item()
-				if (in_hands)
-					attackby(in_hands, user)
 
 	interact(user)
 
 /obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
+	if (state_open && !powered())
+		return FALSE
+
 	if (!state_open && !can_interact(user))
 		return FALSE
 
@@ -310,7 +308,7 @@
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.body_position == LYING_DOWN)
+		if(!(L.mobility_flags & MOBILITY_STAND))
 			return
 	var/mob/living/target = A
 	if(!state_open)
@@ -353,7 +351,7 @@
 		uv = TRUE
 		locked = TRUE
 		update_icon()
-		if(mob_occupant)
+		if(occupant)
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -380,7 +378,7 @@
 			// The wires get damaged too.
 			wires.cut_all()
 		else
-			if(!mob_occupant)
+			if(!occupant)
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
@@ -399,15 +397,15 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.GetAllContents()
-			if(mob_occupant)
-				things_to_clear += mob_occupant
-				things_to_clear += mob_occupant.GetAllContents()
+			if(occupant)
+				things_to_clear += occupant
+				things_to_clear += occupant.GetAllContents()
 			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				var/atom/movable/dirty_movable = am
 				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
-		if(mob_occupant)
-			dump_inventory_contents()
+		if(occupant)
+			dump_contents()
 
 /obj/machinery/suit_storage_unit/process(delta_time)
 	if(!suit)
@@ -436,12 +434,12 @@
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open_machine()
-	dump_inventory_contents()
+	dump_contents()
 
 /obj/machinery/suit_storage_unit/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
-		dump_inventory_contents()
+		dump_contents()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -454,7 +452,7 @@
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
-		dump_inventory_contents()
+		dump_contents()
 
 	add_fingerprint(user)
 	if(locked)
@@ -463,7 +461,7 @@
 		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
 	else
 		open_machine()
-		dump_inventory_contents()
+		dump_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
@@ -513,7 +511,7 @@
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
 	if(default_pry_open(I))
-		dump_inventory_contents()
+		dump_contents()
 		return
 
 	return ..()

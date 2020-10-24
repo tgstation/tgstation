@@ -14,8 +14,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/template_noop,
-/area/template_noop)
+/turf/open/space/basic,
+/area/space)
 "e" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Shuttle Airlock"

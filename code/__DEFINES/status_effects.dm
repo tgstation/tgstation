@@ -108,8 +108,6 @@
 #define STATUS_EFFECT_HELDUP /datum/status_effect/heldup // someone is currently pointing a gun at you
 
 #define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
-
-#define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
 /////////////
 //  SLIME  //
 /////////////
@@ -120,8 +118,6 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
-
-#define STASIS_ASCENSION_EFFECT "heretic_ascension"
 
 // Stasis helpers
 

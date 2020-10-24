@@ -304,7 +304,7 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
+	if(!istype(user) || user.incapacitated() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -353,17 +353,15 @@
 		return
 	container_resist_act(user)
 
-
 /obj/structure/closet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
+	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
-
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -374,8 +372,7 @@
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
-	if(attack_hand(user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return attack_hand(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)
@@ -471,7 +468,7 @@
 			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 							"<span class='hear'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, "sparks", 50, TRUE)
 		broken = TRUE
 		locked = FALSE
 		update_icon()

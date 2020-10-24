@@ -32,6 +32,7 @@
 		/datum/reagent/potassium,
 		/datum/reagent/uranium/radium,
 		/datum/reagent/silicon,
+		/datum/reagent/silver,
 		/datum/reagent/sodium,
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
@@ -79,8 +80,7 @@
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	. = TRUE
 	switch(action)

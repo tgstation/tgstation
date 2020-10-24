@@ -52,8 +52,7 @@
 	return data
 
 /datum/robot_control/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	if(!is_interactable(usr))
 		return

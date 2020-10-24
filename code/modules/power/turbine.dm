@@ -266,13 +266,12 @@
 	return data
 
 /obj/machinery/power/turbine/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor?.turbine)
+			if(compressor && compressor.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")
@@ -328,13 +327,12 @@
 	return data
 
 /obj/machinery/computer/turbine_computer/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor?.turbine)
+			if(compressor && compressor.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")

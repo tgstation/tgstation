@@ -11,7 +11,6 @@
 	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "NtosNetDownloader"
-	program_icon = "download"
 
 	var/datum/computer_file/program/downloaded_file = null
 	var/hacked_download = FALSE
@@ -105,9 +104,8 @@
 	download_completion += download_netspeed
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 	switch(action)
 		if("PRG_downloadfile")
 			if(!downloaded_file)
@@ -150,7 +148,7 @@
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
 		// Only those programs our user can run will show in the list
-		if(hard_drive.find_file_by_name(P.filename))
+		if(!P.can_run(user,transfer = 1, access = access) || hard_drive.find_file_by_name(P.filename))
 			continue
 		all_entries.Add(list(list(
 			"filename" = P.filename,
@@ -158,7 +156,6 @@
 			"fileinfo" = P.extended_desc,
 			"compatibility" = check_compatibility(P),
 			"size" = P.size,
-			"access" = P.can_run(user,transfer = 1, access = access)
 		)))
 	data["hackedavailable"] = FALSE
 	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
@@ -172,9 +169,7 @@
 				"filename" = P.filename,
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
-				"compatibility" = check_compatibility(P),
 				"size" = P.size,
-				"access" = TRUE,
 			)))
 		data["hacked_programs"] = hacked_programs
 
@@ -185,7 +180,7 @@
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
 	var/hardflag = computer.hardware_flag
 
-	if(P?.is_supported_by_hardware(hardflag,0))
+	if(P && P.is_supported_by_hardware(hardflag,0))
 		return "Compatible"
 	return "Incompatible!"
 

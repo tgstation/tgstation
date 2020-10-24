@@ -471,12 +471,12 @@
 
 /datum/objective/revenant_fluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
-									 "Impersonate or be worshipped as a god.", \
+									 "Avoid killing in plain sight.", \
 									 "Cause as much chaos and anger as you can without being killed.", \
 									 "Damage and render as much of the station rusted and unusable as possible.", \
 									 "Disable and cause malfunctions in as many machines as possible.", \
 									 "Ensure that any holy weapons are rendered unusable.", \
-									 "Heed and obey the requests of the dead, provided that carrying them out wouldn't be too inconvenient or self-destructive.", \
+									 "Hinder the crew while attempting to avoid being noticed.", \
 									 "Make the crew as miserable as possible.", \
 									 "Make the clown as miserable as possible.", \
 									 "Make the captain as miserable as possible.", \

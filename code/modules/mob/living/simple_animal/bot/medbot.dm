@@ -93,7 +93,7 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+	if(IsStun() || IsParalyzed())
 		icon_state = "medibota"
 		return
 	if(mode == BOT_HEALING)
@@ -116,6 +116,9 @@
 	if(damagetype_healer == "all")
 		return
 
+/mob/living/simple_animal/bot/medbot/update_mobility()
+	. = ..()
+	update_icon()
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -218,7 +221,7 @@
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, "sparks", 75, TRUE)
 		if(user)
 			oldpatient = user
 
@@ -242,7 +245,7 @@
 		return
 
 /mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
+	mobility_flags &= ~MOBILITY_MOVE
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 	user.visible_message("<span class='danger'>[user] tips over [src]!</span>", "<span class='danger'>You tip [src] over!</span>")
 	mode = BOT_TIPPED
@@ -251,7 +254,7 @@
 	tipper_name = user.name
 
 /mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
+	mobility_flags |= MOBILITY_MOVE
 	var/list/messagevoice
 
 	if(user)

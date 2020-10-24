@@ -78,8 +78,8 @@
 /area/shuttle/escape/luxury)
 "ap" = (
 /obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	dir = 4
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
@@ -155,7 +155,7 @@
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "aC" = (
-/obj/item/food/enchiladas{
+/obj/item/reagent_containers/food/snacks/enchiladas{
 	pixel_y = 3
 	},
 /obj/structure/table/wood/fancy/black,
@@ -169,7 +169,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aE" = (
-/obj/item/food/benedict{
+/obj/item/reagent_containers/food/snacks/benedict{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
@@ -183,21 +183,21 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aG" = (
-/obj/item/food/eggplantparm{
+/obj/item/reagent_containers/food/snacks/eggplantparm{
 	pixel_y = 3
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aH" = (
-/obj/item/food/spaghetti/copypasta{
+/obj/item/reagent_containers/food/snacks/spaghetti/copypasta{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aI" = (
-/obj/item/food/spaghetti/boiledspaghetti{
+/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -211,14 +211,14 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aK" = (
-/obj/item/food/spaghetti/meatballspaghetti{
+/obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aL" = (
-/obj/item/food/notasandwich{
+/obj/item/reagent_containers/food/snacks/notasandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
@@ -226,8 +226,8 @@
 /area/shuttle/escape/luxury)
 "aM" = (
 /obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
+	icon_state = "comfychair";
+	dir = 4
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -253,7 +253,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aQ" = (
-/obj/item/food/bearsteak{
+/obj/item/reagent_containers/food/snacks/bearsteak{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -274,42 +274,42 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "aT" = (
-/obj/item/food/spaghetti/pastatomato{
+/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aU" = (
-/obj/item/food/kebab/tofu{
+/obj/item/reagent_containers/food/snacks/kebab/tofu{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aV" = (
-/obj/item/food/honkdae{
+/obj/item/reagent_containers/food/snacks/honkdae{
 	pixel_y = 8
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aW" = (
-/obj/item/food/spaghetti/chowmein{
+/obj/item/reagent_containers/food/snacks/spaghetti/chowmein{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aX" = (
-/obj/item/food/grilledcheese{
+/obj/item/reagent_containers/food/snacks/grilledcheese{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aY" = (
-/obj/item/food/jelliedtoast/cherry{
+/obj/item/reagent_containers/food/snacks/jelliedtoast/cherry{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -323,7 +323,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "ba" = (
-/obj/item/food/pizza/dank{
+/obj/item/reagent_containers/food/snacks/customizable/pizza{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -454,8 +454,8 @@
 	layer = 2.9
 	},
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bx" = (
@@ -522,8 +522,8 @@
 "bG" = (
 /obj/machinery/door/window/eastleft,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bH" = (
@@ -562,8 +562,8 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	icon_state = "sandwater_t";
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bN" = (

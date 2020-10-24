@@ -43,7 +43,7 @@
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
-		LAZYADD(component_parts, cell)
+		component_parts += cell
 		cell = null
 	return ..()
 
@@ -201,10 +201,8 @@
 	return data
 
 /obj/machinery/space_heater/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("power")
 			on = !on

@@ -27,4 +27,5 @@
 /obj/item/clothing/gloves/butchering/proc/butcher_target(mob/user, atom/target, proximity)
 	if(!isliving(target))
 		return
-	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user) & COMPONENT_ITEM_NO_ATTACK)
+		return COMPONENT_NO_ATTACK_HAND

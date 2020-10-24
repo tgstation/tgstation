@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			try_to_connect(D)
 			return TRUE
 		if("deactivate")
-			if(G?.target)
+			if(G && G.target)
 				G.deactivate()
 			return TRUE
 

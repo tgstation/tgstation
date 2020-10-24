@@ -10,30 +10,30 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 4,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/margherita
+	result = /obj/item/reagent_containers/food/snacks/pizza/margherita
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/meatpizza
 	name = "Meat pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/food/meat/cutlet = 4,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 4,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/meat
+	result = /obj/item/reagent_containers/food/snacks/pizza/meat
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/arnold
 	name = "Arnold pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/food/meat/cutlet = 3,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 3,
 		/obj/item/ammo_casing/c9mm = 8,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/arnold
+	result = /obj/item/reagent_containers/food/snacks/pizza/arnold
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/mushroompizza
@@ -42,7 +42,7 @@
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom = 5
 	)
-	result = /obj/item/food/pizza/mushroom
+	result = /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/vegetablepizza
@@ -54,7 +54,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/vegetable
+	result = /obj/item/reagent_containers/food/snacks/pizza/vegetable
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/donkpocketpizza
@@ -65,7 +65,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/donkpocket
+	result = /obj/item/reagent_containers/food/snacks/pizza/donkpocket
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/dankpizza
@@ -76,28 +76,28 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/dank
+	result = /obj/item/reagent_containers/food/snacks/pizza/dank
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/sassysagepizza
 	name = "Sassysage pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/food/meatball = 3,
+		/obj/item/reagent_containers/food/snacks/meatball = 3,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/sassysage
+	result = /obj/item/reagent_containers/food/snacks/pizza/sassysage
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/pineapplepizza
 	name = "Hawaiian pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/food/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/pineappleslice = 3,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
-	result = /obj/item/food/pizza/pineapple
+	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple
 	subcategory = CAT_PIZZA

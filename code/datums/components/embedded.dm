@@ -136,7 +136,7 @@
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
-	else if(victim.body_position == LYING_DOWN)
+	else if(victim.mobility_flags & ~MOBILITY_STAND)
 		pain_chance_current *= 0.2
 
 	if(harmful && prob(pain_chance_current))
@@ -144,7 +144,7 @@
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
-	if(victim.body_position == LYING_DOWN)
+	if(victim.mobility_flags & ~MOBILITY_STAND)
 		fall_chance_current *= 0.2
 
 	if(prob(fall_chance_current))
@@ -161,7 +161,7 @@
 
 	var/mob/living/carbon/victim = parent
 	var/chance = jostle_chance
-	if(victim.m_intent == MOVE_INTENT_WALK || victim.body_position == LYING_DOWN)
+	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
 		chance *= 0.5
 
 	if(harmful && prob(chance))

@@ -10,10 +10,10 @@
 	name = "Sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/food/meat/steak = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1
 	)
-	result = /obj/item/food/sandwich
+	result = /obj/item/reagent_containers/food/snacks/sandwich
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/grilledcheesesandwich
@@ -22,7 +22,7 @@
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
 	)
-	result = /obj/item/food/grilledcheese
+	result = /obj/item/reagent_containers/food/snacks/grilledcheese
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/slimesandwich
@@ -31,7 +31,7 @@
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/food/breadslice/plain = 2,
 	)
-	result = /obj/item/food/jellysandwich/slime
+	result = /obj/item/reagent_containers/food/snacks/jellysandwich/slime
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/cherrysandwich
@@ -40,7 +40,7 @@
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/food/breadslice/plain = 2,
 	)
-	result = /obj/item/food/jellysandwich/cherry
+	result = /obj/item/reagent_containers/food/snacks/jellysandwich/cherry
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/notasandwich
@@ -49,7 +49,7 @@
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/clothing/mask/fakemoustache = 1
 	)
-	result = /obj/item/food/notasandwich
+	result = /obj/item/reagent_containers/food/snacks/notasandwich
 	subcategory = CAT_SANDWICH
 
 

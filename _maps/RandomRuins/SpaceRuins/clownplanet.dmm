@@ -168,7 +168,6 @@
 	},
 /area/ruin/powered/clownplanet)
 "aI" = (
-/obj/item/gps/spaceruin,
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered/clownplanet)

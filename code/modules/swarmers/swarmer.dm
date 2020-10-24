@@ -243,7 +243,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/victim = target
 		if(!victim.handcuffed)
-			victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(victim))
+			victim.handcuffed = new /obj/item/restraints/handcuffs/energy/used(victim)
 			victim.update_handcuffed()
 			log_combat(src, victim, "handcuffed")
 
@@ -283,7 +283,7 @@
 		disintegration_effect.pixel_x = target.pixel_x
 		disintegration_effect.pixel_y = target.pixel_y
 		disintegration_effect.pixel_z = target.pixel_z
-		target.dump_contents()
+		target.dropContents()
 		if(istype(target, /obj/machinery/computer))
 			var/obj/machinery/computer/computer_target = target
 			if(computer_target.circuit)

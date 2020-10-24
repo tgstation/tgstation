@@ -217,7 +217,7 @@
 
 /datum/objective_item/special/corgimeat
 	name = "a piece of corgi meat."
-	targetitem = /obj/item/food/meat/slab/corgi
+	targetitem = /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	difficulty = 5
 
 /datum/objective_item/stack/New()

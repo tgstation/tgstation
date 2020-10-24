@@ -24,8 +24,8 @@ export const AtmosTempGate = (props, context) => {
                 value={parseFloat(data.temperature)}
                 unit="K"
                 width="75px"
-                minValue={data.min_temperature}
-                maxValue={data.max_temperature}
+                minValue={3}
+                maxValue={4500}
                 step={1}
                 onChange={(e, value) => act('temperature', {
                   temperature: value,

@@ -30,7 +30,7 @@
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
-	if(chambered?.BB)
+	if(chambered && chambered.BB)
 		process_fire(user, user, FALSE)
 		. = 1
 

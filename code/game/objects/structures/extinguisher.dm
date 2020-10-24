@@ -93,16 +93,15 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(stored_extinguisher)
 		stored_extinguisher.forceMove(loc)
 		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
 		stored_extinguisher = null
-		opened = TRUE
+		opened = 1
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
-		return
-	toggle_cabinet(user)
+	else
+		toggle_cabinet(user)
 
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)

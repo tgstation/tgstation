@@ -1,5 +1,3 @@
-#define DEFAULT_WHO_CELLS_PER_ROW 4
-
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
@@ -7,11 +5,9 @@
 	var/msg = "<b>Current Players:</b>\n"
 
 	var/list/Lines = list()
-	var/columns_per_row = DEFAULT_WHO_CELLS_PER_ROW
 
 	if(holder)
 		if (check_rights(R_ADMIN,0) && isobserver(src.mob))//If they have +ADMIN and are a ghost they can see players IC names and statuses.
-			columns_per_row = 1
 			var/mob/dead/observer/G = src.mob
 			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
 				log_admin("[key_name(usr)] checked advanced who in-round")
@@ -42,7 +38,7 @@
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
 			for(var/client/C in GLOB.clients)
-				var/entry = "[C.key]"
+				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
 				entry += " ([round(C.avgping, 1)]ms)"
@@ -54,16 +50,8 @@
 			else
 				Lines += "[C.key] ([round(C.avgping, 1)]ms)"
 
-	var/num_lines = 0
-	msg += "<table style='width: 100%; table-layout: fixed'><tr>"
 	for(var/line in sortList(Lines))
-		msg += "<td>[line]</td>"
-
-		num_lines += 1
-		if (num_lines == columns_per_row)
-			num_lines = 0
-			msg += "</tr><tr>"
-	msg += "</tr></table>"
+		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, msg)
@@ -99,4 +87,3 @@
 		msg += "<span class='info'>Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game adminhelp anyways and an admin will see it and respond.</span>"
 	to_chat(src, msg)
 
-#undef DEFAULT_WHO_CELLS_PER_ROW

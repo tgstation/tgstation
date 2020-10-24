@@ -186,10 +186,8 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		hit_limb = L.check_limb_hit(def_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
-
-	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
-		return
+	if(SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb) & COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
+		return BULLET_ACT_HIT
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -249,7 +247,7 @@
 		L.on_hit(src)
 
 	var/reagent_note
-	if(reagents?.reagent_list)
+	if(reagents && reagents.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
 			reagent_note += "[R.name] ([num2text(R.volume)])"
@@ -629,11 +627,12 @@
 			return FALSE
 	else
 		var/mob/living/L = target
-		if(direct_target)
-			return TRUE
-		// If target not able to use items, move and stand - or if they're just dead, pass over.
-		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
-			return FALSE
+		if(!direct_target)
+			var/checking = NONE
+			if(!hit_stunned_targets)
+				checking = MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE
+			if(!(L.mobility_flags & checking) || L.stat == DEAD)		// If target not able to use items, move and stand - or if they're just dead, pass over.
+				return FALSE
 	return TRUE
 
 //Spread is FORCED!

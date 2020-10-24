@@ -43,20 +43,11 @@ export const NtosNetDownloader = (props, context) => {
           </LabeledList>
         </Section>
         <Section>
-          {downloadable_programs
-            .filter(program => program.access)
-            .map(program => (
-              <Program
-                key={program.filename}
-                program={program} />
-            ))}
-          {downloadable_programs
-            .filter(program => !program.access)
-            .map(program => (
-              <Program
-                key={program.filename}
-                program={program} />
-            ))}
+          {downloadable_programs.map(program => (
+            <Program
+              key={program.filename}
+              program={program} />
+          ))}
         </Section>
         {!!hackedavailable && (
           <Section title="UNKNOWN Software Repository">
@@ -109,9 +100,7 @@ const Program = (props, context) => {
               fluid
               icon="download"
               content="Download"
-              disabled={
-                downloading || program.size > disk_free || !program.access
-              }
+              disabled={downloading || program.size > disk_free}
               onClick={() => act('PRG_downloadfile', {
                 filename: program.filename,
               })} />
@@ -122,12 +111,6 @@ const Program = (props, context) => {
         <Box mt={1} italic fontSize="12px" position="relative">
           <Icon mx={1} color="red" name="times" />
           Incompatible!
-        </Box>
-      )}
-      {!(program.access) && (
-        <Box mt={1} italic fontSize="12px" position="relative">
-          <Icon mx={1} color="red" name="times" />
-          Invalid credentials loaded!
         </Box>
       )}
       {program.size > disk_free && (
