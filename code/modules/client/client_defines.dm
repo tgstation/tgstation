@@ -7,6 +7,8 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
 	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
  	///Needs to implement InterceptClickOn(user,params,atom) proc
@@ -101,9 +103,6 @@
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
-	///goonchat chatoutput of the client
-	var/datum/chat_output/chatOutput
-
  	///lazy list of all credit object bound to this client
 	var/list/credits
 
@@ -141,7 +140,20 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	/// datum wrapper for client view
 	var/datum/view_data/view_size
+
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
+	/// list of tabs containing spells and abilities
+	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
 	var/list/recent_examines
 
@@ -158,6 +170,8 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 4
 	var/parallax_animate_timer
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
@@ -177,3 +191,14 @@
 
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
+
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub

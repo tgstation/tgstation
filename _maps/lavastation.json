@@ -1,0 +1,27 @@
+{
+   "map_name":"LavaStation",
+   "map_path":"map_files/Lavastation",
+   "map_file":[
+      "Lavastation.dmm"
+   ],
+   "space_ruin_levels":0,
+   "space_empty_levels":0,
+   "shuttles":{
+      "cargo":"cargo_box",
+      "ferry":"ferry_fancy",
+      "whiteship":"whiteship_box",
+      "emergency":"emergency_lava"
+   },
+   "traits":[
+      {
+         "Mining":true,
+		 "Station":false,
+         "Linkage":null,
+         "Gravity":true,
+         "Lava Ruins":true,
+         "Weather_Ashstorm":true,
+         "Baseturf":"/turf/open/lava/smooth/lava_land_surface"
+      }
+   ],
+   "minetype":"none"
+}

@@ -34,7 +34,7 @@
     'border-color': #fff,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
 
@@ -42,7 +42,7 @@
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #381608,
+    'background-color': #381608,
   ));
 
   .Button {

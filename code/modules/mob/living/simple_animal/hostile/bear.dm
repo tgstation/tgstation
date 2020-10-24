@@ -51,12 +51,16 @@
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/bear/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
 	if(!rideable && mind)
 		can_buckle = TRUE
-		buckle_lying = FALSE
+		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
 		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -146,6 +150,9 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/butter = 6, /obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
 	attack_verb_continuous = "slaps"
+
+/mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
+	return //You cannot grow a real bear from butter.
 
 /mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
 	if(stat)

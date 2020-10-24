@@ -1450,7 +1450,7 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/burger/bearger,
+/obj/item/food/burger/bearger,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},

@@ -16,7 +16,7 @@
 "ae" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "af" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -286,7 +286,7 @@
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "ba" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/djstation)
@@ -355,7 +355,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "Co" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station"

@@ -4,7 +4,7 @@
 
 
 /datum/keybinding/mob/face_north
-	hotkey_keys = list("CtrlW", "CtrlNorth")
+	hotkey_keys = list("AltW", "AltNorth")
 	name = "face_north"
 	full_name = "Face North"
 	description = ""
@@ -20,7 +20,7 @@
 
 
 /datum/keybinding/mob/face_east
-	hotkey_keys = list("CtrlD", "CtrlEast")
+	hotkey_keys = list("AltD", "AltEast")
 	name = "face_east"
 	full_name = "Face East"
 	description = ""
@@ -36,7 +36,7 @@
 
 
 /datum/keybinding/mob/face_south
-	hotkey_keys = list("CtrlS", "CtrlSouth")
+	hotkey_keys = list("AltS", "AltSouth")
 	name = "face_south"
 	full_name = "Face South"
 	description = ""
@@ -51,7 +51,7 @@
 	return TRUE
 
 /datum/keybinding/mob/face_west
-	hotkey_keys = list("CtrlA", "CtrlWest")
+	hotkey_keys = list("AltA", "AltWest")
 	name = "face_west"
 	full_name = "Face West"
 	description = ""
@@ -165,7 +165,7 @@
 	return TRUE
 
 /datum/keybinding/mob/toggle_move_intent
-	hotkey_keys = list("Alt")
+	hotkey_keys = list("C")
 	name = "toggle_move_intent"
 	full_name = "Hold to toggle move intent"
 	description = "Held down to cycle to the other move intent, release to cycle back"
@@ -296,3 +296,22 @@
 		return
 	user.body_l_leg()
 	return TRUE
+
+/datum/keybinding/mob/prevent_movement
+	hotkey_keys = list("Alt")
+	name = "block_movement"
+	full_name = "Block movement"
+	description = "Prevents you from moving"
+	keybind_signal = COMSIG_KB_MOB_BLOCKMOVEMENT_DOWN
+
+/datum/keybinding/mob/prevent_movement/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.movement_locked = TRUE
+
+/datum/keybinding/mob/prevent_movement/up(client/user)
+	. = ..()
+	if(.)
+		return
+	user.movement_locked = FALSE

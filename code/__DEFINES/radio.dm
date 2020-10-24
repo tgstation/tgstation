@@ -37,6 +37,9 @@
 #define RADIO_KEY_AI_PRIVATE "o"
 #define RADIO_TOKEN_AI_PRIVATE ":o"
 
+#define RADIO_CHANNEL_BANGERS "Rythm Heaven"
+#define RADIO_KEY_BANGERS "r"
+#define RADIO_TOKEN_BANGERS ":r"
 
 #define RADIO_CHANNEL_SYNDICATE "Syndicate"
 #define RADIO_KEY_SYNDICATE "t"
@@ -84,6 +87,7 @@
 #define FREQ_LOCATOR_IMPLANT 1451
 #define FREQ_SIGNALER 1457  // the default for new signalers
 #define FREQ_COMMON 1459  // Common comms frequency, dark green
+#define FREQ_BANGERS 1467 // Tunes, light green
 
 #define MAX_FREQ 1489 // ------------------------------------------------------
 

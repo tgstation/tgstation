@@ -251,7 +251,7 @@
 //Nuke Disk Finder App//
 ////////////////////////
 
-///A program that tracks crew members via suit sensors
+///A program that tracks nukes and nuclear accessories
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
@@ -275,8 +275,6 @@
 	objects = list()
 	for(var/i in GLOB.nuke_list)
 		var/obj/machinery/nuclearbomb/nuke = i
-		if(!trackable(nuke))
-			continue
 
 		var/list/nukeinfo = list(
 			ref = REF(nuke),
@@ -284,9 +282,8 @@
 			)
 		objects += list(nukeinfo)
 	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
-	if(trackable(disk))
-		var/list/nukeinfo = list(
-			ref = REF(disk),
-			name = disk.name,
-			)
-		objects += list(nukeinfo)
+	var/list/nukeinfo = list(
+		ref = REF(disk),
+		name = "Nuke Auth. Disk",
+		)
+	objects += list(nukeinfo)

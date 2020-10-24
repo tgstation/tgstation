@@ -24,7 +24,6 @@
 	health = 50
 	maxHealth = 50
 	speed = 10
-	glide_size = 2
 	held_state = "sloth"
 	pet_bonus = TRUE
 	pet_bonus_emote = "slowly smiles!"

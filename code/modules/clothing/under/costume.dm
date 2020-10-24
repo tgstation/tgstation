@@ -256,7 +256,7 @@
 	inhand_icon_state = "hostanclothes"
 	worn_icon =  'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30)
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -364,6 +364,18 @@ obj/item/clothing/under/costume/servicesuit
 	desc = "If the King finds out you stole this you're FUCKED."
 	icon_state = "stranger"
 	inhand_icon_state = "stranger"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	can_adjust = FALSE
+	resistance_flags = NONE
+	strip_delay = 99180
+	can_be_bloody = FALSE
+
+/obj/item/clothing/under/costume/voidstranger
+	name = "flesh gift"
+	desc = "This is just a test. Don't disappoint."
+	icon_state = "void"
+	inhand_icon_state = "void"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	can_adjust = FALSE

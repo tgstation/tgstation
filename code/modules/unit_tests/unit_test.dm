@@ -24,6 +24,7 @@ GLOBAL_VAR(test_log)
 	var/turf/run_loc_top_right
 
 	//internal shit
+	var/focus = FALSE
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
@@ -66,7 +67,14 @@ GLOBAL_VAR(test_log)
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	for(var/I in subtypesof(/datum/unit_test))
+	var/tests_to_run = subtypesof(/datum/unit_test)
+	for (var/_test_to_run in tests_to_run)
+		var/datum/unit_test/test_to_run = _test_to_run
+		if (initial(test_to_run.focus))
+			tests_to_run = list(test_to_run)
+			break
+
+	for(var/I in tests_to_run)
 		var/datum/unit_test/test = new I
 
 		GLOB.current_test = test

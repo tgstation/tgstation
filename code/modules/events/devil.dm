@@ -26,11 +26,11 @@
 	var/mob/dead/selected_candidate = pick_n_take(candidates)
 	var/key = selected_candidate.key
 
-	var/datum/mind/Mind = create_devil_mind(key)
-	Mind.active = 1
+	var/datum/mind/mind = create_devil_mind(key)
+	mind.active = TRUE
 
 	var/mob/living/carbon/human/devil = create_event_devil()
-	Mind.transfer_to(devil)
+	mind.transfer_to(devil)
 	add_devil(devil, ascendable = FALSE)
 
 	spawned_mobs += devil

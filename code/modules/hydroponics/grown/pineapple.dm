@@ -22,7 +22,8 @@
 	force = 4
 	throwforce = 8
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("stung", "pined")
+	attack_verb_continuous = list("stings", "pines")
+	attack_verb_simple = list("sting", "pine")
 	throw_speed = 1
 	throw_range = 5
 	slice_path = /obj/item/reagent_containers/food/snacks/pineappleslice

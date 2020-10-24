@@ -98,6 +98,10 @@
 			B.desc = "Happy, Full, Clean. Live it and give it."
 		if("subgenius")
 			B.name = "Book of the SubGenius"
+		if("nine divines","eight and one")
+			B.name = pick("The Talos Mistake", "Ten Commands: Nine Divines", "A Dream of Sovngarde", "Divines and the Nords")
+			B.deity_name = pick("Talos", "Akatosh", "Dibella", "Julianos", "Kynareth", "Mara", "Stendarr", "Zenithar")
+			B.desc = "By the Nine!"
 		if("toolboxia","greytide")
 			B.name = pick("Toolbox Manifesto","iGlove Assistants")
 		if("weeaboo","kawaii")

@@ -56,10 +56,9 @@
 
 	var/tod = null /// Time of death
 
-	var/on_fire = 0 ///The "Are we on fire?" var
+	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
-	var/holder = null //The holder for blood crawling
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
@@ -67,6 +66,20 @@
 	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/has_limbs = 0 ///does the mob have distinct limbs?(arms,legs, chest,head)
+
+	///How many legs does this mob have by default. This shouldn't change at runtime.
+	var/default_num_legs = 2
+	///How many legs does this mob currently have. Should only be changed through set_num_legs()
+	var/num_legs = 2
+	///How many usable legs this mob currently has. Should only be changed through set_usable_legs()
+	var/usable_legs = 2
+
+	///How many hands does this mob have by default. This shouldn't change at runtime.
+	var/default_num_hands = 2
+	///How many hands hands does this mob currently have. Should only be changed through set_num_hands()
+	var/num_hands = 2
+	///How many usable hands does this mob currently have. Should only be changed through set_usable_hands()
+	var/usable_hands = 2
 
 	var/list/pipes_shown = list()
 	var/last_played_vent

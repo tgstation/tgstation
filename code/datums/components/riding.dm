@@ -7,6 +7,9 @@
 	var/slowed = FALSE
 	var/slowvalue = 1
 
+	///Bool to check if you gain the ridden mob's abilities.
+	var/can_use_abilities = FALSE
+
 	var/list/riding_offsets = list()	//position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
 	var/list/directional_vehicle_layers = list()	//["[DIRECTION]"] = layer. Don't set it for a direction for default, set a direction to null for no change.
 	var/list/directional_vehicle_offsets = list()	//same as above but instead of layer you have a list(px, py)
@@ -34,15 +37,49 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+
 	var/atom/movable/AM = parent
+	remove_abilities(M)
 	restore_position(M)
 	unequip_buckle_inhands(M)
+	M.updating_glide_size = TRUE
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+
 	var/atom/movable/movable_parent = parent
+	M.set_glide_size(movable_parent.glide_size)
+	M.updating_glide_size = FALSE
 	handle_vehicle_offsets(movable_parent.dir)
+	if(can_use_abilities)
+		setup_abilities(M)
+
+///Gives the rider the riding parent's abilities
+/datum/component/riding/proc/setup_abilities(mob/living/M)
+
+	if(!istype(parent, /mob/living))
+		return
+
+	var/mob/living/ridden_creature = parent
+
+	for(var/i in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = i
+		M.AddAbility(proc_holder)
+
+///Takes away the riding parent's abilities from the rider
+/datum/component/riding/proc/remove_abilities(mob/living/M)
+
+	if(!istype(parent, /mob/living))
+		return
+
+	var/mob/living/ridden_creature = parent
+
+	for(var/i in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = i
+		M.RemoveAbility(proc_holder)
 
 /datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
@@ -58,15 +95,22 @@
 	directional_vehicle_layers["[dir]"] = layer
 
 /datum/component/riding/proc/vehicle_moved(datum/source, dir)
+	SIGNAL_HANDLER
+
 	var/atom/movable/movable_parent = parent
 	if (isnull(dir))
 		dir = movable_parent.dir
-	for (var/buckled_mob in movable_parent.buckled_mobs)
-		ride_check(buckled_mob)
+	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
+	for (var/m in movable_parent.buckled_mobs)
+		ride_check(m)
+		var/mob/buckled_mob = m
+		buckled_mob.set_glide_size(movable_parent.glide_size)
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
 
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	vehicle_moved(source, new_dir)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
@@ -211,7 +255,7 @@
 	return override_allow_spacemove || AM.has_gravity()
 
 /datum/component/riding/proc/account_limbs(mob/living/M)
-	if(M.get_num_legs() < 2 && !slowed)
+	if(M.usable_legs < 2 && !slowed)
 		vehicle_move_delay = vehicle_move_delay + slowvalue
 		slowed = TRUE
 	else if(slowed)
@@ -238,6 +282,8 @@
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/human/H = parent
 	if(H.a_intent == INTENT_DISARM && (target in H.buckled_mobs))
 		force_dismount(target)
@@ -292,7 +338,7 @@
 			return
 	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
-		if(!carbonuser.get_num_arms())
+		if(!carbonuser.usable_hands)
 			Unbuckle(user)
 			to_chat(user, "<span class='warning'>You can't grab onto [AM] with no hands!</span>")
 			return

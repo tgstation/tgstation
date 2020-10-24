@@ -57,7 +57,7 @@
 		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
-			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/vehicle/sealed/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -74,7 +74,7 @@
 		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		else if(stat == UNCONSCIOUS)
+		else if(stat >= UNCONSCIOUS)
 			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 

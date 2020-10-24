@@ -172,7 +172,7 @@
 	icon_state = null
 	damage = 40
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	range = 3
 	log_override = TRUE
 

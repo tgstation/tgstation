@@ -16,6 +16,7 @@
 					/obj/item/kitchen/rollingpin = 2,
 					/obj/item/kitchen/knife = 2,
 					/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2,
+					/obj/item/reagent_containers/syringe/whippedcream = 3,
 					/obj/item/clothing/neck/chefbandana = 2)
 	contraband = list(/obj/item/kitchen/rollingpin = 2,
 					  /obj/item/kitchen/knife/butcher = 2)

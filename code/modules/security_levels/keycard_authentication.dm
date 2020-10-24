@@ -20,7 +20,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
-	var/waiting = 0
+	var/waiting = FALSE
 
 /obj/machinery/keycard_auth/Initialize()
 	. = ..()
@@ -82,14 +82,14 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr
 	event = event_type
-	waiting = 1
+	waiting = TRUE
 	GLOB.keycard_events.fireEvent("triggerEvent", src)
 	addtimer(CALLBACK(src, .proc/eventSent), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
 	event = ""
-	waiting = 0
+	waiting = FALSE
 
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"

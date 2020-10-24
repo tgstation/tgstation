@@ -50,7 +50,7 @@
 	if(istype(I,/obj/item/clothing/head/mob_holder))
 		var/obj/item/clothing/head/mob_holder/mausholder = I
 		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
-			return TRUE
+			return
 		return FALSE
 
 /datum/component/storage/concrete/pockets/shoes

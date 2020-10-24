@@ -75,6 +75,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/spray,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
@@ -98,14 +99,14 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
+		/obj/item/shears,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/gun/syringe/syndicate,
@@ -113,7 +114,8 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical
+		/obj/item/holosign_creator/medical,
+		/obj/item/stack/sticky_tape //surgical tape
 		))
 
 /obj/item/storage/firstaid/medical/PopulateContents()
@@ -124,7 +126,7 @@
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen/ekit = 1,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
@@ -300,14 +302,16 @@
 		return
 
 	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
+	if (istype(src, /obj/item/storage/firstaid/fire))
 		A.set_skin("ointment")
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
+	else if (istype(src, /obj/item/storage/firstaid/toxin))
 		A.set_skin("tox")
-	else if(istype(src, /obj/item/storage/firstaid/o2))
+	else if (istype(src, /obj/item/storage/firstaid/o2))
 		A.set_skin("o2")
-	else if(istype(src, /obj/item/storage/firstaid/brute))
+	else if (istype(src, /obj/item/storage/firstaid/brute))
 		A.set_skin("brute")
+	else if (istype(src, /obj/item/storage/firstaid/advanced))
+		A.set_skin("advanced")
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
 	A.robot_arm = S.type
@@ -556,17 +560,17 @@
 	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process()
+/obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/cool = FALSE
-	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
-	if(amount >= 0.1)
-		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
+	if(amount > 0)
+		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
 		cool = TRUE
 	else
-		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
-		if(amount >= 0.3)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
+		if(amount > 0)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE

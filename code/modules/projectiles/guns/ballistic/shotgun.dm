@@ -227,7 +227,7 @@
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = 0
+		slung = FALSE
 		update_icon()
 		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -254,7 +254,8 @@
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
 	force = 16 //it has a hook on it
-	attack_verb = list("slashed", "hooked", "stabbed")
+	attack_verb_continuous = list("slashes", "hooks", "stabs")
+	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook

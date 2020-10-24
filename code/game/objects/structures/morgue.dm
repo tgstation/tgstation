@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/update_icon()
 	return
 
-/obj/structure/bodycontainer/relaymove(mob/user)
+/obj/structure/bodycontainer/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
 		return
 	if(locked)
@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	recursive_organ_check(src)
 	qdel(src)
 
-/obj/structure/bodycontainer/container_resist(mob/living/user)
+/obj/structure/bodycontainer/container_resist_act(mob/living/user)
 	if(!locked)
 		open()
 		return

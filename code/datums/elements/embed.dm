@@ -68,13 +68,15 @@
 
 /// Checking to see if we're gonna embed into a human
 /datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
+	SIGNAL_HANDLER
+
 	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
 	var/actual_chance = embed_chance
 
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
-		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
+		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
 			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
@@ -108,15 +110,21 @@
 
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
+	SIGNAL_HANDLER
+
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
 ///If we don't want to be embeddable anymore (deactivating an e-dagger for instance)
 /datum/element/embed/proc/detachFromWeapon(obj/weapon)
+	SIGNAL_HANDLER
+
 	Detach(weapon)
 
 ///Someone inspected our embeddable item
 /datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(I.isEmbedHarmless())
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
@@ -129,6 +137,8 @@
   *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
   */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
+	SIGNAL_HANDLER
+
 	if(!iscarbon(hit))
 		Detach(P)
 		return // we don't care
@@ -143,7 +153,7 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	payload.tryEmbed(limb)
+	. = payload.tryEmbed(limb)
 	Detach(P)
 
 /**
@@ -159,6 +169,8 @@
   * * forced- if we want this to succeed 100%
   */
 /datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE)
+	SIGNAL_HANDLER
+
 	var/obj/item/bodypart/limb
 	var/mob/living/carbon/C
 

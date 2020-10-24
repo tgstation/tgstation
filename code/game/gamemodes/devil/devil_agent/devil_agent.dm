@@ -40,5 +40,5 @@
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
 		D.objectives += outsellobjective
-		return 1
-	return 0
+		return TRUE
+	return FALSE

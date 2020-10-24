@@ -120,6 +120,11 @@ export const RADIO_CHANNELS = [
     freq: 1459,
     color: '#1ecc43',
   },
+  {
+    name: `Rythm Heaven`,
+    freq: 1467,
+    color: `#a6d5b8`,
+  },
 ];
 
 const GASES = [

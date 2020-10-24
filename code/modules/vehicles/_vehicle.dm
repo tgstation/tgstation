@@ -4,9 +4,10 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
 	max_integrity = 300
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	density = TRUE
 	anchored = FALSE
+	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
 	var/max_occupants = 1
 	var/max_drivers = 1
@@ -107,12 +108,12 @@
 
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
-/obj/vehicle/relaymove(mob/user, direction)
+/obj/vehicle/relaymove(mob/living/user, direction)
 	if(is_driver(user))
 		return driver_move(user, direction)
 	return FALSE
 
-/obj/vehicle/proc/driver_move(mob/user, direction)
+/obj/vehicle/proc/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
@@ -124,9 +125,9 @@
 	return TRUE
 
 /obj/vehicle/proc/vehicle_move(direction)
-	if(lastmove + movedelay > world.time)
+	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	lastmove = world.time
+	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
 		var/did_move = step(src, direction)

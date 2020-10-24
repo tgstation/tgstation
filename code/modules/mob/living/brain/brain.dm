@@ -35,7 +35,7 @@
 	return ..()
 
 /mob/living/brain/update_mobility()
-	if(in_contents_of(/obj/mecha))
+	if(in_contents_of(/obj/vehicle/sealed/mecha))
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	else
 		mobility_flags = NONE
@@ -56,21 +56,14 @@
 	return // no eyes, no flashing
 
 /mob/living/brain/can_be_revived()
-	. = 1
 	if(!container || health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
+	return TRUE
 
 /mob/living/brain/fully_replace_character_name(oldname,newname)
 	..()
 	if(stored_dna)
 		stored_dna.real_name = real_name
-
-/mob/living/brain/ClickOn(atom/A, params)
-	..()
-	if(container)
-		var/obj/mecha/M = container.mecha
-		if(istype(M))
-			return M.click_action(A,src,params)
 
 /mob/living/brain/forceMove(atom/destination)
 	if(container)
@@ -92,7 +85,7 @@
 	if(!container)
 		return
 	if (container.mecha)
-		var/obj/mecha/M = container.mecha
+		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
