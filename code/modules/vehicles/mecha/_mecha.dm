@@ -670,7 +670,7 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
-		if(dir != direction && !(mecha_flags & QUIET_STEPS) && !step_silent)
+		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
 		return TRUE
