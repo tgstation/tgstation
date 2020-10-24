@@ -247,14 +247,17 @@
 
 //Funny wallem additions
 
-/datum/reagent/consumable/whipcream
+/datum/reagent/consumable/whipcream //Just like real whipped cream, made of sugar and milk.
 	name = "Whipped Cream"
 	description = "Cream and Sugar, mixed together to create stiff peaks. Peaks not to be confused for other similarly stiff peaks."
 	color = "#FAF7EF" // rgb: 223, 215, 175
-	taste_description = "sugary and creamy milk"
+	taste_description = "thick, sugary milk"
 	glass_icon_state  = "glass_white"
 	glass_name = "glass of whipped cream"
 	glass_desc = "Full of delicious whipped cream!"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 300 // Hyperglycaemic shock. Still got sugar in it!
 
 /datum/reagent/consumable/whipcream/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
@@ -262,9 +265,14 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/whipcream/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
+	M.AdjustSleeping(600, FALSE)
+	. = 1
+
 /datum/reagent/consumable/naenaecream
 	name = "Nae Nae Cream"
-	description = "Cream and Sugar, mixed along with a little neurotoxin. Don't take too much!"
+	description = "Cream and Sugar, mixed along with some other... substances. Don't take too much!"
 	color = "#F6B6A9" // rgb: 223, 215, 175
 	taste_description = "awestruck dancers"
 	glass_icon_state  = "glass_naenae"
@@ -278,7 +286,7 @@
 		M.Stun(2)
 	..()
 
-/datum/reagent/consumable/naenaecream/proc/pickt()
+/datum/reagent/consumable/naenaecream/proc/picklimb()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
 /datum/reagent/consumable/naenaecream/overdose_process(mob/living/carbon/M)
@@ -291,7 +299,7 @@
 		to_chat(M, "<span class='notice'>Your hands can't hold anything while you're nae naeing!</span>")
 	if(current_cycle > 5)
 		if(prob(35))
-			var/t = pickt()
+			var/t = picklimb()
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)

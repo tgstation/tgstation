@@ -2115,7 +2115,7 @@
 "bcd" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/closed/wall,/area/crew_quarters/kitchen)
 "bce" = (/obj/structure/kitchenspike,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/crew_quarters/kitchen)
 "bcf" = (/obj/machinery/icecream_vat,/obj/structure/extinguisher_cabinet{pixel_y = -32},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/effect/turf_decal/delivery,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/crew_quarters/kitchen)
-"bcg" = (/obj/structure/kitchenspike,/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/crew_quarters/kitchen)
+"bcg" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 1},/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/closet/secure_closet/hose,/turf/open/floor/plasteel,/area/crew_quarters/kitchen)
 "bcj" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/maintenance_hatch{name = "Maintenance Hatch"; req_access_txt = "12"},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/turf/open/floor/plating,/area/maintenance/starboard)
 "bck" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/open/floor/plating{icon_state = "platingdmg1"},/area/maintenance/starboard)
 "bcl" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/floor/plating,/area/maintenance/starboard)

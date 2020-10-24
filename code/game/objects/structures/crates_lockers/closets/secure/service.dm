@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/hose
 	name = "\proper head of service's locker"
 	req_access = list(ACCESS_HOSE)
-	icon_state = "generic"
+	icon_state = "hose"
 
 /obj/structure/closet/secure_closet/hose/PopulateContents()
 	..()
