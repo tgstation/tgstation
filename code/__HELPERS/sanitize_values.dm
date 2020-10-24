@@ -6,6 +6,13 @@
 			return number
 	return default
 
+/proc/sanitize_float(number, min=0, max=1, accuracy=1, default=0)
+	if(isnum(number))
+		number = round(number, accuracy)
+		if(min <= number && number <= max)
+			return number
+	return default
+
 /proc/sanitize_text(text, default="")
 	if(istext(text))
 		return text
