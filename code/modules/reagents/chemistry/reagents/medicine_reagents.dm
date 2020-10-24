@@ -26,6 +26,12 @@
 		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal(apply_change=FALSE))
 	else if(M.bodytemperature < (M.get_body_temp_normal(apply_change=FALSE) + 1))
 		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal(apply_change=FALSE))
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		if(humi.coretemperature > humi.get_body_temp_normal(apply_change=FALSE))
+			humi.adjust_coretemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, humi.get_body_temp_normal(apply_change=FALSE))
+		else if(humi.coretemperature < (humi.get_body_temp_normal(apply_change=FALSE) + 1))
+			humi.adjust_coretemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, humi.get_body_temp_normal(apply_change=FALSE))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
