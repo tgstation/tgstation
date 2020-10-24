@@ -8,7 +8,7 @@ tritfire = -2
 halon_o2removal = -1
 nitrous_decomp = 0
 water_vapor = 1
-nitryl_decomp = 2
+nitryl_decomp = 21
 pluox_formation = 2
 nitrylformation = 3
 bzformation = 4
@@ -543,7 +543,7 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/nitryl_decomposition //The decomposition of nitryl. Exothermic. Requires oxygen as catalyst.
-	priority = 2
+	priority = 21
 	name = "Nitryl Decomposition"
 	id = "nitryl_decomp"
 
