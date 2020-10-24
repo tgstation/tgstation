@@ -36,7 +36,7 @@
 
 			if (do_after(ninja ,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -45,7 +45,7 @@
 
 		if(!(obj_flags & EMAGGED))
 			flick("apc-spark", ninja_gloves)
-			playsound(loc, "sparks", 50, TRUE)
+			playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			update_icon()
@@ -77,7 +77,7 @@
 
 			if (do_after(ninja,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				charge -= drain
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -254,7 +254,7 @@
 				maxcapacity = TRUE
 			if (do_after(ninja, 10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -271,7 +271,7 @@
 	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
 	if (do_after(ninja, 60, target = src))
 		spark_system.start()
-		playsound(loc, "sparks", 50, TRUE)
+		playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(src, "<span class='danger'>UPLOAD COMPLETE.  NEW CYBORG MODULE DETECTED.  INSTALLING...</span>")
 		faction = list(ROLE_NINJA)
 		bubble_icon = "syndibot"
@@ -301,6 +301,6 @@
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, "sparks", 50, TRUE)
+		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		visible_message("<span class='danger'>[ninja] electrocutes [src] with [ninja.p_their()] touch!</span>", "<span class='userdanger'>[ninja] electrocutes you with [ninja.p_their()] touch!</span>")
 		Knockdown(3 SECONDS)
