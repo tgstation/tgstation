@@ -79,17 +79,12 @@
 
 	if(network_id)
 		var/area/A = get_area(src)
-		if(mapload && A && A.network_root_id)
-			// got to love how map loading works
-			// The area name is the root network for this device.  This way
-			// all devices in the area join the same base network, or whatever
-			// network is set up in the map template object
-			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id)
+		if(A && A.network_root_id)
+			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
 		else
-			// This should cover areas made after the map loading.  
-			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+			stack_trace("Bad area [A] for [src] for object?")
 		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
-	/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
+		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
 /obj/Destroy(force=FALSE)

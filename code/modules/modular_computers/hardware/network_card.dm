@@ -23,10 +23,6 @@
 	if(ethernet)
 		to_chat(user, "OpenEth (Physical Connection) - Physical network connection port")
 
-/obj/item/computer_hardware/network_card/Initialize()
-	. = ..()
-	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	hardware_id = conn.hardware_id
 
 // Returns a string identifier of this network card
 /obj/item/computer_hardware/network_card/proc/get_network_tag()

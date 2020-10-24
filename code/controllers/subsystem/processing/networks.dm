@@ -42,6 +42,10 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/Initialize()
 	station_network = new
 	station_network.register_map_supremecy() // sigh
+	assign_areas_root_ids(GLOB.sortedAreas) // setup area names before Initialize
+	// At round start, fix the network_id's so the station root is on them
+	initialized = TRUE
+	// Now when the objects Initialize they will join the right network
 	return ..()
 
 
@@ -190,8 +194,12 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/proc/verify_network_name(name)
 	return istext(name) && length(name) > 0 && findtext(name, @"[^\.][A-Z0-9_\.]+[^\.]") == 0
 
-// Fixes a network name by replacing the spaces and making eveything uppercase
 
+// gets the raw area of something that is in something else.  Like a pen, in a box, in a backpack, in a locker
+/proc/get_absoulte_area(atom/O)
+	while(O != null && !isarea(O))
+		O = O.loc
+	return O
 
 
 /// Ok, so instead of going though all the maps and making sure all the tags
@@ -224,10 +232,11 @@ SUBSYSTEM_DEF(networks)
 	for(var/area/A in areas)
 		if(!A.network_root_id)
 			lookup_root_id(A, M)
-		// finally  set the network area id, bit copy paste from area Initialize
-		// This is done in case we have more than one area type, each area instance has its own network name
-		A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
-		A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
+			// finally  set the network area id, bit copy paste from area Initialize
+			// This is done in case we have more than one area type, each area instance has its own network name
+			if(!A.network_area_id)
+				A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
+				A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
 
 
 // create a network name from a list containing the network tree
