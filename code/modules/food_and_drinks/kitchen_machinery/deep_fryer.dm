@@ -32,6 +32,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/deep_fryer
 	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.025 //How much cooking oil is used per second
@@ -57,10 +58,6 @@ God bless America.
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
-	component_parts += new /obj/item/stock_parts/micro_laser(null)
-	RefreshParts()
 	fry_loop = new(list(src), FALSE)
 
 /obj/machinery/deepfryer/RefreshParts()

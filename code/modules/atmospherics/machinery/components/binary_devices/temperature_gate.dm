@@ -86,11 +86,13 @@
 	var/data = list()
 	data["on"] = on
 	data["temperature"] = round(target_temperature)
-	data["max_temperature"] = round(max_temperature*100)
+	data["min_temperature"] = round(minimum_temperature)
+	data["max_temperature"] = round(max_temperature)
 	return data
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

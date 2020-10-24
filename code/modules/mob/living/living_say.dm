@@ -286,7 +286,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
 				mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!</span.?>", visible_message_flags = EMOTE_MESSAGE)
 				return FALSE
-			if(HAS_TRAIT(mute, TRAIT_INCAPACITATED))
+			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
 				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src
-	if(imp && imp.radio.on)
+	if(imp?.radio.on)
 		if(message_mods[MODE_HEADSET])
 			imp.radio.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE

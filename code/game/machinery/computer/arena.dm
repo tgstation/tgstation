@@ -46,7 +46,7 @@
 	var/list/team_keys = list()
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
-	/// Default team outfit if outfits[team] is empty
+	/// Default team outfit if `outfits[team]` is empty
 	var/default_outfit = /datum/outfit/job/assistant
 
 	/// Is the arena template loading in

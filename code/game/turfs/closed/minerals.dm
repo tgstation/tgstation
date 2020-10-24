@@ -4,8 +4,7 @@
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
-	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MINERAL_WALLS)
 	baseturfs = /turf/open/floor/plating/asteroid/airless
@@ -14,6 +13,8 @@
 	density = TRUE
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
+	base_icon_state = "smoothrocks"
+	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
@@ -254,7 +255,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	base_icon_state = "mountain_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	environment_type = "snow_cavern"
@@ -273,6 +275,9 @@
 	if(mineralType)
 		smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon = 'icons/turf/walls/icerock_wall.dmi'
+		icon_state = "icerock_wall-0"
+		base_icon_state = "icerock_wall"
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow/more_caves
 	mineralSpawnChanceList = list(
@@ -287,6 +292,7 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/snow/underground
+	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	// abundant ore and caves
 	mineralChance = 20
 	mineralSpawnChanceList = list(
@@ -323,7 +329,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	base_icon_state = "mountain_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	environment_type = "snow"
@@ -352,6 +359,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_iron"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -377,6 +386,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_Uranium"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -402,6 +413,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_diamond"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -427,6 +440,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_gold"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -452,6 +467,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_silver"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -477,6 +494,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_titanium"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -502,6 +521,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_plasma"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -521,6 +542,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_Bananium"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -547,6 +570,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_BScrystal"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -574,7 +599,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock2"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
@@ -587,7 +613,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	base_icon_state = "mountain_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
@@ -605,7 +632,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
@@ -715,6 +743,8 @@
 	environment_type = "snow_cavern"
 	icon_state = "icerock_Gibtonite"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -734,13 +764,14 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
 	if(!ishuman(user))
 		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
+	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
@@ -750,7 +781,7 @@
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user
-	if(!(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+	if(!(H.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
 		return
 	drop_ores()
 	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
@@ -760,7 +791,7 @@
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
+	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))

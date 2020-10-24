@@ -170,7 +170,7 @@
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user?.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return
@@ -212,7 +212,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

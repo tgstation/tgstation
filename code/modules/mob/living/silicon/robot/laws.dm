@@ -1,11 +1,3 @@
-/mob/living/silicon/robot/verb/cmd_show_laws()
-	set category = "Robot Commands"
-	set name = "Show Laws"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	show_laws()
-
 /mob/living/silicon/robot/deadchat_lawchange()
 	if(lawupdate)
 		return
@@ -48,12 +40,6 @@
 	var/datum/ai_laws/master = connected_ai?.laws
 	var/temp
 	if (master)
-		laws.devillaws.len = master.devillaws.len
-		for (var/index = 1, index <= master.devillaws.len, index++)
-			temp = master.devillaws[index]
-			if (length(temp) > 0)
-				laws.devillaws[index] = temp
-
 		laws.ion.len = master.ion.len
 		for (var/index = 1, index <= master.ion.len, index++)
 			temp = master.ion[index]
@@ -84,4 +70,12 @@
 			if (length(temp) > 0)
 				laws.supplied[index] = temp
 
+		var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+		if(program)
+			program.force_full_update()
+
 	picturesync()
+
+/mob/living/silicon/robot/post_lawchange(announce = TRUE)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/logevent,"Law update processed."), 0, TIMER_UNIQUE | TIMER_OVERRIDE) //Post_Lawchange gets spammed by some law boards, so let's wait it out

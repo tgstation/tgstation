@@ -124,7 +124,7 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] starts to pour the contents of [O] onto [src].</span>", "<span class='notice'>You start to slowly pour the contents of [O] onto [src].</span>")
-		if(!do_after(user, 60, TRUE, src))
+		if(!do_after(user, 6 SECONDS, src))
 			to_chat(user, "<span class='warning'>You failed to pour [O] onto [src]!</span>")
 			return
 

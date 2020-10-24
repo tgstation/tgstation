@@ -59,8 +59,6 @@
 
 	if(suiciding)
 		O.set_suicide(suiciding)
-	if(hellbound)
-		O.hellbound = hellbound
 	O.a_intent = INTENT_HARM
 
 	//keep viruses?
@@ -123,7 +121,7 @@
 			for(var/X in O.internal_organs)
 				var/obj/item/organ/G = X
 				if(BP.body_zone == check_zone(G.zone))
-					if(mind && mind.has_antag_datum(/datum/antagonist/changeling) && istype(G, /obj/item/organ/brain))
+					if(mind?.has_antag_datum(/datum/antagonist/changeling) && istype(G, /obj/item/organ/brain))
 						continue //so headless changelings don't lose their brain when transforming
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
@@ -238,8 +236,6 @@
 
 	if(suiciding)
 		O.set_suicide(suiciding)
-	if(hellbound)
-		O.hellbound = hellbound
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
@@ -302,7 +298,7 @@
 			for(var/X in O.internal_organs)
 				var/obj/item/organ/G = X
 				if(BP.body_zone == check_zone(G.zone))
-					if(mind && mind.has_antag_datum(/datum/antagonist/changeling) && istype(G, /obj/item/organ/brain))
+					if(mind?.has_antag_datum(/datum/antagonist/changeling) && istype(G, /obj/item/organ/brain))
 						continue //so headless changelings don't lose their brain when transforming
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
@@ -445,7 +441,8 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	mobility_flags = NONE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
@@ -476,7 +473,8 @@
 	if (notransform)
 		return
 	notransform = TRUE
-	mobility_flags = NONE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()

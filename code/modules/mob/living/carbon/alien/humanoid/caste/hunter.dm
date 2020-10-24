@@ -31,7 +31,7 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || leaping)
+	if(body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED) || leaping)
 		return
 
 	if(pounce_cooldown > world.time)
@@ -74,17 +74,16 @@
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Paralyze(40, 1, 1)
+				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
-			Paralyze(40, 1, 1)
+			Paralyze(40, ignore_canstun = TRUE)
 
 		if(leaping)
 			leaping = FALSE
 			update_icons()
-			update_mobility()
 
 
 /mob/living/carbon/alien/humanoid/float(on)

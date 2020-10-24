@@ -204,7 +204,7 @@
 		to_chat(user, "<span class='notice'>You begin to add wheels to [src].</span>")
 		if(I.use_tool(src, user, 80, volume=50, amount=5))
 			to_chat(user, "<span class='notice'>You finish making wheels for [src].</span>")
-			new /obj/vehicle/ridden/scooter/skateboard(user.loc)
+			new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
 			qdel(src)
 	else
 		return ..()

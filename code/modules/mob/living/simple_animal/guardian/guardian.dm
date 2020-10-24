@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "holocarp"
 			icon_living = "holocarp"
 			icon_dead = "holocarp"
-			speak_emote = list("gnashes")
+			speak_emote = string_list(list("gnashes"))
 			desc = "A mysterious fish that stands by its charge, ever vigilant."
 			attack_verb_continuous = "bites"
 			attack_verb_simple = "bite"
@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
-	if(summoner && hud_used && hud_used.healths)
+	if(summoner && hud_used?.healths)
 		var/resulthealth
 		if(iscarbon(summoner))
 			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)

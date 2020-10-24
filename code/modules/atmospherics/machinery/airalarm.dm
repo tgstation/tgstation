@@ -105,8 +105,7 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -131,14 +130,13 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
-/obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
+/obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -14°C or 259.15°K.
 	TLV = list(
-		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"				= new/datum/tlv(T0C-273.15, T0C-100, T0C-60, T0C),
+		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE *  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
+		"temperature"				= new/datum/tlv(COLD_ROOM_TEMP-40, COLD_ROOM_TEMP-20, COLD_ROOM_TEMP+20, COLD_ROOM_TEMP+40),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
@@ -157,8 +155,7 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -385,7 +382,9 @@
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
-	if(..() || buildstage != 2)
+	. = ..()
+
+	if(. || buildstage != 2)
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
@@ -551,7 +550,6 @@
 						/datum/gas/proto_nitrate,
 						/datum/gas/zauker,
 						/datum/gas/halon,
-						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
@@ -852,7 +850,7 @@
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

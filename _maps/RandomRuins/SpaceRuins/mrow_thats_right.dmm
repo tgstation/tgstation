@@ -317,7 +317,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
@@ -350,9 +350,7 @@
 	dir = 4
 	},
 /obj/structure/closet/cabinet,
-/obj/item/gps{
-	gpstag = "kitty"
-	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
@@ -706,7 +704,7 @@
 "bX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
@@ -877,35 +875,35 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},

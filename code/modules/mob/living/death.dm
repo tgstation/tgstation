@@ -47,7 +47,6 @@
 
 
 /mob/living/death(gibbed)
-	var/was_dead_before = stat == DEAD
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
@@ -59,9 +58,6 @@
 		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	remove_from_alive_mob_list()
-	if(!gibbed && !was_dead_before)
-		add_to_dead_mob_list()
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
@@ -70,7 +66,6 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
 	stop_pulling()
@@ -79,12 +74,5 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(gibbed)
 
 	return TRUE

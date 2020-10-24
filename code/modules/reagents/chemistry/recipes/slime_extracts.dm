@@ -3,6 +3,9 @@
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
+	use_slime_core(holder)
+
+/datum/chemical_reaction/slime/proc/use_slime_core(datum/reagents/holder)
 	SSblackbox.record_feedback("tally", "slime_cores_used", 1, "type")
 	if(deletes_extract)
 		delete_extract(holder)
@@ -36,7 +39,7 @@
 
 /datum/chemical_reaction/slime/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(get_turf(holder.my_atom))
+		new /obj/item/food/monkeycube(get_turf(holder.my_atom))
 	..()
 
 //Green
@@ -201,7 +204,7 @@
 	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
 			var/datum/gas/gastype = /datum/gas/nitrogen
@@ -239,7 +242,7 @@
 	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
 			T.atmos_spawn_air("plasma=50;TEMP=1000")
@@ -265,10 +268,6 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
-
-/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/stock_parts/cell/high/slime(get_turf(holder.my_atom))
-	..()
 
 /datum/chemical_reaction/slime/slimeglow
 	required_reagents = list(/datum/reagent/water = 1)
@@ -392,7 +391,7 @@
 	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
 
@@ -488,7 +487,9 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/slime_stop, holder), 5 SECONDS)
+
+/datum/chemical_reaction/slime/slimestop/proc/slime_stop(datum/reagents/holder)
 	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
 	new /obj/effect/timestop(T, null, null, null)
@@ -497,8 +498,7 @@
 			var/mob/lastheld = get_mob_by_key(holder.my_atom.fingerprintslast)
 			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, ITEM_SLOT_HANDS, disable_warning = TRUE))
 				extract.forceMove(get_turf(lastheld))
-
-	..()
+	use_slime_core(holder)
 
 /datum/chemical_reaction/slime/slimecamera
 	required_reagents = list(/datum/reagent/water = 1)

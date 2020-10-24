@@ -524,7 +524,6 @@
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	CALCULATE_ADJACENT_TURFS(T)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -563,7 +562,7 @@
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
-	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
+	var/obj/item/food/sausage/held_sausage
 	var/static/list/ovens
 	var/on = FALSE
 	var/datum/beam/beam
@@ -588,7 +587,7 @@
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
-	if (istype(target, /obj/item/reagent_containers/food/snacks/sausage))
+	if (istype(target, /obj/item/food/sausage))
 		if (!on)
 			to_chat(user, "<span class='warning'>You must extend [src] to attach anything to it!</span>")
 			return
@@ -635,7 +634,7 @@
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))
-		if (held_sausage && held_sausage.roasted)
+		if (held_sausage?.roasted)
 			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
