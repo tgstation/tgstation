@@ -18,7 +18,7 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
 	else
-		stored_extinguisher = new /obj/item/extinguisher(src)´
+		stored_extinguisher = new /obj/item/extinguisher(src)
 	update_icon()
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
@@ -145,12 +145,7 @@
 /obj/structure/extinguisher_cabinet/update_overlays()
 	. = ..()
 	if(stored_extinguisher)
-		if(stored_extinguisher.type == /obj/item/extinguisher/mini)
-			. += "extinguisher_mini"
-		else if(stored_extinguisher.type == /obj/item/extinguisher/advanced)
-			. += "extinguisher_adv"
-		else
-			. += "extinguisher_common"
+		. += stored_extinguisher.cabinet_icon_state
 	if(opened)
 		. +=  "cabinet_door_open"
 	else

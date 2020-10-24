@@ -28,6 +28,8 @@
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 	/// Icon state when inside a tank holder
 	var/tank_holder_icon_state = "holder_extinguisher"
+	///Icon state when inside an extinguisher cabinet.
+	var/cabinet_icon_state = "extinguisher_common"
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -43,6 +45,7 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+	cabinet_icon_state = "extinguisher_mini"
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
@@ -70,6 +73,7 @@
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+	cabinet_icon_state = "extinguisher_adv"
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
