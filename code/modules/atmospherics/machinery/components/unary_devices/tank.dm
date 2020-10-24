@@ -72,9 +72,6 @@
 	icon_state = "red"
 	gas_type = /datum/gas/healium
 
-/obj/machinery/atmospherics/components/unary/tank/hexane
-	gas_type = /datum/gas/hexane
-
 /obj/machinery/atmospherics/components/unary/tank/hydrogen
 	icon_state = "grey"
 	gas_type = /datum/gas/hydrogen
