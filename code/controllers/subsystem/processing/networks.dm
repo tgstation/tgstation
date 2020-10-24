@@ -284,7 +284,7 @@ SUBSYSTEM_DEF(networks)
   * * area - Area to modify the root id.
   * * template - optional, map_template of that area
   */
-/datum/controller/subsystem/networks/proc/lookup_root_id(area/A, datum/map_template/M=null)
+/datum/controller/subsystem/networks/proc/lookup_area_root_id(area/A, datum/map_template/M=null)
 	/// Check if the area is valid and if it doesn't have a network root id.  If it has a root assume it has
 	/// network_area_id as well
 	if(!A || A.network_root_id != null)
@@ -376,23 +376,24 @@ SUBSYSTEM_DEF(networks)
   */
 /datum/controller/subsystem/networks/proc/_hard_create_network(list/network_tree)
 	var/network_name_part = network_tree[1]
+	var/network_id = network_name_part
 	var/datum/ntnet/parent = root_networks[network_name_part]
 	var/datum/ntnet/network
 	if(!parent) // we have no network root?  Must be mapload of a ruin or such
 		parent = new(network_name_part)
-		root_networks[network_name_part] = parent
-		networks[network_name_part] = parent
 
 	// go up the branches, creating nodes
 	for(var/i in 2 to network_tree.len)
-		network_name_part += "." + network_tree[i]
-		network = networks[network_name_part]
+		network_name_part = network_tree[i]
+		network = parent.children[network_name_part]
+		network_id += "." + network_name_part
 		if(!network)
-			network = new(network_name_part, parent)
-			networks[network_name_part] = network
+			network = new(network_id, network_name_part, parent)
 
 		parent = network
 	return network
+
+
 /**
   * Creates or finds a network anywhere in the world using a fully qualified name
   *
