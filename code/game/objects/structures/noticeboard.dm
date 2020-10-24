@@ -1,8 +1,8 @@
 /obj/structure/noticeboard
 	name = "notice board"
-	desc = "A board for pinning important notices upon."
+	desc = "A board for pinning important notices upon. It is made of the finest Spanish cork."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "nboard00"
+	icon_state = "noticeboard"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 150
@@ -15,12 +15,12 @@
 		return
 
 	for(var/obj/item/I in loc)
-		if(notices > 4)
+		if(notices >= 8)
 			break
 		if(istype(I, /obj/item/paper))
 			I.forceMove(src)
 			notices++
-	icon_state = "nboard0[notices]"
+	update_icon()
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
@@ -28,11 +28,11 @@
 		if(!allowed(user))
 			to_chat(user, "<span class='warning'>You are not authorized to add notices!</span>")
 			return
-		if(notices < 5)
+		if(notices < 8)
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
-			icon_state = "nboard0[notices]"
+			update_icon()
 			to_chat(user, "<span class='notice'>You pin the [O] to the noticeboard.</span>")
 		else
 			to_chat(user, "<span class='warning'>The notice board is full!</span>")
@@ -65,7 +65,7 @@
 			I.forceMove(usr.loc)
 			usr.put_in_hands(I)
 			notices--
-			icon_state = "nboard0[notices]"
+			update_icon()
 
 	if(href_list["write"])
 		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED)) //For when a player is handcuffed while they have the notice window open
@@ -88,6 +88,11 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal (loc, 1)
 	qdel(src)
+
+/obj/structure/noticeboard/update_overlays()
+	. = ..()
+	if(notices)
+		. += "notices_[notices]"
 
 // Notice boards for the heads of staff (plus the qm)
 
