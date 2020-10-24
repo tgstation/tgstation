@@ -363,7 +363,7 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
-	/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
 	name = "sweet pea jelly donut"
 	desc = "Goes great with a bottle of Bastion Burbon!"
 	icon_state = "jelly_laugh"
