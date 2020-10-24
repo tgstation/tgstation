@@ -1641,7 +1641,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * humi (required) The mob we will stabilize
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi)
-	var/natural_change = get_temp_change(humi.get_body_temp_normal() - humi.coretemperature, 0.12)
+	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.12)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
 /**
@@ -1651,9 +1651,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  */
 /datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi)
 
-	// Now change the core based on the skin temp
+	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
-	var/skin_core_change = get_temp_change(skin_core_diff, 0.08)
+	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.08)
 
 	humi.adjust_coretemperature(skin_core_change)
 
@@ -1669,20 +1669,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
-		var/area_skin_change = get_temp_change(area_skin_diff, 0.1)
+		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.1)
 
-		if(humi.get_body_temp_normal() + 10 < humi.coretemperature) // we are overheating and sweaty insulation is not as good
+		// Are we sweaty, check against unmodified body temp.
+		if(humi.get_body_temp_normal(apply_change=FALSE) + 10 < humi.coretemperature) // with small buffer as temp can bounce a bit
+			// we are overheating and sweaty insulation is not as good reducing thermal protection
 			area_skin_change = (1 - (thermal_protection * 0.7)) * area_skin_change
 		else
 			area_skin_change = (1 - thermal_protection) * area_skin_change
 
 		humi.adjust_bodytemperature(area_skin_change)
 
-	// Core to skin temp transfer only when not on fire
+	// Core to skin temp transfer, when not on fire
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change(core_skin_diff, 0.08)
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.08)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)
@@ -1694,12 +1696,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /**
- * Used to set alerts and debuffs based on body temperature
+ * Used to get the amount of change between two body temperatures
+ *
+ * When passed the difference between two temperatures returns the amount of change to temperature to apply.
+ * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
  * vars:
- * * temp_diff (required) The differance between
- * * change_rate (required) The rate of range multiplyer
+ * * temp_diff (required) The differance between two temperatures
+ * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
  */
-/datum/species/proc/get_temp_change(var/temp_diff, var/change_rate)
+/datum/species/proc/get_temp_change_amount(var/temp_diff, var/change_rate = 0.06)
 	if(temp_diff < 0)
 		return (log((temp_diff * -1) * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR) * -1
 	return log(temp_diff * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR
@@ -1756,11 +1761,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * humi (required) The mob we will targeting
  */
 /datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi)
-	if(humi.bodytemperature > bodytemp_heat_damage_limit)
+
+	//If the body temp is above the wound limit start adding exposure stacks
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT)
 		humi.heat_exposure_stacks = min(humi.heat_exposure_stacks + 1, 40)
-	else
+	else //When below the wound limit, reduce the exposure stacks fast.
 		humi.heat_exposure_stacks = max(humi.heat_exposure_stacks - 4, 0)
 
+	//when exposure stacks are greater then 10 + rand20 try to apply wounds and reset stacks
 	if(humi.heat_exposure_stacks > (10 + rand(0, 20)))
 		apply_burn_wounds(humi)
 		humi.heat_exposure_stacks = 0
@@ -1809,7 +1817,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 
 	// If our body temp is to low for a wound exit
-	if(humi.bodytemperature < bodytemp_heat_damage_limit)
+	if(humi.bodytemperature < BODYTEMP_HEAT_WOUND_LIMIT)
 		return
 
 	// Lets pick a random body part and check for an existing burn
@@ -1820,20 +1828,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(existing_burn)
 		switch(existing_burn.severity)
 			if(WOUND_SEVERITY_MODERATE)
-				if(humi.bodytemperature > 400)
+				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400) // 800k
 					bodypart.force_wound_upwards(/datum/wound/burn/severe)
 			if(WOUND_SEVERITY_SEVERE)
-				if(humi.bodytemperature > 2200)
+				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800) // 3200k
 					bodypart.force_wound_upwards(/datum/wound/burn/critical)
-	// If we have no burn apply the lowest level burn
-	else
+	else // If we have no burn apply the lowest level burn
 		bodypart.force_wound_upwards(/datum/wound/burn/moderate)
 
-	// Burns cause some damage even if they did not upgrade
+	// always take some burn damage
 	var/burn_damage = HEAT_DAMAGE_LEVEL_1
-	if(humi.bodytemperature > 400)
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400)
 		burn_damage = HEAT_DAMAGE_LEVEL_2
-	if(humi.bodytemperature > 2200)
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800)
 		burn_damage = HEAT_DAMAGE_LEVEL_3
 
 	humi.apply_damage(burn_damage, BURN, bodypart)

@@ -155,6 +155,8 @@
 /// This also affects how fast the body normalises it's temperature when cold.
 /// 270k is about -3c, that is below freezing and would hurt over time.
 #define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 40)
+/// The body temperature limit the human body can take before it will take wound damage.
+#define BODYTEMP_HEAT_WOUND_LIMIT			(BODYTEMP_NORMAL + 90) // 400.5 k
 
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT			2.0
