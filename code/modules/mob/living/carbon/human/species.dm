@@ -1653,26 +1653,33 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
+	// change rate of 0.08 to be slightly below area to skin change rate and still have a solid curve
 	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.08)
 
 	humi.adjust_coretemperature(skin_core_change)
 
-	// get the enviroment details
+	// get the enviroment details of where the mob is standing
 	var/datum/gas_mixture/environment = humi.loc.return_air()
-	if(!environment)
+	if(!environment) // if there is no environment (nullspace) drop out here.
 		return
 
+	// Get the temperature of the environment for area
 	var/area_temp = humi.get_temperature(environment)
+
 	// Get the insulation value based on the area's temp
 	var/thermal_protection = humi.get_insulation_protection(area_temp)
 
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
+		// change rate of 0.1 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.1)
 
-		// Are we sweaty, check against unmodified body temp.
-		if(humi.get_body_temp_normal(apply_change=FALSE) + 10 < humi.coretemperature) // with small buffer as temp can bounce a bit
+		// We need to apply the thermal protection of the clothing when applying area to surface change
+		// If the core bodytemp goes over the normal body temp you are overheating and becom sweaty
+		// This will cause the insulation value of any clothing to reduced in effect (70% normal rating)
+		// we add 10 degree over normal body temp before triggering as thick insulation raises body temp
+		if(humi.get_body_temp_normal(apply_change=FALSE) + 10 < humi.coretemperature)
 			// we are overheating and sweaty insulation is not as good reducing thermal protection
 			area_skin_change = (1 - (thermal_protection * 0.7)) * area_skin_change
 		else
@@ -1684,6 +1691,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
+		// change rate of 0.08 to reflect temp back in to the core at the same rate as core to skin
 		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.08)
 
 		// We do not want to over shoot after using protection
@@ -1694,20 +1702,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		humi.adjust_bodytemperature(core_skin_change)
 
-
-/**
- * Used to get the amount of change between two body temperatures
- *
- * When passed the difference between two temperatures returns the amount of change to temperature to apply.
- * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
- * vars:
- * * temp_diff (required) The differance between two temperatures
- * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
- */
-/datum/species/proc/get_temp_change_amount(var/temp_diff, var/change_rate = 0.06)
-	if(temp_diff < 0)
-		return (log((temp_diff * -1) * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR) * -1
-	return log(temp_diff * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR
 
 /**
  * Used to set alerts and debuffs based on body temperature

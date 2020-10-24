@@ -96,13 +96,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	var/suit_change = 0
-	var/temp_diff = (temperature_setting - user.bodytemperature)
-	if(temp_diff < 0)
-		suit_change = (log((temp_diff * -1) * 0.16 + 1) * BODYTEMP_COLD_DIVISOR) * -1
-	else
-		suit_change = log(temp_diff * 0.16 + 1) * BODYTEMP_HEAT_DIVISOR
-	user.adjust_bodytemperature(suit_change)
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.16))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy
