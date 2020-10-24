@@ -2,6 +2,10 @@
 
 #define NETWORK_BROADCAST_ID "ALL"
 
+/// To debug networks use this to check
+#define DEBUG_NETWORKS
+
+
 /// We do some macro magic to make sure the strings are created at compile time rather than runtime
 /// We do it this way so that if someone changes any of the names of networks we don't have to hunt down
 /// all the constants though all the files for them.  hurrah!
@@ -61,7 +65,8 @@
 
 /// Error codes
 #define NETWORK_ERROR_OK null
+#define NETWORK_ERROR_NOT_ON_NETWORK "network_error_not_on_network"
 #define NETWORK_ERROR_BAD_NETWORK "network_error_bad_network"
 #define NETWORK_ERROR_BAD_RECEIVER_ID "network_error_bad_receiver_id"
 #define NETWORK_ERROR_UNAUTHORIZED "network_error_bad_unauthorized"
-
+#define NETWORK_ERROR_BAD_TARGET_ID "network_error_bad_target_id"

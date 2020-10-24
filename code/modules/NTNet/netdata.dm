@@ -70,14 +70,6 @@
 	// Used for packet queuing
 	var/datum/netdata/next = null
 	var/mob/user = null // used for sending error messages
-	
-/datum/netdata/proc/get(idx)
-	if(data)
-		return data[idx]
-
-/datum/netdata/proc/put(idx, V)
-	if(data)
-		return data[idx] = V
 
 /datum/netdata/New(list/data = null)
 	if(!data)
@@ -87,6 +79,8 @@
 /datum/netdata/Destroy()
 	data = null
 	passkey = null
+	next = null
+	user = null
 	return ..()
 
 /datum/netdata/proc/clone(deep_copy=FALSE)
@@ -95,20 +89,14 @@
 	C.receiver_id = receiver_id
 	C.network_id = network_id
 	C.passkey = passkey
+	C.user = user
+	C.next = null
 	if(deep_copy)
 		C.data = deepCopyList(data)
 	else
 		C.data = data
-
-// this proc just swaps the sender/receiver's id so we don't have to make a new packet
-// if we are sending a return message
-/datum/netdata/proc/make_return(list/new_data)
-	var/temp
-	temp = sender_id
-	sender_id = receiver_id
-	receiver_id = temp
-	if(new_data)
-		data = new_data
+	return C
+	
 
 /datum/netdata/proc/json_to_data(json)
 	data = json_decode(json)

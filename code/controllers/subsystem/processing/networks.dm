@@ -1,4 +1,4 @@
-#define DEBUG_NETWORKS
+
 
 SUBSYSTEM_DEF(networks)
 	name = "Networks"
@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(networks)
 		count_failed_packets++
 		add_log("Bad target network '[data.network_id]'", null, data.sender_id)
 		if(!QDELETED(sending_interface))
-			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data , data.user, NETWORK_ERROR_BAD_NETWORK)
+			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data , NETWORK_ERROR_BAD_NETWORK)
 		return
 
 	/// Check if the receiver_id is in the network.  If not send an error and return
@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(networks)
 		count_failed_packets++
 		add_log("Bad target device '[receiver_id]'", target_network, data.sender_id)
 		if(!QDELETED(sending_interface))
-			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, data.user, NETWORK_ERROR_BAD_RECEIVER_ID)
+			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data,  NETWORK_ERROR_BAD_RECEIVER_ID)
 		return
 
 	/// Check if we care about permissions.  If we do check if we are allowed the message to be processed
@@ -114,36 +114,48 @@ SUBSYSTEM_DEF(networks)
 			count_failed_packets++
 			add_log("Access denied to ([receiver_id]) from ([data.network_id])", target_network, data.sender_id)
 			if(!QDELETED(sending_interface))
-				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, data.user, NETWORK_ERROR_UNAUTHORIZED)
+				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, NETWORK_ERROR_UNAUTHORIZED)
 		return
 
 	/// All is good, send the packet then send an ACK to the sender
-	target_interface.parent.ntnet_receive(data)
+	SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_RECEIVE, data)
 	if(!QDELETED(sending_interface))
-		SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_ACK, data, data.user)
+		SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_ACK, data)
 	count_good_packets++
 
-
-#define POP_PACKET(CURRENT) first = CURRENT.next; packet_count--; if(!first) { last = null; packet_count = 0; }; qdel(CURRENT);
+/// Helper define to make sure we pop the packet and qdel it
+#define POP_PACKET(CURRENT) first = CURRENT.next;  packet_count--; if(!first) { last = null; packet_count = 0; }; qdel(CURRENT);
 
 /datum/controller/subsystem/networks/fire(resumed = 0)
 	var/datum/netdata/current
+	var/datum/component/ntnet_interface/target_interface
 	while(first)
 		current = first
-		// check if we are a broadcast and fix the packet
-		if(current.receiver_id == null)
-			var/datum/ntnet/target_network = networks[current.network_id]
-			current.receiver_id = target_network.collect_interfaces()
-		else if(islist(current.receiver_id)) // are we a broadcast list, not logged
+		/// Check if we are a list.  If so process the list
+		if(islist(current.receiver_id)) // are we a broadcast list, not logged
 			var/list/receivers = current.receiver_id
 			var/receiver_id = receivers[receivers.len--] // pop it
 			_process_packet(receiver_id, current)
 			if(receivers.len == 0) // pop it if done
 				count_broadcasts_packets++
 				POP_PACKET(current)
-		else
-			_process_packet(current.receiver_id, current) // single target
-			POP_PACKET(current)
+		else // else set up a broadcast or send a single targete
+			// check if we are sending to a network or to a single target
+			target_interface = interfaces_by_hardware_id[data.receiver_id]
+			if(target_interface) // a single sender id
+				_process_packet(current.receiver_id, current) // single target
+				POP_PACKET(current)
+			else // ok so lets find the network to send it too
+				var/datum/ntnet/net = networks[data.network_id]		// get the sending network
+				net = net?.networks[data.receiver_id]				// find the target network to broadcast
+				if(net)		// we found it
+					data.reciver_id = net.collect_interfaces()		// make a list of all the sending targets
+				else
+					// We got an error, the network is bad so send a NAK
+					target_interface = interfaces_by_hardware_id[data.sender_id]
+					if(!QDELETED(target_interface))
+						SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_NAK, current , NETWORK_ERROR_BAD_NETWORK)
+					POP_PACKET(current) // and get rid of it
 		if (MC_TICK_CHECK)
 			return
 
@@ -166,6 +178,8 @@ SUBSYSTEM_DEF(networks)
 		last.next = data
 		last = data
 	packet_count++
+	// We do error checking when the packet is sent
+	return NETWORK_ERROR_OK
 
 
 /datum/controller/subsystem/networks/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.

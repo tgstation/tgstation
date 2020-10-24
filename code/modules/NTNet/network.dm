@@ -171,9 +171,9 @@
 	if(!interface.alias[network_id])
 		log_telecomms("The device {[interface.hardware_id]} is trying to leave a '[network_id]'' when its on '[interface.network.network.id]''")
 		return
-	/// just cashing it
+	// just cashing it
 	var/hardware_id = interface.hardware_id
-	/// Handle the quick case
+	// Handle the quick case
 	interface.alias.Remove(network_id)
 	linked_devices.Remove(hardware_id)
 	if(remove_all_alias)
@@ -182,15 +182,15 @@
 			net = interface.alias[id]
 			net.linked_devices.Remove(hardware_id)
 
-	/// Now check if there are more than meets the eye
+	// Now check if there are more than meets the eye
 	if(interface.network == src || remove_all_alias)
-		/// Ok, so we got to remove this network, but if we have an alias we are still "on" the network
-		/// so we need to shift down to one of the other networks on the alias list.  If the alias list
-		/// is empty, fuck it and remove it from the network.
+		// Ok, so we got to remove this network, but if we have an alias we are still "on" the network
+		// so we need to shift down to one of the other networks on the alias list.  If the alias list
+		// is empty, fuck it and remove it from the network.
 		if(interface.alias.len > 0)
 			interface.network = interface.alias[1] // ... whatever is there.
 		else
-			/// ok, hard remove from everything then
+			// ok, hard remove from everything then
 			root_devices.Remove(interface.hardware_id)
 			if(interface.id_tag != null) // could be a type, never know
 				root_devices.Remove(interface.id_tag)
