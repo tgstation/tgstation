@@ -39,7 +39,17 @@
 ///Sets the minimum amount of power the machine uses
 #define MIN_POWER_USAGE						50000
 
-#define DAMAGE_HARDCAP						0.002
+#define DAMAGE_CAP_MULTIPLIER				0.002
+
+//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
+#define HYPERTORUS_MELTING_PERCENT 		5
+#define HYPERTORUS_EMERGENCY_PERCENT 	25
+#define HYPERTORUS_DANGER_PERCENT 		50
+#define HYPERTORUS_WARNING_PERCENT 		100
+
+#define WARNING_TIME_DELAY 60
+///to prevent accent sounds from layering
+#define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN 3 SECONDS
 
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
@@ -248,12 +258,53 @@
 	///Used for debug, maybe will be ported into the final phase
 	COOLDOWN_DECLARE(hypertorus_reactor)
 
+	///The amount of damage we have currently
+	var/damage = 0
+	///The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
+	var/damage_archived = 0
+	///Our "Shit is no longer fucked" message. We send it when damage is less then damage_archived
+	var/safe_alert = "Main containment field returning to safe operating parameters."
+	///The point at which we should start sending messeges about the damage to the engi channels.
+	var/warning_point = 50
+	///The alert we send when we've reached warning_point
+	var/warning_alert = "Danger! Magnetic containment field faltering!"
+	///The point at which we start sending messages to the common channel
+	var/emergency_point = 700
+	///The alert we send when we've reached emergency_point
+	var/emergency_alert = "HYPERTORUS MELTDOWN IMMINENT."
+	///The point at which we melt
+	var/explosion_point = 900
+	///Boolean used for logging if we've passed the emergency point
+	var/has_reached_emergency = FALSE
+	///Time in 1/10th of seconds since the last sent warning
+	var/lastwarning = 0
+
+	///Our internal radio
+	var/obj/item/radio/radio
+	///The key our internal radio uses
+	var/radio_key = /obj/item/encryptionkey/headset_eng
+	///The engineering channel
+	var/engineering_channel = "Engineering"
+	///The common channel
+	var/common_channel = null
+
+	///Our soundloop
+	var/datum/looping_sound/supermatter/soundloop
+	///cooldown tracker for accent sounds
+	var/last_accent_sound = 0
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
 	internal_output = new
 	moderator_internal = new
+
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.listening = 0
+	radio.recalculateChannels()
+	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/ComponentInitialize()
 	. = ..()
@@ -272,16 +323,17 @@
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
 	if(linked_input)
-		linked_input = null
+		QDEL_NULL(linked_input)
 	if(linked_output)
-		linked_output = null
+		QDEL_NULL(linked_output)
 	if(linked_moderator)
-		linked_moderator = null
+		QDEL_NULL(linked_moderator)
 	if(linked_interface)
-		linked_interface = null
+		QDEL_NULL(linked_interface)
 	if(corners.len)
 		for(var/corner in corners)
-			corner = null
+			QDEL_NULL(corner)
+	QDEL_NULL(radio)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 90), turn(dir, 270))
@@ -438,6 +490,66 @@
 	if(use_power == ACTIVE_POWER_USE)
 		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
+	var/integrity = get_integrity()
+	if(integrity < HYPERTORUS_MELTING_PERCENT)
+		return HYPERTORUS_MELTING
+
+	if(integrity < HYPERTORUS_EMERGENCY_PERCENT)
+		return HYPERTORUS_EMERGENCY
+
+	if(integrity < HYPERTORUS_DANGER_PERCENT)
+		return HYPERTORUS_DANGER
+
+	if(integrity < HYPERTORUS_WARNING_PERCENT)
+		return HYPERTORUS_WARNING
+
+	if(power_level > 0)
+		return HYPERTORUS_NOMINAL
+	return HYPERTORUS_INACTIVE
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/alarm()
+	switch(get_status())
+		if(HYPERTORUS_MELTING)
+			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+		if(HYPERTORUS_EMERGENCY)
+			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(HYPERTORUS_DANGER)
+			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		if(HYPERTORUS_WARNING)
+			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_integrity()
+	var/integrity = damage / explosion_point
+	integrity = round(100 - integrity * 100, 0.01)
+	integrity = integrity < 0 ? 0 : integrity
+	return integrity
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_alert()
+	if(damage < warning_point)
+		return
+	if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_TIME_DELAY)
+		alarm()
+
+		if(damage > emergency_point)
+			radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+			lastwarning = REALTIMEOFDAY
+			if(!has_reached_emergency)
+				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
+				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
+				has_reached_emergency = TRUE
+		else if(damage >= damage_archived) // The damage is still going up
+			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel)
+			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
+
+		else // Phew, we're safe
+			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
+			lastwarning = REALTIMEOFDAY
+
+	//Melt(To be done)
+/*	if(damage > explosion_point)
+		countdown()*/
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
 		slowprocess()
@@ -463,6 +575,16 @@
 	if(!fusion_started)
 		return
 
+	//We play delam/neutral sounds at a rate determined by power and damage
+	if(last_accent_sound < world.time && prob(20))
+		var/aggression = min(((damage / 800) * ((power_level + 1) / 5)), 1.0) * 100
+		if(damage >= 300)
+			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		else
+			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		var/next_sound = round((100 - aggression) * 5) + 5
+		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+
 	/*
 	 *Storing variables such as gas mixes, temperature, volume, moles
 	 */
@@ -481,7 +603,9 @@
 	if(internal_fusion.total_moles() < 500 && power_level < 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 700) / 200, 0), 0)
 
-	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_HARDCAP * melting_point), critical_threshold_proximity)
+	critical_threshold_proximity += iron_content * 0.5
+
+	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	check_power_use()
 
@@ -541,7 +665,7 @@
 	for (var/gas_id in moderator_internal.gases)
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper + iron_content
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper + iron_content * 2.5
 	//Effective reaction instability (determines if the energy is used/released)
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -762,7 +886,7 @@
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen (to do)
 	if(moderator_internal.total_moles())
 		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
-		if(power_level > 5 && prob(17 * power_level))//at power level 6 is 100%
+		if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
 			iron_content += 0.05
 
 	//Waste gas can be remove by the interface, can spill if temperature is too high (to do)
@@ -786,14 +910,21 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
+	check_alert()
+
 	//better heat and rads emission
 	//To do
 	if(power_output)
 		var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
 		if(prob(PERCENT(particle_chance)))
-			loc.fire_nuclear_particle()
+			var/obj/machinery/hypertorus/corner/pick_corner = pick(corners)
+			pick_corner.loc.fire_nuclear_particle()
 		rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
 		radiation_pulse(loc, rad_power)
+
+/*
+* Interface and corners
+*/
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
