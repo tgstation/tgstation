@@ -34,22 +34,26 @@
 
 /datum/component/ntnet_interface
 	var/hardware_id = null				// text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
-	var/id_tag = null  					// named tag for looking up on mapping objects
+	var/id_tag = null  					// named tag, mainly used to look up mapping objects
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
 	var/list/registered_sockets = list()// list of ports opened up on devices
 	var/list/alias = list() 			// if we live in more than one network branch
 
 /datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
-	if(!network_name)
-		stack_trace("Bad network '[network_name]' for '[parent]', going to limbo it")
+	if(network_name == null || !istext(network_name))
+		stack_trace("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
 		network_name = NETWORK_LIMBO
-
+	// Why this? while in "theory" we have have text based numbers as a tag, in practice is a bad idea
+	// to have objects as plain numbers as the point of id_tags its to have clear readable text to help
+	// pair devices with one another.  So this checks to make sure that the mapper is not giving us a
+	// straight number OR a number converted to text.
+	// I wonder if this is slower than findtext(network_tag, "^\d") == 1
 	if(network_tag != null && text2num(network_tag) == text2num(num2text(network_tag)))
 		// numbers are not allowed as lookups for interfaces
 		stack_trace("Tag cannot be a number?  '[network_name]' for '[parent]', going to limbo it")
 		network_tag = "BADTAG_" + network_tag
 
-	hardware_id = "[SSnetworks.get_next_HID()]"
+	hardware_id = SSnetworks.get_next_HID()
 	id_tag = network_tag
 	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
 
