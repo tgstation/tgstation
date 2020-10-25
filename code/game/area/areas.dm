@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		// Also, because people are lazy in naming runtime areas, the name will have a bit of random letters to make sure its unique
 		network_area_id = network_root_id + ".AREA." + simple_network_name_fix(name) 		// Make the string
 		network_area_id = SSnetworks.assign_random_name(5, network_area_id + "_")		// tack on some garbage
-
+	
 
 	return INITIALIZE_HINT_LATELOAD
 

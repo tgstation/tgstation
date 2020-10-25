@@ -250,14 +250,14 @@
 /datum/ntnet/station/New()
 	. = ..(STATION_NETWORK_ROOT,  null)
 	build_software_lists()
-	SSnetworks.add_log("NTNet logging system activated.")
+	SSnetworks.add_log("NTNet logging system activated for station")
 
 
 
 /datum/ntnet/station/syndicate/New()
-	..(SYNDICATE_NETWORK_ROOT, null)
+	. = ..SYNDICATE_NETWORK_ROOT, null)
 	build_software_lists()
-	SSnetworks.add_log("NTNet logging system activated.")
+	log_telecomms("NTNet logging system activated for syndicate") // don't want eveyone to know about this one
 // not sure if we want service to work as it is, hold off till we get machines working
 
 #ifdef NTNET_SERVICE
