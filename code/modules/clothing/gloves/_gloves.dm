@@ -11,10 +11,8 @@
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
-	/// Boolean. If TRUE this glove will produce a fingerless version when cut by wirecutters.
-	var/can_be_cut = FALSE
-	// if TRUE, will designate the result of cutting gloves
-	var/cut_type = FALSE
+	// Path variable. If defined, will produced the type through interaction with wirecutters.
+	var/cut_type = null
 
 /obj/item/clothing/gloves/wash(clean_types)
 	. = ..()
