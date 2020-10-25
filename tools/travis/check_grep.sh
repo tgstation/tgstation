@@ -94,7 +94,7 @@ nl='
 '
 nl=$'\n'
 while read f; do
-    t=$(tail -c2 $f; printf x); r1="${nl}$"; r2="${nl}${r1}"
+    t=$(tail -c2 "$f"; printf x); r1="${nl}$"; r2="${nl}${r1}"
     if [[ ! ${t%x} =~ $r1 ]]; then
         echo "file $f is missing a trailing newline"
         st=1
@@ -129,11 +129,15 @@ if ls _maps/*.json | grep -nP "[A-Z]"; then
 fi;
 for json in _maps/*.json
 do
-    filename="_maps/$(jq -r '.map_path' $json)/$(jq -r '.map_file' $json)"
-    if [ ! -f $filename ]
-    then
-        echo "found invalid file reference to $filename in _maps/$json"
-        st=1
+    map_path=$(jq -r '.map_path' $json)
+    while read map_file; do
+        filename="_maps/$map_path/$map_file"
+        if [ ! -f $filename ]
+        then
+            echo "found invalid file reference to $filename in _maps/$json"
+            st=1
+        fi
+    done < <(jq -r '[.map_file] | flatten | .[]' $json)
     fi
 done
 
