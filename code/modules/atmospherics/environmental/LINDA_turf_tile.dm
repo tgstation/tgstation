@@ -252,8 +252,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
 		//If we are both in an excited group, and they aren't the same, merge.
 		//If we are both in an excited group, and you're active, share
-		//If we pass compare or if we're rebuilding, and if we're not already both in a group, lets join up
-		//If we both pass compare or are rebuilding, add to active and share
+		//If we pass compare, and if we're not already both in a group, lets join up
+		//If we both pass compare, add to active and share
 		if(our_excited_group && enemy_excited_group)
 			if(our_excited_group != enemy_excited_group)
 				//combine groups (this also handles updating the excited_group var of all involved turfs)
