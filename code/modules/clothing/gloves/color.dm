@@ -88,7 +88,6 @@
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
 	transfer_prints = TRUE
-	cut_type = TRUE
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
