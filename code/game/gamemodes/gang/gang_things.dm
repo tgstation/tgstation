@@ -18,8 +18,7 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/ert/families))
 		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
 		for(var/threads in team_to_use.free_clothes)
-			var/obj/O = new threads(get_turf(user))
-			O.armor = getArmor(7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5)
+			new threads(get_turf(user))
 			qdel(src)
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
