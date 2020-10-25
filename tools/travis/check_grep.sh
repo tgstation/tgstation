@@ -138,7 +138,6 @@ do
             st=1
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
-    fi
 done
 
 exit $st
