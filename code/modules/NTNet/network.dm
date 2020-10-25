@@ -136,7 +136,7 @@
   */
 /datum/ntnet/proc/add_interface(datum/component/ntnet_interface/interface)
 	if(interface.network)
-		if(!network[interface.network.network_id])
+		if(!networks[interface.network.network_id])
 			/// If we are doing a hard jump to a new network, log it
 			log_telecomms("The device {[interface.hardware_id]} is jumping networks from '[interface.network.network_id]' to '[network_id]'")
 			interface.network.remove_interface(interface, TRUE)
@@ -167,9 +167,8 @@
   * * remove_all_alias - remove ALL references to this device on this network
   */
 /datum/ntnet/proc/remove_interface(datum/component/ntnet_interface/interface, remove_all_alias=FALSE)
-
 	if(!interface.alias[network_id])
-		log_telecomms("The device {[interface.hardware_id]} is trying to leave a '[network_id]'' when its on '[interface.network.network.id]''")
+		log_telecomms("The device {[interface.hardware_id]} is trying to leave a '[network_id]'' when its on '[interface.network.network_id]'")
 		return
 	// just cashing it
 	var/hardware_id = interface.hardware_id
@@ -248,15 +247,15 @@
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New(netname = STATION_NETWORK_ROOT, datum/ntnet/parent=null)
-	. = ..(netname,  parent)
+/datum/ntnet/station/New()
+	. = ..(STATION_NETWORK_ROOT,  null)
 	build_software_lists()
 	SSnetworks.add_log("NTNet logging system activated.")
 
 
 
-/datum/ntnet/station/syndicate/New(network_id = SYNDICATE_NETWORK_ROOT)
-	..()
+/datum/ntnet/station/syndicate/New()
+	..(SYNDICATE_NETWORK_ROOT, null)
 	build_software_lists()
 	SSnetworks.add_log("NTNet logging system activated.")
 // not sure if we want service to work as it is, hold off till we get machines working

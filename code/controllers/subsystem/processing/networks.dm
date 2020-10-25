@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(networks)
 /// will run before these networks are dynamically created.  So its here.
 /datum/controller/subsystem/networks/New()
 	// Limbo network needs to be made at boot up for all error devices
-	networks[NETWORK_LIMBO] = new/datum/ntnet(NETWORK_LIMBO)
+	networks[LIMBO_NETWORK_ROOT] = new/datum/ntnet(LIMBO_NETWORK_ROOT)
 	// As well as the station network incase something funny goes during startup
 	networks[STATION_NETWORK_ROOT] = station_network = new
 	networks[CENTCOM_NETWORK_ROOT] = new/datum/ntnet(CENTCOM_NETWORK_ROOT)
@@ -141,18 +141,18 @@ SUBSYSTEM_DEF(networks)
 				POP_PACKET(current)
 		else // else set up a broadcast or send a single targete
 			// check if we are sending to a network or to a single target
-			target_interface = interfaces_by_hardware_id[data.receiver_id]
+			target_interface = interfaces_by_hardware_id[current.receiver_id]
 			if(target_interface) // a single sender id
 				_process_packet(current.receiver_id, current) // single target
 				POP_PACKET(current)
 			else // ok so lets find the network to send it too
-				var/datum/ntnet/net = networks[data.network_id]		// get the sending network
-				net = net?.networks[data.receiver_id]				// find the target network to broadcast
+				var/datum/ntnet/net = networks[current.network_id]		// get the sending network
+				net = net?.networks[current.receiver_id]				// find the target network to broadcast
 				if(net)		// we found it
-					data.reciver_id = net.collect_interfaces()		// make a list of all the sending targets
+					current.receiver_id = net.collect_interfaces()		// make a list of all the sending targets
 				else
 					// We got an error, the network is bad so send a NAK
-					target_interface = interfaces_by_hardware_id[data.sender_id]
+					target_interface = interfaces_by_hardware_id[current.sender_id]
 					if(!QDELETED(target_interface))
 						SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_NAK, current , NETWORK_ERROR_BAD_NETWORK)
 					POP_PACKET(current) // and get rid of it
@@ -307,7 +307,7 @@ SUBSYSTEM_DEF(networks)
 	/// If we are a ruin or a shuttle, we get our own network
 	if(M)
 		/// if we have a template, try to get the network id from the template
-		if(M.station_id && M.station_id != NETWORK_LIMBO)				// check if the template specifies it
+		if(M.station_id && M.station_id != LIMBO_NETWORK_ROOT)		// check if the template specifies it
 			A.network_root_id = simple_network_name_fix(M.station_id)
 		else if(istype(M, /datum/map_template/shuttle))					 // if not, then check if its a shuttle type
 			var/datum/map_template/shuttle/T = M	// we are a shuttle so use shuttle id
@@ -422,6 +422,7 @@ SUBSYSTEM_DEF(networks)
   * * network_id - text, Fully qualified network name
   */
 /datum/controller/subsystem/networks/proc/create_network_simple(network_id)
+
 	var/datum/ntnet/network = networks[network_id]
 	if(network)
 		return network // don't worry about it	if(network_id in networks)
@@ -431,13 +432,13 @@ SUBSYSTEM_DEF(networks)
 	if(!verify_network_name(network_id))
 		log_mapping("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
 		log_telecomms("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
-		return network[NETWORK_LIMBO]
+		return network[LIMBO_NETWORK_ROOT]
 
 	var/list/network_tree = network_string_to_list(network_id)
 	if(!network_tree || network_tree.len == 0)
 		log_mapping("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
 		log_telecomms("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
-		return network[NETWORK_LIMBO]
+		return network[LIMBO_NETWORK_ROOT]
 
 	network = _hard_create_network(network_tree)
 
@@ -470,7 +471,7 @@ SUBSYSTEM_DEF(networks)
 #endif
 		network_tree += network_string_to_list(part)
 
-	var/datum/ntnet/network = network = _hard_create_network(network_tree)
+	var/datum/ntnet/network =  _hard_create_network(network_tree)
 	log_telecomms("create_network:  created final [network.network_id]")
 	return network
 

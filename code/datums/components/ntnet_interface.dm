@@ -23,12 +23,11 @@
 		data.passkey = passkey
 	if(data.receiver_id == null)
 		return NETWORK_ERROR_BAD_TARGET_ID
-	data.sender_id = NIC.hardware_id
-	data.network_id = NIC.network.network_id
-
 	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return NETWORK_ERROR_NOT_ON_NETWORK
+	data.sender_id = NIC.hardware_id
+	data.network_id = NIC.network.network_id
 	return SSnetworks.transmit(data)
 
 /**
@@ -62,7 +61,7 @@
 /datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
 	if(network_name == null || !istext(network_name))
 		stack_trace("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
-		network_name = NETWORK_LIMBO
+		network_name = LIMBO_NETWORK_ROOT
 	// Tags cannot be numbers and must be unique over the world
 	if(network_tag != null && !istext(network_tag))
 		// numbers are not allowed as lookups for interfaces

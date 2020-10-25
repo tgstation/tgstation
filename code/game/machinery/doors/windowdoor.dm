@@ -38,6 +38,8 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	QDEL_LIST(debris)
@@ -306,7 +308,7 @@
 /obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
 
-/obj/machinery/door/window/ntnet_receive(datum/netdata/data)
+/obj/machinery/door/window/proc/ntnet_receive(datum/netdata/data)
 	// Check if the airlock is powered.
 	if(!hasPower())
 		return
