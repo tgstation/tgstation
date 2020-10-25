@@ -284,12 +284,23 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"aaJ" = (
+/obj/machinery/computer/security/qm{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/quartermaster/qm)
 "aaK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"aaL" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/quartermaster/qm)
 "aaM" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -11438,9 +11449,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
-"aCS" = (
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "aCT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -18186,7 +18194,6 @@
 /area/quartermaster/sorting)
 "aWt" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/bounty,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -21441,12 +21448,6 @@
 "beI" = (
 /turf/closed/wall,
 /area/science/robotics/mechbay)
-"beJ" = (
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/quartermaster/qm)
 "beK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel,
@@ -40855,8 +40856,8 @@
 	name = "BOMB RANGE"
 	},
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cjx" = (
@@ -41807,8 +41808,8 @@
 /area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible/riveted{
-	name = "hyper-reinforced wall";
-	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease"
+	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
+	name = "hyper-reinforced wall"
 	},
 /area/asteroid/nearstation/bomb_site)
 "cnr" = (
@@ -54140,9 +54141,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "pHo" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "pHN" = (
@@ -55626,14 +55624,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
-"rIl" = (
-/obj/machinery/computer/security/qm{
-	dir = 8
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/quartermaster/qm)
 "rJg" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -58577,11 +58567,8 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = 26
+/obj/item/radio/intercom/chapel{
+	pixel_x = 29
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -58986,11 +58973,8 @@
 /area/medical/virology)
 "whH" = (
 /obj/structure/chair/wood,
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
+/obj/item/radio/intercom/chapel{
+	pixel_x = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -94589,7 +94573,7 @@ aaa
 aaa
 aAH
 aBE
-aCS
+pHo
 aDV
 aEP
 aFA
@@ -101028,8 +101012,8 @@ bcI
 wDZ
 aPb
 bcS
-beJ
-rIl
+aaJ
+aaL
 aTo
 aUx
 aVA

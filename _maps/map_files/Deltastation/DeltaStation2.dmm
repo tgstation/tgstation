@@ -22200,25 +22200,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aUa" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aUb" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -24584,9 +24565,6 @@
 /obj/machinery/light_switch{
 	pixel_x = 23
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -26125,9 +26103,6 @@
 /obj/item/radio/intercom{
 	dir = 8;
 	pixel_x = 28
-	},
-/obj/machinery/computer/bounty{
-	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -106367,12 +106342,6 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106382,6 +106351,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -106393,12 +106365,6 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106408,6 +106374,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -107803,16 +107772,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/port/aft)
-"ehb" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/heads/hop)
 "ehs" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -151447,7 +151406,7 @@ caP
 aZa
 caP
 cge
-ehb
+caP
 cjB
 ckX
 aai
@@ -158091,7 +158050,7 @@ azy
 aOW
 axf
 aSm
-aUa
+aUc
 aVI
 aXs
 aYY
