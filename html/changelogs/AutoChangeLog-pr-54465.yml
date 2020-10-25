@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Added the interview system, a 'soft' panic bunker which lets players who would normally be blocked from joining be interviewed by admins to be selectively allowed to play."
