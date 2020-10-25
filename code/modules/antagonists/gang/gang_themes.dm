@@ -270,5 +270,5 @@
 	everyone_objective = "<B>Be the biggest, baddest gang on the station!</B>"
 
 /datum/gang_theme/warriors/New()
-	..()
+	. = ..()
 	involved_gangs = subtypesof(/datum/antagonist/gang) // everyone is here
