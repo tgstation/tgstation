@@ -29,7 +29,6 @@
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
-	hard_drive.store_file(new /datum/computer_file/program/bounty)
 	hard_drive.store_file(new /datum/computer_file/program/shipping)
 
 /obj/item/modular_computer/tablet/preset/advanced/atmos/Initialize() //This will be defunct and will be replaced when NtOS PDAs are done
