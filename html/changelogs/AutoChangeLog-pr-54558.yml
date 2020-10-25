@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Alien resin floors can no spread to cover up Z level transitions like stairs."
