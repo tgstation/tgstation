@@ -1,12 +1,12 @@
 /obj/item/clothing/under/misc
 	icon = 'icons/obj/clothing/under/misc.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/misc.dmi'
+	worn_icon = 'icons/mob/clothing/under/misc.dmi'
 
 /obj/item/clothing/under/misc/pj
 	name = "\improper PJs"
 	desc = "A comfy set of sleepwear, for taking naps or being lazy instead of working."
 	can_adjust = FALSE
-	item_state = "w_suit"
+	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/misc/pj/red
 	icon_state = "red_pyjamas"
@@ -18,39 +18,39 @@
 	name = "Patriotic Suit"
 	desc = "Motorcycle not included."
 	icon_state = "ek"
-	item_state = "ek"
+	inhand_icon_state = "ek"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/mailman
 	name = "mailman's jumpsuit"
 	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
-	item_state = "b_suit"
+	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/misc/psyche
 	name = "psychedelic jumpsuit"
 	desc = "Groovy!"
 	icon_state = "psyche"
-	item_state = "p_suit"
+	inhand_icon_state = "p_suit"
 
 /obj/item/clothing/under/misc/vice_officer
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
 	icon_state = "vice"
-	item_state = "gy_suit"
+	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/adminsuit
 	name = "administrative cybernetic jumpsuit"
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	icon_state = "syndicate"
-	item_state = "bl_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	inhand_icon_state = "bl_suit"
+	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100,ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -62,7 +62,7 @@
 	name = "burial garments"
 	desc = "Traditional burial garments from the early 22nd century."
 	icon_state = "burial"
-	item_state = "burial"
+	inhand_icon_state = "burial"
 	can_adjust = FALSE
 	has_sensor = NO_SENSORS
 
@@ -70,7 +70,7 @@
 	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
-	item_state = "lb_suit"
+	inhand_icon_state = "lb_suit"
 	can_adjust = FALSE
 	custom_price = 60
 
@@ -78,17 +78,17 @@
 	name = "assistant's formal uniform"
 	desc = "An assistant's formal-wear. Why an assistant needs formal-wear is still unknown."
 	icon_state = "assistant_formal"
-	item_state = "gy_suit"
+	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
-	item_state = "plasmaman"
+	inhand_icon_state = "plasmaman"
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/plasmaman.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 95, ACID = 95)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
@@ -112,9 +112,8 @@
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
-			H.ExtinguishMob()
+			H.extinguish_mob()
 			new /obj/effect/particle_effect/water(get_turf(H))
-	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
@@ -136,23 +135,23 @@
 	name = "durathread jumpsuit"
 	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "durathread"
-	item_state = "durathread"
+	inhand_icon_state = "durathread"
 	can_adjust = FALSE
-	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+	armor = list(MELEE = 10, LASER = 10, FIRE = 40, ACID = 10, BOMB = 5)
 
 /obj/item/clothing/under/misc/bouncer
 	name = "bouncer uniform"
 	desc = "A uniform made from a little bit more resistant fibers, makes you seem like a cool guy."
 	icon_state = "bouncer"
-	item_state = "bouncer"
+	inhand_icon_state = "bouncer"
 	can_adjust = FALSE
-	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30)
 
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"
 	desc = "A jumpsuit made by party people, from party people, for party people."
 	icon = 'icons/obj/clothing/under/captain.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/captain.dmi'
+	worn_icon = 'icons/mob/clothing/under/captain.dmi'
 	icon_state = "captain_parade"
-	item_state = "by_suit"
+	inhand_icon_state = "by_suit"
 	can_adjust = FALSE

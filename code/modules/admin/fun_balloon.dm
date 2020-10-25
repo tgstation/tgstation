@@ -137,7 +137,7 @@
 	desc = "For the winners."
 
 /obj/effect/landmark/shuttle_arena_entrance
-	name = "the arena"
+	name = "\proper the arena"
 	desc = "A lava filled battlefield."
 
 

@@ -15,7 +15,6 @@
 	name = "splice nerves"
 	accept_hand = TRUE
 	time = 155
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/splice_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start splicing together [target]'s nerves.</span>",

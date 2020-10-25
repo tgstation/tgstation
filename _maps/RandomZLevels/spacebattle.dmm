@@ -536,7 +536,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cC" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cD" = (
@@ -618,7 +618,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cV" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/soup/stew,
+/obj/item/food/soup/stew,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cW" = (
@@ -815,13 +815,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "dK" = (
-/obj/mecha/medical/odysseus,
+/obj/vehicle/sealed/mecha/medical/odysseus,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dL" = (
-/obj/mecha/working/clarke{
-	ruin_mecha = 1
-	},
+/obj/vehicle/sealed/mecha/working/clarke,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dM" = (
@@ -2366,7 +2364,7 @@
 /turf/open/floor/plasteel/rockvault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
-/obj/mecha/combat/gygax,
+/obj/vehicle/sealed/mecha/combat/gygax,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jq" = (
@@ -2444,7 +2442,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jz" = (
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot{
-	spawn_mecha_type = /obj/mecha/combat/gygax/dark/loaded
+	spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/gygax/dark/loaded
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
@@ -2581,13 +2579,13 @@
 /area/awaymission/spacebattle/cruiser)
 "jV" = (
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot{
-	spawn_mecha_type = /obj/mecha/combat/gygax/dark/loaded
+	spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/gygax/dark/loaded
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "jW" = (
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot{
-	spawn_mecha_type = /obj/mecha/combat/gygax/dark/loaded
+	spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/gygax/dark/loaded
 	},
 /turf/open/floor/plasteel/airless,
 /area/awaymission/spacebattle/cruiser)

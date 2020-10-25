@@ -60,7 +60,7 @@
 	wires = new /datum/wires/emitter(src)
 	if(welded)
 		if(!anchored)
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 		connect_to_network()
 
 	sparks = new
@@ -71,7 +71,7 @@
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
-/obj/machinery/power/emitter/setAnchored(anchorvalue)
+/obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
 	if(!anchored && welded) //make sure they're keep in sync in case it was forcibly unanchored by badmins or by a megafauna.
 		welded = FALSE
@@ -168,14 +168,14 @@
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
 	if(ismegafauna(M) && anchored)
-		setAnchored(FALSE)
+		set_anchored(FALSE)
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
 		. = ..()
 	if(. && !anchored)
 		step(src, get_dir(M, src))
 
-/obj/machinery/power/emitter/process()
+/obj/machinery/power/emitter/process(delta_time)
 	if(machine_stat & (BROKEN))
 		return
 	if(!welded || (!powernet && active_power_usage))
@@ -197,7 +197,7 @@
 				log_game("Emitter lost power in [AREACOORD(src)]")
 			return
 		if(charge <= 80)
-			charge += 5
+			charge += 2.5 * delta_time
 		if(!check_delay() || manual == TRUE)
 			return FALSE
 		fire_beam()
@@ -375,8 +375,8 @@
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
-	buckle_lying = FALSE
-	var/view_range = 12
+	buckle_lying = 0
+	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 
 //BUCKLE HOOKS
@@ -391,7 +391,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 	auto.Remove(buckled_mob)
 	. = ..()
 
@@ -407,13 +407,13 @@
 	M.pixel_y = 14
 	layer = 4.1
 	if(M.client)
-		M.client.change_view(view_range)
+		M.client.view_size.setTo(view_range)
 	if(!auto)
 		auto = new()
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 

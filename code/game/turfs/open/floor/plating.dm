@@ -51,7 +51,10 @@
 		return
 	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
+			if(!iscyborg(user))
+				to_chat(user, "<span class='warning'>Repair the plating first! Use a welding tool to fix the damage.</span>")
+			else
+				to_chat(user, "<span class='warning'>Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.</span>") //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
@@ -87,7 +90,17 @@
 
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
-			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
+			if(!iscyborg(user))
+				to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welding tool to fix the damage.</span>")
+			else
+				to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welding tool or a plating repair tool to fix the damage.</span>")
+	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
+		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
+			to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+			icon_state = icon_plating
+			burnt = FALSE
+			broken = FALSE
+
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -99,7 +112,12 @@
 
 	return TRUE
 
-/turf/open/floor/plating/make_plating()
+/turf/open/floor/plating/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
+/turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
 /turf/open/floor/plating/foam

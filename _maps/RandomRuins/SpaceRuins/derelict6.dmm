@@ -9,11 +9,11 @@
 	icon_state = "singular"
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ad" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
@@ -24,7 +24,7 @@
 /obj/item/stack/sheet/metal,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "af" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 8;
@@ -63,7 +63,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "am" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -293,12 +293,12 @@
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aZ" = (
 /obj/structure/lattice,
 /obj/item/shard,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ba" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/plasteel/airless/cafeteria,

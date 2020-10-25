@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(events)
 	return ..()
 
 
-/datum/controller/subsystem/events/fire(resumed = 0)
+/datum/controller/subsystem/events/fire(resumed = FALSE)
 	if(!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(events)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(events)
 // Why the heck is this here! Took me so damn long to find!
 /client/proc/forceEvent()
 	set name = "Trigger Event"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return
@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(events)
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
 	var/DDD = time2text(world.timeofday, "DDD")	// get the current weekday
-	var/W = weekdayofthemonth()	// is this the first monday? second? etc.
+	var/W = week_of_the_month()	// is this the first monday? second? etc.
 
 	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()

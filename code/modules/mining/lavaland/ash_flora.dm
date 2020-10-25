@@ -22,15 +22,16 @@
 	var/base_icon
 	var/regrowth_time_low = 8 MINUTES
 	var/regrowth_time_high = 16 MINUTES
+	var/number_of_variants = 4
 
 /obj/structure/flora/ash/Initialize()
 	. = ..()
-	base_icon = "[icon_state][rand(1, 4)]"
+	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
 
 /obj/structure/flora/ash/proc/harvest(user)
 	if(harvested)
-		return 0
+		return FALSE
 
 	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
 	if(rand_harvested)
@@ -49,7 +50,7 @@
 	desc = harvested_desc
 	harvested = TRUE
 	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
-	return 1
+	return TRUE
 
 /obj/structure/flora/ash/proc/regrow()
 	icon_state = base_icon
@@ -146,6 +147,24 @@
 	// min dmg 3, max dmg 6, prob(70)
 	AddComponent(/datum/component/caltrop, 3, 6, 70)
 
+///Snow flora to exist on icebox.
+/obj/structure/flora/ash/chilly
+	icon_state = "chilly_pepper"
+	name = "springy grassy fruit"
+	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
+	harvested_name = "springy grass"
+	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
+	harvest = /obj/item/reagent_containers/food/snacks/grown/icepepper
+	needs_sharp_harvest = FALSE
+	harvest_amount_high = 3
+	harvest_time = 15
+	harvest_message_low = "You pluck a single, curved fruit."
+	harvest_message_med = "You pluck a number of curved fruit."
+	harvest_message_high = "You pluck quite a lot of curved fruit."
+	regrowth_time_low = 2400
+	regrowth_time_high = 5500
+	number_of_variants = 2
+
 //SNACKS
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora
@@ -210,6 +229,8 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	resistance_flags = FIRE_PROOF
 	species = "polypore" // silence unit test
+	genes = list(/datum/plant_gene/trait/fire_resistance)
+	graft_gene = /datum/plant_gene/trait/fire_resistance
 
 /obj/item/seeds/lavaland/cactus
 	name = "pack of fruiting cactus seeds"
@@ -218,10 +239,41 @@
 	species = "cactus"
 	plantname = "Fruiting Cactus"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
+	mutatelist = list(/obj/item/seeds/star_cactus)
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08)
+
+///Star Cactus seeds, mutation of lavaland cactus.
+/obj/item/seeds/star_cactus
+	name = "pack of star cacti seeds"
+	desc = "These seeds grow into star cacti."
+	icon_state = "seed-starcactus"
+	species = "starcactus"
+	plantname = "Star Cactus Cluster"
+	product = /obj/item/reagent_containers/food/snacks/grown/star_cactus
+	lifespan = 60
+	endurance = 30
+	maturation = 7
+	production = 6
+	yield = 3
+	growthstages = 4
+	genes = list(/datum/plant_gene/trait/sticky, /datum/plant_gene/trait/stinging)
+	graft_gene = /datum/plant_gene/trait/sticky
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/water = 0.08, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/c2/helbital = 0.05)
+
+///Star Cactus Plants.
+/obj/item/reagent_containers/food/snacks/grown/star_cactus
+	seed = /obj/item/seeds/star_cactus
+	name = "star cacti"
+	desc = "A spikey, round cluster of prickly star cacti. And no, it's not called a star cactus because it's in space."
+	icon_state = "starcactus"
+	filling_color = "#1c801c"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
+	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
@@ -297,7 +349,7 @@
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_overlays()
 	. = ..()
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling

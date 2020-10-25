@@ -170,7 +170,7 @@
 				new /obj/item/clothing/head/kitty(src)
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
-			new /obj/item/clothing/shoes/kindleKicks(src)
+			new /obj/item/clothing/shoes/kindle_kicks(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
@@ -218,7 +218,7 @@
 			new /obj/item/banhammer(src)
 			for(var/i in 1 to 3)
 				var/obj/effect/mine/sound/bwoink/mine = new (src)
-				mine.anchored = FALSE
+				mine.set_anchored(FALSE)
 				mine.move_resist = MOVE_RESIST_DEFAULT
 		if(97)
 			for(var/i in 1 to 4)

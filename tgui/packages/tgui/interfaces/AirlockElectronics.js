@@ -12,7 +12,9 @@ export const AirlockElectronics = (props, context) => {
   const regions = data.regions || [];
   const accesses = data.accesses || [];
   return (
-    <Window>
+    <Window
+      width={420}
+      height={485}>
       <Window.Content>
         <Section title="Main">
           <LabeledList>
@@ -34,14 +36,14 @@ export const AirlockElectronics = (props, context) => {
                 })} />
               <Button
                 icon={unres_direction & 2 ? 'check-square-o' : 'square-o'}
-                content="East"
+                content="South"
                 selected={unres_direction & 2}
                 onClick={() => act('direc_set', {
                   unres_direction: '2',
                 })} />
               <Button
                 icon={unres_direction & 4 ? 'check-square-o' : 'square-o'}
-                content="South"
+                content="East"
                 selected={unres_direction & 4}
                 onClick={() => act('direc_set', {
                   unres_direction: '4',

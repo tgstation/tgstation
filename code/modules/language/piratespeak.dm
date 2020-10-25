@@ -1,10 +1,6 @@
 /datum/language/piratespeak
 	name = "Piratespeak"
 	desc = "The language of space pirates."
-	speech_verb = "says"
-	ask_verb = "asks"
-	exclaim_verb = "exclaims"
-	sing_verb = "shanties"
 	key = "p"
 	space_chance = 100
 	default_priority = 90

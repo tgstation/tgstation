@@ -78,8 +78,8 @@
 /area/shuttle/escape/luxury)
 "ap" = (
 /obj/structure/chair/comfy/teal{
-	icon_state = "comfychair";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
@@ -155,7 +155,7 @@
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "aC" = (
-/obj/item/reagent_containers/food/snacks/enchiladas{
+/obj/item/food/enchiladas{
 	pixel_y = 3
 	},
 /obj/structure/table/wood/fancy/black,
@@ -169,35 +169,35 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aE" = (
-/obj/item/reagent_containers/food/snacks/benedict{
+/obj/item/food/benedict{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aF" = (
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate{
+/obj/item/food/cakeslice/chocolate{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aG" = (
-/obj/item/reagent_containers/food/snacks/eggplantparm{
+/obj/item/food/eggplantparm{
 	pixel_y = 3
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aH" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/copypasta{
+/obj/item/food/spaghetti/copypasta{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aI" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti{
+/obj/item/food/spaghetti/boiledspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -211,14 +211,14 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aK" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti{
+/obj/item/food/spaghetti/meatballspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aL" = (
-/obj/item/reagent_containers/food/snacks/notasandwich{
+/obj/item/food/notasandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
@@ -226,13 +226,13 @@
 /area/shuttle/escape/luxury)
 "aM" = (
 /obj/structure/chair/comfy/teal{
-	icon_state = "comfychair";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
 "aN" = (
-/obj/item/reagent_containers/food/snacks/burger/baconburger{
+/obj/item/food/burger/baconburger{
 	pixel_y = 2
 	},
 /obj/structure/table/wood/fancy/black,
@@ -253,7 +253,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aQ" = (
-/obj/item/reagent_containers/food/snacks/bearsteak{
+/obj/item/food/bearsteak{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -262,8 +262,7 @@
 "aR" = (
 /obj/structure/mirror{
 	pixel_x = -23;
-	pixel_y = -4;
-	pixel_z = 2
+	pixel_y = -2
 	},
 /obj/structure/sink/greyscale{
 	dir = 4;
@@ -275,42 +274,42 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "aT" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
+/obj/item/food/spaghetti/pastatomato{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aU" = (
-/obj/item/reagent_containers/food/snacks/kebab/tofu{
+/obj/item/food/kebab/tofu{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aV" = (
-/obj/item/reagent_containers/food/snacks/honkdae{
+/obj/item/food/honkdae{
 	pixel_y = 8
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aW" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/chowmein{
+/obj/item/food/spaghetti/chowmein{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aX" = (
-/obj/item/reagent_containers/food/snacks/grilledcheese{
+/obj/item/food/grilledcheese{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aY" = (
-/obj/item/reagent_containers/food/snacks/jelliedtoast/cherry{
+/obj/item/food/jelliedtoast/cherry{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -324,7 +323,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "ba" = (
-/obj/item/reagent_containers/food/snacks/customizable/pizza{
+/obj/item/food/pizza/dank{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -455,8 +454,8 @@
 	layer = 2.9
 	},
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bx" = (
@@ -523,8 +522,8 @@
 "bG" = (
 /obj/machinery/door/window/eastleft,
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bH" = (
@@ -563,8 +562,8 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright,
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bN" = (
@@ -698,7 +697,7 @@
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ci" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/carpet/green,
@@ -707,23 +706,23 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood/AMinus,
-/obj/item/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/a_minus,
+/obj/item/reagent_containers/blood/b_minus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/b_plus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_plus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/a_plus,
 /obj/item/reagent_containers/blood/random,
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)

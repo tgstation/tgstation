@@ -15,7 +15,7 @@
 	growthstages = 4
 	rarity = 30
 	var/list/mutations = list()
-	reagents_add = list(/datum/reagent/medicine/C2/multiver = 0.04, /datum/reagent/consumable/nutriment = 0.02)
+	reagents_add = list(/datum/reagent/medicine/c2/multiver = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/kudzu/Copy()
@@ -45,7 +45,7 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	user.visible_message("<span class='danger'>[user] begins throwing seeds on the ground...</span>")
-	if(do_after(user, 50, needhand = TRUE, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
 		plant(user)
 		to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 

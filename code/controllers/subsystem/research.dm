@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(research)
 	var/list/point_types = list()				//typecache style type = TRUE list
 	var/list/slime_already_researched = list() 	//Slime cores that have already been researched
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 52.3)
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
 	var/multiserver_calculation = FALSE
 	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
@@ -40,6 +40,17 @@ SUBSYSTEM_DEF(research)
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
+
+	/// The global list of raw anomaly types that have been refined, for hard limits.
+	var/list/created_anomaly_types = list()
+	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
+	var/list/anomaly_hard_limit_by_type = list(
+	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
+	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
+	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
+	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
+	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+	)
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES

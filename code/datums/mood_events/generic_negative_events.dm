@@ -96,13 +96,17 @@
 		var/mob/living/carbon/human/H = owner
 		H.dna.species.start_wagging_tail(H)
 		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
-		description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
+		description = "<span class='nicegreen'>They want to play on the table!</span>\n"
 		mood_change = 2
 
-/datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurts...</span>"
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
 	mood_change = -3
 	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/brain_damage
   mood_change = -3
@@ -222,13 +226,49 @@
 
 /datum/mood_event/tripped
 	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
-	mood_change = -10
+	mood_change = -5
 	timeout = 2 MINUTES
 
 /datum/mood_event/untied
 	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
-	mood_change = -5
+	mood_change = -3
 	timeout = 1 MINUTES
+
+/datum/mood_event/gates_of_mansus
+	description = "<span class='boldwarning'>I HAD A GLIMPSE OF THE HORROR BEYOND THIS WORLD. REALITY UNCOILED BEFORE MY EYES!</span>\n"
+	mood_change = -25
+	timeout = 4 MINUTES
+
+/datum/mood_event/high_five_alone
+	description = "<span class='boldwarning'>I tried getting a high-five with no one around, how embarassing!</span>\n"
+	mood_change = -2
+	timeout = 1 MINUTES
+
+/datum/mood_event/high_five_full_hand
+	description = "<span class='boldwarning'>Oh God, I don't even know how to high-five correctly...</span>\n"
+	mood_change = -1
+	timeout = 45 SECONDS
+
+/datum/mood_event/left_hanging
+	description = "<span class='boldwarning'>But everyone loves high fives! Maybe people just... hate me?</span>\n"
+	mood_change = -2
+	timeout = 1.5 MINUTES
+
+/datum/mood_event/too_slow
+	description = "<span class='boldwarning'>NO! HOW COULD I BE.... TOO SLOW???</span>\n"
+	mood_change = -2 // multiplied by how many people saw it happen, up to 8, so potentially massive. the ULTIMATE prank carries a lot of weight
+	timeout = 2 MINUTES
+
+/datum/mood_event/too_slow/add_effects(param)
+	var/people_laughing_at_you = 1 // start with 1 in case they're on the same tile or something
+	for(var/mob/living/carbon/iter_carbon in oview(owner, 7))
+		if(iter_carbon.stat == CONSCIOUS)
+			people_laughing_at_you++
+			if(people_laughing_at_you > 7)
+				break
+
+	mood_change *= people_laughing_at_you
+	return ..()
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery

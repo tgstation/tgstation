@@ -12,6 +12,8 @@ export const Uplink = (props, context) => {
   const { telecrystals } = data;
   return (
     <Window
+      width={620}
+      height={580}
       theme="syndicate"
       resizable>
       <Window.Content scrollable>
@@ -70,6 +72,7 @@ export const GenericUplink = (props, context) => {
         <Fragment>
           Search
           <Input
+            autoFocus
             value={searchText}
             onInput={(e, value) => setSearchText(value)}
             mx={1} />

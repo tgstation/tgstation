@@ -18,7 +18,8 @@
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
-	mobility_flags = MOBILITY_FLAGS_DEFAULT
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	density = TRUE
 	if(istype(card.loc, /obj/item/pda))
 		var/obj/item/pda/P = card.loc
@@ -64,17 +65,25 @@
 	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
-	mobility_flags = NONE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 	density = FALSE
 	set_light(0)
 	holoform = FALSE
 	set_resting(resting)
 
+/**
+  * Sets a new holochassis skin based on a pAI's choice
+  */
 /mob/living/silicon/pai/proc/choose_chassis()
-	if(!isturf(loc) && loc != card)
-		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
-		return FALSE
-	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in sortList(possible_chassis)
+	var/list/skins = list()
+	for(var/holochassis_option in possible_chassis)
+		var/image/item_image = image(icon = src.icon, icon_state = holochassis_option)
+		skins += list("[holochassis_option]" = item_image)
+	sortList(skins)
+
+	var/atom/anchor = get_atom_on_turf(src)
+	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	chassis = choice
@@ -82,6 +91,22 @@
 	held_state = "[chassis]"
 	update_resting()
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
+
+/**
+  * Checks if we are allowed to interact with a radial menu
+  *
+  * * Arguments:
+  * * anchor The atom that is anchoring the menu
+  */
+/mob/living/silicon/pai/proc/check_menu(atom/anchor)
+	if(incapacitated())
+		return FALSE
+	if(get_turf(src) != get_turf(anchor))
+		return FALSE
+	if(!isturf(loc) && loc != card)
+		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/silicon/pai/update_resting()
 	. = ..()

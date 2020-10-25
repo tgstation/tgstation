@@ -169,9 +169,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector
 	name = "Component Injector"
+	icon_state = "component"
 	late = TRUE
-	var/target_type
-	var/target_name
+	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
+	var/target_type //Will inject into atoms of this type
+	var/target_name //Will inject into atoms with this name
 	var/component_type
 
 //Late init so everything is likely ready and loaded (no warranty)
@@ -188,8 +190,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			continue
 		var/cargs = build_args()
 		A._AddComponent(cargs)
+		if(!all)
+			qdel(src)
+			return
+	if(all)
 		qdel(src)
-		return
 
 /obj/effect/mapping_helpers/component_injector/proc/build_args()
 	return list(component_type)
@@ -205,6 +210,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
 	return list(component_type,D)
+
+/obj/effect/mapping_helpers/component_injector/areabound
+	name = "Areabound Injector"
+	icon_state = "component_areabound"
+	component_type = /datum/component/areabound
+	target_type = /atom/movable
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
@@ -265,7 +276,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	//cake + knife to cut it!
 	var/turf/food_turf = get_turf(pick(table))
 	new /obj/item/kitchen/knife(food_turf)
-	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(food_turf)
+	var/obj/item/food/cake/birthday/iancake = new(food_turf)
 	iancake.desc = "Happy birthday, Ian!"
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
@@ -368,5 +379,115 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
+	qdel(src)
+
+/obj/effect/mapping_helpers/simple_pipes
+	name = "Simple Pipes"
+	late = TRUE
+	icon_state = "pipe-3"
+	var/piping_layer = 3
+	var/pipe_color = ""
+	var/connection_num = 0
+	var/hide = FALSE
+
+/obj/effect/mapping_helpers/simple_pipes/LateInitialize()
+	var/list/connections = list( dir2text(NORTH)  = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
+	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+	for(var/direction in connections)
+		var/turf/T = get_step(src,  text2dir(direction))
+		for(var/machine_type_owo in T.contents)
+			if(istype(machine_type_owo,type))
+				var/obj/effect/mapping_helpers/simple_pipes/found = machine_type_owo
+				if(found.piping_layer != piping_layer)
+					continue
+				connections[direction] = TRUE
+				connection_num++
+				break
+			if(!is_type_in_typecache(machine_type_owo,valid_connectors))
+				continue
+			var/obj/machinery/atmospherics/machine = machine_type_owo
+
+			if(machine.piping_layer != piping_layer)
+				continue
+
+			if(angle2dir(dir2angle(text2dir(direction))+180) & machine.initialize_directions)
+				connections[direction] = TRUE
+				connection_num++
+				break
+
+	switch(connection_num)
+		if(1)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+		if(2)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				//Detects straight pipes connected from east to west , north to south etc.
+				if(connections[dir2text(angle2dir(dir2angle(text2dir(direction))+180))] == TRUE)
+					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+					break
+
+				for(var/direction2 in connections - direction)
+					if(connections[direction2] != TRUE)
+						continue
+					spawn_pipe(dir2text(text2dir(direction)+text2dir(direction2)),/obj/machinery/atmospherics/pipe/simple)
+		if(3)
+			for(var/direction in connections)
+				if(connections[direction] == FALSE)
+					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/manifold)
+		if(4)
+			spawn_pipe(dir2text(NORTH),/obj/machinery/atmospherics/pipe/manifold4w)
+
+	qdel(src)
+
+//spawn pipe
+/obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction,type )
+	var/obj/machinery/atmospherics/pipe/pipe = new type(get_turf(src),TRUE,text2dir(direction))
+	pipe.hide = hide
+	pipe.piping_layer = piping_layer
+	pipe.update_layer()
+	pipe.paint(pipe_color)
+
+
+//This helper applies traits to things on the map directly.
+/obj/effect/mapping_helpers/trait_injector
+	name = "Trait Injector"
+	icon_state = "trait"
+	late = TRUE
+	///Will inject into all fitting the criteria if false, otherwise first found.
+	var/first_match_only = TRUE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
+	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
+	var/trait_name
+
+//Late init so everything is likely ready and loaded (no warranty)
+/obj/effect/mapping_helpers/trait_injector/LateInitialize()
+	if(!GLOB.trait_name_map)
+		GLOB.trait_name_map = generate_trait_name_map()
+	if(!GLOB.trait_name_map.Find(trait_name))
+		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
+	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
+	for(var/a in target_turf.GetAllContents())
+		var/atom/atom_on_turf = a
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf,target_type))
+			continue
+		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
+		matches_found++
+		if(first_match_only)
+			qdel(src)
+			return
+	if(!matches_found)
+		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
 	qdel(src)
 

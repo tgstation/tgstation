@@ -12,7 +12,7 @@
 	var/num_escapees = 0 //Above and on centcom z
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
 	var/list/area/shuttle_areas
-	if(SSshuttle && SSshuttle.emergency)
+	if(SSshuttle?.emergency)
 		shuttle_areas = SSshuttle.emergency.shuttle_areas
 
 	for(var/mob/M in GLOB.mob_list)
@@ -239,10 +239,15 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	send2tgs("Server", "Round just ended.")
+	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
+
+	CHECK_TICK
+
+	handle_hearts()
+	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
 
@@ -311,6 +316,8 @@
 	parts += medal_report()
 	//Station Goals
 	parts += goal_report()
+	//Economy & Money
+	parts += market_report()
 
 	listclearnulls(parts)
 
@@ -361,7 +368,7 @@
 	if(!previous)
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
-		C.verbs -= /client/proc/show_previous_roundend_report
+		remove_verb(C, /client/proc/show_previous_roundend_report)
 		fdel(filename)
 		text2file(content, filename)
 	else
@@ -452,6 +459,34 @@
 			parts += G.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
+///Generate a report for how much money is on station, as well as the richest crewmember on the station.
+/datum/controller/subsystem/ticker/proc/market_report()
+	var/list/parts = list()
+	parts += "<span class='header'>Station Economic Summary:</span>"
+	///This is the richest account on station at roundend.
+	var/datum/bank_account/mr_moneybags
+	///This is the station's total wealth at the end of the round.
+	var/station_vault = 0
+	///How many players joined the round.
+	var/total_players = GLOB.joined_player_list.len
+	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	for(var/i in SSeconomy.bank_accounts_by_id)
+		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
+		if(typecache_bank[current_acc.type])
+			continue
+		station_vault += current_acc.account_balance
+		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
+			mr_moneybags = current_acc
+	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
+	if(total_players > 0)
+		parts += "An average of [station_vault/total_players] credits were collected.<br>"
+		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+	if(mr_moneybags)
+		parts += "The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+	else
+		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+	return parts
+
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
 		var/list/parts = list()
@@ -464,8 +499,7 @@
 ///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
 /datum/controller/subsystem/ticker/proc/hardcore_random_report()
 	. = list()
-	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
-	. += "<ul class='playerlist'>"
+	var/list/hardcores = list()
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
@@ -474,8 +508,14 @@
 			continue
 		if(!human_player.mind)
 			continue
+		hardcores += human_player
+	if(!length(hardcores))
+		return
+	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
+	for(var/mob/living/carbon/human/human_player in hardcores)
 		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
-	. += "</ul>"
+	. += "</ul></div>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()
@@ -483,8 +523,6 @@
 	var/list/all_antagonists = list()
 
 	for(var/datum/team/A in GLOB.antagonist_teams)
-		if(!A.members)
-			continue
 		all_teams |= A
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
@@ -611,11 +649,9 @@
 	var/list/sql_admins = list()
 	for(var/i in GLOB.protected_admins)
 		var/datum/admins/A = GLOB.protected_admins[i]
-		var/sql_ckey = sanitizeSQL(A.target)
-		var/sql_rank = sanitizeSQL(A.rank.name)
-		sql_admins += list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
+		sql_admins += list(list("ckey" = A.target, "rank" = A.rank.name))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
-	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
 	qdel(query_admin_rank_update)
 
@@ -648,15 +684,20 @@
 			flags += "can_edit_flags"
 		if(!flags.len)
 			continue
-		var/sql_rank = sanitizeSQL(R.name)
 		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
-		var/datum/DBQuery/query_check_everything_ranks = SSdbcore.NewQuery("SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = '[sql_rank]' AND ([flags_to_check])")
+		var/datum/db_query/query_check_everything_ranks = SSdbcore.NewQuery(
+			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
+			list("rank" = R.name)
+		)
 		if(!query_check_everything_ranks.Execute())
 			qdel(query_check_everything_ranks)
 			return
 		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
 			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
-			var/datum/DBQuery/query_update_everything_ranks = SSdbcore.NewQuery("UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = '[sql_rank]'")
+			var/datum/db_query/query_update_everything_ranks = SSdbcore.NewQuery(
+				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = :rank",
+				list("rank" = R.name)
+			)
 			if(!query_update_everything_ranks.Execute())
 				qdel(query_update_everything_ranks)
 				return

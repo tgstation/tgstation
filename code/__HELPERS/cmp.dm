@@ -127,3 +127,25 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
 	return sorttext(B.ownjob, A.ownjob)
+
+/proc/cmp_num_string_asc(A, B)
+	return text2num(A) - text2num(B)
+
+/proc/cmp_mob_realname_dsc(mob/A,mob/B)
+	return sorttext(A.real_name,B.real_name)
+
+/**
+  * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
+  *
+  * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
+  * This prevents any reagent_containers from being consumed before the reagents they contain, which can
+  * lead to runtimes and item duplication when it happens.
+  */
+/proc/cmp_crafting_req_priority(var/A, var/B)
+	var/lhs
+	var/rhs
+
+	lhs = ispath(A, /datum/reagent) ? 0 : 1
+	rhs = ispath(B, /datum/reagent) ? 0 : 1
+
+	return lhs - rhs

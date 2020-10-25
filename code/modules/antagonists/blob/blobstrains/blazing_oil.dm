@@ -14,15 +14,15 @@
 	reagent = /datum/reagent/blob/blazing_oil
 
 /datum/blobstrain/reagent/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(1.5, BURN, "energy")
+	B.take_damage(1.5, BURN, ENERGY)
 
 /datum/blobstrain/reagent/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage_type == BURN && damage_flag != "energy")
+	if(damage_type == BURN && damage_flag != ENERGY)
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) && prob(80))
 				new /obj/effect/hotspot(T)
-	if(damage_flag == "fire")
+	if(damage_flag == FIRE)
 		return 0
 	return ..()
 
@@ -31,11 +31,12 @@
 	taste_description = "burning oil"
 	color = "#B68D00"
 
-/datum/reagent/blob/blazing_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.adjust_fire_stacks(round(reac_volume/10))
-	M.IgniteMob()
-	if(M)
-		M.apply_damage(0.8*reac_volume, BURN)
-	if(iscarbon(M))
-		M.emote("scream")
+/datum/reagent/blob/blazing_oil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
+	exposed_mob.adjust_fire_stacks(round(reac_volume/10))
+	exposed_mob.IgniteMob()
+	if(exposed_mob)
+		exposed_mob.apply_damage(0.8*reac_volume, BURN, wound_bonus=CANT_WOUND)
+	if(iscarbon(exposed_mob))
+		exposed_mob.emote("scream")

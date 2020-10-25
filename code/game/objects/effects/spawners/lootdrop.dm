@@ -9,7 +9,7 @@
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
-	if(loot && loot.len)
+	if(loot?.len)
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
@@ -42,6 +42,15 @@
 			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 		)
+
+/obj/effect/spawner/lootdrop/arcade_boards
+	name = "arcade board spawner"
+	lootdoubles = FALSE
+	loot = list()
+
+/obj/effect/spawner/lootdrop/arcade_boards/Initialize(mapload)
+	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
+	return ..()
 
 
 /obj/effect/spawner/lootdrop/armory_contraband
@@ -122,6 +131,70 @@
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
 
+/obj/effect/spawner/lootdrop/garbage_spawner
+	name = "garbage_spawner"
+	loot = list(/obj/effect/spawner/lootdrop/food_packaging = 56,
+				/obj/item/trash/can = 8,
+				/obj/item/shard = 8,
+				/obj/effect/spawner/lootdrop/botanical_waste = 8,
+				/obj/effect/spawner/lootdrop/cigbutt = 8,
+				/obj/item/reagent_containers/syringe = 5,
+				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
+				/obj/item/light/tube/broken = 3,
+				/obj/item/light/tube/broken = 1,
+				/obj/item/trash/candle = 1)
+
+/obj/effect/spawner/lootdrop/cigbutt
+	name = "cigarette butt spawner"
+	loot = list(/obj/item/cigbutt = 65,
+				/obj/item/cigbutt/roach = 20,
+				/obj/item/cigbutt/cigarbutt = 15)
+
+/obj/effect/spawner/lootdrop/food_packaging
+	name = "food packaging spawner"
+	loot = list(/obj/item/trash/raisins = 20,
+				/obj/item/trash/cheesie = 10,
+				/obj/item/trash/candy = 10,
+				/obj/item/trash/chips = 10,
+				/obj/item/trash/sosjerky = 10,
+				/obj/item/trash/pistachios = 10,
+				/obj/item/trash/boritos = 8,
+				/obj/item/trash/can/food/beans = 6,
+				/obj/item/trash/popcorn = 5,
+				/obj/item/trash/energybar = 5,
+				/obj/item/trash/can/food/peaches/maint = 4,
+				/obj/item/trash/semki = 2)
+
+/obj/effect/spawner/lootdrop/botanical_waste
+	name = "botanical waste spawner"
+	loot = list(/obj/item/grown/bananapeel = 60,
+				/obj/item/grown/corncob = 30,
+				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
+
+/obj/effect/spawner/lootdrop/refreshing_beverage
+	name = "good soda spawner"
+	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
+				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
+				/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 10,
+				/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 10,
+				/obj/item/reagent_containers/food/drinks/beer/light = 10,
+				/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
+
+/obj/effect/spawner/lootdrop/maint_drugs
+	name = "maint drugs spawner"
+	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
+				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
+				/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
+				/obj/item/reagent_containers/syringe = 15,
+				/obj/item/cigbutt/roach = 15)
+
 /obj/effect/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,
@@ -142,25 +215,25 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/reagent_containers/food/snacks/soup/beet,
-			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
-			/obj/item/reagent_containers/food/snacks/soup/stew,
-			/obj/item/reagent_containers/food/snacks/soup/hotchili,
-			/obj/item/reagent_containers/food/snacks/soup/nettle,
-			/obj/item/reagent_containers/food/snacks/soup/meatball)
+			/obj/item/food/soup/beet,
+			/obj/item/food/soup/sweetpotato,
+			/obj/item/food/soup/stew,
+			/obj/item/food/soup/hotchili,
+			/obj/item/food/soup/nettle,
+			/obj/item/food/soup/meatball)
 	var/salads = list(
-			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
-			/obj/item/reagent_containers/food/snacks/salad/validsalad,
-			/obj/item/reagent_containers/food/snacks/salad/fruit,
-			/obj/item/reagent_containers/food/snacks/salad/jungle,
-			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
+			/obj/item/food/salad/herbsalad,
+			/obj/item/food/salad/validsalad,
+			/obj/item/food/salad/fruit,
+			/obj/item/food/salad/jungle,
+			/obj/item/food/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/reagent_containers/food/snacks/bearsteak,
-			/obj/item/reagent_containers/food/snacks/enchiladas,
-			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
-			/obj/item/reagent_containers/food/snacks/burger/bigbite,
-			/obj/item/reagent_containers/food/snacks/burger/superbite,
-			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
+			/obj/item/food/bearsteak,
+			/obj/item/food/enchiladas,
+			/obj/item/food/stewedsoymeat,
+			/obj/item/food/burger/bigbite,
+			/obj/item/food/burger/superbite,
+			/obj/item/food/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
@@ -300,35 +373,35 @@
 /obj/effect/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
 	name = "harmless AI module spawner"
 	loot = list(
-				/obj/item/aiModule/core/full/asimov,
-				/obj/item/aiModule/core/full/asimovpp,
-				/obj/item/aiModule/core/full/hippocratic,
-				/obj/item/aiModule/core/full/paladin_devotion,
-				/obj/item/aiModule/core/full/paladin
+				/obj/item/ai_module/core/full/asimov,
+				/obj/item/ai_module/core/full/asimovpp,
+				/obj/item/ai_module/core/full/hippocratic,
+				/obj/item/ai_module/core/full/paladin_devotion,
+				/obj/item/ai_module/core/full/paladin
 				)
 
 /obj/effect/spawner/lootdrop/aimodule_neutral // These shouldn't allow the AI to start butchering people without reason
 	name = "neutral AI module spawner"
 	loot = list(
-				/obj/item/aiModule/core/full/corp,
-				/obj/item/aiModule/core/full/maintain,
-				/obj/item/aiModule/core/full/drone,
-				/obj/item/aiModule/core/full/peacekeeper,
-				/obj/item/aiModule/core/full/reporter,
-				/obj/item/aiModule/core/full/robocop,
-				/obj/item/aiModule/core/full/liveandletlive,
-				/obj/item/aiModule/core/full/hulkamania
+				/obj/item/ai_module/core/full/corp,
+				/obj/item/ai_module/core/full/maintain,
+				/obj/item/ai_module/core/full/drone,
+				/obj/item/ai_module/core/full/peacekeeper,
+				/obj/item/ai_module/core/full/reporter,
+				/obj/item/ai_module/core/full/robocop,
+				/obj/item/ai_module/core/full/liveandletlive,
+				/obj/item/ai_module/core/full/hulkamania
 				)
 
 /obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
 	name = "harmful AI module spawner"
 	loot = list(
-				/obj/item/aiModule/core/full/antimov,
-				/obj/item/aiModule/core/full/balance,
-				/obj/item/aiModule/core/full/tyrant,
-				/obj/item/aiModule/core/full/thermurderdynamic,
-				/obj/item/aiModule/core/full/damaged,
-				/obj/item/aiModule/reset/purge
+				/obj/item/ai_module/core/full/antimov,
+				/obj/item/ai_module/core/full/balance,
+				/obj/item/ai_module/core/full/tyrant,
+				/obj/item/ai_module/core/full/thermurderdynamic,
+				/obj/item/ai_module/core/full/damaged,
+				/obj/item/ai_module/reset/purge
 				)
 
 // Tech storage circuit board spawners
@@ -368,7 +441,9 @@
 				/obj/item/circuitboard/computer/nanite_cloud_controller,
 				/obj/item/circuitboard/machine/nanite_chamber,
 				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub
+				/obj/item/circuitboard/machine/nanite_program_hub,
+				/obj/item/circuitboard/computer/scan_consolenew,
+				/obj/item/circuitboard/machine/dnascanner
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/security
@@ -405,15 +480,13 @@
 	name = "medical circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/machine/chem_dispenser,
-				/obj/item/circuitboard/computer/scan_consolenew,
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/dnascanner,
 				/obj/item/circuitboard/computer/pandemic
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/AI
+/obj/effect/spawner/lootdrop/techstorage/ai
 	name = "secure AI circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/aiupload,
@@ -429,7 +502,7 @@
 				/obj/item/circuitboard/computer/card
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/RnD_secure
+/obj/effect/spawner/lootdrop/techstorage/rnd_secure
 	name = "secure RnD circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/mecha_control,
@@ -485,3 +558,119 @@
 	while(islist(lootspawn))
 		lootspawn = pickweight(lootspawn)
 	return lootspawn
+
+/obj/effect/spawner/lootdrop/space
+	name = "generic space ruin loot spawner"
+	lootcount = 1
+
+/// Space loot spawner. Randomlu picks 5 wads of space cash.
+/obj/effect/spawner/lootdrop/space/cashmoney
+	lootcount = 5
+	fan_out_items = TRUE
+	loot = list(
+		/obj/item/stack/spacecash/c1 = 100,
+		/obj/item/stack/spacecash/c10 = 80,
+		/obj/item/stack/spacecash/c20 = 60,
+		/obj/item/stack/spacecash/c50 = 40,
+		/obj/item/stack/spacecash/c100 = 30,
+		/obj/item/stack/spacecash/c200 = 20,
+		/obj/item/stack/spacecash/c500 = 10,
+		/obj/item/stack/spacecash/c1000 = 5,
+		/obj/item/stack/spacecash/c10000 = 1
+	)
+
+/// Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
+/obj/effect/spawner/lootdrop/space/fancytech
+	lootcount = 2
+	loot = list(
+		/obj/item/raw_anomaly_core/random = 1,
+		/obj/item/disk/tech_disk/spaceloot = 1,
+		/obj/item/camera_bug = 1
+	)
+
+/// Space loot spawner. Some sort of random and rare tool. Only a single drop.
+/obj/effect/spawner/lootdrop/space/fancytool
+	lootcount = 1
+	loot = list(
+		/obj/item/wrench/abductor = 1,
+		/obj/item/wirecutters/abductor = 1,
+		/obj/item/screwdriver/abductor = 1,
+		/obj/item/crowbar/abductor = 1,
+		/obj/item/weldingtool/abductor = 1,
+		/obj/item/multitool/abductor = 1,
+		/obj/item/scalpel/alien = 1,
+		/obj/item/hemostat/alien = 1,
+		/obj/item/retractor/alien = 1,
+		/obj/item/circular_saw/alien = 1,
+		/obj/item/surgicaldrill/alien = 1,
+		/obj/item/cautery/alien = 1,
+		/obj/item/wrench/caravan = 1,
+		/obj/item/wirecutters/caravan = 1,
+		/obj/item/screwdriver/caravan = 1,
+		/obj/item/crowbar/red/caravan = 1
+	)
+
+/// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
+/obj/effect/spawner/lootdrop/space/rareseed
+	lootcount = 5
+	loot = list(
+		/obj/item/seeds/random = 30,
+		/obj/item/seeds/angel = 1,
+		/obj/item/seeds/glowshroom/glowcap = 1,
+		/obj/item/seeds/glowshroom/shadowshroom = 1,
+		/obj/item/seeds/liberty = 5,
+		/obj/item/seeds/nettle/death = 1,
+		/obj/item/seeds/plump/walkingmushroom = 1,
+		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/cannabis/rainbow = 1,
+		/obj/item/seeds/cannabis/death = 1,
+		/obj/item/seeds/cannabis/white = 1,
+		/obj/item/seeds/cannabis/ultimate = 1,
+		/obj/item/seeds/replicapod = 5,
+		/obj/item/seeds/kudzu = 1
+	)
+
+/// Space loot spawner. A single roundstart species language book.
+/obj/effect/spawner/lootdrop/space/languagebook
+	lootcount = 1
+	loot = list(
+		/obj/item/language_manual/roundstart_species = 100,
+		/obj/item/language_manual/roundstart_species/five = 3,
+		/obj/item/language_manual/roundstart_species/unlimited = 1
+	)
+
+/// Space loot spawner. Random selecton of a few rarer materials.
+/obj/effect/spawner/lootdrop/space/material
+	lootcount = 3
+	loot = list(
+		/obj/item/stack/sheet/plastic/fifty = 5,
+		/obj/item/stack/sheet/runed_metal/ten = 20,
+		/obj/item/stack/sheet/runed_metal/fifty = 5,
+		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/gold{amount = 15} = 15,
+	)
+
+/// A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
+/obj/effect/spawner/lootdrop/space/syndiecosmetic
+	lootcount = 2
+	loot = list(
+		/obj/item/clothing/under/syndicate = 10,
+		/obj/item/clothing/under/syndicate/skirt = 10,
+		/obj/item/clothing/under/syndicate/bloodred = 10,
+		/obj/item/clothing/under/syndicate/bloodred/sleepytime = 5,
+		/obj/item/clothing/under/syndicate/tacticool = 10,
+		/obj/item/clothing/under/syndicate/tacticool/skirt = 10,
+		/obj/item/clothing/under/syndicate/sniper = 10,
+		/obj/item/clothing/under/syndicate/camo = 10,
+		/obj/item/clothing/under/syndicate/soviet = 10,
+		/obj/item/clothing/under/syndicate/combat = 10,
+		/obj/item/clothing/under/syndicate/rus_army = 10,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_candy = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust = 2,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1
+	)

@@ -30,7 +30,7 @@
 	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
+			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counterintelligence")
 		if(RUSKY_PARTY)
 			priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 		if(SPIDER_GIFT)
@@ -111,7 +111,7 @@
 		for(var/place in shuttle_areas)
 			var/area/shuttle/shuttle_area = place
 			for(var/turf/open/floor/T in shuttle_area)
-				if(is_blocked_turf(T))
+				if(T.is_blocked_turf())
 					continue
 				empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)
@@ -260,7 +260,7 @@
 
 /obj/machinery/syndicatebomb/shuttle_loan/Initialize()
 	. = ..()
-	setAnchored(TRUE)
+	set_anchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb
 	activate()
 	update_icon()

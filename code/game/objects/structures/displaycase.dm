@@ -1,12 +1,12 @@
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "glassbox0"
+	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
+	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
@@ -14,6 +14,7 @@
 	var/alert = TRUE
 	var/open = FALSE
 	var/openable = TRUE
+	var/custom_glass_overlay = FALSE ///If we have a custom glass overlay to use.
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
 	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
@@ -32,11 +33,22 @@
 		showpiece = new start_showpiece_type (src)
 	update_icon()
 
+/obj/structure/displaycase/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
+		update_icon()
+
+/obj/structure/displaycase/handle_atom_del(atom/A)
+	if(A == electronics)
+		electronics = null
+	if(A == showpiece)
+		showpiece = null
+		update_icon()
+	return ..()
+
 /obj/structure/displaycase/Destroy()
-	if(electronics)
-		QDEL_NULL(electronics)
-	if(showpiece)
-		QDEL_NULL(showpiece)
+	QDEL_NULL(electronics)
+	QDEL_NULL(showpiece)
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
@@ -44,61 +56,62 @@
 	if(alert)
 		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		. += "<span class='notice'>There's [showpiece] inside.</span>"
+		. += "<span class='notice'>There's \a [showpiece] inside.</span>"
 	if(trophy_message)
 		. += "The plaque reads:\n [trophy_message]"
 
-
 /obj/structure/displaycase/proc/dump()
-	if (showpiece)
-		showpiece.forceMove(loc)
-		showpiece = null
+	if(QDELETED(showpiece))
+		return
+	showpiece.forceMove(drop_location())
+	showpiece = null
+	update_icon()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		dump()
 		if(!disassembled)
-			new /obj/item/shard( src.loc )
+			new /obj/item/shard(drop_location())
 			trigger_alarm()
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		density = FALSE
-		broken = 1
-		new /obj/item/shard( src.loc )
+		broken = TRUE
+		new /obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm()
 
+///Anti-theft alarm triggered when broken.
 /obj/structure/displaycase/proc/trigger_alarm()
-	//Activate Anti-theft
-	if(alert)
-		var/area/alarmed = get_area(src)
-		alarmed.burglaralert(src)
-		playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
+	if(!alert)
+		return
+	var/area/alarmed = get_area(src)
+	alarmed.burglaralert(src)
+	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
-/obj/structure/displaycase/update_icon()
-	var/icon/I
-	if(open)
-		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
-	else
-		I = icon('icons/obj/stationobjs.dmi',"glassbox0")
-	if(broken)
-		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
+/obj/structure/displaycase/update_overlays()
+	. = ..()
 	if(showpiece)
-		var/icon/S = getFlatIcon(showpiece)
-		S.Scale(17,17)
-		I.Blend(S,ICON_UNDERLAY,8,8)
-	src.icon = I
-	return
+		var/mutable_appearance/showpiece_overlay = mutable_appearance(showpiece.icon, showpiece.icon_state)
+		showpiece_overlay.copy_overlays(showpiece)
+		showpiece_overlay.transform *= 0.6
+		. += showpiece_overlay
+	if(custom_glass_overlay)
+		return
+	if(broken)
+		. += "[initial(icon_state)]_broken"
+	else if(!open)
+		. += "[initial(icon_state)]_closed"
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !broken && openable)
@@ -148,7 +161,7 @@
 		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 		if(do_after(user, 20, target = src))
 			G.use(2)
-			broken = 0
+			broken = FALSE
 			obj_integrity = max_integrity
 			update_icon()
 	else
@@ -170,15 +183,15 @@
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
-		src.add_fingerprint(user)
-		update_icon()
+		add_fingerprint(user)
 		return
 	else
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
 		if (user.a_intent == INTENT_HELP)
-			user.examinate(src)
+			if(!user.is_blind())
+				user.examinate(src)
 			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
@@ -293,7 +306,7 @@
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
@@ -347,7 +360,7 @@
 			new /obj/effect/decal/cleanable/ash(loc)
 			QDEL_NULL(showpiece)
 		else
-			..()
+			return ..()
 
 /obj/item/key/displaycase
 	name = "display case key"
@@ -365,37 +378,132 @@
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "laserbox0"
+	icon_state = "laserbox"
+	custom_glass_overlay = TRUE
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
 	density = FALSE
 	max_integrity = 100
-	req_access = list(ACCESS_KITCHEN)
+	req_access = null
 	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
-	///The Account which will recieve payment for purchases. Set by the first ID to swipe the tray.
+	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
+	///We're using the same trick as paper does in order to cache the image, and only load the UI when messed with.
+	var/list/viewing_ui = list()
 
-/obj/structure/displaycase/forsale/update_icon()	//remind me to fix my shitcode later
-	var/icon/I
-	if(open)
-		I = icon('icons/obj/stationobjs.dmi',"laserboxb0")
-	else
-		I = icon('icons/obj/stationobjs.dmi',"laserbox0")
-	if(!showpiece && !open)
-		I = icon('icons/obj/stationobjs.dmi',"laserbox_open")
-	if(broken)
-		I = icon('icons/obj/stationobjs.dmi',"laserbox_broken")
+/obj/structure/displaycase/forsale/update_icon_state()
+	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
+
+/obj/structure/displaycase/forsale/update_overlays()
+	. = ..()
+	if(!broken && !open)
+		. += "[initial(icon_state)]_overlay"
+
+/obj/structure/displaycase/forsale/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Vendatray", name)
+		ui.set_autoupdate(FALSE)
+		viewing_ui[user] = ui
+		ui.open()
+
+/obj/structure/displaycase/forsale/ui_data(mob/user)
+	var/list/data = list()
+	var/register = FALSE
+	if(payments_acc)
+		register = TRUE
+		data["owner_name"] = payments_acc.account_holder
 	if(showpiece)
-		var/icon/S = getFlatIcon(showpiece)
-		S.Scale(17,17)
-		I.Blend(S,ICON_UNDERLAY,8,12)
-	src.icon = I
-	return
+		data["product_name"] = capitalize(showpiece.name)
+		var/base64 = icon2base64(icon(showpiece.icon, showpiece.icon_state))
+		data["product_icon"] = base64
+	data["registered"] = register
+	data["product_cost"] = sale_price
+	data["tray_open"] = open
+	return data
 
+/obj/structure/displaycase/forsale/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	var/obj/item/card/id/potential_acc = usr.get_idcard(hand_first = TRUE)
+	switch(action)
+		if("Buy")
+			if(!showpiece)
+				to_chat(usr, "<span class='notice'>There's nothing for sale.</span>")
+				return TRUE
+			if(broken)
+				to_chat(usr, "<span class='notice'>[src] appears to be broken.</span>")
+				return TRUE
+			if(!payments_acc)
+				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				return TRUE
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return TRUE
+			if(!potential_acc)
+				to_chat(usr, "<span class='notice'>No ID card detected.</span>")
+				return
+			var/datum/bank_account/account = potential_acc.registered_account
+			if(!account)
+				to_chat(usr, "<span class='notice'>[potential_acc] has no account registered!</span>")
+				return
+			if(!account.has_money(sale_price))
+				to_chat(usr, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+				return TRUE
+			else
+				account.adjust_money(-sale_price)
+				if(payments_acc)
+					payments_acc.adjust_money(sale_price)
+				usr.put_in_hands(showpiece)
+				to_chat(usr, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				flick("[initial(icon_state)]_vend", src)
+				showpiece = null
+				update_icon()
+				SStgui.update_uis(src)
+				return TRUE
+		if("Open")
+			if(!payments_acc)
+				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				return TRUE
+			if(!potential_acc || !potential_acc.registered_account)
+				return
+			if(!check_access(potential_acc))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+			toggle_lock()
+			SStgui.update_uis(src)
+		if("Register")
+			if(payments_acc)
+				return
+			if(!potential_acc || !potential_acc.registered_account)
+				return
+			if(!check_access(potential_acc))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+			payments_acc = potential_acc.registered_account
+			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		if("Adjust")
+			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				return
+
+			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
+				to_chat(usr, "<span class='warning'>[src] rejects your new price.</span>")
+				return
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
+				to_chat(usr, "<span class='warning'>You need to get closer!</span>")
+				return
+			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
+			sale_price = new_price_input
+			to_chat(usr, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			SStgui.update_uis(src)
+			return TRUE
+	. = TRUE
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		//Card Registration
@@ -403,57 +511,29 @@
 		if(!potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
 			return
-		if(!payments_acc && potential_acc.registered_account)
-			payments_acc = potential_acc.registered_account
+		if(payments_acc == potential_acc.registered_account)
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-			to_chat(user, "<span class='notice'>Vend-a-tray registered. Use your ID on grab intent to change the sale price, or disarm intent to open the tray.</span>")
+			toggle_lock()
 			return
-		//Buying the contained item with the ID.
-		switch(user.a_intent)
-			if(INTENT_HELP)
-				if(!showpiece)
-					to_chat(user, "<span class='notice'>There's nothing for sale.</span>")
-					return TRUE
-				if(broken)
-					to_chat(user, "<span class='notice'>[src] appears to be broken.</span>")
-					return TRUE
-				var/confirm = alert(user, "Purchase [showpiece] for [sale_price]?", "Purchase?", "Confirm", "Cancel")
-				if(confirm == "Cancel" || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-					return TRUE
-				var/datum/bank_account/account = potential_acc.registered_account
-				if(!account.has_money(sale_price))
-					to_chat(user, "<span class='notice'>You do not possess the funds to purchase this.</span>")
-					return TRUE
-				else
-					account.adjust_money(-sale_price)
-					if(payments_acc)
-						payments_acc.adjust_money(sale_price)
-					user.put_in_hands(showpiece)
-					to_chat(user, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-					playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
-					icon = 'icons/obj/stationobjs.dmi'
-					flick("laserbox_vend", src)
-					showpiece = null
-					update_icon()
-					return TRUE
-			//Setting the object's price.
-			if(INTENT_GRAB)
-				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-				if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
-					to_chat(user, "<span class='warning'>The vend-a-tray rejects your new price.</span>")
-					return
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
-					to_chat(user, "<span class='warning'>You need to get closer!</span>")
-					return
-				new_price_input = clamp(round(new_price_input, 1), 10, 1000)
-				sale_price = new_price_input
-				to_chat(user, "<span class='notice'>The cost is now set to [sale_price].</span>")
-				return TRUE
-			if(INTENT_DISARM || INTENT_HARM)
-				if(payments_acc && payments_acc != potential_acc.registered_account)
-					to_chat(user, "<span class='warning'>This Vend-a-tray is already registered!</span>")
-					return
-	if(I.tool_behaviour == TOOL_WRENCH && open && user.a_intent == INTENT_HELP )
+	if(istype(I, /obj/item/pda))
+		return TRUE
+	SStgui.update_uis(src)
+	. = ..()
+
+
+/obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(obj_integrity <= (integrity_failure *  max_integrity))
+		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
+		if(do_after(user, 20, target = src))
+			broken = FALSE
+			obj_integrity = max_integrity
+			update_icon()
+		return TRUE
+
+/obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
 		else
@@ -465,24 +545,11 @@
 				to_chat(user, "<span class='notice'>You unsecure [src].</span>")
 			else
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
-			anchored = !anchored
+			set_anchored(!anchored)
 			return
-	else if(I.tool_behaviour == TOOL_WRENCH && !open && user.a_intent == INTENT_HELP)
+	else if(!open && user.a_intent == INTENT_HELP)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
-	if(istype(I, /obj/item/pda))
-		return TRUE
-	. = ..()
-
-/obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(obj_integrity <= (integrity_failure *  max_integrity))
-		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
-		if(do_after(user, 20, target = src))
-			broken = 0
-			obj_integrity = max_integrity
-			update_icon()
-		return TRUE
 
 /obj/structure/displaycase/forsale/emag_act(mob/user)
 	. = ..()
@@ -503,3 +570,7 @@
 		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm() //In case it's given an alarm anyway.
+
+/obj/structure/displaycase/forsale/kitchen
+	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
+	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)

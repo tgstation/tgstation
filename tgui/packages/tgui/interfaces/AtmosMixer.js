@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const AtmosMixer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={370}
+      height={165}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -23,7 +25,7 @@ export const AtmosMixer = (props, context) => {
                 unit="kPa"
                 width="75px"
                 minValue={0}
-                maxValue={4500}
+                maxValue={data.max_pressure}
                 step={10}
                 onChange={(e, value) => act('pressure', {
                   pressure: value,

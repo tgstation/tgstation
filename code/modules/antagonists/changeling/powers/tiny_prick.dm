@@ -34,7 +34,7 @@
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling && changeling.chosen_sting)
+		if(changeling?.chosen_sting)
 			changeling.chosen_sting.unset_sting(src)
 
 /datum/action/changeling/sting/can_sting(mob/user, mob/target)
@@ -87,12 +87,13 @@
 	..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
@@ -130,8 +131,8 @@
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", object="false armblade sting")
@@ -211,7 +212,7 @@
 	target.blur_eyes(40)
 	return TRUE
 
-/datum/action/changeling/sting/LSD
+/datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
 	desc = "We cause mass terror to our victim."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
@@ -219,12 +220,12 @@
 	chemical_cost = 10
 	dna_cost = 1
 
-/datum/action/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
+/datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
 	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
 	return TRUE
 
-/datum/action/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
+/datum/action/changeling/sting/lsd/proc/hallucination_time(mob/living/carbon/target)
 	if(target)
 		target.hallucination = max(90, target.hallucination)
 

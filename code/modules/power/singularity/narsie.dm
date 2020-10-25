@@ -14,7 +14,7 @@
 	consume_range = 6 //How many tiles out do we eat
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(255, 0, 0)
+	light_color = COLOR_RED
 	gender = FEMALE
 
 /obj/singularity/narsie/large
@@ -72,7 +72,7 @@
 /proc/begin_the_end()
 	sleep(50)
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected a anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
 		sleep(20)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
@@ -123,7 +123,7 @@
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
-/proc/cult_ending_helper(var/ending_type = 0)
+/proc/cult_ending_helper(ending_type = 0)
 	if(ending_type == 2) //narsie fukkin died
 		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
 	else if(ending_type) //no explosion

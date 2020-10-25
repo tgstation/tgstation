@@ -4,7 +4,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("dumped")
+	attack_verb_continuous = list("dumps")
+	attack_verb_simple = list("dump")
 	var/dumped = FALSE
 
 /obj/item/suspiciousphone/attack_self(mob/user)
@@ -20,13 +21,13 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
+		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 		var/mob/living/carbon/human/H = user
 		accounts_to_rob -= H.get_bank_account()
 		for(var/i in accounts_to_rob)
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
-		new /obj/effect/dumpeetTarget(targetturf, user)
+		new /obj/effect/dumpeet_target(targetturf, user)
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
@@ -35,7 +36,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = LARGE_MOB_LAYER
-	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
@@ -84,7 +85,8 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	SSeconomy.market_crashing = TRUE
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -155,10 +157,11 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, 0,0,1, flame_range = 2)
+	SSeconomy.market_crashing = FALSE
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = SSeconomy.bank_accounts.Copy()
+	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -169,7 +172,8 @@
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		if(!B.being_dumped)
+		if(!(B?.being_dumped))
+			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff.get_bank_account()
@@ -186,39 +190,40 @@
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.being_dumped = FALSE
+		if(B)
+			B.being_dumped = FALSE
 
-/obj/effect/dumpeetFall //Falling pod
+/obj/effect/dumpeet_fall //Falling pod
 	name = ""
 	icon = 'icons/obj/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
-	layer = FLY_LAYER//that wasnt flying, that was falling with style!
+	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	icon_state = "missile_blur"
 
-/obj/effect/dumpeetTarget
+/obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2
-	var/obj/effect/dumpeetFall/DF
+	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/carbon/human/bogdanoff
 
 /obj/effect/ex_act()
 	return
 
-/obj/effect/dumpeetTarget/Initialize(mapload, user)
+/obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
-/obj/effect/dumpeetTarget/proc/startLaunch()
-	DF = new /obj/effect/dumpeetFall(drop_location())
+/obj/effect/dumpeet_target/proc/startLaunch()
+	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
@@ -227,7 +232,7 @@
 
 
 
-/obj/effect/dumpeetTarget/proc/endLaunch()
+/obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	playsound(src, "explosion", 80, TRUE)
 	dump.forceMove(get_turf(src))

@@ -1,14 +1,12 @@
 /datum/computer_file/program/arcade
-	filename = "arcade"
-	filedesc = "Nanotrasen Micro Arcade"
+	filename = "dsarcade"
+	filedesc = "Donksoft Micro Arcade"
 	program_icon_state = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
 	requires_ntnet = FALSE
-	network_destination = "arcade network"
 	size = 6
 	tgui_id = "NtosArcade"
-	ui_x = 450
-	ui_y = 350
+	program_icon = "gamepad"
 
 	///Returns TRUE if the game is being played.
 	var/game_active = TRUE
@@ -30,7 +28,7 @@
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
-		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(computer.loc, 'sound/arcade/win.ogg', 50)
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
@@ -40,7 +38,7 @@
 		sleep(10)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
-		playsound(computer.loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(computer.loc, 'sound/arcade/lose.ogg', 50)
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
@@ -60,30 +58,29 @@
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
-		playsound(computer.loc, 'sound/arcade/steal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(computer.loc, 'sound/arcade/steal.ogg', 50, TRUE)
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
 	else if(boss_mp > 5 && boss_hp <12)
 		heads_up = "[boss_name] heals for [bossheal] health!"
-		playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
 	else
 		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
-		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
 		player_hp -= boss_attackamt
 
 	pause_state = FALSE
 	game_check()
 
-/datum/computer_file/program/arcade/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
-	. = ..()
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/arcade)
-	assets.send(user)
+/datum/computer_file/program/arcade/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/arcade),
+	)
 
 /datum/computer_file/program/arcade/ui_data(mob/user)
 	var/list/data = get_header_data()
-
 	data["Hitpoints"] = boss_hp
 	data["PlayerHitpoints"] = player_hp
 	data["PlayerMP"] = player_mp
@@ -95,14 +92,19 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
+
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
-	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/gamerSkillLevel = 0
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+		gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
 			var/attackamt = 0 //Spam prevention.
@@ -110,7 +112,7 @@
 				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
-			playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+			playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
 			boss_hp -= attackamt
 			sleep(10)
 			game_check()
@@ -127,7 +129,7 @@
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
-			playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+			playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
 			player_hp += healamt
 			player_mp -= healcost
 			sleep(10)
@@ -140,7 +142,7 @@
 				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
-			playsound(computer.loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+			playsound(computer.loc, 'sound/arcade/mana.ogg', 50, TRUE)
 			player_mp += rechargeamt
 			sleep(10)
 			game_check()

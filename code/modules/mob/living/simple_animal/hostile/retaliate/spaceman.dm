@@ -37,7 +37,7 @@
 	icon_gib = "syndicate_gib"
 	turns_per_move = 5
 	speed = 0
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	vision_range = 3
 	maxHealth = 100

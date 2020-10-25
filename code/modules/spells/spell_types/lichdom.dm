@@ -11,7 +11,7 @@
 	clothes_req = FALSE
 	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
@@ -27,9 +27,6 @@
 			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 		if(!hand_items.len)
 			to_chat(M, "<span class='warning'>You must hold an item you wish to make your phylactery!</span>")
-			return
-		if(!M.mind.hasSoul)
-			to_chat(user, "<span class='warning'>You do not possess a soul!</span>")
 			return
 
 		var/obj/item/marked_item
@@ -49,7 +46,7 @@
 
 		playsound(user, 'sound/effects/pope_entry.ogg', 100)
 
-		if(!do_after(M, 50, needhand=FALSE, target=marked_item))
+		if(!do_after(M, 5 SECONDS, target = marked_item, timed_action_flags = IGNORE_HELD_ITEM))
 			to_chat(M, "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item]!</span>")
 			return
 
@@ -60,7 +57,6 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
-		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -80,9 +76,10 @@
 	desc = "Stores souls. Revives liches. Also repels mosquitos."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
-	color = "#003300"
-	light_color = "#003300"
-	var/lon_range = 3
+	color = COLOR_VERY_DARK_LIME_GREEN
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_color = COLOR_VERY_DARK_LIME_GREEN
 	var/resurrections = 0
 	var/datum/mind/mind
 	var/respawn_time = 1800
@@ -97,7 +94,6 @@
 	active_phylacteries++
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
-	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
 
@@ -141,7 +137,7 @@
 	var/turf/body_turf = get_turf(old_body)
 	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
-	if(old_body && old_body.loc)
+	if(old_body?.loc)
 		if(iscarbon(old_body))
 			var/mob/living/carbon/C = old_body
 			for(var/obj/item/W in C)

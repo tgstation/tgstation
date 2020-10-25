@@ -4,16 +4,35 @@
 	..()
 	switch(M.a_intent)
 		if("help")
-			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help_continuous] [src].</span>", \
-								"<span class='notice'>[M] [response_help_continuous] you.</span>", null, null, M)
-				to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			if (stat == DEAD)
+				return
+			visible_message("<span class='notice'>[M] [response_help_continuous] [src].</span>", \
+							"<span class='notice'>[M] [response_help_continuous] you.</span>", null, null, M)
+			to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			if(pet_bonus)
+				funpet(M)
 
 		if("grab")
 			grabbedby(M)
 
-		if("harm", "disarm")
+		if("disarm")
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+			var/shove_dir = get_dir(M, src)
+			if(!Move(get_step(src, shove_dir), shove_dir))
+				log_combat(M, src, "shoved", "failing to move it")
+				M.visible_message("<span class='danger'>[M.name] shoves [src]!</span>",
+					"<span class='danger'>You shove [src]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
+				to_chat(src, "<span class='userdanger'>You're shoved by [M.name]!</span>")
+				return TRUE
+			log_combat(M, src, "shoved", "pushing it")
+			M.visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
+				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
+			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
+			return TRUE
+
+		if("harm")
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
 				return
@@ -26,6 +45,16 @@
 			log_combat(M, src, "attacked")
 			updatehealth()
 			return TRUE
+
+/**
+*This is used to make certain mobs (pet_bonus == TRUE) emote when pet, make a heart emoji at their location, and give the petter a moodlet.
+*
+*/
+/mob/living/simple_animal/proc/funpet(mob/petter)
+	new /obj/effect/temp_visual/heart(loc)
+	if(prob(33))
+		manual_emote("[pet_bonus_emote]")
+	SEND_SIGNAL(petter, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
@@ -95,7 +124,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE)
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -120,7 +149,7 @@
 	..()
 	if(QDELETED(src))
 		return
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armor = getarmor(null, BOMB)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(prob(bomb_armor))

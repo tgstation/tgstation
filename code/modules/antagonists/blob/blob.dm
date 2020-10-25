@@ -2,6 +2,7 @@
 	name = "Blob"
 	roundend_category = "blobs"
 	antagpanel_category = "Blob"
+	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
 
 	var/datum/action/innate/blobpop/pop_action
@@ -60,7 +61,7 @@
 
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
-	if(owner && owner.current)
+	if(owner?.current)
 		var/mob/camera/blob/B = owner.current
 		if(istype(B))
 			. += "(Progress: [B.blobs_legit.len]/[B.blobwincount])"

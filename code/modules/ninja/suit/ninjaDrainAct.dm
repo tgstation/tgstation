@@ -27,7 +27,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	. = 0
 
-	if(cell && cell.charge)
+	if(cell?.charge)
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
@@ -43,7 +43,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 			if (do_after(H,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				S.cell.give(drain)
 				. += drain
@@ -52,7 +52,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 		if(!(obj_flags & EMAGGED))
 			flick("apc-spark", G)
-			playsound(loc, "sparks", 50, TRUE)
+			playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			update_icon()
@@ -87,7 +87,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 			if (do_after(H,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				charge -= drain
 				S.cell.give(drain)
 				. += drain
@@ -190,7 +190,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		S.spark_system.start()
 
 //MECH//
-/obj/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/vehicle/sealed/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -198,7 +198,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	var/drain = 0 //Drain amount
 	. = 0
 
-	occupant_message("<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
+	to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
 	if(get_charge())
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)
@@ -209,7 +209,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				maxcapacity = 1
 			if (do_after(H,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				S.cell.give(drain)
 				. += drain
@@ -227,7 +227,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
-	if(cell && cell.charge)
+	if(cell?.charge)
 		while(G.candrain && cell.charge > 0 && !maxcapacity)
 			drain = rand(G.mindrain,G.maxdrain)
 			if(cell.charge < drain)
@@ -237,7 +237,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				maxcapacity = 1
 			if (do_after(H,10))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
+				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				S.cell.give(drain)
 				. += drain
@@ -258,6 +258,6 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, "sparks", 50, TRUE)
+		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		visible_message("<span class='danger'>[H] electrocutes [src] with [H.p_their()] touch!</span>", "<span class='userdanger'>[H] electrocutes you with [H.p_their()] touch!</span>")
 		electrocute_act(25, H)

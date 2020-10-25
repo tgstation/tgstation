@@ -3,27 +3,28 @@
 /obj/structure/statue/bone
 	anchored = TRUE
 	max_integrity = 120
-	material_drop_type = /obj/item/stack/sheet/bone
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
 	name = "collosal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	oreAmount = 4
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "collosal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	oreAmount = 12
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	oreAmount = 6
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
@@ -51,6 +52,8 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
@@ -75,7 +78,7 @@
 
 /obj/structure/sink/oil_well/attack_hand(mob/M)
 	flick("puddle-oil-splash",src)
-	reagents.reaction(M, TOUCH, 20) //Covers target in 20u of oil.
+	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
@@ -106,7 +109,7 @@
 //***Grave mounds.
 /obj/structure/closet/crate/grave
 	name = "burial mound"
-	desc = "An marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
+	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "grave"
 	dense_when_open = TRUE
@@ -146,7 +149,7 @@
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
+/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)
 		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.</span>")
 	else

@@ -96,14 +96,6 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	poweralm = FALSE
-
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
 	icon_state = "red"
-
-/area/ruin/powered/kinggoat_arena
-	name = "King Goat Arena"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	noteleport = TRUE
-	icon_state = "dk_yellow"

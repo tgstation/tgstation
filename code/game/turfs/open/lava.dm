@@ -28,7 +28,7 @@
 	return src
 
 /turf/open/lava/acid_act(acidpwr, acid_volume)
-	return
+	return FALSE
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
@@ -44,15 +44,17 @@
 	. = ..()
 	if(isliving(Obj))
 		var/mob/living/L = Obj
-		if(!islava(newloc) && !L.on_fire)
+		if(!islava(newloc))
+			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		if(!L.on_fire)
 			L.update_fire()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/process()
-	if(!burn_stuff())
+/turf/open/lava/process(delta_time)
+	if(!burn_stuff(null, delta_time))
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -114,7 +116,7 @@
 	return LAZYLEN(found_safeties)
 
 
-/turf/open/lava/proc/burn_stuff(AM)
+/turf/open/lava/proc/burn_stuff(AM, delta_time = 1)
 	. = 0
 
 	if(is_safe())
@@ -137,16 +139,17 @@
 				O.resistance_flags &= ~FIRE_PROOF
 			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
 				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(10000, 1000)
-
+			O.fire_act(10000, 1000 * delta_time)
+			if(istype(O, /obj/structure/closet))
+				var/obj/structure/closet/C = O
+				for(var/I in C.contents)
+					burn_stuff(I)
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue	//YOU'RE FLYING OVER IT
-			var/buckle_check = L.buckling
-			if(!buckle_check)
-				buckle_check = L.buckled
+			var/buckle_check = L.buckled
 			if(isobj(buckle_check))
 				var/obj/O = buckle_check
 				if(O.resistance_flags & LAVA_PROOF)
@@ -155,9 +158,6 @@
 				var/mob/living/live = buckle_check
 				if("lava" in live.weather_immunities)
 					continue
-
-			if(!L.on_fire)
-				L.update_fire()
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
@@ -170,18 +170,23 @@
 			if("lava" in L.weather_immunities)
 				continue
 
-			L.adjustFireLoss(20)
+			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
+			L.update_fire()
+
+			L.adjustFireLoss(20 * delta_time)
 			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(20)
+				L.adjust_fire_stacks(20 * delta_time)
 				L.IgniteMob()
 
 /turf/open/lava/smooth
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
-	icon_state = "unsmooth"
-	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/lava/smooth)
+	icon_state = "lava-255"
+	base_icon_state = "lava"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_LAVA)
+	canSmoothWith = list(SMOOTH_GROUP_FLOOR_LAVA)
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

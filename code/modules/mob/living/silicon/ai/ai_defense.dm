@@ -1,7 +1,7 @@
 
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/aiModule))
-		var/obj/item/aiModule/MOD = W
+	if(istype(W, /obj/item/ai_module))
+		var/obj/item/ai_module/MOD = W
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
 			return
@@ -24,8 +24,8 @@
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/emp_act(severity)
 	. = ..()

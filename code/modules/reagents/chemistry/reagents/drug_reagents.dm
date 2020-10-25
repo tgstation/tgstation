@@ -17,7 +17,7 @@
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
-		if(M.mobility_flags & MOBILITY_MOVE)
+		if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED))
 			if(prob(10))
 				step(M, pick(GLOB.cardinals))
 	if(prob(7))
@@ -56,11 +56,11 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.AdjustStun(-5, FALSE)
-	M.AdjustKnockdown(-5, FALSE)
-	M.AdjustUnconscious(-5, FALSE)
-	M.AdjustParalyzed(-5, FALSE)
-	M.AdjustImmobilized(-5, FALSE)
+	M.AdjustStun(-5)
+	M.AdjustKnockdown(-5)
+	M.AdjustUnconscious(-5)
+	M.AdjustParalyzed(-5)
+	M.AdjustImmobilized(-5)
 	..()
 	. = 1
 
@@ -83,11 +83,11 @@
 		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-20, FALSE)
-	M.AdjustKnockdown(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.AdjustImmobilized(-20, FALSE)
-	M.AdjustParalyzed(-20, FALSE)
+	M.AdjustStun(-20)
+	M.AdjustKnockdown(-20)
+	M.AdjustUnconscious(-20)
+	M.AdjustImmobilized(-20)
+	M.AdjustParalyzed(-20)
 	..()
 	. = 1
 
@@ -192,11 +192,11 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-40, FALSE)
-	M.AdjustKnockdown(-40, FALSE)
-	M.AdjustUnconscious(-40, FALSE)
-	M.AdjustParalyzed(-40, FALSE)
-	M.AdjustImmobilized(-40, FALSE)
+	M.AdjustStun(-40)
+	M.AdjustKnockdown(-40)
+	M.AdjustUnconscious(-40)
+	M.AdjustParalyzed(-40)
+	M.AdjustImmobilized(-40)
 	M.adjustStaminaLoss(-2, 0)
 	M.Jitter(2)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
@@ -206,7 +206,7 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -233,7 +233,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -243,7 +243,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(20)
@@ -288,7 +288,7 @@
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4)
 	M.hallucination += 5
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
 	..()
@@ -296,7 +296,7 @@
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 5
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinals))
 	if(prob(20))
@@ -307,7 +307,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(5)
@@ -318,7 +318,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(10)
@@ -330,7 +330,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 12, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(15)
@@ -342,7 +342,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 30
-	if((M.mobility_flags & MOBILITY_MOVE) && !ismovable(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinals))
 	M.Jitter(50)
@@ -393,7 +393,7 @@
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
-	M.confused = 0
+	M.set_confusion(0)
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 	..()
@@ -418,7 +418,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
+	mood?.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
 	if(prob(20))
 		M.emote(pick("twitch","laugh","frown"))
@@ -426,7 +426,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
+	mood?.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
 		M.emote(pick("twitch","laugh","frown"))
@@ -434,7 +434,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
+	mood?.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
 	if(prob(40))
 		M.emote(pick("twitch","laugh","frown"))
@@ -442,7 +442,7 @@
 
 /datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.setSanity(SANITY_INSANE)
+	mood?.setSanity(SANITY_INSANE)
 	M.Jitter(20)
 	if(prob(50))
 		M.emote(pick("twitch","laugh","frown"))
@@ -491,3 +491,122 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+/datum/reagent/drug/maint
+	name = "Maintenance Drugs"
+	addiction_type = /datum/reagent/drug/maint
+	can_synth = FALSE
+
+/datum/reagent/drug/maint/addiction_act_stage1(mob/living/M)
+	. = ..()
+	M.Jitter(1)
+
+/datum/reagent/drug/maint/addiction_act_stage2(mob/living/M)
+	. = ..()
+	M.Jitter(2)
+	if(prob(15))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/addiction_act_stage3(mob/living/M)
+	. = ..()
+	M.Jitter(1)
+	M.adjustToxLoss(2)
+	if(prob(5))
+		M.drop_all_held_items()
+	if(prob(15))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/addiction_act_stage4(mob/living/M)
+	. = ..()
+	M.Jitter(2)
+	M.adjustToxLoss(3)
+	if(prob(10))
+		M.drop_all_held_items()
+	if(prob(30))
+		M.emote(pick("twitch","drool"))
+
+/datum/reagent/drug/maint/powder
+	name = "Maintenance Powder"
+	description = "An unknown powder that you most likely gotten from an assistant, a bored chemist... or cooked yourself. It is a refined form of tar that enhances your mental ability, making you learn stuff a lot faster."
+	reagent_state = SOLID
+	color = "#ffffff"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 15
+	addiction_threshold = 6
+	can_synth = TRUE
+
+/datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,0.1)
+	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
+	var/amt = max(1,round(volume/3,0.1))
+	M?.mind?.experience_multiplier_reasons |= type
+	M?.mind?.experience_multiplier_reasons[type] = amt
+
+/datum/reagent/drug/maint/powder/on_mob_end_metabolize(mob/living/M)
+	. = ..()
+	M?.mind?.experience_multiplier_reasons[type] = null
+	M?.mind?.experience_multiplier_reasons -= type
+
+/datum/reagent/drug/maint/powder/overdose_process(mob/living/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,3)
+
+/datum/reagent/drug/maint/sludge
+	name = "Maintenance Sludge"
+	description = "An unknown sludge that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Half refined, it fills your body with itself, making it more resistant to wounds, but causes toxins to accumulate."
+	reagent_state = LIQUID
+	color = "#203d2c"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 25
+	addiction_threshold = 10
+	can_synth = TRUE
+
+/datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
+
+	. = ..()
+	ADD_TRAIT(L,TRAIT_HARDLIMBWOUND,type)
+
+/datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustToxLoss(0.5)
+
+/datum/reagent/drug/maint/sludge/on_mob_end_metabolize(mob/living/M)
+	. = ..()
+	REMOVE_TRAIT(M,TRAIT_HARDLIMBWOUND,type)
+
+/datum/reagent/drug/maint/sludge/overdose_process(mob/living/M)
+	. = ..()
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/carbie = M
+	//You will be vomiting so the damage is really for a few ticks before you flush it out of your system
+	carbie.adjustToxLoss(1)
+	if(prob(10))
+		carbie.adjustToxLoss(5)
+		carbie.vomit()
+
+/datum/reagent/drug/maint/tar
+	name = "Maintenance Tar"
+	description = "An unknown tar that you most likely gotten from an assistant, a bored chemist... or cooked yourself. Raw tar, straight from the floor. It can help you with escaping bad situations at the cost of liver damage."
+	reagent_state = LIQUID
+	color = "#000000"
+	overdose_threshold = 30
+	addiction_threshold = 10
+	can_synth = TRUE
+
+/datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
+	. = ..()
+
+	M.AdjustStun(-10)
+	M.AdjustKnockdown(-10)
+	M.AdjustUnconscious(-10)
+	M.AdjustParalyzed(-10)
+	M.AdjustImmobilized(-10)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER,1.5)
+
+/datum/reagent/drug/maint/tar/overdose_process(mob/living/M)
+	. = ..()
+
+	M.adjustToxLoss(5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER,3)

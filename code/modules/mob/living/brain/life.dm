@@ -1,6 +1,5 @@
 
 /mob/living/brain/Life()
-	set invisibility = 0
 	if (notransform)
 		return
 	if(!loc)
@@ -15,7 +14,7 @@
 		if(stat != DEAD)
 			death()
 		var/obj/item/organ/brain/BR
-		if(container && container.brain)
+		if(container?.brain)
 			BR = container.brain
 		else if(istype(loc, /obj/item/organ/brain))
 			BR = loc

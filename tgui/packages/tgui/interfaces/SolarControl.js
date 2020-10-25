@@ -1,5 +1,3 @@
-import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Grid, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -17,7 +15,9 @@ export const SolarControl = (props, context) => {
     connected_tracker,
   } = data;
   return (
-    <Window>
+    <Window
+      width={380}
+      height={230}>
       <Window.Content>
         <Section
           title="Status"

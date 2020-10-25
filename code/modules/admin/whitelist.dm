@@ -15,7 +15,7 @@ GLOBAL_PROTECT(whitelist)
 	if(!GLOB.whitelist.len)
 		GLOB.whitelist = null
 
-/proc/check_whitelist(var/ckey)
+/proc/check_whitelist(ckey)
 	if(!GLOB.whitelist)
 		return FALSE
 	. = (ckey in GLOB.whitelist)
