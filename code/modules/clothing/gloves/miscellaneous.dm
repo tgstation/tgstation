@@ -11,6 +11,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = 75
 	undyeable = TRUE
+	cut_type = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"

@@ -9,9 +9,12 @@
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
 	var/transfer_prints = FALSE
-	var/can_be_cut = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
+	/// Boolean. If TRUE this glove will produce a fingerless version when cut by wirecutters.
+	var/can_be_cut = FALSE
+	// if TRUE, will designate the result of cutting gloves
+	var/cut_type = FALSE
 
 /obj/item/clothing/gloves/wash(clean_types)
 	. = ..()
@@ -40,3 +43,13 @@
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return FALSE // return 1 to cancel attack_hand()
+
+/obj/item/clothing/gloves/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(!cut_type)
+		return
+	if(icon_state != initial(icon_state))
+		return // We don't want to cut dyed gloves.
+	new cut_type(drop_location())
+	qdel(src)
+	return TRUE

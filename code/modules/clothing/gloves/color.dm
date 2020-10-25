@@ -12,6 +12,7 @@
 	custom_price = 1200
 	custom_premium_price = 1200
 	can_be_cut = TRUE
+	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
@@ -69,6 +70,7 @@
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	can_be_cut = TRUE
+	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/clothing/gloves/color/fyellow/Initialize()
 	. = ..()
@@ -88,27 +90,10 @@
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
 	transfer_prints = TRUE
+	cut_type = TRUE
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
-
-/obj/item/clothing/gloves/color/yellow/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/cut(drop_location())
-			qdel(src)
-	..()
-
-/obj/item/clothing/gloves/color/fyellow/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/cut(drop_location())
-			qdel(src)
-	..()
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
@@ -121,15 +106,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	can_be_cut = TRUE
-
-/obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER)
-		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/fingerless(drop_location())
-			qdel(src)
-	..()
+	cut_type = /obj/item/clothing/gloves/fingerless
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
