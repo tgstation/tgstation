@@ -213,8 +213,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.fuel_injection_rate)}
                 width="63px"
                 unit="mol/s"
-                minValue={50}
-                maxValue={15000}
+                minValue={5}
+                maxValue={1500}
                 onDrag={(e, value) => act('fuel_injection_rate', {
                   fuel_injection_rate: value,
                 })} />
@@ -225,8 +225,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.moderator_injection_rate)}
                 width="63px"
                 unit="mol/s"
-                minValue={50}
-                maxValue={15000}
+                minValue={5}
+                maxValue={1500}
                 onDrag={(e, value) => act('moderator_injection_rate', {
                   moderator_injection_rate: value,
                 })} />
