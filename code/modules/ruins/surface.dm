@@ -8,6 +8,19 @@
 	name = "Old Writing"
 	info = "Brother Montgomery     -     I can only hope this letter will find you well. I have found near complete Origin text here, thanks to our Master. My plans for Space Station 18 are almost complete, but I think the dogs are on to me. Continue our work even if they stop me. I have one final plan. In case we never speak again, it's password will be  'Orion Nebula.'  See you soon. His Release Is Inevitable.     -     Sister Huygens"
 
+/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_1
+	name = "torn journal page"
+	info = "I can't believe those two attacked me like that. And at my book signing, too!! They practically cornered me and asked me all these stupid questions, like they took my work so personally. And the security just looked the other way when they saw them!! I don't know if they have a loved one suffering as a feral spirit, but to come after me because of what you're going through is just wrong! I'm talking to my captain when I get back to my department "
+
+/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_2
+	name = "ripped journal page"
+	info = "I've been getting reports about a potential spirit. It has all the key sacrifical marks and, from what I can tell, it's practically minutes from going feral and destroying the place. I'm not going to let those two men stop me from saving people. The second we dock, I'm going t"
+
+/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_3
+	name = "crumpled paper with scribbles"
+	info = "it killed the pilot and its looking for me i cant see it its so dark but its massive and it reeks of blood and its carrying a giant weapon im going to die here please whoever reads this run as far as you can its looking for you t-----------------------------"
+
+
 //ratvar
 
 /obj/structure/dead_ratvar
@@ -147,3 +160,41 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	bound_width = 160
 	bound_height = 128
+
+//funny felinid corpse
+
+/obj/structure/cathead
+	name = "disembodied head"
+	desc = "A torn off head. Its expression is twisted in horror."
+	icon = 'icons/obj/body.dmi'
+	icon_state = "head"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/catbody
+	name = "mangled body"
+	desc = "A rotting body. It's covered in deep stab wound and slashes. Parts of it have been eaten away."
+	icon = 'icons/obj/body.dmi'
+	icon_state = "body"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/catleg
+	name = "torn off leg"
+	desc = "A leg torn right off. It has a few bites taken out of it and a deep, massive stab wound."
+	icon = 'icons/obj/body.dmi'
+	icon_state = "leg"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/catarm
+	name = "torn off arm"
+	desc = "An arm torn right off. It has a few bites taken out of it."
+	icon = 'icons/obj/body.dmi'
+	icon_state = "arm"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
