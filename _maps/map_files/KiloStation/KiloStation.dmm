@@ -1924,11 +1924,11 @@
 	pixel_x = 6
 	},
 /obj/item/clothing/neck/tie/red,
-/obj/item/clothing/mask/rat/jackal{
+/obj/item/clothing/mask/animal/rat/jackal{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/mask/rat/jackal,
+/obj/item/clothing/mask/animal/rat/jackal,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
@@ -12019,7 +12019,7 @@
 "ato" = (
 /obj/structure/table,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/fishfingers,
+/obj/item/food/fishfingers,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "atp" = (
@@ -38482,17 +38482,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"bgS" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/command";
-	dir = 8;
-	name = "Command Maintenance APC";
-	pixel_x = -25
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "bgT" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -39109,7 +39098,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bhO" = (
-/obj/machinery/computer/bounty,
+/obj/machinery/modular_computer/console/preset/civilian,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -40053,7 +40042,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/computer/bounty{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -42995,7 +42984,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "bnq" = (
@@ -45636,11 +45625,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/cheesiehonkers{
+/obj/item/food/cheesiehonkers{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "brl" = (
@@ -92096,7 +92085,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/crew_quarters/heads/captain)
 "cNn" = (
-/obj/machinery/computer/bounty{
+/obj/machinery/modular_computer/console/preset/command{
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -123024,7 +123013,7 @@ axf
 axf
 bdP
 bff
-bgS
+bff
 bpf
 bzq
 bAA
