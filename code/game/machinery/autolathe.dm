@@ -17,7 +17,7 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = 0
+	var/disabled = FALSE
 	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire
@@ -61,7 +61,7 @@
 
 /obj/machinery/autolathe/ui_interact(mob/user)
 	. = ..()
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	if(shocked && !(machine_stat & NOPOWER))

@@ -9,19 +9,19 @@
 	unsendable = 1
 	undeletable = 1
 	tgui_id = "SyndContractor"
-	ui_x = 500
-	ui_y = 600
+	program_icon = "tasks"
 	var/error = ""
 	var/info_screen = TRUE
 	var/assigned = FALSE
 	var/first_load = TRUE
 
-/datum/computer_file/program/contract_uplink/run_program(var/mob/living/user)
+/datum/computer_file/program/contract_uplink/run_program(mob/living/user)
 	. = ..(user)
 
 /datum/computer_file/program/contract_uplink/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	var/mob/living/user = usr
 	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = computer.all_components[MC_HDD]

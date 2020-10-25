@@ -5,6 +5,7 @@
 /obj/item/seeds
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				// Unknown plant seed - these shouldn't exist in-game.
+	worn_icon_state = "seed"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	/// Name of plant when planted.
@@ -17,11 +18,11 @@
 	var/species = ""
 	///the file that stores the sprites of the growing plant from this seed.
 	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
-	/// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
+	/// Used to override grow icon (default is `"[species]-grow"`). You can use one grow icon for multiple closely related plants with it.
 	var/icon_grow
-	/// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
+	/// Used to override dead icon (default is `"[species]-dead"`). You can use one dead icon for multiple closely related plants with it.
 	var/icon_dead
-	/// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
+	/// Used to override harvest icon (default is `"[species]-harvest"`). If null, plant will use `[icon_grow][growthstages]`.
 	var/icon_harvest
 	/// How long before the plant begins to take damage from age.
 	var/lifespan = 25
@@ -58,6 +59,8 @@
 	var/grafted = FALSE
 	///Type-path of trait to be applied when grafting a plant.
 	var/graft_gene
+	///Determines if the plant should be allowed to mutate early at 30+ instability.
+	var/seed_flags = MUTATE_EARLY
 
 /obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
@@ -207,7 +210,28 @@
 	if(get_gene(/datum/plant_gene/trait/maxchem))
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
-		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod
+		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
+			var/obj/item/seeds/new_prod = pick(mutatelist)
+			t_prod = initial(new_prod.product)
+			if(!t_prod)
+				continue
+			t_prod = new t_prod(output_loc, src)
+			t_prod.seed = new new_prod
+			t_prod.seed.name = initial(new_prod.name)
+			t_prod.seed.desc = initial(new_prod.desc)
+			t_prod.seed.plantname = initial(new_prod.plantname)
+			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
+				if(trait.can_add(t_prod.seed))
+					t_prod.seed.genes += trait
+			t_prod.transform = initial(t_prod.transform)
+			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
+			t_amount++
+			if(t_prod.seed)
+				t_prod.seed.instability = round(instability * 0.5)
+			continue
+		else
+			t_prod = new product(output_loc, src)
 		if(parent.myseed.plantname != initial(parent.myseed.plantname))
 			t_prod.name = lowertext(parent.myseed.plantname)
 		if(productdesc)
@@ -232,7 +256,7 @@
   * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
   * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
   */
-/obj/item/seeds/proc/prepare_result(var/obj/item/T)
+/obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
 	var/reagent_max = 0
@@ -543,7 +567,8 @@
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
 		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
 		if(R.can_add(src))
-			genes += R
+			if(!R.try_upgrade_gene(src))
+				genes += R
 		else
 			qdel(R)
 	reagents_from_genes()

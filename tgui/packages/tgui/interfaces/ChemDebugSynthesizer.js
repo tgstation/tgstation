@@ -13,7 +13,10 @@ export const ChemDebugSynthesizer = (props, context) => {
     beakerContents = [],
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={390}
+      height={330}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Recipient"

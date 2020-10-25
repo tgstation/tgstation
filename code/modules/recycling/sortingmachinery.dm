@@ -26,14 +26,14 @@
 	return ..()
 
 /obj/structure/big_delivery/contents_explosion(severity, target)
-	for(var/atom/movable/AM in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += AM
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += AM
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += AM
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/big_delivery/examine(mob/user)
 	. = ..()
@@ -140,10 +140,10 @@
 	else
 		return ..()
 
-/obj/structure/big_delivery/relay_container_resist(mob/living/user, obj/O)
+/obj/structure/big_delivery/relay_container_resist_act(mob/living/user, obj/O)
 	if(ismovable(loc))
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
-		AM.relay_container_resist(user, O)
+		AM.relay_container_resist_act(user, O)
 		return
 	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>")
 	if(do_after(user, 50, target = O))
@@ -177,14 +177,14 @@
 	var/obj/item/barcode/sticker
 
 /obj/item/small_delivery/contents_explosion(severity, target)
-	for(var/atom/movable/AM in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += AM
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += AM
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += AM
+				SSexplosions.low_mov_atom += thing
 
 /obj/item/small_delivery/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
@@ -198,6 +198,7 @@
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
+
 
 /obj/item/small_delivery/attack_self_tk(mob/user)
 	if(ismob(loc))
@@ -214,6 +215,8 @@
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	unwrap_contents()
 	qdel(src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/small_delivery/examine(mob/user)
 	. = ..()
@@ -328,6 +331,7 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
+	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class =  WEIGHT_CLASS_TINY
@@ -382,6 +386,7 @@
 	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo. Ctrl-Click to clear the registered account."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "salestagger"
+	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

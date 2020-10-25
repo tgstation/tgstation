@@ -8,6 +8,12 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
+/obj/effect/eldritch/Initialize()
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
+
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -67,12 +73,13 @@
 				if(is_type_in_list(local_atom_in_range,local_required_atom_list))
 					selected_atoms |= local_atom_in_range
 					local_required_atoms -= list(local_required_atom_list)
+					break
 
 		if(length(local_required_atoms) > 0)
 			continue
 
 		flick("[icon_state]_active",src)
-		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
+		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
 		var/list/atoms_to_disappear = selected_atoms.Copy()
 		for(var/to_disappear in atoms_to_disappear)
@@ -142,7 +149,7 @@
 /datum/reality_smash_tracker/proc/_Generate()
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
-	var/number = targ_len * 6 - smash_len
+	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
 
 	for(var/i in 0 to number)
 
@@ -162,7 +169,7 @@
   *
   * Use this whenever you want to add someone to the list
   */
-/datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
+/datum/reality_smash_tracker/proc/AddMind(datum/mind/M)
 	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
 	_Generate()
@@ -176,18 +183,30 @@
   *
   * Use this whenever you want to remove someone from the list
   */
-/datum/reality_smash_tracker/proc/RemoveMind(var/datum/mind/M)
+/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/M)
 	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
 	targets -= M
 	for(var/obj/effect/reality_smash/RS in smashes)
 		RS.RemoveMind(M)
 
 /obj/effect/broken_illusion
-	name = "Pierced reality"
+	name = "pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	alpha = 0
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
+
+///Makes this obj appear out of nothing
+/obj/effect/broken_illusion/proc/show_presence()
+	animate(src,alpha = 255,time = 15 SECONDS)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))
@@ -198,45 +217,50 @@
 	else
 		var/obj/item/bodypart/arm = human_user.get_active_hand()
 		if(prob(25))
-			to_chat(human_user,"<span class='userdanger'>Otherwordly presence tears your arm aparts into atoms as you try to touch the hole in the very fabric of reality!</span>")
+			to_chat(human_user,"<span class='userdanger'>An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!</span>")
 			arm.dismember()
 			qdel(arm)
 		else
 			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
 
+
 /obj/effect/broken_illusion/attack_tk(mob/user)
 	if(!ishuman(user))
 		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
 		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+		return
+	//a very elaborate way to suicide
+	to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+	human_user.ghostize()
+	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
+	if(head)
+		head.dismember()
+		qdel(head)
 	else
-		//a very elaborate way to suicide
-		to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
-		human_user.ghostize()
-		var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
-		if(head)
-			head.dismember()
-			qdel(head)
-		else
-			human_user.gib()
+		human_user.gib()
 
-		var/datum/effect_system/reagents_explosion/explosion = new()
-		explosion.set_up(1, get_turf(human_user), 1, 0)
-		explosion.start()
+	var/datum/effect_system/reagents_explosion/explosion = new()
+	explosion.set_up(1, get_turf(human_user), TRUE, 0)
+	explosion.start()
+
 
 /obj/effect/broken_illusion/examine(mob/user)
+	. = ..()
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
-	. = ..()
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
+		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	invisibility = INVISIBILITY_OBSERVER
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?
@@ -266,7 +290,7 @@
 	new /obj/effect/broken_illusion(drop_location())
 
 ///Makes the mind able to see this effect
-/obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
+/obj/effect/reality_smash/proc/AddMind(datum/mind/cultie)
 	minds |= cultie
 	if(cultie.current.client)
 		cultie.current.client.images |= img
@@ -274,7 +298,7 @@
 
 
 ///Makes the mind not able to see this effect
-/obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
+/obj/effect/reality_smash/proc/RemoveMind(datum/mind/cultie)
 	minds -= cultie
 	if(cultie.current.client)
 		cultie.current.client.images -= img

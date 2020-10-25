@@ -78,7 +78,7 @@
 	var/auto_trim = TRUE
 
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
-	return var_name != "auto_trim" && ..()
+	return var_name != NAMEOF(src, auto_trim) && ..()
 
 /datum/config_entry/string/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
@@ -105,7 +105,7 @@
 	return FALSE
 
 /datum/config_entry/number/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("max_val", "min_val", "integer")
+	var/static/list/banned_edits = list(NAMEOF(src, max_val), NAMEOF(src, min_val), NAMEOF(src, integer))
 	return !(var_name in banned_edits) && ..()
 
 /datum/config_entry/flag
@@ -194,4 +194,4 @@
 	return FALSE
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
-	return var_name != "splitter" && ..()
+	return var_name != NAMEOF(src, splitter) && ..()

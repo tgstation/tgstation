@@ -2,20 +2,9 @@ import os
 import sys
 import inspect
 import shutil
-
-def AddToPath(path):
-  if path not in sys.path:
-    sys.path.insert(0, path)
-    delimeter = ':' if os.name == "posix" else ";"
-    os.environ['PATH'] = path + delimeter + os.environ['PATH']
+import PIL.Image as Image
 
 current_dir = os.path.split(inspect.getfile(inspect.currentframe()))[0]
-
-AddToPath(os.path.abspath(os.path.join(current_dir, "third_party/Imaging-1.1.7/PIL")))
-AddToPath(os.path.abspath(os.path.join(current_dir, "third_party/zlib")))
-
-import Image
-import _imaging
 
 def PngSave(im, file):
   # From http://blog.client9.com/2007/08/28/python-pil-and-png-metadata-take-2.html
@@ -25,13 +14,13 @@ def PngSave(im, file):
   reserved = ('interlace', 'gamma', 'dpi', 'transparency', 'aspect')
 
   # undocumented class
-  import PngImagePlugin
+  import PIL.PngImagePlugin as PngImagePlugin
   meta = PngImagePlugin.PngInfo()
 
   # copy metadata into new object
-  for k,v in im.info.iteritems():
+  for k,v in im.info.items():
       if k in reserved: continue
-      meta.add_text(k, v, 0)
+      meta.add_text(k, str(v), 0)
 
   # and save
   im.save(file, "PNG", pnginfo=meta)
@@ -44,7 +33,7 @@ def ProcessFile(path):
 
   try:
     im = Image.open(path)
-    print name + ": " + im.format, im.size, im.mode
+    print(name + ": " + im.format, im.size, im.mode)
     if im.mode != "RGBA":
       return
     width, height = im.size
@@ -76,15 +65,16 @@ def ProcessFile(path):
       pix[coords] = (0, 0, 0, 1)
 
     PngSave(im, path)
-  except:
-    print "Could not process " + name
+  except Exception as e:
+    print("Could not process " + name)
+    print(e)
 
 root_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 icons_dir = os.path.join(root_dir, "icons")
 
 def Main():
   if len(sys.argv) != 2:
-    print "Usage: hitbox_expander.py filename.dmi"
+    print("Usage: hitbox_expander.py filename.dmi")
     return 0
 
   try:
@@ -101,7 +91,7 @@ def Main():
         ProcessFile(path)
         return 0
 
-  print "File not found: " + sys.argv[1]
+  print("File not found: " + sys.argv[1])
 
 if __name__ == "__main__":
   Main()

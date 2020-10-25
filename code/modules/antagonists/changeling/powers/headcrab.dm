@@ -25,7 +25,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.confused += 3
+		H.add_confusion(3)
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Paralyze(60)
@@ -38,6 +38,6 @@
 		I.forceMove(crab)
 	crab.origin = M
 	if(crab.origin)
-		crab.origin.active = 1
+		crab.origin.active = TRUE
 		crab.origin.transfer_to(crab)
 		to_chat(crab, "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")

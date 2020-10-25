@@ -1,4 +1,7 @@
 #!/bin/bash
+## Copyright (c) 2020 Aleksej Komarov
+## SPDX-License-Identifier: MIT
+
 set -e
 shopt -s globstar
 shopt -s expand_aliases
@@ -23,8 +26,10 @@ fi
 base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
 base_dir="$(tgui-realpath "${base_dir}")"
 
-## Add locally installed node programs to path
-PATH="${PATH}:node_modules/.bin"
+## Fall back to running Yarn from the repo
+if ! hash yarn 2>/dev/null; then
+  alias yarn="node '${base_dir}/.yarn/releases/yarn-berry.js'"
+fi
 
 
 ## Functions
@@ -38,26 +43,37 @@ task-install() {
 
 ## Runs webpack
 task-webpack() {
-  cd "${base_dir}/packages/tgui"
-  webpack "${@}"
+  cd "${base_dir}"
+  yarn run webpack-cli "${@}"
 }
 
 ## Runs a development server
 task-dev-server() {
-  cd "${base_dir}/packages/tgui-dev-server"
-  exec node --experimental-modules index.js "${@}"
+  cd "${base_dir}"
+  yarn node packages/tgui-dev-server/index.esm.js "${@}"
 }
 
 ## Run a linter through all packages
 task-eslint() {
   cd "${base_dir}"
-  eslint ./packages "${@}"
+  yarn run eslint packages "${@}"
+  echo "tgui: eslint check passed"
 }
 
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf packages/tgui/public/.tmp
+  ## Build artifacts
+  rm -rf public/.tmp
+  rm -f public/*.map
+  rm -f public/*.hot-update.*
+  ## Yarn artifacts
+  rm -rf .yarn/cache
+  rm -rf .yarn/unplugged
+  rm -rf .yarn/build-state.yml
+  rm -rf .yarn/install-state.gz
+  rm -f .pnp.js
+  ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
 }
@@ -66,7 +82,7 @@ task-clean() {
 task-validate-build() {
   cd "${base_dir}"
   local diff
-  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  diff="$(git diff public/*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
@@ -150,6 +166,13 @@ if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
   task-eslint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--fix' ]]; then
+  shift 1
+  task-install
+  task-eslint --fix "${@}"
   exit 0
 fi
 

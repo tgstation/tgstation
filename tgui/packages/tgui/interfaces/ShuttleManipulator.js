@@ -7,7 +7,11 @@ import { Window } from '../layouts';
 export const ShuttleManipulator = (props, context) => {
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   return (
-    <Window resizable>
+    <Window
+      title="Shuttle Manipulator"
+      width={800}
+      height={600}
+      resizable>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -224,14 +228,20 @@ export const ShuttleManipulatorModification = (props, context) => {
             level={2}
             title="Status">
             <Button
+              content="Load"
+              color="good"
+              onClick={() => act('load', {
+                shuttle_id: selected.shuttle_id,
+              })} />
+            <Button
               content="Preview"
               onClick={() => act('preview', {
                 shuttle_id: selected.shuttle_id,
               })} />
             <Button
-              content="Load"
+              content="Replace"
               color="bad"
-              onClick={() => act('load', {
+              onClick={() => act('replace', {
                 shuttle_id: selected.shuttle_id,
               })} />
           </Section>

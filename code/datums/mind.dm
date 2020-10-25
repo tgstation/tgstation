@@ -34,7 +34,7 @@
 	var/name				//replaces mob/var/original_name
 	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
-	var/active = 0
+	var/active = FALSE
 
 	var/memory
 
@@ -52,8 +52,6 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/damnation_type = 0
-	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
-	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
@@ -71,12 +69,20 @@
 	var/list/skills_rewarded
 	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()
-	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	///What character we joined in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
+	/// The index for what character slot, if any, we were loaded from, so we can track persistent scars on a per-character basis. Each character slot gets PERSISTENT_SCAR_SLOTS scar slots
+	var/original_character_slot_index
+	/// The index for our current scar slot, so we don't have to constantly check the savefile (unlike the slots themselves, this index is independent of selected char slot, and increments whenever a valid char is joined with)
+	var/current_scar_slot_index
 
-/datum/mind/New(key)
-	src.key = key
-	soulOwner = src
+	///Skill multiplier, adjusts how much xp you get/loose from adjust_xp. Dont override it directly, add your reason to experience_multiplier_reasons and use that as a key to put your value in there.
+	var/experience_multiplier = 1
+	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
+	var/list/experience_multiplier_reasons = list()
+
+/datum/mind/New(_key)
+	key = _key
 	martial_art = default_martial_art
 	init_known_skills()
 
@@ -85,7 +91,6 @@
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	current = null
-	soulOwner = null
 	return ..()
 
 /datum/mind/proc/get_language_holder()
@@ -129,6 +134,7 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
+		new_character.client.init_verbs() // re-initialize character specific verbs
 	current.update_atom_languages()
 
 /datum/mind/proc/init_known_skills()
@@ -146,7 +152,10 @@
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE, force_old_level = 0)
 	var/datum/skill/S = GetSkillRef(skill)
 	var/old_level = force_old_level ? force_old_level : known_skills[skill][SKILL_LVL] //Get current level of the S skill
-	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt) //Update exp. Prevent going below 0
+	experience_multiplier = initial(experience_multiplier)
+	for(var/key in experience_multiplier_reasons)
+		experience_multiplier += experience_multiplier_reasons[key]
+	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt*experience_multiplier) //Update exp. Prevent going below 0
 	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
 	if(silent)
 		return
@@ -210,6 +219,8 @@
 	to_chat(user, msg)
 
 /datum/mind/proc/set_death_time()
+	SIGNAL_HANDLER
+
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
@@ -246,7 +257,7 @@
 	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
-	A.on_gain()
+	INVOKE_ASYNC(A, /datum/antagonist.proc/on_gain)
 	log_game("[key_name(src)] has gained antag datum [A.name]([A.type])")
 	return A
 
@@ -267,7 +278,6 @@
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
 		return
-	. = FALSE
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		if(check_subtypes && istype(A, datum_type))
@@ -697,9 +707,6 @@
 	spell_list += S
 	S.action.Grant(current)
 
-/datum/mind/proc/owns_soul()
-	return soulOwner == src
-
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
 	if(!spell)
@@ -709,6 +716,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+	current?.client << output(null, "statbrowser:check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)
@@ -724,7 +732,7 @@
 			martial_art.teach(new_character)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
-	if(current && current.actions)
+	if(current?.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
@@ -757,6 +765,11 @@
 	if(G)
 		G.reenter_corpse()
 
+/// Sets our can_hijack to the fastest speed our antag datums allow.
+/datum/mind/proc/get_hijack_speed()
+	. = 0
+	for(var/datum/antagonist/A in antag_datums)
+		. = max(., A.hijack_speed())
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
@@ -766,7 +779,7 @@
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
+	mind.active = TRUE	//indicates that the mind is currently synced with a client
 
 /datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)

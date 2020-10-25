@@ -11,12 +11,12 @@
 	faction = list("gondola")
 	turns_per_move = 10
 	icon = 'icons/obj/supplypods.dmi'
-	icon_state = "pod_gondola"
-	icon_living = "pod_gondola"
+	icon_state = "gondola"
+	icon_living = "gondola"
 	pixel_x = -16//2x2 sprite
 	pixel_y = -5
 	layer = TABLE_LAYER//so that deliveries dont appear underneath it
-	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 2, /obj/item/reagent_containers/food/snacks/meat/slab/gondola = 2)
+	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 2, /obj/item/food/meat/slab/gondola = 2)
 	//Gondolas aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0

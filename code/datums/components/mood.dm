@@ -38,6 +38,8 @@
 	return ..()
 
 /datum/component/mood/proc/register_job_signals(datum/source, job)
+	SIGNAL_HANDLER
+
 	if(job in list("Research Director", "Scientist", "Roboticist"))
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
@@ -97,8 +99,8 @@
 		mood += event.mood_change
 		if(!event.hidden)
 			shown_mood += event.mood_change
-		mood *= mood_modifier
-		shown_mood *= mood_modifier
+	mood *= mood_modifier
+	shown_mood *= mood_modifier
 
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)
@@ -168,26 +170,26 @@
 			break
 
 ///Called on SSmood process
-/datum/component/mood/process()
+/datum/component/mood/process(delta_time)
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.3, SANITY_INSANE)
+			setSanity(sanity-0.3*delta_time, SANITY_INSANE)
 		if(2)
-			setSanity(sanity-0.15, SANITY_INSANE)
+			setSanity(sanity-0.15*delta_time, SANITY_INSANE)
 		if(3)
-			setSanity(sanity-0.1, SANITY_CRAZY)
+			setSanity(sanity-0.1*delta_time, SANITY_CRAZY)
 		if(4)
-			setSanity(sanity-0.05, SANITY_UNSTABLE)
+			setSanity(sanity-0.05*delta_time, SANITY_UNSTABLE)
 		if(5)
 			setSanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSanity(sanity+0.2, SANITY_UNSTABLE)
+			setSanity(sanity+0.2*delta_time, SANITY_UNSTABLE)
 		if(7)
-			setSanity(sanity+0.3, SANITY_UNSTABLE)
+			setSanity(sanity+0.3*delta_time, SANITY_UNSTABLE)
 		if(8)
-			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.4*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
-			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
 
 ///Sets sanity to the specified amount and applies effects.
@@ -206,26 +208,32 @@
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
+			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
+			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
+			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 1
 	update_mood_icon()
 
@@ -237,6 +245,8 @@
 	insanity_effect = newval
 
 /datum/component/mood/proc/add_event(datum/source, category, type, ...) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
+	SIGNAL_HANDLER
+
 	var/datum/mood_event/the_event
 	if(!istext(category))
 		category = REF(category)
@@ -247,7 +257,7 @@
 		else
 			if(the_event.timeout)
 				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
-			return 0 //Don't have to update the event.
+			return //Don't have to update the event.
 	var/list/params = args.Copy(4)
 	params.Insert(1, parent)
 	the_event = new type(arglist(params))
@@ -260,11 +270,13 @@
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
+	SIGNAL_HANDLER
+
 	if(!istext(category))
 		category = REF(category)
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
-		return 0
+		return
 
 	mood_events -= category
 	qdel(event)
@@ -281,6 +293,8 @@
 
 
 /datum/component/mood/proc/modify_hud(datum/source)
+	SIGNAL_HANDLER
+
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
@@ -290,15 +304,19 @@
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
+	SIGNAL_HANDLER
+
 	if(!screen_obj)
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud && hud.infodisplay)
+	if(hud?.infodisplay)
 		hud.infodisplay -= screen_obj
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
+	SIGNAL_HANDLER
+
 	if(user != parent)
 		return
 	print_mood(user)
@@ -343,6 +361,8 @@
 			add_event(null, "charge", /datum/mood_event/supercharged)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
+	SIGNAL_HANDLER
+
 	update_beauty(A)
 	if(A.mood_bonus)
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
@@ -373,6 +393,8 @@
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
+	SIGNAL_HANDLER
+
 	if(!full_heal)
 		return
 	remove_temp_moods()

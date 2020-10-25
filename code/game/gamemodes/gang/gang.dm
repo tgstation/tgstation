@@ -3,9 +3,9 @@
 	config_tag = "families"
 	antag_flag = ROLE_FAMILIES
 	false_report_weight = 5
-	required_players = 20
-	required_enemies = 6
-	recommended_enemies = 6
+	required_players = 0
+	required_enemies = 0
+	recommended_enemies = 0
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
@@ -14,18 +14,6 @@
 
 	/// A reference to the handler that is used to run pre_setup(), post_setup(), etc..
 	var/datum/gang_handler/handler
-
-/datum/game_mode/gang/warriors
-	name = "Warriors"
-	config_tag = "warriors"
-	announce_text = "Can you survive this onslaught?"
-
-/datum/game_mode/gang/warriors/pre_setup()
-	handler = new /datum/gang_handler(antag_candidates,restricted_jobs)
-	var/list/datum/antagonist/gang/gangs_to_generate = subtypesof(/datum/antagonist/gang)
-	handler.gangs_to_generate = gangs_to_generate.len
-	handler.gang_balance_cap = 3
-	return handler.pre_setup_analogue()
 
 /datum/game_mode/gang/pre_setup()
 	handler = new /datum/gang_handler(antag_candidates,restricted_jobs)

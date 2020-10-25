@@ -7,6 +7,8 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
+	///Host of this module
+	var/mob/living/silicon/robot/robot
 
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
 	var/list/emag_modules = list() //ditto
@@ -24,6 +26,8 @@
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
+	var/breakable_modules = TRUE //Whether the borg loses tool slots with damage.
+	var/locked_transform = TRUE //Whether swapping to this module should lockcharge the borg
 
 	var/did_feedback = FALSE
 
@@ -72,7 +76,7 @@
 		if(!(m in R.held_items))
 			. += m
 
-/obj/item/robot_module/proc/get_or_create_estorage(var/storage_type)
+/obj/item/robot_module/proc/get_or_create_estorage(storage_type)
 	for(var/datum/robot_energy_storage/S in storages)
 		if(istype(S, storage_type))
 			return S
@@ -84,7 +88,7 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.custom_materials && custom_materials.len)
+			if(S.custom_materials?.len)
 				if(S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
 					S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
@@ -114,7 +118,7 @@
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
-		if(S && S.source)
+		if(S?.source)
 			S.set_custom_materials(null)
 			S.is_cyborg = 1
 
@@ -161,7 +165,8 @@
 
 /obj/item/robot_module/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/R = loc
-	var/held_modules = R.held_items.Copy()
+	var/list/held_modules = R.held_items.Copy()
+	var/active_module = R.module_active
 	R.uneq_all()
 	modules = list()
 	for(var/obj/item/I in basic_modules)
@@ -173,13 +178,16 @@
 		add_module(I, FALSE, FALSE)
 	for(var/i in held_modules)
 		if(i)
-			R.activate_module(i)
+			R.equip_module_to_slot(i, held_modules.Find(i))
+	if(active_module)
+		R.select_module(held_modules.Find(active_module))
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
 /obj/item/robot_module/proc/transform_to(new_module_type)
 	var/mob/living/silicon/robot/R = loc
 	var/obj/item/robot_module/RM = new new_module_type(R)
+	RM.robot = R
 	if(!RM.be_transformed_to(src))
 		qdel(RM)
 		return
@@ -214,18 +222,20 @@
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
-	R.SetLockdown(1)
-	R.anchored = TRUE
+	if(locked_transform)
+		R.SetLockdown(TRUE)
+		R.set_anchored(TRUE)
+	R.logevent("Chassis configuration has been set to [name].")
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
-	if(!prev_lockcharge)
-		R.SetLockdown(0)
+	R.SetLockdown(prev_lockcharge)
 	R.setDir(SOUTH)
-	R.anchored = FALSE
+	R.set_anchored(FALSE)
 	R.notransform = FALSE
-	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
+	R.updatehealth()
+	R.update_icons()
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
@@ -243,28 +253,6 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
-
-/obj/item/robot_module/standard
-	name = "Standard"
-	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/reagent_containers/borghypo/epi,
-		/obj/item/healthanalyzer,
-		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/extinguisher,
-		/obj/item/pickaxe,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/soap/nanotrasen,
-		/obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
-	moduleselect_icon = "standard"
-	hat_offset = -3
 
 /obj/item/robot_module/medical
 	name = "Medical"
@@ -360,7 +348,7 @@
 			T.cell.give(S.e_cost * coeff)
 			T.update_icon()
 		else
-			T.charge_tick = 0
+			T.charge_timer = 0
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
@@ -660,13 +648,41 @@
 	hat_offset = -4
 	canDispose = TRUE
 
+/obj/item/robot_module/syndicate/kiltborg
+	name = "Highlander"
+	basic_modules = list(
+		/obj/item/claymore/highlander/robot,
+		/obj/item/pinpointer/nuke,)
+	moduleselect_icon = "kilt"
+	cyborg_base_icon = "kilt"
+	hat_offset = -2
+	breakable_modules = FALSE
+	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
+
+/obj/item/robot_module/syndicate/kiltborg/be_transformed_to(obj/item/robot_module/old_module)
+	. = ..()
+	qdel(robot.radio)
+	robot.radio = new /obj/item/radio/borg/syndicate(robot)
+	robot.scrambledcodes = TRUE
+	robot.maxHealth = 50 //DIE IN THREE HITS, LIKE A REAL SCOT
+	robot.break_cyborg_slot(3) //YOU ONLY HAVE TWO ITEMS ANYWAY
+	var/obj/item/pinpointer/nuke/diskyfinder = locate(/obj/item/pinpointer/nuke) in basic_modules
+	diskyfinder.attack_self(robot)
+
+/obj/item/robot_module/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
+	. = ..()
+	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
+	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
 	var/max_energy = 30000
 	var/recharge_rate = 1000
 	var/energy
 
-/datum/robot_energy_storage/New(var/obj/item/robot_module/R = null)
+/datum/robot_energy_storage/New(obj/item/robot_module/R = null)
 	energy = max_energy
 	if(R)
 		R.storages |= src

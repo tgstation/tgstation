@@ -39,7 +39,7 @@
 	I.screen_loc = null
 	if(client)
 		client.screen -= I
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			if(observe.client)
@@ -49,31 +49,35 @@
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
-	var/current_equip
+	var/obj/item/current_equip
 	switch(slot)
 		if(ITEM_SLOT_BACK)
 			if (back && swap)
+				back.dropped(src, TRUE)
 				current_equip = back
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
 			if (wear_mask && swap)
+				wear_mask.dropped(src, TRUE)
 				current_equip = wear_mask
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
 			if (head && swap)
+				head.dropped(src, TRUE)
 				current_equip = head
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
 			if (wear_neck && swap)
+				wear_neck.dropped(src, TRUE)
 				current_equip = wear_neck
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)
-			handcuffed = I
+			set_handcuffed(I)
 			update_handcuffed()
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = I
@@ -121,8 +125,8 @@
 		if(!QDELETED(src))
 			update_inv_neck(I)
 	else if(I == handcuffed)
-		handcuffed = null
-		if(buckled && buckled.buckle_requires_restraints)
+		set_handcuffed(null)
+		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()
@@ -168,9 +172,13 @@
 		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	for(var/mob/living/carbon/C in orange(1, src))
+	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue
+
+		if(!C.can_hold_items())
+			continue
+
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
 			continue
@@ -197,7 +205,8 @@
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
 		return
 	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[src] tries to hand over [I] but it's stuck to them....", \
-						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
+		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
 		return
+	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
+					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)

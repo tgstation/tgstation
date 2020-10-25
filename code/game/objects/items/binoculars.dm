@@ -3,6 +3,7 @@
 	desc = "Used for long-distance surveillance."
 	inhand_icon_state = "binoculars"
 	icon_state = "binoculars"
+	worn_icon_state = "binoculars"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -25,6 +26,8 @@
 	return ..()
 
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
 	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 	listeningTo = user
@@ -34,15 +37,21 @@
 	user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, user.dir)
 
 /obj/item/binoculars/proc/rotate(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(ismob(thing))
 		var/mob/lad = thing
 		lad.regenerate_icons()
 		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
 
 /obj/item/binoculars/proc/on_walk()
+	SIGNAL_HANDLER
+
 	attack_self(listeningTo) //Yes I have sinned, why do you ask?
 
 /obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(listeningTo)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)

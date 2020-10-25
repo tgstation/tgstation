@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "manifold-2"
+	icon_state = "manifold-3"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()

@@ -59,7 +59,7 @@
 	special_screen_obj = "honked_nose"
 	special_screen_replace = FALSE
 
-/datum/mood_event/perform_cpr
+/datum/mood_event/saved_life
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6
 	timeout = 8 MINUTES
@@ -198,3 +198,8 @@
 /datum/mood_event/confident_mane
 	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
 	mood_change = 2
+
+/datum/mood_event/holy_consumption
+	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
+	mood_change = 5
+	timeout = 3 MINUTES

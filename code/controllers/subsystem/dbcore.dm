@@ -88,7 +88,6 @@ SUBSYSTEM_DEF(dbcore)
 		"user" = user,
 		"pass" = pass,
 		"db_name" = db,
-		"max_threads" = 5,
 		"read_timeout" = timeout,
 		"write_timeout" = timeout,
 		"max_threads" = thread_limit,

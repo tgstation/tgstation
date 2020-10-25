@@ -28,10 +28,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	valid_territory = FALSE
+	area_flags = UNIQUE_AREA | NO_ALERTS
 	outdoors = TRUE
 	ambientsounds = SPACE
-	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 	flags_1 = CAN_BE_DIRTY_1
 
 /area/space/nearstation
@@ -58,8 +57,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
-	valid_territory = FALSE
+	area_flags = UNIQUE_AREA
 	ambientsounds = MINING
 	flags_1 = CAN_BE_DIRTY_1
 
@@ -68,7 +66,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
-	blob_allowed = TRUE
+	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
 
 /area/asteroid/nearstation/bomb_site
 	name = "Bomb Testing Asteroid"
@@ -79,8 +77,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance
 	ambientsounds = MAINTENANCE
-	valid_territory = FALSE
-
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	airlock_wires = /datum/wires/airlock/maint
 
 //Departments
 
@@ -158,7 +156,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	xenobiology_compatible = TRUE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE
 
 
 //Maintenance - Generic
@@ -302,6 +300,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bridge"
 	icon_state = "bridge"
 	ambientsounds = list('sound/ambience/signal.ogg')
+	airlock_wires = /datum/wires/airlock/command
 
 /area/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
@@ -314,6 +313,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/bridge/showroom/corporate
 	name = "Corporate Showroom"
 	icon_state = "showroom"
+
+/area/crew_quarters/heads
+	airlock_wires = /datum/wires/airlock/command
 
 /area/crew_quarters/heads/captain
 	name = "Captain's Office"
@@ -356,7 +358,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms
 	name = "Dormitories"
 	icon_state = "dorms"
-	safe = TRUE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/crew_quarters/dorms/barracks
 	name = "Sleep Barracks"
@@ -421,6 +423,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+	airlock_wires = /datum/wires/airlock/service
 
 /area/crew_quarters/kitchen/coldroom
 	name = "Kitchen Cold Room"
@@ -431,6 +434,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "bar"
 	mood_bonus = 5
 	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
+	airlock_wires = /datum/wires/airlock/service
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -520,6 +524,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engine
 	ambientsounds = ENGINEERING
+	airlock_wires = /datum/wires/airlock/engineering
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -540,7 +545,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
@@ -557,7 +562,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/engine/break_room
 	name = "Engineering Foyer"
@@ -585,10 +590,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/solar
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	valid_territory = FALSE
-	blob_allowed = FALSE
+	area_flags = UNIQUE_AREA
 	flags_1 = NONE
 	ambientsounds = ENGINEERING
+	airlock_wires = /datum/wires/airlock/engineering
 
 /area/solar/fore
 	name = "Fore Solar Array"
@@ -670,11 +675,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	ambientsounds = ENGINEERING
+	airlock_wires = /datum/wires/airlock/command
 
 /area/gateway
 	name = "Gateway"
 	icon_state = "gateway"
 	ambientsounds = ENGINEERING
+	airlock_wires = /datum/wires/airlock/command
 
 //MedBay
 
@@ -682,6 +689,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medical"
 	icon_state = "medbay1"
 	ambientsounds = MEDICAL
+	airlock_wires = /datum/wires/airlock/medbay
 
 /area/medical/abandoned
 	name = "Abandoned Medbay"
@@ -801,6 +809,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security"
 	icon_state = "security"
 	ambientsounds = HIGHSEC
+	airlock_wires = /datum/wires/airlock/security
 
 /area/security/main
 	name = "Security Office"
@@ -899,10 +908,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	airlock_wires = /datum/wires/airlock/command
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	airlock_wires = /datum/wires/airlock/command
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
@@ -947,6 +958,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/quartermaster
 	name = "Quartermasters"
 	icon_state = "quart"
+	airlock_wires = /datum/wires/airlock/service
 
 /area/quartermaster/sorting
 	name = "Delivery Office"
@@ -987,10 +999,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Custodial Closet"
 	icon_state = "janitor"
 	flags_1 = CULT_PERMITTED_1
+	airlock_wires = /datum/wires/airlock/service
 
 /area/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"
+	airlock_wires = /datum/wires/airlock/service
 
 /area/hydroponics/upper
 	name = "Upper Hydroponics"
@@ -1014,6 +1028,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science
 	name = "Science Division"
 	icon_state = "science"
+	airlock_wires = /datum/wires/airlock/science
 
 /area/science/lab
 	name = "Research and Development"
@@ -1028,9 +1043,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tox_storage"
 
 /area/science/test_area
-	valid_territory = FALSE
 	name = "Toxins Test Area"
 	icon_state = "tox_test"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/science/mixing
 	name = "Toxins Mixing Lab"
@@ -1039,7 +1054,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/mixing/chamber
 	name = "Toxins Mixing Chamber"
 	icon_state = "tox_mix_chamber"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/science/genetics
 	name = "Genetics Lab"
@@ -1102,7 +1117,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tcom
 	name = "Telecomms Storage"
 	icon_state = "tcom"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/storage/eva
 	name = "EVA Storage"
@@ -1159,6 +1174,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Armory"
 	icon_state = "armory"
 	ambientsounds = HIGHSEC
+	airlock_wires = /datum/wires/airlock/security
 
 /area/ai_monitored/security/armory/upper
 	name = "Upper Armory"
@@ -1175,11 +1191,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Maint"
 	icon_state = "ai_storage"
 	ambientsounds = HIGHSEC
+	airlock_wires = /datum/wires/airlock/ai
 
 	//Turret_protected
 
 /area/ai_monitored/turret_protected
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+	airlock_wires = /datum/wires/airlock/ai
 
 /area/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
@@ -1216,6 +1234,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/aisat
 	name = "AI Satellite Exterior"
 	icon_state = "ai"
+	airlock_wires = /datum/wires/airlock/ai
 
 /area/ai_monitored/turret_protected/aisat_interior
 	name = "AI Satellite Antechamber"
@@ -1235,6 +1254,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+	airlock_wires = /datum/wires/airlock/engineering
 
 /area/tcommsat/computer
 	name = "Telecomms Control Room"

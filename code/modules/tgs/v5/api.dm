@@ -15,8 +15,10 @@
 	var/datum/tgs_revision_information/revision
 	var/list/chat_channels
 
+	var/initialized = FALSE
+
 /datum/tgs_api/v5/ApiVersion()
-	return new /datum/tgs_version("5.2.2")
+	return new /datum/tgs_version(TGS_DMAPI_VERSION)
 
 /datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]
@@ -79,6 +81,7 @@
 	chat_channels = list()
 	DecodeChannels(runtime_information)
 
+	initialized = TRUE
 	return TRUE
 
 /datum/tgs_api/v5/proc/RequireInitialBridgeResponse()
@@ -88,15 +91,6 @@
 /datum/tgs_api/v5/OnInitializationComplete()
 	Bridge(DMAPI5_BRIDGE_COMMAND_PRIME)
 
-	var/tgs4_secret_sleep_offline_sauce = 29051994
-	var/old_sleep_offline = world.sleep_offline
-	world.sleep_offline = tgs4_secret_sleep_offline_sauce
-	sleep(1)
-	if(world.sleep_offline == tgs4_secret_sleep_offline_sauce)	//if not someone changed it
-		world.sleep_offline = old_sleep_offline
-	else
-		TGS_WARNING_LOG("world.sleep_offline unexpectedly changed!")
-
 /datum/tgs_api/v5/proc/TopicResponse(error_message = null)
 	var/list/response = list()
 	response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
@@ -104,10 +98,13 @@
 	return json_encode(response)
 
 /datum/tgs_api/v5/OnTopic(T)
+	if(!initialized)
+		return FALSE	//continue world/Topic
+
 	var/list/params = params2list(T)
 	var/json = params[DMAPI5_TOPIC_DATA]
 	if(!json)
-		return FALSE	//continue world/Topic
+		return FALSE
 
 	var/list/topic_parameters = json_decode(json)
 	if(!topic_parameters)
@@ -284,7 +281,7 @@
 
 /datum/tgs_api/v5/TestMerges()
 	RequireInitialBridgeResponse()
-	return test_merges
+	return test_merges.Copy()
 
 /datum/tgs_api/v5/EndProcess()
 	Bridge(DMAPI5_BRIDGE_COMMAND_KILL)
@@ -329,7 +326,7 @@
 
 /datum/tgs_api/v5/ChatChannelInfo()
 	RequireInitialBridgeResponse()
-	return chat_channels
+	return chat_channels.Copy()
 
 /datum/tgs_api/v5/proc/DecodeChannels(chat_update_json)
 	var/list/chat_channels_json = chat_update_json[DMAPI5_CHAT_UPDATE_CHANNELS]

@@ -4,16 +4,17 @@ import { Window } from '../layouts';
 
 export const NtnetRelay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     enabled,
     dos_capacity,
     dos_overload,
     dos_crashed,
   } = data;
-
   return (
-    <Window>
+    <Window
+      title="NtNet Quantum Relay"
+      width={400}
+      height={300}>
       <Window.Content>
         <Section
           title="Network Buffer"

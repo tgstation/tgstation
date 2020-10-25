@@ -33,7 +33,7 @@
 		Sink(1)
 
 //Get a node up to its right position in the heap
-/datum/heap/proc/Swim(var/index)
+/datum/heap/proc/Swim(index)
 	var/parent = round(index * 0.5)
 
 	while(parent > 0 && (call(cmp)(L[index],L[parent]) > 0))
@@ -42,7 +42,7 @@
 		parent = round(index * 0.5)
 
 //Get a node down to its right position in the heap
-/datum/heap/proc/Sink(var/index)
+/datum/heap/proc/Sink(index)
 	var/g_child = GetGreaterChild(index)
 
 	while(g_child > 0 && (call(cmp)(L[index],L[g_child]) < 0))
@@ -52,7 +52,7 @@
 
 //Returns the greater (relative to the comparison proc) of a node children
 //or 0 if there's no child
-/datum/heap/proc/GetGreaterChild(var/index)
+/datum/heap/proc/GetGreaterChild(index)
 	if(index * 2 > L.len)
 		return 0
 

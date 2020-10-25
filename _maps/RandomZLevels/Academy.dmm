@@ -467,14 +467,14 @@
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "bY" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "bZ" = (
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
 "ca" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/alien,
 /turf/open/floor/engine,
 /area/awaymission/academy/classrooms)
@@ -560,9 +560,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cu" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/awaymission/academy/headmaster)
 "cv" = (
 /obj/machinery/door/window{
@@ -1320,7 +1318,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/burger/spell,
+/obj/item/food/burger/spell,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1548,7 +1546,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fW" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fX" = (
@@ -2669,9 +2667,7 @@
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/awaymission/academy/academygate)
 "ky" = (
 /obj/machinery/door/poddoor/shutters{
@@ -2958,9 +2954,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lL" = (
-/mob/living/simple_animal/slaughter{
-	name = "engine demon"
-	},
+/mob/living/simple_animal/hostile/imp/slaughter/engine_demon,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lM" = (
@@ -3241,7 +3235,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mU" = (
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/item/food/meat/slab,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mV" = (

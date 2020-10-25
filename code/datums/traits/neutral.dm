@@ -21,13 +21,13 @@
 /datum/quirk/foreigner/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.add_blocked_language(/datum/language/common)
-	if(ishumanbasic(H) || isfelinid(H))
+	if(ishumanbasic(H))
 		H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.remove_blocked_language(/datum/language/common)
-	if(ishumanbasic(H) || isfelinid(H))
+	if(ishumanbasic(H))
 		H.remove_language(/datum/language/uncommon)
 
 /datum/quirk/vegetarian
@@ -232,6 +232,8 @@
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
 /datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
+	SIGNAL_HANDLER
+
 	if(istype(hat, /obj/item/clothing/head/wig))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
@@ -239,20 +241,30 @@
 
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
 
-/datum/quirk/longtimer
-	name = "Longtimer"
-	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
-	value = 0
-	gain_text = "<span class='notice'>Your body has seen better days.</span>"
-	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
-	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
-	/// the minimum amount of scars we can generate
-	var/min_scars = 3
-	/// the maximum amount of scars we can generate
-	var/max_scars = 7
 
-/datum/quirk/longtimer/on_spawn()
-	var/mob/living/carbon/C = quirk_holder
-	C.generate_fake_scars(rand(min_scars, max_scars))
+/datum/quirk/tongue_tied
+	name = "Tongue Tied"
+	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
+	value = 0
+	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
+
+//Adds tongue & gloves
+/datum/quirk/tongue_tied/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
+	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
+	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
+	old_tongue.Remove(H)
+	new_tongue.Insert(H)
+	qdel(old_tongue)
+	H.put_in_hands(gloves)
+	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
+	H.regenerate_icons()
+
+/datum/quirk/tongue_tied/post_add()
+	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
+

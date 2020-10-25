@@ -12,8 +12,6 @@
 	var/restoring = FALSE
 	var/list/logs
 	var/auth_id = "\[NULL\]:"
-	ui_x = 550
-	ui_y = 500
 
 /obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -33,21 +31,20 @@
 			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
-	if(!IsAdminGhost(user))
+	if(!isAdminGhostAI(user))
 		to_chat(user,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
 		return
 	..()
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
+	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !(APC.area.area_flags & NO_ALERTS)
 
-/obj/machinery/computer/apc_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	operator = user
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ApcControl", "APC Controller", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ApcControl")
 		ui.open()
-
 
 /obj/machinery/computer/apc_control/ui_data(mob/user)
 	var/list/data = list()
@@ -83,8 +80,10 @@
 	return data
 
 /obj/machinery/computer/apc_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("log-in")
 			if(obj_flags & EMAGGED)
@@ -181,7 +180,7 @@
 		return
 	obj_flags |= EMAGGED
 	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)

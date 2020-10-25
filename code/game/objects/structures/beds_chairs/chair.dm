@@ -89,11 +89,13 @@
 	else
 		return ..()
 
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
-		..()
-	else
-		setDir(turn(dir,-90))
+		return ..()
+	setDir(turn(dir,-90))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -249,6 +251,9 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
+/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+	return ..()
+
 /obj/structure/chair/stool/bar
 	name = "bar stool"
 	desc = "It has some unsavory stains on it..."
@@ -325,8 +330,8 @@
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message("<span class='danger'>[owner] fends off [attack_text] with [src]!</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
 	. = ..()
@@ -463,7 +468,7 @@
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
+		if(do_after(Mob, 6 SECONDS, progress = FALSE))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)

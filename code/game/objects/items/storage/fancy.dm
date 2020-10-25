@@ -17,9 +17,11 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/cardboard = 2000)
 	var/icon_type = "donut"
 	var/spawn_type = null
 	var/fancy_open = FALSE
+	var/obj/fold_result = /obj/item/stack/sheet/cardboard
 
 /obj/item/storage/fancy/PopulateContents()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -44,6 +46,11 @@
 	fancy_open = !fancy_open
 	update_icon()
 	. = ..()
+	if(!contents.len)
+		new fold_result(user.drop_location())
+		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		user.put_in_active_hand(fold_result)
+		qdel(src)
 
 /obj/item/storage/fancy/Exited()
 	. = ..()
@@ -120,13 +127,13 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
 	desc = "A carton for containing eggs."
-	spawn_type = /obj/item/reagent_containers/food/snacks/egg
+	spawn_type = /obj/item/food/egg
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg))
+	STR.set_holdable(list(/obj/item/food/egg))
 
 /*
  * Candle Box
@@ -139,6 +146,7 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	inhand_icon_state = "candlebox5"
+	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -149,8 +157,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
-/obj/item/storage/fancy/candle_box/attack_self(mob_user)
-	return
+/obj/item/storage/fancy/candle_box/attack_self(mob/user)
+	if(!contents.len)
+		new fold_result(user.drop_location())
+		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		user.put_in_active_hand(fold_result)
+		qdel(src)
 
 ////////////
 //CIG PACK//
@@ -161,6 +173,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
+	worn_icon_state = "cigpack"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
@@ -440,10 +453,10 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
 	icon_type = "nugget"
-	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+	spawn_type = /obj/item/food/nugget
 
 /obj/item/storage/fancy/nugget_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/nugget))
+	STR.set_holdable(list(/obj/item/food/nugget))

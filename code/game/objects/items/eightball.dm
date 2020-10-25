@@ -59,7 +59,7 @@
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time, needhand=TRUE, target=user, progress=TRUE))
+	if(do_after(user, shake_time))
 		var/answer = get_answer()
 		say(answer)
 
@@ -153,7 +153,7 @@
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
 	. = ..()
 	last_message = raw_message
 
@@ -192,11 +192,13 @@
 
 	return top_vote
 
-/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.always_state)
+/obj/item/toy/eightball/haunted/ui_state(mob/user)
+	return GLOB.observer_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/toy/eightball/haunted/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "EightBallVote", name, 400, 600, master_ui, state)
+		ui = new(user, src, "EightBallVote", name)
 		ui.open()
 
 /obj/item/toy/eightball/haunted/ui_data(mob/user)
@@ -215,8 +217,10 @@
 	return data
 
 /obj/item/toy/eightball/haunted/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/mob/user = usr
 
 	switch(action)

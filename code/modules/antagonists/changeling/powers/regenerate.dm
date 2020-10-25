@@ -5,7 +5,7 @@
 	button_icon_state = "regenerate"
 	chemical_cost = 10
 	dna_cost = 0
-	req_stat = UNCONSCIOUS
+	req_stat = HARD_CRIT
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	..()
@@ -35,8 +35,8 @@
 			B.Insert(C)
 		C.regenerate_organs()
 		for(var/i in C.all_wounds)
-			var/datum/wound/W = i
-			W.remove_wound()
+			var/datum/wound/iter_wound = i
+			iter_wound.remove_wound()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

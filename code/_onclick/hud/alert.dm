@@ -88,7 +88,7 @@
 	qdel(alert)
 
 /obj/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -301,16 +301,39 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
 
-/obj/screen/alert/give/proc/removeAlert()
-	to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
-	owner.clear_alert("[giver]")
+/obj/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
+
+	if (!giver.CanReach(taker))
+		to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
+		owner.clear_alert("[giver]")
 
 /obj/screen/alert/give/Click(location, control, params)
 	. = ..()
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
+
+/// Gives the player the option to succumb while in critical condition
+/obj/screen/alert/succumb
+	name = "Succumb"
+	desc = "Shuffle off this mortal coil."
+	icon_state = "succumb"
+
+/obj/screen/alert/succumb/Click()
+	if (isobserver(usr))
+		return
+
+	var/mob/living/living_owner = owner
+	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
+	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+		return
+
+	if (length(last_whisper))
+		living_owner.say("#[last_whisper]")
+
+	living_owner.succumb(whispered = length(last_whisper) > 0)
 
 //ALIENS
 
@@ -354,7 +377,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/Initialize()
 	. = ..()
-	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /obj/screen/alert/bloodsense/Destroy()
@@ -378,7 +401,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			antag.cult_team.blood_target = null
 		else
 			blood_target = antag.cult_team.blood_target
-	if(Cviewer && Cviewer.seeking && Cviewer.master)
+	if(Cviewer?.seeking && Cviewer.master)
 		blood_target = Cviewer.master
 		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)

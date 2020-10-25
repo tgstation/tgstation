@@ -1,7 +1,11 @@
 /**
  * tgui state: notcontained_state
  *
- * Checks that the user is not inside src_object, and then makes the default checks.
+ * Checks that the user is not inside src_object, and then makes the
+ * default checks.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 GLOBAL_DATUM_INIT(notcontained_state, /datum/ui_state/notcontained_state, new)

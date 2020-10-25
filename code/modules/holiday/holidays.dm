@@ -234,7 +234,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/rat/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -322,11 +322,11 @@
 	if(mm == 9)
 		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
 			if(dd == 12)
-				return 1
+				return TRUE
 		else
 			if(dd == 13)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/holiday/programmers/getStationPrefix()
 	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
@@ -456,8 +456,16 @@
 /datum/holiday/moth
 	name = "Moth Week"
 
-/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
-	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
+/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
+	if(mm == JULY)
+		var/week
+		if(first_day_of_month() >= 5)	//Friday or later start of the month means week 5 is a full week.
+			week = 5
+		else
+			week = 4
+
+		return (ww == week-1 && (ddd == SATURDAY || ddd == SUNDAY)) || ww == week
+
 
 /datum/holiday/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
@@ -496,7 +504,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
@@ -586,8 +594,8 @@
 /datum/holiday/easter/celebrate()
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
-			/obj/item/storage/bag/easterbasket = 15
+			/obj/item/food/egg/loaded = 15,
+			/obj/item/storage/basket/easter = 15
 		) = maint_holiday_weight,
 	)
 

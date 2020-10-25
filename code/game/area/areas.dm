@@ -13,27 +13,12 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	/// Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
-	var/map_name
-
-	/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/valid_territory = TRUE
-	/// If blobs can spawn there and if it counts towards their score.
-	var/blob_allowed = TRUE
-
-	/// If mining tunnel generation is allowed in this area
-	var/tunnel_allowed = FALSE
-	/// If flora are allowed to spawn in this area randomly through tunnel generation
-	var/flora_allowed = FALSE
-	/// If mobs can be spawned by natural random generation
-	var/mob_spawn_allowed = FALSE
-	/// If megafauna can be spawned by natural random generation
-	var/megafauna_spawn_allowed = FALSE
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
 
 	var/fire = null
-	var/atmos = TRUE
+	///Whether there is an atmos alarm in this area
 	var/atmosalm = FALSE
-	var/poweralm = TRUE
+	var/poweralm = FALSE
 	var/lightswitch = TRUE
 
 	/// All beauty in this area combined, only includes indoor area.
@@ -43,11 +28,7 @@
 	/// If a room is too big it doesn't have beauty.
 	var/beauty_threshold = 150
 
-	var/requires_power = TRUE
-	/// This gets overridden to 1 for space in area/Initialize().
-	var/always_unpowered = FALSE
-
-	/// For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
 
 	/// Size of the area in open turfs, only calculated for indoors areas.
@@ -58,23 +39,16 @@
 	/// Mood message for being here, only shows up if mood_bonus != 0
 	var/mood_message = "<span class='nicegreen'>This area is pretty nice!\n</span>"
 
+	///Will objects this area be needing power?
+	var/requires_power = TRUE
+	/// This gets overridden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE
+
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
 
-	var/has_gravity = 0
-	/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE
-	/// Hides area from player Teleport function.
-	var/hidden = FALSE
-	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
-	var/safe = FALSE
-	/// If false, loading multiple maps with this area type will create multiple instances.
-	var/unique = TRUE
-	/// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
-	var/block_suicide = FALSE
-
-	var/no_air = null
+	var/has_gravity = FALSE
 
 	var/parallax_movedir = 0
 
@@ -85,12 +59,17 @@
 	var/list/cameras
 	var/list/firealarms
 	var/firedoors_last_closed_on = 0
-	/// Can the Xenobio management console transverse this area by default?
-	var/xenobiology_compatible = FALSE
-	/// typecache to limit the areas that atoms in this area can smooth with, used for shuttles IIRC
-	var/list/canSmoothWithAreas
+
+	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
+	var/area/area_limited_icon_smoothing
 
 	var/list/power_usage
+
+	/// Wire assignment for airlocks in this area
+	var/airlock_wires = /datum/wires/airlock
+    
+	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
+	var/datum/map_generator/map_generator
 
 
 /**
@@ -113,7 +92,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
-		if(istype(AR, /area/shuttle) || AR.noteleport)
+		if(istype(AR, /area/shuttle) || AR.area_flags & NOTELEPORT)
 			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
@@ -133,7 +112,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (unique)
+	if (area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	return ..()
@@ -148,9 +127,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/Initialize()
 	icon_state = ""
-	layer = AREA_LAYER
-	map_name = name // Save the initial (the name set in the map) name of the area.
-	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	if(requires_power)
 		luminosity = 0
@@ -184,6 +160,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
 	update_beauty()
+	if(map_generator)
+		map_generator = new map_generator()
+		map_generator.generate_terrain(get_area_turfs(src))
 
 /**
   * Register this area as belonging to a z level
@@ -222,32 +201,34 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   */
 /area/proc/poweralert(state, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
-				if (state == 1)
+				if (!state)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
-				if(state == 1)
+				if(!state)
 					a.cancelAlarm("Power", src, source)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.drones_list)
 				var/mob/living/simple_animal/drone/D = item
-				if(state == 1)
+				if(!state)
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
-				if(state == 1)
+				if(!state)
 					p.cancelAlarm("Power", src, source)
 				else
 					p.triggerAlarm("Power", src, cameras, source)
@@ -257,9 +238,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   */
-/area/proc/atmosalert(danger_level, obj/source)
-	if(danger_level != atmosalm)
-		if (danger_level==2)
+/area/proc/atmosalert(isdangerous, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
+	if(isdangerous != atmosalm)
+		if(isdangerous)
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
@@ -274,7 +257,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.triggerAlarm("Atmosphere", src, cameras, source)
 
-		else if (src.atmosalm == 2)
+		else
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
@@ -288,9 +271,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.cancelAlarm("Atmosphere", src, source)
 
-		src.atmosalm = danger_level
-		return 1
-	return 0
+		atmosalm = isdangerous
+		return TRUE
+	return FALSE
 
 /**
   * Try to close all the firedoors in the area
@@ -307,7 +290,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					if(A.fire)
 						cont = FALSE
 						break
-			if(cont && D.is_operational())
+			if(cont && D.is_operational)
 				if(D.operating)
 					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
@@ -321,29 +304,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
-	if(always_unpowered == 1) //no fire alarms in space/asteroid
-		return
-
 	if (!fire)
 		set_fire_alarm_effect()
 		ModifyFiredoors(FALSE)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_icon()
-
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.triggerAlarm("Fire", src, cameras, source)
-
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.triggerAlarm("Fire", src, cameras, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.triggerAlarm("Fire", src, cameras, source)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -361,20 +340,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_icon()
-
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.cancelAlarm("Fire", src, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.cancelAlarm("Fire", src, source)
-
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.cancelAlarm("Fire", src, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.cancelAlarm("Fire", src, source)
 	STOP_PROCESSING(SSobj, src)
 
 /**
@@ -403,9 +381,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Alarm auto resets after 600 ticks
   */
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered) //no burglar alarms in space/asteroid
+	if (area_flags & NO_ALERTS)
 		return
-
 	//Trigger alarm effect
 	set_fire_alarm_effect()
 	//Lockdown airlocks
@@ -478,9 +455,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(AREA_USAGE_EQUIP)
 			return power_equip
@@ -489,13 +466,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(AREA_USAGE_ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 /**
-  * Space is not powered ever, so this returns 0
+  * Space is not powered ever, so this returns false
   */
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 /**
   * Called when the area power status changes
@@ -611,8 +588,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_light = FALSE
 	power_environ = FALSE
 	always_unpowered = FALSE
-	valid_territory = FALSE
-	blob_allowed = FALSE
+	area_flags &= ~VALID_TERRITORY
+	area_flags &= ~BLOBS_ALLOWED
 	addSorted()
 /**
   * Set the area size of the area

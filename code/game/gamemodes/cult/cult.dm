@@ -18,7 +18,7 @@
 	if(M.mind)
 		if(ishuman(M) && (M.mind.holy_role))
 			return FALSE
-		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
+		if(specific_cult?.is_sacrifice_target(M.mind))
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE
@@ -47,8 +47,6 @@
 	announce_text = "Some crew members are trying to start a cult to Nar'Sie!\n\
 	<span class='cult'>Cultists</span>: Carry out Nar'Sie's will.\n\
 	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
-
-	var/finished = 0
 
 	var/acolytes_needed = 10 //for the survive objective
 	var/acolytes_survived = 0
@@ -145,9 +143,9 @@
 			if(cult_mind.current.onCentCom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 /datum/game_mode/cult/generate_report()

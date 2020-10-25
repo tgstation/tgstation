@@ -18,7 +18,7 @@
 		if(ignored_things[thing.type])
 			continue
 		. += thing
-		if((thing.rad_flags & RAD_PROTECT_CONTENTS) || (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION))
+		if((thing.flags_1 & RAD_PROTECT_CONTENTS_1) || (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION))
 			continue
 		processing_list += thing.contents
 

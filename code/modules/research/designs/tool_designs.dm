@@ -73,6 +73,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/rcd_upgrade/furnishing
+	name = "RCD furnishing upgrade"
+	desc = "Adds the ability to furnish areas using the RCD."
+	id = "rcd_upgrade_furnishing"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
+	build_path = /obj/item/rcd_upgrade/furnishing
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/rcd_upgrade/silo_link
 	name = "Advanced RCD silo link upgrade"
 	desc = "Upgrades the RCD to be able to pull materials from the ore silo. The RCD must be linked to the silo using a multitool before it will function."
@@ -80,6 +90,16 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/titanium = 2500, /datum/material/bluespace = 2500)
 	build_path = /obj/item/rcd_upgrade/silo_link
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rpd_upgrade/unwrench
+	name = "RPD unwrenching upgrade"
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	id = "rpd_upgrade_unwrench"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
+	build_path = /obj/item/rpd_upgrade/unwrench
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -102,6 +122,34 @@
 	materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/silver=500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/crystal_stabilizer
+	name = "Supermatter Matrix Stabilizer"
+	desc = "A tool that is used to restore the stability of the Crystal Matrix by injecting it with the anomaly liquid"
+	id = "crystal_stabilizer"
+	build_path = /obj/item/crystal_stabilizer
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 4500, /datum/material/silver = 2500)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plumbing_rcd_sci
+	name = "Research Plumbing Constructor"
+	id = "plumbing_rcd_sci"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
+	build_path = /obj/item/construction/plumbing/research
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/biopsy_tool
+	name = "Biopsy Tool"
+	id = "biopsy_tool"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
+	build_path = /obj/item/biopsy_tool
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////

@@ -106,7 +106,7 @@
   *
   * Gives addtional effects to sickly blade weapon
   */
-/datum/eldritch_knowledge/proc/on_eldritch_blade(target,user,proximity_flag,click_parameters)
+/datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
 	return
 
 //////////////
@@ -128,6 +128,7 @@
 /datum/eldritch_knowledge/curse
 	var/timer = 5 MINUTES
 	var/list/fingerprints = list()
+	var/list/dna = list()
 
 /datum/eldritch_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
 	fingerprints = list()
@@ -150,7 +151,7 @@
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
-		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")
+		to_chat(user, "<span class='warning'>The items don't posses required fingerprints or dna.</span>")
 		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
@@ -175,7 +176,7 @@
 	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.name]", ROLE_HERETIC, null, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, null, FALSE, 100, summoned)
 	if(!LAZYLEN(candidates))
 		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
 		qdel(summoned)
@@ -192,6 +193,7 @@
 
 //Ascension knowledge
 /datum/eldritch_knowledge/final
+
 	var/finished = FALSE
 
 /datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc,selected_atoms)
@@ -207,6 +209,8 @@
 
 /datum/eldritch_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	finished = TRUE
+	var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	ascension.ascended = TRUE
 	return TRUE
 
 /datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
@@ -223,7 +227,7 @@
 /datum/eldritch_knowledge/spell/basic
 	name = "Break of dawn"
 	desc = "Starts your journey in the mansus. Allows you to select a target using a living heart on a transmutation rune."
-	gain_text = "Gates of mansus open up to your mind."
+	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something weird in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
 	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
@@ -256,18 +260,22 @@
 				if(!istype(X,/obj/item/forbidden_book))
 					continue
 				var/obj/item/forbidden_book/FB = X
-				FB.charge++
+				FB.charge += 2
 				break
 
 		if(!LH.target)
 			var/datum/objective/A = new
 			A.owner = user.mind
-			var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
-			LH.target = targeted.current
+			var/list/targets = list()
+			for(var/i in 0 to 3)
+				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				if(!targeted)
+					break
+				targets[targeted.current.real_name] = targeted.current
+			LH.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(A)
 			if(LH.target)
 				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.real_name]!</span>")
-
 			else
 				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 

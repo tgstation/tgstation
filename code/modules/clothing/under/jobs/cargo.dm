@@ -15,6 +15,7 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/cargo/tech
@@ -34,6 +35,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/cargo/miner
@@ -41,7 +43,7 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_icon_state = "miner"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 0, "wound" = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 0, WOUND = 10)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland

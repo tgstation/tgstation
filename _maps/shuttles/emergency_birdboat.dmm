@@ -182,7 +182,7 @@
 /area/shuttle/escape)
 "I" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti{
+/obj/item/food/spaghetti/boiledspaghetti{
 	name = "pasghetti";
 	pixel_x = 4;
 	pixel_y = 7

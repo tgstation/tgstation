@@ -4,7 +4,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("dumped")
+	attack_verb_continuous = list("dumps")
+	attack_verb_simple = list("dump")
 	var/dumped = FALSE
 
 /obj/item/suspiciousphone/attack_self(mob/user)
@@ -20,7 +21,7 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
+		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 		var/mob/living/carbon/human/H = user
 		accounts_to_rob -= H.get_bank_account()
 		for(var/i in accounts_to_rob)
@@ -35,7 +36,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = LARGE_MOB_LAYER
-	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
@@ -85,6 +86,7 @@
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	SSeconomy.market_crashing = TRUE
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -155,10 +157,11 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, 0,0,1, flame_range = 2)
+	SSeconomy.market_crashing = FALSE
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = SSeconomy.bank_accounts.Copy()
+	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -169,7 +172,8 @@
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		if(!B.being_dumped)
+		if(!(B?.being_dumped))
+			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff.get_bank_account()
@@ -186,7 +190,8 @@
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.being_dumped = FALSE
+		if(B)
+			B.being_dumped = FALSE
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""

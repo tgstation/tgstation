@@ -4,7 +4,7 @@
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon_state = "secway"
 	max_integrity = 60
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 
@@ -25,10 +25,10 @@
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/secway/process()
+/obj/vehicle/ridden/secway/process(delta_time)
 	if(obj_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, src)
@@ -47,7 +47,7 @@
 	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
 		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
-		if(do_after(user, 30, TRUE, src))
+		if(do_after(user, 3 SECONDS, src))
 			if(user.transferItemToLoc(W, src))
 				user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
 				eddie_murphy = W
@@ -64,7 +64,7 @@
 		return
 	return ..()
 
-/obj/vehicle/ridden/secway/driver_move(mob/user, direction)
+/obj/vehicle/ridden/secway/driver_move(mob/living/user, direction)
 	if(is_key(inserted_key) && eddie_murphy)
 		if(stall_cooldown + 10 < world.time)
 			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")

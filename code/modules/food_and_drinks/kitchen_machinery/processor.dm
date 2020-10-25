@@ -131,33 +131,23 @@
 	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr
 		if(!(L.mobility_flags & MOBILITY_UI))
 			return
-	empty()
+	dump_inventory_contents()
 	add_fingerprint(usr)
 
-/obj/machinery/processor/container_resist(mob/living/user)
+/obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
 	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
-
-/obj/machinery/processor/proc/empty()
-	for (var/obj/O in src)
-		O.forceMove(drop_location())
-	for (var/mob/M in src)
-		M.forceMove(drop_location())
 
 /obj/machinery/processor/slime
 	name = "slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
-
-/obj/machinery/processor/slime/Initialize()
-	. = ..()
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
-	B.apply_default_parts(src)
+	circuit = /obj/item/circuitboard/machine/processor/slime
 
 /obj/machinery/processor/slime/adjust_item_drop_location(atom/movable/AM)
 	var/static/list/slimecores = subtypesof(/obj/item/slime_extract)

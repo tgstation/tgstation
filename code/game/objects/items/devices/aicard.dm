@@ -40,26 +40,28 @@
 			log_combat(user, AI, "carded", src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
-/obj/item/aicard/update_icon()
-	cut_overlays()
-	if(AI)
-		name = "[initial(name)] - [AI.name]"
-		if(AI.stat == DEAD)
-			icon_state = "[initial(icon_state)]-404"
-		else
-			icon_state = "[initial(icon_state)]-full"
-		if(!AI.control_disabled)
-			add_overlay("[initial(icon_state)]-on")
-		AI.cancel_camera()
-	else
+/obj/item/aicard/update_icon_state()
+	if(!AI)
 		name = initial(name)
 		icon_state = initial(icon_state)
+		return
+	name = "[initial(name)] - [AI.name]"
+	icon_state = "[initial(icon_state)][AI.stat == DEAD ? "-404" : "-full"]"
+	AI.cancel_camera()
 
-/obj/item/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/aicard/update_overlays()
+	. = ..()
+	if(!AI || AI.control_disabled)
+		return
+	. += "[initial(icon_state)]-on"
+
+/obj/item/aicard/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/aicard/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Intellicard", name, 500, 500, master_ui, state)
+		ui = new(user, src, "Intellicard", name)
 		ui.open()
 
 /obj/item/aicard/ui_data()
@@ -76,7 +78,8 @@
 	return data
 
 /obj/item/aicard/ui_act(action,params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("wipe")

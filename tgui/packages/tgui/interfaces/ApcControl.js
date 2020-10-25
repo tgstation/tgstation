@@ -9,11 +9,17 @@ import { AreaCharge, powerRank } from './PowerMonitor';
 export const ApcControl = (props, context) => {
   const { data } = useBackend(context);
   return (
-    <Window resizable>
-      {data.authenticated === 1
-      && <ApcLoggedIn />}
-      {data.authenticated === 0
-      && <ApcLoggedOut />}
+    <Window
+      title="APC Controller"
+      width={550}
+      height={500}
+      resizable>
+      {data.authenticated === 1 && (
+        <ApcLoggedIn />
+      )}
+      {data.authenticated === 0 && (
+        <ApcLoggedOut />
+      )}
     </Window>
   );
 };

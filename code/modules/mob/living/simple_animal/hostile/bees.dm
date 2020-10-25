@@ -119,7 +119,7 @@
 	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
-	if(beegent && beegent.color)
+	if(beegent?.color)
 		col = beegent.color
 
 	add_overlay("[icon_base]_base")
@@ -240,6 +240,9 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
+/mob/living/simple_animal/hostile/poison/bees/will_escape_storage()
+	return TRUE
+
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
@@ -270,6 +273,8 @@
 /mob/living/simple_animal/hostile/poison/bees/queen/pollinate()
 	return
 
+/mob/living/simple_animal/hostile/poison/bees/queen/will_escape_storage()
+	return FALSE
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
@@ -296,7 +301,7 @@
 				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
 				var/obj/item/queen_bee/qb = new(user.drop_location())
 				qb.queen = new(qb)
-				if(queen && queen.beegent)
+				if(queen?.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
 				user.put_in_active_hand(qb)
 				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")

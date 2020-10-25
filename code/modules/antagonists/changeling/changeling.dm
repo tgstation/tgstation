@@ -10,7 +10,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
-
+	hijack_speed = 0.5
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
@@ -31,8 +31,8 @@
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/was_absorbed = FALSE //if they were absorbed by another ling already.
-	var/isabsorbing = 0
-	var/islinking = 0
+	var/isabsorbing = FALSE
+	var/islinking = FALSE
 	var/geneticpoints = 10
 	var/total_geneticspoints = 10
 	var/total_chem_storage = 75
@@ -149,6 +149,8 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
 	if(!chosen_sting.try_to_sting(ling, A))
@@ -205,15 +207,18 @@
 	if(!ishuman(owner.current))
 		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
 		return
+	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
+		to_chat(owner.current, "<span class='warning'>We are too busy reforming ourselves to readapt right now!</span>")
+		return
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		canrespec = 0
+		canrespec = FALSE
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
-		return 1
+		return TRUE
 	else
 		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return FALSE
 
 //Called in life()
 /datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
@@ -274,7 +279,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	return 1
+	return TRUE
 
 
 /datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)
@@ -290,6 +295,12 @@
 	prof.underwear = H.underwear
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
+
+	prof.skillchips = H.clone_skillchip_list(TRUE)
+
+	for(var/i in H.all_scars)
+		var/datum/scar/iter_scar = i
+		LAZYADD(prof.stored_scars, iter_scar.format())
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -344,8 +355,8 @@
 	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
 	if(removeprofile)
 		stored_profiles -= removeprofile
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/antagonist/changeling/proc/create_initial_profile()
@@ -524,8 +535,13 @@
 	var/undershirt
 	var/socks
 
+	var/list/skillchips = list()
+	/// What scars the target had when we copied them, in string form (like persistent scars)
+	var/list/stored_scars
+
 /datum/changelingprofile/Destroy()
 	qdel(dna)
+	LAZYCLEARLIST(stored_scars)
 	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
@@ -545,7 +561,8 @@
 	newprofile.socks = socks
 	newprofile.worn_icon_list = worn_icon_list.Copy()
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
-
+	newprofile.skillchips = skillchips.Copy()
+	newprofile.stored_scars = stored_scars.Copy()
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
@@ -556,9 +573,9 @@
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
-	var/changelingwin = 1
+	var/changelingwin = TRUE
 	if(!owner.current)
-		changelingwin = 0
+		changelingwin = FALSE
 
 	parts += printplayer(owner)
 
@@ -573,7 +590,7 @@
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				changelingwin = FALSE
 			count++
 
 	if(changelingwin)

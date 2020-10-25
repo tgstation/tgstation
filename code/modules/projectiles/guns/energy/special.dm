@@ -126,9 +126,10 @@
 	inhand_icon_state = "plasmacutter"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags_1 = CONDUCT_1
-	attack_verb = list("attacked", "slashed", "cut", "sliced")
+	attack_verb_continuous = list("attacks", "slashes", "cuts", "slices")
+	attack_verb_simple = list("attack", "slash", "cut", "slice")
 	force = 12
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	can_charge = FALSE
 
 	heat = 3800

@@ -79,9 +79,6 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if((M.mind && !M.mind.hasSoul) || is_devil(M))
-		to_chat(user, "<span class='warning'>This... THING has no soul! It's filled with evil!</span>")
-		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
@@ -177,7 +174,7 @@
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team.is_sacrifice_target(T.mind))
+			if(C?.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -284,7 +281,7 @@
 		SM.Grant(newstruct)
 	newstruct.key = target.key
 	var/obj/screen/alert/bloodsense/BS
-	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker?.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
@@ -297,7 +294,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
@@ -310,7 +307,8 @@
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
 	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
-	S.copy_languages(user, LANGUAGE_MASTER)
+	if(user)
+		S.copy_languages(user, LANGUAGE_MASTER)
 	S.update_atom_languages()
 	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 	if(user)

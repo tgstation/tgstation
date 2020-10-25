@@ -5,7 +5,7 @@
 
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
-	if(recharger && recharger.check_functionality())
+	if(recharger?.check_functionality())
 		if(recharger.use_power(amount))
 			return TRUE
 
@@ -22,7 +22,7 @@
 
 /obj/item/modular_computer/proc/give_power(amount)
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		return battery_module.battery.give(amount)
 	return 0
 
@@ -41,10 +41,10 @@
 		shutdown_computer(0)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
-/obj/item/modular_computer/proc/handle_power()
+/obj/item/modular_computer/proc/handle_power(delta_time)
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 	if(recharger)
-		recharger.process()
+		recharger.process(delta_time)
 
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 

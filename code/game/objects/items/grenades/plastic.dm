@@ -3,6 +3,7 @@
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	icon_state = "plastic-explosive0"
 	inhand_icon_state = "plastic-explosive"
+	worn_icon_state = "c4"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -56,7 +57,7 @@
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target && target.density)
+		if(directional && target?.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
@@ -160,5 +161,6 @@
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
 	inhand_icon_state = "plasticx4"
+	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

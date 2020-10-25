@@ -24,7 +24,7 @@
 	ranged_cooldown_time = 10
 	pass_flags = LETPASSTHROW
 	robust_searching = TRUE
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	deathsound = 'sound/voice/mook_death.ogg'
 	aggro_vision_range = 15 //A little more aggressive once in combat to balance out their really low HP

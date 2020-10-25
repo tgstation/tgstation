@@ -18,7 +18,9 @@ export const Jukebox = (props, context) => {
       song => song.name),
   ])(data.songs || []);
   return (
-    <Window>
+    <Window
+      width={370}
+      height={313}>
       <Window.Content>
         <Section
           title="Song Player"

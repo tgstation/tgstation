@@ -42,7 +42,7 @@
 	var/spines = "None"
 
 /obj/item/organ/tail/lizard/Initialize()
-	..()
+	. = ..()
 	color = "#"+ random_color()
 
 /obj/item/organ/tail/lizard/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
@@ -67,3 +67,13 @@
 		tail_type = H.dna.features["tail_lizard"]
 		spines = H.dna.features["spines"]
 		H.update_body()
+
+/obj/item/organ/tail/lizard/before_organ_replacement(obj/item/organ/replacement)
+	. = ..()
+	var/obj/item/organ/tail/lizard/new_tail = replacement
+
+	if(!istype(new_tail))
+		return
+
+	new_tail.tail_type = tail_type
+	new_tail.spines = spines

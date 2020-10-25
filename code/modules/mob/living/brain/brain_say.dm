@@ -10,11 +10,11 @@
 
 		..()
 
-/mob/living/brain/radio(message, message_mode, list/spans, language)
-	if(message_mode == MODE_HEADSET && istype(container, /obj/item/mmi))
+/mob/living/brain/radio(message, list/message_mods = list(), list/spans, language)
+	if(message_mods[MODE_HEADSET] && istype(container, /obj/item/mmi))
 		var/obj/item/mmi/R = container
 		if(R.radio)
-			R.radio.talk_into(src, message, language = language)
+			R.radio.talk_into(src, message, language = language, message_mods = message_mods)
 			return ITALICS | REDUCE_RANGE
 	else
 		return ..()

@@ -11,21 +11,28 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	var/turf_type = null
-	var/mineralType = null
 	novariants = TRUE
-	var/human_maxHealth = 100
+	/// What type of turf does this tile produce.
+	var/turf_type = null
+	/// Determines certain welder interactions.
+	var/mineralType = null
+	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
+	var/list/tile_reskin_types
+
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+	if(tile_reskin_types)
+		tile_reskin_types = tile_reskin_list(tile_reskin_types)
+
 
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/verb
-		switch(CEILING(human_maxHealth / throwforce, 1)) //throws to crit a human
+		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
 			if(1 to 3)
 				verb = "superb"
 			if(4 to 6)
@@ -39,6 +46,7 @@
 		if(!verb)
 			return
 		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
+
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -128,7 +136,7 @@
 //Carpets
 /obj/item/stack/tile/carpet
 	name = "carpet"
-	singular_name = "carpet"
+	singular_name = "carpet tile"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	inhand_icon_state = "tile-carpet"
@@ -233,7 +241,7 @@
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
-	singular_name = "astral carpet"
+	singular_name = "astral carpet tile"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	inhand_icon_state = "tile-space"
@@ -337,8 +345,9 @@
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
+	matter_amount = 1
 
 /obj/item/stack/tile/plasteel/cyborg
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR

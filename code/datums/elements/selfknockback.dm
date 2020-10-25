@@ -37,6 +37,8 @@ clamping the Knockback_Force value below. */
 		return default_speed
 
 /datum/element/selfknockback/proc/Item_SelfKnockback(obj/item/I, atom/attacktarget, mob/usertarget, proximity_flag)
+	SIGNAL_HANDLER
+
 	if(isturf(attacktarget) && !attacktarget.density)
 		return
 	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.reach))
@@ -49,6 +51,8 @@ clamping the Knockback_Force value below. */
 		usertarget.visible_message("<span class='warning'>[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!</span>", "<span class='warning'>The force of \the [I] impacting \the [attacktarget] sends you flying!</span>")
 
 /datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/P)
+	SIGNAL_HANDLER
+
 	if(!P.firer)
 		return
 

@@ -59,11 +59,54 @@
 	maxHealth = 50
 	health = 50
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/pointed/manse_link,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch)
+
+	var/list/linked_mobs = list()
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
+	. = ..()
+	link_mob(src)
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
-	client?.view_size.setTo(11)
+	client?.view_size.setTo(10)
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/link_mob(mob/living/mob_linked)
+	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
+		return FALSE
+	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+		return FALSE
+	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		return FALSE
+	if(linked_mobs[mob_linked])
+		return FALSE
+
+	to_chat(mob_linked, "<span class='notice'>You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link.</span>")
+	var/datum/action/innate/mansus_speech/action = new(src)
+	linked_mobs[mob_linked] = action
+	action.Grant(mob_linked)
+	RegisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
+	return TRUE
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
+	SIGNAL_HANDLER
+
+	if(!linked_mobs[mob_linked])
+		return
+	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
+	action.Remove(mob_linked)
+	qdel(action)
+	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
+	INVOKE_ASYNC(mob_linked, /mob.proc/emote, "scream")
+	//micro stun
+	mob_linked.AdjustParalyzed(0.5 SECONDS)
+	linked_mobs -= mob_linked
+
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/death(gibbed)
+	for(var/linked_mob in linked_mobs)
+		unlink_mob(linked_mob)
+	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
@@ -93,6 +136,8 @@
 	var/stacks_to_grow = 5
 	///Currently eaten arms
 	var/current_stacks = 0
+	///Does this follow other pieces?
+	var/follow = TRUE
 
 //I tried Initalize but it didnt work, like at all. This proc just wouldnt fire if it was Initalize instead of New
 /mob/living/simple_animal/hostile/eldritch/armsy/Initialize(mapload,spawn_more = TRUE,len = 6)
@@ -105,6 +150,9 @@
 	if(!spawn_more)
 		return
 	allow_pulling = TRUE
+	///sets the hp of the head to be exactly the length times hp, so the head is de facto the hardest to destroy.
+	maxHealth = len * maxHealth
+	health = maxHealth
 	///next link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/next
 	///previous link
@@ -135,6 +183,18 @@
 			prev.AIStatus = AI_OFF
 		next = prev
 
+/mob/living/simple_animal/hostile/eldritch/armsy/adjustBruteLoss(amount, updating_health, forced)
+	if(back)
+		back.adjustBruteLoss(amount, updating_health, forced)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/eldritch/armsy/adjustFireLoss(amount, updating_health, forced)
+	if(back)
+		back.adjustFireLoss(amount, updating_health, forced)
+	else
+		return ..()
+
 //we are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
 /mob/living/simple_animal/hostile/eldritch/armsy/has_gravity(turf/T)
 	return TRUE
@@ -150,8 +210,15 @@
 		back.contract_next_chain_into_single_tile()
 	return
 
+/mob/living/simple_animal/hostile/eldritch/armsy/proc/get_length()
+	. += 1
+	if(back)
+		. += back.get_length()
+
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
+	if(!follow)
+		return
 	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
@@ -176,33 +243,30 @@
 		QDEL_NULL(back) // chain destruction baby
 	return ..()
 
-
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/heal()
-	if(health == maxHealth)
-		if(back)
-			back.heal()
-			return
-		else
-			current_stacks++
-			if(current_stacks >= stacks_to_grow)
-				var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
-				icon_state = "armsy_mid"
-				icon_living =  "armsy_mid"
-				back = prev
-				prev.icon_state = "armsy_end"
-				prev.icon_living = "armsy_end"
-				prev.front = src
-				prev.AIStatus = AI_OFF
-				current_stacks = 0
+	if(back)
+		back.heal()
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
 	adjustFireLoss(-maxHealth * 0.5 ,FALSE)
 
+	if(health == maxHealth)
+		current_stacks++
+		if(current_stacks >= stacks_to_grow)
+			var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
+			icon_state = "armsy_mid"
+			icon_living =  "armsy_mid"
+			back = prev
+			prev.icon_state = "armsy_end"
+			prev.icon_living = "armsy_end"
+			prev.front = src
+			prev.AIStatus = AI_OFF
+			current_stacks = 0
+			return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
 	target = targeted_atom
 	AttackingTarget()
-
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
@@ -243,8 +307,8 @@
 	real_name = "Master of Decay"
 	maxHealth = 400
 	health = 400
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage_lower = 30
+	melee_damage_upper = 50
 
 /mob/living/simple_animal/hostile/eldritch/armsy/prime/Initialize(mapload,spawn_more = TRUE,len = 9)
 	. = ..()
@@ -299,7 +363,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/pointed/cleave/long,/obj/effect/proc_holder/spell/aoe_turf/fire_cascade)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/pointed/cleave,/obj/effect/proc_holder/spell/targeted/fire_sworn)
 
 /mob/living/simple_animal/hostile/eldritch/stalker
 	name = "Flesh Stalker"

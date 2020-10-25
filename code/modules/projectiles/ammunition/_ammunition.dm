@@ -3,6 +3,7 @@
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
+	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
@@ -42,9 +43,28 @@
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
 /obj/item/ammo_casing/update_icon()
-	..()
+	. = ..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
+
+/*
+ * On accidental consumption, 'spend' the ammo, and add in some gunpowder
+ */
+/obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(BB)
+		BB = null
+		update_icon()
+		var/obj/item/reagent_containers/food/snacks/S = source_item
+		if(istype(S))
+			if(S.reagents)
+				S.reagents.add_reagent(/datum/reagent/gunpowder, S.reagents.total_volume*(2/3))
+			if(S.tastes?.len)
+				S.tastes += "salt"
+				S.tastes["salt"] = 3
+
+		M.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
+
+	return ..()
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
@@ -74,7 +94,7 @@
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)
-	. = ..()
+	return ..()
 
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
 	if(!heavy_metal)
@@ -82,7 +102,7 @@
 	update_icon()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
-	if(still_warm && T && T.bullet_sizzle)
+	if(still_warm && T?.bullet_sizzle)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
-	else if(T && T.bullet_bounce_sound)
+	else if(T?.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

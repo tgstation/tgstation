@@ -1,7 +1,6 @@
 /**
- * @file
- * @copyright 2020 Paul Bruner
- * @license MIT
+ * Copyright (c) 2020 Paul Bruner
+ * SPDX-License-Identifier: MIT
  */
 
 @use 'sass:color';
@@ -9,42 +8,49 @@
 
 @use '../colors.scss' with (
   $primary: #ffffff,
+  $bg-lightness: -25%,
+  $fg-lightness: -10%,
+  // Commenting out color maps will adjust all colors based on the lightness
+  // settings above, but will add extra 10KB to the theme.
   $fg-map-keys: (),
   $bg-map-keys: (),
 );
 @use '../base.scss' with (
-  $color-fg: rgb(0,0,0),
-  $color-bg: rgb(255, 255, 255),
+  $color-fg: #000000,
+  $color-bg: #ffffff,
   $color-bg-grad-spread: 0%,
-  $border-radius: 0px,
 );
+
 $font-size: 24px;
+
 // A fat warning to anyone who wants to use this: this only half works.
 // It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
 .theme-paper {
-  $color-fg:  rgb(0,0,0);
-  $color-bg:  rgb(255, 255, 255);
   // Atomic classes
   @include meta.load-css('../atomic/color.scss');
 
   // Components
   @include meta.load-css('../components/Tabs.scss');
-
-
+  @include meta.load-css('../components/Section.scss', $with: (
+    'background-color': rgba(0, 0, 0, 0.1),
+    'shadow-color': rgba(0, 0, 0, 0.2),
+  ));
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': #E8E4C9,
     'color-disabled': #363636,
     'color-selected': #9d0808,
     'color-caution': #be6209,
     'color-danger': #9a9d00,
+    'color-transparent-text': rgba(0, 0, 0, 0.5),
   ));
+
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
-
   @include meta.load-css('../layouts/Window.scss');
-
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background':$color-bg,
+    'text-color': rgba(0, 0, 0, 0.75),
+    'background-color': base.$color-bg,
+    'shadow-color-core': rgba(0, 0, 0, 0.25),
   ));
 
   .PaperInput {
@@ -62,53 +68,51 @@ $font-size: 24px;
     overflow: visible;
   }
 
-.PaperInput__baseline {
-  display: inline-block;
-  color: transparent;
-}
-
-.PaperInput__input {
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border: 0;
-  outline: 0;
-  width: 100%;
-  font-size: 12px;
-  line-height: 17px;
-  height: 17px;
-  margin: 0;
-  padding: 0 6px;
-  font-family: Verdana, sans-serif;
-  background-color: transparent;
-  color: #fff;
-  color: inherit;
-
-  &:-ms-input-placeholder {
-    font-style: italic;
-    color: #777;
-    color: rgba(255, 255, 255, 0.45);
+  .PaperInput__baseline {
+    display: inline-block;
+    color: transparent;
   }
-}
 
+  .PaperInput__input {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    font-size: 12px;
+    line-height: 17px;
+    height: 17px;
+    margin: 0;
+    padding: 0 6px;
+    font-family: Verdana, sans-serif;
+    background-color: transparent;
+    color: #fff;
+    color: inherit;
 
+    &:-ms-input-placeholder {
+      font-style: italic;
+      color: #777;
+      color: rgba(255, 255, 255, 0.45);
+    }
+  }
 
   .Layout__content {
     background-image: none;
   }
+
   .Window {
     background-image: none;
-    color: $color-fg;
-    $font-size: $font-size;
+    color: base.$color-fg;
   }
+
   .paper-text {
     input:disabled {
       position: relative;
       display: inline-block;
-
       border: none;
       background: transparent;
       border-bottom: 1px solid #000;
@@ -119,10 +123,10 @@ $font-size: 24px;
       line-height: 17px;
       overflow: visible;
     }
+
     input {
       position: relative;
       display: inline-block;
-
       border: none;
       background: transparent;
       border-bottom: 1px solid #000;
@@ -134,6 +138,7 @@ $font-size: 24px;
       overflow: visible;
     }
   }
+
   .paper-field {
     position: relative;
     display: inline-block;
@@ -162,7 +167,5 @@ $font-size: 24px;
       line-height: 17px;
       overflow: visible;
     }
-
   }
-
 }

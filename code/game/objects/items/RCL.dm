@@ -35,10 +35,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = FALSE
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
@@ -170,6 +174,8 @@
 	listeningTo = to_hook
 
 /obj/item/rcl/proc/trigger(mob/user)
+	SIGNAL_HANDLER
+
 	if(active)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move
@@ -240,7 +246,7 @@
 		var/pipe_cleanersuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
 		if(fromdir == dirnum) //pipe_cleaners can't loop back on themselves
 			pipe_cleanersuffix = "invalid"
-		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
+		var/image/img = image(icon = 'icons/hud/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
 		img.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
 		wiredirs[icondir] = img
 	return wiredirs

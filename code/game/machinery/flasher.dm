@@ -7,7 +7,7 @@
 	icon_state = "mflash1"
 	max_integrity = 250
 	integrity_failure = 0.4
-	light_color = LIGHT_COLOR_WHITE
+	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
@@ -25,6 +25,9 @@
 	anchored = FALSE
 	base_state = "pflash"
 	density = TRUE
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = FLASH_LIGHT_RANGE
+	light_on = FALSE
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
@@ -35,8 +38,9 @@
 	else
 		bulb = new(src)
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -107,7 +111,9 @@
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick("[base_state]_flash", src)
-	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+
 	last_flash = world.time
 	use_power(1000)
 
@@ -124,6 +130,10 @@
 		bulb.times_used++
 
 	return 1
+
+
+/obj/machinery/flasher/proc/flash_end()
+	set_light_on(FALSE)
 
 
 /obj/machinery/flasher/emp_act(severity)
@@ -174,13 +184,13 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 			power_change()
 			proximity_monitor.SetRange(0)
 
@@ -199,7 +209,7 @@
 	. = ..()
 	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
-/obj/item/wallframe/flasher/after_attach(var/obj/O)
+/obj/item/wallframe/flasher/after_attach(obj/O)
 	..()
 	var/obj/machinery/flasher/F = O
 	F.id = id

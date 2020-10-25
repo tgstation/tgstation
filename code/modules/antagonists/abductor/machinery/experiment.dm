@@ -5,8 +5,6 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
-	ui_x = 330
-	ui_y = 207
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -18,8 +16,7 @@
 	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	var/mob/living/L = user
-	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(isabductor(target))
 		return
@@ -36,14 +33,14 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/relaymove(mob/user)
+/obj/machinery/abductor/experiment/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
-/obj/machinery/abductor/experiment/container_resist(mob/living/user)
+/obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
@@ -61,11 +58,13 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/abductor/experiment/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/abductor/experiment/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/abductor/experiment/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ProbingConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ProbingConsole", name)
 		ui.open()
 
 /obj/machinery/abductor/experiment/ui_data(mob/user)
@@ -100,7 +99,7 @@
 			var/mob/living/mob_occupant = occupant
 			if(mob_occupant.stat == DEAD)
 				return
-			flash = experiment(occupant, params["experiment_type"], usr)
+			flash = experiment(mob_occupant, params["experiment_type"], usr)
 			return TRUE
 
 /**

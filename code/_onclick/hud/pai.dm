@@ -1,7 +1,7 @@
 #define PAI_MISSING_SOFTWARE_MESSAGE "<span class='warning'>You must download the required software to use this.</span>"
 
 /obj/screen/pai
-	icon = 'icons/mob/screen_pai.dmi'
+	icon = 'icons/hud/screen_pai.dmi'
 	var/required_software
 
 /obj/screen/pai/Click()
@@ -54,7 +54,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.lay_down()
+	pAI.toggle_resting()
 
 /obj/screen/pai/light
 	name = "Toggle Integrated Lights"
@@ -83,14 +83,15 @@
 	required_software = "host scan"
 
 /obj/screen/pai/host_monitor/Click()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(iscarbon(pAI.card.loc))
 		pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
 		to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
-		return 0
+		return FALSE
 
 /obj/screen/pai/crew_manifest
 	name = "Crew Manifest"
@@ -159,7 +160,7 @@
 
 /obj/screen/pai/radio
 	name = "radio"
-	icon = 'icons/mob/screen_cyborg.dmi'
+	icon = 'icons/hud/screen_cyborg.dmi'
 	icon_state = "radio"
 
 /obj/screen/pai/radio/Click()

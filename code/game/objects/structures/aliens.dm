@@ -12,7 +12,7 @@
 	max_integrity = 100
 
 /obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee")
+	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BRUTE)
 				damage_amount *= 0.25
@@ -53,13 +53,15 @@
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "smooth"
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
 	density = TRUE
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
-	canSmoothWith = list(/obj/structure/alien/resin)
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
+	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 	max_integrity = 200
-	smooth = SMOOTH_TRUE
 	var/resintype = null
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -77,9 +79,11 @@
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "smooth"	//same as resin, but consistency ho!
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
 	resintype = "wall"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -88,11 +92,13 @@
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
-	icon_state = "smooth"
-	opacity = 0
+	icon_state = "resin_membrane-0"
+	base_icon_state = "resin_membrane"
+	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
@@ -111,18 +117,23 @@
 	density = FALSE
 	layer = TURF_LAYER
 	plane = FLOOR_PLANE
-	icon_state = "weeds"
+	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon_state = "weeds1-0"
+	base_icon_state = "weeds1"
 	max_integrity = 15
-	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
-	smooth = SMOOTH_MORE
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
+	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200
 	var/static/list/blacklisted_turfs
 
+
 /obj/structure/alien/weeds/Initialize()
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
+
 	. = ..()
 
 	if(!blacklisted_turfs)
@@ -131,16 +142,26 @@
 			/turf/open/chasm,
 			/turf/open/lava))
 
+	set_base_icon()
 
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
-	if(icon == initial(icon))
-		switch(rand(1,3))
-			if(1)
-				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
-			if(2)
-				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
-			if(3)
-				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
+
+
+///Randomizes the weeds' starting icon, gets redefined by children for them not to share the behavior.
+/obj/structure/alien/weeds/proc/set_base_icon()
+	. = base_icon_state
+	switch(rand(1,3))
+		if(1)
+			icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+			base_icon_state = "weeds1"
+		if(2)
+			icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			base_icon_state = "weeds2"
+		if(3)
+			icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
+			base_icon_state = "weeds3"
+	set_smoothed_icon_state(smoothing_junction)
+
 
 /obj/structure/alien/weeds/proc/expand()
 	var/turf/U = get_turf(src)
@@ -166,14 +187,16 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon_state = "weednode"
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+	icon_state = "weednode-0"
+	base_icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE
 	light_power = 0.5
 	var/lon_range = 4
 	var/node_range = NODERANGE
 
+
 /obj/structure/alien/weeds/node/Initialize()
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	. = ..()
 	set_light(lon_range)
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
@@ -181,15 +204,22 @@
 		qdel(W)
 	START_PROCESSING(SSobj, src)
 
+
 /obj/structure/alien/weeds/node/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
 
 /obj/structure/alien/weeds/node/process()
 	for(var/obj/structure/alien/weeds/W in range(node_range, src))
 		if(W.last_expand <= world.time)
 			if(W.expand())
 				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+
+
+/obj/structure/alien/weeds/node/set_base_icon()
+	return //No icon randomization at init. The node's icon is already well defined.
+
 
 #undef NODERANGE
 
