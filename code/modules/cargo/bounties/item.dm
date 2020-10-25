@@ -22,6 +22,7 @@
 	if (special_include_types)
 		for (var/i_type in special_include_types)
 			wanted_types[i_type] = TRUE
+	wanted_types = string_assoc_list(wanted_types)
 
 
 /datum/bounty/item/completion_string()
