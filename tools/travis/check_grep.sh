@@ -99,7 +99,6 @@ while read f; do
         echo "file $f is missing a trailing newline"
         st=1
     fi;
-
 if grep -P '^/*var/' code/**/*.dm; then	echo "Checking long list formatting"
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
