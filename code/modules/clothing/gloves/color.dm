@@ -11,7 +11,6 @@
 	resistance_flags = NONE
 	custom_price = 1200
 	custom_premium_price = 1200
-	can_be_cut = TRUE
 	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/toy/sprayoncan
