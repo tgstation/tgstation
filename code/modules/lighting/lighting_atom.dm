@@ -19,8 +19,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
 
-	if(light_system == STATIC_LIGHT)
-		update_light()
+	update_light()
 
 #undef NONSENSICAL_VALUE
 
