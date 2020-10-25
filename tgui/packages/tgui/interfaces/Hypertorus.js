@@ -16,6 +16,7 @@ export const Hypertorus = (props, context) => {
     power_output,
     heat_limiter_modifier,
     heat_output,
+    heat_output_bool,
     heating_conductor,
     magnetic_constrictor,
     fuel_injection_rate,
@@ -139,7 +140,7 @@ export const Hypertorus = (props, context) => {
                 value={heat_output}
                 minValue={-1e40}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(heat_output, 1, 'K')}
+                {heat_output_bool + formatSiBaseTenUnit(heat_output, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
           </Section>
@@ -188,8 +189,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.heating_conductor)}
                 width="63px"
                 unit="J/cm"
-                minValue={0.5}
-                maxValue={5}
+                minValue={50}
+                maxValue={500}
                 onDrag={(e, value) => act('heating_conductor', {
                   heating_conductor: value,
                 })} />
@@ -200,8 +201,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.magnetic_constrictor)}
                 width="63px"
                 unit="m^3/B"
-                minValue={0.5}
-                maxValue={10}
+                minValue={50}
+                maxValue={1000}
                 onDrag={(e, value) => act('magnetic_constrictor', {
                   magnetic_constrictor: value,
                 })} />
@@ -212,8 +213,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.fuel_injection_rate)}
                 width="63px"
                 unit="mol/s"
-                minValue={1}
-                maxValue={150}
+                minValue={50}
+                maxValue={15000}
                 onDrag={(e, value) => act('fuel_injection_rate', {
                   fuel_injection_rate: value,
                 })} />
@@ -224,8 +225,8 @@ export const Hypertorus = (props, context) => {
                 value={parseFloat(data.moderator_injection_rate)}
                 width="63px"
                 unit="mol/s"
-                minValue={1}
-                maxValue={150}
+                minValue={50}
+                maxValue={15000}
                 onDrag={(e, value) => act('moderator_injection_rate', {
                   moderator_injection_rate: value,
                 })} />
@@ -237,7 +238,7 @@ export const Hypertorus = (props, context) => {
                 width="63px"
                 unit="mol/s"
                 minValue={0}
-                maxValue={10}
+                maxValue={1000}
                 onDrag={(e, value) => act('current_damper', {
                   current_damper: value,
                 })} />

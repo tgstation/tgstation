@@ -31,11 +31,11 @@
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY			0.05
+#define METALLIC_VOID_CONDUCTIVITY			0.001
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.85
 ///Sets the range of the hallucinations
-#define HALLUCINATION_RANGE(P) 				(min(7, round(P ** 0.25)))
+#define HALLUCINATION_RANGE(P) 				(min(7, round(abs(P) ** 0.25)))
 ///Sets the minimum amount of power the machine uses
 #define MIN_POWER_USAGE						50000
 
@@ -136,6 +136,7 @@
 	move_resist = INFINITY
 	anchored = FALSE
 	density = TRUE
+	power_channel = AREA_USAGE_ENVIRON
 	var/active = FALSE
 
 /obj/machinery/hypertorus/ComponentInitialize()
@@ -188,6 +189,7 @@
 	var/datum/gas_mixture/internal_output
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
+
 	///E=mc^2 with some addition to allow it gameplaywise
 	var/energy = 0
 	///Temperature of the center of the fusion reaction
@@ -237,9 +239,9 @@
 	///Check if the user want to remove the waste gases
 	var/waste_remove = FALSE
 	///User controlled variable to control the flow of the fusion by changing the contact of the material
-	var/heating_conductor = 1
+	var/heating_conductor = 100
 	///User controlled variable to control the flow of the fusion by changing the volume of the gasmix by controlling the power of the magnetic fields
-	var/magnetic_constrictor  = 1
+	var/magnetic_constrictor  = 100
 	///User controlled variable to control the flow of the fusion by changing the instability of the reaction
 	var/current_damper = 0
 	///Stores the current fusion mix power level
@@ -247,9 +249,9 @@
 	///Stores the iron content produced by the fusion
 	var/iron_content = 0
 	///User controlled variable to control the flow of the fusion by changing the amount of fuel injected
-	var/fuel_injection_rate = 25
+	var/fuel_injection_rate = 250
 	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
-	var/moderator_injection_rate = 25
+	var/moderator_injection_rate = 250
 	///Used for debug, maybe will be ported into the final phase
 	COOLDOWN_DECLARE(hypertorus_reactor)
 
@@ -554,6 +556,10 @@
 		deactivate()
 		return
 
+	//now check if the machine has been turned on by the user
+	if(!fusion_started)
+		return
+
 	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
 	if(last_accent_sound < world.time && prob(20))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
@@ -569,32 +575,40 @@
 	 */
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
 	var/datum/gas_mixture/buffer
-	buffer = linked_input.airs[1].remove(fuel_injection_rate)
+	buffer = linked_input.airs[1].remove(fuel_injection_rate * 0.1)
 	internal_fusion.merge(buffer)
-	buffer = linked_moderator.airs[1].remove(moderator_injection_rate)
+	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
-	critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e15 + internal_fusion.temperature) / 1e15, 1) - 3000) / 200, 0), 0)
+	if(power_level > 4)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e15 + internal_fusion.temperature) / 1e15, 1) - 3000) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() < 2500 && power_level < 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 3000) / 200, 0), 0)
 
-	critical_threshold_proximity += iron_content * 0.5
+	critical_threshold_proximity += round(iron_content * 0.5, 1)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	check_power_use()
 
 	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-	moderator_internal.temperature_share(internal_fusion, METALLIC_VOID_CONDUCTIVITY)
+	var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
+	var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+	internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
+	moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 	//Cooling of the moderator gases with the cooling loop in and out the core
 	if(airs[1].total_moles() > 0)
 		var/datum/gas_mixture/cooling_in = airs[1]
 		var/datum/gas_mixture/cooling_out = airs[2]
 		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
-		cooling_remove.temperature_share(moderator_internal, HIGH_EFFICIENCY_CONDUCTIVITY)
+
+		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
+		var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
+		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
 		cooling_out.merge(cooling_remove)
 
 	fusion_temperature = internal_fusion.temperature
@@ -639,7 +653,7 @@
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
 	//Store the volume of the fusion reaction multiplied by the force of the magnets that controls how big it will be
-	var/volume = internal_fusion.volume * magnetic_constrictor
+	var/volume = internal_fusion.volume * (magnetic_constrictor * 0.01)
 
 	//Assert the gases that will be used/created during the process
 	internal_fusion.assert_gases(/datum/gas/helium)
@@ -692,7 +706,7 @@
 	for (var/gas_id in moderator_internal.gases)
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + current_damper + iron_content * 2.5
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) + iron_content * 2.5
 	//Effective reaction instability (determines if the energy is used/released)
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -745,8 +759,8 @@
 	 */
 	//Can go either positive or negative depending on the instability and the negative_modifiers
 	//E=mc^2 with some changes for gameplay purposes
-	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
-	energy = clamp(energy, -1e35, 1e35) //ugly way to prevent NaN error
+	energy = ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(internal_fusion.temperature * heat_modifier / 100, 1)
+	energy = clamp(energy, 0, 1e35) //ugly way to prevent NaN error
 	//Power of the gas mixture
 	internal_power = (scaled_hydrogen * power_modifier / 100) * (scaled_tritium * power_modifier / 100) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	//Temperature inside the center of the gas mixture
@@ -755,16 +769,16 @@
 	//Difference between the gases temperature and the internal temperature of the reaction
 	delta_temperature = archived_heat - core_temperature
 	//Energy from the reaction lost from the molecule colliding between themselves.
-	conduction = - delta_temperature * (magnetic_constrictor / 10)
+	conduction = - delta_temperature * (magnetic_constrictor * 0.001)
 	//The remaining wavelength that actually can do damage to mobs.
 	radiation = max(-(PLANCK_LIGHT_CONSTANT / 5e-18) * radiation_modifier * delta_temperature, 0)
 	//Efficiency of the reaction, it increases with the amount of helium
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = (internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())) * heating_conductor
+	heat_limiter_modifier = (internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())) * (heating_conductor * 0.01)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(power_output * heat_modifier / 100, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+	heat_output = internal_instability * clamp(power_output * heat_modifier / 100, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
@@ -791,9 +805,9 @@
 	//better gas usage and consumption
 	//To do
 	if(check_fuel())
-		internal_fusion.gases[/datum/gas/tritium][MOLES] -= min(tritium, clamp(5 * power_level, 5, max(5, fuel_injection_rate - MAX_MODERATOR_USAGE)) * 0.5)
-		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= min(hydrogen, clamp(10 * power_level, 10, max(5, fuel_injection_rate - MAX_MODERATOR_USAGE)) * 0.75)
-		internal_fusion.gases[/datum/gas/helium][MOLES] += clamp(5 * power_level, 0, (fuel_injection_rate - MAX_MODERATOR_USAGE) / 2)
+		internal_fusion.gases[/datum/gas/tritium][MOLES] -= min(tritium, clamp(5 * power_level, 5, max(5, (fuel_injection_rate * 0.1) - MAX_MODERATOR_USAGE)) * 0.5)
+		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= min(hydrogen, clamp(10 * power_level, 10, max(5, (fuel_injection_rate * 0.1) - MAX_MODERATOR_USAGE)) * 0.75)
+		internal_fusion.gases[/datum/gas/helium][MOLES] += clamp(5 * power_level, 0, ((fuel_injection_rate * 0.1) - MAX_MODERATOR_USAGE) / 2)
 		//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 		//Also dependant on what is the power level and what moderator gases are present
 		if(power_output)
@@ -877,7 +891,7 @@
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
 					if(moderator_internal.temperature < 10000)
 						internal_output.assert_gases(/datum/gas/antinoblium)
-						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate / 15))
+						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)
 					var/scaled_production = clamp(heat_output * 1e-20, 0, MAX_MODERATOR_USAGE)
 					if(m_plasma > 30)
@@ -899,9 +913,9 @@
 							human.hallucination = clamp(human.hallucination, 0, 200)
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.015
-						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(0.01 * (scaled_helium / (fuel_injection_rate / 15)), 0, 5)
+						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(0.01 * (scaled_helium / (fuel_injection_rate * 0.0065)), 0, 5)
 					if(moderator_internal.temperature < 1e6)
-						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate / 15))
+						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 
 	//heat up and output what's in the internal_output into the linked_output port
 	internal_output.temperature = moderator_internal.temperature
@@ -1037,7 +1051,8 @@
 	data["internal_power"] = connected_core.internal_power
 	data["power_output"] = connected_core.power_output
 	data["heat_limiter_modifier"] = connected_core.heat_limiter_modifier
-	data["heat_output"] = connected_core.heat_output
+	data["heat_output"] = abs(connected_core.heat_output)
+	data["heat_output_bool"] = connected_core.heat_output >= 0 ? "" : "-"
 
 	data["heating_conductor"] = connected_core.heating_conductor
 	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
@@ -1068,35 +1083,35 @@
 				heating_conductor = text2num(heating_conductor)
 				. = TRUE
 			if(.)
-				connected_core.heating_conductor = clamp(heating_conductor, 0.5, 5)
+				connected_core.heating_conductor = clamp(heating_conductor, 50, 500)
 		if("magnetic_constrictor")
 			var/magnetic_constrictor = params["magnetic_constrictor"]
 			if(text2num(magnetic_constrictor) != null)
 				magnetic_constrictor = text2num(magnetic_constrictor)
 				. = TRUE
 			if(.)
-				connected_core.magnetic_constrictor = clamp(magnetic_constrictor, 0.5, 10)
+				connected_core.magnetic_constrictor = clamp(magnetic_constrictor, 50, 1000)
 		if("fuel_injection_rate")
 			var/fuel_injection_rate = params["fuel_injection_rate"]
 			if(text2num(fuel_injection_rate) != null)
 				fuel_injection_rate = text2num(fuel_injection_rate)
 				. = TRUE
 			if(.)
-				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 0.5, 150)
+				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 5, 1500)
 		if("moderator_injection_rate")
 			var/moderator_injection_rate = params["moderator_injection_rate"]
 			if(text2num(moderator_injection_rate) != null)
 				moderator_injection_rate = text2num(moderator_injection_rate)
 				. = TRUE
 			if(.)
-				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 0.5, 150)
+				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 5, 1500)
 		if("current_damper")
 			var/current_damper = params["current_damper"]
 			if(text2num(current_damper) != null)
 				current_damper = text2num(current_damper)
 				. = TRUE
 			if(.)
-				connected_core.current_damper = clamp(current_damper, 0, 10)
+				connected_core.current_damper = clamp(current_damper, 0, 1000)
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
