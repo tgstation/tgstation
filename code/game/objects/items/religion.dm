@@ -98,7 +98,6 @@
 	reqs = list(/obj/item/stack/rods = 2,
 		/obj/item/clothing/under/rank/security/officer = 1,
 	)
-
 	category = CAT_MISC
 
 /obj/item/banner/medical
