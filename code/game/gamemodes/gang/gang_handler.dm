@@ -110,7 +110,7 @@ GLOBAL_VAR(families_override_theme)
 		current_theme = new theme_to_use
 	else
 		current_theme = new GLOB.families_override_theme
-	for(var/j = 0, j < current_theme.involved_gangs.len, j++)
+	for(var/i in 1 to length(current_theme.involved_gangs))
 		if (!antag_candidates.len)
 			break
 		var/taken = pick_n_take(antag_candidates) // original used antag_pick, but that's local to game_mode and rulesets use pick_n_take so this is fine maybe
