@@ -11,5 +11,5 @@
 	TEST_ASSERT_EQUAL(siunit(999e3, "Pa"), "999 MPa", "")
 	TEST_ASSERT_EQUAL(siunit(999.9e3, "Pa"), "999.9 MPa" , "")
 	TEST_ASSERT_EQUAL(siunit(999.9e3, "Pa", 0), "1 GPa", "")
-	TEST_ASSERT_EQUAL(siunit(1e9, "Pa"), "1 GPa", "")
+	TEST_ASSERT_EQUAL(siunit(1e6, "Pa"), "1 GPa", "")
 	TEST_ASSERT_EQUAL(siunit(3e17, "Pa"), "300000 PPa", "")
