@@ -99,6 +99,12 @@ while read f; do
         echo "file $f is missing a trailing newline"
         st=1
     fi;
+
+if grep -P '^/*var/' code/**/*.dm; then	echo "Checking long list formatting"
+    echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
+    st=1
+fi;
+
 done < <(find . -type f -name '*.dm')
 if grep -nP '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
@@ -112,9 +118,15 @@ if grep -ni 'nanotransen' _maps/**/*.dmm; then
     echo "Misspelling(s) of nanotrasen detected in maps, please remove the extra N(s)."
     st=1
 fi;
+if grep -i 'centcomm' code/**/*.dm; then
+    echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
+fi;
+if grep -i 'centcomm' _maps/**/*.dmm; then
+    echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
+fi;
 if ls _maps/*.json | grep -nP "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
-	st=1
+    st=1
 fi;
 for json in _maps/*.json
 do
