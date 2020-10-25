@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Added a missing bucket for the Icebox hermit ghost role."
