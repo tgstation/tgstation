@@ -366,6 +366,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
+		T.significant_share_ticker = 0 //Reset the ticker, need to think about this
 		if(T.excited)
 			if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
 				T.excited_group.garbage_collect(FALSE) //Nuke it
