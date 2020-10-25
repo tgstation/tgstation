@@ -104,22 +104,18 @@ SUBSYSTEM_DEF(economy)
   * Payout used to be based on power generated, but power generated at batshit insane rates, so we'll just go with 1000 credits per supermatter on the map.
   */
 /datum/controller/subsystem/economy/proc/eng_payout()
-	///How much do we reward per supermatter on the map?
-	var/cash_per_shard = 1000
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
 	if(D)
-		for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
-			D.adjust_money(cash_per_shard)
+		D.adjust_money(MAX_GRANT_ENG)
 
 /**
   * Cargo's natural income generation.
   * Naturally lower than all other departments because they LITERALLY print money.
   */
 /datum/controller/subsystem/economy/proc/car_payout()
-	var/cargo_cash = 500
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CAR)
 	if(D)
-		D.adjust_money(cargo_cash)
+		D.adjust_money(MAX_GRANT_CAR)
 
 /**
   * Payout based on crew safety, health, and mood.
@@ -128,60 +124,33 @@ SUBSYSTEM_DEF(economy)
   * Finally, security is paid based on the number of living crew alive/total crew, multiplied by the crew_safety_bounty.
   */
 /datum/controller/subsystem/economy/proc/secmedsrv_payout()
-	var/crew
-	var/alive_crew
-	var/cash_to_grant
-	for(var/mob/m in GLOB.mob_list)
-		if(isnewplayer(m))
-			continue
-		if(m.mind)
-			if(isbrain(m) || iscameramob(m))
-				continue
-			if(ishuman(m))
-				var/mob/living/carbon/human/H = m
-				crew++
-				if(H.stat != DEAD)
-					alive_crew++
-					var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-					var/medical_cash = (H.health / H.maxHealth) * alive_humans_bounty
-					if(mood)
-						var/datum/bank_account/D = get_dep_account(ACCOUNT_SRV)
-						if(D)
-							var/mood_dosh = (mood.mood_level / 9) * mood_bounty
-							D.adjust_money(mood_dosh)
-						medical_cash *= (mood.sanity / 100)
-					var/datum/bank_account/D = get_dep_account(ACCOUNT_MED)
-					if(D)
-						D.adjust_money(medical_cash)
+	var/datum/bank_account/service = get_dep_account(ACCOUNT_SRV)
+	if(medical)
+		service.adjust_money(MAX_GRANT_SECMEDSRV)
+	var/datum/bank_account/medical = get_dep_account(ACCOUNT_MED)
+	if(medical)
+		medical.adjust_money(MAX_GRANT_SECMEDSRV)
 		CHECK_TICK
-	var/living_ratio = alive_crew / crew
-	cash_to_grant = (crew_safety_bounty * living_ratio)
-	var/datum/bank_account/D = get_dep_account(ACCOUNT_SEC)
-	if(D)
-		D.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
+	var/datum/bank_account/security = get_dep_account(ACCOUNT_SEC)
+	if(security)
+		security.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
 
 /**
   * Science is paid for the number of slimes living at a given time. Remind me to make this something less rudimentry when science has experiments. ~Arcane.
   */
 /datum/controller/subsystem/economy/proc/sci_payout()
-	var/science_bounty = 0
-	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
-		if(S.stat == DEAD)
-			continue
-		science_bounty += slime_bounty[S.colour]
-	var/datum/bank_account/D = get_dep_account(ACCOUNT_SCI)
-	if(D)
-		D.adjust_money(min(science_bounty, MAX_GRANT_SCI))
+	var/datum/bank_account/science = get_dep_account(ACCOUNT_SCI)
+	if(science)
+		science.adjust_money(min(science_bounty, MAX_GRANT_SCI))
 
 /** Payout based on Effort and market ebb/flow.
   *	For every civilian bounty completed, they make 100 credits plus a random 500-1000.
   * Rewards participation towards the rest of the crew getting resources, as the control of this budget is the HOP.
   */
 /datum/controller/subsystem/economy/proc/civ_payout()
-	var/civ_cash = ((rand(1,2) * 500) + (civ_bounty_tracker * civ_bounty_value))
-	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
-	if(D)
-		D.adjust_money(civ_cash, MAX_GRANT_CIV)
+	var/datum/bank_account/civilian = get_dep_account(ACCOUNT_CIV)
+	if(civilian)
+		civilian.adjust_money(civ_cash, MAX_GRANT_CIV)
 
 
 /**
