@@ -269,7 +269,7 @@
 	template.load(bottom_left, FALSE)//this is what actually loads the holodeck simulation into the map
 
 	spawned += template.spawned_atoms//parsed_map.holodeckTemplateBounds has newatoms, which is passed to template as spawned_atoms, which is passed to this as spawned
-
+	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
@@ -378,6 +378,9 @@
 /obj/machinery/computer/holodeck/proc/nerf(active)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
 	for(var/obj/item/I in spawned)
 		I.damtype = active ? STAMINA : initial(I.damtype)
+	for(var/e in effects)
+		var/obj/effect/holodeck_effect/HE = e
+		HE.safety(active)
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
