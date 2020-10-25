@@ -9,6 +9,7 @@
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
 	var/transfer_prints = FALSE
+	var/can_be_cut = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
 

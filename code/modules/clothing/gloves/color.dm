@@ -11,7 +11,7 @@
 	resistance_flags = NONE
 	custom_price = 1200
 	custom_premium_price = 1200
-	var/can_be_cut = TRUE
+	can_be_cut = TRUE
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
@@ -68,7 +68,7 @@
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	var/can_be_cut = TRUE
+	can_be_cut = TRUE
 
 /obj/item/clothing/gloves/color/fyellow/Initialize()
 	. = ..()
@@ -120,7 +120,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	var/can_be_cut = TRUE
+	can_be_cut = TRUE
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
