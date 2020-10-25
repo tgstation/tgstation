@@ -53182,7 +53182,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "toxinsdriver";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -76112,9 +76111,7 @@
 /area/maintenance/starboard)
 "tgQ" = (
 /obj/structure/water_source/puddle,
-/obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+/obj/structure/flora/junglebush/large,
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/medical/virology)
