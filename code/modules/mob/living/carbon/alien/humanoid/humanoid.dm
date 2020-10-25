@@ -29,7 +29,7 @@
 
 /mob/living/carbon/alien/humanoid/Initialize()
 	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)

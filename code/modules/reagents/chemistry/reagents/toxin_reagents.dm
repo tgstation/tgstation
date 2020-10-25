@@ -793,7 +793,7 @@
 	return ..()
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
-	if(M && M.hud_used)
+	if(M?.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)

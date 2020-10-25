@@ -276,7 +276,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
-	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
 		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
@@ -369,9 +369,10 @@ Behavior that's still missing from this component that original food items had t
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(HAS_TRAIT(H, TRAIT_AGEUSIA) && foodtypes & H.dna.species.toxic_food)
-		to_chat(H, "<span class='warning'>You don't feel so good...</span>")
-		H.adjust_disgust(25 + 30 * fraction)
+	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+		if(foodtypes & H.dna.species.toxic_food)
+			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
+			H.adjust_disgust(25 + 30 * fraction)
 	else
 		if(foodtypes & H.dna.species.toxic_food)
 			to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
@@ -415,7 +416,7 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount == 0 || prob(50))
 		L.manual_emote("nibbles away at \the [parent].")
 	bitecount++
-	. = COMPONENT_ITEM_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [parent] was.")

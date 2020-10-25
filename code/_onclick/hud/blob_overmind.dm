@@ -1,6 +1,6 @@
 
 /obj/screen/blob
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/hud/blob.dmi'
 
 /obj/screen/blob/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
@@ -34,7 +34,7 @@
 	desc = "Moves your camera to your blob core."
 
 /obj/screen/blob/jump_to_core/MouseEntered(location,control,params)
-	if(hud && hud.mymob && isovermind(hud.mymob))
+	if(hud?.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
 		if(!B.placed)
 			name = "Place Blob Core"
@@ -97,7 +97,7 @@
 	desc = "Allows you to choose a new strain from 4 random choices for 40 resources."
 
 /obj/screen/blob/readapt_strain/MouseEntered(location,control,params)
-	if(hud && hud.mymob && isovermind(hud.mymob))
+	if(hud?.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
 		if(B.free_strain_rerolls)
 			name = "Readapt Strain (FREE)"

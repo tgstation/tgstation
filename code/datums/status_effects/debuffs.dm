@@ -181,7 +181,7 @@
 			owner.adjustFireLoss(healing)
 			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
 		owner.adjustStaminaLoss(healing)
-	if(human_owner && human_owner.drunkenness)
+	if(human_owner?.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
 		if(carbon_owner)
@@ -270,7 +270,7 @@
 	if(usr != owner)
 		return
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-	if(do_after(owner, 35, null, owner))
+	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
 			var/mob/living/L = owner
 			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")

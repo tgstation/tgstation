@@ -1,11 +1,12 @@
 /obj/vehicle/sealed/mecha/working
 	internal_damage_threshold = 60
+	allow_diagonal_movement = TRUE
 	/// Handles an internal ore box for working mechs
 	var/obj/structure/ore_box/box
 
 /obj/vehicle/sealed/mecha/working/Initialize()
 	. = ..()
-	box = new /obj/structure/ore_box(src)
+	box = new(src)
 
 /obj/vehicle/sealed/mecha/working/Destroy()
 	QDEL_NULL(box)

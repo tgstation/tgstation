@@ -685,10 +685,10 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
-    if(!istype(A, /turf/closed/mineral))
-        return
-    A.attackby(src, H)
-    return COMPONENT_NO_ATTACK_HAND
+	if(!istype(A, /turf/closed/mineral))
+		return
+	A.attackby(src, H)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 ///Bosses
