@@ -100,6 +100,9 @@
   * * lifespan - The lifespan of the message in deciseconds
   */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+	/// Cached icons to show what language the user is speaking
+	var/static/list/language_icons
+
 	// Register client who owns this message
 	owned_by = owner.client
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
@@ -146,8 +149,11 @@
 	// Append language icon if the language uses one
 	var/datum/language/language_instance = GLOB.language_datum_instances[language]
 	if (language_instance?.display_icon(owner))
-		var/icon/language_icon = icon(language_instance.icon, icon_state = language_instance.icon_state)
-		language_icon.Scale(CHAT_MESSAGE_ICON_SIZE, CHAT_MESSAGE_ICON_SIZE)
+		var/icon/language_icon = LAZYACCESS(language_icons, language)
+		if (isnull(language_icon))
+			language_icon = icon(language_instance.icon, icon_state = language_instance.icon_state)
+			language_icon.Scale(CHAT_MESSAGE_ICON_SIZE, CHAT_MESSAGE_ICON_SIZE)
+			LAZYSET(language_icons, language, language_icon)
 		LAZYADD(prefixes, "\icon[language_icon]")
 
 	text = "[prefixes?.Join("&nbsp;")][text]"
