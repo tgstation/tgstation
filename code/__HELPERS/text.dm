@@ -904,6 +904,13 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(abs(value) <= 1e-18)
 		return "0 [unit]"
 
+
+	// The game code never uses Pa, but kPa, since 1 Pa is too small to reasonably handle
+	// thus, to ensure correct conversion from any kPa in game code, this value needs to be multiplied by 10e3 to get Pa
+	if(unit == "Pa")
+		value = value * 1000
+
+
 	var/exponent = clamp(log(10, abs(value)), -15, 15) // Calculate the exponent and clamp it so we don't go outside the prefix list bounds
 	var/divider = 10 ** (round(exponent / 3) * 3) // Rounds the exponent to nearest SI unit and power it back to the full form
 	var/coefficient = round(value / divider, 10 ** -maxdecimals) // Calculate the coefficient and round it to desired decimals
