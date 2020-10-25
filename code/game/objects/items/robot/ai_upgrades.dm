@@ -9,11 +9,12 @@
 	icon_state = "datadisk3"
 
 
-/obj/item/malf_upgrade/pre_attack(mob/living/silicon/ai/AI, mob/user, proximity)
+/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)
 		return ..()
-	if(!istype(AI))
+	if(!isAI(A))
 		return ..()
+	var/mob/living/silicon/ai/AI = A
 	if(AI.malf_picker)
 		AI.malf_picker.processing_time += 50
 		to_chat(AI, "<span class='userdanger'>[user] has attempted to upgrade you with combat software that you already possess. You gain 50 points to spend on Malfunction Modules instead.</span>")
@@ -36,11 +37,12 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
-/obj/item/surveillance_upgrade/pre_attack(mob/living/silicon/ai/AI, mob/user, proximity)
+/obj/item/surveillance_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)
 		return ..()
-	if(!istype(AI))
+	if(!isAI(A))
 		return ..()
+	var/mob/living/silicon/ai/AI = A
 	if(AI.eyeobj)
 		AI.eyeobj.relay_speech = TRUE
 		to_chat(AI, "<span class='userdanger'>[user] has upgraded you with surveillance software!</span>")
