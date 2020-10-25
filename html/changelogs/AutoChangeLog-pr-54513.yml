@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Cuffs no longer prevent all actions that require a progress bar to complete. This includes cuffs preventing you from resisting out of cuffs (yikers!) and cuffs preventing you from standing up after resting."
-  - bugfix: "Container contents, including storage boxes and backpacks, can once again be dumped onto the floor."

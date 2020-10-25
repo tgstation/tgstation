@@ -293,6 +293,8 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
+///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_obj()
+#define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 
 // /mob signals
 

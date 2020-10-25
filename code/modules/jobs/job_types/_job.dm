@@ -65,6 +65,20 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
+/datum/job/New()
+	. = ..()
+	var/list/jobs_changes = GetMapChanges()
+	if(!jobs_changes)
+		return
+	if(isnum(jobs_changes["additional_access"]))
+		access += jobs_changes["additional_access"]
+	if(isnum(jobs_changes["additional_minimal_access"]))
+		minimal_access += jobs_changes["additional_minimal_access"]
+	if(isnum(jobs_changes["spawn_positions"]))
+		spawn_positions = jobs_changes["spawn_positions"]
+	if(isnum(jobs_changes["total_positions"]))
+		total_positions = jobs_changes["total_positions"]
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -173,7 +187,26 @@
 	return TRUE
 
 /datum/job/proc/map_check()
+	var/list/job_changes = GetMapChanges()
+	if(!job_changes)
+		return FALSE
 	return TRUE
+
+/**
+  * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
+  */
+/datum/job/proc/GetMapChanges()
+	var/string_type = "[type]"
+	var/list/splits = splittext(string_type, "/")
+	var/endpart = splits[splits.len]
+
+	SSmapping.HACK_LoadMapConfig()
+
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!(endpart in job_changes))
+		return list()
+
+	return job_changes[endpart]
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")

@@ -305,15 +305,10 @@
 	// Nitryl
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
 		if (prob(nitryl_pp))
-			to_chat(H, "<span class='alert'>Your mouth feels like it's burning!</span>")
-		if (nitryl_pp >40)
-			H.emote("gasp")
-			H.adjustFireLoss(10)
-			if (prob(nitryl_pp/2))
-				to_chat(H, "<span class='alert'>Your throat closes up!</span>")
-				H.silent = max(H.silent, 3)
-		else
-			H.adjustFireLoss(nitryl_pp/4)
+			H.emote("burp")
+		if (prob(nitryl_pp) && nitryl_pp>10)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
+			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			H.reagents.add_reagent(/datum/reagent/nitryl,1)
