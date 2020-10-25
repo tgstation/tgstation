@@ -125,15 +125,15 @@ SUBSYSTEM_DEF(economy)
   */
 /datum/controller/subsystem/economy/proc/secmedsrv_payout()
 	var/datum/bank_account/service = get_dep_account(ACCOUNT_SRV)
-	if(medical)
-		service.adjust_money(MAX_GRANT_SECMEDSRV)
+	if(service)
+		service.adjust_money(MAX_GRANT_SRV)
 	var/datum/bank_account/medical = get_dep_account(ACCOUNT_MED)
 	if(medical)
-		medical.adjust_money(MAX_GRANT_SECMEDSRV)
+		medical.adjust_money(MAX_GRANT_MED)
 		CHECK_TICK
 	var/datum/bank_account/security = get_dep_account(ACCOUNT_SEC)
 	if(security)
-		security.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
+		security.adjust_money(MAX_GRANT_SEC)
 
 /**
   * Science is paid for the number of slimes living at a given time. Remind me to make this something less rudimentry when science has experiments. ~Arcane.
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/sci_payout()
 	var/datum/bank_account/science = get_dep_account(ACCOUNT_SCI)
 	if(science)
-		science.adjust_money(min(science_bounty, MAX_GRANT_SCI))
+		science.adjust_money(MAX_GRANT_SCI)
 
 /** Payout based on Effort and market ebb/flow.
   *	For every civilian bounty completed, they make 100 credits plus a random 500-1000.
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/civ_payout()
 	var/datum/bank_account/civilian = get_dep_account(ACCOUNT_CIV)
 	if(civilian)
-		civilian.adjust_money(civ_cash, MAX_GRANT_CIV)
+		civilian.adjust_money(MAX_GRANT_CIV)
 
 
 /**
