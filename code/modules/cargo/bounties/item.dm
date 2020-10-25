@@ -16,7 +16,7 @@
 	..()
 	wanted_types = typecacheof(wanted_types, only_root_path = !include_subtypes)
 	if (exclude_types)
-		exclude_types = typecacheof(exclude_types)
+		exclude_types = string_assoc_list(typecacheof(exclude_types))
 		for (var/e_type in exclude_types)
 			wanted_types[e_type] = FALSE
 	if (special_include_types)
@@ -48,4 +48,3 @@
 
 /datum/bounty/item/compatible_with(datum/other_bounty)
 	return type != other_bounty.type
-
