@@ -22,12 +22,6 @@
 	if (!istype(stationary_port))
 		stack_trace("Invalid stationary_port for shuttle_projector!")
 		return INITIALIZE_HINT_QDEL
-
-	if (istype(shuttle_port, /obj/docking_port/mobile/emergency))
-		// if we ever get an accurate way to measure memory usage, we can make this more conditional
-		log_world("Not projecting emergency shuttle due to potential OOM")
-		return INITIALIZE_HINT_QDEL
-
 	src.shuttle_port = shuttle_port
 
 	// Get the mobile ports turfs to project
