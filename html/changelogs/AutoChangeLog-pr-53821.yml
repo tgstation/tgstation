@@ -1,6 +1,0 @@
-author: "Capsandi"
-delete-after: True
-changes: 
-  - rscadd: "Nitryl decomposition reaction: requires oxygen as a catalyst, under 600k, make sure to breathe nitryl with pluoxium"
-  - balance: "Nitryl no longer causes burns when breathed, but will cause lung damage proportional to the amount you are breathing at a rate proportional to the amount you are breathing when it makes up more than 10% of your breath."
-  - rscadd: "Nitryl may cause burping"
