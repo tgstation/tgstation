@@ -751,38 +751,6 @@
 			L.visible_message("<span class='warning'>An unseen force pulls the blood spear from [L]'s hands!</span>")
 		spear.throw_at(owner, 10, 2, owner)
 
-
-/obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
-	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
-
-/obj/item/ammo_casing/magic/arcane_barrage/blood
-	projectile_type = /obj/projectile/magic/arcane_barrage/blood
-	firing_effect_type = /obj/effect/temp_visual/cult/sparks
-
-/obj/projectile/magic/arcane_barrage/blood
-	name = "blood bolt"
-	icon_state = "mini_leaper"
-	nondirectional_sprite = TRUE
-	damage_type = BRUTE
-	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
-
-/obj/projectile/magic/arcane_barrage/blood/Bump(atom/target)
-	var/turf/T = get_turf(target)
-	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-	if(iscultist(target))
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.stat != DEAD)
-				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
-		if(isshade(target) || isconstruct(target))
-			var/mob/living/simple_animal/M = target
-			if(M.health+5 < M.maxHealth)
-				M.adjustHealth(-5)
-		new /obj/effect/temp_visual/cult/sparks(T)
-		qdel(src)
-	else
-		..()
-
 /obj/item/blood_beam
 	name = "\improper magical aura"
 	desc = "Sinister looking aura that distorts the flow of reality around it."

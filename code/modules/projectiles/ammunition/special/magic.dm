@@ -40,9 +40,6 @@
 /obj/item/ammo_casing/magic/spellblade
 	projectile_type = /obj/projectile/magic/spellblade
 
-/obj/item/ammo_casing/magic/arcane_barrage
-	projectile_type = /obj/projectile/magic/arcane_barrage
-
 /obj/item/ammo_casing/magic/honk
 	projectile_type = /obj/projectile/bullet/honker
 

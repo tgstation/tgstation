@@ -362,26 +362,6 @@
 			return BULLET_ACT_BLOCK
 	. = ..()
 
-/obj/projectile/magic/arcane_barrage
-	name = "arcane bolt"
-	icon_state = "arcane_barrage"
-	damage = 20
-	damage_type = BURN
-	nodamage = FALSE
-	armour_penetration = 0
-	flag = MAGIC
-	hitsound = 'sound/weapons/barragespellhit.ogg'
-
-/obj/projectile/magic/arcane_barrage/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			qdel(src)
-			return BULLET_ACT_BLOCK
-	. = ..()
-
-
 /obj/projectile/magic/locker
 	name = "locker bolt"
 	icon_state = "locker"
