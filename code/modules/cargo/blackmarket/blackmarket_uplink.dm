@@ -158,7 +158,7 @@
 		/obj/item/stock_parts/subspace/amplifier = 1,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/radio = 1,
-		/obj/item/analyzer = 1
+		/obj/item/analyzer = 1,
 	)
 	category = CAT_MISC
 

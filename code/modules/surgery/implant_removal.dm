@@ -61,4 +61,5 @@
 		/datum/surgery_step/mechanic_unwrench,
 		/datum/surgery_step/extract_implant,
 		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/mechanic_close,
+	)

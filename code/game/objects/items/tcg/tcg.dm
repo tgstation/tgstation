@@ -15,9 +15,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
-	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
+	///Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/id = "code"
-	//Used along with the id for lookup
+	///Used along with the id for lookup
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
   * *User: The person doing the shuffling, used in visable message and closing UI.
   * *Visible: Will anyone need to hear the visable message about the shuffling?
   */
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
@@ -345,7 +345,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"uncommon" = 300,
 		"rare" = 100,
 		"epic" = 30,
-		"legendary" = 5)
+		"legendary" = 5,
+	)
 
 /obj/item/cardpack/Initialize()
 	. = ..()

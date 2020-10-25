@@ -1,12 +1,12 @@
-/* Emags
- * Contains:
- *		EMAGS AND DOORMAGS
- */
+/** Emags
+  * Contains:
+  *	EMAGS AND DOORMAGS
+  */
 
 
-/*
- * EMAG AND SUBTYPES
- */
+/**
+  * EMAG AND SUBTYPES
+  */
 /obj/item/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
@@ -65,9 +65,9 @@
 			return FALSE
 	return TRUE
 
-/*
- * DOORMAG
- */
+/**
+  * DOORMAG
+  */
 /obj/item/card/emag/doorjack
 	desc = "Commonly known as a \"doorjack\", this device is a specialized cryptographic sequencer specifically designed to override station airlock access codes. Uses self-refilling charges to hack airlocks."
 	name = "airlock authentication override card"

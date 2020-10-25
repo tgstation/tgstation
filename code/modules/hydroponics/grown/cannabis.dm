@@ -14,10 +14,12 @@
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
-						/obj/item/seeds/cannabis/death,
-						/obj/item/seeds/cannabis/white,
-						/obj/item/seeds/cannabis/ultimate)
+	mutatelist = list(
+		/obj/item/seeds/cannabis/rainbow,
+		/obj/item/seeds/cannabis/death,
+		/obj/item/seeds/cannabis/white,
+		/obj/item/seeds/cannabis/ultimate,
+	)
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
 
 
@@ -65,17 +67,18 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
-						/datum/reagent/toxin/mindbreaker = 0.3,
-						/datum/reagent/mercury = 0.15,
-						/datum/reagent/lithium = 0.15,
-						/datum/reagent/medicine/atropine = 0.15,
-						/datum/reagent/drug/methamphetamine = 0.15,
-						/datum/reagent/drug/bath_salts = 0.15,
-						/datum/reagent/drug/crank = 0.15,
-						/datum/reagent/drug/krokodil = 0.15,
-						/datum/reagent/toxin/lipolicide = 0.15,
-						/datum/reagent/drug/nicotine = 0.1)
+	reagents_add = list(
+		/datum/reagent/drug/space_drugs = 0.3,
+		/datum/reagent/toxin/mindbreaker = 0.3,
+		/datum/reagent/mercury = 0.15,
+		/datum/reagent/lithium = 0.15,
+		/datum/reagent/medicine/atropine = 0.15,
+		/datum/reagent/drug/methamphetamine = 0.15,
+		/datum/reagent/drug/bath_salts = 0.15,
+		/datum/reagent/drug/crank = 0.15,
+		/datum/reagent/drug/krokodil = 0.15,
+		/datum/reagent/toxin/lipolicide = 0.15,
+		/datum/reagent/drug/nicotine = 0.1)
 	rarity = 69
 	graft_gene = /datum/plant_gene/trait/glow/green
 

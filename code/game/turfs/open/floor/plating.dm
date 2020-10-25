@@ -1,11 +1,11 @@
 /* In this file:
- *
- * Plating
- * Airless
- * Airless plating
- * Engine floor
- * Foam plating
- */
+	*
+	* Plating
+	* Airless
+	* Airless plating
+	* Engine floor
+	* Foam plating
+	*/
 
 /turf/open/floor/plating
 	name = "plating"

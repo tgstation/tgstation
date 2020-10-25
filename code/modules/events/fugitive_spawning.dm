@@ -86,7 +86,7 @@
 	spawned_mobs += S
 	return S
 
- //special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
+///special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(mob/dead/leader, turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE

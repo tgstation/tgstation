@@ -1,13 +1,13 @@
 /*
- * Contains:
- *		Fire protection
- *		Bomb protection
- *		Radiation protection
- */
+	* Contains:
+	*		Fire protection
+	*		Bomb protection
+	*		Radiation protection
+	*/
 
 /*
- * Fire protection
- */
+	* Fire protection
+	*/
 
 /obj/item/clothing/suit/fire
 	name = "emergency firesuit"
@@ -49,9 +49,9 @@
 	inhand_icon_state = "firesuit_atmos"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
-/*
- * Bomb protection
- */
+/**
+  * Bomb protection
+  */
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
 	desc = "Use in case of bomb."

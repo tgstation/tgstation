@@ -203,21 +203,25 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	suit_store = /obj/item/gun/energy/e_gun/stun
 
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,
 		/obj/item/storage/box/handcuffs=1,
 		/obj/item/melee/baton/loaded=1,
-		/obj/item/construction/rcd/loaded=1)
+		/obj/item/construction/rcd/loaded=1,
+	)
 
 /datum/outfit/centcom/ert/medic/inquisitor
 	name = "Inquisition Medic"
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,
 		/obj/item/melee/baton/loaded=1,
 		/obj/item/reagent_containers/hypospray/combat=1,
 		/obj/item/reagent_containers/hypospray/combat/heresypurge=1,
-		/obj/item/gun/medbeam=1)
+		/obj/item/gun/medbeam=1,
+	)
 
 /datum/outfit/centcom/ert/chaplain
 	name = "ERT Chaplain"
@@ -228,9 +232,10 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/storage/backpack/cultpack
 	belt = /obj/item/storage/belt/soulstone
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,
 		/obj/item/nullrod=1,
-		)
+	)
 
 /datum/outfit/centcom/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -244,10 +249,11 @@
 	name = "Inquisition Chaplain"
 
 	belt = /obj/item/storage/belt/soulstone/full/chappy
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,
 		/obj/item/grenade/chem_grenade/holy=1,
-		/obj/item/nullrod=1
-		)
+		/obj/item/nullrod=1,
+	)
 
 /datum/outfit/centcom/ert/janitor
 	name = "ERT Janitor"
@@ -260,7 +266,8 @@
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash/bluespace
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/mop/advanced=1,\
@@ -282,7 +289,8 @@
 
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	l_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/grenade/clusterbuster/cleaner=3)
@@ -299,7 +307,8 @@
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
 	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
-	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/hug/survival=1,\
 		/obj/item/melee/transforming/energy/sword/bananium=1,\
 		/obj/item/shield/energy/bananium=1,\
 		/obj/item/gun/ballistic/revolver/reverse=1)
@@ -363,7 +372,8 @@
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/mop/advanced=1,\
 		/obj/item/reagent_containers/glass/bucket=1)
@@ -391,7 +401,8 @@
 	suit = /obj/item/clothing/suit/hazardvest
 	suit_store = null
 	l_hand = /obj/item/areaeditor/blueprints
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/stack/sheet/metal/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
 		/obj/item/stack/sheet/plasteel/twenty=1,\
@@ -407,7 +418,8 @@
 	suit = /obj/item/clothing/suit/chameleon
 	suit_store = null
 	glasses = /obj/item/clothing/glasses/chameleon
-	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/hug/survival=1,\
 		/obj/item/shield/energy/bananium=1,\
 		/obj/item/instrument/piano_synth=1)
 
@@ -421,6 +433,7 @@
 	belt = /obj/item/storage/belt/sabre
 	l_hand = /obj/item/toy/balloon
 	l_pocket = /obj/item/kitchen/knife
-	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/fireworks=3,\
 		/obj/item/food/cake/birthday=1)

@@ -1,6 +1,6 @@
-/*
- * Photo
- */
+/**
+  * Photo
+  */
 /obj/item/photo
 	name = "photo"
 	icon = 'icons/obj/items_and_weapons.dmi'

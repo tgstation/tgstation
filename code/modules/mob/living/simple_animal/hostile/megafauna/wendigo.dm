@@ -42,9 +42,11 @@ Difficulty: Hard
 	deathmessage = "falls, shaking the ground around it"
 	deathsound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
-							   /datum/action/innate/megafauna_attack/teleport,
-							   /datum/action/innate/megafauna_attack/disorienting_scream)
+	attack_action_types = list(
+		/datum/action/innate/megafauna_attack/heavy_stomp,
+		/datum/action/innate/megafauna_attack/teleport,
+		/datum/action/innate/megafauna_attack/disorienting_scream,
+	)
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves

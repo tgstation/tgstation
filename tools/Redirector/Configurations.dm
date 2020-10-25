@@ -1,7 +1,7 @@
 /*
 	Written by contributor Doohl for the /tg/station Open Source project, hosted on Google Code.
 	(2012)
- */
+*/
 
 var/list/config_stream = list()
 var/list/servers = list()

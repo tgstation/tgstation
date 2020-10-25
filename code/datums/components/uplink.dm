@@ -1,11 +1,11 @@
 #define PEN_ROTATIONS 2
 
 /**
- * Uplinks
- *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
- * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
- * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
+  * Uplinks
+  *
+  * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
+  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
 /datum/component/uplink
 	dupe_mode = COMPONENT_DUPE_UNIQUE

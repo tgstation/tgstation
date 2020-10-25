@@ -1,8 +1,8 @@
 /**
- * tgui state: new_player_state
- *
- * Checks that the user is a new_player, or if user is an admin
- */
+  * tgui state: new_player_state
+  *
+  * Checks that the user is a new_player, or if user is an admin
+  */
 
 GLOBAL_DATUM_INIT(new_player_state, /datum/ui_state/new_player_state, new)
 

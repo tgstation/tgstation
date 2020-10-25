@@ -1,6 +1,6 @@
-/*
- *	Premade paper
- */
+/**
+  *	Premade paper
+  */
 
 /obj/item/paper/fluff/sop
 	name = "paper- 'Standard Operating Procedure'"

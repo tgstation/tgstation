@@ -260,7 +260,7 @@
 		/obj/item/mecha_parts/part/ripley_left_arm,
 		/obj/item/mecha_parts/part/ripley_right_arm,
 		/obj/item/mecha_parts/part/ripley_left_leg,
-		/obj/item/mecha_parts/part/ripley_right_leg
+		/obj/item/mecha_parts/part/ripley_right_leg,
 	)
 
 /datum/component/construction/mecha/ripley
@@ -403,7 +403,7 @@
 		/obj/item/mecha_parts/part/gygax_right_arm,
 		/obj/item/mecha_parts/part/gygax_left_leg,
 		/obj/item/mecha_parts/part/gygax_right_leg,
-		/obj/item/mecha_parts/part/gygax_head
+		/obj/item/mecha_parts/part/gygax_head,
 	)
 
 /datum/component/construction/mecha/gygax
@@ -543,7 +543,7 @@
 		/obj/item/mecha_parts/part/clarke_torso,
 		/obj/item/mecha_parts/part/clarke_left_arm,
 		/obj/item/mecha_parts/part/clarke_right_arm,
-		/obj/item/mecha_parts/part/clarke_head
+		/obj/item/mecha_parts/part/clarke_head,
 	)
 
 /datum/component/construction/mecha/clarke
@@ -711,13 +711,12 @@
 		/obj/item/mecha_parts/part/honker_right_arm,
 		/obj/item/mecha_parts/part/honker_left_leg,
 		/obj/item/mecha_parts/part/honker_right_leg,
-		/obj/item/mecha_parts/part/honker_head
+		/obj/item/mecha_parts/part/honker_head,
 	)
 
 /datum/component/construction/mecha/honker
 	result = /obj/vehicle/sealed/mecha/combat/honker
-	steps = list(
-		list(
+	steps = list(list(
 			"key" = /obj/item/bikehorn
 		),
 		list(
@@ -825,7 +824,7 @@
 		/obj/item/mecha_parts/part/durand_right_arm,
 		/obj/item/mecha_parts/part/durand_left_leg,
 		/obj/item/mecha_parts/part/durand_right_leg,
-		/obj/item/mecha_parts/part/durand_head
+		/obj/item/mecha_parts/part/durand_head,
 	)
 
 /datum/component/construction/mecha/durand
@@ -967,7 +966,7 @@
 		/obj/item/mecha_parts/part/phazon_right_arm,
 		/obj/item/mecha_parts/part/phazon_left_leg,
 		/obj/item/mecha_parts/part/phazon_right_leg,
-		/obj/item/mecha_parts/part/phazon_head
+		/obj/item/mecha_parts/part/phazon_head,
 	)
 
 /datum/component/construction/mecha/phazon
@@ -1212,7 +1211,7 @@
 		/obj/item/mecha_parts/part/odysseus_left_arm,
 		/obj/item/mecha_parts/part/odysseus_right_arm,
 		/obj/item/mecha_parts/part/odysseus_left_leg,
-		/obj/item/mecha_parts/part/odysseus_right_leg
+		/obj/item/mecha_parts/part/odysseus_right_leg,
 	)
 
 /datum/component/construction/mecha/odysseus

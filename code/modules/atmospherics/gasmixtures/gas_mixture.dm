@@ -1,4 +1,4 @@
- /*
+/*
 What are the archived variables for?
 	Calculations are done using the archived variables with the results merged into the regular variables.
 	This prevents race conditions that arise based on the order of tile processing.
@@ -8,11 +8,11 @@ What are the archived variables for?
 #define MOLAR_ACCURACY  1E-7
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))/*I feel the need to document what happens here. Basically this is used
 															to catch most rounding errors, however its previous value made it so that
-                                                            once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
+															once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
 															counts would get rounded away. Thus, we lowered it a few orders of magnitude
-                                                            Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
-                                                            So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
-                                                            and any attempts to fix it just killed atmos. I leave this to a greater man then I*/
+															Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
+															So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
+															and any attempts to fix it just killed atmos. I leave this to a greater man then I*/
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 

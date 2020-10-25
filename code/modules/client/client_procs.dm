@@ -131,19 +131,19 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return FALSE
 	return TRUE
-/*
- * Call back proc that should be checked in all paths where a client can send messages
- *
- * Handles checking for duplicate messages and people sending messages too fast
- *
- * The first checks are if you're sending too fast, this is defined as sending
- * SPAM_TRIGGER_AUTOMUTE messages in
- * 5 seconds, this will start supressing your messages,
- * if you send 2* that limit, you also get muted
- *
- * The second checks for the same duplicate message too many times and mutes
- * you for it
- */
+/**
+  * Call back proc that should be checked in all paths where a client can send messages
+  *
+  * Handles checking for duplicate messages and people sending messages too fast
+  *
+  * The first checks are if you're sending too fast, this is defined as sending
+  * SPAM_TRIGGER_AUTOMUTE messages in
+  * 5 seconds, this will start supressing your messages,
+  * if you send 2* that limit, you also get muted
+  *
+  * The second checks for the same duplicate message too many times and mutes
+  * you for it
+  */
 /client/proc/handle_spam_prevention(message, mute_type)
 
 	//Increment message count
@@ -700,7 +700,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
 			qdel(src)

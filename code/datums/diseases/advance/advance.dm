@@ -14,7 +14,7 @@
 
 	PROPERTIES
 
- */
+  */
 
 /datum/disease/advance
 	name = "Unknown" // We will always let our Virologist name our disease.
@@ -74,7 +74,7 @@
 
 	OLD PROCS
 
- */
+  */
 
 /datum/disease/advance/New()
 	Refresh()
@@ -166,7 +166,7 @@
 
 	NEW PROCS
 
- */
+  */
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
@@ -421,7 +421,7 @@
 		var/datum/disease/advance/D2 = pick(diseases)
 		D2.Mix(D1)
 
-	 // Should be only 1 entry left, but if not let's only return a single entry
+	// Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(TRUE)
 	return to_return

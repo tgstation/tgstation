@@ -1,9 +1,9 @@
 /*
- * Data HUDs have been rewritten in a more generic way.
- * In short, they now use an observer-listener pattern.
- * See code/datum/hud.dm for the generic hud datum.
- * Update the HUD icons when needed with the appropriate hook. (see below)
- */
+  * Data HUDs have been rewritten in a more generic way.
+  * In short, they now use an observer-listener pattern.
+  * See code/datum/hud.dm for the generic hud datum.
+  * Update the HUD icons when needed with the appropriate hook. (see below)
+  */
 
 /* DATA HUD DATUMS */
 
@@ -82,11 +82,11 @@
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
- * THESE HOOKS SHOULD BE CALLED BY THE MOB SHOWING THE HUD
- */
+  * THESE HOOKS SHOULD BE CALLED BY THE MOB SHOWING THE HUD
+  */
 
 /***********************************************
- Medical HUD! Basic mode needs suit sensors on.
+Medical HUD! Basic mode needs suit sensors on.
 ************************************************/
 
 //HELPERS
@@ -214,7 +214,7 @@
 
 
 /***********************************************
- FAN HUDs! For identifying other fans on-sight.
+FAN HUDs! For identifying other fans on-sight.
 ************************************************/
 
 //HOOKS
@@ -232,7 +232,7 @@
 			holder.icon_state = "fan_clown_pin"
 
 /***********************************************
- Security HUDs! Basic mode shows only the job.
+Security HUDs! Basic mode shows only the job.
 ************************************************/
 
 //HOOKS
@@ -292,7 +292,7 @@
 	holder.icon_state = null
 
 /***********************************************
- Diagnostic HUDs!
+Diagnostic HUDs!
 ************************************************/
 
 /mob/living/proc/hud_set_nanite_indicator()

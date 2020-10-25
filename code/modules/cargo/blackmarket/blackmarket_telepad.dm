@@ -6,7 +6,8 @@
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/obj/item/stock_parts/subspace/ansible = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 2)
+		/obj/item/stock_parts/scanning_module = 2,
+	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt

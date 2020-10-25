@@ -1,29 +1,29 @@
 /* Toys!
- * Contains
- *		Balloons
- *		Fake singularity
- *		Toy gun
- *		Toy crossbow
- *		Toy swords
- *		Crayons
- *		Snap pops
- *		AI core prizes
- *		Toy codex gigas
- * 		Skeleton toys
- *		Cards
- *		Toy nuke
- *		Fake meteor
- *		Foam armblade
- *		Toy big red button
- *		Beach ball
- *		Toy xeno
- *      Kitty toys!
- *		Snowballs
- *		Clockwork Watches
- *		Toy Daggers
- *		Squeaky Brain
- *		Broken Radio
- */
+  * Contains
+  *		Balloons
+  *		Fake singularity
+  *		Toy gun
+  *		Toy crossbow
+  *		Toy swords
+  *		Crayons
+  *		Snap pops
+  *		AI core prizes
+  *		Toy codex gigas
+  * 		Skeleton toys
+  *		Cards
+  *		Toy nuke
+  *		Fake meteor
+  *		Foam armblade
+  *		Toy big red button
+  *		Beach ball
+  *		Toy xeno
+  *      Kitty toys!
+  *		Snowballs
+  *		Clockwork Watches
+  *		Toy Daggers
+  *		Squeaky Brain
+  *		Broken Radio
+  */
 
 /obj/item/toy
 	throwforce = 0
@@ -32,9 +32,9 @@
 	force = 0
 
 
-/*
- * Balloons
- */
+/**
+  * Balloons
+  */
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
@@ -177,9 +177,9 @@
 	inhand_icon_state = "arrestballoon"
 	random_color = FALSE
 
-/*
- * Fake singularity
- */
+/**
+  * Fake singularity
+  */
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
@@ -231,9 +231,9 @@
 
 
 
-/*
- * Toy gun: Why isn't this an /obj/item/gun?
- */
+/**
+  * Toy gun: Why isn't this an /obj/item/gun?
+  */
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
@@ -292,8 +292,8 @@
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
-						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='hear'>You hear a gunshot!</span>")
+		"<span class='danger'>You fire [src] at [target]!</span>", \
+		"<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -311,9 +311,9 @@
 	. = ..()
 	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
-/*
- * Toy swords
- */
+/**
+  * Toy swords
+  */
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
@@ -377,9 +377,9 @@
 	else
 		return ..()
 
-/*
- * Foam armblade
- */
+/**
+  * Foam armblade
+  */
 /obj/item/toy/foamblade
 	name = "foam armblade"
 	desc = "It says \"Sternside Changs #1 fan\" on it."
@@ -440,9 +440,9 @@
 	active = FALSE
 	animate(src, transform=matrix())
 
-/*
- * Subtype of Double-Bladed Energy Swords
- */
+/**
+  * Subtype of Double-Bladed Energy Swords
+  */
 /obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
@@ -483,8 +483,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /*
- * Snap pops
- */
+  * Snap pops
+  */
 
 /obj/item/toy/snappop
 	name = "snap pop"
@@ -584,9 +584,9 @@
 	if(chattering)
 		chatter(message, phomeme, user)
 
-/*
- * AI core prizes
- */
+/**
+  * AI core prizes
+  */
 /obj/item/toy/talking/ai
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
@@ -998,10 +998,9 @@
 	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
 
-/*
- * Fake nuke
- */
-
+/**
+  * Fake nuke
+  */
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
@@ -1041,10 +1040,10 @@
 		return
 	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
 	obj_flags |= EMAGGED
-/*
- * Fake meteor
- */
 
+/**
+  * Fake meteor
+  */
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
@@ -1071,9 +1070,9 @@
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
 
-/*
- * Toy big red button
- */
+/**
+  * Toy big red button
+  */
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
@@ -1096,9 +1095,9 @@
 	else
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
 
-/*
- * Snowballs
- */
+/**
+  * Snowballs
+  */
 
 /obj/item/toy/snowball
 	name = "snowball"
@@ -1118,9 +1117,9 @@
 		playsound(src, 'sound/effects/pop.ogg', 20, TRUE)
 		qdel(src)
 
-/*
- * Beach ball
- */
+/**
+  * Beach ball
+  */
 /obj/item/toy/beach_ball
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
@@ -1128,10 +1127,9 @@
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
-/*
- * Clockwork Watch
- */
-
+/**
+  * Clockwork Watch
+  */
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
@@ -1154,10 +1152,9 @@
 	. = ..()
 	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
 
-/*
- * Toy Dagger
- */
-
+/**
+  * Toy Dagger
+  */
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
@@ -1168,10 +1165,9 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 
-/*
- * Xenomorph action figure
- */
-
+/**
+  * Xenomorph action figure
+  */
 /obj/item/toy/toy_xeno
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
@@ -1195,8 +1191,7 @@
 		to_chat(user, "<span class='warning'>The string on [src] hasn't rewound all the way!</span>")
 		return
 
-// TOY MOUSEYS :3 :3 :3
-
+/// TOY MOUSEYS :3 :3 :3
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
@@ -1207,10 +1202,9 @@
 	resistance_flags = FLAMMABLE
 
 
-/*
- * Action Figures
- */
-
+/**
+  * Action Figures
+  */
 /obj/item/toy/figure
 	name = "Non-Specific Action Figure action figure"
 	desc = null

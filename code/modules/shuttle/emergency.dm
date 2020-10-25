@@ -360,7 +360,7 @@
   * Args:
   * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
   * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
- */
+  */
 /obj/docking_port/mobile/emergency/proc/elimination_hijack(filter_by_human = TRUE, solo_hijack = FALSE)
 	var/has_people = FALSE
 	var/hijacker_count = 0

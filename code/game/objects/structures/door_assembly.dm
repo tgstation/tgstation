@@ -98,8 +98,8 @@
 
 			if(door_check)
 				user.visible_message("<span class='notice'>[user] secures the airlock assembly to the floor.</span>", \
-									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='hear'>You hear wrenching.</span>")
+					"<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
+					"<span class='hear'>You hear wrenching.</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(anchored)
@@ -112,8 +112,8 @@
 
 		else
 			user.visible_message("<span class='notice'>[user] unsecures the airlock assembly from the floor.</span>", \
-								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='hear'>You hear wrenching.</span>")
+				"<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
+				"<span class='hear'>You hear wrenching.</span>")
 			if(W.use_tool(src, user, 40, volume=100))
 				if(!anchored)
 					return
@@ -136,7 +136,7 @@
 
 	else if((W.tool_behaviour == TOOL_WIRECUTTER) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 		user.visible_message("<span class='notice'>[user] cuts the wires from the airlock assembly.</span>", \
-							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
+			"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
@@ -149,7 +149,7 @@
 	else if(istype(W, /obj/item/electronics/airlock) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 		W.play_tool_sound(src, 100)
 		user.visible_message("<span class='notice'>[user] installs the electronics into the airlock assembly.</span>", \
-							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
+			"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
@@ -164,7 +164,7 @@
 
 	else if((W.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
-								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+			"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
@@ -208,7 +208,7 @@
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message("<span class='notice'>[user] adds [G.name] to the airlock assembly.</span>", \
-												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+									"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 								if(do_after(user, 40, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
@@ -237,7 +237,7 @@
 
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] finishes the airlock.</span>", \
-							 "<span class='notice'>You start finishing the airlock...</span>")
+			"<span class='notice'>You start finishing the airlock...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
 			if(loc && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)

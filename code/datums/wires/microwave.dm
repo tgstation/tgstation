@@ -3,9 +3,7 @@
 	proper_name = "Microwave"
 
 /datum/wires/microwave/New(atom/holder)
-	wires = list(
-		WIRE_ACTIVATE
-	)
+	wires = list(WIRE_ACTIVATE)
 	..()
 
 /datum/wires/microwave/interactable(mob/user)

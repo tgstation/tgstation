@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /// The actual ranged proc holder.
 /obj/effect/proc_holder/ranged_ai
- 	/// Appears when the user activates the ability
+	/// Appears when the user activates the ability
 	var/enable_text = "<span class='notice'>Hello World!</span>"
 	/// Appears when the user deactivates the ability
 	var/disable_text = "<span class='danger'>Goodbye Cruel World!</span>"
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	/// Sound played when an ability is unlocked
 	var/unlock_sound
 
- /// Applies upgrades
+/// Applies upgrades
 /datum/ai_module/proc/upgrade(mob/living/silicon/ai/AI)
 	return
 

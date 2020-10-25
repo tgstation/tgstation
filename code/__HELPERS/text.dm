@@ -1,24 +1,24 @@
 /*
- * Holds procs designed to help with filtering text
- * Contains groups:
- *			SQL sanitization/formating
- *			Text sanitization
- *			Text searches
- *			Text modification
- *			Misc
- */
+  * Holds procs designed to help with filtering text
+  * Contains groups:
+  *			SQL sanitization/formating
+  *			Text sanitization
+  *			Text searches
+  *			Text modification
+  *			Misc
+  */
 
 
 /*
- * SQL sanitization
- */
+  * SQL sanitization
+  */
 
 /proc/format_table_name(table as text)
 	return CONFIG_GET(string/feedback_tableprefix) + table
 
 /*
- * Text sanitization
- */
+  * Text sanitization
+  */
 
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(t,limit=MAX_MESSAGE_LEN)

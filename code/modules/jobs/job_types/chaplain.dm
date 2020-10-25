@@ -126,8 +126,8 @@
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
 		/obj/item/stamp/chap = 1,
-		/obj/item/camera/spooky = 1
-		)
+		/obj/item/camera/spooky = 1,
+	)
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack

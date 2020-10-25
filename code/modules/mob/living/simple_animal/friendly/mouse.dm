@@ -143,9 +143,10 @@
 		mind.transfer_to(regalrat)
 	qdel(src)
 
-/*
- * Mouse types
- */
+
+/**
+  * Mouse types
+  */
 
 /mob/living/simple_animal/mouse/white
 	body_color = "white"

@@ -105,7 +105,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/nitrous_decomp/init_reqs()
 	min_requirements = list(
 		"TEMP" = N2O_DECOMPOSITION_MIN_ENERGY,
-		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT
+		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/nitrous_decomp/react(datum/gas_mixture/air, datum/holder)
@@ -145,7 +145,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
-		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
@@ -202,7 +202,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
-		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/plasmafire/react(datum/gas_mixture/air, datum/holder)
@@ -280,8 +280,8 @@ nobiliumsuppression = INFINITY
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
 		"TEMP" = FREON_LOWER_TEMPERATURE,
-		"MAX_TEMP" = FREON_MAXIMUM_BURN_TEMPERATURE
-		)
+		"MAX_TEMP" = FREON_MAXIMUM_BURN_TEMPERATURE,
+	)
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
@@ -335,7 +335,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
-		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/h2fire/react(datum/gas_mixture/air, datum/holder)
@@ -395,7 +395,8 @@ nobiliumsuppression = INFINITY
 		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
 		/datum/gas/tritium = FUSION_TRITIUM_MOLES_USED,
 		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
-		/datum/gas/hydrogen = FUSION_MOLE_THRESHOLD)
+		/datum/gas/hydrogen = FUSION_MOLE_THRESHOLD,
+	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
@@ -476,7 +477,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/nitrogen = 20,
 		/datum/gas/bz = 5,
 		"TEMP" = 200,
-		"MAX_TEMP" = 250
+		"MAX_TEMP" = 250,
 	)
 
 /datum/gas_reaction/nitrousformation/react(datum/gas_mixture/air)
@@ -507,7 +508,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
-		"MAX_TEMP" = 600
+		"MAX_TEMP" = 600,
 	)
 
 /datum/gas_reaction/nitryl_decomposition/react(datum/gas_mixture/air)
@@ -540,7 +541,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/nitrogen = 10,
 		/datum/gas/bz = 5,
 		"TEMP" = 1500,
-		"MAX_TEMP" = 10000
+		"MAX_TEMP" = 10000,
 	)
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
@@ -572,7 +573,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/bzformation/init_reqs()
 	min_requirements = list(
 		/datum/gas/nitrous_oxide = 10,
-		/datum/gas/plasma = 10
+		/datum/gas/plasma = 10,
 	)
 
 
@@ -685,7 +686,8 @@ nobiliumsuppression = INFINITY
 		/datum/gas/tritium = 30,
 		/datum/gas/bz = 20,
 		/datum/gas/nitryl = 30,
-		"TEMP" = 1500)
+		"TEMP" = 1500,
+	)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
@@ -715,7 +717,8 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
-		"TEMP" = 50000)
+		"TEMP" = 50000,
+	)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
@@ -772,7 +775,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		"TEMP" = 30,
-		"MAX_TEMP" = 55
+		"MAX_TEMP" = 55,
 	)
 
 /datum/gas_reaction/halon_formation/react(datum/gas_mixture/air, datum/holder)
@@ -804,7 +807,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
 		"TEMP" = 25,
-		"MAX_TEMP" = 300
+		"MAX_TEMP" = 300,
 	)
 
 /datum/gas_reaction/healium_formation/react(datum/gas_mixture/air, datum/holder)
@@ -836,7 +839,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/pluoxium = MINIMUM_MOLE_COUNT,
 		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
 		"TEMP" = 5000,
-		"MAX_TEMP" = 10000
+		"MAX_TEMP" = 10000,
 	)
 
 /datum/gas_reaction/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
@@ -868,7 +871,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
 		/datum/gas/stimulum = MINIMUM_MOLE_COUNT,
 		"TEMP" = 50000,
-		"MAX_TEMP" = 75000
+		"MAX_TEMP" = 75000,
 	)
 
 /datum/gas_reaction/zauker_formation/react(datum/gas_mixture/air, datum/holder)
@@ -899,7 +902,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/halon = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 	)
 
 /datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
@@ -929,7 +932,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/zauker_decomp/init_reqs()
 	min_requirements = list(
 		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
-		/datum/gas/zauker = MINIMUM_MOLE_COUNT
+		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
@@ -967,7 +970,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		"TEMP" = 260,
-		"MAX_TEMP" = 280
+		"MAX_TEMP" = 280,
 	)
 
 /datum/gas_reaction/proto_nitrate_bz_response/react(datum/gas_mixture/air, datum/holder)
@@ -1007,7 +1010,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		"TEMP" = 150,
-		"MAX_TEMP" = 340
+		"MAX_TEMP" = 340,
 	)
 
 /datum/gas_reaction/proto_nitrate_tritium_response/react(datum/gas_mixture/air, datum/holder)
@@ -1067,7 +1070,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
 	)
 
 /datum/gas_reaction/proto_nitrate_zauker_response/react(datum/gas_mixture/air, datum/holder)
@@ -1089,7 +1092,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		"TEMP" = 50,
-		"MAX_TEMP" = T0C
+		"MAX_TEMP" = T0C,
 	)
 
 /datum/gas_reaction/pluox_formation/react(datum/gas_mixture/air, datum/holder)

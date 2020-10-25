@@ -1,12 +1,12 @@
-/* Gifts and wrapping paper
- * Contains:
- *		Gifts
- *		Wrapping Paper
- */
+/** Gifts and wrapping paper
+  * Contains:
+  *		Gifts
+  *		Wrapping Paper
+  */
 
-/*
- * Gifts
- */
+/**
+  * Gifts
+  */
 
 GLOBAL_LIST_EMPTY(possible_gifts)
 

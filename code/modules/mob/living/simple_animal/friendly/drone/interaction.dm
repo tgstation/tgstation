@@ -65,14 +65,16 @@
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
-		var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
-									 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
-									 "tradewind stabilizer","radiated XML cable","registry fluid tank","open-source debunker")
+		var/list/faux_gadgets = list(
+			"hypertext inflator","failsafe directory","DRM switch","stack initializer",\
+			"anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
+			"tradewind stabilizer","radiated XML cable","registry fluid tank","open-source debunker")
 
-		var/list/faux_problems = list("won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
-									  " even though the BMX calibrator is working","will start leaking their XSS coolant",\
-									  "can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
-									  " kernels to function properly","can't start their neurotube console")
+		var/list/faux_problems = list(
+			"won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
+			" even though the BMX calibrator is working","will start leaking their XSS coolant",\
+			"can't tell if their ethernet detour is moving or not", "won't be able to reseed enough"+\
+			" kernels to function properly","can't start their neurotube console")
 
 		to_chat(user, "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>")
 		return
@@ -101,10 +103,10 @@
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
-							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
+			"<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
 			user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
-								 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
+				"<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
 			update_drone_hack(FALSE)
 		return
 	else

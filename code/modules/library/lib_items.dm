@@ -3,16 +3,16 @@
 #define BOOKCASE_FINISHED 2
 
 /* Library Items
- *
- * Contains:
- *		Bookcase
- *		Book
- *		Barcode Scanner
- */
+	*
+	* Contains:
+	*		Bookcase
+	*		Book
+	*		Barcode Scanner
+	*/
 
 /*
- * Bookcase
- */
+  * Bookcase
+  */
 
 /obj/structure/bookcase
 	name = "bookcase"
@@ -197,9 +197,9 @@
 	update_icon()
 
 
-/*
- * Book
- */
+/**
+  * Book
+  */
 /obj/item/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
@@ -335,9 +335,9 @@
 		..()
 
 
-/*
- * Barcode Scanner
- */
+/**
+  * Barcode Scanner
+  */
 /obj/item/barcodescanner
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'

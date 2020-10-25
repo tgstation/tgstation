@@ -1,13 +1,13 @@
 /* Stack type objects!
- * Contains:
- * 		Stacks
- * 		Recipe datum
- * 		Recipe list datum
- */
+  * Contains:
+  * 		Stacks
+  * 		Recipe datum
+  * 		Recipe list datum
+  */
 
 /*
- * Stacks
- */
+  * Stacks
+*/
 
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
@@ -468,9 +468,9 @@
 	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
-/*
- * Recipe datum
- */
+/**
+  * Recipe datum
+  */
 /datum/stack_recipe
 	var/title = "ERROR"
 	var/result_type
@@ -502,9 +502,9 @@
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
-/*
- * Recipe list datum
- */
+/**
+  * Recipe list datum
+  */
 /datum/stack_recipe_list
 	var/title = "ERROR"
 	var/list/recipes

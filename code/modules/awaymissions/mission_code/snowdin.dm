@@ -263,18 +263,18 @@
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
 	name = "scribbled note"
 	info = {"Something's gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
-	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker..."}
+		telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker..."}
 
 /obj/item/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
 	info = {"Holy shit, what a rush! Those Nanotrasen bastards didn't even know what hit 'em! All five of us dropped in right on the captain, didn't even have time to yell! We were in and out with that disk in mere minutes!
-	Crew didn't even know what was happening till the delta alert went down and by then we were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
+		Crew didn't even know what was happening till the delta alert went down and by then we were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside
 	name = "scribbled note"
 	info = {"If you're reading this: GET OUT! The mining go on here has unearthed something that was once-trapped by the layers of ice on this hell-hole. The overseer and Jouslen have gone missing. The officer is
-	 keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
-	 for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here..."}
+		keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
+		for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here..."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage
 	name = "SAW Usage"
@@ -289,19 +289,19 @@
 /obj/item/paper/fluff/awaymissions/snowdin/profile/overseer
 	name = "Personnel Record AOP#01"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Caleb Reed<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Overseer<br><br><center><b>Information</b></center><br><center>Caleb Reed lead several expeditions
-	 among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
-	 expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
+		among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
+		expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/sec1
 	name = "Personnel Record AOP#02"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>James Reed<br><b>Age:</b>43<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Security<br><br><center><b>Information</b></center><br><center>James Reed has been a part
-	 of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
-	  when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
+		of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
+		when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/hydro1
 	name = "Personnel Record AOP#03"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Katherine Esterdeen<br><b>Age:</b>27<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Botanist<br><br><center><b>Information</b></center><br><center>Katherine Esterdeen is a recent
-	 graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
+		graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/engi1
 	name = "Personnel Record AOP#04"
@@ -329,12 +329,12 @@
 /obj/item/paper/fluff/awaymissions/snowdin/mining
 	name = "Assignment Notice"
 	info = {"This cold-ass planet is the new-age equivalent of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
-	 Nanotrasen pays by the pound, so get minin' boys!"}
+		Nanotrasen pays by the pound, so get minin' boys!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/lootstructures
 	name = "scribbled note"
 	info = {"There's some ruins scattered along the cavern, their walls seem to be made of some sort of super-condensed mixture of ice and snow. We've already barricaded up the ones we've found so far,
-	 since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
+		since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
 
 /obj/item/paper/crumpled/ruins/snowdin/shovel
 	name = "shoveling duties"
@@ -474,77 +474,83 @@
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite
 	name = "dungeon lite"
-	loot = list(/obj/item/melee/classic_baton = 11,
-				/obj/item/melee/classic_baton/telescopic = 12,
-				/obj/item/book/granter/spell/smoke = 10,
-				/obj/item/book/granter/spell/blind = 10,
-				/obj/item/storage/firstaid/regular = 45,
-				/obj/item/storage/firstaid/toxin = 35,
-				/obj/item/storage/firstaid/brute = 27,
-				/obj/item/storage/firstaid/fire = 27,
-				/obj/item/storage/toolbox/syndicate = 12,
-				/obj/item/grenade/c4 = 7,
-				/obj/item/grenade/clusterbuster/smoke = 15,
-				/obj/item/clothing/under/chameleon = 13,
-				/obj/item/clothing/shoes/chameleon/noslip = 10,
-				/obj/item/borg/upgrade/ddrill = 3,
-				/obj/item/borg/upgrade/soh = 3)
+	loot = list(
+		/obj/item/melee/classic_baton = 11,
+		/obj/item/melee/classic_baton/telescopic = 12,
+		/obj/item/book/granter/spell/smoke = 10,
+		/obj/item/book/granter/spell/blind = 10,
+		/obj/item/storage/firstaid/regular = 45,
+		/obj/item/storage/firstaid/toxin = 35,
+		/obj/item/storage/firstaid/brute = 27,
+		/obj/item/storage/firstaid/fire = 27,
+		/obj/item/storage/toolbox/syndicate = 12,
+		/obj/item/grenade/c4 = 7,
+		/obj/item/grenade/clusterbuster/smoke = 15,
+		/obj/item/clothing/under/chameleon = 13,
+		/obj/item/clothing/shoes/chameleon/noslip = 10,
+		/obj/item/borg/upgrade/ddrill = 3,
+		/obj/item/borg/upgrade/soh = 3,
+	)
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonmid
 	name = "dungeon mid"
-	loot = list(/obj/item/defibrillator/compact = 6,
-				/obj/item/storage/firstaid/tactical = 35,
-				/obj/item/shield/energy = 6,
-				/obj/item/shield/riot/tele = 12,
-				/obj/item/dnainjector/lasereyesmut = 7,
-				/obj/item/gun/magic/wand/fireball/inert = 3,
-				/obj/item/pneumatic_cannon = 15,
-				/obj/item/melee/transforming/energy/sword = 7,
-				/obj/item/book/granter/spell/knock = 15,
-				/obj/item/book/granter/spell/summonitem = 20,
-				/obj/item/book/granter/spell/forcewall = 17,
-				/obj/item/storage/backpack/holding = 12,
-				/obj/item/grenade/spawnergrenade/manhacks = 6,
-				/obj/item/grenade/spawnergrenade/spesscarp = 7,
-				/obj/item/grenade/clusterbuster/inferno = 3,
-				/obj/item/stack/sheet/mineral/diamond{amount = 15} = 10,
-				/obj/item/stack/sheet/mineral/uranium{amount = 15} = 10,
-				/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
-				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
-				/obj/item/book/granter/spell/barnyard = 4,
-				/obj/item/pickaxe/drill/diamonddrill = 6,
-				/obj/item/borg/upgrade/disablercooler = 7)
+	loot = list(
+		/obj/item/defibrillator/compact = 6,
+		/obj/item/storage/firstaid/tactical = 35,
+		/obj/item/shield/energy = 6,
+		/obj/item/shield/riot/tele = 12,
+		/obj/item/dnainjector/lasereyesmut = 7,
+		/obj/item/gun/magic/wand/fireball/inert = 3,
+		/obj/item/pneumatic_cannon = 15,
+		/obj/item/melee/transforming/energy/sword = 7,
+		/obj/item/book/granter/spell/knock = 15,
+		/obj/item/book/granter/spell/summonitem = 20,
+		/obj/item/book/granter/spell/forcewall = 17,
+		/obj/item/storage/backpack/holding = 12,
+		/obj/item/grenade/spawnergrenade/manhacks = 6,
+		/obj/item/grenade/spawnergrenade/spesscarp = 7,
+		/obj/item/grenade/clusterbuster/inferno = 3,
+		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 10,
+		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 10,
+		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
+		/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
+		/obj/item/book/granter/spell/barnyard = 4,
+		/obj/item/pickaxe/drill/diamonddrill = 6,
+		/obj/item/borg/upgrade/disablercooler = 7)
 
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
-	loot = list(/obj/item/singularityhammer = 25,
-				/obj/item/mjollnir = 10,
-				/obj/item/fireaxe = 25,
-				/obj/item/organ/brain/alien = 17,
-				/obj/item/dualsaber = 15,
-				/obj/item/organ/heart/demon = 7,
-				/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
-				/obj/item/gun/magic/wand/resurrection/inert = 15,
-				/obj/item/gun/magic/wand/resurrection = 10,
-				/obj/item/uplink/old = 2,
-				/obj/item/book/granter/spell/charge = 12,
-				/obj/item/grenade/clusterbuster/spawner_manhacks = 15,
-				/obj/item/book/granter/spell/fireball = 10,
-				/obj/item/pickaxe/drill/jackhammer = 30,
-				/obj/item/borg/upgrade/syndicate = 13,
-				/obj/item/borg/upgrade/selfrepair = 17)
+	loot = list(
+		/obj/item/singularityhammer = 25,
+		/obj/item/mjollnir = 10,
+		/obj/item/fireaxe = 25,
+		/obj/item/organ/brain/alien = 17,
+		/obj/item/dualsaber = 15,
+		/obj/item/organ/heart/demon = 7,
+		/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
+		/obj/item/gun/magic/wand/resurrection/inert = 15,
+		/obj/item/gun/magic/wand/resurrection = 10,
+		/obj/item/uplink/old = 2,
+		/obj/item/book/granter/spell/charge = 12,
+		/obj/item/grenade/clusterbuster/spawner_manhacks = 15,
+		/obj/item/book/granter/spell/fireball = 10,
+		/obj/item/pickaxe/drill/jackhammer = 30,
+		/obj/item/borg/upgrade/syndicate = 13,
+		/obj/item/borg/upgrade/selfrepair = 17,
+	)
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonmisc
 	name = "dungeon misc"
 	lootdoubles = 2
 	lootcount = 1
 
-	loot = list(/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
-				/obj/item/toy/snowball = 15,
-				/obj/item/shovel = 10,
-				/obj/item/spear = 8,
-				)
+	loot = list(
+		/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
+		/obj/item/toy/snowball = 15,
+		/obj/item/shovel = 10,
+		/obj/item/spear = 8,
+		)
 
 //special items//--
 

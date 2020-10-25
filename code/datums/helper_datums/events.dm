@@ -1,6 +1,6 @@
-/*
- * WARRANTY VOID IF CODE USED
- */
+/**
+  * WARRANTY VOID IF CODE USED
+  */
 
 
 /datum/events
@@ -36,7 +36,7 @@
 //  Arguments: event_type as text, any number of additional arguments to pass to event handler
 //  Returns: null
 /datum/events/proc/fireEvent(eventName, ...)
-	
+
 	var/list/event = LAZYACCESS(events,eventName)
 	if(istype(event))
 		for(var/E in event)

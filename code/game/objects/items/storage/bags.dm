@@ -1,19 +1,19 @@
 /*
- *	These absorb the functionality of the plant bag, ore satchel, etc.
- *	They use the use_to_pickup, quick_gather, and quick_empty functions
- *	that were already defined in weapon/storage, but which had been
- *	re-implemented in other classes.
- *
- *	Contains:
- *		Trash Bag
- *		Mining Satchel
- *		Plant Bag
- *		Sheet Snatcher
- *		Book Bag
- *      Biowaste Bag
- *
- *	-Sayu
- */
+	*	These absorb the functionality of the plant bag, ore satchel, etc.
+	*	They use the use_to_pickup, quick_gather, and quick_empty functions
+	*	that were already defined in weapon/storage, but which had been
+	*	re-implemented in other classes.
+	*
+	*	Contains:
+	*		Trash Bag
+	*		Mining Satchel
+	*		Plant Bag
+	*		Sheet Snatcher
+	*		Book Bag
+	*      Biowaste Bag
+	*
+	*	-Sayu
+	*/
 
 //  Generic non-item
 /obj/item/storage/bag
@@ -300,8 +300,8 @@
 		))
 
 /*
- * Trays - Agouri
- */
+* Trays - Agouri
+*/
 /obj/item/storage/bag/tray
 	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
@@ -379,8 +379,8 @@
 	desc = "A cheap metal tray to pile today's meal onto."
 
 /*
- *	Chemistry bag
- */
+*	Chemistry bag
+*/
 
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
@@ -408,8 +408,8 @@
 		))
 
 /*
- *  Biowaste bag (mostly for xenobiologists)
- */
+*  Biowaste bag (mostly for xenobiologists)
+*/
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
@@ -440,8 +440,8 @@
 		))
 
 /*
- *  Construction bag (for engineering, holds stock parts and electronics)
- */
+*  Construction bag (for engineering, holds stock parts and electronics)
+*/
 
 /obj/item/storage/bag/construction
 	name = "construction bag"

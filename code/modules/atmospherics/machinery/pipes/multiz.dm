@@ -19,10 +19,10 @@
 	var/mutable_appearance/pipe = null
 	var/obj/machinery/atmospherics/front_node = null
 
-/* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
- * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
- */
+/** We use New() instead of Initialize() because these values are used in update_icon()
+  * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
+  * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
+  */
 /obj/machinery/atmospherics/pipe/multiz/New()
 	icon_state = ""
 	center = mutable_appearance(icon, "adapter_center", layer = HIGH_OBJ_LAYER)

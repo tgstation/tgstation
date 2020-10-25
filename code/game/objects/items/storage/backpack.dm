@@ -1,13 +1,13 @@
 /* Backpacks
- * Contains:
- *		Backpack
- *		Backpack Types
- *		Satchel Types
- */
+  * Contains:
+  *		Backpack
+  *		Backpack Types
+  *		Satchel Types
+  */
 
-/*
- * Backpack
- */
+/**
+  * Backpack
+  */
 
 /obj/item/storage/backpack
 	name = "backpack"
@@ -29,8 +29,8 @@
 	STR.max_items = 21
 
 /*
- * Backpack Types
- */
+  * Backpack Types
+  */
 
 /obj/item/storage/backpack/old/ComponentInitialize()
 	. = ..()
@@ -222,8 +222,8 @@
 	desc = "A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team."
 	icon_state = "ert_clown"
 /*
- * Satchel Types
- */
+  * Satchel Types
+  */
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"

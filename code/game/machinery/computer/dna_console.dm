@@ -1741,7 +1741,7 @@
 	tgui_console_chromosomes.Cut()
 	tgui_advinjector_mutations.Cut()
 
-  // ------------------------------------------------------------------------ //
+	// ------------------------------------------------------------------------ //
 	// GUARD CHECK - Can we genetically modify the occupant? This check will have
 	//  previously included checks to make sure the DNA Scanner is still
 	//  operational

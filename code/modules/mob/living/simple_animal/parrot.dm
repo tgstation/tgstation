@@ -1,17 +1,17 @@
 /* Parrots!
- * Contains
- * 		Defines
- *		Inventory (headset stuff)
- *		Attack responces
- *		AI
- *		Procs / Verbs (usable by players)
- *		Sub-types
- *		Hear & say (the things we do for gimmicks)
- */
+	* Contains
+	* 		Defines
+	*		Inventory (headset stuff)
+	*		Attack responces
+	*		AI
+	*		Procs / Verbs (usable by players)
+	*		Sub-types
+	*		Hear & say (the things we do for gimmicks)
+	*/
 
 /*
- * Defines
- */
+* Defines
+*/
 
 //Only a maximum of one action and one intent should be active at any given time.
 //Actions
@@ -183,9 +183,9 @@
 
 	return FALSE
 
-/*
- * Inventory
- */
+/**
+  * Inventory
+  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
 
@@ -269,9 +269,9 @@
 		return ..()
 
 
-/*
- * Attack responces
- */
+/**
+  * Attack responces
+  */
 //Humans, monkeys, aliens
 /mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
 	..()
@@ -355,9 +355,9 @@
 		icon_state = icon_living
 		drop_held_item(0)
 
-/*
- * AI - Not really intelligent, but I'm calling it AI anyway.
- */
+/**
+  * AI - Not really intelligent, but I'm calling it AI anyway.
+  */
 /mob/living/simple_animal/parrot/Life()
 	..()
 
@@ -599,9 +599,9 @@
 		parrot_state = PARROT_WANDER
 		return
 
-/*
- * Procs
- */
+/**
+  * Procs
+  */
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
@@ -671,9 +671,9 @@
 	return null
 
 
-/*
- * Verbs - These are actually procs, but can be used as verbs by player-controlled parrots.
- */
+/**
+  * Verbs - These are actually procs, but can be used as verbs by player-controlled parrots.
+  */
 /mob/living/simple_animal/parrot/proc/steal_from_ground()
 	set name = "Steal from ground"
 	set category = "Parrot"
@@ -865,9 +865,9 @@
 	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
 	return
 
-/*
- * Sub-types
- */
+/**
+  * Sub-types
+  */
 /mob/living/simple_animal/parrot/poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."

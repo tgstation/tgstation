@@ -230,15 +230,19 @@
 	roundend_category = "The San Fierro Triad gangsters"
 	gang_name = "San Fierro Triad"
 	gang_id = "SFT"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
-							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/suit/jacket/letterman_red,
-							/obj/item/clothing/under/color/red,
-							/obj/item/clothing/mask/bandana/red,
-							/obj/item/clothing/under/suit/red)
-	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
-						/obj/item/clothing/under/color/red,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/red,
+		/obj/item/clothing/neck/scarf/red,
+		/obj/item/clothing/suit/jacket/letterman_red,
+		/obj/item/clothing/under/color/red,
+		/obj/item/clothing/mask/bandana/red,
+		/obj/item/clothing/under/suit/red,
+	)
+	free_clothes = list(
+		/obj/item/clothing/suit/jacket/letterman_red,
+		/obj/item/clothing/under/color/red,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending undercover cops. Find them and eliminate them all."
 	antag_hud_name = "Triad"
 
@@ -256,16 +260,20 @@
 	roundend_category = "The Ballas gangsters"
 	gang_name = "Ballas"
 	gang_id = "B"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/purple,
-							/obj/item/clothing/under/color/lightpurple,
-							/obj/item/clothing/neck/scarf/purple,
-							/obj/item/clothing/head/beanie/purple,
-							/obj/item/clothing/suit/apron/purple_bartender,
-							/obj/item/clothing/mask/bandana/skull,
-							/obj/item/clothing/under/suit/green)
-	free_clothes = list(/obj/item/clothing/head/beanie/purple,
-						/obj/item/clothing/under/color/lightpurple,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/purple,
+		/obj/item/clothing/under/color/lightpurple,
+		/obj/item/clothing/neck/scarf/purple,
+		/obj/item/clothing/head/beanie/purple,
+		/obj/item/clothing/suit/apron/purple_bartender,
+		/obj/item/clothing/mask/bandana/skull,
+		/obj/item/clothing/under/suit/green,
+	)
+	free_clothes = list(
+		/obj/item/clothing/head/beanie/purple,
+		/obj/item/clothing/under/color/lightpurple,
+		/obj/item/toy/crayon/spraycan,
+	)
 	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
 	gang_objective = "We're looking to make a deal with the security pigs on this station after the shift. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
 	antag_hud_name = "Ballas"
@@ -283,15 +291,19 @@
 	roundend_category = "The Grove Street Families gangsters"
 	gang_name = "Grove Street Families"
 	gang_id = "GSF"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/green,
-							/obj/item/clothing/under/color/darkgreen,
-							/obj/item/clothing/neck/scarf/green,
-							/obj/item/clothing/head/beanie/green,
-							/obj/item/clothing/suit/poncho/green,
-							/obj/item/clothing/mask/bandana/green)
-	free_clothes = list(/obj/item/clothing/mask/bandana/green,
-						/obj/item/clothing/under/color/darkgreen,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/green,
+		/obj/item/clothing/under/color/darkgreen,
+		/obj/item/clothing/neck/scarf/green,
+		/obj/item/clothing/head/beanie/green,
+		/obj/item/clothing/suit/poncho/green,
+		/obj/item/clothing/mask/bandana/green,
+	)
+	free_clothes = list(
+		/obj/item/clothing/mask/bandana/green,
+		/obj/item/clothing/under/color/darkgreen,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "We lost a lot of territory recently. We gotta get that shit back. Make sure 45 rooms are tagged for Grove Street."
 	antag_hud_name = "Grove"
 
@@ -311,14 +323,18 @@
 	roundend_category = "The Russian mafiosos"
 	gang_name = "Russian Mafia"
 	gang_id = "RM"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
-							/obj/item/clothing/neck/scarf/red,
-							/obj/item/clothing/under/suit/white,
-							/obj/item/clothing/head/beanie/red,
-							/obj/item/clothing/head/ushanka)
-	free_clothes = list(/obj/item/clothing/head/ushanka,
-						/obj/item/clothing/under/suit/white,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/red,
+		/obj/item/clothing/neck/scarf/red,
+		/obj/item/clothing/under/suit/white,
+		/obj/item/clothing/head/beanie/red,
+		/obj/item/clothing/head/ushanka,
+	)
+	free_clothes = list(
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/under/suit/white,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "We are starting to run low on supplies at the home base, my friend. Make sure every comrade has a bottle of some kind of booze on them, friend."
 	antag_hud_name = "Russian"
 
@@ -341,13 +357,17 @@
 	roundend_category = "The Italian mobsters"
 	gang_name = "Italian Mob"
 	gang_id = "IM"
-	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
-							/obj/item/clothing/head/fedora,
-							/obj/item/clothing/neck/scarf/green,
-							/obj/item/clothing/mask/bandana/green)
-	free_clothes = list(/obj/item/clothing/head/fedora,
-						/obj/item/clothing/under/suit/checkered,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/under/suit/checkered,
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/neck/scarf/green,
+		/obj/item/clothing/mask/bandana/green,
+	)
+	free_clothes = list(
+		/obj/item/clothing/head/fedora,
+		/obj/item/clothing/under/suit/checkered,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "The boss wants it made very clear that all our esteemed members are to be held with respect. If a friend falls, ensure they are properly buried with a coffin. And keep any Chaplains alive, to ensure the corpses are properly taken care of."
 	antag_hud_name = "Italian"
 
@@ -372,12 +392,16 @@
 	roundend_category = "The Tunnel Snakes"
 	gang_name = "Tunnel Snakes"
 	gang_id = "TS"
-	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
-							/obj/item/clothing/suit/jacket,
-							/obj/item/clothing/mask/bandana/skull)
-	free_clothes = list(/obj/item/clothing/suit/jacket,
-						/obj/item/clothing/under/pants/classicjeans,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/under/pants/classicjeans,
+		/obj/item/clothing/suit/jacket,
+		/obj/item/clothing/mask/bandana/skull,
+	)
+	free_clothes = list(
+		/obj/item/clothing/suit/jacket,
+		/obj/item/clothing/under/pants/classicjeans,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "TUNNEL SNAKES RULE!!! Make sure that everyone knows that, by getting 25% of people on station to wear any part of our uniform! TUNNEL SNAKES RULE!!!"
 	antag_hud_name = "Snakes"
 
@@ -403,14 +427,18 @@
 	roundend_category = "The Los Santos Vagos gangsters"
 	gang_name = "Los Santos Vagos"
 	gang_id = "LSV"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/color/yellow,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold)
-	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
-						/obj/item/clothing/under/color/yellow,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/yellow,
+		/obj/item/clothing/under/color/yellow,
+		/obj/item/clothing/neck/scarf/yellow,
+		/obj/item/clothing/head/beanie/yellow,
+		/obj/item/clothing/mask/bandana/gold,
+	)
+	free_clothes = list(
+		/obj/item/clothing/mask/bandana/gold,
+		/obj/item/clothing/under/color/yellow,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to meth."
 	antag_hud_name = "Vagos"
 
@@ -437,15 +465,19 @@
 	roundend_category = "The Monarch henchmen"
 	gang_name = "Monarch Crew"
 	gang_id = "HENCH"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/suit/henchmen,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold,
-							/obj/item/storage/backpack/henchmen)
-	free_clothes = list(/obj/item/storage/backpack/henchmen,
-						/obj/item/clothing/under/suit/henchmen,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/yellow,
+		/obj/item/clothing/under/suit/henchmen,
+		/obj/item/clothing/neck/scarf/yellow,
+		/obj/item/clothing/head/beanie/yellow,
+		/obj/item/clothing/mask/bandana/gold,
+		/obj/item/storage/backpack/henchmen,
+	)
+	free_clothes = list(
+		/obj/item/storage/backpack/henchmen,
+		/obj/item/clothing/under/suit/henchmen,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "I have it on VERY GOOD AUTHORITY that the Research Director on this station helped Venture on a science project back in college! ENSURE THAT HE DOES NOT LEAVE THIS STATION ALIVE, HENCHMEN! THE MIGHTY MONARCH DEMANDS IT!!!"
 	antag_hud_name = "Monarch"
 
@@ -462,19 +494,23 @@
 	roundend_category = "The Yakuza"
 	gang_name = "Tojo Clan"
 	gang_id = "YAK"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
-							/obj/item/clothing/under/costume/yakuza,
-							/obj/item/clothing/shoes/yakuza,
-							/obj/item/clothing/neck/scarf/yellow,
-							/obj/item/clothing/head/beanie/yellow,
-							/obj/item/clothing/mask/bandana/gold,
-							/obj/item/clothing/head/hardhat,
-							/obj/item/clothing/suit/yakuza)
-	free_clothes = list(/obj/item/clothing/under/costume/yakuza,
-						/obj/item/clothing/shoes/yakuza,
-						/obj/item/clothing/suit/yakuza,
-						/obj/item/clothing/head/hardhat,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/yellow,
+		/obj/item/clothing/under/costume/yakuza,
+		/obj/item/clothing/shoes/yakuza,
+		/obj/item/clothing/neck/scarf/yellow,
+		/obj/item/clothing/head/beanie/yellow,
+		/obj/item/clothing/mask/bandana/gold,
+		/obj/item/clothing/head/hardhat,
+		/obj/item/clothing/suit/yakuza,
+	)
+	free_clothes = list(
+		/obj/item/clothing/under/costume/yakuza,
+		/obj/item/clothing/shoes/yakuza,
+		/obj/item/clothing/suit/yakuza,
+		/obj/item/clothing/head/hardhat,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "The boss is thrilled about this new construction opportunity we've all been given, yadda yadda, look, he knows we're here to expand our business ventures for the clan, but Majima wanted it made VERY clear that we do NOT fuck this station's infrastructure up. If more than 15% of this station is busted when we get the hell out of here, it's your ass on the line."
 	antag_hud_name = "Tojo"
 
@@ -492,15 +528,19 @@
 	roundend_category = "The Hee-hos"
 	gang_name = "Jack Bros"
 	gang_id = "JB"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/blue,
-							/obj/item/clothing/under/costume/jackbros,
-							/obj/item/clothing/shoes/jackbros,
-							/obj/item/clothing/head/jackbros,
-							/obj/item/clothing/mask/bandana/blue)
-	free_clothes = list(/obj/item/clothing/under/costume/jackbros,
-						/obj/item/clothing/shoes/jackbros,
-						/obj/item/clothing/head/jackbros,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/blue,
+		/obj/item/clothing/under/costume/jackbros,
+		/obj/item/clothing/shoes/jackbros,
+		/obj/item/clothing/head/jackbros,
+		/obj/item/clothing/mask/bandana/blue,
+	)
+	free_clothes = list(
+		/obj/item/clothing/under/costume/jackbros,
+		/obj/item/clothing/shoes/jackbros,
+		/obj/item/clothing/head/jackbros,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "Hee-hello friends! We need to expand our influence, ho! Get a King Frost in as the Captain of this joint! Either get the original Captain on board with the program, or Hee-ho a fellow Jack Frost into the position yourselves!"
 	antag_hud_name = "JackFrost"
 
@@ -521,15 +561,19 @@
 	roundend_category = "Dutch's outlaws"
 	gang_name = "Dutch van der Linde's Gang"
 	gang_id = "VDL"
-	acceptable_clothes = list(/obj/item/clothing/head/soft/black,
-							/obj/item/clothing/under/costume/dutch,
-							/obj/item/clothing/suit/dutch,
-							/obj/item/clothing/head/bowler,
-							/obj/item/clothing/mask/bandana/black)
-	free_clothes = list(/obj/item/clothing/under/costume/dutch,
-						/obj/item/clothing/head/bowler,
-						/obj/item/clothing/suit/dutch,
-						/obj/item/toy/crayon/spraycan)
+	acceptable_clothes = list(
+		/obj/item/clothing/head/soft/black,
+		/obj/item/clothing/under/costume/dutch,
+		/obj/item/clothing/suit/dutch,
+		/obj/item/clothing/head/bowler,
+		/obj/item/clothing/mask/bandana/black,
+	)
+	free_clothes = list(
+		/obj/item/clothing/under/costume/dutch,
+		/obj/item/clothing/head/bowler,
+		/obj/item/clothing/suit/dutch,
+		/obj/item/toy/crayon/spraycan,
+	)
 	gang_objective = "Listen here, fellas. I have a plan. Just one more score on this crappy little po-dunk station. Gold bars, friends. Get all the gold out of the silos, and leave nothing behind! Spread the gold amongst yourselves for the escape plan, make sure everyone has at least 1 bar. After this, it'll be space mangos at Tahiti. You just gotta have a little faith."
 	antag_hud_name = "Dutch"
 

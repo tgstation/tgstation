@@ -1116,8 +1116,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
 
 /**
- * Equip the outfit required for life. Replaces items currently worn.
- */
+  * Equip the outfit required for life. Replaces items currently worn.
+  */
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
 	if(!outfit_important_for_life)
 		return
@@ -1609,12 +1609,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * environment handler for species
- *
- * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
- */
+  * environment handler for species
+  *
+  * vars:
+  * * environment The environment gas mix
+  * * H The mob we will stabilize
+  */
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 
@@ -1734,12 +1734,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 /**
- * Used to stabilize the body temperature back to normal on living mobs
- *
- * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
- */
+  * Used to stabilize the body temperature back to normal on living mobs
+  *
+  * vars:
+  * * environment The environment gas mix
+  * * H The mob we will stabilize
+  */
 /datum/species/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	var/areatemp = H.get_temperature(environment)
 	var/body_temp = H.bodytemperature // Get current body temperature

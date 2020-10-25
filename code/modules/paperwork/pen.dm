@@ -1,15 +1,15 @@
 /*	Pens!
- *	Contains:
- *		Pens
- *		Sleepy Pens
- *		Parapens
- *		Edaggers
- */
+	*	Contains:
+	*		Pens
+	*		Sleepy Pens
+	*		Parapens
+	*		Edaggers
+	*/
 
 
-/*
- * Pens
- */
+/**
+  * Pens
+  */
 /obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
@@ -170,9 +170,9 @@
 			O.desc = input
 			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
-/*
- * Sleepypens
- */
+/**
+  * Sleepypens
+  */
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))
@@ -192,9 +192,9 @@
 	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
 	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
-/*
- * (Alan) Edaggers
- */
+/**
+  * (Alan) Edaggers
+  */
 /obj/item/pen/edagger
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")

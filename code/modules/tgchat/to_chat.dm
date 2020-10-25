@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
+  * Copyright (c) 2020 Aleksej Komarov
+  * SPDX-License-Identifier: MIT
+  */
 
 /**
- * Circumvents the message queue and sends the message
- * to the recipient (target) as soon as possible.
- */
+  * Circumvents the message queue and sends the message
+  * to the recipient (target) as soon as possible.
+  */
 /proc/to_chat_immediate(target, html,
 		type = null,
 		text = null,
@@ -44,15 +44,15 @@
 		SEND_TEXT(client, message_html)
 
 /**
- * Sends the message to the recipient (target).
- *
- * Recommended way to write to_chat calls:
- * ```
- * to_chat(client,
- *     type = MESSAGE_TYPE_INFO,
- *     html = "You have found <strong>[object]</strong>")
- * ```
- */
+  * Sends the message to the recipient (target).
+  *
+  * Recommended way to write to_chat calls:
+  * ```
+  * to_chat(client,
+  *     type = MESSAGE_TYPE_INFO,
+  *     html = "You have found <strong>[object]</strong>")
+  * ```
+  */
 /proc/to_chat(target, html,
 		type = null,
 		text = null,

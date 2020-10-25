@@ -1,33 +1,33 @@
 /**
- * # Discord Subsystem
- *
- * This subsystem handles some integrations with discord
- *
- *
- * NOTES:
- * * There is a DB table to track ckeys and associated discord IDs. (discord_link)
- * * This system REQUIRES TGS for notifying users at end of the round
- * * The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
- * * It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
- * * The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
- *
- *
- * ## HOW NOTIFYING WORKS
- *
- * ### ROUNDSTART:
- * 1) The file is loaded and the discord IDs are extracted
- * 2) A ping is sent to the discord with the IDs of people who wished to be notified
- * 3) The file is emptied
- *
- * ### MIDROUND:
- * 1) Someone usees the notify verb, it adds their discord ID to the list.
- * 2) On fire, it will write that to the disk, as long as conditions above are correct
- *
- * ### END ROUND:
- * 1) The file is force-saved, incase it hasn't fired at end round
- *
- * This is an absolute clusterfuck, but its my clusterfuck -aa07
- */
+  * # Discord Subsystem
+  *
+  * This subsystem handles some integrations with discord
+  *
+  *
+  * NOTES:
+  * * There is a DB table to track ckeys and associated discord IDs. (discord_link)
+  * * This system REQUIRES TGS for notifying users at end of the round
+  * * The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
+  * * It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
+  * * The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
+  *
+  *
+  * ## HOW NOTIFYING WORKS
+  *
+  * ### ROUNDSTART:
+  * 1) The file is loaded and the discord IDs are extracted
+  * 2) A ping is sent to the discord with the IDs of people who wished to be notified
+  * 3) The file is emptied
+  *
+  * ### MIDROUND:
+  * 1) Someone usees the notify verb, it adds their discord ID to the list.
+  * 2) On fire, it will write that to the disk, as long as conditions above are correct
+  *
+  * ### END ROUND:
+  * 1) The file is force-saved, incase it hasn't fired at end round
+  *
+  * This is an absolute clusterfuck, but its my clusterfuck -aa07
+  */
 SUBSYSTEM_DEF(discord)
 	name = "Discord"
 	wait = 3000

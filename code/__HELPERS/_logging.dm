@@ -203,8 +203,8 @@
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
 /**
- * Appends a tgui-related log entry. All arguments are optional.
- */
+  * Appends a tgui-related log entry. All arguments are optional.
+  */
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)

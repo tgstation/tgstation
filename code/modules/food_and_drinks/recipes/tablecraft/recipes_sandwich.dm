@@ -11,7 +11,7 @@
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/meat/steak = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 1
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 	)
 	result = /obj/item/food/sandwich
 	subcategory = CAT_SANDWICH
@@ -20,7 +20,7 @@
 	name = "Cheese sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 	)
 	result = /obj/item/food/grilledcheese
 	subcategory = CAT_SANDWICH
@@ -47,7 +47,7 @@
 	name = "Not a sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/clothing/mask/fakemoustache = 1
+		/obj/item/clothing/mask/fakemoustache = 1,
 	)
 	result = /obj/item/food/notasandwich
 	subcategory = CAT_SANDWICH

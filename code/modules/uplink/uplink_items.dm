@@ -81,9 +81,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 
 /**
- * Uplink Items
- *
- * Items that can be spawned from an uplink. Can be limited by gamemode.
+  * Uplink Items
+  *
+  * Items that can be spawned from an uplink. Can be limited by gamemode.
 **/
 /datum/uplink_item
 	var/name = "item name"
@@ -733,7 +733,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
-            Great for blasting airlocks off their frames and knocking down enemies."
+		Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 

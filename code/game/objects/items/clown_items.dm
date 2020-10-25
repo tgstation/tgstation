@@ -1,14 +1,14 @@
-/* Clown Items
- * Contains:
- *		Soap
- *		Bike Horns
- *		Air Horns
- *		Canned Laughter
- */
+/** Clown Items
+  * Contains:
+  *		Soap
+  *		Bike Horns
+  *		Air Horns
+  *		Canned Laughter
+  */
 
-/*
- * Soap
- */
+/**
+  * Soap
+  */
 
 /obj/item/soap
 	name = "soap"
@@ -165,9 +165,9 @@
 	return
 
 
-/*
- * Bike Horns
- */
+/**
+  * Bike Horns
+  */
 
 /obj/item/bikehorn
 	name = "bike horn"

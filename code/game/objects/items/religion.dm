@@ -95,8 +95,8 @@
 	name = "Securistan Banner"
 	result = /obj/item/banner/security/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/security/officer = 1)
+,
+
 	category = CAT_MISC
 
 /obj/item/banner/medical
@@ -122,8 +122,10 @@
 	name = "Meditopia Banner"
 	result = /obj/item/banner/medical/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/medical = 1)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/clothing/under/rank/medical = 1,
+	)
 	category = CAT_MISC
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
@@ -154,8 +156,10 @@
 	name = "Sciencia Banner"
 	result = /obj/item/banner/science/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/rnd/scientist = 1)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/clothing/under/rank/rnd/scientist = 1,
+	)
 	category = CAT_MISC
 
 /obj/item/banner/cargo
@@ -178,8 +182,10 @@
 	name = "Cargonia Banner"
 	result = /obj/item/banner/cargo/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/cargo/tech = 1)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/clothing/under/rank/cargo/tech = 1,
+	)
 	category = CAT_MISC
 
 /obj/item/banner/engineering
@@ -205,8 +211,10 @@
 	name = "Engitopia Banner"
 	result = /obj/item/banner/engineering/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/engineering/engineer = 1)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/clothing/under/rank/engineering/engineer = 1,
+	)
 	category = CAT_MISC
 
 /obj/item/banner/command
@@ -229,8 +237,10 @@
 	name = "Command Banner"
 	result = /obj/item/banner/command/mundane
 	time = 40
-	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/captain/parade = 1)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/clothing/under/rank/captain/parade = 1,
+	)
 	category = CAT_MISC
 
 /obj/item/banner/red

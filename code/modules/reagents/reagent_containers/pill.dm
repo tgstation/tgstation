@@ -73,9 +73,9 @@
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 
-/*
- * On accidental consumption, consume the pill
- */
+/**
+  * On accidental consumption, consume the pill
+  */
 /obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
 	to_chat(M, "<span class='warning'>You swallow something small. Was that in \the [source_item]?</span>")
 	if(reagents?.total_volume)

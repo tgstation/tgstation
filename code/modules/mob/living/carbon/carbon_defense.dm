@@ -235,9 +235,9 @@
 	return dam_zone
 
 /**
- * Attempt to disarm the target mob.
- * Will shove the target mob back, and drop them if they're in front of something dense
- * or another carbon.
+  * Attempt to disarm the target mob.
+  * Will shove the target mob back, and drop them if they're in front of something dense
+  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)

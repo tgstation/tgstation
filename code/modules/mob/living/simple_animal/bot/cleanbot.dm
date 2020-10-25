@@ -290,8 +290,8 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/remains
-		)
+		/obj/effect/decal/remains,
+	)
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood

@@ -50,9 +50,11 @@
 	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
-	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
-							   /datum/action/innate/megafauna_attack/charge_target,
-							   /datum/action/innate/megafauna_attack/create_turrets)
+	attack_action_types = list(
+		/datum/action/innate/megafauna_attack/create_skull,
+		/datum/action/innate/megafauna_attack/charge_target,
+		/datum/action/innate/megafauna_attack/create_turrets,
+	)
 	small_sprite_type = /datum/action/small_sprite/megafauna/legion
 	var/size = 3
 	var/charging = FALSE

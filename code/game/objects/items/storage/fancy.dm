@@ -1,18 +1,18 @@
 /*
- * The 'fancy' path is for objects like donut boxes that show how many items are in the storage item on the sprite itself
- * .. Sorry for the shitty path name, I couldnt think of a better one.
- *
- * WARNING: var/icon_type is used for both examine text and sprite name. Please look at the procs below and adjust your sprite names accordingly
- *		TODO: Cigarette boxes should be ported to this standard
- *
- * Contains:
- *		Donut Box
- *		Egg Box
- *		Candle Box
- *		Cigarette Box
- *		Cigar Case
- *		Heart Shaped Box w/ Chocolates
- */
+	* The 'fancy' path is for objects like donut boxes that show how many items are in the storage item on the sprite itself
+	* .. Sorry for the shitty path name, I couldnt think of a better one.
+	*
+	* WARNING: var/icon_type is used for both examine text and sprite name. Please look at the procs below and adjust your sprite names accordingly
+	*		TODO: Cigarette boxes should be ported to this standard
+	*
+	* Contains:
+	*		Donut Box
+	*		Egg Box
+	*		Candle Box
+	*		Cigarette Box
+	*		Cigar Case
+	*		Heart Shaped Box w/ Chocolates
+	*/
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
@@ -65,8 +65,8 @@
 #define DONUT_INBOX_SPRITE_WIDTH 3
 
 /*
- * Donut Box
- */
+* Donut Box
+*/
 
 /obj/item/storage/fancy/donut_box
 	name = "donut box"
@@ -115,8 +115,8 @@
 #undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
- * Egg Box
- */
+* Egg Box
+*/
 
 /obj/item/storage/fancy/egg_box
 	icon = 'icons/obj/food/containers.dmi'
@@ -136,8 +136,8 @@
 	STR.set_holdable(list(/obj/item/food/egg))
 
 /*
- * Candle Box
- */
+* Candle Box
+*/
 
 /obj/item/storage/fancy/candle_box
 	name = "candle pack"
@@ -426,8 +426,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 
 /*
- * Heart Shaped Box w/ Chocolates
- */
+* Heart Shaped Box w/ Chocolates
+*/
 
 /obj/item/storage/fancy/heart_box
 	name = "heart-shaped box"

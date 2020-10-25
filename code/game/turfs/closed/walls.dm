@@ -159,7 +159,7 @@
   *Arguments:
   **arg1 is the arm to deal damage to.
   **arg2 is the hulk
- */
+  */
 /turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
 	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
 	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations

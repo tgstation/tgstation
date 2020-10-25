@@ -122,7 +122,7 @@
 /datum/asset/group/irv
 	children = list(
 		/datum/asset/simple/jquery,
-		/datum/asset/simple/irv
+		/datum/asset/simple/irv,
 	)
 
 /datum/asset/simple/namespaced/changelog
@@ -200,7 +200,7 @@
 /datum/asset/group/permissions
 	children = list(
 		/datum/asset/simple/permissions,
-		/datum/asset/simple/namespaced/common
+		/datum/asset/simple/namespaced/common,
 	)
 
 /datum/asset/simple/notes

@@ -138,7 +138,7 @@
   * Adds the seeds to the contents and to an associated list that pregenerates the data
   * needed to go to the ui handler
   *
- **/
+  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")

@@ -1,7 +1,7 @@
-/*
- *	Dehydrated Carp
- *	Instant carp, just add water
- */
+/**
+  *	Dehydrated Carp
+  *	Instant carp, just add water
+  */
 
 //Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/plush/carpplushie/dehy_carp
@@ -47,7 +47,7 @@
 	else
 		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
 	qdel(src)
-	
+
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] starts eating [src]. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -56,7 +56,7 @@
 		H.Paralyze(30)
 		forceMove(H) //we move it AWAAAYY
 		sleep(20)
-		
+
 		if(QDELETED(src))
 			return SHAME
 		if(!QDELETED(H))
@@ -66,7 +66,7 @@
 		icon = 'icons/mob/carp.dmi'
 		flick("carp_swell", src)
 		sleep(6) //let the animation play out
-	
+
 		if(!QDELETED(src))
 			var/mob/living/M = new mobtype(get_turf(src))
 			M.faction = list("neutral")

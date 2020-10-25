@@ -247,4 +247,5 @@
 		/obj/item/clothing/gloves/color/light_brown = 1,
 		/obj/item/clothing/gloves/color/brown = 1,
 		/obj/item/clothing/gloves/color/white = 1,
-		/obj/item/clothing/gloves/color/rainbow = 1)
+		/obj/item/clothing/gloves/color/rainbow = 1,
+	)

@@ -55,19 +55,25 @@
 	GLOB.reloading_map = FALSE
 
 /datum/map_generator/repair
-	modules = list(/datum/map_generator_module/bottom_layer/repair_floor_plasteel,
-	/datum/map_generator_module/bottom_layer/repressurize)
+	modules = list(
+		/datum/map_generator_module/bottom_layer/repair_floor_plasteel,
+		/datum/map_generator_module/bottom_layer/repressurize,
+	)
 	buildmode_name = "Repair: Floor"
 
 /datum/map_generator/repair/delete_walls
-	modules = list(/datum/map_generator_module/bottom_layer/repair_floor_plasteel/flatten,
-	/datum/map_generator_module/bottom_layer/repressurize)
+	modules = list(
+		/datum/map_generator_module/bottom_layer/repair_floor_plasteel/flatten,
+		/datum/map_generator_module/bottom_layer/repressurize,
+	)
 	buildmode_name = "Repair: Floor: Flatten Walls"
 
 /datum/map_generator/repair/enclose_room
-	modules = list(/datum/map_generator_module/bottom_layer/repair_floor_plasteel/flatten,
-	/datum/map_generator_module/border/normal_walls,
-	/datum/map_generator_module/bottom_layer/repressurize)
+	modules = list(
+		/datum/map_generator_module/bottom_layer/repair_floor_plasteel/flatten,
+		/datum/map_generator_module/border/normal_walls,
+		/datum/map_generator_module/bottom_layer/repressurize,
+	)
 	buildmode_name = "Repair: Generate Aired Room"
 
 /datum/map_generator/repair/reload_station_map

@@ -16,7 +16,7 @@
 		"true",
 		"glorious",
 		"robust",
-		)
+	)
 	badPrefixes = list(
 		"lesser",
 		"minor",
@@ -28,7 +28,7 @@
 		"tragic",
 		"gimped",
 		"cursed",
-		)
+	)
 
 	weight = (length(goodPrefixes) + length(badPrefixes)) * 10
 

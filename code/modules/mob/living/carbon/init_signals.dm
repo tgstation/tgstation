@@ -5,10 +5,10 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), .proc/on_nobreath_trait_gain)
 
 /**
- * On gain of TRAIT_NOBREATH
- *
- * This will clear all alerts and moods related to breathing.
- */
+  * On gain of TRAIT_NOBREATH
+  *
+  * This will clear all alerts and moods related to breathing.
+  */
 /mob/living/carbon/proc/on_nobreath_trait_gain(datum/source)
 	failed_last_breath = FALSE
 	clear_alert("too_much_oxy")

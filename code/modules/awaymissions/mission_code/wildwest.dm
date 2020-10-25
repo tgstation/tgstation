@@ -1,8 +1,8 @@
-/* Code for the Wild West map by Brotemis
- * Contains:
- *		Wish Granter
- *		Meat Grinder
- */
+	/* Code for the Wild West map by Brotemis
+	* Contains:
+	*		Wish Granter
+	*		Meat Grinder
+	*/
 
 //Areas
 
@@ -31,7 +31,7 @@
 	requires_power = FALSE
 
 
- ////////// wildwest papers
+////////// wildwest papers
 
 /obj/item/paper/fluff/awaymissions/wildwest/grinder
 	info = "meat grinder requires sacri"
@@ -54,9 +54,9 @@
 	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside."
 
 
-/*
- * Wish Granter
- */
+/**
+  * Wish Granter
+  */
 /obj/machinery/wish_granter_dark
 	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."

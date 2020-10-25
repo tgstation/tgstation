@@ -508,16 +508,16 @@
 	return TRUE
 
 /**
- * Expel the reagents you just tried to ingest
- *
- * When you try to ingest reagents but you do not have a stomach
- * you will spew the reagents on the floor.
- *
- * Vars:
- * * bite: /atom the reagents to expel
- * * amount: int The amount of reagent
- */
-/mob/living/carbon/proc/expel_ingested(var/atom/bite, amount)
+  * Expel the reagents you just tried to ingest
+  *
+  * When you try to ingest reagents but you do not have a stomach
+  * you will spew the reagents on the floor.
+  *
+  * Vars:
+  * * bite: /atom the reagents to expel
+  * * amount: int The amount of reagent
+  */
+/mob/living/carbon/proc/expel_ingested(atom/bite, amount)
 	visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 					"<span class='userdanger'>You are unable to keep the [bite] down without a stomach!</span>")
 

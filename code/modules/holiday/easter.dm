@@ -175,7 +175,7 @@
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/datum/reagent/consumable/sugar = 1
+		/datum/reagent/consumable/sugar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
 	subcategory = CAT_MISCFOOD
@@ -184,7 +184,7 @@
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/datum/reagent/consumable/sugar = 2
+		/datum/reagent/consumable/sugar = 2,
 	)
 	result = /obj/item/food/cake/brioche
 	subcategory = CAT_MISCFOOD
@@ -204,7 +204,7 @@
 		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/food/meatball = 1
+		/obj/item/food/meatball = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg
 	subcategory = CAT_MISCFOOD
@@ -214,7 +214,7 @@
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/datum/reagent/consumable/milk = 5
+		/datum/reagent/consumable/milk = 5,
 	)
 	result = /obj/item/food/soup/mammi
 	subcategory = CAT_MISCFOOD
@@ -231,7 +231,7 @@
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
 	subcategory = CAT_MISCFOOD

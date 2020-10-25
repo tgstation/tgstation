@@ -72,9 +72,7 @@
 	holder_type = /obj/item/pizzabox
 
 /datum/wires/explosive/pizza/New(atom/holder)
-	wires = list(
-		WIRE_DISARM
-	)
+	wires = list(WIRE_DISARM)
 	add_duds(3) // Duds also explode here.
 	..()
 

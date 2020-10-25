@@ -4,7 +4,7 @@
 
 	NOTE: The below functions are part of BYOND user Deadron's "TextHandling" library.
 		[ http://www.byond.com/developer/Deadron/TextHandling ]
- */
+*/
 
 
 proc
@@ -20,9 +20,9 @@ proc
 		return dd_text2list(file2text(file), separator)
 
 
-    ////////////////////
-    // Replacing text //
-    ////////////////////
+	////////////////////
+	// Replacing text //
+	////////////////////
 	dd_replacetext(text, search_string, replacement_string)
 		// A nice way to do this is to split the text into an array based on the search_string,
 		// then put it back together into text using replacement_string as the new separator.
@@ -35,7 +35,7 @@ proc
 		return dd_list2text(textList, replacement_string)
 
 
-    /////////////////////
+	/////////////////////
 	// Prefix checking //
 	/////////////////////
 	dd_hasprefix(text, prefix)
@@ -49,7 +49,7 @@ proc
 		return findtextEx(text, prefix, start, end)
 
 
-    /////////////////////
+	/////////////////////
 	// Suffix checking //
 	/////////////////////
 	dd_hassuffix(text, suffix)

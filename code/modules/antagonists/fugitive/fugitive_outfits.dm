@@ -129,9 +129,7 @@
 	id = /obj/item/card/id
 	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 
-	backpack_contents = list(
-		/obj/item/ammo_casing/shotgun/incapacitate = 6
-		)
+	backpack_contents = list(/obj/item/ammo_casing/shotgun/incapacitate = 6)
 
 /datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -154,9 +152,7 @@
 	r_hand = /obj/item/storage/firstaid/regular
 	l_hand = /obj/item/pinpointer/shuttle
 
-	backpack_contents = list(
-		/obj/item/bountytrap = 4
-		)
+	backpack_contents = list(/obj/item/bountytrap = 4)
 
 /datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

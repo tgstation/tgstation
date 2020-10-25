@@ -91,7 +91,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] snaps [O] onto [src]!</span>", \
 		"<span class='notice'>You press [O] into the side of [src], clicking into place.</span>")
-		 //This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
 			if(!(altPatient == W.return_patient()))
 				clearScans()

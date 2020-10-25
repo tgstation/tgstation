@@ -479,14 +479,14 @@
 		/datum/reagent/consumable/limejuice,
 		/datum/reagent/consumable/tomatojuice,
 		/datum/reagent/consumable/lemonjuice,
-		/datum/reagent/consumable/menthol
+		/datum/reagent/consumable/menthol,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
 		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
+		/datum/reagent/toxin/staminatoxin,
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -539,7 +539,7 @@
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
 		/datum/reagent/consumable/ethanol/triple_sec,
 		/datum/reagent/consumable/ethanol/sake,
-		/datum/reagent/consumable/ethanol/applejack
+		/datum/reagent/consumable/ethanol/applejack,
 	)
 	upgrade_reagents = null
 	emagged_reagents = list(
@@ -547,7 +547,7 @@
 		/datum/reagent/iron,
 		/datum/reagent/toxin/minttoxin,
 		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/consumable/ethanol/fernet
+		/datum/reagent/consumable/ethanol/fernet,
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -601,7 +601,8 @@
 		/datum/reagent/medicine/cryoxadone,
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
-		/datum/reagent/diethylamine)
+		/datum/reagent/diethylamine,
+	)
 	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
@@ -695,7 +696,7 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
-		/datum/reagent/uranium
+		/datum/reagent/uranium,
 	)
 
 /obj/machinery/chem_dispenser/abductor/Initialize()

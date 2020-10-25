@@ -116,13 +116,13 @@
 	location.hotspot_expose(700, 50, 1)
 
 /**
- * Get the fullness of the mob
- *
- * This returns a value form 0 upwards to represent how full the mob is.
- * The value is a total amount of consumable reagents in the body combined
- * with the total amount of nutrition they have.
- * This does not have an upper limit.
- */
+  * Get the fullness of the mob
+  *
+  * This returns a value form 0 upwards to represent how full the mob is.
+  * The value is a total amount of consumable reagents in the body combined
+  * with the total amount of nutrition they have.
+  * This does not have an upper limit.
+  */
 /mob/living/proc/get_fullness()
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
@@ -133,47 +133,47 @@
 	return fullness
 
 /**
- * Check if the mob contains this reagent.
- *
- * This will validate the the reagent holder for the mob and any sub holders contain the requested reagent.
- * Vars:
- * * reagent (typepath) takes a PATH to a reagent.
- * * amount (int) checks for having a specific amount of that chemical.
- * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
- */
+  * Check if the mob contains this reagent.
+  *
+  * This will validate the the reagent holder for the mob and any sub holders contain the requested reagent.
+  * Vars:
+  * * reagent (typepath) takes a PATH to a reagent.
+  * * amount (int) checks for having a specific amount of that chemical.
+  * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
+  */
 /mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	return reagents.has_reagent(reagent, amount, needs_metabolizing)
 
 /**
- * Removes reagents from the mob
- *
- * This will locate the reagent in the mob and remove it from reagent holders
- * Vars:
- * * reagent (typepath) takes a PATH to a reagent.
- * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
- * * safety (bool) check for the trans_id_to
- */
+  * Removes reagents from the mob
+  *
+  * This will locate the reagent in the mob and remove it from reagent holders
+  * Vars:
+  * * reagent (typepath) takes a PATH to a reagent.
+  * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
+  * * safety (bool) check for the trans_id_to
+  */
 /mob/living/proc/remove_reagent(reagent, custom_amount, safety)
 	if(!custom_amount)
 		custom_amount = get_reagent_amount(reagent)
 	return reagents.remove_reagent(reagent, custom_amount, safety)
 
 /**
- * Returns the amount of a reagent from the mob
- *
- * This will locate the reagent in the mob and return the total amount from all reagent holders
- * Vars:
- * * reagent (typepath) takes a PATH to a reagent.
- */
+  * Returns the amount of a reagent from the mob
+  *
+  * This will locate the reagent in the mob and return the total amount from all reagent holders
+  * Vars:
+  * * reagent (typepath) takes a PATH to a reagent.
+  */
 /mob/living/proc/get_reagent_amount(reagent)
 	return reagents.get_reagent_amount(reagent)
 
 /**
- * Get a list of all chems the mob has that they are addicted to.
- *
- * This creates a ist of all chems the mob has within its body that it is addicted to.
- * Returns list of reagents
- */
+  * Get a list of all chems the mob has that they are addicted to.
+  *
+  * This creates a ist of all chems the mob has within its body that it is addicted to.
+  * Returns list of reagents
+  */
 /mob/living/proc/get_addiction_list()
 	var/list/addictions = list()
 	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
@@ -186,12 +186,12 @@
 	return addictions
 
 /**
- * Removes an addiction from the mob
- *
- * This will remove addiction to the passeed in chem from the mob
- * vars:
- * * addiction (reagent) the reagent to remove
- */
+  * Removes an addiction from the mob
+  *
+  * This will remove addiction to the passeed in chem from the mob
+  * vars:
+  * * addiction (reagent) the reagent to remove
+  */
 /mob/living/proc/remove_addiction(addiction)
 	reagents.remove_addiction(addiction)
 	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
@@ -199,10 +199,10 @@
 		belly.reagents.remove_addiction(addiction)
 
 /**
- * Removes all addictions from the mob
- *
- * This will remove all addictions from the mob
- */
+  * Removes all addictions from the mob
+  *
+  * This will remove all addictions from the mob
+  */
 /mob/living/proc/clear_addictions()
 	var/list/addictions = get_addiction_list()
 	for(var/reagent in addictions)

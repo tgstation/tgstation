@@ -30,8 +30,8 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(
 		/obj/item/sharpener = 1,
-		/obj/item/choice_beacon/ingredient = 1
-		)
+		/obj/item/choice_beacon/ingredient = 1,
+	)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

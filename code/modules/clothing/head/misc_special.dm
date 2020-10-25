@@ -1,18 +1,18 @@
 /*
- * Contents:
- *		Welding mask
- *		Cakehat
- *		Ushanka
- *		Pumpkin head
- *		Kitty ears
- *		Cardborg disguise
- *		Wig
- *		Bronze hat
- */
+	* Contents:
+	*		Welding mask
+	*		Cakehat
+	*		Ushanka
+	*		Pumpkin head
+	*		Kitty ears
+	*		Cardborg disguise
+	*		Wig
+	*		Bronze hat
+	*/
 
-/*
- * Welding mask
- */
+/**
+  * Welding mask
+  */
 /obj/item/clothing/head/welding
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
@@ -33,9 +33,9 @@
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
-/*
- * Cakehat
- */
+/**
+  * Cakehat
+  */
 /obj/item/clothing/head/hardhat/cakehat
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
@@ -111,9 +111,9 @@
 	to_chat(user, "<span class='warning'>You turn off \the [src].</span>")
 	..()
 
-/*
- * Ushanka
- */
+/**
+  * Ushanka
+  */
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
@@ -137,9 +137,9 @@
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 	earflaps = !earflaps
 
-/*
- * Pumpkin head
- */
+/**
+  * Pumpkin head
+  */
 /obj/item/clothing/head/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
@@ -152,9 +152,9 @@
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 
-/*
- * Kitty ears
- */
+/**
+  * Kitty ears
+  */
 /obj/item/clothing/head/kitty
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"

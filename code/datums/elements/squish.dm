@@ -2,7 +2,7 @@
 #define TALL 7/5
 
 /**
-  # squish.dm
+  * squish.dm
   *
   * It's an element that squishes things. After the duration passes, it reverses the transformation it squished with, taking into account if they are a different orientation than they started (read: rotationally-fluid)
   *

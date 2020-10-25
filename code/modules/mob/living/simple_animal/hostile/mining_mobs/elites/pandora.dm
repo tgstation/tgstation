@@ -40,10 +40,12 @@
 	deathmessage = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
 
-	attack_action_types = list(/datum/action/innate/elite_attack/singular_shot,
-								/datum/action/innate/elite_attack/magic_box,
-								/datum/action/innate/elite_attack/pandora_teleport,
-								/datum/action/innate/elite_attack/aoe_squares)
+	attack_action_types = list(
+		/datum/action/innate/elite_attack/singular_shot,
+		/datum/action/innate/elite_attack/magic_box,
+		/datum/action/innate/elite_attack/pandora_teleport,
+		/datum/action/innate/elite_attack/aoe_squares,
+	)
 
 	var/sing_shot_length = 8
 	var/cooldown_time = 20

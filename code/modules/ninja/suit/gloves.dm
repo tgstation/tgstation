@@ -9,7 +9,7 @@
 
 	...
 	I guess you're a little cool.
-	 -Sayu
+	-Sayu
 
 
 	see ninjaDrainAct.dm for ninjadrain_act()

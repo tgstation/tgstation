@@ -88,14 +88,14 @@
 	/// Internals box. Will be inserted at the start of backpack_contents
 	var/box
 
-	/** 
+	/**
 	  * Any implants the mob should start implanted with
 	  *
 	  * Format of this list is (typepath, typepath, typepath)
 	  */
 	var/list/implants = null
 
-  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
 	/// Any clothing accessory item

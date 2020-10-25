@@ -1,17 +1,16 @@
 /*
- * Holds procs designed to change one type of value, into another.
- * Contains:
- *			file2list
- *			angle2dir
- *			angle2text
- *			worldtime2text
- *			text2dir_extended & dir2text_short
- */
+  * Holds procs designed to change one type of value, into another.
+  * Contains:
+  *			file2list
+  *			angle2dir
+  *			angle2text
+  *			worldtime2text
+  *			text2dir_extended & dir2text_short
+  */
 
 
 
-//Splits the text of a file at seperator and returns them in a list.
-//returns an empty list if the file doesn't exist
+//Splits the text of a file at seperator and returns them in a list.returns an empty list if the file doesn't exist
 /world/proc/file2list(filename, seperator="\n", trim = TRUE)
 	if (trim)
 		return splittext(trim(file2text(filename)),seperator)

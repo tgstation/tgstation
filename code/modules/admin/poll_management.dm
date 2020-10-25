@@ -493,7 +493,7 @@
 		Maximum Value
 		<input type='text' name='maxval' size='3' value='[option?.max_val]'>
 		<div class='row'>
-  			<div class='column left'>
+			<div class='column left'>
 				<label class='inputlabel checkbox'>Minimum description
 				<input type='checkbox' id='descmincheck' name='descmincheck' value='1'[option?.desc_min ? " checked": ""]>
 				<div class='inputbox'></div></label>

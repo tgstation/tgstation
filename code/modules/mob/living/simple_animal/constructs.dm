@@ -142,8 +142,10 @@
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
-							/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/forcewall/cult,
+		/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut,
+	)
 	runetype = /datum/action/innate/cult/create_rune/wall
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
@@ -263,14 +265,15 @@
 	attack_verb_simple = "ram"
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser,
+	)
 	runetype = /datum/action/innate/cult/create_rune/revive
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
-
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
@@ -322,16 +325,20 @@
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
 	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser,
+	)
 
 /mob/living/simple_animal/hostile/construct/artificer/noncult
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser,
+	)
 
 /////////////////////////////Harvester/////////////////////////
 /mob/living/simple_animal/hostile/construct/harvester
@@ -348,8 +355,10 @@
 	attack_verb_continuous = "butchers"
 	attack_verb_simple = "butcher"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
-							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
+		/obj/effect/proc_holder/spell/targeted/forcewall/cult,
+	)
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
 	can_repair_constructs = TRUE
@@ -391,7 +400,7 @@
 		var/obj/item/bodypart/BP = pick(parts)
 		BP.dismember()
 		return FALSE
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/construct/harvester/Initialize()
 	. = ..()

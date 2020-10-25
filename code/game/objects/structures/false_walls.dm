@@ -1,6 +1,6 @@
-/*
- * False Walls
- */
+/**
+  * False Walls
+  */
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
@@ -126,9 +126,9 @@
 	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
 	return null
 
-/*
- * False R-Walls
- */
+/**
+  * False R-Walls
+  */
 
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
@@ -149,9 +149,9 @@
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
 		dismantle(user, TRUE, tool)
 
-/*
- * Uranium Falsewalls
- */
+/**
+  * Uranium Falsewalls
+  */
 
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
@@ -184,12 +184,10 @@
 				T.radiate()
 			last_event = world.time
 			active = null
-			return
-	return
-/*
- * Other misc falsewall types
- */
 
+/**
+  * Other misc falsewall types
+  */
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"

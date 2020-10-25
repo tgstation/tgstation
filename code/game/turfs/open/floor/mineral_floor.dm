@@ -1,13 +1,13 @@
 /* In this file:
- *
- * Plasma floor
- * Gold floor
- * Silver floor
- * Bananium floor
- * Diamond floor
- * Uranium floor
- * Shuttle floor (Titanium)
- */
+	*
+	* Plasma floor
+	* Gold floor
+	* Silver floor
+	* Bananium floor
+	* Diamond floor
+	* Uranium floor
+	* Shuttle floor (Titanium)
+	*/
 
 /turf/open/floor/mineral
 	name = "mineral floor"

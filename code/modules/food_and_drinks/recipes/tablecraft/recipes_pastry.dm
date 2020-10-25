@@ -8,7 +8,7 @@
 	name = "Donut"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 1,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/plain
 	subcategory = CAT_PASTRY
@@ -19,7 +19,7 @@
 	reqs = list(
 		/datum/reagent/consumable/frostoil = 5,
 		/datum/reagent/consumable/capsaicin = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/chaos
 
@@ -28,7 +28,7 @@
 	name = "Meat donut"
 	reqs = list(
 		/obj/item/food/meat/rawcutlet = 1,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/meat
 
@@ -36,7 +36,7 @@
 	name = "Jelly donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/plain
 
@@ -44,7 +44,7 @@
 	name = "Slime jelly donut"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain
 
@@ -53,7 +53,7 @@
 	name = "Berry Donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/berry
 
@@ -61,7 +61,7 @@
 	name = "Spaceman's Donut"
 	reqs = list(
 		/datum/reagent/medicine/polypyr = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/donut/trumpet
@@ -70,7 +70,7 @@
 	name = "Apple Donut"
 	reqs = list(
 		/datum/reagent/consumable/applejuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/apple
 
@@ -78,7 +78,7 @@
 	name = "Caramel Donut"
 	reqs = list(
 		/datum/reagent/consumable/caramel = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/caramel
 
@@ -86,7 +86,7 @@
 	name = "Chocolate Donut"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/choco
 
@@ -94,7 +94,7 @@
 	name = "Blumpkin Donut"
 	reqs = list(
 		/datum/reagent/consumable/blumpkinjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/blumpkin
 
@@ -102,7 +102,7 @@
 	name = "Bungo Donut"
 	reqs = list(
 		/datum/reagent/consumable/bungojuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/bungo
 
@@ -110,7 +110,7 @@
 	name = "Matcha Donut"
 	reqs = list(
 		/datum/reagent/toxin/teapowder = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/matcha
 
@@ -118,7 +118,7 @@
 	name = "Sweet Pea Donut"
 	reqs = list(
 		/datum/reagent/consumable/laughsyrup = 3,
-		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/laugh
 
@@ -128,7 +128,7 @@
 	name = "Berry Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/berry
 
@@ -136,7 +136,7 @@
 	name = "Spaceman's Jelly Donut"
 	reqs = list(
 		/datum/reagent/medicine/polypyr = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/trumpet
@@ -145,7 +145,7 @@
 	name = "Apple Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/applejuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/apple
 
@@ -153,7 +153,7 @@
 	name = "Caramel Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/caramel = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/caramel
 
@@ -161,7 +161,7 @@
 	name = "Chocolate Jelly Donut"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/choco
 
@@ -169,7 +169,7 @@
 	name = "Blumpkin Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/blumpkinjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
 
@@ -177,7 +177,7 @@
 	name = "Bungo Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/bungojuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/bungo
 
@@ -185,7 +185,7 @@
 	name = "Matcha Jelly Donut"
 	reqs = list(
 		/datum/reagent/toxin/teapowder = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/matcha
 
@@ -193,7 +193,7 @@
 	name = "Sweet Pea Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/laughsyrup = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/laugh
 
@@ -203,7 +203,7 @@
 	name = "Berry Slime Donut"
 	reqs = list(
 		/datum/reagent/consumable/berryjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/berry
 
@@ -211,7 +211,7 @@
 	name = "Spaceman's Slime Donut"
 	reqs = list(
 		/datum/reagent/medicine/polypyr = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/trumpet
@@ -220,7 +220,7 @@
 	name = "Apple Slime Donut"
 	reqs = list(
 		/datum/reagent/consumable/applejuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/apple
 
@@ -228,7 +228,7 @@
 	name = "Caramel Slime Donut"
 	reqs = list(
 		/datum/reagent/consumable/caramel = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/caramel
 
@@ -236,7 +236,7 @@
 	name = "Chocolate Slime Donut"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/choco
 
@@ -244,7 +244,7 @@
 	name = "Blumpkin Slime Donut"
 	reqs = list(
 		/datum/reagent/consumable/blumpkinjuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/blumpkin
 
@@ -252,7 +252,7 @@
 	name = "Bungo Slime Donut"
 	reqs = list(
 		/datum/reagent/consumable/bungojuice = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/bungo
 
@@ -260,7 +260,7 @@
 	name = "Matcha Slime Donut"
 	reqs = list(
 		/datum/reagent/toxin/teapowder = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/matcha
 
@@ -268,7 +268,7 @@
 	name = "Sweet Pea Jelly Donut"
 	reqs = list(
 		/datum/reagent/consumable/laughsyrup = 3,
-		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1
+		/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
 
@@ -278,7 +278,7 @@
 	time = 15
 	name = "Waffles"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/pastrybase = 2
+		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/waffles
 	subcategory = CAT_PASTRY
@@ -288,7 +288,7 @@
 	name = "Soylent viridians"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
-		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
+		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/soylenviridians
 	subcategory = CAT_PASTRY
@@ -297,7 +297,7 @@
 	name = "Soylent green"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
-		/obj/item/food/meat/slab/human = 2
+		/obj/item/food/meat/slab/human = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/soylentgreen
 	subcategory = CAT_PASTRY
@@ -307,16 +307,14 @@
 	name = "Roffle waffles"
 	reqs = list(
 		/datum/reagent/drug/mushroomhallucinogen = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 2
+		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/rofflewaffles
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/pancakes
 	name = "Pancake"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
-	)
+	reqs = list(/obj/item/reagent_containers/food/snacks/pastrybase = 1)
 	result = /obj/item/reagent_containers/food/snacks/pancakes
 	subcategory = CAT_PASTRY
 
@@ -324,7 +322,7 @@
 	name = "Blueberry pancake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/pancakes/blueberry
 	subcategory = CAT_PASTRY
@@ -333,7 +331,7 @@
 	name = "Chocolate chip pancake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/pancakes/chocolatechip
 	subcategory = CAT_PASTRY
@@ -346,7 +344,7 @@
 	name = "Donk-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/food/meatball = 1
+		/obj/item/food/meatball = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket
 	subcategory = CAT_PASTRY
@@ -356,7 +354,7 @@
 	name = "Dank-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cannabis = 1
+		/obj/item/reagent_containers/food/snacks/grown/cannabis = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/dankpocket
 	subcategory = CAT_PASTRY
@@ -367,7 +365,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/food/snacks/grown/chili
+		/obj/item/reagent_containers/food/snacks/grown/chili,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
 	subcategory = CAT_PASTRY
@@ -378,7 +376,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/consumable/soysauce = 3
+		/datum/reagent/consumable/soysauce = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
 	subcategory = CAT_PASTRY
@@ -389,7 +387,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
 	subcategory = CAT_PASTRY
@@ -400,7 +398,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/datum/reagent/consumable/sugar = 3
+		/datum/reagent/consumable/sugar = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/honk
 	subcategory = CAT_PASTRY
@@ -410,7 +408,7 @@
 	name = "Berry-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/berry
 	subcategory = CAT_PASTRY
@@ -421,7 +419,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/tranquility = 5,
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -433,7 +431,7 @@
 	name = "Muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin
 	subcategory = CAT_PASTRY
@@ -443,7 +441,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin/berry
 	subcategory = CAT_PASTRY
@@ -454,7 +452,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
-		/obj/item/ectoplasm = 1
+		/obj/item/ectoplasm = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin/booberry
 	subcategory = CAT_PASTRY
@@ -465,7 +463,7 @@
 		/datum/reagent/water = 5,
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/food/boiledegg = 2,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
 	subcategory = CAT_PASTRY
@@ -477,7 +475,7 @@
 	reqs = list(
 		/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/food/sausage = 1
+		/obj/item/food/sausage = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotdog
 	subcategory = CAT_PASTRY
@@ -488,7 +486,7 @@
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
+		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
 	result = /obj/item/food/meatbun
 	subcategory = CAT_PASTRY
@@ -498,7 +496,7 @@
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/food/bread/plain = 1
+		/obj/item/food/bread/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
 	subcategory = CAT_PASTRY
@@ -508,7 +506,7 @@
 	name = "Sugar cookie"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie
 	subcategory = CAT_PASTRY
@@ -518,7 +516,7 @@
 	name = "Fortune cookie"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/paper = 1
+		/obj/item/paper = 1,
 	)
 	parts =	list(
 		/obj/item/paper = 1
@@ -531,7 +529,7 @@
 	name = "Poppy pretzel"
 	reqs = list(
 		/obj/item/seeds/poppy = 1,
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/poppypretzel
 	subcategory = CAT_PASTRY
@@ -541,7 +539,7 @@
 	name = "Plumphelmet biscuit"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/plumphelmetbiscuit
 	subcategory = CAT_PASTRY
@@ -561,7 +559,7 @@
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/chococornet
 	subcategory = CAT_PASTRY
@@ -570,7 +568,7 @@
 	name = "Oatmeal cookie"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/oat = 1
+		/obj/item/reagent_containers/food/snacks/grown/oat = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/oatmealcookie
 	subcategory = CAT_PASTRY
@@ -580,7 +578,7 @@
 	reqs = list(
 		/obj/item/food/no_raisin = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/oat = 1
+		/obj/item/reagent_containers/food/snacks/grown/oat = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/raisincookie
 	subcategory = CAT_PASTRY
@@ -589,7 +587,7 @@
 	name = "Cherry cupcake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1
+		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/cherrycupcake
 	subcategory = CAT_PASTRY
@@ -598,7 +596,7 @@
 	name = "Blue cherry cupcake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1
+		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	subcategory = CAT_PASTRY
@@ -607,7 +605,7 @@
 	name = "Honey bun"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/datum/reagent/consumable/honey = 5
+		/datum/reagent/consumable/honey = 5,
 	)
 	result = /obj/item/reagent_containers/food/snacks/honeybun
 	subcategory = CAT_PASTRY

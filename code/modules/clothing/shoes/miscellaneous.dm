@@ -497,7 +497,8 @@
 	icon_state = "lizardboots_green"
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
-		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
+		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1,
+	)
 
 /obj/item/clothing/shoes/cookflops
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"

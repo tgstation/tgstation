@@ -14,9 +14,9 @@
 #define PAINT_LARGE_HORIZONTAL	2
 #define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
 
-/*
- * Crayons
- */
+/**
+  * Crayons
+  */
 
 /obj/item/toy/crayon
 	name = "crayon"
@@ -577,9 +577,9 @@
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	. = ..()
 
-/*
- * Crayon Box
- */
+/**
+  * Crayon Box
+  */
 
 /obj/item/storage/crayons
 	name = "box of crayons"

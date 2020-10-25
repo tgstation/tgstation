@@ -1,9 +1,9 @@
 /**
- * Paper
- * also scraps of paper
- *
- * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
- */
+  * Paper
+  * also scraps of paper
+  *
+  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
+  */
 #define MAX_PAPER_LENGTH 5000
 #define MAX_PAPER_STAMPS 30		// Too low?
 #define MAX_PAPER_STAMPS_OVERLAYS 4
@@ -13,10 +13,10 @@
 
 
 /**
- * Paper is now using markdown (like in github pull notes) for ALL rendering
- * so we do loose a bit of functionality but we gain in easy of use of
- * paper and getting rid of that crashing bug
- */
+  * Paper is now using markdown (like in github pull notes) for ALL rendering
+  * so we do loose a bit of functionality but we gain in easy of use of
+  * paper and getting rid of that crashing bug
+  */
 /obj/item/paper
 	name = "paper"
 	gender = NEUTER
@@ -63,10 +63,10 @@
 	. = ..()
 
 /**
- * This proc copies this sheet of paper to a new
- * sheet,  Makes it nice and easy for carbon and
- * the copyer machine
- */
+  * This proc copies this sheet of paper to a new
+  * sheet,  Makes it nice and easy for carbon and
+  * the copyer machine
+  */
 /obj/item/paper/proc/copy()
 	var/obj/item/paper/N = new(arglist(args))
 	N.info = info
@@ -80,10 +80,10 @@
 	return N
 
 /**
- * This proc sets the text of the paper and updates the
- * icons.  You can modify the pen_color after if need
- * be.
- */
+  * This proc sets the text of the paper and updates the
+  * icons.  You can modify the pen_color after if need
+  * be.
+  */
 /obj/item/paper/proc/setText(text)
 	info = text
 	form_fields = null
@@ -342,8 +342,8 @@
 			. = TRUE
 
 /**
- * Construction paper
- */
+  * Construction paper
+  */
 /obj/item/paper/construction
 
 /obj/item/paper/construction/Initialize()
@@ -351,8 +351,8 @@
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /**
- * Natural paper
- */
+  * Natural paper
+  */
 /obj/item/paper/natural/Initialize()
 	. = ..()
 	color = "#FFF5ED"

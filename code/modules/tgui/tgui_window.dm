@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
+  * Copyright (c) 2020 Aleksej Komarov
+  * SPDX-License-Identifier: MIT
+  */
 
 /datum/tgui_window
 	var/id
@@ -22,13 +22,13 @@
 	var/fancy
 
 /**
- * public
- *
- * Create a new tgui window.
- *
- * required client /client
- * required id string A unique window identifier.
- */
+  * public
+  *
+  * Create a new tgui window.
+  *
+  * required client /client
+  * required id string A unique window identifier.
+  */
 /datum/tgui_window/New(client/client, id, pooled = FALSE)
 	src.id = id
 	src.client = client
@@ -38,16 +38,16 @@
 		src.pool_index = TGUI_WINDOW_INDEX(id)
 
 /**
- * public
- *
- * Initializes the window with a fresh page. Puts window into the "loading"
- * state. You can begin sending messages right after initializing. Messages
- * will be put into the queue until the window finishes loading.
- *
- * optional inline_assets list List of assets to inline into the html.
- * optional inline_html string Custom HTML to inject.
- * optional fancy bool If TRUE, will hide the window titlebar.
- */
+  * public
+  *
+  * Initializes the window with a fresh page. Puts window into the "loading"
+  * state. You can begin sending messages right after initializing. Messages
+  * will be put into the queue until the window finishes loading.
+  *
+  * optional inline_assets list List of assets to inline into the html.
+  * optional inline_html string Custom HTML to inject.
+  * optional fancy bool If TRUE, will hide the window titlebar.
+  */
 /datum/tgui_window/proc/initialize(
 		inline_assets = list(),
 		inline_html = "",
@@ -96,22 +96,22 @@
 	is_browser = winexists(client, id) == "BROWSER"
 
 /**
- * public
- *
- * Checks if the window is ready to receive data.
- *
- * return bool
- */
+  * public
+  *
+  * Checks if the window is ready to receive data.
+  *
+  * return bool
+  */
 /datum/tgui_window/proc/is_ready()
 	return status == TGUI_WINDOW_READY
 
 /**
- * public
- *
- * Checks if the window can be sanely suspended.
- *
- * return bool
- */
+  * public
+  *
+  * Checks if the window can be sanely suspended.
+  *
+  * return bool
+  */
 /datum/tgui_window/proc/can_be_suspended()
 	return !fatally_errored \
 		&& pooled \
@@ -120,25 +120,25 @@
 		&& status == TGUI_WINDOW_READY
 
 /**
- * public
- *
- * Acquire the window lock. Pool will not be able to provide this window
- * to other UIs for the duration of the lock.
- *
- * Can be given an optional tgui datum, which will be automatically
- * subscribed to incoming messages via the on_message proc.
- *
- * optional ui /datum/tgui
- */
+  * public
+  *
+  * Acquire the window lock. Pool will not be able to provide this window
+  * to other UIs for the duration of the lock.
+  *
+  * Can be given an optional tgui datum, which will be automatically
+  * subscribed to incoming messages via the on_message proc.
+  *
+  * optional ui /datum/tgui
+  */
 /datum/tgui_window/proc/acquire_lock(datum/tgui/ui)
 	locked = TRUE
 	locked_by = ui
 
 /**
- * public
- *
- * Release the window lock.
- */
+  * public
+  *
+  * Release the window lock.
+  */
 /datum/tgui_window/proc/release_lock()
 	// Clean up assets sent by tgui datum which requested the lock
 	if(locked)
@@ -147,34 +147,34 @@
 	locked_by = null
 
 /**
- * public
- *
- * Subscribes the datum to consume window messages on a specified proc.
- *
- * Note, that this supports only one subscriber, because code for that
- * is simpler and therefore faster. If necessary, this can be rewritten
- * to support multiple subscribers.
- */
+  * public
+  *
+  * Subscribes the datum to consume window messages on a specified proc.
+  *
+  * Note, that this supports only one subscriber, because code for that
+  * is simpler and therefore faster. If necessary, this can be rewritten
+  * to support multiple subscribers.
+  */
 /datum/tgui_window/proc/subscribe(datum/object, delegate)
 	subscriber_object = object
 	subscriber_delegate = delegate
 
 /**
- * public
- *
- * Unsubscribes the datum. Do not forget to call this when cleaning up.
- */
+  * public
+  *
+  * Unsubscribes the datum. Do not forget to call this when cleaning up.
+  */
 /datum/tgui_window/proc/unsubscribe(datum/object)
 	subscriber_object = null
 	subscriber_delegate = null
 
 /**
- * public
- *
- * Close the UI.
- *
- * optional can_be_suspended bool
- */
+  * public
+  *
+  * Close the UI.
+  *
+  * optional can_be_suspended bool
+  */
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
 	if(!client)
 		return
@@ -197,14 +197,14 @@
 		client << browse(null, "window=[id]")
 
 /**
- * public
- *
- * Sends a message to tgui window.
- *
- * required type string Message type
- * required payload list Message payload
- * optional force bool Send regardless of the ready status.
- */
+  * public
+  *
+  * Sends a message to tgui window.
+  *
+  * required type string Message type
+  * required payload list Message payload
+  * optional force bool Send regardless of the ready status.
+  */
 /datum/tgui_window/proc/send_message(type, payload, force)
 	if(!client)
 		return
@@ -220,13 +220,13 @@
 		: "[id].browser:update")
 
 /**
- * public
- *
- * Sends a raw payload to tgui window.
- *
- * required message string JSON+urlencoded blob to send.
- * optional force bool Send regardless of the ready status.
- */
+  * public
+  *
+  * Sends a raw payload to tgui window.
+  *
+  * required message string JSON+urlencoded blob to send.
+  * optional force bool Send regardless of the ready status.
+  */
 /datum/tgui_window/proc/send_raw_message(message, force)
 	if(!client)
 		return
@@ -241,14 +241,14 @@
 		: "[id].browser:update")
 
 /**
- * public
- *
- * Makes an asset available to use in tgui.
- *
- * required asset datum/asset
- *
- * return bool - TRUE if any assets had to be sent to the client
- */
+  * public
+  *
+  * Makes an asset available to use in tgui.
+  *
+  * required asset datum/asset
+  *
+  * return bool - TRUE if any assets had to be sent to the client
+  */
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
@@ -260,10 +260,10 @@
 	send_message("asset/mappings", asset.get_url_mappings())
 
 /**
- * private
- *
- * Sends queued messages if the queue wasn't empty.
- */
+  * private
+  *
+  * Sends queued messages if the queue wasn't empty.
+  */
 /datum/tgui_window/proc/flush_message_queue()
 	if(!client || !message_queue)
 		return
@@ -274,10 +274,10 @@
 	message_queue = null
 
 /**
- * private
- *
- * Callback for handling incoming tgui messages.
- */
+  * private
+  *
+  * Callback for handling incoming tgui messages.
+  */
 /datum/tgui_window/proc/on_message(type, payload, href_list)
 	// Status can be READY if user has refreshed the window.
 	if(type == "ready" && status == TGUI_WINDOW_READY)

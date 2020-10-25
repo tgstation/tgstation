@@ -331,12 +331,12 @@
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
-    . = ..()
-    if(newdir == NORTH)
-        icon_state = "rust_walker_n"
-    else if(newdir == SOUTH)
-        icon_state = "rust_walker_s"
-    update_icon()
+	. = ..()
+	if(newdir == NORTH)
+		icon_state = "rust_walker_n"
+	else if(newdir == SOUTH)
+		icon_state = "rust_walker_s"
+	update_icon()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
 	. = ..()

@@ -134,7 +134,7 @@
 		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
 		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 
-		 // Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
+		// Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
 		if(prob(max(chance_stats, chance_generation)))
 			var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
 			var/turf/newLoc = null

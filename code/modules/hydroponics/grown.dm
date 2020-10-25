@@ -171,14 +171,14 @@
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
 /*
- * Attack self for growns
- *
- * Spawns the trash item at the growns drop_location()
- *
- * Then deletes the grown object
- *
- * Then puts trash item into the hand of user attack selfing, or drops it back on the ground
- */
+  * Attack self for growns
+  *
+  * Spawns the trash item at the growns drop_location()
+  *
+  * Then deletes the grown object
+  *
+  * Then puts trash item into the hand of user attack selfing, or drops it back on the ground
+  */
 /obj/item/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
 	var/obj/item/T
 	if(trash)

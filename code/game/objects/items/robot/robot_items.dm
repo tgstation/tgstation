@@ -864,8 +864,10 @@
 	name = "beaker storage apparatus"
 	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/glass/beaker,
-				/obj/item/reagent_containers/glass/bottle)
+	storable = list(
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+	)
 
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
@@ -924,8 +926,10 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/food/drinks/,
-				/obj/item/reagent_containers/food/condiment)
+	storable = list(
+		/obj/item/reagent_containers/food/drinks/,
+		/obj/item/reagent_containers/food/condiment,
+	)
 
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
@@ -941,8 +945,10 @@
 	name = "circuit manipulation apparatus"
 	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
 	icon_state = "borg_hardware_apparatus"
-	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics)
+	storable = list(
+		/obj/item/circuitboard,
+		/obj/item/electronics,
+	)
 
 /obj/item/borg/apparatus/circuit/Initialize()
 	. = ..()

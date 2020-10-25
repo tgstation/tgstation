@@ -1,16 +1,16 @@
-/* Cards
- * Contains:
- *		DATA CARD
- *		ID CARD
- *		FINGERPRINT CARD HOLDER
- *		FINGERPRINT CARD
- */
+/** Cards
+  * Contains:
+  *		DATA CARD
+  *		ID CARD
+  *		FINGERPRINT CARD HOLDER
+  *		FINGERPRINT CARD
+  */
 
 
 
-/*
- * DATA CARDS - Used for the IC data card reader
- */
+/**
+  * DATA CARDS - Used for the IC data card reader
+  */
 
 /obj/item/card
 	name = "card"
@@ -57,9 +57,9 @@
 	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one inexplicibly looks like a floppy disk."
 	icon_state = "data_3"
 
-/*
- * ID CARDS
- */
+/**
+  * ID CARDS
+  */
 
 /obj/item/card/id
 	name = "identification card"

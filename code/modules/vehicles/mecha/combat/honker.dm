@@ -93,7 +93,7 @@
 						</div>
 						</body>
 						</html>
-					 "}
+					"}
 	return output
 
 /obj/vehicle/sealed/mecha/combat/honker/get_commands()

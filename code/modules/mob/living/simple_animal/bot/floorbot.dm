@@ -311,7 +311,7 @@
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
 	if(isspaceturf(target_turf))
-		 //Must be a hull breach or in line mode to continue.
+		//Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
 			target = null
 			return

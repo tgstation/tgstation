@@ -1,13 +1,13 @@
 /* First aid storage
- * Contains:
- *		First Aid Kits
- * 		Pill Bottles
- *		Dice Pack (in a pill bottle)
- */
+	* Contains:
+	*		First Aid Kits
+	* 		Pill Bottles
+	*		Dice Pack (in a pill bottle)
+	*/
 
-/*
- * First Aid Kits
- */
+/**
+  * First Aid Kits
+  */
 /obj/item/storage/firstaid
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
@@ -320,8 +320,8 @@
 	qdel(src)
 
 /*
- * Pill Bottles
- */
+* Pill Bottles
+*/
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"

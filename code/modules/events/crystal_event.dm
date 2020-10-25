@@ -591,8 +591,8 @@ This section is for the crystal portals variations
 	spawn_time = 5 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
-		/mob/living/simple_animal/hostile/crystal_monster/thug
-		)
+		/mob/living/simple_animal/hostile/crystal_monster/thug,
+	)
 
 /obj/structure/crystal_portal/medium
 	name = "Medium Portal"
@@ -603,8 +603,8 @@ This section is for the crystal portals variations
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
-		/mob/living/simple_animal/hostile/crystal_monster/recruit
-		)
+		/mob/living/simple_animal/hostile/crystal_monster/recruit,
+	)
 
 /obj/structure/crystal_portal/big
 	name = "Big Portal"
@@ -616,8 +616,8 @@ This section is for the crystal portals variations
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
 		/mob/living/simple_animal/hostile/crystal_monster/recruit,
-		/mob/living/simple_animal/hostile/crystal_monster/killer
-		)
+		/mob/living/simple_animal/hostile/crystal_monster/killer,
+	)
 
 /obj/structure/crystal_portal/huge
 	name = "Huge Portal"
@@ -625,9 +625,7 @@ This section is for the crystal portals variations
 	color = COLOR_BLACK
 	max_mobs = 2
 	spawn_time = 40 SECONDS
-	mob_types = list(
-		/mob/living/simple_animal/hostile/crystal_monster/boss
-		)
+	mob_types = list(/mob/living/simple_animal/hostile/crystal_monster/boss)
 
 /obj/structure/crystal_portal/huge/Initialize()
 	. = ..()

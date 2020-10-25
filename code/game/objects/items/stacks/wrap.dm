@@ -1,8 +1,8 @@
 
 
-/*
- * Wrapping Paper
- */
+/**
+  * Wrapping Paper
+  */
 
 /obj/item/stack/wrapping_paper
 	name = "wrapping paper"
@@ -24,9 +24,9 @@
 	desc = "Wrap packages with this festive paper to make gifts. This roll looks a bit skimpy."
 	amount = 10
 
-/*
- * Package Wrap
- */
+/**
+  * Package Wrap
+  */
 
 /obj/item/stack/package_wrap
 	name = "package wrapper"

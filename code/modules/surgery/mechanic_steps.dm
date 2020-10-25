@@ -45,7 +45,8 @@
 	name = "prepare electronics"
 	implements = list(
 		TOOL_MULTITOOL = 100,
-		TOOL_HEMOSTAT = 10) // try to reboot internal controllers via short circuit with some conductor
+		TOOL_HEMOSTAT = 10,
+	) // try to reboot internal controllers via short circuit with some conductor
 	time = 24
 
 /datum/surgery_step/prepare_electronics/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -58,7 +59,8 @@
 	name = "unwrench bolts"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 10,
+	)
 	time = 24
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -71,7 +73,8 @@
 	name = "wrench bolts"
 	implements = list(
 		TOOL_WRENCH = 100,
-		TOOL_RETRACTOR = 10)
+		TOOL_RETRACTOR = 10,
+	)
 	time = 24
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -1,11 +1,11 @@
 /*
- *	Absorbs /obj/item/secstorage.
- *	Reimplements it only slightly to use existing storage functionality.
- *
- *	Contains:
- *		Secure Briefcase
- *		Wall Safe
- */
+	*	Absorbs /obj/item/secstorage.
+	*	Reimplements it only slightly to use existing storage functionality.
+	*
+	*	Contains:
+	*		Secure Briefcase
+	*		Wall Safe
+	*/
 
 // -----------------------------
 //         Generic Item

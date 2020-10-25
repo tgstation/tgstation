@@ -1,6 +1,6 @@
-/*
- * Photo album
- */
+/**
+  * Photo album
+  */
 /obj/item/storage/photo_album
 	name = "photo album"
 	desc = "A big book used to store photos and mementos."

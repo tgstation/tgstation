@@ -1,6 +1,6 @@
-/*
- * Don't use the apostrophe in name or desc. Causes script errors.//probably no longer true
- */
+/**
+  * Don't use the apostrophe in name or desc. Causes script errors.//probably no longer true
+  */
 
 /datum/action/changeling
 	name = "Prototype Sting - Debug button, ahelp this"

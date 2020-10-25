@@ -42,10 +42,12 @@
 
 	can_talk = 1
 
-	attack_action_types = list(/datum/action/innate/elite_attack/herald_trishot,
-								/datum/action/innate/elite_attack/herald_directionalshot,
-								/datum/action/innate/elite_attack/herald_teleshot,
-								/datum/action/innate/elite_attack/herald_mirror)
+	attack_action_types = list(
+		/datum/action/innate/elite_attack/herald_trishot,
+		/datum/action/innate/elite_attack/herald_directionalshot,
+		/datum/action/innate/elite_attack/herald_teleshot,
+		/datum/action/innate/elite_attack/herald_mirror,
+	)
 
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/my_mirror = null
 	var/is_mirror = FALSE

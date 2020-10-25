@@ -52,13 +52,13 @@ Bonus
 		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
 
 /**
- * set_body_temp Sets the body temp change
- *
- * Sets the body temp change to the mob based on the stage and resistance of the disease
- * arguments:
- * * mob/living/M The mob to apply changes to
- * * datum/disease/advance/A The disease applying the symptom
- */
+  * set_body_temp Sets the body temp change
+  *
+  * Sets the body temp change to the mob based on the stage and resistance of the disease
+  * arguments:
+  * * mob/living/M The mob to apply changes to
+  * * datum/disease/advance/A The disease applying the symptom
+  */
 /datum/symptom/shivering/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
 	M.add_body_temperature_change("shivering", -((6 * power) * A.stage))
 

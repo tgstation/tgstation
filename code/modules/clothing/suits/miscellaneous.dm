@@ -1,13 +1,13 @@
 /*
- * Contains:
- *		Lasertag
- *		Costume
- *		Misc
- */
+	* Contains:
+	*		Lasertag
+	*		Costume
+	*		Misc
+	*/
 
-/*
- * Lasertag
- */
+/**
+  * Lasertag
+  */
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armor"
 	desc = "A piece of plastic armor. It has sensors that react to red light." //Lasers are concentrated light
@@ -28,9 +28,9 @@
 	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE
 
-/*
- * Costume
- */
+/**
+  * Costume
+  */
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flashy costume"
 	desc = "What did you expect?"
@@ -349,8 +349,8 @@
 	flags_inv = HIDEJUMPSUIT
 
 /*
- * Misc
- */
+* Misc
+*/
 
 /obj/item/clothing/suit/straight_jacket
 	name = "straight jacket"

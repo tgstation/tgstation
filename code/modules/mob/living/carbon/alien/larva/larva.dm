@@ -21,7 +21,7 @@
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
-		)
+	)
 
 	var/amount_grown = 0
 	var/max_grown = 100

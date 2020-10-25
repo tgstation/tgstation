@@ -8,7 +8,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling
 	name = "seedling"
 	desc = "This oversized, predatory flower conceals what can only be described as an organic energy cannon, and it will not die until its hidden vital organs are sliced out. \
-	 The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
+		The concentrated streams of energy it sometimes produces require its full attention, attacking it during this time will prevent it from finishing its attack."
 	icon = 'icons/mob/jungle/seedling.dmi'
 	icon_state = "seedling"
 	icon_living = "seedling"

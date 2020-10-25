@@ -99,26 +99,26 @@
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
-#define APPLY_CORNER(C)                      \
-	. = LUM_FALLOFF(C, pixel_turf);          \
-	. *= light_power;                        \
-	var/OLD = effect_str[C];                 \
-	effect_str[C] = .;                       \
-                                             \
-	C.update_lumcount                        \
-	(                                        \
-		(. * lum_r) - (OLD * applied_lum_r), \
-		(. * lum_g) - (OLD * applied_lum_g), \
-		(. * lum_b) - (OLD * applied_lum_b)  \
+#define APPLY_CORNER(C)						\
+	. = LUM_FALLOFF(C, pixel_turf);			\
+	. *= light_power;						\
+	var/OLD = effect_str[C];				\
+	effect_str[C] = .;						\
+											\
+	C.update_lumcount						\
+	(										\
+		(. * lum_r) - (OLD * applied_lum_r),\
+		(. * lum_g) - (OLD * applied_lum_g),\
+		(. * lum_b) - (OLD * applied_lum_b)	\
 	);
 
-#define REMOVE_CORNER(C)                     \
-	. = -effect_str[C];                      \
-	C.update_lumcount                        \
-	(                                        \
-		. * applied_lum_r,                   \
-		. * applied_lum_g,                   \
-		. * applied_lum_b                    \
+#define REMOVE_CORNER(C)					\
+	. = -effect_str[C];						\
+	C.update_lumcount						\
+	(										\
+		. * applied_lum_r,					\
+		. * applied_lum_g,					\
+		. * applied_lum_b					\
 	);
 
 // This is the define used to calculate falloff.

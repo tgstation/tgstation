@@ -89,7 +89,7 @@
 		/obj/item/stack/tile/mineral/titanium/tiled/blue,
 		/obj/item/stack/tile/mineral/titanium/tiled/white,
 		/obj/item/stack/tile/mineral/titanium/tiled/purple,
-		)
+	)
 
 /obj/item/stack/tile/mineral/titanium/yellow
 	name = "yellow titanium tile"

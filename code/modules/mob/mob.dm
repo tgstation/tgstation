@@ -1061,11 +1061,12 @@
 			faction_target -= "[REF(target)]" //same thing here.
 		return faction_check(faction_src, faction_target, TRUE)
 	return faction_check(faction, target.faction, FALSE)
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
+
+/**
+  * Compare two lists of factions, returning true if any match
+  *
+  * If exact match is passed through we only return true if both faction lists match equally
+  */
 /proc/faction_check(list/faction_A, list/faction_B, exact_match)
 	var/list/match_list
 	if(exact_match)

@@ -47,9 +47,9 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
-/*
- * On accidental consumption, 'spend' the ammo, and add in some gunpowder
- */
+/**
+  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
+  */
 /obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(BB)
 		BB = null

@@ -328,11 +328,11 @@
 	return TRUE
 
 /**
- * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
- *
- * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- */
+  * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+  *
+  * Argument(s):
+  * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+  */
 
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
@@ -343,11 +343,11 @@
 	return items
 
 /**
- * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
- *
- * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- */
+  * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
+  *
+  * Argument(s):
+  * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+  */
 
 /mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	var/list/items = ..()

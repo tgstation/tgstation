@@ -1,13 +1,13 @@
 /* Table Frames
- * Contains:
- *		Frames
- *		Wooden Frames
- */
+  * Contains:
+  *		Frames
+  *		Wooden Frames
+  */
 
 
 /*
- * Normal Frames
- */
+  * Normal Frames
+  */
 
 /obj/structure/table_frame
 	name = "table frame"
@@ -69,10 +69,9 @@
 	new /obj/structure/table_frame/wood(src.loc)
 	qdel(src)
 
-/*
- * Wooden Frames
- */
-
+/**
+  * Wooden Frames
+  */
 /obj/structure/table_frame/wood
 	name = "wooden table frame"
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."

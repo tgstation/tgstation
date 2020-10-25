@@ -1006,23 +1006,23 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /// How many different types of mats will be counted in a bite?
 #define MAX_BONUS_MATS_PER_BITE 2
 
-/*
- * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
- *
- * The base proc will check if the item is sharp and has a decent force.
- * Then, it checks the item's mat datums for the effects it applies afterwards.
- * Then, it checks tiny items.
- * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
- *
- * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
- * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
- *
- * Arguments
- * * M - the mob accidentally consuming the item
- * * user - the mob feeding M the item - usually, it's the same as M
- * * source_item - the item that held the item being consumed - bread, cake, etc
- * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
- */
+/**
+  * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
+  *
+  * The base proc will check if the item is sharp and has a decent force.
+  * Then, it checks the item's mat datums for the effects it applies afterwards.
+  * Then, it checks tiny items.
+  * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
+  *
+  * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+  * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
+  *
+  * Arguments
+  * * M - the mob accidentally consuming the item
+  * * user - the mob feeding M the item - usually, it's the same as M
+  * * source_item - the item that held the item being consumed - bread, cake, etc
+  * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
+  */
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	/// If source_item is a snack, we can adjust its taste
 	var/obj/item/reagent_containers/food/snacks/S = source_item
