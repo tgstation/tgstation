@@ -113,7 +113,6 @@
 	if(istype(owner.current, /mob/living/carbon/human))
 		for(var/C in my_gang.free_clothes)
 			var/obj/O = new C(owner.current)
-			O.armor = getArmor(7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
 				"left pocket" = ITEM_SLOT_LPOCKET,
@@ -127,7 +126,6 @@
 				qdel(O)
 		for(var/CD in my_gang.current_theme.bonus_items)
 			var/obj/O = new CD(owner.current)
-			O.armor = getArmor(7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
 				"left pocket" = ITEM_SLOT_LPOCKET,
@@ -141,7 +139,6 @@
 				qdel(O)
 		for(var/CD in my_gang.current_theme.bonus_first_gangster_items)
 			var/obj/O = new CD(owner.current)
-			O.armor = getArmor(7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5, 7.5)
 			var/list/slots = list (
 				"backpack" = ITEM_SLOT_BACKPACK,
 				"left pocket" = ITEM_SLOT_LPOCKET,

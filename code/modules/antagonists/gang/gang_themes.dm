@@ -7,9 +7,6 @@
 	var/list/bonus_first_gangster_items = list() // Stuff given to the starting gangster at roundstart. Assoc list, type = list(item_type)
 	var/list/everyone_objective = null // If this isn't null, everyone gets this objective.
 
-/datum/gang_theme/proc/get_gangs()
-	return involved_gangs
-
 /datum/gang_theme/los_santos_showdown
 	name = "Los Santos Showdown"
 	description = "Hey hey hey, it's your man Joey, here on Radio Los Spess in the Spinward Stellar Coalition! Thanks for tuning in today! <br>\
@@ -272,5 +269,6 @@
 	description = "Warriors! Come out to play-ay!"
 	everyone_objective = "<B>Be the biggest, baddest gang on the station!</B>"
 
-/datum/gang_theme/warriors/get_gangs()
-	return subtypesof(/datum/antagonist/gang/) // everyone is here
+/datum/gang_theme/warriors/New()
+	..()
+	involved_gangs = subtypesof(/datum/antagonist/gang) // everyone is here

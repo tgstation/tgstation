@@ -41,11 +41,9 @@
 		to_chat(user, policy)
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
-		var/obj/O = new threads(get_turf(user))
-		O.armor = list("melee" = 7.5, "bullet" = 7.5, "laser" = 7.5, "energy" = 7.5, "bomb" = 7.5, "bio" = 7.5, "rad" = 7.5, "fire" = 7.5, "acid" = 7.5, "wound" = 7.5)
+		new threads(get_turf(user))
 	for(var/threads in team_to_use.current_theme.bonus_items)
-		var/obj/O = new threads(get_turf(user))
-		O.armor = list("melee" = 7.5, "bullet" = 7.5, "laser" = 7.5, "energy" = 7.5, "bomb" = 7.5, "bio" = 7.5, "rad" = 7.5, "fire" = 7.5, "acid" = 7.5, "wound" = 7.5)
+		new threads(get_turf(user))
 	if (!isnull(handler) && !handler.gangbangers.Find(user.mind)) // if we have a handler and they're not tracked by it
 		handler.gangbangers += user.mind
 
