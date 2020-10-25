@@ -69,7 +69,6 @@
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	can_be_cut = TRUE
 	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/clothing/gloves/color/fyellow/Initialize()
