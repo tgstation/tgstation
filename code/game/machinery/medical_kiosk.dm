@@ -241,11 +241,8 @@
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
 			chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
-			if(bit.overdosed)
-				overdose_list += list(list("name" = bit.name))
-	var/list/addictions = altPatient.get_addiction_list()
-	if(addictions.len)
-		for(var/datum/reagent/R in addictions)
+	if(altPatient.reagents.addiction_list.len)
+		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
 			addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."

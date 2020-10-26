@@ -210,8 +210,9 @@
   * * show_message - passed through to [/datum/reagents/proc/expose_single]
   * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
   * * ignore_stomach - when using methods INGEST will not use the stomach as the target
+  * * single_reagent - The single reagent to transfer, used with round_robin
   */
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE, single_reagent)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -252,10 +253,7 @@
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(methods)
-				if(istype(target_atom, /obj/item/organ/stomach))
-					R.expose_single(T, target, methods, part, show_message)
-				else
-					R.expose_single(T, target_atom, methods, part, show_message)
+				R.expose_single(T, target_atom, methods, part, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -265,6 +263,8 @@
 			if(!to_transfer)
 				break
 			var/datum/reagent/T = reagent
+			if(single_reagent && T.type != single_reagent)
+				continue
 			if(remove_blacklisted && !T.can_synth)
 				continue
 			if(preserve_data)
@@ -275,10 +275,7 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
-				if(istype(target_atom, /obj/item/organ/stomach))
-					R.expose_single(T, target, methods, transfer_amount, show_message)
-				else
-					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
+				R.expose_single(T, target_atom, methods, transfer_amount, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -642,7 +639,9 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.1)
+		if(R.type == /datum/reagent/drug/methamphetamine)
+			to_chat(world, "RD R:[R.volume], R:[R]")
+		if(R.volume < 0.05)
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
@@ -785,10 +784,6 @@
 
 	if(isliving(my_atom))
 		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
-	else if(istype(my_atom, /obj/item/organ/stomach))
-		var/obj/item/organ/stomach/belly = my_atom
-		var/mob/living/carbon/body = belly.owner
-		R.on_mob_add(body)
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)

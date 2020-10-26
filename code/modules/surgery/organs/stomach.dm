@@ -18,6 +18,10 @@
 
 	var/disgust_metabolism = 1
 
+	///The rate that the stomach will transfer reagents to the body
+	///The value should be greater then 1 to ensure medication remains in effect
+	var/metabolism_efficiency = 1
+
 /obj/item/organ/stomach/Initialize()
 	. = ..()
 	create_reagents(1000)
@@ -31,26 +35,42 @@
 		if(!(organ_flags & ORGAN_FAILING))
 			humi.dna.species.handle_digestion(humi)
 
-	//digest food
 	var/mob/living/carbon/body = owner
-	var/obj/item/organ/liver/liver = body.getorganslot(ORGAN_SLOT_LIVER)
-	var/liverless = (!liver || (liver.organ_flags & ORGAN_FAILING))
-	reagents.metabolize(body, can_overdose=TRUE, liverless=liverless)
+
+	// digest food, sent all reagents that can metabolize to the body
+	for(var/chunk in reagents.reagent_list)
+		var/datum/reagent/bit = chunk
+		// If the reagent does not metabolize then it will sit in the stomach
+		// This has an effect on items like plastic causing them to take up space in the stomach
+		if(!(bit.metabolization_rate > 0))
+			continue
+		// transfer the reagents over to the body at the rate of the stomach metabolim
+		// this way the body is where all reagents that are processed react
+		// the stomach manages how fast they feed in to the body like a drip injection
+		// We are adding 0.1 reagents to transfer more then we remove on metabolization
+		reagents.trans_to(body, single_reagent=bit.type, amount=((bit.metabolization_rate + 0.1) * metabolism_efficiency), round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
+
+	//Handle disgust
 	if(body)
 		handle_disgust(body)
 
+	//If the stomach is not damage exit out
 	if(damage < low_threshold)
 		return
 
+	//We are checking if we have nutriment in a damaged stomach.
 	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	//No nutriment found lets exit out
 	if(!nutri)
 		return
 
+	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
 	if(prob(damage * 0.025 * nutri.volume * nutri.volume))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 		return
 
+	// the change of vomit is now high
 	if(damage > high_threshold && prob(damage * 0.1 * nutri.volume * nutri.volume))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")

@@ -860,6 +860,10 @@
 
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
+	if(reagents)
+		reagents.clear_reagents()
+		for(var/addi in reagents.addiction_list)
+			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -878,7 +882,8 @@
 		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
-	clear_addictions()
+		if(reagents)
+			reagents.addiction_list = list()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
