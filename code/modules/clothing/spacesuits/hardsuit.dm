@@ -905,4 +905,59 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 
+//Nanotrasen medical Protosuit
+
+/obj/item/clothing/suit/space/hardsuit/protosuit
+	name = "protosuit hardsuit"
+	desc = "A failed Nanotrasen experiment, intended to be a unique medical hardsuit based on stolen Syndicate samples."
+	icon_state = "protosuit"
+	hardsuit_type = "protosuit"
+	armor = list(MELEE = 30, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 30, BIO = 100, RAD = 25, FIRE = 75, ACID = 75, WOUND = 15)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/protosuit
+
+/obj/item/clothing/head/helmet/space/hardsuit/protosuit
+	name = "protosuit hardsuit helmet"
+	desc = "A failed Nanotrasen experiment, intended to be a unique medical hardsuit based on stolen Syndicate samples."
+	icon_state = "protosuit"
+	hardsuit_type = "protosuit"
+	armor = list(MELEE = 30, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 30, BIO = 100, RAD = 25, FIRE = 75, ACID = 75, WOUND = 15)
+	light_range = 7
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/protosuit/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_HEAD)
+		if(suit)
+			if(!user.dna)
+				display_visor_message("<span class='notice'>Initialization error. Unable to recognise user. Halting setup process.</span>")
+				return
+
+			var/datum/data/record/R = find_record("name", user.dna.real_name, GLOB.data_core.medical) //The helmet is based on DNA
+			if(!R)
+				display_visor_message("<span class='notice'>Initialization error. Unable to recognise user. Halting setup process.</span>")
+				return
+
+			display_visor_message("<span class='notice'>Initialization complete. User recognised. Hello, [user.dna.real_name].</span>")
+			ADD_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
+			ADD_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+
+			var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+			H.add_hud_to(user)
+	else
+		REMOVE_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+		var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		H.remove_hud_from(user)
+		display_visor_message("<span class='notice'>De-initializing HUD system. Have a great shift.</span>")
+
+/obj/item/clothing/head/helmet/space/hardsuit/protosuit/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(istype(user) && HAS_TRAIT_FROM(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT))
+		REMOVE_TRAIT(user, TRAIT_SELF_AWARE, CLOTHING_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
+		var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		H.remove_hud_from(user)
+		display_visor_message("<span class='notice'>De-initializing HUD system. Have a great shift.</span>")
+
 #undef HARDSUIT_EMP_BURN
