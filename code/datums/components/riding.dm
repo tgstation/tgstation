@@ -265,6 +265,10 @@
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
 	del_on_unbuckle_all = TRUE
+	ride_check_rider_incapacitated = FALSE
+	ride_check_rider_restrained = TRUE
+	var/ride_check_ridden_incapacitated = FALSE
+	var/ride_check_ridden_restrained = FALSE
 
 /datum/component/riding/human/Initialize()
 	. = ..()
@@ -290,21 +294,23 @@
 
 /datum/component/riding/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
-	if(AM.buckled_mobs && AM.buckled_mobs.len)
-		for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
-			M.layer = MOB_LAYER
-		if(!AM.buckle_lying)
-			if(dir == SOUTH)
-				AM.layer = ABOVE_MOB_LAYER
-			else
-				AM.layer = OBJ_LAYER
-		else
-			if(dir == NORTH)
-				AM.layer = OBJ_LAYER
-			else
-				AM.layer = ABOVE_MOB_LAYER
-	else
+	if(!AM.buckled_mobs || !AM.buckled_mobs.len)
 		AM.layer = MOB_LAYER
+		return
+
+	for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
+		M.layer = MOB_LAYER
+	if(!AM.buckle_lying)
+		if(dir == SOUTH)
+			AM.layer = ABOVE_MOB_LAYER
+		else
+			AM.layer = OBJ_LAYER
+	else
+		if(dir == NORTH)
+			AM.layer = OBJ_LAYER
+		else
+			AM.layer = ABOVE_MOB_LAYER
+
 
 /datum/component/riding/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
