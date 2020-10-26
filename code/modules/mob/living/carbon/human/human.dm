@@ -1164,7 +1164,7 @@
 		riding_flags = (RIDING_RIDER_HOLDING_ON)
 
 	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
-	if(LoadComponent(/datum/component/riding/human, riding_flags, riding_mob = target))
+	if(LoadComponent(/datum/component/riding/human, riding_flags, target))
 		stop_pulling()
 		//riding_datum.handle_vehicle_layer() idk if this is actually necessary or if i can move this to the riding datum's init to avoid assigning the riding_datum var here
 		return ..(target, force, check_loc)

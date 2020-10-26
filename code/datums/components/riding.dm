@@ -18,21 +18,19 @@
 	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
 	var/override_allow_spacemove = FALSE
 	var/drive_verb = "drive"
-	var/ride_check_rider_incapacitated = FALSE
-	var/ride_check_rider_restrained = FALSE
+	/// If we should delete this component when we have nothing left buckled, used for buckling to mobs
+	var/del_on_unbuckle_all = FALSE
 
 	/// If the rider needs hands free in order to not fall off (fails if they're incap'd or restrained)
 	var/rider_holding_on = FALSE
 	/// If the ridden needs a hand free to carry the rider (fails if they're incap'd or restrained)
 	var/ridden_holding_rider = FALSE
 
-	var/del_on_unbuckle_all = FALSE
+
 
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
-	/// The mob riding
-	var/mob/living/save_rider
 
 /datum/component/riding/Initialize(riding_flags, mob/living/riding_mob)
 	if(!ismovable(parent))
@@ -45,34 +43,33 @@
 	var/atom/movable/parent_movable = parent
 	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
 	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
-	save_rider = riding_mob
 
 	if(!riding_mob)
 		return
 
-	if(parent_movable.buckled_mobs && ((riding_mob in parent_movable.buckled_mobs) || (parent_movable.buckled_mobs.len >= parent_movable.max_buckled_mobs)))
+	if(parent_movable.has_buckled_mobs() && ((riding_mob in parent_movable.buckled_mobs) || parent_movable.buckled_mobs.len >= parent_movable.max_buckled_mobs))
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/parent_living = parent
 	if(isliving(parent_living) && parent_living.buckled)
+		testing("already has a thing buckled? thing: [parent_living.buckled]")
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/living/carbon/human/riding_human = riding_mob
-	if(ishuman(riding_human) && isliving(parent_living) && !is_type_in_typecache(parent_movable, riding_human.can_ride_typecache))
-		riding_human.visible_message("<span class='warning'>[riding_human] really can't seem to mount [parent_movable]...</span>")
-		return
-
+	var/mob/living/carbon/human/human_parent = parent // likely should be somewhere else
+	if(ishuman(human_parent) && !is_type_in_typecache(riding_mob, human_parent.can_ride_typecache))
+		riding_mob.visible_message("<span class='warning'>[riding_mob] really can't seem to mount [parent_movable]...</span>")
+		return COMPONENT_INCOMPATIBLE
 
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
-	if(ridden_holding_rider)
-		// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
-		if(isliving(parent_living) && !equip_buckle_inhands(parent_living, 1)) // hardcode 1 hand for now
-			parent_living.visible_message("<span class='warning'>[parent_living] can't get a grip on [save_rider] because [parent_living.p_their()] hands are full!</span>",
-				"<span class='warning'>You can't get a grip on [save_rider] because your hands are full!</span>")
+
+	// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
+	if(ridden_holding_rider && (!isliving(parent_living) || !equip_buckle_inhands(parent_living, 1, riding_mob))) // hardcode 1 hand for now
+		parent_living.visible_message("<span class='warning'>[parent_living] can't get a grip on [riding_mob] because [parent_living.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [riding_mob] because your hands are full!</span>")
 		return COMPONENT_INCOMPATIBLE // is this okay to use as a conditional fail rather than a categorical "you can't use that on this"?
 
-	if(rider_holding_on && !equip_buckle_inhands(save_rider, 2)) // hardcode 2 hands for now
-		save_rider.visible_message("<span class='warning'>[save_rider] can't get a grip on [parent_movable] because [save_rider.p_their()] hands are full!</span>",
+	if(rider_holding_on && !equip_buckle_inhands(riding_mob, 2)) // hardcode 2 hands for now
+		riding_mob.visible_message("<span class='warning'>[riding_mob] can't get a grip on [parent_movable] because [riding_mob.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [parent_movable] because your hands are full!</span>")
 		return COMPONENT_INCOMPATIBLE
 
@@ -143,8 +140,8 @@
 		dir = movable_parent.dir
 	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for (var/m in movable_parent.buckled_mobs)
-		ride_check(m)
 		var/mob/buckled_mob = m
+		ride_check(buckled_mob)
 		buckled_mob.set_glide_size(movable_parent.glide_size)
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
@@ -160,9 +157,13 @@
 
 	if(rider_holding_on && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
 		kick_us_off = TRUE
-	else if(ridden_holding_rider && ismob(parent_movable))
-		var/mob/parent_mob = parent_movable
-		if(HAS_TRAIT(parent_mob, TRAIT_RESTRAINED) || parent_mob.incapacitated(TRUE, TRUE))
+	else if(ridden_holding_rider && isliving(parent_movable))
+		var/mob/living/parent_living = parent_movable
+		if(HAS_TRAIT(parent_living, TRAIT_RESTRAINED) || parent_living.incapacitated(TRUE, TRUE))
+			kick_us_off = TRUE
+	else if(isliving(parent_movable)) // adding a check for standing to the ridden for all carries pending someone explaining why laying down should let you keep riding
+		var/mob/living/parent_living = parent_movable
+		if(parent_living.body_position != STANDING_UP)
 			kick_us_off = TRUE
 
 	if(!kick_us_off)
@@ -432,6 +433,7 @@
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
+	testing(" start equip - needed [amount_required]")
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
 		if(!riding_target_override)
@@ -444,11 +446,15 @@
 				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
+			testing("equipped: [amount_equipped] | needed [amount_required]")
 		else
 			break
+
 	if(amount_equipped >= amount_required)
+		testing("had enough, true")
 		return TRUE
 	else
+		testing("not enough, false")
 		unequip_buckle_inhands(user)
 		return FALSE
 
