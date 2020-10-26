@@ -46,6 +46,7 @@
 		}
 	],
 	"minetype": "none",
+	"box_suffix": "/icebox",
 	"job_changes": {
 		"prisoner": {
 			"total_positions": 4,

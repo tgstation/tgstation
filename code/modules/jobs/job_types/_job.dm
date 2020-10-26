@@ -249,6 +249,14 @@
 		else
 			back = backpack //Department backpack
 
+	//checks map config to see if it uses custom survival boxes
+	SSmapping.HACK_LoadMapConfig()
+	if(SSmapping.config.box_suffix)
+		var/box_suffix = SSmapping.config.box_suffix
+		var/box_type
+		box_type = "[box][box_suffix]"
+		box = text2path(box_type)
+
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
 	if(H.jumpsuit_style == PREF_SKIRT)

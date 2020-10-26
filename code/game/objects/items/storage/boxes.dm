@@ -145,6 +145,10 @@
 	..()
 	new /obj/item/crowbar/red(src)
 
+/obj/item/storage/box/survival/mining/icebox/PopulateContents()
+	..()
+	new /obj/item/pickaxe/emergency(src)
+
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
@@ -152,6 +156,10 @@
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/survival/engineer/icebox/PopulateContents()
+	..()
+	new /obj/item/pickaxe/emergency(src)
 
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
@@ -166,6 +174,10 @@
 /obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/survival/security/icebox/PopulateContents()
+	..()
+	new /obj/item/pickaxe/emergency(src)
 
 // Medical survival box
 /obj/item/storage/box/survival/medical

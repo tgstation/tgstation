@@ -24,6 +24,8 @@
 
 	var/minetype = "lavaland"
 
+	var/box_suffix  = null
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -136,6 +138,9 @@
 
 	if ("minetype" in json)
 		minetype = json["minetype"]
+
+	if("box_suffix" in json)
+		box_suffix = json["box_suffix"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
