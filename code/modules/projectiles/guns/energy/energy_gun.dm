@@ -27,8 +27,8 @@
 	flight_y_offset = 13
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
+	. = ..()
 	set_gun_light(new /obj/item/flashlight/seclite(src))
-	return ..()
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"
