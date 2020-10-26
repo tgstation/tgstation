@@ -51,6 +51,8 @@
 ///to prevent accent sounds from layering
 #define HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN 3 SECONDS
 
+#define HYPERTORUS_COUNTDOWN_TIME 30 SECONDS
+
 /obj/machinery/atmospherics/components/unary/hypertorus
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "core"
@@ -127,34 +129,6 @@
 	icon_state_open = "moderator_input"
 	icon_state_off = "moderator_input"
 	circuit = /obj/item/circuitboard/machine/HFR_moderator_input
-
-/obj/machinery/hypertorus
-	name = "hypertorus_core"
-	desc = "hypertorus_core"
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
-	move_resist = INFINITY
-	anchored = FALSE
-	density = TRUE
-	power_channel = AREA_USAGE_ENVIRON
-	var/active = FALSE
-
-/obj/machinery/hypertorus/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
-
-/obj/machinery/hypertorus/wrench_act(mob/user, obj/item/I)
-	. = ..()
-	if(!active)
-		anchored = !anchored
-	else
-		message_admins("Is active")
-
-/obj/machinery/hypertorus/proc/activate()
-	return
-
-/obj/machinery/hypertorus/proc/deactivate()
-	return
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core
 	name = "HFR core"
@@ -296,6 +270,8 @@
 	var/moderator_temperature = 0
 	var/coolant_temperature = 0
 	var/output_temperature = 0
+
+	var/final_countdown = FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
 	. = ..()
@@ -553,6 +529,38 @@
 	//Melt(To be done)
 /*	if(critical_threshold_proximity > melting_point)
 		countdown()*/
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/countdown()
+	set waitfor = FALSE
+
+	if(final_countdown) // We're already doing it go away
+		return
+	final_countdown = TRUE
+
+	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
+	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
+		if(critical_threshold_proximity < melting_point) // Cutting it a bit close there engineers
+			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
+			final_countdown = FALSE
+			return
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+			sleep(10)
+			continue
+		else if(i > 50)
+			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
+		else
+			speaking = "[i*0.1]..."
+		radio.talk_into(src, speaking, common_channel)
+		sleep(10)
+
+	deactivate()
+	meltdown()
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/meltdown()
+	//to do
+	message_admins("MELTDOWN")
+	return
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
 	/*
@@ -991,6 +999,34 @@
 /*
 * Interface and corners
 */
+/obj/machinery/hypertorus
+	name = "hypertorus_core"
+	desc = "hypertorus_core"
+	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon_state = "core"
+	move_resist = INFINITY
+	anchored = TRUE
+	density = TRUE
+	power_channel = AREA_USAGE_ENVIRON
+	var/active = FALSE
+	var/icon_state_open = "core"
+	var/icon_state_off = "core"
+
+/obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
+	if(!active)
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+			return
+	if(default_change_direction_wrench(user, I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
+
+/obj/machinery/hypertorus/proc/activate()
+	return
+
+/obj/machinery/hypertorus/proc/deactivate()
+	return
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
@@ -998,6 +1034,8 @@
 	icon_state = "interface"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
 	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
+	icon_state_off = "interface"
+	icon_state_open = "interface"
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -1005,17 +1043,7 @@
 	var/obj/machinery/atmospherics/components/binary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
-		to_chat(user, "<span class='notice'><B>The following parts are missing or misplaced:</B></span>")
-		if(!centre.linked_input)
-			to_chat(user, "<span class='notice'>Missing or misplaced fuel input.</span>")
-		if(!centre.linked_output)
-			to_chat(user, "<span class='notice'>Missing or misplaced waste output.</span>")
-		if(!centre.linked_moderator)
-			to_chat(user, "<span class='notice'>Missing or misplaced moderator gas input.</span>")
-		if(!centre.linked_interface)
-			to_chat(user, "<span class='notice'>Missing or misplaced interface.</span>")
-		if(centre.corners.len != 4)
-			to_chat(user, "<span class='notice'>Missing or misplaced corner.</span>")
+		to_chat(user, "<span class='notice'>Check all parts and then try again.</span>")
 		return TRUE
 
 	connected_core = centre
@@ -1165,5 +1193,7 @@
 	desc = "Structural piece of the machine."
 	icon_state = "corner"
 	circuit = /obj/item/circuitboard/machine/HFR_corner
+	icon_state_off = "corner"
+	icon_state_open = "corner"
 
 #undef HALLUCINATION_RANGE
