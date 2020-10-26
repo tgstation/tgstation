@@ -12,7 +12,7 @@
 
 
 	Easiest way to add new holodeck programs
-	1) Define new map template datums in code/modules/holodeck/holodeck
+	1) Define new map template datums in code/modules/holodeck/holodeck_map_templates
 	2) Create the new map templates in _maps/templates (remember theyre 9x10)
 	3) Create a new control console that uses those templates
 

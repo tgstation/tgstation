@@ -28,9 +28,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor/chapel{
-	direction = 8
-	},
+/turf/open/floor/holofloor/chapel/bottom_left,
 /area/template_noop)
 "d" = (
 /obj/structure/table/wood/fancy,
@@ -53,9 +51,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "g" = (
-/turf/open/floor/holofloor/chapel{
-	direction = 1
-	},
+/turf/open/floor/holofloor/chapel/top_left,
 /area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -83,15 +79,13 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "i" = (
-/turf/open/floor/holofloor/chapel,
+/turf/open/floor/holofloor/chapel/bottom_right,
 /area/template_noop)
 "k" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor/chapel{
-	direction = 4
-	},
+/turf/open/floor/holofloor/chapel/top_right,
 /area/template_noop)
 "l" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -221,15 +215,19 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "A" = (
-/turf/open/floor/holofloor/chapel{
-	direction = 8
-	},
+/turf/open/floor/holofloor/chapel/bottom_left,
 /area/template_noop)
 "C" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/holofloor/chapel,
+/area/template_noop)
+"E" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/holofloor/chapel/bottom_right,
 /area/template_noop)
 "F" = (
 /obj/item/clothing/suit/judgerobe,
@@ -272,9 +270,7 @@
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "K" = (
-/turf/open/floor/holofloor/chapel{
-	direction = 4
-	},
+/turf/open/floor/holofloor/chapel/top_right,
 /area/template_noop)
 "L" = (
 /obj/structure/chair{
@@ -330,9 +326,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor/chapel{
-	direction = 1
-	},
+/turf/open/floor/holofloor/chapel/top_left,
 /area/template_noop)
 "U" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -448,7 +442,7 @@ m
 w
 W
 K
-C
+E
 k
 i
 L
@@ -472,7 +466,7 @@ x
 K
 i
 K
-C
+E
 k
 i
 L

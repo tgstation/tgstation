@@ -43,19 +43,12 @@
 	icon_state = "chapel"
 	direction = 1
 
-/turf/open/floor/holofloor/chapel/Initialize()
+/turf/open/floor/holofloor/Initialize()
 	. = ..()
 	if (direction != 2)
 		src.setDir(direction)
-
-	//message_admins("INITIALIZE")
-	//return INITIALIZE_HINT_LATELOAD
-
-/turf/open/floor/holofloor/chapel/LateInitialize()
-	//message_admins("LATE INITIALIZE")
-	//if (direction != 2)
-	//	src.setDir(direction)
-	//. = ..()
+	//why do i have this? some bug with turfs with dir vars not loading correctly, this only happens after mapload. turfs will be correctly rotated before
+	//mapload is finished, but not after.
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"

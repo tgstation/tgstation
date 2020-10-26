@@ -124,10 +124,7 @@
 "w" = (
 /obj/structure/table/wood,
 /obj/item/instrument/saxophone,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
+/turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "x" = (
 /obj/structure/table/wood,
@@ -158,10 +155,7 @@
 	icon_state = "plant-05";
 	pixel_y = 10
 	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
+/turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "E" = (
 /obj/structure/chair/comfy/brown{
