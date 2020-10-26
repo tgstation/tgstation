@@ -1111,14 +1111,14 @@
 		return
 
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+		buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
 	else
 		var/old_density = density
 		density = FALSE
 		step_towards(target, loc)
 		density = old_density
 		if(target.loc == loc)
-			buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+			buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
 
 
 
@@ -1132,48 +1132,55 @@
 	if(!do_after(target, 1.5 SECONDS, target = src) || !can_piggyback(target))
 		visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 		return
-		if()
-			if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-				target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
-				return
-			buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
-	else
 
-
-
-
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
-	if(!force)//humans are only meant to be ridden through piggybacking and special cases
+	if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
+
+	// fireman
+	//buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+
+
+	// pigback
+	// buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
+	buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_PIGBACK)
+
+
+// /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, carry_mode)
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
-	buckle_lying = lying_buckle
-	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-	if(target_hands_needed)
-		riding_datum.ride_check_rider_restrained = TRUE
-	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
+
+	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
-	var/equipped_hands_self
-	var/equipped_hands_target
-	if(hands_needed)
-		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, target)
-	if(target_hands_needed)
-		equipped_hands_target = riding_datum.equip_buckle_inhands(target, target_hands_needed)
 
-	if(hands_needed || target_hands_needed)
-		if(hands_needed && !equipped_hands_self)
-			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>",
+	var/riding_flags
+	if(carry_mode == HUMAN_CARRY_FIREMAN)
+		buckle_lying = 90
+		riding_flags = (RIDING_RIDDEN_HOLD_RIDER)
+	else if(carry_mode == HUMAN_CARRY_PIGBACK)
+		buckle_lying = 0
+		riding_flags = (RIDING_RIDER_HOLDING_ON)
+
+	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
+	if(LoadComponent(/datum/component/riding/human, riding_flags, riding_mob = target))
+		stop_pulling()
+		//riding_datum.handle_vehicle_layer() idk if this is actually necessary or if i can move this to the riding datum's init to avoid assigning the riding_datum var here
+		return ..(target, force, check_loc)
+
+	// so we must not have enough hands on one of the parties who needed hands (or something else in general with components went wrong i guess)
+
+	// i tried making the two "x holds y" flags neutral of each other so you could have both/either/neither, but this message printout
+	// violates that since we wouldn't know which party/parties caused the carry to fail due to lack of hands if both needed them
+	// this could/should probably be moved to the riding datum anyway
+	if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+		visible_message("<span class='warning'>[src] can't get a grip on [target] because [p_their()] hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
-			return
-		else if(target_hands_needed && !equipped_hands_target)
-			target.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
-				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
-			return
+	else if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+		target.visible_message("<span class='warning'>[target] can't get a grip on [src] because [target.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
 
-	stop_pulling()
-	riding_datum.handle_vehicle_layer()
-	. = ..(target, force, check_loc)
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

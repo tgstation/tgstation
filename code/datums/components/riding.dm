@@ -20,15 +20,21 @@
 	var/drive_verb = "drive"
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
-	var/ride_check_ridden_incapacitated = FALSE
-	var/ride_check_ridden_restrained = FALSE
+
+	/// If the rider needs hands free in order to not fall off (fails if they're incap'd or restrained)
+	var/rider_holding_on = FALSE
+	/// If the ridden needs a hand free to carry the rider (fails if they're incap'd or restrained)
+	var/ridden_holding_rider = FALSE
 
 	var/del_on_unbuckle_all = FALSE
 
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
-/datum/component/riding/Initialize()
+	/// The mob riding
+	var/mob/living/save_rider
+
+/datum/component/riding/Initialize(riding_flags, mob/living/riding_mob)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
@@ -36,15 +42,50 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	var/atom/movable/parent_movable = parent
+	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
+	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+	save_rider = riding_mob
+
+	if(!riding_mob)
+		return
+
+	if(parent_movable.buckled_mobs && ((riding_mob in parent_movable.buckled_mobs) || (parent_movable.buckled_mobs.len >= parent_movable.max_buckled_mobs)))
+		return COMPONENT_INCOMPATIBLE
+
+	var/mob/living/parent_living = parent
+	if(isliving(parent_living) && parent_living.buckled)
+		return COMPONENT_INCOMPATIBLE
+
+	var/mob/living/carbon/human/riding_human = riding_mob
+	if(ishuman(riding_human) && isliving(parent_living) && !is_type_in_typecache(parent_movable, riding_human.can_ride_typecache))
+		riding_human.visible_message("<span class='warning'>[riding_human] really can't seem to mount [parent_movable]...</span>")
+		return
+
+
+	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
+	if(ridden_holding_rider)
+		// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
+		if(isliving(parent_living) && !equip_buckle_inhands(parent_living, 1)) // hardcode 1 hand for now
+			parent_living.visible_message("<span class='warning'>[parent_living] can't get a grip on [save_rider] because [parent_living.p_their()] hands are full!</span>",
+				"<span class='warning'>You can't get a grip on [save_rider] because your hands are full!</span>")
+		return COMPONENT_INCOMPATIBLE // is this okay to use as a conditional fail rather than a categorical "you can't use that on this"?
+
+	if(rider_holding_on && !equip_buckle_inhands(save_rider, 2)) // hardcode 2 hands for now
+		save_rider.visible_message("<span class='warning'>[save_rider] can't get a grip on [parent_movable] because [save_rider.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [parent_movable] because your hands are full!</span>")
+		return COMPONENT_INCOMPATIBLE
+
+
+/datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
 	SIGNAL_HANDLER
 
-	var/atom/movable/AM = parent
-	remove_abilities(M)
-	restore_position(M)
-	unequip_buckle_inhands(M)
-	M.updating_glide_size = TRUE
-	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
+	var/atom/movable/movable_parent = parent
+	remove_abilities(rider)
+	restore_position(rider)
+	unequip_buckle_inhands(rider)
+	rider.updating_glide_size = TRUE
+	if(del_on_unbuckle_all && !movable_parent.has_buckled_mobs())
 		qdel(src)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
@@ -113,34 +154,44 @@
 
 	vehicle_moved(source, new_dir)
 
-/datum/component/riding/proc/ride_check(mob/living/M)
-	var/atom/movable/AM = parent
-	var/mob/AMM = AM
+/datum/component/riding/proc/ride_check(mob/living/rider)
+	var/atom/movable/parent_movable = parent
 	var/kick_us_off
-	if((ride_check_rider_restrained && HAS_TRAIT(M, TRAIT_RESTRAINED)) || (ride_check_rider_incapacitated && M.incapacitated(TRUE, TRUE)))
-		kick_us_off = TRUE
-	if(kick_us_off || (istype(AMM) && ((ride_check_ridden_restrained && HAS_TRAIT(AMM, TRAIT_RESTRAINED)) || (ride_check_ridden_incapacitated && AMM.incapacitated(TRUE, TRUE)))))
-		M.visible_message("<span class='warning'>[M] falls off of [AM]!</span>", \
-						"<span class='warning'>You fall off of [AM]!</span>")
-		AM.unbuckle_mob(M)
-	return TRUE
 
-/datum/component/riding/proc/force_dismount(mob/living/M, gentle = FALSE)
-	var/atom/movable/AM = parent
-	AM.unbuckle_mob(M)
-	if(isanimal(AM) || iscyborg(AM))
-		var/turf/target = get_edge_target_turf(AM, AM.dir)
-		var/turf/targetm = get_step(get_turf(AM), AM.dir)
-		M.Move(targetm)
-		if(gentle)
-			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
-			"<span class='warning'>You're thrown clear of [AM]!</span>")
-			M.throw_at(target, 8, 3, AM, gentle = TRUE)
-		else
-			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
-			"<span class='warning'>You're thrown violently from [AM]!</span>")
-			M.throw_at(target, 14, 5, AM, gentle = FALSE)
-		M.Knockdown(3 SECONDS)
+	if(rider_holding_on && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
+		kick_us_off = TRUE
+	else if(ridden_holding_rider && ismob(parent_movable))
+		var/mob/parent_mob = parent_movable
+		if(HAS_TRAIT(parent_mob, TRAIT_RESTRAINED) || parent_mob.incapacitated(TRUE, TRUE))
+			kick_us_off = TRUE
+
+	if(!kick_us_off)
+		return TRUE
+
+	rider.visible_message("<span class='warning'>[rider] falls off of [parent_movable]!</span>", \
+					"<span class='warning'>You fall off of [parent_movable]!</span>")
+	parent_movable.unbuckle_mob(rider)
+
+
+/datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
+	var/atom/movable/parent_movable = parent
+	parent_movable.unbuckle_mob(rider)
+
+	if(!isanimal(parent_movable) && !iscyborg(parent_movable))
+		return
+
+	var/turf/target = get_edge_target_turf(parent_movable, parent_movable.dir)
+	var/turf/targetm = get_step(get_turf(parent_movable), parent_movable.dir)
+	rider.Move(targetm)
+	if(gentle)
+		rider.visible_message("<span class='warning'>[rider] is thrown clear of [parent_movable]!</span>", \
+		"<span class='warning'>You're thrown clear of [parent_movable]!</span>")
+		rider.throw_at(target, 8, 3, parent_movable, gentle = TRUE)
+	else
+		rider.visible_message("<span class='warning'>[rider] is thrown violently from [parent_movable]!</span>", \
+		"<span class='warning'>You're thrown violently from [parent_movable]!</span>")
+		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
+	rider.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -263,14 +314,17 @@
 		slowed = FALSE
 
 ///////Yes, I said humans. No, this won't end well...//////////
-/datum/component/riding/human
-	del_on_unbuckle_all = TRUE
-	ride_check_rider_incapacitated = FALSE
-	ride_check_rider_restrained = TRUE
-	var/ride_check_ridden_incapacitated = FALSE
-	var/ride_check_ridden_restrained = FALSE
 
-/datum/component/riding/human/Initialize()
+
+
+/datum/component/riding/human
+	/// Is the parent fireman carrying the cargo, or is the cargo riding along on the parent?
+	var/carry_mode
+	del_on_unbuckle_all = TRUE
+
+
+
+/datum/component/riding/human/Initialize(riding_flags, mob/living/riding_mob)
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
@@ -385,7 +439,7 @@
 		else
 			inhand.rider = riding_target_override
 		inhand.parent = AM
-		for(var/obj/item/I in user.held_items) // yes i know this sucks but these are ABSTRACT++ dumbness and i'm not adding a whole new flag for these two meme items
+		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
 			if((I.obj_flags & HAND_ITEM))
 				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))

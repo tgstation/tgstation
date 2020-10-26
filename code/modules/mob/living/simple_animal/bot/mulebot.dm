@@ -70,9 +70,9 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	var/riding_flags = (RIDING_RIDER_HOLDING_ON) //so mobs fall off when the vehicle is shot.
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding, riding_flags)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(0, 12), TEXT_WEST = list(0, 12)))
-	D.ride_check_rider_incapacitated = TRUE //so mobs fall off when the vehicle is shot.
 	D.set_vehicle_dir_layer(SOUTH, layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
 	D.set_vehicle_dir_layer(NORTH, layer)
 	D.set_vehicle_dir_layer(EAST, layer)
