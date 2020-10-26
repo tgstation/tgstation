@@ -209,19 +209,19 @@
 
 /obj/item/stack/tile/carpet/executive
 	name = "executive carpet"
-	icon_state = "tile-carpet-executive"
+	icon_state = "tile_carpet_executive"
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/executive
 
 /obj/item/stack/tile/carpet/stellar
 	name = "stellar carpet"
-	icon_state = "tile-carpet-stellar"
+	icon_state = "tile_carpet_stellar"
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/stellar
 
 /obj/item/stack/tile/carpet/donk
 	name = "donk co promotional carpet"
-	icon_state = "tile-carpet-donk"
+	icon_state = "tile_carpet_donk"
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/donk
 
