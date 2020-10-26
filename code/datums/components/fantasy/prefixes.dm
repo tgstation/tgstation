@@ -66,3 +66,29 @@
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
 	return "vampiric [newName]"
+
+/datum/fantasy_affix/aesthetic
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+
+/datum/fantasy_affix/aesthetic/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	MODIFY_BEAUTY(master, max(comp.quality, 1) * 250)
+	return "[pick("aesthetic", "beautiful", "gorgeous", "handsome")] [newName]"
+
+/datum/fantasy_affix/aesthetic/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	MODIFY_BEAUTY(master, -max(comp.quality, 1) * 250)
+
+/datum/fantasy_affix/ugly
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_EVIL
+
+/datum/fantasy_affix/ugly/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	MODIFY_BEAUTY(master, min(comp.quality, -1) * 250)
+	return "[pick("fugly", "ugly", "grotesque", "hideous")] [newName]"
+
+/datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	MODIFY_BEAUTY(master, -min(comp.quality, -1) * 250)

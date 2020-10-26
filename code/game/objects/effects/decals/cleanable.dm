@@ -26,7 +26,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty))
+	MODIFY_BEAUTY(src, beauty)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))

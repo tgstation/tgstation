@@ -1484,19 +1484,29 @@
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
+	var/former_beauty = 0
+	var/new_beauty = 0
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
+			former_beauty += custom_material.beauty_modifier * custom_materials[i]
 
 	if(!length(materials))
 		custom_materials = null
+		MODIFY_BEAUTY(src, -former_beauty)
 		return
 
 	if(!(material_flags & MATERIAL_NO_EFFECTS))
 		for(var/x in materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
+			var/amount = materials[x] * multiplier * material_modifier
+			custom_material.on_applied(src, amount, material_flags)
+			new_beauty += custom_material.beauty_modifier * amount
+
+	if(new_beauty != former_beauty)
+		MODIFY_BEAUTY(src, new_beauty - former_beauty)
+
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
