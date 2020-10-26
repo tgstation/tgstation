@@ -102,3 +102,101 @@
 	human2borg.set_species(/datum/species/android)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [name]!</span>")
 	return TRUE
+
+
+/*********Ever-Burning Candle**********/
+
+/datum/religion_rites/fireproof
+	name = "Unmelting Wax"
+	desc = "Grants fire immunity to any piece of clothing."
+	ritual_length = 15 SECONDS
+	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
+	"... allow this unworthy apparel to serve you ...",
+	"... make it strong enough to burn a thousand time and more ...")
+	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
+	favor_cost = 1000
+///the piece of clothing that will be fireproofed, only one per rite
+	var/obj/item/clothing/chosen_clothing
+
+/datum/religion_rites/fireproof/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/clothing/apparel in get_turf(religious_tool))
+		if(apparel.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			continue //we ignore anything that is already fireproof
+		chosen_clothing = apparel //the apparel has been chosen by our lord and savior
+		return ..()
+	return FALSE
+
+/datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
+	for(chosen_clothing in get_turf(religious_tool))
+		chosen_clothing.name = "unmelting [chosen_clothing.name]"
+		chosen_clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		chosen_clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+		chosen_clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+		chosen_clothing.heat_protection = chosen_clothing.body_parts_covered
+		chosen_clothing.resistance_flags |= FIRE_PROOF
+		chosen_clothing = null //our lord and savior no longer cares about this apparel
+		return TRUE
+	chosen_clothing = null
+	to_chat(user, "<span class='warning'>The clothing that was chosen for the rite is no longer on the altar!</span>")
+	return FALSE
+
+
+/datum/religion_rites/burning_sacrifice
+	name = "Candle Fuel"
+	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
+	ritual_length = 10 SECONDS
+	ritual_invocations = list("To feed the fire of the one true flame ...",
+	"... to make it burn brighter ...",
+	"... so that it may consume all in its path ...",
+	"... I offer you this pitiful being ...")
+	invoke_msg = "... may it join you in the amalgamation of wax and fire, and become one in the black and white scene. "
+///the burning corpse chosen for the sacrifice of the rite
+	var/mob/living/carbon/chosen_sacrifice
+
+/datum/religion_rites/burning_sacrifice/perform_rite(mob/living/user, atom/religious_tool)
+	if(!ismovable(religious_tool))
+		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+		return FALSE
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool)
+		return FALSE
+	if(!LAZYLEN(movable_reltool.buckled_mobs))
+		to_chat(user, "<span class='warning'>Nothing is buckled to the altar!</span>")
+		return FALSE
+	for(var/mob/living/carbon/corpse in movable_reltool.buckled_mobs) //works with any carbon corpse,not just humans
+		if(corpse.stat != DEAD)
+			to_chat(user, "<span class='warning'>You can only sacrifice dead bodies, this one is still alive!</span>")
+			return FALSE
+		if(!corpse.on_fire)
+			to_chat(user, "<span class='warning'>This corpse needs to be on fire to be sacrificed!</span>")
+			return FALSE
+		chosen_sacrifice = corpse
+		return ..()
+	return FALSE
+
+/datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	for(chosen_sacrifice in religious_tool.buckled_mobs) //checks one last time if the right corpse is still buckled
+		var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
+		GLOB.religious_sect?.adjust_favor(favor_gained, user)
+		to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
+		chosen_sacrifice.dust(force = TRUE)
+		chosen_sacrifice = null
+		return TRUE
+	to_chat(user, "<span class='warning'>The sacrifice has been moved before you could finish the rite!</span>")
+	chosen_sacrifice = null
+	return FALSE
+
+
+/datum/religion_rites/infinite_candle
+	name = "Immortal Candles"
+	desc = "Creates 5 candles that never run out of wax."
+	ritual_length = 10 SECONDS
+	invoke_msg = "please lend us five of your candles so we may bask in your Ever-Burning glory."
+	favor_cost = 200
+
+/datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	var/altar_turf = get_turf(religious_tool)
+	for(var/candle_count = 0, candle_count < 5, candle_count++)
+		new /obj/item/candle/infinite(altar_turf)
+	playsound(get_turf(altar_turf), 'sound/magic/charge.ogg', 50, TRUE)
+	return TRUE
