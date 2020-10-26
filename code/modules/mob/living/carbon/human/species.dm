@@ -54,15 +54,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/say_mod = "says"
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
 	var/species_language_holder = /datum/language_holder
-	/// Default mutant bodyparts for this species, like horns. Don't forget to set one for every mutant bodypart you allow this species to have.
-	var/list/default_features = list()
-	/// Visible CURRENT bodyparts that are unique to a species.
-	///
-	/// DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
-	/// SHIT UP! Changes to this list for non-species specific bodyparts (ie
-	/// cat ears and tails) should be assigned at organ level if possible.
-	/// Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts]
-	/// below.
+	/**
+	  * Visible CURRENT bodyparts that are unique to a species.
+	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
+	  * SHIT UP! Changes to this list for non-species specific bodyparts (ie
+	  * cat ears and tails) should be assigned at organ level if possible.
+	  * Assoc values are defaults for given bodyparts, also modified by aforementioned organs.
+	  * They also allow for faster '[]' list access versus 'in'. Other than that, they are useless right now.
+	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
+	  */
 	var/list/mutant_bodyparts = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
@@ -343,7 +343,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.hud_used.update_locked_slots()
 
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+	if(C.dna.species.mutant_bodyparts["legs"] && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
@@ -436,8 +436,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(C.movement_type & FLYING)
 			ToggleFlight(C)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
-		if("wings" in C.dna.species.mutant_bodyparts)
-			C.dna.species.mutant_bodyparts -= "wings"
+		C.dna.species.mutant_bodyparts -= "wings"
 		C.dna.features["wings"] = "None"
 		C.update_body()
 
@@ -727,64 +726,64 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
-	if("tail_lizard" in mutant_bodyparts)
+	if(mutant_bodyparts["tail_lizard"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_lizard"
 
-	if("waggingtail_lizard" in mutant_bodyparts)
+	if(mutant_bodyparts["waggingtail_lizard"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_lizard"
-		else if ("tail_lizard" in mutant_bodyparts)
+		else if (mutant_bodyparts["tail_lizard"])
 			bodyparts_to_add -= "waggingtail_lizard"
 
-	if("tail_human" in mutant_bodyparts)
+	if(mutant_bodyparts["tail_human"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
 
 
-	if("waggingtail_human" in mutant_bodyparts)
+	if(mutant_bodyparts["waggingtail_human"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
-		else if ("tail_human" in mutant_bodyparts)
+		else if (mutant_bodyparts["tail_human"])
 			bodyparts_to_add -= "waggingtail_human"
 
-	if("spines" in mutant_bodyparts)
+	if(mutant_bodyparts["spines"])
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
 
-	if("waggingspines" in mutant_bodyparts)
+	if(mutant_bodyparts["waggingspines"])
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingspines"
-		else if ("tail" in mutant_bodyparts)
+		else if (mutant_bodyparts["tail"])
 			bodyparts_to_add -= "waggingspines"
 
-	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
+	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
 		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "snout"
 
-	if("frills" in mutant_bodyparts)
+	if(mutant_bodyparts["frills"])
 		if(!H.dna.features["frills"] || H.dna.features["frills"] == "None" || H.head && (H.head.flags_inv & HIDEEARS) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "frills"
 
-	if("horns" in mutant_bodyparts)
+	if(mutant_bodyparts["horns"])
 		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "horns"
 
-	if("ears" in mutant_bodyparts)
+	if(mutant_bodyparts["ears"])
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "ears"
 
-	if("wings" in mutant_bodyparts)
+	if(mutant_bodyparts["wings"])
 		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
 			bodyparts_to_add -= "wings"
 
-	if("wings_open" in mutant_bodyparts)
+	if(mutant_bodyparts["wings_open"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))
 			bodyparts_to_add -= "wings_open"
-		else if ("wings" in mutant_bodyparts)
+		else if (mutant_bodyparts["wings"])
 			bodyparts_to_add -= "wings_open"
 
-	if("moth_antennae" in mutant_bodyparts)
+	if(mutant_bodyparts["moth_antennae"])
 		if(!H.dna.features["moth_antennae"] || H.dna.features["moth_antennae"] == "None" || !HD)
 			bodyparts_to_add -= "moth_antennae"
 
@@ -1287,18 +1286,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
-		//Steal them shoes
-		if(target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
-			var/obj/item/I = target.shoes
-			user.visible_message("<span class='warning'>[user] starts stealing [target]'s [I.name]!</span>",
-							"<span class='danger'>You start stealing [target]'s [I.name]...</span>", null, null, target)
-			to_chat(target, "<span class='userdanger'>[user] starts stealing your [I.name]!</span>")
-			if(do_after(user, I.strip_delay, target))
-				target.dropItemToGround(I, TRUE)
-				user.put_in_hands(I)
-				user.visible_message("<span class='warning'>[user] stole [target]'s [I.name]!</span>",
-								"<span class='notice'>You stole [target]'s [I.name]!</span>", null, null, target)
-				to_chat(target, "<span class='userdanger'>[user] stole your [I.name]!</span>")
 		target.grabbedby(user)
 		return TRUE
 
@@ -1915,7 +1902,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly = new
 		fly.Grant(H)
 	if(H.dna.features["wings"] != wings_icon)
-		mutant_bodyparts |= "wings"
+		mutant_bodyparts["wings"] = wings_icon
 		H.dna.features["wings"] = wings_icon
 		H.update_body()
 

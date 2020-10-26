@@ -139,9 +139,11 @@
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
-	if (!islist(json["jobs_changes"]))
-		log_world("map_config \"job_changes\" field is missing or invalid!")
-		return
+	if ("jobs_changes" in json)
+		if(!islist(json["jobs_changes"]))
+			log_world("map_config \"job_changes\" field is missing or invalid!")
+			return
+		job_changes = json["job_changes"]
 
 	defaulted = FALSE
 	return TRUE
