@@ -74,11 +74,7 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
-	eng_payout()
-	sci_payout()
-	secmedsrv_payout()
-	civ_payout()
-	car_payout()
+	departmental_payouts()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
 	for(var/account in bank_accounts_by_id)
@@ -100,58 +96,31 @@ SUBSYSTEM_DEF(economy)
 			return D
 
 /**
-  * How much does the engineering department make in passive income?
-  * Payout used to be based on power generated, but power generated at batshit insane rates, so we'll just go with 1000 credits per supermatter on the map.
+  * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+  * Iterates over every department account for the same payment.
   */
-/datum/controller/subsystem/economy/proc/eng_payout()
-	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
-	if(D)
-		D.adjust_money(MAX_GRANT_ENG)
-
-/**
-  * Cargo's natural income generation.
-  * Naturally lower than all other departments because they LITERALLY print money.
-  */
-/datum/controller/subsystem/economy/proc/car_payout()
-	var/datum/bank_account/D = get_dep_account(ACCOUNT_CAR)
-	if(D)
-		D.adjust_money(MAX_GRANT_CAR)
-
-/**
-  * Payout based on crew safety, health, and mood.
-  * Checks through the full list of living players, and obtains their mood. Mood increases departmental earnings.
-  * Then, pays medical based on their percentage of total health, times the alive_human_bounty.
-  * Finally, security is paid based on the number of living crew alive/total crew, multiplied by the crew_safety_bounty.
-  */
-/datum/controller/subsystem/economy/proc/secmedsrv_payout()
+/datum/controller/subsystem/economy/proc/departmental_payouts()
+	var/datum/bank_account/engine = get_dep_account(ACCOUNT_ENG)
+	var/datum/bank_account/cargo = get_dep_account(ACCOUNT_CAR)
 	var/datum/bank_account/service = get_dep_account(ACCOUNT_SRV)
-	if(service)
-		service.adjust_money(MAX_GRANT_SRV)
 	var/datum/bank_account/medical = get_dep_account(ACCOUNT_MED)
-	if(medical)
-		medical.adjust_money(MAX_GRANT_MED)
-		CHECK_TICK
 	var/datum/bank_account/security = get_dep_account(ACCOUNT_SEC)
-	if(security)
-		security.adjust_money(MAX_GRANT_SEC)
-
-/**
-  * Science is paid for the number of slimes living at a given time. Remind me to make this something less rudimentry when science has experiments. ~Arcane.
-  */
-/datum/controller/subsystem/economy/proc/sci_payout()
 	var/datum/bank_account/science = get_dep_account(ACCOUNT_SCI)
-	if(science)
-		science.adjust_money(MAX_GRANT_SCI)
-
-/** Payout based on Effort and market ebb/flow.
-  *	For every civilian bounty completed, they make 100 credits plus a random 500-1000.
-  * Rewards participation towards the rest of the crew getting resources, as the control of this budget is the HOP.
-  */
-/datum/controller/subsystem/economy/proc/civ_payout()
 	var/datum/bank_account/civilian = get_dep_account(ACCOUNT_CIV)
+	if(engine)
+		engine.adjust_money(MAX_GRANT_DPT)
+	if(cargo)
+		cargo.adjust_money(MAX_GRANT_DPT)
+	if(service)
+		service.adjust_money(MAX_GRANT_DPT)
+	if(medical)
+		medical.adjust_money(MAX_GRANT_DPT)
+	if(security)
+		security.adjust_money(MAX_GRANT_DPT)
+	if(science)
+		science.adjust_money(MAX_GRANT_DPT)
 	if(civilian)
-		civilian.adjust_money(MAX_GRANT_CIV)
-
+		civilian.adjust_money(MAX_GRANT_DPT)
 
 /**
   * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.

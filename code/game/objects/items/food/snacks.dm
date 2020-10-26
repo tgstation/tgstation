@@ -24,7 +24,7 @@
 	bite_consumption = 10
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtypes = JUNKFOOD | RAW | GROSS
-	custom_price = 800
+	custom_price = 400
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 

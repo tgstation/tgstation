@@ -107,7 +107,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = 325
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"

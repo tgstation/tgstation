@@ -12,13 +12,7 @@
 
 #define STATION_TARGET_BUFFER 40
 
-#define MAX_GRANT_CAR 500
-#define MAX_GRANT_CIV 500
-#define MAX_GRANT_ENG 1000
-#define MAX_GRANT_SCI 1500
-#define MAX_GRANT_SEC 750
-#define MAX_GRANT_MED 750
-#define MAX_GRANT_SRV 750
+#define MAX_GRANT_DPT 500
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"

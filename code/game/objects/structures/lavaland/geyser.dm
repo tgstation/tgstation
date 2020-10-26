@@ -87,4 +87,4 @@
 	reinforced = TRUE
 	plunge_mod = 0.8
 
-	custom_premium_price = 1200
+	custom_premium_price = 600
