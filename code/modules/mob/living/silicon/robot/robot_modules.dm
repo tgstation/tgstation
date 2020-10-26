@@ -285,6 +285,32 @@
 	can_be_pushed = FALSE
 	hat_offset = 3
 
+/obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/image/medihound_image = image(icon = 'icons/mob/widerobots.dmi', icon_state = "medihound")
+	medihound_image.pixel_x = -16
+	var/list/medic_icons = sortList(list(
+		"Regular" = image(icon = 'icons/mob/robots.dmi', icon_state = "medical"),
+		"Medihound" = medihound_image
+		))
+	var/medic_robot_icon = show_radial_menu(R, R , medic_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+	switch(medic_robot_icon)
+		if("Regular")
+			cyborg_base_icon = "medical"
+		if("Medihound")
+			cyborg_base_icon = "medihound"
+		else
+			return FALSE
+	return ..()
+
+/obj/item/robot_module/medical/do_transform_delay()
+	. = ..()
+	if(cyborg_base_icon == "medihound")
+		var/matrix/M = matrix()
+		M.Translate(-16, 0)
+		robot.transform = M
+		robot.icon = 'icons/mob/widerobots.dmi'
+
 /obj/item/robot_module/engineering
 	name = "Engineering"
 	basic_modules = list(
