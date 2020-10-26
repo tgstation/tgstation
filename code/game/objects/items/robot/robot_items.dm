@@ -9,6 +9,7 @@
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/charge_cost = 30
+	var/stamina_loss_amt = 60
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -22,7 +23,7 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Paralyze(100)
+	M.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 	M.apply_effect(EFFECT_STUTTER, 5)
 
 	M.visible_message("<span class='danger'>[user] prods [M] with [src]!</span>", \
