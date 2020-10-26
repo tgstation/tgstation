@@ -32335,9 +32335,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bzU" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
@@ -36462,7 +36459,7 @@
 	dir = 8;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -37731,7 +37728,7 @@
 	dir = 8;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
