@@ -12,12 +12,14 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
+	max_integrity = 250
+	integrity_failure = 0.2
 	force = 7
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 
 	// Built automatically from the corresponding vending machine.
 	// If null, considered to be full. Otherwise, is list(/typepath = amount).
@@ -49,3 +51,27 @@
 		. += contraband[key]
 	for(var/key in premium)
 		. += premium[key]
+
+/obj/item/vending_refill/obj_break(damage_flag)
+	. = ..()
+	if(get_part_rating()!=INFINITY)
+		var/list/product_list = products+contraband+premium
+		for(var/key in product_list)
+			for(var/a in 1 to product_list[key])
+				if(prob(80)) //haha funny proc
+					new key(loc)
+		visible_message("<span class='notice'>[src] releases some of its contents as it breaks.</span>")
+	else
+		visible_message("<span class='warning'>[src]'s anti theft system destroys its contents before breaking.</span>")
+	new /obj/item/broken_refill(loc)
+	qdel(src)
+
+/obj/item/broken_refill
+	name = "broken resupply canister"
+	icon = 'icons/obj/vending_restock.dmi'
+	icon_state = "refill_broken"
+	inhand_icon_state = "restock_unit"
+	desc = "A broken vending machine restock cart. It's completely useless."
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
