@@ -22,7 +22,10 @@ export const Hypertorus = (props, context) => {
     fuel_injection_rate,
     moderator_injection_rate,
     current_damper,
-    fusion_started,
+    power_level,
+    start_power,
+    start_cooling,
+    start_fuel,
     internal_fusion_temperature,
     moderator_internal_temperature,
     internal_output_temperature,
@@ -46,16 +49,43 @@ export const Hypertorus = (props, context) => {
       resizable>
       <Window.Content>
         <Section title="Fusion Reactor">
-          <LabeledList>
-            <LabeledList.Item label="Powered">
-              <Button
-                disabled={data.power_level > 2}
-                icon={data.fusion_started ? 'power-off' : 'times'}
-                content={data.fusion_started ? 'On' : 'Off'}
-                selected={data.fusion_started}
-                onClick={() => act('fusion_started')} />
-            </LabeledList.Item>
-          </LabeledList>
+          <Section title="Switches">
+            <Flex>
+              <LabeledList>
+                <LabeledList.Item label="Start power">
+                  <Button
+                    disabled={data.power_level > 0}
+                    icon={data.start_power ? 'power-off' : 'times'}
+                    content={data.start_power ? 'On' : 'Off'}
+                    selected={data.start_power}
+                    onClick={() => act('start_power')} />
+                </LabeledList.Item>
+              </LabeledList>
+              <LabeledList>
+                <LabeledList.Item label="Start cooling">
+                  <Button
+                    disabled={start_fuel === 1
+                      || start_power === 0
+                      || data.power_level > 0}
+                    icon={data.start_cooling ? 'power-off' : 'times'}
+                    content={data.start_cooling ? 'On' : 'Off'}
+                    selected={data.start_cooling}
+                    onClick={() => act('start_cooling')} />
+                </LabeledList.Item>
+              </LabeledList>
+              <LabeledList>
+                <LabeledList.Item label="Start fuel injection">
+                  <Button
+                    disabled={start_power === 0
+                      || start_cooling === 0}
+                    icon={data.start_fuel ? 'power-off' : 'times'}
+                    content={data.start_fuel ? 'On' : 'Off'}
+                    selected={data.start_fuel}
+                    onClick={() => act('start_fuel')} />
+                </LabeledList.Item>
+              </LabeledList>
+            </Flex>
+          </Section>
           <Section>
             <Section title="Internal Fusion Gases">
               {fusion_gases.map(gas => (
@@ -89,6 +119,15 @@ export const Hypertorus = (props, context) => {
             </Section>
           </Section>
           <Section title="Reactor Parameters">
+            <LabeledList.Item label="Power Level">
+              <ProgressBar
+                value={power_level}
+                ranges={{
+                  good: [0, 2],
+                  average: [2, 4],
+                  bad: [4, 6],
+                }} />
+            </LabeledList.Item>
             <LabeledList.Item label="Energy Levels">
               <ProgressBar
                 color={'yellow'}
@@ -113,7 +152,7 @@ export const Hypertorus = (props, context) => {
                 value={core_temperature}
                 minValue={-1e40}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(core_temperature, 1, 'K')}
+                {formatSiBaseTenUnit(core_temperature * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Power Output">
@@ -131,7 +170,7 @@ export const Hypertorus = (props, context) => {
                 value={heat_limiter_modifier}
                 minValue={-1e40}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(heat_limiter_modifier, 1, 'K')}
+                {formatSiBaseTenUnit(heat_limiter_modifier * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Heat Output">
@@ -140,7 +179,7 @@ export const Hypertorus = (props, context) => {
                 value={heat_output}
                 minValue={-1e40}
                 maxValue={1e30}>
-                {heat_output_bool + formatSiBaseTenUnit(heat_output, 1, 'K')}
+                {heat_output_bool + formatSiBaseTenUnit(heat_output * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
           </Section>
@@ -151,7 +190,7 @@ export const Hypertorus = (props, context) => {
                 value={internal_fusion_temperature}
                 minValue={0}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(internal_fusion_temperature, 1, 'K')}
+                {formatSiBaseTenUnit(internal_fusion_temperature * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Moderator gas temperature">
@@ -160,7 +199,7 @@ export const Hypertorus = (props, context) => {
                 value={moderator_internal_temperature}
                 minValue={0}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(moderator_internal_temperature, 1, 'K')}
+                {formatSiBaseTenUnit(moderator_internal_temperature * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Output gas temperature">
@@ -169,7 +208,7 @@ export const Hypertorus = (props, context) => {
                 value={internal_output_temperature}
                 minValue={0}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(internal_output_temperature, 1, 'K')}
+                {formatSiBaseTenUnit(internal_output_temperature * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Coolant output temperature">
@@ -178,7 +217,7 @@ export const Hypertorus = (props, context) => {
                 value={internal_coolant_temperature}
                 minValue={0}
                 maxValue={1e30}>
-                {formatSiBaseTenUnit(internal_coolant_temperature, 1, 'K')}
+                {formatSiBaseTenUnit(internal_coolant_temperature * 1000, 1, 'K')}
               </ProgressBar>
             </LabeledList.Item>
           </Section>

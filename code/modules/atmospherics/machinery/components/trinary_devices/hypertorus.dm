@@ -171,7 +171,11 @@
 	///Checks if the machine state is active (all parts are connected)
 	var/active = FALSE
 	///Checks if the user has started the machine
-	var/fusion_started = FALSE
+	var/start_power = FALSE
+
+	var/start_cooling = FALSE
+
+	var/start_fuel = FALSE
 
 	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
@@ -284,7 +288,7 @@
 	var/common_channel = null
 
 	///Our soundloop
-	var/datum/looping_sound/supermatter/soundloop
+	var/datum/looping_sound/hypertorus/soundloop
 	///cooldown tracker for accent sounds
 	var/last_accent_sound = 0
 
@@ -330,6 +334,7 @@
 		for(var/corner in corners)
 			QDEL_NULL(corner)
 	QDEL_NULL(radio)
+	QDEL_NULL(soundloop)
 	return..()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
@@ -457,6 +462,8 @@
 	linked_moderator.active = TRUE
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
+	soundloop = new(list(src), TRUE)
+	soundloop.volume = 5
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
 	if(!active)
@@ -473,6 +480,7 @@
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
+	QDEL_NULL(soundloop)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
 	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
@@ -480,8 +488,11 @@
 	return FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_power_use()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
 		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
 	var/integrity = get_integrity()
@@ -557,7 +568,11 @@
 		return
 
 	//now check if the machine has been turned on by the user
-	if(!fusion_started)
+	if(!start_power)
+		return
+
+	if(!check_power_use())
+		deactivate()
 		return
 
 	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
@@ -570,15 +585,11 @@
 		var/next_sound = round((100 - aggression) * 5) + 5
 		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
+	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
+
 	/*
 	 *Storing variables such as gas mixes, temperature, volume, moles
 	 */
-	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
-	var/datum/gas_mixture/buffer
-	buffer = linked_input.airs[1].remove(fuel_injection_rate * 0.1)
-	internal_fusion.merge(buffer)
-	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
-	moderator_internal.merge(buffer)
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
 	if(power_level > 4)
@@ -591,16 +602,11 @@
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
-	check_power_use()
-
-	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-	var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-	var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
-	internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
-	moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
+	if(!start_cooling)
+		return
 
 	//Cooling of the moderator gases with the cooling loop in and out the core
-	if(airs[1].total_moles() > 0)
+	if(airs[1].total_moles() > 0 && moderator_internal.total_moles() > 0)
 		var/datum/gas_mixture/cooling_in = airs[1]
 		var/datum/gas_mixture/cooling_out = airs[2]
 		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
@@ -609,6 +615,17 @@
 		var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
 		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
+		cooling_out.merge(cooling_remove)
+
+	else if(airs[1].total_moles() > 0 && internal_fusion.total_moles() > 0)
+		var/datum/gas_mixture/cooling_in = airs[1]
+		var/datum/gas_mixture/cooling_out = airs[2]
+		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
+
+		var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
+		var/cooling_heat_amount = METALLIC_VOID_CONDUCTIVITY * 2 * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
+		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
 		cooling_out.merge(cooling_remove)
 
 	fusion_temperature = internal_fusion.temperature
@@ -621,6 +638,22 @@
 	linked_input.update_parents()
 	linked_output.update_parents()
 	linked_moderator.update_parents()
+
+	if(!start_fuel)
+		return
+
+	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
+	var/datum/gas_mixture/buffer
+	buffer = linked_input.airs[1].remove(fuel_injection_rate * 0.1)
+	internal_fusion.merge(buffer)
+	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
+	moderator_internal.merge(buffer)
+
+	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+	var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
+	var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+	internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
+	moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
@@ -644,10 +677,13 @@
 		return
 
 	//now check if the machine has been turned on by the user
-	if(!fusion_started)
+	if(!start_fuel)
 		return
 
 	if(!check_fuel())
+		return
+
+	if(!check_power_use())
 		return
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
@@ -1059,7 +1095,12 @@
 	data["fuel_injection_rate"] = connected_core.fuel_injection_rate
 	data["moderator_injection_rate"] = connected_core.moderator_injection_rate
 	data["current_damper"] = connected_core.current_damper
-	data["fusion_started"] = connected_core.fusion_started
+
+	data["power_level"] = connected_core.power_level
+
+	data["start_power"] = connected_core.start_power
+	data["start_cooling"] = connected_core.start_cooling
+	data["start_fuel"] = connected_core.start_fuel
 
 	data["internal_fusion_temperature"] = connected_core.fusion_temperature
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
@@ -1073,9 +1114,15 @@
 	if(.)
 		return
 	switch(action)
-		if("fusion_started")
-			connected_core.fusion_started = !connected_core.fusion_started
-			connected_core.use_power = connected_core.fusion_started ? ACTIVE_POWER_USE : IDLE_POWER_USE
+		if("start_power")
+			connected_core.start_power = !connected_core.start_power
+			connected_core.use_power = connected_core.start_power ? ACTIVE_POWER_USE : IDLE_POWER_USE
+			. = TRUE
+		if("start_cooling")
+			connected_core.start_cooling = !connected_core.start_cooling
+			. = TRUE
+		if("start_fuel")
+			connected_core.start_fuel = !connected_core.start_fuel
 			. = TRUE
 		if("heating_conductor")
 			var/heating_conductor = params["heating_conductor"]
