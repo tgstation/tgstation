@@ -130,7 +130,7 @@
 	for(chosen_clothing in get_turf(religious_tool))
 		chosen_clothing.name = "unmelting [chosen_clothing.name]"
 		chosen_clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		chosen_clothing.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+		chosen_clothing.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 		chosen_clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		chosen_clothing.heat_protection = chosen_clothing.body_parts_covered
 		chosen_clothing.resistance_flags |= FIRE_PROOF
@@ -144,7 +144,7 @@
 /datum/religion_rites/burning_sacrifice
 	name = "Candle Fuel"
 	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
-	ritual_length = 10 SECONDS
+	ritual_length = 20 SECONDS
 	ritual_invocations = list("To feed the fire of the one true flame ...",
 	"... to make it burn brighter ...",
 	"... so that it may consume all in its path ...",
