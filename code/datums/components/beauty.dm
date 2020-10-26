@@ -3,7 +3,8 @@
   * Clean and well decorated areas lead to a positive moodlets for passerbies, while shabbier, dirtier ones
   * lead to negative moodlets exclusive to characters with the snob quirk.
   *
-  * Please use MODIFY_BEAUTY() macro for both adding and removing beauty and refrain from using qdel() or RemoveComponent().
+  * Keep in mind AddComponent is used for BOTH adding and removing beauty value here.
+  * Please don't use qdel/RemoveComponent unless necessary.
   */
 /datum/component/beauty
 	var/beauty = 0

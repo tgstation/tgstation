@@ -526,6 +526,3 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<2)
 #define IGNORE_HELD_ITEM (1<<3)
 #define IGNORE_INCAPACITATED (1<<4)
-
-/// Maybe I'm too cautious, but I don't want any coder to screw up and qdel()'ing all of it somewhere, thinking it was a simple dupe-able component.
-#define MODIFY_BEAUTY(atom, value) INVOKE_ASYNC(atom, /datum.proc/_AddComponent, list(/datum/component/beauty, value))
