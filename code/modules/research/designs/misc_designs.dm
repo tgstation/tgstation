@@ -296,6 +296,16 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/id/silver
+	name = "Silver Identification Card"
+	desc = "A silver card which shows honour and dedication."
+	id = "silver_idcard"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/silver = 1500, /datum/material/glass = 200)
+	build_path = /obj/item/card/id/silver
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/eng_gloves
 	name = "Tinkers Gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."

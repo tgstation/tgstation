@@ -66,6 +66,8 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	inhand_icon_state = "card-id"
+	worn_icon = 'icons/mob/clothing/belt.dmi'
+	worn_icon_state = "grey_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
@@ -74,6 +76,11 @@
 	var/id_type_name = "identification card"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
+	var/trim = NONE // Department access flags wont take away wildcards when using the appropriate trim
+	var/card_level = CARD_LEVEL_GREY
+	// used_common_wildcards() returns the number being a used
+	var/common_wildcards = 2 // N of wildcards possible. see used_common_wildcards() for wc being used.
+	var/command_wildcards = 0
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/access_txt // mapping aid
@@ -247,6 +254,8 @@
 	. = ..()
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+	if(trim != NONE)
+		. += "The card is trimmed with a [get_region_accesses_name(trim)] trim."
 	. += "<span class='notice'><i>There's more information below, you can look again to take a closer look...</i></span>"
 
 /obj/item/card/id/examine_more(mob/user)
@@ -276,6 +285,35 @@
 
 	return msg
 
+//Returns the number of already used wildcards.
+/obj/item/card/id/proc/used_common_wildcards()
+	var/count = 0
+	var/list/a_region = get_region_accesses(trim)
+	var/list/c_access = get_common_accesses()
+	if(trim != NONE)
+		for(var/a in access)
+			if(!a_region.Find(a) && c_access.Find(a)) // if their card is trimmed, we dont count those access flags as wildcards
+				count++
+	else
+		for(var/a in access)
+			if(c_access.Find(a))
+				count++
+	return count
+
+/obj/item/card/id/proc/used_command_wildcards()
+	var/count = 0
+	var/list/a_region = get_region_accesses(trim)
+	var/list/c_access = get_command_accesses()
+	if(trim != NONE)
+		for(var/a in access)
+			if(!a_region.Find(a) && c_access.Find(a))
+				count++
+	else
+		for(var/a in access)
+			if(c_access.Find(a))
+				count++
+	return count
+
 /obj/item/card/id/GetAccess()
 	return access
 
@@ -294,7 +332,9 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, "assigned")
 	if(job)
-		. += mutable_appearance(icon, "id[job]")
+		. += mutable_appearance(icon, "id[job]") // TODO: make special mime and clown trim display
+	if(trim)
+		. += mutable_appearance(icon, "trim[ckey(get_region_accesses_name(trim))]")
 
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
@@ -331,6 +371,10 @@ update_label()
 	name = "silver identification card"
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
+	worn_icon_state = "silver_card"
+	card_level = CARD_LEVEL_SILVER
+	common_wildcards = 5
+	command_wildcards = 2
 	icon_state = "silver"
 	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -346,8 +390,13 @@ update_label()
 	name = "gold identification card"
 	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
+	card_level = CARD_LEVEL_GOLD
+	common_wildcards = 100
+	command_wildcards = 100
+	// wildcards don't matter at this card level
 	icon_state = "gold"
 	inhand_icon_state = "gold_id"
+	worn_icon_state = "gold_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -475,7 +524,7 @@ update_label()
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
-/obj/item/card/id/captains_spare
+/obj/item/card/id/gold/captains_spare
 	name = "captain's spare ID"
 	id_type_name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
@@ -487,13 +536,13 @@ update_label()
 	assignment = "Captain"
 	registered_age = null
 
-/obj/item/card/id/captains_spare/Initialize()
+/obj/item/card/id/gold/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	. = ..()
 	update_label()
 
-/obj/item/card/id/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
+/obj/item/card/id/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
 		update_icon()
@@ -609,6 +658,7 @@ update_label()
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
 	inhand_icon_state = "orange-id"
+	worn_icon_state = "orange_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"

@@ -17,6 +17,7 @@
 
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
+	card_trim = TRIM_COMMAND
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 

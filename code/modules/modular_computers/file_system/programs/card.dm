@@ -212,7 +212,13 @@
 					if(!job)
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
+					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.card_trim && job.card_trim != NONE)) // Grey & Silver cards don't have enough wildcards if the trims don't match
+						to_chat(user, "<span class='warning'>Card trim doesn't match the selected job.</span>")
+						return
 					new_access = job.get_access()
+					if(!check_access_valid(new_access, target_id_card.card_level, target_id_card.trim))
+						to_chat(user, "<span class='warning'>This job has accesses that cannot fit on this card.</span>")
+						return
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
 				target_id_card.assignment = target
@@ -222,16 +228,38 @@
 		if("PRG_access")
 			if(!computer || !authenticated)
 				return
+			var/list/r_access = get_region_accesses(target_id_card.trim)
 			var/access_type = text2num(params["access_target"])
 			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
 				if(access_type in target_id_card.access)
 					target_id_card.access -= access_type
-				else
-					target_id_card.access |= access_type
+				else if(access_type in get_common_accesses())
+					if((target_id_card.used_common_wildcards() < target_id_card.common_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
+						target_id_card.access |= access_type
+					else
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommon Slots: [target_id_card.used_common_wildcards()]/[target_id_card.common_wildcards]</span>")
+				else if(access_type in get_command_accesses())
+					if((target_id_card.used_command_wildcards() < target_id_card.command_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
+						target_id_card.access |= access_type
+					else
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommand Slots: [target_id_card.used_command_wildcards()]/[target_id_card.command_wildcards]</span>")
+				else if(access_type in get_private_command_accesses()) // Private access can only be obtained from gold or silver + correct trim
+					if(target_id_card.card_level >= CARD_LEVEL_GOLD || (target_id_card.card_level == CARD_LEVEL_SILVER && r_access.Find(access_type)))
+						target_id_card.access |= access_type
+					else
+						to_chat(user, "<span class='warning'>This card cannot hold private command level accesses without the appropriate trim.</span>")
+				else if(access_type in get_captain_accesses()) //
+					if(target_id_card.card_level >= CARD_LEVEL_GOLD)
+						target_id_card.access |= access_type
+					else
+						to_chat(user, "<span class='warning'>This card cannot hold captain level accesses.</span>")
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
+				return
+			if(target_id_card.card_level < CARD_LEVEL_GOLD) // cards below gold can't hold every access anyway so there is no point in testing wildcards.
+				to_chat(user, "<span class='warning'>This card cannot hold every access.</span>")
 				return
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -246,6 +274,18 @@
 			if(!computer || !authenticated)
 				return
 			var/region = text2num(params["region"])
+			var/list/r_access = get_region_accesses(region)
+			if(target_id_card.card_level < CARD_LEVEL_SILVER)
+				to_chat(user, "<span class='warning'>This card cannot hold every access in this region.</span>")
+				return
+			if(target_id_card.card_level == CARD_LEVEL_SILVER)
+				if(target_id_card.trim != region)
+					to_chat(user, "<span class='warning'>This cards trim doesn't match this region.</span>")
+					return
+				for(var/c_access in get_captain_accesses())
+					if(r_access.Find(c_access)) // check to make sure there are no captain accesses to prevent getting more accesses than inteded
+						to_chat(user, "<span class='warning'>There are captain accesses in this region that this card can't have.</span>")
+						return
 			if(isnull(region))
 				return
 			target_id_card.access |= get_region_accesses(region)

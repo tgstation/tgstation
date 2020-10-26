@@ -1100,6 +1100,14 @@
 	req_components = list(
 		/obj/item/stock_parts/card_reader = 1)
 
+/obj/item/circuitboard/machine/card_trimmer
+	name = "Card Trimmer (Machine Board)"
+	icon_state = "service"
+	build_path = /obj/machinery/card_trimmer
+	req_components = list(
+		/obj/item/stock_parts/card_reader = 1,
+		/obj/item/stock_parts/manipulator = 1)
+
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
