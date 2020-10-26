@@ -20,16 +20,13 @@
 	var/drive_verb = "drive"
 	/// If we should delete this component when we have nothing left buckled, used for buckling to mobs
 	var/del_on_unbuckle_all = FALSE
+	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
+	var/respect_mob_mobility = TRUE
 
 	/// If the rider needs hands free in order to not fall off (fails if they're incap'd or restrained)
 	var/rider_holding_on = FALSE
 	/// If the ridden needs a hand free to carry the rider (fails if they're incap'd or restrained)
 	var/ridden_holding_rider = FALSE
-
-
-
-	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
-	var/respect_mob_mobility = TRUE
 
 
 /datum/component/riding/Initialize(riding_flags, mob/living/riding_mob)
@@ -44,15 +41,16 @@
 	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
 	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 
-	if(!riding_mob)
+	if(!riding_mob) // none of the following checks matter if we're just setting this up on initialize, the following is for human carrying and such
 		return
 
+	// see if we have room to add this person
 	if(parent_movable.has_buckled_mobs() && ((riding_mob in parent_movable.buckled_mobs) || parent_movable.buckled_mobs.len >= parent_movable.max_buckled_mobs))
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/parent_living = parent
+	// see if we're already, in fact, carrying this person
 	if(isliving(parent_living) && parent_living.buckled)
-		testing("already has a thing buckled? thing: [parent_living.buckled]")
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/carbon/human/human_parent = parent // likely should be somewhere else
@@ -143,6 +141,8 @@
 		var/mob/buckled_mob = m
 		ride_check(buckled_mob)
 		buckled_mob.set_glide_size(movable_parent.glide_size)
+	if(QDELETED(src))
+		return // runtimed with piggy's without this, look into this more
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
 
@@ -172,7 +172,6 @@
 	rider.visible_message("<span class='warning'>[rider] falls off of [parent_movable]!</span>", \
 					"<span class='warning'>You fall off of [parent_movable]!</span>")
 	parent_movable.unbuckle_mob(rider)
-
 
 /datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
 	var/atom/movable/parent_movable = parent
@@ -315,15 +314,8 @@
 		slowed = FALSE
 
 ///////Yes, I said humans. No, this won't end well...//////////
-
-
-
 /datum/component/riding/human
-	/// Is the parent fireman carrying the cargo, or is the cargo riding along on the parent?
-	var/carry_mode
 	del_on_unbuckle_all = TRUE
-
-
 
 /datum/component/riding/human/Initialize(riding_flags, mob/living/riding_mob)
 	. = ..()
@@ -340,6 +332,7 @@
 	var/mob/living/carbon/human/H = parent
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
+/// If the carrier gets shoved, drop our load
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	SIGNAL_HANDLER
 
@@ -433,7 +426,7 @@
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
-	testing(" start equip - needed [amount_required]")
+
 	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
 		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
 		if(!riding_target_override)
@@ -446,15 +439,12 @@
 				qdel(I)
 		if(user.put_in_hands(inhand, TRUE))
 			amount_equipped++
-			testing("equipped: [amount_equipped] | needed [amount_required]")
 		else
 			break
 
 	if(amount_equipped >= amount_required)
-		testing("had enough, true")
 		return TRUE
 	else
-		testing("not enough, false")
 		unequip_buckle_inhands(user)
 		return FALSE
 
