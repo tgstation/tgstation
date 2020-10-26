@@ -58,7 +58,7 @@
 		var/list/product_list = products+contraband+premium
 		for(var/key in product_list)
 			for(var/a in 1 to product_list[key])
-				if(prob(80)) //haha funny proc
+				if(prob(40))
 					new key(loc)
 		visible_message("<span class='notice'>[src] releases some of its contents as it breaks.</span>")
 	else
