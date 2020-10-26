@@ -1112,16 +1112,14 @@
 
 	if(target.loc == loc)
 		buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
-	else
-		var/old_density = density
-		density = FALSE
-		step_towards(target, loc)
-		density = old_density
-		if(target.loc == loc)
-			buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
+		return
 
-
-
+	var/old_density = density
+	density = FALSE
+	step_towards(target, loc)
+	density = old_density
+	if(target.loc == loc)
+		buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1137,14 +1135,7 @@
 		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
 
-	// fireman
-	//buckle_mob(target, TRUE, TRUE, 90, 1, 0)
-
-
-	// pigback
-	// buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
 	buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_PIGBACK)
-
 
 // /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, carry_mode)
