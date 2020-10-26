@@ -111,40 +111,28 @@
 /// Gives a gangster their equipment in their backpack and / or pockets.
 /datum/antagonist/gang/proc/equip_gangster_in_inventory()
 	if(istype(owner.current, /mob/living/carbon/human))
-		for(var/C in my_gang.free_clothes)
-			var/obj/O = new C(owner.current)
-			var/list/slots = list (
-				"backpack" = ITEM_SLOT_BACKPACK,
-				"left pocket" = ITEM_SLOT_LPOCKET,
-				"right pocket" = ITEM_SLOT_RPOCKET,
-				"hands" = ITEM_SLOT_HANDS
-			)
+		var/list/slots = list (
+			"backpack" = ITEM_SLOT_BACKPACK,
+			"left pocket" = ITEM_SLOT_LPOCKET,
+			"right pocket" = ITEM_SLOT_RPOCKET,
+			"hands" = ITEM_SLOT_HANDS
+		)
+		for(var/clothing in my_gang.free_clothes)
+			var/obj/O = new clothing(owner.current)
 			var/mob/living/carbon/human/H = owner.current
 			var/equipped = H.equip_in_one_of_slots(O, slots)
 			if(!equipped)
 				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
 				qdel(O)
-		for(var/CD in my_gang.current_theme.bonus_items)
-			var/obj/O = new CD(owner.current)
-			var/list/slots = list (
-				"backpack" = ITEM_SLOT_BACKPACK,
-				"left pocket" = ITEM_SLOT_LPOCKET,
-				"right pocket" = ITEM_SLOT_RPOCKET,
-				"hands" = ITEM_SLOT_HANDS
-			)
+		for(var/bonus_item in my_gang.current_theme.bonus_items)
+			var/obj/O = new bonus_item(owner.current)
 			var/mob/living/carbon/human/H = owner.current
 			var/equipped = H.equip_in_one_of_slots(O, slots)
 			if(!equipped)
 				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
 				qdel(O)
-		for(var/CD in my_gang.current_theme.bonus_first_gangster_items)
-			var/obj/O = new CD(owner.current)
-			var/list/slots = list (
-				"backpack" = ITEM_SLOT_BACKPACK,
-				"left pocket" = ITEM_SLOT_LPOCKET,
-				"right pocket" = ITEM_SLOT_RPOCKET,
-				"hands" = ITEM_SLOT_HANDS
-			)
+		for(var/bonus_starter_item in my_gang.current_theme.bonus_first_gangster_items)
+			var/obj/O = new bonus_starter_item(owner.current)
 			var/mob/living/carbon/human/H = owner.current
 			var/equipped = H.equip_in_one_of_slots(O, slots)
 			if(!equipped)

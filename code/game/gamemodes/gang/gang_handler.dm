@@ -54,7 +54,7 @@ GLOBAL_VAR(families_override_theme)
 	/// List of all family member minds. Used internally; added to internally, and externally by /obj/item/gang_induction_package when used to induct a new family member.
 	var/list/gangbangers = list()
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
-	var/gang_balance_cap = 5
+	var/gang_balance_cap = 999 // disabled for now, will full remove if positive impact on testmerges
 	/// Whether the handler corresponds to a ruleset that does not trigger at round start. Should be set externally only if applicable; used internally.
 	var/midround_ruleset = FALSE
 	/// Whether we want to use the 30 to 15 minute timer instead of the 60 to 30 minute timer, for Dynamic.
@@ -110,7 +110,8 @@ GLOBAL_VAR(families_override_theme)
 		current_theme = new theme_to_use
 	else
 		current_theme = new GLOB.families_override_theme
-	for(var/i in 1 to length(current_theme.involved_gangs))
+	var/gangsters_to_make = length(current_theme.involved_gangs) * current_theme.starting_gangsters
+	for(var/i in 1 to gangsters_to_make)
 		if (!antag_candidates.len)
 			break
 		var/taken = pick_n_take(antag_candidates) // original used antag_pick, but that's local to game_mode and rulesets use pick_n_take so this is fine maybe
@@ -174,12 +175,19 @@ GLOBAL_VAR(families_override_theme)
 		if(return_if_no_gangs)
 			return FALSE // ending early is bad if we're not in dynamic
 	var/list/gangs_to_use = current_theme.involved_gangs
-	for(var/datum/mind/gangbanger in gangbangers)
+	var/amount_of_gangs = gangs_to_use.len // idk if the len will change mid loop w/ pick n take
+
+	for(var/i in 1 to amount_of_gangs)
 		var/gang_to_use = pick_n_take(gangs_to_use)
-		var/datum/antagonist/gang/new_gangster = new gang_to_use()
-		new_gangster.handler = src
-		new_gangster.starter_gangster = TRUE
-		gangbanger.add_antag_datum(new_gangster)
+		for(var/i_two_the_sequel_starring_the_rock_and_adam_sandler in 1 to current_theme.starting_gangsters)
+			if(!gangbangers.len)
+				break
+			var/datum/mind/gangbanger = pick_n_take(gangbangers)
+			var/datum/antagonist/gang/new_gangster = new gang_to_use()
+			new_gangster.handler = src
+			new_gangster.starter_gangster = TRUE
+			gangbanger.add_antag_datum(new_gangster)
+
 		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
