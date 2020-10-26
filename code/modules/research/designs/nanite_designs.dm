@@ -141,7 +141,7 @@
 	program_type = /datum/nanite_program/regenerative
 	category = list("Medical Nanites")
 
-/datum/design/nanites/regenerative
+/datum/design/nanites/preserving
 	name = "Organ Preservation"
 	desc = "The nanites preserve the host's organs in case of death, preventing their decay."
 	id = "preserving_nanites"
