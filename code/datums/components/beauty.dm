@@ -1,5 +1,5 @@
 /**
-  * Beauty component, makes indoors areas prettier/uglier depending on the tallied beauty of their contents.
+  * Beauty component, makes the indoor area the parent is in prettier or uglier depending on the beauty var.
   * Clean and well decorated areas lead to a positive moodlets for passerbies, while shabbier, dirtier ones
   * lead to negative moodlets exclusive to characters with the snob quirk.
   *
