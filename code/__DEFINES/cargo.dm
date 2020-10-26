@@ -30,6 +30,11 @@
 #define POD_SHAPE_NORML 1
 #define POD_SHAPE_OTHER 2
 
+#define POD_TRANSIT "1"
+#define POD_FALLING "2"
+#define POD_OPENING "3"
+#define POD_LEAVING "4"
+
 #define SUPPLYPOD_X_OFFSET -16
 
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)

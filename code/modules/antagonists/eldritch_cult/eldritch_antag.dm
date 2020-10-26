@@ -6,6 +6,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
+	hijack_speed = 0.5
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -91,33 +92,45 @@
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
-	for(var/i in 1 to 2)
-		var/pck = pick("assasinate","stalk","protect")
-		switch(pck)
-			if("assasinate")
-				var/datum/objective/assassinate/A = new
-				A.owner = owner
-				var/list/owners = A.get_owners()
-				A.find_target(owners,protection)
-				assasination += A.target
-				objectives += A
-			if("stalk")
-				var/datum/objective/stalk/S = new
-				S.owner = owner
-				S.find_target()
-				objectives += S
-			if("protect")
-				var/datum/objective/protect/P = new
-				P.owner = owner
-				var/list/owners = P.get_owners()
-				P.find_target(owners,assasination)
-				protection += P.target
-				objectives += P
+
+	var/choose_list_begin = list("assassinate","protect")
+	var/choose_list_end = list("assassinate","hijack","protect","glory")
+
+	var/pck1 = pick(choose_list_begin)
+	var/pck2 = pick(choose_list_end)
+
+	forge_objective(pck1,assasination,protection)
+	forge_objective(pck2,assasination,protection)
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
+
+/datum/antagonist/heretic/proc/forge_objective(string,assasination,protection)
+	switch(string)
+		if("assassinate")
+			var/datum/objective/assassinate/A = new
+			A.owner = owner
+			var/list/owners = A.get_owners()
+			A.find_target(owners,protection)
+			assasination += A.target
+			objectives += A
+		if("hijack")
+			var/datum/objective/hijack/hijack = new
+			hijack.owner = owner
+			objectives += hijack
+		if("glory")
+			var/datum/objective/martyr/martyrdom = new
+			martyrdom.owner = owner
+			objectives += martyrdom
+		if("protect")
+			var/datum/objective/protect/P = new
+			P.owner = owner
+			var/list/owners = P.get_owners()
+			P.find_target(owners,assasination)
+			protection += P.target
+			objectives += P
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -209,33 +222,6 @@
 ////////////////
 // Objectives //
 ////////////////
-
-/datum/objective/stalk
-	name = "spendtime"
-	var/timer = 5 MINUTES
-
-/datum/objective/stalk/process(delta_time)
-	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
-		timer -= delta_time * 10 // timer is in deciseconds
-	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
-	if(timer <= 0)
-		STOP_PROCESSING(SSprocessing,src)
-
-/datum/objective/stalk/Destroy(force, ...)
-	STOP_PROCESSING(SSprocessing,src)
-	return ..()
-
-/datum/objective/stalk/update_explanation_text()
-	//we want to start processing after we set the timer
-	timer += rand(-3 MINUTES, 3 MINUTES)
-	START_PROCESSING(SSprocessing,src)
-	if(target?.current)
-		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
-	else
-		explanation_text = "Free Objective"
-
-/datum/objective/stalk/check_completion()
-	return timer <= 0 || explanation_text == "Free Objective"
 
 /datum/objective/sacrifice_ecult
 	name = "sacrifice"

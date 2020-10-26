@@ -201,6 +201,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = "secateurs"
+	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -219,6 +220,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
 	inhand_icon_state = "secateurs"
+	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1

@@ -36,6 +36,7 @@
 	..()
 	assume_disguise(old_species, H)
 	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
+	H.set_safe_hunger_level()
 
 /datum/species/synth/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
@@ -65,7 +66,6 @@
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
 		mutant_organs = S.mutant_organs.Copy()
-		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
 		limbs_id = S.limbs_id
@@ -82,7 +82,6 @@
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()
-		default_features = list()
 		nojumpsuit = initial(nojumpsuit)
 		no_equip = list()
 		qdel(fake_species)

@@ -423,7 +423,8 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			people_on_station++
-			for(var/R in H.reagents.addiction_list)
+			var/list/addictions = H.get_addiction_list()
+			for(var/R in addictions)
 				if(istype(R, /datum/reagent/drug/methamphetamine))
 					people_on_crack++
 	if(0.25*people_on_station > people_on_crack)

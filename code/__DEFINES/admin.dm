@@ -105,6 +105,8 @@
 #define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
 #define ADMIN_PUNISHMENT_DOCK "Dock Pay"
 #define ADMIN_PUNISHMENT_BREAD "Bread"
+/// Applies [/datum/component/omen] to the target, optionally permanently.
+#define ADMIN_PUNISHMENT_BADLUCK "Bad Luck"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
@@ -126,7 +128,7 @@
 #define MAX_KEYS_PER_KEYBIND 3
 ///Max amount of keypress messages per second over two seconds before client is autokicked
 #define MAX_KEYPRESS_AUTOKICK 50
-///Length of held key rolling buffer
+///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
 
 #define STICKYBAN_DB_CACHE_TIME 10 SECONDS

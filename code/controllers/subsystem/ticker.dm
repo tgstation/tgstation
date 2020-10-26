@@ -62,6 +62,9 @@ SUBSYSTEM_DEF(ticker)
 	/// People who have been commended and will receive a heart
 	var/list/hearts
 
+	/// Why an emergency shuttle was called
+	var/emergency_reason
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -453,7 +456,7 @@ SUBSYSTEM_DEF(ticker)
 		if(5) //every 5 ticks check if there is a slot available
 			listclearnulls(queued_players)
 			if(living_player_count() < hpc)
-				if(next_in_line && next_in_line.client)
+				if(next_in_line?.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
 					next_in_line.LateChoices()
@@ -525,7 +528,10 @@ SUBSYSTEM_DEF(ticker)
 		if(STATION_DESTROYED_NUKE)
 			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [station_name()] are, in fact, a hoax. Have a secure day!"
 		if(STATION_EVACUATED)
-			news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
+			if(emergency_reason)
+				news_message = "[station_name()] has been evacuated after transmitting the following distress beacon:\n\n[emergency_reason]"
+			else
+				news_message = "The crew of [station_name()] has been evacuated amid unconfirmed reports of enemy activity."
 		if(BLOB_WIN)
 			news_message = "[station_name()] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
 		if(BLOB_NUKE)

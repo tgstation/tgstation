@@ -58,6 +58,7 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
+	icon_state = null
 	item_flags = DROPDEL
 
 /obj/item/clothing/head/changeling/Initialize()
@@ -165,6 +166,10 @@
 		for(var/slot in GLOB.slots)
 			if(istype(user.vars[slot], GLOB.slot2type[slot]))
 				qdel(user.vars[slot])
+		for(var/i in user.all_scars)
+			var/datum/scar/iter_scar = i
+			if(iter_scar.fake)
+				qdel(iter_scar)
 
 	var/datum/changelingprofile/prof = get_dna(chosen_name)
 	return prof

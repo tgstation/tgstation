@@ -213,7 +213,7 @@
 	var/datum/bank_account/buyer_account
 	var/privacy_lock = TRUE
 
-/obj/item/storage/lockbox/order/Initialize(datum/bank_account/_buyer_account)
+/obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
 

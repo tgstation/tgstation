@@ -207,6 +207,7 @@
 	inhand_icon_state = "constable"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	custom_price = 350
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
@@ -372,7 +373,7 @@
 
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "Elder Atmosian Helmet"
-	desc = "A superb helmet made with the thoughest and rarest materials avaiable to man."
+	desc = "A superb helmet made with the toughest and rarest materials available to man."
 	icon_state = "knight_greyscale"
 	inhand_icon_state = "knight_greyscale"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
@@ -465,7 +466,7 @@
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
