@@ -4234,19 +4234,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer4,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"akP" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/security/armory)
 "akQ" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -84017,7 +84004,7 @@ aim
 aiO
 ajj
 ajT
-akP
+ajT
 alA
 amh
 amZ
