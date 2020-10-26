@@ -1,6 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Mech pilots can once again open doors they have access to without exiting their mech."
-  - bugfix: "Upgrading a MK-I Ripley to MK-II no longer deletes the equipment, and will now match the same percentage integrity that the MK-I had before the upgrade."
-  - balance: "Ripleys no longer spawn with ore boxes. Go raid the mining outpost if you really need one."

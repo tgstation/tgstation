@@ -1,4 +1,0 @@
-author: "MadMedicineMan"
-delete-after: True
-changes: 
-  - bugfix: "Canisters now display correct max. pressure"
