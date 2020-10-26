@@ -616,6 +616,15 @@
 	build_path = /obj/item/circuitboard/machine/vendatray
 	category = list ("Misc. Machinery")
 
+/datum/design/board/card_trimmer
+	name = "Machine Design (Card Trimmer)"
+	desc = "The circuit board for a card trimmer."
+	id = "card_trimmer"
+	build_type = PROTOLATHE
+	build_path = /obj/item/circuitboard/machine/card_trimmer
+	category = list("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/board/bountypad
 	name = "Machine Design (Civilian Bounty Pad)"
 	desc = "The circuit board for a Civilian Bounty Pad."

@@ -286,16 +286,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/card_trimmer
-	name = "Identification Card Trimmer"
-	desc = "A device that can replace the trim of Nanotrasen cards, changing its predefined access slots."
-	id = "idcard_trimmer"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/uranium = 2000, /datum/material/silver = 1000, /datum/material/iron=500, /datum/material/glass = 200)
-	build_path = /obj/item/card_trimmer
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."

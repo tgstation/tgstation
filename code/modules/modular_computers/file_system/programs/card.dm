@@ -234,15 +234,15 @@
 				if(access_type in target_id_card.access)
 					target_id_card.access -= access_type
 				else if(access_type in get_common_accesses())
-					if((target_id_card.get_common_wildcards() < target_id_card.common_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
+					if((target_id_card.used_common_wildcards() < target_id_card.common_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
 						target_id_card.access |= access_type
 					else
-						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommon Slots: [target_id_card.get_common_wildcards()]/[target_id_card.common_wildcards]</span>")
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommon Slots: [target_id_card.used_common_wildcards()]/[target_id_card.common_wildcards]</span>")
 				else if(access_type in get_command_accesses())
-					if((target_id_card.get_command_wildcards() < target_id_card.command_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
+					if((target_id_card.used_command_wildcards() < target_id_card.command_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
 						target_id_card.access |= access_type
 					else
-						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommand Slots: [target_id_card.get_command_wildcards()]/[target_id_card.command_wildcards]</span>")
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommand Slots: [target_id_card.used_command_wildcards()]/[target_id_card.command_wildcards]</span>")
 				else if(access_type in get_private_command_accesses()) // Private access can only be obtained from gold or silver + correct trim
 					if(target_id_card.card_level >= CARD_LEVEL_GOLD || (target_id_card.card_level == CARD_LEVEL_SILVER && r_access.Find(access_type)))
 						target_id_card.access |= access_type

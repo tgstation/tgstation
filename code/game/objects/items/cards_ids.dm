@@ -78,8 +78,8 @@
 	var/list/access = list()
 	var/trim = NONE // Department access flags wont take away wildcards when using the appropriate trim
 	var/card_level = CARD_LEVEL_GREY
-	// get_common_wildcards() returns the number being a used
-	var/common_wildcards = 2 // N of wildcards possible. see get_common_wildcards() for wc being used.
+	// used_common_wildcards() returns the number being a used
+	var/common_wildcards = 2 // N of wildcards possible. see used_common_wildcards() for wc being used.
 	var/command_wildcards = 0
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -127,10 +127,6 @@
 		return
 	else if(istype(W, /obj/item/coin))
 		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/card_trimmer))
-		var/obj/item/card_trimmer/CT = W
-		CT.trim_card(src, user)
 		return
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
@@ -291,7 +287,7 @@
 	return msg
 
 //Returns the number of already used wildcards.
-/obj/item/card/id/proc/get_common_wildcards()
+/obj/item/card/id/proc/used_common_wildcards()
 	var/count = 0
 	var/list/a_region = get_region_accesses(trim)
 	var/list/c_access = get_common_accesses()
@@ -305,7 +301,7 @@
 				count++
 	return count
 
-/obj/item/card/id/proc/get_command_wildcards()
+/obj/item/card/id/proc/used_command_wildcards()
 	var/count = 0
 	var/list/a_region = get_region_accesses(trim)
 	var/list/c_access = get_command_accesses()

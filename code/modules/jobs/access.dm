@@ -215,22 +215,22 @@
 	var/list/ca_access = get_captain_accesses()
 	switch(card_level)
 		if(CARD_LEVEL_GREY)
-			var/obj/item/card/id/C = new /obj/item/card/id
-			C.access = accesses
-			C.trim = trim
-			if((C.common_wildcards < C.get_common_wildcards()) || (C.command_wildcards < C.get_command_wildcards())) // make sure wildcards are valid
+			var/obj/item/card/id/test_card = new /obj/item/card/id
+			test_card.access = accesses
+			test_card.trim = trim
+			if((test_card.common_wildcards < test_card.used_common_wildcards()) || (test_card.command_wildcards < test_card.used_command_wildcards())) // make sure wildcards are valid
 				return FALSE
-			for(var/A in C.access)
+			for(var/A in test_card.access)
 				if(pc_access.Find(A) || ca_access.Find(A)) // make sure there are no flags of these levels
 					return FALSE
 		if(CARD_LEVEL_SILVER)
-			var/obj/item/card/id/silver/C = new /obj/item/card/id/silver
-			C.access = accesses
-			C.trim = trim
-			if((C.common_wildcards < C.get_common_wildcards()) || (C.command_wildcards < C.get_command_wildcards()))
+			var/obj/item/card/id/silver/test_card = new /obj/item/card/id/silver
+			test_card.access = accesses
+			test_card.trim = trim
+			if((test_card.common_wildcards < test_card.used_common_wildcards()) || (test_card.command_wildcards < test_card.used_command_wildcards()))
 				return FALSE
-			for(var/A in C.access)
-				if((pc_access.Find(A) && !r_access.Find(A)) || ca_access.Find(A)) // make sure there are no flags of these levels if the trim and region mismatch
+			for(var/A in test_card.access)
+				if(((pc_access.Find(A) || ca_access.Find(A)) && !r_access.Find(A))) // make sure there are no flags of these levels if the trim and region mismatch
 					return FALSE
 		if(CARD_LEVEL_GOLD)
 			return TRUE
