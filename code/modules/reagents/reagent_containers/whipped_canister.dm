@@ -41,7 +41,7 @@
 		return
 	if(!target.reagents)
 		return
-	if(isliving(target))
+	if(isliving(target)) //Sorry fellas, no getting high off pressurized reagents (yet)
 		return
 	whippedcolor = mix_color_from_reagents(reagents.reagent_list) // The color check needs to be here, or the last whipped pile created from a canister will be completely white
 	// Always log attemped injections for admins
@@ -70,7 +70,7 @@
 
 
 /obj/item/reagent_containers/food/whipped_canister/update_overlays()
-	. = list()
+	. = ..()
 	if(reagents)
 		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whippedbottle")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
