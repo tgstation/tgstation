@@ -9,7 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	possible_transfer_amounts = list()
-	custom_materials = list(/datum/material/iron=15, /datum/material/glass=15)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	reagent_flags = TRANSPARENT | OPENCONTAINER // Just slap a beaker against it until it's full
 	custom_price = 100
 	var/whippedcolor = null // Used for changing the whipped pile on top of the food

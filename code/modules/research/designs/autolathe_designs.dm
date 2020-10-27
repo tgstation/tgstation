@@ -433,6 +433,14 @@
 	build_path = /obj/item/reagent_containers/food/drinks/shaker
 	category = list("initial","Dinnerware")
 
+/datum/design/whipped_canister
+	name = "Whipped Cream Canister"
+	id = "whipped_canister"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 10)
+	build_path = /obj/item/reagent_containers/food/whipped_canister
+	category = list("initial","Dinnerware")
+
 /datum/design/cultivator
 	name = "Cultivator"
 	id = "cultivator"
