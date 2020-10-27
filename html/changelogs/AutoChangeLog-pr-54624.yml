@@ -1,0 +1,4 @@
+author: "skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Removed a duplicate table and holopad from MetaStation"
