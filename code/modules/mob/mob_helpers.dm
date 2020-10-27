@@ -531,3 +531,32 @@
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+
+//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/mob/proc/get_idcard(hand_first)
+	if(!length(held_items)) //Early return for mobs without hands.
+		return
+	//Check hands
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item) //Check active hand
+		. = held_item.GetID()
+	if(!.) //If there is no id, check the other hand
+		held_item = get_inactive_held_item()
+		if(held_item)
+			. = held_item.GetID()
+
+/mob/proc/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()
+
+//Returns the bank account of an ID the user may be holding.
+/mob/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I?.registered_account)
+		account = I.registered_account
+		return account

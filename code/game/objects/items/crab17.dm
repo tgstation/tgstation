@@ -9,7 +9,7 @@
 	var/dumped = FALSE
 
 /obj/item/suspiciousphone/attack_self(mob/user)
-	if(!ishuman(user))
+	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>This device is too advanced for you!</span>")
 		return
 	if(dumped)
@@ -22,8 +22,7 @@
 		if (!targetturf)
 			return FALSE
 		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
-		var/mob/living/carbon/human/H = user
-		accounts_to_rob -= H.get_bank_account()
+		accounts_to_rob -= user.get_bank_account()
 		for(var/i in accounts_to_rob)
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
@@ -41,7 +40,7 @@
 	pixel_z = -8
 	max_integrity = 5000
 	var/list/accounts_to_rob
-	var/mob/living/carbon/human/bogdanoff
+	var/mob/bogdanoff
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)

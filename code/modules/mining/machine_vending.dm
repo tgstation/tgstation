@@ -113,20 +113,16 @@
 
 /obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
 	. = list()
-	var/mob/living/carbon/human/H
-	var/obj/item/card/id/C
-	if(ishuman(user))
-		H = user
-		C = H.get_idcard(TRUE)
-		if(C)
-			.["user"] = list()
-			.["user"]["points"] = C.mining_points
-			if(C.registered_account)
-				.["user"]["name"] = C.registered_account.account_holder
-				if(C.registered_account.account_job)
-					.["user"]["job"] = C.registered_account.account_job.title
-				else
-					.["user"]["job"] = "No Job"
+	var/obj/item/card/id/C = user.get_idcard(TRUE)
+	if(C)
+		.["user"] = list()
+		.["user"]["points"] = C.mining_points
+		if(C.registered_account)
+			.["user"]["name"] = C.registered_account.account_holder
+			if(C.registered_account.account_job)
+				.["user"]["job"] = C.registered_account.account_job.title
+			else
+				.["user"]["job"] = "No Job"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	. = ..()

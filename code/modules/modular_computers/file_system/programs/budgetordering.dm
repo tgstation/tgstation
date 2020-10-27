@@ -193,7 +193,7 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid && ishuman(usr))
+			if(self_paid)
 				var/mob/living/carbon/human/H = usr
 				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
 				if(!istype(id_card))
