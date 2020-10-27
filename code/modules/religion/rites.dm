@@ -106,6 +106,13 @@
 
 /*********Ever-Burning Candle**********/
 
+///apply a bunch of fire immunity effect to clothing
+/datum/religion_rites/fireproof/proc/apply_fireproof(obj/item/clothing/fireproofed)
+	fireproofed.name = "unmelting [fireproofed.name]"
+	fireproofed.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	fireproofed.heat_protection = chosen_clothing.body_parts_covered
+	fireproofed.resistance_flags |= FIRE_PROOF
+
 /datum/religion_rites/fireproof
 	name = "Unmelting Wax"
 	desc = "Grants fire immunity to any piece of clothing."
@@ -128,12 +135,9 @@
 
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
 	for(chosen_clothing in get_turf(religious_tool))
-		chosen_clothing.name = "unmelting [chosen_clothing.name]"
-		chosen_clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		chosen_clothing.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
-		chosen_clothing.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-		chosen_clothing.heat_protection = chosen_clothing.body_parts_covered
-		chosen_clothing.resistance_flags |= FIRE_PROOF
+		for(var/obj/item/clothing/head/integrated_clothing in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof that too
+			apply_fireproof(integrated_clothing)
+		apply_fireproof(chosen_clothing)
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
