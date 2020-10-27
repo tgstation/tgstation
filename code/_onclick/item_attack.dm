@@ -72,8 +72,11 @@
   * * mob/living/user - The mob hitting with this item
   */
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE
+	switch(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user))
+		if(COMPONENT_CANCEL_ATTACK_CHAIN)
+			return TRUE
+		if(COMPONENT_SKIP_ATTACK)
+			return
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
