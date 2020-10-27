@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/food/whipped_canister // For when you want your cakes and pies to have a little extra something (bath salts)
 	name = "Whipped Cream Canister"
-	desc = "An advanced form of condiment spreading, allowing for the foaming of a reagent over a dish."
+	desc = "An advanced piece of condiment foaming technology. Perfect for pastries!"
 	icon = 'icons/obj/food/containers.dmi'
 	amount_per_transfer_from_this = 2
 	volume = 10
@@ -13,7 +13,7 @@
 	reagent_flags = TRANSPARENT | OPENCONTAINER // Just slap a beaker against it until it's full
 	custom_price = 100
 	var/whippedcolor = null // Used for changing the whipped pile on top of the food
-	var/list/blacklist = list(/obj/item/extinguisher, /obj/item/reagent_containers/syringe) 
+	var/list/blacklist = list(/obj/item/extinguisher, /obj/item/reagent_containers/syringe)
 
 /obj/item/reagent_containers/food/whipped_canister/Initialize()
 	. = ..()
@@ -44,7 +44,7 @@
 		return
 	if(isliving(target)) //Sorry fellas, no getting high off pressurized reagents (yet)
 		return
-	if(is_type_in_list(target, blacklist)) //To make sure nobody can fill fire extinguishers or epipens with bath salts
+	if(is_type_in_list(target, blacklist)) //To make sure nobody can fill fire extinguishers with bath salts
 		return
 	whippedcolor = mix_color_from_reagents(reagents.reagent_list) // The color check needs to be here, or the last whipped pile created from a canister will be completely white
 	// Always log attemped injections for admins
