@@ -3538,17 +3538,13 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aif" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "disposal bay door"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aig" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "trash"
+/obj/machinery/mass_driver/trash{
+	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -3946,8 +3942,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24
 	},
 /turf/open/floor/plating,
@@ -32335,9 +32330,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bzU" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
@@ -36462,7 +36454,7 @@
 	dir = 8;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -37731,7 +37723,7 @@
 	dir = 8;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -53183,9 +53175,7 @@
 "cBK" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
-	pixel_x = 0;
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -53748,9 +53738,8 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cDq" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "toxinsdriver"
+/obj/machinery/mass_driver/toxins{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -53768,10 +53757,7 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "cDt" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "Toxins Launcher Bay Door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -58903,9 +58889,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "cRm" = (
-/obj/machinery/mass_driver{
-	id = "chapelgun"
-	},
+/obj/machinery/mass_driver/chapelgun,
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
@@ -59221,10 +59205,7 @@
 /turf/open/space,
 /area/solar/starboard/aft)
 "cRP" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "Chapel Launcher Door"
-	},
+/obj/machinery/door/poddoor/massdriver_chapel,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
@@ -63182,8 +63163,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "chapelgun";
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
