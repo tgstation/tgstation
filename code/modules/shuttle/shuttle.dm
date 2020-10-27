@@ -609,6 +609,9 @@
 	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
+	if(inbound_shuttle_projector)
+		CRASH("create_ripples() called multiple times!")
+
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
 		ripples += new /obj/effect/abstract/ripple(t, src, animate_time)
