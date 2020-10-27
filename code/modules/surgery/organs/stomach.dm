@@ -49,18 +49,20 @@
 
 		var/amount_max = bit.volume
 		var/amount_food = food_reagents[bit.type]
+
 		//If the reagent is part of the food reagents for the organ
 		//prevent all the reagents form being used leaving the food reagents
 		if(amount_food)
 			amount_max = max(amount_max - amount_food, 0)
+
+		// We are adding 0.2 reagents to transfer more then we remove on metabolization
 		var/amount = clamp((bit.metabolization_rate + 0.2) * metabolism_efficiency, 0, amount_max)
 		if(!(amount > 0))
 			continue
 
 		// transfer the reagents over to the body at the rate of the stomach metabolim
-		// this way the body is where all reagents that are processed react
-		// the stomach manages how fast they feed in to the body like a drip injection
-		// We are adding 0.2 reagents to transfer more then we remove on metabolization
+		// this way the body is where all reagents that are processed and react
+		// the stomach manages how fast they are feed in a drip style
 		reagents.trans_to(body, single_reagent=bit.type, amount=amount, round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
 
 	//Handle disgust
