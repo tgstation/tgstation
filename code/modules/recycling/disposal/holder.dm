@@ -89,7 +89,7 @@
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
-	var/static/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	if(!pipes_typecache[loc.type])
 		var/turf/T = get_turf(loc)
 		if(T)
