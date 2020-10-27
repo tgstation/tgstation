@@ -1518,7 +1518,7 @@
 	. = base_pixel_x
 	base_pixel_x = new_value
 
-	pixel_x = pixel_x + (base_pixel_x - .)
+	pixel_x = pixel_x + base_pixel_x - .
 
 
 ///Setter for the `base_pixel_y` variable to append behavior related to its changing.
@@ -1528,7 +1528,7 @@
 	. = base_pixel_y
 	base_pixel_y = new_value
 
-	pixel_y = pixel_y + (base_pixel_y - .)
+	pixel_y = pixel_y + base_pixel_y - .
 
 
 /**Returns the material composition of the atom.
