@@ -16,15 +16,16 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
+	//This is a reagent user and needs more then the 10u from edible component
+	reagent_vol = 1000
+
+	///The rate that disgust decays
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
 	///The value should be greater then 1 to ensure medication remains in effect
 	var/metabolism_efficiency = 1
 
-/obj/item/organ/stomach/Initialize()
-	. = ..()
-	create_reagents(1000)
 
 /obj/item/organ/stomach/on_life()
 	. = ..()
@@ -40,15 +41,27 @@
 	// digest food, sent all reagents that can metabolize to the body
 	for(var/chunk in reagents.reagent_list)
 		var/datum/reagent/bit = chunk
+
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
 		if(!(bit.metabolization_rate > 0))
 			continue
+
+		var/amount_max = bit.volume
+		var/amount_food = food_reagents[bit.type]
+		//If the reagent is part of the food reagents for the organ
+		//prevent all the reagents form being used leaving the food reagents
+		if(amount_food)
+			amount_max = max(amount_max - amount_food, 0)
+		var/amount = clamp((bit.metabolization_rate + 0.2) * metabolism_efficiency, 0, amount_max)
+		if(!(amount > 0))
+			continue
+
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed react
 		// the stomach manages how fast they feed in to the body like a drip injection
 		// We are adding 0.2 reagents to transfer more then we remove on metabolization
-		reagents.trans_to(body, single_reagent=bit.type, amount=((bit.metabolization_rate + 0.2) * metabolism_efficiency), round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
+		reagents.trans_to(body, single_reagent=bit.type, amount=amount, round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
 
 	//Handle disgust
 	if(body)

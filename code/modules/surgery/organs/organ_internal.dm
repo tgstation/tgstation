@@ -29,6 +29,8 @@
 	///When you take a bite you cant jam it in for surgery anymore.
 	var/useable = TRUE
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	///The size of the reagent container
+	var/reagent_vol = 10
 
 /obj/item/organ/Initialize()
 	. = ..()
@@ -36,7 +38,7 @@
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = RAW | MEAT | GROSS,\
-			volume = 10,\
+			volume = reagent_vol,\
 			after_eat = CALLBACK(src, .proc/OnEatFrom))
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
