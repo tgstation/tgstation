@@ -176,12 +176,20 @@
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	for(chosen_sacrifice in religious_tool.buckled_mobs) //checks one last time if the right corpse is still buckled
-		var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
-		GLOB.religious_sect?.adjust_favor(favor_gained, user)
-		to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
-		chosen_sacrifice.dust(force = TRUE)
+		if(!chosen_sacrifice.on_fire)
+			to_chat(user, "<span class='warning'>The sacrifice is no longer on fire, it needs to burn until the end of the rite!</span>")
+			. = FALSE
+		else if(chosen_sacrifice.stat != DEAD)
+			to_chat(user, "<span class='warning'>The sacrifice has to stay dead for the rite to work!</span>")
+			. = FALSE
+		else
+			var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
+			GLOB.religious_sect?.adjust_favor(favor_gained, user)
+			to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
+			chosen_sacrifice.dust(force = TRUE)
+			. = TRUE
 		chosen_sacrifice = null
-		return TRUE
+		return
 	to_chat(user, "<span class='warning'>The sacrifice has been moved before you could finish the rite!</span>")
 	chosen_sacrifice = null
 	return FALSE
@@ -191,7 +199,7 @@
 	name = "Immortal Candles"
 	desc = "Creates 5 candles that never run out of wax."
 	ritual_length = 10 SECONDS
-	invoke_msg = "please lend us five of your candles so we may bask in your Ever-Burning glory."
+	invoke_msg = "please lend us five of your candles so we may bask in your burning glory."
 	favor_cost = 200
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
