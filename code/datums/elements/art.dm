@@ -48,8 +48,11 @@
 	apply_moodlet(source, M, impressiveness *(O.obj_integrity/O.max_integrity))
 
 /datum/element/art/proc/on_attack_hand(atom/source, mob/M)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
+	INVOKE_ASYNC(src, .proc/appraise, source, M) //Do not sleep the proc!
+
+/datum/element/art/proc/appraise(atom/source, mob/M)
 	to_chat(M, "<span class='notice'>You start examining [source]...</span>")
 	if(!do_after(M, 20, target = source))
 		return
