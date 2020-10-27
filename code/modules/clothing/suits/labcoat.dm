@@ -40,10 +40,15 @@
 
 /obj/item/clothing/suit/toggle/labcoat/virologist
 	name = "virologist labcoat"
-	desc = "A suit that protects against minor chemical spills. Offers slightly more protection against biohazards than the standard model. Has a green stripe on the shoulder."
+	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox"
+
+/obj/item/clothing/suit/toggle/labcoat/roboticist
+	name = "roboticist labcoat"
+	desc = "It helps hide the oil smears. Comes with red shoulder pads for a more retro-futuristic feel, and to accentuate just how extra you are."
+	icon_state = "labcoat_robo"
