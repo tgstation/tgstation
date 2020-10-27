@@ -121,9 +121,9 @@
 	var/chat_color_darkened
 
 	///Default pixel x shifting for the atom's icon.
-	var/base_pixel_x
+	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
-	var/base_pixel_y
+	var/base_pixel_y = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
@@ -1055,6 +1055,12 @@
 		if(NAMEOF(src, opacity))
 			set_opacity(var_value)
 			. =  TRUE
+		if(NAMEOF(src, base_pixel_x))
+			set_base_pixel_x(var_value)
+			. =  TRUE
+		if(NAMEOF(src, base_pixel_y))
+			set_base_pixel_y(var_value)
+			. =  TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -1503,6 +1509,27 @@
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+
+
+///Setter for the `base_pixel_x` variable to append behavior related to its changing.
+/atom/proc/set_base_pixel_x(new_value)
+	if(base_pixel_x == new_value)
+		return
+	. = base_pixel_x
+	base_pixel_x = new_value
+
+	pixel_x = pixel_x + (base_pixel_x - .)
+
+
+///Setter for the `base_pixel_y` variable to append behavior related to its changing.
+/atom/proc/set_base_pixel_y(new_value)
+	if(base_pixel_y == new_value)
+		return
+	. = base_pixel_y
+	base_pixel_y = new_value
+
+	pixel_y = pixel_y + (base_pixel_y - .)
+
 
 /**Returns the material composition of the atom.
   *

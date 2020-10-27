@@ -318,8 +318,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/Initialize()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
@@ -353,8 +353,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
 	. = ..()

@@ -80,7 +80,7 @@
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = FALSE)
 	if(leaping)
 		return -32
 	else if(custom_pixel_y_offset)
