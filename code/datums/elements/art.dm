@@ -53,7 +53,7 @@
 	INVOKE_ASYNC(src, .proc/appraise, source, M) //Do not sleep the proc!
 
 /datum/element/art/proc/appraise(atom/source, mob/M)
-	to_chat(M, "<span class='notice'>You start examining [source]...</span>")
+	to_chat(M, "<span class='notice'>You start appraising [source]...</span>")
 	if(!do_after(M, 20, target = source))
 		return
 	on_obj_examine(source, M)
