@@ -342,10 +342,10 @@
 
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
-				O.on_life()
+		for(var/organ_slot in GLOB.organ_process_order)
+			var/obj/item/organ/organ = getorganslot(organ_slot)
+			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+				organ.on_life()
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
 			return

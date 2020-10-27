@@ -21,8 +21,10 @@
 	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks before taking phlogiston")
 	drink.reagents.add_reagent(/datum/reagent/phlogiston, 10)
 	drink.attack(human, human)
+	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks on INJEST before life tick")
 	human.Life() // reagents only transfer after life tick
-	TEST_ASSERT_EQUAL(human.fire_stacks, 1, "Human does not have fire stacks after taking phlogiston")
+	// Two stack, one from the expose, and one from life tick
+	TEST_ASSERT_EQUAL(human.fire_stacks, 2, "Human does not have fire stacks after taking phlogiston")
 
 	// TOUCH
 	dropper.reagents.add_reagent(/datum/reagent/water, 1)

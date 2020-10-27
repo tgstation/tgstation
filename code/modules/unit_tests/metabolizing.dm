@@ -27,12 +27,9 @@
 	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
 	pill.attack(user, user)
 
-	user.Life() // move the meth from stomach to body
+	user.Life()
 
 	TEST_ASSERT(user.reagents.has_reagent(meth), "User does not have meth in their system after consuming it")
-
-	user.Life() // Activate the meth in the body
-
 	TEST_ASSERT(user.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "User consumed meth, but did not gain movespeed modifier")
 
 	user.Life()

@@ -639,8 +639,6 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.type == /datum/reagent/drug/methamphetamine)
-			to_chat(world, "RD R:[R.volume], R:[R]")
 		if(R.volume < 0.05)
 			del_reagent(R.type)
 		else

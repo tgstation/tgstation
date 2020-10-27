@@ -47,8 +47,8 @@
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed react
 		// the stomach manages how fast they feed in to the body like a drip injection
-		// We are adding 0.1 reagents to transfer more then we remove on metabolization
-		reagents.trans_to(body, single_reagent=bit.type, amount=((bit.metabolization_rate + 0.1) * metabolism_efficiency), round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
+		// We are adding 0.2 reagents to transfer more then we remove on metabolization
+		reagents.trans_to(body, single_reagent=bit.type, amount=((bit.metabolization_rate + 0.2) * metabolism_efficiency), round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
 
 	//Handle disgust
 	if(body)
