@@ -1,6 +1,6 @@
 
 #define STATION_HOLODECK		(1<<0)
-#define CUSTON_HOLODECK_ONE		(1<<1)
+#define CUSTOM_HOLODECK_ONE		(1<<1)
 #define CUSTOM_HOLODECK_TWO		(1<<2)
 #define HOLODECK_DEBUG			(1<<3)//you should never see this
 

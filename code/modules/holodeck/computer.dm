@@ -49,6 +49,7 @@
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
+	var/functioning = TRUE
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -58,8 +59,8 @@
 	linked = GLOB.areas_by_type[mappedstartarea]
 	bottom_left = locate(linked.x, linked.y, src.z)
 
-	var/area/AS = get_area(src)
-	if(istype(AS, /area/holodeck))
+	var/area/computer_area = get_area(src)
+	if(istype(computer_area, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
@@ -87,13 +88,13 @@
 
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
-		var/datum/map_template/holodeck/A = typekey
+		var/datum/map_template/holodeck/program = typekey
 		var/list/info_this = list()
-		info_this["id"] = initial(A.template_id)
-		info_this["name"] = initial(A.name)
-		if(initial(A.restricted) && (initial(A.access_flags) & holodeck_access))
+		info_this["id"] = initial(program.template_id)
+		info_this["name"] = initial(program.name)
+		if(initial(program.restricted) && (initial(program.access_flags) & holodeck_access))
 			LAZYADD(emag_programs, list(info_this))
-		else if (initial(A.access_flags) & holodeck_access)
+		else if (initial(program.access_flags) & holodeck_access)
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
@@ -135,20 +136,20 @@
 	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the baseturf list)
 	and passes spawned_atoms from parsed to the holodeck template datum
 */
-/datum/map_template/holodeck/load(turf/T, centered = FALSE, )
+/datum/map_template/holodeck/load(turf/target_turf, centered = FALSE, )
 	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
+		target_turf = locate(target_turf.x - round(width/2) , target_turf.y - round(height/2) , target_turf.z)
+	if(!target_turf)
 		return
-	if(T.x+width > world.maxx)
+	if(target_turf.x+width > world.maxx)
 		return
-	if(T.y+height > world.maxy)
+	if(target_turf.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
-							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
-	for(var/L in border)
-		var/turf/turf_to_disable = L
+	var/list/border = block(locate(max(target_turf.x-1, 1),	max(target_turf.y-1, 1), target_turf.z),
+							locate(min(target_turf.x+width+1, world.maxx),	min(target_turf.y+height+1, world.maxy), target_turf.z))
+	for(var/_turf in border)
+		var/turf/turf_to_disable = _turf
 		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in holodeckTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
 
@@ -156,7 +157,7 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=FALSE))
+	if(!parsed.load(target_turf.x, target_turf.y, target_turf.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=FALSE))
 		return
 	var/list/bounds = parsed.bounds
 	if(!bounds)
@@ -175,7 +176,7 @@
 			spawned_atoms += base_container.GetAllContents()
 
 	lastparsed = parsed
-	log_game("[name] loaded at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [target_turf.x],[target_turf.y],[target_turf.z]")
 	return bounds
 
 /*
@@ -201,25 +202,23 @@
 			)
 		)
 
-	for(var/L in turfs)
-		var/turf/B = L
-		areas |= B.loc
-		for(var/atom/A in B)
-			if (!(A.flags_1 & INITIALIZED_1))//anything in the parsed map that hasnt been initialized is something spawned from the holodeck, so add it to newatoms
-				newatoms += A
+	for(var/_turf in turfs)
+		var/turf/turf_iterate = _turf
+		areas |= turf_iterate.loc
+		for(var/atom/atom_iterate in turf_iterate)
+			if (!(atom_iterate.flags_1 & INITIALIZED_1))//anything in the parsed map that hasnt been initialized is something spawned from the holodeck, so add it to newatoms
+				newatoms += atom_iterate
 			else
-				atoms += A
+				atoms += atom_iterate
 
-			if(istype(A, /obj/structure/cable))
-				cables += A
+			if(istype(atom_iterate, /obj/structure/cable))
+				cables += atom_iterate
 				continue
-			if(istype(A, /obj/machinery/atmospherics))
-				atmos_machines += A
+			if(istype(atom_iterate, /obj/machinery/atmospherics))
+				atmos_machines += atom_iterate
 
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(turfs)
-	SSatoms.InitializeAtoms(atoms)
-	SSatoms.InitializeAtoms(newatoms)
+	SSatoms.InitializeAtoms(turfs+atoms+newatoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
@@ -235,8 +234,8 @@
 			bounds[MAP_MAXZ]
 			)
 		)
-	for(var/t in template_and_bordering_turfs)
-		var/turf/affected_turf = t
+	for(var/_turf in template_and_bordering_turfs)
+		var/turf/affected_turf = _turf
 		affected_turf.air_update_turf(TRUE)
 
 	return newatoms//this is what will become the spawned list for the holodeck
@@ -246,14 +245,17 @@
 */
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
-	if(program == map_id)
+	if (program == map_id)
 		return
 
-	if(current_cd > world.time && !force)
+	if (!is_operational || !functioning)
+		return
+
+	if (current_cd > world.time && !force)
 		say("ERROR. Recalibrating projection apparatus.")
 		return
 
-	if(add_delay)
+	if (add_delay)
 		current_cd = world.time + HOLODECK_CD
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
@@ -274,20 +276,18 @@
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
 	var/list/added = list()
-
 	for (var/atom/atoms in spawned)
-
 		if (atoms.flags_1 & INITIALIZED_1)
 			atoms.flags_1 |= HOLOGRAM_1
 
 		if (istype(atoms, /obj/effect/holodeck_effect/))//this is what makes holoeffects work
-			var/obj/effect/holodeck_effect/HE = atoms
-			effects += HE
-			spawned -= HE
-			var/atom/x = HE.activate(src)
-			if(istype(x) || islist(x))
-				spawned += x // holocarp are not forever
-				added += x
+			var/obj/effect/holodeck_effect/holo_effect = atoms
+			effects += holo_effect
+			spawned -= holo_effect
+			var/atom/active_effect = holo_effect.activate(src)
+			if(istype(active_effect) || islist(active_effect))
+				spawned += active_effect // holocarp are not forever
+				added += active_effect
 
 		if (istype(atoms, /obj))
 			var/obj/obbies = atoms
@@ -309,10 +309,10 @@
 		return
 
 	spawned -= object
-	var/turf/T = get_turf(object)
-	for(var/atom/movable/AM in object) // these should be derezed if they were generated
-		AM.forceMove(T)
-		if(ismob(AM))
+	var/turf/target_turf = get_turf(object)
+	for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
+		object_contents.forceMove(target_turf)
+		if(ismob(object_contents))
 			silent = FALSE // otherwise make sure they are dropped
 
 	if(!silent)
@@ -322,33 +322,35 @@
 
 /obj/machinery/computer/holodeck/process(delta_time)
 	if(damaged && DT_PROB(5, delta_time))
-		for(var/turf/T in linked)
+		for(var/turf/holo_turf in linked)
 			if(DT_PROB(2.5, delta_time))
-				do_sparks(2, 1, T)
+				do_sparks(2, 1, holo_turf)
 				return
 
 	if(!..() || !active)
 		return
 
-	if(!floorcheck())
+	if(!floorcheck() && functioning)//if floor check is false but functioning hasnt been set to false yet
 		emergency_shutdown()
 		damaged = TRUE
-		for(var/mob/M in urange(10,src))
-			M.show_message("The holodeck overloads!")
+		for(var/mob/can_see_fuckup in urange(10,src))
+			can_see_fuckup.show_message("The holodeck overloads!")
 
-		for(var/turf/T in linked)
+		for(var/turf/holo_turf in linked)
 			if(prob(30))
-				do_sparks(2, 1, T)
-			SSexplosions.lowturf += T
-			T.hotspot_expose(1000,500,1)
+				do_sparks(2, 1, holo_turf)
+			SSexplosions.lowturf += holo_turf
+			holo_turf.hotspot_expose(1000,500,1)
+	else if(floorcheck())//if the hole is fixed
+		functioning = TRUE
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
 				derez(item)
-	for(var/e in effects)
-		var/obj/effect/holodeck_effect/HE = e
-		HE.tick()
+	for(var/_effect in effects)
+		var/obj/effect/holodeck_effect/holo_effect = _effect
+		holo_effect.tick()
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
@@ -366,21 +368,29 @@
 
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
-	load_program("holodeck_offline", TRUE)
-	active = FALSE
+	functioning = FALSE
+	for (var/_item in spawned)
+		var/obj/to_remove = _item
+		derez(to_remove)
+	for (var/_turf in linked)
+		var/turf/holo_turf = _turf
+		if (istype(holo_turf, /turf/open/floor/holofloor))
+			holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
-	for(var/turf/T in linked)
-		if(!T.intact || isspaceturf(T))
+	for(var/turf/holo_floor in linked)
+		if(isspaceturf(holo_floor))
+			return FALSE
+		if(!holo_floor.intact)
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/holodeck/proc/nerf(active)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
-	for(var/obj/item/I in spawned)
-		I.damtype = active ? STAMINA : initial(I.damtype)
-	for(var/e in effects)
-		var/obj/effect/holodeck_effect/HE = e
-		HE.safety(active)
+/obj/machinery/computer/holodeck/proc/nerf(var/nerf_this)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
+	for(var/obj/item/to_be_nerfed in spawned)
+		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
+	for(var/to_be_nerfed in effects)
+		var/obj/effect/holodeck_effect/holo_effect = to_be_nerfed
+		holo_effect.safety(nerf_this)
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -421,12 +431,11 @@
 	return ..()
 
 
-
 /obj/machinery/computer/holodeck/offstation
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
-	offline_program = "holodeck_gamer"
-	holodeck_access = HOLODECK_DEBUG
+	offline_program = "holodeck_offline"
+	holodeck_access = CUSTOM_HOLODECK_ONE
 	mappedstartarea = /area/holodeck/rec_center/offstation_one
 
 /obj/machinery/computer/holodeck/offstation/LateInitialize()
