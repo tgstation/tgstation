@@ -9,10 +9,10 @@
 	size = 5
 	tgui_id = "NtosSupermatterMonitor"
 	program_icon = "radiation"
+	alert_able = TRUE
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
 	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
-
 
 /datum/computer_file/program/supermatter_monitor/process_tick()
 	..()
@@ -26,10 +26,11 @@
 
 /datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
 	. = ..(user)
+	if(!(active in GLOB.machines))
+		active = null
 	refresh()
 
 /datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
-	active = null
 	supermatters = null
 	..()
 
@@ -52,6 +53,46 @@
 	. = SUPERMATTER_INACTIVE
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 		. = max(., S.get_status())
+
+/**
+  * Sets up the signal listener for Supermatter delaminations.
+  *
+  * Unregisters any old listners for SM delams, and then registers one for the SM refered
+  * to in the `active` variable. This proc is also used with no active SM to simply clear
+  * the signal and exit.
+ */
+/datum/computer_file/program/supermatter_monitor/proc/set_signals()
+//	UnregisterSignal(COMSIG_SUPERMATTER_DELAM_ALARM)
+//	UnregisterSignal(COMSIG_SUPERMATTER_DELAM_START_ALARM)
+	if(active)
+		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, FALSE, override = TRUE)
+		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_alert, TRUE, override = TRUE)
+
+/**
+  * Sends an SM delam alert to the computer.
+  *
+  * Triggered by the signals from set_signals(), this proc will send an alert to the
+  * computer. If the program is the active one on this device, all alerts are simply
+  * ignored except the very first delam alarm; engineers fixing the SM probably don't
+  * need constant notification beeps to distract them.
+  *
+  * Arguments:
+  * a bool of whether this alert is the signal indicating the start of a delam state
+ */
+/datum/computer_file/program/supermatter_monitor/proc/send_alert(start_alarm)
+	if(!active) //just in case
+		set_signals() //If active is not set, clear out the forgotten listeners
+		return
+
+	if(computer.active_program == src)
+		if(start_alarm) //Only the initial alarm will be sent as an alert if this app is the active one
+			computer.alert_call(src, "Crystal delamination in progress!")
+		return
+
+	if(!start_alarm) //Avoid the start_alarm signal if we're not the active app, to avoid double alerts
+		computer.alert_call(src, "Crystal delamination in progress!")
+		alert_pending = !(computer.active_program == src)
+
 
 /datum/computer_file/program/supermatter_monitor/ui_data()
 	var/list/data = get_header_data()
@@ -122,4 +163,5 @@
 			for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 				if(S.uid == newuid)
 					active = S
+					set_signals()
 			return TRUE
