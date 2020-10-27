@@ -28,11 +28,11 @@
 	update_icon()
 
 /obj/item/reagent_containers/food/whipped_canister/pickup(mob/user)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_containers/food/whipped_canister/dropped(mob/user)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_containers/food/whipped_canister/afterattack(atom/target, mob/user, proximity)
