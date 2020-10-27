@@ -173,7 +173,7 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
-		AM.pipe_eject(0)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, FALSE)
 	update_icon()
 
 /obj/machinery/disposal/proc/flush()
@@ -216,7 +216,7 @@
 		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
 
 		AM.forceMove(T)
-		AM.pipe_eject(0)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, FALSE)
 		AM.throw_at(target, 5, 1)
 
 	H.vent_gas(loc)

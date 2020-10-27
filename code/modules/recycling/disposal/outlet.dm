@@ -62,7 +62,7 @@
 	for(var/A in H)
 		var/atom/movable/AM = A
 		AM.forceMove(T)
-		AM.pipe_eject(dir)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, dir)
 		AM.throw_at(target, eject_range, eject_speed)
 
 	H.vent_gas(T)
