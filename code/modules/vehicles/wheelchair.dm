@@ -6,7 +6,7 @@
 	layer = OBJ_LAYER
 	max_integrity = 100
 	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 30)	//Wheelchairs aren't super tough yo
-	legs_required = 0	//You'll probably be using this if you don't have legs
+	rider_check_flags = REQUIRES_ARMS | DISABLED_RIDER_UNBUCKLE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
@@ -41,11 +41,12 @@
 
 /obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
 	if(istype(user))
-		if(canmove && (user.usable_hands < arms_required))
-			to_chat(user, "<span class='warning'>You don't have enough arms to operate the wheels!</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
-			return FALSE
+		if(canmove && rider_check_flags & REQUIRES_ARMS)
+			if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+				to_chat(user, "<span class='warning'>You don't have enough arms to operate the wheels!</span>")
+				canmove = FALSE
+				addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
+				return FALSE
 		set_move_delay(user)
 	return ..()
 

@@ -12,7 +12,7 @@
 	icon = 'icons/obj/bike.dmi'
 	icon_state = "speedbike_blue"
 	layer = LYING_MOB_LAYER
-	fall_off_if_missing_arms = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | DISABLED_RIDER_UNBUCKLE
 	var/overlay_state = "cover_blue"
 	var/mutable_appearance/overlay
 

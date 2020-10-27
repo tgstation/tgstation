@@ -4,7 +4,7 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
-	fall_off_if_missing_arms = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | DISABLED_RIDER_UNBUCKLE
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
