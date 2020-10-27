@@ -309,7 +309,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_STELLAR)
 
 /turf/open/floor/carpet/donk
-	name = "donk co carpet"
+	name = "Donk Co. carpet"
 	icon = 'icons/turf/floors/carpet_donk.dmi'
 	icon_state = "donk_carpet-255"
 	base_icon_state = "donk_carpet"
