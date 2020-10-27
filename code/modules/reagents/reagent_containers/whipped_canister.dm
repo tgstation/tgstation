@@ -14,6 +14,7 @@
 	custom_price = 100
 	var/whippedcolor = null // Used for changing the whipped pile on top of the food
 
+
 /obj/item/reagent_containers/food/whipped_canister/Initialize()
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
@@ -42,6 +43,11 @@
 	if(!target.reagents)
 		return
 	if(isliving(target)) //Sorry fellas, no getting high off pressurized reagents (yet)
+		return
+	var/obj/item/extinguisher/fire_extinguishers = target
+	var/obj/item/reagent_containers/hypospray/sprays = target
+	var/obj/item/reagent_containers/syringe/needles = target
+	if(istype(fire_extinguishers) || istype(sprays) || istype(needles)) //To make sure nobody can fill fire extinguishers or epipens with bath salts
 		return
 	whippedcolor = mix_color_from_reagents(reagents.reagent_list) // The color check needs to be here, or the last whipped pile created from a canister will be completely white
 	// Always log attemped injections for admins
