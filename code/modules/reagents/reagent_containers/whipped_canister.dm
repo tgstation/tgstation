@@ -59,12 +59,12 @@
 	reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 	to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The canister now contains [reagents.total_volume] units.</span>")
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6) // pshhhhhhh
-	var/obj/item/food/S = target
-	var/obj/item/reagent_containers/food/snacks/N = target // Some food items are still reagent containers, so this is just in case
-	if(istype(S) || istype(N))
+	var/obj/item/food/not_container = target
+	var/obj/item/reagent_containers/food/snacks/container = target // Some food items are still reagent containers, so this is just in case
+	if(istype(not_container) || istype(container))
 		var/mutable_appearance/whipped_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whipped")
 		whipped_overlay.color = whippedcolor // Applies the color of the reagent to the cream pile
-		S.add_overlay(whipped_overlay)
+		target.add_overlay(whipped_overlay)
 	if (reagents.total_volume <= 0)
 		update_icon()
 
