@@ -1,5 +1,0 @@
-author: "Gamer025 and ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Refunding Lesser Summon Guns or Arcane Barrage as a wizard will now remove any instances of that spell's associated kind of projectile weapon from your inventory."
-  - rscadd: "Non-cultists who try to fire a blood bolt from a Blood Barrage \"spell\"'s hand will be in for a nasty surprise."

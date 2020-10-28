@@ -32581,7 +32581,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/structure/table,
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
 "bAH" = (
@@ -47612,12 +47611,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
-/area/medical/pharmacy)
-"cmA" = (
-/obj/machinery/holopad,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "cmB" = (
@@ -105710,7 +105703,7 @@ chc
 cix
 cjT
 cjT
-cmA
+cjT
 cnI
 coU
 cqs
