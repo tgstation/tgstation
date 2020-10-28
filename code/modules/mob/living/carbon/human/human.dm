@@ -1111,7 +1111,7 @@
 		return
 
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
+		buckle_mob(target, TRUE, TRUE, RIDING_RIDDEN_HOLD_RIDER)
 		return
 
 	var/old_density = density
@@ -1119,7 +1119,7 @@
 	step_towards(target, loc)
 	density = old_density
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_FIREMAN)
+		buckle_mob(target, TRUE, TRUE, RIDING_RIDDEN_HOLD_RIDER)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1135,7 +1135,7 @@
 		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
 
-	buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_PIGBACK)
+	buckle_mob(target, TRUE, TRUE, RIDING_RIDER_HOLDING_ON)
 
 // /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, riding_flags = NONE)
@@ -1146,15 +1146,14 @@
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 
-	var/carry_mode
-	if(carry_mode == HUMAN_CARRY_FIREMAN)
+	// while these flags are usually not mutually exclusive, this part of the code where we decide whether they go sideways
+	// when carrried or not doesn't abide, so for now i just go for sideways if the ridden is holding at all
+	if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 		buckle_lying = 90
-		riding_flags = (RIDING_RIDDEN_HOLD_RIDER)
-	else if(carry_mode == HUMAN_CARRY_PIGBACK)
+	else if(riding_flags & RIDING_RIDER_HOLDING_ON)
 		buckle_lying = 0
-		riding_flags = (RIDING_RIDER_HOLDING_ON)
 
-	buckle_mob(target, TRUE, check_loc, riding_flags)
+	return ..()
 	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
 	/*if(LoadComponent(/datum/component/riding/human, riding_flags, target))
 		stop_pulling()

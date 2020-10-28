@@ -42,6 +42,7 @@
 
 /datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, riding_flags = NONE)
 	SIGNAL_HANDLER
+	testing("check mount | target [target_movable] | rider [potential_rider] | flags [riding_flags]")
 
 	if((riding_flags & RIDING_RIDER_HOLDING_ON) && !equip_buckle_inhands(potential_rider, 2, target_movable)) // hardcode 2 hands for now
 		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
@@ -53,7 +54,7 @@
 
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
 	// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
-	if((target_living & RIDING_RIDDEN_HOLD_RIDER) && !equip_buckle_inhands(target_living, 1, potential_rider, target_movable)) // hardcode 1 hand for now
+	if((riding_flags & RIDING_RIDDEN_HOLD_RIDER) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
 		target_living.visible_message("<span class='warning'>[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [potential_rider] because your hands are full!</span>")
 		return MOUNTING_HALT_BUCKLE
@@ -94,3 +95,43 @@
 		else
 			qdel(O)
 	return TRUE
+
+
+
+
+/obj/item/riding_offhand
+	name = "offhand"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/mob/living/carbon/rider
+	var/mob/living/parent
+	var/selfdeleting = FALSE
+
+/obj/item/riding_offhand/dropped()
+	selfdeleting = TRUE
+	. = ..()
+
+/obj/item/riding_offhand/equipped()
+	if(loc != rider && loc != parent)
+		selfdeleting = TRUE
+		qdel(src)
+	. = ..()
+
+/obj/item/riding_offhand/Destroy()
+	var/atom/movable/AM = parent
+	if(selfdeleting)
+		if(rider in AM.buckled_mobs)
+			AM.unbuckle_mob(rider)
+	. = ..()
+
+/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
+	if(rider == user)
+		return //Piggyback user.
+	user.unbuckle_mob(rider)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
+		return
+	return rider

@@ -47,6 +47,9 @@
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	testing("check riding start | parent [parent] | rider [riding_mob] | flags [riding_flags]")
+
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
@@ -58,12 +61,18 @@
 
 	if(isliving(parent))
 		var/mob/living/parent_living = parent
+		parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
 		riding_mob.set_glide_size(parent_living.glide_size)
 		handle_vehicle_offsets(parent_living.dir)
 	riding_mob.updating_glide_size = FALSE
 
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
+
+/datum/component/riding/Destroy(force, silent)
+	if(isliving(parent))
+		unequip_buckle_inhands(parent)
+	return ..()
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
@@ -445,40 +454,3 @@
 		else
 			qdel(O)
 	return TRUE
-
-/obj/item/riding_offhand
-	name = "offhand"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "offhand"
-	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/mob/living/carbon/rider
-	var/mob/living/parent
-	var/selfdeleting = FALSE
-
-/obj/item/riding_offhand/dropped()
-	selfdeleting = TRUE
-	. = ..()
-
-/obj/item/riding_offhand/equipped()
-	if(loc != rider && loc != parent)
-		selfdeleting = TRUE
-		qdel(src)
-	. = ..()
-
-/obj/item/riding_offhand/Destroy()
-	var/atom/movable/AM = parent
-	if(selfdeleting)
-		if(rider in AM.buckled_mobs)
-			AM.unbuckle_mob(rider)
-	. = ..()
-
-/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
-	if(rider == user)
-		return //Piggyback user.
-	user.unbuckle_mob(rider)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
-		return
-	return rider
