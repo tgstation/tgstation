@@ -6,9 +6,9 @@
 
 //Ridden vehcile flags
 
-#define REQUIRES_ARMS 1    //Does our vehicle require hands to drive?
-#define REQUIRES_LEGS  2    //Does our vehicle require legs to drive?
-#define DISABLED_RIDER_UNBUCKLE 3   //If our rider is disabled, does he fall off?
+#define REQUIRES_ARMS   (1<<0)    //Does our vehicle require hands to drive?
+#define REQUIRES_LEGS   (1<<1)    //Does our vehicle require legs to drive?
+#define UNBUCKLE_DISABLED_RIDER (1<<2)   //If our rider is disabled, does he fall off?
 
 //Car trait flags
 #define CAN_KIDNAP 1

@@ -61,36 +61,37 @@
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
-	if(rider_check_flags & REQUIRES_LEGS)
-		if(HAS_TRAIT(user, TRAIT_INCAPACITATED) || HAS_TRAIT(user, TRAIT_FLOORED))
-			if(rider_check_flags & DISABLED_RIDER_UNBUCKLE)	
-				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
-				"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
-				if(isliving(user))
-					var/mob/living/L = user
-					L.Stun(30)
-				return FALSE
-			
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [src]...</span>")
-				message_cooldown = world.time + 5 SECONDS
-			return FALSE
-	if(rider_check_flags & REQUIRES_ARMS)
-		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(rider_check_flags & DISABLED_RIDER_UNBUCKLE)
-				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
-				"<span class='danger'>You fall off \the [src] while trying to operate it without being able to hold on!</span>")
-				if(isliving(user))
-					var/mob/living/L = user
-					L.Stun(30)
-				return FALSE
 
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
-				message_cooldown = world.time + 5 SECONDS
+	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_INCAPACITATED) || HAS_TRAIT(user, TRAIT_FLOORED))
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)	
+			unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+			"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
+			if(isliving(user))
+				var/mob/living/L = user
+				L.Stun(30)
 			return FALSE
+			
+		if(message_cooldown < world.time)
+			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [src]...</span>")
+			message_cooldown = world.time + 5 SECONDS
+		return FALSE
+
+	if(rider_check_flags & REQUIRES_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
+			unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+			"<span class='danger'>You fall off \the [src] while trying to operate it without being able to hold on!</span>")
+			if(isliving(user))
+				var/mob/living/rider = user
+				rider.Stun(30)
+			return FALSE
+
+		if(message_cooldown < world.time)
+			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
+			message_cooldown = world.time + 5 SECONDS
+		return FALSE
+	
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()

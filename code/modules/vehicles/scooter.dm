@@ -2,7 +2,7 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | DISABLED_RIDER_UNBUCKLE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	are_legs_exposed = TRUE
 
 /obj/vehicle/ridden/scooter/Initialize()
@@ -44,7 +44,7 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
-	rider_check_flags = REQUIRES_LEGS | DISABLED_RIDER_UNBUCKLE
+	rider_check_flags = REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
