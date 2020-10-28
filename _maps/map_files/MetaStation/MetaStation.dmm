@@ -17374,7 +17374,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aPp" = (
 /obj/structure/table,
 /obj/structure/sign/poster/contraband/robust_softdrinks{
@@ -17397,7 +17397,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aPq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -17799,20 +17799,20 @@
 	req_one_access_txt = "12;25;28;35;37"
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aQw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aQx" = (
 /obj/machinery/newscaster{
 	pixel_x = 28;
 	pixel_y = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aQy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -18409,7 +18409,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aRR" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
@@ -18425,7 +18425,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aRS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
@@ -18877,7 +18877,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aTd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -18886,7 +18886,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aTe" = (
 /obj/item/radio/intercom{
 	dir = 4;
@@ -18897,7 +18897,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aTf" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
@@ -19377,11 +19377,11 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aUq" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aUs" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
@@ -19398,7 +19398,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aUt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20082,7 +20082,7 @@
 	dir = 10
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aVS" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
@@ -20091,8 +20091,9 @@
 	pixel_y = 22
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/suit/apron/chef,
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "aVT" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;63;48;50"
@@ -20813,7 +20814,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage_wing)
+/area/hallway/primary/central)
 "aXw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -28907,7 +28908,7 @@
 	},
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "bqv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -42576,7 +42577,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "caB" = (
 /obj/machinery/status_display/evac{
 	pixel_y = 32
@@ -64254,7 +64255,7 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "dCv" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/decal/cleanable/dirt,
@@ -65431,6 +65432,9 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"eHe" = (
+/turf/closed/wall,
+/area/crew_quarters/cafeteria)
 "eIt" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -65825,7 +65829,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/dark,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "flL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Surgery C Maintenance";
@@ -67044,7 +67048,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "gJs" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
@@ -67505,7 +67509,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
 /obj/effect/decal/cleanable/blood/old,
@@ -75004,7 +75008,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "rvk" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -79269,7 +79273,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood,
-/area/storage/primary)
+/area/crew_quarters/cafeteria)
 "xAp" = (
 /obj/structure/chair/comfy,
 /obj/machinery/power/apc/auto_name/north,
@@ -103188,12 +103192,12 @@ aJN
 aLl
 aJN
 aJN
-aJN
-aJN
-aJN
-aJN
-aJN
-aJN
+eHe
+eHe
+eHe
+eHe
+eHe
+eHe
 aXz
 aYY
 baQ
