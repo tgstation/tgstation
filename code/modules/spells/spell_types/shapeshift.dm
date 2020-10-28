@@ -192,7 +192,7 @@
 		restore()
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
-	// Destroy() calls this if it hasn't been called and the prevents multiple qdel loops
+	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
 	// when caster and shape both die at the same time.
 	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
 	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
