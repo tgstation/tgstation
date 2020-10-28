@@ -15,7 +15,7 @@
 	opacity = FALSE
 	CanAtmosPass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-	network_id = NETWORK_AIRLOCKS
+	network_id = NETWORK_DOOR_AIRLOCKS
 	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2

@@ -1,5 +1,3 @@
-
-
 SUBSYSTEM_DEF(networks)
 	name = "Networks"
 	priority = FIRE_PRIORITY_NETWORKS
@@ -11,6 +9,7 @@ SUBSYSTEM_DEF(networks)
 	/// Legacy ntnet lookup for software.  Should be changed latter so don't rely on this
 	/// being here.
 	var/datum/ntnet/station/station_network
+	var/datum/ntnet/station/syndicate/syndie_network
 	var/list/network_initialize_queue = list()
 	/// all interfaces by their hardware address.
 	/// Do NOT use to verify a reciver_id is valid, use the network.root_devices for that
@@ -26,7 +25,7 @@ SUBSYSTEM_DEF(networks)
 	var/list/networks = list()
 	/// List of the root networks starting at their root names.  Used to find and/or build
 	/// network tress
-	var/list/root_networks
+	var/list/root_networks = list()
 
 
 
@@ -48,26 +47,24 @@ SUBSYSTEM_DEF(networks)
 	/// DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOUR DOING
 	var/list/used_names = list()
 
+
 /// You shouldn't need to do this.  But mapping is async and there is no guarantee that Initialize
 /// will run before these networks are dynamically created.  So its here.
-/datum/controller/subsystem/networks/New()
+/datum/controller/subsystem/networks/PreInit()
 	// Limbo network needs to be made at boot up for all error devices
-	networks[LIMBO_NETWORK_ROOT] = new/datum/ntnet(LIMBO_NETWORK_ROOT)
+	new/datum/ntnet(LIMBO_NETWORK_ROOT)
+	station_network = new
+	syndie_network = new
 	// As well as the station network incase something funny goes during startup
-	networks[STATION_NETWORK_ROOT] = station_network = new
-	networks[CENTCOM_NETWORK_ROOT] = new/datum/ntnet(CENTCOM_NETWORK_ROOT)
-	networks[SYNDICATE_NETWORK_ROOT] = new/datum/ntnet(SYNDICATE_NETWORK_ROOT)
-	// Right now its the same as these are both the same root networks
-	root_networks = networks.Copy()
+	new/datum/ntnet(CENTCOM_NETWORK_ROOT)
 
-	return ..()
+
 
 /datum/controller/subsystem/networks/stat_entry(msg)
 	msg = "NET: QUEUE([packet_count]) FAILS([count_failed_packets]) BROADCAST([count_broadcasts_packets])"
 	return ..()
 
 /datum/controller/subsystem/networks/Initialize()
-	station_network = new
 	station_network.register_map_supremecy() // sigh
 	assign_areas_root_ids(GLOB.sortedAreas) // setup area names before Initialize
 	// At round start, fix the network_id's so the station root is on them
@@ -267,17 +264,6 @@ SUBSYSTEM_DEF(networks)
 	setting_maxlogcount = lognumber
 	add_log("Configuration Updated. Now keeping [setting_maxlogcount] logs in system memory.")
 
-/**
-  * Helper that verifies a network name is valid.
-  *
-  * A valid network name (ie, SS13.ATMOS.SCRUBBERS) is all caps, no spaces with periods between
-  * branches.  Returns false if it doesn't meat this requirement
-  *
-  * Arguments:
-  * * name - network text name to check
-  */
-/datum/controller/subsystem/networks/proc/verify_network_name(name)
-	return istext(name) && length(name) > 0 && findtext(name, @"[^\.][A-Z0-9_\.]+[^\.]") == 1
 
 
 /**
@@ -329,7 +315,7 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/proc/assign_areas_root_ids(list/areas, datum/map_template/M=null)
 	for(var/area/A in areas)
 		if(!A.network_root_id)
-			lookup_root_id(A, M)
+			lookup_area_root_id(A, M)
 			// finally  set the network area id, bit copy paste from area Initialize
 			// This is done in case we have more than one area type, each area instance has its own network name
 			if(!A.network_area_id)
@@ -352,12 +338,9 @@ SUBSYSTEM_DEF(networks)
 	ASSERT(tree && tree.len > 0) // this should be obvious but JUST in case.
 #ifdef DEBUG_NETWORKS
 	for(var/part in tree)
-		if(!istext(part))
-			log_runtime("Cannot create network with [part]")
-			return null // not a valid tree
-		if(!verify_network_name(part) && findtext(name,".")==0) // and no stray dots
-			log_runtime("Cannot create network with [part]")
-			return null 	// name part wrong
+		if(!verify_network_name(part) || findtext(name,".")!=0) // and no stray dots
+			stack_trace("network_list_to_string: Cannot create network with ([part]) of ([tree.Join(".")])")
+			break
 #endif
 	return tree.Join(".")
 
@@ -374,7 +357,7 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/proc/network_string_to_list(name)
 #ifdef DEBUG_NETWORKS
 	if(!verify_network_name(name))
-		log_runtime("network_string_to_list: [name] IS INVALID")
+		stack_trace("network_string_to_list: [name] IS INVALID")
 #endif
 	return splittext(name,".") // should we do a splittext_char?  I doubt we really need unicode in network names
 
@@ -424,24 +407,28 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/proc/create_network_simple(network_id)
 
 	var/datum/ntnet/network = networks[network_id]
-	if(network)
-		return network // don't worry about it	if(network_id in networks)
+	if(network!=null)
+		return network // don't worry about it
 
 	/// Checks to make sure the network is valid.  We log BOTH to mapping and telecoms
 	/// so if your checking for network errors you can find it in mapping to (because its their fault!)
 	if(!verify_network_name(network_id))
 		log_mapping("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
 		log_telecomms("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
-		return network[LIMBO_NETWORK_ROOT]
+		#ifdef DEBUG_NETWORKS
+		return networks[LIMBO_NETWORK_ROOT]
 
 	var/list/network_tree = network_string_to_list(network_id)
 	if(!network_tree || network_tree.len == 0)
 		log_mapping("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
 		log_telecomms("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
-		return network[LIMBO_NETWORK_ROOT]
+		return networks[LIMBO_NETWORK_ROOT]
 
 	network = _hard_create_network(network_tree)
-
+#ifdef DEBUG_NETWORKS
+	if(!network)
+		CRASH("NETWORK CANNOT BE NULL")
+#endif
 	log_telecomms("create_network_simple:  created final [network.network_id]")
 	return network // and we are done!
 

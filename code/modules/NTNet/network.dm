@@ -64,6 +64,9 @@
 		SSnetworks.root_networks[network_id] = src
 
 	SSnetworks.networks[network_id] = src
+#ifdef DEBUG_NETWORKS
+	to_chat(world, "Network [network_id] Create")
+#endif
 	return ..()
 
 /datum/ntnet/vv_edit_var(var_name)
@@ -255,7 +258,7 @@
 
 
 /datum/ntnet/station/syndicate/New()
-	. = ..SYNDICATE_NETWORK_ROOT, null)
+	. = ..(SYNDICATE_NETWORK_ROOT, null)
 	build_software_lists()
 	log_telecomms("NTNet logging system activated for syndicate") // don't want eveyone to know about this one
 // not sure if we want service to work as it is, hold off till we get machines working

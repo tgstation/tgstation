@@ -27,6 +27,8 @@
 	return bounds
 
 /datum/parsed_map/proc/initTemplateBounds(datum/map_template/template)
+	if(!SSatoms.initialized)
+		return				// If we are starting up the game, no reason to do a runtime load.  Its all done in SSatoms
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()

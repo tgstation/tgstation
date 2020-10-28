@@ -79,10 +79,14 @@
 
 	if(network_id)
 		var/area/A = get_area(src)
-		if(A && A.network_root_id)
+		if(A)
+			if(!A.network_root_id)
+				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+				SSnetworks.lookup_area_root_id(A)
 			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
 		else
-			stack_trace("Bad area [A] for [src] for object?")
+			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
 		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 

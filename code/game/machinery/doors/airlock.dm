@@ -111,7 +111,7 @@
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-	network_id = NETWORK_AIRLOCKS
+	network_id = NETWORK_DOOR_AIRLOCKS
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()

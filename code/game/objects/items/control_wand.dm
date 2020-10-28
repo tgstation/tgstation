@@ -14,7 +14,7 @@
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
 	var/list/access_list
-	network_id = NETWORK_AIRLOCKS
+	network_id = NETWORK_DOOR_REMOTES
 
 /obj/item/door_remote/Initialize()
 	. = ..()

@@ -3,7 +3,7 @@
 #define NETWORK_BROADCAST_ID "ALL"
 
 /// To debug networks use this to check
-#define DEBUG_NETWORKS
+#define DEBUG_NETWORKS 1
 
 
 /// We do some macro magic to make sure the strings are created at compile time rather than runtime
@@ -11,7 +11,7 @@
 /// all the constants though all the files for them.  hurrah!
 
 /// Ugh, couldn't get recursive stringafy to work in byond for some reason
-#define _NETCOMBINE(L,R)   			L + "." + R
+#define NETWORK_NAME_COMBINE(L,R)   			((L) + "." + (R))
 
 /// Station network names.  Used as the root networks for main parts of the station
 #define __STATION_NETWORK_ROOT 			"SS13"
@@ -22,8 +22,9 @@
 /// various sub networks pieces
 #define __NETWORK_LIMBO					"LIMBO"
 #define __NETWORK_TOOLS					"TOOLS"
-#define __NETWORK_DOOR_REMOTES			"DOOR_REMOTES"
+#define __NETWORK_REMOTES				"REMOTES"
 #define __NETWORK_AIRLOCKS 				"AIRLOCKS"
+#define __NETWORK_DOORS					"DOORS"
 #define __NETWORK_ATMOS 				"ATMOS"
 #define __NETWORK_SCUBBERS				"AIRLOCKS"
 #define __NETWORK_AIRALARMS				"AIRALARMS"
@@ -35,12 +36,13 @@
 #define __NETWORK_CARDS					"CARDS"
 
 /// Various combined subnetworks
-#define NETWORK_TOOLS_REMOTES			_NETCOMBINE(__NETWORK_AIRLOCKS, __NETWORK_DOOR_REMOTES)
-#define NETWORK_ATMOS_AIRALARMS			_NETCOMBINE(__NETWORK_ATMOS, __NETWORK_AIRALARMS)
-#define NETWORK_ATMOS_SCUBBERS			_NETCOMBINE(__NETWORK_ATMOS, __NETWORK_SCUBBERS)
-#define NETWORK_CARDS					_NETCOMBINE(__NETWORK_COMPUTER, __NETWORK_CARDS)
-#define NETWORK_BOTS_CARGO				_NETCOMBINE(__NETWORK_CARGO, __NETWORK_BOTS)
-#define NETWORK_AIRLOCKS				__NETWORK_AIRLOCKS
+#define NETWORK_DOOR_REMOTES			NETWORK_NAME_COMBINE(__NETWORK_DOORS, __NETWORK_REMOTES)
+#define NETWORK_DOOR_AIRLOCKS			NETWORK_NAME_COMBINE(__NETWORK_DOORS, __NETWORK_AIRLOCKS)
+#define NETWORK_ATMOS_AIRALARMS			NETWORK_NAME_COMBINE(__NETWORK_ATMOS, __NETWORK_AIRALARMS)
+#define NETWORK_ATMOS_SCUBBERS			NETWORK_NAME_COMBINE(__NETWORK_ATMOS, __NETWORK_SCUBBERS)
+#define NETWORK_CARDS					NETWORK_NAME_COMBINE(__NETWORK_COMPUTER, __NETWORK_CARDS)
+#define NETWORK_BOTS_CARGO				NETWORK_NAME_COMBINE(__NETWORK_CARGO, __NETWORK_BOTS)
+
 
 // Finally turn eveything into strings
 #define STATION_NETWORK_ROOT			__STATION_NETWORK_ROOT
@@ -52,7 +54,25 @@
 
 /// Network name should be all caps and no punctuation except for _ and . between domains
 /// This does a quick an dirty fix to a network name to make sure it works
-#define simple_network_name_fix(N) replacetext(uppertext(N), @"[ \-]", "_")
+/proc/simple_network_name_fix(name)
+	// can't make this as a define, some reason findtext(name,@"^[^\. ]+[A-Z0-9_\.]+[^\. ]+$") dosn't work
+	var/static/regex/check_regex = new(@"[ \-]{1}","g")
+	return check_regex.Replace(uppertext(name),"_")
+/**
+  * Helper that verifies a network name is valid.
+  *
+  * A valid network name (ie, SS13.ATMOS.SCRUBBERS) is all caps, no spaces with periods between
+  * branches.  Returns false if it doesn't meat this requirement
+  *
+  * Arguments:
+  * * name - network text name to check
+  */
+/proc/verify_network_name(name)
+	// can't make this as a define, some reason findtext(name,@"^[^\. ]+[A-Z0-9_\.]+[^\. ]+$") dosn't work
+	var/static/regex/check_regex = new(@"^(?=[^\. ]+)[A-Z0-9_\.]+[^\. ]+$")
+	return istext(name) && check_regex.Find(name)
+
+
 
 /// Port protocol.  A port is just a list with a few vars that are used to send signals
 /// that something is refreshed or updated.  These macros make it faster rather than

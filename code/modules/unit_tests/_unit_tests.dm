@@ -21,6 +21,7 @@
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
 #include "anchored_mobs.dm"
+#include "ntnetwork_tests.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "card_mismatch.dm"

@@ -60,12 +60,12 @@
   */
 /datum/component/ntnet_interface/Initialize(network_name, network_tag = null)
 	if(network_name == null || !istext(network_name))
-		stack_trace("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
+		log_telecomms("ntnet_interface/Initialize: Bad network '[network_name]' for '[parent]', going to limbo it")
 		network_name = LIMBO_NETWORK_ROOT
 	// Tags cannot be numbers and must be unique over the world
 	if(network_tag != null && !istext(network_tag))
 		// numbers are not allowed as lookups for interfaces
-		stack_trace("Tag cannot be a number?  '[network_name]' for '[parent]', going to limbo it")
+		log_telecomms("Tag cannot be a number?  '[network_name]' for '[parent]', going to limbo it")
 		network_tag = "BADTAG_" + network_tag
 
 	hardware_id = SSnetworks.get_next_HID()
@@ -73,6 +73,7 @@
 	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
 
 	network = SSnetworks.create_network_simple(network_name)
+
 	network.add_interface(src)
 
 
