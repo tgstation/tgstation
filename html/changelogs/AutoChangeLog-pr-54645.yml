@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "The reactive teleport armor will now actually teleport the owner instead of forcemoving them to the picked turf. Expect some slight changes to the item's behaviour as result."
