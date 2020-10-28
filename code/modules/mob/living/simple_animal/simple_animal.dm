@@ -170,7 +170,6 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
-	AddComponent(/datum/component/riding)
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
 
@@ -656,16 +655,6 @@
 			return
 
 	return ..()
-
-/mob/living/simple_animal/relaymove(mob/living/user, direction)
-	if (stat == DEAD)
-		return
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-	if(tame && riding_datum)
-		riding_datum.handle_ride(user, direction)
-
-/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
-	. = ..()
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if(!can_have_ai && (togglestatus != AI_OFF))

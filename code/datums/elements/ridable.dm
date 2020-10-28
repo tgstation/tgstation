@@ -1,5 +1,5 @@
 
-/datum/component/ridable
+/datum/element/ridable
 	var/last_vehicle_move = 0 //used for move delays
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
@@ -30,32 +30,67 @@
 	var/ridden_holding_rider = FALSE
 
 
-/datum/component/ridable/Initialize(riding_flags, mob/living/riding_mob)
-	if(!ismovable(parent))
+/datum/element/ridable/Attach(atom/movable/target)
+	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOVABLE_TRY_MOUNTING, .proc/check_mounting)
-	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/check_unmounting)
+	RegisterSignal(target, COMSIG_MOVABLE_TRY_MOUNTING, .proc/check_mounting)
+	//RegisterSignal(target, COMSIG_MOVABLE_UNBUCKLE, .proc/check_unmounting)
 
 
-/datum/component/ridable/proc/check_unmounting(datum/source, mob/living/rider, force = FALSE)
+//datum/element/ridable/proc/check_unmounting(datum/source, mob/living/rider, force = FALSE)
 
 
-/datum/component/ridable/proc/check_mounting(datum/source, mob/living/potential_rider, force = FALSE, riding_flags = NONE)
+/datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, riding_flags = NONE)
 	SIGNAL_HANDLER
 
-	if((riding_flags & RIDING_RIDER_HOLDING_ON) && !equip_buckle_inhands(potential_rider, 2)) // hardcode 2 hands for now
-		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [parent_movable] because [potential_rider.p_their()] hands are full!</span>",
-			"<span class='warning'>You can't get a grip on [parent_movable] because your hands are full!</span>")
+	if((riding_flags & RIDING_RIDER_HOLDING_ON) && !equip_buckle_inhands(potential_rider, 2, target_movable)) // hardcode 2 hands for now
+		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
+			"<span class='warning'>You can't get a grip on [target_movable] because your hands are full!</span>")
 		return MOUNTING_HALT_BUCKLE
 
 
-	var/mob/living/parent_living = parent
+	var/mob/living/target_living = target_movable
 
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
 	// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
-	if((riding_flags & RIDING_RIDDEN_HOLD_RIDER) && !equip_buckle_inhands(parent_living, 1, potential_rider)) // hardcode 1 hand for now
-		parent_living.visible_message("<span class='warning'>[parent_living] can't get a grip on [potential_rider] because [parent_living.p_their()] hands are full!</span>",
+	if((target_living & RIDING_RIDDEN_HOLD_RIDER) && !equip_buckle_inhands(target_living, 1, potential_rider, target_movable)) // hardcode 1 hand for now
+		target_living.visible_message("<span class='warning'>[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [potential_rider] because your hands are full!</span>")
 		return MOUNTING_HALT_BUCKLE
 
-	parent.AddComponent(/datum/component/riding, potential_rider, force, riding_flags)
+	target_living.AddComponent(/datum/component/riding, potential_rider, force, riding_flags)
+
+/datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)
+	var/atom/movable/AM = target_movable
+	var/amount_equipped = 0
+	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
+		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
+		if(!riding_target_override)
+			inhand.rider = user
+		else
+			inhand.rider = riding_target_override
+		inhand.parent = AM
+		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
+			if((I.obj_flags & HAND_ITEM))
+				qdel(I)
+		if(user.put_in_hands(inhand, TRUE))
+			amount_equipped++
+		else
+			break
+
+	if(amount_equipped >= amount_required)
+		return TRUE
+	else
+		unequip_buckle_inhands(user, target_movable)
+		return FALSE
+
+/datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)
+	var/atom/movable/AM = target_movable
+	for(var/obj/item/riding_offhand/O in user.contents)
+		if(O.parent != AM)
+			CRASH("RIDING OFFHAND ON WRONG MOB")
+		if(O.selfdeleting)
+			continue
+		else
+			qdel(O)
+	return TRUE

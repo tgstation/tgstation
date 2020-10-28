@@ -22,7 +22,6 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
-	AddComponent(/datum/component/riding)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1147,7 +1146,7 @@
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 
-	var/riding_flags
+	var/carry_mode
 	if(carry_mode == HUMAN_CARRY_FIREMAN)
 		buckle_lying = 90
 		riding_flags = (RIDING_RIDDEN_HOLD_RIDER)
@@ -1155,6 +1154,7 @@
 		buckle_lying = 0
 		riding_flags = (RIDING_RIDER_HOLDING_ON)
 
+	buckle_mob(target, TRUE, check_loc, riding_flags)
 	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
 	/*if(LoadComponent(/datum/component/riding/human, riding_flags, target))
 		stop_pulling()
@@ -1166,13 +1166,14 @@
 	// i tried making the two "x holds y" flags neutral of each other so you could have both/either/neither, but this message printout
 	// violates that since we wouldn't know which party/parties caused the carry to fail due to lack of hands if both needed them
 	// this could/should probably be moved to the riding datum anyway
+	/*
 	if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 		visible_message("<span class='warning'>[src] can't get a grip on [target] because [p_their()] hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
 	else if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 		target.visible_message("<span class='warning'>[target] can't get a grip on [src] because [target.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
-
+*/
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

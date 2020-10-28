@@ -44,23 +44,24 @@
 	var/ridden_holding_rider = FALSE
 
 
-/datum/component/riding/Initialize(riding_flags, mob/living/riding_mob, force = FALSE, riding_flags = NONE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
-	var/atom/movable/parent_movable = parent
 	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
 	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 
-	riding_mob.set_glide_size(movable_parent.glide_size)
+	if(isliving(parent))
+		var/mob/living/parent_living = parent
+		riding_mob.set_glide_size(parent_living.glide_size)
+		handle_vehicle_offsets(parent_living.dir)
 	riding_mob.updating_glide_size = FALSE
-	handle_vehicle_offsets(movable_parent.dir)
+
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
 
@@ -315,7 +316,7 @@
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
-/datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
+/datum/component/riding/human/Initialize()
 	. = ..()
 	var/mob/living/carbon/human/H = parent
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
