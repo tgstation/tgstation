@@ -327,31 +327,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/list/currenthand = list()
 	var/choice = null
 
-/obj/item/tcg_deck
-	name = "\improper TGC pile"
-	desc = "A pile of TGC cards. May be a deck, may be a discard pile. The only limit is your imagination! (And the rules, naturally)."
-	icon = 'icons/obj/tcgmisc.dmi'
-	icon_state = "none"
-	var/list/card_contents = list()
-
-/obj/item/tcg_deck/attack_hand(mob/user)
-	draw_card(user)
-
-/obj/item/tcg_deck/proc/draw_card(mob/user)
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
-			return
-	var/choice = null
-	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
-	choice = cards[1]
-	H.cardname = choice
-	H.pickup(user)
-	user.put_in_hands(H)
-	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	update_icon()
-	return H
-
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
