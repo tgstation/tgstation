@@ -51,6 +51,7 @@
 #include "code\__DEFINES\exosuit_fab.dm"
 #include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
+#include "code\__DEFINES\filters.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"

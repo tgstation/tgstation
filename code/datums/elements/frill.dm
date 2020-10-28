@@ -1,5 +1,12 @@
 GLOBAL_LIST_EMPTY(frill_objects)
-GLOBAL_VAR_INIT(frill_shadow_object, new /atom/movable/visual/frill_shadow(null))
+
+
+/proc/get_frill_object(icon_path, junction, shadow = FALSE, alpha = 255, pixel_y = 32, plane = FRILL_PLANE)
+	. = GLOB.frill_objects["[icon_path]-[junction]-[shadow]-[alpha]-[pixel_y]-[plane]"]
+	if(.)
+		return
+	. = GLOB.frill_objects["[icon_path]-[junction]-[shadow]-[alpha]-[pixel_y]-[plane]"] = new /atom/movable/visual/frill(null, icon_path, junction, shadow, alpha, pixel_y, plane)
+
 
 /**
   * Attached to smoothing atoms. Adds a globally-cached object to their vis_contents and updates based on junction changes.
@@ -9,6 +16,7 @@ GLOBAL_VAR_INIT(frill_shadow_object, new /atom/movable/visual/frill_shadow(null)
   */
 /datum/element/frill
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
 	var/icon_path
 
 
@@ -18,28 +26,21 @@ GLOBAL_VAR_INIT(frill_shadow_object, new /atom/movable/visual/frill_shadow(null)
 	. = ..()
 	src.icon_path = icon_path
 	var/turf/turf_or_movable = target
-	turf_or_movable.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction)
+	turf_or_movable.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 
 /datum/element/frill/Detach(turf/target)
-	target.vis_contents -= get_frill_object(icon_path, target.smoothing_junction)
+	target.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
-
-
-/datum/element/frill/proc/get_frill_object(icon_path, junction)
-	. = GLOB.frill_objects["[icon_path]-[junction]"]
-	if(.)
-		return
-	. = GLOB.frill_objects["[icon_path]-[junction]"] = new /atom/movable/visual/frill(null, icon_path, junction)
 
 
 /datum/element/frill/proc/on_junction_change(atom/source, new_junction)
 	SIGNAL_HANDLER
 	var/turf/turf_or_movable = source
-	turf_or_movable.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction)
-	turf_or_movable.vis_contents += get_frill_object(icon_path, new_junction)
+	turf_or_movable.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
+	turf_or_movable.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
 
 
 /atom/movable/visual/frill
@@ -51,18 +52,15 @@ GLOBAL_VAR_INIT(frill_shadow_object, new /atom/movable/visual/frill_shadow(null)
 	pixel_y = 32
 
 
-/atom/movable/visual/frill/Initialize(mapload, icon, junction)
+/atom/movable/visual/frill/Initialize(mapload, icon, junction, shadow, custom_alpha, custom_pixel_y, custom_plane)
 	. = ..()
 	src.icon = icon
 	icon_state = "frill-[junction]"
-	vis_contents += GLOB.frill_shadow_object
-
-
-/atom/movable/visual/frill_shadow
-	icon = 'icons/effects/frills/shadow.dmi'
-	icon_state = "shadow"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = NONE
-	layer = ABOVE_MOB_LAYER
-	plane = UNDER_FRILL_PLANE
-	vis_flags = VIS_UNDERLAY
+	if(shadow)
+		vis_contents += get_frill_object(icon, junction, FALSE, 120, 0, UNDER_FRILL_PLANE)
+	if(!isnull(custom_alpha))
+		alpha = custom_alpha
+	if(!isnull(custom_pixel_y))
+		pixel_y = custom_pixel_y
+	if(!isnull(custom_plane))
+		plane = custom_plane

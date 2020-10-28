@@ -81,12 +81,19 @@
 
 /obj/screen/plane_master/frill/backdrop(mob/mymob)
 	if(!mymob)
+		CRASH("Plane master backdrop called without a mob attached.")
+	remove_filter(FRILL_FLOOR_CUT)
+	remove_filter(FRILL_GAME_CUT)
+	if(!mymob.client?.prefs)
 		return
-	remove_filter("frill cut")
-	if(mymob.client?.prefs?.ambientocclusion)
-		add_filter("frill cut", 1, list("type" = "alpha", "x" = 6, "y" = -7, "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+	var/datum/preferences/client_prefs = mymob.client.prefs
+	if(!client_prefs.frills_over_floors)
+		add_filter(FRILL_FLOOR_CUT, 1, list("type" = "alpha", "render_source" = FLOOR_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+	if(client_prefs.ambientocclusion)
+		add_filter(FRILL_GAME_CUT, 1, list("type" = "alpha", "x" = 6, "y" = -7, "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
 	else
-		add_filter("frill cut", 1, list("type" = "alpha", "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+		add_filter(FRILL_GAME_CUT, 1, list("type" = "alpha", "render_source" = GAME_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
+
 
 
 ///Contains all lighting objects
