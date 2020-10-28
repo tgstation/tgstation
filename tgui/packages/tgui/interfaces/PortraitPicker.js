@@ -38,7 +38,7 @@ export const PortraitPicker = (props, context) => {
         <Flex height="100%" direction="column">
           <Flex.Item mb={1}>
             <Section fitted>
-              <Tabs fluid={1}>
+              <Tabs fluid textAlign="center">
                 {TABS.map((tabObj, i) => (
                   !!tabObj.list !== 0 && (
                     <Tabs.Tab
