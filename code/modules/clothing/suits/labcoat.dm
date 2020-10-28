@@ -50,5 +50,5 @@
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"
-	desc = "It helps hide the oil smears. Comes with red shoulder pads for a more retro-futuristic feel, and to accentuate just how extra you are."
+	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_robo"
