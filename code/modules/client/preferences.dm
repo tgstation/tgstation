@@ -107,6 +107,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/ambientocclusion = TRUE
+
+	///Do we see the top part of tall walls when looming over floors?
+	var/frills_over_floors = FALSE
+
 	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
 	///Should we be in the widescreen mode set by the config?
@@ -627,6 +631,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "High"
 			dat += "</a><br>"
 
+			dat += "<b>Frills over Floors:</b> <a href='?_src_=prefs;preference=frills_over_floors'>[frills_over_floors ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
 			if (CONFIG_GET(string/default_view) != CONFIG_GET(string/default_view_square))
@@ -1793,9 +1798,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (parent && parent.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
+				if("frills_over_floors")
+					frills_over_floors = !frills_over_floors
+					if(length(parent?.screen))
+						var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in parent.screen
+						frill.backdrop(parent.mob)
+
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
-					if(parent?.screen && parent.screen.len)
+					if(length(parent?.screen))
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 						PM.backdrop(parent.mob)
 						var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in parent.screen
