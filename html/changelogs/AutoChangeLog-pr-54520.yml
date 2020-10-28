@@ -1,5 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - rscadd: "Added functional directional lighting. You can notice them with flashlights, hardsuit lamps, hardhats and the likes."
-  - code_imp: "Made the static light system respect the light_on variable"
