@@ -172,6 +172,7 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
+		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -592,10 +593,7 @@
 	return access_card
 
 /mob/living/simple_animal/can_hold_items()
-	return dextrous
-
-/mob/living/simple_animal/IsAdvancedToolUser()
-	return dextrous
+	return dextrous && ..()
 
 /mob/living/simple_animal/activate_hand(selhand)
 	if(!dextrous)

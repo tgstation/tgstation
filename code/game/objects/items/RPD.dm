@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
+	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//Unwrench pipe before we build one over/paint it.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
-		A = A.wrench_act(user, src)	
+		A = A.wrench_act(user, src)
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
