@@ -255,5 +255,5 @@
 
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 4)
 		new /obj/effect/spawner/lootdrop/decorations_spawner(src)
