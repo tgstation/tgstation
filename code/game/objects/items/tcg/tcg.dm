@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck
 	name = "Trading Card Pile"
 	desc = "A stack of TCG cards."
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "deck_up"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
