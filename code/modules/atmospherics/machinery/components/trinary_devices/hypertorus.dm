@@ -526,9 +526,9 @@
 			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
 
-	//Melt(To be done)
-/*	if(critical_threshold_proximity > melting_point)
-		countdown()*/
+	//Melt
+	if(critical_threshold_proximity > melting_point)
+		countdown()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/countdown()
 	set waitfor = FALSE
@@ -558,9 +558,21 @@
 	meltdown()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/meltdown()
-	//to do
-	message_admins("MELTDOWN")
-	return
+	explosion(loc, 0, 0, 20, 30, 1, 1)
+	var/fusion_moles = internal_fusion.total_moles()
+	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
+	var/datum/gas_mixture/remove_fusion = internal_fusion.remove(fusion_moles)
+	var/datum/gas_mixture/remove_moderator
+	if(moderator_internal.total_moles() > 0)
+		remove_moderator = moderator_internal.remove(moderator_moles)
+	loc.assume_air(remove_fusion)
+	if(moderator_internal.total_moles() > 0)
+		loc.assume_air(remove_moderator)
+	air_update_turf()
+	qdel(src)
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/attack_hand(mob/living/user)
+	meltdown()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
 	/*
@@ -657,11 +669,12 @@
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
 
-	//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-	var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-	var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
-	internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
-	moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
+	if(moderator_internal.total_moles() > 0)
+		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
+		var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
@@ -933,7 +946,7 @@
 								l.hallucination = clamp(l.hallucination, 0, 200)
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-					if(moderator_internal.temperature < 10000)
+					if(moderator_internal.temperature < 1e8)
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)
@@ -958,8 +971,7 @@
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.015
 						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(0.01 * (scaled_helium / (fuel_injection_rate * 0.0065)), 0, 5)
-					if(moderator_internal.temperature < 1e6)
-						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
+					moderator_internal.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 
 	//heat up and output what's in the internal_output into the linked_output port
 	internal_output.temperature = moderator_internal.temperature
@@ -972,7 +984,7 @@
 			iron_content += 0.05
 
 	//Waste gas can be remove by the interface, can spill if temperature is too high (to do)
-	if(waste_remove)
+	if(waste_remove && power_level < 5)
 		var/datum/gas_mixture/internal_remove
 		internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
 		internal_fusion.garbage_collect()

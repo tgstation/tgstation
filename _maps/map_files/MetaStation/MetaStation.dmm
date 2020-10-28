@@ -75083,9 +75083,6 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10
-	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "rKS" = (
@@ -77181,9 +77178,6 @@
 "uMa" = (
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input{
 	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
