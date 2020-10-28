@@ -1972,21 +1972,16 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aeY" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #1"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line,
-/mob/living/simple_animal/bot/mulebot{
-	beacon_freq = 1400;
-	home_destination = "QM #1";
-	suffix = "#1"
+/obj/machinery/vending/assist,
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/newscaster{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -2012,22 +2007,28 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "afb" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #3"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/box/lights/mixed,
+/obj/item/stack/sheet/metal{
+	amount = 30
 	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #3";
-	suffix = "#3"
+/obj/item/radio{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/radio{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/stack/cable_coil,
+/obj/item/radio,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 22
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -8619,6 +8620,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "ata" = (
@@ -14743,6 +14747,7 @@
 	dir = 8;
 	name = "storage wing camera"
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aIA" = (
@@ -14786,7 +14791,11 @@
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aIF" = (
-/obj/item/kirbyplants/random,
+/obj/machinery/vending/tool,
+/obj/machinery/light_switch{
+	pixel_x = -6;
+	pixel_y = 27
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aII" = (
@@ -15166,16 +15175,27 @@
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aJQ" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/flashlight,
+/obj/item/analyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/assembly/signaler,
+/obj/item/stack/rods{
+	amount = 25
+	},
+/obj/item/stack/cable_coil,
+/obj/item/gps,
+/obj/machinery/camera/autoname,
+/obj/machinery/power/apc{
+	areastring = "/area/storage/primary";
 	dir = 8;
-	freq = 1400;
-	location = "QM #2"
+	name = "Primary Tool Storage APC";
+	pixel_y = 26
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aJS" = (
@@ -15689,7 +15709,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aLl" = (
-/obj/structure/plasticflaps/opaque,
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;63;48;50"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aLm" = (
@@ -16181,32 +16204,49 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aMC" = (
-/obj/machinery/door/airlock/mining{
-	name = "Automated Delivery";
-	req_one_access_txt = "31;48"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Primary Tool Storage"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aMD" = (
+/obj/item/assembly/timer,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aME" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #4"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/storage/box/lights/mixed,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aMF" = (
@@ -16728,6 +16768,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aNR" = (
@@ -16789,7 +16830,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -17346,18 +17387,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aPi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel,
-/area/quartermaster/warehouse)
 "aPl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aPo" = (
@@ -17765,10 +17801,16 @@
 /area/quartermaster/warehouse)
 "aQr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/cargo_technician,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 8;
+	freq = 1400;
+	location = "QM #4"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -17777,6 +17819,9 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/airlock_painter/decal,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aQt" = (
@@ -18406,9 +18451,22 @@
 /area/quartermaster/warehouse)
 "aRL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 8;
+	freq = 1400;
+	location = "QM #3"
+	},
+/mob/living/simple_animal/bot/mulebot{
+	home_destination = "QM #3";
+	suffix = "#3"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aRQ" = (
@@ -28865,7 +28923,21 @@
 /area/crew_quarters/toilet/auxiliary)
 "bqk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 8;
+	freq = 1400;
+	location = "QM #1"
+	},
+/mob/living/simple_animal/bot/mulebot{
+	beacon_freq = 1400;
+	home_destination = "QM #1";
+	suffix = "#1"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bql" = (
@@ -37757,6 +37829,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bOr" = (
@@ -62725,9 +62798,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dhI" = (
-/obj/machinery/door/window/eastright{
-	name = "MULEbot Access";
-	req_one_access_txt = "31;48"
+/obj/item/storage/box/shipping,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -65927,6 +66002,20 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"fok" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 8;
+	freq = 1400;
+	location = "QM #2"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "fos" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -68136,6 +68225,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ivz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "ivA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -68740,6 +68834,17 @@
 /obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
+"jqa" = (
+/obj/effect/landmark/event_spawn,
+/obj/item/storage/belt/utility,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "jqA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -70433,6 +70538,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"lxQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "lzk" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -72265,6 +72377,27 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
+"odi" = (
+/obj/structure/rack,
+/obj/item/flashlight,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/book/manual/wiki/engineering_hacking{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/book/manual/wiki/engineering_guide,
+/obj/item/book/manual/wiki/engineering_construction{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/stack/sheet/glass{
+	amount = 30
+	},
+/obj/item/airlock_painter,
+/obj/item/crowbar,
+/obj/item/wrench,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "oem" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -74633,6 +74766,17 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/quartermaster/qm)
+"qYx" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool,
+/obj/item/clothing/head/welding,
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "qZf" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -99623,7 +99767,7 @@ aKZ
 aNV
 aNP
 aPg
-aQp
+fok
 bqk
 aSZ
 nMU
@@ -99879,7 +100023,7 @@ aSZ
 aLa
 aNW
 aNP
-aQq
+aQp
 aQq
 aRK
 aSZ
@@ -100135,8 +100279,8 @@ iMF
 aSZ
 aLb
 aNX
-aPi
-aPi
+aNP
+aNP
 aQr
 aRL
 aSZ
@@ -100393,7 +100537,7 @@ cTs
 aRS
 asY
 aNQ
-aQq
+lxQ
 aQs
 aSZ
 aSZ
@@ -100650,7 +100794,7 @@ aSZ
 bOq
 aNY
 aNR
-aQq
+ivz
 aQt
 aSZ
 dhy
@@ -101933,7 +102077,7 @@ aIB
 aIz
 aJP
 aMB
-aMB
+qYx
 aTf
 uLc
 aYL
@@ -102187,10 +102331,10 @@ aaa
 aaa
 aFN
 aHt
-aFN
+aJN
 aJO
 aMC
-aMC
+aJO
 aJN
 dCt
 aQv
@@ -102444,10 +102588,10 @@ aaa
 aaa
 aFN
 aHt
-aFN
+aJN
 aIF
 aMD
-aMD
+odi
 aJN
 aPo
 fkb
@@ -102701,9 +102845,9 @@ aaa
 dne
 dne
 aIC
-dne
+aJN
 aJQ
-aMD
+jqa
 aME
 aJN
 aPp
@@ -102958,7 +103102,7 @@ aaa
 anb
 doA
 doJ
-dne
+aJN
 aeY
 dhI
 afb
@@ -103215,7 +103359,7 @@ aaa
 anb
 wnR
 doJ
-dne
+aJN
 aJN
 aLl
 aJN
