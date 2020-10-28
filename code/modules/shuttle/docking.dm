@@ -105,7 +105,7 @@
 	// remove any stragglers just in case, and clear the list
 	remove_ripples()
 
-	var/should_project = !istype(old_turfs[1], /turf/open/space/transit)
+	var/should_project = !istype(old_dock, /obj/docking_port/stationary/transit)
 	if (should_project)
 		new /obj/effect/abstract/shuttle_projector(null, src, old_dock, FALSE)
 

@@ -609,6 +609,10 @@
 	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
+	// Don't create ripples for transit docks
+	if(istype(S1, /obj/docking_port/stationary/transit))
+		return
+
 	if(inbound_shuttle_projector)
 		CRASH("create_ripples() called multiple times!")
 
