@@ -1,4 +1,20 @@
+/**
+  * This is the riding component, which is applied to a movable atom so that various mobs can "ride" it, meaning they are buckled to
+  * it and have their icon modified along with the vehicle's icon to indicate the riding state.
+  *
+  * There are two ways this component is used, one at atom initialization (inanimate vehicles), and one spontaneously at time of mounting (mobs)
+  *	* 1. Inanimate- The component is created on initialization and persists when nothing is buckled to the parent. Think secways and cars.
+  *	* 2. Mobs- Used for humans picking up humans, riding borgs, and riding tamed animals. The component is created at the time of mounting,
+  *	* 		and is deleted when there are no more riders. If there are multiple riders, one component handles all of them.
+  *
+  * Arguments:
+  * *
+  */
+
+
 /datum/component/riding
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+
 	var/last_vehicle_move = 0 //used for move delays
 	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
@@ -18,8 +34,7 @@
 	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
 	var/override_allow_spacemove = FALSE
 	var/drive_verb = "drive"
-	/// If we should delete this component when we have nothing left buckled, used for buckling to mobs
-	var/del_on_unbuckle_all = FALSE
+
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
@@ -29,47 +44,33 @@
 	var/ridden_holding_rider = FALSE
 
 
-/datum/component/riding/Initialize(riding_flags, mob/living/riding_mob)
+/datum/component/riding/Initialize(riding_flags, mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+	if(ismob(parent))
+		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
 	var/atom/movable/parent_movable = parent
 	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
 	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
 
-	if(!riding_mob) // none of the following checks matter if we're just setting this up on initialize, the following is for human carrying and such
+	riding_mob.set_glide_size(movable_parent.glide_size)
+	riding_mob.updating_glide_size = FALSE
+	handle_vehicle_offsets(movable_parent.dir)
+	if(can_use_abilities)
+		setup_abilities(riding_mob)
+
+/// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
+/datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
+	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
 		return
 
-	// see if we have room to add this person
-	if(parent_movable.has_buckled_mobs() && ((riding_mob in parent_movable.buckled_mobs) || parent_movable.buckled_mobs.len >= parent_movable.max_buckled_mobs))
-		return COMPONENT_INCOMPATIBLE
-
-	var/mob/living/parent_living = parent
-	// see if we're already, in fact, carrying this person
-	if(isliving(parent_living) && parent_living.buckled)
-		return COMPONENT_INCOMPATIBLE
-
-	var/mob/living/carbon/human/human_parent = parent // likely should be somewhere else
-	if(ishuman(human_parent) && !is_type_in_typecache(riding_mob, human_parent.can_ride_typecache))
-		riding_mob.visible_message("<span class='warning'>[riding_mob] really can't seem to mount [parent_movable]...</span>")
-		return COMPONENT_INCOMPATIBLE
-
-	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
-
-	// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
-	if(ridden_holding_rider && (!isliving(parent_living) || !equip_buckle_inhands(parent_living, 1, riding_mob))) // hardcode 1 hand for now
-		parent_living.visible_message("<span class='warning'>[parent_living] can't get a grip on [riding_mob] because [parent_living.p_their()] hands are full!</span>",
-			"<span class='warning'>You can't get a grip on [riding_mob] because your hands are full!</span>")
-		return COMPONENT_INCOMPATIBLE // is this okay to use as a conditional fail rather than a categorical "you can't use that on this"?
-
-	if(rider_holding_on && !equip_buckle_inhands(riding_mob, 2)) // hardcode 2 hands for now
-		riding_mob.visible_message("<span class='warning'>[riding_mob] can't get a grip on [parent_movable] because [riding_mob.p_their()] hands are full!</span>",
-			"<span class='warning'>You can't get a grip on [parent_movable] because your hands are full!</span>")
-		return COMPONENT_INCOMPATIBLE
+	for(var/mob/yeet_mob in user.buckled_mobs)
+		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
 
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
@@ -80,22 +81,11 @@
 	restore_position(rider)
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
-	if(del_on_unbuckle_all && !movable_parent.has_buckled_mobs())
+	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
-
-/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
-	SIGNAL_HANDLER
-
-	var/atom/movable/movable_parent = parent
-	M.set_glide_size(movable_parent.glide_size)
-	M.updating_glide_size = FALSE
-	handle_vehicle_offsets(movable_parent.dir)
-	if(can_use_abilities)
-		setup_abilities(M)
 
 ///Gives the rider the riding parent's abilities
 /datum/component/riding/proc/setup_abilities(mob/living/M)
-
 	if(!istype(parent, /mob/living))
 		return
 
@@ -107,7 +97,6 @@
 
 ///Takes away the riding parent's abilities from the rider
 /datum/component/riding/proc/remove_abilities(mob/living/M)
-
 	if(!istype(parent, /mob/living))
 		return
 
@@ -315,7 +304,6 @@
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
-	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/human/Initialize(riding_flags, mob/living/riding_mob)
 	. = ..()
@@ -376,7 +364,6 @@
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
-	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/cyborg/ride_check(mob/user)
 	var/atom/movable/AM = parent

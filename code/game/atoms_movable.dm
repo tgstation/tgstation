@@ -60,6 +60,9 @@
 	///Highest-intensity light affecting us, which determines our visibility.
 	var/affecting_dynamic_lumi = 0
 
+	///If TRUE, we get a riding element
+	var/ridable = FALSE
+
 
 /atom/movable/Initialize(mapload)
 	. = ..()
@@ -70,6 +73,8 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(ridable)
+		AddElement(/datum/element/ridable)
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)

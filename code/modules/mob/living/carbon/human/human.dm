@@ -22,6 +22,7 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	AddComponent(/datum/component/riding)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1138,7 +1139,7 @@
 	buckle_mob(target, TRUE, TRUE, HUMAN_CARRY_PIGBACK)
 
 // /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, carry_mode)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, riding_flags = NONE)
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
@@ -1155,11 +1156,11 @@
 		riding_flags = (RIDING_RIDER_HOLDING_ON)
 
 	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
-	if(LoadComponent(/datum/component/riding/human, riding_flags, target))
+	/*if(LoadComponent(/datum/component/riding/human, riding_flags, target))
 		stop_pulling()
 		//riding_datum.handle_vehicle_layer() idk if this is actually necessary or if i can move this to the riding datum's init to avoid assigning the riding_datum var here
 		return ..(target, force, check_loc)
-
+*/
 	// so we must not have enough hands on one of the parties who needed hands (or something else in general with components went wrong i guess)
 
 	// i tried making the two "x holds y" flags neutral of each other so you could have both/either/neither, but this message printout

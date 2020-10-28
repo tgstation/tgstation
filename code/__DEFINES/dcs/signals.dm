@@ -258,6 +258,9 @@
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"
+///from base of atom/movable/unbuckle_mob(): (mob, force)
+#define COMSIG_MOVABLE_TRY_MOUNTING "try_mounting"
+	#define MOUNTING_HALT_BUCKLE	(1<<0)
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)

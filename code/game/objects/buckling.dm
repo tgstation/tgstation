@@ -83,11 +83,14 @@
   * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
   * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
   */
-/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, riding_flags = NONE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
 	if(!is_buckle_possible(M, force, check_loc))
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_TRY_MOUNTING, M, force, riding_flags) == MOUNTING_HALT_BUCKLE) // needs 3 options: no interference (no ridable element/not mounting, keep going), mount failed (stop), mount succeeded (keep going)
 		return FALSE
 
 	if(M.pulledby)

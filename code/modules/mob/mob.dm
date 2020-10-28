@@ -999,7 +999,7 @@
   *
   * Turns you to face the other mob too
   */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, riding_flags = NONE)
 	if(M.buckled)
 		return FALSE
 	var/turf/T = get_turf(src)

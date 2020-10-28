@@ -104,6 +104,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = 0
+	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/get_cell()
@@ -116,6 +117,7 @@
 
 	wires = new /datum/wires/robot(src)
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddComponent(/datum/component/riding)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -1029,11 +1031,11 @@
 	if(module && !module.allow_riding)
 		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
-
+	/*
 	var/riding_flags = (RIDING_RIDER_HOLDING_ON)
 	if(LoadComponent(/datum/component/riding/cyborg, riding_flags, M))
 		return
-
+*/
 	return ..()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)

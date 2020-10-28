@@ -582,6 +582,7 @@
 #include "code\datums\elements\forced_gravity.dm"
 #include "code\datums\elements\light_blocking.dm"
 #include "code\datums\elements\obj_regen.dm"
+#include "code\datums\elements\ridable.dm"
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\snail_crawl.dm"
 #include "code\datums\elements\squish.dm"
