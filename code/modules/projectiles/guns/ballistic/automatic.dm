@@ -224,7 +224,7 @@
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust infantry rifle design inspired by the ancient Stoner, nicknamed "Boarder" by Special Forces. Still has feeding issues in jungles."
+	desc = "A robust infantry rifle design inspired by the ancient Stoner, nicknamed 'Boarder' by Special Forces. Still has feeding issues in jungles."
 	icon_state = "arg"
 	inhand_icon_state = "arg"
 	slot_flags = 0
