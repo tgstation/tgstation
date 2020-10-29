@@ -1,10 +1,10 @@
 /**
   * Beauty component, makes the indoor area the parent is in prettier or uglier depending on the beauty var.
-  * Clean and well decorated areas lead to a positive moodlets for passerbies, while shabbier, dirtier ones
+  * Clean and well decorated areas lead to positive moodlets for passerbies, while shabbier, dirtier ones
   * lead to negative moodlets exclusive to characters with the snob quirk.
   *
-  * Keep in mind AddComponent is used for BOTH adding and removing beauty value here.
-  * Please don't use qdel/RemoveComponent unless necessary.
+  * Keep in mind AddComponent is used for BOTH adding and removing beauty value here,
+  * so please don't use qdel/RemoveComponent unless necessary.
   */
 /datum/component/beauty
 	var/beauty = 0
