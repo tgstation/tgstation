@@ -212,14 +212,14 @@
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
-	var/mob/living/bogdanoff
+	var/datum/bank_account/bogdanoff
 
 /obj/effect/ex_act()
 	return
 
-/obj/effect/dumpeet_target/Initialize(mapload, user)
+/obj/effect/dumpeet_target/Initialize(mapload, datum/bank_account/account)
 	. = ..()
-	bogdanoff = user
+	bogdanoff = account
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
