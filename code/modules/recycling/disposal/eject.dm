@@ -1,5 +1,5 @@
 /**
-  * General proc used to expel an holder's this contents through src (for bins, holder is also the src).
+  * General proc used to expel an holder's contents through src (for bins, holder is also the src).
   * Because having more than one source of a determinated signal is usually bad practice.
   */
 /obj/proc/pipe_eject(obj/holder, direction, throw_em = TRUE, turf/target, throw_range = 5, throw_speed = 1)
