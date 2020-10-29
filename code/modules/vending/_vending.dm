@@ -764,7 +764,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/obj/item/card/id/C = user.get_idcard(TRUE)
+	var/obj/item/card/id/C
+	if(isliving(user))
+		var/mob/living/L = user
+		C = L.get_idcard(TRUE)
 	if(C?.registered_account)
 		.["user"] = list()
 		.["user"]["name"] = C.registered_account.account_holder
@@ -817,8 +820,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 				vend_ready = TRUE
 				return
 			if(onstation)
-				var/obj/item/card/id/C = usr.get_idcard(TRUE)
-
+				var/obj/item/card/id/C
+				if(isliving(usr))
+					var/mob/living/L = usr
+					C = L.get_idcard(TRUE)
 				if(!C)
 					say("No card found.")
 					flick(icon_deny,src)
@@ -1007,7 +1012,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
-	var/obj/item/card/id/C = user.get_idcard(FALSE)
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/L = user
+	var/obj/item/card/id/C = L.get_idcard(FALSE)
 	if(C?.registered_account && C.registered_account == private_a)
 		return TRUE
 
@@ -1059,8 +1067,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/N = params["item"]
 			var/obj/S
 			vend_ready = FALSE
-			var/obj/item/card/id/C = usr.get_idcard(TRUE)
-
+			var/obj/item/card/id/C
+			if(isliving(usr))
+				var/mob/living/L = usr
+				C = L.get_idcard(TRUE)
 			if(!C)
 				say("No card found.")
 				flick(icon_deny,src)
@@ -1108,8 +1118,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			vend_ready = TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
-	if(!private_a)
-		var/obj/item/card/id/C = user.get_idcard(TRUE)
+	if(!private_a && isliving(user))
+		var/mob/living/L = user
+		var/obj/item/card/id/C = L.get_idcard(TRUE)
 		if(C?.registered_account)
 			private_a = C.registered_account
 			say("\The [src] has been linked to [C].")

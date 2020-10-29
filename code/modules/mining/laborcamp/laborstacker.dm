@@ -52,8 +52,10 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		data["emagged"] = TRUE
 		can_go_home = TRUE
-
-	var/obj/item/card/id/I = user.get_idcard(TRUE)
+	var/obj/item/card/id/I
+	if(isliving(usr))
+		var/mob/living/L = usr
+		I = L.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
 		data["id_points"] = P.points
@@ -80,7 +82,10 @@ GLOBAL_LIST(labor_sheet_values)
 	var/mob/M = usr
 	switch(action)
 		if("claim_points")
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(M))
+				var/mob/living/L = M
+				I = L.get_idcard(TRUE)
 			if(istype(I, /obj/item/card/id/prisoner))
 				var/obj/item/card/id/prisoner/P = I
 				P.points += stacking_machine.points

@@ -72,7 +72,10 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
-	var/obj/item/card/id/id_card = user.get_idcard()
+	var/obj/item/card/id/id_card
+	if(isliving(user))
+		var/mob/living/L = user
+		id_card = L.get_idcard()
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
