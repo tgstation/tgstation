@@ -64,9 +64,9 @@
 		SSnetworks.root_networks[network_id] = src
 
 	SSnetworks.networks[network_id] = src
-#ifdef DEBUG_NETWORKS
-	to_chat(world, "Network [network_id] Create")
-#endif
+
+	SSnetworks.add_log("Network was created: [network_id]")
+
 	return ..()
 
 /datum/ntnet/vv_edit_var(var_name)
@@ -86,6 +86,13 @@
 		SSnetworks.root_networks.Remove(network_id)
 
 	SSnetworks.networks.Remove(network_id)
+
+	root_devices = null
+	networks = null
+	network_node_id = null
+	SSnetworks.add_log("Network was destroyed: [network_id]")
+	network_id = null
+
 	return ..()
 
 /**
@@ -227,7 +234,8 @@
 	interface.alias[target.network_id] = target
 
 
-/datum/ntnet/station
+
+/datum/ntnet/station_root
 	var/list/services_by_path = list()					//type = datum/ntnet_service
 	var/list/services_by_id = list()					//id = datum/ntnet_service
 
@@ -250,34 +258,29 @@
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New()
-	. = ..(STATION_NETWORK_ROOT,  null)
+/datum/ntnet/station_root/New(root_name)
+	. = ..(root_name)
 	build_software_lists()
-	SSnetworks.add_log("NTNet logging system activated for station")
+	SSnetworks.add_log("NTNet logging system activated for [root_name]")
 
 
 
-/datum/ntnet/station/syndicate/New()
-	. = ..(SYNDICATE_NETWORK_ROOT, null)
-	build_software_lists()
-	log_telecomms("NTNet logging system activated for syndicate") // don't want eveyone to know about this one
-// not sure if we want service to work as it is, hold off till we get machines working
 
 #ifdef NTNET_SERVICE
-/datum/ntnet/station/Destroy()
+/datum/ntnet/station_root/Destroy()
 	for(var/i in services_by_id)
 		var/S = i
 		S.disconnect(src, TRUE)
 	return ..()
 
 
-/datum/ntnet/station/proc/find_service_id(id)
+/datum/ntnet/station_root/proc/find_service_id(id)
 	return services_by_id[id]
 
-/datum/ntnet/station/proc/find_service_path(path)
+/datum/ntnet/station_root/proc/find_service_path(path)
 	return services_by_path[path]
 
-/datum/ntnet/station/proc/register_service(datum/ntnet_service/S)
+/datum/ntnet/station_root/proc/register_service(datum/ntnet_service/S)
 	if(!istype(S))
 		return FALSE
 	if(services_by_path[S.type] || services_by_id[S.id])
@@ -286,14 +289,14 @@
 	services_by_id[S.id] = S
 	return TRUE
 
-/datum/ntnet/station/proc/unregister_service(datum/ntnet_service/S)
+/datum/ntnet/station_root/proc/unregister_service(datum/ntnet_service/S)
 	if(!istype(S))
 		return FALSE
 	services_by_path -= S.type
 	services_by_id -= S.id
 	return TRUE
 
-/datum/ntnet/station/proc/create_service(type)
+/datum/ntnet/station_root/proc/create_service(type)
 	var/datum/ntnet_service/S = new type
 	if(!istype(S))
 		return FALSE
@@ -301,7 +304,7 @@
 	if(!.)
 		qdel(S)
 
-/datum/ntnet/station/proc/destroy_service(type)
+/datum/ntnet/station_root/proc/destroy_service(type)
 	var/datum/ntnet_service/S = find_service_path(type)
 	if(!istype(S))
 		return FALSE
@@ -309,7 +312,7 @@
 	if(.)
 		qdel(src)
 
-/datum/ntnet/station/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
+/datum/ntnet/station_root/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
 	if(..())
 		for(var/i in services_by_id)
 			var/datum/ntnet_service/serv = services_by_id[i]
@@ -318,7 +321,7 @@
 #endif
 
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
-/datum/ntnet/station/proc/check_function(specific_action = 0)
+/datum/ntnet/station_root/proc/check_function(specific_action = 0)
 	if(!SSnetworks.relays || !SSnetworks.relays.len) // No relays found. NTNet is down
 		return FALSE
 
@@ -341,7 +344,7 @@
 	return TRUE
 
 // Builds lists that contain downloadable software.
-/datum/ntnet/station/proc/build_software_lists()
+/datum/ntnet/station_root/proc/build_software_lists()
 	available_station_software = list()
 	available_antag_software = list()
 	for(var/F in typesof(/datum/computer_file/program))
@@ -356,7 +359,7 @@
 			available_antag_software.Add(prog)
 
 // Attempts to find a downloadable file according to filename var
-/datum/ntnet/station/proc/find_ntnet_file_by_name(filename)
+/datum/ntnet/station_root/proc/find_ntnet_file_by_name(filename)
 	for(var/N in available_station_software)
 		var/datum/computer_file/program/P = N
 		if(filename == P.filename)
@@ -366,21 +369,21 @@
 		if(filename == P.filename)
 			return P
 
-/datum/ntnet/station/proc/get_chat_channel_by_id(id)
+/datum/ntnet/station_root/proc/get_chat_channel_by_id(id)
 	for(var/datum/ntnet_conversation/chan in chat_channels)
 		if(chan.id == id)
 			return chan
 
 // Resets the IDS alarm
-/datum/ntnet/station/proc/resetIDS()
+/datum/ntnet/station_root/proc/resetIDS()
 	intrusion_detection_alarm = FALSE
 
-/datum/ntnet/station/proc/toggleIDS()
+/datum/ntnet/station_root/proc/toggleIDS()
 	resetIDS()
 	intrusion_detection_enabled = !intrusion_detection_enabled
 
 
-/datum/ntnet/station/proc/toggle_function(function)
+/datum/ntnet/station_root/proc/toggle_function(function)
 	if(!function)
 		return
 	function = text2num(function)
@@ -400,7 +403,7 @@
 
 
 
-/datum/ntnet/station/proc/register_map_supremecy()					//called at map init to make this what station networks use.
+/datum/ntnet/station_root/proc/register_map_supremecy()					//called at map init to make this what station networks use.
 	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
 		SSnetworks.relays.Add(R)
 		R.NTNet = src

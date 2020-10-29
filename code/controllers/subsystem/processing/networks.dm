@@ -8,8 +8,8 @@ SUBSYSTEM_DEF(networks)
 	var/list/relays = list()
 	/// Legacy ntnet lookup for software.  Should be changed latter so don't rely on this
 	/// being here.
-	var/datum/ntnet/station/station_network
-	var/datum/ntnet/station/syndicate/syndie_network
+	var/datum/ntnet/station_root/station_network
+	var/datum/ntnet/station_root/syndie_network
 	var/list/network_initialize_queue = list()
 	/// all interfaces by their hardware address.
 	/// Do NOT use to verify a reciver_id is valid, use the network.root_devices for that
@@ -53,11 +53,10 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/PreInit()
 	// Limbo network needs to be made at boot up for all error devices
 	new/datum/ntnet(LIMBO_NETWORK_ROOT)
-	station_network = new
-	syndie_network = new
+	station_network = new(STATION_NETWORK_ROOT)
+	syndie_network = new(SYNDICATE_NETWORK_ROOT)
 	// As well as the station network incase something funny goes during startup
 	new/datum/ntnet(CENTCOM_NETWORK_ROOT)
-
 
 
 /datum/controller/subsystem/networks/stat_entry(msg)
@@ -83,7 +82,7 @@ SUBSYSTEM_DEF(networks)
   * * data - packet to be sent
   */
 /datum/controller/subsystem/networks/proc/_process_packet(receiver_id, datum/netdata/data)
-	/// Used only for sending NAK/ACK and error replys
+	/// Used only for sending NAK/ACK and error reply's
 	var/datum/component/ntnet_interface/sending_interface = interfaces_by_hardware_id[data.sender_id]
 
 	/// Check if the network_id is valid and if not send an error and return
@@ -107,12 +106,17 @@ SUBSYSTEM_DEF(networks)
 	/// Check if we care about permissions.  If we do check if we are allowed the message to be processed
 	if(data.passkey) // got to check permissions
 		var/obj/O = target_interface.parent
-		if(O && !O.check_access_list(data.passkey))
-			count_failed_packets++
-			add_log("Access denied to ([receiver_id]) from ([data.network_id])", target_network, data.sender_id)
+		if(O)
+			if(!O.check_access_list(data.passkey))
+				count_failed_packets++
+				add_log("Access denied to ([receiver_id]) from ([data.network_id])", target_network, data.sender_id)
+				if(!QDELETED(sending_interface))
+					SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, NETWORK_ERROR_UNAUTHORIZED)
+				return
+		else
+			add_log("A access key message was sent to a non-device", target_network, data.sender_id)
 			if(!QDELETED(sending_interface))
 				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, NETWORK_ERROR_UNAUTHORIZED)
-		return
 
 	/// All is good, send the packet then send an ACK to the sender
 	SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_RECEIVE, data)
@@ -129,7 +133,7 @@ SUBSYSTEM_DEF(networks)
 	while(first)
 		current = first
 		/// Check if we are a list.  If so process the list
-		if(islist(current.receiver_id)) // are we a broadcast list, not logged
+		if(islist(current.receiver_id)) // are we a broadcast list
 			var/list/receivers = current.receiver_id
 			var/receiver_id = receivers[receivers.len--] // pop it
 			_process_packet(receiver_id, current)
@@ -302,9 +306,13 @@ SUBSYSTEM_DEF(networks)
 			var/datum/map_template/ruin/R = M
 			A.network_root_id = simple_network_name_fix(R.id)
 
+
 	if(!A.network_root_id) // not assigned?  Then lets use some defaults
 		// Anything in Centcom is completely isolated
-		if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
+		// Special case for holodecks.
+		if(istype(A,/area/holodeck))
+			A.network_root_id =  "HOLODECK"		// isolated from the station network
+		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
 			A.network_root_id =  CENTCOM_NETWORK_ROOT
 		// Otherwise the default is the station
 		else

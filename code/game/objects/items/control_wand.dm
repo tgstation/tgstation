@@ -20,14 +20,22 @@
 	. = ..()
 	access_list = get_region_accesses(region_access)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
-/obj/item/door_remote/proc/bad_signal(datum/netdata/data, mob/user, error_code)
-	if(!user)
+/obj/item/door_remote/proc/bad_signal(target, datum/netdata/data, error_code)
+	if(QDELETED(data.user))
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
-		to_chat(user, "<span class='notice'>This remote is not authorized to modify this door.</span>")
+		to_chat(data.user, "<span class='notice'>This remote is not authorized to modify this door.</span>")
 	else
-		to_chat(user, "<span class='notice'>Error: [error_code]</span>")
+		to_chat(data.user, "<span class='notice'>Error: [error_code]</span>")
+
+
+/obj/item/door_remote/proc/good_signal(target, datum/netdata/data,error_code)
+	if(QDELETED(data.user))
+		return
+	var/toggled = data.data["data"]
+	to_chat(data.user, "<span class='notice'>Door [toggled] toggled</span>")
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -48,12 +56,12 @@
 	if(!target_interface)
 		return
 
+	usr.set_machine(user)
 	// Generate a control packet.
 	var/datum/netdata/data = new(list("data" = mode,"data_secondary" = "toggle"))
 	data.receiver_id = target_interface.hardware_id
 	data.passkey = access_list
-	data.user = user
-
+	data.user = user	// for responce message
 
 	ntnet_send(data)
 
