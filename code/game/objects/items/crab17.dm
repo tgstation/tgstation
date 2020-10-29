@@ -22,15 +22,14 @@
 		if (!targetturf)
 			return FALSE
 		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
-		var/datum/bank_account/account
+		var/mob/living/L
 		if(isliving(user))
-			var/mob/living/L = user
-			account = L.get_bank_account()
-			accounts_to_rob -= account
+			L = user
+			accounts_to_rob -= L.get_bank_account()
 		for(var/i in accounts_to_rob)
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
-		new /obj/effect/dumpeet_target(targetturf, account)
+		new /obj/effect/dumpeet_target(targetturf, L)
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
@@ -44,7 +43,7 @@
 	pixel_z = -8
 	max_integrity = 5000
 	var/list/accounts_to_rob
-	var/datum/bank_account/bogdanoff
+	var/mob/living/bogdanoff
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
@@ -81,9 +80,9 @@
 	else
 		return ..()
 
-/obj/structure/checkoutmachine/Initialize(mapload, datum/bank_account/account)
+/obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()
-	bogdanoff = account
+	bogdanoff = user
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
@@ -165,7 +164,7 @@
 
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
-	accounts_to_rob -= bogdanoff
+	accounts_to_rob -= bogdanoff?.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
 		B.dumpeet()
@@ -179,8 +178,9 @@
 			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
-		if (bogdanoff) // in the case the phone was used by some grug.
-			bogdanoff.transfer_money(B, amount)
+		var/datum/bank_account/account = bogdanoff?.get_bank_account()
+		if (account) // get_bank_account() may return FALSE
+			account.transfer_money(B, amount)
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
 
@@ -212,14 +212,14 @@
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
-	var/datum/bank_account/bogdanoff
+	var/mob/living/bogdanoff
 
 /obj/effect/ex_act()
 	return
 
-/obj/effect/dumpeet_target/Initialize(mapload, datum/bank_account/account)
+/obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
-	bogdanoff = account
+	bogdanoff = user
 	addtimer(CALLBACK(src, .proc/startLaunch), 100)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
