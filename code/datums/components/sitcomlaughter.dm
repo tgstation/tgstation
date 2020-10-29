@@ -19,4 +19,4 @@
 /datum/component/wearertargeting/sitcomlaughter/proc/EngageInComedy(datum/source)
 	SIGNAL_HANDLER
 	playsound(parent, pick(comedysounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
-	post_comedy_callback?.Invoke()
+	post_comedy_callback?.Invoke(source)

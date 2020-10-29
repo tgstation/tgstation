@@ -19,8 +19,8 @@
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
 
-/obj/item/pda/clown/proc/after_sitcom_laugh()
-	visible_message("The Clown's PDA let's out a burst of laughter!")
+/obj/item/pda/clown/proc/after_sitcom_laugh(mob/victim)
+	victim.visible_message("[src] lets out a burst of laughter!")
 
 //Mime PDA sends "silent" messages.
 /obj/item/pda/mime
