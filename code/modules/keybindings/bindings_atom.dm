@@ -4,7 +4,7 @@
 /atom/movable/keyLoop(client/user)
 	var/movement_dir = NONE
 	for(var/_key in user.keys_held)
-		movement_dir = movement_dir | (turn(user.movement_keys[_key], dir2angle(user.dir)))
+		movement_dir = movement_dir | user.movement_keys[_key]
 	if(user.next_move_dir_add)
 		movement_dir |= user.next_move_dir_add
 	if(user.next_move_dir_sub)
@@ -14,6 +14,9 @@
 		movement_dir &= ~(NORTH|SOUTH)
 	if((movement_dir & EAST) && (movement_dir & WEST))
 		movement_dir &= ~(EAST|WEST)
+
+	if(movement_dir) //If we're not moving, don't compensate, as byond will auto-fill dir otherwise
+		movement_dir = turn(movement_dir, -dir2angle(user.dir))
 
 	if(user.movement_locked)
 		setDir(movement_dir)
