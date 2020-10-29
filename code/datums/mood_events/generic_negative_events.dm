@@ -285,3 +285,7 @@
 /datum/mood_event/bald
 	description ="<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/mask
+	description ="<span class='warning'>Plasma gas is an hoax and even if it wasn't there's no evidence to suggest that masks even help at all. Having to wear a mask goes against my personal freedom, we live in a free country I should be able to do whatever the hell I want I don't have to listen and I don't have to listen to anything anyone says.</span>\n"
+	mood_change = -50

@@ -32,6 +32,15 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to adjust it.</span>"
 
+/obj/item/clothing/mask/breath/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_MASK)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "anti_mask", /datum/mood_event/mask)
+
+/obj/item/clothing/mask/breath/dropped(mob/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "anti_mask")
+
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
