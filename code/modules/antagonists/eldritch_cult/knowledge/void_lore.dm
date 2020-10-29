@@ -18,7 +18,7 @@
 /datum/eldritch_knowledge/void_grasp
 	name = "Grasp of Void"
 	desc = "Lowers your victims body temperature by 20 degrees, also temporarily mutes them."
-	gain_text = "I found the cold watcher who observes me. Aristocrat leads my way."
+	gain_text = "I found the cold watcher who observes me. The resonance of cold grows within me. This isn't the end of the mystery."
 	cost = 1
 	route = PATH_VOID
 	next_knowledge = list(/datum/eldritch_knowledge/cold_snap)
@@ -46,7 +46,7 @@
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
 	desc = "Makes you immune to cold temperatures, you can still take damage from lack of pressure."
-	gain_text = "I learned how to walk like a true monarch, like a true knight, like a true Aristrocrat."
+	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. Translucent and white, a depiction of a nobleman stood before me."
 	cost = 1
 	route = PATH_VOID
 	next_knowledge = list(/datum/eldritch_knowledge/void_cloak,/datum/eldritch_knowledge/void_mark,/datum/eldritch_knowledge/armor)
@@ -113,14 +113,14 @@
 
 /datum/eldritch_knowledge/void_blade_upgrade
 	name = "Seeking blade"
-	gain_text = "Fleeting memories, fleeting feet. Not a single human can escape me now."
+	gain_text = "Fleeting memories, fleeting feet. I can mark my way with the frozen blood upon the snow. Covered and forgotten."
 	desc = "You can now use your blade on a distant marked target to move to them and attack them."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/voidpull)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
 	route = PATH_VOID
 
-/datum/eldritch_knowledge/void_blade_upgrade/on_distant_eldritch_blade(atom/target, mob/user, click_parameters)
+/datum/eldritch_knowledge/void_blade_upgrade/on_ranged_attack_eldritch_blade(atom/target, mob/user, click_parameters)
 	. = ..()
 	if(!ishuman(target) || !iscarbon(user))
 		return
@@ -136,7 +136,7 @@
 
 /datum/eldritch_knowledge/spell/voidpull
 	name = "Void Pull"
-	gain_text = "Aristocrat gave me a favor, i won't waste it..."
+	gain_text = "This entity calls itself the aristocrat, I'm close to ending what was started."
 	desc = "You gain an ability that let's you pull people around you closer to you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
@@ -144,24 +144,31 @@
 	route = PATH_VOID
 
 /datum/eldritch_knowledge/final/void_final
-	name = "Call of the Void"
+	name = "Waltz at the End of Time"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you and will summon a snow storm around you."
-	gain_text = "Calm...... Absolute..... ETERNAL...."
+	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. Aristocrat stand before me, he motions to me. We will play a waltz to the whispers of dying reality, as the world is destroyed before our eyes."
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_VOID
+	var/datum/looping_sound/void_loop/sound_loop
+	var/datum/weather/void_storm/storm
 
 /datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
 	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@#  SILENCE! the Void Seer [user.real_name] has come! Fear his call! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+
+	sound_loop = new(list(user),TRUE,TRUE)
 	return ..()
+
+/datum/eldritch_knowledge/final/void_final/on_death()
+	sound_loop.stop()
+	storm.wind_down()
 
 /datum/eldritch_knowledge/final/void_final/on_life(mob/user)
 	. = ..()
-
 	if(!finished)
 		return
 
@@ -179,20 +186,11 @@
 
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
-	if(!user_area || !user_turf)
-		return
 
-	var/datum/weather/A
-	for(var/V in SSweather.processing)
-		var/datum/weather/W = V
-		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
-			A = W
-			break
-	if(A)
-		if(A.stage > 2)
-			A.stage = 2
-			A.start()
-	else
-		A = new /datum/weather/snow_storm(list(user_turf.z))
-		A.area_type = user_area.type
-		A.telegraph()
+	if(!storm)
+		storm = new /datum/weather/void_storm(list(user_turf.z))
+		storm.telegraph()
+
+	storm.area_type = user_area.type
+	storm.impacted_areas = list(user_area)
+	storm.update_areas()

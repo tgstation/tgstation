@@ -66,6 +66,14 @@
 	return TRUE
 
 /**
+  * A proc that handles the code when the mob dies
+  *
+  * This proc is primarily used to end any soundloops when the heretic dies
+  */
+/datum/eldritch_knowledge/proc/on_death(mob/user)
+	return
+
+/**
   * What happens once the recipe is succesfully finished
   *
   * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
@@ -114,7 +122,7 @@
   *
   * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
   */
-/datum/eldritch_knowledge/proc/on_distant_eldritch_blade(atom/target,mob/user,click_parameters)
+/datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 
 //////////////

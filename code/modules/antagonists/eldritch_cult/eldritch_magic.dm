@@ -728,6 +728,11 @@
 	action_icon_state = "voidblink"
 	selection_type = "range"
 
+/obj/effect/proc_holder/spell/pointed/void_blink/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(get_dist(get_turf(user),get_turf(target)) < 2 )
+		return FALSE
+
 /obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
 	. = ..()
 	var/target = targets[1]
@@ -793,3 +798,4 @@
 	for(var/mob/living/livies in view(7,user)-user)
 		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
+			livies.AdjustKnockdown(2 SECONDS)

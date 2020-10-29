@@ -38,6 +38,11 @@
 		return
 
 	if(istype(I,/obj/item/bodypart) || istype(I,/obj/item/organ))
+		//Both organs and bodyparts hold information if they are organic or robotic in the exact same way.
+		var/obj/item/bodypart/forced = I
+		if(forced.status != BODYPART_ORGANIC)
+			return
+
 		if(current_mass >= max_mass)
 			to_chat(user,"<span class='notice'> Crucible is already full!</span>")
 			return
@@ -77,6 +82,8 @@
 	update_icon_state()
 
 /obj/structure/eldritch_crucible/proc/devour(mob/living/carbon/user)
+	if(HAS_TRAIT(user,TRAIT_NODISMEMBER))
+		return
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	to_chat(user,"<span class='danger'>Crucible grabs your arm and devours it whole!</span>")
 	var/obj/item/bodypart/arm = user.get_active_hand()

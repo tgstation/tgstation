@@ -112,7 +112,7 @@
 		if(proximity_flag)
 			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 		else
-			eldritch_knowledge_datum.on_distant_eldritch_blade(target,user,click_parameters)
+			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"
@@ -294,10 +294,15 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	///turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
+	///A check to see if you are in process of drawing a rune
 	var/drawing = FALSE
+	///A list of current runes
 	var/list/current_runes = list()
+	///Max amount of runes
 	var/max_rune_amt = 3
+	///Linked action
 	var/datum/action/innate/rune_shatter/linked_action
 
 /obj/item/melee/rune_knife/Initialize()
@@ -339,7 +344,11 @@
 
 	drawing = TRUE
 
-	var/type = pick_list[input(user,"Choose the rune","Rune") in pick_list]
+	var/type = pick_list[input(user,"Choose the rune","Rune") as null|anything in pick_list ]
+	if(!type)
+		drawing = FALSE
+		return
+
 
 	to_chat(user,"<span class='notice'>You start drawing the rune...</span>")
 	if(!do_after(user,5 SECONDS,target = target))
