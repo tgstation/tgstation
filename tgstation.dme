@@ -2848,7 +2848,6 @@
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\spray.dm"
 #include "code\modules\reagents\reagent_containers\syringes.dm"
-#include "code\modules\reagents\reagent_containers\whipped_canister.dm"
 #include "code\modules\recycling\conveyor2.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
 #include "code\modules\recycling\disposal\bin.dm"

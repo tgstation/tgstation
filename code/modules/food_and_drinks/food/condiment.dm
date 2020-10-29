@@ -298,3 +298,78 @@
 	name = "bbq sauce pack"
 	originalname = "bbq sauce"
 	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)
+
+
+/obj/item/reagent_containers/food/condiment/whipped_canister // For when you want your cakes and pies to have a little extra something (bath salts)
+	name = "Whipped Cream Canister"
+	desc = "An advanced piece of condiment foaming technology. Perfect for pastries!"
+	amount_per_transfer_from_this = 2
+	volume = 10
+	icon_state = "cream_bottle"
+	inhand_icon_state = "cream_bottle"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	possible_transfer_amounts = list()
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+	reagent_flags = TRANSPARENT | OPENCONTAINER // Just slap a beaker against it until it's full
+	custom_price = 100
+	var/whippedcolor = null // Used for changing the whipped pile on top of the food
+
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/Initialize()
+	. = ..()
+	create_reagents(volume, OPENCONTAINER)
+	if(list_reagents)
+		update_icon()
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/on_reagent_change(changetype)
+	update_icon()
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/pickup(mob/user)
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/dropped(mob/user)
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
+	whippedcolor = mix_color_from_reagents(reagents.reagent_list) // The color check needs to be here, or the last whipped pile created from a canister will be completely white
+
+	if(!reagents.total_volume)
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		return
+
+	if(target.reagents.total_volume >= target.reagents.maximum_volume)
+		to_chat(user, "<span class='notice'>[target] is full.</span>")
+		return
+
+
+	to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The canister now contains [reagents.total_volume] units.</span>")
+	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6) // pshhhhhhh
+	var/obj/item/food/not_container = target
+	var/obj/item/reagent_containers/food/snacks/container = target // Some food items are still reagent containers, so this is just in case
+	if(istype(not_container) || istype(container))
+		var/mutable_appearance/whipped_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whipped")
+		whipped_overlay.color = whippedcolor // Applies the color of the reagent to the cream pile
+		target.add_overlay(whipped_overlay)
+	if (reagents.total_volume <= 0)
+		update_icon()
+
+
+/obj/item/reagent_containers/food/condiment/whipped_canister/update_overlays()
+	. = ..()
+	if(reagents)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whippedbottle")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
+		add_overlay(filling_overlay)

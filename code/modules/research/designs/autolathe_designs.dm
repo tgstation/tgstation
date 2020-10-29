@@ -438,7 +438,7 @@
 	id = "whipped_canister"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 10)
-	build_path = /obj/item/reagent_containers/food/whipped_canister
+	build_path = /obj/item/reagent_containers/food/condiment/whipped_canister
 	category = list("initial","Dinnerware")
 
 /datum/design/cultivator
