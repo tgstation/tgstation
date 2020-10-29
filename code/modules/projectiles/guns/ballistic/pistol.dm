@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/pistol
 	name = "makarov pistol"
-	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
+	desc = "A small, easily concealable 9mm PMm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/m9mm
@@ -33,7 +33,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
-	desc = "A classic .45 handgun with a small magazine capacity."
+	desc = "An antique .45 handgun with a small magazine capacity. It's rumored that it was in official service for over 70 years."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
@@ -48,7 +48,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
 	name = "\improper Desert Eagle"
-	desc = "A robust .50 AE handgun."
+	desc = "A robust .50 AE handgun. Despite the name, don't drop it on sand."
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
@@ -65,7 +65,7 @@
 	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/camo
-	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
+	desc = "The 80's gun runner's flashy go-to handcannon. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	inhand_icon_state = "deagleg"
 
