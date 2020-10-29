@@ -6,6 +6,9 @@
 	var/loaded = 0 // Times loaded this round
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
+	var/should_place_on_top = TRUE
+	var/returns_list = FALSE//if true, returns a list of all spawned items, used for holodeck
+	var/list/created_atoms = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -119,8 +122,10 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+	parsed.should_return_created = returns_list
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
+	created_atoms = parsed.created_atoms
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return

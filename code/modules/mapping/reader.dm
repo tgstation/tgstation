@@ -17,6 +17,9 @@
 
 	var/list/modelCache
 
+	var/list/created_atoms = list()
+	var/should_return_created = FALSE
+
 	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
 	/// Offset bounds. Same as parsed_bounds until load().
@@ -295,7 +298,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, list/to_return = null)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -381,6 +384,8 @@
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
+	if (should_return_created)
+		created_atoms += .
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)

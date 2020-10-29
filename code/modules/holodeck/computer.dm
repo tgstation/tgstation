@@ -50,6 +50,7 @@
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
 	var/functioning = TRUE
+	var/list/non_holo_items_in_area = list()
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -136,6 +137,7 @@
 	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the baseturf list)
 	and passes spawned_atoms from parsed to the holodeck template datum
 */
+/*
 /datum/map_template/holodeck/load(turf/target_turf, centered = FALSE, )
 	if(centered)
 		target_turf = locate(target_turf.x - round(width/2) , target_turf.y - round(height/2) , target_turf.z)
@@ -239,7 +241,7 @@
 		affected_turf.air_update_turf(TRUE)
 
 	return newatoms//this is what will become the spawned list for the holodeck
-
+*/
 /*
 	the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 */
@@ -268,9 +270,27 @@
 			derez(item)
 
 	template = SSmapping.holodeck_templates[map_id]
-	template.load(bottom_left, FALSE)//this is what actually loads the holodeck simulation into the map
+	non_holo_items_in_area.Cut()
+	for  (var/_turf in linked)
+		var/turf/holo_turf = _turf
+		for (var/_contents in holo_turf)
+			var/obj/in_holodeck = _contents
+			non_holo_items_in_area += in_holodeck
 
-	spawned += template.spawned_atoms//parsed_map.holodeckTemplateBounds has newatoms, which is passed to template as spawned_atoms, which is passed to this as spawned
+	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
+
+	spawned = template.created_atoms
+
+	for (var/_atom in spawned)
+		if (isturf(_atom))
+			var/turf/holo_turf = _atom
+			spawned -= holo_turf
+		if (isobj(_atom))
+			var/obj/holo_object = _atom
+			if (length(holo_object.contents) > 0)
+				spawned -= holo_object
+				spawned += holo_object.GetAllContents()
+
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
@@ -294,21 +314,29 @@
 			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 			if (ismachinery(obbies))
 				var/obj/machinery/machines = obbies
+				machines.flags_1 |= NODECONSTRUCT_1
 				machines.power_change()
 				if(istype(machines, /obj/machinery/button))
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
+			if (isstructure(obbies))
+				var/obj/structure/structures = obbies
+				structures.flags_1 |= NODECONSTRUCT_1
 
-	for(var/obj/machinery/M in spawned)
-		M.flags_1 |= NODECONSTRUCT_1
-	for(var/obj/structure/S in spawned)
-		S.flags_1 |= NODECONSTRUCT_1
+	//for(var/obj/machinery/M in spawned)
+	//	M.flags_1 |= NODECONSTRUCT_1
+	//for(var/obj/structure/S in spawned)
+	//	S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
 	if(!object)
 		return
 
 	spawned -= object
+	for (var/_object in non_holo_items_in_area)
+		var/obj/is_holo = _object
+		if (object == is_holo)
+			return
 	var/turf/target_turf = get_turf(object)
 	for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
 		object_contents.forceMove(target_turf)
