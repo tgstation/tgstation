@@ -42937,20 +42937,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"crL" = (
-/obj/structure/chair/wood,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
-/area/chapel/main/monastery)
-"crM" = (
-/obj/structure/chair/wood,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/chapel{
-	dir = 1
-	},
-/area/chapel/main/monastery)
 "crN" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -74846,7 +74832,7 @@ bXJ
 bXJ
 bZm
 bYB
-crL
+bZm
 caV
 cbM
 ccH
@@ -75617,7 +75603,7 @@ bXJ
 bXJ
 bZl
 bYA
-crM
+bZl
 caW
 cbP
 cdu
