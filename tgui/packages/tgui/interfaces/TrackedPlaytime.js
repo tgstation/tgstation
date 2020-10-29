@@ -9,26 +9,12 @@ const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
 const sortByPlaytime = sortBy(([_, playtime]) => -playtime);
 
 const PlaytimeSection = props => {
-  const { playtimes, total, totalName } = props;
+  const { playtimes } = props;
   const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes));
   const mostPlayed = sortedPlaytimes[0][1];
 
   return (
     <Table>
-      <Table.Row mb={1}>
-        <Table.Cell collapsing p={0.65} header style={{
-          "vertical-align": "middle",
-        }}>
-          <Box align="right">{totalName}</Box>
-        </Table.Cell>
-
-        <Table.Cell>
-          <ProgressBar value={1}>
-            {total.toLocaleString()}h
-          </ProgressBar>
-        </Table.Cell>
-      </Table.Row>
-
       {sortedPlaytimes.map(([jobName, playtime]) => {
         const ratio = playtime / mostPlayed;
 
@@ -88,18 +74,23 @@ export const TrackedPlaytime = (props, context) => {
             && <Box>You have no records.</Box>
         ) || (
           <Box>
+            <Section title="Total">
+              <PlaytimeSection
+                playtimes={{
+                  "Ghost": ghostTime,
+                  "Living": livingTime,
+                }}
+              />
+            </Section>
+
             <Section title="Jobs">
               <PlaytimeSection
-                total={livingTime}
-                totalName="Living"
                 playtimes={jobPlaytimes}
               />
             </Section>
 
             <Section title="Special">
               <PlaytimeSection
-                total={ghostTime}
-                totalName="Ghost"
                 playtimes={specialPlaytimes}
               />
             </Section>
