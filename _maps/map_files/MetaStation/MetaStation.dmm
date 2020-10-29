@@ -50193,7 +50193,7 @@
 /obj/machinery/light,
 /obj/structure/bed/pod{
 	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "Medical Bed"
+	name = "medical bed"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
