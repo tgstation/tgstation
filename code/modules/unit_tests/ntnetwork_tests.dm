@@ -1,21 +1,30 @@
-TEST_FOCUS(/datum/unit_test/ntnetwork)
 /datum/unit_test/ntnetwork
 	var/list/valid_network_names = list("SS13.ATMOS.SCRUBBERS.SM", "DEEPSPACE.HYDRO.PLANT", "SINDIE.STINKS.BUTT")
+
 	var/list/invalid_network_names = list(".SS13.BOB", "SS13.OHMAN.", "SS13.HAS A SPACE" )
+
 	var/list/valid_network_trees = list(list("SS13","ATMOS","SCRUBBERS","SM"),list("DEEPSPACE","HYDRO","PLANT"), list("SINDIE","STINKS","BUTT"))
-	var/list/network_roots = list(__STATION_NETWORK_ROOT,__CENTCOM_NETWORK_ROOT,__SYNDICATE_NETWORK_ROOT, __LIMBO_NETWORK_ROOT)
-	var/list/random_words_for_testing = list(__NETWORK_TOOLS,__NETWORK_REMOTES,__NETWORK_AIRLOCKS,
-									__NETWORK_DOORS, __NETWORK_ATMOS,__NETWORK_SCUBBERS,__NETWORK_AIRALARMS,
-									__NETWORK_CONTROL,__NETWORK_STORAGE,__NETWORK_CARGO,__NETWORK_BOTS,__NETWORK_COMPUTER,__NETWORK_CARDS)
+
+	var/list/network_roots = list(
+				__STATION_NETWORK_ROOT,
+				__CENTCOM_NETWORK_ROOT,
+				__SYNDICATE_NETWORK_ROOT,
+				__LIMBO_NETWORK_ROOT)
+
+	var/list/random_words_for_testing = list(
+				__NETWORK_TOOLS, __NETWORK_REMOTES, __NETWORK_AIRLOCKS,
+				__NETWORK_DOORS, __NETWORK_ATMOS, __NETWORK_SCUBBERS,
+				__NETWORK_AIRALARMS, __NETWORK_CONTROL, __NETWORK_STORAGE,
+				__NETWORK_CARGO, __NETWORK_BOTS, __NETWORK_COMPUTER,
+				__NETWORK_CARDS)
+
 	var/number_of_names_to_test = 50
-	var/lenght_of_test_network = 5
+	var/length_of_test_network = 5
 
 /datum/unit_test/proc/mangle_word(word)
 	var/len = length(word)
-	var/pos
-	if(prob(30)) // add a random space
-		pos = rand(1+1, len-1)
-		word = copytext(word,1,pos) + " " + copytext(word,pos,len)
+	var/space_pos = round(len/2)
+	word = copytext(word,1,space_pos) + " " + copytext(word,space_pos,len)
 	return word
 
 /datum/unit_test/ntnetwork/Run()
@@ -34,7 +43,7 @@ TEST_FOCUS(/datum/unit_test/ntnetwork)
 	for(var/i in 1 to valid_network_trees.len)
 		var/list/name_list = valid_network_trees[i]
 		var/name = SSnetworks.network_list_to_string(name_list)
-		TEST_ASSERT(name == valid_network_names[i], "Network name ([name]) did not pack into a proper string")
+		TEST_ASSERT_EQUAL(name, valid_network_names[i], "Network name ([name]) did not pack into a proper string")
 
 	// Ok, we know we can verify network names now, and that we can pack and unpack.  Lets try making some random good names
 	var/list/generated_network_names = list()
@@ -42,17 +51,17 @@ TEST_FOCUS(/datum/unit_test/ntnetwork)
 	for(var/i in 1 to number_of_names_to_test)
 		var/list/builder = list()
 		builder += pick(network_roots)
-		for(var/j in 1 to lenght_of_test_network)
+		for(var/j in 1 to length_of_test_network)
 			builder += pick(random_words_for_testing)
 		test_string = SSnetworks.network_list_to_string(builder)
 		var/name_fix = simple_network_name_fix(test_string)
-		TEST_ASSERT(name_fix == test_string, "Network name ([test_string]) was not fixed correctly to ([name_fix])")
+		TEST_ASSERT_EQUAL(name_fix, test_string, "Network name ([test_string]) was not fixed correctly to ([name_fix])")
 		generated_network_names += name_fix // save for future
 	// test badly generated names
 	for(var/i in 1 to number_of_names_to_test)
 		var/list/builder = list()
-		builder +=  mangle_word(pick(network_roots))
-		for(var/j in 1 to lenght_of_test_network)
+		builder += mangle_word(pick(network_roots))
+		for(var/j in 1 to length_of_test_network)
 			builder += mangle_word(pick(random_words_for_testing))
 		test_string = builder.Join(".")
 		var/name_fix = simple_network_name_fix(test_string)

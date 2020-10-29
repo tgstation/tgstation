@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(networks)
 	if(data.passkey) // got to check permissions
 		var/obj/O = target_interface.parent
 		if(O)
-			if(!O.check_access_list(data.passkey))
+			if(!O.check_access_ntnet(data.passkey))
 				count_failed_packets++
 				add_log("Access denied to ([receiver_id]) from ([data.network_id])", target_network, data.sender_id)
 				if(!QDELETED(sending_interface))
@@ -343,8 +343,8 @@ SUBSYSTEM_DEF(networks)
   * * tree - List of strings
   */
 /datum/controller/subsystem/networks/proc/network_list_to_string(list/tree)
-	ASSERT(tree && tree.len > 0) // this should be obvious but JUST in case.
 #ifdef DEBUG_NETWORKS
+	ASSERT(tree && tree.len > 0) // this should be obvious but JUST in case.
 	for(var/part in tree)
 		if(!verify_network_name(part) || findtext(name,".")!=0) // and no stray dots
 			stack_trace("network_list_to_string: Cannot create network with ([part]) of ([tree.Join(".")])")
@@ -423,7 +423,6 @@ SUBSYSTEM_DEF(networks)
 	if(!verify_network_name(network_id))
 		log_mapping("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
 		log_telecomms("create_network_simple: [network_id] IS INVALID, replacing with LIMBO")
-		#ifdef DEBUG_NETWORKS
 		return networks[LIMBO_NETWORK_ROOT]
 
 	var/list/network_tree = network_string_to_list(network_id)
@@ -456,6 +455,7 @@ SUBSYSTEM_DEF(networks)
   */
 /datum/controller/subsystem/networks/proc/create_network(...)
 	var/list/network_tree = list()
+
 	for(var/i in 1 to args.len)
 		var/part = args[i]
 #ifdef DEBUG_NETWORKS

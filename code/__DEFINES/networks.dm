@@ -3,7 +3,7 @@
 #define NETWORK_BROADCAST_ID "ALL"
 
 /// To debug networks use this to check
-#define DEBUG_NETWORKS 1
+//#define DEBUG_NETWORKS 1
 
 
 /// We do some macro magic to make sure the strings are created at compile time rather than runtime

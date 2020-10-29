@@ -21,7 +21,6 @@
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
 #include "anchored_mobs.dm"
-#include "ntnetwork_tests.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "card_mismatch.dm"
@@ -31,6 +30,7 @@
 #include "emoting.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
+#include "ntnetwork_tests.dm"
 #include "medical_wounds.dm"
 #include "metabolizing.dm"
 #include "outfit_sanity.dm"
