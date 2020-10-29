@@ -9,6 +9,7 @@ import { formatSiUnit, formatSiBaseTenUnit } from '../format';
 
 export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);
+  const filterTypes = data.filter_types || [];
   const {
     energy_level,
     core_temperature,
@@ -30,6 +31,7 @@ export const Hypertorus = (props, context) => {
     moderator_internal_temperature,
     internal_output_temperature,
     internal_coolant_temperature,
+    waste_remove,
   } = data;
   const fusion_gases = flow([
     filter(gas => gas.amount >= 0.01),
@@ -281,6 +283,27 @@ export const Hypertorus = (props, context) => {
                 onDrag={(e, value) => act('current_damper', {
                   current_damper: value,
                 })} />
+            </LabeledList.Item>
+          </Section>
+          <Section>
+            <LabeledList.Item label="Waste remove">
+              <Button
+                disabled={data.power_level > 5}
+                icon={data.waste_remove ? 'power-off' : 'times'}
+                content={data.waste_remove ? 'On' : 'Off'}
+                selected={data.waste_remove}
+                onClick={() => act('waste_remove')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Filter">
+              {filterTypes.map(filter => (
+                <Button
+                  key={filter.id}
+                  selected={filter.selected}
+                  content={getGasLabel(filter.id, filter.name)}
+                  onClick={() => act('filter', {
+                    mode: filter.id,
+                  })} />
+              ))}
             </LabeledList.Item>
           </Section>
         </Section>

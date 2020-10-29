@@ -1,7 +1,7 @@
 ///Max amount of radiation that can be emitted per reaction cycle
 #define FUSION_RAD_MAX						5000
 ///Maximum instability before the reaction goes endothermic
-#define FUSION_INSTABILITY_ENDOTHERMALITY   5
+#define FUSION_INSTABILITY_ENDOTHERMALITY   7
 ///Maximum reachable fusion temperature
 #define FUSION_MAXIMUM_TEMPERATURE			1e30
 ///Speed of light, in m/s
@@ -64,6 +64,7 @@
 	var/icon_state_open = "moderator_input"
 	var/icon_state_off = "moderator_input"
 	var/active = FALSE
+	var/fusion_started = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
 	. = ..()
@@ -74,7 +75,7 @@
 	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
 
 /obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, params)
-	if(!on)
+	if(!fusion_started)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
 	if(default_change_direction_wrench(user, I))
@@ -151,6 +152,8 @@
 
 	var/start_fuel = FALSE
 
+	var/fusion_started = FALSE
+
 	///Stores the informations of the interface machine
 	var/obj/machinery/hypertorus/interface/linked_interface
 	///Stores the information of the moderator input
@@ -167,6 +170,8 @@
 	var/datum/gas_mixture/internal_output
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
+
+	var/filter_type = null
 
 	///E=mc^2 with some addition to allow it gameplaywise
 	var/energy = 0
@@ -322,7 +327,7 @@
 	return FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/attackby(obj/item/I, mob/user, params)
-	if(!on)
+	if(!fusion_started)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
 	if(default_change_direction_wrench(user, I))
@@ -370,7 +375,7 @@
 		if(. == FALSE)
 			break
 
-		if(!object.anchored)
+		if(object.panel_open)
 			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/corner))
@@ -591,10 +596,6 @@
 	if(!start_power)
 		return
 
-	if(!check_power_use())
-		deactivate()
-		return
-
 	//We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
 	if(last_accent_sound < world.time && prob(20))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
@@ -621,6 +622,9 @@
 	critical_threshold_proximity += round(iron_content * 0.5, 1)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	if(!check_power_use())
+		return
 
 	if(!start_cooling)
 		return
@@ -680,6 +684,22 @@
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
 		slowprocess()
 		COOLDOWN_START(src, hypertorus_reactor, 1 SECONDS) //Set to wait for another second before processing again, we don't need to process more than once a second
+	if(power_level > 0)
+		fusion_started = TRUE
+		linked_input.fusion_started = TRUE
+		linked_output.fusion_started = TRUE
+		linked_moderator.fusion_started = TRUE
+		linked_interface.fusion_started = TRUE
+		for(var/obj/machinery/hypertorus/corner/corner in corners)
+			corner.fusion_started = TRUE
+	else
+		fusion_started = FALSE
+		linked_input.fusion_started = FALSE
+		linked_output.fusion_started = FALSE
+		linked_moderator.fusion_started = FALSE
+		linked_interface.fusion_started = FALSE
+		for(var/obj/machinery/hypertorus/corner/corner in corners)
+			corner.fusion_started = FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/slowprocess()
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
@@ -697,15 +717,17 @@
 		deactivate()
 		return
 
-	//now check if the machine has been turned on by the user
-	if(!start_fuel)
-		return
-
 	if(!check_fuel())
 		return
 
 	if(!check_power_use())
-		return
+		magnetic_constrictor = 100
+		heating_conductor = 500
+		current_damper = 0
+		fuel_injection_rate = 600
+		moderator_injection_rate = 500
+		waste_remove = FALSE
+		iron_content += 0.01
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -713,7 +735,7 @@
 	var/volume = internal_fusion.volume * (magnetic_constrictor * 0.01)
 
 	//Assert the gases that will be used/created during the process
-	internal_fusion.assert_gases(/datum/gas/helium)
+	internal_fusion.assert_gases(/datum/gas/helium, /datum/gas/antinoblium)
 	moderator_internal.assert_gases(/datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/bz, /datum/gas/proto_nitrate, /datum/gas/hypernoblium, /datum/gas/antinoblium)
 
 	//Store the fuel gases and the product gas moles
@@ -763,7 +785,7 @@
 	for (var/gas_id in moderator_internal.gases)
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) + iron_content * 2.5
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) - iron_content * 4.5
 	//Effective reaction instability (determines if the energy is used/released)
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -971,7 +993,7 @@
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.015
 						moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(0.01 * (scaled_helium / (fuel_injection_rate * 0.0065)), 0, 5)
-					moderator_internal.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
+					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 
 	//heat up and output what's in the internal_output into the linked_output port
 	internal_output.temperature = moderator_internal.temperature
@@ -983,12 +1005,28 @@
 		if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
 			iron_content += 0.05
 
-	//Waste gas can be remove by the interface, can spill if temperature is too high (to do)
-	if(waste_remove && power_level < 5)
+	//Gases can be removed from the moderator internal by using the interface. Helium and antinoblium inside the fusion mix will get always removed at a fixed rate
+	if(waste_remove && power_level <= 5)
+		var/filtering = TRUE
+		if(!ispath(filter_type))
+			if(filter_type)
+				filter_type = gas_id2path(filter_type)
+			else
+				filtering = FALSE
+		if(filtering && moderator_internal.gases[filter_type])
+			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 20)
+			removed.temperature = moderator_internal.temperature
+			linked_output.airs[1].merge(removed)
+
 		var/datum/gas_mixture/internal_remove
-		internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
+		if(internal_fusion.gases[/datum/gas/helium][MOLES] > 0)
+			internal_remove = internal_fusion.remove_specific(/datum/gas/helium, internal_fusion.gases[/datum/gas/helium][MOLES] * 0.5)
+			linked_output.airs[1].merge(internal_remove)
+		if(internal_fusion.gases[/datum/gas/antinoblium][MOLES] > 0)
+			internal_remove = internal_fusion.remove_specific(/datum/gas/antinoblium, internal_fusion.gases[/datum/gas/antinoblium][MOLES] * 0.05)
+			linked_output.airs[1].merge(internal_remove)
 		internal_fusion.garbage_collect()
-		linked_output.airs[1].merge(internal_remove)
+
 
 	//Update pipenets
 	update_parents()
@@ -1003,8 +1041,8 @@
 	if(power_output)
 		var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
 		if(prob(PERCENT(particle_chance)))
-			var/obj/machinery/hypertorus/corner/pick_corner = pick(corners)
-			pick_corner.loc.fire_nuclear_particle()
+			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+			picked_corner.loc.fire_nuclear_particle()
 		rad_power = clamp((radiation / 1e5), 0, FUSION_RAD_MAX)
 		radiation_pulse(loc, rad_power)
 
@@ -1023,9 +1061,10 @@
 	var/active = FALSE
 	var/icon_state_open = "core"
 	var/icon_state_off = "core"
+	var/fusion_started = FALSE
 
 /obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
-	if(!active)
+	if(!fusion_started)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
 	if(default_change_direction_wrench(user, I))
@@ -1033,12 +1072,6 @@
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
-
-/obj/machinery/hypertorus/proc/activate()
-	return
-
-/obj/machinery/hypertorus/proc/deactivate()
-	return
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
@@ -1062,22 +1095,6 @@
 
 	connected_core.activate(user)
 	return TRUE
-
-/obj/machinery/hypertorus/interface/attack_hand(mob/living/user)
-	. = ..()
-	if(connected_core)
-		message_admins("energy [connected_core.energy]")
-		message_admins("core_temperature [connected_core.core_temperature]")
-		message_admins("internal_power [connected_core.internal_power]")
-		message_admins("power_output [connected_core.power_output]")
-		message_admins("instability [connected_core.instability]")
-		message_admins("rad_power [connected_core.rad_power]")
-		message_admins("delta_temperature [connected_core.delta_temperature]")
-		message_admins("conduction [connected_core.conduction]")
-		message_admins("radiation [connected_core.radiation]")
-		message_admins("efficiency [connected_core.efficiency]")
-		message_admins("heat_limiter_modifier [connected_core.heat_limiter_modifier]")
-		message_admins("heat_output [connected_core.heat_output]")
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
 	if(active)
@@ -1147,6 +1164,13 @@
 	data["internal_output_temperature"] = connected_core.coolant_temperature
 	data["internal_coolant_temperature"] = connected_core.output_temperature
 
+	data["waste_remove"] = connected_core.waste_remove
+	data["filter_types"] = list()
+	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !connected_core.filter_type))
+	for(var/path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[path]
+		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(connected_core.filter_type))))
+
 	return data
 
 /obj/machinery/hypertorus/interface/ui_act(action, params)
@@ -1199,6 +1223,18 @@
 				. = TRUE
 			if(.)
 				connected_core.current_damper = clamp(current_damper, 0, 1000)
+		if("waste_remove")
+			connected_core.waste_remove = !connected_core.waste_remove
+			. = TRUE
+		if("filter")
+			connected_core.filter_type = null
+			var/filter_name = "nothing"
+			var/gas = gas_id2path(params["mode"])
+			if(gas in GLOB.meta_gas_info)
+				connected_core.filter_type = gas
+				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
+			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
