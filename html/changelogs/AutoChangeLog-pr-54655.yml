@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Slicing food in your hand (e.g. pizza) no longer results in it \"disappearing\" (i.e. having the slices created inside you)"
