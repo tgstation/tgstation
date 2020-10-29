@@ -253,7 +253,10 @@
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(methods)
-				R.expose_single(T, target_atom, methods, part, show_message)
+				if(istype(target_atom, /obj/item/organ))
+					R.expose_single(T, target, methods, transfer_amount, show_message)
+				else
+					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -275,7 +278,10 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
-				R.expose_single(T, target_atom, methods, transfer_amount, show_message)
+				if(istype(target_atom, /obj/item/organ))
+					R.expose_single(T, target, methods, transfer_amount, show_message)
+				else
+					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -781,7 +787,7 @@
 		R.on_new(data)
 
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
+		R.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)

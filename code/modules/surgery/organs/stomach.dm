@@ -23,8 +23,7 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	///The value should be greater then 1 to ensure medication remains in effect
-	var/metabolism_efficiency = 1
+	var/metabolism_efficiency = 0.1
 
 
 /obj/item/organ/stomach/on_life()
@@ -55,15 +54,16 @@
 		if(amount_food)
 			amount_max = max(amount_max - amount_food, 0)
 
-		// We are adding 0.2 reagents to transfer more then we remove on metabolization
-		var/amount = clamp((bit.metabolization_rate + 0.2) * metabolism_efficiency, 0, amount_max)
+		// Transfer the amount of reagents based on volume with a min amount of 1u
+		var/amount = min(round(metabolism_efficiency * bit.volume, 0.1) + 1, amount_max)
+
 		if(!(amount > 0))
 			continue
 
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
-		reagents.trans_to(body, single_reagent=bit.type, amount=amount, round_robin=TRUE, methods=INGEST, ignore_stomach=TRUE)
+		reagents.trans_id_to(body, bit.type, amount=amount)
 
 	//Handle disgust
 	if(body)
