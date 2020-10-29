@@ -409,7 +409,7 @@
 
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"
-///From /obj/item/gun/proc//check_botched()
+///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 
 ///When a carbon mob hugs someone, this is called on the carbon mob.
