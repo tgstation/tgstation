@@ -279,7 +279,7 @@
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
-// called when movable is expelled from a disposal pipe or outlet: (direction)
+// called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)
 #define COMSIG_MOVABLE_PIPE_EJECTING "movable_pipe_ejecting"
 ///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"

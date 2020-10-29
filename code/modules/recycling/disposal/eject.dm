@@ -1,0 +1,13 @@
+/**
+  * General proc used to expel an holder's this contents through src (for bins, holder is also the src).
+  * Because having more than one source of a determinated signal is usually bad practice.
+  */
+/obj/proc/pipe_eject(obj/holder, direction, throw_em = TRUE, turf/target, throw_range = 5, throw_speed = 1)
+	var/turf/src_T = get_turf(src)
+	for(var/A in holder)
+		var/atom/movable/AM = A
+		AM.forceMove(src_T)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, direction)
+		if(throw_em && !QDELETED(AM))
+			var/turf/T = target || get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
+			AM.throw_at(T, throw_range, throw_speed)

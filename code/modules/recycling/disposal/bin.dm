@@ -170,10 +170,7 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/AM in src)
-		AM.forceMove(T)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, FALSE)
+	pipe_eject(src, FALSE, FALSE)
 	update_icon()
 
 /obj/machinery/disposal/proc/flush()
@@ -206,18 +203,9 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
-	var/turf/T = get_turf(src)
-	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
-	for(var/A in H)
-		var/atom/movable/AM = A
-
-		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
-
-		AM.forceMove(T)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, FALSE)
-		AM.throw_at(target, 5, 1)
+	pipe_eject(H)
 
 	H.vent_gas(loc)
 	qdel(H)

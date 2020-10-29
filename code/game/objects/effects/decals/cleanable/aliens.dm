@@ -28,7 +28,7 @@
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/pipe_eject)
+	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE
@@ -41,7 +41,7 @@
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/proc/pipe_eject(atom/source, direction)
+/obj/effect/decal/cleanable/xenoblood/xgibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
 
 	var/list/dirs

@@ -106,12 +106,7 @@
 		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
 	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
-	for(var/A in H)
-		var/atom/movable/AM = A
-		AM.forceMove(T)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_PIPE_EJECTING, direction)
-		if(target)
-			AM.throw_at(target, eject_range, 1)
+	pipe_eject(H, direction, TRUE, target, eject_range)
 	H.vent_gas(T)
 	qdel(H)
 
