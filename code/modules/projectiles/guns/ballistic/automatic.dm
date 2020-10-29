@@ -15,7 +15,7 @@
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
-	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
+	desc = "A prototype burst-firing 9mm compact submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
 	selector_switch_icon = TRUE
 	mag_display = TRUE
@@ -91,7 +91,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/automatic/wt550
-	name = "security auto rifle"
+	name = "security PDW"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
 	inhand_icon_state = "arg"
@@ -123,7 +123,7 @@
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
-	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
+	desc = "A lightweight, burst-fire submachine gun, for when you want to show those busters who's the king of this turf. Uses 9mm rounds."
 	icon_state = "miniuzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
@@ -134,7 +134,7 @@
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
-	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	desc = "A three-round burst 5.56x45mm toploading rifle, designated 'M-90gl'. Has an attached 40mm underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
 	inhand_icon_state = "m90"
 	selector_switch_icon = TRUE
@@ -224,7 +224,7 @@
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust assault rifle used by Nanotrasen fighting forces."
+	desc = "A robust infantry rifle design inspired by the ancient Stoner, nicknamed "Boarder" by Special Forces. Still has feeding issues in jungles."
 	icon_state = "arg"
 	inhand_icon_state = "arg"
 	slot_flags = 0
@@ -238,7 +238,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW', has 'Aussec Armoury - 2531' engraved on the receiver below the designation. Git sum!"
 	icon_state = "l6"
 	inhand_icon_state = "l6"
 	w_class = WEIGHT_CLASS_HUGE
@@ -321,7 +321,7 @@
 
 /obj/item/gun/ballistic/automatic/sniper_rifle
 	name = "sniper rifle"
-	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+	desc = "A long ranged anti-materiel rifle based on the legendary M107. No, you can't quickscope."
 	icon_state = "sniper"
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
@@ -346,7 +346,7 @@
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
-	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
+	desc = "An illegally modified .50 BMG anti-materiel rifle with suppression compatibility. Quickscoping still doesn't work, and the suppressor probably won't do much either."
 	can_suppress = TRUE
 	can_unsuppress = TRUE
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -355,7 +355,7 @@
 
 /obj/item/gun/ballistic/automatic/surplus
 	name = "Surplus Rifle"
-	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
+	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent, it seems to be a cheap copy of the Mini-14. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = null
