@@ -116,7 +116,7 @@
 // Ordinary survival box
 /obj/item/storage/box/survival
 	var/mask_type = /obj/item/clothing/mask/breath
-	var/internal_type = /obj/item/tank/internals/emergency_oxygen
+	var/internal_type = null
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
@@ -124,10 +124,11 @@
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
-	if(!isplasmaman(loc))
-		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+	if(!isnull(internal_type))
+		if(!isplasmaman(loc))
+			new internal_type(src)
+		else
+			new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
