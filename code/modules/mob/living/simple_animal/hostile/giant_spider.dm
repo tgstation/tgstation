@@ -43,7 +43,7 @@
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
-	speed = 1
+	speed = 0
 	turns_per_move = 5
 	see_in_dark = 4
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8)
@@ -54,7 +54,7 @@
 	initial_language_holder = /datum/language_holder/spider
 	maxHealth = 80
 	health = 80
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
@@ -83,6 +83,12 @@
 	lay_web = new
 	lay_web.Grant(src)
 
+/mob/living/simple_animal/hostile/poison/giant_spider/Life(mapload)
+	. = ..()
+	staminaloss = max(0, staminaloss - 10)
+	set_varspeed(initial(speed) + (staminaloss * 0.2))
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.2))
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
 	if(!. || !client)
@@ -108,6 +114,9 @@
 	else
 		clear_alert("temp")
 
+/mob/living/simple_animal/hostile/poison/giant_spider/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+	staminaloss = min(200, amount * damage_coeff[STAMINA])
+
 /**
   * # Spider Hunter
   *
@@ -116,6 +125,7 @@
   * A subtype of the giant spider which is faster, has toxin injection, but less health.  This spider is only slightly slower than a human.
   */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+	name = "hunter spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
@@ -126,7 +136,7 @@
 	melee_damage_upper = 20
 	poison_per_bite = 10
 	move_to_delay = 5
-	speed = 0.1
+	speed = -0.1
 
 /**
   * # Spider Nurse
@@ -137,6 +147,7 @@
   * that other species can and can wrap other spiders' wounds, healing them.  Note that it cannot heal itself.
   */
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
+	name = "nurse spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
 	icon_state = "nurse"
 	icon_living = "nurse"
@@ -149,6 +160,13 @@
 	melee_damage_upper = 10
 	poison_per_bite = 3
 	web_speed = 0.25
+	///The health HUD applied to the mob.
+	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
+	. = ..()
+	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
+	datahud.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/AttackingTarget()
 	if(is_busy)
@@ -198,7 +216,7 @@
 	charger = TRUE
 	charge_distance = 4
 	///Whether or not the tarantula is currently walking on webbing.
-	var/silk_walking = FALSE
+	var/silk_walking = TRUE
 	///The spider's charge ability
 	var/obj/effect/proc_holder/tarantula_charge/charge
 
@@ -226,7 +244,7 @@
   * but like the hunter has a limited amount of health.
   */
 /mob/living/simple_animal/hostile/poison/giant_spider/viper
-	name = "viper"
+	name = "viper spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
 	icon_state = "viper"
 	icon_living = "viper"
@@ -252,7 +270,7 @@
   * of sending messages to all living spiders, being a communication line for the rest of the horde.
   */
 /mob/living/simple_animal/hostile/poison/giant_spider/midwife
-	name = "broodmother"
+	name = "broodmother spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	gender = FEMALE
 	icon_state = "midwife"
@@ -379,7 +397,7 @@
 	panel = "Spider"
 	active = FALSE
 	action = null
-	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, you'll also consume them, allowing you to lay eggs."
+	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, you'll also consume them, allowing you to lay enriched eggs."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
@@ -680,3 +698,15 @@
 		is_busy = FALSE
 		return
 	return ..()
+
+/**
+  * # Viper Spider (Wizard)
+  *
+  * A viper spider buffed slightly so I don't need to hear anyone complain about me nerfing an already useless wizard ability.
+  *
+  * A viper spider with buffed attributes.  All I changed was its health value and gave it the ability to ventcrawl.  The crux of the wizard meta.
+  */
+/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
+	maxHealth = 80
+	health = 80
+	ventcrawler = VENTCRAWLER_ALWAYS
