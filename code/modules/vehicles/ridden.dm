@@ -77,7 +77,6 @@
 				var/mob/living/L = user
 				L.Stun(3 SECONDS)
 			return FALSE
-			
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [src]...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
@@ -121,4 +120,3 @@
 
 	if(mover.pass_flags & PASSTABLE)
 		return TRUE
-
