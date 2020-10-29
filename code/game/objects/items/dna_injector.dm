@@ -3,6 +3,7 @@
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dnainjector"
+	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
