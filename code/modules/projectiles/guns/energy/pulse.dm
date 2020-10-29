@@ -1,6 +1,6 @@
 /obj/item/gun/energy/pulse
 	name = "pulse rifle"
-	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
+	desc = "The NT-PR2. A heavy-duty, multifaceted energy infantry rifle that can stun, kill and DESTROY. Considered a great weapon by front-line fighters."
 	icon_state = "pulse"
 	inhand_icon_state = null
 	worn_icon_state = null
@@ -37,7 +37,7 @@
 
 /obj/item/gun/energy/pulse/carbine
 	name = "pulse carbine"
-	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
+	desc = "The NT-PR1. A compact variant of the renowned pulse rifle with less ammunition capabilities, but easier to store."
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_carbine"
@@ -53,7 +53,7 @@
 
 /obj/item/gun/energy/pulse/pistol
 	name = "pulse pistol"
-	desc = "A pulse rifle in an easily concealed handgun package with low capacity."
+	desc = "The NT-PR1S. The smallest a pulse rifle can go, with a relatively small charge yet all of the firepower."
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_pistol"
