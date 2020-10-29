@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/shotgun
 	name = "shotgun"
-	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	desc = "A traditional pump-action shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
@@ -41,7 +41,7 @@
 
 /obj/item/gun/ballistic/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
-	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
+	desc = "A sturdy pump-action shotgun with a bigger shell capacity and a fixed ergonomic stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
 	fire_delay = 7
@@ -57,7 +57,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"
-	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
+	desc = "A heavy semi-automatic shotgun with tactical accessories and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 5
@@ -113,7 +113,7 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
+	desc = "A semi-automatic, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
@@ -186,7 +186,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
+	desc = "Essentially a tube that aims shotgun shells, are you sure this is uh... safe?"
 	icon_state = "ishotgun"
 	inhand_icon_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
@@ -203,7 +203,7 @@
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
 			slot_flags = ITEM_SLOT_BACK
-			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
+			to_chat(user, "<span class='notice'>You tie the lengths of cable to each end of the shotgun, making a sling.</span>")
 			slung = TRUE
 			update_icon()
 		else
@@ -245,7 +245,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"
-	desc = "Range isn't an issue when you can bring your victim to you."
+	desc = "Range isn't an issue when you can bring your victims close. The only thing they fear is you." //Funny DOOM reference
 	icon_state = "hookshotgun"
 	inhand_icon_state = "shotgun"
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
@@ -269,19 +269,19 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(toggled)
-		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")
+		to_chat(user,"<span class='notice'>You switch back to the shotgun.</span>")
 		fire_sound = initial(fire_sound)
 	else
-		to_chat(user,"<span class='notice'>You switch to the hook.</span>")
+		to_chat(user,"<span class='notice'>You extend the hook.</span>")
 		fire_sound = 'sound/weapons/batonextend.ogg'
 	toggled = !toggled
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/examine(mob/user)
 	. = ..()
 	if(toggled)
-		. += "<span class='notice'>Alt-click to switch to the shotgun.</span>"
+		. += "<span class='notice'>Alt-click to switch back the shotgun.</span>"
 	else
-		. += "<span class='notice'>Alt-click to switch to the hook.</span>"
+		. += "<span class='notice'>Alt-click to extend the hook.</span>"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/afterattack(atom/target, mob/living/user, flag, params)
 	if(toggled)
