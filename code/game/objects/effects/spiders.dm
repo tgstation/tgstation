@@ -82,7 +82,7 @@
 	///Whether or not a ghost can use the cluster to become a spider.
 	var/ghost_ready = FALSE
 	///The types of spiders the egg sac could produce.
-	var/potentialspawns = list(/mob/living/simple_animal/hostile/poison/giant_spider,
+	var/list/mob/living/potentialspawns = list(/mob/living/simple_animal/hostile/poison/giant_spider,
 								/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 								/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 
@@ -111,10 +111,18 @@
   * * user - The ghost attempting to become a spider.
   */
 /obj/structure/spider/eggcluster/proc/make_spider(mob/user)
-	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || QDELETED(src) || QDELETED(user))
+	var/list/spider_list = list()
+	var/list/display_spiders = list()
+	for(var/choice in potentialspawns)
+		var/mob/living/simple_animal/spider = choice
+		spider_list[initial(spider.name)] = choice
+		var/image/spider_image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
+		display_spiders += list(initial(spider.name) = spider_image)
+	sortList(display_spiders)
+	var/chosen_spider = show_radial_menu(user, src, display_spiders, radius = 38, require_near = TRUE)
+	chosen_spider = spider_list[chosen_spider]
+	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
-	var/chosen_spider = pick(potentialspawns)
 	var/mob/living/simple_animal/hostile/poison/giant_spider/new_spider = new chosen_spider(src.loc)
 	new_spider.faction = faction.Copy()
 	new_spider.directive = directive
@@ -132,7 +140,7 @@
 /obj/structure/spider/eggcluster/bloody
 	name = "bloody egg cluster"
 	color = rgb(255,0,0)
-	directive = "You are the spawn of a visicious changeling.  You have no ambitions except to wreak havoc and ensure your own survival."
+	directive = "You are the spawn of a visicious changeling.  You have no ambitions except to wreak havoc and ensure your own survival.  You are aggressive to all living beings outside of your species, including changelings."
 	potentialspawns = list(/mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh)
 
 /obj/structure/spider/eggcluster/midwife
