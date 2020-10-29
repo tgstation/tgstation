@@ -41,7 +41,7 @@
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be revived!)",,"Yes","No")
-	if(ghost_role == "No" || !loc || !user)
+	if(ghost_role == "No" || !loc || QDELETED(user))
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, "<span class='warning'>An admin has temporarily disabled non-admin ghost roles!</span>")
