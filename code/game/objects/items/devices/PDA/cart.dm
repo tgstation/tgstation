@@ -461,17 +461,17 @@ Code:
 			if (cl)
 				menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
 
-				menu += "<h4>Located Mops:</h4>"
+				menu += "<h4>Located Pimpin' Ride:</h4>"
 
 				var/ldat
-				for (var/obj/item/mop/M in world)
+				for (var/obj/vehicle/ridden/janicart/M in world)
 					var/turf/ml = get_turf(M)
 
 					if(ml)
 						if (ml.z != cl.z)
 							continue
 						var/direction = get_dir(src, M)
-						ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
+						ldat += "Ride - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b><br>"
 
 				if (!ldat)
 					menu += "None"
@@ -506,6 +506,23 @@ Code:
 							continue
 						var/direction = get_dir(src, B)
 						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
+
+				if (!ldat)
+					menu += "None"
+				else
+					menu += "[ldat]"
+
+				menu += "<h4>Located Mops:</h4>"
+
+				ldat = null
+				for (var/obj/item/mop/M in world)
+					var/turf/ml = get_turf(M)
+
+					if(ml)
+						if (ml.z != cl.z)
+							continue
+						var/direction = get_dir(src, M)
+						ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
 				if (!ldat)
 					menu += "None"
