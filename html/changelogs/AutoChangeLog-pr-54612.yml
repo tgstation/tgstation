@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "Added 3 new types of fancy carpets."
+  - rscadd: "A crate of decorative items now sometimes spawns in maintenance."
