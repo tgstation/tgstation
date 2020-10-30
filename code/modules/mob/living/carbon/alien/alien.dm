@@ -116,9 +116,6 @@ Des: Removes all infected images from the alien.
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = FALSE)
-	return initial(pixel_y)
-
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
@@ -147,3 +144,13 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/on_standing_up()
 	. = ..()
 	update_icons()
+
+///Proc to set the alien's leaping state and update the pixel offsets to match
+/mob/living/carbon/alien/proc/set_leaping(var/newval)
+	leaping = newval
+	if (leaping)
+		body_position_pixel_x_offset = PIXEL_X_OFFSET_ALIEN_LEAPING
+		body_position_pixel_y_offset = PIXEL_Y_OFFSET_ALIEN_LEAPING
+	else
+		body_position_pixel_x_offset = 0
+		body_position_pixel_y_offset = 0

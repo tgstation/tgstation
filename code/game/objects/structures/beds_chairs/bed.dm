@@ -103,7 +103,7 @@
 	density = FALSE
 	icon_state = "down"
 	//Set them back down to the normal lying position
-	M.pixel_y = M.base_pixel_y + M.get_standard_pixel_y_offset(M.body_position == LYING_DOWN)
+	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 
 
 /obj/item/roller

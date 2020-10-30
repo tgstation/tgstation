@@ -78,18 +78,6 @@
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = FALSE)
-	if(leaping)
-		return -32
-	else
-		return 0
-
-/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = FALSE)
-	if(leaping)
-		return -32
-	else
-		return 0
-
 /mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
 	return 0.8
 

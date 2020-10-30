@@ -44,13 +44,13 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
-		leaping = 1
+		set_leaping(TRUE)
 		LAZYADD(weather_immunities,"lava")
 		update_icons()
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
-	leaping = 0
+	set_leaping(FALSE)
 	LAZYREMOVE(weather_immunities, "lava")
 	update_icons()
 
@@ -82,9 +82,8 @@
 			Paralyze(40, ignore_canstun = TRUE)
 
 		if(leaping)
-			leaping = FALSE
+			set_leaping(FALSE)
 			update_icons()
-
 
 /mob/living/carbon/alien/humanoid/float(on)
 	if(leaping)
