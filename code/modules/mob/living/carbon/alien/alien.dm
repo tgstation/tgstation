@@ -146,7 +146,7 @@ Des: Removes all infected images from the alien.
 	update_icons()
 
 ///Proc to set the alien's leaping state and update the pixel offsets to match (because the leaping sprite is bigger than normal)
-/mob/living/carbon/alien/proc/set_leaping(var/newval)
+/mob/living/carbon/alien/proc/set_leaping(newval)
 	leaping = newval
 	if (leaping)
 		body_position_pixel_x_offset = -32
