@@ -86,8 +86,8 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Life(mapload)
 	. = ..()
 	staminaloss = max(0, staminaloss - 10)
-	set_varspeed(initial(speed) + (staminaloss * 0.2))
-	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.2))
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
@@ -115,7 +115,7 @@
 		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/adjustStaminaLoss(amount, updating_health, forced = FALSE)
-	staminaloss = min(200, amount * damage_coeff[STAMINA])
+	staminaloss = min(200, staminaloss + (amount * damage_coeff[STAMINA]))
 
 /**
   * # Spider Hunter
@@ -207,6 +207,7 @@
 	melee_damage_lower = 35
 	melee_damage_upper = 40
 	obj_damage = 100
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	poison_per_bite = 0
 	move_to_delay = 8
 	speed = 1
