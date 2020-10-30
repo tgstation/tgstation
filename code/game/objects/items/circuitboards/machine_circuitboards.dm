@@ -339,27 +339,24 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 10)
+		/obj/item/stack/sheet/metal = 5,
+		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_waste_output
 	name = "HFR Waste Output (Machine Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 10)
+		/obj/item/stack/sheet/metal = 5,
+		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_moderator_input
 	name = "HFR Moderator Input (Machine Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 10)
+		/obj/item/stack/sheet/metal = 5,
+		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_core
 	name = "HFR core (Machine Board)"
@@ -375,9 +372,8 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/hypertorus/corner
 	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 10)
+		/obj/item/stack/sheet/metal = 5,
+		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_interface
 	name = "HFR Interface (Machine Board)"
@@ -386,7 +382,7 @@
 	req_components = list(
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 10)
+		/obj/item/stack/sheet/plasteel = 5)
 
 //Generic
 

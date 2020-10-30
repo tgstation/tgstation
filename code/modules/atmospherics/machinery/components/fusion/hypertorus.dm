@@ -63,6 +63,8 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	layer = OBJ_LAYER
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	circuit = /obj/item/circuitboard/machine/thermomachine
 	var/icon_state_open
 	var/icon_state_off
 	var/icon_state_active
@@ -87,38 +89,32 @@
 		return
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/hypertorus/getNodeConnects()
+	return list(dir)
+
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
-	if(!.)
-		return
-	if(!anchored)
-		return FALSE
-	SetInitDirections()
-	var/obj/machinery/atmospherics/node = nodes[1]
-	if(node)
-		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+	if(.)
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node = nodes[1]
+		if(node)
 			node.disconnect(src)
-		nodes[1] = null
-	if(parents[1])
+			nodes[1] = null
 		nullifyPipenet(parents[1])
-
-	atmosinit()
-	node = nodes[1]
-	if(node)
-		node.atmosinit()
-		node.addMember(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
+		atmosinit()
+		node = nodes[1]
+		if(node)
+			node.atmosinit()
+			node.addMember(src)
+		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon()
-	cut_overlays()
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(active)
 		icon_state = icon_state_active
 	else
 		icon_state = icon_state_off
-	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -309,10 +305,6 @@
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
-
 /obj/machinery/atmospherics/components/binary/hypertorus/core/SetInitDirections()
 	switch(dir)
 		if(NORTH, SOUTH)
@@ -341,14 +333,12 @@
 	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/update_icon()
-	cut_overlays()
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(active)
 		icon_state = icon_state_active
 	else
 		icon_state = icon_state_off
-	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 270), turn(dir, 90))
@@ -466,6 +456,10 @@
 				linked_moderator = null
 				. =  FALSE
 			linked_moderator = object
+
+	if(!linked_interface || !linked_input || !linked_moderator || !linked_output || corners.len != 4)
+		. = FALSE
+
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
