@@ -121,13 +121,13 @@
 			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
 
-
+///Deletes nanites!
 /datum/component/nanites/proc/delete_nanites()
 	SIGNAL_HANDLER
 
 	qdel(src)
 
-//Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
+///Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	SIGNAL_HANDLER
 
@@ -149,6 +149,7 @@
 		var/datum/nanite_program/SNP = X
 		add_program(null, SNP.copy())
 
+///Syncs the nanites to their assigned cloud copy, if it is available. If it is not, there is a small chance of a software error instead.
 /datum/component/nanites/proc/cloud_sync()
 	if(cloud_id)
 		var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
@@ -162,6 +163,7 @@
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
 
+///Adds a nanite program, replacing existing unique programs of the same type. A source program can be specified to copy its programming onto the new one.
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	SIGNAL_HANDLER
 
@@ -183,13 +185,63 @@
 	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
 
+///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
 	SIGNAL_HANDLER
 
-	nanite_volume = clamp(nanite_volume + amount, 0, max_nanites)
+	nanite_volume += amount
+	if(nanite_volume > max_nanites)
+		reject_excess_nanites()
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
 
+/**
+  *	Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+  *
+  * IC explanation:
+  * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+  * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+  * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+  * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+  */
+/datum/component/nanites/proc/reject_excess_nanites()
+	var/excess = nanite_volume - max_nanites
+	nanite_volume = max_nanites
+
+	switch(excess)
+		if(0 to 25) //Minor excess amount, the extra nanites are quietly expelled without visible effects
+			return
+		if(25.1 to 100) //Enough nanites getting rejected at once to be visible to the naked eye
+			host_mob.visible_message("<span class='warning'>A grainy grey slurry starts oozing out of [host_mob].</span>", "<span class='warning'>A grainy grey slurry starts oozing out of your skin.</span>", null, 4);
+		if(100.1 to 350) //Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				host_mob.visible_message("<span class='warning'>[host_mob] vomits a grainy grey slurry!</span>", "<span class='warning'>You vomit a metallic-tasting grainy grey slurry!</span>", null);
+				C.vomit(0, FALSE, TRUE, FLOOR(excess / 100), FALSE, VOMIT_NANITE, FALSE, TRUE, 0)
+			else
+				host_mob.visible_message("<span class='warning'>A grainy grey slurry bursts out of [host_mob]'s skin!</span>", "<span class='warning'>A grainy grey slurry violently bursts out of your skin!</span>", null);
+				if(isturf(host_mob.drop_location()))
+					var/turf/T = host_mob.drop_location()
+					T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+		if(350.1 to INFINITY) //Way too many nanites, they just leave through the closest exit before they harm/poison the host
+			host_mob.visible_message("<span class='warning'>A torrent of grainy grey slurry violently bursts out of [host_mob]'s face and skin!</span>", "<span class='warning'>A torrent of grainy grey slurry violently bursts out of your eyes, ears, and mouth, as well as your skin!</span>", null);
+
+			host_mob.blur_eyes(15) //nanites coming out of your eyes
+			if(iscarbon(host_mob))
+				var/mob/living/carbon/C = host_mob
+				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+				if(ears)
+					adjustEarDamage(0, 30) //nanites coming out of your ears
+				C.vomit(0, FALSE, TRUE, 1, FALSE, VOMIT_NANITE, FALSE, TRUE, 0) //nanites coming out of your mouth
+
+			//nanites everywhere
+			if(isturf(host_mob.drop_location()))
+				var/turf/T = host_mob.drop_location()
+				T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+				for(var/turf/adjacent_turf in T.reachableAdjacentTurfs())
+					adjacent_turf.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
+
+///Updates the nanite volume bar visible in diagnostic HUDs
 /datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
 	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
 	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
