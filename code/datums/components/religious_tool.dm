@@ -66,7 +66,7 @@
 		if(!(operation_flags & RELIGION_TOOL_INVOKE))
 			return
 		INVOKE_ASYNC(src, .proc/perform_rite, user)
-		return (force_catalyst_afterattack ? null : COMPONENT_NO_AFTERATTACK)
+		return (force_catalyst_afterattack ? NONE : COMPONENT_NO_AFTERATTACK)
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
