@@ -277,7 +277,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	open_flame()
-	if((reagents && reagents.total_volume) && (nextdragtime <= world.time))
+	if((reagents?.total_volume) && (nextdragtime <= world.time))
 		nextdragtime = world.time + dragtime SECONDS
 		handle_reagents()
 
@@ -548,7 +548,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
-	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
+	if(reagents?.total_volume)	//	check if it has any reagents at all
 		handle_reagents()
 
 
@@ -1004,5 +1004,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(src)
 			return
 
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		hand_reagents()
