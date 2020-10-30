@@ -624,9 +624,6 @@
 	air_update_turf()
 	qdel(src)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/attack_hand(mob/living/user)
-	meltdown()
-
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
 	/*
 	 *Pre-checks
