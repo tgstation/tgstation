@@ -1,0 +1,4 @@
+author: "Rohesie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue preventing afterattacks from happening, which broke regenerative crossbreeds, fulton packs and other interactions."
