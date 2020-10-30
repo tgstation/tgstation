@@ -1978,6 +1978,10 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/radio,
 /obj/item/hand_labeler,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aeZ" = (
@@ -2015,9 +2019,8 @@
 	pixel_y = 5
 	},
 /obj/item/stack/cable_coil,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 22
+/obj/structure/sign/poster/random{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -14758,6 +14761,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aID" = (
@@ -14779,6 +14783,8 @@
 	pixel_x = -26;
 	pixel_y = 28
 	},
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aII" = (
@@ -17843,6 +17849,7 @@
 	req_one_access_txt = "12;25;28;35;37"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "aQw" = (
@@ -17850,6 +17857,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "aQx" = (
@@ -17858,6 +17866,7 @@
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "aQy" = (
@@ -18476,6 +18485,9 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "aRR" = (
@@ -18493,6 +18505,9 @@
 	},
 /obj/structure/table/reinforced{
 	name = "Jim Norton's Quebecois Coffee table"
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
@@ -20177,7 +20192,9 @@
 	name = "Jim Norton's Quebecois Coffee apron"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/autoname,
+/obj/machinery/camera/autoname{
+	c_tag = "Jim Norton's Quebecois Coffee"
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "aVT" = (
@@ -29006,6 +29023,9 @@
 /obj/item/reagent_containers/glass/rag,
 /obj/structure/table/reinforced{
 	name = "Jim Norton's Quebecois Coffee table"
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
@@ -42679,6 +42699,9 @@
 /obj/item/reagent_containers/food/snacks/hotcrossbun{
 	pixel_x = 3;
 	pixel_y = 5
+	},
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
@@ -65942,6 +65965,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/line,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cafeteria)
 "flL" = (
@@ -76997,13 +77021,6 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/gps,
-/obj/machinery/camera/autoname,
-/obj/machinery/power/apc{
-	areastring = "/area/storage/primary";
-	dir = 8;
-	name = "Primary Tool Storage APC";
-	pixel_y = 26
-	},
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
@@ -77014,6 +77031,7 @@
 	},
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/gps,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "ucX" = (
@@ -78281,6 +78299,9 @@
 /area/medical/sleeper)
 "vTs" = (
 /obj/machinery/vending/tool,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "vTD" = (
@@ -78795,11 +78816,10 @@
 /area/medical/medbay/central)
 "wAq" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
-	name = "Security-Storage Backroom";
-	req_access_txt = "63"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;63;48;50"
+	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "wBb" = (
