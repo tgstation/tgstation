@@ -135,9 +135,11 @@
 
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
 	for(chosen_clothing in get_turf(religious_tool))
-		for(var/obj/item/clothing/head/integrated_clothing in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof that too
-			apply_fireproof(integrated_clothing)
+		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
+			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
+				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
+		playsound(get_turf(religious_tool), 'sound/magic/fireball.ogg', 50, TRUE)
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
@@ -191,6 +193,7 @@
 			GLOB.religious_sect?.adjust_favor(favor_gained, user)
 			to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
 			chosen_sacrifice.dust(force = TRUE)
+			playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
 			. = TRUE
 		chosen_sacrifice = null
 		return
@@ -210,5 +213,5 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/candle_count = 0, candle_count < 5, candle_count++)
 		new /obj/item/candle/infinite(altar_turf)
-	playsound(get_turf(altar_turf), 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
 	return TRUE

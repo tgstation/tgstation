@@ -198,11 +198,12 @@
 	desc = "A sect dedicated to candles."
 	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Bibles now deal burn damage and double as a lighter. Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
 	alignment = ALIGNMENT_NEUT
+	max_favor = 10000
 	desired_items = list(/obj/item/candle)
 	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
 	altar_icon_state = "convertaltar-red"
 
-//candle sect bibles don't heal or do anything special but holy water blessings
+//candle sect bibles don't heal or do anything special apart from the standard holy water blessings
 /datum/religion_sect/candle_sect/sect_bless(mob/living/blessed, mob/living/user)
 	return TRUE
 
