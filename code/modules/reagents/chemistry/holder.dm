@@ -210,9 +210,8 @@
   * * show_message - passed through to [/datum/reagents/proc/expose_single]
   * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
   * * ignore_stomach - when using methods INGEST will not use the stomach as the target
-  * * single_reagent - The single reagent to transfer, used with round_robin
   */
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE, single_reagent)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -266,8 +265,6 @@
 			if(!to_transfer)
 				break
 			var/datum/reagent/T = reagent
-			if(single_reagent && T.type != single_reagent)
-				continue
 			if(remove_blacklisted && !T.can_synth)
 				continue
 			if(preserve_data)
@@ -616,15 +613,16 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.type == reagent)
-			var/mob/living/mob_consumer
 
-			if (isliving(my_atom))
+			//are we in a mob/mobs organs
+			var/mob/living/mob_consumer
+			if(isliving(my_atom))
 				mob_consumer = my_atom
-			else if (istype(my_atom, /obj/item/organ))
+			else if(istype(my_atom, /obj/item/organ))
 				var/obj/item/organ/organ = my_atom
 				mob_consumer = organ.owner
 
-			if (mob_consumer)
+			if(mob_consumer)
 				if(R.metabolizing)
 					R.metabolizing = FALSE
 					R.on_mob_end_metabolize(mob_consumer)
@@ -635,7 +633,9 @@
 			reagent_list -= R
 			qdel(R)
 			update_total()
-			if(my_atom)
+			if(mob_consumer)
+				mob_consumer.on_reagent_change(DEL_REAGENT)
+			if(my_atom && my_atom != mob_consumer)
 				my_atom.on_reagent_change(DEL_REAGENT)
 	return 1
 
@@ -786,10 +786,21 @@
 		R.data = data
 		R.on_new(data)
 
+	//are we in a mob/mobs organs
+	var/mob/living/mob_consumer
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
+		mob_consumer = my_atom
+	else if(istype(my_atom, /obj/item/organ))
+		var/obj/item/organ/organ = my_atom
+		mob_consumer = organ.owner
+
+	if(mob_consumer)
+		R.on_mob_add(mob_consumer) //Must occur before it could posibly run on_mob_delete
+
 	update_total()
-	if(my_atom)
+	if(mob_consumer)
+		mob_consumer.on_reagent_change(ADD_REAGENT)
+	if(my_atom && my_atom != mob_consumer)
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()

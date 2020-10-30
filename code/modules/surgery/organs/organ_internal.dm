@@ -66,13 +66,6 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
-	//reagent on_mob_delete on organ destruction
-	if(reagents && iscarbon(owner))
-		var/mob/living/carbon/body = owner
-		for(var/chem in reagents.reagent_list)
-			var/datum/reagent/reagent = chem
-			reagent.on_mob_delete(body) //It was removed from the body
-
 	owner = null
 	if(M)
 		M.internal_organs -= src
