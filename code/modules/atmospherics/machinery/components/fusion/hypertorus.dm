@@ -61,8 +61,11 @@
 	desc = "Heats or cools gas in connected pipes."
 	anchored = TRUE
 	density = TRUE
-	var/icon_state_open = "moderator_input"
-	var/icon_state_off = "moderator_input"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	layer = OBJ_LAYER
+	var/icon_state_open
+	var/icon_state_off
+	var/icon_state_active
 	var/active = FALSE
 	var/fusion_started = FALSE
 
@@ -107,42 +110,57 @@
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
+/obj/machinery/atmospherics/components/unary/hypertorus/update_icon()
+	cut_overlays()
+	if(panel_open)
+		icon_state = icon_state_open
+	else if(active)
+		icon_state = icon_state_active
+	else
+		icon_state = icon_state_off
+	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
+
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
 	desc = "Input port for the Hypertorus Fusion Reactor, designed to take in only Hydrogen and Tritium in gas forms."
-	icon_state = "fuel_input"
-	icon_state_open = "fuel_input"
-	icon_state_off = "fuel_input"
+	icon_state = "fuel_input_off"
+	icon_state_open = "fuel_input_open"
+	icon_state_off = "fuel_input_off"
+	icon_state_active = "fuel_input_active"
 	circuit = /obj/item/circuitboard/machine/HFR_fuel_input
 
 /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 	name = "HFR waste output port"
 	desc = "Waste port for the Hypertorus Fusion Reactor, designed to output the hot waste gases coming from the core of the machine."
-	icon_state = "waste_output"
-	icon_state_open = "waste_output"
-	icon_state_off = "waste_output"
+	icon_state = "waste_output_off"
+	icon_state_open = "waste_output_open"
+	icon_state_off = "waste_output_off"
+	icon_state_active = "waste_output_active"
 	circuit = /obj/item/circuitboard/machine/HFR_waste_output
 
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 	name = "HFR moderator input port"
 	desc = "Moderator port for the Hypertorus Fusion Reactor, designed to move gases inside the machine to cool and control the flow of the reaction."
-	icon_state = "moderator_input"
-	icon_state_open = "moderator_input"
-	icon_state_off = "moderator_input"
+	icon_state = "moderator_input_off"
+	icon_state_open = "moderator_input_open"
+	icon_state_off = "moderator_input_off"
+	icon_state_active = "moderator_input_active"
 	circuit = /obj/item/circuitboard/machine/HFR_moderator_input
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core
 	name = "HFR core"
 	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
-	icon_state = "core"
+	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	var/icon_state_open = "core"
-	var/icon_state_off = "core"
+	var/icon_state_open = "core_open"
+	var/icon_state_off = "core_off"
+	var/icon_state_active = "core_active"
 	///Checks if the machine state is active (all parts are connected)
 	var/active = FALSE
 	///Checks if the user has started the machine
@@ -318,6 +336,20 @@
 	QDEL_NULL(soundloop)
 	return..()
 
+/obj/machinery/atmospherics/components/binary/hypertorus/core/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/update_icon()
+	cut_overlays()
+	if(panel_open)
+		icon_state = icon_state_open
+	else if(active)
+		icon_state = icon_state_active
+	else
+		icon_state = icon_state_off
+	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
+
 /obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
 	return list(turn(dir, 270), turn(dir, 90))
 
@@ -368,7 +400,7 @@
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_part_connectivity()
 	. = TRUE
-	if(!anchored)
+	if(!anchored || panel_open)
 		return FALSE
 
 	for(var/obj/machinery/hypertorus/object in orange(1,src))
@@ -403,6 +435,7 @@
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
 			if(linked_interface && linked_interface != object)
+				linked_interface = null
 				. =  FALSE
 			linked_interface = object
 
@@ -410,7 +443,7 @@
 		if(. == FALSE)
 			break
 
-		if(!object.anchored)
+		if(object.panel_open)
 			. = FALSE
 
 		if(get_step(object,turn(object.dir,180)) != loc)
@@ -418,16 +451,19 @@
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
 			if(linked_input && linked_input != object)
+				linked_input = null
 				. =  FALSE
 			linked_input = object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
+				linked_output = null
 				. =  FALSE
 			linked_output = object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
+				linked_moderator = null
 				. =  FALSE
 			linked_moderator = object
 
@@ -437,12 +473,18 @@
 		return
 	to_chat(user, "<span class='notice'>You link all parts toghether.</span>")
 	active = TRUE
+	update_icon()
 	linked_interface.active = TRUE
+	linked_interface.update_icon()
 	linked_input.active = TRUE
+	linked_input.update_icon()
 	linked_output.active = TRUE
+	linked_output.update_icon()
 	linked_moderator.active = TRUE
+	linked_moderator.update_icon()
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
+		corner.update_icon()
 	soundloop = new(list(src), TRUE)
 	soundloop.volume = 5
 
@@ -450,17 +492,23 @@
 	if(!active)
 		return
 	active = FALSE
+	update_icon()
 	if(linked_interface)
 		linked_interface.active = FALSE
+		linked_interface.update_icon()
 	if(linked_input)
 		linked_input.active = FALSE
+		linked_input.update_icon()
 	if(linked_output)
 		linked_output.active = FALSE
+		linked_output.update_icon()
 	if(linked_moderator)
 		linked_moderator.active = FALSE
+		linked_moderator.update_icon()
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
+			corner.update_icon()
 	QDEL_NULL(soundloop)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
@@ -684,22 +732,23 @@
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
 		slowprocess()
 		COOLDOWN_START(src, hypertorus_reactor, 1 SECONDS) //Set to wait for another second before processing again, we don't need to process more than once a second
-	if(power_level > 0)
-		fusion_started = TRUE
-		linked_input.fusion_started = TRUE
-		linked_output.fusion_started = TRUE
-		linked_moderator.fusion_started = TRUE
-		linked_interface.fusion_started = TRUE
-		for(var/obj/machinery/hypertorus/corner/corner in corners)
-			corner.fusion_started = TRUE
-	else
-		fusion_started = FALSE
-		linked_input.fusion_started = FALSE
-		linked_output.fusion_started = FALSE
-		linked_moderator.fusion_started = FALSE
-		linked_interface.fusion_started = FALSE
-		for(var/obj/machinery/hypertorus/corner/corner in corners)
-			corner.fusion_started = FALSE
+	if(active)
+		if(power_level > 0)
+			fusion_started = TRUE
+			linked_input.fusion_started = TRUE
+			linked_output.fusion_started = TRUE
+			linked_moderator.fusion_started = TRUE
+			linked_interface.fusion_started = TRUE
+			for(var/obj/machinery/hypertorus/corner/corner in corners)
+				corner.fusion_started = TRUE
+		else
+			fusion_started = FALSE
+			linked_input.fusion_started = FALSE
+			linked_output.fusion_started = FALSE
+			linked_moderator.fusion_started = FALSE
+			linked_interface.fusion_started = FALSE
+			for(var/obj/machinery/hypertorus/corner/corner in corners)
+				corner.fusion_started = FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/slowprocess()
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
@@ -1057,11 +1106,17 @@
 	move_resist = INFINITY
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	power_channel = AREA_USAGE_ENVIRON
 	var/active = FALSE
-	var/icon_state_open = "core"
-	var/icon_state_off = "core"
+	var/icon_state_open
+	var/icon_state_off
+	var/icon_state_active
 	var/fusion_started = FALSE
+
+/obj/machinery/hypertorus/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
 
 /obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!fusion_started)
@@ -1073,14 +1128,27 @@
 		return
 	return ..()
 
+/obj/machinery/hypertorus/update_icon()
+	if(panel_open)
+		icon_state = icon_state_open
+	else if(active)
+		icon_state = icon_state_active
+	else
+		icon_state = icon_state_off
+
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"
 	desc = "Interface for the HFR to control the flow of the reaction."
-	icon_state = "interface"
+	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
 	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
-	icon_state_off = "interface"
-	icon_state_open = "interface"
+	icon_state_off = "interface_off"
+	icon_state_open = "interface_open"
+	icon_state_active = "interface_active"
+
+/obj/machinery/hypertorus/interface/Destroy()
+	if(connected_core)
+		connected_core = null
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -1239,9 +1307,10 @@
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
 	desc = "Structural piece of the machine."
-	icon_state = "corner"
+	icon_state = "corner_off"
 	circuit = /obj/item/circuitboard/machine/HFR_corner
-	icon_state_off = "corner"
-	icon_state_open = "corner"
+	icon_state_off = "corner_off"
+	icon_state_open = "corner_open"
+	icon_state_active = "corner_active"
 
 #undef HALLUCINATION_RANGE
