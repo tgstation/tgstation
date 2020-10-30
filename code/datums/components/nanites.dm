@@ -216,29 +216,33 @@
 		if(100.1 to 350) //Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
 			if(iscarbon(host_mob))
 				var/mob/living/carbon/C = host_mob
-				host_mob.visible_message("<span class='warning'>[host_mob] vomits a grainy grey slurry!</span>", "<span class='warning'>You vomit a metallic-tasting grainy grey slurry!</span>", null);
-				C.vomit(0, FALSE, TRUE, FLOOR(excess / 100), FALSE, VOMIT_NANITE, FALSE, TRUE, 0)
+				host_mob.visible_message("<span class='warning'>[host_mob] vomits a grainy grey slurry!</span>", "<span class='warning'>You suddenly vomit a metallic-tasting grainy grey slurry!</span>", null);
+				C.vomit(0, FALSE, TRUE, FLOOR(excess / 100, 1), FALSE, VOMIT_NANITE, FALSE, TRUE, 0)
 			else
-				host_mob.visible_message("<span class='warning'>A grainy grey slurry bursts out of [host_mob]'s skin!</span>", "<span class='warning'>A grainy grey slurry violently bursts out of your skin!</span>", null);
+				host_mob.visible_message("<span class='warning'>A metallic grey slurry bursts out of [host_mob]'s skin!</span>", "<span class='userdanger'>A metallic grey slurry violently bursts out of your skin!</span>", null);
 				if(isturf(host_mob.drop_location()))
 					var/turf/T = host_mob.drop_location()
 					T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
 		if(350.1 to INFINITY) //Way too many nanites, they just leave through the closest exit before they harm/poison the host
-			host_mob.visible_message("<span class='warning'>A torrent of grainy grey slurry violently bursts out of [host_mob]'s face and skin!</span>", "<span class='warning'>A torrent of grainy grey slurry violently bursts out of your eyes, ears, and mouth, as well as your skin!</span>", null);
+			host_mob.visible_message("<span class='warning'>A torrent of metallic grey slurry violently bursts out of [host_mob]'s face and floods out of [host_mob.p_their()] skin!</span>",
+								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>");
 
-			host_mob.blur_eyes(15) //nanites coming out of your eyes
+			host_mob.blind_eyes(15) //nanites coming out of your eyes
+			host_mob.Paralyze(120)
 			if(iscarbon(host_mob))
 				var/mob/living/carbon/C = host_mob
 				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)
-					adjustEarDamage(0, 30) //nanites coming out of your ears
-				C.vomit(0, FALSE, TRUE, 1, FALSE, VOMIT_NANITE, FALSE, TRUE, 0) //nanites coming out of your mouth
+					ears.adjustEarDamage(0, 30) //nanites coming out of your ears
+				C.vomit(0, FALSE, TRUE, 2, FALSE, VOMIT_NANITE, FALSE, TRUE, 0) //nanites coming out of your mouth
 
 			//nanites everywhere
 			if(isturf(host_mob.drop_location()))
 				var/turf/T = host_mob.drop_location()
 				T.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
-				for(var/turf/adjacent_turf in T.reachableAdjacentTurfs())
+				for(var/turf/adjacent_turf in oview(host_mob, 1))
+					if(adjacent_turf.density || !adjacent_turf.Adjacent(T))
+						continue
 					adjacent_turf.add_vomit_floor(host_mob, VOMIT_NANITE, 0)
 
 ///Updates the nanite volume bar visible in diagnostic HUDs
@@ -337,7 +341,7 @@
 /datum/component/nanites/proc/set_max_volume(datum/source, amount)
 	SIGNAL_HANDLER
 
-	max_nanites = max(1, max_nanites)
+	max_nanites = max(1, amount)
 
 /datum/component/nanites/proc/set_cloud(datum/source, amount)
 	SIGNAL_HANDLER

@@ -488,7 +488,6 @@
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)

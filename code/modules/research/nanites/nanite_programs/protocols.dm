@@ -135,12 +135,42 @@
 
 /datum/nanite_program/protocol/unsafe_storage
 	name = "S.L.O. Protocol"
-	desc = "Storage Protocol: 'S.L.O.P.', or Storage Level Override Protocol, completely disables the safety measures normally present in nanites,
+	desc = "Storage Protocol: 'S.L.O.P.', or Storage Level Override Protocol, completely disables the safety measures normally present in nanites,\
 		allowing them to reach much higher saturation levels, but at the risk of causing internal damage to the host."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE
 	var/extra_volume = 1500
+	var/next_warning = 0
+	var/min_warning_cooldown = 120
+	var/max_warning_cooldown = 350
+	var/volume_warnings_stage_1 = list("You feel a dull pain in your abdomen.",
+									"You feel a tickling sensation in your abdomen.")
+	var/volume_warnings_stage_2 = list("You feel a dull pain in your stomach.",
+									"You feel a dull pain when breathing.",
+									"Your stomach grumbles.",
+									"You feel a tickling sensation in your throat.",
+									"You feel a tickling sensation in your lungs.",
+									"You feel a tickling sensation in your stomach.",
+									"Your lungs feel stiff.")
+	var/volume_warnings_stage_3 = list("You feel a dull pain in your chest.",
+									"You hear a faint buzzing coming from nowhere.",
+									"You hear a faint buzzing inside your head.",
+									"Your head aches.")
+	var/volume_warnings_stage_4 = list("You feel a dull pain in your ears.",
+									"You feel a dull pain behind your eyes.",
+									"You hear a loud, echoing buzz inside your ears.",
+									"You feel dizzy.",
+									"You feel an itch coming from behind your eyes.",
+									"Your eardrums itch.",
+									"You see tiny grey motes drifting in your field of view.")
+	var/volume_warnings_stage_5 = list("You feel sick.",
+									"You feel a dull pain from every part of your body.",
+									"You feel nauseous.")
+	var/volume_warnings_stage_6 = list("Your skin itches and burns.",
+									"Your muscles ache.",
+									"You feel tired.",
+									"You feel something skittering under your skin.",)
 
 /datum/nanite_program/protocol/unsafe_storage/enable_passive_effect()
 	. = ..()
@@ -152,8 +182,8 @@
 
 /datum/nanite_program/protocol/unsafe_storage/active_effect()
 	if(!iscarbon(host_mob))
-		if(prob(15))
-			host_mob.adjustBruteLoss(((max(nanites.nanite_volume - 450, 0) / 450) ** 2 ) * 0.5) // 0.5 - 2 - 4.5 - 8
+		if(prob(10))
+			host_mob.adjustBruteLoss(((max(nanites.nanite_volume - 450, 0) / 450) ** 2 ) * 0.5) // 0.5 -> 2 -> 4.5 -> 8 damage per successful tick
 		return
 
 	var/mob/living/carbon/C = host_mob
@@ -164,32 +194,74 @@
 	var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
 	var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)
-	switch(nanites.nanite_volume)
-		if(0 to 500)
-			return
-		if(500 to 2000) //Liver is the main hub of nanite replication and the first to be threatened by excess volume
-			if(prob(15))
-				liver.applyOrganDamage(1)
-		if(750 to 2000) //Extra volume spills out in other central organs
-			if(prob(10))
-				stomach.applyOrganDamage(0.75)
-			if(prob(10))
-				lungs.applyOrganDamage(0.75)
-		if(1000 to 2000) //Extra volume spills out in more critical organs
-			if(prob(10))
-				heart.applyOrganDamage(0.75)
-			if(prob(10))
-				brain.applyOrganDamage(0.75)
-		if(1250 to 2000) //Excess nanites start invading smaller organs for more space, including sensory organs
-			if(prob(20))
-				eyes.applyOrganDamage(0.75)
-			if(prob(20))
-				ears.applyOrganDamage(0.75)
-		if(1500 to 2000) //Nanites start spilling into the bloodstream, causing toxicity
-			if(prob(30))
-				C.adjustToxLoss(0.5, TRUE, forced = TRUE) //Not healthy for slimepeople either
-		if(1750 to 2000) //Nanites have almost reached their physical limit, and the pressure itself starts causing tissue damage
-			if(prob(30))
-				C.adjustBruteLoss(0.75, TRUE)
 
+	if(nanites.nanite_volume < 500)
+		return
 
+	var/current_stage = 0
+	if(nanites.nanite_volume > 500) //Liver is the main hub of nanite replication and the first to be threatened by excess volume
+		if(prob(10))
+			liver.applyOrganDamage(0.6)
+		current_stage++
+	if(nanites.nanite_volume > 750) //Extra volume spills out in other central organs
+		if(prob(10))
+			stomach.applyOrganDamage(0.75)
+		if(prob(10))
+			lungs.applyOrganDamage(0.75)
+		current_stage++
+	if(nanites.nanite_volume > 1000) //Extra volume spills out in more critical organs
+		if(prob(10))
+			heart.applyOrganDamage(0.75)
+		if(prob(10))
+			brain.applyOrganDamage(0.75)
+		current_stage++
+	if(nanites.nanite_volume > 1250) //Excess nanites start invading smaller organs for more space, including sensory organs
+		if(prob(13))
+			eyes.applyOrganDamage(0.75)
+		if(prob(13))
+			ears.applyOrganDamage(0.75)
+		current_stage++
+	if(nanites.nanite_volume > 1500) //Nanites start spilling into the bloodstream, causing toxicity
+		if(prob(15))
+			C.adjustToxLoss(0.5, TRUE, forced = TRUE) //Not healthy for slimepeople either
+		current_stage++
+	if(nanites.nanite_volume > 1750) //Nanites have almost reached their physical limit, and the pressure itself starts causing tissue damage
+		if(prob(15))
+			C.adjustBruteLoss(0.75, TRUE)
+		current_stage++
+
+	volume_warning(current_stage)
+
+/datum/nanite_program/protocol/unsafe_storage/proc/volume_warning(tier)
+	if(world.time < next_warning)
+		return
+
+	var/list/main_warnings
+	var/list/extra_warnings
+
+	switch(tier)
+		if(1)
+			main_warnings = volume_warnings_stage_1
+			extra_warnings = null
+		if(2)
+			main_warnings = volume_warnings_stage_2
+			extra_warnings = volume_warnings_stage_1
+		if(3)
+			main_warnings = volume_warnings_stage_3
+			extra_warnings = volume_warnings_stage_1 + volume_warnings_stage_2
+		if(4)
+			main_warnings = volume_warnings_stage_4
+			extra_warnings = volume_warnings_stage_1 + volume_warnings_stage_2 + volume_warnings_stage_3
+		if(5)
+			main_warnings = volume_warnings_stage_5
+			extra_warnings = volume_warnings_stage_1 + volume_warnings_stage_2 + volume_warnings_stage_3 + volume_warnings_stage_4
+		if(6)
+			main_warnings = volume_warnings_stage_6
+			extra_warnings = volume_warnings_stage_1 + volume_warnings_stage_2 + volume_warnings_stage_3 + volume_warnings_stage_4 + volume_warnings_stage_5
+
+	if(prob(35))
+		to_chat(host_mob, "<span class='warning'>[pick(main_warnings)]</span>")
+		next_warning = world.time + rand(min_warning_cooldown, max_warning_cooldown)
+	else if(islist(extra_warnings))
+		to_chat(host_mob, "<span class='warning'>[pick(extra_warnings)]</span>")
+		next_warning = world.time + rand(min_warning_cooldown, max_warning_cooldown)
