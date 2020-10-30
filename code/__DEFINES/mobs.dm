@@ -381,10 +381,5 @@
 /// Mob is lying down, usually associated with lying_angle values of 90 or 270.
 #define LYING_DOWN 1
 
-//How much a mob's pixel position should be offset due to various conditions (e.g. lying down moves your sprite down)
-///Y pixel offset for a mob lying down
+///How much a mob's sprite should be moved when they're lying down
 #define PIXEL_Y_OFFSET_LYING -6
-///X pixel offset for an alien that's leaping
-#define PIXEL_X_OFFSET_ALIEN_LEAPING -32
-///Y pixel offset for an alien that's leaping
-#define PIXEL_Y_OFFSET_ALIEN_LEAPING -32
