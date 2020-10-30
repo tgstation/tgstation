@@ -132,13 +132,6 @@
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
-	//reagent on_mob_delete on organ destruction
-	if(reagents && iscarbon(owner))
-		var/mob/living/carbon/body = owner
-		for(var/chem in reagents.reagent_list)
-			var/datum/reagent/reagent = chem
-			reagent.on_mob_delete(body) //It was removed from the body
-
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		H.clear_alert("disgust")
