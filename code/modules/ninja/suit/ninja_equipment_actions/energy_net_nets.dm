@@ -26,11 +26,8 @@
 	var/mob/living/affecting
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
-		if(BURN)
-			playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
+	if(damage_type == BRUTE || damage_type == BURN)
+		playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
 
 /obj/structure/energy_net/Destroy()
 	if(!QDELETED(affecting))
