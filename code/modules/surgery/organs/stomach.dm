@@ -26,7 +26,7 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.05 // the lowest we can go is 0.01
+	var/metabolism_efficiency = 0.1 // the lowest we should go is 0.05
 
 
 /obj/item/organ/stomach/on_life()
@@ -148,7 +148,7 @@
 
 /obj/item/organ/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
-	metabolism_efficiency = 0.02 //very bad
+	metabolism_efficiency = 0.05 //very bad
 
 /obj/item/organ/stomach/bone/on_life()
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -168,7 +168,7 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
-	metabolism_efficiency = 0.08
+	metabolism_efficiency = 0.12
 
 /obj/item/organ/stomach/plasmaman/on_life()
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -223,7 +223,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.03 // not as good at digestion
+	metabolism_efficiency = 0.7 // not as good at digestion
 
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -232,7 +232,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2
 	emp_vulnerability = 40
-	metabolism_efficiency = 0.1
+	metabolism_efficiency = 0.14
 
 /obj/item/organ/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
