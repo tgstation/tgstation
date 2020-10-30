@@ -2339,9 +2339,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "afD" = (
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "afE" = (
 /obj/machinery/door/airlock/external{
@@ -3538,13 +3536,17 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aif" = (
-/obj/machinery/door/poddoor/massdriver_trash,
+/obj/machinery/door/poddoor{
+	id = "trash";
+	name = "disposal bay door"
+	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aig" = (
-/obj/machinery/mass_driver/trash{
-	dir = 8
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "trash"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -3942,7 +3944,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller/trash{
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "trash";
 	pixel_x = -24
 	},
 /turf/open/floor/plating,
@@ -32581,6 +32584,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
 "bAH" = (
@@ -36453,7 +36457,7 @@
 	dir = 8;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "18"
+	req_access_txt = "19"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -37722,7 +37726,7 @@
 	dir = 8;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "18"
+	req_access_txt = "19"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -53168,7 +53172,9 @@
 "cBK" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "toxinsdriver";
+	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -53731,8 +53737,9 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cDq" = (
-/obj/machinery/mass_driver/toxins{
-	dir = 4
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "toxinsdriver"
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -53750,7 +53757,10 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "cDt" = (
-/obj/machinery/door/poddoor/massdriver_toxins,
+/obj/machinery/door/poddoor{
+	id = "toxinsdriver";
+	name = "Toxins Launcher Bay Door"
+	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -58882,7 +58892,9 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "cRm" = (
-/obj/machinery/mass_driver/chapelgun,
+/obj/machinery/mass_driver{
+	id = "chapelgun"
+	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
@@ -59198,7 +59210,10 @@
 /turf/open/space,
 /area/solar/starboard/aft)
 "cRP" = (
-/obj/machinery/door/poddoor/massdriver_chapel,
+/obj/machinery/door/poddoor{
+	id = "chapelgun";
+	name = "Chapel Launcher Door"
+	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
@@ -63156,7 +63171,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun{
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "chapelgun";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -64753,6 +64769,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"dNW" = (
+/obj/machinery/holopad,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/pharmacy)
 "dOR" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -73225,9 +73247,7 @@
 	c_tag = "Holodeck - Fore";
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "pwn" = (
 /obj/structure/sign/poster/contraband/random{
@@ -73801,9 +73821,7 @@
 	dir = 1;
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "qif" = (
 /obj/machinery/power/apc{
@@ -105703,7 +105721,7 @@ chc
 cix
 cjT
 cjT
-cjT
+dNW
 cnI
 coU
 cqs

@@ -11,7 +11,7 @@
 	var/restricted = FALSE
 	var/list/spawned_atoms
 	var/datum/parsed_map/lastparsed
-	returns_list = TRUE
+	returns_created = TRUE
 	should_place_on_top = TRUE
 
 	var/obj/machinery/computer/holodeck/linked

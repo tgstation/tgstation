@@ -3,7 +3,7 @@
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = NONE
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | HIDDEN_AREA
+	area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = FALSE // if true, program goes on emag list

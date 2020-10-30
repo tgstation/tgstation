@@ -7882,9 +7882,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "aro" = (
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "arp" = (
 /obj/structure/sign/warning/vacuum/external{
@@ -53707,9 +53705,7 @@
 	c_tag = "Holodeck - Fore";
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "pHl" = (
 /obj/item/kirbyplants/random,
@@ -54535,9 +54531,7 @@
 	dir = 1;
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "sgR" = (
 /obj/structure/table,

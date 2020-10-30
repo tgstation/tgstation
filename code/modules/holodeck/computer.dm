@@ -262,43 +262,48 @@
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
 
+	active = (map_id != "holodeck_offline")
 	use_power = active + IDLE_POWER_USE
 	program = map_id
 
-	if (spawned)//clear the items from the previous program
-		for (var/atom/item in spawned)
-			derez(item)
+	//clear the items from the previous program
+	if (spawned)
+		for (var/_item in spawned)
+			var/obj/holo_item = _item
+			derez(holo_item)
+	if (effects)
+		for (var/_effect in effects)
+			var/obj/effect/holodeck_effect/holo_effect = _effect
+			effects -= holo_effect
+			holo_effect.deactivate(src)
 
 	template = SSmapping.holodeck_templates[map_id]
 	non_holo_items_in_area.Cut()
-	for  (var/_turf in linked)
+
+	for (var/_turf in linked)
 		var/turf/holo_turf = _turf
-		for (var/_contents in holo_turf)
-			var/obj/in_holodeck = _contents
-			non_holo_items_in_area += in_holodeck
+		non_holo_items_in_area += holo_turf.contents
 
 	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
 
 	spawned = template.created_atoms
-
-	for (var/_atom in spawned)
-		if (isturf(_atom))
-			var/turf/holo_turf = _atom
-			spawned -= holo_turf
-		if (isobj(_atom))
-			var/obj/holo_object = _atom
-			if (length(holo_object.contents) > 0)
-				spawned -= holo_object
-				spawned += holo_object.GetAllContents()
-
+	if (!active)
+		for (var/_turf in linked)
+			var/turf/holo_turf = _turf
+			if (istype(holo_turf, /turf/open/floor/holofloor))
+				holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
-	var/list/added = list()
-	for (var/atom/atoms in spawned)
-		if (atoms.flags_1 & INITIALIZED_1)
-			atoms.flags_1 |= HOLOGRAM_1
+	for (var/_atom in spawned)
+		var/atom/atoms = _atom
+
+		if (isturf(atoms))
+			var/turf/holo_turf = atoms
+			spawned -= holo_turf
+
+		atoms.flags_1 |= HOLOGRAM_1
 
 		if (istype(atoms, /obj/effect/holodeck_effect/))//this is what makes holoeffects work
 			var/obj/effect/holodeck_effect/holo_effect = atoms
@@ -307,20 +312,25 @@
 			var/atom/active_effect = holo_effect.activate(src)
 			if(istype(active_effect) || islist(active_effect))
 				spawned += active_effect // holocarp are not forever
-				added += active_effect
 
-		if (istype(atoms, /obj))
-			var/obj/obbies = atoms
-			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-			if (ismachinery(obbies))
-				var/obj/machinery/machines = obbies
+		if (isobj(atoms))
+			var/obj/holo_object = atoms
+			if (length(holo_object.contents) > 0)
+				spawned -= holo_object
+				spawned += holo_object.GetAllContents()
+			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+			if (ismachinery(holo_object))
+				var/obj/machinery/machines = holo_object
 				machines.flags_1 |= NODECONSTRUCT_1
 				machines.power_change()
+
 				if(istype(machines, /obj/machinery/button))
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
-			if (isstructure(obbies))
-				var/obj/structure/structures = obbies
+
+			if (isstructure(holo_object))
+				var/obj/structure/structures = holo_object
 				structures.flags_1 |= NODECONSTRUCT_1
 
 	//for(var/obj/machinery/M in spawned)
@@ -369,7 +379,7 @@
 				do_sparks(2, 1, holo_turf)
 			SSexplosions.lowturf += holo_turf
 			holo_turf.hotspot_expose(1000,500,1)
-	else if(floorcheck())//if the hole is fixed
+	else if(floorcheck() && functioning == FALSE)//if the hole is fixed
 		functioning = TRUE
 
 	if(!(obj_flags & EMAGGED))
@@ -397,6 +407,7 @@
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	functioning = FALSE
+	active = FALSE
 	for (var/_item in spawned)
 		var/obj/to_remove = _item
 		derez(to_remove)
@@ -404,6 +415,7 @@
 		var/turf/holo_turf = _turf
 		if (istype(holo_turf, /turf/open/floor/holofloor))
 			holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)
+	load_program("holodeck_offline")
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
@@ -413,7 +425,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/holodeck/proc/nerf(var/nerf_this)//i cant really think of a situation in which nerf does anything, since its deactivated when safeties are turned off
+/obj/machinery/computer/holodeck/proc/nerf(var/nerf_this)
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
 	for(var/to_be_nerfed in effects)
@@ -452,7 +464,7 @@
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
+	INVOKE_ASYNC(src, .proc/toggle_power, machine_stat)
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()

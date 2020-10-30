@@ -33127,9 +33127,7 @@
 	c_tag = "Holodeck - Fore 2";
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "bnT" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -70831,18 +70829,14 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "cFF" = (
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "cFG" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck - Fore 1";
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "cFH" = (
 /obj/structure/cable,
@@ -77615,9 +77609,7 @@
 	dir = 1;
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "cTj" = (
 /obj/structure/table,
@@ -115180,9 +115172,7 @@
 	dir = 1;
 	name = "holodeck camera"
 	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
+/turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center)
 "xXn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,

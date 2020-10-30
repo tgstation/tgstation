@@ -18,7 +18,7 @@
 	var/list/modelCache
 
 	var/list/created_atoms = list()
-	var/should_return_created = FALSE
+	var/returns_created = FALSE
 
 	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
@@ -384,7 +384,7 @@
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
-	if (should_return_created)
+	if (returns_created)
 		created_atoms += .
 
 //text trimming (both directions) helper proc
