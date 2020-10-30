@@ -41,6 +41,9 @@ SUBSYSTEM_DEF(timer)
 	var/list/timer_id_dict = list()
 	/// Special timers that run in real-time, not BYOND time; these are more expensive to run and maintain
 	var/list/clienttime_timers = list()
+
+	// for debugging
+	var/list/clienttime_procs = list()
 	/// Contains the last time that a timer's callback was invoked, or the last tick the SS fired if no timers are being processed
 	var/last_invoke_tick = 0
 	/// Contains the last time that a warning was issued for not invoking callbacks
@@ -409,6 +412,12 @@ SUBSYSTEM_DEF(timer)
 	// Determine time at which the timer's callback should be invoked
 	timeToRun = (flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY : world.time) + wait
 
+	if(flags & TIMER_CLIENT_TIME)
+		if(SStimer.clienttime_procs[callBack.delegate])
+			SStimer.clienttime_procs[callBack.delegate]++
+		else
+			SStimer.clienttime_procs[callBack.delegate] = 1
+
 	// Include the timer in the hash table if the timer is unique
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
@@ -440,6 +449,9 @@ SUBSYSTEM_DEF(timer)
 	..()
 	if (flags & TIMER_UNIQUE && hash)
 		SStimer.hashes -= hash
+
+	if (flags & TIMER_CLIENT_TIME && callBack)
+		SStimer.clienttime_procs[callBack.delegate]--
 
 	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
 		callBack.object.active_timers -= src
