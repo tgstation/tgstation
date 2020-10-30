@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed various shapeshifting runtimes that would affect vampries in bat form and players in ash drake from in particular."
-  - bugfix: "Interactions with mobs in shapeshifted form and the Wabbajack force-tranformation effects (including the Staff of Change) should now make more sense and not leave behind random corpses."
