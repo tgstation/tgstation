@@ -613,29 +613,18 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.type == reagent)
-
-			//are we in a mob/mobs organs
-			var/mob/living/mob_consumer
 			if(isliving(my_atom))
-				mob_consumer = my_atom
-			else if(istype(my_atom, /obj/item/organ))
-				var/obj/item/organ/organ = my_atom
-				mob_consumer = organ.owner
-
-			if(mob_consumer)
 				if(R.metabolizing)
 					R.metabolizing = FALSE
-					R.on_mob_end_metabolize(mob_consumer)
-				R.on_mob_delete(mob_consumer)
+					R.on_mob_end_metabolize(my_atom)
+				R.on_mob_delete(my_atom)
 
 			//Clear from relevant lists
 			addiction_list -= R
 			reagent_list -= R
 			qdel(R)
 			update_total()
-			if(mob_consumer)
-				mob_consumer.on_reagent_change(DEL_REAGENT)
-			if(my_atom && my_atom != mob_consumer)
+			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
 	return 1
 
@@ -786,21 +775,11 @@
 		R.data = data
 		R.on_new(data)
 
-	//are we in a mob/mobs organs
-	var/mob/living/mob_consumer
 	if(isliving(my_atom))
-		mob_consumer = my_atom
-	else if(istype(my_atom, /obj/item/organ))
-		var/obj/item/organ/organ = my_atom
-		mob_consumer = organ.owner
-
-	if(mob_consumer)
-		R.on_mob_add(mob_consumer) //Must occur before it could posibly run on_mob_delete
+		R.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
 
 	update_total()
-	if(mob_consumer)
-		mob_consumer.on_reagent_change(ADD_REAGENT)
-	if(my_atom && my_atom != mob_consumer)
+	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
