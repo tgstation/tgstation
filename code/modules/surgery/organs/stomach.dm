@@ -49,16 +49,19 @@
 		if(!(bit.metabolization_rate > 0))
 			continue
 
+		//Ensure that the the minimum is equal to the metabolization_rate of the reagent if it is higher then the STOMACH_METABOLISM_CONSTANT
+		var/amount_min = max(bit.metabolization_rate, STOMACH_METABOLISM_CONSTANT)
+		//Do not transfer over more then we have
 		var/amount_max = bit.volume
-		var/amount_food = food_reagents[bit.type]
 
 		//If the reagent is part of the food reagents for the organ
 		//prevent all the reagents form being used leaving the food reagents
+		var/amount_food = food_reagents[bit.type]
 		if(amount_food)
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min(round(metabolism_efficiency * bit.volume, 0.1) + STOMACH_METABOLISM_CONSTANT, amount_max)
+		var/amount = min(round(metabolism_efficiency * bit.volume, 0.1) + amount_min, amount_max)
 
 		if(!(amount > 0))
 			continue
