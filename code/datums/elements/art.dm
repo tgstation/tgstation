@@ -29,16 +29,16 @@
 	switch(impress)
 		if(GREAT_ART to INFINITY)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-			msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [p_theyre(TRUE)]. So [pick("trascended", "awe-inspiring", "bewitching", "impeccable")]!"
+			msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre(TRUE)]. So [pick("trascended", "awe-inspiring", "bewitching", "impeccable")]!"
 		if (GOOD_ART to GREAT_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
-			msg = "[p_theyre(TRUE)] a [pick("respectable", "commendable", "laudable")] art piece, easy on the keen eye."
+			msg = "[source.p_theyre(TRUE)] a [pick("respectable", "commendable", "laudable")] art piece, easy on the keen eye."
 		if (BAD_ART to GOOD_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
-			msg = "[p_theyre(TRUE)] fair to middling, enough to be called an \"art object\"."
+			msg = "[source.p_theyre(TRUE)] fair to middling, enough to be called an \"art object\"."
 		if (0 to BAD_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
-			msg = "Wow, [atom.p_they()] sucks."
+			msg = "Wow, [source.p_they()] sucks."
 
 	user.visible_message("<span class='notice'>[user] stops and looks intently at [source].</span>", \
 						 "<span class='notice'>You appraise [source]... [msg]</span>")
@@ -76,9 +76,9 @@
 	var/msg
 	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [p_theyre(TRUE)]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre(TRUE)]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
-		msg = "Wow, [atom.p_they()] sucks."
+		msg = "Wow, [source.p_they()] sucks."
 
 	user.visible_message("<span class='notice'>[user] stops to inspect [source].</span>", \
 						 "<span class='notice'>You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]</span>")
