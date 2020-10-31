@@ -69,7 +69,7 @@
 	prereq_ids = list("base")
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller", "biopsy_tool", "plumbing_rcd_sci")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/random/slime/calibration, /datum/experiment/physical/meat_wall_explosion)
+	required_experiments = list(/datum/experiment/scanning/random/slime/calibration)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -77,8 +77,9 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	required_experiments = list(/datum/experiment/scanning/random/slime/easy)
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 7000) //Big discount to reinforce doing it.
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -88,7 +89,7 @@
 	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	required_experiments = list(/datum/experiment/scanning/random/cytology)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 5000) //Big discount to reinforce doing it.
+	discount_experiments = list(/datum/experiment/physical/meat_wall_explosion = 7000) //Big discount to reinforce doing it.
 
 /////////////////////////Advanced Surgery/////////////////////////
 /datum/techweb_node/imp_wt_surgery
@@ -509,8 +510,8 @@
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
 	design_ids = list("holobarrier_jani", "advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 1250) //50% discount for scanning some trash, seems fair right?
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 3000) //75% discount for scanning some trash, seems fair right?
 
 /datum/techweb_node/botany
 	id = "botany"
