@@ -184,6 +184,10 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || !target)
 		return FALSE
+
+	if(!(timed_action_flags & IGNORE_DO_AFTER_CAP) && LAZYLEN(user.do_afters) >= MAX_DO_AFTERS)
+		return FALSE
+
 	var/user_loc = user.loc
 
 	var/drifting = FALSE
@@ -332,6 +336,9 @@ GLOBAL_LIST_EMPTY(species_list)
 		targets = list(targets)
 	if(!length(targets))
 		return FALSE
+	if(!(timed_action_flags & IGNORE_DO_AFTER_CAP) && LAZYLEN(user.do_afters) >= MAX_DO_AFTERS)
+		return FALSE
+
 	var/user_loc = user.loc
 
 	time *= user.cached_multiplicative_actions_slowdown
