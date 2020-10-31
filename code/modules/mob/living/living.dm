@@ -9,6 +9,8 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(ai_controller)
+		assign_ai_controller(ai_controller)
 
 /mob/living/prepare_huds()
 	..()
@@ -1840,3 +1842,8 @@
 /mob/living/proc/on_handsblocked_end()
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_HANDS_BLOCKED)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED)
+
+
+///Assigns a new ai controller to this mob.
+/mob/living/proc/assign_ai_controller(datum/ai_controller/new_controller_type)
+	ai_controller = new new_controller_type(src)

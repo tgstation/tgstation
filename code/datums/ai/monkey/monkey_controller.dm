@@ -1,3 +1,64 @@
+/*
+AI controllers are a datumized form of AI that simulates the input a player would otherwise give to a mob. What this means is that these datums
+have ways of interacting with a specific mob and control it.
+*/
+///OOK OOK OOK
+
+#define IS_CONSCIOUS(source) (source.controlled_mob.stat == CONSCIOUS && !IS_IN_STASIS(source.controlled_mob))
+#define SHOULD_RESIST(source) (source.controlled_mob.on_fire || source.controlled_mob.buckled || HAS_TRAIT(source.controlled_mob, TRAIT_RESTRAINED) || (source.controlled_mob.pulledby && source.controlled_mob.pulledby.grab_state > GRAB_PASSIVE))
+#define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source.controlled_mob, TRAIT_INCAPACITATED) || HAS_TRAIT(source.controlled_mob, TRAIT_HANDS_BLOCKED))
+
+/datum/ai_controller/monkey
+	var/datum/ai_action/stop_all_movement/stop_all_movement
+	var/datum/ai_action/try_resist/try_resist
+	var/datum/ai_action/monkey_random_wander/monkey_random_wander
+
+
+	stop_all_movement = new(src)
+	try_resist = new(src)
+	monkey_random_wander = new(src)
+
+
+/datum/ai_controller/monkey/CreateController(mob/living/new_mob)
+	. = ..()
+	if(!ismonkey(new_mob))
+		return AI_BEHAVIOR_INCOMPATIBLE
+
+///Builds a plan from actions based on checks performed in this proc.
+/datum/ai_controller/monkey/create_plan(list/new_plan)
+	. = ..()
+	if(!IS_CONSCIOUS(src)) //Not conscious; So just keep repeating stop_movement tasks.
+		. += stop_all_movement
+		return
+	if(SHOULD_RESIST(src))
+		. += try_resist
+	if((controlled_mob.mobility_flags & MOBILITY_MOVE) && isturf(controlled_mob.loc) && !controlled_mob.pulledby)
+		. += monkey_random_wander
+
+///ACTIONS
+/datum/ai_action/stop_all_movement/start_execution()
+	. = ..()
+	walk_to(our_controller.controlled_mob, 0)
+	finish_execution(TRUE)
+
+/datum/ai_action/try_resist/start_execution()
+	. = ..()
+	our_controller.controlled_mob.resist()
+	addtimer(CALLBACK(src, .proc/finish_execution, TRUE), 1 SECONDS)
+
+/datum/ai_action/monkey_random_wander
+	requires_processing = TRUE
+
+/datum/ai_action/monkey_random_wander/process(delta_time)
+	. = ..()
+	if(DT_PROB(25, delta_time))
+		step(our_controller.controlled_mob, pick(GLOB.cardinals))
+	else if(DT_PROB(3, delta_time)))
+		emote(pick("scratch","jump","roll","tail"))
+
+
+
+
 #define MAX_RANGE_FIND 32
 
 /mob/living/carbon/monkey
@@ -52,7 +113,7 @@
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap()
-	return HAS_TRAIT(src, TRAIT_INCAPACITATED) || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
+	return
 
 
 /mob/living/carbon/monkey/proc/battle_screech()

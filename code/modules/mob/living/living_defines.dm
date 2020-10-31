@@ -157,3 +157,6 @@
 
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE
+
+	///The mob's current AI controller, deactivates if a mob takes over
+	var/datum/ai_controller/ai_controller
