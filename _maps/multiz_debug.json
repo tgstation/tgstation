@@ -1,6 +1,23 @@
 {
-    "map_name": "MultiZ Debug",
-    "map_path": "map_files/debug",
-    "map_file": "multiz.dmm",
-	"traits": [{"Up" : 1, "Linkage" : "Cross"}, {"Up" : 1, "Down" : -1, "Baseturf" : "/turf/open/transparent/openspace", "Linkage" : "Cross"}, {"Down" : -1, "Baseturf" : "/turf/open/transparent/openspace", "Linkage" : "Cross"}]
-	}
+	"version": 1,
+	"map_name": "MultiZ Debug",
+	"map_path": "map_files/debug",
+	"map_file": "multiz.dmm",
+	"traits": [
+		{
+			"Up": 1,
+			"Linkage": "Cross"
+		},
+		{
+			"Up": 1,
+			"Down": -1,
+			"Baseturf": "/turf/open/transparent/openspace",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": -1,
+			"Baseturf": "/turf/open/transparent/openspace",
+			"Linkage": "Cross"
+		}
+	]
+}

@@ -44,8 +44,6 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize()
 	. = ..()
-	//Add ore box to cargo, here because the clarke has a unremovable box
-	LAZYADD(cargo, box)
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 

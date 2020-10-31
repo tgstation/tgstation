@@ -243,35 +243,35 @@
 
 			if (get_dist(A, D) > 1)
 				to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-				A.pixel_x = 0
-				A.pixel_y = 0
-				D.pixel_x = 0
-				D.pixel_y = 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
 				return
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "<span class='warning'>You can't slam [D] here!</span>")
-				A.pixel_x = 0
-				A.pixel_y = 0
-				D.pixel_x = 0
-				D.pixel_y = 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
 				return
 		else
 			if (A)
-				A.pixel_x = 0
-				A.pixel_y = 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
 			if (D)
-				D.pixel_x = 0
-				D.pixel_y = 0
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
 			return
 
 		sleep(1)
 
 	if (A && D)
-		A.pixel_x = 0
-		A.pixel_y = 0
-		D.pixel_x = 0
-		D.pixel_y = 0
+		A.pixel_x = A.base_pixel_x
+		A.pixel_y = A.base_pixel_y
+		D.pixel_x = D.base_pixel_x
+		D.pixel_y = D.base_pixel_y
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
@@ -310,11 +310,11 @@
 
 	else
 		if (A)
-			A.pixel_x = 0
-			A.pixel_y = 0
+			A.pixel_x = A.base_pixel_x
+			A.pixel_y = A.base_pixel_y
 		if (D)
-			D.pixel_x = 0
-			D.pixel_y = 0
+			D.pixel_x = D.base_pixel_x
+			D.pixel_y = D.base_pixel_y
 
 
 	log_combat(A, D, "body-slammed")
@@ -386,7 +386,7 @@
 		A.forceMove(ST)
 		A.visible_message("<span class='danger'>[A] climbs onto [surface]!</span>", \
 						"<span class='danger'>You climb onto [surface]!</span>")
-		A.pixel_y = 10
+		A.pixel_y = A.base_pixel_y + 10
 		falling = 1
 		sleep(10)
 
@@ -394,7 +394,7 @@
 		// These are necessary because of the sleep call.
 
 		if ((falling == 0 && get_dist(A, D) > 1) || (falling == 1 && get_dist(A, D) > 2)) // We climbed onto stuff.
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 			if (falling == 1)
 				A.visible_message("<span class='danger'>...and dives head-first into the ground, ouch!</span>", \
 								"<span class='userdanger'>...and dive head-first into the ground, ouch!</span>")
@@ -404,7 +404,7 @@
 			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 			to_chat(A, "<span class='warning'>You can't drop onto [D] from here!</span>")
 			return
 
@@ -432,11 +432,11 @@
 
 		D.Paralyze(40)
 
-		A.pixel_y = 0
+		A.pixel_y = A.base_pixel_y
 
 	else
 		if (A)
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 	log_combat(A, D, "leg-dropped")
 	return
 
