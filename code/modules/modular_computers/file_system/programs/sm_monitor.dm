@@ -14,6 +14,10 @@
 	var/list/supermatters
 	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
 
+/datum/computer_file/program/supermatter_monitor/Destroy()
+	clear_signals()
+	active = null
+
 /datum/computer_file/program/supermatter_monitor/process_tick()
 	..()
 	var/new_status = get_status()
@@ -62,11 +66,14 @@
   * the signal and exit.
  */
 /datum/computer_file/program/supermatter_monitor/proc/set_signals()
-//	UnregisterSignal(COMSIG_SUPERMATTER_DELAM_ALARM)
-//	UnregisterSignal(COMSIG_SUPERMATTER_DELAM_START_ALARM)
 	if(active)
 		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, FALSE, override = TRUE)
 		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_alert, TRUE, override = TRUE)
+
+/datum/computer_file/program/supermatter_monitor/proc/clear_signals()
+	if(active)
+		UnregisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM)
+		UnregisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM)
 
 /**
   * Sends an SM delam alert to the computer.
@@ -153,6 +160,7 @@
 
 	switch(action)
 		if("PRG_clear")
+			clear_signals()
 			active = null
 			return TRUE
 		if("PRG_refresh")
