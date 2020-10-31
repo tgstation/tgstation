@@ -142,10 +142,11 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	buckled = null
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y)
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
 
-	..(gibbed)
+	return ..()
+
 
 /mob/living/simple_animal/parrot/get_status_tab_items()
 	. = ..()

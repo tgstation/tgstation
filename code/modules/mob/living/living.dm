@@ -322,22 +322,22 @@
 	M.setDir(get_dir(M, src))
 	switch(M.dir)
 		if(NORTH)
-			animate(M, pixel_x = 0, pixel_y = offset, 3)
+			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y + offset, 3)
 		if(SOUTH)
-			animate(M, pixel_x = 0, pixel_y = -offset, 3)
+			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y - offset, 3)
 		if(EAST)
 			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
 				M.set_lying_angle(90)
-			animate(M, pixel_x = offset, pixel_y = 0, 3)
+			animate(M, pixel_x = M.base_pixel_x + offset, pixel_y = M.base_pixel_y, 3)
 		if(WEST)
 			if(M.lying_angle == 90)
 				M.set_lying_angle(270)
-			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+			animate(M, pixel_x = M.base_pixel_x - offset, pixel_y = M.base_pixel_y, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = 0, pixel_y = 0, 1)
+	animate(M, pixel_x = base_pixel_x, pixel_y = base_pixel_y, 1)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -918,7 +918,7 @@
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		setMovetype(movement_type | FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = get_standard_pixel_y_offset(lying_angle), time = 10)
+		animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
 		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
@@ -930,6 +930,7 @@
 	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>You try to remove [who]'s [what.name]...</span>")
+	log_combat(src, who, "started stripping [what] off")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -1005,8 +1006,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = get_standard_pixel_x_offset(body_position == LYING_DOWN)
-	var/final_pixel_y = get_standard_pixel_y_offset(body_position == LYING_DOWN)
+	var/final_pixel_x = base_pixel_x + get_standard_pixel_x_offset(body_position == LYING_DOWN)
+	var/final_pixel_y = base_pixel_y + get_standard_pixel_y_offset(body_position == LYING_DOWN)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
@@ -1023,10 +1024,10 @@
 		loc_temp = heat_turf.temperature
 	return loc_temp
 
-/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_x_offset(lying = FALSE)
 	return initial(pixel_x)
 
-/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
+/mob/living/proc/get_standard_pixel_y_offset(lying = FALSE)
 	return initial(pixel_y)
 
 /mob/living/cancel_camera()
@@ -1256,17 +1257,6 @@
 	for(var/obj/effect/proc_holder/A in abilities)
 		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
 	return L
-
-/mob/living/lingcheck()
-	if(mind)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			if(changeling.changeling_speak)
-				return LINGHIVE_LING
-			return LINGHIVE_OUTSIDER
-	if(mind?.linglink)
-		return LINGHIVE_LINK
-	return LINGHIVE_NONE
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

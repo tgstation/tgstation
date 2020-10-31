@@ -207,6 +207,23 @@
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
 
+/obj/item/stack/tile/carpet/executive
+	name = "executive carpet"
+	icon_state = "tile_carpet_executive"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/executive
+
+/obj/item/stack/tile/carpet/stellar
+	name = "stellar carpet"
+	icon_state = "tile_carpet_stellar"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/stellar
+
+/obj/item/stack/tile/carpet/donk
+	name = "donk co promotional carpet"
+	icon_state = "tile_carpet_donk"
+	inhand_icon_state = "tile-carpet-orange"
+	turf_type = /turf/open/floor/carpet/donk
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
@@ -238,6 +255,14 @@
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/executive/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/stellar/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/donk/thirty
+	amount = 30
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"

@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added a large toner pack to cargo - six cartridges for 3000 credits."
-  - tweak: "Increased the capacity of large toner cartridges from 15 to 25. This should make decal/airlock painting less frustrating."

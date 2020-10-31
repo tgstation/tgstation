@@ -280,6 +280,7 @@
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='hear'>You hear welding.</span>")
+			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_icon()
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)

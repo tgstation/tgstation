@@ -1286,18 +1286,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
-		//Steal them shoes
-		if(target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
-			var/obj/item/I = target.shoes
-			user.visible_message("<span class='warning'>[user] starts stealing [target]'s [I.name]!</span>",
-							"<span class='danger'>You start stealing [target]'s [I.name]...</span>", null, null, target)
-			to_chat(target, "<span class='userdanger'>[user] starts stealing your [I.name]!</span>")
-			if(do_after(user, I.strip_delay, target))
-				target.dropItemToGround(I, TRUE)
-				user.put_in_hands(I)
-				user.visible_message("<span class='warning'>[user] stole [target]'s [I.name]!</span>",
-								"<span class='notice'>You stole [target]'s [I.name]!</span>", null, null, target)
-				to_chat(target, "<span class='userdanger'>[user] stole your [I.name]!</span>")
 		target.grabbedby(user)
 		return TRUE
 
