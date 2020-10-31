@@ -19,8 +19,8 @@
 	contraband = list(/obj/item/kitchen/rollingpin = 2,
 					  /obj/item/kitchen/knife/butcher = 2)
 	refill_canister = /obj/item/vending_refill/dinnerware
-	default_price = 50
-	extra_price = 250
+	default_price = 40
+	extra_price = 100
 	payment_department = ACCOUNT_SRV
 	light_mask = "dinnerware-light-mask"
 

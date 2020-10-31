@@ -78,7 +78,7 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 75)
 	can_be_bloody = FALSE
-	custom_price = 600
+	custom_price = 200
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry

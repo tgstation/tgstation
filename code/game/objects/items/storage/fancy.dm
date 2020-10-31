@@ -77,6 +77,7 @@
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
 	appearance_flags = KEEP_TOGETHER
+	custom_premium_price = 175
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()

@@ -272,7 +272,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/salt = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 95
+	custom_price = 45
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
@@ -292,7 +292,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
-	custom_price = 30
+	custom_price = 20
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()

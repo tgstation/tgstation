@@ -19,8 +19,8 @@
 	contraband = list(/obj/item/reagent_containers/glass/bottle/ammonia = 10,
 					  /obj/item/reagent_containers/glass/bottle/diethylamine = 5)
 	refill_canister = /obj/item/vending_refill/hydronutrients
-	default_price = 100
-	extra_price = 250
+	default_price = 40
+	extra_price = 80
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydronutrients

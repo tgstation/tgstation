@@ -155,6 +155,7 @@
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
 	value = FOOD_FAST
+	custom_price = 60
 
 /obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
 	. = ..()

@@ -1160,7 +1160,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
 	foldable = null
-	custom_price = 120
+	custom_price = 60
 
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()

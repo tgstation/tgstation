@@ -255,7 +255,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
 	inhand_icon_state = "firstaid-rad"
-	custom_premium_price = 1100
+	custom_premium_price = 600
 	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()

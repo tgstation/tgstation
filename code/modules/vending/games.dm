@@ -29,7 +29,7 @@
 					/obj/item/storage/box/tail_pin = 1)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = 50
-	extra_price = 250
+	extra_price = 125
 	payment_department = ACCOUNT_SRV
 	light_mask = "games-light-mask"
 

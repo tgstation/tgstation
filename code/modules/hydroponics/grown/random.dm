@@ -11,6 +11,7 @@
 	icon_dead = "xpod-dead"
 	icon_harvest = "xpod-harvest"
 	growthstages = 4
+	custom_premium_price = 120
 
 /obj/item/seeds/random/Initialize()
 	. = ..()

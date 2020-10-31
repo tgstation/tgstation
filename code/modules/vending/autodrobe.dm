@@ -146,8 +146,8 @@
 				   /obj/item/clothing/head/weddingveil = 1,
 				   /obj/item/storage/belt/cummerbund = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 180
-	extra_price = 360
+	default_price = 40
+	extra_price = 100
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 
