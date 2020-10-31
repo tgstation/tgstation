@@ -927,7 +927,7 @@
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(
-		/obj/item/reagent_containers/food/drinks/,
+		/obj/item/reagent_containers/food/drinks,
 		/obj/item/reagent_containers/food/condiment,
 	)
 

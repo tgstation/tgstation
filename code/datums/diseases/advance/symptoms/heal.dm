@@ -142,7 +142,7 @@
 	level = 7
 	var/triple_metabolism = FALSE
 	var/reduced_hunger = FALSE
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast, \
 	but also causing increased hunger."
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
