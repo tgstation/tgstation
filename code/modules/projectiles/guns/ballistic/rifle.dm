@@ -102,6 +102,8 @@
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
 	. = ..()
 	guns_left = 0
+	magazine = null
+	chambered = null
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))

@@ -18,6 +18,7 @@
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()
 	. = ..()
+	box = new(src)
 	var/obj/item/mecha_parts/mecha_equipment/orebox_manager/ME = new(src)
 	ME.attach(src)
 

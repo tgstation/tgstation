@@ -8,6 +8,7 @@ tritfire = -2
 halon_o2removal = -1
 nitrous_decomp = 0
 water_vapor = 1
+nitryl_decomp = 21
 pluox_formation = 2
 nitrylformation = 3
 bzformation = 4
@@ -495,6 +496,37 @@ nobiliumsuppression = INFINITY
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB) //the air heats up when reacting
+		return REACTING
+
+/datum/gas_reaction/nitryl_decomposition //The decomposition of nitryl. Exothermic. Requires oxygen as catalyst.
+	priority = 21
+	name = "Nitryl Decomposition"
+	id = "nitryl_decomp"
+
+/datum/gas_reaction/nitryl_decomposition/init_reqs()
+	min_requirements = list(
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
+		"MAX_TEMP" = 600
+	)
+
+/datum/gas_reaction/nitryl_decomposition/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/old_heat_capacity = air.heat_capacity()
+	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitryl][MOLES])
+	var/energy_produced = heat_efficency * NITRYL_DECOMPOSITION_ENERGY
+	ASSERT_GAS(/datum/gas/nitrogen, air)
+	if ((cached_gases[/datum/gas/nitryl][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+		return NO_REACTION
+	cached_gases[/datum/gas/nitryl][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/oxygen][MOLES] += heat_efficency
+	cached_gases[/datum/gas/nitrogen][MOLES] += heat_efficency
+
+	if(energy_produced> 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB) //the air heats up when reacting
 		return REACTING
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
