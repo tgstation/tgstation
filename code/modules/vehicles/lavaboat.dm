@@ -9,8 +9,7 @@
 	var/allowed_turf = /turf/open/lava
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
-	legs_required = 0
-	arms_required = 0
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()

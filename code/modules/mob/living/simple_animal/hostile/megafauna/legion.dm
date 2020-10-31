@@ -42,8 +42,10 @@
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
 	score_achievement_type = /datum/award/score/legion_score
-	pixel_y = -16
 	pixel_x = -32
+	base_pixel_x = -32
+	pixel_y = -16
+	base_pixel_y = -16
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE

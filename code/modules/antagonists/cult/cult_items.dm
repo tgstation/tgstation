@@ -760,6 +760,18 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
+	. = ..()
+	if(!iscultist(user))
+		to_chat(user, "<span class='cultlarge'>\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\"</span>")
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.active_hand_index == 1)
+				C.apply_damage(20, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 20, sharpness = SHARP_EDGED) //oof ouch
+			else
+				C.apply_damage(20, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 20, sharpness = SHARP_EDGED)
+		qdel(src)
+		return FALSE
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
