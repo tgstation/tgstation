@@ -674,3 +674,39 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1
 	)
+
+/obj/effect/spawner/lootdrop/decorative_material
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
+		/obj/item/stack/tile/bronze/thirty = 20,
+		/obj/item/stack/tile/noslip{amount = 20} = 10,
+		/obj/item/stack/sheet/plastic{amount = 30} = 10,
+		/obj/item/stack/tile/pod{amount = 20} = 4,
+		/obj/item/stack/tile/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+	)
+
+/obj/effect/spawner/lootdrop/maintenance_carpet
+	lootcount = 1
+	loot = list(
+		/obj/item/stack/tile/carpet{amount = 30} = 35,
+		/obj/item/stack/tile/carpet/black{amount = 30} = 20,
+		/obj/item/stack/tile/carpet/donk/thirty = 15,
+		/obj/item/stack/tile/carpet/stellar/thirty = 15,
+		/obj/item/stack/tile/carpet/executive/thirty = 15,
+	)
+
+/obj/effect/spawner/lootdrop/decorations_spawner
+	lootcount = 1
+	loot = list(
+	/obj/effect/spawner/lootdrop/maintenance_carpet = 25,
+	/obj/effect/spawner/lootdrop/decorative_material = 25,
+	/obj/item/sign = 10,
+	/obj/item/flashlight/lamp/green = 10,
+	/obj/item/plaque = 5,
+	/obj/item/flashlight/lantern/jade = 5,
+	/obj/item/phone = 5,
+	/obj/item/flashlight/lamp/bananalamp = 3
+	)

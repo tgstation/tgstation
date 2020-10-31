@@ -404,7 +404,7 @@
 			update_inv_legcuffed()
 			return TRUE
 
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/get_standard_pixel_y_offset(lying = FALSE)
 	if(lying)
 		return -6
 	else

@@ -3,6 +3,9 @@
 
 //Example usage TOGGLE_CHECKBOX(datum/verbs/menu/settings/Ghost/chatterbox, toggle_ghost_ears)()
 
+/datum/verbs/menu/settings
+	name = "Settings"
+
 //override because we don't want to save preferences twice.
 /datum/verbs/menu/settings/Set_checked(client/C, verbpath)
 	if (checkbox == CHECKBOX_GROUP)
@@ -18,6 +21,9 @@
 	set desc = "Open Game Preferences Window"
 	usr.client.prefs.current_tab = 1
 	usr.client.prefs.ShowChoices(usr)
+
+/datum/verbs/menu/settings/ghost
+	name = "Ghost"
 
 //toggles
 /datum/verbs/menu/settings/ghost/chatterbox
@@ -125,6 +131,9 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost, togglemidroundantag)()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Midround Antag", "[usr.client.prefs.toggles & MIDROUND_ANTAG ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/settings/ghost/togglemidroundantag/Get_checked(client/C)
 	return C.prefs.toggles & MIDROUND_ANTAG
+
+/datum/verbs/menu/settings/sound
+	name = "Sound"
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggletitlemusic)()
 	set name = "Hear/Silence Lobby Music"
