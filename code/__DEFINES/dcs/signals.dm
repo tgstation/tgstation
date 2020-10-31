@@ -692,8 +692,8 @@
 ///called when you clear a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
-///called if you want to directly imapct sanity, without adding mood events.
-#define COMSIG_DRAIN_SANITY "sanity_drain"
+///sent to everyone in range of being affected by mask of madness
+#define COMSIG_VOID_MASK_ACT "void_mask_act"
 
 //NTnet
 

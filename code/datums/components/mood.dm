@@ -26,7 +26,7 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
 
-	RegisterSignal(parent, COMSIG_DRAIN_SANITY, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
 
 	var/mob/living/owner = parent
 	if(owner.hud_used)

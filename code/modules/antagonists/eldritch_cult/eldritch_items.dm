@@ -266,20 +266,19 @@
 		if(IS_HERETIC(human_in_range) || IS_HERETIC_MONSTER(human_in_range))
 			continue
 
-		SEND_SIGNAL(human_in_range,COMSIG_DRAIN_SANITY,rand(-1,-10))
+		SEND_SIGNAL(human_in_range,COMSIG_VOID_MASK_ACT,rand(-2,-20)*delta_time)
+		if(DT_PROB(60,delta_time))
+			human_in_range.hallucination += 5
 
-		if(DT_PROB(10,delta_time))
+		if(DT_PROB(40,delta_time))
+			human_in_range.Jitter(5)
+
+		if(DT_PROB(30,delta_time))
 			human_in_range.emote(pick("giggle","laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25,delta_time))
 			human_in_range.Dizzy(5)
-
-		if(DT_PROB(40,delta_time))
-			human_in_range.Jitter(5)
-
-		if(DT_PROB(60,delta_time))
-			human_in_range.hallucination += 5
 
 /obj/item/melee/rune_knife
 	name = "Carving Knife"
