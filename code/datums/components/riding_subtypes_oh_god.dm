@@ -35,11 +35,12 @@
 
 
 /datum/component/riding/megacarp/handle_specials()
+	var/atom/movable/parent_movable = parent
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
-	set_vehicle_dir_offsets(SOUTH, pixel_x, 0)
-	set_vehicle_dir_offsets(NORTH, pixel_x, 0)
-	set_vehicle_dir_offsets(EAST, pixel_x, 0)
-	set_vehicle_dir_offsets(WEST, pixel_x, 0)
+	set_vehicle_dir_offsets(SOUTH, parent_movable.pixel_x, 0)
+	set_vehicle_dir_offsets(NORTH, parent_movable.pixel_x, 0)
+	set_vehicle_dir_offsets(EAST, parent_movable.pixel_x, 0)
+	set_vehicle_dir_offsets(WEST, parent_movable.pixel_x, 0)
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -65,6 +66,7 @@
 	drive_verb = "ride"
 
 /datum/component/riding/speedwagon/handle_specials()
+	vehicle_move_delay = 0
 	set_riding_offsets(1, list(TEXT_NORTH = list(-10, -4), TEXT_SOUTH = list(16, 3), TEXT_EAST = list(-4, 30), TEXT_WEST = list(4, -3)))
 	set_riding_offsets(2, list(TEXT_NORTH = list(19, -5, 4), TEXT_SOUTH = list(-13, 3, 4), TEXT_EAST = list(-4, -3, 4.1), TEXT_WEST = list(4, 28, 3.9)))
 	set_riding_offsets(3, list(TEXT_NORTH = list(-10, -18, 4.2), TEXT_SOUTH = list(16, 25, 3.9), TEXT_EAST = list(-22, 30), TEXT_WEST = list(22, -3, 4.1)))
@@ -88,6 +90,9 @@
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 	vehicle_move_delay = 0
 
+/datum/component/riding/lavaboat
+	var/allowed_turf = /turf/open/lava
+
 /datum/component/riding/lavaboat/handle_specials()
 	keytype = /obj/item/oar
 	allowed_turf_typecache = typecacheof(allowed_turf)
@@ -109,22 +114,26 @@
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
 
 /datum/component/riding/skateboard/handle_specials()
-	D.vehicle_move_delay = 1.5
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	vehicle_move_delay = 1.5
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/wheelys/handle_specials()
 	vehicle_move_delay = 0
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
 
-/datum/component/riding/rollerscates/handle_specials()
+/datum/component/riding/rollerskates/handle_specials()
 	vehicle_move_delay = 1.5
 
 /datum/component/riding/skishoes/handle_specials()
 	vehicle_move_delay = 1
 	allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
+
+/datum/component/riding/secway/handle_specials()
+	vehicle_move_delay = 1.75
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
 /datum/component/riding/speedbike/handle_specials()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, -8), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-10, 5), TEXT_WEST = list( 10, 5)))

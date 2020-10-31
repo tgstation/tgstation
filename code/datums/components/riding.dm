@@ -74,6 +74,9 @@
 		unequip_buckle_inhands(parent)
 	return ..()
 
+
+/datum/component/riding/proc/handle_specials/()
+
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
 	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))

@@ -46,7 +46,6 @@
 /obj/vehicle/ridden/space/speedwagon/Initialize()
 	. = ..()
 	add_overlay(overlay)
-	vehicle_move_delay = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/speedwagon)
 
 /obj/vehicle/ridden/space/speedwagon/Bump(atom/A)

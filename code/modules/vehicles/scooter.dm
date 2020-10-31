@@ -287,7 +287,6 @@
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/wheelys)
-	vehicle_move_delay = 1.5
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
