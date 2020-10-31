@@ -49,7 +49,7 @@
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
-	var/functioning = TRUE
+	//var/broken_floor = TRUE
 	var/list/non_holo_items_in_area = list()
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
@@ -242,15 +242,22 @@
 
 	return newatoms//this is what will become the spawned list for the holodeck
 */
+
+/datum/map_template/holodeck/update_blacklist(turf/placement)
+	turf_blacklist.Cut()
+	for (var/_turf in get_affected_turfs(placement))
+		var/turf/possible_blacklist = _turf
+		if (!istype(possible_blacklist, /turf/open/floor/holofloor))
+			if (istype(possible_blacklist, /turf/open/floor/engine))
+				continue
+			turf_blacklist += possible_blacklist
+
 /*
 	the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 */
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
 	if (program == map_id)
-		return
-
-	if (!is_operational || !functioning)
 		return
 
 	if (current_cd > world.time && !force)
@@ -262,7 +269,7 @@
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
 
-	active = (map_id != "holodeck_offline")
+	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
 
@@ -287,11 +294,7 @@
 	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
 
 	spawned = template.created_atoms
-	if (!active)
-		for (var/_turf in linked)
-			var/turf/holo_turf = _turf
-			if (istype(holo_turf, /turf/open/floor/holofloor))
-				holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)
+
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
@@ -333,11 +336,6 @@
 				var/obj/structure/structures = holo_object
 				structures.flags_1 |= NODECONSTRUCT_1
 
-	//for(var/obj/machinery/M in spawned)
-	//	M.flags_1 |= NODECONSTRUCT_1
-	//for(var/obj/structure/S in spawned)
-	//	S.flags_1 |= NODECONSTRUCT_1
-
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
 	if(!object)
 		return
@@ -365,10 +363,10 @@
 				do_sparks(2, 1, holo_turf)
 				return
 
-	if(!..() || !active)
+	if(!..() || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
 		return
 
-	if(!floorcheck() && functioning)//if floor check is false but functioning hasnt been set to false yet
+	if(!floorcheck())
 		emergency_shutdown()
 		damaged = TRUE
 		for(var/mob/can_see_fuckup in urange(10,src))
@@ -379,8 +377,6 @@
 				do_sparks(2, 1, holo_turf)
 			SSexplosions.lowturf += holo_turf
 			holo_turf.hotspot_expose(1000,500,1)
-	else if(floorcheck() && functioning == FALSE)//if the hole is fixed
-		functioning = TRUE
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
@@ -397,25 +393,29 @@
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			load_program(last_program)
+			addtimer(CALLBACK(src, .proc/load_program, last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
-		load_program("holodeck_offline")
+		load_program("holodeck_offline", TRUE)
 		active = FALSE
+
+/obj/machinery/computer/holodeck/power_change()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
 
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
-	functioning = FALSE
 	active = FALSE
+	//broken_floor = FALSE
 	for (var/_item in spawned)
 		var/obj/to_remove = _item
 		derez(to_remove)
-	for (var/_turf in linked)
+	/*for (var/_turf in linked)
 		var/turf/holo_turf = _turf
 		if (istype(holo_turf, /turf/open/floor/holofloor))
-			holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)
-	load_program("holodeck_offline")
+			holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)*/
+	load_program("holodeck_offline", TRUE)
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
@@ -462,9 +462,7 @@
 		linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
 
-/obj/machinery/computer/holodeck/power_change()
-	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, machine_stat)
+
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()

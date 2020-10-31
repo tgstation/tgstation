@@ -9,6 +9,7 @@
 	var/should_place_on_top = TRUE
 	var/returns_created = FALSE//if true, returns a list of all spawned items, used for holodeck
 	var/list/created_atoms = list()
+	var/list/turf_blacklist = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -87,7 +88,7 @@
 	var/y = round((world.maxy - height) * 0.5) + 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -122,7 +123,11 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
+
+	update_blacklist(T)
+	parsed.turf_blacklist = turf_blacklist
 	parsed.returns_created = returns_created
+
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
 	created_atoms = parsed.created_atoms
@@ -156,3 +161,6 @@
 /proc/load_new_z_level(file, name)
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()
+
+/datum/map_template/proc/update_blacklist(turf/placement)
+	return
