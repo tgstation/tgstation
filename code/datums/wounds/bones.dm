@@ -65,15 +65,15 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	if(!(gelled && taped))
+	if(!gelled || !taped))
 		return
 
 	regen_ticks_current++
-	if(victim.IsSleeping() && prob(50))
-		regen_ticks_current++
-	else if(!(victim.mobility_flags & MOBILITY_STAND) && prob(50))
-		regen_ticks_current += 0.5
-
+	if(victim.body_position == LYING_DOWN)
+		if(prob(50))
+			regen_ticks_current += 0.5
+		if(victim.IsSleeping() && prob(50))
+			regen_ticks_current += 0.5
 
 	if(prob(severity * 3))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
