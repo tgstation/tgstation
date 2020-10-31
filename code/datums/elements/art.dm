@@ -9,11 +9,12 @@
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
 	if(isobj(target))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_obj_examine)
 		if(isstructure(target))
 			RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 		else if(isitem(target))
 			RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+		else
+			RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_obj_examine)
 	else
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_other_examine)
 
@@ -24,17 +25,23 @@
 /datum/element/art/proc/apply_moodlet(atom/source, mob/user, impress)
 	SIGNAL_HANDLER
 
-	user.visible_message("<span class='notice'>[user] stops and looks intently at [source].</span>", \
-						 "<span class='notice'>You stop to take in [source].</span>")
+	var/msg
 	switch(impress)
 		if(GREAT_ART to INFINITY)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+			msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [p_theyre(TRUE)]. So [pick("trascended", "awe-inspiring", "bewitching", "impeccable")]!"
 		if (GOOD_ART to GREAT_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
+			msg = "[p_theyre(TRUE)] a [pick("respectable", "commendable", "laudable")] art piece, easy on the keen eye."
 		if (BAD_ART to GOOD_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+			msg = "[p_theyre(TRUE)] fair to middling, enough to be called an \"art object\"."
 		if (0 to BAD_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+			msg = "Wow, [atom.p_they()] sucks."
+
+	user.visible_message("<span class='notice'>[user] stops and looks intently at [source].</span>", \
+						 "<span class='notice'>You appraise [source]... [msg]</span>")
 
 /datum/element/art/proc/on_other_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
@@ -66,10 +73,12 @@
 /datum/element/art/rev
 
 /datum/element/art/rev/apply_moodlet(atom/source, mob/user, impress)
-	user.visible_message("<span class='notice'>[user] stops to inspect [source].</span>", \
-						 "<span class='notice'>You take in [source], inspecting the fine craftsmanship of the proletariat.</span>")
-
+	var/msg
 	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-	else
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [p_theyre(TRUE)]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		msg = "Wow, [atom.p_they()] sucks."
+
+	user.visible_message("<span class='notice'>[user] stops to inspect [source].</span>", \
+						 "<span class='notice'>You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]</span>")
