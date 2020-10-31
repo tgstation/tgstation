@@ -12,9 +12,7 @@
 
 /obj/vehicle/sealed/car/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = movedelay
-	D.slowvalue = 0
+	AddElement(/datum/element/ridable, /datum/component/riding/car)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()

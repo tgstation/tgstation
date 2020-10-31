@@ -17,9 +17,7 @@
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1.75
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+	AddElement(/datum/element/ridable, /datum/component/riding/secway)
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)
