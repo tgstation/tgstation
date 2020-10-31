@@ -595,3 +595,46 @@
 	attack_verb_continuous = list("hugs", "squeezes")
 	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
+
+/obj/item/toy/plush/toolboxplushie
+	name = "toolbox plushie"
+	desc = "A plush toolbox. Looks just like the real thing!"
+	icon_state = "toolbox_default"
+	inhand_icon_state = "toolbox_default"
+	icon = 'icons/obj/storage.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	var/latches = "single_latch"
+
+/obj/item/toy/plush/toolboxplushie/Initialize()
+	. = ..()
+
+	var/flavour = pick("toolbox_default", "red", "yellow", "blue", "green", "syndicate")
+	icon_state = flavour
+
+	switch(icon_state)
+		if("blue")
+			name = "mechanical toolbox plushie"
+			inhand_icon_state = "toolbox_blue"
+		if("red")
+			name = "emergency toolbox plushie"
+			inhand_icon_state = "toolbox_red"
+		if("yellow")
+			name = "electrical toolbox plushie"
+			inhand_icon_state = "toolbox_yellow"
+		if("green")
+			name = "artistic toolbox plushie"
+			inhand_icon_state = "artistic_toolbox"
+		if("syndicate")
+			name = "suspicious looking toolbox plushie"
+			inhand_icon_state = "toolbox_syndi"
+
+	if(prob(10))
+		latches = "double_latch"
+		if(prob(1))
+			latches = "triple_latch"
+	update_icon()
+
+/obj/item/toy/plush/toolboxplushie/update_overlays()
+	. = ..()
+		. += latches
