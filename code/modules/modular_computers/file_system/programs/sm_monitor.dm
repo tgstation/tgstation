@@ -17,6 +17,7 @@
 /datum/computer_file/program/supermatter_monitor/Destroy()
 	clear_signals()
 	active = null
+	return ..()
 
 /datum/computer_file/program/supermatter_monitor/process_tick()
 	..()
