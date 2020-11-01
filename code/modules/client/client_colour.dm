@@ -80,7 +80,6 @@
 	for(var/cc in client_colours)
 		var/datum/client_colour/CC = cc
 		if(CC.type == colour_type)
-			fade_time = CC.fade_out
 			qdel(CC)
 			break
 
@@ -202,7 +201,6 @@
 /datum/client_colour/bloodlust
 	priority = PRIORITY_ABSOLUTE // Only anger.
 	colour = list(0,0,0,0,0,0,0,0,0,1,0,0) //pure red.
-	override = TRUE
 	fade_out = 10
 
 /datum/client_colour/bloodlust/New(mob/_owner)
