@@ -637,4 +637,4 @@
 
 /obj/item/toy/plush/toolboxplushie/update_overlays()
 	. = ..()
-		. += latches
+	. += latches
