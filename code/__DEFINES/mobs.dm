@@ -381,15 +381,3 @@
 /// Mob is lying down, usually associated with lying_angle values of 90 or 270.
 #define LYING_DOWN 1
 
-
-// riding datum defines
-
-/// The carried person is incapacitated or was otherwise prone, carrier needs 1 free hand
-#define RIDDEN_HOLDING_RIDER	(1<<0)
-/// The carried person is holding onto the carrier, carried person needs 2 free hands
-#define RIDER_HOLDING_ON		(1<<1)
-
-/// Uses RIDDEN_HOLDING_RIDER flag
-#define HUMAN_CARRY_FIREMAN		0
-/// Uses RIDER_HOLDING_ON flag
-#define HUMAN_CARRY_PIGBACK		1

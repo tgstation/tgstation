@@ -2,7 +2,6 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	are_legs_exposed = TRUE
 
 /obj/vehicle/ridden/scooter/Initialize()

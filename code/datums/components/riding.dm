@@ -48,11 +48,7 @@
 
 	var/riding_flags
 
-	var/arms_required = 1
-
-	var/legs_required = 2
-
-	var/fall_off_if_missing_arms = FALSE
+	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
 
 
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
@@ -85,7 +81,8 @@
 	return ..()
 
 
-/datum/component/riding/proc/handle_specials/()
+/datum/component/riding/proc/handle_specials()
+	return
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)

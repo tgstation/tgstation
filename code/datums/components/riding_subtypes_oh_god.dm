@@ -77,6 +77,7 @@
 
 
 /datum/component/riding/atv
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
 
 /datum/component/riding/atv/handle_specials()
@@ -88,6 +89,7 @@
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/bicycle
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 0
 
 /datum/component/riding/bicycle/handle_specials()
@@ -97,8 +99,7 @@
 
 
 /datum/component/riding/lavaboat
-	legs_required = 0
-	arms_required
+	rider_check_flags = NONE // not sure
 	keytype = /obj/item/oar
 	var/allowed_turf = /turf/open/lava
 
@@ -123,7 +124,7 @@
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
 /datum/component/riding/scooter
-	fall_off_if_missing_arms = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/scooter/handle_specials()
 	. = ..()
@@ -131,8 +132,7 @@
 
 /datum/component/riding/scooter/skateboard
 	vehicle_move_delay = 1.5
-	fall_off_if_missing_arms = TRUE
-	arms_required = 0
+	rider_check_flags = REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/scooter/skateboard/handle_specials()
 	. = ..()
@@ -160,6 +160,7 @@
 
 /datum/component/riding/secway
 	vehicle_move_delay = 1.75
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/secway/handle_specials()
 	. = ..()
@@ -169,6 +170,7 @@
 /datum/component/riding/speedbike
 	vehicle_move_delay = 0
 	override_allow_spacemove = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/speedbike/handle_specials()
 	. = ..()
@@ -181,7 +183,7 @@
 
 /datum/component/riding/wheelchair
 	vehicle_move_delay = 0
-	legs_required = 0
+	rider_check_flags = REQUIRES_ARMS
 
 /datum/component/riding/wheelchair/handle_specials()
 	. = ..()

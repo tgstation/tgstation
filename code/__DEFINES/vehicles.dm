@@ -12,3 +12,11 @@
 
 //Car trait flags
 #define CAN_KIDNAP 1
+
+
+// riding datum defines
+
+/// The carried person is incapacitated or was otherwise prone, carrier needs 1 free hand
+#define RIDDEN_HOLDING_RIDER	(1<<0)
+/// The carried person is holding onto the carrier, carried person needs 2 free hands
+#define RIDER_HOLDING_ON		(1<<1)

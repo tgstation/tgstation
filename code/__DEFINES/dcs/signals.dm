@@ -264,6 +264,7 @@
 #define COMSIG_MOVABLE_TRY_MOUNTING "try_mounting"
 	#define MOUNTING_HALT_BUCKLE	(1<<0)
 #define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
+	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)
