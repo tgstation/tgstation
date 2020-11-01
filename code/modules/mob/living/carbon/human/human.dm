@@ -22,6 +22,7 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	AddElement(/datum/element/ridable, /datum/component/riding/human)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1111,7 +1112,7 @@
 		return
 
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, RIDING_RIDDEN_HOLD_RIDER)
+		buckle_mob(target, TRUE, TRUE, RIDDEN_HOLDING_RIDER)
 		return
 
 	var/old_density = density
@@ -1119,7 +1120,7 @@
 	step_towards(target, loc)
 	density = old_density
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, RIDING_RIDDEN_HOLD_RIDER)
+		buckle_mob(target, TRUE, TRUE, RIDDEN_HOLDING_RIDER)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1135,7 +1136,7 @@
 		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
 
-	buckle_mob(target, TRUE, TRUE, RIDING_RIDER_HOLDING_ON)
+	buckle_mob(target, TRUE, TRUE, RIDER_HOLDING_ON)
 
 // /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
 /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, riding_flags = NONE)
@@ -1148,9 +1149,9 @@
 
 	// while these flags are usually not mutually exclusive, this part of the code where we decide whether they go sideways
 	// when carrried or not doesn't abide, so for now i just go for sideways if the ridden is holding at all
-	if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+	if(riding_flags & RIDDEN_HOLDING_RIDER)
 		buckle_lying = 90
-	else if(riding_flags & RIDING_RIDER_HOLDING_ON)
+	else if(riding_flags & RIDER_HOLDING_ON)
 		buckle_lying = 0
 
 	return ..()
@@ -1166,10 +1167,10 @@
 	// violates that since we wouldn't know which party/parties caused the carry to fail due to lack of hands if both needed them
 	// this could/should probably be moved to the riding datum anyway
 	/*
-	if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+	if(riding_flags & RIDDEN_HOLDING_RIDER)
 		visible_message("<span class='warning'>[src] can't get a grip on [target] because [p_their()] hands are full!</span>",
 				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
-	else if(riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+	else if(riding_flags & RIDDEN_HOLDING_RIDER)
 		target.visible_message("<span class='warning'>[target] can't get a grip on [src] because [target.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
 */

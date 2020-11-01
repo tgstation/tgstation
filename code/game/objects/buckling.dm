@@ -90,7 +90,11 @@
 	if(!is_buckle_possible(M, force, check_loc))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_TRY_MOUNTING, M, force, riding_flags) == MOUNTING_HALT_BUCKLE) // needs 3 options: no interference (no ridable element/not mounting, keep going), mount failed (stop), mount succeeded (keep going)
+	// This signal will check if the mob is mounting this atom to ride it. There are 3 possibilities for how this goes
+	//	1. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
+	//	2. There's a ridable element but we failed to mount it for whatever reason (maybe it has no seats left, for example), so we cancel the buckling
+	//	3. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_TRY_MOUNTING, M, force, riding_flags) == MOUNTING_HALT_BUCKLE)
 		return FALSE
 
 	if(M.pulledby)

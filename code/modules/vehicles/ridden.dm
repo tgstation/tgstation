@@ -9,10 +9,6 @@
 	var/fall_off_if_missing_arms = FALSE //heh...
 	var/message_cooldown = 0
 
-/obj/vehicle/ridden/Initialize()
-	. = ..()
-	AddComponent(/datum/component/riding)
-
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
 	if(key_type)
@@ -63,27 +59,27 @@
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
-	if(legs_required)
-		if(user.usable_legs < legs_required)
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_legs ? " your leg[user.usable_legs > 1 ? "s" : null]" : "out legs"]...</span>")
-				message_cooldown = world.time + 5 SECONDS
-			return FALSE
-	if(arms_required)
-		if(user.usable_hands < arms_required)
-			if(fall_off_if_missing_arms)
-				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
-				"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
-				if(isliving(user))
-					var/mob/living/L = user
-					L.Stun(30)
-				return FALSE
 
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_hands ? " your arm[user.usable_hands > 1 ? "s" : null]" : "out arms"]...</span>")
-				message_cooldown = world.time + 5 SECONDS
+	if(legs_required && (user.usable_legs < legs_required))
+		if(message_cooldown < world.time)
+			to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_legs ? " your leg[user.usable_legs > 1 ? "s" : null]" : "out legs"]...</span>")
+			message_cooldown = world.time + 5 SECONDS
+		return FALSE
+
+	if(arms_required && (user.usable_hands < arms_required))
+		if(fall_off_if_missing_arms)
+			unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+			"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
+			if(isliving(user))
+				var/mob/living/L = user
+				L.Stun(3 SECONDS)
 			return FALSE
+
+		if(message_cooldown < world.time)
+			to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_hands ? " your arm[user.usable_hands > 1 ? "s" : null]" : "out arms"]...</span>")
+			message_cooldown = world.time + 5 SECONDS
+		return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()

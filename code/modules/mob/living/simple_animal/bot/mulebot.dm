@@ -70,7 +70,6 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
-	var/riding_flags = (RIDING_RIDER_HOLDING_ON) //so mobs fall off when the vehicle is shot.
 	AddElement(/datum/element/ridable, /datum/component/riding/mulebot)
 	diag_hud_set_mulebotcell()
 

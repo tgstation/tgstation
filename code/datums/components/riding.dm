@@ -17,31 +17,42 @@
 
 	var/last_vehicle_move = 0 //used for move delays
 	var/last_move_diagonal = FALSE
-	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
+	///tick delay between movements, lower = faster, higher = slower
+	var/vehicle_move_delay = 2
+	/// If the driver needs a specific item in hand in order to move this vehicle
 	var/keytype
 
 	var/slowed = FALSE
 	var/slowvalue = 1
 
-	///Bool to check if you gain the ridden mob's abilities.
+	/// If the vehicle is a mob with abilities, and this is TRUE, then the rider can trigger those abilities while mounted
 	var/can_use_abilities = FALSE
 
-	var/list/riding_offsets = list()	//position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
-	var/list/directional_vehicle_layers = list()	//["[DIRECTION]"] = layer. Don't set it for a direction for default, set a direction to null for no change.
-	var/list/directional_vehicle_offsets = list()	//same as above but instead of layer you have a list(px, py)
+	/// position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
+	var/list/riding_offsets = list()
+	/// ["[DIRECTION]"] = layer. Don't set it for a direction for default, set a direction to null for no change.
+	var/list/directional_vehicle_layers = list()
+	/// same as above but instead of layer you have a list(px, py)
+	var/list/directional_vehicle_offsets = list()
+	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/allowed_turf_typecache
-	var/list/forbid_turf_typecache					//allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
-	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
+	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
+	var/list/forbid_turf_typecache
+	/// allow moving one tile away from a valid turf but not more.
+	var/allow_one_away_from_valid_turf = TRUE
+	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
-	var/drive_verb = "drive"
 
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
-	/// If the rider needs hands free in order to not fall off (fails if they're incap'd or restrained)
-	var/rider_holding_on = FALSE
-	/// If the ridden needs a hand free to carry the rider (fails if they're incap'd or restrained)
-	var/ridden_holding_rider = FALSE
+	var/riding_flags
+
+	var/arms_required = 1
+
+	var/legs_required = 2
+
+	var/fall_off_if_missing_arms = FALSE
 
 
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
@@ -56,8 +67,7 @@
 	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
-	rider_holding_on = (riding_flags & RIDING_RIDER_HOLDING_ON)
-	ridden_holding_rider = (riding_flags & RIDING_RIDDEN_HOLD_RIDER)
+	handle_specials()
 
 	if(isliving(parent))
 		var/mob/living/parent_living = parent
@@ -154,18 +164,19 @@
 	vehicle_moved(source, new_dir)
 
 /datum/component/riding/proc/ride_check(mob/living/rider)
-	var/atom/movable/parent_movable = parent
+	var/mob/living/parent_movable = parent
+	var/mob/living/parent_living = parent
 	var/kick_us_off
 
-	if(rider_holding_on && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
+	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
+	if((riding_flags & RIDER_HOLDING_ON) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
 		kick_us_off = TRUE
-	else if(ridden_holding_rider && isliving(parent_movable))
-		var/mob/living/parent_living = parent_movable
-		if(HAS_TRAIT(parent_living, TRAIT_RESTRAINED) || parent_living.incapacitated(TRUE, TRUE))
+	else if(isliving(parent_living))
+		// for fireman carries, check if the ridden is stunned/restrained
+		if((riding_flags & RIDDEN_HOLDING_RIDER) && (HAS_TRAIT(parent_living, TRAIT_RESTRAINED) || parent_living.incapacitated(TRUE, TRUE)))
 			kick_us_off = TRUE
-	else if(isliving(parent_movable)) // adding a check for standing to the ridden for all carries pending someone explaining why laying down should let you keep riding
-		var/mob/living/parent_living = parent_movable
-		if(parent_living.body_position != STANDING_UP)
+		// no matter what, you can't ride something that's on the floor
+		else if(parent_living.body_position != STANDING_UP)
 			kick_us_off = TRUE
 
 	if(!kick_us_off)
@@ -185,6 +196,7 @@
 	var/turf/target = get_edge_target_turf(parent_movable, parent_movable.dir)
 	var/turf/targetm = get_step(get_turf(parent_movable), parent_movable.dir)
 	rider.Move(targetm)
+	rider.Knockdown(3 SECONDS)
 	if(gentle)
 		rider.visible_message("<span class='warning'>[rider] is thrown clear of [parent_movable]!</span>", \
 		"<span class='warning'>You're thrown clear of [parent_movable]!</span>")
@@ -193,7 +205,6 @@
 		rider.visible_message("<span class='warning'>[rider] is thrown violently from [parent_movable]!</span>", \
 		"<span class='warning'>You're thrown violently from [parent_movable]!</span>")
 		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
-	rider.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -274,31 +285,33 @@
 		return
 	last_vehicle_move = world.time
 
-	if(keycheck(user))
-		var/turf/next = get_step(AM, direction)
-		var/turf/current = get_turf(AM)
-		if(!istype(next) || !istype(current))
-			return	//not happening.
-		if(!turf_check(next, current))
-			to_chat(user, "<span class='warning'>Your \the [AM] can not go onto [next]!</span>")
-			return
-		if(!Process_Spacemove(direction) || !isturf(AM.loc))
-			return
-		if(isliving(AM) && respect_mob_mobility)
-			var/mob/living/M = AM
-			if(!(M.mobility_flags & MOBILITY_MOVE))
-				return
-		step(AM, direction)
+	if(!keycheck(user))
+		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to operate [AM].</span>")
+		return
 
-		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
-			last_move_diagonal = TRUE
-		else
-			last_move_diagonal = FALSE
+	var/turf/next = get_step(AM, direction)
+	var/turf/current = get_turf(AM)
+	if(!istype(next) || !istype(current))
+		return	//not happening.
+	if(!turf_check(next, current))
+		to_chat(user, "<span class='warning'>Your \the [AM] can not go onto [next]!</span>")
+		return
+	if(!Process_Spacemove(direction) || !isturf(AM.loc))
+		return
+	if(isliving(AM) && respect_mob_mobility)
+		var/mob/living/M = AM
+		if(!(M.mobility_flags & MOBILITY_MOVE))
+			return
+	step(AM, direction)
 
-		handle_vehicle_layer(AM.dir)
-		handle_vehicle_offsets(AM.dir)
+	if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
+		last_move_diagonal = TRUE
 	else
-		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to [drive_verb] [AM].</span>")
+		last_move_diagonal = FALSE
+
+	handle_vehicle_layer(AM.dir)
+	handle_vehicle_offsets(AM.dir)
+
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
@@ -318,20 +331,17 @@
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
 
-/datum/component/riding/human/Initialize(riding_flags, mob/living/riding_mob)
+/datum/component/riding/human/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
+	var/mob/living/carbon/human/H = parent
+	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
-
-/datum/component/riding/human/Initialize()
-	. = ..()
-	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /// If the carrier gets shoved, drop our load
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
@@ -379,22 +389,19 @@
 /datum/component/riding/cyborg
 
 /datum/component/riding/cyborg/ride_check(mob/user)
-	var/atom/movable/AM = parent
-	if(user.incapacitated())
-		var/kick = TRUE
-		if(iscyborg(AM))
-			var/mob/living/silicon/robot/R = AM
-			if(R.module && R.module.ride_allow_incapacitated)
-				kick = FALSE
-		if(kick)
-			to_chat(user, "<span class='userdanger'>You fall off of [AM]!</span>")
-			Unbuckle(user)
-			return
+	if(!iscyborg(parent))
+		return
+
+	var/mob/living/silicon/robot/robot_parent = parent
+	if(user.incapacitated() && !(robot_parent.module?.ride_allow_incapacitated))
+		to_chat(user, "<span class='userdanger'>You fall off of [robot_parent]!</span>")
+		Unbuckle(user)
+		return
 	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.usable_hands)
 			Unbuckle(user)
-			to_chat(user, "<span class='warning'>You can't grab onto [AM] with no hands!</span>")
+			to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
 			return
 
 /datum/component/riding/cyborg/handle_vehicle_layer(dir)

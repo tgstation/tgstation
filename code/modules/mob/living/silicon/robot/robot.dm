@@ -16,7 +16,6 @@
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
-	ridable = TRUE
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -119,7 +118,7 @@
 
 	wires = new /datum/wires/robot(src)
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
-	AddComponent(/datum/component/riding)
+	AddElement(/datum/element/ridable, /datum/component/riding/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -1034,7 +1033,7 @@
 		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
 	/*
-	var/riding_flags = (RIDING_RIDER_HOLDING_ON)
+	var/riding_flags = (RIDER_HOLDING_ON)
 	if(LoadComponent(/datum/component/riding/cyborg, riding_flags, M))
 		return
 */
