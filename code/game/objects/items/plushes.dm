@@ -609,26 +609,6 @@
 /obj/item/toy/plush/toolboxplushie/Initialize()
 	. = ..()
 
-	var/flavour = pick("toolbox_default", "red", "yellow", "blue", "green", "syndicate")
-	icon_state = flavour
-
-	switch(icon_state)
-		if("blue")
-			name = "mechanical toolbox plushie"
-			inhand_icon_state = "toolbox_blue"
-		if("red")
-			name = "emergency toolbox plushie"
-			inhand_icon_state = "toolbox_red"
-		if("yellow")
-			name = "electrical toolbox plushie"
-			inhand_icon_state = "toolbox_yellow"
-		if("green")
-			name = "artistic toolbox plushie"
-			inhand_icon_state = "artistic_toolbox"
-		if("syndicate")
-			name = "suspicious looking toolbox plushie"
-			inhand_icon_state = "toolbox_syndi"
-
 	if(prob(10))
 		latches = "double_latch"
 		if(prob(1))
@@ -638,3 +618,38 @@
 /obj/item/toy/plush/toolboxplushie/update_overlays()
 	. = ..()
 	. += latches
+
+/obj/item/toy/plush/toolboxplushie/emergency
+	name = "emergency toolbox plushie"
+	icon_state = "red"
+	inhand_icon_state = "toolbox_red"
+
+/obj/item/toy/plush/toolboxplushie/mechanical
+	name = "mechanical toolbox plushie"
+	icon_state = "blue"
+	inhand_icon_state = "toolbox_blue"
+
+/obj/item/toy/plush/toolboxplushie/electrical
+	name = "electrical toolbox plushie"
+	icon_state = "yellow"
+	inhand_icon_state = "toolbox_yellow"
+
+/obj/item/toy/plush/toolboxplushie/syndicate
+	name = "suspicious looking toolbox plushie"
+	icon_state = "syndicate"
+	inhand_icon_state = "toolbox_syndi"
+
+/obj/item/toy/plush/toolboxplushie/artistic
+	name = "artistic toolbox plushie"
+	icon_state = "green"
+	inhand_icon_state = "artistic_toolbox"
+
+/obj/item/toy/plush/toolboxplushie/random
+	name = "random toolbox plushie"
+	desc = "This should've vanished!"
+
+/obj/item/toy/plush/toolboxplushie/random/Initialize()
+	. = ..()
+	var/newbox = pick(subtypesof(/obj/item/toy/plush/toolboxplushie))
+	new newbox(get_turf(loc))
+	qdel(src)
