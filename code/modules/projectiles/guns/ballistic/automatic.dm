@@ -224,7 +224,7 @@
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust infantry rifle design inspired by the ancient Stoner, nicknamed 'Boarder' by Special Forces. Still has feeding issues in jungles."
+	desc = "A robust infantry rifle design inspired by the ancient Stoner design, nicknamed 'Boarder' by Special Forces. Still has feeding issues in jungles."
 	icon_state = "arg"
 	inhand_icon_state = "arg"
 	slot_flags = 0
@@ -321,7 +321,7 @@
 
 /obj/item/gun/ballistic/automatic/sniper_rifle
 	name = "sniper rifle"
-	desc = "A long ranged anti-materiel rifle based on the legendary M107. No, you can't quickscope."
+	desc = "A long ranged .50 BMG anti-materiel rifle based on one of Barrett's designs. No, you can't quickscope." //Added .50 BMG here too for consistency
 	icon_state = "sniper"
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
