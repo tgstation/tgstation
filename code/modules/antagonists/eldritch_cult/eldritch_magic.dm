@@ -747,12 +747,12 @@
 	for(var/mob/living/living_mob in range(1,user)-user)
 		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 			continue
-		living_mob.adjustBruteLoss(20)
+		living_mob.adjustBruteLoss(40)
 
 	for(var/mob/living/living_mob in range(1,targeted_turf)-user)
 		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 			continue
-		living_mob.adjustBruteLoss(20)
+		living_mob.adjustBruteLoss(40)
 
 	do_teleport(user,targeted_turf,channel = TELEPORT_CHANNEL_MAGIC)
 
@@ -791,7 +791,7 @@
 	for(var/mob/living/living_mob in range(1,user)-user)
 		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
 			continue
-		living_mob.adjustBruteLoss(20)
+		living_mob.adjustBruteLoss(30)
 
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	new /obj/effect/temp_visual/voidin(user.drop_location())

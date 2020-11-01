@@ -55,6 +55,8 @@
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
 
+	on_death()
+
 	return ..()
 
 
