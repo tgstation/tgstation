@@ -67,8 +67,8 @@
  */
 /datum/computer_file/program/supermatter_monitor/proc/set_signals()
 	if(active)
-		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, FALSE, override = TRUE)
-		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_alert, TRUE, override = TRUE)
+		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, override = TRUE)
+		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_start_alert, override = TRUE)
 
 /datum/computer_file/program/supermatter_monitor/proc/clear_signals()
 	if(active)
@@ -78,28 +78,28 @@
 /**
   * Sends an SM delam alert to the computer.
   *
-  * Triggered by the signals from set_signals(), this proc will send an alert to the
-  * computer. If the program is the active one on this device, all alerts are simply
-  * ignored except the very first delam alarm; engineers fixing the SM probably don't
-  * need constant notification beeps to distract them.
-  *
-  * Arguments:
-  * a bool of whether this alert is the signal indicating the start of a delam state
+  * Triggered by a signal from the selected supermatter, this proc sends a notification
+  * to the computer if the program is either closed or minimized. We do not send these
+  * notifications to the comptuer if we're the active program, because engineers fixing
+  * the supermatter probably don't need constant beeping to distract them.
  */
-/datum/computer_file/program/supermatter_monitor/proc/send_alert(start_alarm)
-	if(!active) //just in case
-		set_signals() //If active is not set, clear out the forgotten listeners
-		return
-
-	if(computer.active_program == src)
-		if(start_alarm) //Only the initial alarm will be sent as an alert if this app is the active one
-			computer.alert_call(src, "Crystal delamination in progress!")
-		return
-
-	if(!start_alarm) //Avoid the start_alarm signal if we're not the active app, to avoid double alerts
+/datum/computer_file/program/supermatter_monitor/proc/send_alert()
+	if(computer.active_program != src)
 		computer.alert_call(src, "Crystal delamination in progress!")
-		alert_pending = !(computer.active_program == src)
+		alert_pending = TRUE
 
+/**
+  * Sends an SM delam start alert to the computer.
+  *
+  * Triggered by a signal from the selected supermatter at the start of a delamination,
+  * this proc sends a notification to the computer if this program is the active one.
+  * We do this so that people carrying a tablet with NT CIMS open but with the NTOS window
+  * closed will still get one audio alert. This is not sent to computers with the program
+  * minimized or closed to avoid double-notifications.
+ */
+/datum/computer_file/program/supermatter_monitor/proc/send_start_alert()
+	if(computer.active_program == src)
+		computer.alert_call(src, "Crystal delamination in progress!")
 
 /datum/computer_file/program/supermatter_monitor/ui_data()
 	var/list/data = get_header_data()
