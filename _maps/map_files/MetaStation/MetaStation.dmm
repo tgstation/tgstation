@@ -32581,7 +32581,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/structure/table,
 /turf/open/floor/plasteel/checker,
 /area/engine/atmos)
 "bAH" = (
@@ -47614,12 +47613,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
-"cmA" = (
-/obj/machinery/holopad,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/pharmacy)
 "cmB" = (
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -50200,7 +50193,7 @@
 /obj/machinery/light,
 /obj/structure/bed/pod{
 	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "Medical Bed"
+	name = "medical bed"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -105710,7 +105703,7 @@ chc
 cix
 cjT
 cjT
-cmA
+cjT
 cnI
 coU
 cqs
