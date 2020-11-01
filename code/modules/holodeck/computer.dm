@@ -14,7 +14,7 @@
 	Easiest way to add new holodeck programs
 	1) Define new map template datums in code/modules/holodeck/holodeck_map_templates
 	2) Create the new map templates in _maps/templates (remember theyre 9x10)
-	3) Create a new control console that uses those templates
+	3) Create a new holodeck console that uses those templates
 
 
 */
@@ -49,7 +49,6 @@
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
-	//var/broken_floor = TRUE
 	var/list/non_holo_items_in_area = list()
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
@@ -133,116 +132,6 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/*
-	basically the equivalent of map_template/load except it calls parsed.load with placeOnTop = FALSE (so holodeck programs dont stack in the baseturf list)
-	and passes spawned_atoms from parsed to the holodeck template datum
-*/
-/*
-/datum/map_template/holodeck/load(turf/target_turf, centered = FALSE, )
-	if(centered)
-		target_turf = locate(target_turf.x - round(width/2) , target_turf.y - round(height/2) , target_turf.z)
-	if(!target_turf)
-		return
-	if(target_turf.x+width > world.maxx)
-		return
-	if(target_turf.y+height > world.maxy)
-		return
-
-	var/list/border = block(locate(max(target_turf.x-1, 1),	max(target_turf.y-1, 1), target_turf.z),
-							locate(min(target_turf.x+width+1, world.maxx),	min(target_turf.y+height+1, world.maxy), target_turf.z))
-	for(var/_turf in border)
-		var/turf/turf_to_disable = _turf
-		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in holodeckTemplateBounds()
-		turf_to_disable.atmos_adjacent_turfs?.Cut()
-
-	// Accept cached maps, but don't save them automatically - we don't want
-	// ruins clogging up memory for the whole round.
-	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
-	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(target_turf.x, target_turf.y, target_turf.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=FALSE))
-		return
-	var/list/bounds = parsed.bounds
-	if(!bounds)
-		return
-
-	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
-		repopulate_sorted_areas()
-
-	//initialize things that are normally initialized after map load
-
-	spawned_atoms = parsed.holodeckTemplateBounds()
-
-	for (var/obj/base_container in spawned_atoms)//this didnt seem to work when i put this in holodeckTemplateBounds
-		if (length(base_container.contents) > 0)
-			spawned_atoms -= base_container
-			spawned_atoms += base_container.GetAllContents()
-
-	lastparsed = parsed
-	log_game("[name] loaded at [target_turf.x],[target_turf.y],[target_turf.z]")
-	return bounds
-
-/*
-	similar to initTemplateBounds except it keeps track of all new objects it creates and passes it to map_template/holodeck/load
-*/
-/datum/parsed_map/proc/holodeckTemplateBounds()
-	var/list/obj/machinery/atmospherics/atmos_machines = list()
-	var/list/obj/structure/cable/cables = list()
-	var/list/atom/atoms = list()
-	var/list/atom/newatoms = list()
-	var/list/area/areas = list()
-
-	var/list/turfs = block(
-		locate(
-			bounds[MAP_MINX],
-			bounds[MAP_MINY],
-			bounds[MAP_MINZ]
-			),
-		locate(
-			bounds[MAP_MAXX],
-			bounds[MAP_MAXY],
-			bounds[MAP_MAXZ]
-			)
-		)
-
-	for(var/_turf in turfs)
-		var/turf/turf_iterate = _turf
-		areas |= turf_iterate.loc
-		for(var/atom/atom_iterate in turf_iterate)
-			if (!(atom_iterate.flags_1 & INITIALIZED_1))//anything in the parsed map that hasnt been initialized is something spawned from the holodeck, so add it to newatoms
-				newatoms += atom_iterate
-			else
-				atoms += atom_iterate
-
-			if(istype(atom_iterate, /obj/structure/cable))
-				cables += atom_iterate
-				continue
-			if(istype(atom_iterate, /obj/machinery/atmospherics))
-				atmos_machines += atom_iterate
-
-	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(turfs+atoms+newatoms)
-	SSmachines.setup_template_powernets(cables)
-	SSair.setup_template_machinery(atmos_machines)
-
-	var/list/template_and_bordering_turfs = block(
-		locate(
-			max(bounds[MAP_MINX]-1, 1),
-			max(bounds[MAP_MINY]-1, 1),
-			bounds[MAP_MINZ]
-			),
-		locate(
-			min(bounds[MAP_MAXX]+1, world.maxx),
-			min(bounds[MAP_MAXY]+1, world.maxy),
-			bounds[MAP_MAXZ]
-			)
-		)
-	for(var/_turf in template_and_bordering_turfs)
-		var/turf/affected_turf = _turf
-		affected_turf.air_update_turf(TRUE)
-
-	return newatoms//this is what will become the spawned list for the holodeck
-*/
-
 /datum/map_template/holodeck/update_blacklist(turf/placement)
 	turf_blacklist.Cut()
 	for (var/_turf in get_affected_turfs(placement))
@@ -252,9 +141,8 @@
 				continue
 			turf_blacklist += possible_blacklist
 
-/*
-	the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
-*/
+
+///the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
 	if (program == map_id)
@@ -289,6 +177,12 @@
 
 	for (var/_turf in linked)
 		var/turf/holo_turf = _turf
+		if (istype(holo_turf, /turf/closed))
+			for (var/_baseturf in holo_turf.baseturfs)
+				if (ispath(_baseturf, /turf/open/floor/holofloor))
+					holo_turf.baseturfs -= _baseturf
+					holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+
 		non_holo_items_in_area += holo_turf.contents
 
 	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
@@ -336,7 +230,8 @@
 				var/obj/structure/structures = holo_object
 				structures.flags_1 |= NODECONSTRUCT_1
 
-/obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)//this qdels holoitems that should no longer exist for whatever reason
+///this qdels holoitems that should no longer exist for whatever reason
+/obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
 	if(!object)
 		return
 
@@ -393,11 +288,11 @@
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src, .proc/load_program, last_program, TRUE), 25)
+			load_program(last_program,TRUE)
 		active = TRUE
 	else
 		last_program = program
-		load_program("holodeck_offline", TRUE)
+		load_program(offline_program, TRUE)
 		active = FALSE
 
 /obj/machinery/computer/holodeck/power_change()
@@ -407,15 +302,10 @@
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	active = FALSE
-	//broken_floor = FALSE
 	for (var/_item in spawned)
 		var/obj/to_remove = _item
 		derez(to_remove)
-	/*for (var/_turf in linked)
-		var/turf/holo_turf = _turf
-		if (istype(holo_turf, /turf/open/floor/holofloor))
-			holo_turf.ChangeTurf(/turf/open/floor/holofloor/plating, null, flags = CHANGETURF_INHERIT_AIR)*/
-	load_program("holodeck_offline", TRUE)
+	load_program(offline_program, TRUE)
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
@@ -461,8 +351,6 @@
 		linked.linked = null
 		linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
-
-
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()

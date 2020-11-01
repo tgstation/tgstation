@@ -54,6 +54,10 @@
 	name = "burn-mix floor"
 	initial_gas_mix = BURNMIX_ATMOS
 
+/turf/open/floor/holofloor/white
+	name = "white floor"
+	icon_state = "white"
+
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
