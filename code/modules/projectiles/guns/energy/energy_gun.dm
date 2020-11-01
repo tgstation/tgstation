@@ -1,6 +1,6 @@
 /obj/item/gun/energy/e_gun
 	name = "energy gun"
-	desc = "The most basic of energy guns, with two settings: disable and kill."
+	desc = "A basic energy gun, with two settings: disable and kill."
 	icon_state = "energy"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
