@@ -157,7 +157,8 @@
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
-	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
+	// COMMENTED FOR TESTMERGE
+	//H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 
 	sound_loop = new(list(user),TRUE,TRUE)
