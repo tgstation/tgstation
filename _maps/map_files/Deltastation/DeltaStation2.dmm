@@ -2386,6 +2386,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"ahC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "ahD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster{
@@ -15907,10 +15918,7 @@
 "aIe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aIf" = (
 /obj/structure/table,
@@ -64992,6 +65000,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/radio/intercom{
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cuE" = (
@@ -67339,6 +67350,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -77357,7 +77371,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cSP" = (
-/obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 3
@@ -77380,7 +77393,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cSQ" = (
-/obj/structure/table,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
 	pixel_y = 3
@@ -168642,7 +168654,7 @@ cRw
 cTd
 cVc
 cWC
-cYr
+ahC
 dab
 dbF
 ddv
