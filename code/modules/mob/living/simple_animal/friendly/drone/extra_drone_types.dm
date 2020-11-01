@@ -15,8 +15,8 @@
 	icon_state = "drone_synd"
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
-	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	health = 120
+	maxHealth = 120
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
@@ -40,7 +40,7 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
+	to_chat(src, "<span class='notice'>You may resume your mission, operative!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
