@@ -113,7 +113,6 @@
 	if(mind && is_monkey(mind))
 		return TRUE
 	return FALSE
-
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")

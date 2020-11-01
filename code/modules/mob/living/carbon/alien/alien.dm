@@ -137,8 +137,8 @@ Des: Removes all infected images from the alien.
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
-/mob/living/carbon/alien/can_hold_items()
-	return has_fine_manipulation
+/mob/living/carbon/alien/can_hold_items(obj/item/I)
+	return ((I && istype(I, /obj/item/clothing/mask/facehugger)) || (!IsAdvancedToolUser() && ..()))
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

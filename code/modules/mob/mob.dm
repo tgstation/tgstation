@@ -931,7 +931,6 @@
 ///This might need a rename but it should replace the can this mob use things check
 /mob/proc/IsAdvancedToolUser()
 	return FALSE
-
 /mob/proc/swap_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
@@ -1040,7 +1039,7 @@
 		return TRUE
 
 ///Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, floor_okay=FALSE)
 	return
 
 ///Can this mob use storage
@@ -1192,10 +1191,6 @@
 		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
 		return
 	return TRUE
-
-///Can this mob hold items
-/mob/proc/can_hold_items()
-	return FALSE
 
 ///Get the id card on this mob
 /mob/proc/get_idcard(hand_first)
