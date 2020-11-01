@@ -30,7 +30,7 @@
 	///IF non-zero, 'animate_client_colour(fade_in)' will be called instead of 'update_client_colour' when added.
 	var/fade_in = 0
 	///Same as above, but on removal.
-	var/fade_out = FALSE
+	var/fade_out = 0
 
 /datum/client_colour/New(mob/_owner)
 	owner = _owner
