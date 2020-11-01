@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - code_imp: "StartProcessingAtom() uses drop_location() instead of get_turf(src)"

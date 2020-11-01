@@ -9,20 +9,20 @@
   */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
-		return
+		return TRUE
 	if(pre_attack(target, user, params))
-		return
+		return TRUE
 	if(target.attackby(src,user, params))
-		return
+		return TRUE
 	if(QDELETED(src) || QDELETED(target))
 		attack_qdeleted(target, user, TRUE, params)
-		return
-	afterattack(target, user, TRUE, params)
+		return TRUE
+	return afterattack(target, user, TRUE, params)
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return
+		return TRUE
 	interact(user)
 
 /**
@@ -72,21 +72,26 @@
   * * mob/living/user - The mob hitting with this item
   */
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
+	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	if(signal_return & COMPONENT_SKIP_ATTACK)
+		return
+
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
+
 	if(item_flags & NOBLUDGEON)
 		return
 
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
-		return TRUE
+		return
 
 	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user
 		if(eyestab(M,user))
-			return TRUE
+			return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
@@ -103,7 +108,6 @@
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
-	return TRUE
 
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
