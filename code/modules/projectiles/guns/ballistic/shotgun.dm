@@ -57,7 +57,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"
-	desc = "A heavy semi-automatic shotgun with tactical accessories and a six-shell capacity underneath."
+	desc = "A heavy semi-automatic tactical shotgun. It has a six-shell capacity underneath. Breach and clear!"
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 5
@@ -279,7 +279,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/examine(mob/user)
 	. = ..()
 	if(toggled)
-		. += "<span class='notice'>Alt-click to switch back the shotgun.</span>"
+		. += "<span class='notice'>Alt-click to switch back to the shotgun.</span>"
 	else
 		. += "<span class='notice'>Alt-click to extend the hook.</span>"
 
