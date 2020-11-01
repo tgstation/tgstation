@@ -71,6 +71,11 @@
 		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, override = TRUE)
 		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_start_alert, override = TRUE)
 
+/**
+  * Removes the signal listener for Supermatter delaminations from the selected supermatter.
+  *
+  * Pretty much does what it says.
+ */
 /datum/computer_file/program/supermatter_monitor/proc/clear_signals()
 	if(active)
 		UnregisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM)
@@ -85,6 +90,8 @@
   * the supermatter probably don't need constant beeping to distract them.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_alert()
+	if(!computer.get_ntnet_status())
+		return
 	if(computer.active_program != src)
 		computer.alert_call(src, "Crystal delamination in progress!")
 		alert_pending = TRUE
@@ -99,6 +106,8 @@
   * minimized or closed to avoid double-notifications.
  */
 /datum/computer_file/program/supermatter_monitor/proc/send_start_alert()
+	if(!computer.get_ntnet_status())
+		return
 	if(computer.active_program == src)
 		computer.alert_call(src, "Crystal delamination in progress!")
 
