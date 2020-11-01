@@ -54,25 +54,15 @@
 				to_chat(user, "<span class='warning'>There's already a table built here!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
-<<<<<<< HEAD
-			if(do_after(user, 20, target = src) && material.use(1))
-				var/list/material_list = list()
-				if(material.material_type)
-					material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT
-				make_new_table(/obj/structure/table/grayscale, material_list)
-	else
-		return ..()
-=======
 			if(!do_after(user, 2 SECONDS, target = src) || !material.use(1) || (locate(/obj/structure/table) in loc))
 				return
 			var/list/material_list = list()
 			if(material.material_type)
 				material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT
-			make_new_table(/obj/structure/table/greyscale, material_list)
+			make_new_table(/obj/structure/table/grayscale, material_list)
 		return
 	return ..()
 
->>>>>>> upstream/master
 
 /obj/structure/table_frame/proc/make_new_table(table_type, custom_materials) //makes sure the new table made retains what we had as a frame
 	var/obj/structure/table/T = new table_type(loc)
