@@ -74,9 +74,20 @@
 		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
 			if((I.obj_flags & HAND_ITEM))
 				qdel(I)
-		if(user.put_in_hands(inhand, TRUE))
+
+		// this would be put_in_hands() if it didn't have the chance to sleep
+		var/inserted_successfully = FALSE
+		if(user.put_in_active_hand(inhand, TRUE))
+			inserted_successfully = TRUE
+		else
+			var/hand = user.get_empty_held_index_for_side(LEFT_HANDS) || user.get_empty_held_index_for_side(RIGHT_HANDS)
+			if(hand && user.put_in_hand(inhand, hand, TRUE))
+				inserted_successfully = TRUE
+
+		if(inserted_successfully)
 			amount_equipped++
 		else
+			qdel(inhand)
 			break
 
 	if(amount_equipped >= amount_required)
