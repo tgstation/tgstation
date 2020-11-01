@@ -151,7 +151,7 @@
 
 /obj/item/gun/ballistic/revolver/nagant
 	name = "\improper Nagant revolver"
-	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
+	desc = "An old model of revolver that originated in Russia. Has a threaded barrel for supressors. Uses 7.62x38mmR ammo." //Supressor indication consistency
 	icon_state = "nagant"
 	can_suppress = TRUE
 
