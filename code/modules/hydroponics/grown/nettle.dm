@@ -106,15 +106,14 @@
 			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
-/obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..())
-		return
-	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
-		log_combat(user, M, "attacked", src)
-
-		M.adjust_blurriness(force/7)
+/obj/item/reagent_containers/food/snacks/grown/nettle/death/afterattack(atom/target as mob|obj, mob/user, proximity)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/target_mob = target
+		to_chat(target_mob, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
+		target_mob.adjust_blurriness(force/7)
 		if(prob(20))
-			M.Unconscious(force / 0.3)
-			M.Paralyze(force / 0.75)
-		M.drop_all_held_items()
+			target_mob.Unconscious(force / 0.3)
+			target_mob.Paralyze(force / 0.75)
+			log_combat("[key_name(user)] painfully stunned [key_name(target)] with [src] at [AREACOORD(user)]")
+		target_mob.drop_all_held_items()

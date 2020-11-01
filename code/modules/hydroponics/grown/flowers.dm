@@ -257,18 +257,15 @@
 	..()
 	force = round((5 + seed.potency / 5), 1)
 
-/obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
-	if(!..())
-		return
-	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
-		M.adjust_fire_stacks(seed.potency / 20)
-		if(M.IgniteMob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
-			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
-/obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
+/obj/item/grown/novaflower/afterattack(atom/target as mob|obj, mob/user,proximity)
 	. = ..()
+	if(isliving(target))
+		var/mob/living/target_mob = target
+		to_chat(target_mob, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
+		target_mob.adjust_fire_stacks(seed.potency / 20)
+		if(target_mob.IgniteMob())
+			log_combat("[key_name(user)] set [key_name(target_mob)] on fire with [src] at [AREACOORD(user)]")
 	if(!proximity)
 		return
 	if(force > 0)
