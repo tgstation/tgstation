@@ -150,7 +150,7 @@
 		G.ToggleMode()
 
 /obj/screen/guardian/toggle_mode/inactive
-	icon_state = "notoggle" //greyed out so it doesn't look like it'll work
+	icon_state = "notoggle" //grayed out so it doesn't look like it'll work
 
 /obj/screen/guardian/toggle_mode/assassin
 	icon_state = "stealth"

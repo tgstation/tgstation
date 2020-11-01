@@ -148,8 +148,8 @@
 	icon_state = "green"
 	inhand_icon_state = "greengloves"
 
-/obj/item/clothing/gloves/color/grey
-	name = "grey gloves"
+/obj/item/clothing/gloves/color/gray
+	name = "gray gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
 	inhand_icon_state = "graygloves"
@@ -246,7 +246,7 @@
 		/obj/item/clothing/gloves/color/blue = 1,
 		/obj/item/clothing/gloves/color/purple = 1,
 		/obj/item/clothing/gloves/color/green = 1,
-		/obj/item/clothing/gloves/color/grey = 1,
+		/obj/item/clothing/gloves/color/gray = 1,
 		/obj/item/clothing/gloves/color/light_brown = 1,
 		/obj/item/clothing/gloves/color/brown = 1,
 		/obj/item/clothing/gloves/color/white = 1,

@@ -22,7 +22,7 @@
 							/datum/reagent/toxin/heparin = -6,
 							/datum/reagent/consumable/astrotame = -4, //Saccarin gives rats cancer.
 							/datum/reagent/consumable/ethanol/rubberneck = -3,
-							/datum/reagent/consumable/grey_bull = -1)
+							/datum/reagent/consumable/gray_bull = -1)
 
 	virus_suspectibility = 2
 	growth_rate = VAT_GROWTH_RATE

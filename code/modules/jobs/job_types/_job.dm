@@ -216,7 +216,7 @@
 
 	var/jobtype = null
 
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/color/gray
 	id = /obj/item/card/id
 	ears = /obj/item/radio/headset
 	belt = /obj/item/pda
@@ -235,11 +235,11 @@
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backpack)
 		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
+			back = /obj/item/storage/backpack //gray backpack
 		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
+			back = /obj/item/storage/backpack/satchel //gray satchel
 		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
+			back = /obj/item/storage/backpack/duffelbag //gray Duffel bag
 		if(LSATCHEL)
 			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)

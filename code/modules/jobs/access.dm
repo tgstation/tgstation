@@ -341,7 +341,7 @@
 /proc/get_centcom_access_desc(A)
 	switch(A)
 		if(ACCESS_CENT_GENERAL)
-			return "Code Grey"
+			return "Code gray"
 		if(ACCESS_CENT_THUNDER)
 			return "Code Yellow"
 		if(ACCESS_CENT_STORAGE)

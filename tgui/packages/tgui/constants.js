@@ -47,7 +47,7 @@ export const CSS_COLORS = [
   'purple',
   'pink',
   'brown',
-  'grey',
+  'gray',
   'good',
   'average',
   'bad',
@@ -139,7 +139,7 @@ const GASES = [
     'id': 'co2',
     'name': 'Carbon Dioxide',
     'label': 'CO₂',
-    'color': 'grey',
+    'color': 'gray',
   },
   {
     'id': 'plasma',
@@ -151,7 +151,7 @@ const GASES = [
     'id': 'water_vapor',
     'name': 'Water Vapor',
     'label': 'H₂O',
-    'color': 'grey',
+    'color': 'gray',
   },
   {
     'id': 'nob',

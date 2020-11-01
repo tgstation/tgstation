@@ -134,23 +134,23 @@
 		explosive.prime(lanced_by=user)
 		qdel(src)
 
-//GREY TIDE
-/obj/item/spear/grey_tide
-	name = "\improper Grey Tide"
+//gray TIDE
+/obj/item/spear/gray_tide
+	name = "\improper gray Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	attack_verb_continuous = list("gores")
 	attack_verb_simple = list("gore")
 	force=15
 
-/obj/item/spear/grey_tide/ComponentInitialize()
+/obj/item/spear/gray_tide/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+/obj/item/spear/gray_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	user.faction |= "greytide([REF(user)])"
+	user.faction |= "graytide([REF(user)])"
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))

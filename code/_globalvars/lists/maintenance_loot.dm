@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/hazardvest = 1,
 		/obj/item/clothing/suit/toggle/labcoat = 1,
-		/obj/item/clothing/under/color/grey = 1,
+		/obj/item/clothing/under/color/gray = 1,
 		/obj/item/clothing/gloves/color/fyellow = 1,
 		/obj/effect/spawner/lootdrop/gloves = 1,
 		/obj/item/storage/wallet/random = 1,
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			) = 1,
 		list(//drinks
 			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
-			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
+			/obj/item/reagent_containers/food/drinks/soda_cans/gray_bull = 1,
 			) = 1,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,

@@ -538,7 +538,7 @@
 
 /datum/chemical_reaction/rubberneck
 	results = list(/datum/reagent/consumable/ethanol/rubberneck = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 4, /datum/reagent/consumable/grey_bull = 5, /datum/reagent/consumable/astrotame = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 4, /datum/reagent/consumable/gray_bull = 5, /datum/reagent/consumable/astrotame = 1)
 
 /datum/chemical_reaction/duplex
 	results = list(/datum/reagent/consumable/ethanol/duplex = 4)
@@ -584,4 +584,4 @@
 /datum/chemical_reaction/ginger_amaretto
 	results = list(/datum/reagent/consumable/ethanol/ginger_amaretto = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/sol_dry = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/lemonjuice = 1)
-	
+

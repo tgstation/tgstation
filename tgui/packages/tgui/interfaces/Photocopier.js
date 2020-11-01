@@ -128,11 +128,11 @@ const Options = (props, context) => {
             <Button
               fluid
               textAlign="center"
-              selected={color_mode === "Greyscale"}
+              selected={color_mode === "grayscale"}
               onClick={() => act('color_mode', {
-                mode: "Greyscale",
+                mode: "grayscale",
               })}>
-              Greyscale
+              grayscale
             </Button>
           </Flex.Item>
           <Flex.Item

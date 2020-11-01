@@ -5,7 +5,7 @@
 	icon_state = "labeler1"
 	inhand_icon_state = "flight"
 	item_flags = NOBLUDGEON
-	var/paint_color = "grey"
+	var/paint_color = "gray"
 
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2000)
 

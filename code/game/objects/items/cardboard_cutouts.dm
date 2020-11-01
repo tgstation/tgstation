@@ -16,7 +16,7 @@
 /obj/item/cardboard_cutout/Initialize()
 	. = ..()
 	possible_appearances = sortList(list(
-		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+		"Assistant" = image(icon = src.icon, icon_state = "cutout_graytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
 		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
@@ -119,7 +119,7 @@
 		if("Assistant")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
-			icon_state = "cutout_greytide"
+			icon_state = "cutout_graytide"
 		if("Clown")
 			name = pick(GLOB.clown_names)
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."

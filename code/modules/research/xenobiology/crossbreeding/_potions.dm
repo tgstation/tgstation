@@ -4,7 +4,7 @@ Slimecrossing Potions
 	Collected here for clarity.
 */
 
-//Extract cloner - Charged Grey
+//Extract cloner - Charged gray
 /obj/item/slimepotion/extract_cloner
 	name = "extract cloning potion"
 	desc = "A more powerful version of the extract enhancer potion, capable of cloning regular slime extracts."
@@ -173,7 +173,7 @@ Slimecrossing Potions
 	if(!uses)
 		qdel(src)
 
-//Revival potion - Charged Grey
+//Revival potion - Charged gray
 /obj/item/slimepotion/slime_reviver
 	name = "slime revival potion"
 	desc = "Infused with plasma and compressed gel, this brings dead slimes back to life."

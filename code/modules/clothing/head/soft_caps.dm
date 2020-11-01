@@ -72,11 +72,11 @@
 	soft_type = "yellow"
 	dog_fashion = null
 
-/obj/item/clothing/head/soft/grey
-	name = "grey cap"
-	desc = "It's a baseball hat in a tasteful grey colour."
-	icon_state = "greysoft"
-	soft_type = "grey"
+/obj/item/clothing/head/soft/gray
+	name = "gray cap"
+	desc = "It's a baseball hat in a tasteful gray colour."
+	icon_state = "graysoft"
+	soft_type = "gray"
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/orange

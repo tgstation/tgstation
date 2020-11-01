@@ -70,15 +70,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/det_suit/grey
+/obj/item/clothing/suit/det_suit/gray
 	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's grey trenchcoat."
-	icon_state = "greydet"
-	inhand_icon_state = "greydet"
+	desc = "A hard-boiled private investigator's gray trenchcoat."
+	icon_state = "graydet"
+	inhand_icon_state = "graydet"
 
 /obj/item/clothing/suit/det_suit/noir
 	name = "noir suit coat"
-	desc = "A dapper private investigator's grey suit coat."
+	desc = "A dapper private investigator's gray suit coat."
 	icon_state = "detsuit"
 	inhand_icon_state = "detsuit"
 

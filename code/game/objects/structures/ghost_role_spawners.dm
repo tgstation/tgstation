@@ -323,7 +323,7 @@
 
 /datum/outfit/hermit
 	name = "Lavaland hermit"
-	uniform = /obj/item/clothing/under/color/grey/ancient
+	uniform = /obj/item/clothing/under/color/gray/ancient
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/breath

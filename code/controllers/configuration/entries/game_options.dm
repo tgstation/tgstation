@@ -326,7 +326,7 @@
 	config_entry_value = "Assistant"
 
 /datum/config_entry/flag/starlight
-/datum/config_entry/flag/grey_assistants
+/datum/config_entry/flag/gray_assistants
 
 /datum/config_entry/number/lavaland_budget
 	config_entry_value = 60

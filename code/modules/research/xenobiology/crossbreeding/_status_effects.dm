@@ -452,11 +452,11 @@
 
 
 //Stabilized effects start below.
-/datum/status_effect/stabilized/grey
-	id = "stabilizedgrey"
-	colour = "grey"
+/datum/status_effect/stabilized/gray
+	id = "stabilizedgray"
+	colour = "gray"
 
-/datum/status_effect/stabilized/grey/tick()
+/datum/status_effect/stabilized/gray/tick()
 	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
 		if(!(owner in S.Friends))
 			to_chat(owner, "<span class='notice'>[linked_extract] pulses gently as it communicates with [S].</span>")

@@ -35,7 +35,7 @@ Legendary
 Szechuan
 White
 Black
-Grey
+gray
 Grim
 Electric
 Burning

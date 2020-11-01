@@ -538,7 +538,7 @@
 
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/slime_extract/grey(location)
+	new /obj/item/slime_extract/gray(location)
 
 /datum/chemical_reaction/metalgen_imprint
 	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)

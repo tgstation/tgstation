@@ -224,7 +224,7 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
-## Comment this out to disable the antagonist reputation system. This system rewards players who participate in the game instead of greytiding by giving them slightly higher odds to
+## Comment this out to disable the antagonist reputation system. This system rewards players who participate in the game instead of graytiding by giving them slightly higher odds to
 ## roll antagonist in subsequent rounds until they get it.
 ##
 ## For details See the comments for /datum/game_mode/proc/antag_pick in code/game/gamemodes/game_mode.dm
@@ -474,8 +474,8 @@ OVERFLOW_CAP -1
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
 #STARLIGHT
 
-## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+## Uncomment to bring back old gray suit assistants instead of the now default rainbow colored assistants.
+#gray_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 

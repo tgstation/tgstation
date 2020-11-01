@@ -112,7 +112,7 @@
 	var/heat_g = heat2colour_g(temperature)
 	var/heat_b = heat2colour_b(temperature)
 	var/heat_a = 255
-	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
+	var/grayscale_fire = 1 //This determines how grayscaled the fire is.
 
 	if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
 		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
@@ -120,7 +120,7 @@
 		heat_g = LERP(heat_g,255,normal_amt)
 		heat_b = LERP(heat_b,255,normal_amt)
 		heat_a -= gauss_lerp(temperature, -5000, 5000) * 128
-		greyscale_fire -= normal_amt
+		grayscale_fire -= normal_amt
 	if(temperature > 40000) //Past this temperature the fire will gradually turn a bright purple
 		var/purple_amt = temperature < LERP(40000,200000,0.5) ? gauss_lerp(temperature, 40000, 200000) : 1
 		heat_r = LERP(heat_r,255,purple_amt)
@@ -149,13 +149,13 @@
 		add_overlay(fusion_overlay)
 		add_overlay(rainbow_overlay)
 
-	set_light_color(rgb(LERP(250, heat_r, greyscale_fire), LERP(160, heat_g, greyscale_fire), LERP(25, heat_b, greyscale_fire)))
+	set_light_color(rgb(LERP(250, heat_r, grayscale_fire), LERP(160, heat_g, grayscale_fire), LERP(25, heat_b, grayscale_fire)))
 
 	heat_r /= 255
 	heat_g /= 255
 	heat_b /= 255
 
-	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
+	color = list(LERP(0.3, 1, 1-grayscale_fire) * heat_r,0.3 * heat_g * grayscale_fire,0.3 * heat_b * grayscale_fire, 0.59 * heat_r * grayscale_fire,LERP(0.59, 1, 1-grayscale_fire) * heat_g,0.59 * heat_b * grayscale_fire, 0.11 * heat_r * grayscale_fire,0.11 * heat_g * grayscale_fire,LERP(0.11, 1, 1-grayscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
 #define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)

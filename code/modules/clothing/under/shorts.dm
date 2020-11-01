@@ -26,9 +26,9 @@
 	name = "black athletic shorts"
 	icon_state = "blackshorts"
 
-/obj/item/clothing/under/shorts/grey
-	name = "grey athletic shorts"
-	icon_state = "greyshorts"
+/obj/item/clothing/under/shorts/gray
+	name = "gray athletic shorts"
+	icon_state = "grayshorts"
 
 /obj/item/clothing/under/shorts/purple
 	name = "purple athletic shorts"

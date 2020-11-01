@@ -37,7 +37,7 @@
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
-//TODO on_hit effect that turns skin grey for a moment
+//TODO on_hit effect that turns skin gray for a moment
 
 /datum/nanite_program/hardening/enable_passive_effect()
 	. = ..()

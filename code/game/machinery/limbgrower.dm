@@ -134,14 +134,14 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	if(selected_category=="human" || selected_category=="lizard" || selected_category=="ethereal") //Species with greyscale parts should be included here
+	if(selected_category=="human" || selected_category=="lizard" || selected_category=="ethereal") //Species with grayscale parts should be included here
 		if(selected_category=="human")			//humans don't use the full colour spectrum, they use random_skin_tone
 			limb.skin_tone = random_skin_tone()
 		else
 			limb.species_color = random_short_color()
 
-		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
-		limb.should_draw_greyscale = TRUE
+		limb.icon = 'icons/mob/human_parts_grayscale.dmi'
+		limb.should_draw_grayscale = TRUE
 	else
 		limb.icon = 'icons/mob/human_parts.dmi'
 	// Set this limb up using the species name and body zone

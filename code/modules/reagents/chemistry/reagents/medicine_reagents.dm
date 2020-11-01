@@ -647,7 +647,7 @@
 	name = "Oculine"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
-	color = "#404040" //oculine is dark grey, inacusiate is light grey
+	color = "#404040" //oculine is dark gray, inacusiate is light gray
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
 
@@ -803,7 +803,7 @@
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
 	description = "Efficiently restores brain damage."
-	color = "#A0A0A0" //mannitol is light grey, neurine is lighter grey
+	color = "#A0A0A0" //mannitol is light gray, neurine is lighter gray
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)

@@ -42,9 +42,9 @@ Recurring extracts:
 	. = ..()
 	STOP_PROCESSING(SSobj,src)
 
-/obj/item/slimecross/recurring/grey
-	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+/obj/item/slimecross/recurring/gray
+	extract_type = /obj/item/slime_extract/gray
+	colour = "gray"
 
 /obj/item/slimecross/recurring/orange
 	extract_type = /obj/item/slime_extract/orange

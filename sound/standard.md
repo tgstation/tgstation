@@ -11,7 +11,7 @@ If the sound is going to play to all players at the same time with no source, it
 
 If it is going to play from a source with a direction, it should be mono.
 You can downmix in audacity directly, use Tracks > Mix > Mix Stereo Down to Mono
-If the option is greyed out, try clicking the track first. If it's still greyed out, it's likely already mono.
+If the option is grayed out, try clicking the track first. If it's still grayed out, it's likely already mono.
 
 To export, go to File > Export > Export as OGG. Once the dialogue pops up, give the file a name, and set the Quality slider at the bottom to dead center so the bottom number displays 5.
 

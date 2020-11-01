@@ -363,7 +363,7 @@ grab
 great
 green
 greet
-grey
+gray
 grin
 grip
 groan

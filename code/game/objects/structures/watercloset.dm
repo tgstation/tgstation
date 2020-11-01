@@ -138,7 +138,7 @@
 		w_items += secret.w_class
 		contents += secret
 
-/obj/structure/toilet/greyscale
+/obj/structure/toilet/grayscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
@@ -427,8 +427,8 @@
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 
-/obj/structure/sink/greyscale
-	icon_state = "sink_greyscale"
+/obj/structure/sink/grayscale
+	icon_state = "sink_grayscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
 
@@ -452,7 +452,7 @@
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
 		qdel(I)
-		var/obj/structure/sink/greyscale/new_sink = new /obj/structure/sink/greyscale(loc)
+		var/obj/structure/sink/grayscale/new_sink = new /obj/structure/sink/grayscale(loc)
 		new_sink.has_water_reclaimer = TRUE
 		new_sink.set_custom_materials(custom_materials)
 		new_sink.setDir(dir)

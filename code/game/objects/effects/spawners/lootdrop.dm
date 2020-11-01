@@ -174,7 +174,7 @@
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
 	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
-				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
+				/obj/item/reagent_containers/food/drinks/soda_cans/gray_bull = 15,
 				/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 10,
 				/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 10,
 				/obj/item/reagent_containers/food/drinks/beer/light = 10,

@@ -1122,7 +1122,7 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "dh" = (
-/obj/structure/sign/poster/contraband/grey_tide,
+/obj/structure/sign/poster/contraband/gray_tide,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/icemoon/surface/outdoors)

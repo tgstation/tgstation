@@ -44,7 +44,7 @@
 	icon_state = "bio_virology"
 
 
-//Security biosuit, grey with red stripe across the chest
+//Security biosuit, gray with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
 	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 100, RAD = 80, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
@@ -57,7 +57,7 @@
 	. = ..()
 	allowed += GLOB.security_vest_allowed
 
-//Janitor's biosuit, grey with purple arms
+//Janitor's biosuit, gray with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
 

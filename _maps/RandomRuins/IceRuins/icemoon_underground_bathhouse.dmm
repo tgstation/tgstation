@@ -9,7 +9,7 @@
 	},
 /area/ruin/powered/bathhouse)
 "c" = (
-/obj/structure/table/greyscale,
+/obj/structure/table/grayscale,
 /obj/item/stack/medical/aloe{
 	desc = "A healing paste you can apply on wounds. It smells amazing."
 	},

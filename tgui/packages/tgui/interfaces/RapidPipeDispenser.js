@@ -21,7 +21,7 @@ const ICON_BY_CATEGORY_NAME = {
 };
 
 const PAINT_COLORS = {
-  grey: '#bbbbbb',
+  gray: '#bbbbbb',
   amethyst: '#a365ff',
   blue: '#4466ff',
   brown: '#b26438',

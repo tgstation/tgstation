@@ -367,8 +367,8 @@ Contains:
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team hardsuit"
 	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
-	icon_state = "knight_grey"
-	inhand_icon_state = "knight_grey"
+	icon_state = "knight_gray"
+	inhand_icon_state = "knight_gray"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF

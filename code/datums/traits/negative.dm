@@ -205,7 +205,7 @@
 			if("Station Engineer")
 				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 			if("Atmospheric Technician")
-				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
+				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/grayscale, /obj/item/storage/box/matches)
 			//Supply
 			if("Quartermaster")
 				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
@@ -629,7 +629,7 @@
 	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
-	accessory_type = /obj/item/lighter/greyscale
+	accessory_type = /obj/item/lighter/grayscale
 	hardcore_value = 1
 
 /datum/quirk/junkie/smoker/on_spawn()

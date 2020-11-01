@@ -1013,7 +1013,7 @@
 	pixel_x = -13;
 	pixel_y = 2
 	},
-/obj/item/lighter/greyscale{
+/obj/item/lighter/grayscale{
 	pixel_x = 6;
 	pixel_y = -10
 	},

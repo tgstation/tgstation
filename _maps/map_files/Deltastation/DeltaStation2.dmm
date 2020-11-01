@@ -36415,7 +36415,7 @@
 /obj/structure/closet/secure_closet/hos,
 /obj/item/clothing/head/hos/beret,
 /obj/item/clothing/suit/armor/hos/trenchcoat,
-/obj/item/clothing/under/rank/security/head_of_security/grey,
+/obj/item/clothing/under/rank/security/head_of_security/gray,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -55968,7 +55968,7 @@
 /area/security/warden)
 "cbF" = (
 /obj/structure/closet/secure_closet/warden,
-/obj/item/clothing/under/rank/security/warden/grey,
+/obj/item/clothing/under/rank/security/warden/gray,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -70745,7 +70745,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cFv" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -78670,7 +78670,7 @@
 /obj/machinery/light,
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "graydet";
 	name = "trenchcoat"
 	},
 /obj/item/clothing/suit/toggle/lawyer/black,
@@ -95833,7 +95833,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "graydet";
 	name = "trenchcoat"
 	},
 /obj/item/clothing/suit/jacket{
@@ -108743,7 +108743,7 @@
 /turf/open/floor/wood,
 /area/library)
 "gWz" = (
-/obj/structure/toilet/greyscale,
+/obj/structure/toilet/grayscale,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/red{
@@ -110770,7 +110770,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "mrC" = (
-/obj/structure/toilet/greyscale,
+/obj/structure/toilet/grayscale,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

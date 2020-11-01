@@ -27,12 +27,12 @@ Chilling extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/chilling/grey
-	colour = "grey"
+/obj/item/slimecross/chilling/gray
+	colour = "gray"
 	effect_desc = "Creates some slime barrier cubes. When used they create slimy barricades."
 
-/obj/item/slimecross/chilling/grey/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] produces a few small, grey cubes</span>")
+/obj/item/slimecross/chilling/gray/do_effect(mob/user)
+	user.visible_message("<span class='notice'>[src] produces a few small, gray cubes</span>")
 	for(var/i in 1 to 3)
 		new /obj/item/barriercube(get_turf(user))
 	..()

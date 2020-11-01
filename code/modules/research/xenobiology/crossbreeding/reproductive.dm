@@ -44,9 +44,9 @@ Reproductive extracts:
 		to_chat(user, "<span class='notice'>You feed [monkeycube] to [src], and it pulses gently.</span>")
 		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 
-/obj/item/slimecross/reproductive/grey
-	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+/obj/item/slimecross/reproductive/gray
+	extract_type = /obj/item/slime_extract/gray
+	colour = "gray"
 
 /obj/item/slimecross/reproductive/orange
 	extract_type = /obj/item/slime_extract/orange

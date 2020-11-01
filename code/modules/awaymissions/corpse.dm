@@ -282,9 +282,9 @@
 
 /obj/effect/mob_spawn/slime
 	mob_type = 	/mob/living/simple_animal/slime
-	var/mobcolour = "grey"
+	var/mobcolour = "gray"
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "grey baby slime" //sets the icon in the map editor
+	icon_state = "gray baby slime" //sets the icon in the map editor
 
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
@@ -302,7 +302,7 @@
 /obj/effect/mob_spawn/human/corpse/assistant
 	name = "Assistant"
 	outfit = /datum/outfit/job/assistant
-	icon_state = "corpsegreytider"
+	icon_state = "corpsegraytider"
 
 /obj/effect/mob_spawn/human/corpse/assistant/beesease_infection
 	disease = /datum/disease/beesease
@@ -446,5 +446,5 @@
 
 /datum/outfit/abductorcorpse
 	name = "Abductor Corpse"
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/color/gray
 	shoes = /obj/item/clothing/shoes/combat

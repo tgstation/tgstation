@@ -170,7 +170,7 @@
 	if(length(skillchips))
 		. += "<span class='info'>It has a skillchip embedded in it.</span>"
 	if(suicided)
-		. += "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>"
+		. += "<span class='info'>It's started turning slightly gray. They must not have been able to handle the stress of it all.</span>"
 		return
 	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
 		if(organ_flags & ORGAN_FAILING)

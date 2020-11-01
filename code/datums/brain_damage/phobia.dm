@@ -140,8 +140,8 @@
 	phobia_type = "clowns"
 	random_gain = FALSE
 
-/datum/brain_trauma/mild/phobia/greytide
-	phobia_type = "greytide"
+/datum/brain_trauma/mild/phobia/graytide
+	phobia_type = "graytide"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/lizards

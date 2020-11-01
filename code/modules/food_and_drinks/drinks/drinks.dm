@@ -748,11 +748,11 @@
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30)
 	foodtype = SUGAR | JUNKFOOD
 
-/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
-	name = "Grey Bull"
-	desc = "Grey Bull, it gives you gloves!"
+/obj/item/reagent_containers/food/drinks/soda_cans/gray_bull
+	name = "gray Bull"
+	desc = "gray Bull, it gives you gloves!"
 	icon_state = "energy_drink"
-	list_reagents = list(/datum/reagent/consumable/grey_bull = 20)
+	list_reagents = list(/datum/reagent/consumable/gray_bull = 20)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy

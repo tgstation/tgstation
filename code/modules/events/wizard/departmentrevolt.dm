@@ -12,11 +12,11 @@
 	var/nation_name
 	var/list/citizens	=		list()
 
-	tidecolor = pick("grey", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
+	tidecolor = pick("gray", "white", "yellow", "purple", "brown", "whatevercolorrepresentstheservicepeople")
 	switch(tidecolor)
-		if("grey") //God help you
+		if("gray") //God help you
 			jobs_to_revolt = list("Assistant")
-			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
+			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "gray", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
 			jobs_to_revolt = GLOB.medical_positions
 			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")

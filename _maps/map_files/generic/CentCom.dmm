@@ -18308,7 +18308,7 @@
 "Sa" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
-	icon_state = "cutout_greytide";
+	icon_state = "cutout_graytide";
 	name = "Black Pawn"
 	},
 /turf/open/floor/holofloor/dark,
@@ -18501,7 +18501,7 @@
 /area/centcom/holding)
 "To" = (
 /obj/item/cardboard_cutout/adaptive{
-	icon_state = "cutout_greytide";
+	icon_state = "cutout_graytide";
 	name = "White Pawn"
 	},
 /turf/open/floor/holofloor/dark,

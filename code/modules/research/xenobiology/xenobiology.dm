@@ -4,7 +4,7 @@
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "grey slime extract"
+	icon_state = "gray slime extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
@@ -88,14 +88,14 @@
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		M.spawn_corecross()
 
-/obj/item/slime_extract/grey
-	name = "grey slime extract"
-	icon_state = "grey slime extract"
+/obj/item/slime_extract/gray
+	name = "gray slime extract"
+	icon_state = "gray slime extract"
 	effectmod = "reproductive"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_0
 
-/obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
+/obj/item/slime_extract/gray/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/obj/item/food/monkeycube/M = new
@@ -107,7 +107,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>Your [name] starts pulsing...</span>")
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
+				var/mob/living/simple_animal/slime/S = new(get_turf(user), "gray")
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
@@ -1009,7 +1009,7 @@
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "potgrey"
+	icon_state = "potgray"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
 	if(!ismob(M))

@@ -96,7 +96,7 @@
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
 	icon_state = "scarf"
-	color = "#4A4A4B" //Grey but it looks black
+	color = "#4A4A4B" //gray but it looks black
 
 /obj/item/clothing/neck/scarf/pink
 	name = "pink scarf"

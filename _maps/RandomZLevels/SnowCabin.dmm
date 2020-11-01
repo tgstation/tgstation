@@ -1233,7 +1233,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dQ" = (
-/obj/item/lighter/greyscale,
+/obj/item/lighter/grayscale,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dR" = (
@@ -1726,7 +1726,7 @@
 "ff" = (
 /obj/structure/table/wood,
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /turf/open/floor/wood/cold,
@@ -2555,27 +2555,27 @@
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /turf/open/floor/plating,
@@ -5070,7 +5070,7 @@
 /area/awaymission/cabin/caves)
 "mZ" = (
 /obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
+	desc = "A small gray key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
 	name = "ATV key"
 	},
 /obj/effect/decal/remains/human{

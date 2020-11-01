@@ -15,7 +15,7 @@
 
 /obj/item/clothing/under/color/random/Initialize()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - typesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/ancient - /obj/item/clothing/under/color/black/ghost)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - typesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/gray/ancient - /obj/item/clothing/under/color/black/ghost)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING, initial=TRUE) //or else you end up with naked assistants running around everywhere...
@@ -54,21 +54,21 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-/obj/item/clothing/under/color/grey
-	name = "grey jumpsuit"
-	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
-	icon_state = "grey"
+/obj/item/clothing/under/color/gray
+	name = "gray jumpsuit"
+	desc = "A tasteful gray jumpsuit that reminds you of the good old days."
+	icon_state = "gray"
 	inhand_icon_state = "gy_suit"
 
-/obj/item/clothing/under/color/jumpskirt/grey
-	name = "grey jumpskirt"
-	desc = "A tasteful grey jumpskirt that reminds you of the good old days."
-	icon_state = "grey_skirt"
+/obj/item/clothing/under/color/jumpskirt/gray
+	name = "gray jumpskirt"
+	desc = "A tasteful gray jumpskirt that reminds you of the good old days."
+	icon_state = "gray_skirt"
 	inhand_icon_state = "gy_suit"
 
-/obj/item/clothing/under/color/grey/ancient
+/obj/item/clothing/under/color/gray/ancient
 	name = "ancient jumpsuit"
-	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
+	desc = "A terribly ragged and frayed gray jumpsuit. It looks like it hasn't been washed in over a decade."
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"

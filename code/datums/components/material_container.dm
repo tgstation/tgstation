@@ -218,7 +218,7 @@
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, target = null)
 	if(!M.sheet_type)
-		return 0 //Add greyscale sheet handling here later
+		return 0 //Add grayscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
 

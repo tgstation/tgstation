@@ -60,9 +60,9 @@ Self-sustaining extracts:
 
 //Different types.
 
-/obj/item/slimecross/selfsustaining/grey
-	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+/obj/item/slimecross/selfsustaining/gray
+	extract_type = /obj/item/slime_extract/gray
+	colour = "gray"
 
 /obj/item/slimecross/selfsustaining/orange
 	extract_type = /obj/item/slime_extract/orange

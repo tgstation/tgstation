@@ -48,7 +48,7 @@
 				var/list/material_list = list()
 				if(material.material_type)
 					material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT
-				make_new_table(/obj/structure/table/greyscale, material_list)
+				make_new_table(/obj/structure/table/grayscale, material_list)
 	else
 		return ..()
 

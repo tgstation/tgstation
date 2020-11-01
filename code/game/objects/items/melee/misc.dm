@@ -664,8 +664,8 @@
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "mace_greyscale"
-	inhand_icon_state = "mace_greyscale"
+	icon_state = "mace_grayscale"
+	inhand_icon_state = "mace_grayscale"
 	worn_icon_state = "mace"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'

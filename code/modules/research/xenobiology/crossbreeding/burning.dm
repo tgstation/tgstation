@@ -27,12 +27,12 @@ Burning extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/burning/grey
-	colour = "grey"
+/obj/item/slimecross/burning/gray
+	colour = "gray"
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
-/obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
+/obj/item/slimecross/burning/gray/do_effect(mob/user)
+	var/mob/living/simple_animal/slime/S = new(get_turf(user),"gray")
 	S.visible_message("<span class='danger'>A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!</span>")
 	S.Friends[user] = 20 //Gas, gas, gas
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.

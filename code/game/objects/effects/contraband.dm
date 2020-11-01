@@ -226,8 +226,8 @@
 	desc = "A poster advertising a rival corporate brand of cigarettes."
 	icon_state = "poster7"
 
-/obj/structure/sign/poster/contraband/grey_tide
-	name = "Grey Tide"
+/obj/structure/sign/poster/contraband/gray_tide
+	name = "gray Tide"
 	desc = "A rebellious poster symbolizing assistant solidarity."
 	icon_state = "poster8"
 

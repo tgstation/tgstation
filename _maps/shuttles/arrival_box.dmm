@@ -43,7 +43,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "k" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "l" = (

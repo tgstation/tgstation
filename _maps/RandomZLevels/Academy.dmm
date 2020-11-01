@@ -484,7 +484,7 @@
 /area/awaymission/academy/headmaster)
 "cc" = (
 /obj/structure/table,
-/obj/item/lighter/greyscale,
+/obj/item/lighter/grayscale,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cd" = (

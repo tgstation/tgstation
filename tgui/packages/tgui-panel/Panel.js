@@ -48,7 +48,7 @@ export const Panel = (props, context) => {
               </Flex.Item>
               <Flex.Item mx={0.5}>
                 <Button
-                  color="grey"
+                  color="gray"
                   selected={audio.visible}
                   icon="music"
                   tooltip="Music player"

@@ -48,8 +48,8 @@ Stabilized extracts:
 
 
 //Colors and subtypes:
-/obj/item/slimecross/stabilized/grey
-	colour = "grey"
+/obj/item/slimecross/stabilized/gray
+	colour = "gray"
 	effect_desc = "Makes slimes friendly to the owner"
 
 /obj/item/slimecross/stabilized/orange

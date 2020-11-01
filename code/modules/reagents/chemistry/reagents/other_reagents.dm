@@ -1455,7 +1455,7 @@
 	name = "Black Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
+	random_color_list = list("#8D8D8D")	//more gray than black, not enough to hide your true colors
 
 /datum/reagent/colorful_reagent/powder/white
 	name = "White Powder"
@@ -1988,7 +1988,7 @@
 	name = "Romerol"
 	// the REAL zombie powder
 	description = "Romerol is a highly experimental bioterror agent \
-		which causes dormant nodules to be etched into the grey matter of \
+		which causes dormant nodules to be etched into the gray matter of \
 		the subject. These nodules only become active upon death of the \
 		host, upon which, the secondary structures activate and take control \
 		of the host body."

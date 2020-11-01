@@ -1186,9 +1186,9 @@
 	icon_state = "shirt_green"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/shirt_grey
-	name = "Shirt (Grey)"
-	icon_state = "shirt_grey"
+/datum/sprite_accessory/undershirt/shirt_gray
+	name = "Shirt (gray)"
+	icon_state = "shirt_gray"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/ian
@@ -1336,9 +1336,9 @@
 	icon_state = "tank_fire"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/tank_grey
-	name = "Tank Top (Grey)"
-	icon_state = "tank_grey"
+/datum/sprite_accessory/undershirt/tank_gray
+	name = "Tank Top (gray)"
+	icon_state = "tank_gray"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/female_midriff

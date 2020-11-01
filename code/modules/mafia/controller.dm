@@ -40,7 +40,7 @@
 	///Readable list of roles in current game, sent to the tgui panel for roles list > list("Psychologist x1", "Clown x2")
 	var/list/current_setup_text
 
-	///starting outfit for all mafia players. it's just a grey jumpsuit.
+	///starting outfit for all mafia players. it's just a gray jumpsuit.
 	var/player_outfit = /datum/outfit/mafia
 
 	///spawn points for players, each one has a house

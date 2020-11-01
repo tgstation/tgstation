@@ -21,6 +21,6 @@
 	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")
 	owner.vomit(20)
 
-	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
+	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "gray")
 	Slime.Friends = list(owner)
 	Slime.Leader = owner

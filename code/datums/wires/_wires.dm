@@ -87,7 +87,7 @@
 	"crimson",
 	"cyan",
 	"gold",
-	"grey",
+	"gray",
 	"green",
 	"magenta",
 	"orange",

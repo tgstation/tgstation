@@ -113,7 +113,7 @@
 	icon_state = "cobweb2"
 
 /obj/effect/decal/cleanable/molten_object
-	name = "gooey grey mass"
+	name = "gooey gray mass"
 	desc = "It looks like a melted... something."
 	gender = NEUTER
 	icon = 'icons/effects/effects.dmi'
@@ -122,7 +122,7 @@
 	beauty = -150
 
 /obj/effect/decal/cleanable/molten_object/large
-	name = "big gooey grey mass"
+	name = "big gooey gray mass"
 	icon_state = "big_molten"
 	beauty = -300
 

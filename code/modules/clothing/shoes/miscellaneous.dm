@@ -500,7 +500,7 @@
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
 
 /obj/item/clothing/shoes/cookflops
-	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
+	desc = "All this talk of antags, graytiding, and griefing... I just wanna grill for god's sake!"
 	name = "grilling sandals"
 	icon_state = "cookflops"
 	can_be_tied = FALSE

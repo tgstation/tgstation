@@ -48,7 +48,7 @@
 	var/body_gender = ""
 	var/species_id = ""
 	var/should_draw_gender = FALSE
-	var/should_draw_greyscale = FALSE
+	var/should_draw_grayscale = FALSE
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
@@ -754,7 +754,7 @@
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
-		should_draw_greyscale = FALSE
+		should_draw_grayscale = FALSE
 		no_update = TRUE
 
 	if(no_update)
@@ -762,7 +762,7 @@
 
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
-		should_draw_greyscale = FALSE
+		should_draw_grayscale = FALSE
 
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
@@ -770,7 +770,7 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			should_draw_greyscale = TRUE
+			should_draw_grayscale = TRUE
 		else
 			skin_tone = ""
 
@@ -782,7 +782,7 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			should_draw_greyscale = TRUE
+			should_draw_grayscale = TRUE
 		else
 			species_color = ""
 
@@ -851,8 +851,8 @@
 		should_draw_gender = FALSE
 
 	if(is_organic_limb())
-		if(should_draw_greyscale)
-			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+		if(should_draw_grayscale)
+			limb.icon = 'icons/mob/human_parts_grayscale.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else if(use_digitigrade)
@@ -881,7 +881,7 @@
 		return
 
 
-	if(should_draw_greyscale)
+	if(should_draw_grayscale)
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"

@@ -194,7 +194,7 @@ export const ImplantedSkillchips = (props, context) => {
                 ) || (
                   (skill.complexity + complexity_used > complexity_max) && "bad"
                 ) || (
-                  "grey"
+                  "gray"
                 )}
                 textAlign="center">
                 {skill.complexity}

@@ -910,7 +910,7 @@
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
 	id = "alientech"
 	display_name = "Alien Technology"
-	description = "Things used by the greys."
+	description = "Things used by the grays."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(/obj/item/gun/energy/alien, /obj/item/scalpel/alien, /obj/item/hemostat/alien, /obj/item/retractor/alien, /obj/item/circular_saw/alien,
 	/obj/item/cautery/alien, /obj/item/surgicaldrill/alien, /obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor,

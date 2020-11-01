@@ -28,11 +28,11 @@ Charged extracts:
 	qdel(src)
 	return
 
-/obj/item/slimecross/charged/grey
-	colour = "grey"
+/obj/item/slimecross/charged/gray
+	colour = "gray"
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
-/obj/item/slimecross/charged/grey/do_effect(mob/user)
+/obj/item/slimecross/charged/gray/do_effect(mob/user)
 	new /obj/item/slimepotion/slime_reviver(get_turf(user))
 	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
 	..()

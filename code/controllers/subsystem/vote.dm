@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin || avr)
 			. += "<a href='?src=[REF(src)];vote=restart'>Restart</a>"
 		else
-			. += "<font color='grey'>Restart (Disallowed)</font>"
+			. += "<font color='gray'>Restart (Disallowed)</font>"
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_restart'>[avr ? "Allowed" : "Disallowed"]</a>)"
 		. += "</li><li>"
@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin || avm)
 			. += "<a href='?src=[REF(src)];vote=gamemode'>GameMode</a>"
 		else
-			. += "<font color='grey'>GameMode (Disallowed)</font>"
+			. += "<font color='gray'>GameMode (Disallowed)</font>"
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
 
@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin || avmap)
 			. += "<a href='?src=[REF(src)];vote=map'>Map</a>"
 		else
-			. += "<font color='grey'>Map (Disallowed)</font>"
+			. += "<font color='gray'>Map (Disallowed)</font>"
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_map'>[avmap ? "Allowed" : "Disallowed"]</a>)"
 

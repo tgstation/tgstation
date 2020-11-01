@@ -754,7 +754,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return lit * heat
 
 
-/obj/item/lighter/greyscale
+/obj/item/lighter/grayscale
 	name = "cheap lighter"
 	desc = "A cheap lighter."
 	icon_state = "lighter"
@@ -785,18 +785,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		COLOR_ASSEMBLY_PURPLE
 		)
 
-/obj/item/lighter/greyscale/Initialize()
+/obj/item/lighter/grayscale/Initialize()
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/create_lighter_overlay()
+/obj/item/lighter/grayscale/create_lighter_overlay()
 	var/mutable_appearance/lighter_overlay = ..()
 	lighter_overlay.color = lighter_color
 	return lighter_overlay
 
-/obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
+/obj/item/lighter/grayscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
 		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 

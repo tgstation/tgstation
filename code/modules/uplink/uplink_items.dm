@@ -633,7 +633,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
-	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the gray matter of the brain. \
 			On death, these nodules take control of the dead body, causing limited revivification, \
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
@@ -1724,7 +1724,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
-	item = /obj/item/clothing/under/color/grey/ancient
+	item = /obj/item/clothing/under/color/gray/ancient
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
@@ -1832,7 +1832,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
-	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the gray tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
 	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, He will fall back to slumber. \
 	To activate His Grace, simply unlatch Him."

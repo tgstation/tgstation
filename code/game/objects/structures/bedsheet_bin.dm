@@ -65,10 +65,10 @@ LINEN BINS
 	inhand_icon_state = "sheetgreen"
 	dream_messages = list("green")
 
-/obj/item/bedsheet/grey
-	icon_state = "sheetgrey"
-	inhand_icon_state = "sheetgrey"
-	dream_messages = list("grey")
+/obj/item/bedsheet/gray
+	icon_state = "sheetgray"
+	inhand_icon_state = "sheetgray"
+	dream_messages = list("gray")
 
 /obj/item/bedsheet/orange
 	icon_state = "sheetorange"
@@ -178,14 +178,14 @@ LINEN BINS
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	inhand_icon_state = "sheetqm"
-	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
+	dream_messages = list("a gray ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
 /obj/item/bedsheet/chaplain
 	name = "chaplain's blanket"
 	desc = "A blanket woven with the hearts of gods themselves... Wait, that's just linen."
 	icon_state = "sheetchap"
 	inhand_icon_state = "sheetchap"
-	dream_messages = list("a grey ID", "the gods", "a fulfilled prayer", "a cult", "the chaplain")
+	dream_messages = list("a gray ID", "the gods", "a fulfilled prayer", "a cult", "the chaplain")
 
 /obj/item/bedsheet/brown
 	icon_state = "sheetbrown"
@@ -272,7 +272,7 @@ LINEN BINS
 			type = pick(list(/obj/item/bedsheet,
 				/obj/item/bedsheet/blue,
 				/obj/item/bedsheet/green,
-				/obj/item/bedsheet/grey,
+				/obj/item/bedsheet/gray,
 				/obj/item/bedsheet/orange,
 				/obj/item/bedsheet/purple,
 				/obj/item/bedsheet/red,

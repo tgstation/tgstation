@@ -60,7 +60,7 @@
 	icon_state = "tracer_beam"
 
 /obj/effect/projectile/tracer/tracer/aiming
-	icon_state = "pixelbeam_greyscale"
+	icon_state = "pixelbeam_grayscale"
 	layer = ABOVE_LIGHTING_LAYER
 	plane = ABOVE_LIGHTING_PLANE
 

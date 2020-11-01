@@ -100,7 +100,7 @@ Slimecrossing Items
 	maxcharge = 50000
 	chargerate = 2500
 
-//Barrier cube - Chilling Grey
+//Barrier cube - Chilling gray
 /obj/item/barriercube
 	name = "barrier cube"
 	desc = "A compressed cube of slime. When squeezed, it grows to massive size!"
@@ -117,10 +117,10 @@ Slimecrossing Items
 	B.visible_message("<span class='warning'>[src] suddenly grows into a large, gelatinous barrier!</span>")
 	qdel(src)
 
-//Slime barricade - Chilling Grey
+//Slime barricade - Chilling gray
 /obj/structure/barricade/slime
 	name = "gelatinous barrier"
-	desc = "A huge chunk of grey slime. Bullets might get stuck in it."
+	desc = "A huge chunk of gray slime. Bullets might get stuck in it."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "slimebarrier"
 	proj_pass_rate = 40
@@ -145,7 +145,7 @@ Slimecrossing Items
 //Ration pack - Chilling Silver
 /obj/item/reagent_containers/food/snacks/rationpack
 	name = "ration pack"
-	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
+	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript gray wrapper. Has saved soldiers' lives before - usually by stopping bullets."
 	icon_state = "rationpack"
 	bitesize = 3
 	junkiness = 15

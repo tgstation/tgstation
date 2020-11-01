@@ -163,7 +163,7 @@
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun_d",
 						"Ash" = "dshotgun_f",
-						"Faded Grey" = "dshotgun_g",
+						"Faded gray" = "dshotgun_g",
 						"Maple" = "dshotgun_l",
 						"Rosewood" = "dshotgun_p"
 						)

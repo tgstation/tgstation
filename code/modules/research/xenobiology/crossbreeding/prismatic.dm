@@ -18,11 +18,11 @@ Prismatic extracts:
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
 	playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
 
-/obj/item/slimecross/prismatic/grey/
-	colour = "grey"
+/obj/item/slimecross/prismatic/gray/
+	colour = "gray"
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
-/obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
+/obj/item/slimecross/prismatic/gray/afterattack(turf/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return

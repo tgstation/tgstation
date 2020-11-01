@@ -8,15 +8,15 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material
 	var/name = "material"
 	var/desc = "its..stuff."
-	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
+	///Base color of the material, is used for grayscale. Item isn't changed in color if this is null.
 	var/color
-	///Base alpha of the material, is used for greyscale icons.
+	///Base alpha of the material, is used for grayscale icons.
 	var/alpha
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
-	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
+	///The type of sheet this material creates. This should be replaced as soon as possible by grayscale sheets
 	var/sheet_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1

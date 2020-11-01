@@ -412,9 +412,9 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/head/chameleon
-	name = "grey cap"
-	desc = "It's a baseball hat in a tasteful grey colour."
-	icon_state = "greysoft"
+	name = "gray cap"
+	desc = "It's a baseball hat in a tasteful gray colour."
+	icon_state = "graysoft"
 
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)

@@ -983,7 +983,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				AV.runEvent()
 			if(71 to 80)
 				var/datum/round_event_control/spacevine/SV = new()
-				var/datum/round_event_control/grey_tide/GT = new()
+				var/datum/round_event_control/gray_tide/GT = new()
 				SV.runEvent()
 				GT.runEvent()
 			if(81 to 100)

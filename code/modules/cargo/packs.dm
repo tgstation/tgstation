@@ -578,7 +578,7 @@
 
 /datum/supply_pack/security/armory/riotshields
 	name = "Riot Shields Crate"
-	desc = "For when the greytide gets really uppity. Contains three riot shields. Requires Armory access to open."
+	desc = "For when the graytide gets really uppity. Contains three riot shields. Requires Armory access to open."
 	cost = 2000
 	contains = list(/obj/item/shield/riot,
 					/obj/item/shield/riot,

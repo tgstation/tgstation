@@ -24,8 +24,8 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/rank/security/officer/grey
-	name = "grey security jumpsuit"
+/obj/item/clothing/under/rank/security/officer/gray
+	name = "gray security jumpsuit"
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	inhand_icon_state = "gy_suit"
@@ -73,8 +73,8 @@
 	sensor_mode = 3
 	random_sensor = FALSE
 
-/obj/item/clothing/under/rank/security/warden/grey
-	name = "grey security suit"
+/obj/item/clothing/under/rank/security/warden/gray
+	name = "gray security suit"
 	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	inhand_icon_state = "gy_suit"
@@ -120,18 +120,18 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/rank/security/detective/grey
+/obj/item/clothing/under/rank/security/detective/gray
 	name = "noir suit"
-	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
-	icon_state = "greydet"
-	inhand_icon_state = "greydet"
+	desc = "A hard-boiled private investigator's gray suit, complete with tie clip."
+	icon_state = "graydet"
+	inhand_icon_state = "graydet"
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/security/detective/grey/skirt
+/obj/item/clothing/under/rank/security/detective/gray/skirt
 	name = "noir suitskirt"
-	desc = "A hard-boiled private investigator's grey suitskirt, complete with tie clip."
-	icon_state = "greydet_skirt"
-	inhand_icon_state = "greydet"
+	desc = "A hard-boiled private investigator's gray suitskirt, complete with tie clip."
+	icon_state = "graydet_skirt"
+	inhand_icon_state = "graydet"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
@@ -161,8 +161,8 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/rank/security/head_of_security/grey
-	name = "head of security's grey jumpsuit"
+/obj/item/clothing/under/rank/security/head_of_security/gray
+	name = "head of security's gray jumpsuit"
 	desc = "There are old men, and there are bold men, but there are very few old, bold men."
 	icon_state = "hos"
 	inhand_icon_state = "gy_suit"

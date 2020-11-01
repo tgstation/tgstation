@@ -128,19 +128,19 @@
 	return
 
 
-/obj/structure/closet/wardrobe/grey
-	name = "grey wardrobe"
-	icon_door = "grey"
+/obj/structure/closet/wardrobe/gray
+	name = "gray wardrobe"
+	icon_door = "gray"
 
-/obj/structure/closet/wardrobe/grey/PopulateContents()
+/obj/structure/closet/wardrobe/gray/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/under/color/grey(src)
+		new /obj/item/clothing/under/color/gray(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/under/color/jumpskirt/grey(src)
+		new /obj/item/clothing/under/color/jumpskirt/gray(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/soft/grey(src)
+		new /obj/item/clothing/head/soft/gray(src)
 	if(prob(50))
 		new /obj/item/storage/backpack/duffelbag(src)
 	if(prob(40))

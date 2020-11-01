@@ -6,7 +6,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	anchored		= TRUE
 
 	icon            = 'icons/turf/floors.dmi'
-	icon_state      = "grey"
+	icon_state      = "gray"
 	plane           = OPENSPACE_BACKDROP_PLANE
 	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
@@ -37,7 +37,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 
-	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+	vis_contents += GLOB.openspace_backdrop_one_for_all //Special gray square for projecting backdrop darkness filter on it.
 
 /turf/open/transparent/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))

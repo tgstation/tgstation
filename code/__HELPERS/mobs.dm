@@ -2,12 +2,12 @@
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
 /proc/random_eye_color()
-	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
+	switch(pick(20;"brown",20;"hazel",20;"gray",15;"blue",15;"green",1;"amber",1;"albino"))
 		if("brown")
 			return "630"
 		if("hazel")
 			return "542"
-		if("grey")
+		if("gray")
 			return pick("666","777","888","999","aaa","bbb","ccc")
 		if("blue")
 			return "36c"

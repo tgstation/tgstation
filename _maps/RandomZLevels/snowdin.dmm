@@ -13653,7 +13653,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Iq" = (
 /obj/structure/bed,
-/obj/item/bedsheet/grey,
+/obj/item/bedsheet/gray,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/snowdin/post/mining_main)
 "Ir" = (

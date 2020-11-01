@@ -51,8 +51,8 @@ Industrial extracts:
 	else
 		icon_state = "industrial_still"
 
-/obj/item/slimecross/industrial/grey
-	colour = "grey"
+/obj/item/slimecross/industrial/gray
+	colour = "gray"
 	effect_desc = "Produces monkey cubes."
 	itempath = /obj/item/food/monkeycube
 	itemamount = 5

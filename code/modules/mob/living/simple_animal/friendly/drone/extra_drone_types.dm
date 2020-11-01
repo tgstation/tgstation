@@ -90,7 +90,7 @@
 	liberate()
 	visualAppearance = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
 	if(visualAppearance == MAINTDRONE)
-		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
+		var/colour = pick("gray", "blue", "red", "green", "pink", "orange")
 		icon_state = "[visualAppearance]_[colour]"
 	else
 		icon_state = visualAppearance

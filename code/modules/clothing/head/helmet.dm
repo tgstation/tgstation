@@ -314,11 +314,11 @@
 	icon_state = "knight_red"
 	inhand_icon_state = "knight_red"
 
-/obj/item/clothing/head/helmet/knight/greyscale
+/obj/item/clothing/head/helmet/knight/grayscale
 	name = "knight helmet"
 	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
-	icon_state = "knight_greyscale"
-	inhand_icon_state = "knight_greyscale"
+	icon_state = "knight_grayscale"
+	inhand_icon_state = "knight_grayscale"
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, RAD = 10, FIRE = 40, ACID = 40)
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
@@ -374,8 +374,8 @@
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
-	icon_state = "knight_greyscale"
-	inhand_icon_state = "knight_greyscale"
+	icon_state = "knight_grayscale"
+	inhand_icon_state = "knight_grayscale"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR

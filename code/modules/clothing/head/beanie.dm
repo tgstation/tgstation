@@ -12,7 +12,7 @@
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
 	icon_state = "beanie"
-	color = "#4A4A4B" //Grey but it looks black
+	color = "#4A4A4B" //gray but it looks black
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"

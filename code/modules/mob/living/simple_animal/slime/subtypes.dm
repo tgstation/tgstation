@@ -2,7 +2,7 @@
 	var/list/slime_mutation[4]
 	switch(colour)
 		//Tier 1
-		if("grey")
+		if("gray")
 			slime_mutation[1] = "orange"
 			slime_mutation[2] = "metal"
 			slime_mutation[3] = "blue"

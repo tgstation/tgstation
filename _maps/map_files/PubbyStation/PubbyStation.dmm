@@ -11058,7 +11058,7 @@
 /turf/open/floor/plasteel/white/corner,
 /area/crew_quarters/fitness/recreation)
 "aBW" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -41942,7 +41942,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "cod" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/grey,
+/obj/item/clothing/under/color/gray,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Dormitory APC";

@@ -3,7 +3,7 @@
 
 /datum/outfit/mafia
 	name = "Mafia Game Outfit"
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/color/gray
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 //town

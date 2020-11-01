@@ -420,25 +420,25 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/grey_bull
-	name = "Grey Bull"
-	description = "Grey Bull, it gives you gloves!"
+/datum/reagent/consumable/gray_bull
+	name = "gray Bull"
+	description = "gray Bull, it gives you gloves!"
 	color = "#EEFF00" // rgb: 238, 255, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
-	glass_icon_state = "grey_bull_glass"
-	glass_name = "glass of Grey Bull"
-	glass_desc = "Surprisingly it isn't grey."
+	glass_icon_state = "gray_bull_glass"
+	glass_name = "glass of gray Bull"
+	glass_desc = "Surprisingly it isn't gray."
 
-/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
+/datum/reagent/consumable/gray_bull/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
 
-/datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/consumable/gray_bull/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
 	..()
 
-/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/gray_bull/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
 	M.dizziness +=1
 	M.drowsyness = 0

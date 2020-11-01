@@ -124,11 +124,11 @@
 
 	add_overlay("[icon_base]_base")
 
-	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/bees.dmi')
-	greyscale_overlay.icon_state = "[icon_base]_grey"
-	greyscale_overlay.color = col
-	add_overlay(greyscale_overlay)
+	var/static/mutable_appearance/grayscale_overlay
+	grayscale_overlay = grayscale_overlay || mutable_appearance('icons/mob/bees.dmi')
+	grayscale_overlay.icon_state = "[icon_base]_gray"
+	grayscale_overlay.color = col
+	add_overlay(grayscale_overlay)
 
 	add_overlay("[icon_base]_wings")
 

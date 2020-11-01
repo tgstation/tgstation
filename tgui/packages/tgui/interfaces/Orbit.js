@@ -202,7 +202,7 @@ export const Orbit = (props, context) => {
             .map(thing => (
               <OrbitedButton
                 key={thing.name}
-                color="grey"
+                color="gray"
                 thing={thing} />
             ))}
         </Section>

@@ -1500,7 +1500,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "ads" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -3008,7 +3008,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "agF" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -7503,7 +7503,7 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness)
 "aqt" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 8;
 	open = 1
 	},
@@ -9309,7 +9309,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "auF" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -14035,7 +14035,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "aFq" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -14123,7 +14123,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
 "aFE" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4;
 	open = 1
 	},
@@ -14141,7 +14141,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aFF" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -14560,7 +14560,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aGu" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -17787,7 +17787,7 @@
 /obj/item/storage/fancy/cigarettes{
 	pixel_y = 2
 	},
-/obj/item/lighter/greyscale{
+/obj/item/lighter/grayscale{
 	pixel_x = 4;
 	pixel_y = 2
 	},
@@ -20032,7 +20032,7 @@
 /area/crew_quarters/locker)
 "aUp" = (
 /obj/structure/table,
-/obj/item/clothing/head/soft/grey{
+/obj/item/clothing/head/soft/gray{
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -20254,7 +20254,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aUU" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /obj/machinery/requests_console{
 	department = "Locker Room";
 	pixel_x = -32
@@ -30952,7 +30952,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/structure/table/greyscale,
+/obj/structure/table/grayscale,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
@@ -37669,7 +37669,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bNC" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bNH" = (

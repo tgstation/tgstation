@@ -137,7 +137,7 @@ export const Vending = (props, context) => {
                 Your balance is <b>{user.cash} credits</b>.
               </Box>
             ) || (
-              <Box color="light-grey">
+              <Box color="light-gray">
                 No registered ID card!<br />
                 Please contact your local HoP!
               </Box>

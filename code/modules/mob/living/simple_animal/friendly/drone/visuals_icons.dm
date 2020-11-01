@@ -102,7 +102,7 @@
 /mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/list/drone_icons = list(
-		"Maintenance Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = "[MAINTDRONE]_grey"),
+		"Maintenance Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = "[MAINTDRONE]_gray"),
 		"Repair Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = REPAIRDRONE),
 		"Scout Drone" = image(icon = 'icons/mob/drone.dmi', icon_state = SCOUTDRONE)
 		)
@@ -113,7 +113,7 @@
 			var/list/drone_colors = list(
 				"blue" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_blue"),
 				"green" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_green"),
-				"grey" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_grey"),
+				"gray" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_gray"),
 				"orange" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_orange"),
 				"pink" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_pink"),
 				"red" = image(icon = 'icons/mob/drone.dmi', icon_state = "[visualAppearance]_red")
@@ -123,8 +123,8 @@
 				icon_state = "[visualAppearance]_[picked_color]"
 				icon_living = "[visualAppearance]_[picked_color]"
 			else
-				icon_state = "[visualAppearance]_grey"
-				icon_living = "[visualAppearance]_grey"
+				icon_state = "[visualAppearance]_gray"
+				icon_living = "[visualAppearance]_gray"
 		if("Repair Drone")
 			visualAppearance = REPAIRDRONE
 			icon_state = visualAppearance
@@ -135,8 +135,8 @@
 			icon_living = visualAppearance
 		else
 			visualAppearance = MAINTDRONE
-			icon_state = "[visualAppearance]_grey"
-			icon_living = "[visualAppearance]_grey"
+			icon_state = "[visualAppearance]_gray"
+			icon_living = "[visualAppearance]_gray"
 	icon_dead = "[visualAppearance]_dead"
 	picked = TRUE
 

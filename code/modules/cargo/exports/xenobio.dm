@@ -1,9 +1,9 @@
 /datum/export/slime
 
-/datum/export/slime/grey
+/datum/export/slime/gray
 	cost = 25
-	unit_name = "grey slime core"
-	export_types = list(/obj/item/slime_extract/grey)
+	unit_name = "gray slime core"
+	export_types = list(/obj/item/slime_extract/gray)
 
 /datum/export/slime/common
 	cost = 60

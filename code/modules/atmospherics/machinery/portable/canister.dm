@@ -128,8 +128,8 @@
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Air canister"
 	desc = "Pre-mixed air."
-	icon_state = "grey"
-	base_icon_state = "grey"
+	icon_state = "gray"
+	base_icon_state = "gray"
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"

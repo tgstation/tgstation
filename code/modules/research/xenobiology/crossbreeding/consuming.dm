@@ -82,15 +82,15 @@ Consuming extracts:
 		return
 	..()
 
-/obj/item/slimecross/consuming/grey
-	colour = "grey"
+/obj/item/slimecross/consuming/gray
+	colour = "gray"
 	effect_desc = "Creates a slime cookie."
-	cookietype = /obj/item/slime_cookie/grey
+	cookietype = /obj/item/slime_cookie/gray
 
-/obj/item/slime_cookie/grey
+/obj/item/slime_cookie/gray
 	name = "slime cookie"
-	desc = "A grey-ish transparent cookie. Nutritious, probably."
-	icon_state = "grey"
+	desc = "A gray-ish transparent cookie. Nutritious, probably."
+	icon_state = "gray"
 	taste = "goo"
 	nutrition = 15
 
@@ -148,7 +148,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/metal
 	name = "metallic cookie"
-	desc = "A shiny grey cookie. Hard to the touch."
+	desc = "A shiny gray cookie. Hard to the touch."
 	icon_state = "metal"
 	taste = /datum/reagent/copper
 

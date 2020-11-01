@@ -20,7 +20,7 @@ const GENE_COLORS = {
   T: 'green',
   G: 'blue',
   C: 'blue',
-  X: 'grey',
+  X: 'gray',
 };
 
 const CONSOLE_MODE_STORAGE = 'storage';

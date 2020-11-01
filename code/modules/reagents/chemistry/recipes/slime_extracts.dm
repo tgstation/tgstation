@@ -15,14 +15,14 @@
 	if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
 		qdel(M)
 
-//Grey
+//gray
 /datum/chemical_reaction/slime/slimespawn
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-	required_container = /obj/item/slime_extract/grey
+	required_container = /obj/item/slime_extract/gray
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimespawn/on_reaction(datum/reagents/holder)
-	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "grey")
+	var/mob/living/simple_animal/slime/S = new(get_turf(holder.my_atom), "gray")
 	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
 	..()
 
@@ -30,11 +30,11 @@
 	results = list(/datum/reagent/medicine/epinephrine = 3)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_other = TRUE
-	required_container = /obj/item/slime_extract/grey
+	required_container = /obj/item/slime_extract/gray
 
 /datum/chemical_reaction/slime/slimemonkey
 	required_reagents = list(/datum/reagent/blood = 1)
-	required_container = /obj/item/slime_extract/grey
+	required_container = /obj/item/slime_extract/gray
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimemonkey/on_reaction(datum/reagents/holder)

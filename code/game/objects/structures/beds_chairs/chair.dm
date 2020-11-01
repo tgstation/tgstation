@@ -125,9 +125,9 @@
 // Chair types
 
 ///Material chair
-/obj/structure/chair/greyscale
+/obj/structure/chair/grayscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	item_chair = /obj/item/chair/greyscale
+	item_chair = /obj/item/chair/grayscale
 	buildstacktype = null //Custom mats handle this
 
 
@@ -345,9 +345,9 @@
 				C.Paralyze(20)
 		smash(user)
 
-/obj/item/chair/greyscale
+/obj/item/chair/grayscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	origin_type = /obj/structure/chair/greyscale
+	origin_type = /obj/structure/chair/grayscale
 
 /obj/item/chair/stool
 	name = "stool"

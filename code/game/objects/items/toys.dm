@@ -1239,7 +1239,7 @@
 /obj/item/toy/figure/assistant
 	name = "Assistant action figure"
 	icon_state = "assistant"
-	toysay = "Grey tide world wide!"
+	toysay = "gray tide world wide!"
 
 /obj/item/toy/figure/atmos
 	name = "Atmospheric Technician action figure"
@@ -1306,7 +1306,7 @@
 /obj/item/toy/figure/detective
 	name = "Detective action figure"
 	icon_state = "detective"
-	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
+	toysay = "This airlock has gray jumpsuit and insulated glove fibers on it."
 
 /obj/item/toy/figure/dsquad
 	name = "Death Squad Officer action figure"

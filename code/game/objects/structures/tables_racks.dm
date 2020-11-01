@@ -258,10 +258,10 @@
 	return FALSE
 
 
-/obj/structure/table/greyscale
-	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
-	icon_state = "table_greyscale-0"
-	base_icon_state = "table_greyscale"
+/obj/structure/table/grayscale
+	icon = 'icons/obj/smooth_structures/table_grayscale.dmi'
+	icon_state = "table_grayscale-0"
+	base_icon_state = "table_grayscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 

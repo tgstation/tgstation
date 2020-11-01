@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(economy)
 	var/monster_bounty = 150
 	var/mood_bounty = 100
 	var/techweb_bounty = 250
-	var/slime_bounty = list("grey" = 10,
+	var/slime_bounty = list("gray" = 10,
 							// tier 1
 							"orange" = 100,
 							"metal" = 100,

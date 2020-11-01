@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/working = 0
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
-	var/paint_color = "grey"
+	var/paint_color = "gray"
 	var/atmos_build_speed = 5 //deciseconds (500ms)
 	var/disposal_build_speed = 5
 	var/transit_build_speed = 5
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//Unwrench pipe before we build one over/paint it.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
-		A = A.wrench_act(user, src)	
+		A = A.wrench_act(user, src)
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist

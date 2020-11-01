@@ -25,7 +25,7 @@ const COLORS_SPECTRUM = [
   'purple',
   'pink',
   'brown',
-  'grey',
+  'gray',
 ];
 
 const COLORS_STATES = [

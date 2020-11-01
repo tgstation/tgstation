@@ -28,7 +28,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/tank/air
-	icon_state = "grey"
+	icon_state = "gray"
 	name = "pressure tank (Air)"
 
 /obj/machinery/atmospherics/components/unary/tank/air/New()
@@ -73,7 +73,7 @@
 	gas_type = /datum/gas/healium
 
 /obj/machinery/atmospherics/components/unary/tank/hydrogen
-	icon_state = "grey"
+	icon_state = "gray"
 	gas_type = /datum/gas/hydrogen
 
 /obj/machinery/atmospherics/components/unary/tank/hypernoblium
@@ -102,7 +102,7 @@
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/atmospherics/components/unary/tank/water_vapor
-	icon_state = "grey"
+	icon_state = "gray"
 	gas_type = /datum/gas/water_vapor
 
 /obj/machinery/atmospherics/components/unary/tank/zauker

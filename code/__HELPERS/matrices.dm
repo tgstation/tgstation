@@ -101,7 +101,7 @@
 /////////////////////
 
 /* Documenting a couple of potentially useful color matrices here to inspire ideas
-// Greyscale - indentical to saturation @ 0
+// grayscale - indentical to saturation @ 0
 list(LUMA_R,LUMA_R,LUMA_R,0, LUMA_G,LUMA_G,LUMA_G,0, LUMA_B,LUMA_B,LUMA_B,0, 0,0,0,1, 0,0,0,0)
 
 // Color inversion
@@ -120,8 +120,8 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 /proc/color_matrix_lightness(power)
 	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)
 
-//Changes distance hues have from grey while maintaining the overall lightness. Greys are unaffected.
-//1 is identity, 0 is greyscale, >1 oversaturates colors
+//Changes distance hues have from gray while maintaining the overall lightness. grays are unaffected.
+//1 is identity, 0 is grayscale, >1 oversaturates colors
 /proc/color_matrix_saturation(value)
 	var/inv = 1 - value
 	var/R = round(LUMA_R * inv, 0.001)
@@ -130,13 +130,13 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 
 	return list(R + value,R,R,0, G,G + value,G,0, B,B,B + value,0, 0,0,0,1, 0,0,0,0)
 
-//Changes distance colors have from rgb(127,127,127) grey
-//1 is identity. 0 makes everything grey >1 blows out colors and greys
+//Changes distance colors have from rgb(127,127,127) gray
+//1 is identity. 0 makes everything gray >1 blows out colors and grays
 /proc/color_matrix_contrast(value)
 	var/add = (1 - value) / 2
 	return list(value,0,0,0, 0,value,0,0, 0,0,value,0, 0,0,0,1, add,add,add,0)
 
-//Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting greys
+//Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting grays
 //0 is identity, 120 moves reds to greens, 240 moves reds to blues
 /proc/color_matrix_rotate_hue(angle)
 	var/sin = sin(angle)

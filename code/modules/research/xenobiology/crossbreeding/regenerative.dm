@@ -34,8 +34,8 @@ Regenerative extracts:
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
 
-/obj/item/slimecross/regenerative/grey
-	colour = "grey" //Has no bonus effect.
+/obj/item/slimecross/regenerative/gray
+	colour = "gray" //Has no bonus effect.
 	effect_desc = "Fully heals the target and does nothing else."
 
 /obj/item/slimecross/regenerative/orange

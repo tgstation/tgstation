@@ -1,4 +1,4 @@
- //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
+ //Suits for the pink and gray skeletons! //EVA version no longer used in favor of the Jumpsuit version
 
 
 /obj/item/clothing/suit/space/eva/plasmaman
@@ -186,7 +186,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
 	name = "chief medical officer's plasma envirosuit helmet"
-	desc = "A special containment helmet designed for the Chief Medical Officer. A light grey design is applied to differentiate them from other medical staff."
+	desc = "A special containment helmet designed for the Chief Medical Officer. A light gray design is applied to differentiate them from other medical staff."
 	icon_state = "cmo_envirohelm"
 	inhand_icon_state = "cmo_envirohelm"
 
@@ -277,7 +277,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/janitor
 	name = "janitor's plasma envirosuit helmet"
-	desc = "A grey helmet bearing a pair of purple stripes, designating the wearer as a janitor."
+	desc = "A gray helmet bearing a pair of purple stripes, designating the wearer as a janitor."
 	icon_state = "janitor_envirohelm"
 	inhand_icon_state = "janitor_envirohelm"
 

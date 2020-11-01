@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"ghost_dred",
 	"ghost_dgreen",
 	"ghost_dcyan",
-	"ghost_grey",
+	"ghost_gray",
 	"ghost_dyellow",
 	"ghost_dpink",
 	"skeleghost",
@@ -143,9 +143,9 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks
-#define GBACKPACK "Grey Backpack"
-#define GSATCHEL "Grey Satchel"
-#define GDUFFELBAG "Grey Duffel Bag"
+#define GBACKPACK "gray Backpack"
+#define GSATCHEL "gray Satchel"
+#define GDUFFELBAG "gray Duffel Bag"
 #define LSATCHEL "Leather Satchel"
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"

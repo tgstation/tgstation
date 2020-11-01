@@ -18074,7 +18074,7 @@
 /area/hydroponics)
 "aQW" = (
 /obj/structure/table,
-/obj/item/clothing/head/soft/grey{
+/obj/item/clothing/head/soft/gray{
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -19655,7 +19655,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "aUO" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -54105,7 +54105,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cEz" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cEA" = (
@@ -59890,7 +59890,7 @@
 "cTT" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/obj/structure/table/greyscale,
+/obj/structure/table/grayscale,
 /obj/item/toy/plush/slimeplushie,
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
@@ -65353,7 +65353,7 @@
 	},
 /area/maintenance/port/aft)
 "eEe" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -65568,7 +65568,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "eWu" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -72301,7 +72301,7 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "omh" = (
-/obj/structure/toilet/greyscale{
+/obj/structure/toilet/grayscale{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,

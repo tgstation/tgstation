@@ -264,7 +264,7 @@
 	pixel_x = -23;
 	pixel_y = -2
 	},
-/obj/structure/sink/greyscale{
+/obj/structure/sink/grayscale{
 	dir = 4;
 	pixel_x = -12
 	},

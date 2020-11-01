@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(traumas)
 
 /datum/controller/subsystem/traumas/Initialize()
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
-	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
+	phobia_types = sortList(list("spiders", "space", "security", "clowns", "graytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
 						"aliens", "strangers", "birds", "falling", "anime", "insects"))
 
@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(traumas)
 						  "space"            = construct_phobia_regex("space"),
 						  "security"         = construct_phobia_regex("security"),
 						  "clowns"           = construct_phobia_regex("clowns"),
-						  "greytide"         = construct_phobia_regex("greytide"),
+						  "graytide"         = construct_phobia_regex("graytide"),
 						  "lizards"          = construct_phobia_regex("lizards"),
 						  "skeletons"        = construct_phobia_regex("skeletons"),
 						  "snakes"           = construct_phobia_regex("snakes"),
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/food/cheesiehonkers,
 												 /obj/item/trash/cheesie)),
 
-						"greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+						"graytide"  = typecacheof(list(/obj/item/clothing/under/color/gray, /obj/item/melee/baton/cattleprod,
 												 /obj/item/spear, /obj/item/clothing/mask/gas)),
 
 						"lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(traumas)
 						"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/security/head_of_security,
 												 /obj/item/clothing/under/rank/engineering/chief_engineer, /obj/item/clothing/under/rank/medical/chief_medical_officer,
 												 /obj/item/clothing/under/rank/civilian/head_of_personnel, /obj/item/clothing/under/rank/rnd/research_director,
-												 /obj/item/clothing/under/rank/security/head_of_security/grey, /obj/item/clothing/under/rank/security/head_of_security/alt,
+												 /obj/item/clothing/under/rank/security/head_of_security/gray, /obj/item/clothing/under/rank/security/head_of_security/alt,
 												 /obj/item/clothing/under/rank/rnd/research_director/alt, /obj/item/clothing/under/rank/rnd/research_director/turtleneck,
 												 /obj/item/clothing/under/rank/captain/parade, /obj/item/clothing/under/rank/security/head_of_security/parade, /obj/item/clothing/under/rank/security/head_of_security/parade/female,
 												 /obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/melee/baton/abductor,

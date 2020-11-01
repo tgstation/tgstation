@@ -37,7 +37,7 @@
 
 /obj/item/clothing/under/plasmaman/janitor
 	name = "janitor's plasma envirosuit"
-	desc = "A grey and purple envirosuit designated for plasmamen janitors."
+	desc = "A gray and purple envirosuit designated for plasmamen janitors."
 	icon_state = "janitor_envirosuit"
 	inhand_icon_state = "janitor_envirosuit"
 

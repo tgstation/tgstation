@@ -8,8 +8,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ByondUi, Divider, Flex, Fragment, Input, Knob, LabeledControls, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
-const pod_grey = {
-  color: 'grey',
+const pod_gray = {
+  color: 'gray',
 };
 
 const useCompact = context => {
@@ -498,7 +498,7 @@ const ViewTabHolder = (props, context) => {
             setTabPageIndex(1);
             act('tabSwitch', { tabIndex: 1 });
           }} />
-        <span style={pod_grey}>|</span>
+        <span style={pod_gray}>|</span>
         {(!!data.customDropoff && data.effectReverse===1) && (
           <Button
             inline
@@ -608,7 +608,7 @@ const PodStatusPage = (props, context) => {
                 {list.list.map((effect, j) => (
                   <Fragment key={j}>
                     {effect.divider && (
-                      <span style={pod_grey}><b>|</b></span>
+                      <span style={pod_gray}><b>|</b></span>
                     )}
                     {!effect.divider &&(
                       <Button
@@ -938,7 +938,7 @@ class PresetsPage extends Component {
           </Fragment>
         )}
         {(!presets || presets.length === 0) && (
-          <span style={pod_grey}>
+          <span style={pod_gray}>
             Click [+] to define a new preset.
             They are persistent across rounds/servers!
           </span>
@@ -956,7 +956,7 @@ class PresetsPage extends Component {
               'border-color': `hsl(${preset.hue}, 80%, 80%)`,
             } : ''} />
         )) : ""}
-        <span style={pod_grey}>
+        <span style={pod_gray}>
           <br />
           <br />
           NOTE: Custom sounds from outside the base game files will not save! :(
@@ -1109,23 +1109,23 @@ const Timing = (props, context) => {
             color="transparent"
             tooltip={multiline`
             Toggle Reverse Delays
-            Note: Top set is  
-            normal delays, bottom set 
+            Note: Top set is
+            normal delays, bottom set
             is reversing pod's delays`}
             tooltipOverrideLong
             tooltipPosition="bottom-right"
             onClick={() => act('toggleRevDelays')} />
         </Fragment>
       )}>
-      <DelayHelper 
-        delay_list={DELAYS} 
+      <DelayHelper
+        delay_list={DELAYS}
       />
       {data.custom_rev_delay && (
         <Fragment>
           <Divider horizontal />
-          <DelayHelper 
-            delay_list={REV_DELAYS} 
-            reverse 
+          <DelayHelper
+            delay_list={REV_DELAYS}
+            reverse
           />
         </Fragment>
       )||""}
@@ -1154,7 +1154,7 @@ const DelayHelper = (props, context) => {
             unit={"s"}
             format={value => toFixed(value, 2)}
             maxValue={10}
-            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10) 
+            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
               > 10 ? "orange" : "default"}
             onDrag={(e, value) => {
               act('editTiming', {

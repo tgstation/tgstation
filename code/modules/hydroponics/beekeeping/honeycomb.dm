@@ -24,7 +24,7 @@
 	. = ..()
 	var/mutable_appearance/honey_overlay = mutable_appearance(icon, "honey")
 	if(honey_color)
-		honey_overlay.icon_state = "greyscale_honey"
+		honey_overlay.icon_state = "grayscale_honey"
 		honey_overlay.color = honey_color
 	. += honey_overlay
 

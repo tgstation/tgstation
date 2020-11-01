@@ -40,7 +40,7 @@
 /datum/outfit/space
 	name = "Standard Space Gear"
 
-	uniform = /obj/item/clothing/under/color/grey
+	uniform = /obj/item/clothing/under/color/gray
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/space
 	head = /obj/item/clothing/head/helmet/space

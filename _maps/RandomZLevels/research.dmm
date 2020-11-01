@@ -4938,7 +4938,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "kV" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/gray,
 /obj/machinery/light{
 	dir = 4
 	},

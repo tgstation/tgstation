@@ -1,6 +1,6 @@
 
-/// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
-#define PHOTO_GREYSCALE	"Greyscale"
+/// For use with the `color_mode` var. Photos will be printed in grayscale while the var has this value.
+#define PHOTO_graySCALE	"grayscale"
 /// For use with the `color_mode` var. Photos will be printed in full color while the var has this value.
 #define PHOTO_COLOR		"Color"
 
@@ -39,7 +39,7 @@
 	var/obj/item/toner/toner_cartridge
 	/// How many copies will be printed with one click of the "copy" button.
 	var/num_copies = 1
-	/// Used with photos. Determines if the copied photo will be in greyscale or color.
+	/// Used with photos. Determines if the copied photo will be in grayscale or color.
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
@@ -143,9 +143,9 @@
 			toner_cartridge.charges -= PHOTO_TONER_USE
 			return TRUE
 
-		// Switch between greyscale and color photos
+		// Switch between grayscale and color photos
 		if("color_mode")
-			if(params["mode"] in list(PHOTO_GREYSCALE, PHOTO_COLOR))
+			if(params["mode"] in list(PHOTO_graySCALE, PHOTO_COLOR))
 				color_mode = params["mode"]
 			return TRUE
 
@@ -251,14 +251,14 @@
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
- * Handles the copying of photos, which can be printed in either color or greyscale.
+ * Handles the copying of photos, which can be printed in either color or grayscale.
  *
  * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_photo_copy()
 	if(!photo_copy)
 		return
-	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
+	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_graySCALE ? TRUE : FALSE))
 	give_pixel_offset(copied_pic)
 	toner_cartridge.charges -= PHOTO_TONER_USE
 
@@ -495,7 +495,7 @@
 	charges = 200
 	max_charges = 200
 
-#undef PHOTO_GREYSCALE
+#undef PHOTO_graySCALE
 #undef PHOTO_COLOR
 #undef PAPER_TONER_USE
 #undef PHOTO_TONER_USE

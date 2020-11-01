@@ -15,12 +15,12 @@
 /datum/chemical_reaction/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
 	required_reagents = list(/datum/reagent/medicine/c2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
+	mix_message = "The mixture bubbles noticeably and becomes a dark gray color!"
 
 /datum/chemical_reaction/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/multiver = 1)
-	mix_message = "The mixture sputters loudly and becomes a light grey color!"
+	mix_message = "The mixture sputters loudly and becomes a light gray color!"
 
 /datum/chemical_reaction/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)

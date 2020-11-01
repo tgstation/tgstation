@@ -1,7 +1,7 @@
 /mob/living/simple_animal/slime
-	name = "grey baby slime (123)"
+	name = "gray baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
-	icon_state = "grey baby slime"
+	icon_state = "gray baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
@@ -10,8 +10,8 @@
 	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
-	icon_living = "grey baby slime"
-	icon_dead = "grey baby slime dead"
+	icon_living = "gray baby slime"
+	icon_dead = "gray baby slime dead"
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "shoos"
@@ -67,11 +67,11 @@
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
-	var/colour = "grey"
-	var/coretype = /obj/item/slime_extract/grey
+	var/colour = "gray"
+	var/coretype = /obj/item/slime_extract/gray
 	var/list/slime_mutation[4]
 
-	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	var/static/list/slime_colours = list("rainbow", "gray", "purple", "metal", "orange",
 	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
@@ -82,7 +82,7 @@
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
 
-/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour="gray", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 

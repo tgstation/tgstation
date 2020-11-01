@@ -159,9 +159,9 @@
 	name = "Exotic Corgi"
 	desc = "As cute as it is colorful!"
 	icon = 'icons/mob/pets.dmi'
-	icon_state = "corgigrey"
-	icon_living = "corgigrey"
-	icon_dead = "corgigrey_dead"
+	icon_state = "corgigray"
+	icon_living = "corgigray"
+	icon_dead = "corgigray_dead"
 	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	nofur = TRUE
 

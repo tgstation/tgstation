@@ -154,7 +154,7 @@
 	json[id] = serialize_json()
 	WRITE_FILE(jsonpath, json_encode(json))
 
-/datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
+/datum/picture/proc/Copy(grayscale = FALSE, cropx = 0, cropy = 0)
 	var/datum/picture/P = new
 	P.picture_name = picture_name
 	P.picture_desc = picture_desc
@@ -165,7 +165,7 @@
 	P.psize_x = psize_x - cropx * 2
 	P.psize_y = psize_y - cropy * 2
 	P.has_blueprints = has_blueprints
-	if(greyscale)
+	if(grayscale)
 		if(picture_image)
 			P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		if(picture_icon)

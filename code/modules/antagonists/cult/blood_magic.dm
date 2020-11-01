@@ -285,7 +285,7 @@
 
 /datum/action/innate/cult/blood_spell/veiling/Activate()
 	if(!revealing)
-		owner.visible_message("<span class='warning'>Thin grey dust falls from [owner]'s hand!</span>", \
+		owner.visible_message("<span class='warning'>Thin gray dust falls from [owner]'s hand!</span>", \
 			"<span class='cultitalic'>You invoke the veiling spell, hiding nearby runes.</span>")
 		charges--
 		SEND_SOUND(owner, sound('sound/magic/smoke.ogg',0,1,25))

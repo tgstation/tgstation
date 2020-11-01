@@ -234,7 +234,7 @@
 
 /obj/structure/statue/sandstone/assistant
 	name = "statue of an assistant"
-	desc = "A cheap statue of sandstone for a greyshirt."
+	desc = "A cheap statue of sandstone for a grayshirt."
 	icon_state = "assist"
 
 
@@ -424,12 +424,12 @@
 	var/static/list/statue_costs
 	/// statue completion from 0 to 1.0
 	var/completion = 0
-	/// Greyscaled target with cutout filter
+	/// grayscaled target with cutout filter
 	var/mutable_appearance/target_appearance_with_filters
 	/// Cutout filter for main block sprite
 	var/partial_uncover_filter
 	/// HSV color filters parameters
-	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
+	var/static/list/grayscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
 /obj/structure/carving_block/Destroy()
 	current_target = null
@@ -490,7 +490,7 @@
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target)
 		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
-		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+		target_appearance_with_filters.filters = filter(type="color",color=grayscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
 	switch(value)
@@ -540,7 +540,7 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
-	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
+	var/static/list/grayscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
 /obj/structure/statue/custom/Destroy()
 	content_ma = null
@@ -552,7 +552,7 @@
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
-	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+	content_ma.filters = filter(type="color",color=grayscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_icon()
 
 /obj/structure/statue/custom/update_overlays()

@@ -89,7 +89,7 @@ const MedicalKioskScanButton = (props, context) => {
       <Flex.Item width="16px" textAlign="center">
         <Icon
           name={paid ? 'check' : 'dollar-sign'}
-          color={paid ? 'green' : 'grey'} />
+          color={paid ? 'green' : 'gray'} />
       </Flex.Item>
       <Flex.Item grow={1}>
         <Button

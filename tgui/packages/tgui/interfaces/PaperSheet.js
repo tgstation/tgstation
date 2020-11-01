@@ -488,7 +488,7 @@ class PaperSheetEdit extends Component {
               key="marked_edit"
               textColor={'black'}
               backgroundColor={this.state.previewSelected === "Edit"
-                ? "grey"
+                ? "gray"
                 : "white"}
               selected={this.state.previewSelected === "Edit"}
               onClick={() => this.setState({ previewSelected: "Edit" })}>
@@ -498,7 +498,7 @@ class PaperSheetEdit extends Component {
               key="marked_preview"
               textColor={'black'}
               backgroundColor={this.state.previewSelected === "Preview"
-                ? "grey"
+                ? "gray"
                 : "white"}
               selected={this.state.previewSelected === "Preview"}
               onClick={() => this.setState(() => {
@@ -518,7 +518,7 @@ class PaperSheetEdit extends Component {
               backgroundColor={this.state.previewSelected === "confirm"
                 ? "red"
                 : this.state.previewSelected === "save"
-                  ? "grey"
+                  ? "gray"
                   : "white"}
               selected={this.state.previewSelected === "confirm"
                 || this.state.previewSelected === "save"}

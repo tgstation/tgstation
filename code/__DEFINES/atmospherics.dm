@@ -493,7 +493,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"cyan" = rgb(0,255,249),
 		"dark" = rgb(69,69,69),
 		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
+		"gray" = rgb(255,255,255),
 		"orange" = rgb(255,129,25),
 		"purple" = rgb(128,0,182),
 		"red" = rgb(255,0,0),

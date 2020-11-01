@@ -243,7 +243,7 @@
 		for(var/C in contents)
 			var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
 
-			if(istype(C, /obj/item/lighter/greyscale))
+			if(istype(C, /obj/item/lighter/grayscale))
 				inserted_overlay.icon_state = "lighter_in"
 			else if(istype(C, /obj/item/lighter))
 				inserted_overlay.icon_state = "zippo_in"
