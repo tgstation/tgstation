@@ -1,7 +1,7 @@
-#define PRIORITY_ABSOLUTE 1000
-#define PRIORITY_HIGH 100
-#define PRIORITY_NORMAL 1
-#define PRIORITY_LOW 0
+#define PRIORITY_ABSOLUTE 1
+#define PRIORITY_HIGH 10
+#define PRIORITY_NORMAL 100
+#define PRIORITY_LOW 1000
 
 /**
   * Client Colour Priority System By RemieRichards (then refactored by another contributor)
@@ -16,12 +16,12 @@
   * Define subtypes of this datum
   */
 /datum/client_colour
-	/////Any client.color-valid value
+	///Any client.color-valid value
 	var/colour = ""
 	///The mob that owns this client_colour.
 	var/mob/owner
 	/**
-	  * Since only one client.color can be rendered on screen, we take the one with the highest priority value:
+	  * We prioritize colours with higher priority (lower numbers), so they don't get overriden by less important ones:
 	  * eg: "Bloody screen" > "goggles colour" as the former is much more important
 	  */
 	var/priority = PRIORITY_NORMAL
@@ -36,9 +36,13 @@
 	owner = _owner
 
 /datum/client_colour/Destroy()
-	if(owner)
+	if(!QDELETED(owner))
 		owner.client_colours -= src
-		owner = null
+		if(fade_out)
+			owner.animate_client_colour(fade_out)
+		else
+			owner.update_client_colour()
+	owner = null
 	return ..()
 
 ///Sets a new colour, then updates the owner's screen colour.
@@ -73,17 +77,12 @@
 	if(!ispath(colour_type, /datum/client_colour))
 		return
 
-	var/fade_time = 0
 	for(var/cc in client_colours)
 		var/datum/client_colour/CC = cc
 		if(CC.type == colour_type)
 			fade_time = CC.fade_out
 			qdel(CC)
 			break
-	if(fade_time)
-		animate_client_colour(fade_time)
-	else
-		update_client_colour()
 
 /**
   * Gets the resulting colour/tone from client_colours.
@@ -97,7 +96,7 @@
 	var/_pool_closed = FALSE;\
 	for(var/_c in client_colours){\
 		var/datum/client_colour/_CC = _c;\
-		if(_pool_closed > _CC.priority){\
+		if(_pool_closed < _CC.priority){\
 			break\
 		};\
 		_number_colours++;\
