@@ -186,7 +186,7 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells, are you sure this is uh... safe?"
+	desc = "Essentially a tube that aims shotgun shells. Are you sure this is safe?"
 	icon_state = "ishotgun"
 	inhand_icon_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
