@@ -81,11 +81,6 @@
 		return FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
-	var/datum/bank_account/dept_account = SSeconomy.get_dep_account(inserted_scan_id.registered_account.account_job.paycheck_department)
-	if(!dept_account?.has_money(curr_bounty.reward))
-		playsound(loc, 'sound/machines/synth_no.ogg', 50 , TRUE)
-		stop_sending("Not enough funds to submit bounty at this time, please try again later.")
-		return FALSE
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -100,10 +95,12 @@
 		stop_sending()
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
-		inserted_scan_id.registered_account.transfer_money(dept_account, curr_bounty.reward)
-		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
+		status_report += "Bounty Completed! Please send your completed bounty cube to cargo for your automated payout shortly."
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
+		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
+		reward.bounty_value = curr_bounty.reward
+		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 10)
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -161,14 +158,6 @@
 				to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			var/crumb_floor = (SSeconomy.inflation_value() * BOUNTY_MULTIPLIER)
-			crumbs.reward = round(crumbs.reward/(crumb_floor))
-			if(istype(crumbs, /datum/bounty/item))
-				var/datum/bounty/item/items = crumbs
-				items.required_count = max(round((items.required_count)/(SSeconomy.inflation_value()*2)), 1)
-			if(istype(crumbs, /datum/bounty/reagent))
-				var/datum/bounty/reagent/chems = crumbs
-				chems.required_volume = max(round((chems.required_volume)/SSeconomy.inflation_value()*2), 1)
 			pot_acc.bounty_timer = world.time
 			pot_acc.civilian_bounty = crumbs
 		if("eject")
@@ -215,6 +204,14 @@
 		updateUsrDialog()
 		return TRUE
 
+///Upon completion of a civilian bounty, one of these is created. It is sold to cargo to give the cargo budget bounty money, and the person who completed it cash.
+/obj/item/bounty_cube
+	name = "Bounty Cube"
+	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it!"
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "bounty_cube"
+	///Value of the bounty that this bounty cube sells for.
+	var/bounty_value = 0
 
 ///Beacon to launch a new bounty setup when activated.
 /obj/item/civ_bounty_beacon
@@ -229,7 +226,7 @@
 	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	playsound(src, "sparks", 80, TRUE)
+	playsound(src, "sparks", 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

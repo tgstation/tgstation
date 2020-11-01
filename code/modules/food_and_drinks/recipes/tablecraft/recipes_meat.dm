@@ -81,6 +81,16 @@
 	result = /obj/item/food/fishfingers
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/fishfry
+	name = "Fish fry"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
+		/obj/item/reagent_containers/food/snacks/grown/peas = 1,
+		/obj/item/food/carpmeat = 1
+	)
+	result = /obj/item/food/fishfry
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/sashimi
 	name = "Sashimi"
 	reqs = list(
@@ -226,4 +236,26 @@
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/lasagna
+	name = "Lasagna"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/food/spaghetti = 1
+	)
+	result = /obj/item/food/lasagna
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/gumbo
+	name = "Black eyed gumbo"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/reagent_containers/food/snacks/grown/peas = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/food/meat/cutlet = 1
+	)
+	result = /obj/item/food/salad/gumbo
 	subcategory = CAT_MEAT

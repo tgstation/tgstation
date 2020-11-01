@@ -71,7 +71,7 @@ datum
 				proc3()
 					code
 			proc2()
-				..()
+				. = ..()
 				code
 ```
 
@@ -328,6 +328,27 @@ This is good:
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
+
+### Signal Handlers
+All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
+```
+/type/path/proc/signal_callback()
+	SIGNAL_HANDLER
+	// rest of the code
+```
+This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
+
+There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code may not use this.
+
+### Enforcing parent calling
+When adding new signals to root level procs, eg;
+```
+/atom/proc/setDir(newdir)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	dir = newdir
+```
+The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)

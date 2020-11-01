@@ -195,7 +195,7 @@
 
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
-	. = COMPONENT_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
@@ -766,6 +766,7 @@
 				return TRUE
 	return TRUE
 
+
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
 	SIGNAL_HANDLER_DOES_SLEEP
 
@@ -775,7 +776,7 @@
 	if(user.active_storage == src && A.loc == user) //if you're already looking inside the storage item
 		user.active_storage.close(user)
 		close(user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		return
 
 	if(rustle_sound)
@@ -784,22 +785,23 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.l_store == A && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
-			. = COMPONENT_NO_ATTACK_HAND
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
 			H.put_in_hands(A)
 			H.l_store = null
 			return
 		if(H.r_store == A && !H.get_active_held_item())
-			. = COMPONENT_NO_ATTACK_HAND
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
 			H.put_in_hands(A)
 			H.r_store = null
 			return
 
 	if(A.loc == user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		if(locked)
 			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		else
 			show_to(user)
+
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER

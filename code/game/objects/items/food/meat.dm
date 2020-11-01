@@ -49,6 +49,14 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 
+/obj/item/food/fishfry
+	name = "fish fry"
+	desc = "All that and no bag of chips..."
+	icon_state = "fishfry"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	foodtypes = MEAT | VEGETABLES | FRIED
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/food/tofu
@@ -294,6 +302,14 @@
 /obj/item/food/meatclown/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 30)
+
+/obj/item/food/lasagna
+	name = "Lasagna"
+	desc = "A slice of lasagna. Perfect for a Monday afternoon."
+	icon_state = "lasagna"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
+	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
+	foodtypes = MEAT | DAIRY | GRAIN
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
