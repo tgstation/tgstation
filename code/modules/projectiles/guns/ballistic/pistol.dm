@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/pistol
 	name = "makarov pistol"
-	desc = "A small, easily concealable 9mm PMm handgun. Has a threaded barrel for suppressors."
+	desc = "A small, easily concealable 9mm PMM handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/m9mm
@@ -65,7 +65,7 @@
 	inhand_icon_state = "deagleg"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/camo
-	desc = "The 80's gun runner's flashy go-to handcannon. Uses .50 AE ammo."
+	desc = "A handgun for those Operators who need to operate in operational environments. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	inhand_icon_state = "deagleg"
 
