@@ -21,7 +21,7 @@
 	switch(impress)
 		if(GREAT_ART to INFINITY)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-			msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre(TRUE)]. So [pick("trascended", "awe-inspiring", "bewitching", "impeccable")]!"
+			msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("trascended", "awe-inspiring", "bewitching", "impeccable")]!"
 		if (GOOD_ART to GREAT_ART)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
 			msg = "[source.p_theyre(TRUE)] a [pick("respectable", "commendable", "laudable")] art piece, easy on the keen eye."
@@ -58,7 +58,7 @@
 	var/msg
 	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre(TRUE)]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
+		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."
 
