@@ -1,5 +1,5 @@
-/// The subsystem used to tick [/datum/ai_actions] instances, and thus also behavior trees.
-PROCESSING_SUBSYSTEM_DEF(ai_actions)
+/// The subsystem used to tick [/datum/ai_behavior] instances, and thus also behavior trees.
+PROCESSING_SUBSYSTEM_DEF(ai_behaviors)
 	name = "AI behavior"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC

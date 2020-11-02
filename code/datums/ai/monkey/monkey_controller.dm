@@ -4,64 +4,19 @@ have ways of interacting with a specific mob and control it.
 */
 ///OOK OOK OOK
 
-#define IS_CONSCIOUS(source) (source.controlled_mob.stat == CONSCIOUS && !IS_IN_STASIS(source.controlled_mob))
 #define SHOULD_RESIST(source) (source.controlled_mob.on_fire || source.controlled_mob.buckled || HAS_TRAIT(source.controlled_mob, TRAIT_RESTRAINED) || (source.controlled_mob.pulledby && source.controlled_mob.pulledby.grab_state > GRAB_PASSIVE))
 #define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source.controlled_mob, TRAIT_INCAPACITATED) || HAS_TRAIT(source.controlled_mob, TRAIT_HANDS_BLOCKED))
 
 /datum/ai_controller/monkey
-	var/datum/ai_action/stop_all_movement/stop_all_movement
-	var/datum/ai_action/try_resist/try_resist
-	var/datum/ai_action/monkey_random_wander/monkey_random_wander
+	var/datum/ai_behavior/stop_all_movement/stop_all_movement
+	var/datum/ai_behavior/try_resist/try_resist
+	var/datum/ai_behavior/monkey_random_wander/monkey_random_wander
+	var/datum/ai_behavior/monkey_random_emote/monkey_random_emote
 
+	//2 parallel behaviors at once
+	current_ai_behaviors = list(AI_BEHAVIOR_MOVEMENT = null, AI_BEHAVIOR_ACTION = null)
 
-	stop_all_movement = new(src)
-	try_resist = new(src)
-	monkey_random_wander = new(src)
-
-
-/datum/ai_controller/monkey/CreateController(mob/living/new_mob)
-	. = ..()
-	if(!ismonkey(new_mob))
-		return AI_BEHAVIOR_INCOMPATIBLE
-
-///Builds a plan from actions based on checks performed in this proc.
-/datum/ai_controller/monkey/create_plan(list/new_plan)
-	. = ..()
-	if(!IS_CONSCIOUS(src)) //Not conscious; So just keep repeating stop_movement tasks.
-		. += stop_all_movement
-		return
-	if(SHOULD_RESIST(src))
-		. += try_resist
-	if((controlled_mob.mobility_flags & MOBILITY_MOVE) && isturf(controlled_mob.loc) && !controlled_mob.pulledby)
-		. += monkey_random_wander
-
-///ACTIONS
-/datum/ai_action/stop_all_movement/start_execution()
-	. = ..()
-	walk_to(our_controller.controlled_mob, 0)
-	finish_execution(TRUE)
-
-/datum/ai_action/try_resist/start_execution()
-	. = ..()
-	our_controller.controlled_mob.resist()
-	addtimer(CALLBACK(src, .proc/finish_execution, TRUE), 1 SECONDS)
-
-/datum/ai_action/monkey_random_wander
-	requires_processing = TRUE
-
-/datum/ai_action/monkey_random_wander/process(delta_time)
-	. = ..()
-	if(DT_PROB(25, delta_time))
-		step(our_controller.controlled_mob, pick(GLOB.cardinals))
-	else if(DT_PROB(3, delta_time)))
-		emote(pick("scratch","jump","roll","tail"))
-
-
-
-
-#define MAX_RANGE_FIND 32
-
-/mob/living/carbon/monkey
+	///How angry is the monkey?
 	var/aggressive=0 // set to 1 using VV for an angry monkey
 	var/frustration=0
 	var/pickupTimer=0
@@ -73,102 +28,40 @@ have ways of interacting with a specific mob and control it.
 	var/list/blacklistItems = list()
 	var/maxStepsTick = 6
 	var/best_force = 0
-	var/martial_art = new/datum/martial_art
-	var/resisting = FALSE
 	var/pickpocketing = FALSE
 	var/disposing_body = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
-	var/next_battle_screech = 0
-	var/battle_screech_cooldown = 50
-	ai_controller = /datum/ai_controller/monkey
-
-/mob/living/carbon/monkey/proc/IsStandingStill()
-	return resisting || pickpocketing || disposing_body
-
-// blocks
-// taken from /mob/living/carbon/human/interactive/
-/mob/living/carbon/monkey/proc/walk2derpless(target)
-	if(!target || IsStandingStill())
-		return FALSE
-
-	if(myPath.len <= 0)
-		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1)
-
-	if(myPath)
-		if(myPath.len > 0)
-			for(var/i = 0; i < maxStepsTick; ++i)
-				if(!IsDeadOrIncap())
-					if(myPath.len >= 1)
-						walk_to(src,myPath[1],0,5)
-						myPath -= myPath[1]
-			return TRUE
-
-	// failed to path correctly so just try to head straight for a bit
-	walk_to(src,get_turf(target),0,5)
-	sleep(1)
-	walk_to(src,0)
-
-	return FALSE
 
 
-// taken from /mob/living/carbon/human/interactive/
-/mob/living/carbon/monkey/proc/IsDeadOrIncap()
-	return
+/datum/ai_controller/monkey/CreateController(mob/living/new_mob)
+	. = ..()
+	if(!ismonkey(new_mob))
+		return AI_BEHAVIOR_INCOMPATIBLE
+
+	stop_all_movement = new(src)
+	try_resist = new(src)
+	monkey_random_wander = new(src)
+	monkey_random_emote = new(src)
+
+/datum/ai_controller/monkey/generate_plan(delta_time)
+	. = ..()
+	if(controlled_mob.incapacitated(ignore_restraints = TRUE, ignore_stasis = FALSE))
+		.[AI_BEHAVIOR_MOVEMENT] += stop_all_movement
+		return //Just don't move and thats the entire plan
+
+	if(SHOULD_RESIST(src)) //We're being held or in a chair or on fire, shit situation basically.
+		.[AI_BEHAVIOR_ACTION] += try_resist
+		return
+
+	if((controlled_mob.mobility_flags & MOBILITY_MOVE) && isturf(controlled_mob.loc) && !controlled_mob.pulledby) //This is essentialy idle behavior.
+		.[AI_BEHAVIOR_MOVEMENT] += monkey_random_wander
+		.[AI_BEHAVIOR_ACTION] += monkey_random_emote
+		return
+
+/datum/ai_controller/monkey/proc/IsStandingStill()
+	return pickpocketing || disposing_body
 
 
-/mob/living/carbon/monkey/proc/battle_screech()
-	if(next_battle_screech < world.time)
-		emote(pick("roar","screech"))
-		for(var/mob/living/carbon/monkey/M in view(7,src))
-			M.next_battle_screech = world.time + battle_screech_cooldown
-
-/mob/living/carbon/monkey/proc/equip_item(obj/item/I)
-	if(I.loc == src)
-		return TRUE
-
-	if(I.anchored)
-		blacklistItems[I] ++
-		return FALSE
-
-	// WEAPONS
-	if(istype(I, /obj/item))
-		var/obj/item/W = I
-		if(W.force >= best_force)
-			put_in_hands(W)
-			best_force = W.force
-			return TRUE
-
-	// CLOTHING
-	else if(istype(I, /obj/item/clothing))
-		var/obj/item/clothing/C = I
-		monkeyDrop(C)
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
-		return TRUE
-
-	// EVERYTHING ELSE
-	else
-		if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
-			put_in_hands(I)
-			return TRUE
-
-	blacklistItems[I] ++
-	return FALSE
-
-/mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/clothing/C)
-	if(!equip_to_appropriate_slot(C))
-		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
-		addtimer(CALLBACK(src, .proc/equip_to_appropriate_slot, C), 5)
-
-/mob/living/carbon/monkey/resist_restraints()
-	var/obj/item/I = null
-	if(handcuffed)
-		I = handcuffed
-	else if(legcuffed)
-		I = legcuffed
-	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(mob/living/L)
 	if(HAS_TRAIT(src, TRAIT_PACIFISM))
@@ -486,3 +379,4 @@ have ways of interacting with a specific mob and control it.
 			return TRUE
 
 #undef MAX_RANGE_FIND
+*/

@@ -9,94 +9,10 @@
 	var/obj/item/pickupTarget
 	var/mode = MONKEY_IDLE
 	var/list/myPath = list()
-	var/list/blacklistItems = list()
 	var/maxStepsTick = 6
-	var/best_force = 0
-	var/martial_art = new/datum/martial_art
-	var/resisting = FALSE
 	var/pickpocketing = FALSE
 	var/disposing_body = FALSE
 	var/obj/machinery/disposal/bodyDisposal = null
-	var/next_battle_screech = 0
-	var/battle_screech_cooldown = 50
-	ai_controller = /datum/ai_controller/monkey
-
-/mob/living/carbon/monkey/proc/IsStandingStill()
-	return resisting || pickpocketing || disposing_body
-
-// blocks
-// taken from /mob/living/carbon/human/interactive/
-/mob/living/carbon/monkey/proc/walk2derpless(target)
-	if(!target || IsStandingStill())
-		return FALSE
-
-	if(myPath.len <= 0)
-		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1)
-
-	if(myPath)
-		if(myPath.len > 0)
-			for(var/i = 0; i < maxStepsTick; ++i)
-				if(!IsDeadOrIncap())
-					if(myPath.len >= 1)
-						walk_to(src,myPath[1],0,5)
-						myPath -= myPath[1]
-			return TRUE
-
-	// failed to path correctly so just try to head straight for a bit
-	walk_to(src,get_turf(target),0,5)
-	sleep(1)
-	walk_to(src,0)
-
-	return FALSE
-
-
-// taken from /mob/living/carbon/human/interactive/
-/mob/living/carbon/monkey/proc/IsDeadOrIncap()
-	return HAS_TRAIT(src, TRAIT_INCAPACITATED) || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
-
-
-/mob/living/carbon/monkey/proc/battle_screech()
-	if(next_battle_screech < world.time)
-		emote(pick("roar","screech"))
-		for(var/mob/living/carbon/monkey/M in view(7,src))
-			M.next_battle_screech = world.time + battle_screech_cooldown
-
-/mob/living/carbon/monkey/proc/equip_item(obj/item/I)
-	if(I.loc == src)
-		return TRUE
-
-	if(I.anchored)
-		blacklistItems[I] ++
-		return FALSE
-
-	// WEAPONS
-	if(istype(I, /obj/item))
-		var/obj/item/W = I
-		if(W.force >= best_force)
-			put_in_hands(W)
-			best_force = W.force
-			return TRUE
-
-	// CLOTHING
-	else if(istype(I, /obj/item/clothing))
-		var/obj/item/clothing/C = I
-		monkeyDrop(C)
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
-		return TRUE
-
-	// EVERYTHING ELSE
-	else
-		if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
-			put_in_hands(I)
-			return TRUE
-
-	blacklistItems[I] ++
-	return FALSE
-
-/mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/clothing/C)
-	if(!equip_to_appropriate_slot(C))
-		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
-		addtimer(CALLBACK(src, .proc/equip_to_appropriate_slot, C), 5)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null

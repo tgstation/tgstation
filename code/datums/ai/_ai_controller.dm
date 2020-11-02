@@ -9,7 +9,7 @@ have ways of interacting with a specific mob and control it.
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits
 	///Current action being performed by the AI.
-	var/datum/ai_action/current_ai_action
+	var/datum/ai_behavior/list/current_ai_behaviors = list()
 	///Current status of AI (OFF/ON/IDLE)
 	var/ai_status
 
@@ -28,50 +28,26 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/proc/CreateController(mob/living/new_mob)
 	return
 
+
+/// Generates a plan and see if our existing one is still valid.
 /datum/ai_controller/process(delta_time)
-	var/list/new_plan = create_plan() //Create a new plan based on the environment of the AI
+	var/list/new_plan = generate_plan()
+	for(var/key in current_ai_behaviors)
+		if(current_ai_behaviors[key] != new_plan[key]) //Not the same plan
+			current_ai_behaviors[key]?.finish_execution(FALSE) //Cancel the previous one.
+			current_ai_behaviors[key] = new_plan[key]
+			current_ai_behaviors[key].behavior_key = key //Re-assign the correct key
+			current_ai_behaviors[key].start_execution()
 
-	///No new plan generated
-	if(!new_plan?.len)
-		return
-
-	if(!current_plan?.len) //We currently have no plan, this could mean we havn't gotten one yet or we finished our last one. So just use the new one.
-		current_plan = new_plan
-		perform_next_step(TRUE)
-		return
-
-	if(!check_current_plan_validity(new_plan)) //We have a plan, but it is no longer ideal.
-		cancel_plan()
-		current_plan = new_plan //From now on, use the new plan
-		perform_next_step(TRUE)
-		return
-
-///Tries to perform the next step in the current plan, if its not the first step it will also remove the previous step.
-/datum/ai_controller/proc/perform_next_step(first = FALSE)
-	if(!first) //Not our first step, so cut the last step we performed.
-		current_plan.Cut(1,2)
-	if(!current_plan.len) //Plan ran out of steps, we are done.
-		return
-	current_ai_action = current_plan[1]
-	current_ai_action.start_execution()
-
-///Builds a plan from actions based on checks performed in this proc.
-/datum/ai_controller/proc/create_plan()
+///This is where you decide what actions are taken by the AI in parallel. By default this means AI_BEHAVIOR_MOVEMENT and AI_BEHAVIOR_ACTION.
+/datum/ai_controller/proc/generate_plan()
 	return list()
 
-///Tries to cancel the currently existing plan if it exists, and also the current active action
-/datum/ai_controller/proc/cancel_plan()
-	current_ai_action?.finish_execution(FALSE) //Fail our current action, which will automatically clear the current plan.
-	current_plan.Cut() //Cancel the plan
-
-///Checks if current plan is different from previous plan by seeing if any actions changed.
-/datum/ai_controller/proc/check_current_plan_validity(list/new_plan)
-	for(var/i in 1 to current_plan.len)
-		var/current_action_temp = current_plan[i]
-		var/new_action_temp	= new_plan[i]
-		if(current_action_temp != new_action_temp)
-			return FALSE
-	return TRUE
+///Cancels all currently active actions, for when for they are no longer needed.
+/datum/ai_controller/proc/cancel_behaviors()
+	for(var/key in current_ai_behaviors)
+		var/datum/ai_behavior/ai_behavior = current_ai_behaviors[key]
+		ai_behavior.finish_execution(FALSE)
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -81,10 +57,10 @@ have ways of interacting with a specific mob and control it.
 	ai_status = new_ai_status
 	switch(ai_status)
 		if(AI_STATUS_ON)
-			START_PROCESSING(SSai_behavior, src)
+			START_PROCESSING(SSai_controllers, src)
 		if(AI_STATUS_OFF)
-			STOP_PROCESSING(SSai_behavior, src)
-			cancel_plan()
+			STOP_PROCESSING(SSai_controllers, src)
+			cancel_behaviors()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	UnregisterSignal(controlled_mob, COMSIG_MOB_LOGIN)
