@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(string_lists)
 	return GLOB.string_lists[string_id] = values
 
 ///A wrapper for baseturf string lists, for support for non list values, and a stack_trace if we have major issues
-/datum/proc/baseturfs_string_list(list/values, turf/T)
+/proc/baseturfs_string_list(list/values, turf/baseturf_holder)
 	if(!islist(values))
 		values = list(values)
 	//	return values
@@ -28,4 +28,3 @@ GLOBAL_LIST_EMPTY(string_lists)
 	desc = "It looks like base turfs went to the fucking moon, TELL YOUR LOCAL CODER TODAY"
 	icon = 'icons/turf/debug.dmi'
 	icon_state = "fucked_baseturfs"
-
