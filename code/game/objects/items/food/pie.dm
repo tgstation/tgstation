@@ -47,12 +47,12 @@
 	if(reagents?.total_volume)
 		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
+		var/mob/living/Living = hit_atom
 		if(stunning)
-			L.Paralyze(20) //splat!
-		L.adjust_blurriness(1)
-		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(L, "desecration", 50, TRUE)
+			Living.Paralyze(20) //splat!
+		Living.adjust_blurriness(1)
+		Living.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(Living, "desecration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
@@ -110,14 +110,12 @@
 	foodtypes = GRAIN | VEGETABLES
 
 /obj/item/food/pie/plump_pie/Initialize()
-	. = ..()
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 		food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	if(fey)
-		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
+	. = ..()
 
 /obj/item/food/pie/xemeatpie
 	name = "xeno-pie"
