@@ -36,12 +36,6 @@
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
 
-/mob/living/simple_animal/drone/syndrone/Login()
-	. = ..()
-	if(!. || !client)
-		return FALSE
-	to_chat(src, "<span class='notice'>You may resume your mission, operative!</span>" )
-
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
