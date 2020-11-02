@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscadd: "Roboticist unique labcoat! Because you're worth it! Aesthetics!"
-  - bugfix: "All other labcoats no longer utilize the oldest labcoat sprites we have for their icons!"
-  - bugfix: "The virologist labcoat no longer lies about being more resistant to biological effects! Not that bio armor does anything in the first place."
-  - bugfix: "Some stuff that could be worn in the suit storage slot no longer shows pink! Hooray!"
