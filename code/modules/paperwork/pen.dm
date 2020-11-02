@@ -28,12 +28,79 @@
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
+	var/toggleable = TRUE //can writing be toggled
+	var/on = FALSE //can it write
 	embedding = list()
 	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
+
+/obj/item/pen/attack_self(mob/user)
+	if(toggleable)
+		on = !on
+		to_chat(user, "<span class='notice'>You click \the [src] [on ? "on" : "off"].</span>")
+
+/obj/item/pen/AltClick(mob/user)
+	..()
+
+	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	if(deg && (deg > 0 && deg <= 360))
+		degrees = deg
+		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
+
+/obj/item/pen/examine(mob/user)
+	. = ..()
+
+	. += "<span class='notice'>Alt-click to rotate the head.</span>"
+
+/obj/item/pen/attack(mob/living/M, mob/user,stealth)
+	if(!istype(M))
+		return
+
+	if(!force && on)
+		if(M.can_inject(user, 1))
+			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+			if(!stealth)
+				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
+			. = 1
+
+		log_combat(user, M, "stabbed", src)
+
+	else
+		. = ..()
+
+/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
+	. = ..()
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(on && isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"[O.name]", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			if(oldname == input)
+				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
+			else
+				O.name = input
+				var/datum/component/label/LBL = O.GetComponent(/datum/component/label)
+				if(LBL)
+					LBL.remove_label()
+					LBL.apply_label()
+				to_chat(user, "<span class='notice'>\The [oldname] has been successfully renamed to \the [O.name].</span>")
+				O.renamedByPlayer = TRUE
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -55,6 +122,7 @@
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	colour = "black"
+	on = TRUE
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
 	switch(colour)
@@ -66,10 +134,18 @@
 			throw_speed = initial(throw_speed)
 		if("green")
 			colour = "blue"
+		if("blue")
+			on = FALSE
+			colour = null
 		else
+			on = TRUE
 			colour = "black"
-	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
-	desc = "It's a fancy four-color ink pen, set to [colour]."
+	if(on)
+		to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
+		desc = "It's a fancy four-color ink pen, set to [colour]."
+	else
+		to_chat(user, "<span class='notice'>\The [src] is now off.</span>")
+		desc = "It's a fancy four-color ink pen. It's off."
 
 /obj/item/pen/fountain
 	name = "fountain pen"
@@ -77,25 +153,9 @@
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
-/obj/item/pen/charcoal
-	name = "charcoal stylus"
-	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write."
-	icon_state = "pen-charcoal"
-	colour = "dimgray"
-	font = CHARCOAL_FONT
-	custom_materials = null
-	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
-
-/datum/crafting_recipe/charcoal_stylus
-	name = "Charcoal Stylus"
-	result = /obj/item/pen/charcoal
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
-	time = 30
-	category = CAT_PRIMAL
-
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
-	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
+	desc = "It's an expensive oak fountain pen. The nib is quite sharp."
 	icon_state = "pen-fountain-o"
 	force = 5
 	throwforce = 5
@@ -121,54 +181,23 @@
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
 
-/obj/item/pen/attack_self(mob/living/carbon/user)
-	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
-	if(deg && (deg > 0 && deg <= 360))
-		degrees = deg
-		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
-		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
+/obj/item/pen/charcoal
+	name = "charcoal stylus"
+	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write."
+	icon_state = "pen-charcoal"
+	colour = "dimgray"
+	font = CHARCOAL_FONT
+	custom_materials = null
+	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
+	toggleable = FALSE
+	on = TRUE
 
-/obj/item/pen/attack(mob/living/M, mob/user,stealth)
-	if(!istype(M))
-		return
-
-	if(!force)
-		if(M.can_inject(user, 1))
-			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
-			if(!stealth)
-				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
-			. = 1
-
-		log_combat(user, M, "stabbed", src)
-
-	else
-		. = ..()
-
-/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	. = ..()
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
-	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-			return
-		if(penchoice == "Rename")
-			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-				return
-			if(oldname == input)
-				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
-			else
-				O.name = input
-				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
-				O.renamedByPlayer = TRUE
-
-		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-				return
-			O.desc = input
-			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
+/datum/crafting_recipe/charcoal_stylus
+	name = "Charcoal Stylus"
+	result = /obj/item/pen/charcoal
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
+	time = 30
+	category = CAT_PRIMAL
 
 /*
  * Sleepypens
@@ -179,9 +208,8 @@
 		return
 
 	if(..())
-		if(reagents.total_volume)
+		if(reagents.total_volume && on)
 			if(M.reagents)
-
 				reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
 
 
@@ -199,7 +227,9 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	var/on = FALSE
+	toggleable = FALSE
+	on = TRUE
+	var/stabby = FALSE //is the energy blade active
 
 /obj/item/pen/edagger/ComponentInitialize()
 	. = ..()
@@ -207,19 +237,19 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/edagger/get_sharpness()
-	return on * sharpness
+	return stabby * sharpness
 
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS
-	if(on)
+	if(stabby)
 		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
-	if(on)
-		on = FALSE
+	if(stabby)
+		stabby = FALSE
 		force = initial(force)
 		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
@@ -230,7 +260,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
-		on = TRUE
+		stabby = TRUE
 		force = 18
 		throw_speed = 4
 		w_class = WEIGHT_CLASS_NORMAL
@@ -244,7 +274,7 @@
 	update_icon()
 
 /obj/item/pen/edagger/update_icon_state()
-	if(on)
+	if(stabby)
 		icon_state = inhand_icon_state = "edagger"
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'

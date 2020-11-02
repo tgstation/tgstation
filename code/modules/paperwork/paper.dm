@@ -198,10 +198,18 @@
 		SStgui.close_uis(src)
 		return
 
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
-			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
+	if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
+		to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
+		return
+
+	if(istype(P, /obj/item/pen))
+		var/obj/item/pen/pen = P
+		if(!pen.on)
+			to_chat(user, "<span class='warning'>\The [pen] is off!</span>")
 			return
+		ui_interact(user)
+		return
+	else if(istype(P, /obj/item/toy/crayon))
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
@@ -258,9 +266,12 @@
 		data["stamp_icon_state"] = "FAKE"
 	else if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
+		if(PEN.on)
+			data["edit_mode"] = MODE_WRITING
+		else
+			data["edit_mode"] = MODE_READING
 		data["pen_font"] = PEN.font
 		data["pen_color"] = PEN.colour
-		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"

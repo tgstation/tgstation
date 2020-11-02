@@ -508,6 +508,13 @@
 		var/obj/item/hand_labeler/labeler = I
 		if(labeler.mode)
 			return FALSE
+	if(istype(I, /obj/item/pen))
+		var/obj/item/pen/pen = I
+		if(pen.on)
+			if(istype(parent, /obj))
+				var/obj/O = parent
+				if(O.obj_flags & UNIQUE_RENAME)
+					return FALSE
 	. = TRUE //no afterattack
 	if(iscyborg(M))
 		return
