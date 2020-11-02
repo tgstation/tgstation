@@ -162,7 +162,7 @@
 
 // clumsy monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
-	if(IsAdvancedToolUser())
+	if(user.IsAdvancedToolUser())
 		return ..()
 	if(machine_stat & BROKEN)
 		return
