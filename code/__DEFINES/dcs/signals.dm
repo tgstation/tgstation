@@ -98,6 +98,8 @@
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
 ///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
+///from base of atom/CheckParts(): (atom/movable/new_craft) - The atom has just been used in a crafting recipe and has been moved inside new_craft.
+#define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
