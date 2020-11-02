@@ -229,10 +229,10 @@
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
 		else
 			cloak.max_items = 4
+		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
-	item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
 
 /obj/item/clothing/mask/void_mask
 	name = "Abyssal Mask"

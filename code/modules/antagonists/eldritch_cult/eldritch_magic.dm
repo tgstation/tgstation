@@ -754,7 +754,7 @@
 			continue
 		living_mob.adjustBruteLoss(40)
 
-	do_teleport(user,targeted_turf,channel = TELEPORT_CHANNEL_MAGIC)
+	user.forceMove(targeted_turf)
 
 
 /obj/effect/temp_visual/voidin
