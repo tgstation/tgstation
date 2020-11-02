@@ -25,7 +25,7 @@
 /obj/effect/cult_turf/overlay/floor
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
-	layer = TURF_LAYER
+	layer = TURF_DECAL_LAYER
 
 /obj/effect/cult_turf/overlay/floor/bloodcult
 	icon_state = "cult"
