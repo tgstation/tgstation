@@ -38,11 +38,12 @@
 /datum/element/art/proc/on_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/appraise, source, user) //Do not sleep the proc.
+	if(!INTERACTING_WITH(user, source))
+		INVOKE_ASYNC(src, .proc/appraise, source, user) //Do not sleep the proc.
 
 /datum/element/art/proc/appraise(atom/source, mob/user)
 	to_chat(user, "<span class='notice'>You start appraising [source]...</span>")
-	if(!do_after(user, 20, target = source))
+	if(!do_after(user, 2 SECONDS, target = source))
 		return
 	var/mult = 1
 	if(isobj(source))
