@@ -311,7 +311,7 @@
 	update_stat()
 
 /mob/living/silicon/pai/process(delta_time)
-	emitterhealth = clamp((emitterhealth + emitter_regen_per_second * delta_time), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth + (emitter_regen_per_second * delta_time)), -50, emittermaxhealth)
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	if(pai && (istype(W, /obj/item/encryptionkey) || W.tool_behaviour == TOOL_SCREWDRIVER))
