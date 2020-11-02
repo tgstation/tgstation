@@ -211,7 +211,7 @@
 	foodtypes = GRAIN | VEGETABLES
 
 /obj/item/food/pie/blumpkinpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/blumpkinpieslice, 5, 20)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/blumpkin, 5, 20)
 
 /obj/item/food/pieslice/blumpkin
 	name = "blumpkin pie slice"
