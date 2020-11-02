@@ -18,6 +18,7 @@
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	actions_types = list(/datum/action/item_action/toggle/pen)
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -30,6 +31,7 @@
 	var/font = PEN_FONT
 	var/toggleable = TRUE //can writing be toggled
 	var/on = FALSE //can it write
+	var/datum/action/item_action/toggle/pen
 	embedding = list()
 	sharpness = SHARP_POINTY
 
@@ -38,11 +40,9 @@
 	return(BRUTELOSS)
 
 /obj/item/pen/attack_self(mob/user)
-	if(toggleable)
-		on = !on
-		to_chat(user, "<span class='notice'>You click \the [src] [on ? "on" : "off"].</span>")
+	toggle_pen(user)
 
-/obj/item/pen/AltClick(mob/user)
+/obj/item/pen/CtrlShiftClick(mob/user)
 	..()
 
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
@@ -54,7 +54,23 @@
 /obj/item/pen/examine(mob/user)
 	. = ..()
 
-	. += "<span class='notice'>Alt-click to rotate the head.</span>"
+	. += "<span class='notice'>Ctrl+Shift click to rotate the head.</span>"
+
+/obj/item/pen/proc/toggle_pen(mob/user)
+	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	if(toggleable)
+		on = !on
+		to_chat(user, "<span class='notice'>You click \the [src] [on ? "on" : "off"].</span>")
+		playsound(loc, 'sound/items/penclick.ogg', get_clamped_volume(), TRUE, -1)
+	else
+		to_chat(user, "<span class='warning'>\The [src] doesn't turn [on ? "off" : "on"]!</span>")
+
+/datum/action/item_action/toggle/pen/Trigger()
+	var/obj/item/pen/pen = target
+	if(!istype(pen))
+		return
+	pen.toggle_pen(owner)
 
 /obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -124,7 +140,7 @@
 	colour = "black"
 	on = TRUE
 
-/obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
+/obj/item/pen/fourcolor/toggle_pen(mob/living/carbon/user)
 	switch(colour)
 		if("black")
 			colour = "red"
@@ -140,6 +156,9 @@
 		else
 			on = TRUE
 			colour = "black"
+
+	playsound(loc, 'sound/items/penclick.ogg', get_clamped_volume(), TRUE, -1)
+
 	if(on)
 		to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 		desc = "It's a fancy four-color ink pen, set to [colour]."
@@ -227,8 +246,6 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	toggleable = FALSE
-	on = TRUE
 	var/stabby = FALSE //is the energy blade active
 
 /obj/item/pen/edagger/ComponentInitialize()
