@@ -1,6 +1,6 @@
 import { sortBy } from "common/collections";
-import DOMPurify from 'dompurify';
 import { capitalize } from "common/string";
+import DOMPurify from 'dompurify';
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
@@ -15,8 +15,8 @@ const SWIPE_NEEDED = "SWIPE_NEEDED";
 
 const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
 
-// Sanitization code stolen from PaperSheet.js, typos and all.
-const sanatize_text = value => {
+// Sanitization code stolen from PaperSheet.js
+const sanitize_text = value => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
@@ -629,7 +629,7 @@ const PageMessages = (props, context) => {
     }
 
     const text_html = {
-      __html: sanatize_text(message.content),
+      __html: sanitize_text(message.content),
     };
 
     messageElements.push((
