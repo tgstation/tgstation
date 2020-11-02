@@ -35,6 +35,36 @@
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return(BRUTELOSS)
 
+/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
+	. = ..()
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"[O.name]", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			if(oldname == input)
+				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
+			else
+				O.name = input
+				var/datum/component/label/LBL = O.GetComponent(/datum/component/label)
+				if(LBL)
+					LBL.remove_label()
+					LBL.apply_label()
+				to_chat(user, "<span class='notice'>\The [oldname] has been successfully renamed to \the [O.name].</span>")
+				O.renamedByPlayer = TRUE
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
+
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
@@ -143,32 +173,6 @@
 
 	else
 		. = ..()
-
-/obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	. = ..()
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
-	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-			return
-		if(penchoice == "Rename")
-			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-				return
-			if(oldname == input)
-				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
-			else
-				O.name = input
-				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
-				O.renamedByPlayer = TRUE
-
-		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
-				return
-			O.desc = input
-			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
 /*
  * Sleepypens
