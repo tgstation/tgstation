@@ -92,7 +92,7 @@
 #define MIX_CLIENT_COLOUR(target)\
 	var/_our_colour;\
 	var/_number_colours = 0;\
-	var/_pool_closed = FALSE;\
+	var/_pool_closed = INFINITY;\
 	for(var/_c in client_colours){\
 		var/datum/client_colour/_colour = _c;\
 		if(_pool_closed < _colour.priority){\
