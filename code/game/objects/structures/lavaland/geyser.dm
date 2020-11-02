@@ -83,8 +83,6 @@
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
-
 	reinforced = TRUE
 	plunge_mod = 0.8
-
-	custom_premium_price = 600
+	custom_premium_price = 1200
