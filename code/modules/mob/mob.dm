@@ -815,14 +815,11 @@
   */
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
-	if(ismob(dropping) && dropping != user)
+	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
-		if(ismob(user))
-			var/mob/U = user
-			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
-				M.show_inv(U)
-		else
-			M.show_inv(user)
+		var/mob/U = user
+		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+			M.show_inv(U)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
