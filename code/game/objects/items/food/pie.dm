@@ -47,12 +47,12 @@
 	if(reagents?.total_volume)
 		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))
-		var/mob/living/Living = hit_atom
+		var/mob/living/living_target_getting_hit = hit_atom
 		if(stunning)
-			Living.Paralyze(20) //splat!
-		Living.adjust_blurriness(1)
-		Living.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(Living, "desecration", 50, TRUE)
+			living_target_getting_hit.Paralyze(20) //splat!
+		living_target_getting_hit.adjust_blurriness(1)
+		living_target_getting_hit.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(living_target_getting_hit, "desecration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
