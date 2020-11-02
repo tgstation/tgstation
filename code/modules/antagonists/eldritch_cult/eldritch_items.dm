@@ -215,7 +215,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize()
 	. = ..()
-	var/datum/component/storage/concrete/pockets/void_cloak/cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
+	cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(loc))
