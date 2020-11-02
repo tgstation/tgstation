@@ -123,9 +123,5 @@
 	icon_state = "reinforced_plunger"
 	reinforced = TRUE
 	plunge_mod = 0.8
-<<<<<<< HEAD
-=======
 	layer_mode_sprite = "reinforced_plunger_layer"
-
->>>>>>> upstream/master
 	custom_premium_price = 1200
