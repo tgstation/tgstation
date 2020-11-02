@@ -195,11 +195,11 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 	return output
 
 ///Converts RGB shorthands into RGBA matrices complete of constants rows (ergo a 20 keys list in byond).
-/proc/color2fullRGBAmatrix(color)
+/proc/color_to_full_rgba_matrix(color)
 	if(istext(color))
 		var/list/L = ReadRGB(color)
 		if(!L)
-			return color_matrix_identity() //invalid format
+			CRASH("Invalid/unsupported color format argument in color_to_full_rgba_matrix()")
 		return list(L[1]/255,0,0,0, 0,L[2]/255,0,0, 0,0,L[3]/255,0, 0,0,0,L.len>3?L[4]/255:1, 0,0,0,0)
 	else if(!islist(color)) //invalid format
 		return color_matrix_identity()
@@ -227,5 +227,6 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 			if(L.len < 20) //missing constants row
 				for(var/b in 1 to 20-L.len)
 					. += 0
-		else //invalid format
-			return color_matrix_identity()
+		else
+			CRASH("Invalid/unsupported color format argument in color_to_full_rgba_matrix()")
+

@@ -176,8 +176,8 @@
 	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
-	var/datum/client_colour/C = victim.add_client_colour(/datum/client_colour/bloodlust)
-	QDEL_IN(C, 11)
+	var/datum/client_colour/colour = victim.add_client_colour(/datum/client_colour/bloodlust)
+	QDEL_IN(colour, 11)
 	doomslayer = victim
 	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/end_blood_frenzy)
 	QDEL_IN(src, duration)

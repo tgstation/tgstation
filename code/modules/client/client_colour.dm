@@ -61,13 +61,13 @@
 	if(!ispath(colour_type, /datum/client_colour) || QDELING(src))
 		return
 
-	var/datum/client_colour/CC = new colour_type(src)
-	BINARY_INSERT(CC, client_colours, /datum/client_colour, CC, priority, COMPARE_KEY)
-	if(CC.fade_in)
-		animate_client_colour(CC.fade_in)
+	var/datum/client_colour/colour = new colour_type(src)
+	BINARY_INSERT(colour, client_colours, /datum/client_colour, colour, priority, COMPARE_KEY)
+	if(colour.fade_in)
+		animate_client_colour(colour.fade_in)
 	else
 		update_client_colour()
-	return CC
+	return colour
 
 /**
   * Removes an instance of colour_type from the mob's client_colours list
@@ -78,9 +78,9 @@
 		return
 
 	for(var/cc in client_colours)
-		var/datum/client_colour/CC = cc
-		if(CC.type == colour_type)
-			qdel(CC)
+		var/datum/client_colour/colour = cc
+		if(colour.type == colour_type)
+			qdel(colour)
 			break
 
 /**
@@ -94,25 +94,25 @@
 	var/_number_colours = 0;\
 	var/_pool_closed = FALSE;\
 	for(var/_c in client_colours){\
-		var/datum/client_colour/_CC = _c;\
-		if(_pool_closed < _CC.priority){\
+		var/datum/client_colour/_colour = _c;\
+		if(_pool_closed < _colour.priority){\
 			break\
 		};\
 		_number_colours++;\
-		if(_CC.override){\
-			_pool_closed = _CC.priority\
+		if(_colour.override){\
+			_pool_closed = _colour.priority\
 		};\
 		if(!_our_colour){\
-			_our_colour = _CC.colour;\
+			_our_colour = _colour.colour;\
 			continue\
 		};\
 		if(_number_colours == 2){\
-			_our_colour = color2fullRGBAmatrix(_our_colour)\
+			_our_colour = color_to_full_rgba_matrix(_our_colour)\
 		};\
-		var/list/_new_colour = color2fullRGBAmatrix(_CC.colour);\
+		var/list/_colour_matrix = color_to_full_rgba_matrix(_colour.colour);\
 		var/list/_L = _our_colour;\
 		for(var/_i in 1 to 20){\
-			_L[_i] += _new_colour[_i]\
+			_L[_i] += _colour_matrix[_i]\
 		};\
 	};\
 	if(_number_colours > 1){\
