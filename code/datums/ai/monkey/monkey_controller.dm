@@ -12,15 +12,18 @@ have ways of interacting with a specific mob and control it.
 	var/datum/ai_behavior/try_resist/try_resist
 	var/datum/ai_behavior/monkey_random_wander/monkey_random_wander
 	var/datum/ai_behavior/monkey_random_emote/monkey_random_emote
+	var/datum/ai_behavior/battle_screech/battle_screech
 
 	//2 parallel behaviors at once
-	current_ai_behaviors = list(AI_BEHAVIOR_MOVEMENT = null, AI_BEHAVIOR_ACTION = null)
+	current_ai_behaviors = list(AI_BEHAVIOR_MOVEMENT = null, AI_BEHAVIOR_ACTION = null, AI_BEHAVIOR_SPEECH = null)
 
-	///How angry is the monkey?
+	///Current enemies of the monkey.
+	var/list/enemies = list()
+
 	var/aggressive=0 // set to 1 using VV for an angry monkey
 	var/frustration=0
 	var/pickupTimer=0
-	var/list/enemies = list()
+
 	var/mob/living/target
 	var/obj/item/pickupTarget
 	var/mode = MONKEY_IDLE
@@ -58,12 +61,22 @@ have ways of interacting with a specific mob and control it.
 		.[AI_BEHAVIOR_ACTION] += monkey_random_emote
 		return
 
+	var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+
+	//We have enemies nearby
+	if(enemies.len)
+		for(var/mob/living/L in around)
+			if(should_target(L))
+				if(COOLDOWN_FINISHED(battle_screech, battle_screech_cooldown))
+					.[AI_BEHAVIOR_MOVEMENT] = battle_screech()
+				retaliate(L)
+				return TRUE
+				var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+
 /datum/ai_controller/monkey/proc/IsStandingStill()
 	return pickpocketing || disposing_body
 
-
-
-/mob/living/carbon/monkey/proc/should_target(mob/living/L)
+/datum/ai_controller/monkey/proc/should_target(var/mob/living/L)
 	if(HAS_TRAIT(src, TRAIT_PACIFISM))
 		return FALSE
 
@@ -75,6 +88,19 @@ have ways of interacting with a specific mob and control it.
 		return TRUE
 
 	return FALSE
+
+
+
+// get angry are a mob
+/mob/living/carbon/monkey/proc/retaliate(mob/living/L)
+	mode = MONKEY_HUNT
+	target = L
+	if(L != src)
+		enemies[L] += MONKEY_HATRED_AMOUNT
+
+	if(a_intent != INTENT_HARM)
+		a_intent = INTENT_HARM
+
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
@@ -104,14 +130,7 @@ have ways of interacting with a specific mob and control it.
 
 	switch(mode)
 		if(MONKEY_IDLE)		// idle
-			if(enemies.len)
-				var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
-				for(var/mob/living/L in around)
-					if( should_target(L) )
-						if(L.stat == CONSCIOUS)
-							battle_screech()
-							retaliate(L)
-							return TRUE
+
 						else
 							bodyDisposal = locate(/obj/machinery/disposal/) in around
 							if(bodyDisposal)
@@ -310,16 +329,6 @@ have ways of interacting with a specific mob and control it.
 		if( target == L )
 			back_to_idle()
 
-// get angry are a mob
-/mob/living/carbon/monkey/proc/retaliate(mob/living/L)
-	mode = MONKEY_HUNT
-	target = L
-	if(L != src)
-		enemies[L] += MONKEY_HATRED_AMOUNT
-
-	if(a_intent != INTENT_HARM)
-		battle_screech()
-		a_intent = INTENT_HARM
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))

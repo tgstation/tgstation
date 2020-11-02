@@ -67,7 +67,7 @@
 	switch(mode)
 		if(MONKEY_IDLE)		// idle
 			if(enemies.len)
-				var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+
 				for(var/mob/living/L in around)
 					if( should_target(L) )
 						if(L.stat == CONSCIOUS)
