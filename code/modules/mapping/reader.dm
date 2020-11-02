@@ -299,7 +299,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, list/to_return = null)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
