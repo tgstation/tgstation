@@ -20,6 +20,9 @@
 
 	. += "You can anchor and reanchor it using Codex Cicatrix!"
 	. += "It is currently [anchored == FALSE ? "unanchored" : "anchored"]"
+	. += "This structure can brew 'Brew of Crucible soul' - when used it gives you the ability to phase through matter for 15 seconds, after the time elapses it teleports you back to your original location"
+	. += "This structure can brew 'Brew of Dusk and Dawn' - when used it gives you xray for 1 minute"
+	. += "This structure can brew 'Brew of Wounded Soldier' - when used it makes you immune to damage slowdown, additionally you start healing for every wound you have, quickly outpacing the damage caused by them."
 
 /obj/structure/eldritch_crucible/attacked_by(obj/item/I, mob/living/user)
 	if(istype(I,/obj/item/nullrod))

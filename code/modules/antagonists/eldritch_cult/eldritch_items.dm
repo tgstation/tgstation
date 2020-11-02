@@ -136,7 +136,7 @@
 	name = "Void Blade"
 	desc = "Devoid of any substance, this blade reflects nothingness. It is a real depiction of purity, and chaos that ensues after its implementation."
 	icon_state = "void_blade"
-	inhand_icon_state = "flesh_blade"
+	inhand_icon_state = "void_blade"
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
@@ -206,9 +206,16 @@
 	inhand_icon_state = "void_cloak"
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
+	flags_inv = NONE
 	// slightly worse than normal cult robes
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
+	///reference to the componenet so we dont have to call get_component every time we toggle hood
+	var/datum/component/storage/concrete/pockets/void_cloak/cloak
+
+/obj/item/clothing/suit/hooded/cultrobes/void/Initialize()
+	. = ..()
+	var/datum/component/storage/concrete/pockets/void_cloak/cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(loc))
@@ -217,7 +224,6 @@
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
 		. = ..()
 		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
-		var/datum/component/storage/concrete/pockets/void_cloak/cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
 		if(suittoggled)
 			cloak.max_items = 3
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
@@ -241,7 +247,6 @@
 
 /obj/item/clothing/mask/void_mask/equipped(mob/user, slot)
 	. = ..()
-
 	if(ishuman(user) && user.mind && slot == ITEM_SLOT_MASK)
 		local_user = user
 		START_PROCESSING(SSobj,src)
@@ -288,6 +293,7 @@
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
+	wound_bonus = 20
 	force = 10
 	throwforce = 5
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -303,6 +309,12 @@
 	var/max_rune_amt = 3
 	///Linked action
 	var/datum/action/innate/rune_shatter/linked_action
+
+/obj/item/melee/rune_knife/examine(mob/user)
+	. = ..()
+	. += "This item can carve 'Alert carving' - nearly invisible rune that when stepped on gives you a prompt about where someone stood on it and who it was, doesn't get destroyed by being stepped on."
+	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
+	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
 /obj/item/melee/rune_knife/Initialize()
 	. = ..()
