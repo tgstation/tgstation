@@ -49,6 +49,14 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
 
+/obj/item/food/fishfry
+	name = "fish fry"
+	desc = "All that and no bag of chips..."
+	icon_state = "fishfry"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	foodtypes = MEAT | VEGETABLES | FRIED
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/food/tofu

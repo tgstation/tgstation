@@ -172,8 +172,9 @@
 	. = ..()
 	if(emulate_door_bumps)
 		if(istype(A, /obj/machinery/door))
+			var/obj/machinery/door/conditionalwall = A
 			for(var/m in occupants)
-				A.Bumped(m)
+				conditionalwall.bumpopen(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

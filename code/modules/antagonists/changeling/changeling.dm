@@ -13,7 +13,6 @@
 	hijack_speed = 0.5
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
-	var/team_mode = FALSE //Should assign team objectives ?
 	var/competitive_objectives = FALSE //Should we assign objectives in competition with other lings?
 
 	//Changeling Stuff
@@ -28,7 +27,6 @@
 	var/chem_recharge_rate = 1
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
-	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/was_absorbed = FALSE //if they were absorbed by another ling already.
 	var/isabsorbing = FALSE
@@ -63,34 +61,16 @@
 	QDEL_NULL(emporium_action)
 	. = ..()
 
-/datum/antagonist/changeling/proc/generate_name()
-	var/honorific
-	if(owner.current.gender == FEMALE)
-		honorific = "Ms."
-	else if(owner.current.gender == MALE)
-		honorific = "Mr."
-	else
-		honorific = "Mx."
-	if(GLOB.possible_changeling_IDs.len)
-		changelingID = pick(GLOB.possible_changeling_IDs)
-		GLOB.possible_changeling_IDs -= changelingID
-		changelingID = "[honorific] [changelingID]"
-	else
-		changelingID = "[honorific] [rand(1,999)]"
-
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
 	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
-	generate_name()
 	create_actions()
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
-		if(team_mode)
-			forge_team_objectives()
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
 	. = ..()
@@ -386,8 +366,7 @@
 
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
-		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
-	to_chat(owner.current, "<span class='boldannounce'>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with your fellow changelings.</span>")
+		to_chat(owner.current, "<span class='boldannounce'>You are a changeling! You have absorbed and taken the form of a human.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -396,15 +375,6 @@
 /datum/antagonist/changeling/farewell()
 	to_chat(owner.current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
 
-/datum/antagonist/changeling/proc/forge_team_objectives()
-	if(GLOB.changeling_team_objective_type)
-		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
-		team_objective.owner = owner
-		if(team_objective.prepare())//Setting up succeeded
-			objectives += team_objective
-		else
-			qdel(team_objective)
-	return
 
 /datum/antagonist/changeling/proc/forge_objectives()
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
@@ -413,13 +383,7 @@
 
 	var/escape_objective_possible = TRUE
 
-	//if there's a team objective, check if it's compatible with escape objectives
-	for(var/datum/objective/changeling_team_objective/CTO in objectives)
-		if(!CTO.escape_objective_compatible)
-			escape_objective_possible = FALSE
-			break
-
-	switch(competitive_objectives ? (team_mode ? rand(1,2) : rand(1,3)) : 1)
+	switch(competitive_objectives ? rand(1,3) : 1)
 		if(1)
 			var/datum/objective/absorb/absorb_objective = new
 			absorb_objective.owner = owner
@@ -429,7 +393,7 @@
 			var/datum/objective/absorb_most/ac = new
 			ac.owner = owner
 			objectives += ac
-		if(3) //only give the murder other changelings goal if they're not in a team.
+		if(3)
 			var/datum/objective/absorb_changeling/ac = new
 			ac.owner = owner
 			objectives += ac
@@ -456,18 +420,12 @@
 		if(prob(70))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
-			else
-				kill_objective.find_target()
+			kill_objective.find_target()
 			objectives += kill_objective
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
-			else
-				maroon_objective.find_target()
+			maroon_objective.find_target()
 			objectives += maroon_objective
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
@@ -486,17 +444,14 @@
 		else
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
-			if(team_mode)
-				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
-			else
-				identity_theft.find_target()
+			identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
-	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [changelingID], a changeling!</span>")
+	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are a changeling!</span>")
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
@@ -580,7 +535,6 @@
 	parts += printplayer(owner)
 
 	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-	parts += "<b>Changeling ID:</b> [changelingID]."
 	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
 	parts += " "
 	if(objectives.len)
@@ -599,9 +553,6 @@
 		parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")
-
-/datum/antagonist/changeling/antag_listing_name()
-	return ..() + "([changelingID])"
 
 /datum/antagonist/changeling/xenobio/antag_listing_name()
 	return ..() + "(Xenobio)"
