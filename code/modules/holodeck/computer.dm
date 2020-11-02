@@ -227,8 +227,7 @@
 					buttons.setup_device()
 
 			if (isstructure(holo_object))
-				var/obj/structure/structures = holo_object
-				structures.flags_1 |= NODECONSTRUCT_1
+				holo_object.flags_1 |= NODECONSTRUCT_1
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
