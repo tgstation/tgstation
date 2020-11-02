@@ -22,9 +22,12 @@ const VendingRow = (props, context) => {
       !product.premium
       && department
       && user
-      && department === user.department
     )
   );
+  const discount = (
+    department === user.department
+  );
+  const redPrice = Math.round(product.price * 0.2);
   return (
     <Table.Row>
       <Table.Cell collapsing>
@@ -79,7 +82,7 @@ const VendingRow = (props, context) => {
                 || product.price > data.user.cash
               )
             )}
-            content={free ? 'FREE' : product.price + ' cr'}
+            content={(free && discount) ? redPrice +' cr': product.price+' cr'}
             onClick={() => act('vend', {
               'ref': product.ref,
             })} />
