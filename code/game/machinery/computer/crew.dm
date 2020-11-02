@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		//ANYTHING ELSE = 81  //Unknowns/custom jobs will appear after civilians, and before assistants
 		"Assistant" = 999,
 
-		//200-229: Centcomm
+		//200-229: Centcom
 		"Admiral" = 200,
 		"CentCom Commander" = 210,
 		"Custodian" = 211,
