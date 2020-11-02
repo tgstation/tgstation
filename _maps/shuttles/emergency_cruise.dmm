@@ -70,7 +70,7 @@
 /obj/item/storage/fancy/donut_box{
 	pixel_y = -7
 	},
-/obj/item/reagent_containers/food/snacks/donut{
+/obj/item/food/donut{
 	pixel_x = 5;
 	pixel_y = 10
 	},

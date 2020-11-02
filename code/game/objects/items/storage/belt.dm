@@ -225,7 +225,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
-		/obj/item/reagent_containers/food/snacks/donut,
+		/obj/item/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,

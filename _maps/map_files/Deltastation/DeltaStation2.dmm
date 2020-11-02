@@ -33925,7 +33925,7 @@
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
-/obj/item/reagent_containers/food/snacks/donut/jelly/choco,
+/obj/item/food/donut/jelly/choco,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
