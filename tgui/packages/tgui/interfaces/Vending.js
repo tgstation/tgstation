@@ -14,6 +14,7 @@ const VendingRow = (props, context) => {
     onstation,
     department,
     user,
+    jobDiscount,
   } = data;
   const free = (
     !onstation
@@ -27,7 +28,7 @@ const VendingRow = (props, context) => {
   const discount = (
     department === user.department
   );
-  const redPrice = Math.round(product.price * 0.2);
+  const redPrice = Math.round(product.price * jobDiscount);
   return (
     <Table.Row>
       <Table.Cell collapsing>
