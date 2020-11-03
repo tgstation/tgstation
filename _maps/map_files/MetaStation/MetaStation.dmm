@@ -64722,13 +64722,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"dLU" = (
-/obj/machinery/bounty_board{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "dMl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -72496,10 +72489,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/machinery/bounty_board{
-	dir = 1;
-	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
@@ -101048,7 +101037,7 @@ ayn
 aXr
 bmm
 baB
-dLU
+bgQ
 pXD
 bgY
 bgY
