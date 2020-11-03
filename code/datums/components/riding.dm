@@ -50,6 +50,8 @@
 
 	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
 
+	COOLDOWN_DECLARE(message_cooldown)
+
 
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	if(!ismovable(parent))
@@ -64,6 +66,9 @@
 		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
 	handle_specials()
+
+	if(istype(parent, /obj/vehicle))
+		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
 
 	if(isliving(parent))
 		var/mob/living/parent_living = parent
@@ -317,13 +322,11 @@
 	var/atom/movable/AM = parent
 	return override_allow_spacemove || AM.has_gravity()
 
-/datum/component/riding/proc/account_limbs(mob/living/M)
-	if(M.usable_legs < 2 && !slowed)
-		vehicle_move_delay = vehicle_move_delay + slowvalue
-		slowed = TRUE
-	else if(slowed)
-		vehicle_move_delay = vehicle_move_delay - slowvalue
-		slowed = FALSE
+
+
+
+
+
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human

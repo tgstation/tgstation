@@ -123,13 +123,15 @@
 	return FALSE
 
 /obj/vehicle/proc/driver_move(mob/living/user, direction)
-	if(key_type && !is_key(inserted_key))
-		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
-		return FALSE
+	testing("driver move start")
 	if(!default_driver_move)
 		return
 	if(!canmove)
 		return
+	testing("about to send driver move signal")
+	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) == COMPONENT_DRIVER_BLOCK_MOVE)
+		return
+	testing("successful signal")
 	vehicle_move(direction)
 	return TRUE
 

@@ -51,6 +51,7 @@
 	user.put_in_hands(inserted_key)
 	inserted_key = null
 
+/*
 /obj/vehicle/ridden/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
@@ -65,7 +66,7 @@
 		return FALSE
 
 	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
-		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)	
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
 			unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
 			"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
@@ -92,10 +93,11 @@
 			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return FALSE
-	
+
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()
+*/
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || !in_range(M, src))
