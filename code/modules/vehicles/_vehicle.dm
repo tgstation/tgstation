@@ -118,17 +118,16 @@
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
+	testing("vehicle relaymove")
 	if(is_driver(user))
 		return driver_move(user, direction)
 	return FALSE
 
 /obj/vehicle/proc/driver_move(mob/living/user, direction)
-	testing("driver move start")
 	if(!default_driver_move)
 		return
 	if(!canmove)
 		return
-	testing("about to send driver move signal")
 	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) == COMPONENT_DRIVER_BLOCK_MOVE)
 		return
 	testing("successful signal")

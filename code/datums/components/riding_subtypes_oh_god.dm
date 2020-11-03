@@ -77,6 +77,7 @@
 
 
 /datum/component/riding/atv
+	keytype = /obj/item/key
 	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
 
@@ -119,6 +120,9 @@
 	keytype = null
 
 
+/datum/component/riding/janicart
+	keytype = /obj/item/key/janitor
+
 /datum/component/riding/janicart/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
@@ -159,6 +163,7 @@
 	allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
 
 /datum/component/riding/secway
+	keytype = /obj/item/key/security
 	vehicle_move_delay = 1.75
 	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
@@ -197,6 +202,9 @@
 	//vehicle_move_delay = movedelay
 	vehicle_move_delay = 1
 	slowvalue = 0
+
+/datum/component/riding/car/clowncar
+	keytype = /obj/item/bikehorn
 
 /datum/component/riding/car/speedwagon
 	vehicle_move_delay = 0

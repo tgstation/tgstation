@@ -212,22 +212,24 @@
 	var/atom/movable/AM = parent
 	var/AM_dir = "[dir]"
 	var/passindex = 0
-	if(AM.has_buckled_mobs())
-		for(var/m in AM.buckled_mobs)
-			passindex++
-			var/mob/living/buckled_mob = m
-			var/list/offsets = get_offsets(passindex)
-			buckled_mob.setDir(dir)
-			dir_loop:
-				for(var/offsetdir in offsets)
-					if(offsetdir == AM_dir)
-						var/list/diroffsets = offsets[offsetdir]
-						buckled_mob.pixel_x = diroffsets[1]
-						if(diroffsets.len >= 2)
-							buckled_mob.pixel_y = diroffsets[2]
-						if(diroffsets.len == 3)
-							buckled_mob.layer = diroffsets[3]
-						break dir_loop
+	if(!AM.has_buckled_mobs())
+		return
+
+	for(var/m in AM.buckled_mobs)
+		passindex++
+		var/mob/living/buckled_mob = m
+		var/list/offsets = get_offsets(passindex)
+		buckled_mob.setDir(dir)
+		dir_loop:
+			for(var/offsetdir in offsets)
+				if(offsetdir == AM_dir)
+					var/list/diroffsets = offsets[offsetdir]
+					buckled_mob.pixel_x = diroffsets[1]
+					if(diroffsets.len >= 2)
+						buckled_mob.pixel_y = diroffsets[2]
+					if(diroffsets.len == 3)
+						buckled_mob.layer = diroffsets[3]
+					break dir_loop
 	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
 	var/px = default_vehicle_pixel_offsets[AM_dir]
 	var/py = default_vehicle_pixel_offsets[AM_dir]
@@ -311,6 +313,8 @@
 	else
 		last_move_diagonal = FALSE
 
+	if(QDELETED(src))
+		return
 	handle_vehicle_layer(AM.dir)
 	handle_vehicle_offsets(AM.dir)
 

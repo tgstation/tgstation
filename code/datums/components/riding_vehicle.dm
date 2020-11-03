@@ -38,6 +38,7 @@
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
+	handle_ride(user, direction)
 
 
 

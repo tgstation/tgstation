@@ -85,25 +85,27 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
-	if(A.density && has_buckled_mobs())
-		var/mob/living/H = buckled_mobs[1]
-		H.adjustStaminaLoss(instability*6)
-		playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
-			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-			unbuckle_mob(H)
-			H.throw_at(throw_target, 3, 2)
-			var/head_slot = H.get_item_by_slot(ITEM_SLOT_HEAD)
-			if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-				H.updatehealth()
-			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-			H.Paralyze(80)
-		else
-			var/backdir = turn(dir, 180)
-			vehicle_move(backdir)
-			H.spin(4, 1)
-		next_crash = world.time + 10
+	if(!A.density || !has_buckled_mobs())
+		return
+
+	var/mob/living/rider = buckled_mobs[1]
+	rider.adjustStaminaLoss(instability*6)
+	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
+		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
+		unbuckle_mob(rider)
+		rider.throw_at(throw_target, 3, 2)
+		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			rider.updatehealth()
+		visible_message("<span class='danger'>[src] crashes into [A], sending [rider] flying!</span>")
+		rider.Paralyze(80)
+	else
+		var/backdir = turn(dir, 180)
+		vehicle_move(backdir)
+		rider.spin(4, 1)
+	next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()

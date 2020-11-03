@@ -3,7 +3,6 @@
 	can_buckle = TRUE
 	max_buckled_mobs = 1
 	buckle_lying = 0
-	default_driver_move = FALSE
 	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
 	COOLDOWN_DECLARE(message_cooldown)
 
