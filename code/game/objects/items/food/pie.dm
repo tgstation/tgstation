@@ -1,4 +1,3 @@
-
 /obj/item/food/pie
 	icon = 'icons/obj/food/piecake.dmi'
 	trash_type = /obj/item/trash/plate
