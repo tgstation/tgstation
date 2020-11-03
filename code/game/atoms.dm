@@ -436,10 +436,6 @@
 					M.forceMove(src)
 		parts_list.Cut()
 
-///Hook for multiz???
-/atom/proc/update_multiz(prune_on_fail = FALSE)
-	return FALSE
-
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -1583,7 +1579,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return 0
 
