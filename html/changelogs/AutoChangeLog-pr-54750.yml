@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Fixes null rods that replace your hand being able to be placed into storage slots on accident."
