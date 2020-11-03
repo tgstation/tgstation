@@ -536,7 +536,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
+	AddElement(/datum/element/art, impressiveness)
 	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000))
 
 /obj/item/statuebust/hippocratic

@@ -12,13 +12,13 @@
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
-	var/art_type = /datum/component/art
+	var/art_type = /datum/element/art
 	/// Abstract root type
 	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(art_type, impressiveness)
+	AddElement(art_type, impressiveness)
 	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75))
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
 
@@ -271,7 +271,7 @@
 	name = "\improper Karl Marx bust"
 	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
 	icon_state = "marx"
-	art_type = /datum/component/art/rev
+	art_type = /datum/element/art/rev
 
 ///////////Elder Atmosian///////////////////////////////////////////
 
