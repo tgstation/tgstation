@@ -1,7 +1,7 @@
 
 /datum/component/riding/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	testing("Drive move - vehicle [vehicle_parent] | user [user] | direction [direction]")
-	if(keytype && !vehicle_parent.is_key(vehicle_parent.inserted_key))
+	if(!keycheck(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)

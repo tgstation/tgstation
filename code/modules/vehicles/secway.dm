@@ -8,11 +8,8 @@
 	key_type = /obj/item/key/security
 	integrity_failure = 0.5
 
-
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
 	var/obj/item/reagent_containers/food/snacks/grown/banana/eddie_murphy
-	///When jammed with a banana, the secway will make a stalling sound. This stores the last time it made a sound to prevent spam.
-	var/stall_cooldown
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
@@ -59,15 +56,6 @@
 			eddie_murphy.forceMove(drop_location())
 			eddie_murphy = null
 		return
-	return ..()
-
-/obj/vehicle/ridden/secway/driver_move(mob/living/user, direction)
-	if(is_key(inserted_key) && eddie_murphy)
-		if(stall_cooldown + 10 < world.time)
-			visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
-			playsound(src, 'sound/effects/stall.ogg', 70)
-			stall_cooldown = world.time
-		return FALSE
 	return ..()
 
 /obj/vehicle/ridden/secway/examine(mob/user)

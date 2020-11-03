@@ -261,7 +261,14 @@
 
 //KEYS
 /datum/component/riding/proc/keycheck(mob/user)
-	return !keytype || user.is_holding_item_of_type(keytype)
+	if(!keytype)
+		return TRUE
+
+	if(isvehicle(parent))
+		var/obj/vehicle/vehicle_parent = parent
+		return istype(vehicle_parent.inserted_key, keytype)
+
+	return user.is_holding_item_of_type(keytype)
 
 //BUCKLE HOOKS
 /datum/component/riding/proc/restore_position(mob/living/buckled_mob)

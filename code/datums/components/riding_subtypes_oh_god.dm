@@ -171,6 +171,16 @@
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
+/datum/component/riding/secway/driver_move(mob/living/user, direction)
+	var/obj/vehicle/ridden/secway/the_secway = parent
+
+	if(keycheck(user) && the_secway.eddie_murphy)
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			the_secway.visible_message("<span class='warning'>[src] sputters and refuses to move!</span>")
+			playsound(get_turf(the_secway), 'sound/effects/stall.ogg', 70)
+			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
+		return COMPONENT_DRIVER_BLOCK_MOVE
+	return ..()
 
 /datum/component/riding/speedbike
 	vehicle_move_delay = 0
