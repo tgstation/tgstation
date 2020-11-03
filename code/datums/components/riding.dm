@@ -1,14 +1,8 @@
 /**
-  * This is the riding component, which is applied to a movable atom so that various mobs can "ride" it, meaning they are buckled to
-  * it and have their icon modified along with the vehicle's icon to indicate the riding state.
+  * This is the riding component, which is applied to a movable atom by the [ridable element][/datum/element/ridable] when a mob is successfully buckled to said movable.
   *
-  * There are two ways this component is used, one at atom initialization (inanimate vehicles), and one spontaneously at time of mounting (mobs)
-  *	* 1. Inanimate- The component is created on initialization and persists when nothing is buckled to the parent. Think secways and cars.
-  *	* 2. Mobs- Used for humans picking up humans, riding borgs, and riding tamed animals. The component is created at the time of mounting,
-  *	* 		and is deleted when there are no more riders. If there are multiple riders, one component handles all of them.
-  *
-  * Arguments:
-  * *
+  * This component lives for as long as at least one mob is buckled to the parent. Once all mobs are unbuckled, the component is deleted, until another mob is buckled in
+  * and we make a new riding component, so on and so forth until the sun explodes.
   */
 
 
@@ -19,7 +13,7 @@
 	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower
 	var/vehicle_move_delay = 2
-	/// If the driver needs a specific item in hand in order to move this vehicle
+	/// If the driver needs a specific item in hand (or inserted, for vehicles) in order to move this vehicle
 	var/keytype
 
 	var/slowed = FALSE
@@ -46,8 +40,9 @@
 	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
 	var/respect_mob_mobility = TRUE
 
+	/// the riding flags I had for piggyback/fireman carrying, merge into the below flags somehow
 	var/riding_flags
-
+	/// necroanne's rider flags to see if the rider needs arms/legs/falls over if they lack those, should be merged with the above
 	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
 
 	COOLDOWN_DECLARE(message_cooldown)
@@ -56,8 +51,6 @@
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-
-	testing("check riding start | parent [parent] | rider [riding_mob] | flags [riding_flags]")
 
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
@@ -85,7 +78,13 @@
 		unequip_buckle_inhands(parent)
 	return ..()
 
-
+/**
+  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
+  *
+  * The original riding component had these procs all called from the ridden object itself through the use of GetComponent() and LoadComponent()
+  * This was obviously problematic for componentization, but while lots of the variables being set were able to be moved to component variables,
+  * the proc calls couldn't be. Thus, anything that has to do an initial proc call should be handled here.
+  */
 /datum/component/riding/proc/handle_specials()
 	return
 
@@ -98,6 +97,7 @@
 		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
 
 
+/// This proc is called when a rider unbuckles, whether they chose to or not. If there's no more riders, this will be the riding component's death knell.
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
 	SIGNAL_HANDLER
 
@@ -109,7 +109,7 @@
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
 
-///Gives the rider the riding parent's abilities
+/// If the ridden atom is a creature with abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/proc/setup_abilities(mob/living/M)
 	if(!istype(parent, /mob/living))
 		return
@@ -120,7 +120,7 @@
 		var/obj/effect/proc_holder/proc_holder = i
 		M.AddAbility(proc_holder)
 
-///Takes away the riding parent's abilities from the rider
+/// Takes away the riding parent's abilities from the rider
 /datum/component/riding/proc/remove_abilities(mob/living/M)
 	if(!istype(parent, /mob/living))
 		return
@@ -131,6 +131,7 @@
 		var/obj/effect/proc_holder/proc_holder = i
 		M.RemoveAbility(proc_holder)
 
+/// Some ridable atoms may want to only show on top of the rider in certain directions, like wheelchairs
 /datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
 	var/static/list/defaults = list(TEXT_NORTH = OBJ_LAYER, TEXT_SOUTH = ABOVE_MOB_LAYER, TEXT_EAST = ABOVE_MOB_LAYER, TEXT_WEST = ABOVE_MOB_LAYER)
@@ -143,6 +144,7 @@
 
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
+
 
 /datum/component/riding/proc/vehicle_moved(datum/source, dir)
 	SIGNAL_HANDLER
@@ -165,6 +167,7 @@
 
 	vehicle_moved(source, new_dir)
 
+/// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
 /datum/component/riding/proc/ride_check(mob/living/rider)
 	var/mob/living/parent_movable = parent
 	var/mob/living/parent_living = parent
@@ -188,6 +191,7 @@
 					"<span class='warning'>You fall off of [parent_movable]!</span>")
 	parent_movable.unbuckle_mob(rider)
 
+/// We're launching off a given rider, used for cyborg spinning
 /datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
 	var/atom/movable/parent_movable = parent
 	parent_movable.unbuckle_mob(rider)
@@ -259,7 +263,11 @@
 		return FALSE
 	riding_offsets["[index]"] = offsets
 
-//KEYS
+/**
+  * This proc is used to see if we have the appropriate key to drive this atom, if such a key is needed. Returns FALSE if we don't have what we need to drive.
+  *
+  * Still needs to be neatened up and spruced up with proper OOP, as a result of vehicles having their own key handling from other ridable atoms
+  */
 /datum/component/riding/proc/keycheck(mob/user)
 	if(!keytype)
 		return TRUE
@@ -327,7 +335,7 @@
 
 	moved_successfully()
 
-
+/// This proc is only used for cars so that they can play an engine rumble on movement. If we run this, we successfully moved a tile thru driving.
 /datum/component/riding/proc/moved_successfully(atom/movable/M)
 	return
 
@@ -446,30 +454,7 @@
 			else
 				..()
 
-/datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
-	var/atom/movable/AM = parent
-	var/amount_equipped = 0
-	for(var/amount_needed = amount_required, amount_needed > 0, amount_needed--)
-		var/obj/item/riding_offhand/inhand = new /obj/item/riding_offhand(user)
-		if(!riding_target_override)
-			inhand.rider = user
-		else
-			inhand.rider = riding_target_override
-		inhand.parent = AM
-		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
-			if((I.obj_flags & HAND_ITEM))
-				qdel(I)
-		if(user.put_in_hands(inhand, TRUE))
-			amount_equipped++
-		else
-			break
-
-	if(amount_equipped >= amount_required)
-		return TRUE
-	else
-		unequip_buckle_inhands(user)
-		return FALSE
-
+/// currently replicated from ridable because we need this behavior here too, see if we can deal with that
 /datum/component/riding/proc/unequip_buckle_inhands(mob/living/carbon/user)
 	var/atom/movable/AM = parent
 	for(var/obj/item/riding_offhand/O in user.contents)

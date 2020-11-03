@@ -1,10 +1,16 @@
-
+/**
+  * This element is used to indicate that a movable atom can be mounted by mobs in order to ride it. The movable is considered mounted when a mob is buckled to it,
+  * at which point a [riding component][/datum/component/riding] is created on the movable, and that component handles the actual riding behavior.
+  *
+  * Besides the target, the ridable element has one argument: the component subtype. This is not really ideal since there's ~20-30 component subtypes rather than
+  * having the behavior defined on the ridable atoms themselves or some such, but because the old riding behavior was so horrifyingly spread out and redundant,
+  * just having the variables, behavior, and procs be standardized is still a big improvement.
+  */
 /datum/element/ridable
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	var/riding_component_type = /datum/component/riding
-
 
 /datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding)
 	. = ..()
@@ -15,10 +21,9 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_TRY_MOUNTING, .proc/check_mounting)
 
-
+/// Someone is buckling to this movable, which is literally the only thing we care about.
 /datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, riding_flags = NONE)
 	SIGNAL_HANDLER
-	testing("check mount | target [target_movable] | rider [potential_rider] | flags [riding_flags]")
 
 	if((riding_flags & RIDER_HOLDING_ON) && !equip_buckle_inhands(potential_rider, 2, target_movable)) // hardcode 2 hands for now
 		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
@@ -37,6 +42,7 @@
 
 	target_living.AddComponent(riding_component_type, potential_rider, force, riding_flags)
 
+/// Try putting the appropriate number of [riding offhand items][/obj/item/riding_offhand] into the target's hands, return FALSE if we can't
 /datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)
 	var/atom/movable/AM = target_movable
 	var/amount_equipped = 0
@@ -72,6 +78,7 @@
 		unequip_buckle_inhands(user, target_movable)
 		return FALSE
 
+/// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
 /datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)
 	var/atom/movable/AM = target_movable
 	for(var/obj/item/riding_offhand/O in user.contents)
