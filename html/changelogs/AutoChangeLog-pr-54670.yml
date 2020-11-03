@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixes psychologists and unknown job titles being incorrectly bolded in the crew monitor UI."

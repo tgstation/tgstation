@@ -1,4 +1,0 @@
-author: "81Denton"
-delete-after: True
-changes: 
-  - admin: "Added logging for handcuff attempts and renaming GPS devices"
