@@ -1,9 +1,9 @@
 ///Max amount of radiation that can be emitted per reaction cycle
 #define FUSION_RAD_MAX						5000
 ///Maximum instability before the reaction goes endothermic
-#define FUSION_INSTABILITY_ENDOTHERMALITY   7
+#define FUSION_INSTABILITY_ENDOTHERMALITY   5
 ///Maximum reachable fusion temperature
-#define FUSION_MAXIMUM_TEMPERATURE			1e30
+#define FUSION_MAXIMUM_TEMPERATURE			1e9
 ///Speed of light, in m/s
 #define LIGHT_SPEED 						299792458
 ///Calculation between the plank constant and the lambda of the lightwave
@@ -31,7 +31,7 @@
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY			0.001
+#define METALLIC_VOID_CONDUCTIVITY			15
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.85
 ///Sets the range of the hallucinations
@@ -652,15 +652,17 @@
 	 */
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
-	if(power_level > 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e15 + internal_fusion.temperature) / 1e15, 1) - 3000) / 200, 0), 0)
+	if(power_level > 5)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e6 + internal_fusion.temperature) / 1e6, 1) - 1500) / 200, 0), 0)
 
-	if(internal_fusion.total_moles() < 2500 && power_level < 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 3000) / 200, 0), 0)
+	if(internal_fusion.total_moles() < 1200 || power_level < 4)
+		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1400) / 200, 0), 0)
 
-	critical_threshold_proximity += round(iron_content * 0.5, 1)
+	critical_threshold_proximity += round(iron_content * 0.08, 1)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+
+	check_alert()
 
 	if(!check_power_use())
 		return
@@ -668,27 +670,29 @@
 	if(!start_cooling)
 		return
 
-	//Cooling of the moderator gases with the cooling loop in and out the core
-	if(airs[1].total_moles() > 0 && moderator_internal.total_moles() > 0)
+	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
+		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
+		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
+		var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
+
+	if(airs[1].total_moles() > 0)
 		var/datum/gas_mixture/cooling_in = airs[1]
 		var/datum/gas_mixture/cooling_out = airs[2]
 		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
+		//Cooling of the moderator gases with the cooling loop in and out the core
+		if(moderator_internal.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
+			var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
+			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+			moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
-		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
-		var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
-		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
-		cooling_out.merge(cooling_remove)
-
-	else if(airs[1].total_moles() > 0 && internal_fusion.total_moles() > 0)
-		var/datum/gas_mixture/cooling_in = airs[1]
-		var/datum/gas_mixture/cooling_out = airs[2]
-		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
-
-		var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
-		var/cooling_heat_amount = METALLIC_VOID_CONDUCTIVITY * 2 * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
-		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
+		else if(internal_fusion.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
+			var/cooling_heat_amount = METALLIC_VOID_CONDUCTIVITY * 2 * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
+			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
 		cooling_out.merge(cooling_remove)
 
 	fusion_temperature = internal_fusion.temperature
@@ -711,13 +715,6 @@
 	internal_fusion.merge(buffer)
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
-
-	if(moderator_internal.total_moles() > 0)
-		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
-		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-		var/fusion_heat_amount = METALLIC_VOID_CONDUCTIVITY * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
-		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process()
 	if(COOLDOWN_FINISHED(src, hypertorus_reactor))
@@ -825,7 +822,7 @@
 	for (var/gas_id in moderator_internal.gases)
 		gas_power += (moderator_internal.gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * moderator_internal.gases[gas_id][MOLES] * 0.75)
 
-	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) - iron_content * 4.5
+	instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) + (current_damper * 0.01) - iron_content * 0.05
 	//Effective reaction instability (determines if the energy is used/released)
 	var/internal_instability = 0
 	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
@@ -895,28 +892,30 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = (internal_fusion.temperature / (internal_fusion.heat_capacity() / internal_fusion.total_moles())) * (heating_conductor * 0.01)
+	heat_limiter_modifier = 100 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = internal_instability * clamp(power_output * heat_modifier / 100, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+	heat_output = internal_instability * clamp(power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01, heat_limiter_modifier)
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
+	else
+		internal_fusion.temperature -= heat_limiter_modifier * 0.01
 
 	//Set the power level of the fusion process
 	var/fusion_temperature = internal_fusion.temperature
 	switch(fusion_temperature) //need to find a better way
-		if(-INFINITY to 100000)
+		if(-INFINITY to 1000)
 			power_level = 0
-		if(100000 to 1e6)
+		if(1000 to 1e4)
 			power_level = 1
-		if(1e6 to 1e8)
+		if(1e4 to 1e5)
 			power_level = 2
-		if(1e8 to 1e10)
+		if(1e5 to 1e6)
 			power_level = 3
-		if(1e10 to 1e13)
+		if(1e6 to 1e7)
 			power_level = 4
-		if(1e13 to 1e16)
+		if(1e7 to 1e8)
 			power_level = 5
 		else
 			power_level = 6
@@ -932,11 +931,11 @@
 		if(power_output)
 			switch(power_level)
 				if(1)
-					var/scaled_production = clamp(heat_output * 1e-6, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-3, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 				if(2)
-					var/scaled_production = clamp(heat_output * 1e-8, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-4, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -951,7 +950,7 @@
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 0.65
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.35)
 				if(3, 4)
-					var/scaled_production = clamp(heat_output * 1e-12, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 5e-5, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -980,7 +979,7 @@
 								l.hallucination += power_level * 50 * D
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
-					var/scaled_production = clamp(heat_output * 1e-16, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-7, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 1.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -1012,7 +1011,7 @@
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)
-					var/scaled_production = clamp(heat_output * 1e-20, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-8, 0, MAX_MODERATOR_USAGE)
 					if(m_plasma > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
@@ -1073,8 +1072,6 @@
 	linked_input.update_parents()
 	linked_output.update_parents()
 	linked_moderator.update_parents()
-
-	check_alert()
 
 	//better heat and rads emission
 	//To do
