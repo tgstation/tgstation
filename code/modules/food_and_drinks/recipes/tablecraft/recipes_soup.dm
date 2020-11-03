@@ -300,7 +300,8 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/food/snacks/grown/peas = 2,
 		/obj/item/reagent_containers/food/snacks/grown/parsnip = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1
+		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
+		/obj/item/reagent_containers/glass/bowl = 1
 	)
 	result = /obj/item/food/soup/peasoup
 	subcategory = CAT_SOUP
