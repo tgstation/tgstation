@@ -158,7 +158,7 @@
 			if(istype(attached_device, /obj/item/assembly/signaler))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
-				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The last received signal had the following log entry: [attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
+				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
 			else
 				attachment = attached_device
 
@@ -172,7 +172,7 @@
 		var/admin_bomber_message
 		var/bomber_message
 		if(bomber)
-			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by: [ADMIN_LOOKUPFLW(bomber)]"
+			admin_bomber_message = "The bomb's most recent set of fingerprints indicate it was last touched by [ADMIN_LOOKUPFLW(bomber)]"
 			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)]<br>[admin_attachment_message]<br>[admin_bomber_message]<br>[attachment_signal_log]"

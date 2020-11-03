@@ -147,7 +147,10 @@
 	if(suicider)
 		manual_suicide(suicider)
 		return
-	last_receive_signal_log = signal.logging_data
+
+	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
+	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
+
 	pulse(TRUE)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
