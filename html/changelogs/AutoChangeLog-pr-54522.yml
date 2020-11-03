@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "Runechat messages now won't be obstructed by darkness or lighting, or other effects"

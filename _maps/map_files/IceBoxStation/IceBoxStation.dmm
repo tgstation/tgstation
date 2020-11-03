@@ -13527,10 +13527,8 @@
 	name = "Mass Driver";
 	req_access_txt = "22"
 	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "chapelgun";
-	name = "Holy Driver"
+/obj/machinery/mass_driver/chapelgun{
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13538,10 +13536,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEn" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "Chapel Launcher Door"
-	},
+/obj/machinery/door/poddoor/massdriver_chapel,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
@@ -14090,8 +14085,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aFA" = (
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "chapelgun";
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -26660,9 +26654,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/mass_driver{
-	id = "trash"
-	},
+/obj/machinery/mass_driver/trash,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -26917,8 +26909,7 @@
 	req_access_txt = "12"
 	},
 /obj/structure/chair/stool,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24;
 	pixel_y = -6
 	},
@@ -27491,10 +27482,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "blS" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "disposal bay door"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -36682,8 +36670,7 @@
 	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
@@ -36954,17 +36941,13 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLk" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "toxinsdriver"
+/obj/machinery/mass_driver/toxins{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLl" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "toxins launcher bay door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
