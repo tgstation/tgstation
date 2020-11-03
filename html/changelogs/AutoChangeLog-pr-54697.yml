@@ -1,6 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - rscadd: "Garbage Bags and Paint Remover now available in service protolathe."
-  - tweak: "Light Replacer is now in \"Equipment\" tab of service protolathe."
-  - bugfix: "Push Broom can be printed at Service Lathe"

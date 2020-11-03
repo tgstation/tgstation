@@ -1,5 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "Fixes mecha rotate sounds"
-  - code_imp: "makes mech silence flag instead of null based"

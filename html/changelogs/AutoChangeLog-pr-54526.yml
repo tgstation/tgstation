@@ -1,5 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Fly people will not become full on eating that vomit"
-  - bugfix: "Vomiting now removes reagents properly"
