@@ -90,6 +90,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PULL_BLOCKED		"pullblocked"
 /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
 #define TRAIT_RESTRAINED		"restrained"
+/// Doesn't miss attacks
+#define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
