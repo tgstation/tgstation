@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "Dynamic Mode can now spawn Swarmers"
+  - balance: "Swarmers have received a software update, changing some of their capabilities.  Nanotrasen reports a slight increase in strange objects in the neighboring sector."

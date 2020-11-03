@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "The chemical bottler no longer clears reagents when its settings are changed."
-  - tweak: "Chemical bottlers can now fill reagents into dart shotgun rounds."
