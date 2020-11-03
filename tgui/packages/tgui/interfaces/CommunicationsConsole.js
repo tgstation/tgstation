@@ -1,9 +1,9 @@
 import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
-import DOMPurify from 'dompurify';
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
+import { sanitizeText } from "../sanitize";
 
 const STATE_BUYING_SHUTTLE = "buying_shuttle";
 const STATE_CHANGING_STATUS = "changing_status";
@@ -14,24 +14,6 @@ const STATE_MESSAGES = "messages";
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
 const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
-
-// Sanitization code stolen from PaperSheet.js
-const sanitize_text = value => {
-  // This is VERY important to think first if you NEED
-  // the tag you put in here.  We are pushing all this
-  // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it dosn't
-  // kill href links or such
-  return DOMPurify.sanitize(value, {
-    FORBID_ATTR: ['class', 'style'],
-    ALLOWED_TAGS: [
-      'br', 'code', 'li', 'p', 'pre',
-      'span', 'table', 'td', 'tr', 'i',
-      'th', 'ul', 'ol', 'menu', 'font', 'b',
-      'center', 'table', 'tr', 'th', 'hr',
-    ],
-  });
-};
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -628,11 +610,12 @@ const PageMessages = (props, context) => {
       );
     }
 
-    const text_html = {
-      __html: sanitize_text(message.content),
+    const textHtml = {
+      __html: sanitizeText(message.content),
     };
 
     messageElements.push((
+
       <Section
         title={message.title}
         key={messageIndex}
@@ -647,7 +630,7 @@ const PageMessages = (props, context) => {
           />
         )}>
         <Box
-          dangerouslySetInnerHTML={text_html} />
+          dangerouslySetInnerHTML={textHtml} />
 
         {answers}
       </Section>
