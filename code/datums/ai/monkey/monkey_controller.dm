@@ -61,17 +61,17 @@ have ways of interacting with a specific mob and control it.
 		.[AI_BEHAVIOR_ACTION] += monkey_random_emote
 		return
 
-	var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+	var/list/around = view(src, MONKEY_ENEMY_VISION)
 
-	//We have enemies nearby
+	//We have enemies nearby. This is our top priority.
 	if(enemies.len)
 		for(var/mob/living/L in around)
-			if(should_target(L))
-				if(COOLDOWN_FINISHED(battle_screech, battle_screech_cooldown))
-					.[AI_BEHAVIOR_MOVEMENT] = battle_screech()
-				retaliate(L)
-				return TRUE
-				var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+			if(!should_target(L))
+				continue
+			if(COOLDOWN_FINISHED(battle_screech, battle_screech_cooldown))
+				.[AI_BEHAVIOR_MOVEMENT] = battle_screech()
+			retaliate(L)
+			return TRUE
 
 /datum/ai_controller/monkey/proc/IsStandingStill()
 	return pickpocketing || disposing_body
@@ -86,7 +86,6 @@ have ways of interacting with a specific mob and control it.
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return TRUE
-
 	return FALSE
 
 
