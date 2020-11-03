@@ -4,7 +4,6 @@
 
 import DOMPurify from 'dompurify';
 
-
 // Default values
 let defTag = [
   'br', 'code', 'li', 'p', 'pre',
