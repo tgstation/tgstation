@@ -17,8 +17,8 @@ let defAttr = ['class', 'style'];
  * Feed it a string and it should spit out a sanitized version.
  *
  * @param {string} input
- * @param {array} forbidAttr
  * @param {array} tags
+ * @param {array} forbidAttr
  */
 export const sanitizeText = (input, tags = defTag, forbidAttr = defAttr) => {
   // This is VERY important to think first if you NEED
