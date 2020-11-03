@@ -615,7 +615,6 @@ const PageMessages = (props, context) => {
     };
 
     messageElements.push((
-
       <Section
         title={message.title}
         key={messageIndex}
