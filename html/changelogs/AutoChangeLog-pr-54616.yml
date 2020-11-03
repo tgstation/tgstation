@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "Assessing the impressiveness of artwork (such as painting) can now only be done through examine and takes a few seconds, just like how attack_hand (structures) and attack_self (items) used to."
