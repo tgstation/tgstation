@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes ChemMaster not outputting pills to inserted pill bottle"
