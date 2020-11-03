@@ -212,6 +212,16 @@
 	//vehicle_move_delay = movedelay
 	vehicle_move_delay = 1
 	slowvalue = 0
+	COOLDOWN_DECLARE(enginesound_cooldown)
+
+/datum/component/riding/car/moved_successfully()
+	. = ..()
+	var/obj/vehicle/sealed/car/car_parent = parent
+	if(!COOLDOWN_FINISHED(src, enginesound_cooldown))
+		return FALSE
+	COOLDOWN_START(src, enginesound_cooldown, car_parent.engine_sound_length)
+	playsound(car_parent, car_parent.engine_sound, 100, TRUE)
+	return TRUE
 
 /datum/component/riding/car/clowncar
 	keytype = /obj/item/bikehorn

@@ -325,6 +325,11 @@
 	handle_vehicle_layer(AM.dir)
 	handle_vehicle_offsets(AM.dir)
 
+	moved_successfully()
+
+
+/datum/component/riding/proc/moved_successfully(atom/movable/M)
+	return
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
