@@ -7,6 +7,7 @@
 	armor = list(MELEE = 50, BULLET = 25, LASER = 20, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	key_type = /obj/item/key
 	integrity_failure = 0.5
+	rider_check_flags = REQUIRES_ARMS | REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER 
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()

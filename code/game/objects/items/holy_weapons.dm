@@ -273,6 +273,7 @@
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
+	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
@@ -548,6 +549,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = null
 	item_flags = ABSTRACT
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
@@ -635,6 +637,7 @@
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	slot_flags = null
 	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
