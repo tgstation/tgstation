@@ -212,10 +212,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	///reference to the componenet so we dont have to call get_component every time we toggle hood
 	var/datum/component/storage/concrete/pockets/void_cloak/cloak
-
-/obj/item/clothing/suit/hooded/cultrobes/void/Initialize()
-	. = ..()
-	cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
+	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(loc))
@@ -225,10 +222,9 @@
 		. = ..()
 		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
 		if(suittoggled)
-			cloak.max_items = 3
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
 		else
-			cloak.max_items = 4
+			to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
 		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")

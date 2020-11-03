@@ -40,6 +40,7 @@
 
 	if(hood)
 		if(ishuman(hood.loc))
+			var/mob/living/carbon/human/H = hood.loc
 			H.transferItemToLoc(hood, src, TRUE)
 			H.update_inv_wear_suit()
 		else
@@ -47,6 +48,7 @@
 
 		if(alternative_mode)
 			qdel(hood)
+			hood = null
 
 	for(var/X in actions)
 		var/datum/action/A = X

@@ -775,7 +775,7 @@
 
 /obj/effect/proc_holder/spell/targeted/void_pull
 	name = "Void pull"
-	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you."
+	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "BR'NG F'RTH TH'M T' M'"
 	clothes_req = FALSE
@@ -798,4 +798,6 @@
 	for(var/mob/living/livies in view(7,user)-user)
 		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
-			livies.AdjustKnockdown(2 SECONDS)
+			if(get_dist(user,livies) < 4)
+				livies.AdjustKnockdown(3 SECONDS)
+				livies.AdjustParalyzed(0.5 SECONDS)
