@@ -3,7 +3,7 @@
 ///Maximum instability before the reaction goes endothermic
 #define FUSION_INSTABILITY_ENDOTHERMALITY   5
 ///Maximum reachable fusion temperature
-#define FUSION_MAXIMUM_TEMPERATURE			1e9
+#define FUSION_MAXIMUM_TEMPERATURE			1e8
 ///Speed of light, in m/s
 #define LIGHT_SPEED 						299792458
 ///Calculation between the plank constant and the lambda of the lightwave
@@ -653,7 +653,7 @@
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
 	if(power_level > 5)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e6 + internal_fusion.temperature) / 1e6, 1) - 1500) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e5 + internal_fusion.temperature) / 1e5, 1) - 1500) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() < 1200 || power_level < 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1400) / 200, 0), 0)
@@ -892,7 +892,7 @@
 	efficiency = VOID_CONDUCTION * clamp(scaled_helium, 1, 100)
 	power_output = efficiency * (internal_power - conduction - radiation)
 	//Hotter air is easier to heat up and cool down
-	heat_limiter_modifier = 100 * (10 ** power_level) * (heating_conductor / 100)
+	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = internal_instability * clamp(power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01, heat_limiter_modifier)
 
@@ -905,17 +905,17 @@
 	//Set the power level of the fusion process
 	var/fusion_temperature = internal_fusion.temperature
 	switch(fusion_temperature) //need to find a better way
-		if(-INFINITY to 1000)
+		if(-INFINITY to 500)
 			power_level = 0
-		if(1000 to 1e4)
+		if(500 to 1e3)
 			power_level = 1
-		if(1e4 to 1e5)
+		if(1e3 to 1e4)
 			power_level = 2
-		if(1e5 to 1e6)
+		if(1e4 to 1e5)
 			power_level = 3
-		if(1e6 to 1e7)
+		if(1e5 to 1e6)
 			power_level = 4
-		if(1e7 to 1e8)
+		if(1e6 to 1e7)
 			power_level = 5
 		else
 			power_level = 6
@@ -931,11 +931,11 @@
 		if(power_output)
 			switch(power_level)
 				if(1)
-					var/scaled_production = clamp(heat_output * 1e-3, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-2, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 				if(2)
-					var/scaled_production = clamp(heat_output * 1e-4, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-3, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -950,7 +950,7 @@
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 0.65
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.35)
 				if(3, 4)
-					var/scaled_production = clamp(heat_output * 5e-5, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 5e-4, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 2.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -979,7 +979,7 @@
 								l.hallucination += power_level * 50 * D
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
-					var/scaled_production = clamp(heat_output * 1e-7, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-6, 0, MAX_MODERATOR_USAGE)
 					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 1.65
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma)
@@ -1007,11 +1007,11 @@
 								l.hallucination = clamp(l.hallucination, 0, 200)
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-					if(moderator_internal.temperature < 1e8)
+					if(moderator_internal.temperature < 1e6)
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)
-					var/scaled_production = clamp(heat_output * 1e-8, 0, MAX_MODERATOR_USAGE)
+					var/scaled_production = clamp(heat_output * 1e-7, 0, MAX_MODERATOR_USAGE)
 					if(m_plasma > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
@@ -1211,6 +1211,8 @@
 	data["current_damper"] = connected_core.current_damper
 
 	data["power_level"] = connected_core.power_level
+	data["iron_content"] = connected_core.iron_content
+	data["integrity"] = connected_core.get_integrity()
 
 	data["start_power"] = connected_core.start_power
 	data["start_cooling"] = connected_core.start_cooling
