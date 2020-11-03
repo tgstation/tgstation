@@ -446,6 +446,8 @@
 		make_luminosity_update()
 
 /datum/component/overlay_lighting/proc/on_parent_crafted(datum/source, atom/movable/new_craft)
+	SIGNAL_HANDLER
+
 	if(!istype(new_craft))
 		return
 
