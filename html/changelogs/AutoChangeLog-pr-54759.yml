@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscdel: "Removes the now depreciated high-priority cargo bounty event, that does nothing."
