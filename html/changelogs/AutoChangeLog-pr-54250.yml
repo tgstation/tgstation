@@ -1,0 +1,6 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "All turfs now support transparency"
+  - rscadd: "Datum material floors and walls now support transparency"
+  - bugfix: "Glass floors are now destructible"
