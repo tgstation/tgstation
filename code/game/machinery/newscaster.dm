@@ -4,24 +4,41 @@ GLOBAL_LIST_EMPTY(allCasters)
 /datum/newscaster
 
 /datum/newscaster/feed_comment
+	///The author of the comment, as seen on a newscaster feed.
 	var/author = ""
+	///Body of the aforementioned comment.
 	var/body = ""
+	///At what time was the feed comment sent? Time is in station time.
 	var/time_stamp = ""
 
 /datum/newscaster/feed_message
+	///Who is the author of the full-size article to the feed channel?
 	var/author =""
+	///Body of the full-size article to the feed channel.
 	var/body =""
+	///In station time, at what time was the author's messages censored and blocked from viewing.
 	var/list/authorCensorTime = list()
+	///In station time, at what time was this message censored and blocked from viewing.
 	var/list/bodyCensorTime = list()
+	///Did an admin send this message?
 	var/is_admin_message = FALSE
+	///Is there an image tied to the feed message?
 	var/icon/img = null
+	///At what time was the full-size article sent? Time is in station time.
 	var/time_stamp = ""
+	///List consisting of the articles feed comments for this full-size article.
 	var/list/datum/newscaster/feed_comment/comments = list()
+	///Can comments be placed on that feed message?
 	var/locked = FALSE
+	///If the message has an image, what is that image's caption?
 	var/caption = ""
+	///At what time was the feed message created?
 	var/creationTime
+	///Has the author been blocked from making new feed messages?
 	var/authorCensor
+	///Has the body of the message been censored?
 	var/bodyCensor
+	///Referece to the photo used in picture messages.
 	var/photo_file
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
