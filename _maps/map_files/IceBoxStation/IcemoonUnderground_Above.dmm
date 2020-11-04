@@ -106,7 +106,7 @@
 "as" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "at" = (

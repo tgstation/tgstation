@@ -27,7 +27,7 @@
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
-	slice_path = /obj/item/reagent_containers/food/snacks/watermelonslice
+	slice_path = /obj/item/food/watermelonslice
 	slices_num = 5
 	dried_type = null
 	w_class = WEIGHT_CLASS_NORMAL

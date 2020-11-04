@@ -36238,7 +36238,7 @@
 /area/engine/atmos)
 "bKl" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
