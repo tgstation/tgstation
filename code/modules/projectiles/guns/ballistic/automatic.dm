@@ -93,8 +93,14 @@
 /obj/item/gun/ballistic/automatic/wt550
 	name = "security auto rifle"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
+
+	/// PM: Frontier specific icons.
+	icon = 'icons/FrontierProgramIcons/icons/obj/guns/projectile.dmi'
+	lefthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_righthand.dmi'
+
 	icon_state = "wt550"
-	inhand_icon_state = "arg"
+	inhand_icon_state = "wt550" // PM: New in-hands.
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
 	can_suppress = FALSE
