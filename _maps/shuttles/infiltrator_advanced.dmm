@@ -1110,7 +1110,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "cl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)

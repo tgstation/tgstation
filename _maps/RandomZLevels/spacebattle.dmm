@@ -626,7 +626,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -654,7 +654,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "dd" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
@@ -789,23 +789,23 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "dE" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dF" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dG" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dH" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
 	},
 /turf/open/floor/engine,
@@ -914,7 +914,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "dY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -937,7 +937,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "eb" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -973,7 +973,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "ek" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/atom/movable/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "el" = (
@@ -1853,7 +1853,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "ha" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/atom/movable/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "hc" = (
@@ -1889,7 +1889,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "hi" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1950,7 +1950,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/spacebattle/cruiser)
 "hu" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2473,7 +2473,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jE" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jF" = (
@@ -2496,12 +2496,12 @@
 /area/awaymission/spacebattle/cruiser)
 "jI" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jJ" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/atom/movable/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
@@ -2609,7 +2609,7 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ka" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/atom/movable/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "kb" = (
@@ -2644,7 +2644,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "ki" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
@@ -2690,7 +2690,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kr" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -2710,17 +2710,17 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "kv" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kw" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kx" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional,
+/atom/movable/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "ky" = (
@@ -2728,7 +2728,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kz" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/open/floor/engine/vacuum,

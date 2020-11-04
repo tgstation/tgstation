@@ -153,7 +153,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "aC" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aD" = (
@@ -1760,7 +1760,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dZ" = (
@@ -1793,8 +1793,8 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ef" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -2054,7 +2054,7 @@
 /area/awaymission/research/interior/maint)
 "eG" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eH" = (
@@ -3498,7 +3498,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "hF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
@@ -3704,14 +3704,14 @@
 /area/awaymission/research/interior/genetics)
 "hX" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hY" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hZ" = (
@@ -4541,7 +4541,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "jR" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "jS" = (
@@ -4854,7 +4854,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "kB" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
+/atom/movable/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (
@@ -5399,7 +5399,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lU" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 4
 	},
@@ -5486,7 +5486,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mk" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -5835,7 +5835,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mZ" = (

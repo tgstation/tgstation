@@ -8,12 +8,12 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "ac" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "ag" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "ah" = (
@@ -247,7 +247,7 @@
 	},
 /obj/structure/rack,
 /obj/item/melee/baton/cattleprod,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)

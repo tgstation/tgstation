@@ -31,7 +31,7 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "aj" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -49,7 +49,7 @@
 /area/template_noop)
 "an" = (
 /obj/structure/window/reinforced,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -259,7 +259,7 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "bl" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -297,7 +297,7 @@
 /area/awaymission/bmpship/aft)
 "bt" = (
 /obj/structure/window/reinforced,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -827,7 +827,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/atom/movable/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "dg" = (
@@ -923,7 +923,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "dG" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1060,14 +1060,14 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "ed" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/awaymission/bmpship/fore)
 "ee" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/atom/movable/spawner/lootdrop/space/fancytech,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "ef" = (
@@ -1224,7 +1224,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -1265,7 +1265,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/fancytech,
+/atom/movable/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eS" = (
@@ -1622,7 +1622,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gk" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -1689,7 +1689,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
 "gz" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gA" = (
@@ -1709,7 +1709,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "gF" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
 	},
 /obj/item/shard{
@@ -1767,7 +1767,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "gR" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
@@ -1842,7 +1842,7 @@
 /area/awaymission/bmpship/midship)
 "hk" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/atom/movable/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hl" = (
@@ -1854,7 +1854,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "ho" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -1882,7 +1882,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/aft)
 "hu" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/atom/movable/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/engine,
 /area/awaymission/bmpship/aft)
 "hv" = (
@@ -1913,7 +1913,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/atom/movable/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "EQ" = (
@@ -1928,7 +1928,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/atom/movable/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "Hy" = (

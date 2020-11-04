@@ -732,7 +732,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bP" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1018,7 +1018,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1947,7 +1947,7 @@
 	layer = 2.9;
 	name = "Acid-Proof biohazard containment door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2108,7 +2108,7 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2683,7 +2683,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fV" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2903,7 +2903,7 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3431,7 +3431,7 @@
 	layer = 2.9;
 	name = "privacy shutter"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3876,7 +3876,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "io" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4481,7 +4481,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
@@ -4497,7 +4497,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jC" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -4574,7 +4574,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jM" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5421,7 +5421,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals)
 "lD" = (
@@ -5757,7 +5757,7 @@
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5812,7 +5812,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mB" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
@@ -6473,7 +6473,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "nV" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},

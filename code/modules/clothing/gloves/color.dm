@@ -235,7 +235,7 @@
 	inhand_icon_state = "wgloves"
 	custom_price = 200
 
-/obj/effect/spawner/lootdrop/gloves
+/atom/movable/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
 	icon = 'icons/obj/clothing/gloves.dmi'

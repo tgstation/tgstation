@@ -31,7 +31,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "g" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "h" = (

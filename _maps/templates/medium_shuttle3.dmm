@@ -63,7 +63,7 @@
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "t" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
 "v" = (

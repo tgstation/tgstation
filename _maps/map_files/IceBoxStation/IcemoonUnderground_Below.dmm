@@ -262,7 +262,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "Y" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 

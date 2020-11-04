@@ -36,13 +36,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "j" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "k" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -60,7 +60,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "o" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/atom/movable/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "p" = (

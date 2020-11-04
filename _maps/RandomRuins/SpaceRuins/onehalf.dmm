@@ -20,7 +20,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ah" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aj" = (
@@ -142,9 +142,9 @@
 	dir = 8
 	},
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
@@ -369,7 +369,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "be" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bf" = (
@@ -663,7 +663,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bZ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
 	name = "bridge blast door"
@@ -707,7 +707,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/atom/movable/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -741,7 +741,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ck" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -778,11 +778,11 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/atom/movable/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
 	name = "bridge blast door"
@@ -917,7 +917,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cQ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cR" = (

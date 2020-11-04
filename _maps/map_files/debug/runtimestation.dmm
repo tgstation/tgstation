@@ -98,7 +98,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/radiation/rad_area{
 	pixel_y = 32
 	},
@@ -176,7 +176,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aI" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aJ" = (
@@ -409,11 +409,11 @@
 /turf/closed/wall/r_wall,
 /area/bridge)
 "bv" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/bridge)
 "bw" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/brig)
 "bx" = (
@@ -603,11 +603,11 @@
 	},
 /area/medical/medbay)
 "bY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "bZ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "ca" = (
@@ -658,7 +658,7 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "ck" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/medbay)
 "cl" = (
@@ -799,7 +799,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/chemistry)
 "cF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -880,7 +880,7 @@
 /turf/closed/wall/r_wall,
 /area/storage/primary)
 "cT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -1288,7 +1288,7 @@
 /turf/closed/wall/r_wall,
 /area/quartermaster/miningoffice)
 "en" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ep" = (
@@ -1326,7 +1326,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ew" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -1591,7 +1591,7 @@
 /turf/open/space,
 /area/space)
 "fh" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "fi" = (
@@ -1623,7 +1623,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "fn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -1923,7 +1923,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "gd" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science)
 "ge" = (
@@ -1931,7 +1931,7 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "gf" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "gg" = (
@@ -2232,7 +2232,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "pA" = (
@@ -2561,7 +2561,7 @@
 /turf/open/floor/plating,
 /area/medical/medbay)
 "Rb" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "Re" = (
@@ -2630,7 +2630,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Wh" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "Wq" = (

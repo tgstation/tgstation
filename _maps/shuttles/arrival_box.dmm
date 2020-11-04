@@ -12,7 +12,7 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "e" = (
@@ -24,7 +24,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /obj/machinery/light{
 	dir = 1
 	},

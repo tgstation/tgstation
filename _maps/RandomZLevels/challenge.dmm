@@ -242,13 +242,13 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aY" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aZ" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -450,7 +450,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/challenge/main)
 "bA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bB" = (
@@ -861,23 +861,23 @@
 /turf/open/space,
 /area/space/nearstation)
 "cM" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cN" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cO" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cP" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -918,7 +918,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "de" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/atom/movable/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "df" = (
@@ -967,7 +967,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dl" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,

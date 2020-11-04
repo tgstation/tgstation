@@ -14,7 +14,7 @@
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
 
-/obj/effect/spawner/lootdrop/seed_vault
+/atom/movable/spawner/lootdrop/seed_vault
 	name = "seed vault seeds"
 	lootcount = 1
 

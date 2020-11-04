@@ -32,28 +32,28 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "ao" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "ap" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "aq" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "ar" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "as" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "at" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "au" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "av" = (
@@ -742,7 +742,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cG" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
@@ -1165,7 +1165,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "ec" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/workroom)
@@ -1559,7 +1559,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
 "fv" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
@@ -2973,7 +2973,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/pool)
 "jv" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3170,7 +3170,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
 "jS" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
 "jT" = (
@@ -3208,7 +3208,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
 "ka" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
@@ -3266,7 +3266,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
 "km" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
 "kn" = (
@@ -4471,7 +4471,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
 "mN" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/pool)

@@ -466,13 +466,13 @@
 
 //lootspawners//--
 
-/obj/effect/spawner/lootdrop/snowdin
+/atom/movable/spawner/lootdrop/snowdin
 	name = "why are you using this dummy"
 	lootdoubles = 0
 	lootcount = 1
 	loot = list(/obj/item/bikehorn = 100)
 
-/obj/effect/spawner/lootdrop/snowdin/dungeonlite
+/atom/movable/spawner/lootdrop/snowdin/dungeonlite
 	name = "dungeon lite"
 	loot = list(/obj/item/melee/classic_baton = 11,
 				/obj/item/melee/classic_baton/telescopic = 12,
@@ -490,7 +490,7 @@
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 
-/obj/effect/spawner/lootdrop/snowdin/dungeonmid
+/atom/movable/spawner/lootdrop/snowdin/dungeonmid
 	name = "dungeon mid"
 	loot = list(/obj/item/defibrillator/compact = 6,
 				/obj/item/storage/firstaid/tactical = 35,
@@ -516,7 +516,7 @@
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 
-/obj/effect/spawner/lootdrop/snowdin/dungeonheavy
+/atom/movable/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
 	loot = list(/obj/item/singularityhammer = 25,
 				/obj/item/mjollnir = 10,
@@ -535,7 +535,7 @@
 				/obj/item/borg/upgrade/syndicate = 13,
 				/obj/item/borg/upgrade/selfrepair = 17)
 
-/obj/effect/spawner/lootdrop/snowdin/dungeonmisc
+/atom/movable/spawner/lootdrop/snowdin/dungeonmisc
 	name = "dungeon misc"
 	lootdoubles = 2
 	lootcount = 1

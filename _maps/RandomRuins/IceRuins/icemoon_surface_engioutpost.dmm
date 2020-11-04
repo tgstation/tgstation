@@ -188,12 +188,12 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "aM" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/atom/movable/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "aN" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/atom/movable/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
@@ -216,7 +216,7 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "aQ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "aR" = (
@@ -677,7 +677,7 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "bR" = (
-/obj/effect/spawner/structure/window/plasma,
+/atom/movable/spawner/structure/window/plasma,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bS" = (
@@ -1085,17 +1085,17 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/atom/movable/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "da" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/atom/movable/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/brown/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "db" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/atom/movable/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)

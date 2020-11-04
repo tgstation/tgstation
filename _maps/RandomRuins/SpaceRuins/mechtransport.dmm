@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/space/has_grav/powered/mechtransport)
 "c" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/mechtransport)
 "d" = (

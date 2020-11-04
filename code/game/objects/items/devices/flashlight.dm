@@ -550,12 +550,12 @@
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
 
-/obj/effect/spawner/lootdrop/glowstick
+/atom/movable/spawner/lootdrop/glowstick
 	name = "random colored glowstick"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "random_glowstick"
 
-/obj/effect/spawner/lootdrop/glowstick/Initialize()
+/atom/movable/spawner/lootdrop/glowstick/Initialize()
 	loot = typesof(/obj/item/flashlight/glowstick)
 	. = ..()
 

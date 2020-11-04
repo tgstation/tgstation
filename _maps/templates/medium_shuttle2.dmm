@@ -122,7 +122,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/shuttle/medium_2)
 "v" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "w" = (
@@ -130,7 +130,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "x" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "y" = (

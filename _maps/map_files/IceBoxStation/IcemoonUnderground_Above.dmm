@@ -14,14 +14,14 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored/rivers)
 "ac" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ad" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
 "ae" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "af" = (
@@ -76,7 +76,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "an" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -87,7 +87,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ap" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "aq" = (
@@ -162,7 +162,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "aB" = (
@@ -378,7 +378,7 @@
 /turf/closed/wall,
 /area/mine/eva)
 "bg" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
@@ -422,7 +422,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bn" = (
@@ -433,7 +433,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bo" = (
@@ -456,7 +456,7 @@
 /turf/closed/wall,
 /area/mine/production)
 "br" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "bs" = (
@@ -560,7 +560,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bF" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bG" = (
@@ -860,7 +860,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cp" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobiomain";
@@ -980,7 +980,7 @@
 /turf/closed/wall/r_wall,
 /area/mine/maintenance)
 "cR" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cS" = (
@@ -1056,7 +1056,7 @@
 /area/mine/production)
 "dd" = (
 /obj/structure/closet/emcloset,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "df" = (
@@ -1377,7 +1377,7 @@
 /turf/open/floor/plasteel,
 /area/mine/maintenance)
 "dQ" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dR" = (
@@ -1408,7 +1408,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dV" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/production)
 "dW" = (
@@ -2242,7 +2242,7 @@
 	pixel_y = 4;
 	req_access_txt = "55"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -2410,7 +2410,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ia" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/production)
@@ -2654,7 +2654,7 @@
 /area/mine/laborcamp)
 "kh" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio3";
 	name = "Xenobio Pen 3 Blast Door"
@@ -2763,7 +2763,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "lL" = (
@@ -2781,7 +2781,7 @@
 /area/mine/production)
 "lY" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio5";
 	name = "Xenobio Pen 5 Blast Door"
@@ -2804,7 +2804,7 @@
 /area/storage/mining)
 "mu" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "mG" = (
@@ -2837,7 +2837,7 @@
 /turf/open/floor/grass,
 /area/hydroponics)
 "na" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "nd" = (
@@ -2863,7 +2863,7 @@
 	pixel_y = 4;
 	req_access_txt = "55"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -2903,7 +2903,7 @@
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "nI" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -3109,7 +3109,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "pF" = (
@@ -3186,12 +3186,12 @@
 	id = "xenobio4";
 	name = "Xenobio Pen 4 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "qn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hydroponics)
 "qt" = (
@@ -3310,7 +3310,7 @@
 	id = "xenobio7";
 	name = "Xenobio Pen 7 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "sa" = (
@@ -3390,7 +3390,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "sv" = (
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/atom/movable/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "sw" = (
@@ -3423,7 +3423,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "sF" = (
@@ -3450,12 +3450,12 @@
 /area/mine/production)
 "sM" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "sX" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "sY" = (
@@ -3507,7 +3507,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "tI" = (
@@ -3541,7 +3541,7 @@
 	id = "xenobio8";
 	name = "Xenobio Pen 8 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ub" = (
@@ -3604,7 +3604,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -3687,7 +3687,7 @@
 "we" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/donkpockets,
+/atom/movable/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "wg" = (
@@ -3726,7 +3726,7 @@
 	id = "xenobio11";
 	name = "Xenobio Pen 11 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "wF" = (
@@ -3781,11 +3781,11 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "xi" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/mine/living_quarters)
 "xj" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio1";
@@ -3873,7 +3873,7 @@
 /area/icemoon/underground/unexplored/rivers)
 "zb" = (
 /obj/structure/sign/warning/coldtemp,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -4309,7 +4309,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "DV" = (
@@ -4336,7 +4336,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Ef" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio6";
@@ -4353,7 +4353,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "El" = (
@@ -4504,13 +4504,13 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "FF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "FG" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio2";
 	name = "Xenobio Pen 2 Blast Door"
@@ -4565,7 +4565,7 @@
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "Gl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -4777,7 +4777,7 @@
 	id = "xenobio3";
 	name = "Xenobio Pen 3 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
@@ -4864,7 +4864,7 @@
 /area/mine/laborcamp)
 "Jv" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /obj/item/pickaxe,
 /obj/item/mining_scanner,
 /obj/item/storage/bag/ore,
@@ -4888,7 +4888,7 @@
 	id = "misclab";
 	name = "test chamber blast door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -4951,7 +4951,7 @@
 /area/mine/living_quarters)
 "Kn" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio4";
 	name = "Xenobio Pen 4 Blast Door"
@@ -4963,7 +4963,7 @@
 	id = "xenobio2";
 	name = "Xenobio Pen 2 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5133,7 +5133,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "Mt" = (
@@ -5256,7 +5256,7 @@
 	id = "misclab";
 	name = "test chamber blast door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -5398,7 +5398,7 @@
 	id = "xenobio10";
 	name = "Xenobio Pen 10 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "OD" = (
@@ -5433,7 +5433,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "OP" = (
@@ -5523,7 +5523,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -5637,7 +5637,7 @@
 	pixel_y = 4;
 	req_access_txt = "55"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -5900,11 +5900,11 @@
 /area/mine/laborcamp)
 "TC" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "TK" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio1";
@@ -6055,7 +6055,7 @@
 	pixel_y = 4;
 	req_access_txt = "55"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -6169,7 +6169,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/storage/mining)
 "Wn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -6217,7 +6217,7 @@
 	id = "xenobio6";
 	name = "Xenobio Pen 6 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "WM" = (
@@ -6248,7 +6248,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio5";
@@ -6317,7 +6317,7 @@
 	req_access_txt = "55"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "XU" = (
@@ -6353,7 +6353,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -6377,7 +6377,7 @@
 	pixel_y = 4;
 	req_access_txt = "55"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -6479,7 +6479,7 @@
 	id = "xenobio9";
 	name = "Xenobio Pen 9 Blast Door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "Zk" = (
@@ -6536,7 +6536,7 @@
 	name = "Xenobio Pen 6 Blast Door"
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)

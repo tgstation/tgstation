@@ -187,7 +187,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aK" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "aL" = (
@@ -787,7 +787,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cc" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "cd" = (
@@ -1877,7 +1877,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/space/fancytool,
+/atom/movable/spawner/lootdrop/space/fancytool,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "er" = (
@@ -1959,7 +1959,7 @@
 	},
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/atom/movable/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eC" = (

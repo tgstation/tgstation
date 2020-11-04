@@ -23,7 +23,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "f" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
@@ -60,7 +60,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "o" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (

@@ -621,7 +621,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "ca" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -693,7 +693,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -822,7 +822,7 @@
 	},
 /area/awaymission/caves/research)
 "cF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1047,7 +1047,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dm" = (
@@ -1587,7 +1587,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "fh" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fi" = (
@@ -1751,7 +1751,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/caves/bmp_asteroid)
 "fH" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "fI" = (

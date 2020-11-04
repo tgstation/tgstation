@@ -1579,7 +1579,7 @@
 "ZA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /obj/structure/curtain,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)

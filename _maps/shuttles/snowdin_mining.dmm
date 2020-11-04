@@ -14,7 +14,7 @@
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)
 "b" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)

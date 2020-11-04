@@ -393,7 +393,7 @@
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "aU" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "aV" = (

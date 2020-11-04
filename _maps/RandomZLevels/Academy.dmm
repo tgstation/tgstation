@@ -443,7 +443,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bR" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -1066,7 +1066,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "et" = (
@@ -2289,7 +2289,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -2578,7 +2578,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jP" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jQ" = (
@@ -2610,7 +2610,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "jX" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "jY" = (
@@ -2783,7 +2783,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kV" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kW" = (
@@ -3366,7 +3366,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "CD" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)

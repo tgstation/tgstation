@@ -15,7 +15,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cP" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "dJ" = (
@@ -129,7 +129,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/atom/movable/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plasteel/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
@@ -165,7 +165,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zx" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "zZ" = (

@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -338,7 +338,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/table/wood/bar,
-/obj/effect/spawner/lootdrop/gambling,
+/atom/movable/spawner/lootdrop/gambling,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bc" = (
@@ -397,7 +397,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bn" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -485,7 +485,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bF" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bG" = (

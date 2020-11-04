@@ -89,7 +89,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
@@ -236,7 +236,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aM" = (
@@ -340,7 +340,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
@@ -349,7 +349,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/atom/movable/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (

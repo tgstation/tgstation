@@ -266,7 +266,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aP" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -380,7 +380,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bd" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/space,
 /area/awaymission/undergroundoutpost45/central)
 "be" = (
@@ -2016,7 +2016,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "el" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3098,7 +3098,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gr" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3290,7 +3290,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "gU" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3651,7 +3651,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hH" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3805,7 +3805,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hV" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3824,7 +3824,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "hX" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -4273,7 +4273,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iS" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -4477,7 +4477,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -4732,7 +4732,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "jM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4750,7 +4750,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "jO" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6158,7 +6158,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mi" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "UO45_rdprivacy";
@@ -6169,7 +6169,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mj" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "UO45_rdprivacy";
 	name = "privacy shutters"
@@ -8384,7 +8384,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qb" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8401,7 +8401,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qd" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/meter{
 	layer = 3.3;
 	name = "Mixed Air Tank Out"
@@ -8412,7 +8412,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qe" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/meter{
 	layer = 3.3;
@@ -8453,7 +8453,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
@@ -8975,7 +8975,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rg" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9230,7 +9230,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
@@ -9637,7 +9637,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sg" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -9754,7 +9754,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sq" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
@@ -10083,7 +10083,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10185,7 +10185,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "td" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -11035,7 +11035,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "uI" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 1
 	},
@@ -11047,7 +11047,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uJ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/meter{
 	layer = 3.3
 	},
@@ -11348,7 +11348,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "vm" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -11819,7 +11819,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wk" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -11827,7 +11827,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -11926,7 +11926,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "ww" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -12580,7 +12580,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xr" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -12654,7 +12654,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -12875,7 +12875,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006

@@ -379,7 +379,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted/frosted,
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 8
 	},
 /turf/open/floor/plating/ironsand{
@@ -469,7 +469,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/ironsand{
@@ -776,7 +776,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/ironsand{
@@ -829,7 +829,7 @@
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "dj" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dk" = (
@@ -1563,7 +1563,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional,
+/atom/movable/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "fB" = (
@@ -1961,7 +1961,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wildwest/refine)
 "gX" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted/frosted,

@@ -36,7 +36,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bar)
 "af" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -868,7 +868,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "bI" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -1007,7 +1007,7 @@
 /area/shuttle/abandoned/bridge)
 "bT" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge"
 	},
@@ -1390,7 +1390,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "cz" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -1463,7 +1463,7 @@
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
 /obj/item/t_scanner,
-/obj/effect/spawner/lootdrop/maintenance{
+/atom/movable/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
@@ -1509,7 +1509,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1711,7 +1711,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/maintenance{
+/atom/movable/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
@@ -2276,7 +2276,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/maintenance{
+/atom/movable/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
@@ -2362,7 +2362,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "SY" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},

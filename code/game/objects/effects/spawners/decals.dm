@@ -1,5 +1,5 @@
 ///This spawner can spawn either a swabbable or non-swabble decal, the purpose of this is provide swabbing spots that cannot be rushed every round using map knowledge.
-/obj/effect/spawner/lootdrop/gross_decal_spawner
+/atom/movable/spawner/lootdrop/gross_decal_spawner
 	name = "gross decal spawner"
 	icon_state = "random_trash"
 	loot = list(

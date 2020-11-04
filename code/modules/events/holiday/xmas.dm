@@ -40,7 +40,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	dog_fashion = /datum/dog_fashion/head/festive
 
-/obj/effect/spawner/xmastree
+/atom/movable/spawner/xmastree
 	name = "christmas tree spawner"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
@@ -49,7 +49,7 @@
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
-/obj/effect/spawner/xmastree/Initialize()
+/atom/movable/spawner/xmastree/Initialize()
 	..()
 	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
 		new christmas_tree(get_turf(src))
@@ -58,7 +58,7 @@
 
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/spawner/xmastree/rdrod
+/atom/movable/spawner/xmastree/rdrod
 	name = "festivus pole spawner"
 	festive_tree = /obj/structure/festivus
 	christmas_tree = null

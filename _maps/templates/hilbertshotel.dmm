@@ -72,7 +72,7 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "n" = (
-/obj/effect/spawner/xmastree,
+/atom/movable/spawner/xmastree,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "o" = (
@@ -269,7 +269,7 @@
 /area/hilbertshotel)
 "V" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/three_course_meal,
+/atom/movable/spawner/lootdrop/three_course_meal,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 

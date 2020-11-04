@@ -13,7 +13,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "e" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/atom/movable/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "f" = (
@@ -21,7 +21,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "h" = (
@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/effect/spawner/lootdrop/maintenance{
+/atom/movable/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
@@ -47,7 +47,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
-/obj/effect/spawner/lootdrop/maintenance{
+/atom/movable/spawner/lootdrop/maintenance{
 	lootcount = 4;
 	name = "4maintenance loot spawner"
 	},

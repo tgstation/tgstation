@@ -1030,7 +1030,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/medical)
 "cl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "cn" = (

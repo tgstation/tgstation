@@ -501,12 +501,12 @@
 "bz" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/atom/movable/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "bA" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/languagebook,
+/atom/movable/spawner/lootdrop/space/languagebook,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "bB" = (
@@ -604,7 +604,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/languagebook,
+/atom/movable/spawner/lootdrop/space/languagebook,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bP" = (
@@ -738,7 +738,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cj" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/material,
+/atom/movable/spawner/lootdrop/space/material,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "ck" = (
@@ -988,7 +988,7 @@
 /obj/structure/rack,
 /obj/item/stack/wrapping_paper,
 /obj/item/stack/package_wrap,
-/obj/effect/spawner/lootdrop/donkpockets,
+/atom/movable/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "oH" = (

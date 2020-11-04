@@ -57,7 +57,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/atom/movable/spawner/lootdrop/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -68,7 +68,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/atom/movable/spawner/lootdrop/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
@@ -153,7 +153,7 @@
 /area/ruin/unpowered)
 "x" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/atom/movable/spawner/lootdrop/pizzaparty,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

@@ -2970,7 +2970,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iu" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/control)
 "iv" = (
@@ -3212,7 +3212,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iX" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/supply)
 "iY" = (
@@ -3246,7 +3246,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jb" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/centcom/supply)
@@ -4761,7 +4761,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "mk" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -5730,7 +5730,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "oe" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "of" = (
@@ -7337,7 +7337,7 @@
 /turf/open/floor/plating/asteroid,
 /area/centcom/evac)
 "qV" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/evac)
 "qW" = (
@@ -8425,7 +8425,7 @@
 /area/centcom/supplypod)
 "ta" = (
 /obj/machinery/light/floor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "tb" = (
@@ -8434,7 +8434,7 @@
 	},
 /area/holodeck/rec_center/photobooth)
 "tc" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -9541,7 +9541,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "vA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -9914,7 +9914,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "wk" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
 "wl" = (
@@ -10251,7 +10251,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xh" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -10352,7 +10352,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "xr" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -10681,7 +10681,7 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "yn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -13638,7 +13638,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "Ev" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tdome/tdomeobserve)
 "Ew" = (
@@ -15803,7 +15803,7 @@
 	},
 /area/tdome/tdomeadmin)
 "IR" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tdome/tdomeadmin)
 "IS" = (
@@ -16924,7 +16924,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Lw" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/centcom/evac)
 "Lx" = (
@@ -18243,7 +18243,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/effect/spawner/xmastree,
+/atom/movable/spawner/xmastree,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "RC" = (
@@ -18865,7 +18865,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "UV" = (
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "UY" = (
@@ -19273,7 +19273,7 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "XK" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
 "XL" = (
@@ -19293,7 +19293,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/thunderdome1218)
 "XT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/space/basic,
 /area/centcom/supplypod)
 "XZ" = (

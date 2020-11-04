@@ -104,7 +104,7 @@
 				var/mob/living/carbon/human/H = user
 				H.put_in_hands(HC)
 		else
-			var/crap = pick(subtypesof(/obj/effect/spawner/bundle/costume)) //harmless garbage some people may appreciate
+			var/crap = pick(subtypesof(/atom/movable/spawner/bundle/costume)) //harmless garbage some people may appreciate
 			new crap(user.loc)
 		qdel(WP)
 		set_expression("happy", 2 SECONDS)

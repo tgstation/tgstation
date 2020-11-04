@@ -87,11 +87,11 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "aw" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "az" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "aB" = (
@@ -170,7 +170,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aQ" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aR" = (
@@ -209,7 +209,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ba" = (

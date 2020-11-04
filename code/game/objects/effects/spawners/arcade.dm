@@ -1,10 +1,10 @@
-/obj/effect/spawner/randomarcade
+/atom/movable/spawner/randomarcade
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
 	name = "spawn random arcade machine"
 	desc = "Automagically transforms into a random arcade machine. If you see this while in a shift, please create a bug report."
 
-/obj/effect/spawner/randomarcade/Initialize(mapload)
+/atom/movable/spawner/randomarcade/Initialize(mapload)
 	..()
 
 	var/static/list/gameodds = list(

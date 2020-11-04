@@ -345,8 +345,8 @@
 /obj/structure/closet/cardboard,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/space/languagebook,
-/obj/effect/spawner/lootdrop/space/languagebook,
+/atom/movable/spawner/lootdrop/space/languagebook,
+/atom/movable/spawner/lootdrop/space/languagebook,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aX" = (
@@ -431,7 +431,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bh" = (
@@ -576,7 +576,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "bA" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bB" = (
@@ -795,8 +795,8 @@
 /area/ruin/space/has_grav/deepstorage)
 "cd" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/space/rareseed,
-/obj/effect/spawner/lootdrop/space/rareseed,
+/atom/movable/spawner/lootdrop/space/rareseed,
+/atom/movable/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cf" = (
@@ -949,7 +949,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cw" = (
@@ -1151,7 +1151,7 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "cR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
@@ -1221,7 +1221,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "da" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1272,7 +1272,7 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "dh" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/obj/effect/spawner/randomarcade,
+/atom/movable/spawner/randomarcade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
@@ -1745,7 +1745,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/obj/effect/spawner/lootdrop/space/fancytool,
+/atom/movable/spawner/lootdrop/space/fancytool,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
@@ -1955,7 +1955,7 @@
 	id = "bunkershutter"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -2205,7 +2205,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
@@ -2270,7 +2270,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fK" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fL" = (
@@ -2416,7 +2416,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gd" = (
@@ -2851,7 +2851,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "hq" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},

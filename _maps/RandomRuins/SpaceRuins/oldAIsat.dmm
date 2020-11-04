@@ -121,7 +121,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ay" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/atom/movable/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
 "az" = (
@@ -439,23 +439,23 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "bA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "bB" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "bC" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "bD" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -506,17 +506,17 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "bK" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
 "bL" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/atom/movable/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
 "bM" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -538,7 +538,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "bP" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -553,7 +553,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "bS" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/atom/movable/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
@@ -611,7 +611,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "cc" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
+/atom/movable/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -636,7 +636,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 "ch" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/atom/movable/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -760,7 +760,7 @@
 /turf/template_noop,
 /area/template_noop)
 "cB" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
+/atom/movable/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
 "cC" = (
@@ -898,12 +898,12 @@
 /area/tcommsat/oldaisat)
 "jZ" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/atom/movable/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
 "AX" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/spawner/lootdrop/space/fancytool,
+/atom/movable/spawner/lootdrop/space/fancytool,
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 

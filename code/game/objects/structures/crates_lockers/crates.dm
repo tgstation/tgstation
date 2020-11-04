@@ -88,7 +88,7 @@
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/lootdrop/maintenance(src)
+		new /atom/movable/spawner/lootdrop/maintenance(src)
 
 /obj/structure/closet/crate/trashcart/Initialize()
 	. = ..()
@@ -99,10 +99,10 @@
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /atom/movable/spawner/lootdrop/garbage_spawner(src)
 		if(prob(12))
 			new	/obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/scatter/grime(loc)
+	new /atom/movable/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -256,4 +256,4 @@
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /obj/effect/spawner/lootdrop/decorations_spawner(src)
+		new /atom/movable/spawner/lootdrop/decorations_spawner(src)

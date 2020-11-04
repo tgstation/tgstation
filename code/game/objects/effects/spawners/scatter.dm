@@ -1,5 +1,5 @@
 ///This spawner scatters the spawned stuff around where it is placed.
-/obj/effect/spawner/scatter
+/atom/movable/spawner/scatter
 	///determines how many things to scatter
 	var/max_spawns = 3
 	///determines how big of a range we should scatter things in.
@@ -7,7 +7,7 @@
 	///This weighted list acts as the loot table for the spawner
 	var/list/loot_table
 
-/obj/effect/spawner/scatter/Initialize()
+/atom/movable/spawner/scatter/Initialize()
 	..()
 	if(!length(loot_table))
 		return INITIALIZE_HINT_QDEL
@@ -33,17 +33,17 @@
 	return INITIALIZE_HINT_QDEL
 
 ///This spawner will scatter garbage around a dirty site.
-/obj/effect/spawner/scatter/grime
+/atom/movable/spawner/scatter/grime
 	name = "trash and grime scatterer"
 	max_spawns = 5
-	loot_table = list(/obj/effect/spawner/lootdrop/garbage_spawner = 30,
+	loot_table = list(/atom/movable/spawner/lootdrop/garbage_spawner = 30,
 					/mob/living/simple_animal/hostile/cockroach = 25,
 					/obj/effect/decal/cleanable/garbage = 20,
 					/obj/effect/decal/cleanable/vomit/old = 15,
-					/obj/effect/spawner/lootdrop/cigbutt = 10)
+					/atom/movable/spawner/lootdrop/cigbutt = 10)
 
 ///This spawner will scatter water related items around a moist site.
-/obj/effect/spawner/scatter/moisture
+/atom/movable/spawner/scatter/moisture
 	max_spawns = 2
 	radius = 1
 	loot_table = list(/obj/item/clothing/head/cone = 35,

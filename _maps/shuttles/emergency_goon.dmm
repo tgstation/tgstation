@@ -46,7 +46,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "m" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
@@ -91,7 +91,7 @@
 /area/shuttle/escape)
 "v" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/atom/movable/spawner/lootdrop/maintenance,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "w" = (

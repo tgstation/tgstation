@@ -81,7 +81,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ap" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "aq" = (
@@ -337,7 +337,7 @@
 /turf/closed/wall,
 /area/mine/eva)
 "bg" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
@@ -394,7 +394,7 @@
 /turf/closed/wall,
 /area/mine/mechbay)
 "bo" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "bp" = (
@@ -405,7 +405,7 @@
 /turf/closed/wall,
 /area/mine/production)
 "br" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "bs" = (
@@ -519,7 +519,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bF" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/eva)
 "bG" = (
@@ -584,7 +584,7 @@
 /area/mine/laborcamp/security)
 "bN" = (
 /obj/structure/sign/warning/docking,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
@@ -921,7 +921,7 @@
 /turf/closed/wall/r_wall,
 /area/mine/maintenance)
 "cR" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cS" = (
@@ -1333,7 +1333,7 @@
 /turf/open/floor/plasteel,
 /area/mine/maintenance)
 "dQ" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dR" = (
@@ -1364,7 +1364,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dV" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/production)
 "dW" = (
@@ -2450,7 +2450,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ia" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/production)
@@ -3559,7 +3559,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/laborcamp)
 "nI" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -3833,7 +3833,7 @@
 /area/mine/laborcamp)
 "sM" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "tI" = (
@@ -3884,7 +3884,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "uJ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -3993,7 +3993,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "xi" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/mine/living_quarters)
 "xW" = (
@@ -4309,7 +4309,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "FF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
@@ -4879,7 +4879,7 @@
 /area/mine/living_quarters)
 "TC" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/atom/movable/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "TJ" = (
@@ -5240,7 +5240,7 @@
 "Zn" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/donkpockets,
+/atom/movable/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Zs" = (

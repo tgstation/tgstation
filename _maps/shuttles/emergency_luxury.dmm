@@ -61,7 +61,7 @@
 "aj" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/atom/movable/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "ak" = (
@@ -110,7 +110,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/luxury)
 "au" = (
-/obj/effect/spawner/structure/window,
+/atom/movable/spawner/structure/window,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "av" = (
@@ -348,13 +348,13 @@
 "bf" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/six,
+/atom/movable/spawner/lootdrop/maintenance/six,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bg" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/atom/movable/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bi" = (
@@ -393,13 +393,13 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/atom/movable/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bo" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/atom/movable/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bp" = (
@@ -468,7 +468,7 @@
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/atom/movable/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bz" = (
@@ -487,7 +487,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "bB" = (
@@ -664,7 +664,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/atom/movable/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "cd" = (
@@ -848,7 +848,7 @@
 /area/shuttle/escape/luxury)
 "cC" = (
 /obj/structure/grille/broken,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/atom/movable/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "cD" = (

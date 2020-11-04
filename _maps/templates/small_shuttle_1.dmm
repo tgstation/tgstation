@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/template_noop)
 "c" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "d" = (

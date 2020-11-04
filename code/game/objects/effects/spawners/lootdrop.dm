@@ -1,4 +1,4 @@
-/obj/effect/spawner/lootdrop
+/atom/movable/spawner/lootdrop
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
 	layer = OBJ_LAYER
@@ -7,7 +7,7 @@
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
 	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
-/obj/effect/spawner/lootdrop/Initialize(mapload)
+/atom/movable/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot?.len)
 		var/loot_spawned = 0
@@ -31,7 +31,7 @@
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/spawner/lootdrop/donkpockets
+/atom/movable/spawner/lootdrop/donkpockets
 	name = "donk pocket box spawner"
 	lootdoubles = FALSE
 
@@ -43,17 +43,17 @@
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 		)
 
-/obj/effect/spawner/lootdrop/arcade_boards
+/atom/movable/spawner/lootdrop/arcade_boards
 	name = "arcade board spawner"
 	lootdoubles = FALSE
 	loot = list()
 
-/obj/effect/spawner/lootdrop/arcade_boards/Initialize(mapload)
+/atom/movable/spawner/lootdrop/arcade_boards/Initialize(mapload)
 	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
 	return ..()
 
 
-/obj/effect/spawner/lootdrop/armory_contraband
+/atom/movable/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
 	lootdoubles = FALSE
 
@@ -64,14 +64,14 @@
 				/obj/item/gun/ballistic/revolver/mateba
 				)
 
-/obj/effect/spawner/lootdrop/armory_contraband/metastation
+/atom/movable/spawner/lootdrop/armory_contraband/metastation
 	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/gun/ballistic/automatic/pistol/deagle,
 				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
 				/obj/item/gun/ballistic/revolver/mateba)
 
-/obj/effect/spawner/lootdrop/armory_contraband/donutstation
+/atom/movable/spawner/lootdrop/armory_contraband/donutstation
 	loot = list(/obj/item/grenade/clusterbuster/teargas = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
@@ -79,7 +79,7 @@
 				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
 				/obj/item/gun/ballistic/revolver/mateba)
 
-/obj/effect/spawner/lootdrop/prison_contraband
+/atom/movable/spawner/lootdrop/prison_contraband
 	name = "prison contraband loot spawner"
 	loot = list(/obj/item/clothing/mask/cigarette/space_cigarette = 4,
 				/obj/item/clothing/mask/cigarette/robust = 2,
@@ -121,7 +121,7 @@
 				/obj/item/pda = 1
 				)
 
-/obj/effect/spawner/lootdrop/gambling
+/atom/movable/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
 				/obj/item/gun/ballistic/revolver/russian = 5,
@@ -131,26 +131,26 @@
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
 
-/obj/effect/spawner/lootdrop/garbage_spawner
+/atom/movable/spawner/lootdrop/garbage_spawner
 	name = "garbage_spawner"
-	loot = list(/obj/effect/spawner/lootdrop/food_packaging = 56,
+	loot = list(/atom/movable/spawner/lootdrop/food_packaging = 56,
 				/obj/item/trash/can = 8,
 				/obj/item/shard = 8,
-				/obj/effect/spawner/lootdrop/botanical_waste = 8,
-				/obj/effect/spawner/lootdrop/cigbutt = 8,
+				/atom/movable/spawner/lootdrop/botanical_waste = 8,
+				/atom/movable/spawner/lootdrop/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
 				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
 				/obj/item/light/tube/broken = 3,
 				/obj/item/light/tube/broken = 1,
 				/obj/item/trash/candle = 1)
 
-/obj/effect/spawner/lootdrop/cigbutt
+/atom/movable/spawner/lootdrop/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(/obj/item/cigbutt = 65,
 				/obj/item/cigbutt/roach = 20,
 				/obj/item/cigbutt/cigarbutt = 15)
 
-/obj/effect/spawner/lootdrop/food_packaging
+/atom/movable/spawner/lootdrop/food_packaging
 	name = "food packaging spawner"
 	loot = list(/obj/item/trash/raisins = 20,
 				/obj/item/trash/cheesie = 10,
@@ -165,13 +165,13 @@
 				/obj/item/trash/can/food/peaches/maint = 4,
 				/obj/item/trash/semki = 2)
 
-/obj/effect/spawner/lootdrop/botanical_waste
+/atom/movable/spawner/lootdrop/botanical_waste
 	name = "botanical waste spawner"
 	loot = list(/obj/item/grown/bananapeel = 60,
 				/obj/item/grown/corncob = 30,
 				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
 
-/obj/effect/spawner/lootdrop/refreshing_beverage
+/atom/movable/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"
 	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
 				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
@@ -187,7 +187,7 @@
 				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
 				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
 
-/obj/effect/spawner/lootdrop/maint_drugs
+/atom/movable/spawner/lootdrop/maint_drugs
 	name = "maint drugs spawner"
 	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
 				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
@@ -195,7 +195,7 @@
 				/obj/item/reagent_containers/syringe = 15,
 				/obj/item/cigbutt/roach = 15)
 
-/obj/effect/spawner/lootdrop/grille_or_trash
+/atom/movable/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,
 			/obj/item/cigbutt = 1,
@@ -210,7 +210,7 @@
 			/obj/item/trash/sosjerky = 1,
 			/obj/item/trash/syndi_cakes = 1)
 
-/obj/effect/spawner/lootdrop/three_course_meal
+/atom/movable/spawner/lootdrop/three_course_meal
 	name = "three course meal spawner"
 	lootcount = 3
 	lootdoubles = FALSE
@@ -235,47 +235,47 @@
 			/obj/item/food/burger/superbite,
 			/obj/item/food/burger/fivealarm)
 
-/obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
+/atom/movable/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
 	. = ..()
 
-/obj/effect/spawner/lootdrop/maintenance
+/atom/movable/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
-/obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
+/atom/movable/spawner/lootdrop/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
 	. = ..()
 
-/obj/effect/spawner/lootdrop/maintenance/two
+/atom/movable/spawner/lootdrop/maintenance/two
 	name = "2 x maintenance loot spawner"
 	lootcount = 2
 
-/obj/effect/spawner/lootdrop/maintenance/three
+/atom/movable/spawner/lootdrop/maintenance/three
 	name = "3 x maintenance loot spawner"
 	lootcount = 3
 
-/obj/effect/spawner/lootdrop/maintenance/four
+/atom/movable/spawner/lootdrop/maintenance/four
 	name = "4 x maintenance loot spawner"
 	lootcount = 4
 
-/obj/effect/spawner/lootdrop/maintenance/five
+/atom/movable/spawner/lootdrop/maintenance/five
 	name = "5 x maintenance loot spawner"
 	lootcount = 5
 
-/obj/effect/spawner/lootdrop/maintenance/six
+/atom/movable/spawner/lootdrop/maintenance/six
 	name = "6 x maintenance loot spawner"
 	lootcount = 6
 
-/obj/effect/spawner/lootdrop/maintenance/seven
+/atom/movable/spawner/lootdrop/maintenance/seven
 	name = "7 x maintenance loot spawner"
 	lootcount = 7
 
-/obj/effect/spawner/lootdrop/maintenance/eight
+/atom/movable/spawner/lootdrop/maintenance/eight
 	name = "8 x maintenance loot spawner"
 	lootcount = 8
 
-/obj/effect/spawner/lootdrop/crate_spawner
+/atom/movable/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE
 
@@ -284,7 +284,7 @@
 				"" = 80
 				)
 
-/obj/effect/spawner/lootdrop/organ_spawner
+/atom/movable/spawner/lootdrop/organ_spawner
 	name = "ayylien organ spawner"
 	loot = list(
 		/obj/item/organ/heart/gland/electric = 3,
@@ -301,7 +301,7 @@
 		/obj/item/organ/regenerative_core = 2)
 	lootcount = 3
 
-/obj/effect/spawner/lootdrop/memeorgans
+/atom/movable/spawner/lootdrop/memeorgans
 	name = "meme organ spawner"
 	loot = list(
 		/obj/item/organ/ears/penguin,
@@ -323,54 +323,54 @@
 		/obj/item/organ/tail/lizard)
 	lootcount = 5
 
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
+/atom/movable/spawner/lootdrop/two_percent_xeno_egg_spawner
 	name = "2% chance xeno egg spawner"
 	loot = list(
 		/obj/effect/decal/remains/xeno = 49,
-		/obj/effect/spawner/xeno_egg_delivery = 1)
+		/atom/movable/spawner/xeno_egg_delivery = 1)
 
-/obj/effect/spawner/lootdrop/costume
+/atom/movable/spawner/lootdrop/costume
 	name = "random costume spawner"
 
-/obj/effect/spawner/lootdrop/costume/Initialize()
+/atom/movable/spawner/lootdrop/costume/Initialize()
 	loot = list()
-	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
+	for(var/path in subtypesof(/atom/movable/spawner/bundle/costume))
 		loot[path] = TRUE
 	. = ..()
 
 // Minor lootdrops follow
 
-/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears
+/atom/movable/spawner/lootdrop/minor/beret_or_rabbitears
 	name = "beret or rabbit ears spawner"
 	loot = list(
 		/obj/item/clothing/head/beret = 1,
 		/obj/item/clothing/head/rabbitears = 1)
 
-/obj/effect/spawner/lootdrop/minor/bowler_or_that
+/atom/movable/spawner/lootdrop/minor/bowler_or_that
 	name = "bowler or top hat spawner"
 	loot = list(
 		/obj/item/clothing/head/bowler = 1,
 		/obj/item/clothing/head/that = 1)
 
-/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears
+/atom/movable/spawner/lootdrop/minor/kittyears_or_rabbitears
 	name = "kitty ears or rabbit ears spawner"
 	loot = list(
 		/obj/item/clothing/head/kitty = 1,
 		/obj/item/clothing/head/rabbitears = 1)
 
-/obj/effect/spawner/lootdrop/minor/pirate_or_bandana
+/atom/movable/spawner/lootdrop/minor/pirate_or_bandana
 	name = "pirate hat or bandana spawner"
 	loot = list(
 		/obj/item/clothing/head/pirate = 1,
 		/obj/item/clothing/head/bandana = 1)
 
-/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask
+/atom/movable/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask
 	name = "25% cyborg mask spawner"
 	loot = list(
 		/obj/item/clothing/mask/gas/cyborg = 25,
 		"" = 75)
 
-/obj/effect/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
+/atom/movable/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
 	name = "harmless AI module spawner"
 	loot = list(
 				/obj/item/ai_module/core/full/asimov,
@@ -380,7 +380,7 @@
 				/obj/item/ai_module/core/full/paladin
 				)
 
-/obj/effect/spawner/lootdrop/aimodule_neutral // These shouldn't allow the AI to start butchering people without reason
+/atom/movable/spawner/lootdrop/aimodule_neutral // These shouldn't allow the AI to start butchering people without reason
 	name = "neutral AI module spawner"
 	loot = list(
 				/obj/item/ai_module/core/full/corp,
@@ -393,7 +393,7 @@
 				/obj/item/ai_module/core/full/hulkamania
 				)
 
-/obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
+/atom/movable/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
 	name = "harmful AI module spawner"
 	loot = list(
 				/obj/item/ai_module/core/full/antimov,
@@ -406,13 +406,13 @@
 
 // Tech storage circuit board spawners
 
-/obj/effect/spawner/lootdrop/techstorage
+/atom/movable/spawner/lootdrop/techstorage
 	name = "generic circuit board spawner"
 	lootdoubles = FALSE
 	fan_out_items = TRUE
 	lootcount = INFINITY
 
-/obj/effect/spawner/lootdrop/techstorage/service
+/atom/movable/spawner/lootdrop/techstorage/service
 	name = "service circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/arcade/battle,
@@ -427,7 +427,7 @@
 				/obj/item/circuitboard/computer/slot_machine
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/rnd
+/atom/movable/spawner/lootdrop/techstorage/rnd
 	name = "RnD circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
@@ -446,7 +446,7 @@
 				/obj/item/circuitboard/machine/dnascanner
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/security
+/atom/movable/spawner/lootdrop/techstorage/security
 	name = "security circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/secure_data,
@@ -454,7 +454,7 @@
 				/obj/item/circuitboard/computer/prisoner
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/engineering
+/atom/movable/spawner/lootdrop/techstorage/engineering
 	name = "engineering circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/atmos_alert,
@@ -462,7 +462,7 @@
 				/obj/item/circuitboard/computer/powermonitor
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/tcomms
+/atom/movable/spawner/lootdrop/techstorage/tcomms
 	name = "tcomms circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/message_monitor,
@@ -476,7 +476,7 @@
 				/obj/item/circuitboard/computer/comm_monitor
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/medical
+/atom/movable/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/machine/chem_dispenser,
@@ -486,7 +486,7 @@
 				/obj/item/circuitboard/computer/pandemic
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/ai
+/atom/movable/spawner/lootdrop/techstorage/ai
 	name = "secure AI circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/aiupload,
@@ -494,7 +494,7 @@
 				/obj/item/circuitboard/aicore
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/command
+/atom/movable/spawner/lootdrop/techstorage/command
 	name = "secure command circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
@@ -502,7 +502,7 @@
 				/obj/item/circuitboard/computer/card
 				)
 
-/obj/effect/spawner/lootdrop/techstorage/rnd_secure
+/atom/movable/spawner/lootdrop/techstorage/rnd_secure
 	name = "secure RnD circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/mecha_control,
@@ -510,20 +510,20 @@
 				/obj/item/circuitboard/computer/robotics
 				)
 
-/obj/effect/spawner/lootdrop/mafia_outfit
+/atom/movable/spawner/lootdrop/mafia_outfit
 	name = "mafia outfit spawner"
 	loot = list(
-				/obj/effect/spawner/bundle/costume/mafia = 20,
-				/obj/effect/spawner/bundle/costume/mafia/white = 5,
-				/obj/effect/spawner/bundle/costume/mafia/checkered = 2,
-				/obj/effect/spawner/bundle/costume/mafia/beige = 5
+				/atom/movable/spawner/bundle/costume/mafia = 20,
+				/atom/movable/spawner/bundle/costume/mafia/white = 5,
+				/atom/movable/spawner/bundle/costume/mafia/checkered = 2,
+				/atom/movable/spawner/bundle/costume/mafia/beige = 5
 				)
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
-	var/spawner_to_test = /obj/effect/spawner/lootdrop/maintenance //what lootdrop spawner to use the loot pool of
+	var/spawner_to_test = /atom/movable/spawner/lootdrop/maintenance //what lootdrop spawner to use the loot pool of
 	var/loot_count = 180 //180 is about how much maint loot spawns per map as of 11/14/2019
 	//result outputs
 	var/list/spawned_table //list of all items "spawned" and how many
@@ -540,7 +540,7 @@
 /obj/item/loot_table_maker/proc/make_table()
 	spawned_table = list()
 	stat_table = list()
-	var/obj/effect/spawner/lootdrop/spawner_to_table = new spawner_to_test
+	var/atom/movable/spawner/lootdrop/spawner_to_table = new spawner_to_test
 	var/lootpool = spawner_to_table.loot
 	qdel(spawner_to_table)
 	for(var/i in 1 to loot_count)
@@ -559,12 +559,12 @@
 		lootspawn = pickweight(lootspawn)
 	return lootspawn
 
-/obj/effect/spawner/lootdrop/space
+/atom/movable/spawner/lootdrop/space
 	name = "generic space ruin loot spawner"
 	lootcount = 1
 
 /// Space loot spawner. Randomlu picks 5 wads of space cash.
-/obj/effect/spawner/lootdrop/space/cashmoney
+/atom/movable/spawner/lootdrop/space/cashmoney
 	lootcount = 5
 	fan_out_items = TRUE
 	loot = list(
@@ -580,7 +580,7 @@
 	)
 
 /// Space loot spawner. Couple of random bits of technology-adjacent stuff including anomaly cores and BEPIS techs.
-/obj/effect/spawner/lootdrop/space/fancytech
+/atom/movable/spawner/lootdrop/space/fancytech
 	lootcount = 2
 	loot = list(
 		/obj/item/raw_anomaly_core/random = 1,
@@ -589,7 +589,7 @@
 	)
 
 /// Space loot spawner. Some sort of random and rare tool. Only a single drop.
-/obj/effect/spawner/lootdrop/space/fancytool
+/atom/movable/spawner/lootdrop/space/fancytool
 	lootcount = 1
 	loot = list(
 		/obj/item/wrench/abductor = 1,
@@ -611,7 +611,7 @@
 	)
 
 /// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
-/obj/effect/spawner/lootdrop/space/rareseed
+/atom/movable/spawner/lootdrop/space/rareseed
 	lootcount = 5
 	loot = list(
 		/obj/item/seeds/random = 30,
@@ -631,7 +631,7 @@
 	)
 
 /// Space loot spawner. A single roundstart species language book.
-/obj/effect/spawner/lootdrop/space/languagebook
+/atom/movable/spawner/lootdrop/space/languagebook
 	lootcount = 1
 	loot = list(
 		/obj/item/language_manual/roundstart_species = 100,
@@ -640,7 +640,7 @@
 	)
 
 /// Space loot spawner. Random selecton of a few rarer materials.
-/obj/effect/spawner/lootdrop/space/material
+/atom/movable/spawner/lootdrop/space/material
 	lootcount = 3
 	loot = list(
 		/obj/item/stack/sheet/plastic/fifty = 5,
@@ -653,7 +653,7 @@
 	)
 
 /// A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
-/obj/effect/spawner/lootdrop/space/syndiecosmetic
+/atom/movable/spawner/lootdrop/space/syndiecosmetic
 	lootcount = 2
 	loot = list(
 		/obj/item/clothing/under/syndicate = 10,
@@ -675,7 +675,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1
 	)
 
-/obj/effect/spawner/lootdrop/decorative_material
+/atom/movable/spawner/lootdrop/decorative_material
 	lootcount = 1
 	loot = list(
 		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
@@ -688,7 +688,7 @@
 		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
 	)
 
-/obj/effect/spawner/lootdrop/maintenance_carpet
+/atom/movable/spawner/lootdrop/maintenance_carpet
 	lootcount = 1
 	loot = list(
 		/obj/item/stack/tile/carpet{amount = 30} = 35,
@@ -698,11 +698,11 @@
 		/obj/item/stack/tile/carpet/executive/thirty = 15,
 	)
 
-/obj/effect/spawner/lootdrop/decorations_spawner
+/atom/movable/spawner/lootdrop/decorations_spawner
 	lootcount = 1
 	loot = list(
-	/obj/effect/spawner/lootdrop/maintenance_carpet = 25,
-	/obj/effect/spawner/lootdrop/decorative_material = 25,
+	/atom/movable/spawner/lootdrop/maintenance_carpet = 25,
+	/atom/movable/spawner/lootdrop/decorative_material = 25,
 	/obj/item/sign = 10,
 	/obj/item/flashlight/lamp/green = 10,
 	/obj/item/plaque = 5,

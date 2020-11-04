@@ -788,7 +788,7 @@
 /turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter1)
 "LM" = (
-/obj/effect/spawner/structure/window/shuttle,
+/atom/movable/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_bridge"
 	},

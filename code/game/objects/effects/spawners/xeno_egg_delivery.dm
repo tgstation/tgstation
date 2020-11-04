@@ -1,10 +1,10 @@
-/obj/effect/spawner/xeno_egg_delivery
+/atom/movable/spawner/xeno_egg_delivery
 	name = "xeno egg delivery"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "egg_growing"
 	var/announcement_time = 1200
 
-/obj/effect/spawner/xeno_egg_delivery/Initialize(mapload)
+/atom/movable/spawner/xeno_egg_delivery/Initialize(mapload)
 	..()
 	var/turf/T = get_turf(src)
 

@@ -18,7 +18,7 @@
 /obj/effect/beam/singularity_pull()
 	return
 
-/obj/effect/spawner
+/atom/movable/spawner
 	name = "object spawner"
 
 /obj/effect/list_container
