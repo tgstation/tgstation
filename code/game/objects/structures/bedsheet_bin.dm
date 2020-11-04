@@ -46,9 +46,10 @@ LINEN BINS
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
-		transfer_fingerprints_to(C)
-		C.add_fingerprint(user)
+		if (!(flags_1 & HOLOGRAM_1))
+			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), 3)
+			transfer_fingerprints_to(shreds)
+			shreds.add_fingerprint(user)
 		qdel(src)
 		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
 	else
@@ -393,8 +394,9 @@ LINEN BINS
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
-
 	add_fingerprint(user)
+
+
 /obj/structure/bedsheetbin/attack_tk(mob/user)
 	if(amount >= 1)
 		amount--
@@ -415,5 +417,5 @@ LINEN BINS
 			hidden.forceMove(drop_location())
 			hidden = null
 
-
 	add_fingerprint(user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN

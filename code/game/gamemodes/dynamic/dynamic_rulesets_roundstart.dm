@@ -109,7 +109,6 @@
 	scaling_cost = 15
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
-	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
 	. = ..()
@@ -123,21 +122,8 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
-	var/team_mode = FALSE
-	if(prob(team_mode_probability))
-		team_mode = TRUE
-		var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
-		var/list/possible_team_objectives = list()
-		for(var/T in team_objectives)
-			var/datum/objective/changeling_team_objective/CTO = T
-			if(assigned.len >= initial(CTO.min_lings))
-				possible_team_objectives += T
-
-		if(possible_team_objectives.len && prob(20*assigned.len))
-			GLOB.changeling_team_objective_type = pick(possible_team_objectives)
 	for(var/datum/mind/changeling in assigned)
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
-		new_antag.team_mode = team_mode
 		changeling.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= changeling
 	return TRUE
