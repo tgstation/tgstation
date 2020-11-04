@@ -1,3 +1,6 @@
+#define BASE_OF_CATEGORY "_root"
+
+
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
@@ -8,7 +11,6 @@
 	var/allowed_department_flags = ALL
 	var/production_animation				//What's flick()'d on print.
 	var/allowed_buildtypes = NONE
-	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
 	var/department_tag = "Unidentified"			//used for material distribution among other things.
 
@@ -19,23 +21,20 @@
 	. = ..()
 	create_reagents(0, OPENCONTAINER)
 	matching_designs = list()
-	cached_designs = list()
-	update_designs()
+	// To make life easier for ui, we insert BASE_OF_CATEGORY at the front so
+	// items without a sub category get displayed first
+	var/list/category_order
+	for(var/category_name in categories)
+		category_order = categories[category_name]
+		category_order.Insert(1,BASE_OF_CATEGORY)
+
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, breakdown_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
 	materials = null
-	cached_designs = null
 	matching_designs = null
 	return ..()
-
-/obj/machinery/rnd/production/proc/update_designs()
-	cached_designs.Cut()
-	for(var/i in stored_research.researched_designs)
-		var/datum/design/d = SSresearch.techweb_design_by_id(i)
-		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
-			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
@@ -189,7 +188,6 @@
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"
-	l += "<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"
 	return l
 
@@ -223,7 +221,6 @@
 
 /obj/machinery/rnd/production/proc/ui_screen_search()
 	var/list/l = list()
-	var/coeff = efficiency_coeff
 	l += "<h2>Search Results:</h2>"
 	l += "<form name='search' action='?src=[REF(src)]'>\
 	<input type='hidden' name='src' value='[REF(src)]'>\
@@ -232,14 +229,14 @@
 	<input type='submit' value='Search'>\
 	</form><HR>"
 	for(var/datum/design/D in matching_designs)
-		l += design_menu_entry(D, coeff)
+		l += design_menu_entry(D)
 	l += "</div>"
 	return l
 
-/obj/machinery/rnd/production/proc/design_menu_entry(datum/design/D, coeff)
+/obj/machinery/rnd/production/proc/design_menu_entry(datum/design/D, coeff=null)
 	if(!istype(D))
 		return
-	if(!coeff)
+	if(isnull(coeff))
 		coeff = efficiency_coeff
 	if(!efficient_with(D.build_path))
 		coeff = 1
@@ -284,9 +281,6 @@
 	if(ls["search"]) //Search for designs with name matching pattern
 		search(ls["to_search"])
 		screen = RESEARCH_FABRICATOR_SCREEN_SEARCH
-	if(ls["sync_research"])
-		update_designs()
-		say("Synchronizing research with host technology database.")
 	if(ls["category"])
 		selected_category = ls["category"]
 	if(ls["dispose"])  //Causes the protolathe to dispose of a single reagent (all of it)
@@ -326,19 +320,48 @@
 
 	return l
 
+
+/obj/machinery/rnd/production/proc/ui_screen_sub_category_view(sub_name, list/things)
+	var/list/l = list()
+	l += "<div class='statusDisplay'><h3 style='padding: 0'>[sub_name]</h3>"
+	// things are already known to be good
+	for(var/datum/design/D in things)
+		l += design_menu_entry(D)
+	l += "</div>"
+	return l
+
 /obj/machinery/rnd/production/proc/ui_screen_category_view()
 	if(!selected_category)
 		return ui_screen_main()
-	var/list/l = list()
-	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	var/coeff = efficiency_coeff
+	var/list/sub_category_order = categories[selected_category]
+	var/sub_category
+	var/list/category_lists = list()
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))
 			continue
 		if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 			continue
-		l += design_menu_entry(D, coeff)
+		sub_category = BASE_OF_CATEGORY
+		// If we have a sub_category and have a list that describes the order of the sub category
+		// then put it in the right order
+		if(D.sub_category && (D.sub_category in sub_category_order))
+			sub_category = D.sub_category
+		if(!category_lists[sub_category])
+			category_lists[sub_category] = list()
+		category_lists[sub_category] += D
+
+	var/list/l = list()
+	var/list/design_list
+	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
+	for(var/N in sub_category_order) // Now display the items in a preprogrammed order
+		design_list = category_lists[N]
+		if(N == BASE_OF_CATEGORY) // no sub category
+			for(var/datum/design/D in design_list)
+				l += design_menu_entry(D)
+		else
+			if(length(design_list) > 0)
+				l += ui_screen_sub_category_view(N,design_list)
 	l += "</div>"
 	return l
 
@@ -350,6 +373,8 @@
 	var/list/l = "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
+		if(length(stored_research.researched_designs_by_category[C])==0)
+			continue // If the category is empty don't bother printing it
 		if(line_length > 2)
 			l += "</tr><tr>"
 			line_length = 1
@@ -359,3 +384,5 @@
 
 	l += "</tr></table></div>"
 	return l
+
+#undef BASE_OF_CATEGORY

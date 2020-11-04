@@ -41,6 +41,8 @@ other types of metals and chemistry for reagents).
 	var/icon_cache
 	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
+	/// Optional Sub Category data.  See stock parts
+	var/sub_category = null
 
 /datum/design/error_design
 	name = "ERROR"

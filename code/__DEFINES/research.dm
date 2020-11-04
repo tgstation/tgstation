@@ -46,6 +46,92 @@
 #define DEPARTMENTAL_FLAG_ENGINEERING	(1<<4)
 #define DEPARTMENTAL_FLAG_SERVICE		(1<<5)
 
+///! Lathe catagories.  Used to sort and order the designs when being displayed or searched
+#define CATEGORY_INITIAL        		  	"initial"
+#define CATEGORY_HACKED         			"hacked"
+#define CATEGORY_TOOLS						"Tools"
+
+#define CATEGORY_DINNERWARE					"Dinnerware"
+#define CATEGORY_MISC						"Misc"			// Misc?  So many things here:P
+#define CATEGORY_FOOD						"Food"
+#define CATEGORY_EMAGGED					"emagged"
+#define CATEGORY_OTHER						"other"
+#define CATEGORY_AMMO						"Ammo"
+#define CATEGORY_EQUIPMENT					"Equipment"
+#define CATEGORY_IMPORTED					"Imported"
+#define CATEGORY_WEAPONS					"Weapons"
+#define CATEGORY_STOCK_PARTS				"Stock Parts"
+///! Stock parts sub catagories
+#define CATEGORY_TIER_BASIC					"Basic"
+#define CATEGORY_TIER_ADVANCED				"Advanced"
+#define CATEGORY_TIER_SUPER					"Super"
+#define CATEGORY_TIER_BLUESPACE				"Bluespace"
+#define CATEGORY_TIER_TELECOMS				CATEGORY_SUBSPACE_TELECOMS
+#define CATEGORY_TIER_MATERIALS				"Smelted Materials"
+
+#define CATEGORY_MACHINERY					"Machinery"
+#define CATEGORY_MEDICAL					"Medical"
+#define CATEGORY_SECURITY					"Security"
+
+#define CATEGORY_COMPUTER_BOARDS			"Computer Boards"
+#define CATEGORY_AI_MODULES					"AI Modules"
+#define CATEGORY_BLUESPACE_DESIGNS			"Bluespace Designs"
+#define CATEGORY_TOOL_DESIGNS				"Tool Designs"
+#define CATEGORY_MEDICAL_DESIGNS			"Medical Designs"
+#define CATEGORY_MINING_DESIGNS				"Mining Designs"
+#define CATEGORY_POWER_DESIGNS				"Power Designs"
+
+#define CATEGORY_COMPUTER_PARTS				"Computer Parts"
+#define CATEGORY_ELECTRONICS				"Electronics"
+#define CATEGORY_SUBSPACE_TELECOMS			"Subspace Telecoms"
+#define CATEGORY_MACHINERY_ENGINEERING		"Engineering Machinery"
+#define CATEGORY_MACHINERY_TELEPORTATION	"Teleportation Machinery"
+#define CATEGORY_MACHINERY_MEDICAL			"Medical Machinery"
+#define CATEGORY_MACHINERY_RESEARCH			"Research Machinery"
+#define CATEGORY_MACHINERY_MISC				"Misc. Machinery"
+#define CATEGORY_MACHINERY_HYDRO			"Hydroponics Machinery"
+#define CATEGORY_FIRING_PINS				"Firing Pins"
+
+#define CATEGORY_EXOSUIT_MODULES			"Exosuit Modules"
+#define CATEGORY_EXOSUIT_EQUIPMENT			"Exosuit Equipment"
+#define CATEGORY_EXOSUIT_AMMO				"Exosuit Ammunition"
+#define CATEGORY_CYBORG						"Cyborg"
+#define CATEGORY_CYBORG_MODULES				"Cyborg Upgrade Modules"
+#define CATEGORY_MECH_RIPLEY				"Ripley"
+#define CATEGORY_MECH_ODYSSEUS				"Odysseus"
+#define CATEGORY_MECH_GYGAX					"Gygax"
+#define CATEGORY_MECH_DURAND				"Durand"
+#define CATEGORY_MECH_HONK					"H.O.N.K"
+#define CATEGORY_MECH_PHAZON				"Phazon"
+#define CATEGORY_MECH_CLARKE				"Clarke"
+#define CATEGORY_CONTROL_INTERFACES			"Control Interfaces"
+#define CATEGORY_IMPLANTS					"Implants"
+#define CATEGORY_CYBERNETICS				"Cybernetics"
+
+///! Catagories for the bio regenerator
+#define CATEGORY_BOTANY_CHEMICALS			"Botany Chemicals"
+#define CATEGORY_ORGANIC_MATERIALS			"Organic Materials"
+
+///! Catagories for the limb grower
+#define CATEGORY_HUMAN						"human"
+#define CATEGORY_LIZARD						"lizard"
+#define CATEGORY_MOTH						"moth"
+#define CATEGORY_PLASMAMAN					"plasmaman"
+#define CATEGORY_ETHEREAL					"ethereal"
+
+///! Catagories for nanites
+#define CATEGORY_NANITES_UTILITY			"Utility Nanites"
+#define CATEGORY_NANITES_MEDICAL			"Medical Nanites"
+#define CATEGORY_NANITES_AUGMENTATION		"Augmentation Nanites"
+#define CATEGORY_NANITES_DEFECTIVE			"Defective Nanites"
+#define CATEGORY_NANITES_WEAPONIZED			"Weaponized Nanites"
+#define CATEGORY_NANITES_SUPPRESSION		"Suppression Nanites"
+#define CATEGORY_NANITES_SENSOR				"Sensor Nanites"
+#define CATEGORY_NANITES_PROTOCOLS			"Protocols Nanites"
+
+///! Helper to create a category list, just to make it a little cleaner
+#define CREATE_CATEGORY_LIST(...) list(__VA_ARGS__)
+
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 

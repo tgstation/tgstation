@@ -9,6 +9,7 @@
 	var/list/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
 	var/list/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
 	var/list/researched_designs = list()	//Designs that are available for use. Assoc list, id = TRUE
+	var/list/researched_designs_by_category = list()	//Designs that are available for use. Assoc list, category = list(datum/design,...)
 	var/list/custom_designs = list()		//Custom inserted designs like from disks that should survive recalculation.
 	var/list/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node id = path of boost object.
 	var/list/hidden_nodes = list()			//Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
@@ -65,6 +66,7 @@
 /datum/techweb/Destroy()
 	researched_nodes = null
 	researched_designs = null
+	researched_designs_by_category = null
 	available_nodes = null
 	visible_nodes = null
 	custom_designs = null
@@ -80,7 +82,10 @@
 	for(var/id in available_nodes)
 		processing[id] = TRUE
 	if(recalculate_designs)
-		researched_designs = custom_designs.Copy()
+		researched_designs = list()
+		researched_designs_by_category = list()
+		for(var/D in custom_designs)
+			_add_design(D)
 		if(wipe_custom_designs)
 			custom_designs = list()
 	for(var/id in processing)
@@ -143,6 +148,7 @@
 	returned.visible_nodes = visible_nodes.Copy()
 	returned.available_nodes = available_nodes.Copy()
 	returned.researched_designs = researched_designs.Copy()
+	returned.researched_designs_by_category = researched_designs_by_category.Copy()
 	returned.hidden_nodes = hidden_nodes.Copy()
 	return returned
 
@@ -173,13 +179,31 @@
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
 
+/datum/techweb/proc/_add_design(datum/design/design)
+	PRIVATE_PROC(1)
+	researched_designs[design.id] = TRUE
+	for(var/category_name in design.category)
+		if(!researched_designs_by_category[category_name])
+			researched_designs_by_category[category_name] = list()
+		researched_designs_by_category[category_name] += design
+
+/datum/techweb/proc/_remove_design(datum/design/design)
+	PRIVATE_PROC(1)
+	var/list/L
+	researched_designs -= design.id
+	for(var/category_name in design.category)
+		L = researched_designs_by_category[category_name]
+		L -= design
+		if(!L.len)
+			researched_designs_by_category.Remove(category_name)
+
 /datum/techweb/proc/add_design_by_id(id, custom = FALSE)
 	return add_design(SSresearch.techweb_design_by_id(id), custom)
 
 /datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
 	if(!istype(design))
 		return FALSE
-	researched_designs[design.id] = TRUE
+	_add_design(design)
 	if(custom)
 		custom_designs[design.id] = TRUE
 	return TRUE
@@ -193,7 +217,7 @@
 	if(custom_designs[design.id] && !custom)
 		return FALSE
 	custom_designs -= design.id
-	researched_designs -= design.id
+	_remove_design(design)
 	return TRUE
 
 /datum/techweb/proc/get_point_total(list/pointlist)

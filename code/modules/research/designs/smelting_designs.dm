@@ -6,10 +6,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasteel
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
-
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/plastitanium_alloy
 	name = "Plasma + Titanium alloy"
@@ -17,9 +17,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT, /datum/material/plasma = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/mineral/plastitanium
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/plaglass_alloy
 	name = "Plasma + Glass alloy"
@@ -27,9 +28,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasmaglass
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/plasmarglass_alloy
 	name = "Plasma + Metal + Glass alloy"
@@ -37,9 +39,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5,  /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasmarglass
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/titaniumglass_alloy
 	name = "Titanium + Glass alloy"
@@ -47,9 +50,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/titaniumglass
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/plastitaniumglass_alloy
 	name = "Plasma + Titanium + Glass alloy"
@@ -57,9 +61,10 @@
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plastitaniumglass
-	category = list("initial", "Stock Parts")
+	category = list(CATEGORY_INITIAL, CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
+	sub_category = CATEGORY_TIER_MATERIALS
 
 /datum/design/alienalloy
 	name = "Alien Alloy"
@@ -68,5 +73,7 @@
 	build_type = PROTOLATHE | SMELTER
 	materials = list(/datum/material/iron = 4000, /datum/material/plasma = 4000)
 	build_path = /obj/item/stack/sheet/mineral/abductor
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	sub_category = CATEGORY_TIER_MATERIALS
+	

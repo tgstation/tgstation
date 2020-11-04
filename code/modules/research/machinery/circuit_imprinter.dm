@@ -4,18 +4,18 @@
 	icon_state = "circuit_imprinter"
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 	categories = list(
-								"AI Modules",
-								"Computer Boards",
-								"Teleportation Machinery",
-								"Medical Machinery",
-								"Engineering Machinery",
-								"Exosuit Modules",
-								"Hydroponics Machinery",
-								"Subspace Telecomms",
-								"Research Machinery",
-								"Misc. Machinery",
-								"Computer Parts"
-								)
+		CATEGORY_AI_MODULES	= list(),
+		CATEGORY_COMPUTER_BOARDS = list(),
+		CATEGORY_MACHINERY_TELEPORTATION = list(),
+		CATEGORY_MACHINERY_MEDICAL = list(),
+		CATEGORY_MACHINERY_ENGINEERING = list(),
+		CATEGORY_EXOSUIT_MODULES = list(),
+		CATEGORY_MACHINERY_HYDRO = list(),
+		CATEGORY_SUBSPACE_TELECOMS = list(),
+		CATEGORY_MACHINERY_RESEARCH = list(),
+		CATEGORY_MACHINERY_MISC = list(),
+		CATEGORY_COMPUTER_PARTS = list()
+		)
 	production_animation = "circuit_imprinter_ani"
 	allowed_buildtypes = IMPRINTER
 
@@ -26,3 +26,4 @@
 		total_rating += M.rating * 2			//There is only one.
 	total_rating = max(1, total_rating)
 	efficiency_coeff = total_rating
+

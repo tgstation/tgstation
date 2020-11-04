@@ -5,7 +5,7 @@
 /datum/design/c38/sec
 	id = "sec_38"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/c38_trac
@@ -15,7 +15,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/silver = 5000, /datum/material/gold = 1000)
 	build_path = /obj/item/ammo_box/c38/trac
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/c38_hotshot
@@ -25,7 +25,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 5000)
 	build_path = /obj/item/ammo_box/c38/hotshot
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/c38_iceblox
@@ -35,43 +35,43 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 5000)
 	build_path = /obj/item/ammo_box/c38/iceblox
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/beanbag_slug/sec
 	id = "sec_beanbag_slug"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/shotgun_slug/sec
 	id = "sec_slug"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/buckshot_shell/sec
 	id = "sec_bshot"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/incendiary_slug/sec
 	id = "sec_Islug"
 	build_type = PROTOLATHE
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/pin_testing
@@ -81,7 +81,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 300)
 	build_path = /obj/item/firing_pin/test_range
-	category = list("Firing Pins")
+	category = list(CATEGORY_FIRING_PINS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/pin_mindshield
@@ -91,7 +91,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 600, /datum/material/diamond = 600, /datum/material/uranium = 200)
 	build_path = /obj/item/firing_pin/implant/mindshield
-	category = list("Firing Pins")
+	category = list(CATEGORY_FIRING_PINS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/pin_explorer
@@ -101,7 +101,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 1000, /datum/material/gold = 1000, /datum/material/iron = 500)
 	build_path = /obj/item/firing_pin/explorer
-	category = list("Firing Pins")
+	category = list(CATEGORY_FIRING_PINS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/stunrevolver
@@ -111,7 +111,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 10000, /datum/material/silver = 10000)
 	build_path = /obj/item/gun/energy/tesla_revolver
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/nuclear_gun
@@ -121,7 +121,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 1000)
 	build_path = /obj/item/gun/energy/e_gun/nuclear
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/tele_shield
@@ -131,7 +131,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 4000, /datum/material/silver = 300, /datum/material/titanium = 200)
 	build_path = /obj/item/shield/riot/tele
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/beamrifle
@@ -141,7 +141,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
 	build_path = /obj/item/gun/energy/beam_rifle
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/decloner
@@ -152,7 +152,7 @@
 	materials = list(/datum/material/gold = 5000,/datum/material/uranium = 10000)
 	reagents_list = list(/datum/reagent/toxin/mutagen = 40)
 	build_path = /obj/item/gun/energy/decloner
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/rapidsyringe
@@ -162,7 +162,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
 	build_path = /obj/item/gun/syringe/rapidsyringe
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL		//uwu
 
 /datum/design/temp_gun
@@ -172,7 +172,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 500, /datum/material/silver = 3000)
 	build_path = /obj/item/gun/energy/temperature
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/flora_gun
@@ -182,7 +182,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500, /datum/material/uranium = 2000)
 	build_path = /obj/item/gun/energy/floragun
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/large_grenade
@@ -192,7 +192,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/grenade/chem_grenade/large
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/pyro_grenade
@@ -202,7 +202,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/plasma = 500)
 	build_path = /obj/item/grenade/chem_grenade/pyro
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cryo_grenade
@@ -212,7 +212,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
 	build_path = /obj/item/grenade/chem_grenade/cryo
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_grenade
@@ -222,7 +222,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 500)
 	build_path = /obj/item/grenade/chem_grenade/adv_release
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/xray
@@ -232,7 +232,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/gold = 5000, /datum/material/uranium = 4000, /datum/material/iron = 5000, /datum/material/titanium = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/gun/energy/xray
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/ioncarbine
@@ -242,7 +242,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 6000, /datum/material/iron = 8000, /datum/material/uranium = 2000)
 	build_path = /obj/item/gun/energy/ionrifle/carbine
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/wormhole_projector
@@ -252,7 +252,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 2000, /datum/material/iron = 5000, /datum/material/diamond = 2000, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/wormhole_projector
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 //WT550 Mags
@@ -264,7 +264,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_oldsmg/ap_mag
@@ -290,7 +290,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/ammo_casing/shotgun/stunslug
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/techshell
@@ -300,7 +300,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 200)
 	build_path = /obj/item/ammo_casing/shotgun/techshell
-	category = list("Ammo")
+	category = list(CATEGORY_AMMO)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/suppressor
@@ -310,7 +310,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
 	build_path = /obj/item/suppressor
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/gravitygun
@@ -320,7 +320,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond = 3000, /datum/material/bluespace = 3000)
 	build_path = /obj/item/gun/energy/gravity_gun
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/largecrossbow
@@ -330,7 +330,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1500, /datum/material/uranium = 1500, /datum/material/silver = 1500)
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/cleric_mace
@@ -340,7 +340,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_RIGID = 12000)
 	build_path = /obj/item/melee/cleric_mace
-	category = list("Imported")
+	category = list(CATEGORY_IMPORTED)
 
 /datum/design/stun_boomerang
 	name = "OZtek Boomerang"
@@ -349,5 +349,5 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 	build_path = /obj/item/melee/baton/boomerang
-	category = list("Weapons")
+	category = list(CATEGORY_WEAPONS)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

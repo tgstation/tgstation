@@ -1,7 +1,7 @@
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
-
+GLOBAL
 /datum/design/rped
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
@@ -9,7 +9,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000) //hardcore
 	build_path = /obj/item/storage/part_replacer
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/bs_rped
@@ -19,7 +19,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 5000, /datum/material/silver = 2500) //hardcore
 	build_path = /obj/item/storage/part_replacer/bluespace
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 //Capacitors
@@ -30,9 +30,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/capacitor
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
@@ -41,9 +42,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/stock_parts/capacitor/adv
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/super_capacitor
 	name = "Super Capacitor"
@@ -52,9 +54,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/capacitor/super
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
@@ -63,9 +66,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/diamond = 100)
 	build_path = /obj/item/stock_parts/capacitor/quadratic
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 //Scanning modules
 /datum/design/basic_scanning
@@ -75,9 +79,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/stock_parts/scanning_module
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/adv_scanning
 	name = "Advanced Scanning Module"
@@ -86,9 +91,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/scanning_module/adv
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/phasic_scanning
 	name = "Phasic Scanning Module"
@@ -97,9 +103,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 150, /datum/material/silver = 60)
 	build_path = /obj/item/stock_parts/scanning_module/phasic
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
@@ -108,9 +115,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/diamond = 30, /datum/material/bluespace = 30)
 	build_path = /obj/item/stock_parts/scanning_module/triphasic
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 //Maipulators
 /datum/design/micro_mani
@@ -120,9 +128,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/stock_parts/manipulator
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -131,9 +140,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/stock_parts/manipulator/nano
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -142,9 +152,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/stock_parts/manipulator/pico
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/femto_mani
 	name = "Femto Manipulator"
@@ -153,9 +164,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/diamond = 30, /datum/material/titanium = 30)
 	build_path = /obj/item/stock_parts/manipulator/femto
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 //Micro-lasers
 /datum/design/basic_micro_laser
@@ -165,9 +177,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/stock_parts/micro_laser
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
@@ -176,9 +189,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/micro_laser/high
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
@@ -187,9 +201,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 150, /datum/material/uranium = 60)
 	build_path = /obj/item/stock_parts/micro_laser/ultra
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
@@ -198,9 +213,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/uranium = 100, /datum/material/diamond = 60)
 	build_path = /obj/item/stock_parts/micro_laser/quadultra
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 /datum/design/basic_matter_bin
 	name = "Basic Matter Bin"
@@ -209,9 +225,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/stock_parts/matter_bin
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"
@@ -220,9 +237,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/stock_parts/matter_bin/adv
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -231,9 +249,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/stock_parts/matter_bin/super
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
@@ -242,9 +261,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 250, /datum/material/diamond = 100, /datum/material/bluespace = 100)
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 //electrolite
 /datum/design/basic_electrolite
@@ -254,9 +274,10 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/electrolite
-	category = list("Stock Parts","Machinery","initial")
+	category = list(CATEGORY_STOCK_PARTS,CATEGORY_MACHINERY,CATEGORY_INITIAL)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BASIC
 
 /datum/design/adv_electrolite
 	name = "Advanced Electrolite"
@@ -265,9 +286,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/stock_parts/electrolite/adv
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_ADVANCED
 
 /datum/design/super_electrolite
 	name = "Super Electrolite"
@@ -276,9 +298,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/electrolite/super
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_SUPER
 
 /datum/design/bluespace_electrolite
 	name = "Bluespace Electrolite"
@@ -287,9 +310,10 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/silver = 100, /datum/material/diamond = 100)
 	build_path = /obj/item/stock_parts/electrolite/bluespace
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_BLUESPACE
 
 //T-Comms devices
 /datum/design/subspace_ansible
@@ -299,8 +323,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/ansible
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/hyperwave_filter
 	name = "Hyperwave Filter"
@@ -309,8 +334,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/filter
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/subspace_amplifier
 	name = "Subspace Amplifier"
@@ -319,8 +345,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/amplifier
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
@@ -329,8 +356,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 200)
 	build_path = /obj/item/stock_parts/subspace/treatment
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
@@ -339,8 +367,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/analyzer
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
@@ -349,8 +378,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 800, /datum/material/silver = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/crystal
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
@@ -359,8 +389,9 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 100, /datum/material/silver = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/transmitter
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	sub_category = CATEGORY_TIER_TELECOMS
 
 /datum/design/card_reader
 	name = "Card Reader"
@@ -369,7 +400,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 
 /datum/design/water_recycler
 	name = "Water Recycler"
@@ -378,5 +409,5 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = 200, /datum/material/iron = 50)
 	build_path = /obj/item/stock_parts/water_recycler
-	category = list("Stock Parts")
+	category = list(CATEGORY_STOCK_PARTS)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
