@@ -7,6 +7,7 @@
 	//Add client links
 	var/dat = ""
 	if(M.client)
+		dat += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>"
 		dat += "<center><p>Client</p></center>"
 		dat += "<center>"
 		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CLIENT, "Attack Log", source, ntype)

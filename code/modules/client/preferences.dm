@@ -1884,9 +1884,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace)	//we need a surname
-				real_name += " [pick(GLOB.last_names)]"
+				real_name += " [pick(GLOB.last_names_male)]"
 			else if(firstspace == name_length)
-				real_name += "[pick(GLOB.last_names)]"
+				real_name += "[pick(GLOB.last_names_male)]"
 
 	character.real_name = real_name
 	character.name = character.real_name

@@ -195,7 +195,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 							else
 								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
 								new_name += " "
-								new_name += pick(GLOB.last_names)
+								new_name += pick(pick(GLOB.last_names_male,GLOB.last_names_female))
 								. += new_name
 					if(2)
 						. += pick(get_all_jobs())//Returns a job.
