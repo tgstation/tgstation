@@ -270,7 +270,7 @@ Contains:
 	icon_state = "ert_clown"
 	inhand_icon_state = "ert_clown"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
-	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/grown/banana, /obj/item/grown/bananapeel)
+	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/food/grown/banana, /obj/item/grown/bananapeel)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"

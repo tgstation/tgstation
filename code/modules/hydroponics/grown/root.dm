@@ -5,7 +5,7 @@
 	icon_state = "seed-carrot"
 	species = "carrot"
 	plantname = "Carrots"
-	product = /obj/item/reagent_containers/food/snacks/grown/carrot
+	product = /obj/item/food/grown/carrot
 	maturation = 10
 	production = 1
 	yield = 5
@@ -15,7 +15,7 @@
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
 	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/carrot
+/obj/item/food/grown/carrot
 	seed = /obj/item/seeds/carrot
 	name = "carrot"
 	desc = "It's good for the eyes!"
@@ -26,7 +26,7 @@
 	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
 	wine_power = 30
 
-/obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
 		to_chat(user, "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>")
 		var/obj/item/kitchen/knife/shiv/carrot/Shiv = new /obj/item/kitchen/knife/shiv/carrot
@@ -43,12 +43,12 @@
 	icon_state = "seed-parsnip"
 	species = "parsnip"
 	plantname = "Parsnip"
-	product = /obj/item/reagent_containers/food/snacks/grown/parsnip
+	product = /obj/item/food/grown/parsnip
 	icon_dead = "carrot-dead"
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/parsnip
+/obj/item/food/grown/parsnip
 	seed = /obj/item/seeds/carrot/parsnip
 	name = "parsnip"
 	desc = "Closely related to carrots."
@@ -66,7 +66,7 @@
 	icon_state = "seed-whitebeet"
 	species = "whitebeet"
 	plantname = "White-Beet Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/whitebeet
+	product = /obj/item/food/grown/whitebeet
 	lifespan = 60
 	endurance = 50
 	yield = 6
@@ -76,7 +76,7 @@
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/sugar = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/whitebeet
+/obj/item/food/grown/whitebeet
 	seed = /obj/item/seeds/whitebeet
 	name = "white-beet"
 	desc = "You can't beat white-beet."
@@ -93,7 +93,7 @@
 	icon_state = "seed-redbeet"
 	species = "redbeet"
 	plantname = "Red-Beet Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/redbeet
+	product = /obj/item/food/grown/redbeet
 	lifespan = 60
 	endurance = 50
 	yield = 6
@@ -104,7 +104,7 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 	graft_gene = /datum/plant_gene/trait/maxchem
 
-/obj/item/reagent_containers/food/snacks/grown/redbeet
+/obj/item/food/grown/redbeet
 	seed = /obj/item/seeds/redbeet
 	name = "red beet"
 	desc = "You can't beat red beet."

@@ -164,7 +164,7 @@
 
 //BOMBANANA
 
-/obj/item/reagent_containers/food/snacks/grown/banana/bombanana
+/obj/item/food/grown/banana/bombanana
 	trash = /obj/item/grown/bananapeel/bombanana
 	bitesize = 1
 	customfoodfilling = FALSE

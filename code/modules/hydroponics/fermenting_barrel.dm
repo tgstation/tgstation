@@ -39,7 +39,7 @@
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
 /obj/structure/fermenting_barrel/attackby(obj/item/I, mob/user, params)
-	var/obj/item/reagent_containers/food/snacks/grown/fruit = I
+	var/obj/item/food/grown/fruit = I
 	if(istype(fruit))
 		if(!fruit.can_distill)
 			to_chat(user, "<span class='warning'>You can't distill this into anything...</span>")

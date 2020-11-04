@@ -71,7 +71,7 @@
 	icon_state = "seed-galaxythistle"
 	species = "galaxythistle"
 	plantname = "Galaxythistle"
-	product = /obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	product = /obj/item/food/grown/galaxythistle
 	lifespan = 70
 	endurance = 40
 	maturation = 3
@@ -91,7 +91,7 @@
 	if(!nogenes)
 		unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
 
-/obj/item/reagent_containers/food/snacks/grown/galaxythistle
+/obj/item/food/grown/galaxythistle
 	seed = /obj/item/seeds/galaxythistle
 	name = "galaxythistle flower head"
 	desc = "This spiny cluster of florets reminds you of the highlands."
@@ -109,7 +109,7 @@
 	icon_state = "seed-cabbage"
 	species = "cabbage"
 	plantname = "Cabbages"
-	product = /obj/item/reagent_containers/food/snacks/grown/cabbage
+	product = /obj/item/food/grown/cabbage
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -123,7 +123,7 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	seed_flags = null
 
-/obj/item/reagent_containers/food/snacks/grown/cabbage
+/obj/item/food/grown/cabbage
 	seed = /obj/item/seeds/cabbage
 	name = "cabbage"
 	desc = "Ewwwwwwwwww. Cabbage."
@@ -140,7 +140,7 @@
 	icon_state = "seed-sugarcane"
 	species = "sugarcane"
 	plantname = "Sugarcane"
-	product = /obj/item/reagent_containers/food/snacks/grown/sugarcane
+	product = /obj/item/food/grown/sugarcane
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
@@ -151,7 +151,7 @@
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
 
-/obj/item/reagent_containers/food/snacks/grown/sugarcane
+/obj/item/food/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
 	name = "sugarcane"
 	desc = "Sickly sweet."
@@ -168,7 +168,7 @@
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+	product = /obj/item/food/grown/shell/gatfruit
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
@@ -181,7 +181,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	reagents_add = list(/datum/reagent/sulfur = 0.1, /datum/reagent/carbon = 0.1, /datum/reagent/nitrogen = 0.07, /datum/reagent/potassium = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+/obj/item/food/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
 	name = "gatfruit"
 	desc = "It smells like burning."
@@ -199,12 +199,12 @@
 	icon_state = "seed-cherry_bomb"
 	species = "cherry_bomb"
 	plantname = "Cherry Bomb Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
+	product = /obj/item/food/grown/cherry_bomb
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb
+/obj/item/food/grown/cherry_bomb
 	name = "cherry bombs"
 	desc = "You think you can hear the hissing of a tiny fuse."
 	icon_state = "cherry_bomb"
@@ -215,21 +215,21 @@
 	max_integrity = 40
 	wine_power = 80
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
+/obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
 	log_bomber(user, "primed a", src, "for detonation")
 	prime()
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
+/obj/item/food/grown/cherry_bomb/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
+/obj/item/food/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
+/obj/item/food/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
 	reagents.chem_temp = 1000 //Sets off the gunpowder
@@ -242,7 +242,7 @@
 	icon_state = "seed-aloe"
 	species = "aloe"
 	plantname = "Aloe"
-	product = /obj/item/reagent_containers/food/snacks/grown/aloe
+	product = /obj/item/food/grown/aloe
 	lifespan = 60
 	endurance = 25
 	maturation = 4
@@ -252,7 +252,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/aloe
+/obj/item/food/grown/aloe
 	seed = /obj/item/seeds/aloe
 	name = "aloe"
 	desc = "Cut leaves from the aloe plant."
@@ -263,6 +263,6 @@
 	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
-/obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
+/obj/item/food/grown/aloe/microwave_act(obj/machinery/microwave/M)
 	new /obj/item/stack/medical/aloe(drop_location(), 2)
 	qdel(src)

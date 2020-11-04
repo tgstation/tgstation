@@ -5,7 +5,7 @@
 	icon_state = "seed-pineapple"
 	species = "pineapple"
 	plantname = "Pineapple Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/pineapple
+	product = /obj/item/food/grown/pineapple
 	lifespan = 40
 	endurance = 30
 	growthstages = 3
@@ -14,7 +14,7 @@
 	mutatelist = list(/obj/item/seeds/apple)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.2, /datum/reagent/water = 0.04)
 
-/obj/item/reagent_containers/food/snacks/grown/pineapple
+/obj/item/food/grown/pineapple
 	seed = /obj/item/seeds/pineapple
 	name = "pineapples"
 	desc = "Blorble."

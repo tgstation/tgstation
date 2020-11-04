@@ -4,7 +4,7 @@
 	icon_state = "seed-onion"
 	species = "onion"
 	plantname = "Onion Sprouts"
-	product = /obj/item/reagent_containers/food/snacks/grown/onion
+	product = /obj/item/food/grown/onion
 	lifespan = 20
 	maturation = 3
 	production = 4
@@ -17,7 +17,7 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
-/obj/item/reagent_containers/food/snacks/grown/onion
+/obj/item/food/grown/onion
 	seed = /obj/item/seeds/onion
 	name = "onion"
 	desc = "Nothing to cry over."
@@ -36,10 +36,10 @@
 	species = "onion_red"
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
-	product = /obj/item/reagent_containers/food/snacks/grown/onion/red
+	product = /obj/item/food/grown/onion/red
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/onion/red
+/obj/item/food/grown/onion/red
 	seed = /obj/item/seeds/onion/red
 	name = "red onion"
 	desc = "Purple despite the name."
@@ -48,7 +48,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice/red
 	wine_power = 60
 
-/obj/item/reagent_containers/food/snacks/grown/onion/slice(accuracy, obj/item/W, mob/user)
+/obj/item/food/grown/onion/slice(accuracy, obj/item/W, mob/user)
 	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
 	S.attach(splat_location)

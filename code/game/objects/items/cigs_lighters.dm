@@ -553,8 +553,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = O
+	if(istype(O, /obj/item/food/grown))
+		var/obj/item/food/grown/G = O
 		if(!packeditem)
 			if(HAS_TRAIT(G, TRAIT_DRIED))
 				to_chat(user, "<span class='notice'>You stuff [O] into [src].</span>")
@@ -825,8 +825,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/O = target
+	if(istype(target, /obj/item/food/grown))
+		var/obj/item/food/grown/O = target
 		if(HAS_TRAIT(O, TRAIT_DRIED))
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume

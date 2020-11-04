@@ -5,7 +5,7 @@
 	icon_state = "seed-tomato"
 	species = "tomato"
 	plantname = "Tomato Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/tomato
+	product = /obj/item/food/grown/tomato
 	maturation = 8
 	instability = 25
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -16,7 +16,7 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/squash
 
-/obj/item/reagent_containers/food/snacks/grown/tomato
+/obj/item/food/grown/tomato
 	seed = /obj/item/seeds/tomato
 	name = "tomato"
 	desc = "I say to-mah-to, you say tom-mae-to."
@@ -36,12 +36,12 @@
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
 	plantname = "Blood-Tomato Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/tomato/blood
+	product = /obj/item/food/grown/tomato/blood
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/blood = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/blood
+/obj/item/food/grown/tomato/blood
 	seed = /obj/item/seeds/tomato/blood
 	name = "blood-tomato"
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
@@ -59,7 +59,7 @@
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
 	plantname = "Blue-Tomato Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/tomato/blue
+	product = /obj/item/food/grown/tomato/blue
 	yield = 2
 	icon_grow = "bluetomato-grow"
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
@@ -68,7 +68,7 @@
 	rarity = 20
 	graft_gene = /datum/plant_gene/trait/slip
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/blue
+/obj/item/food/grown/tomato/blue
 	seed = /obj/item/seeds/tomato/blue
 	name = "blue-tomato"
 	desc = "I say blue-mah-to, you say blue-mae-to."
@@ -84,7 +84,7 @@
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
 	plantname = "Bluespace Tomato Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/tomato/blue/bluespace
+	product = /obj/item/food/grown/tomato/blue/bluespace
 	yield = 2
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
@@ -92,7 +92,7 @@
 	rarity = 50
 	graft_gene = /datum/plant_gene/trait/teleport
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/blue/bluespace
+/obj/item/food/grown/tomato/blue/bluespace
 	seed = /obj/item/seeds/tomato/blue/bluespace
 	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
@@ -107,7 +107,7 @@
 	icon_state = "seed-killertomato"
 	species = "killertomato"
 	plantname = "Killer-Tomato Plants"
-	product = /obj/item/reagent_containers/food/snacks/grown/tomato/killer
+	product = /obj/item/food/grown/tomato/killer
 	yield = 2
 	genes = list(/datum/plant_gene/trait/squash)
 	growthstages = 2
@@ -117,7 +117,7 @@
 	mutatelist = list()
 	rarity = 30
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/killer
+/obj/item/food/grown/tomato/killer
 	seed = /obj/item/seeds/tomato/killer
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
@@ -126,13 +126,13 @@
 	filling_color = "#FF0000"
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
+/obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
 		to_chat(user, "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>")
 		return
 	..()
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
+/obj/item/food/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || isspaceturf(user.loc))
 		return
 	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
@@ -140,7 +140,7 @@
 	addtimer(CALLBACK(src, .proc/awaken), 3 SECONDS)
 	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
-/obj/item/reagent_containers/food/snacks/grown/tomato/killer/proc/awaken()
+/obj/item/food/grown/tomato/killer/proc/awaken()
 	if(QDELETED(src))
 		return
 	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))

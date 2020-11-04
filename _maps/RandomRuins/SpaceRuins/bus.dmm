@@ -91,7 +91,7 @@
 /area/ruin/unpowered/no_grav)
 "ar" = (
 /obj/structure/fluff/bus/passable/seat,
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
+/obj/item/food/grown/cherry_bomb,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
@@ -99,7 +99,7 @@
 "as" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/item/food/grown/citrus/orange,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
