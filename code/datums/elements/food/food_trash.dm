@@ -5,6 +5,7 @@
 	/// The type of trash that is spawned by this element
 	var/trash
 	///Flags of the trash element that change its behavior
+	var/flags
 
 /datum/element/food_trash/Attach(datum/target, atom/trash, flags)
 	. = ..()
