@@ -31,7 +31,7 @@
 ///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 ///Conduction of heat inside the fusion reactor
-#define METALLIC_VOID_CONDUCTIVITY			15
+#define METALLIC_VOID_CONDUCTIVITY			0.15
 ///Conduction of heat near the external cooling loop
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.85
 ///Sets the range of the hallucinations
@@ -898,7 +898,7 @@
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
-		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,INFINITY)
+		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE)
 	else
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01
 
@@ -1039,7 +1039,7 @@
 	linked_output.airs[1].merge(internal_output)
 
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen (to do)
-	if(moderator_internal.total_moles())
+	if(moderator_internal.total_moles() > 0)
 		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
 		if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
 			iron_content += 0.05
