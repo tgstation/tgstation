@@ -29,13 +29,15 @@
 	icon_state = "watermelon"
 	slice_path = /obj/item/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
-	dried_type = null
 	w_class = WEIGHT_CLASS_NORMAL
 	filling_color = "#008000"
 	bitesize_mod = 3
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
+
+/obj/item/reagent_containers/food/snacks/grown/watermelon/make_dryable()
+	return //No drying
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -57,9 +59,12 @@
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
 	filling_color = "#FFD700"
-	dried_type = null
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
+
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/make_dryable()
+	return //No drying
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()

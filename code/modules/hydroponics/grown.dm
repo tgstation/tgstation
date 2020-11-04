@@ -12,9 +12,6 @@
 	var/bitesize_mod = 0
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-	dried_type = -1
-	// Saves us from having to define each stupid grown's dried_type as itself.
-	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
@@ -38,8 +35,7 @@
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
-	if(dried_type == -1)
-		dried_type = src.type
+	make_dryable()
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
@@ -48,7 +44,8 @@
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 		add_juice()
 
-
+/obj/item/reagent_containers/food/snacks/grown/proc/make_dryable()
+	AddElement(/datum/element/dryable, src.type)
 
 /obj/item/reagent_containers/food/snacks/grown/proc/add_juice()
 	if(reagents)

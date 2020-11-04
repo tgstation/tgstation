@@ -218,13 +218,15 @@
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
-	dried_type = /obj/item/food/no_raisin/healthy
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
+
+/obj/item/reagent_containers/food/snacks/grown/grapes/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
 
 // Green Grapes
 /obj/item/seeds/grape/green
