@@ -64,6 +64,18 @@
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
 
+/// Special handling for gondolas, as they don't use icon_states and instead rely on overlays, which the parent proc for this deletes.
+/mob/living/simple_animal/pet/gondola/add_collar(obj/item/clothing/neck/petcollar/P, mob/user)
+	if(QDELETED(P) || pcollar)
+		return
+	if(!user.transferItemToLoc(P, src))
+		return
+
+	pcollar = P
+
+	to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
+	if(P.tagname && !unique_pet)
+		fully_replace_character_name(null, "\proper [P.tagname]")
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR
