@@ -80,6 +80,9 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
+	staminaloss = max(0, staminaloss - 10)
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)

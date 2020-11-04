@@ -83,12 +83,6 @@
 	lay_web = new
 	lay_web.Grant(src)
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Life(mapload)
-	. = ..()
-	staminaloss = max(0, staminaloss - 10)
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
-	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
-
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
 	if(!. || !client)
