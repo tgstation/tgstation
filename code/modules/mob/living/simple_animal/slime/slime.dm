@@ -143,7 +143,7 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/on_reagent_change()
+/mob/living/simple_animal/slime/proc/on_reagent_change()
 	SIGNAL_HANDLER
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
