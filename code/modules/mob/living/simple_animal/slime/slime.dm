@@ -102,8 +102,10 @@
 	set_nutrition(700)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 	add_cell_sample()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
 
 /mob/living/simple_animal/slime/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
 	for (var/A in actions)
 		var/datum/action/AC = A
 		AC.Remove(src)
@@ -142,7 +144,7 @@
 	..()
 
 /mob/living/simple_animal/slime/on_reagent_change()
-	. = ..()
+	SIGNAL_HANDLER
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
@@ -151,6 +153,7 @@
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
+	return NONE
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()

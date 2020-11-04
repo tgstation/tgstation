@@ -238,18 +238,16 @@
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
 	list_reagents  = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
 
-/obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
+/obj/item/reagent_containers/food/drinks/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
 	icon_state = "tea"
 	inhand_icon_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = "tea"
-	else
-		icon_state = "tea_empty"
+/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(datum/reagents/reagents)
+	icon_state = reagents.total_volume ? "tea" : "tea_empty"
+	return NONE
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
@@ -450,17 +448,23 @@
 	spillable = TRUE
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change(changetype)
-	if(reagents.total_volume)
-		icon_state = "water_cup"
-	else
-		icon_state = "water_cup_e"
+/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change(datum/reagents/_reagents)
+	icon_state = _reagents.total_volume ? "water_cup" : "water_cup_e"
+	return NONE
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/Initialize(mapload)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT))
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -479,8 +483,8 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
-	if (reagents.reagent_list.len)
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(datum/reagents/reagents)
+	if(reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if(/datum/reagent/consumable/orangejuice)
 				icon_state = "orangebox"
@@ -521,6 +525,7 @@
 		icon_state = "juicebox"
 		name = "small carton"
 		desc = "A small carton, intended for holding drinks."
+	return NONE
 
 
 /obj/item/reagent_containers/food/drinks/colocup

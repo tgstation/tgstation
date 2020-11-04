@@ -31,12 +31,17 @@
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
 	create_reagents(5, INJECTABLE | DRAINABLE)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
 	if(ratingdesc)
 		desc += " This one has a rating of [DisplayEnergy(maxcharge)], and you should not swallow it."
 	update_icon()
+
+/obj/item/stock_parts/cell/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT))
+	return ..()
 
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
@@ -86,9 +91,10 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/on_reagent_change(changetype)
+/obj/item/stock_parts/cell/proc/on_reagent_change(changetype)
+	SIGNAL_HANDLER
 	rigged = (corrupted || reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
-	return ..()
+	return NONE
 
 
 /obj/item/stock_parts/cell/proc/explode()

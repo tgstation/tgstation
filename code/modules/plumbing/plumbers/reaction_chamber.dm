@@ -16,11 +16,19 @@
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
 
-/obj/machinery/plumbing/reaction_chamber/on_reagent_change()
+/obj/machinery/plumbing/reaction_chamber/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
+	return ..()
+
+/// Handles stopping the emptying process when the chamber empties.
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
 	if(reagents.total_volume == 0 && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		reagents.flags |= NO_REACT
+	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()

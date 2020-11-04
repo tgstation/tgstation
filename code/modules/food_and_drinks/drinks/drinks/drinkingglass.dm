@@ -15,7 +15,7 @@
 	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
 	custom_price = 25
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
+/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(datum/reagents/reagents)
 	cut_overlays()
 	if(reagents.reagent_list.len)
 		var/datum/reagent/R = reagents.get_master_reagent()
@@ -32,6 +32,7 @@
 	else
 		icon_state = "glass_empty"
 		renamedByPlayer = FALSE //so new drinks can rename the glass
+	return NONE
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -69,16 +70,11 @@
 			shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(shot_overlay)
 
-
 	else
 		icon_state = "shotglass"
 		name = "shot glass"
 		desc = "A shot glass - the universal symbol for bad decisions."
-		return
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/Initialize()
-	. = ..()
-	on_reagent_change(ADD_REAGENT)
+	return NONE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"

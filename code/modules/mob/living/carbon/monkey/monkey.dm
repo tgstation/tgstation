@@ -48,8 +48,10 @@
 	dna.initialize_dna(random_blood_type())
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
 
 /mob/living/carbon/monkey/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
 	SSmobs.cubemonkeys -= src
 	return ..()
 
@@ -65,8 +67,8 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/on_reagent_change()
-	. = ..()
+/mob/living/carbon/monkey/proc/on_reagent_change()
+	SIGNAL_HANDLER
 	var/amount
 	if(has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
@@ -74,6 +76,7 @@
 		amount = -1
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
+	return NONE
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()

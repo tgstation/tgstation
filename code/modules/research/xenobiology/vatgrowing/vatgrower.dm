@@ -11,6 +11,11 @@
 /obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
+
+/obj/machinery/plumbing/growing_vat/Destroy()
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
+	return ..()
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/plumbing/growing_vat/process()
@@ -64,10 +69,11 @@
 	. = ..()
 	QDEL_NULL(biological_sample)
 
-///Call update icon when reagents change to update the reagent content icons
-/obj/machinery/plumbing/growing_vat/on_reagent_change(changetype)
+///Call update icon when reagents change to update the reagent content icons. Eats signal args.
+/obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
 	update_icon()
-	return ..()
+	return NONE
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
