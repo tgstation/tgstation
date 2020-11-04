@@ -358,6 +358,9 @@
 /area/mine/eva)
 "bh" = (
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/light_switch{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/foremanoffice)
 "bi" = (
@@ -4016,6 +4019,9 @@
 "tX" = (
 /obj/structure/cable,
 /obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/miningtech)
 "tZ" = (
@@ -4248,6 +4254,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"xC" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/plasma,
+/area/miningtech)
 "xF" = (
 /obj/machinery/vending/security{
 	onstation_override = 1
@@ -5152,6 +5162,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/miningtech)
 "Nj" = (
@@ -5276,6 +5289,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"OS" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/air,
+/area/miningtech)
 "OX" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
@@ -5397,6 +5414,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"PY" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine/o2,
+/area/miningtech)
 "PZ" = (
 /obj/structure/chair/stool,
 /obj/machinery/flasher{
@@ -5412,6 +5435,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Qf" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/miningtech)
 "Qg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -16548,14 +16577,14 @@ aD
 aD
 aD
 Hd
-bd
+Qf
 wQ
 ZO
 Gm
 HD
 Qs
 PJ
-nw
+xC
 yS
 XH
 GB
@@ -17319,14 +17348,14 @@ aD
 aD
 aD
 Hd
-ei
+PY
 EK
 is
 PG
 JV
 SV
 oC
-Ul
+OS
 Hd
 Hd
 zs
