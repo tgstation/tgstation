@@ -352,5 +352,5 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
-	result = /obj/item/food/royalcheesee
+	result = /obj/item/food/royalcheese
 	subcategory = CAT_MISCFOOD

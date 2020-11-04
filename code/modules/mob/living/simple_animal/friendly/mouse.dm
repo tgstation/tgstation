@@ -79,7 +79,7 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
-	if(istype(AM, /obj/item/food/royalcheesee))
+	if(istype(AM, /obj/item/food/royalcheese))
 		evolve()
 		qdel(AM)
 	..()
@@ -103,7 +103,7 @@
 			be_fruitful()
 			qdel(cheese)
 			return
-	for(var/obj/item/food/royalcheesee/bigcheese in range(1, src))
+	for(var/obj/item/food/royalcheese/bigcheese in range(1, src))
 		qdel(bigcheese)
 		evolve()
 		return
