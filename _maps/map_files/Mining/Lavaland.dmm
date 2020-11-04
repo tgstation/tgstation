@@ -4434,7 +4434,9 @@
 /turf/open/floor/plasteel,
 /area/foremanoffice)
 "Ap" = (
-/obj/machinery/door/poddoor/incinerator_atmos_aux,
+/obj/machinery/door/poddoor/incinerator_atmos_aux{
+	id = "minetechauxvent"
+	},
 /turf/open/floor/engine/vacuum,
 /area/miningtech)
 "Aw" = (
@@ -4670,6 +4672,11 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
+/obj/machinery/button/ignition{
+	id = "ferals";
+	pixel_x = 23;
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel,
 /area/miningtech)
 "En" = (
@@ -4686,7 +4693,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "Ey" = (
-/obj/machinery/door/poddoor/incinerator_atmos_main,
+/obj/machinery/door/poddoor/incinerator_atmos_main{
+	id = "minetechmainvent"
+	},
 /turf/open/floor/engine/vacuum,
 /area/miningtech)
 "EG" = (
@@ -5146,6 +5155,18 @@
 	dir = 4
 	},
 /obj/machinery/vending/tool,
+/obj/machinery/button{
+	id = "minetechmainvent";
+	name = "Turbine Vent";
+	pixel_x = 32;
+	pixel_y = 7
+	},
+/obj/machinery/button{
+	id = "minetechauxvent";
+	name = "Aux Vent";
+	pixel_x = 32;
+	pixel_y = -7
+	},
 /turf/open/floor/plasteel,
 /area/miningtech)
 "Na" = (
@@ -6074,12 +6095,10 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "ZG" = (
-/obj/machinery/igniter/incinerator_atmos,
-/obj/machinery/air_sensor/atmos/incinerator_tank{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /obj/structure/cable,
+/obj/machinery/igniter{
+	id = "ferals"
+	},
 /turf/open/floor/engine/vacuum,
 /area/miningtech)
 "ZO" = (
