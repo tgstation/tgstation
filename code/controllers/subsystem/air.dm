@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(air)
 
 	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
-	var/currentpart = SSAIR_REBUILD_PIPENETS
+	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
@@ -77,7 +77,9 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 	var/delta_time = wait * 0.1
 
-	if(currentpart == SSAIR_REBUILD_PIPENETS)
+	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
+	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
+	if(length(pipenets_needing_rebuilt))
 		if(!resumed) //We track the use for each subprocess for the full tick, so we can get an acccurate idea of how much each part costs
 			cached_cost = 0
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
@@ -90,7 +92,6 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-		currentpart = SSAIR_PIPENETS
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		timer = TICK_USAGE_REAL
@@ -174,7 +175,7 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-	currentpart = SSAIR_REBUILD_PIPENETS
+	currentpart = SSAIR_PIPENETS
 
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
