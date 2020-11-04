@@ -21,7 +21,6 @@
 	name = "Tea Aspera tips"
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
-	filling_color = "#008000"
 	grind_results = list(/datum/reagent/toxin/teapowder = 0)
 	dry_grind = TRUE
 	can_distill = FALSE
@@ -41,7 +40,6 @@
 	seed = /obj/item/seeds/tea/astra
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
-	filling_color = "#4582B4"
 	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
 
 
@@ -70,8 +68,7 @@
 	name = "coffee arabica beans"
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
-	filling_color = "#DC143C"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua

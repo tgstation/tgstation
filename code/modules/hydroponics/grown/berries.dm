@@ -24,9 +24,8 @@
 	desc = "Nutritious!"
 	icon_state = "berrypile"
 	gender = PLURAL
-	filling_color = "#FF00FF"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
@@ -48,8 +47,7 @@
 	name = "bunch of poison-berries"
 	desc = "Taste so good, you might die!"
 	icon_state = "poisonberrypile"
-	filling_color = "#C71585"
-	foodtype = FRUIT | TOXIC
+	foodtypes = FRUIT | TOXIC
 	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
@@ -74,8 +72,7 @@
 	name = "bunch of death-berries"
 	desc = "Taste so good, you will die!"
 	icon_state = "deathberrypile"
-	filling_color = "#708090"
-	foodtype = FRUIT | TOXIC
+	foodtypes = FRUIT | TOXIC
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
@@ -101,8 +98,7 @@
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
 	icon_state = "glowberrypile"
-	filling_color = "#7CFC00"
-	foodtype = FRUIT
+	foodtypes = FRUIT
 	tastes = list("glow-berry" = 1)
 	distill_reagent = null
 	wine_power = 60
@@ -135,9 +131,8 @@
 	desc = "Great for toppings!"
 	icon_state = "cherry"
 	gender = PLURAL
-	filling_color = "#FF0000"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 30
@@ -159,9 +154,8 @@
 	name = "blue cherries"
 	desc = "They're cherries that are blue."
 	icon_state = "bluecherry"
-	filling_color = "#6495ED"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
@@ -185,9 +179,8 @@
 	name = "cherry bulbs"
 	desc = "They're like little Space Christmas lights!"
 	icon_state = "cherry_bulb"
-	filling_color = "#FF0000"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 50
@@ -218,9 +211,8 @@
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
-	filling_color = "#FF1493"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
@@ -242,6 +234,5 @@
 	seed = /obj/item/seeds/grape/green
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
-	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac

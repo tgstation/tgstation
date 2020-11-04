@@ -4,8 +4,8 @@
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 30
 
 // Lime
@@ -30,7 +30,6 @@
 	name = "lime"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	filling_color = "#00FF00"
 	juice_results = list(/datum/reagent/consumable/limejuice = 0)
 
 // Orange
@@ -57,7 +56,6 @@
 	name = "orange"
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
-	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
@@ -84,7 +82,6 @@
 	name = "lemon"
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
-	filling_color = "#FFD700"
 	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
 
 // Combustible lemon
@@ -109,8 +106,8 @@
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 70
 
 /obj/item/food/grown/firelemon/attack_self(mob/living/user)
@@ -182,7 +179,6 @@
 	name = "extradimensional orange"
 	desc = "You can hardly wrap your head around this thing."
 	icon_state = "orang"
-	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/toxin/mindbreaker
 	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)

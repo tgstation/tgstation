@@ -21,9 +21,8 @@
 	name = "pumpkin"
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
-	filling_color = "#FFA500"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/pumpkinjuice = 0)
 	wine_power = 20
 
@@ -53,8 +52,7 @@
 	name = "blumpkin"
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
-	filling_color = "#87CEFA"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50

@@ -24,9 +24,8 @@
 	name = "cocoa pod"
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
-	filling_color = "#FFD700"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	tastes = list("cocoa" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
 
@@ -47,8 +46,7 @@
 	name = "vanilla pod"
 	desc = "Fattening... Mmmmm... vanilla."
 	icon_state = "vanillapod"
-	filling_color = "#FFD700"
-	foodtype = FRUIT
+	foodtypes = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
 
@@ -77,9 +75,8 @@
 	name = "bungo fruit"
 	desc = "A strange fruit, tough leathery skin protects its juicy flesh and large poisonous seed."
 	icon_state = "bungo"
-	trash = /obj/item/food/grown/bungopit
-	filling_color = "#E8C22F"
-	foodtype = FRUIT
+	trash_type = /obj/item/food/grown/bungopit
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
 	distill_reagent = null
@@ -93,7 +90,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	foodtype = TOXIC
+	foodtypes = TOXIC
 	tastes = list("acrid bitterness" = 1)
 
 /obj/item/food/grown/bungopit/Initialize()

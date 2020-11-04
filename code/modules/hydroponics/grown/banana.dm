@@ -22,10 +22,9 @@
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
 	inhand_icon_state = "banana"
-	trash = /obj/item/grown/bananapeel
-	filling_color = "#FFFF00"
-	bitesize = 5
-	foodtype = FRUIT
+	trash_type = /obj/item/grown/bananapeel
+	bite_consumption = 5
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
@@ -87,8 +86,7 @@
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
-	trash = /obj/item/grown/bananapeel/mimanapeel
-	filling_color = "#FFFFEE"
+	trash_type = /obj/item/grown/bananapeel/mimanapeel
 	distill_reagent = /datum/reagent/consumable/ethanol/silencer
 
 /obj/item/grown/bananapeel/mimanapeel
@@ -119,8 +117,7 @@
 	name = "bluespace banana"
 	icon_state = "banana_blue"
 	inhand_icon_state = "bluespace_peel"
-	trash = /obj/item/grown/bananapeel/bluespace
-	filling_color = "#0000FF"
+	trash_type = /obj/item/grown/bananapeel/bluespace
 	tastes = list("banana" = 1)
 	wine_power = 60
 	wine_flavor = "slippery hypercubes"

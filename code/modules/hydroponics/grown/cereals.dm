@@ -20,9 +20,8 @@
 	desc = "Sigh... wheat... a-grain?"
 	gender = PLURAL
 	icon_state = "wheat"
-	filling_color = "#F0E68C"
-	bitesize_mod = 2
-	foodtype = GRAIN
+	bite_consumption_mod = 2
+	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
@@ -43,9 +42,8 @@
 	desc = "Eat oats, do squats."
 	gender = PLURAL
 	icon_state = "oat"
-	filling_color = "#556B2F"
-	bitesize_mod = 2
-	foodtype = GRAIN
+	bite_consumption_mod = 2
+	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
@@ -68,9 +66,8 @@
 	desc = "Rice to meet you."
 	gender = PLURAL
 	icon_state = "rice"
-	filling_color = "#FAFAD2"
-	bitesize_mod = 2
-	foodtype = GRAIN
+	bite_consumption_mod = 2
+	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
@@ -90,10 +87,9 @@
 	desc = "Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough."
 	icon_state = "meatwheat"
 	gender = PLURAL
-	filling_color = rgb(150, 0, 0)
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	seed = /obj/item/seeds/wheat/meat
-	foodtype = MEAT | GRAIN
+	foodtypes = MEAT | GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE

@@ -96,9 +96,8 @@
 	name = "galaxythistle flower head"
 	desc = "This spiny cluster of florets reminds you of the highlands."
 	icon_state = "galaxythistle"
-	filling_color = "#1E7549"
-	bitesize_mod = 3
-	foodtype = VEGETABLES
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES
 	wine_power = 35
 	tastes = list("thistle" = 2, "artichoke" = 1)
 
@@ -128,9 +127,8 @@
 	name = "cabbage"
 	desc = "Ewwwwwwwwww. Cabbage."
 	icon_state = "cabbage"
-	filling_color = "#90EE90"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Sugarcane
@@ -156,9 +154,8 @@
 	name = "sugarcane"
 	desc = "Sickly sweet."
 	icon_state = "sugarcane"
-	filling_color = "#FFD700"
-	bitesize_mod = 2
-	foodtype = VEGETABLES | SUGAR
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES | SUGAR
 	distill_reagent = /datum/reagent/consumable/ethanol/rum
 
 // Gatfruit
@@ -186,9 +183,9 @@
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	trash = /obj/item/gun/ballistic/revolver
-	bitesize_mod = 2
-	foodtype = FRUIT
+	trash_type = /obj/item/gun/ballistic/revolver
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	tastes = list("gunpowder" = 1)
 	wine_power = 90 //It burns going down, too.
 
@@ -208,9 +205,8 @@
 	name = "cherry bombs"
 	desc = "You think you can hear the hissing of a tiny fuse."
 	icon_state = "cherry_bomb"
-	filling_color = rgb(20, 20, 20)
 	seed = /obj/item/seeds/cherry/bomb
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	volume = 125 //Gives enough room for the gunpowder at max potency
 	max_integrity = 40
 	wine_power = 80
@@ -257,9 +253,8 @@
 	name = "aloe"
 	desc = "Cut leaves from the aloe plant."
 	icon_state = "aloe"
-	filling_color = "#90EE90"
-	bitesize_mod = 5
-	foodtype = VEGETABLES
+	bite_consumption_mod = 5
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 

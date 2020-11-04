@@ -1,7 +1,7 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	wine_power = 40
 
 // Reishi
@@ -30,7 +30,6 @@
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
-	filling_color = "#FF4500"
 
 
 // Fly Amanita
@@ -59,7 +58,6 @@
 	name = "fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
-	filling_color = "#FF0000"
 
 // Destroying Angel
 /obj/item/seeds/angel
@@ -87,7 +85,6 @@
 	name = "destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	filling_color = "#C0C0C0"
 	wine_power = 60
 
 // Liberty Cap
@@ -114,7 +111,6 @@
 	name = "liberty-cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
-	filling_color = "#DAA520"
 	wine_power = 80
 
 // Plump Helmet
@@ -141,7 +137,6 @@
 	name = "plump-helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
-	filling_color = "#9370DB"
 	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
 
 // Walking Mushroom
@@ -167,7 +162,6 @@
 	name = "walking mushroom"
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
-	filling_color = "#9370DB"
 	can_distill = FALSE
 
 /obj/item/food/grown/mushroom/walkingmushroom/attack_self(mob/user)
@@ -210,7 +204,6 @@
 	name = "chanterelle cluster"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
-	filling_color = "#FFA500"
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
@@ -241,7 +234,6 @@
 	name = "jupiter cup"
 	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
 	icon_state = "jupitercup"
-	filling_color = "#B5003D"
 
 // Glowshroom
 /obj/item/seeds/glowshroom
@@ -271,7 +263,6 @@
 	name = "glowshroom cluster"
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
-	filling_color = "#00FA9A"
 	var/effect_path = /obj/structure/glowshroom
 	wine_power = 50
 
@@ -318,7 +309,6 @@
 	name = "glowcap cluster"
 	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but isn't actually bioluminescent. They're warm to the touch..."
 	icon_state = "glowcap"
-	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap
 	tastes = list("glowcap" = 1)
 

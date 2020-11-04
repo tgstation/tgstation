@@ -30,9 +30,8 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/watermelonslice
 	slices_num = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	filling_color = "#008000"
-	bitesize_mod = 3
-	foodtype = FRUIT
+	bite_consumption_mod = 3
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
 
@@ -58,7 +57,6 @@
 	name = "holymelon"
 	desc = "The water within this melon has been blessed by some deity that's particularly fond of watermelon."
 	icon_state = "holymelon"
-	filling_color = "#FFD700"
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
 
@@ -115,5 +113,4 @@
 	name = "barrelmelon"
 	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
-	filling_color = "#b47b31"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.

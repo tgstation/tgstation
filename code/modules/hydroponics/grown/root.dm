@@ -20,9 +20,8 @@
 	name = "carrot"
 	desc = "It's good for the eyes!"
 	icon_state = "carrot"
-	filling_color = "#FFA500"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
 	wine_power = 30
 
@@ -53,8 +52,8 @@
 	name = "parsnip"
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
 	wine_power = 35
 
@@ -81,9 +80,8 @@
 	name = "white-beet"
 	desc = "You can't beat white-beet."
 	icon_state = "whitebeet"
-	filling_color = "#F4A460"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	wine_power = 40
 
 // Red Beet
@@ -109,6 +107,6 @@
 	name = "red beet"
 	desc = "You can't beat red beet."
 	icon_state = "redbeet"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	wine_power = 60

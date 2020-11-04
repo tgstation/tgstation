@@ -24,9 +24,8 @@
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
 	slot_flags = ITEM_SLOT_HEAD
-	filling_color = "#FF6347"
-	bitesize_mod = 3
-	foodtype = VEGETABLES | GROSS
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Lily
@@ -44,7 +43,6 @@
 	name = "lily"
 	desc = "A beautiful orange flower."
 	icon_state = "lily"
-	filling_color = "#FFA500"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -82,9 +80,8 @@
 	name = "spaceman's trumpet"
 	desc = "A vivid flower that smells faintly of freshly cut grass. Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon."
 	icon_state = "spacemanstrumpet"
-	filling_color = "#FF6347"
-	bitesize_mod = 3
-	foodtype = VEGETABLES
+	bite_consumption_mod = 3
+	foodtypes = VEGETABLES
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -101,7 +98,6 @@
 	name = "geranium"
 	desc = "A beautiful blue flower."
 	icon_state = "geranium"
-	filling_color = "#008B8B"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -121,7 +117,6 @@
 	name = "fraxinella"
 	desc = "A beautiful light pink flower."
 	icon_state = "fraxinella"
-	filling_color = "#008B8B"
 	distill_reagent = /datum/reagent/ash
 
 // Harebell
@@ -151,8 +146,7 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = ITEM_SLOT_HEAD
-	filling_color = "#E6E6FA"
-	bitesize_mod = 3
+	bite_consumption_mod = 3
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
 // Sunflower
@@ -217,8 +211,7 @@
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
-	filling_color = "#E6E6FA"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower

@@ -28,9 +28,8 @@
 	throw_range = 5
 	slice_path = /obj/item/reagent_containers/food/snacks/pineappleslice
 	slices_num = 3
-	filling_color = "#F6CB0B"
 	w_class = WEIGHT_CLASS_NORMAL
-	foodtype = FRUIT | PINEAPPLE
+	foodtypes = FRUIT | PINEAPPLE
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 0)
 	tastes = list("pineapple" = 1)
 	wine_power = 40

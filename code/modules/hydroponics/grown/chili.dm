@@ -24,9 +24,8 @@
 	name = "chili"
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
-	filling_color = "#FF0000"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 20
 
 // Ice Chili
@@ -49,9 +48,8 @@
 	name = "chilly pepper"
 	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
-	filling_color = "#0000CD"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 30
 
 // Ghost Chili
@@ -76,9 +74,8 @@
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	var/mob/living/carbon/human/held_mob
-	filling_color = "#F8F8FF"
-	bitesize_mod = 4
-	foodtype = FRUIT
+	bite_consumption_mod = 4
+	foodtypes = FRUIT
 	wine_power = 50
 
 /obj/item/food/grown/ghost_chili/attack_hand(mob/user)

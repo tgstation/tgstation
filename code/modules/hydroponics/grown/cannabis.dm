@@ -88,9 +88,8 @@
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"
-	filling_color = "#00FF00"
-	bitesize_mod = 2
-	foodtype = VEGETABLES //i dont really know what else weed could be to be honest
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES //i dont really know what else weed could be to be honest
 	tastes = list("cannabis" = 1)
 	wine_power = 20
 

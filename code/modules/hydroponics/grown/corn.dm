@@ -22,10 +22,9 @@
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
-	filling_color = "#FFFF00"
-	trash = /obj/item/grown/corncob
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	trash_type = /obj/item/grown/corncob
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey

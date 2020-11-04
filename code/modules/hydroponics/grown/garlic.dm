@@ -16,7 +16,6 @@
 	name = "garlic"
 	desc = "Delicious, but with a potentially overwhelming odor."
 	icon_state = "garlic"
-	filling_color = "#C0C9A0"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	tastes = list("garlic" = 1)
 	wine_power = 10

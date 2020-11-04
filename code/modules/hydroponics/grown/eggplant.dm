@@ -20,9 +20,8 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
-	filling_color = "#800080"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	wine_power = 20
 
 // Egg-Plant
@@ -43,8 +42,7 @@
 	name = "egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
-	trash = /obj/item/food/egg
-	filling_color = "#F8F8FF"
-	bitesize_mod = 2
-	foodtype = MEAT
+	trash_type = /obj/item/food/egg
+	bite_consumption_mod = 2
+	foodtypes = MEAT
 	distill_reagent = /datum/reagent/consumable/ethanol/eggnog

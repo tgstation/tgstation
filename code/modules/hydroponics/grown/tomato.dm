@@ -22,9 +22,8 @@
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
-	filling_color = "#FF6347"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
 	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
 	distill_reagent = /datum/reagent/consumable/enzyme
@@ -47,8 +46,7 @@
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
 	splat_type = /obj/effect/gibspawner/generic
-	filling_color = "#FF0000"
-	foodtype = FRUIT | GROSS
+	foodtypes = FRUIT | GROSS
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
@@ -74,7 +72,6 @@
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	splat_type = /obj/effect/decal/cleanable/oil
-	filling_color = "#0000FF"
 	distill_reagent = /datum/reagent/consumable/laughter
 
 // Bluespace Tomato
@@ -123,7 +120,6 @@
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
 	var/awakening = 0
-	filling_color = "#FF0000"
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
 
 /obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)

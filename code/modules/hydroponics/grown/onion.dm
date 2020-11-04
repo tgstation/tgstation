@@ -22,8 +22,7 @@
 	name = "onion"
 	desc = "Nothing to cry over."
 	icon_state = "onion"
-	filling_color = "#C0C9A0"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	tastes = list("onions" = 1)
 	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice
 	slices_num = 2
@@ -44,7 +43,6 @@
 	name = "red onion"
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
-	filling_color = "#C29ACF"
 	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice/red
 	wine_power = 60
 
@@ -63,7 +61,6 @@
 	desc = "Rings, not for wearing."
 	icon_state = "onionslice"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	filling_color = "#C0C9A0"
 	gender = PLURAL
 	cooked_type = /obj/item/reagent_containers/food/snacks/onionrings
 
@@ -71,5 +68,4 @@
 	name = "red onion slices"
 	desc = "They shine like exceptionally low quality amethyst."
 	icon_state = "onionslice_red"
-	filling_color = "#C29ACF"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)

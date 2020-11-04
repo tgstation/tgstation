@@ -9,9 +9,9 @@
 	name = "fresh produce" // so recipe text doesn't say 'snack'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
-	var/bitesize_mod = 0
+	var/bite_consumption_mod = 0
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
-	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
+	// If set, bitesize = 1 + round(reagents.total_volume / bite_consumption_mod)
 	resistance_flags = FLAMMABLE
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
@@ -23,8 +23,6 @@
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
-
-	. = ..()
 
 	if(new_seed)
 		seed = new_seed.Copy()
@@ -45,7 +43,8 @@
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 		add_juice()
 
-/obj/item/food/grown/AddComponent(/datum/component/edible,\
+/obj/item/food/grown/MakeEdible()
+	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\
@@ -60,12 +59,12 @@
 
 
 /obj/item/food/grown/proc/make_dryable()
-	AddElement(/datum/element/dryable, src.type)
+	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/proc/add_juice()
 	if(reagents)
-		if(bitesize_mod)
-			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
+		if(bite_consumption_mod)
+			bite_consumption_mod = 1 + round(reagents.total_volume / bite_consumption_mod)
 		return TRUE
 	return FALSE
 

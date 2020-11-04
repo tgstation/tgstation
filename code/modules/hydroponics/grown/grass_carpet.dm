@@ -24,8 +24,7 @@
 	name = "grass"
 	desc = "Green and lush."
 	icon_state = "grassclump"
-	filling_color = "#32CD32"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
 	wine_power = 15
@@ -60,7 +59,6 @@
 	name = "fairygrass"
 	desc = "Blue, glowing, and smells fainly of mushrooms."
 	icon_state = "fairygrassclump"
-	filling_color = "#3399ff"
 	stacktype = /obj/item/stack/tile/fairygrass
 
 // Carpet

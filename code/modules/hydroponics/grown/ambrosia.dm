@@ -5,9 +5,8 @@
 	desc = "This is a plant."
 	icon_state = "ambrosiavulgaris"
 	slot_flags = ITEM_SLOT_HEAD
-	filling_color = "#008000"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	tastes = list("ambrosia" = 1)
 
 // Ambrosia Vulgaris
@@ -51,7 +50,6 @@
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
-	filling_color = "#008B8B"
 	wine_power = 50
 
 //Ambrosia Gaia
@@ -73,7 +71,6 @@
 	name = "ambrosia gaia branch"
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
-	filling_color = rgb(255, 175, 0)
 	light_system = MOVABLE_LIGHT
 	light_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia

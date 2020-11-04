@@ -24,9 +24,8 @@
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
-	filling_color = "#E9967A"
-	bitesize = 100
-	foodtype = VEGETABLES
+	bite_consumption = 100
+	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
@@ -34,8 +33,7 @@
 	name = "potato wedges"
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"
-	filling_color = "#E9967A"
-	bitesize = 100
+	bite_consumption = 100
 
 
 /obj/item/food/grown/potato/attackby(obj/item/W, mob/user, params)
