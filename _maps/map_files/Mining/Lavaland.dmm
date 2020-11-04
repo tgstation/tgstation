@@ -4136,7 +4136,7 @@
 /obj/structure/window/plasma/reinforced/spawner,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/miningtech)
 "vV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -5359,11 +5359,8 @@
 /area/mine/laborcamp)
 "PD" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering";
-	req_one_access_txt = "10;24"
-	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/airlock/engineering/glass,
 /turf/open/floor/engine,
 /area/miningtech)
 "PE" = (
@@ -5665,6 +5662,9 @@
 /area/mine/laborcamp)
 "UA" = (
 /obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/binary/pump/layer2{
+	dir = 8
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/living_quarters)
 "UC" = (
@@ -5930,9 +5930,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/airlock_sensor/incinerator_atmos{
-	pixel_y = 22
-	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
@@ -5947,10 +5944,7 @@
 /area/mine/laborcamp/security)
 "Yf" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering";
-	req_one_access_txt = "10;24"
-	},
+/obj/machinery/door/airlock/engineering/glass,
 /turf/open/floor/engine,
 /area/miningtech)
 "Yi" = (
