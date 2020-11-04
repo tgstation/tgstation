@@ -301,7 +301,7 @@
 		if(fault == src)
 			return
 		fault.software_error()
-		host_mob.investigate_log("[src] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
+		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"

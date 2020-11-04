@@ -42,7 +42,7 @@
 		if(target == src)
 			return
 		target.software_error()
-		host_mob.investigate_log("[src] nanite program received a software error due to Memory Leak program.", INVESTIGATE_NANITES)
+		host_mob.investigate_log("[target] nanite program received a software error due to Memory Leak program.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
