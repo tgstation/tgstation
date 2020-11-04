@@ -307,8 +307,8 @@
 	severity = 10
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
-		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
+	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
+		new/obj/structure/alien/resin/flower_bud(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(25))
@@ -461,7 +461,7 @@
 	growth_queue += SV
 	vines += SV
 	SV.master = src
-	if(muts && muts.len)
+	if(muts?.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
 	if(parent)
@@ -488,7 +488,7 @@
 		KZ.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
 		qdel(src)
 
-/datum/spacevine_controller/process()
+/datum/spacevine_controller/process(delta_time)
 	if(!LAZYLEN(vines))
 		qdel(src) //space vines exterminated. Remove the controller
 		return
@@ -496,9 +496,7 @@
 		qdel(src) //Sanity check
 		return
 
-	var/length = 0
-
-	length = min( spread_cap , max( 1 , vines.len / spread_multiplier ) )
+	var/length = round(clamp(delta_time * 0.5 * vines.len / spread_multiplier, 1, spread_cap))
 	var/i = 0
 	var/list/obj/structure/spacevine/queue_end = list()
 
@@ -511,7 +509,7 @@
 		for(var/datum/spacevine_mutation/SM in SV.mutations)
 			SM.process_mutation(SV)
 		if(SV.energy < 2) //If tile isn't fully grown
-			if(prob(20))
+			if(DT_PROB(10, delta_time))
 				SV.grow()
 		else //If tile is fully grown
 			SV.entangle_mob()

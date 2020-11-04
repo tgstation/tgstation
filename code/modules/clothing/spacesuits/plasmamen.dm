@@ -30,7 +30,7 @@
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
-			H.ExtinguishMob()
+			H.extinguish_mob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 
 
@@ -45,7 +45,7 @@
 	tint = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 100, ACID = 75)
 	resistance_flags = FIRE_PROOF
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_on = FALSE
 	var/helmet_on = FALSE

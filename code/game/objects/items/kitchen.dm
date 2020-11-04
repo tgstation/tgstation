@@ -76,6 +76,7 @@
 	name = "kitchen knife"
 	icon_state = "knife"
 	inhand_icon_state = "knife"
+	worn_icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags_1 = CONDUCT_1
 	force = 10
@@ -137,6 +138,7 @@
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	worn_icon_state = "render"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -146,6 +148,7 @@
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "bloodletter"
+	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
@@ -210,6 +213,7 @@
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
 	icon_state = "bone_dagger"
+	worn_icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
@@ -255,6 +259,7 @@
 	name = "rolling pin"
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
+	worn_icon_state = "rolling_pin"
 	force = 8
 	throwforce = 5
 	throw_speed = 3
@@ -264,6 +269,7 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = 200
+	tool_behaviour = TOOL_ROLLINGPIN
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

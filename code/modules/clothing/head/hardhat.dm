@@ -9,13 +9,13 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = "+generic"
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
-	///Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
+	///Determines used sprites: `hardhat[on]_[hat_type]` and `hardhat[on]_[hat_type]2` (lying down sprite)
 	var/hat_type = "yellow"
 	///Whether the headlamp is on or off.
 	var/on = FALSE

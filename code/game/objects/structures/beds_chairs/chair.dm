@@ -89,11 +89,13 @@
 	else
 		return ..()
 
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
-		..()
-	else
-		setDir(turn(dir,-90))
+		return ..()
+	setDir(turn(dir,-90))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -466,7 +468,7 @@
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
+		if(do_after(Mob, 6 SECONDS, progress = FALSE))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)

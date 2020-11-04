@@ -158,7 +158,7 @@
 	replacementmode = pickweight(usable_modes)
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
-		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
+		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE, SHUTTLE_DISABLED)
 			return TRUE
 		if(SHUTTLE_CALL)
 			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)

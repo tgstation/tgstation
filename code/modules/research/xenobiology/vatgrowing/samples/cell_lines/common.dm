@@ -365,7 +365,7 @@
 						/datum/reagent/liquidgibs = 1)
 
 	suppressive_reagents = list(
-						/datum/reagent/consumable/sodiumchloride = -3,
+						/datum/reagent/consumable/salt = -3,
 						/datum/reagent/medicine/c2/syriniver = -2)
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)

@@ -61,7 +61,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	for(var/datum/surgery/S in surgeries)
-		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+		if(body_position == LYING_DOWN || !S.lying_required)
 			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 				if(S.next_step(user,user.a_intent))
 					return 1
@@ -173,9 +173,6 @@
 		newtonian_move(get_dir(target, src))
 		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
 
-/mob/living/carbon/restrained(ignore_grab)
-	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
-
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -269,16 +266,16 @@
 		return FALSE
 
 /mob/living/carbon/resist_buckle()
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
-		var/buckle_cd = 600
+		var/buckle_cd = 60 SECONDS
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
-		if(do_after(src, buckle_cd, 0, target = src))
+		if(do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -289,8 +286,8 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	fire_stacks -= 5
-	Paralyze(60, TRUE, TRUE)
+	adjust_fire_stacks(-5)
+	Paralyze(60, ignore_canstun = TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -298,7 +295,7 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message("<span class='danger'>[src] successfully extinguishes [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
-		ExtinguishMob()
+		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -329,7 +326,7 @@
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 			. = clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to remove [I]!</span>")
@@ -338,7 +335,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 			. = clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -350,8 +347,8 @@
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
-		handcuffed = null
-		if (buckled && buckled.buckle_requires_restraints)
+		set_handcuffed(null)
+		if (buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
@@ -394,9 +391,9 @@
 	else
 		if(I == handcuffed)
 			handcuffed.forceMove(drop_location())
-			handcuffed = null
+			set_handcuffed(null)
 			I.dropped(src)
-			if(buckled && buckled.buckle_requires_restraints)
+			if(buckled?.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
 			return TRUE
@@ -407,7 +404,7 @@
 			update_inv_legcuffed()
 			return TRUE
 
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/get_standard_pixel_y_offset(lying = FALSE)
 	if(lying)
 		return -6
 	else
@@ -425,7 +422,7 @@
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
-			I.attack(src,src)
+			INVOKE_ASYNC(I, /obj/item.proc/attack, src, src)
 		if(1 to 30) //throw it at yourself
 			I.throw_impact(src)
 		if(31 to 60) //Throw object in facing direction
@@ -462,7 +459,7 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
-	if(nutrition < 100 && !blood)
+	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
@@ -490,22 +487,43 @@
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
+
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
 			if(harm)
 				adjustBruteLoss(3)
-		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
-			if(T)
-				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
-			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
+				if(T)
+					T.add_vomit_floor(src, VOMIT_PURPLE)
+			else
+				if(T)
+					T.add_vomit_floor(src, VOMIT_TOXIC, purge) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (T?.is_blocked_turf())
 			break
 	return TRUE
+
+/**
+ * Expel the reagents you just tried to ingest
+ *
+ * When you try to ingest reagents but you do not have a stomach
+ * you will spew the reagents on the floor.
+ *
+ * Vars:
+ * * bite: /atom the reagents to expel
+ * * amount: int The amount of reagent
+ */
+/mob/living/carbon/proc/expel_ingested(var/atom/bite, amount)
+	visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
+					"<span class='userdanger'>You are unable to keep the [bite] down without a stomach!</span>")
+
+	var/turf/floor = get_turf(src)
+	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
+	bite.reagents.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -524,12 +542,16 @@
 	if(dna)
 		dna.real_name = real_name
 
-/mob/living/carbon/update_mobility()
+
+/mob/living/carbon/set_body_position(new_value)
 	. = ..()
-	if(!(mobility_flags & MOBILITY_STAND))
+	if(isnull(.))
+		return
+	if(new_value == LYING_DOWN)
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
@@ -546,9 +568,8 @@
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
-	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
-		become_husk("burn")
+		become_husk(BURN)
 
 	med_hud_set_health()
 
@@ -780,11 +801,11 @@
 			hud_used.healths.icon_state = "health7"
 
 /mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
-	if(hud_used && hud_used.internals)
+	if(hud_used?.internals)
 		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	if(hud_used && hud_used.spacesuit)
+	if(hud_used?.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
 
 
@@ -803,7 +824,6 @@
 			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 
 
-
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
@@ -819,7 +839,6 @@
 			set_stat(SOFT_CRIT)
 		else
 			set_stat(CONSCIOUS)
-		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
@@ -838,13 +857,9 @@
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
-	update_mobility()
+
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
-	if(reagents)
-		reagents.clear_reagents()
-		for(var/addi in reagents.addiction_list)
-			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -859,12 +874,11 @@
 		suiciding = FALSE
 		regenerate_limbs()
 		regenerate_organs()
-		handcuffed = initial(handcuffed)
+		set_handcuffed(null)
 		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
-		if(reagents)
-			reagents.addiction_list = list()
+	clear_addictions()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
@@ -876,9 +890,6 @@
 /mob/living/carbon/proc/can_defib()
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
-
-	if (hellbound)
-		return DEFIB_FAIL_HELLBOUND
 
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
@@ -924,10 +935,10 @@
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
-/mob/living/carbon/ExtinguishMob()
+/mob/living/carbon/extinguish_mob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
+		I.wash(CLEAN_TYPE_ACID) //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
 	..()
 
@@ -946,7 +957,7 @@
 	var/r_arm_index_next = 0
 	for(var/bodypart_path in bodyparts)
 		var/obj/item/bodypart/bodypart_instance = new bodypart_path()
-		bodypart_instance.owner = src
+		bodypart_instance.set_owner(src)
 		bodyparts.Remove(bodypart_path)
 		add_bodypart(bodypart_instance)
 		switch(bodypart_instance.body_part)
@@ -995,10 +1006,6 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
-/mob/living/carbon/proc/update_disabled_bodyparts()
-	for(var/B in bodyparts)
-		var/obj/item/bodypart/BP = B
-		BP.update_disabled()
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
@@ -1264,3 +1271,49 @@
 		return
 
 	brain.update_skillchips()
+
+
+/// Modifies the handcuffed value if a different value is passed, returning FALSE otherwise. The variable should only be changed through this proc.
+/mob/living/carbon/proc/set_handcuffed(new_value)
+	if(handcuffed == new_value)
+		return FALSE
+	. = handcuffed
+	handcuffed = new_value
+	if(.)
+		if(!handcuffed)
+			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
+	else if(handcuffed)
+		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
+
+
+/mob/living/carbon/on_lying_down(new_lying_angle)
+	. = ..()
+	if(!buckled || buckled.buckle_lying != 0)
+		lying_angle_on_lying_down(new_lying_angle)
+
+
+/// Special carbon interaction on lying down, to transform its sprite by a rotation.
+/mob/living/carbon/proc/lying_angle_on_lying_down(new_lying_angle)
+	if(!new_lying_angle)
+		set_lying_angle(pick(90, 270))
+	else
+		set_lying_angle(new_lying_angle)
+
+
+/mob/living/carbon/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, disgust))
+			set_disgust(var_value)
+			. = TRUE
+		if(NAMEOF(src, hal_screwyhud))
+			set_screwyhud(var_value)
+			. = TRUE
+		if(NAMEOF(src, handcuffed))
+			set_handcuffed(var_value)
+			. = TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
+	return ..()

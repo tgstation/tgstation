@@ -41,13 +41,13 @@
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
-	toggle_reel_spin(1) //The reels won't spin unless we activate them
+	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
 	for(var/i = 0, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
 
-	toggle_reel_spin(0)
+	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
 
 	for(cointype in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new cointype
@@ -59,12 +59,12 @@
 		give_payout(balance)
 	return ..()
 
-/obj/machinery/computer/slot_machine/process()
+/obj/machinery/computer/slot_machine/process(delta_time)
 	. = ..() //Sanity checks.
 	if(!.)
 		return .
 
-	money++ //SPESSH MAJICKS
+	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)
@@ -129,7 +129,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
 	. = ..()

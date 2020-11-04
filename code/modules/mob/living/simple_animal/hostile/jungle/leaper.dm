@@ -18,6 +18,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged_cooldown_time = 30
 	pixel_x = -16
+	base_pixel_x = -16
 	layer = LARGE_MOB_LAYER
 	speed = 10
 	stat_attack = HARD_CRIT
@@ -80,7 +81,7 @@
 
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
-	float(on = TRUE)
+	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 	QDEL_IN(src, 100)
 
 /obj/structure/leaper_bubble/Destroy()
@@ -123,7 +124,9 @@
 	icon_state = "lily_pad"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -32
+	base_pixel_x = -32
 	pixel_y = -32
+	base_pixel_y = -32
 	duration = 30
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize()

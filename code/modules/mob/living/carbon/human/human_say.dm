@@ -1,7 +1,10 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
 	if(slurring)
-		return "slurs"
+		if (HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			return "loosely signs"
+		else
+			return "slurs"
 	else
 		. = ..()
 
@@ -24,7 +27,7 @@
 			return real_name
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling && changeling.mimicing )
+		if(changeling?.mimicing )
 			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()

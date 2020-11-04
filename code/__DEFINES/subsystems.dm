@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 10
+#define DB_MINOR_VERSION 11
 
 
 //! ## Timing subsystem
@@ -169,6 +169,7 @@
 #define FIRE_PRIORITY_TGUI			110
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_STATPANEL		390
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
@@ -238,3 +239,9 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
+// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+#define SSFLUIDS_DT (SSfluids.wait/10)
+#define SSMACHINES_DT (SSmachines.wait/10)
+#define SSMOBS_DT (SSmobs.wait/10)
+#define SSOBJ_DT (SSobj.wait/10)

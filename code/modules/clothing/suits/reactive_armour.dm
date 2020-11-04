@@ -72,28 +72,13 @@
 	if(!active)
 		return FALSE
 	if(prob(hit_reaction_chance))
-		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [owner]!</span>")
 			return FALSE
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [owner] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
-				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
+		owner.rad_act(rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 	return FALSE
@@ -115,9 +100,9 @@
 		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
-				C.fire_stacks += 8
+				C.adjust_fire_stacks(8)
 				C.IgniteMob()
-		owner.fire_stacks = -20
+		owner.set_fire_stacks(-20)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 	return FALSE

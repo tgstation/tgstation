@@ -29,6 +29,7 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
+	base_pixel_x = -16
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
@@ -73,7 +74,7 @@ Difficulty: Hard
 /datum/action/innate/megafauna_attack/disorienting_scream
 	name = "Disorienting Scream"
 	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
+	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 

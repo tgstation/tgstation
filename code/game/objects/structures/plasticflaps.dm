@@ -65,7 +65,7 @@
 		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
 			return FALSE
 	var/atom/movable/M = caller
-	if(M && M.pulling)
+	if(M?.pulling)
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass
 
@@ -93,7 +93,7 @@
 			return TRUE
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return TRUE
-		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
+		if(M.body_position == STANDING_UP && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)

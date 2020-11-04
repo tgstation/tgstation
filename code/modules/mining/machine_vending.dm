@@ -129,7 +129,8 @@
 					.["user"]["job"] = "No Job"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -212,7 +213,7 @@
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
 		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
-		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
+		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/food/monkeycube,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),

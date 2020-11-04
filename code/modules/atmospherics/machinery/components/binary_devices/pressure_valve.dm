@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/binary/pressure_valve
 	icon_state = "pvalve_map-3"
 	name = "pressure valve"
-	desc = "An activable valve that let gas pass through if the pressure on the input side is higher than the set pressure."
+	desc = "An activable one way valve that let gas pass through if the pressure on the input side is higher than the set pressure."
 
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
@@ -31,6 +31,7 @@
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+		to_chat(user, "<span class='notice'>You set the target pressure on [src] to [target_pressure] kPa.</span>")
 		update_icon()
 	return ..()
 
@@ -42,11 +43,11 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
-		icon_state = "pvalve_flow"
+		icon_state = "pvalve_flow-[set_overlay_offset(piping_layer)]"
 	else if(on && is_operational && !is_gas_flowing)
-		icon_state = "pvalve_on"
+		icon_state = "pvalve_on-[set_overlay_offset(piping_layer)]"
 	else
-		icon_state = "pvalve_off"
+		icon_state = "pvalve_off-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/process_atmos()
 
@@ -57,13 +58,12 @@
 	var/datum/gas_mixture/air2 = airs[2]
 
 	if(air1.return_pressure() > target_pressure)
-		if(air1.pump_gas_to(air2, air1.return_pressure()))
+		if(air1.release_gas_to(air2, air1.return_pressure()))
 			update_parents()
 			is_gas_flowing = TRUE
-			update_icon_nopipes()
 	else
 		is_gas_flowing = FALSE
-		update_icon_nopipes()
+	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -94,11 +94,12 @@
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["max_pressure"] = round(ONE_ATMOSPHERE*100)
 	return data
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")
@@ -108,13 +109,13 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = ONE_ATMOSPHERE*100
 				. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, ONE_ATMOSPHERE*100)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -136,7 +137,7 @@
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*100)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

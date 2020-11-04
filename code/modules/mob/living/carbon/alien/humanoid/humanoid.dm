@@ -2,7 +2,7 @@
 	name = "alien"
 	icon_state = "alien"
 	pass_flags = PASSTABLE
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
@@ -29,10 +29,8 @@
 
 /mob/living/carbon/alien/humanoid/Initialize()
 	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
-/mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	return handcuffed
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
@@ -82,7 +80,7 @@
 	pulledby.stop_pulling()
 	. = 0
 
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = FALSE)
 	if(leaping)
 		return -32
 	else if(custom_pixel_y_offset)

@@ -79,7 +79,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "u" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "v" = (

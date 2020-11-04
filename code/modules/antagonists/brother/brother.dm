@@ -5,9 +5,9 @@
 	var/special_role = ROLE_BROTHER
 	antag_hud_type = ANTAG_HUD_BROTHER
 	antag_hud_name = "brother"
+	hijack_speed = 0.5
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -42,7 +42,7 @@
 	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/brother/antag_panel_data()
-	return "Conspirators : [get_brother_names()]]"
+	return "Conspirators : [get_brother_names()]"
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner

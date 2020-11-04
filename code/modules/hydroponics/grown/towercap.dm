@@ -206,8 +206,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = W.base_pixel_x + clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = W.base_pixel_y + clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
 			return ..()
 
@@ -254,41 +254,41 @@
 	if(burning & !grill)
 		Burn()
 
-/obj/structure/bonfire/proc/Burn()
+/obj/structure/bonfire/proc/Burn(delta_time = 2)
 	var/turf/current_location = get_turf(src)
-	current_location.hotspot_expose(1000,500,1)
+	current_location.hotspot_expose(1000, 250 * delta_time, 1)
 	for(var/A in current_location)
 		if(A == src)
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			O.fire_act(1000, 500)
+			O.fire_act(1000, 250 * delta_time)
 		else if(isliving(A))
 			var/mob/living/L = A
-			L.adjust_fire_stacks(fire_stack_strength)
+			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
 
-/obj/structure/bonfire/proc/Cook()
+/obj/structure/bonfire/proc/Cook(delta_time = 2)
 	var/turf/current_location = get_turf(src)
 	for(var/A in current_location)
 		if(A == src)
 			continue
 		else if(isliving(A)) //It's still a fire, idiot.
 			var/mob/living/L = A
-			L.adjust_fire_stacks(fire_stack_strength)
+			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(istype(A, /obj/item) && DT_PROB(10, delta_time))
 			var/obj/item/O = A
 			O.microwave_act()
 
-/obj/structure/bonfire/process()
+/obj/structure/bonfire/process(delta_time)
 	if(!CheckOxygen())
 		extinguish()
 		return
 	if(!grill)
-		Burn()
+		Burn(delta_time)
 	else
-		Cook()
+		Cook(delta_time)
 
 /obj/structure/bonfire/extinguish()
 	if(burning)

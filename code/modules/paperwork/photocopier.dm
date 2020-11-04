@@ -82,7 +82,8 @@
 	return data
 
 /obj/machinery/photocopier/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -98,10 +99,6 @@
 				// Basic paper
 				if(istype(paper_copy, /obj/item/paper))
 					do_copy_loop(CALLBACK(src, .proc/make_paper_copy), usr)
-					return TRUE
-				// Devil contract paper.
-				if(istype(paper_copy, /obj/item/paper/contract/employment))
-					do_copy_loop(CALLBACK(src, .proc/make_devil_paper_copy), usr)
 					return TRUE
 			// Copying photo.
 			if(photo_copy)
@@ -209,8 +206,8 @@
  * * copied_item - The paper, document, or photo that was just spawned on top of the printer.
  */
 /obj/machinery/photocopier/proc/give_pixel_offset(obj/item/copied_item)
-	copied_item.pixel_x = rand(-10, 10)
-	copied_item.pixel_y = rand(-10, 10)
+	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
+	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
 /**
  * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -291,10 +288,17 @@
 		return
 
 	var/icon/temp_img
-	if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
+	if(ishuman(ass))
+		var/mob/living/carbon/human/H = ass
+		var/datum/species/spec = H.dna.species
+		if(spec.ass_image)
+			temp_img = spec.ass_image
+		else
+			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
+	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
 		temp_img = icon('icons/ass/assalien.png')
-	else if(ishuman(ass)) //Suit checks are in check_ass
-		temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
+	else if(issilicon(ass))
+		temp_img = icon('icons/ass/assmachine.png')
 	else if(isdrone(ass)) //Drones are hot
 		temp_img = icon('icons/ass/assdrone.png')
 
@@ -342,15 +346,10 @@
 
 	else if(istype(O, /obj/item/paper))
 		if(copier_empty())
-			if(istype(O, /obj/item/paper/contract/infernal))
-				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
-				resistance_flags |= FLAMMABLE
-				fire_act()
-			else
-				if(!user.temporarilyRemoveItemFromInventory(O))
-					return
-				paper_copy = O
-				do_insertion(O, user)
+			if(!user.temporarilyRemoveItemFromInventory(O))
+				return
+			paper_copy = O
+			do_insertion(O, user)
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
@@ -476,6 +475,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
+	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -484,9 +484,10 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
+	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	charges = 15
-	max_charges = 15
+	charges = 25
+	max_charges = 25
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"

@@ -16,6 +16,7 @@
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter

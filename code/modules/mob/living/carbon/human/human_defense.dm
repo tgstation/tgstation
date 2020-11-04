@@ -49,12 +49,12 @@
 	return covering_part
 
 /mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna && dna.species)
+	if(dna?.species)
 		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
 			return spec_return
@@ -141,7 +141,7 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
 			return spec_return
@@ -173,7 +173,10 @@
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
+		var/zone_hit_chance = 80
+		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
+			zone_hit_chance += 10
+		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
 
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
@@ -617,9 +620,9 @@
 
 		inventory_items_to_kill += held_items
 
-	for(var/obj/item/I in inventory_items_to_kill)
-		I.acid_act(acidpwr, acid_volume)
-	return 1
+	for(var/obj/item/inventory_item in inventory_items_to_kill)
+		inventory_item.acid_act(acidpwr, acid_volume)
+	return TRUE
 
 ///Overrides the point value that the mob is worth
 /mob/living/carbon/human/singularity_act()
@@ -638,7 +641,7 @@
 	if(src == M)
 		if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
 			to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-			if(do_after(src, 35, null, src))
+			if(do_after(src, 3.5 SECONDS, src))
 				to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 				remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 			return
@@ -653,10 +656,6 @@
 
 		..()
 
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	. = ..()
-	if(src == A)
-		check_self_for_injuries()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
@@ -714,7 +713,7 @@
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
 		var/isdisabled = ""
-		if(LB.is_disabled())
+		if(LB.bodypart_disabled)
 			isdisabled = " is disabled"
 			if(no_damage)
 				isdisabled += " but otherwise"

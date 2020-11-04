@@ -168,7 +168,43 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 15
 	name = "Hydrogen"
 	dangerous = TRUE
-	rarity = 700
+	rarity = 600
+
+/datum/gas/healium
+	id = "healium"
+	specific_heat = 10
+	name = "Healium"
+	dangerous = TRUE
+	gas_overlay = "healium"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 300
+
+/datum/gas/proto_nitrate
+	id = "proto_nitrate"
+	specific_heat = 30
+	name = "Proto Nitrate"
+	dangerous = TRUE
+	gas_overlay = "proto_nitrate"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 200
+
+/datum/gas/zauker
+	id = "zauker"
+	specific_heat = 350
+	name = "Zauker"
+	dangerous = TRUE
+	gas_overlay = "zauker"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 1
+
+/datum/gas/halon
+	id = "halon"
+	specific_heat = 175
+	name = "Halon"
+	dangerous = TRUE
+	gas_overlay = "halon"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 300
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'

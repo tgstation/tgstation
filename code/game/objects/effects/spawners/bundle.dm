@@ -1,6 +1,6 @@
 /obj/effect/spawner/bundle
 	name = "bundle spawner"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	color = "#00FF00"
 
@@ -8,7 +8,7 @@
 
 /obj/effect/spawner/bundle/Initialize(mapload)
 	..()
-	if(items && items.len)
+	if(items?.len)
 		for(var/path in items)
 			new path(loc)
 	return INITIALIZE_HINT_QDEL
@@ -18,7 +18,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/reagent_containers/food/snacks/egg)
+		/obj/item/food/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"

@@ -3,6 +3,7 @@
 	desc = "A dropper. Holds up to 5 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dropper0"
+	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5

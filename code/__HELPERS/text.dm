@@ -71,9 +71,10 @@
 /**
   * Perform a whitespace cleanup on the text, similar to what HTML renderers do
   *
-  * This is useful if you want to better predict how text is going to look like when displaying it to a user
+  * This is useful if you want to better predict how text is going to look like when displaying it to a user.
   * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
-  * HTML5 defines whitespace pretty much exactly like regex defines the \s group, [ \t\r\n\f].
+  * HTML5 defines whitespace pretty much exactly like regex defines the `\s` group, `[ \t\r\n\f]`.
+  *
   * Arguments:
   * * t - The text to "render"
   */
@@ -893,6 +894,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
   * * value - The number to convert to text. Can be positive or negative.
   * * unit - The base unit of the number, such as "Pa" or "W".
   * * maxdecimals - Maximum amount of decimals to display for the final number. Defaults to 1.
+  * *
+  * * For pressure conversion, use proc/siunit_pressure() below
   */
 /proc/siunit(value, unit, maxdecimals=1)
 	var/static/list/prefixes = list("f","p","n","μ","m","","k","M","G","T","P")
@@ -916,3 +919,29 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/prefix = prefixes[prefix_index]
 	return "[coefficient] [prefix][unit]"
+
+
+/** The game code never uses Pa, but kPa, since 1 Pa is too small to reasonably handle
+  * Thus, to ensure correct conversion from any kPa in game code, this value needs to be multiplied by 10e3 to get Pa, which the siunit() proc expects
+  * Args:
+  * * value_in_kpa - Value that should be converted to readable text in kPa
+  * * maxdecimals - maximum number of decimals that are displayed, defaults to 1 in proc/siunit()
+ */
+/proc/siunit_pressure(value_in_kpa, maxdecimals)
+	var/pressure_adj = value_in_kpa * 1000 //to adjust for using kPa instead of Pa
+	return siunit(pressure_adj, "Pa", maxdecimals)
+
+/// Slightly expensive proc to scramble a message using equal probabilities of character replacement from a list. DOES NOT SUPPORT HTML!
+/proc/scramble_message_replace_chars(original, replaceprob = 25, list/replacementchars = list("$", "@", "!", "#", "%", "^", "&", "*"), replace_letters_only = FALSE, replace_whitespace = FALSE)
+	var/list/out = list()
+	var/static/list/whitespace = list(" ", "\n", "\t")
+	for(var/i in 1 to length(original))
+		var/char = original[i]
+		if(!replace_whitespace && (char in whitespace))
+			out += char
+			continue
+		if(replace_letters_only && (!ISINRANGE(char, 65, 90) && !ISINRANGE(char, 97, 122)))
+			out += char
+			continue
+		out += prob(replaceprob)? pick(replacementchars) : char
+	return out.Join("")

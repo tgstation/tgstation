@@ -143,11 +143,6 @@
 				var/mob/living/carbon/C = user
 				C.head_update(src, forced = 1)
 
-			if(active_sound)
-				while(up)
-					playsound(src, "[active_sound]", 100, FALSE, 4)
-					sleep(15)
-
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
@@ -157,8 +152,24 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/weeoo1.ogg'
 	dog_fashion = null
+	///Looping sound datum for the siren helmet
+	var/datum/looping_sound/siren/weewooloop
+
+/obj/item/clothing/head/helmet/justice/Initialize()
+	. = ..()
+	weewooloop = new(list(src), FALSE, FALSE)
+
+/obj/item/clothing/head/helmet/justice/Destroy()
+	QDEL_NULL(weewooloop)
+	return ..()
+
+/obj/item/clothing/head/helmet/justice/attack_self(mob/user)
+	. = ..()
+	if(up)
+		weewooloop.start()
+	else
+		weewooloop.stop()
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
@@ -196,6 +207,7 @@
 	inhand_icon_state = "constable"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	custom_price = 350
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
@@ -359,6 +371,16 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
 
+/obj/item/clothing/head/helmet/elder_atmosian
+	name = "Elder Atmosian Helmet"
+	desc = "A superb helmet made with the toughest and rarest materials available to man."
+	icon_state = "knight_greyscale"
+	inhand_icon_state = "knight_greyscale"
+	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+
 //monkey sentience caps
 
 /obj/item/clothing/head/helmet/monkey_sentience
@@ -444,7 +466,7 @@
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation

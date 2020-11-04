@@ -42,23 +42,21 @@
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
 	value = FOOD_WORTHLESS
 
-/obj/item/reagent_containers/food/snacks/candy_corn
+/obj/item/food/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
 	icon_state = "candy_corn"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
-	filling_color = "#FF8C00"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
 	tastes = list("candy corn" = 1)
-	foodtype = JUNKFOOD | SUGAR
-	value = FOOD_JUNK
+	foodtypes = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/candy_corn/prison
+/obj/item/food/candy_corn/prison
 	name = "desiccated candy corn"
 	desc = "If this candy corn were any harder Security would confiscate it for being a potential shiv."
 	force = 1 // the description isn't lying
 	throwforce = 1 // if someone manages to bust out of jail with candy corn god bless them
 	tastes = list("bitter wax" = 1)
-	foodtype = GROSS
+	foodtypes = GROSS
 
 /obj/item/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
@@ -209,16 +207,13 @@
 	foodtype = TOXIC | SUGAR
 	value = FOOD_EXOTIC
 
-/obj/item/reagent_containers/food/snacks/eggwrap
+/obj/item/food/eggwrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "eggwrap"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	filling_color = "#F0E68C"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("egg" = 1)
-	foodtype = MEAT | GRAIN
-	value = FOOD_EXOTIC
+	foodtypes = MEAT | GRAIN
 
 /obj/item/reagent_containers/food/snacks/spidereggs
 	name = "spider eggs"
@@ -244,6 +239,7 @@
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
+	worn_icon_state = "lollipop_stick"
 	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
@@ -284,18 +280,14 @@
 	foodtype = JUNKFOOD | SUGAR
 	value = FOOD_RARE
 
-/obj/item/reagent_containers/food/snacks/eggplantparm
+/obj/item/food/eggplantparm
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-
-	filling_color = "#BA55D3"
+	trash_type = /obj/item/trash/plate
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
-	foodtype = VEGETABLES | DAIRY
-	value = FOOD_FAST
+	foodtypes = VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
@@ -463,7 +455,7 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
-	wound_bonus = -70
+	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
 	w_class = WEIGHT_CLASS_BULKY
@@ -474,8 +466,8 @@
 /obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
 	value = FOOD_WORTHLESS
-	///How long it lasts before being deleted
-	var/succ_dur = 180
+	///How long it lasts before being deleted in seconds
+	var/succ_dur = 360
 	///The delay between each time it will handle reagents
 	var/succ_int = 100
 	///Stores the time set for the next handle_reagents
@@ -492,13 +484,13 @@
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/reagent_containers/food/snacks/chewable/process()
+/obj/item/reagent_containers/food/snacks/chewable/process(delta_time)
 	if(iscarbon(loc))
-		if(succ_dur < 1)
+		if(succ_dur <= 0)
 			qdel(src)
 			return
-		succ_dur--
-		if((reagents && reagents.total_volume) && (next_succ <= world.time))
+		succ_dur -= delta_time
+		if((reagents?.total_volume) && (next_succ <= world.time))
 			handle_reagents()
 			next_succ = world.time + succ_int
 
@@ -564,7 +556,7 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
-	succ_dur = 450 //15 minutes
+	succ_dur = 15 * 60
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
 	name = "nicotine gum"
@@ -585,7 +577,7 @@
 	color = "#913D3D"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
-	succ_dur = 180
+	succ_dur = 6 * 60
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
 	. = ..()
@@ -613,6 +605,7 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
+	worn_icon_state = "bubblegum"
 	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD
@@ -660,8 +653,8 @@
 	name = "Bran Requests Cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
 	icon_state = "bran_requests"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 5)
-	bonus_reagents = list(/datum/reagent/consumable/sodiumchloride = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/salt = 5)
+	bonus_reagents = list(/datum/reagent/consumable/salt = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtype = GRAIN | FRUIT | BREAKFAST
 	value = FOOD_FAST
@@ -809,7 +802,7 @@
 	icon_state = "boritos"
 	trash = /obj/item/trash/boritos
 	bitesize = 2
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/sodiumchloride = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
 	junkiness = 20
 	filling_color = "#ECA735"
 	tastes = list("fried corn" = 1)

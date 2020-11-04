@@ -96,6 +96,8 @@
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
 ///from base of atom/bullet_act(): (/obj/projectile, def_zone)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
+///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
+#define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
@@ -113,7 +115,7 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
-///from base of atom/set_light(): (l_range, l_power, l_color)
+///from base of atom/set_light(): (l_range, l_power, l_color, l_on)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
@@ -136,6 +138,8 @@
 ///for any tool behaviors: (mob/living/user, obj/item/I, list/recipes)
 #define COMSIG_ATOM_TOOL_ACT(tooltype) "tool_recipe_discovery_[tooltype]"
 	#define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)
+///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
+#define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///called when teleporting into a protected turf: (channel, turf/origin)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
@@ -145,26 +149,29 @@
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
 ///called when an atom stops orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
-/////////////////
-///from base of atom/attack_ghost(): (mob/dead/observer/ghost)
-#define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
-///from base of atom/attack_hand(): (mob/user)
-#define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
-///from base of atom/attack_paw(): (mob/user)
-#define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
-	#define COMPONENT_NO_ATTACK_HAND (1<<0)								//works on all 3.
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
-#define COMISG_STORAGE_ENTERED "storage_entered"
+#define COMSIG_STORAGE_ENTERED "storage_entered"
 //from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
-#define CONSIG_STORAGE_EXITED "storage_exited"
+#define COMSIG_STORAGE_EXITED "storage_exited"
 
-///from base of atom/expose_reagents():
+///from base of atom/expose_reagents(): (/list, /datum/reagents, methods, volume_modifier, show_message)
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
-	/// Prevents the atom from being exposed to reagents if returned on [COMPONENT_ATOM_EXPOSE_REAGENTS]
+	/// Prevents the atom from being exposed to reagents if returned on [COMSIG_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
+///from base of [/datum/reagent/proc/expose_atom]: (/datum/reagent, reac_volume)
+#define COMSIG_ATOM_EXPOSE_REAGENT	"atom_expose_reagent"
+///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_ATOM	"reagent_expose_atom"
+///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_OBJ	"reagent_expose_obj"
+///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/camera/blob) // ovemind arg is only used by blob reagents.
+#define COMSIG_REAGENT_EXPOSE_MOB	"reagent_expose_mob"
+///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
+
 ///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
 #define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
 ///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
@@ -204,6 +211,8 @@
 	#define COMPONENT_NO_MOUSEDROP (1<<0)
 ///from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+///from base of mob/MouseWheelOn(): (/atom, delta_x, delta_y, params)
+#define COMSIG_MOUSE_SCROLL_ON "mousescroll_on"
 
 // /area signals
 
@@ -220,7 +229,9 @@
 #define COMSIG_TURF_CHANGE "turf_change"
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
-///from base of turf/New(): (turf/source, direction)
+///from base of turf/multiz_turf_del(): (turf/source, direction)
+#define COMSIG_TURF_MULTIZ_DEL "turf_multiz_del"
+///from base of turf/multiz_turf_new: (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
 
 // /atom/movable signals
@@ -286,6 +297,8 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
+///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_obj()
+#define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 
 // /mob signals
 
@@ -312,19 +325,9 @@
 	#define COMPONENT_BLOCK_MAGIC (1<<0)
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
-///from base of atom/attack_hand(): (mob/user)
-#define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
-///from base of /obj/item/attack(): (mob/M, mob/user)
-#define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-	#define COMPONENT_ITEM_NO_ATTACK (1<<0)
+
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
-///from base of mob/RangedAttack(): (atom/A, params)
-#define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)
@@ -355,12 +358,14 @@
 ///from base of mob/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
+///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
+#define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
 ///from base of mob/living/IgniteMob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
-///from base of mob/living/ExtinguishMob() (/mob/living)
+///from base of mob/living/extinguish_mob() (/mob/living)
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"
 ///from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"
@@ -387,22 +392,25 @@
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 
-///from base of mob/living/Stun() (amount, update, ignore)
+///from base of mob/living/Stun() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_STUN "living_stun"
-///from base of mob/living/Knockdown() (amount, update, ignore)
+///from base of mob/living/Knockdown() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_KNOCKDOWN "living_knockdown"
-///from base of mob/living/Paralyze() (amount, update, ignore)
+///from base of mob/living/Paralyze() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_PARALYZE "living_paralyze"
-///from base of mob/living/Immobilize() (amount, update, ignore)
+///from base of mob/living/Immobilize() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
-///from base of mob/living/Unconscious() (amount, update, ignore)
+///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
-///from base of mob/living/Sleeping() (amount, update, ignore)
+///from base of mob/living/Sleeping() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"
 	#define COMPONENT_NO_STUN (1<<0)									//For all of them
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
+
+///When a carbon mob hugs someone, this is called on the carbon mob.
+#define COMSIG_CARBON_HUG "carbon_hug"
 
 // /mob/living/carbon physiology signals
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound"				//from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
@@ -436,6 +444,10 @@
 
 // /obj signals
 
+///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
+#define COMSIG_OBJ_TAKE_DAMAGE	"obj_take_damage"
+	/// Return bitflags for the above signal which prevents the object taking any damage.
+	#define COMPONENT_NO_TAKE_DAMAGE	(1<<0)
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -453,6 +465,13 @@
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
+///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
+#define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
+
+// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+
+/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
+#define COMSIG_CRYO_SET_ON "cryo_set_on"
 
 // /obj/machinery/door/airlock signals
 
@@ -463,21 +482,6 @@
 
 // /obj/item signals
 
-///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
-#define COMSIG_ITEM_ATTACK "item_attack"
-///from base of obj/item/attack_self(): (/mob)
-#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
-	#define COMPONENT_NO_INTERACT (1<<0)
-///from base of obj/item/attack_obj(): (/obj, /mob)
-#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
-	#define COMPONENT_NO_ATTACK_OBJ (1<<0)
-///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
-	#define COMPONENT_NO_ATTACK (1<<0)
-///from base of obj/item/afterattack(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
@@ -497,6 +501,9 @@
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"
 ///called on item when microwaved (): (obj/machinery/microwave/M)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
+	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
+///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
+#define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
 #define COMSIG_ITEM_SHARPEN_ACT "sharpen_act"
 	#define COMPONENT_BLOCK_SHARPEN_APPLIED (1<<0)
@@ -511,7 +518,7 @@
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"
-///from [/obj/structure/closet/supplypod/proc/endlaunch]:
+///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 // /obj signals for economy
@@ -588,10 +595,8 @@
 
 // /obj/projectile signals (sent to the firer)
 
-///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
+///from base of /obj/projectile/proc/on_hit(), like COMSIG_PROJECTILE_ON_HIT but on the projectile itself and with the hit limb (if any): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
-	#define COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS (1<<0)
-	#define COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE (1<<1)
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
@@ -602,8 +607,9 @@
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
-///sent when trying to force an embed (mainly for projectiles, only used in the embed element)
+///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
+	#define COMPONENT_EMBED_SUCCESS (1<<1)
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
@@ -616,12 +622,6 @@
 
 // /mob/living/carbon/human signals
 
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
-#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
@@ -651,6 +651,9 @@
 
 ///Called on an object to "clean it", such as removing blood decals/overlays, etc. The clean types bitfield is sent with it. Return TRUE if any cleaning was necessary and thus performed.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"
+	///Returned by cleanable components when they are cleaned.
+	#define COMPONENT_CLEANED	(1<<0)
+
 
 //Creamed
 
@@ -800,3 +803,46 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+
+// /datum/component/container_item
+/// (atom/container, mob/user) - returns bool
+#define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
+
+/* Attack signals. They should share the returned flags, to standardize the attack chain. */
+/// tool_act -> pre_attack -> target.attackby (item.attack) -> afterattack
+	///Ends the attack chain. If sent early might cause posterior attacks not to happen.
+	#define COMPONENT_CANCEL_ATTACK_CHAIN (1<<0)
+	///Skips the specific attack step, continuing for the next one to happen.
+	#define COMPONENT_SKIP_ATTACK (1<<1)
+///from base of atom/attack_ghost(): (mob/dead/observer/ghost)
+#define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
+///from base of atom/attack_hand(): (mob/user)
+#define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
+///from base of atom/attack_paw(): (mob/user)
+#define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
+///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
+#define COMSIG_ITEM_ATTACK "item_attack"
+///from base of obj/item/attack_self(): (/mob)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
+///from base of obj/item/attack_obj(): (/obj, /mob)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
+///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
+///from base of obj/item/afterattack(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_AFTERATTACK "item_afterattack"
+///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of atom/attack_hand(): (mob/user)
+#define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
+///from base of /obj/item/attack(): (mob/M, mob/user)
+#define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
+///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
+///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
+///from base of mob/RangedAttack(): (atom/A, params)
+#define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"

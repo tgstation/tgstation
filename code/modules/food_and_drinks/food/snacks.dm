@@ -68,7 +68,7 @@ All foods are distributed among various categories. Use common sense.
 	return COMSIG_FRYING_HANDLED
 
 /obj/item/reagent_containers/food/snacks/add_initial_reagents()
-	if(tastes && tastes.len)
+	if(tastes?.len)
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
@@ -109,9 +109,7 @@ All foods are distributed among various categories. Use common sense.
 		if(!canconsume(M, user))
 			return FALSE
 
-		var/fullness = M.nutrition + 10
-		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
-			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+		var/fullness = M.get_fullness() + 10
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
@@ -187,7 +185,7 @@ All foods are distributed among various categories. Use common sense.
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
 				return FALSE
-			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
+			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
 				return FALSE
 			if(contents.len >= 20)
@@ -198,7 +196,8 @@ All foods are distributed among various categories. Use common sense.
 			return FALSE
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
-		return sharp && slice(sharp, W, user)
+		if (sharp == SHARP_EDGED)
+			return slice(sharp, W, user)
 	else
 		return ..()
 
@@ -217,7 +216,7 @@ All foods are distributed among various categories. Use common sense.
 				qdel(A)
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
-	if(bonus_reagents && bonus_reagents.len)
+	if(bonus_reagents?.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
@@ -283,17 +282,20 @@ All foods are distributed among various categories. Use common sense.
 	add_overlay(filling)
 
 // initialize_cooked_food() is called when microwaving the food
-/obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/reagent_containers/food/snacks/S, cooking_efficiency = 1)
-	S.create_reagents(S.volume)
-	if(reagents)
-		reagents.trans_to(S, reagents.total_volume)
-	if(S.bonus_reagents && S.bonus_reagents.len)
-		for(var/r_id in S.bonus_reagents)
-			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
-				S.reagents.add_reagent(r_id, amount, tastes)
-			else
-				S.reagents.add_reagent(r_id, amount)
+/obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/S, cooking_efficiency = 1)
+	if(istype(S, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/snackyfood = S
+		snackyfood.create_reagents(snackyfood.volume)
+		if(reagents)
+			reagents.trans_to(snackyfood, reagents.total_volume)
+		if(snackyfood.bonus_reagents && snackyfood.bonus_reagents.len)
+			for(var/r_id in snackyfood.bonus_reagents)
+				var/amount = snackyfood.bonus_reagents[r_id] * cooking_efficiency
+				if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+					snackyfood.reagents.add_reagent(r_id, amount, tastes)
+				else
+					snackyfood.reagents.add_reagent(r_id, amount)
+		return
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	var/turf/T = get_turf(src)
@@ -301,6 +303,7 @@ All foods are distributed among various categories. Use common sense.
 
 	if(cooked_type)
 		result = new cooked_type(T)
+		SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, src, M.efficiency)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
 		else
@@ -325,15 +328,13 @@ All foods are distributed among various categories. Use common sense.
 		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
-				M.manual_emote("nibbles away at \the [src]")
+				M.manual_emote("nibbles away at \the [src].")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
-				if(sattisfaction_text)
-					M.manual_emote(sattisfaction_text)
+				var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [src] was.")
+				M.manual_emote(satisfaction_text)
 				qdel(src)
-
 
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.

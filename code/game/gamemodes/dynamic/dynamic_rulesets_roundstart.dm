@@ -109,7 +109,6 @@
 	scaling_cost = 15
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
-	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
 	. = ..()
@@ -123,21 +122,8 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
-	var/team_mode = FALSE
-	if(prob(team_mode_probability))
-		team_mode = TRUE
-		var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
-		var/list/possible_team_objectives = list()
-		for(var/T in team_objectives)
-			var/datum/objective/changeling_team_objective/CTO = T
-			if(assigned.len >= initial(CTO.min_lings))
-				possible_team_objectives += T
-
-		if(possible_team_objectives.len && prob(20*assigned.len))
-			GLOB.changeling_team_objective_type = pick(possible_team_objectives)
 	for(var/datum/mind/changeling in assigned)
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
-		new_antag.team_mode = team_mode
 		changeling.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= changeling
 	return TRUE
@@ -586,58 +572,6 @@
 			V.assigned_role = "Clown Operative"
 			V.special_role = "Clown Operative"
 
-//////////////////////////////////////////////
-//                                          //
-//               DEVIL                      //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/devil
-	name = "Devil"
-	antag_flag = ROLE_DEVIL
-	antag_datum = /datum/antagonist/devil
-	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Prisoner", "Head of Security", "Captain", "AI")
-	required_candidates = 1
-	weight = 3
-	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
-
-/datum/dynamic_ruleset/roundstart/devil/pre_execute()
-	. = ..()
-	var/num_devils = antag_cap[indice_pop]
-
-	for(var/j = 0, j < num_devils, j++)
-		if (!candidates.len)
-			break
-		var/mob/devil = pick_n_take(candidates)
-		assigned += devil.mind
-		devil.mind.special_role = ROLE_DEVIL
-		devil.mind.restricted_roles = restricted_roles
-		GLOB.pre_setup_antags += devil.mind
-
-		log_game("[key_name(devil)] has been selected as a devil")
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/devil/execute()
-	for(var/datum/mind/devil in assigned)
-		add_devil(devil.current, ascendable = TRUE)
-		GLOB.pre_setup_antags -= devil
-		add_devil_objectives(devil,2)
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/devil/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
-	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
-	var/datum/antagonist/devil/D = devil_mind.has_antag_datum(/datum/antagonist/devil)
-	for(var/i = 1 to quantity)
-		var/type = pick(validtypes)
-		var/datum/objective/devil/objective = new type(null)
-		objective.owner = devil_mind
-		D.objectives += objective
-		if(!istype(objective, /datum/objective/devil/buy_target))
-			validtypes -= type
-		else
-			objective.find_target()
 
 //////////////////////////////////////////////
 //                                          //

@@ -14,6 +14,7 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	inhand_icon_state = "chain"
+	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -337,7 +338,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
-	worn_icon_state = null
+	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -493,6 +494,7 @@
 	visible_message("<span class='danger'>The acid smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
+	return TRUE
 
 /obj/item/melee/supermatter_sword/bullet_act(obj/projectile/P)
 	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
@@ -522,7 +524,6 @@
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	CALCULATE_ADJACENT_TURFS(T)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -534,6 +535,7 @@
 	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	worn_icon_state = "whip"
 	slot_flags = ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -553,13 +555,14 @@
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
 	icon_state = "roastingstick_0"
 	inhand_icon_state = "null"
+	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
-	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
+	var/obj/item/food/sausage/held_sausage
 	var/static/list/ovens
 	var/on = FALSE
 	var/datum/beam/beam
@@ -584,7 +587,7 @@
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
-	if (istype(target, /obj/item/reagent_containers/food/snacks/sausage))
+	if (istype(target, /obj/item/food/sausage))
 		if (!on)
 			to_chat(user, "<span class='warning'>You must extend [src] to attach anything to it!</span>")
 			return
@@ -631,7 +634,7 @@
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))
-		if (held_sausage && held_sausage.roasted)
+		if (held_sausage?.roasted)
 			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)

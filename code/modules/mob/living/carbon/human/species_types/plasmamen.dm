@@ -34,6 +34,12 @@
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
+	ass_image = 'icons/ass/assplasma.png'
+
+/datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.set_safe_hunger_level()
+
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
 	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
@@ -82,6 +88,9 @@
 
 		if("Bartender", "Lawyer")
 			O = new /datum/outfit/plasmaman/bar
+
+		if("Psychologist")
+			O = new /datum/outfit/plasmaman/psychologist
 
 		if("Cook")
 			O = new /datum/outfit/plasmaman/chef
@@ -172,16 +181,6 @@
 
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
-	if(istype(chem, /datum/reagent/consumable/milk))
-		if(chem.volume > 10)
-			H.reagents.remove_reagent(chem.type, chem.volume - 10)
-			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		H.heal_bodypart_damage(1.5,0, 0)
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		for(var/i in H.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		return TRUE
 	if(istype(chem, /datum/reagent/toxin/plasma))
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		for(var/i in H.all_wounds)

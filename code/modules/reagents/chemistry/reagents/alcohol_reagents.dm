@@ -48,35 +48,36 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
 	return ..()
 
-/datum/reagent/consumable/ethanol/expose_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/paper))
-		var/obj/item/paper/paperaffected = O
+/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
+	if(istype(exposed_obj, /obj/item/paper))
+		var/obj/item/paper/paperaffected = exposed_obj
 		paperaffected.clearpaper()
 		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
-	if(istype(O, /obj/item/book))
+	if(istype(exposed_obj, /obj/item/book))
 		if(reac_volume >= 5)
-			var/obj/item/book/affectedbook = O
+			var/obj/item/book/affectedbook = exposed_obj
 			affectedbook.dat = null
-			O.visible_message("<span class='notice'>[O]'s writing is washed away by [name]!</span>")
+			exposed_obj.visible_message("<span class='notice'>[exposed_obj]'s writing is washed away by [name]!</span>")
 		else
-			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
-	return
+			exposed_obj.visible_message("<span class='warning'>[exposed_obj]'s ink is smeared by [name], but doesn't wash away!</span>")
+	return ..()
 
-/datum/reagent/consumable/ethanol/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!isliving(M))
+/datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	if(methods & (TOUCH|VAPOR|PATCH))
-		M.adjust_fire_stacks(reac_volume / 15)
+	exposed_mob.adjust_fire_stacks(reac_volume / 15)
 
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+	if(!iscarbon(exposed_mob))
+		return
 
-			for(var/s in C.surgeries)
-				var/datum/surgery/S = s
-				S.speed_modifier = max(0.1*power_multiplier, S.speed_modifier)
-	return ..()
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+
+	for(var/s in exposed_carbon.surgeries)
+		var/datum/surgery/surgery = s
+		surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -143,7 +144,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-40, FALSE)
+	M.AdjustSleeping(-40)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	..()
@@ -405,6 +406,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of grappa"
 	glass_desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
 
+/datum/reagent/consumable/ethanol/amaretto
+	name = "Amaretto"
+	description = "A gentle drink that carries a sweet aroma."
+	color = "#E17600" 
+	boozepwr = 25
+	taste_description = "fruity and nutty sweetness"
+	glass_icon_state = "amarettoglass"
+	glass_name = "glass of amaretto"
+	glass_desc = "A sweet and syrupy looking drink."
+	shot_glass_icon_state = "shotglassgold"
+
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
 	description = "A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
@@ -653,7 +665,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M)
 	if(QDELETED(light_holder))
-		M.reagents.del_reagent(/datum/reagent/consumable/ethanol/tequila_sunrise) //If we lost our light object somehow, remove the reagent
+		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
@@ -1324,10 +1336,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.slurring += 3
 	switch(current_cycle)
 		if(51 to 200)
-			M.Sleeping(100, FALSE)
+			M.Sleeping(100)
 			. = 1
 		if(201 to INFINITY)
-			M.AdjustSleeping(40, FALSE)
+			M.AdjustSleeping(40)
 			M.adjustToxLoss(2, 0)
 			. = 1
 	..()
@@ -1729,13 +1741,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
 	..()
 	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
-		L.reagents.del_reagent(/datum/reagent/consumable/ethanol/alexander)
+		holder.remove_reagent(type)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
 	..()
+
+/datum/reagent/consumable/ethanol/amaretto_alexander
+	name = "Amaretto Alexander"
+	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor."
+	color = "#DBD5AE"
+	boozepwr = 35
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet, creamy cacao"
+	glass_icon_state = "alexanderam"
+	glass_name = "Amaretto Alexander"
+	glass_desc = "A creamy, indulgent delight that is in fact as gentle as it seems."
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
@@ -2268,3 +2291,37 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
+
+/datum/reagent/consumable/ethanol/ginger_amaretto
+	name = "Ginger Amaretto"
+	description = "A delightfully simple cocktail that pleases the senses."
+	boozepwr = 30
+	color = "#EFB42A"
+	quality = DRINK_GOOD
+	taste_description = "sweetness followed by a soft sourness and warmth"
+	glass_icon_state = "gingeramaretto"
+	glass_name = "Ginger Amaretto"
+	glass_desc = "The sprig of rosemary adds a nice aroma to the drink, and isn't just to be pretentious afterall!"
+
+/datum/reagent/consumable/ethanol/godfather
+	name = "Godfather"
+	description = "A rough cocktail with illegal connections."
+	boozepwr = 50
+	color = "#E68F00"
+	quality = DRINK_GOOD
+	taste_description = "a delightful softened punch"
+	glass_icon_state = "godfather"
+	glass_name = "Godfather"
+	glass_desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth."
+			
+/datum/reagent/consumable/ethanol/godmother
+	name = "Godmother"
+	description = "A twist on a classic, liked more by mature women."
+	boozepwr = 50
+	color = "#E68F00"
+	quality = DRINK_GOOD
+	taste_description = "sweetness and a zesty twist"
+	glass_icon_state = "godmother"
+	glass_name = "Godmother"
+	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
+	

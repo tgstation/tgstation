@@ -105,6 +105,9 @@
 	attack_verb_simple = list("drill")
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
+	sharpness = SHARP_POINTY
+	wound_bonus = 10
+	bare_wound_bonus = 10
 
 /obj/item/surgicaldrill/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -143,7 +146,8 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
-	bare_wound_bonus = 20
+	wound_bonus = 15
+	bare_wound_bonus = 15
 
 /obj/item/scalpel/Initialize()
 	. = ..()
@@ -180,8 +184,8 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
-	wound_bonus = 10
-	bare_wound_bonus = 15
+	wound_bonus = 15
+	bare_wound_bonus = 10
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
@@ -422,4 +426,19 @@
 	attack_verb_continuous = list("corrects", "properly sets")
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
+	toolspeed = 1
+
+/obj/item/blood_filter
+	name = "blood filter"
+	desc = "For filtering the blood."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bloodfilter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("pumps", "siphons")
+	attack_verb_simple = list("pumps", "siphons")
+	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1

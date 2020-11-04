@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - tweak: "Slightly made it easier for blind people to examine things in hand / examine things closer"
-  - bugfix: "Fixed delayed blind examinations"
-  - bugfix: "Fixed blind people examining things with disabled/detached hands"
-  - bugfix: "Fixed blind people being able to reach through windows"

@@ -1,9 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Penthrite no longer makes you immune to staminacrit."
-  - bugfix: "Penthrite no longer has an effect on people who can't metabolize it."
-  - bugfix: "Spam-buckling and spam-unbuckling someone to/from a stasis bed while they have penthrite in their system will no longer cause them to enter a state of permanent critical condition."
-  - bugfix: "If you regain the ability to metabolize chems while you have penthrite in your system, you'll also regain the special traits (immunity to hardcrit, immunity to softcrit, and immunity to the effects of heart failure) that penthrite's supposed to give you."
-  - balance: "Penthrite now makes you immune to the damage over time that being in crit gives you, so as to better mimic its previous/intended effects."
-  - tweak: "Penthrite's description has been modified slightly."

@@ -485,6 +485,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 // art quality defines, used in datums/components/art.dm, elsewhere
 #define BAD_ART 12.5
+#define OK_ART 20
 #define GOOD_ART 25
 #define GREAT_ART 50
 
@@ -515,3 +516,14 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ANON_DISABLED "" //so it's falsey
 #define ANON_RANDOMNAMES "Random Default"
 #define ANON_EMPLOYEENAMES "Employees"
+
+/// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
+#define NO_BUCKLE_LYING -1
+
+
+// timed_action_flags parameter for `/proc/do_atom`, `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+#define IGNORE_TARGET_IN_DOAFTERS (1<<0)
+#define IGNORE_USER_LOC_CHANGE (1<<1)
+#define IGNORE_TARGET_LOC_CHANGE (1<<2)
+#define IGNORE_HELD_ITEM (1<<3)
+#define IGNORE_INCAPACITATED (1<<4)

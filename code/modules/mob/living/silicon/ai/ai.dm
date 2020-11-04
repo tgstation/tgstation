@@ -19,7 +19,6 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -30,19 +29,21 @@
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
+	can_buckle_to = FALSE
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
-	var/aiRestorePowerRoutine = 0
+	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
+	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
@@ -135,7 +136,7 @@
 
 	create_eye()
 	if(client)
-		apply_pref_name("ai",client)
+		INVOKE_ASYNC(src, .proc/apply_pref_name,"ai",client)
 
 	set_core_display_icon()
 
@@ -169,6 +170,10 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+
+
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
 		_key = _key[7] //strings, lists, same thing really
@@ -193,10 +198,18 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
-	qdel(eyeobj) // No AI, no Eye
+	QDEL_NULL(eyeobj) // No AI, no Eye
+	QDEL_NULL(spark_system)
+	QDEL_NULL(malf_picker)
+	QDEL_NULL(doomsday_device)
+	QDEL_NULL(robot_control)
+	QDEL_NULL(aiMulti)
 	malfhack = null
-
-	. = ..()
+	current = null
+	Bot = null
+	controlled_mech = null
+	linked_core = null
+	return ..()
 
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
@@ -301,7 +314,9 @@
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 
-	if(!SSshuttle.canEvac(src))
+	var/can_evac_or_fail_reason = SSshuttle.canEvac(src)
+	if(can_evac_or_fail_reason != TRUE)
+		to_chat(usr, "<span class='alert'>[can_evac_or_fail_reason]</span>")
 		return
 
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
@@ -366,14 +381,6 @@
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
-/mob/living/silicon/ai/update_mobility() //If the AI dies, mobs won't go through it anymore
-	if(stat != CONSCIOUS)
-		mobility_flags = NONE
-	else
-		mobility_flags = ALL
-
-/mob/living/silicon/ai/restrained(ignore_grab)
-	. = 0
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -516,9 +523,9 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	if (O)
-		if (C && C.can_use())
+		if (C?.can_use())
 			queueAlarm("--- [class] alarm detected in [A.name]! (<A HREF=?src=[REF(src)];switchcamera=[REF(C)]>[C.c_tag]</A>)", class)
-		else if (CL && CL.len)
+		else if (CL?.len)
 			var/foo = 0
 			var/dat2 = ""
 			for (var/obj/machinery/camera/I in CL)
@@ -788,14 +795,6 @@
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
-/mob/living/silicon/ai/can_buckle()
-	return FALSE
-
-/mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(aiRestorePowerRoutine)
-		return TRUE
-	return ..()
-
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(control_disabled || incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
@@ -959,7 +958,7 @@
 		return
 
 	else if(mind)
-		soullink(/datum/soullink/sharedbody, src, target)
+		RegisterSignal(target, COMSIG_MOB_DEATH, .proc/disconnect_shell)
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
@@ -997,6 +996,7 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, "<span class='danger'>Your remote connection has been reset!</span>")
 		deployed_shell.undeploy()
+		UnregisterSignal(deployed_shell, COMSIG_MOB_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
@@ -1015,5 +1015,32 @@
 	if(.)
 		end_multicam()
 
+/mob/living/silicon/ai/up()
+	set name = "Move Upwards"
+	set category = "IC"
+
+	if(zMove(UP, TRUE))
+		to_chat(src, "<span class='notice'>You move upwards.</span>")
+
 /mob/living/silicon/ai/zMove(dir, feedback = FALSE)
 	. = eyeobj.zMove(dir, feedback)
+
+
+/// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
+/mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)
+	if(new_value == aiRestorePowerRoutine)
+		return
+	. = aiRestorePowerRoutine
+	aiRestorePowerRoutine = new_value
+	if(aiRestorePowerRoutine)
+		if(!.)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+	else if(.)
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+
+
+/mob/living/silicon/on_handsblocked_start()
+	return // AIs have no hands
+
+/mob/living/silicon/on_handsblocked_end()
+	return // AIs have no hands

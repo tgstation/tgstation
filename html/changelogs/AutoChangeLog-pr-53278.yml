@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - tweak: "unlocked atmos full layer potential (now 5 layers avaiable instead of 3, not all objects can use the additional layers)"

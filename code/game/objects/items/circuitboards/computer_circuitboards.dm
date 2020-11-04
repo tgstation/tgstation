@@ -103,6 +103,62 @@
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
 
+/obj/item/circuitboard/computer/atmos_control/tank/bz_tank
+	name = "BZ Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/bz_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/freon_tank
+	name = "Freon Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/freon_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/halon_tank
+	name = "Halon Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/halon_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/healium_tank
+	name = "Healium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/healium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/hydrogen_tank
+	name = "Hydrogen Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/hydrogen_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/hypernoblium_tank
+	name = "Hypernoblium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/hypernoblium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/miasma_tank
+	name = "Miasma Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
+	name = "Nitryl Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitryl_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
+	name = "Pluoxium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/pluoxium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
+	name = "Proto-Nitrate Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
+	name = "Stimulum Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/stimulum_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
+	name = "Tritium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/tritium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/water_vapor
+	name = "Water Vapor Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/water_vapor
+
+/obj/item/circuitboard/computer/atmos_control/tank/zauker_tank
+	name = "Zauker Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/zauker_tank
+
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console (Computer Board)"
 	icon_state = "engineering"
@@ -127,7 +183,6 @@
 	name = "Communications (Computer Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/communications
-	var/lastTimeUsed = 0
 
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
@@ -258,6 +313,11 @@
 	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 
+/obj/item/circuitboard/computer/white_ship/bridge
+	name = "White Ship Bridge (Computer Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/computer/shuttle/white_ship/bridge
+
 /obj/item/circuitboard/computer/white_ship/pod
 	name = "Salvage Pod (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod
@@ -327,11 +387,7 @@
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
 	icon_state = "science"
-	build_path = /obj/machinery/computer/rdconsole/core
-
-/obj/item/circuitboard/computer/rdconsole/production
-	name = "R&D Console Production Only (Computer Board)"
-	build_path = /obj/machinery/computer/rdconsole/production
+	build_path = /obj/machinery/computer/rdconsole
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
@@ -414,11 +470,6 @@
 
 //Supply
 
-/obj/item/circuitboard/computer/bounty
-	name = "\improper Nanotrasen Bounty Console (Computer Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/computer/bounty
-
 /obj/item/circuitboard/computer/cargo
 	name = "Supply Console (Computer Board)"
 	icon_state = "supply"
@@ -438,6 +489,16 @@
 		contraband = TRUE
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+
+/obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+
+	machine.contraband = contraband
+	if (obj_flags & EMAGGED)
+		machine.obj_flags |= EMAGGED
+	else
+		machine.obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"

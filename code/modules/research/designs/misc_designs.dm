@@ -324,6 +324,15 @@
 	build_path = /obj/item/bikehorn/rubberducky/plasticducky
 	category = list("Equipment")
 
+/datum/design/pneumatic_seal
+	name = "Pneumatic Seal"
+	desc = "A heavy brace used to seal doors. Useful for keeping out people without the dexterity to remove it."
+	id = "pneumatic_seal"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 10000)
+	build_path = /obj/item/door_seal
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -339,6 +348,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/normtrash
+	name = "Trashbag"
+	desc = "It's a bag for trash, you put garbage in it."
+	id = "normtrash"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2000)
+	build_path = /obj/item/storage/bag/trash
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
@@ -349,6 +368,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/light_replacer
+	name = "Light Replacer"
+	desc = "A device to automatically replace lights. Refill with working light bulbs."
+	id = "light_replacer"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000)
+	build_path = /obj/item/lightreplacer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."
@@ -356,6 +385,17 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janiupgrade
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/paint_remover
+	name = "Paint Remover"
+	desc = "Removes stains from the floor, and not much else."
+	id = "paint_remover"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	reagents_list = list(/datum/reagent/acetone = 60)
+	build_path = /obj/item/paint/paint_remover
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

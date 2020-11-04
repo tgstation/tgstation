@@ -1,6 +1,6 @@
 /mob/living/carbon/human/Initialize()
 	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -10,7 +10,7 @@
 	setup_human_dna()
 
 	if(dna.species)
-		set_species(dna.species.type)
+		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -20,7 +20,7 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	GLOB.human_list += src
 
@@ -40,6 +40,12 @@
 	GLOB.human_list -= src
 	return ..()
 
+/mob/living/carbon/human/ZImpactDamage(turf/T, levels)
+	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1) // falling off one level
+		return ..()
+	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
+					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
+	Knockdown(levels * 50)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -182,7 +188,7 @@
 		dat += "</td></tr>"
 
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
+	if((w_uniform == null && !(dna?.species.nojumpsuit) && (!O || O.status != BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -533,28 +539,26 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
-	. = 1 // Default to returning true.
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, ignore_species = FALSE)
+	. = TRUE // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-		. = 0
-	// If targeting the head, see if the head item is thin enough.
-	// If targeting anything else, see if the wear suit is thin enough.
-	if (!penetrate_thick)
-		if(above_neck(target_zone))
-			if(head && istype(head, /obj/item/clothing))
-				var/obj/item/clothing/CH = head
-				if (CH.clothing_flags & THICKMATERIAL)
-					. = 0
-		else
-			if(wear_suit && istype(wear_suit, /obj/item/clothing))
-				var/obj/item/clothing/CS = wear_suit
-				if (CS.clothing_flags & THICKMATERIAL)
-					. = 0
+	// we may choose to ignore species trait pierce immunity in case we still want to check skellies for thick clothing without insta failing them (wounds)
+	if(ignore_species)
+		if(HAS_TRAIT_NOT_FROM(src, TRAIT_PIERCEIMMUNE, SPECIES_TRAIT))
+			. = FALSE
+	else if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
+		. = FALSE
+	var/obj/item/bodypart/the_part = get_bodypart(target_zone) || get_bodypart(BODY_ZONE_CHEST)
+	// Loop through the clothing covering this bodypart and see if there's any thiccmaterials
+	if(!penetrate_thick)
+		for(var/obj/item/clothing/iter_clothing in clothingonpart(the_part))
+			if(iter_clothing.clothing_flags & THICKMATERIAL)
+				. = FALSE
+				break
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
+		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material on [p_their()] [the_part.name].</span>")
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
@@ -600,7 +604,7 @@
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(R && R.fields["criminal"])
+		if(R?.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
 					threatcount += 5
@@ -713,7 +717,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna?.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -802,7 +806,7 @@
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
-	if(dna && dna.species)
+	if(dna?.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
 		var/static/mutable_appearance/electrocution_skeleton_anim
 		if(!electrocution_skeleton_anim)
@@ -830,7 +834,7 @@
 	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
-	if(wear_suit && wear_suit.breakouttime)
+	if(wear_suit?.breakouttime)
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		cuff_resist(wear_suit)
@@ -897,11 +901,11 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
 				for(var/t in get_disabled_limbs()) //Disabled limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -918,11 +922,6 @@
 			dna.remove_mutation(HM.name)
 	return ..()
 
-/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
-	. = ..()
-	if (dna && dna.species)
-		. += dna.species.check_species_weakness(weapon, attacker)
-
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
@@ -930,7 +929,7 @@
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+	if(dna?.species) //prevents a runtime while a human is being monkeyfied
 		override = dna.species.override_float
 	..()
 
@@ -1070,13 +1069,19 @@
 	else if(can_be_firemanned(target))
 		fireman_carry(target)
 
+/mob/living/carbon/human/limb_attack_self()
+	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
+	if(arm)
+		arm.attack_self(src)
+	return ..()
+
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
 	return (istype(target) && target.stat == CONSCIOUS)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
+	return ishuman(target) && target.body_position == LYING_DOWN
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
@@ -1092,7 +1097,7 @@
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
 		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, TRUE, target))
+		if(do_after(src, carrydelay, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
 				if(target.loc != loc)
@@ -1196,7 +1201,7 @@
 
 /mob/living/carbon/human/species/Initialize()
 	. = ..()
-	set_species(race)
+	INVOKE_ASYNC(src, .proc/set_species, race)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
@@ -1290,12 +1295,6 @@
 
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
-
-/mob/living/carbon/human/species/golem/capitalist
-	race = /datum/species/golem/capitalist
-
-/mob/living/carbon/human/species/golem/soviet
-	race = /datum/species/golem/soviet
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

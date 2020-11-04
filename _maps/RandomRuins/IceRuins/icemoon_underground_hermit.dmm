@@ -104,6 +104,10 @@
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
+"Ou" = (
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle)
 "ON" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/light{
@@ -324,7 +328,7 @@ YN
 ei
 bz
 gr
-cI
+Ou
 cI
 cI
 cI

@@ -137,9 +137,9 @@
 "aq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "ar" = (
@@ -350,7 +350,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/muffin/berry,
-/obj/item/reagent_containers/food/snacks/tofu,
+/obj/item/food/tofu,
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1172,7 +1172,7 @@
 /area/shuttle/abandoned/bridge)
 "cb" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1417,11 +1417,6 @@
 /obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 14
-	},
-/obj/item/gps{
-	gpstag = "NTREC1";
-	pixel_x = -9;
-	pixel_y = 4
 	},
 /obj/item/megaphone{
 	pixel_x = 3;
@@ -1938,8 +1933,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dq" = (
