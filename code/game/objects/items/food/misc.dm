@@ -78,7 +78,7 @@
 	name = "popcorn"
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
-	trash_type = /obj/item/trash_type/popcorn
+	trash_type = /obj/item/trash/popcorn
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	bite_consumption = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	tastes = list("popcorn" = 3, "butter" = 1)
@@ -97,7 +97,7 @@
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtypes = VEGETABLES | GRAIN | FRIED
@@ -122,7 +122,7 @@
 	name = "soy dope"
 	desc = "Dope from a soy."
 	icon_state = "soydope"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
@@ -131,7 +131,7 @@
 	name = "cheesy fries"
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | GRAIN | DAIRY
@@ -151,7 +151,7 @@
 	name = "carrot fries"
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
@@ -174,7 +174,7 @@
 	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bite_consumption = 1
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	foodtypes = TOXIC | SUGAR
 
@@ -184,7 +184,7 @@
 	icon_state = "eggwrap"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("egg" = 1)
-	foodtypess = MEAT | GRAIN
+	foodtypes = MEAT | GRAIN
 
 /obj/item/food/spidereggs
 	name = "spider eggs"
@@ -240,10 +240,10 @@
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash_type_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
-	foodtypess = VEGETABLES | DAIRY
+	foodtypes = VEGETABLES | DAIRY
 
 /obj/item/food/tortilla
 	name = "tortilla"
@@ -290,7 +290,7 @@
 	name = "yaki imo"
 	desc = "Made with roasted sweet potatoes!"
 	icon_state = "yakiimo"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
@@ -299,7 +299,7 @@
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
 	icon_state = "roastparsnip"
-	trash_type = /obj/item/trash_type/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
@@ -342,7 +342,7 @@
 	desc = "Who knew vodka was a fruit?"
 	icon_state = "melonkeg"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/ethanol/vodka = 15, /datum/reagent/consumable/nutriment/vitamin = 4)
-	volume = 80
+	max_volume = 80
 	bite_consumption = 5
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
@@ -500,8 +500,21 @@
 	if(iscarbon(loc))
 		hallucinate(loc)
 
+/obj/item/food/chewable/bubblegum/bubblegum/MakeEdible()
+	AddComponent(/datum/component/edible,\
+				initial_reagents = food_reagents,\
+				food_flags = food_flags,\
+				foodtypes = foodtypes,\
+				volume = max_volume,\
+				eat_time = eat_time,\
+				tastes = tastes,\
+				eatverbs = eatverbs,\
+				bite_consumption = bite_consumption,\
+				microwaved_type = microwaved_type,\
+				junkiness = junkiness,\
+				on_consume = CALLBACK(src, .proc/OnConsume))
 
-/obj/item/food/chewable/bubblegum/bubblegum/On_Consume(mob/living/eater)
+/obj/item/food/chewable/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	. = ..()
 	if(iscarbon(eater))
 		hallucinate(eater)
@@ -631,17 +644,15 @@
 	desc = "If you ever wondered where air came from..."
 	food_reagents = list(/datum/reagent/oxygen = 6, /datum/reagent/nitrogen = 24)
 	icon_state = "peachcan"
-	in_container = TRUE
-	reagent_flags = NONE
-	spillable = FALSE
+	food_flags = FOOD_IN_CONTAINER
 	w_class = WEIGHT_CLASS_NORMAL
-	volume = 30
+	max_volume = 30
+
 
 /obj/item/food/canned/proc/open_can(mob/user)
 	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
-	spillable = TRUE
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
@@ -659,7 +670,7 @@
 	name = "tin of beans"
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
-	trash_type = /obj/item/trash_type/can/food/beans
+	trash_type = /obj/item/trash/can/food/beans
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/ketchup = 4)
 	tastes = list("beans" = 1)
 	foodtypes = VEGETABLES
@@ -668,7 +679,7 @@
 	name = "canned peaches"
 	desc = "Just a nice can of ripe peaches swimming in their own juices."
 	icon_state = "peachcan"
-	trash_type = /obj/item/trash_type/can/food/peaches
+	trash_type = /obj/item/trash/can/food/peaches
 	food_reagents = list(/datum/reagent/consumable/peachjuice = 20, /datum/reagent/consumable/sugar = 8, /datum/reagent/consumable/nutriment = 2)
 	tastes = list("peaches" = 7, "tin" = 1)
 	foodtypes = FRUIT | SUGAR
@@ -677,7 +688,7 @@
 	name = "Maintenance Peaches"
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
-	trash_type = /obj/item/trash_type/can/food/peaches/maint
+	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
 
 /obj/item/food/crab_rangoon
@@ -693,7 +704,7 @@
 	name = "boritos corn chips"
 	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
 	icon_state = "boritos"
-	trash_type = /obj/item/trash_type/boritos
+	trash_type = /obj/item/trash/boritos
 	bite_consumption = 2
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
 	junkiness = 20

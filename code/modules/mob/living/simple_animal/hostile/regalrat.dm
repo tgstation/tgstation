@@ -97,7 +97,7 @@
 		heal_bodypart_damage(MEDIUM_HEAL)
 		qdel(target)
 		return
-	if(istype(target, /obj/item/food/royalcheesee))
+	if(istype(target, /obj/item/food/royalcheese))
 		to_chat(src, "<span class='green'>You eat [src], revitalizing your royal resolve completely.</span>")
 		heal_bodypart_damage(MAJOR_HEAL)
 		qdel(target)
