@@ -16,6 +16,7 @@
 	var/last_stasis_sound = FALSE
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
+	var/part_speed_modifier = 1
 	var/obj/effect/overlay/vis/mattress_on
 	var/obj/machinery/computer/operating/op_computer
 
@@ -31,6 +32,11 @@
 	. = ..()
 	if(op_computer && op_computer.sbed == src)
 		op_computer.sbed = null
+
+/obj/machinery/stasis/RefreshParts()
+	part_speed_modifier = 0.75
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		part_speed_modifier += 0.25 * M.rating
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
