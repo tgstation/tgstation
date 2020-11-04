@@ -3,16 +3,16 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/abductor,
 /area/shuttle/abandoned)
 "c" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 1
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/abductor,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/public/glass{
+/obj/machinery/door/airlock/abductor{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/dark,
@@ -27,7 +27,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/abductor,
 /area/shuttle/abandoned)
 "h" = (
 /obj/structure/window/reinforced{
@@ -62,7 +62,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/abductor,
 /area/shuttle/abandoned)
 "l" = (
 /obj/structure/chair/comfy/shuttle{
@@ -80,9 +80,6 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Shuttle Airlock"
-	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 4;
@@ -92,6 +89,9 @@
 	name = "White Ship";
 	port_direction = 4;
 	width = 9
+	},
+/obj/machinery/door/airlock/abductor{
+	name = "Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
@@ -124,7 +124,11 @@
 /area/shuttle/abandoned)
 "s" = (
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/abductor,
+/area/shuttle/abandoned)
+"N" = (
+/obj/structure/closet/abductor,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -162,7 +166,7 @@ b
 "}
 (4,1,1) = {"
 c
-e
+N
 e
 h
 l
