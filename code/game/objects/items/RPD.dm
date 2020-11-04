@@ -237,6 +237,18 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	spark_system = null
 	return ..()
 
+/obj/item/pipe_dispenser/examine(mob/user)
+	. = ..()
+	. += "You can scroll your mouse wheel to change the piping layer."
+
+/obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+
+/obj/item/pipe_dispenser/dropped(mob/user, silent)
+	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
+	return ..()
+
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
@@ -506,6 +518,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+
+/obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
+	SIGNAL_HANDLER
+	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+		return
+
+	if(delta_y > 0)
+		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
+	else if(delta_y < 0)
+		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
+	else
+		return
+	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY
