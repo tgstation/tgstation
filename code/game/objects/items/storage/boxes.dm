@@ -1165,12 +1165,12 @@
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
+	STR.set_holdable(list(/obj/item/food/chewable/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum(src)
+		new/obj/item/food/chewable/bubblegum(src)
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
@@ -1180,7 +1180,7 @@
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine(src)
+		new/obj/item/food/chewable/bubblegum/nicotine(src)
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
@@ -1196,7 +1196,7 @@
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
+		new/obj/item/food/chewable/bubblegum/happiness(src)
 
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
@@ -1205,7 +1205,7 @@
 
 /obj/item/storage/box/gum/bubblegum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum(src)
+		new/obj/item/food/chewable/bubblegum/bubblegum(src)
 
 /obj/item/storage/box/shipping
 	name = "box of shipping supplies"

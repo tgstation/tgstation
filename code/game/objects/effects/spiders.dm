@@ -117,7 +117,7 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/spiderling/Destroy()
-	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
+	new/obj/item/food/spiderling(get_turf(src))
 	. = ..()
 
 /obj/structure/spider/spiderling/Initialize()

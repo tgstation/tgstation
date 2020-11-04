@@ -5043,7 +5043,7 @@
 "kM" = (
 /obj/structure/closet/crate/bin,
 /obj/item/trash/plate,
-/obj/item/reagent_containers/food/snacks/badrecipe,
+/obj/item/food/badrecipe,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
