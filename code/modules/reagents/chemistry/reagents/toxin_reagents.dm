@@ -77,6 +77,10 @@
 	. = ..()
 	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
 
+/datum/reagent/toxin/plasma/Destroy()
+	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
+	return ..()
+
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(C.has_reagent(/datum/reagent/medicine/epinephrine))
 		C.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)

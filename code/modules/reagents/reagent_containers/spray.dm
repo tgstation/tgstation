@@ -24,14 +24,6 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
-/obj/item/reagent_containers/spray/Initialize(mapload, vol)
-	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-
-/obj/item/reagent_containers/spray/Destroy()
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT))
-	return ..()
-
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))

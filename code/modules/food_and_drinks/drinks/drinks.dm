@@ -458,14 +458,6 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/Initialize(mapload)
-	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/Destroy()
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT))
-	return ..()
-
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
