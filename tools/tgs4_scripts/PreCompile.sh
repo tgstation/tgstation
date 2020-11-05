@@ -47,15 +47,15 @@ fi
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
 	git clone https://github.com/tgstation/rust-g
+	cd rust-g
+	rustup target add i686-unknown-linux-gnu
 else
 	echo "Fetching rust-g..."
 	cd rust-g
 	git fetch
-	cd ..
 fi
 
 echo "Deploying rust-g..."
-cd rust-g
 git checkout "$RUST_G_VERSION"
 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
 mv target/release/librust_g.so "$1/rust_g"
