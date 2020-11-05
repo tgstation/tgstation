@@ -248,7 +248,8 @@
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
 	if(!(upgrade_type in power_lottery[H]))
 		return
-	var/datum/species/S = H.dna.species
+	if(!istype(H))
+		return
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
 			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
@@ -262,20 +263,23 @@
 			ADD_TRAIT(H, TRAIT_NOBREATH, "dna_vault")
 		if(VAULT_FIREPROOF)
 			to_chat(H, "<span class='notice'>You feel fireproof.</span>")
-			S.burnmod = 0.5
+			H.physiology.burn_mod *= 0.5
 			ADD_TRAIT(H, TRAIT_RESISTHEAT, "dna_vault")
 			ADD_TRAIT(H, TRAIT_NOFIRE, "dna_vault")
 		if(VAULT_STUNTIME)
 			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
-			S.stunmod = 0.5
+			H.physiology.stun_mod *= 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, "<span class='notice'>You feel tough.</span>")
-			S.armor = 30
+			H.physiology.armor.melee += 30
+			H.physiology.armor.bullet += 30
+			H.physiology.armor.laser += 30
+			H.physiology.armor.energy += 30
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
 			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
-			H.next_move_modifier = 0.5
+			H.next_move_modifier *= 0.5
 	power_lottery[H] = list()
