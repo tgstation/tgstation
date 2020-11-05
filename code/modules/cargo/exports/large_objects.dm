@@ -124,7 +124,7 @@
 								/datum/gas/halon
 								)
 
-	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
+	worth += gases[/datum/gas/hypernoblium][MOLES]*5
 	worth += gases[/datum/gas/stimulum][MOLES]*100
 	worth += gases[/datum/gas/freon][MOLES]*15
 	worth += gases[/datum/gas/tritium][MOLES]*5
