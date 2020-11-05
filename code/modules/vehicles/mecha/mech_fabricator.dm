@@ -64,7 +64,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = SSresearch.science_tech
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, breakdown_flags=BREAKDOWN_FLAGS_LATHE)
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, breakdown_flags=BREAKDOWN_FLAGS_LATHE) //, _after_insert = CALLBACK(.proc/AfterMaterialInsert))
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
@@ -535,11 +535,11 @@
 		if("add_queue_part")
 			// Add a specific part to queue
 			var/T = params["id"]
-			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = SSresearch.techweb_design_by_id(v)
+			if(stored_research.researched_designs[T])
+				var/datum/design/D = SSresearch.techweb_design_by_id(T)
 				if((D.build_type & MECHFAB) && (D.id == T))
 					add_to_queue(D)
-					break
+
 			return
 		if("del_queue_part")
 			// Delete a specific from from the queue
