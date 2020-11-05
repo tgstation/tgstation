@@ -560,7 +560,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
-			user.gib()
+			var/mob/living/living_user = user
+			if (istype(living_user))
+				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	if(gameover)

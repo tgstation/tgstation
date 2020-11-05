@@ -1,4 +1,12 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/**
+ * Blow up the mob into giblets
+ *
+ * Arguments:
+ * * no_brain - Should the mob NOT drop a brain?
+ * * no_organs - Should the mob NOT drop organs?
+ * * no_bodyparts - Should the mob NOT drop bodyparts?
+*/
+/mob/living/proc/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)

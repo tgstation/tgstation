@@ -28,9 +28,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
-/mob/dead/gib()		//ghosts can't be gibbed.
-	return
-
 /mob/dead/forceMove(atom/destination)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
