@@ -70,16 +70,11 @@
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/stomach/fly/on_life()
-	for(var/bile in reagents.reagent_list)
-		if(!istype(bile, /datum/reagent/consumable))
-			continue
-		var/datum/reagent/consumable/chunk = bile
-		if(chunk.nutriment_factor <= 0)
-			continue
+	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
 		var/mob/living/carbon/body = owner
-		var/turf/pos = get_turf(owner)
-		body.vomit(reagents.total_volume, FALSE, FALSE, 2, TRUE)
-		playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
+		// we do not loss any nutrition as a fly when vomiting out food
+		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge=TRUE)
+		playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
 	return ..()

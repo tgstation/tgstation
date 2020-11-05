@@ -61,6 +61,18 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 
+/obj/machinery/door/poddoor/massdriver_toxins
+	name = "Toxins Launcher Bay Door"
+	id = MASSDRIVER_TOXINS
+
+/obj/machinery/door/poddoor/massdriver_chapel
+	name = "Chapel Launcher Bay Door"
+	id = MASSDRIVER_CHAPEL
+
+/obj/machinery/door/poddoor/massdriver_trash
+	name = "Disposals Launcher Bay Door"
+	id = MASSDRIVER_DISPOSALS
+
 /obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
@@ -107,7 +119,7 @@
 		if(hasPower())
 			time_to_open = 15 SECONDS
 
-		if(do_after(user, time_to_open, TRUE, src))
+		if(do_after(user, time_to_open, src))
 			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 				to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
 

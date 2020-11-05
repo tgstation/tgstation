@@ -101,13 +101,13 @@
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
-	var/list/equipment = new
+	var/list/equipment = list()
 	///Current active equipment
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	///Maximum amount of equipment we can have
 	var/max_equip = 3
 
-	///Whether our steps are silent, for example in zero-G
+	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
 	var/stepsound = 'sound/mecha/mechstep.ogg'
@@ -211,14 +211,10 @@
 			var/obj/item/mecha_parts/mecha_equipment/equip = E
 			equip.detach(loc)
 			qdel(equip)
-	if(cell)
-		QDEL_NULL(cell)
-	if(scanmod)
-		QDEL_NULL(scanmod)
-	if(capacitor)
-		QDEL_NULL(capacitor)
-	if(internal_tank)
-		QDEL_NULL(internal_tank)
+	QDEL_NULL(cell)
+	QDEL_NULL(scanmod)
+	QDEL_NULL(capacitor)
+	QDEL_NULL(internal_tank)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
 	LAZYCLEARLIST(equipment)
@@ -357,18 +353,20 @@
 		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
-	if(!enclosed)
-		if(mecha_flags & SILICON_PILOT)
-			. += "[src] appears to be piloting itself..."
-		else
-			for(var/occupante in occupants)
-				. += "You can see [occupante] inside."
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				for(var/O in H.held_items)
-					if(istype(O, /obj/item/gun))
-						. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
-						break //in case user is holding two guns
+	if(enclosed)
+		return
+	if(mecha_flags & SILICON_PILOT)
+		. += "[src] appears to be piloting itself..."
+	else
+		for(var/occupante in occupants)
+			. += "You can see [occupante] inside."
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for(var/held_item in H.held_items)
+				if(!isgun(held_item))
+					continue
+				. += "<span class='warning'>It looks like you can hit the pilot directly if you target the center or above.</span>"
+				break //in case user is holding two guns
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(delta_time)
@@ -481,7 +479,7 @@
 
 	if(mecha_flags & LIGHTS_ON)
 		var/lights_energy_drain = 2
-		use_power(lights_energy_drain)
+		use_power(lights_energy_drain*delta_time)
 
 	for(var/b in occupants)
 		var/mob/living/occupant = b
@@ -577,8 +575,9 @@
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
-	if(stepsound)
-		playsound(src,stepsound,40,1)
+	if(mecha_flags & QUIET_STEPS)
+		return
+	playsound(src, stepsound, 40, TRUE)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
 	SIGNAL_HANDLER
@@ -600,10 +599,9 @@
 					to_chat(occupants, "[icon2html(src, occupants)]<span class='info'>The [src] push off [backup] to propel yourself.</span>")
 		return TRUE
 
-	if(movedelay <= world.time && active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))
+	if(active_thrusters?.thrust(movement_dir))
 		step_silent = TRUE
 		return TRUE
-
 	return FALSE
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
@@ -672,9 +670,9 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
-		setDir(direction)
-		if(turnsound)
+		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
+		setDir(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -1115,13 +1113,6 @@
 	req_access = list()
 	return allowed(M)
 
-////////////////////////////////
-/////// Messages and Log ///////
-////////////////////////////////
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
-//why is this in mecha
 
 ///////////////////////
 ///// Power stuff /////

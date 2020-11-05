@@ -42,7 +42,7 @@
 	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/brother/antag_panel_data()
-	return "Conspirators : [get_brother_names()]]"
+	return "Conspirators : [get_brother_names()]"
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner

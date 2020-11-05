@@ -75,7 +75,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !lighting_object.luminosity
+	return !(lighting_object.luminosity || dynamic_lumcount)
 
 
 ///Proc to add movable sources of opacity on the turf and let it handle lighting code.
