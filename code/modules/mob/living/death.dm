@@ -34,7 +34,8 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/** This is the proc for turning a mob into ash.
+/**
+ * This is the proc for turning a mob into ash.
  * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
  *
  * Arguments:
@@ -61,8 +62,13 @@
 /mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
 
-
-/mob/living/death(gibbed)
+/*
+ * Called when the mob dies. Can also be called manually to kill a mob.
+ *
+ * Arguments:
+ * * gibbed - Was the mob gibbed?
+*/
+/mob/living/proc/death(gibbed)
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
@@ -86,7 +92,8 @@
 	med_hud_set_status()
 	stop_pulling()
 
-	. = ..()
+	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
