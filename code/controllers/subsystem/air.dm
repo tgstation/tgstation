@@ -80,8 +80,6 @@ SUBSYSTEM_DEF(air)
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
 	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
 	if(length(pipenets_needing_rebuilt))
-		if(!resumed) //We track the use for each subprocess for the full tick, so we can get an acccurate idea of how much each part costs
-			cached_cost = 0
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
 			var/obj/machinery/atmospherics/AT = thing
@@ -91,7 +89,6 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		timer = TICK_USAGE_REAL
