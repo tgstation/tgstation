@@ -258,6 +258,7 @@
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
@@ -282,6 +283,7 @@
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
