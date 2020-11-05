@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Spreading nanite programs (Exo-locomotion and Nanite Sting) now properly transfer the infector's cloud ID to the infectee."
