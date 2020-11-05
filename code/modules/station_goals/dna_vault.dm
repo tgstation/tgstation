@@ -288,6 +288,6 @@
 			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup) //short and sweet- movement speed buffs are stronk
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
-			H.next_move_modifier *= 0.5
-			H.add_actionspeed_modifier(/datum/actionspeed_modifier/dnavault) //multiplies the lengths of your do_after()s by 0.8
+			H.next_move_modifier *= 0.7 //a next_move_modifier of 0.5 is quite frankly TOO insane, even for a DNA vault ability, so you'll have to settle for a next_move_modifier of "merely" 0.7 (which'll still let you ORA ORA with a faster attack speed than that of a standard holoparasite, mind you)
+			H.add_actionspeed_modifier(/datum/actionspeed_modifier/dnavault) //multiplies the lengths of your do_after()s by 0.7
 	power_lottery[H] = list()
