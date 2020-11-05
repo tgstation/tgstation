@@ -90,7 +90,7 @@
 	if(!client_prefs.frills_over_floors)
 		add_filter(FRILL_FLOOR_CUT, 1, list("type" = "alpha", "render_source" = FLOOR_PLANE_RENDER_TARGET, "flags" = MASK_INVERSE))
 	if(client_prefs.ambientocclusion)
-		add_filter(FRILL_GAME_CUT, 1, list("type" = "alpha", "x" = 6, "y" = -7, "render_source" = EMISSIVE_BLOCKER_RENDER_TARGET, "flags" = MASK_INVERSE))
+		add_filter(FRILL_GAME_CUT, 1, list("type" = "alpha", "render_source" = EMISSIVE_BLOCKER_RENDER_TARGET, "flags" = MASK_INVERSE))
 	else
 		add_filter(FRILL_GAME_CUT, 1, list("type" = "alpha", "render_source" = EMISSIVE_BLOCKER_RENDER_TARGET, "flags" = MASK_INVERSE))
 

@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(frill_objects)
 
 
-/proc/get_frill_object(icon_path, junction, shadow = FALSE, alpha = 255, pixel_x = -16, pixel_y = -16, plane = FRILL_PLANE)
+/proc/get_frill_object(icon_path, junction, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = FRILL_PLANE)
 	. = GLOB.frill_objects["[icon_path]-[junction]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]"]
 	if(.)
 		return
@@ -21,16 +21,21 @@ GLOBAL_LIST_EMPTY(frill_objects)
 
 
 /datum/element/frill/Attach(datum/target, icon_path)
-	if(!isturf(target) && !ismovable(target)) // Turfs and movables have vis_contents. Atoms don't. Pain.
+	var/yep_its_a_turf = isturf(target)
+	if(!yep_its_a_turf && !ismovable(target)) // Turfs and movables have vis_contents. Atoms don't. Pain.
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	src.icon_path = icon_path
+
 	var/turf/turf_or_movable = target
-	turf_or_movable.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
+	var/turf/operator_turf = yep_its_a_turf ? get_step(turf_or_movable, NORTH) : turf_or_movable
+	operator_turf.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE, pixel_y = yep_its_a_turf ? 0 : 32)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 
 /datum/element/frill/Detach(turf/target)
+	if(isturf(target))
+		target = get_step(target, NORTH)
 	target.vis_contents -= get_frill_object(icon_path, target.smoothing_junction, TRUE)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
@@ -39,8 +44,9 @@ GLOBAL_LIST_EMPTY(frill_objects)
 /datum/element/frill/proc/on_junction_change(atom/source, new_junction)
 	SIGNAL_HANDLER
 	var/turf/turf_or_movable = source
-	turf_or_movable.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
-	turf_or_movable.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
+	var/turf/operator_turf = isturf(source) ? get_step(turf_or_movable, NORTH) : turf_or_movable
+	operator_turf.vis_contents -= get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE)
+	operator_turf.vis_contents += get_frill_object(icon_path, new_junction, TRUE)
 
 
 /atom/movable/visual/frill
@@ -49,8 +55,6 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	layer = ABOVE_MOB_LAYER
 	plane = FRILL_PLANE
 	vis_flags = NONE
-	pixel_x = -16
-	pixel_y = -16
 
 
 /atom/movable/visual/frill/Initialize(mapload, icon, junction, shadow, custom_alpha, custom_pixel_x, custom_pixel_y, custom_plane)
