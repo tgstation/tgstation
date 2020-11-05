@@ -13,13 +13,13 @@ GLOBAL_LIST_EMPTY(string_lists)
 
 	return GLOB.string_lists[string_id] = values
 
-///A wrapper for baseturf string lists, for support for non list values, and a stack_trace if we have major issues
-/proc/baseturfs_string_list(list/values, turf/baseturf)
+///A wrapper for baseturf string lists, to offer support of non list values, and a stack_trace if we have major issues
+/proc/baseturfs_string_list(list/values, turf/baseturf_holder)
 	if(!islist(values))
 		values = list(values)
 	//	return values
 	if(length(values) > 10)
-		stack_trace("The baseturfs list of [baseturf] at [baseturf.x], [baseturf.y], [baseturf.x] is [length(values)], it should never be this long, investigate. I've set baseturfs to a chasm as a visual queue")
+		stack_trace("The baseturfs list of [baseturf_holder] at [baseturf_holder.x], [baseturf_holder.y], [baseturf_holder.x] is [length(values)], it should never be this long, investigate. I've set baseturfs to a flashing wall as a visual queue")
 		return string_list(list(/turf/closed/indestructible/baseturfs_ded)) //I want this reported god damn it
 	return string_list(values)
 
