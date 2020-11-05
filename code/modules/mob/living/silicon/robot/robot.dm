@@ -102,7 +102,7 @@
 	var/obj/item/hat
 	var/hat_offset = -3
 
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE|NO_ATTACK_HAND_UNBUCKLE //unbuckling done by other means.
 	buckle_lying = 0
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
@@ -1016,7 +1016,7 @@
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	//Don't try buckling on INTENT_HARM so that silicons can search people's inventories without loading them
-	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
+	if((buckle_flags & CAN_BUCKLE) && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

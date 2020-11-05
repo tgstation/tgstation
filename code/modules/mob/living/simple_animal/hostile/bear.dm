@@ -59,7 +59,7 @@
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
 	if(!rideable && mind)
-		can_buckle = TRUE
+		buckle_flags = CAN_BUCKLE
 		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
@@ -161,7 +161,9 @@
 		heal_overall_damage(10) //Fast life regen, makes it hard for you to get eaten to death.
 
 /mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/L) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
-	..()
+	. = ..()
+	if(.)
+		return
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)

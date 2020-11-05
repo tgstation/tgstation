@@ -1111,7 +1111,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(istype(test, /obj/vehicle/ridden/bicycle/))
 			var/obj/vehicle/ridden/bicycle/bike = test
-			if(!(bike.obj_flags & BEING_SHOCKED) && bike.can_buckle)//God's not on our side cause he hates idiots.
+			if(!(bike.obj_flags & BEING_SHOCKED) && (bike.buckle_flags & CAN_BUCKLE))//God's not on our side cause he hates idiots.
 				if(target_type != BIKE)
 					arctargets = list()
 				arctargets += test

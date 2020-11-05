@@ -169,7 +169,7 @@
 
 /mob/living/simple_animal/cow/tamed()
 	. = ..()
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 0
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
@@ -185,16 +185,15 @@
 		udder.generateMilk()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+	if(M.a_intent == INTENT_DISARM && !HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
 		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
-
-	else
-		..()
+		return TRUE
+	return ..()
 
 /mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
 	if(QDELETED(M) || stat)
@@ -233,7 +232,7 @@
 		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
 		qdel(src)
-		return
+		return TRUE
 	return ..()
 
 

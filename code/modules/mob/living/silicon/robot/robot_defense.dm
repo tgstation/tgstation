@@ -286,20 +286,18 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+	if(!opened || user.a_intent == INTENT_HARM)
+		return ..()
 	add_fingerprint(user)
-	if(opened && !wiresexposed && !issilicon(user))
-		if(cell)
-			cell.update_icon()
-			cell.add_fingerprint(user)
-			user.put_in_active_hand(cell)
-			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
-			cell = null
-			update_icons()
-			diag_hud_set_borgcell()
-	else if(!opened)
-		..()
+	if(!wiresexposed && cell && !issilicon(user))
+		cell.update_icon()
+		cell.add_fingerprint(user)
+		user.put_in_active_hand(cell)
+		to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
+		cell = null
+		update_icons()
+		diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
 	. = ..()

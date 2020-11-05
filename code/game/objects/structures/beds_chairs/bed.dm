@@ -13,7 +13,7 @@
 	icon_state = "bed"
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100

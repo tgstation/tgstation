@@ -5,7 +5,7 @@
 	icon_state = "sacrificealtar"
 	anchored = TRUE
 	density = FALSE
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE
 
 /obj/structure/sacrificealtar/AltClick(mob/living/user)
 	..()

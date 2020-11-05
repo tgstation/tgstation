@@ -1,23 +1,20 @@
 /atom/movable
 	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
-	var/can_buckle = FALSE
+	var/buckle_flags = NONE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
 	var/buckle_lying = NO_BUCKLE_LYING
-	/// Require people to be handcuffed before being able to buckle. eg: pipes
-	var/buckle_requires_restraints = FALSE
 	/// The mobs currently buckled to this atom
 	var/list/mob/living/buckled_mobs = null //list()
 	/// The maximum number of mob/livings allowed to be buckled to this atom at once
 	var/max_buckled_mobs = 1
-	/// Whether things buckled to this atom can be pulled while they're buckled
-	var/buckle_prevents_pull = FALSE
+
 
 //Interaction
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(can_buckle && has_buckled_mobs())
+	if(buckle_flags & CAN_BUCKLE && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
@@ -27,7 +24,7 @@
 				return TRUE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
-	if(!can_buckle || !istype(W, /obj/item/riding_offhand) || !user.Adjacent(src))
+	if(!(buckle_flags & CAN_BUCKLE) || !istype(W, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
 	var/obj/item/riding_offhand/riding_item = W
@@ -43,7 +40,7 @@
 	. = ..()
 	if(.)
 		return
-	if(Adjacent(user) && can_buckle && has_buckled_mobs())
+	if(Adjacent(user) && buckle_flags & CAN_BUCKLE && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			return user_unbuckle_mob(unbuckled,user)
@@ -62,7 +59,7 @@
   * user - The mob buckling M to src
   */
 /atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(can_buckle && istype(M) && istype(user))
+	if((buckle_flags & CAN_BUCKLE) && istype(M) && istype(user))
 		return user_buckle_mob(M, user)
 
 /**
@@ -80,7 +77,7 @@
   * If you want to have a mob buckling another mob to something, or you want a chat message sent, use user_buckle_mob instead.
   * Arguments:
   * M - The mob to be buckled to src
-  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
+  * force - Set to TRUE to ignore src's lack of CAN_BUCKLE flag and M's can_buckle_to
   * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
   */
 /atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -91,7 +88,7 @@
 		return FALSE
 
 	if(M.pulledby)
-		if(buckle_prevents_pull)
+		if(buckle_flags & BUCKLE_PREVENT_PULL)
 			M.pulledby.stop_pulling()
 		else if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby
@@ -165,7 +162,7 @@
   * Called from [/atom/movable/proc/buckle_mob] and [/atom/movable/proc/is_user_buckle_possible].
   * Arguments:
   * * target - Target mob to check against buckling to src.
-  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle_to
+  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's CAN_BUCKLE flag and target's can_buckle_to
   * * check_loc - TRUE if target and src have to be on the same tile, FALSE if they are allowed to just be adjacent
   */
 /atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
@@ -178,7 +175,7 @@
 		return FALSE
 
 	// Check if this atom can have things buckled to it.
-	if(!can_buckle && !force)
+	if(!(buckle_flags & CAN_BUCKLE) && !force)
 		return FALSE
 
 	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
@@ -194,7 +191,7 @@
 		return FALSE
 
 	// If the buckle requires restraints, make sure the target is actually restrained.
-	if(buckle_requires_restraints && !HAS_TRAIT(target, TRAIT_RESTRAINED))
+	if(buckle_flags & BUCKLE_REQUIRE_RESTRAINTS && !HAS_TRAIT(target, TRAIT_RESTRAINED))
 		return FALSE
 
 	//If buckling is forbidden for the target, cancel

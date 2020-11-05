@@ -10,8 +10,7 @@
 	paintable = TRUE
 
 	//Buckling
-	can_buckle = TRUE
-	buckle_requires_restraints = TRUE
+	buckle_flags = CAN_BUCKLE|BUCKLE_REQUIRE_RESTRAINTS
 	buckle_lying = NO_BUCKLE_LYING
 
 /obj/machinery/atmospherics/pipe/New()

@@ -1,7 +1,9 @@
 
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
+	. = ..()
+	if(.)
+		return
 	switch(M.a_intent)
 		if("help")
 			if (stat == DEAD)
@@ -25,17 +27,16 @@
 				M.visible_message("<span class='danger'>[M.name] shoves [src]!</span>",
 					"<span class='danger'>You shove [src]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
 				to_chat(src, "<span class='userdanger'>You're shoved by [M.name]!</span>")
-				return TRUE
+				return
 			log_combat(M, src, "shoved", "pushing it")
 			M.visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
 				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
-			return TRUE
 
 		if("harm")
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
-				return
+				return TRUE //Halts the attack chain so it doesn't trigger snowflake behaviours such as gaining nutrition from butterbears
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm_continuous] [src]!</span>",\
 							"<span class='userdanger'>[M] [response_harm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
@@ -44,7 +45,8 @@
 			attack_threshold_check(harm_intent_damage)
 			log_combat(M, src, "attacked")
 			updatehealth()
-			return TRUE
+
+	return FALSE
 
 /**
 *This is used to make certain mobs (pet_bonus == TRUE) emote when pet, make a heart emoji at their location, and give the petter a moodlet.

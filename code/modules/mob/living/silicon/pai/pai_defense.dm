@@ -40,7 +40,11 @@
 			fold_in(force = 1)
 			Paralyze(200)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
+	. = FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 	switch(user.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")

@@ -113,11 +113,12 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "harm")
+	. = ..()
+	if(.)
+		return
+	if(H.a_intent == INTENT_HARM)
 		retaliate(H)
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
-	return ..()
-
 
 /mob/living/simple_animal/bot/honkbot/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) )

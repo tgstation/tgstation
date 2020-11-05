@@ -1,6 +1,6 @@
 /obj/vehicle/ridden
 	name = "ridden vehicle"
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	default_driver_move = FALSE
@@ -69,7 +69,7 @@
 		return FALSE
 
 	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
-		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)	
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
 			unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
 			"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
@@ -96,7 +96,7 @@
 			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return FALSE
-	
+
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()

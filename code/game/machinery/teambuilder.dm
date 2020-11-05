@@ -7,7 +7,6 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
 	density = FALSE
-	can_buckle = FALSE
 	resistance_flags = INDESTRUCTIBLE // Just to be safe.
 	///What color is your mob set to when crossed?
 	var/team_color = COLOR_WHITE

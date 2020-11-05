@@ -22,7 +22,7 @@
 	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
-	buckle_prevents_pull = TRUE // No pulling loaded shit
+	buckle_flags = BUCKLE_PREVENT_PULL // No pulling loaded shit
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
@@ -463,11 +463,11 @@
 	return load ? load.name : null
 
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
-	can_buckle = TRUE
+	buckle_flags |= CAN_BUCKLE
 	if(buckle_mob(M))
 		passenger = M
 		load = M
-		can_buckle = FALSE
+		buckle_flags &= ~CAN_BUCKLE
 		return TRUE
 
 /mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)

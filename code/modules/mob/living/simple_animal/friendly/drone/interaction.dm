@@ -31,27 +31,25 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user)
-	if(ishuman(user))
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
-			..()
-			return
-		if(user.get_active_held_item())
-			to_chat(user, "<span class='warning'>Your hands are full!</span>")
-			return
-		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
-						"<span class='userdanger'>[user] starts picking you up!</span>")
-		if(!do_after(user, 20, target = src))
-			return
-		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
-						"<span class='userdanger'>[user] picks you up!</span>")
-		if(buckled)
-			to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
-			return
-		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
-		drop_all_held_items()
-		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
-		DH.slot_flags = worn_slot_flags
-		user.put_in_hands(DH)
+	if(!ishuman(user) || stat == DEAD || status_flags & GODMODE || !can_be_held)
+		return ..()
+	if(user.get_active_held_item())
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return
+	visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
+					"<span class='userdanger'>[user] starts picking you up!</span>")
+	if(!do_after(user, 20, target = src))
+		return
+	visible_message("<span class='warning'>[user] picks up [src]!</span>", \
+					"<span class='userdanger'>[user] picks you up!</span>")
+	if(buckled)
+		to_chat(user, "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>")
+		return
+	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+	drop_all_held_items()
+	var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
+	DH.slot_flags = worn_slot_flags
+	user.put_in_hands(DH)
 
 /**
   * Called when a drone attempts to reactivate a dead drone

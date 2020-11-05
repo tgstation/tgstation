@@ -16,7 +16,7 @@
 	name = "fried bicycle"
 	desc = "Well spent."
 	color = rgb(63, 23, 4)
-	can_buckle = FALSE
+	buckle_flags = NONE
 	. = ..()
 	for(var/m in buckled_mobs)
 		unbuckle_mob(m,1)

@@ -113,7 +113,7 @@
 			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
 			qdel(O)
 			saddled = TRUE
-			can_buckle = TRUE
+			buckle_flags = CAN_BUCKLE
 			buckle_lying = 0
 			add_overlay("goliath_saddled")
 			var/datum/component/riding/D = LoadComponent(/datum/component/riding)

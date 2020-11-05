@@ -11,9 +11,8 @@
 	circuit = /obj/item/circuitboard/machine/rtg
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE|BUCKLE_REQUIRE_RESTRAINTS
 	buckle_lying = 0
-	buckle_requires_restraints = TRUE
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.
 
@@ -64,7 +63,7 @@
 	circuit = /obj/item/circuitboard/machine/abductor/core
 	power_gen = 20000 // 280 000 at T1, 400 000 at T4. Starts at T4.
 	irradiate = FALSE // Green energy!
-	can_buckle = FALSE
+	buckle_flags = NONE
 	pixel_y = 7
 	var/going_kaboom = FALSE // Is it about to explode?
 

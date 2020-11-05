@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
@@ -18,7 +18,7 @@
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
-	if(!has_buckled_mobs() && can_buckle)
+	if(!has_buckled_mobs() && (buckle_flags & CAN_BUCKLE))
 		. += "<span class='notice'>While standing on [src], drag and drop your sprite onto [src] to buckle to it.</span>"
 
 /obj/structure/chair/Initialize()
@@ -230,7 +230,7 @@
 	name = "stool"
 	desc = "Apply butt."
 	icon_state = "stool"
-	can_buckle = FALSE
+	buckle_flags = NONE
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 

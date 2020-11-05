@@ -832,7 +832,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestackamount = 1
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE
 	/// Amount to inject per second
 	var/inject_am = 0.5
 

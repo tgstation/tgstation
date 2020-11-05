@@ -275,8 +275,8 @@
  */
 //Humans, monkeys, aliens
 /mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
-	..()
-	if(client)
+	. = ..()
+	if(. || client)
 		return
 	if(!stat && M.a_intent == INTENT_HARM)
 
@@ -295,7 +295,6 @@
 			drop_held_item(0)
 	if(stat != DEAD && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
-	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
 	return attack_hand(M)

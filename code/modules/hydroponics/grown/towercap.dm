@@ -176,14 +176,13 @@
 		return TRUE
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
+	if(istype(W, /obj/item/stack/rods) && !(buckle_flags & CAN_BUCKLE) && !grill)
 		var/obj/item/stack/rods/R = W
 		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
 		switch(choice)
 			if("Stake")
 				R.use(1)
-				can_buckle = TRUE
-				buckle_requires_restraints = TRUE
+				buckle_flags = CAN_BUCKLE|BUCKLE_REQUIRE_RESTRAINTS
 				to_chat(user, "<span class='notice'>You add a rod to \the [src].</span>")
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
@@ -224,7 +223,7 @@
 			L.forceMove(drop_location())
 			L.pixel_x += rand(1,4)
 			L.pixel_y += rand(1,4)
-		if(can_buckle || grill)
+		if((buckle_flags & CAN_BUCKLE) || grill)
 			new /obj/item/stack/rods(loc, 1)
 		qdel(src)
 		return

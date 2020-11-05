@@ -235,7 +235,7 @@
 
 		else if(istype(A, /obj/vehicle/ridden/bicycle))//God's not on our side cause he hates idiots.
 			var/obj/vehicle/ridden/bicycle/B = A
-			if(!(B.obj_flags & BEING_SHOCKED) && B.can_buckle)//Gee goof thanks for the boolean
+			if(!(B.obj_flags & BEING_SHOCKED) && (B.buckle_flags & CAN_BUCKLE))//Gee goof thanks for the boolean
 				//we use both of these to save on istype and typecasting overhead later on
 				//while still allowing common code to run before hand
 				closest_type = BIKE
@@ -262,7 +262,7 @@
 
 		else if(istype(A,/obj/vehicle/ridden))
 			var/obj/vehicle/ridden/R = A
-			if(R.can_buckle && !(R.obj_flags & BEING_SHOCKED))
+			if((R.buckle_flags & CAN_BUCKLE) && !(R.obj_flags & BEING_SHOCKED))
 				closest_type = RIDE
 				closest_atom = A
 

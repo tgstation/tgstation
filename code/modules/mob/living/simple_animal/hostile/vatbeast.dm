@@ -39,7 +39,7 @@
 
 /mob/living/simple_animal/hostile/vatbeast/tamed()
 	. = ..()
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 0
 	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
 	riding.can_use_abilities = TRUE

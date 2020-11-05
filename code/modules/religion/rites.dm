@@ -79,7 +79,7 @@
 		return FALSE
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
 		. = FALSE
-		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
+		if(!(movable_reltool.buckle_flags & CAN_BUCKLE)) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
 			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 			return
 		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [movable_reltool].</span>")

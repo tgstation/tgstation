@@ -59,11 +59,10 @@
 					"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, "<span class='danger'>You punch [src]!</span>")
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
-	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
+	. = ..()
+	if(.)
+		return
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] pets [src].</span>", \

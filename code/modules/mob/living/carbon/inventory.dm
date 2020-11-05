@@ -126,7 +126,7 @@
 			update_inv_neck(I)
 	else if(I == handcuffed)
 		set_handcuffed(null)
-		if(buckled?.buckle_requires_restraints)
+		if(buckled && buckled.buckle_flags & BUCKLE_REQUIRE_RESTRAINTS)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()

@@ -200,8 +200,6 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
 	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
 		retaliate(H)
-		if(special_retaliate_after_attack(H))
-			return
 
 		// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
 		if(HAS_TRAIT(H, TRAIT_PACIFISM))
@@ -210,7 +208,10 @@ Auto Patrol: []"},
 			speak("Taunted by pacifist scumbag <b>[H]</b> in [get_area(src)].", radio_channel)
 
 			// Interrupt the attack chain. We've already handled this scenario for pacifists.
-			return
+			return TRUE
+
+		if(special_retaliate_after_attack(H))
+			return TRUE
 
 	return ..()
 

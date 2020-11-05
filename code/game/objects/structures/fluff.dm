@@ -144,13 +144,13 @@
 	desc = "An altar dedicated to a deity."
 	icon_state = "convertaltar"
 	density = FALSE
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE
 
 /obj/structure/fluff/divine/powerpylon
 	name = "power pylon"
 	desc = "A pylon which increases the deity's rate it can influence the world."
 	icon_state = "powerpylon"
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE
 
 /obj/structure/fluff/divine/defensepylon
 	name = "defense pylon"

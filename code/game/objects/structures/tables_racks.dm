@@ -553,9 +553,8 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE|BUCKLE_REQUIRE_RESTRAINTS
 	buckle_lying = NO_BUCKLE_LYING
-	buckle_requires_restraints = TRUE
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 

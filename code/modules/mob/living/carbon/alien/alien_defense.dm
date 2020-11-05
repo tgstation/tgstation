@@ -56,21 +56,15 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.)	//to allow surgery to return properly.
-		return FALSE
+		return
 
 	switch(M.a_intent)
 		if("help")
 			help_shake_act(M)
+			return TRUE
 		if("grab")
 			grabbedby(M)
-		if ("harm")
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			return TRUE
-		if("disarm")
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
-	return FALSE
-
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
 	if(..())

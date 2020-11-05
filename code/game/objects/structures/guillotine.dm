@@ -17,12 +17,11 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE|BUCKLE_PREVENT_PULL
 	anchored = TRUE
 	density = TRUE
 	max_buckled_mobs = 1
 	buckle_lying = 0
-	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is

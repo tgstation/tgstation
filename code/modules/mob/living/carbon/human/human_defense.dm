@@ -202,7 +202,8 @@
 	apply_damage(15, BRUTE, wound_bonus=10)
 
 /mob/living/carbon/human/attack_hand(mob/user)
-	if(..())	//to allow surgery to return properly.
+	. = ..()
+	if(.) //to allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

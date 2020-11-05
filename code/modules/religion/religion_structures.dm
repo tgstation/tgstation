@@ -8,7 +8,7 @@
 	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
 	var/datum/religion_sect/sect_to_altar

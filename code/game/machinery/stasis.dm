@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/stasis.dmi'
 	icon_state = "stasis"
 	density = FALSE
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	buckle_lying = 90
 	circuit = /obj/item/circuitboard/machine/stasis
 	idle_power_usage = 40

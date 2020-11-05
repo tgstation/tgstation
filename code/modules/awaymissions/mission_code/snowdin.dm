@@ -256,7 +256,7 @@
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = FREEZE_PROOF
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 ///////////	papers
 
 

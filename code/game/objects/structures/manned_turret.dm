@@ -5,7 +5,7 @@
 	desc = "While the trigger is held down, this gun will redistribute recoil to allow its user to easily shift targets."
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 100

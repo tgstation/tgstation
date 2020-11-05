@@ -44,7 +44,7 @@
 	density = TRUE
 	anchored = TRUE
 	buckle_lying = 0
-	can_buckle = 1
+	buckle_flags = CAN_BUCKLE
 	max_integrity = 250
 
 /obj/structure/kitchenspike/attack_paw(mob/user)

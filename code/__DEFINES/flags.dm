@@ -214,3 +214,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EWDIRFLIP(d)     (d^(EAST|WEST))
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
+
+//buckling flags for movables.
+/// If the movable allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
+#define CAN_BUCKLE					(1<<0)
+///if the movable cannot have mobs unbuckled from it through attack_hand() et similar.
+#define NO_ATTACK_HAND_UNBUCKLE		(1<<1)
+/// Require people to be handcuffed before being able to buckle. eg: pipes
+#define BUCKLE_REQUIRE_RESTRAINTS	(1<<2)
+/// Prevents things buckled to this atom from being pulled.
+#define BUCKLE_PREVENT_PULL			(1<<3)

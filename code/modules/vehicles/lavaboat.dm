@@ -8,7 +8,7 @@
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	var/allowed_turf = /turf/open/lava
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	can_buckle = TRUE
+	buckle_flags = CAN_BUCKLE
 	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /obj/vehicle/ridden/lavaboat/Initialize()
