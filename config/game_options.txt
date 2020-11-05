@@ -315,6 +315,8 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Comment this out this to make security officers spawn in departmental security posts
 SEC_START_BRIG
 
+## Comment this out to make airlocks use a common wire dictionary instead of a different dictionary for each part of the station.
+WIRES_CAN_USE_DICTIONARY_KEYS
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.

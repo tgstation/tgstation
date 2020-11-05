@@ -48,8 +48,13 @@
 
 	src.holder = holder
 
-	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
-	var/key = dictionary_key ? dictionary_key : holder_type
+	var/key = null
+	// If this config is set, wires may be set by their dictionary key. (Doors use this for department based wiring.)
+	if(CONFIG_GET(flag/wires_can_use_dictionary_keys))
+		// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
+		key = dictionary_key ? dictionary_key : holder_type
+	else
+		key = holder_type
 
 	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
 	if(randomize)
