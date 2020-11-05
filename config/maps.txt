@@ -25,6 +25,10 @@ map deltastation
 	votable
 endmap
 
+map pubbystation
+	votable
+endmap
+
 map kilostation
 	votable
 endmap
