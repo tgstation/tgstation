@@ -164,6 +164,10 @@
 		if(W.try_handling(user))
 			return TRUE
 
+	if(user.a_intent == INTENT_HARM && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [src]!</span>")
+		return TRUE //Halts the attack chain, so they don't actually punch 'em.
+
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 

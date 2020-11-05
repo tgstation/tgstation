@@ -4,6 +4,9 @@
 	. = ..()
 	if(.) //surgeries, grab or help intents etc.
 		return
+	if(M.a_intent == INTENT_DISARM && HAS_TRAIT(M, TRAIT_PACIFISM))
+		to_chat(M, "<span class='warning'>You don't want to harm [src]!</span>")
+		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
 		playsound(loc, "punch", 25, TRUE, -1)

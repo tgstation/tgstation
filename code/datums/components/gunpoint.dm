@@ -33,7 +33,7 @@
 	var/mob/living/shooter = parent
 	target = targ
 	weapon = wep
-	RegisterSignal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
+	RegisterSignal(targ, list(COMSIG_HUMAN_SPEC_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
 
 	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
@@ -63,13 +63,13 @@
 /datum/component/gunpoint/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, .proc/flinch)
-	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
+	RegisterSignal(parent, COMSIG_HUMAN_SPEC_ATTACK_HAND, .proc/check_shove)
 	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMGE)
-	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
+	UnregisterSignal(parent, COMSIG_HUMAN_SPEC_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
