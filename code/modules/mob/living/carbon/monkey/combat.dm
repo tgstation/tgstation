@@ -367,7 +367,7 @@
 		a_intent = INTENT_HARM
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.a_intent == INTENT_HARM && !HAS_TRAIT(L, TRAIT_PACIFISM) && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
