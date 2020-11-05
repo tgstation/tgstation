@@ -207,6 +207,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE	"permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
+#define TRAIT_AUGMENTED_DNA "augmented_dna" //this mob has received a power from a DNA vault, so it's been marked as being unable to gain another power
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"

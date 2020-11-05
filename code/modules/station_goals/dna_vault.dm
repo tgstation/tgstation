@@ -250,6 +250,11 @@
 		return
 	if(!istype(H))
 		return
+	power_lottery[H] = list()
+	if(HAS_TRAIT(H, TRAIT_AUGMENTED_DNA)) //no double dipping (with the same body, anyway)
+		to_chat(H, "<span class='alert'>Your body has already been improved by a DNA vault!</span>")
+		return
+	ADD_TRAIT(H, TRAIT_AUGMENTED_DNA, "dna_vault")
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
 			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>") //I WILL be back for this after No Nerf November ends, mark my words.
@@ -282,4 +287,3 @@
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier *= 0.5
-	power_lottery[H] = list()
