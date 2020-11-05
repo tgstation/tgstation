@@ -558,7 +558,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
 		V.icon_state = "vomitnanite_[pick(1,4)]"
 	if (purge_ratio && iscarbon(M))
-			clear_reagents_to_vomit_pool(M, V, purge_ratio)
+		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
