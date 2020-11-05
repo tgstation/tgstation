@@ -3,8 +3,9 @@
 // DNA vault requires x animals ,y plants, z human dna
 // DNA vaults require high tier stock parts and cold
 // After completion each crewmember can receive single upgrade chosen out of 2 for the mob.
+// In general, these upgrades should grant traits that are hard to obtain without changing your species. If an option can be fully replicated by a virus symptom or a genetic mutation (that's in the random genetic pool or craftable from mutations from that pool), you should probably add a few more features to it.
 #define VAULT_TOXIN "Toxin Adaptation"
-#define VAULT_NOBREATH "Lung Enhancement"
+#define VAULT_ORGANS "Organ Optimization"
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
 #define VAULT_ARMOUR "Bone Reinforcement"
@@ -184,7 +185,7 @@
 	if(user in power_lottery)
 		return
 	var/list/L = list()
-	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
+	var/list/possible_powers = list(VAULT_TOXIN,VAULT_ORGANS,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
@@ -248,34 +249,45 @@
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
 	if(!(upgrade_type in power_lottery[H]))
 		return
-	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
-			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
-			if(locate(/obj/item/organ/lungs) in H.internal_organs)
-				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
-				L.tox_breath_dam_min = 0
-				L.tox_breath_dam_max = 0
-			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
-		if(VAULT_NOBREATH)
-			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")
+			to_chat(H, "<span class='notice'>You feel resistant to toxins and radiation.</span>")
+			H.setToxLoss(0, TRUE, TRUE)
+			ADD_TRAIT(H, TRAIT_TOXIMMUNE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_RADIMMUNE, "dna_vault") //now you, too, can vibe next to the SM
+		if(VAULT_ORGANS)
+			to_chat(H, "<span class='notice'>You feel enlightened.</span>") //these options are a bit all over the place, but none of these would be valuable enough on their own to be worth spending your dna vault power choice on
+			H.physiology.brain_mod *= 0.25
 			ADD_TRAIT(H, TRAIT_NOBREATH, "dna_vault")
+			ADD_TRAIT(H, TRAIT_THERMAL_VISION, "dna_vault")
+			ADD_TRAIT(H, TRAIT_XRAY_VISION, "dna_vault") //if the code for the knowledge devil boon was still in the game, I'd invoke it here to give the vault-ee the ability to expand their view range, since that's a pretty rare and unique ability
+			H.update_sight()
+			ADD_TRAIT(H, TRAIT_NOHUNGER, "dna_vault")
+			H.set_safe_hunger_level() //I've left out hearts and bleed_mod here because they don't really fit with the enlightened monk "theme" I'm going for with this option
 		if(VAULT_FIREPROOF)
 			to_chat(H, "<span class='notice'>You feel fireproof.</span>")
-			S.burnmod = 0.5
+			H.physiology.burn_mod *= 0.5
 			ADD_TRAIT(H, TRAIT_RESISTHEAT, "dna_vault")
 			ADD_TRAIT(H, TRAIT_NOFIRE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_RESISTCOLD, "dna_vault")
+			ADD_TRAIT(H, TRAIT_SHOCKIMMUNE, "dna_vault") //you're, uh, insulated
 		if(VAULT_STUNTIME)
 			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
-			S.stunmod = 0.5
+			H.physiology.stun_mod *= 0.5
+			H.physiology.stamina_mod *= 0.5
+			ADD_TRAIT(H, TRAIT_STUNRESISTANCE, "dna_vault") //yeah, this isn't actually general stun resistance, but hey, every little bit helps
 		if(VAULT_ARMOUR)
-			to_chat(H, "<span class='notice'>You feel tough.</span>")
-			S.armor = 30
-			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
+			to_chat(H, "<span class='notice'>You feel like you can keep it together.</span>")
+			H.physiology.brute_mod *= 0.5 //while physiologies can handle armor additions, I figured that at least one of these options should be specialized for brute damage
+			H.physiology.bleed_mod = 0 //your veins run through your adamantium bones now or something, so you don't/can't bleed anymore (but can still jab a syringe into your bones or something to draw blood). this is to keep with the "shrug off wounds" theme of this option.
+			ADD_TRAIT(H, TRAIT_NODISMEMBER, "dna_vault")
+			ADD_TRAIT(H, TRAIT_NOLIMBDISABLE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_HARDLIMBWOUND, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup) //short and sweet- movement speed buffs are stronk
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
-			H.next_move_modifier = 0.5
+			H.next_move_modifier *= 0.5
+			H.add_actionspeed_modifier(/datum/actionspeed_modifier/dnavault) //multiplies the lengths of your do_after()s by 0.8
 	power_lottery[H] = list()
