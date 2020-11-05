@@ -34,7 +34,15 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash, drop_items, force)
+/** This is the proc for turning a mob into ash.
+ * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
+ *
+ * Arguments:
+ * * just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains
+ * * drop_items - Should the mob drop their items before dusting?
+ * * force - Should this mob be FORCABLY dusted?
+*/
+/mob/living/proc/dust(just_ash, drop_items, force)
 	death(TRUE)
 
 	if(drop_items)
