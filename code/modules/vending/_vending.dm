@@ -499,7 +499,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		for(var/datum/data/vending_product/R in shuffle(product_records))
+		for(var/datum/data/vending_product/R in shuffle(product_records + coin_records))
 
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
