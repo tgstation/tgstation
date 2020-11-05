@@ -37,8 +37,9 @@
 			//heart attack stuff
 			handle_heart()
 			handle_liver()
-			//Body temperature stability and damage
-			dna.species.handle_body_temperature(src)
+
+		//Body temperature stability and damage
+		dna.species.handle_body_temperature(src)
 
 		dna.species.spec_life(src) // for mutantraces
 	else

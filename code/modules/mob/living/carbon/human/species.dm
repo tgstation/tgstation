@@ -1608,17 +1608,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /**
  * Body temperature handler for species
+ *
+ * These procs manage body temp, bamage, and alerts
+ * Some of these will still fire when not alive to balance body temp to the room temp.
  * vars:
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi)
-	if(humi.stat == DEAD) // If you are dead none of this matters
-		return
-
-	body_temperature_core(humi)
-	body_temperature_skin(humi)
-	body_temperature_alerts(humi)
-	body_temperature_damage(humi)
+	//when in a statis bed or dead the air still effects your skin temp
+	if(humi.stat == DEAD)
+		body_temperature_skin(humi)
+	else //when alive do all the things
+		body_temperature_core(humi)
+		body_temperature_skin(humi)
+		body_temperature_alerts(humi)
+		body_temperature_damage(humi)
 
 /**
  * Used to stabilize the core temperature back to normal on living mobs
@@ -1633,6 +1637,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /**
  * Used to normalize the skin temperature on living mobs
+ *
+ * The core temp effects the skin, then the enviroment effects the skin, then we refect that back to the core.
+ * This happens even when dead so bodies revert to room temp over time.
  * vars:
  * * humi (required) The mob we will targeting
  */
