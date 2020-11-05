@@ -24,6 +24,8 @@ export const Hypertorus = (props, context) => {
     moderator_injection_rate,
     current_damper,
     power_level,
+    iron_content,
+    integrity,
     start_power,
     start_cooling,
     start_fuel,
@@ -130,40 +132,31 @@ export const Hypertorus = (props, context) => {
                   bad: [4, 6],
                 }} />
             </LabeledList.Item>
+            <LabeledList.Item label="Integrity">
+              <ProgressBar
+                value={integrity / 100}
+                ranges={{
+                  good: [0.90, Infinity],
+                  average: [0.5, 0.90],
+                  bad: [-Infinity, 0.5],
+                }} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Iron Content">
+              <ProgressBar
+                value={iron_content}
+                ranges={{
+                  good: [-Infinity, 3],
+                  average: [3, 6],
+                  bad: [6, Infinity],
+                }} />
+            </LabeledList.Item>
             <LabeledList.Item label="Energy Levels">
               <ProgressBar
                 color={'yellow'}
                 value={energy_level}
-                minValue={-1e40}
-                maxValue={1e40}>
+                minValue={0}
+                maxValue={1e35}>
                 {formatSiUnit(energy_level, 1, 'J')}
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Internal Power">
-              <ProgressBar
-                color={'orange'}
-                value={internal_power}
-                minValue={-1e40}
-                maxValue={1e30}>
-                {formatSiUnit(internal_power, 1, 'J')}
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Core Temperature">
-              <ProgressBar
-                color={'red'}
-                value={core_temperature}
-                minValue={-1e40}
-                maxValue={1e30}>
-                {formatSiBaseTenUnit(core_temperature * 1000, 1, 'K')}
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Power Output">
-              <ProgressBar
-                color={'green'}
-                value={power_output}
-                minValue={-1e40}
-                maxValue={1e30}>
-                {formatSiUnit(power_output, 1, 'J')}
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Heat Limiter Modifier">
@@ -294,7 +287,7 @@ export const Hypertorus = (props, context) => {
                 selected={data.waste_remove}
                 onClick={() => act('waste_remove')} />
             </LabeledList.Item>
-            <LabeledList.Item label="Filter">
+            <LabeledList.Item label="Filter from moderator mix">
               {filterTypes.map(filter => (
                 <Button
                   key={filter.id}
