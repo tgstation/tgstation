@@ -1112,7 +1112,7 @@
 		return
 
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, RIDDEN_HOLDING_RIDER)
+		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 		return
 
 	var/old_density = density
@@ -1120,7 +1120,7 @@
 	step_towards(target, loc)
 	density = old_density
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, RIDDEN_HOLDING_RIDER)
+		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1136,10 +1136,10 @@
 		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
 
-	buckle_mob(target, TRUE, TRUE, RIDER_HOLDING_ON)
+	buckle_mob(target, TRUE, TRUE, RIDER_NEEDS_ARMS)
 
 // /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, riding_flags = NONE)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, ride_check_flags = NONE)
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
@@ -1147,33 +1147,7 @@
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 
-	// while these flags are usually not mutually exclusive, this part of the code where we decide whether they go sideways
-	// when carrried or not doesn't abide, so for now i just go for sideways if the ridden is holding at all
-	if(riding_flags & RIDDEN_HOLDING_RIDER)
-		buckle_lying = 90
-	else if(riding_flags & RIDER_HOLDING_ON)
-		buckle_lying = 0
-
 	return ..()
-	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
-	/*if(LoadComponent(/datum/component/riding/creature/human, riding_flags, target))
-		stop_pulling()
-		//riding_datum.handle_vehicle_layer() idk if this is actually necessary or if i can move this to the riding datum's init to avoid assigning the riding_datum var here
-		return ..(target, force, check_loc)
-*/
-	// so we must not have enough hands on one of the parties who needed hands (or something else in general with components went wrong i guess)
-
-	// i tried making the two "x holds y" flags neutral of each other so you could have both/either/neither, but this message printout
-	// violates that since we wouldn't know which party/parties caused the carry to fail due to lack of hands if both needed them
-	// this could/should probably be moved to the riding datum anyway
-	/*
-	if(riding_flags & RIDDEN_HOLDING_RIDER)
-		visible_message("<span class='warning'>[src] can't get a grip on [target] because [p_their()] hands are full!</span>",
-				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
-	else if(riding_flags & RIDDEN_HOLDING_RIDER)
-		target.visible_message("<span class='warning'>[target] can't get a grip on [src] because [target.p_their()] hands are full!</span>",
-			"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
-*/
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

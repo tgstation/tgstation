@@ -22,25 +22,37 @@
 	RegisterSignal(target, COMSIG_MOVABLE_TRY_MOUNTING, .proc/check_mounting)
 
 /// Someone is buckling to this movable, which is literally the only thing we care about.
-/datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, riding_flags = NONE)
+/datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, ride_check_flags = NONE)
 	SIGNAL_HANDLER
 
-	if((riding_flags & RIDER_HOLDING_ON) && !equip_buckle_inhands(potential_rider, 2, target_movable)) // hardcode 2 hands for now
+	var/arms_needed = 0
+	if(ride_check_flags & RIDER_NEEDS_ARMS)
+		arms_needed = 2
+	else if(ride_check_flags & RIDER_NEEDS_ARM)
+		arms_needed = 1
+		ride_check_flags &= ~RIDER_NEEDS_ARM
+		ride_check_flags |= RIDER_NEEDS_ARMS
+
+	if(arms_needed && !equip_buckle_inhands(potential_rider, arms_needed, target_movable)) // can be either 1 (cyborg riding) or 2 (human piggybacking) hands
 		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [target_movable] because your hands are full!</span>")
 		return MOUNTING_HALT_BUCKLE
 
+	if((ride_check_flags & RIDER_NEEDS_LEGS) && HAS_TRAIT(potential_rider, TRAIT_FLOORED))
+		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!</span>",
+			"<span class='warning'>You can't get your footing on [target_movable]!</span>")
+		return MOUNTING_HALT_BUCKLE
 
 	var/mob/living/target_living = target_movable
 
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
-	// ridden_holding_rider shouldn't apply if the ridden isn't even a living mob
-	if((riding_flags & RIDDEN_HOLDING_RIDER) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
+	// CARRIER_NEEDS_ARM shouldn't apply if the ridden isn't even a living mob
+	if((ride_check_flags & CARRIER_NEEDS_ARM) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
 		target_living.visible_message("<span class='warning'>[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [potential_rider] because your hands are full!</span>")
 		return MOUNTING_HALT_BUCKLE
 
-	target_living.AddComponent(riding_component_type, potential_rider, force, riding_flags)
+	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags)
 
 /// Try putting the appropriate number of [riding offhand items][/obj/item/riding_offhand] into the target's hands, return FALSE if we can't
 /datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)

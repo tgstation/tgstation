@@ -118,6 +118,7 @@
 
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -1021,7 +1022,7 @@
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, ride_check_flags = RIDER_NEEDS_ARM)
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
@@ -1031,11 +1032,8 @@
 	if(module && !module.allow_riding)
 		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
-	/*
-	var/riding_flags = (RIDER_HOLDING_ON)
-	if(LoadComponent(/datum/component/riding/creature/cyborg, riding_flags, M))
-		return
-*/
+
+	ride_check_flags = RIDER_NEEDS_ARM
 	return ..()
 
 /mob/living/silicon/robot/resist()

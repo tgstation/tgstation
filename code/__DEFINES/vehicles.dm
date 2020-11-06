@@ -6,17 +6,16 @@
 
 //Ridden vehicle flags
 
-#define REQUIRES_ARMS   (1<<0)    //Does our vehicle require hands to drive?
-#define REQUIRES_LEGS   (1<<1)    //Does our vehicle require legs to drive?
-#define UNBUCKLE_DISABLED_RIDER (1<<2)   //If our rider is disabled, does he fall off?
+///Does our vehicle require hands to drive?
+#define RIDER_NEEDS_ARMS   (1<<0)
+//Does our vehicle require hands to drive?
+#define RIDER_NEEDS_ARM   	(1<<1)
+/// Do we need legs to ride this (checks against TRAIT_FLOORED)
+#define RIDER_NEEDS_LEGS   (1<<2)
+/// If the rider is disabled or loses their needed limbs, do they fall off?
+#define UNBUCKLE_DISABLED_RIDER (1<<3)
+//For fireman carries, the carrying human needs an arm
+#define CARRIER_NEEDS_ARM (1<<4)
 
 //Car trait flags
 #define CAN_KIDNAP 1
-
-
-// riding datum defines
-
-/// The carried person is incapacitated or was otherwise prone, carrier needs 1 free hand
-#define RIDDEN_HOLDING_RIDER	(1<<0)
-/// The carried person is holding onto the carrier, carried person needs 2 free hands
-#define RIDER_HOLDING_ON		(1<<1)

@@ -1,4 +1,4 @@
-/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
+/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS))
 	. = ..()
 
 /datum/component/riding/vehicle/RegisterWithParent()
@@ -60,8 +60,8 @@
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
-	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
-		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
+	if(ride_check_flags & RIDER_NEEDS_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
+		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
 			vehicle_parent.unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it while unable to stand!</span>")
@@ -72,8 +72,8 @@
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
-	if(rider_check_flags & REQUIRES_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
+	if(ride_check_flags & RIDER_NEEDS_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
 			vehicle_parent.unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!</span>")
@@ -95,7 +95,7 @@
 
 /datum/component/riding/vehicle/atv
 	keytype = /obj/item/key
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
 
 /datum/component/riding/vehicle/atv/handle_specials()
@@ -107,7 +107,7 @@
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/vehicle/bicycle
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 0
 
 /datum/component/riding/vehicle/bicycle/handle_specials()
@@ -117,7 +117,7 @@
 
 
 /datum/component/riding/vehicle/lavaboat
-	rider_check_flags = NONE // not sure
+	ride_check_flags = NONE // not sure
 	keytype = /obj/item/oar
 	var/allowed_turf = /turf/open/lava
 
@@ -145,7 +145,7 @@
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
 /datum/component/riding/vehicle/scooter
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/vehicle/scooter/handle_specials()
 	. = ..()
@@ -153,7 +153,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
-	rider_check_flags = REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/vehicle/scooter/skateboard/handle_specials()
 	. = ..()
@@ -182,7 +182,7 @@
 /datum/component/riding/vehicle/secway
 	keytype = /obj/item/key/security
 	vehicle_move_delay = 1.75
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/vehicle/secway/handle_specials()
 	. = ..()
@@ -202,7 +202,7 @@
 /datum/component/riding/vehicle/speedbike
 	vehicle_move_delay = 0
 	override_allow_spacemove = TRUE
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /datum/component/riding/vehicle/speedbike/handle_specials()
 	. = ..()
@@ -215,7 +215,7 @@
 
 /datum/component/riding/vehicle/wheelchair
 	vehicle_move_delay = 0
-	rider_check_flags = REQUIRES_ARMS
+	ride_check_flags = RIDER_NEEDS_ARMS
 
 /datum/component/riding/vehicle/wheelchair/handle_specials()
 	. = ..()
