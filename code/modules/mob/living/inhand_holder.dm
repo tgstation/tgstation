@@ -3,8 +3,7 @@
 /obj/item/clothing/head/mob_holder
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
-	icon = null
-	icon_state = ""
+	icon_state = "ian"
 	slot_flags = NONE
 	var/mob/living/held_mob
 	var/destroying = FALSE
