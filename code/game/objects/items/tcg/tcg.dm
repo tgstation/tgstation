@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
   * *User: The person doing the shuffling, used in visable message and closing UI.
   * *Visible: Will anyone need to hear the visable message about the shuffling?
   */
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)

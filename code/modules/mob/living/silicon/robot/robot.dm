@@ -1107,7 +1107,7 @@
   * Arguments:
   * arg1: a string containing the message to log.
  */
-/mob/living/silicon/robot/proc/logevent(var/string = "")
+/mob/living/silicon/robot/proc/logevent(string = "")
 	if(!string)
 		return
 	if(stat == DEAD) //Dead borgs log no longer

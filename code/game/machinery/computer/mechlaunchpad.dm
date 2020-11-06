@@ -83,7 +83,7 @@
   * * user - The user of the proc
   * * where - The mechpad that the connected mechpad will try to send a supply pod to
   */
-/obj/machinery/computer/mechpad/proc/try_launch(var/mob/user, var/obj/machinery/mechpad/where)
+/obj/machinery/computer/mechpad/proc/try_launch(mob/user, obj/machinery/mechpad/where)
 	if(!connected_mechpad)
 		to_chat(user, "<span class='warning'>[src] has no connected pad!</span>")
 		return
