@@ -56,7 +56,7 @@ if grep -nP '^/*var/' code/**/*.dm; then
     st=1
 fi;
 echo "Checking for space indentation"
-if grep -nP '(^ {2}[^* ])|(^ [^ ])|(^   +)' code/**/*.dm; then
+if grep -nP '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
     echo "space indentation detected"
     st=1
 fi;
