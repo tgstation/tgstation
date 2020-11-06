@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Roundstart Centcomm reports on communication consoles should no longer be word soup!"
