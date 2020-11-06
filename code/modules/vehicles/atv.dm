@@ -11,7 +11,7 @@
 
 /obj/vehicle/ridden/atv/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/atv)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/atv)
 
 /obj/vehicle/ridden/atv/post_buckle_mob(mob/living/M)
 	add_overlay(atvcover)

@@ -18,7 +18,7 @@
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
-	AddElement(/datum/element/ridable, /datum/component/riding/speedbike)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedbike)
 
 /obj/vehicle/ridden/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
@@ -46,7 +46,7 @@
 /obj/vehicle/ridden/space/speedwagon/Initialize()
 	. = ..()
 	add_overlay(overlay)
-	AddElement(/datum/element/ridable, /datum/component/riding/car/speedwagon)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/car/speedwagon)
 
 /obj/vehicle/ridden/space/speedwagon/Bump(atom/A)
 	. = ..()

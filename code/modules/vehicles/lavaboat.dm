@@ -12,7 +12,7 @@
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/lavaboat)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat)
 
 /obj/item/oar
 	name = "oar"
@@ -62,4 +62,4 @@
 
 /obj/vehicle/ridden/lavaboat/dragon/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/lavaboat/dragonboat)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat/dragonboat)

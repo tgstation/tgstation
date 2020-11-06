@@ -13,7 +13,7 @@
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/secway)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/secway)
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)

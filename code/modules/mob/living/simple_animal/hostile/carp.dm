@@ -147,7 +147,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/carp)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
@@ -215,7 +215,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/megacarp)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
 	rideable = TRUE
 
 /mob/living/simple_animal/hostile/carp/cayenne

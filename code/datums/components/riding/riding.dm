@@ -52,26 +52,17 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	handle_specials()
+	riding_mob.updating_glide_size = FALSE
+
+
+
+
+/datum/component/riding/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
-	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
-
-	handle_specials()
-
-	if(istype(parent, /obj/vehicle))
-		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
-
-	if(isliving(parent))
-		var/mob/living/parent_living = parent
-		parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
-		riding_mob.set_glide_size(parent_living.glide_size)
-		handle_vehicle_offsets(parent_living.dir)
-	riding_mob.updating_glide_size = FALSE
-
-	if(can_use_abilities)
-		setup_abilities(riding_mob)
 
 /datum/component/riding/Destroy(force, silent)
 	if(isliving(parent))
@@ -294,46 +285,7 @@
 		return (allow_one_away_from_valid_turf && !forbid_turf_typecache[current.type])
 	return TRUE
 
-/datum/component/riding/proc/handle_ride(mob/user, direction)
-	var/atom/movable/AM = parent
-	if(user.incapacitated())
-		Unbuckle(user)
-		return
 
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
-		return
-	last_vehicle_move = world.time
-
-	if(!keycheck(user))
-		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to operate [AM].</span>")
-		return
-
-	var/turf/next = get_step(AM, direction)
-	var/turf/current = get_turf(AM)
-	if(!istype(next) || !istype(current))
-		return	//not happening.
-	if(!turf_check(next, current))
-		to_chat(user, "<span class='warning'>Your \the [AM] can not go onto [next]!</span>")
-		return
-	if(!Process_Spacemove(direction) || !isturf(AM.loc))
-		return
-	if(isliving(AM) && respect_mob_mobility)
-		var/mob/living/M = AM
-		if(!(M.mobility_flags & MOBILITY_MOVE))
-			return
-	step(AM, direction)
-
-	if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
-		last_move_diagonal = TRUE
-	else
-		last_move_diagonal = FALSE
-
-	if(QDELETED(src))
-		return
-	handle_vehicle_layer(AM.dir)
-	handle_vehicle_offsets(AM.dir)
-
-	moved_successfully()
 
 /// This proc is only used for cars so that they can play an engine rumble on movement. If we run this, we successfully moved a tile thru driving.
 /datum/component/riding/proc/moved_successfully(atom/movable/M)
@@ -353,29 +305,29 @@
 
 
 ///////Yes, I said humans. No, this won't end well...//////////
-/datum/component/riding/human
+/datum/component/riding/creature/human
 
-/datum/component/riding/human/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
+/datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, riding_flags = NONE)
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 	var/mob/living/carbon/human/H = parent
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
-/datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+/datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
 /// If the carrier gets shoved, drop our load
-/datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
+/datum/component/riding/creature/human/proc/on_host_unarmed_melee(atom/target)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/H = parent
 	if(H.a_intent == INTENT_DISARM && (target in H.buckled_mobs))
 		force_dismount(target)
 
-/datum/component/riding/human/handle_vehicle_layer(dir)
+/datum/component/riding/creature/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
 	if(!AM.buckled_mobs || !AM.buckled_mobs.len)
 		AM.layer = MOB_LAYER
@@ -395,7 +347,7 @@
 			AM.layer = ABOVE_MOB_LAYER
 
 
-/datum/component/riding/human/get_offsets(pass_index)
+/datum/component/riding/creature/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
 	if(H.buckle_lying)
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
@@ -403,16 +355,16 @@
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
 
-/datum/component/riding/human/force_dismount(mob/living/user)
+/datum/component/riding/creature/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Paralyze(60)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>", \
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 
-/datum/component/riding/cyborg
+/datum/component/riding/creature/cyborg
 
-/datum/component/riding/cyborg/ride_check(mob/user)
+/datum/component/riding/creature/cyborg/ride_check(mob/user)
 	if(!iscyborg(parent))
 		return
 
@@ -428,7 +380,7 @@
 			to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
 			return
 
-/datum/component/riding/cyborg/handle_vehicle_layer(dir)
+/datum/component/riding/creature/cyborg/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
 	if(AM.buckled_mobs && AM.buckled_mobs.len)
 		if(dir == SOUTH)
@@ -438,10 +390,10 @@
 	else
 		AM.layer = MOB_LAYER
 
-/datum/component/riding/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
+/datum/component/riding/creature/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list( 6, 3))
 
-/datum/component/riding/cyborg/handle_vehicle_offsets(dir)
+/datum/component/riding/creature/cyborg/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
 	if(AM.has_buckled_mobs())
 		for(var/mob/living/M in AM.buckled_mobs)

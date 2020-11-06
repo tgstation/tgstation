@@ -11,7 +11,7 @@
 
 /obj/vehicle/sealed/car/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/car)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/car)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()

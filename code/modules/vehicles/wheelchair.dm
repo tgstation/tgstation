@@ -16,7 +16,7 @@
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/secway)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair)
 
 /obj/vehicle/ridden/wheelchair/ComponentInitialize()	//Since it's technically a chair I want it to have chair properties
 	. = ..()

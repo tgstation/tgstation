@@ -10,7 +10,7 @@
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
 	update_icon()
-	AddElement(/datum/element/ridable, /datum/component/riding/janicart)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
 		AddElement(/datum/element/cleaning)

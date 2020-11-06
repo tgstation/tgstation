@@ -64,7 +64,7 @@
 	// i swear i'll actually rework this in a bit - ryll
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/cow)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
 
 
 /mob/living/simple_animal/hostile/bear/update_icons()

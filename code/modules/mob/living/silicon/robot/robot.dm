@@ -1033,7 +1033,7 @@
 		return
 	/*
 	var/riding_flags = (RIDER_HOLDING_ON)
-	if(LoadComponent(/datum/component/riding/cyborg, riding_flags, M))
+	if(LoadComponent(/datum/component/riding/creature/cyborg, riding_flags, M))
 		return
 */
 	return ..()

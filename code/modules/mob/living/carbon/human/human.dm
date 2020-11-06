@@ -22,7 +22,7 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
-	AddElement(/datum/element/ridable, /datum/component/riding/human)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1156,7 +1156,7 @@
 
 	return ..()
 	// this will fail if we don't have free hands (or if it's incompatible in general I guess)
-	/*if(LoadComponent(/datum/component/riding/human, riding_flags, target))
+	/*if(LoadComponent(/datum/component/riding/creature/human, riding_flags, target))
 		stop_pulling()
 		//riding_datum.handle_vehicle_layer() idk if this is actually necessary or if i can move this to the riding datum's init to avoid assigning the riding_datum var here
 		return ..(target, force, check_loc)

@@ -6,7 +6,7 @@
 
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/scooter)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -54,7 +54,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/scooter/skateboard)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 	sparks = new
 	sparks.set_up(1, 0, src)
 	sparks.attach(src)
@@ -255,7 +255,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/scooter/skateboard/wheelys)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys)
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
@@ -283,7 +283,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/scooter/skateboard/wheelys/rollerskates)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys/rollerskates)
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
@@ -293,4 +293,4 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/scooter/skateboard/wheelys/skishoes)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes)

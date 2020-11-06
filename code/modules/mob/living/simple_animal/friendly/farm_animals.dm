@@ -171,7 +171,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/cow)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /mob/living/simple_animal/cow/Life()
 	. = ..()
