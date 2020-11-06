@@ -35,17 +35,39 @@
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
+	// We do it this way because box
 	if (!bullet_cost)
-		for (var/material in custom_materials)
-			var/material_amount = custom_materials[material]
-			LAZYSET(base_cost, material, (material_amount * 0.10))
-
-			material_amount *= 0.90 // 10% for the container
-			material_amount /= max_ammo
-			LAZYSET(bullet_cost, material, material_amount)
+		_refresh_bullet_cost()
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon()
+
+/obj/item/ammo_box/proc/_refresh_bullet_cost()
+	bullet_cost = list()
+	base_cost = list()
+	for (var/material in custom_materials)
+		var/material_amount = custom_materials[material]
+		base_cost[material] = (material_amount * 0.10)
+		material_amount *= 0.90 // 10% for the container
+		material_amount /= max_ammo
+		bullet_cost[material] = material_amount
+
+
+/**
+  * First time this proc has been overwritten in 5 years.  Yea?
+  *
+  * This is run by the autolathe right after the ammo is created.  Also
+  * after custom materials was set
+  *
+  * Arguments:
+  * * A - the autolathe that made this box
+  */
+/obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
+	_refresh_bullet_cost()
+	for(var/atom/A in contents) // hard set all the bullets to this cost
+		A.custom_materials = bullet_cost
+	update_icon()
+
 
 /**
   * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once

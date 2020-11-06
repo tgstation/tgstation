@@ -228,7 +228,6 @@
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
-			new_item.autolathe_crafted(src)
 
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
@@ -236,6 +235,14 @@
 					var/datum/material/M = x
 					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
 						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
+			else
+				// we STILL need to set custom materials or we get unlimited autolathe works happening
+				var/old_material_flags = new_item.material_flags
+				new_item.material_flags |= MATERIAL_NO_EFFECTS
+				new_item.set_custom_materials(materials_used, 1 / multiplier)
+				new_item.material_flags = old_material_flags
+
+			new_item.autolathe_crafted(src)
 
 
 	icon_state = "autolathe"
