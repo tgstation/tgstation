@@ -42,6 +42,7 @@
 	spawn_positions = 1
 	department_head = list("Head of Security", "Research Director")
 	supervisors = "the head of security and the research director"
+	selection_color = "#ffeeff"
 	outfit = /datum/outfit/job/security/science
 	department = SEC_DEPT_SCIENCE
 	display_order = JOB_DISPLAY_ORDER_SCIENCE_SECURITY

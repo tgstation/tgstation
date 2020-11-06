@@ -294,7 +294,10 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, "assigned")
 	if(job)
-		. += mutable_appearance(icon, "id[job]")
+		if (GetJobName() in get_all_department_security_jobs())
+			. += mutable_appearance('icons/obj/card_security.dmi', "id[job]")
+		else
+			. += mutable_appearance(icon, "id[job]")
 
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
