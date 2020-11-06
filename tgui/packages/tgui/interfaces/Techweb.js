@@ -27,43 +27,45 @@ export const Techweb = (props, context) => {
     <Window
       width={640}
       height={880}
-      scrollable
       title={`${web_org} Research and Development Network`}>
       <Window.Content>
         <Flex direction="column" className="Techweb__Viewport" height="100%">
           <Flex.Item className="Techweb__HeaderSection">
-            <Box className="Techweb__HeaderContent">
-              Available points:
-              <ul className="Techweb__PointSummary">
-                {Object.keys(points).map((k) => (
-                  <li key={`ps${k}`}>
-                    <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
-                  </li>
-                ))}
-              </ul>
-              Security protocols:
-              <span
-                className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
-                {sec_protocols ? "Engaged" : "Disengaged"}
-              </span> <br />
-              Disks:
-              <span>
-                {d_disk && (
-                  <Button
-                    icon="lightbulb"
-                    onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
-                    Design Disk
-                  </Button>
-                )}
-                {t_disk && (
-                  <Button
-                    icon="lightbulb"
-                    onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
-                    Tech Disk
-                  </Button>
-                )}
-              </span>
-            </Box>
+            <Flex direction="column" className="Techweb__HeaderContent">
+              <Flex.Item>
+                Available points:
+                <ul className="Techweb__PointSummary">
+                  {Object.keys(points).map((k) => (
+                    <li key={`ps${k}`}>
+                      <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
+                    </li>
+                  ))}
+                </ul>
+              </Flex.Item>
+              <Flex.Item>
+                Security protocols:
+                <span
+                  className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
+                  {sec_protocols ? "Engaged" : "Disengaged"}
+                </span>
+              </Flex.Item>
+              {(d_disk || t_disk) && (
+                <Flex.Item>
+                  {d_disk && (
+                    <Button
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                      Design Disk Inserted
+                    </Button>
+                  )}
+                  {t_disk && (
+                    <Button
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                      Tech Disk Inserted
+                    </Button>
+                  )}
+                </Flex.Item>
+              )}
+            </Flex>
           </Flex.Item>
           <Flex.Item className="Techweb__RouterContent" height="100%">
             <TechwebRouter />
@@ -199,7 +201,6 @@ const TechwebDiskMenu = (props, context) => {
   // Check for the disk actually being inserted
   if ((diskType === "design" && !d_disk) || (diskType === "tech" && !t_disk)) {
     setTechwebRoute(null);
-    return;
   }
 
   const content = diskType === "design" ? (<TechwebDesignDisk />) : (<TechwebTechDisk />);

@@ -34,6 +34,10 @@
   border: 1px solid #40628a;
 }
 
+.Techweb__HeaderContent > :not(:last-child) {
+  margin-bottom: 5px;
+}
+
 .Techweb__HeaderSectionTabs {
   margin-top: 8px;
   background-color: black;
@@ -55,7 +59,7 @@
 
 .Techweb__PointSummary {
   list-style: none;
-  margin: 0.4em 0 0.4em 1em;
+  margin: 0.4em 0 0 1em;
   padding: 0;
 }
 
