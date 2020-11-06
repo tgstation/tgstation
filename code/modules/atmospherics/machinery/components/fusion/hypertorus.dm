@@ -519,7 +519,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) + 1 * (current_damper * 0.01) //Max around 350 KW
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
@@ -997,10 +997,19 @@
 						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.45
 						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 0.65
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.35)
+					if(m_n2o > 50)
+						radiation *= 0.55
+						heat_output *= 1.055
+						moderator_internal.gases[/datum/gas/halon] += scaled_production * 0.35
+						moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES] -= min(moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES], scaled_production * 1.5)
 				if(3, 4)
 					var/scaled_production = clamp(heat_output * 5e-4, 0, MAX_MODERATOR_USAGE)
-					moderator_internal.gases[/datum/gas/oxygen][MOLES] += scaled_production * 1.65
-					moderator_internal.gases[/datum/gas/nitrogen][MOLES] += scaled_production
+					if(power_level == 3)
+						moderator_internal.gases[/datum/gas/oxygen][MOLES] += scaled_production * 0.35
+						moderator_internal.gases[/datum/gas/nitrogen][MOLES] += scaled_production * 0.75
+					if(power_level == 4)
+						moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.65
+						moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production * 0.25
 					if(m_plasma > 10)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.1
 						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)

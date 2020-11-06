@@ -339,7 +339,6 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	req_components = list(
-		/obj/item/stack/sheet/metal = 5,
 		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_waste_output
@@ -347,7 +346,6 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 	req_components = list(
-		/obj/item/stack/sheet/metal = 5,
 		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_moderator_input
@@ -355,7 +353,6 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 	req_components = list(
-		/obj/item/stack/sheet/metal = 5,
 		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_core
@@ -372,7 +369,6 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/hypertorus/corner
 	req_components = list(
-		/obj/item/stack/sheet/metal = 5,
 		/obj/item/stack/sheet/plasteel = 5)
 
 /obj/item/circuitboard/machine/HFR_interface
