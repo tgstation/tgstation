@@ -13,6 +13,7 @@
 	name = "pie slice"
 	icon = 'icons/obj/food/piecake.dmi'
 	trash_type = /obj/item/trash/plate
+	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)
 	foodtypes = GRAIN | VEGETABLES
