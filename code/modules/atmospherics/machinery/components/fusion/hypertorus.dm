@@ -100,7 +100,8 @@
 		if(node)
 			node.disconnect(src)
 			nodes[1] = null
-		nullifyPipenet(parents[1])
+		if(length(parents))
+			nullifyPipenet(parents[1])
 		atmosinit()
 		node = nodes[1]
 		if(node)
@@ -374,11 +375,13 @@
 	if(node1)
 		node1.disconnect(src)
 		nodes[1] = null
-		nullifyPipenet(parents[1])
+		if(length(parents))
+			nullifyPipenet(parents[1])
 	if(node2)
 		node2.disconnect(src)
 		nodes[2] = null
-		nullifyPipenet(parents[2])
+		if(length(parents))
+			nullifyPipenet(parents[1])
 
 	SetInitDirections()
 	atmosinit()
