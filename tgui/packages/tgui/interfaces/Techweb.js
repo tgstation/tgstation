@@ -103,7 +103,7 @@ const TechwebOverview = (props, context) => {
   const [
     tabIndex,
     setTabIndex,
-  ] = useLocalState(context, 'tabIndex', 1);
+  ] = useLocalState(context, 'overviewTabIndex', 1);
   const [
     searchText,
     setSearchText,
@@ -133,7 +133,7 @@ const TechwebOverview = (props, context) => {
       <Flex.Item>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-            <span>Nodes</span>
+            <span>Web View</span>
           </Flex.Item>
           <Flex.Item grow={1}>
             <Tabs>
@@ -162,7 +162,7 @@ const TechwebOverview = (props, context) => {
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item className={"Techweb__OverviewNodes"}>
+      <Flex.Item className={"Techweb__OverviewNodes"} height="100%">
         {displayedNodes.map((n) => {
           return (
             <TechNode node={n} key={`n${n.id}`} />
@@ -203,14 +203,16 @@ const TechwebDiskMenu = (props, context) => {
     setTechwebRoute(null);
   }
 
-  const content = diskType === "design" ? (<TechwebDesignDisk />) : (<TechwebTechDisk />);
+  const DiskContent =
+    diskType === "design" && TechwebDesignDisk
+    || TechwebTechDisk;
   return (
     <div>
       <Button
         onClick={() => act("ejectDisk", { type: diskType })}>
         Eject Disk
       </Button>
-      {content}
+      <DiskContent />
     </div>
   );
 };
@@ -252,6 +254,14 @@ const TechNodeDetail = (props, context) => {
     tier,
   } = node;
   let thisNode = node_cache[id];
+  const [
+    tabIndex,
+    setTabIndex,
+  ] = useLocalState(context, 'nodeDetailTabIndex', 0);
+  const [
+    techwebRoute,
+    setTechwebRoute,
+  ] = useLocalState(context, 'techwebRoute', null)
 
   const prereqNodes = thisNode.prereq_ids.reduce((arr, val) => {
     const foundNode = nodes.filter(x => x.id == val)[0];
@@ -268,23 +278,62 @@ const TechNodeDetail = (props, context) => {
   }, []);
 
   return (
-    <Fragment>
-      <TechNode node={node} />
-      {prereqNodes.length > 0 && (
-        <Section title="Required">
+    <Flex direction="column" height="100%">
+      <Flex.Item>
+        <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
+          <Flex.Item align="center" className="Techweb__HeaderTabTitle">
+            Node
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Tabs>
+              <Tabs.Tab
+                selected={tabIndex === 0}
+                onClick={() => setTabIndex(0)}>
+                Details
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tabIndex === 1}
+                disabled={prereqNodes.length === 0}
+                onClick={() => setTabIndex(1)}>
+                Required ({prereqNodes.length})
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tabIndex === 2}
+                disabled={unlockedNodes.length === 0}
+                onClick={() => setTabIndex(2)}>
+                Unlocks ({unlockedNodes.length})
+              </Tabs.Tab>
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item align="center">
+            <Button
+              icon="home"
+              onClick={() => setTechwebRoute(null)}>
+              Home
+            </Button>
+          </Flex.Item>
+        </Flex>
+      </Flex.Item>
+      {tabIndex === 0 && (
+        <Flex.Item className="Techweb__OverviewNodes">
+          <TechNode node={node} nodetails />
+        </Flex.Item>
+      )}
+      {tabIndex === 1 && (
+        <Flex.Item className="Techweb__OverviewNodes">
           {prereqNodes.map((n) =>
             (<TechNode node={n} key={`nr${n.id}`} />)
           )}
-        </Section>
+        </Flex.Item>
       )}
-      {unlockedNodes.length > 0 && (
-        <Section title="Unlocks">
+      {tabIndex === 2 && (
+        <Flex.Item className="Techweb__OverviewNodes">
           {unlockedNodes.map((n) =>
             (<TechNode node={n} key={`nu${n.id}`} />)
           )}
-        </Section>
+        </Flex.Item>
       )}
-    </Fragment>
+    </Flex>
   );
 };
 
@@ -296,7 +345,7 @@ const TechNode = (props, context) => {
     experiments,
     points,
   } = data;
-  const { node } = props;
+  const { node, nodetails } = props;
   const {
     id,
     can_unlock,
@@ -308,6 +357,10 @@ const TechNode = (props, context) => {
     techwebRoute,
     setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null)
+  const [
+    tabIndex,
+    setTabIndex,
+  ] = useLocalState(context, 'nodeDetailTabIndex', 0);
   const selected = false;
 
   const expcompl = reqExp.filter(x => experiments[x]?.completed).length;
@@ -327,13 +380,16 @@ const TechNode = (props, context) => {
     <Section title={thisNode.name}
       buttons={
         <span>
-          <Button
-            icon={selected ? "arrow-left" : "tasks"}
-            onClick={() => {
-              setTechwebRoute({ route: "details", selectedNode: node.id });
-            }}>
-            {selected ? "Back" : "Details"}
-          </Button>
+          {!nodetails && (
+            <Button
+              icon="tasks"
+              onClick={() => {
+                setTechwebRoute({ route: "details", selectedNode: node.id });
+                setTabIndex(0);
+              }}>
+              Details
+            </Button>
+          )}
           {tier === 1 && (
           <Button
             icon="lightbulb"
