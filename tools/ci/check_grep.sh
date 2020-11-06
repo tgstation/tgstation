@@ -12,56 +12,56 @@ if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     st=1
 fi;
 echo "Checking for mapping tags"
-if grep -nP '^\ttag = \"icon' _maps/**/*.dmm;	then
+if grep -P '^\ttag = \"icon' _maps/**/*.dmm;	then
     echo "tag vars from icon state generation detected in maps, please remove them."
     st=1
 fi;
 echo "Checking for step_[xy]"
-if grep -nP 'step_[xy]' _maps/**/*.dmm;	then
+if grep -P 'step_[xy]' _maps/**/*.dmm;	then
     echo "step_x/step_y variables detected in maps, please remove them."
     st=1
 fi;
 echo "Checking for stacked cables"
-if grep -nP '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
+if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
     echo "found multiple cables on the same tile, please remove them."
     st=1
 fi;
 echo "Checking for cable varedits"
-if grep -nP '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
+if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
     echo "ERROR: vareditted cables detected, please remove them."
     st=1
 fi;
 echo "Checking for cable d1/d2"
-if grep -nP '\td[1-2] =' _maps/**/*.dmm;	then
+if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
 echo "Checking for pixel_[xy]"
-if grep -nP 'pixel_[xy] = 0' _maps/**/*.dmm;	then
+if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
     echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
 fi;
 echo "Checking for vareditted areas"
-if grep -nP '^/area/.+[\{]' _maps/**/*.dmm;	then
+if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "Vareditted /area path use detected in maps, please replace with proper paths."
     st=1
 fi;
 echo "Checking for base /turf paths"
-if grep -nP '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
+if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
     echo "base /turf path use detected in maps, please replace with proper paths."
     st=1
 fi;
 echo "Checking for unmanaged globals"
-if grep -nP '^/*var/' code/**/*.dm; then
+if grep -P '^/*var/' code/**/*.dm; then
     echo "Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
 echo "Checking for space indentation"
-if grep -nP '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
+if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
     echo "space indentation detected"
     st=1
 fi;
 echo "Checking for mixed indentation"
-if grep -nP '^\t+ [^ *]' code/**/*.dm; then
+if grep -P '^\t+ [^ *]' code/**/*.dm; then
     echo "mixed <tab><space> indentation detected"
     st=1
 fi;
@@ -105,7 +105,7 @@ if grep -P '^/*var/' code/**/*.dm; then
 fi;
 
 done < <(find . -type f -name '*.dm')
-if grep -nP '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
+if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
     st=1
 fi;
@@ -123,7 +123,7 @@ fi;
 if grep -i 'centcomm' _maps/**/*.dmm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
 fi;
-if ls _maps/*.json | grep -nP "[A-Z]"; then
+if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
     st=1
 fi;
