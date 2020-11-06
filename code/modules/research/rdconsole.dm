@@ -557,8 +557,27 @@ Nothing else in the console has ID requirements.
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
 		"web_org" = stored_research.organization,
-		"sec_protocols" = !(obj_flags & EMAGGED)
+		"sec_protocols" = !(obj_flags & EMAGGED),
+		"t_disk" = null,
+		"d_disk" = null
 	)
+
+	if (t_disk)
+		.["t_disk"] = list (
+			"stored_research" = t_disk.stored_research.researched_nodes
+		)
+	if (d_disk)
+		.["d_disk"] = list (
+			"max_blueprints" = d_disk.max_blueprints,
+			"blueprints" = list()
+		)
+		for (var/i in 1 to d_disk.max_blueprints)
+			if (d_disk.blueprints[i])
+				var/datum/design/D = d_disk.blueprints[i]
+				.["d_disk"]["blueprints"] += D.id
+			else
+				.["d_disk"]["blueprints"] += null
+
 
 	// Serialize all nodes to display
 	for(var/v in stored_research.tiers)
@@ -630,6 +649,8 @@ Nothing else in the console has ID requirements.
 			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
 				return
 			research_node(params["node_id"], usr)
+		if ("ejectDisk")
+			eject_disk(params["type"])
 
 /obj/machinery/computer/rdconsole/proc/tdisk_uple_complete()
 	tdisk_uple = FALSE
@@ -640,10 +661,10 @@ Nothing else in the console has ID requirements.
 	updateUsrDialog()
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
-	if(type == "design")
+	if(type == "design" && d_disk)
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
-	if(type == "tech")
+	if(type == "tech" && t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
 

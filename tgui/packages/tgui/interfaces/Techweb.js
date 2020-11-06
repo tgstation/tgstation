@@ -15,6 +15,8 @@ export const Techweb = (props, context) => {
     points_last_tick,
     web_org,
     sec_protocols,
+    t_disk,
+    d_disk,
   } = data;
   const [
     tabIndex,
@@ -24,6 +26,10 @@ export const Techweb = (props, context) => {
     searchText,
     setSearchText,
   ] = useLocalState(context, 'searchText');
+  const [
+    techwebRoute,
+    setTechwebRoute,
+  ] = useLocalState(context, 'techwebRoute', null)
 
   return (
     <Window
@@ -48,6 +54,23 @@ export const Techweb = (props, context) => {
                 <span
                   className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
                   {sec_protocols ? "Engaged" : "Disengaged"}
+                </span> <br />
+                Disks:
+                <span>
+                  {d_disk && (
+                    <Button
+                      icon="lightbulb"
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                      Design Disk
+                    </Button>
+                  )}
+                  {t_disk && (
+                    <Button
+                      icon="lightbulb"
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                      Tech Disk
+                    </Button>
+                  )}
                 </span>
               </Box>
               <Flex justify={"space-between"} className="Techweb__HeaderSectionTabs">
@@ -104,6 +127,9 @@ const TechwebRouter = (props, context) => {
   switch (techwebRoute.route) {
     case "details":
       content = (<TechwebNodeDetail {...techwebRoute} />);
+      break;
+    case "disk":
+      content = (<TechwebDiskMenu {...techwebRoute} />);
       break;
     default:
       content = (<TechwebOverview {...techwebRoute} />);
@@ -173,8 +199,54 @@ const TechwebNodeDetail = (props, context) => {
   );
 }
 
-const TechwebDesignDetail = (props, context) => {
+const TechwebDiskMenu = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { diskType } = props;
+  const {
+    t_disk,
+    d_disk,
+  } = data;
+  const [
+    techwebRoute,
+    setTechwebRoute,
+  ] = useLocalState(context, 'techwebRoute', null)
 
+  // Check for the disk actually being inserted
+  if ((diskType === "design" && !d_disk) || (diskType === "tech" && !t_disk)) {
+    setTechwebRoute(null);
+    return;
+  }
+
+  const content = diskType === "design" ? (<TechwebDesignDisk />) : (<TechwebTechDisk />);
+  return (
+    <div>
+      <Button
+        onClick={() => act("ejectDisk", { type: diskType })}>
+        Eject Disk
+      </Button>
+      {content}
+    </div>
+  );
+};
+
+const TechwebDesignDisk = (props, context) => {
+  const { act, data } = useBackend(context);
+
+  return (
+    <Fragment>
+      Design Disk
+    </Fragment>
+  );
+};
+
+const TechwebTechDisk = (props, context) => {
+  const { act, data } = useBackend(context);
+
+  return (
+    <Fragment>
+      Tech Disk
+    </Fragment>
+  );
 };
 
 // rework the selected node to be included in route data because otherwise there will be issues with route transitions
@@ -272,7 +344,7 @@ const TechNode = (props, context) => {
           <Button
             icon={selected ? "arrow-left" : "tasks"}
             onClick={() => {
-              setTechwebRoute(selected ? null : { route: "details", selectedNode: node.id });
+              setTechwebRoute({ route: "details", selectedNode: node.id });
             }}>
             {selected ? "Back" : "Details"}
           </Button>
