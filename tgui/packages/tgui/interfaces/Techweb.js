@@ -19,14 +19,6 @@ export const Techweb = (props, context) => {
     d_disk,
   } = data;
   const [
-    tabIndex,
-    setTabIndex,
-  ] = useLocalState(context, 'tabIndex', 1);
-  const [
-    searchText,
-    setSearchText,
-  ] = useLocalState(context, 'searchText');
-  const [
     techwebRoute,
     setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null)
@@ -108,9 +100,11 @@ const TechwebOverview = (props, context) => {
   } = data;
   const [
     tabIndex,
+    setTabIndex,
   ] = useLocalState(context, 'tabIndex', 1);
   const [
     searchText,
+    setSearchText,
   ] = useLocalState(context, 'searchText');
 
   let displayedNodes = tabIndex < 2
