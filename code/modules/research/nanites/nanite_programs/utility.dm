@@ -33,19 +33,16 @@
 
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
-	SSnanites.nanite_monitored_mobs |= host_mob
+	ADD_TRAIT(host_mob, TRAIT_NANITE_MONITORING, "nanites") //Shows up in diagnostic and medical HUDs as a small blinking icon
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		if(!(H in GLOB.nanite_sensors_list))
-			GLOB.nanite_sensors_list |= H
+		GLOB.nanite_sensors_list |= host_mob
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	. = ..()
-	SSnanites.nanite_monitored_mobs -= host_mob
+	REMOVE_TRAIT(host_mob, TRAIT_NANITE_MONITORING, "nanites")
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		GLOB.nanite_sensors_list -= H
+		GLOB.nanite_sensors_list -= host_mob
 
 	host_mob.hud_set_nanite_indicator()
 
@@ -261,6 +258,7 @@
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
@@ -285,6 +283,7 @@
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
 		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
