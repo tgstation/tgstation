@@ -1,11 +1,11 @@
 /** In this file:
-  * Wood floor
-  * Grass floor
-  * Fake Basalt
-  * Carpet floor
-  * Fake pits
-  * Fake space
-  */
+ * Wood floor
+ * Grass floor
+ * Fake Basalt
+ * Carpet floor
+ * Fake pits
+ * Fake space
+ */
 
 /turf/open/floor/wood
 	desc = "Stylish dark wood."

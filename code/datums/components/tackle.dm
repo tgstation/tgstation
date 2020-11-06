@@ -2,14 +2,14 @@
 #define MAX_TABLE_MESSES 12
 
 /**
-  * For when you want to throw a person at something and have fun stuff happen
-  *
-  * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
-  *	  intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
-  *	  roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
-  *	  and take a bit of extra damage and stun for each thing launched.
-  *
-  * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
+ * For when you want to throw a person at something and have fun stuff happen
+ *
+ * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
+ *	  intended target with an empty hand. You will then launch toward your target. If you hit a carbon, you'll roll to see how hard you hit them. If you hit a solid non-mob, you'll
+ *	  roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
+ *	  and take a bit of extra damage and stun for each thing launched.
+ *
+ * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
 */
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -123,23 +123,23 @@
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /**
-  * sack() is called when you actually smack into something, assuming we're mid-tackle. First it deals with smacking into non-carbons, in two cases:
-  * * If it's a non-carbon mob, we don't care, get out of here and do normal thrown-into-mob stuff
-  * * Else, if it's something dense (walls, machinery, structures, most things other than the floor), go to [/datum/component/tackler/proc/splat] and get ready for some high grade shit
-  *
-  * If it's a carbon we hit, we'll call rollTackle() which rolls a die and calculates modifiers for both the tackler and target, then gives us a number. Negatives favor the target, while positives favor the tackler.
-  * Check [rollTackle()][/datum/component/tackler/proc/rollTackle] for a more thorough explanation on the modifiers at play.
-  *
-  * Then, we figure out what effect we want, and we get to work! Note that with standard gripper gloves and no modifiers, the range of rolls is (-3, 3). The results are as follows, based on what we rolled:
-  * * -inf to -5: Seriously botched tackle, tackler suffers a concussion, brute damage, and a 3 second paralyze, target suffers nothing
-  * * -4 to -2: weak tackle, tackler gets 3 second knockdown, target gets shove slowdown but is otherwise fine
-  * * -1 to 0: decent tackle, tackler gets up a bit quicker than the target
-  * * 1: solid tackle, tackler has more of an advantage getting up quicker
-  * * 2 to 4: expert tackle, tackler has sizeable advantage and lands on their feet with a free passive grab
-  * * 5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
-  *
-  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
-  */
+ * sack() is called when you actually smack into something, assuming we're mid-tackle. First it deals with smacking into non-carbons, in two cases:
+ * * If it's a non-carbon mob, we don't care, get out of here and do normal thrown-into-mob stuff
+ * * Else, if it's something dense (walls, machinery, structures, most things other than the floor), go to [/datum/component/tackler/proc/splat] and get ready for some high grade shit
+ *
+ * If it's a carbon we hit, we'll call rollTackle() which rolls a die and calculates modifiers for both the tackler and target, then gives us a number. Negatives favor the target, while positives favor the tackler.
+ * Check [rollTackle()][/datum/component/tackler/proc/rollTackle] for a more thorough explanation on the modifiers at play.
+ *
+ * Then, we figure out what effect we want, and we get to work! Note that with standard gripper gloves and no modifiers, the range of rolls is (-3, 3). The results are as follows, based on what we rolled:
+ * * -inf to -5: Seriously botched tackle, tackler suffers a concussion, brute damage, and a 3 second paralyze, target suffers nothing
+ * * -4 to -2: weak tackle, tackler gets 3 second knockdown, target gets shove slowdown but is otherwise fine
+ * * -1 to 0: decent tackle, tackler gets up a bit quicker than the target
+ * * 1: solid tackle, tackler has more of an advantage getting up quicker
+ * * 2 to 4: expert tackle, tackler has sizeable advantage and lands on their feet with a free passive grab
+ * * 5 to inf: MONSTER tackle, tackler gets up immediately and gets a free aggressive grab, target takes sizeable stamina damage from the hit and is paralyzed for one and a half seconds and knocked down for three seconds
+ *
+ * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
+ */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
 	SIGNAL_HANDLER_DOES_SLEEP
 
@@ -231,14 +231,14 @@
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 /**
-  * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
-  *
-  * The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
-  *	how easy they are to knock over, with clumsiness and dwarfiness being strong maluses for each, and gigantism giving a bonus for each. These numbers and ideas
-  *	are absolutely subject to change.
+ * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
+ *
+ * The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
+ *	how easy they are to knock over, with clumsiness and dwarfiness being strong maluses for each, and gigantism giving a bonus for each. These numbers and ideas
+ *	are absolutely subject to change.
 
-  * In addition, after subtracting the defender's mod and adding the attacker's mod to the roll, the component's base (skill) mod is added as well. Some sources of tackles
-  *	are better at taking people down, like the bruiser and rocket gloves, while the dolphin gloves have a malus in exchange for better mobility.
+ * In addition, after subtracting the defender's mod and adding the attacker's mod to the roll, the component's base (skill) mod is added as well. Some sources of tackles
+ *	are better at taking people down, like the bruiser and rocket gloves, while the dolphin gloves have a malus in exchange for better mobility.
 */
 /datum/component/tackler/proc/rollTackle(mob/living/carbon/target)
 	var/defense_mod = 0
@@ -315,28 +315,28 @@
 
 
 /**
-  * This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
-  *	the roll, the more severe the result.
-  *
-  * Mod 1: Speed-
-  *	* Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
-  *	* For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
-  *
-  * Mod 2: Misc-
-  *	-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
-  *		wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
-  *	* Wearing a helmet: -6
-  *	* Wearing riot armor: -6
-  *	* Clumsy: +6
-  *
-  * Effects: Below are the outcomes based off your roll, in order of increasing severity
-  *
-  *	* 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
-  *	* 68-85: Knocked silly, gain some confusion as well as the above
-  *	* 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
-  *	* 93-96: Knocked unconscious, get a random mild brain trauma, as well as a fair amount of damage
-  *	* 97-98: Massive head damage, probably crack your skull open, random mild brain trauma
-  *	* 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
+ * This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
+ *	the roll, the more severe the result.
+ *
+ * Mod 1: Speed-
+ *	* Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
+ *	* For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
+ *
+ * Mod 2: Misc-
+ *	-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
+ *		wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
+ *	* Wearing a helmet: -6
+ *	* Wearing riot armor: -6
+ *	* Clumsy: +6
+ *
+ * Effects: Below are the outcomes based off your roll, in order of increasing severity
+ *
+ *	* 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
+ *	* 68-85: Knocked silly, gain some confusion as well as the above
+ *	* 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
+ *	* 93-96: Knocked unconscious, get a random mild brain trauma, as well as a fair amount of damage
+ *	* 97-98: Massive head damage, probably crack your skull open, random mild brain trauma
+ *	* 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-

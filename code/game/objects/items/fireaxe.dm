@@ -1,6 +1,6 @@
 /**
-  * Fireaxe
-  */
+ * Fireaxe
+ */
 /obj/item/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
@@ -61,8 +61,8 @@
 			W.obj_destruction("fireaxe")
 
 /**
-  * Bone Axe
-  */
+ * Bone Axe
+ */
 /obj/item/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
 	icon_state = "bone_axe0"
 	name = "bone axe"
@@ -76,8 +76,8 @@
 	icon_state = "bone_axe0"
 
 /**
-  * Metal Hydrogen Axe
-  */
+ * Metal Hydrogen Axe
+ */
 /obj/item/fireaxe/metal_h2_axe  // Blatant imitation of the fireaxe, but made out of metallic hydrogen
 	icon_state = "metalh2_axe0"
 	name = "metallic hydrogen axe"

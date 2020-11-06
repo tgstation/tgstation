@@ -211,10 +211,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /**
-  * New, standardized method for chemicals to affect hydroponics trays.
-  * Defined on a per-chem level as opposed to by the tray.
-  * Can affect plant's health, stats, or cause the plant to react in certain ways.
-  */
+ * New, standardized method for chemicals to affect hydroponics trays.
+ * Defined on a per-chem level as opposed to by the tray.
+ * Can affect plant's health, stats, or cause the plant to react in certain ways.
+ */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
 		return

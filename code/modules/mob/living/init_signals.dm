@@ -156,10 +156,10 @@
 
 
 /**
-  * Called when traits that alter succumbing are added/removed.
-  *
-  * Will show or hide the succumb alert prompt.
-  */
+ * Called when traits that alter succumbing are added/removed.
+ *
+ * Will show or hide the succumb alert prompt.
+ */
 /mob/living/proc/update_succumb_action()
 	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src))

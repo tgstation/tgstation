@@ -8,8 +8,8 @@
 
 
 /**
-  * Filing Cabinets
-  */
+ * Filing Cabinets
+ */
 /obj/structure/filingcabinet
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
@@ -114,8 +114,8 @@
 
 
 /**
-  * Security Record Cabinets
-  */
+ * Security Record Cabinets
+ */
 /obj/structure/filingcabinet/security
 	var/virgin = TRUE
 
@@ -147,8 +147,8 @@
 	return ..()
 
 /**
-  * Medical Record Cabinets
-  */
+ * Medical Record Cabinets
+ */
 /obj/structure/filingcabinet/medical
 	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
@@ -182,8 +182,8 @@
 	return ..()
 
 /**
-  * Employment contract Cabinets
-  */
+ * Employment contract Cabinets
+ */
 
 GLOBAL_LIST_EMPTY(employmentCabinets)
 

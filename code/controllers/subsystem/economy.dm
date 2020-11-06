@@ -166,10 +166,10 @@ SUBSYSTEM_DEF(economy)
 
 
 /**
-  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
-  *
-  * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
-  **/
+ * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
+ *
+ * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+ **/
 /datum/controller/subsystem/economy/proc/price_update()
 	for(var/obj/machinery/vending/V in GLOB.machines)
 		if(istype(V, /obj/machinery/vending/custom))
@@ -181,12 +181,12 @@ SUBSYSTEM_DEF(economy)
 	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 
 /**
-  * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
-  *
-  * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
-  * Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
-  * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
-  **/
+ * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
+ *
+ * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
+ * Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
+ * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
+ **/
 /datum/controller/subsystem/economy/proc/inflation_value()
 	if(!bank_accounts_by_id.len)
 		return 1

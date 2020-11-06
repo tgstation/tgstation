@@ -81,9 +81,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 
 /**
-  * Uplink Items
-  *
-  * Items that can be spawned from an uplink. Can be limited by gamemode.
+ * Uplink Items
+ *
+ * Items that can be spawned from an uplink. Can be limited by gamemode.
 **/
 /datum/uplink_item
 	var/name = "item name"

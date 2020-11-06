@@ -132,18 +132,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return FALSE
 	return TRUE
 /**
-  * Call back proc that should be checked in all paths where a client can send messages
-  *
-  * Handles checking for duplicate messages and people sending messages too fast
-  *
-  * The first checks are if you're sending too fast, this is defined as sending
-  * SPAM_TRIGGER_AUTOMUTE messages in
-  * 5 seconds, this will start supressing your messages,
-  * if you send 2* that limit, you also get muted
-  *
-  * The second checks for the same duplicate message too many times and mutes
-  * you for it
-  */
+ * Call back proc that should be checked in all paths where a client can send messages
+ *
+ * Handles checking for duplicate messages and people sending messages too fast
+ *
+ * The first checks are if you're sending too fast, this is defined as sending
+ * SPAM_TRIGGER_AUTOMUTE messages in
+ * 5 seconds, this will start supressing your messages,
+ * if you send 2* that limit, you also get muted
+ *
+ * The second checks for the same duplicate message too many times and mutes
+ * you for it
+ */
 /client/proc/handle_spam_prevention(message, mute_type)
 
 	//Increment message count
@@ -919,14 +919,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
 /**
-  * Updates the keybinds for special keys
-  *
-  * Handles adding macros for the keys that need it
-  * And adding movement keys to the clients movement_keys list
-  * At the time of writing this, communication(OOC, Say, IC) require macros
-  * Arguments:
-  * * direct_prefs - the preference we're going to get keybinds from
-  */
+ * Updates the keybinds for special keys
+ *
+ * Handles adding macros for the keys that need it
+ * And adding movement keys to the clients movement_keys list
+ * At the time of writing this, communication(OOC, Say, IC) require macros
+ * Arguments:
+ * * direct_prefs - the preference we're going to get keybinds from
+ */
 /client/proc/update_special_keybinds(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
@@ -1046,8 +1046,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
 
 /**
-  * Initializes dropdown menus on client
-  */
+ * Initializes dropdown menus on client
+ */
 /client/proc/initialize_menus()
 	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)

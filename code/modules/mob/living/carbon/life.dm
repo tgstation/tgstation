@@ -584,11 +584,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
 
 /**
-  * Used to stabilize the body temperature back to normal on living mobs
-  *
-  * vars:
-  * * environment The environment gas mix
-  */
+ * Used to stabilize the body temperature back to normal on living mobs
+ *
+ * vars:
+ * * environment The environment gas mix
+ */
 /mob/living/carbon/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment)
 	var/areatemp = get_temperature(environment)
 	var/body_temperature_difference = get_body_temp_normal() - bodytemperature
@@ -638,13 +638,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	adjust_bodytemperature(natural_change)
 
 /**
-  * Get the insulation that is appropriate to the temperature you're being exposed to.
-  * All clothing, natural insulation, and traits are combined returning a single value.
-  *
-  * required temperature The Temperature that you're being exposed to
-  *
-  * return the percentage of protection as a value from 0 - 1
-  */
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+ */
 /mob/living/carbon/proc/get_insulation_protection(temperature)
 	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
 
@@ -659,12 +659,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return cold_protection
 
 /**
-  * Have two mobs share body heat between each other.
-  * Account for the insulation and max temperature change range for the mob
-  *
-  * vars:
-  * * M The mob/living/carbon that is sharing body heat
-  */
+ * Have two mobs share body heat between each other.
+ * Account for the insulation and max temperature change range for the mob
+ *
+ * vars:
+ * * M The mob/living/carbon that is sharing body heat
+ */
 /mob/living/carbon/proc/share_bodytemperature(mob/living/carbon/M)
 	var/temp_diff = bodytemperature - M.bodytemperature
 	if(temp_diff > 0) // you are warm share the heat of life
@@ -676,17 +676,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjust_bodytemperature((temp_diff * 0.5), use_insulation=TRUE, use_steps=TRUE) // cool down the giver
 
 /**
-  * Adjust the body temperature of a mob
-  * expanded for carbon mobs allowing the use of insulation and change steps
-  *
-  * vars:
-  * * amount The amount of degrees to change body temperature by
-  * * min_temp (optional) The minimum body temperature after adjustment
-  * * max_temp (optional) The maximum body temperature after adjustment
-  * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
-  * * use_steps (optional) Use the body temp divisors and max change rates
-  * * capped (optional) default True used to cap step mode
-  */
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional) default True used to cap step mode
+ */
 /mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
 	// apply insulation to the amount of change
 	if(use_insulation)
@@ -782,12 +782,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
 /**
-  * Ends metabolization on the mob
-  *
-  * This stop all reagents in the body and organs from metabolizing
-  * Vars:
-  * * keep_liverless (bool)(optional)(default:TRUE) Will keep working without a liver
-  */
+ * Ends metabolization on the mob
+ *
+ * This stop all reagents in the body and organs from metabolizing
+ * Vars:
+ * * keep_liverless (bool)(optional)(default:TRUE) Will keep working without a liver
+ */
 /mob/living/carbon/proc/end_metabolization(keep_liverless = TRUE)
 	reagents.end_metabolization(src, keep_liverless = keep_liverless)
 	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
@@ -878,12 +878,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return TRUE
 
 /**
-  * The mob is having a heart attack
-  *
-  * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
-  * you are meant to use it in combination with can_heartattack for heart attack
-  * related situations (i.e not just cardiac arrest)
-  */
+ * The mob is having a heart attack
+ *
+ * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
+ * you are meant to use it in combination with can_heartattack for heart attack
+ * related situations (i.e not just cardiac arrest)
+ */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)

@@ -54,10 +54,10 @@
 	user.examinate(src)
 
 /**
-  * This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)
-  *
-  * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
-  */
+ * This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)
+ *
+ * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
+ */
 /proc/populate_editable_sign_types()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s

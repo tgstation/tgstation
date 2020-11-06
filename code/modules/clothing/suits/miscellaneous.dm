@@ -6,8 +6,8 @@
 	*/
 
 /**
-  * Lasertag
-  */
+ * Lasertag
+ */
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armor"
 	desc = "A piece of plastic armor. It has sensors that react to red light." //Lasers are concentrated light
@@ -29,8 +29,8 @@
 	resistance_flags = NONE
 
 /**
-  * Costume
-  */
+ * Costume
+ */
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flashy costume"
 	desc = "What did you expect?"

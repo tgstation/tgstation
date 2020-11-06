@@ -1017,13 +1017,13 @@
 	return !operating && density
 
 /**
-  * Used when attempting to remove a seal from an airlock
-  *
-  * Called when attacking an airlock with an empty hand, returns TRUE (there was a seal and we removed it, or failed to remove it)
-  * or FALSE (there was no seal)
-  * Arguments:
-  * * user - Whoever is attempting to remove the seal
-  */
+ * Used when attempting to remove a seal from an airlock
+ *
+ * Called when attacking an airlock with an empty hand, returns TRUE (there was a seal and we removed it, or failed to remove it)
+ * or FALSE (there was no seal)
+ * Arguments:
+ * * user - Whoever is attempting to remove the seal
+ */
 /obj/machinery/door/airlock/try_remove_seal(mob/living/user)
 	if(!seal)
 		return FALSE
@@ -1558,11 +1558,11 @@
 		open()
 
 /**
-  *	Generates the airlock's wire layout based on the current area the airlock resides in.
-  *
-  * Returns a new /datum/wires/ with the appropriate wire layout based on the airlock_wires
-  * of the area the airlock is in.
-  */
+ *	Generates the airlock's wire layout based on the current area the airlock resides in.
+ *
+ * Returns a new /datum/wires/ with the appropriate wire layout based on the airlock_wires
+ * of the area the airlock is in.
+ */
 /obj/machinery/door/airlock/proc/set_wires()
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)

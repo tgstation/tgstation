@@ -1,19 +1,19 @@
 /* Diffrent misc types of sheets
-  * Contains:
-  * Metal
-  * Plasteel
-  * Wood
-  * Cloth
-  * Plastic
-  * Cardboard
-  * Paper Frames
-  * Runed Metal (cult)
-  * Bronze (bake brass)
-  */
+ * Contains:
+ * Metal
+ * Plasteel
+ * Wood
+ * Cloth
+ * Plastic
+ * Cardboard
+ * Paper Frames
+ * Runed Metal (cult)
+ * Bronze (bake brass)
+ */
 
 /**
-  * Metal
-  */
+ * Metal
+ */
 GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_floor = TRUE), \
@@ -161,8 +161,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	return BRUTELOSS
 
 /**
-  * Plasteel
-  */
+ * Plasteel
+ */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
@@ -203,8 +203,8 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	amount = 50
 
 /**
-  * Wood
-  */
+ * Wood
+ */
 GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
@@ -270,8 +270,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	amount = 50
 
 /*
-  * Bamboo
-  */
+ * Bamboo
+ */
 
 GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	new/datum/stack_recipe("punji sticks trap", /obj/structure/punji_sticks, 5, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
@@ -298,8 +298,8 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	. += GLOB.bamboo_recipes
 
 /*
-  * Cloth
-  */
+ * Cloth
+ */
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/color/jumpskirt/white, 3), /*Ladies first*/ \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3), \
@@ -405,8 +405,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	grind_results = list()
 
 /*
-  * Cardboard
-  */
+ * Cardboard
+ */
 GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	new/datum/stack_recipe("box", /obj/item/storage/box),										\
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
@@ -503,8 +503,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 
 
 /*
-  * Runed Metal
-  */
+ * Runed Metal
+ */
 
 GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	new /datum/stack_recipe("runed door (a weak door that stuns non-cultists who touch it))", /obj/machinery/door/airlock/cult, 1, time = 5 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
@@ -554,8 +554,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	amount = 5
 
 /*
-  * Bronze
-  */
+ * Bronze
+ */
 
 GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
@@ -607,8 +607,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	amount = 30
 
 /*
-  * Lesser and Greater gems - unused
-  */
+ * Lesser and Greater gems - unused
+ */
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
@@ -627,8 +627,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = TRUE
 
 /*
-  * Bones
-  */
+ * Bones
+ */
 /obj/item/stack/sheet/bone
 	name = "bones"
 	icon = 'icons/obj/mining.dmi'

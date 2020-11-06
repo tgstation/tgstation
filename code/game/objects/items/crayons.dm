@@ -15,8 +15,8 @@
 #define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
 
 /**
-  * Crayons
-  */
+ * Crayons
+ */
 
 /obj/item/toy/crayon
 	name = "crayon"
@@ -578,8 +578,8 @@
 	. = ..()
 
 /**
-  * Crayon Box
-  */
+ * Crayon Box
+ */
 
 /obj/item/storage/crayons
 	name = "box of crayons"

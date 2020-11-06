@@ -2,14 +2,14 @@
 #define DESTINATION_PORTAL 2
 
 /* Teleportation devices.
-  * Contains:
-  *		Locator
-  *		Hand-tele
-  */
+ * Contains:
+ *		Locator
+ *		Hand-tele
+ */
 
 /**
-  * Locator
-  */
+ * Locator
+ */
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
@@ -92,8 +92,8 @@
 	return data
 
 /*
-  * Hand-tele
-  */
+ * Hand-tele
+ */
 /obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."

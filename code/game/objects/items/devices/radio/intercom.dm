@@ -56,10 +56,10 @@
 	return ..()
 
 /**
-  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
-  * functionality. What we DON'T want is attack_tk_grab attempting to pick up the
-  * intercom as if it was an ordinary item.
-  */
+ * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
+ * functionality. What we DON'T want is attack_tk_grab attempting to pick up the
+ * intercom as if it was an ordinary item.
+ */
 /obj/item/radio/intercom/attack_tk_grab(mob/user)
 	interact(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -116,12 +116,12 @@
 		icon_state = "intercom-p"
 
 /**
-  * Proc called whenever the intercom's area loses or gains power. Responsible for setting the `on` variable and calling `update_icon()`.
-  *
-  * Normally called after the intercom's area recieves the `COMSIG_AREA_POWER_CHANGE` signal, but it can also be called directly.
-  * Arguments:
-  * * source - the area that just had a power change.
-  */
+ * Proc called whenever the intercom's area loses or gains power. Responsible for setting the `on` variable and calling `update_icon()`.
+ *
+ * Normally called after the intercom's area recieves the `COMSIG_AREA_POWER_CHANGE` signal, but it can also be called directly.
+ * Arguments:
+ * * source - the area that just had a power change.
+ */
 /obj/item/radio/intercom/proc/AreaPowerCheck(datum/source)
 	var/area/current_area = get_area(src)
 	if(!current_area)

@@ -62,13 +62,13 @@
 		. |= get_area(I)
 
 /**
-  * Get a bounding box of a list of atoms.
-  *
-  * Arguments:
-  * - atoms - List of atoms. Can accept output of view() and range() procs.
-  *
-  * Returns: list(x1, y1, x2, y2)
-  */
+ * Get a bounding box of a list of atoms.
+ *
+ * Arguments:
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
 /proc/get_bbox_of_atoms(list/atoms)
 	var/list/list_x = list()
 	var/list/list_y = list()
@@ -189,12 +189,12 @@
 		processing_list += A.contents
 
 /** recursive_organ_check
-  * inputs: O (object to start with)
-  * outputs:
-  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
-  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
-  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
-  */
+ * inputs: O (object to start with)
+ * outputs:
+ * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+ *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+ *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+ */
 /proc/recursive_organ_check(atom/O)
 
 	var/list/processing_list = list(O)
@@ -331,11 +331,11 @@
 	return FALSE
 
 /**
-  * Exiled check
-  *
-  * Checks if the current body of the mind has an exile implant and is currently in
-  * an away mission. Returns FALSE if any of those conditions aren't met.
-  */
+ * Exiled check
+ *
+ * Checks if the current body of the mind has an exile implant and is currently in
+ * an away mission. Returns FALSE if any of those conditions aren't met.
+ */
 /proc/considered_exiled(datum/mind/M)
 	if(!ishuman(M?.current))
 		return FALSE

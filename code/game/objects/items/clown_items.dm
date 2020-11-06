@@ -1,14 +1,14 @@
 /** Clown Items
-  * Contains:
-  *		Soap
-  *		Bike Horns
-  *		Air Horns
-  *		Canned Laughter
-  */
+ * Contains:
+ *		Soap
+ *		Bike Horns
+ *		Air Horns
+ *		Canned Laughter
+ */
 
 /**
-  * Soap
-  */
+ * Soap
+ */
 
 /obj/item/soap
 	name = "soap"
@@ -98,12 +98,12 @@
 	return (TOXLOSS)
 
 /**
-  * Decrease the number of uses the bar of soap has.
-  *
-  * The higher the cleaning skill, the less likely the soap will lose a use.
-  * Arguments
-  * * user - The mob that is using the soap to clean.
-  */
+ * Decrease the number of uses the bar of soap has.
+ *
+ * The higher the cleaning skill, the less likely the soap will lose a use.
+ * Arguments
+ * * user - The mob that is using the soap to clean.
+ */
 /obj/item/soap/proc/decreaseUses(mob/user)
 	var/skillcheck = 1
 	if(user?.mind)
@@ -166,8 +166,8 @@
 
 
 /**
-  * Bike Horns
-  */
+ * Bike Horns
+ */
 
 /obj/item/bikehorn
 	name = "bike horn"

@@ -11,8 +11,8 @@
 	*/
 
 /**
-  * Welding mask
-  */
+ * Welding mask
+ */
 /obj/item/clothing/head/welding
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
@@ -34,8 +34,8 @@
 	weldingvisortoggle(user)
 
 /**
-  * Cakehat
-  */
+ * Cakehat
+ */
 /obj/item/clothing/head/hardhat/cakehat
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
@@ -112,8 +112,8 @@
 	..()
 
 /**
-  * Ushanka
-  */
+ * Ushanka
+ */
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
@@ -138,8 +138,8 @@
 	earflaps = !earflaps
 
 /**
-  * Pumpkin head
-  */
+ * Pumpkin head
+ */
 /obj/item/clothing/head/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
@@ -153,8 +153,8 @@
 	flags_cover = HEADCOVERSEYES
 
 /**
-  * Kitty ears
-  */
+ * Kitty ears
+ */
 /obj/item/clothing/head/kitty
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"

@@ -1,8 +1,8 @@
 /**
 * Failsafe
-  *
-  * Pretty much pokes the MC to make sure it's still alive.
-  */
+ *
+ * Pretty much pokes the MC to make sure it's still alive.
+ */
 
 GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 

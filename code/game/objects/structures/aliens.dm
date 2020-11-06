@@ -1,10 +1,10 @@
 /* Alien shit!
-  * Contains:
-  *		structure/alien
-  *		Resin
-  *		Weeds
-  *		Egg
-  */
+ * Contains:
+ *		structure/alien
+ *		Resin
+ *		Weeds
+ *		Egg
+ */
 
 
 /obj/structure/alien
@@ -32,8 +32,8 @@
 				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /*
-  * Generic alien stuff, not related to the purple lizards but still alien-like
-  */
+ * Generic alien stuff, not related to the purple lizards but still alien-like
+ */
 
 /obj/structure/alien/gelpod
 	name = "gelatinous mound"
@@ -47,8 +47,8 @@
 	qdel(src)
 
 /*
-  * Resin
-  */
+ * Resin
+ */
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
@@ -104,8 +104,8 @@
 	return attack_hand(user)
 
 /*
-  * Weeds
-  */
+ * Weeds
+ */
 
 #define NODERANGE 3
 
@@ -227,8 +227,8 @@
 
 
 /*
-  * Egg
-  */
+ * Egg
+ */
 
 //for the status var
 #define BURST "burst"

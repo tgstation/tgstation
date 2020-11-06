@@ -305,7 +305,7 @@ world
 	Value ranges from 0 to 0xff (255)
 
 		Higher value means brighter color
-  */
+ */
 
 /proc/ReadRGB(rgb)
 	if(!rgb)
@@ -530,7 +530,7 @@ world
 	amount=0.5 is directly between the two colors
 
 	amount<0 or amount>1 are allowed
-  */
+ */
 /proc/BlendHSV(hsv1, hsv2, amount)
 	var/list/HSV1 = ReadHSV(hsv1)
 	var/list/HSV2 = ReadHSV(hsv2)
@@ -598,7 +598,7 @@ world
 	amount=0.5 is directly between the two colors
 
 	amount<0 or amount>1 are allowed
-  */
+ */
 /proc/BlendRGB(rgb1, rgb2, amount)
 	var/list/RGB1 = ReadRGB(rgb1)
 	var/list/RGB2 = ReadRGB(rgb2)
@@ -1112,10 +1112,10 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 
 
 /**
-  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-  * exporting it as text, and then parsing the base64 from that.
-  * (This relies on byond automatically storing icons in savefiles as base64)
-  */
+ * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+ * exporting it as text, and then parsing the base64 from that.
+ * (This relies on byond automatically storing icons in savefiles as base64)
+ */
 /proc/icon2base64(icon/icon)
 	if (!isicon(icon))
 		return FALSE
@@ -1236,13 +1236,13 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 
 /**
-  * Creates animation that turns current icon into result appearance from top down.
-  *
-  * result_appearance - End result appearance/atom/image
-  * time - Animation duration
-  * transform_overlay - Appearance/atom/image of effect that moves along the animation - should be horizonatally centered
-  * reset_after - If FALSE, filters won't be reset and helper vis_objects will not be removed after animation duration expires. Cleanup must be handled by the caller!
-  */
+ * Creates animation that turns current icon into result appearance from top down.
+ *
+ * result_appearance - End result appearance/atom/image
+ * time - Animation duration
+ * transform_overlay - Appearance/atom/image of effect that moves along the animation - should be horizonatally centered
+ * reset_after - If FALSE, filters won't be reset and helper vis_objects will not be removed after animation duration expires. Cleanup must be handled by the caller!
+ */
 /atom/movable/proc/transformation_animation(result_appearance,time = 3 SECONDS,transform_overlay,reset_after=TRUE)
 	var/list/transformation_objects = GLOB.transformation_animation_objects[src] || list()
 	//Disappearing part
@@ -1276,8 +1276,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		addtimer(CALLBACK(src,.proc/_reset_transformation_animation,filter_index),time)
 
 /**
-  * Resets filters and removes transformation animations helper objects from vis contents.
-  */
+ * Resets filters and removes transformation animations helper objects from vis contents.
+ */
 /atom/movable/proc/_reset_transformation_animation(filter_index)
 	var/list/transformation_objects = GLOB.transformation_animation_objects[src]
 	for(var/A in transformation_objects)

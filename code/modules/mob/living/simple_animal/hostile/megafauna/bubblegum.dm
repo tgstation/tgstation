@@ -200,15 +200,15 @@ Difficulty: Hard
 			. += L
 
 /**
-  * Attack by override for bubblegum
-  *
-  * This is used to award the frenching achievement for hitting bubblegum with a tongue
-  *
-  * Arguments:
-  * * obj/item/W the item hitting bubblegum
-  * * mob/user The user of the item
-  * * params, extra parameters
-  */
+ * Attack by override for bubblegum
+ *
+ * This is used to award the frenching achievement for hitting bubblegum with a tongue
+ *
+ * Arguments:
+ * * obj/item/W the item hitting bubblegum
+ * * mob/user The user of the item
+ * * params, extra parameters
+ */
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/organ/tongue))

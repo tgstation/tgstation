@@ -132,12 +132,12 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext(A.real_name,B.real_name)
 
 /**
-  * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
-  *
-  * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
-  * This prevents any reagent_containers from being consumed before the reagents they contain, which can
-  * lead to runtimes and item duplication when it happens.
-  */
+ * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
+ *
+ * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
+ * This prevents any reagent_containers from being consumed before the reagents they contain, which can
+ * lead to runtimes and item duplication when it happens.
+ */
 /proc/cmp_crafting_req_priority(A, B)
 	var/lhs
 	var/rhs

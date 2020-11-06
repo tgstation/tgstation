@@ -4,10 +4,10 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /**
-  * Corresponds to single entry in gateway control.
-  *
-  * Will NOT be added automatically to GLOB.gateway_destinations list.
-  */
+ * Corresponds to single entry in gateway control.
+ *
+ * Will NOT be added automatically to GLOB.gateway_destinations list.
+ */
 /datum/gateway_destination
 	var/name = "Unknown Destination"
 	var/wait = 0 /// How long after roundstart this destination becomes active

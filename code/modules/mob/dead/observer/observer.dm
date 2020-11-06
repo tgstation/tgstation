@@ -177,12 +177,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	return ..()
 
 /**
-  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
-  * Please call update_icon(icon_state) from now on when you want to update the icon_state of the ghost,
-  * or you might end up with hair on a sprite that's not supposed to get it.
-  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
-  * |- Ricotez
-  */
+ * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
+ * Please call update_icon(icon_state) from now on when you want to update the icon_state of the ghost,
+ * or you might end up with hair on a sprite that's not supposed to get it.
+ * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
+ * |- Ricotez
+ */
 /mob/dead/observer/update_icon(new_form)
 	. = ..()
 
@@ -232,11 +232,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				add_overlay(hair_overlay)
 
 /**
-  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
-  * and maximum brightness, then adding 30% of that average to R, G and B.
-  *
-  * I'll make this proc global and move it to its own file in a future update. |- Ricotez
-  */
+ * Increase the brightness of a color by calculating the average distance between the R, G and B values,
+ * and maximum brightness, then adding 30% of that average to R, G and B.
+ *
+ * I'll make this proc global and move it to its own file in a future update. |- Ricotez
+ */
 /mob/proc/brighten_color(input_color)
 	var/r_val
 	var/b_val

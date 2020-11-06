@@ -1,6 +1,6 @@
 /**
-  * False Walls
-  */
+ * False Walls
+ */
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
@@ -127,8 +127,8 @@
 	return null
 
 /**
-  * False R-Walls
-  */
+ * False R-Walls
+ */
 
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
@@ -150,8 +150,8 @@
 		dismantle(user, TRUE, tool)
 
 /**
-  * Uranium Falsewalls
-  */
+ * Uranium Falsewalls
+ */
 
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
@@ -186,8 +186,8 @@
 			active = null
 
 /**
-  * Other misc falsewall types
-  */
+ * Other misc falsewall types
+ */
 /obj/structure/falsewall/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"

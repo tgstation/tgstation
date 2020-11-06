@@ -12,8 +12,8 @@
 
 
 /**
-  * Library Public Computer
-  */
+ * Library Public Computer
+ */
 /obj/machinery/computer/libraryconsole
 	name = "library visitor console"
 	icon_state = "oldcomp"
@@ -145,8 +145,8 @@
 	return
 
 /**
-  * Borrowbook datum
-  */
+ * Borrowbook datum
+ */
 /datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
 	var/bookname
 	var/mobname
@@ -156,9 +156,9 @@
 #define PRINTER_COOLDOWN 60
 
 /**
-  * Library Computer
-  * After 860 days, it's finally a buildable computer.
-  */
+ * Library Computer
+ * After 860 days, it's finally a buildable computer.
+ */
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
 // It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
 // It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
@@ -509,8 +509,8 @@
 	updateUsrDialog()
 
 /**
-  * Library Scanner
-  */
+ * Library Scanner
+ */
 /obj/machinery/libraryscanner
 	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
@@ -566,8 +566,8 @@
 
 
 /**
-  * Book binder
-  */
+ * Book binder
+ */
 /obj/machinery/bookbinder
 	name = "book binder"
 	icon = 'icons/obj/library.dmi'

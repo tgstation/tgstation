@@ -1,6 +1,6 @@
 /**
-  *A new subsystem for hydroponics, as a way to share specific traits into plants, as a way to phase out the DNA manipulator.
-  */
+ *A new subsystem for hydroponics, as a way to share specific traits into plants, as a way to phase out the DNA manipulator.
+ */
 /obj/item/graft
 	name = "plant graft"
 	desc = "A carefully cut graft off of a freshly grown plant. Can be grafted onto a plant in order to share unique plant traits onto a plant."
@@ -55,8 +55,8 @@
 	return ..()
 
 /**
-  *Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
-  */
+ *Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
+ */
 /obj/item/graft/proc/get_graft_text()
 	var/text = "- Plant Graft -\n"
 	if(parent_name)

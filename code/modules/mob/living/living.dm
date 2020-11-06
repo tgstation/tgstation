@@ -1154,11 +1154,11 @@
 	return FALSE
 
 /**
-  * Extinguish all fire on the mob
-  *
-  * This removes all fire stacks, fire effects, alerts, and moods
-  * Signals the extinguishing.
-  */
+ * Extinguish all fire on the mob
+ *
+ * This removes all fire stacks, fire effects, alerts, and moods
+ * Signals the extinguishing.
+ */
 /mob/living/proc/extinguish_mob()
 	if(!on_fire)
 		return
@@ -1172,25 +1172,25 @@
 	update_fire()
 
 /**
-  * Adjust the amount of fire stacks on a mob
-  *
-  * This modifies the fire stacks on a mob.
-  *
-  * Vars:
-  * * add_fire_stacks: int The amount to modify the fire stacks
-  */
+ * Adjust the amount of fire stacks on a mob
+ *
+ * This modifies the fire stacks on a mob.
+ *
+ * Vars:
+ * * add_fire_stacks: int The amount to modify the fire stacks
+ */
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks)
 	set_fire_stacks(fire_stacks + add_fire_stacks)
 
 /**
-  * Set the fire stacks on a mob
-  *
-  * This sets the fire stacks on a mob, stacks are clamped between -20 and 20.
-  * If the fire stacks are reduced to 0 then we will extinguish the mob.
-  *
-  * Vars:
-  * * stacks: int The amount to set fire_stacks to
-  */
+ * Set the fire stacks on a mob
+ *
+ * This sets the fire stacks on a mob, stacks are clamped between -20 and 20.
+ * If the fire stacks are reduced to 0 then we will extinguish the mob.
+ *
+ * Vars:
+ * * stacks: int The amount to set fire_stacks to
+ */
 /mob/living/proc/set_fire_stacks(stacks)
 	fire_stacks = clamp(stacks, -20, 20)
 	if(fire_stacks <= 0)
@@ -1445,13 +1445,13 @@
 		CRASH(ERROR_ERROR_LANDMARK_ERROR)
 
 /**
-  * Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.
-  *
-  * In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
-  * This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
-  * Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
-  * The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.
-  */
+ * Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.
+ *
+ * In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
+ * This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
+ * Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
+ * The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.
+ */
 /mob/living/proc/set_lying_angle(new_lying)
 	if(new_lying == lying_angle)
 		return
@@ -1463,34 +1463,34 @@
 
 
 /**
-  * add_body_temperature_change Adds modifications to the body temperature
-  *
-  * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
-  * the aggrogate result is used to derive the new body temperature for the mob
-  *
-  * arguments:
-  * * key_name (str) The unique key for this change, if it already exist it will be overridden
-  * * amount (int) The amount of change from the base body temperature
-  */
+ * add_body_temperature_change Adds modifications to the body temperature
+ *
+ * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
+ * the aggrogate result is used to derive the new body temperature for the mob
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change, if it already exist it will be overridden
+ * * amount (int) The amount of change from the base body temperature
+ */
 /mob/living/proc/add_body_temperature_change(key_name, amount)
 	body_temp_changes["[key_name]"] = amount
 
 /**
-  * remove_body_temperature_change Removes the modifications to the body temperature
-  *
-  * This removes the recorded change to body temperature from the body_temp_changes list
-  *
-  * arguments:
-  * * key_name (str) The unique key for this change that will be removed
-  */
+ * remove_body_temperature_change Removes the modifications to the body temperature
+ *
+ * This removes the recorded change to body temperature from the body_temp_changes list
+ *
+ * arguments:
+ * * key_name (str) The unique key for this change that will be removed
+ */
 /mob/living/proc/remove_body_temperature_change(key_name)
 	body_temp_changes -= key_name
 
 /**
-  * get_body_temp_normal_change Returns the aggregate change to body temperature
-  *
-  * This aggregates all the changes in the body_temp_changes list and returns the result
-  */
+ * get_body_temp_normal_change Returns the aggregate change to body temperature
+ *
+ * This aggregates all the changes in the body_temp_changes list and returns the result
+ */
 /mob/living/proc/get_body_temp_normal_change()
 	var/total_change = 0
 	if(body_temp_changes.len)
@@ -1499,13 +1499,13 @@
 	return total_change
 
 /**
-  *get_body_temp_normal Returns the mobs normal body temperature with any modifications applied
-  *
-  * This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result
-  *
-  * arguments:
-  * * apply_change (optional) Default True This applies the changes to body temperature normal
-  */
+ *get_body_temp_normal Returns the mobs normal body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the BODYTEMP_NORMAL and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
 /mob/living/proc/get_body_temp_normal(apply_change=TRUE)
 	if(!apply_change)
 		return BODYTEMP_NORMAL
@@ -1516,11 +1516,11 @@
 	return !(incapacitated(ignore_restraints = TRUE))
 
 /**
-  * look_up Changes the perspective of the mob to any openspace turf above the mob
-  *
-  * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
-  *
-  */
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
 /mob/living/proc/look_up()
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
 		stop_look_up()
@@ -1561,11 +1561,11 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 /**
-  * look_down Changes the perspective of the mob to any openspace turf below the mob
-  *
-  * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
-  *
-  */
+ * look_down Changes the perspective of the mob to any openspace turf below the mob
+ *
+ * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
+ *
+ */
 /mob/living/proc/look_down()
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
 		stop_look_down()

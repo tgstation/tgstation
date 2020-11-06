@@ -1,15 +1,15 @@
 
 
 /**
-  * GAMEMODES (by Rastaf0)
-  *
-  * In the new mode system all special roles are fully supported.
-  * You can have proper wizards/traitors/changelings/cultists during any mode.
-  * Only two things really depends on gamemode:
-  * 1. Starting roles, equipment and preparations
-  * 2. Conditions of finishing the round.
-  *
-  */
+ * GAMEMODES (by Rastaf0)
+ *
+ * In the new mode system all special roles are fully supported.
+ * You can have proper wizards/traitors/changelings/cultists during any mode.
+ * Only two things really depends on gamemode:
+ * 1. Starting roles, equipment and preparations
+ * 2. Conditions of finishing the round.
+ *
+ */
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null

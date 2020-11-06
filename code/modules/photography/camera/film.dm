@@ -1,6 +1,6 @@
 /**
-  * Film
-  */
+ * Film
+ */
 /obj/item/camera_film
 	name = "film cartridge"
 	icon = 'icons/obj/items_and_weapons.dmi'

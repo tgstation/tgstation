@@ -1,7 +1,7 @@
 /**
-  *	Dehydrated Carp
-  *	Instant carp, just add water
-  */
+ *	Dehydrated Carp
+ *	Instant carp, just add water
+ */
 
 //Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/plush/carpplushie/dehy_carp

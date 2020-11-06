@@ -6,8 +6,8 @@
 	*/
 
 /**
-  * First Aid Kits
-  */
+ * First Aid Kits
+ */
 /obj/item/storage/firstaid
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."

@@ -315,8 +315,8 @@
 		set_light(l_power = 0)
 
 /*
-  * Return of Party button
-  */
+ * Return of Party button
+ */
 
 /area
 	var/party = FALSE

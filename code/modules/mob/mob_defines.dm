@@ -1,11 +1,11 @@
 /**
-  * The mob, usually meant to be a creature of some type
-  *
-  * Has a client attached that is a living person (most of the time), although I have to admit
-  * sometimes it's hard to tell they're sentient
-  *
-  * Has a lot of the creature game world logic, such as health etc
-  */
+ * The mob, usually meant to be a creature of some type
+ *
+ * Has a client attached that is a living person (most of the time), although I have to admit
+ * sometimes it's hard to tell they're sentient
+ *
+ * Has a lot of the creature game world logic, such as health etc
+ */
 /mob
 	datum_flags = DF_USE_TAG
 	density = TRUE

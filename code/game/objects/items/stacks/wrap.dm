@@ -1,8 +1,8 @@
 
 
 /**
-  * Wrapping Paper
-  */
+ * Wrapping Paper
+ */
 
 /obj/item/stack/wrapping_paper
 	name = "wrapping paper"
@@ -25,8 +25,8 @@
 	amount = 10
 
 /**
-  * Package Wrap
-  */
+ * Package Wrap
+ */
 
 /obj/item/stack/package_wrap
 	name = "package wrapper"

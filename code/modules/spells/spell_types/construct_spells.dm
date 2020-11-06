@@ -214,11 +214,11 @@
 	target.adjust_bodytemperature(-200)
 
 /**
-  * cure_blidness: Cures Abyssal Gaze blindness from the target
-  *
-  * Arguments:
-  * * target The mob that is being cured of the blindness.
-  */
+ * cure_blidness: Cures Abyssal Gaze blindness from the target
+ *
+ * Arguments:
+ * * target The mob that is being cured of the blindness.
+ */
 /obj/effect/proc_holder/spell/pointed/abyssal_gaze/proc/cure_blindness(mob/target)
 	if(isliving(target))
 		var/mob/living/L = target

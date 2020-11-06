@@ -1,5 +1,5 @@
 /** Object integrity regeneration element added by alien alloy.
-  */
+ */
 /datum/element/obj_regen
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2

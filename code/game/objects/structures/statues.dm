@@ -322,10 +322,10 @@
 	return ..()
 
 /*
-  * Hit the block to start
-  * Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
-  * Hit block again to start sculpting.
-  * Moving interrupts
+ * Hit the block to start
+ * Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+ * Hit block again to start sculpting.
+ * Moving interrupts
 */
 /obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
 	. = ..()

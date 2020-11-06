@@ -1,16 +1,16 @@
 /** Cards
-  * Contains:
-  *		DATA CARD
-  *		ID CARD
-  *		FINGERPRINT CARD HOLDER
-  *		FINGERPRINT CARD
-  */
+ * Contains:
+ *		DATA CARD
+ *		ID CARD
+ *		FINGERPRINT CARD HOLDER
+ *		FINGERPRINT CARD
+ */
 
 
 
 /**
-  * DATA CARDS - Used for the IC data card reader
-  */
+ * DATA CARDS - Used for the IC data card reader
+ */
 
 /obj/item/card
 	name = "card"
@@ -58,8 +58,8 @@
 	icon_state = "data_3"
 
 /**
-  * ID CARDS
-  */
+ * ID CARDS
+ */
 
 /obj/item/card/id
 	name = "identification card"

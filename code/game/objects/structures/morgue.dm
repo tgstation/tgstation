@@ -1,18 +1,18 @@
 /* Morgue stuff
-  * Contains:
-  *		Morgue
-  *		Morgue tray
-  *		Crematorium
-  *		Creamatorium
-  *		Crematorium tray
-  *		Crematorium button
-  */
+ * Contains:
+ *		Morgue
+ *		Morgue tray
+ *		Crematorium
+ *		Creamatorium
+ *		Crematorium tray
+ *		Crematorium button
+ */
 
 /*
-  * Bodycontainer
-  * Parent class for morgue and crematorium
-  * For overriding only
-  */
+ * Bodycontainer
+ * Parent class for morgue and crematorium
+ * For overriding only
+ */
 GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
 
 /obj/structure/bodycontainer
@@ -147,8 +147,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
 
 /**
-  * Morgue
-  */
+ * Morgue
+ */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
@@ -203,8 +203,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	info = "<font size='2'>Since this station's medbay never seems to fail to be staffed by the mindless monkeys meant for genetics experiments, I'm leaving a reminder here for anyone handling the pile of cadavers the quacks are sure to leave.</font><BR><BR><font size='4'><font color=red>Red lights mean there's a plain ol' dead body inside.</font><BR><BR><font color=orange>Yellow lights mean there's non-body objects inside.</font><BR><font size='2'>Probably stuff pried off a corpse someone grabbed, or if you're lucky it's stashed booze.</font><BR><BR><font color=green>Green lights mean the morgue system detects the body may be able to be brought back to life.</font></font><BR><font size='2'>I don't know how that works, but keep it away from the kitchen and go yell at the geneticists.</font><BR><BR>- CentCom medical inspector"
 
 /**
-  * Crematorium
-  */
+ * Crematorium
+ */
 GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
@@ -306,10 +306,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		IC.forceMove(src)
 
 /**
-  * Generic Tray
-  * Parent class for morguetray and crematoriumtray
-  * For overriding only
-  */
+ * Generic Tray
+ * Parent class for morguetray and crematoriumtray
+ * For overriding only
+ */
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = TRUE
@@ -375,16 +375,16 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return
 
 /**
-  * Crematorium tray
-  */
+ * Crematorium tray
+ */
 /obj/structure/tray/c_tray
 	name = "crematorium tray"
 	desc = "Apply body before burning."
 	icon_state = "cremat"
 
 /**
-  * Morgue tray
-  */
+ * Morgue tray
+ */
 /obj/structure/tray/m_tray
 	name = "morgue tray"
 	desc = "Apply corpse before closing."

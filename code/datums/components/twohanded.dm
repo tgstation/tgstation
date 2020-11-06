@@ -1,9 +1,9 @@
 /**
-  * Two Handed Component
-  *
-  * When applied to an item it will make it two handed
-  *
-  */
+ * Two Handed Component
+ *
+ * When applied to an item it will make it two handed
+ *
+ */
 /datum/component/two_handed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS 		// Only one of the component can exist on an item
 	var/wielded = FALSE 							/// Are we holding the two handed item properly
@@ -19,18 +19,18 @@
 	var/sharpened_increase = 0						/// The amount of increase recived from sharpening the item
 
 /**
-  * Two Handed component
-  *
-  * vars:
-  * * require_twohands (optional) Does the item need both hands to be carried
-  * * wieldsound (optional) The sound to play when wielded
-  * * unwieldsound (optional) The sound to play when unwielded
-  * * attacksound (optional) The sound to play when wielded and attacking
-  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
-  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
-  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
-  * * icon_wielded (optional) The icon to be used when wielded
-  */
+ * Two Handed component
+ *
+ * vars:
+ * * require_twohands (optional) Does the item need both hands to be carried
+ * * wieldsound (optional) The sound to play when wielded
+ * * unwieldsound (optional) The sound to play when unwielded
+ * * attacksound (optional) The sound to play when wielded and attacking
+ * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
+ * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
+ * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
+ * * icon_wielded (optional) The icon to be used when wielded
+ */
 /datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, attacksound=FALSE, \
 										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_wielded=FALSE)
 	if(!isitem(parent))
@@ -117,11 +117,11 @@
 		wield(user)
 
 /**
-  * Wield the two handed item in both hands
-  *
-  * vars:
-  * * user The mob/living/carbon that is wielding the item
-  */
+ * Wield the two handed item in both hands
+ *
+ * vars:
+ * * user The mob/living/carbon that is wielding the item
+ */
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
@@ -176,12 +176,12 @@
 	user.put_in_inactive_hand(offhand_item)
 
 /**
-  * Unwield the two handed item
-  *
-  * vars:
-  * * user The mob/living/carbon that is unwielding the item
-  * * show_message (option) show a message to chat on unwield
-  */
+ * Unwield the two handed item
+ *
+ * vars:
+ * * user The mob/living/carbon that is unwielding the item
+ * * show_message (option) show a message to chat on unwield
+ */
 /datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE)
 	if(!wielded)
 		return
@@ -241,18 +241,18 @@
 	offhand_item = null
 
 /**
-  * on_attack triggers on attack with the parent item
-  */
+ * on_attack triggers on attack with the parent item
+ */
 /datum/component/two_handed/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
 	if(wielded && attacksound)
 		var/obj/item/parent_item = parent
 		playsound(parent_item.loc, attacksound, 50, TRUE)
 
 /**
-  * on_update_icon triggers on call to update parent items icon
-  *
-  * Updates the icon using icon_wielded if set
-  */
+ * on_update_icon triggers on call to update parent items icon
+ *
+ * Updates the icon using icon_wielded if set
+ */
 /datum/component/two_handed/proc/on_update_icon(datum/source)
 	SIGNAL_HANDLER
 
@@ -263,16 +263,16 @@
 			return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
 /**
-  * on_moved Triggers on item moved
-  */
+ * on_moved Triggers on item moved
+ */
 /datum/component/two_handed/proc/on_moved(datum/source, mob/user, dir)
 	SIGNAL_HANDLER
 
 	unwield(user)
 
 /**
-  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
-  */
+ * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
+ */
 /datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
 	SIGNAL_HANDLER
 
@@ -282,8 +282,8 @@
 		return COMPONENT_BLOCK_SWAP
 
 /**
-  * on_sharpen Triggers on usage of a sharpening stone on the item
-  */
+ * on_sharpen Triggers on usage of a sharpening stone on the item
+ */
 /datum/component/two_handed/proc/on_sharpen(obj/item/item, amount, max_amount)
 	SIGNAL_HANDLER
 
@@ -306,9 +306,9 @@
 	return COMPONENT_BLOCK_SHARPEN_APPLIED
 
 /**
-  * The offhand dummy item for two handed items
-  *
-  */
+ * The offhand dummy item for two handed items
+ *
+ */
 /obj/item/offhand
 	name = "offhand"
 	icon_state = "offhand"

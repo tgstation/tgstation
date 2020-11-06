@@ -78,9 +78,9 @@
 			team_hud_index[team] = length(GLOB.huds)
 
 /**
-  * Loads the arenas from config directory.
-  * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
-  */
+ * Loads the arenas from config directory.
+ * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
+ */
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
 	if(default_arenas_loaded)
 		return

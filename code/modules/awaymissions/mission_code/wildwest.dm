@@ -55,8 +55,8 @@
 
 
 /**
-  * Wish Granter
-  */
+ * Wish Granter
+ */
 /obj/machinery/wish_granter_dark
 	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."

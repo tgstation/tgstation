@@ -1,11 +1,11 @@
 /**
-  * Attempts to remove target skillchip from the brain.
-  *
-  * Returns whether the skillchip was removed or not.
-  * If you're removing the skillchip from a mob, use the remove_skillchip proc in mob/living/carbon instead.
-  * Arguments:
-  * * skillchip - The skillchip you'd like to remove.
-  */
+ * Attempts to remove target skillchip from the brain.
+ *
+ * Returns whether the skillchip was removed or not.
+ * If you're removing the skillchip from a mob, use the remove_skillchip proc in mob/living/carbon instead.
+ * Arguments:
+ * * skillchip - The skillchip you'd like to remove.
+ */
 /obj/item/organ/brain/proc/remove_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
 	// Check this skillchip is in the brain.
 	if(!(skillchip in skillchips))
@@ -17,16 +17,16 @@
 	return TRUE
 
 /**
-  * Attempts to implant target skillchip into the brain.
-  *
-  * Returns whether the skillchip was implanted or not.
-  * If you're implanting the skillchip into a mob, use the implant_skillchip proc in mob/living/carbon instead.
-  * DANGEROUS - This proc assumes you've done the appropriate checks to make sure the skillchip should be implanted.
-  * Where possible, call the mob/living/carbon version of this proc which does relevant checks.
-  * Arguments:
-  * * skillchip - The skillchip you'd like to implant.
-  * * force - Whether or not to force the skillchip to be implanted, ignoring any checks.
-  */
+ * Attempts to implant target skillchip into the brain.
+ *
+ * Returns whether the skillchip was implanted or not.
+ * If you're implanting the skillchip into a mob, use the implant_skillchip proc in mob/living/carbon instead.
+ * DANGEROUS - This proc assumes you've done the appropriate checks to make sure the skillchip should be implanted.
+ * Where possible, call the mob/living/carbon version of this proc which does relevant checks.
+ * Arguments:
+ * * skillchip - The skillchip you'd like to implant.
+ * * force - Whether or not to force the skillchip to be implanted, ignoring any checks.
+ */
 /obj/item/organ/brain/proc/implant_skillchip(obj/item/skillchip/skillchip, force = FALSE)
 	// If we're not forcing the implant, so let's do some checks.
 	if(!force)
@@ -43,13 +43,13 @@
 	return
 
 /**
-  * Creates a list of assoc lists containing skillchip types and key metadata.
-  *
-  * Returns a complete list of new skillchip types with their metadata cloned from the brain's existing skillchip stock.
-  * Rumour has it that Changelings just LOVE this proc.
-  * Arguments:
-  * * not_removable - Special override, whether or not to force cloned chips to be non-removable, i.e. to delete on removal.
-  */
+ * Creates a list of assoc lists containing skillchip types and key metadata.
+ *
+ * Returns a complete list of new skillchip types with their metadata cloned from the brain's existing skillchip stock.
+ * Rumour has it that Changelings just LOVE this proc.
+ * Arguments:
+ * * not_removable - Special override, whether or not to force cloned chips to be non-removable, i.e. to delete on removal.
+ */
 /obj/item/organ/brain/proc/clone_skillchip_list(not_removable = FALSE)
 	var/list/skillchip_metadata = list()
 	// Remove and call on_removal proc if successful.
@@ -72,10 +72,10 @@
 	return skillchip_metadata
 
 /**
-  * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
-  * Arguments:
-  * * silent - Whether to give the user a chat notification with the removal flavour text.
-  */
+ * Destroys all skillchips in the brain, calling on_removal if the brain has an owner.
+ * Arguments:
+ * * silent - Whether to give the user a chat notification with the removal flavour text.
+ */
 /obj/item/organ/brain/proc/destroy_all_skillchips(silent = TRUE)
 	if(!QDELETED(owner))
 		for(var/chip in skillchips)
@@ -84,8 +84,8 @@
 	QDEL_LIST(skillchips)
 
 /**
-  * Returns the total maximum skillchip complexity supported by this brain.
-  */
+ * Returns the total maximum skillchip complexity supported by this brain.
+ */
 /obj/item/organ/brain/proc/get_max_skillchip_complexity()
 	if(!QDELETED(owner))
 		return max_skillchip_complexity + owner.skillchip_complexity_modifier
@@ -93,8 +93,8 @@
 	return max_skillchip_complexity
 
 /**
-  * Returns the total current skillchip complexity used in this brain.
-  */
+ * Returns the total current skillchip complexity used in this brain.
+ */
 /obj/item/organ/brain/proc/get_used_skillchip_complexity()
 	var/complexity_tally = 0
 
@@ -109,14 +109,14 @@
 	return complexity_tally
 
 /**
-  * Returns the total maximum skillchip slot capacity supported by this brain.
-  */
+ * Returns the total maximum skillchip slot capacity supported by this brain.
+ */
 /obj/item/organ/brain/proc/get_max_skillchip_slots()
 	return max_skillchip_slots
 
 /**
-  * Returns the total current skillchip slot capacity used in this brain.
-  */
+ * Returns the total current skillchip slot capacity used in this brain.
+ */
 /obj/item/organ/brain/proc/get_used_skillchip_slots()
 	var/slot_tally = 0
 
@@ -128,8 +128,8 @@
 	return slot_tally
 
 /**
-  * Deactivates all chips currently in the brain.
-  */
+ * Deactivates all chips currently in the brain.
+ */
 /obj/item/organ/brain/proc/activate_skillchip_failsafe(silent = TRUE)
 	if(QDELETED(owner))
 		return

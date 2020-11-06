@@ -1,11 +1,11 @@
 /**
-  * Copyright (c) 2020 Aleksej Komarov
-  * SPDX-License-Identifier: MIT
-  */
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
 
 /**
-  * tgui datum (represents a UI).
-  */
+ * tgui datum (represents a UI).
+ */
 /datum/tgui
 	/// The mob who opened/is using the UI.
 	var/mob/user
@@ -35,19 +35,19 @@
 	var/datum/ui_state/state = null
 
 /**
-  * public
-  *
-  * Create a new UI.
-  *
-  * required user mob The mob who opened/is using the UI.
-  * required src_object datum The object or datum which owns the UI.
-  * required interface string The interface used to render the UI.
-  * optional title string The title of the UI.
-  * optional ui_x int Deprecated: Window width.
-  * optional ui_y int Deprecated: Window height.
-  *
-  * return datum/tgui The requested UI.
-  */
+ * public
+ *
+ * Create a new UI.
+ *
+ * required user mob The mob who opened/is using the UI.
+ * required src_object datum The object or datum which owns the UI.
+ * required interface string The interface used to render the UI.
+ * optional title string The title of the UI.
+ * optional ui_x int Deprecated: Window width.
+ * optional ui_y int Deprecated: Window height.
+ *
+ * return datum/tgui The requested UI.
+ */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.tgui_fancy]",
@@ -64,12 +64,12 @@
 		src.window_size = list(ui_x, ui_y)
 
 /**
-  * public
-  *
-  * Open this UI (and initialize it with data).
-  *
-  * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
-  */
+ * public
+ *
+ * Open this UI (and initialize it with data).
+ *
+ * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
+ */
 /datum/tgui/proc/open()
 	if(!user.client)
 		return FALSE
@@ -106,12 +106,12 @@
 	return TRUE
 
 /**
-  * public
-  *
-  * Close the UI.
-  *
-  * optional can_be_suspended bool
-  */
+ * public
+ *
+ * Close the UI.
+ *
+ * optional can_be_suspended bool
+ */
 /datum/tgui/proc/close(can_be_suspended = TRUE)
 	if(closing)
 		return
@@ -130,47 +130,47 @@
 	qdel(src)
 
 /**
-  * public
-  *
-  * Enable/disable auto-updating of the UI.
-  *
-  * required value bool Enable/disable auto-updating.
-  */
+ * public
+ *
+ * Enable/disable auto-updating of the UI.
+ *
+ * required value bool Enable/disable auto-updating.
+ */
 /datum/tgui/proc/set_autoupdate(autoupdate)
 	src.autoupdate = autoupdate
 
 /**
-  * public
-  *
-  * Replace current ui.state with a new one.
-  *
-  * required state datum/ui_state/state Next state
-  */
+ * public
+ *
+ * Replace current ui.state with a new one.
+ *
+ * required state datum/ui_state/state Next state
+ */
 /datum/tgui/proc/set_state(datum/ui_state/state)
 	src.state = state
 
 /**
-  * public
-  *
-  * Makes an asset available to use in tgui.
-  *
-  * required asset datum/asset
-  *
-  * return bool - true if an asset was actually sent
-  */
+ * public
+ *
+ * Makes an asset available to use in tgui.
+ *
+ * required asset datum/asset
+ *
+ * return bool - true if an asset was actually sent
+ */
 /datum/tgui/proc/send_asset(datum/asset/asset)
 	if(!window)
 		CRASH("send_asset() was called either without calling open() first or when open() did not return TRUE.")
 	return window.send_asset(asset)
 
 /**
-  * public
-  *
-  * Send a full update to the client (includes static data).
-  *
-  * optional custom_data list Custom data to send instead of ui_data.
-  * optional force bool Send an update even if UI is not interactive.
-  */
+ * public
+ *
+ * Send a full update to the client (includes static data).
+ *
+ * optional custom_data list Custom data to send instead of ui_data.
+ * optional force bool Send an update even if UI is not interactive.
+ */
 /datum/tgui/proc/send_full_update(custom_data, force)
 	if(!user.client || !initialized || closing)
 		return
@@ -181,13 +181,13 @@
 		with_static_data = TRUE))
 
 /**
-  * public
-  *
-  * Send a partial update to the client (excludes static data).
-  *
-  * optional custom_data list Custom data to send instead of ui_data.
-  * optional force bool Send an update even if UI is not interactive.
-  */
+ * public
+ *
+ * Send a partial update to the client (excludes static data).
+ *
+ * optional custom_data list Custom data to send instead of ui_data.
+ * optional force bool Send an update even if UI is not interactive.
+ */
 /datum/tgui/proc/send_update(custom_data, force)
 	if(!user.client || !initialized || closing)
 		return
@@ -197,12 +197,12 @@
 		with_data = should_update_data))
 
 /**
-  * private
-  *
-  * Package the data to send to the UI, as JSON.
-  *
-  * return list
-  */
+ * private
+ *
+ * Package the data to send to the UI, as JSON.
+ *
+ * return list
+ */
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
 	var/list/json_data = list()
 	json_data["config"] = list(
@@ -236,11 +236,11 @@
 	return json_data
 
 /**
-  * private
-  *
-  * Run an update cycle for this UI. Called internally by SStgui
-  * every second or so.
-  */
+ * private
+ *
+ * Run an update cycle for this UI. Called internally by SStgui
+ * every second or so.
+ */
 /datum/tgui/process(delta_time, force = FALSE)
 	if(closing)
 		return
@@ -269,20 +269,20 @@
 		window.send_message("update", get_payload())
 
 /**
-  * private
-  *
-  * Updates the status, and returns TRUE if status has changed.
-  */
+ * private
+ *
+ * Updates the status, and returns TRUE if status has changed.
+ */
 /datum/tgui/proc/process_status()
 	var/prev_status = status
 	status = src_object.ui_status(user, state)
 	return prev_status != status
 
 /**
-  * private
-  *
-  * Callback for handling incoming tgui messages.
-  */
+ * private
+ *
+ * Callback for handling incoming tgui messages.
+ */
 /datum/tgui/proc/on_message(type, list/payload, list/href_list)
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")

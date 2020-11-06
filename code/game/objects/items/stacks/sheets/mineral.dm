@@ -20,8 +20,8 @@ Mineral Sheets
 */
 
 /**
-  * Sandstone
-  */
+ * Sandstone
+ */
 
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -51,8 +51,8 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	amount = 30
 
 /**
-  * Sandbags
-  */
+ * Sandbags
+ */
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
@@ -90,8 +90,8 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 		return ..()
 
 /**
-  * Diamond
-  */
+ * Diamond
+ */
 /obj/item/stack/sheet/mineral/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
@@ -116,8 +116,8 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	. += GLOB.diamond_recipes
 
 /**
-  * Uranium
-  */
+ * Uranium
+ */
 /obj/item/stack/sheet/mineral/uranium
 	name = "uranium"
 	icon_state = "sheet-uranium"
@@ -142,8 +142,8 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	. += GLOB.uranium_recipes
 
 /**
-  * Plasma
-  */
+ * Plasma
+ */
 /obj/item/stack/sheet/mineral/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
@@ -186,8 +186,8 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	qdel(src)
 
 /**
-  * Gold
-  */
+ * Gold
+ */
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
 	icon_state = "sheet-gold"
@@ -213,8 +213,8 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	. += GLOB.gold_recipes
 
 /**
-  * Silver
-  */
+ * Silver
+ */
 /obj/item/stack/sheet/mineral/silver
 	name = "silver"
 	icon_state = "sheet-silver"
@@ -239,8 +239,8 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	. += GLOB.silver_recipes
 
 /**
-  * Clown
-  */
+ * Clown
+ */
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
 	icon_state = "sheet-bananium"
@@ -264,8 +264,8 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	. += GLOB.bananium_recipes
 
 /**
-  * Titanium
-  */
+ * Titanium
+ */
 /obj/item/stack/sheet/mineral/titanium
 	name = "titanium"
 	icon_state = "sheet-titanium"
@@ -296,8 +296,8 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	amount = 50
 
 /**
-  * Plastitanium
-  */
+ * Plastitanium
+ */
 /obj/item/stack/sheet/mineral/plastitanium
 	name = "plastitanium"
 	icon_state = "sheet-plastitanium"
@@ -326,8 +326,8 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 
 
 /**
-  * Snow
-  */
+ * Snow
+ */
 
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
@@ -356,8 +356,8 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /****************************** Others ****************************/
 
 /**
-  * Adamantine
-  */
+ * Adamantine
+ */
 
 
 GLOBAL_LIST_INIT(adamantine_recipes, list(
@@ -377,8 +377,8 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	. += GLOB.adamantine_recipes
 
 /*
-  * Runite
-  */
+ * Runite
+ */
 
 /obj/item/stack/sheet/mineral/runite
 	name = "runite"
@@ -392,8 +392,8 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 
 
 /**
-  * Mythril
-  */
+ * Mythril
+ */
 /obj/item/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
@@ -404,8 +404,8 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	merge_type = /obj/item/stack/sheet/mineral/mythril
 
 /**
-  * Alien Alloy
-  */
+ * Alien Alloy
+ */
 /obj/item/stack/sheet/mineral/abductor
 	name = "alien alloy"
 	icon = 'icons/obj/abductor.dmi'
@@ -432,8 +432,8 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	. += GLOB.abductor_recipes
 
 /**
-  * Coal
-  */
+ * Coal
+ */
 /obj/item/stack/sheet/mineral/coal
 	name = "coal"
 	desc = "Someone's gotten on the naughty list."

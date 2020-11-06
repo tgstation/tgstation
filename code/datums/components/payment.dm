@@ -1,14 +1,14 @@
 
 /**
-  * Handles simple payment operations where the cost of the object in question doesn't change.
-  *
-  * What this is useful for:
-  * Basic forms of vending.
-  * Objects that can drain the owner's money linearly.
-  * What this is not useful for:
-  * Things where the seller may want to fluxuate the price of the object.
-  * Improving standardizing every form of payment handing, as some custom handling is specific to that object.
-  **/
+ * Handles simple payment operations where the cost of the object in question doesn't change.
+ *
+ * What this is useful for:
+ * Basic forms of vending.
+ * Objects that can drain the owner's money linearly.
+ * What this is not useful for:
+ * Things where the seller may want to fluxuate the price of the object.
+ * Improving standardizing every form of payment handing, as some custom handling is specific to that object.
+ **/
 /datum/component/payment
 	///Standardized of operation.
 	var/cost = 10

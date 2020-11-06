@@ -25,9 +25,9 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	clear_rock()
 
 /**
-  * Clears rocks around the spawner when it is created
-  *
-  */
+ * Clears rocks around the spawner when it is created
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/clear_rock()
 	for(var/turf/F in RANGE_TURFS(2, src))
 		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
@@ -42,17 +42,17 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	return ..()
 
 /**
-  * Effects and messages created when the spawner is destroyed
-  *
-  */
+ * Effects and messages created when the spawner is destroyed
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
 	playsound(loc,'sound/effects/explosionfar.ogg', 200, TRUE)
 	visible_message("<span class='boldannounce'>[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!</span>")
 
 /**
-  * Drops items after the spawner is destroyed
-  *
-  */
+ * Drops items after the spawner is destroyed
+ *
+ */
 /obj/structure/spawner/ice_moon/proc/drop_loot()
 	for(var/type in GLOB.ore_probability)
 		var/chance = GLOB.ore_probability[type]
@@ -116,17 +116,17 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	addtimer(CALLBACK(src, .proc/collapse), 5 SECONDS)
 
 /**
-  * Handles portal deletion
-  *
-  */
+ * Handles portal deletion
+ *
+ */
 /obj/effect/collapsing_demonic_portal/proc/collapse()
 	drop_loot()
 	qdel(src)
 
 /**
-  * Drops loot from the portal
-  *
-  */
+ * Drops loot from the portal
+ *
+ */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message("<span class='warning'>Something slips out of [src]!</span>")
 	var/loot = rand(1, 28)

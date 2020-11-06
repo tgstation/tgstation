@@ -210,12 +210,12 @@ Class Variables:
 		new /obj/effect/temp_visual/emp(loc)
 
 /**
-  * Opens the machine.
-  *
-  * Will update the machine icon and any user interfaces currently open.
-  * Arguments:
-  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
-  */
+ * Opens the machine.
+ *
+ * Will update the machine icon and any user interfaces currently open.
+ * Arguments:
+ * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
+ */
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
 	density = FALSE
@@ -225,8 +225,8 @@ Class Variables:
 	updateUsrDialog()
 
 /**
-  * Drop every movable atom in the machine's contents list, including any components and circuit.
-  */
+ * Drop every movable atom in the machine's contents list, including any components and circuit.
+ */
 /obj/machinery/dump_contents()
 	// Start by calling the dump_inventory_contents proc. Will allow machines with special contents
 	// to handle their dropping.
@@ -243,13 +243,13 @@ Class Variables:
 	LAZYCLEARLIST(component_parts)
 
 /**
-  * Drop every movable atom in the machine's contents list that is not a component_part.
-  *
-  * Proc does not drop components and will skip over anything in the component_parts list.
-  * Call dump_contents() to drop all contents including components.
-  * Arguments:
-  * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
-  */
+ * Drop every movable atom in the machine's contents list that is not a component_part.
+ *
+ * Proc does not drop components and will skip over anything in the component_parts list.
+ * Call dump_contents() to drop all contents including components.
+ * Arguments:
+ * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
+ */
 /obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
@@ -265,15 +265,15 @@ Class Variables:
 			set_occupant(null)
 
 /**
-  * Puts passed object in to user's hand
-  *
-  * Puts the passed object in to the users hand if they are adjacent.
-  * If the user is not adjacent then place the object on top of the machine.
-  *
-  * Vars:
-  * * object (obj) The object to be moved in to the users hand.
-  * * user (mob/living) The user to recive the object
-  */
+ * Puts passed object in to user's hand
+ *
+ * Puts the passed object in to the users hand if they are adjacent.
+ * If the user is not adjacent then place the object on top of the machine.
+ *
+ * Vars:
+ * * object (obj) The object to be moved in to the users hand.
+ * * user (mob/living) The user to recive the object
+ */
 /obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
 	if(!issilicon(user) && in_range(src, user))
 		user.put_in_hands(object)
@@ -710,14 +710,14 @@ Class Variables:
 	return ..()
 
 /**
-  * Generate a name devices
-  *
-  * Creates a randomly generated tag or name for devices5
-  * The length of the generated name can be set by passing in an int
-  * args:
-  * * len (int)(Optional) Default=5 The length of the name
-  * Returns (string) The generated name
-  */
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices5
+ * The length of the generated name can be set by passing in an int
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * Returns (string) The generated name
+ */
 /obj/machinery/proc/assign_random_name(len=5)
 	var/list/new_name = list()
 	// machine id's should be fun random chars hinting at a larger world

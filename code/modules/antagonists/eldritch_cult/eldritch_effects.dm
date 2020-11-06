@@ -107,12 +107,12 @@
 	pixel_y = -32
 
 /**
-  * #Reality smash tracker
-  *
-  * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
-  *
-  * Tracks relevant data, generates relevant data, useful tool
-  */
+ * #Reality smash tracker
+ *
+ * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+ *
+ * Tracks relevant data, generates relevant data, useful tool
+ */
 /datum/reality_smash_tracker
 	///list of tracked reality smashes
 	var/list/smashes = list()
@@ -127,10 +127,10 @@
 	return ..()
 
 /**
-  * Automatically fixes the target and smash network
-  *
-  * Fixes any bugs that are caused by late Generate() or exchanging clients
-  */
+ * Automatically fixes the target and smash network
+ *
+ * Fixes any bugs that are caused by late Generate() or exchanging clients
+ */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
 	listclearnulls(smashes)
 	for(var/mind in targets)
@@ -142,10 +142,10 @@
 			reality_smash.AddMind(mind)
 
 /**
-  * Generates a set amount of reality smashes based on the N value
-  *
-  * Automatically creates more reality smashes
-  */
+ * Generates a set amount of reality smashes based on the N value
+ *
+ * Automatically creates more reality smashes
+ */
 /datum/reality_smash_tracker/proc/_Generate()
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
@@ -165,10 +165,10 @@
 
 
 /**
-  * Adds a mind to the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to add someone to the list
-  */
+ * Adds a mind to the list of people that can see the reality smashes
+ *
+ * Use this whenever you want to add someone to the list
+ */
 /datum/reality_smash_tracker/proc/AddMind(datum/mind/M)
 	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
@@ -179,10 +179,10 @@
 
 
 /**
-  * Removes a mind from the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to remove someone from the list
-  */
+ * Removes a mind from the list of people that can see the reality smashes
+ *
+ * Use this whenever you want to remove someone from the list
+ */
 /datum/reality_smash_tracker/proc/RemoveMind(datum/mind/M)
 	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
 	targets -= M

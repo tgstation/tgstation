@@ -126,13 +126,13 @@ then the player gets the profit from selling his own wasted time.
 	return TRUE
 
 /**
-  * Calculates the exact export value of the object, while factoring in all the relivant variables.
-  *
-  * Called only once, when the object is actually sold by the datum.
-  * Adds item's cost and amount to the current export cycle.
-  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
-  *
-  */
+ * Calculates the exact export value of the object, while factoring in all the relivant variables.
+ *
+ * Called only once, when the object is actually sold by the datum.
+ * Adds item's cost and amount to the current export cycle.
+ * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
+ *
+ */
 /datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)

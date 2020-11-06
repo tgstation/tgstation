@@ -1,12 +1,12 @@
 /**
-  * Copyright (c) 2020 Aleksej Komarov
-  * SPDX-License-Identifier: MIT
-  */
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
 
 /**
-  * tgui_panel datum
-  * Hosts tgchat and other nice features.
-  */
+ * tgui_panel datum
+ * Hosts tgchat and other nice features.
+ */
 /datum/tgui_panel
 	var/client/client
 	var/datum/tgui_window/window
@@ -24,18 +24,18 @@
 	return ..()
 
 /**
-  * public
-  *
-  * TRUE if panel is initialized and ready to receive messages.
-  */
+ * public
+ *
+ * TRUE if panel is initialized and ready to receive messages.
+ */
 /datum/tgui_panel/proc/is_ready()
 	return !broken && window.is_ready()
 
 /**
-  * public
-  *
-  * Initializes tgui panel.
-  */
+ * public
+ *
+ * Initializes tgui panel.
+ */
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	initialized_at = world.time
 	// Perform a clean initialization
@@ -49,19 +49,19 @@
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
 
 /**
-  * private
-  *
-  * Called when initialization has timed out.
-  */
+ * private
+ *
+ * Called when initialization has timed out.
+ */
 /datum/tgui_panel/proc/on_initialize_timed_out()
 	// Currently does nothing but sending a message to old chat.
 	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, click <a href='?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>")
 
 /**
-  * private
-  *
-  * Callback for handling incoming tgui messages.
-  */
+ * private
+ *
+ * Callback for handling incoming tgui messages.
+ */
 /datum/tgui_panel/proc/on_message(type, payload)
 	if(type == "ready")
 		broken = FALSE
@@ -87,9 +87,9 @@
 		return TRUE
 
 /**
-  * public
-  *
-  * Sends a round restart notification.
-  */
+ * public
+ *
+ * Sends a round restart notification.
+ */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")

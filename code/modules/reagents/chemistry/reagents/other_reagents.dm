@@ -148,8 +148,8 @@
 	shot_glass_icon_state = "shotglassclear"
 
 /*
-  *	Water reaction to turf
-  */
+ *	Water reaction to turf
+ */
 
 /datum/reagent/water/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -173,7 +173,7 @@
 
 /*
 	Water reaction to an object
-  */
+ */
 
 /datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -195,8 +195,8 @@
 		qdel(HH)
 
 /*
-  *	Water reaction to a mob
-  */
+ *	Water reaction to a mob
+ */
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
@@ -312,8 +312,8 @@
 	shot_glass_icon_state = "shotglassclear"
 
 /*
-  *	Water reaction to turf
-  */
+ *	Water reaction to turf
+ */
 
 /datum/reagent/hydrogen_peroxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -322,8 +322,8 @@
 	if(reac_volume >= 5)
 		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 /*
-  *	Water reaction to a mob
-  */
+ *	Water reaction to a mob
+ */
 
 /datum/reagent/hydrogen_peroxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
 	. = ..()

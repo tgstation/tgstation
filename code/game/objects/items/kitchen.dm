@@ -1,14 +1,14 @@
 /* Kitchen tools
-  * Contains:
-  *		Fork
-  *		Kitchen knives
-  *		Ritual Knife
-  *		Bloodletter
-  *		Butcher's cleaver
-  *		Combat Knife
-  *		Rolling Pins
-  *		Plastic Utensils
-  */
+ * Contains:
+ *		Fork
+ *		Kitchen knives
+ *		Ritual Knife
+ *		Bloodletter
+ *		Butcher's cleaver
+ *		Combat Knife
+ *		Rolling Pins
+ *		Plastic Utensils
+ */
 
 /obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'

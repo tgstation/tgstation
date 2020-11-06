@@ -1,13 +1,13 @@
 /* Glass stack types
-  * Contains:
-  *		Glass sheets
-  *		Reinforced glass sheets
-  *		Glass shards - TODO: Move this into code/game/object/item/weapons
-  */
+ * Contains:
+ *		Glass sheets
+ *		Reinforced glass sheets
+ *		Glass shards - TODO: Move this into code/game/object/item/weapons
+ */
 
 /**
-  * Glass sheets
-  */
+ * Glass sheets
+ */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
@@ -121,8 +121,8 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 		return ..()
 
 /**
-  * Reinforced glass sheets
-  */
+ * Reinforced glass sheets
+ */
 GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	null, \

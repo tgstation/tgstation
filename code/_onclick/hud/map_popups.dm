@@ -1,17 +1,17 @@
 /**
-  * A screen object, which acts as a container for turfs and other things
-  * you want to show on the map, which you usually attach to "vis_contents".
-  */
+ * A screen object, which acts as a container for turfs and other things
+ * you want to show on the map, which you usually attach to "vis_contents".
+ */
 /obj/screen/map_view
 	// Map view has to be on the lowest plane to enable proper lighting
 	layer = GAME_PLANE
 	plane = GAME_PLANE
 
 /**
-  * A generic background object.
-  * It is also implicitly used to allocate a rectangle on the map, which will
-  * be used for auto-scaling the map.
-  */
+ * A generic background object.
+ * It is also implicitly used to allocate a rectangle on the map, which will
+ * be used for auto-scaling the map.
+ */
 /obj/screen/background
 	name = "background"
 	icon = 'icons/hud/map_backgrounds.dmi'
@@ -20,11 +20,11 @@
 	plane = GAME_PLANE
 
 /**
-  * Sets screen_loc of this screen object, in form of point coordinates,
-  * with optional pixel offset (px, py).
-  *
-  * If applicable, "assigned_map" has to be assigned before this proc call.
-  */
+ * Sets screen_loc of this screen object, in form of point coordinates,
+ * with optional pixel offset (px, py).
+ *
+ * If applicable, "assigned_map" has to be assigned before this proc call.
+ */
 /obj/screen/proc/set_position(x, y, px = 0, py = 0)
 	if(assigned_map)
 		screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
@@ -32,10 +32,10 @@
 		screen_loc = "[x]:[px],[y]:[py]"
 
 /**
-  * Sets screen_loc to fill a rectangular area of the map.
-  *
-  * If applicable, "assigned_map" has to be assigned before this proc call.
-  */
+ * Sets screen_loc to fill a rectangular area of the map.
+ *
+ * If applicable, "assigned_map" has to be assigned before this proc call.
+ */
 /obj/screen/proc/fill_rect(x1, y1, x2, y2)
 	if(assigned_map)
 		screen_loc = "[assigned_map]:[x1],[y1] to [x2],[y2]"
@@ -43,9 +43,9 @@
 		screen_loc = "[x1],[y1] to [x2],[y2]"
 
 /**
-  * Registers screen obj with the client, which makes it visible on the
-  * assigned map, and becomes a part of the assigned map's lifecycle.
-  */
+ * Registers screen obj with the client, which makes it visible on the
+ * assigned map, and becomes a part of the assigned map's lifecycle.
+ */
 /client/proc/register_map_obj(obj/screen/screen_obj)
 	if(!screen_obj.assigned_map)
 		CRASH("Can't register [screen_obj] without 'assigned_map' property.")
@@ -59,12 +59,12 @@
 		screen += screen_obj
 
 /**
-  * Clears the map of registered screen objects.
-  *
-  * Not really needed most of the time, as the client's screen list gets reset
-  * on relog. any of the buttons are going to get caught by garbage collection
-  * anyway. they're effectively qdel'd.
-  */
+ * Clears the map of registered screen objects.
+ *
+ * Not really needed most of the time, as the client's screen list gets reset
+ * on relog. any of the buttons are going to get caught by garbage collection
+ * anyway. they're effectively qdel'd.
+ */
 /client/proc/clear_map(map_name)
 	if(!map_name || !(map_name in screen_maps))
 		return FALSE
@@ -75,20 +75,20 @@
 	screen_maps -= map_name
 
 /**
-  * Clears all the maps of registered screen objects.
-  */
+ * Clears all the maps of registered screen objects.
+ */
 /client/proc/clear_all_maps()
 	for(var/map_name in screen_maps)
 		clear_map(map_name)
 
 /**
-  * Creates a popup window with a basic map element in it, without any
-  * further initialization.
-  *
-  * Ratio is how many pixels by how many pixels (keep it simple).
-  *
-  * Returns a map name.
-  */
+ * Creates a popup window with a basic map element in it, without any
+ * further initialization.
+ *
+ * Ratio is how many pixels by how many pixels (keep it simple).
+ *
+ * Returns a map name.
+ */
 /client/proc/create_popup(name, ratiox = 100, ratioy = 100)
 	winclone(src, "popupwindow", name)
 	var/list/winparams = list()
@@ -108,11 +108,11 @@
 	return "[name]_map"
 
 /**
-  * Create the popup, and get it ready for generic use by giving
-  * it a background.
-  *
-  * Width and height are multiplied by 64 by default.
-  */
+ * Create the popup, and get it ready for generic use by giving
+ * it a background.
+ *
+ * Width and height are multiplied by 64 by default.
+ */
 /client/proc/setup_popup(popup_name, width = 9, height = 9, \
 		tilesize = 2, bg_icon)
 	if(!popup_name)
@@ -132,15 +132,15 @@
 	return map_name
 
 /**
-  * Closes a popup.
-  */
+ * Closes a popup.
+ */
 /client/proc/close_popup(popup)
 	winshow(src, popup, 0)
 	handle_popup_close(popup)
 
 /**
-  * When the popup closes in any way (player or proc call) it calls this.
-  */
+ * When the popup closes in any way (player or proc call) it calls this.
+ */
 /client/verb/handle_popup_close(window_id as text)
 	set hidden = TRUE
 	clear_map("[window_id]_map")

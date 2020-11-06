@@ -162,8 +162,8 @@
 			return TRUE
 
 /**
-  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
-  */
+ * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
+ */
 /obj/machinery/photocopier/proc/has_enough_toner()
 	if(paper_copy)
 		return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
@@ -176,12 +176,12 @@
 	return FALSE
 
 /**
-  * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
-  *
-  * Arguments:
-  * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
-  * * user - the mob who clicked copy.
-  */
+ * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
+ *
+ * Arguments:
+ * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
+ * * user - the mob who clicked copy.
+ */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user)
 	busy = TRUE
 	var/i
@@ -192,29 +192,29 @@
 	addtimer(CALLBACK(src, .proc/reset_busy), i SECONDS)
 
 /**
-  * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
-  */
+ * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
+ */
 /obj/machinery/photocopier/proc/reset_busy()
 	busy = FALSE
 
 /**
-  * Gives items a random x and y pixel offset, between -10 and 10 for each.
-  *
-  * This is done that when someone prints multiple papers, we dont have them all appear to be stacked in the same exact location.
-  *
-  * Arguments:
-  * * copied_item - The paper, document, or photo that was just spawned on top of the printer.
-  */
+ * Gives items a random x and y pixel offset, between -10 and 10 for each.
+ *
+ * This is done that when someone prints multiple papers, we dont have them all appear to be stacked in the same exact location.
+ *
+ * Arguments:
+ * * copied_item - The paper, document, or photo that was just spawned on top of the printer.
+ */
 /obj/machinery/photocopier/proc/give_pixel_offset(obj/item/copied_item)
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
 /**
-  * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
-  *
-  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
-  * Does not check if it has enough toner because devil contracts cost no toner to print.
-  */
+ * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
+ *
+ * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ * Does not check if it has enough toner because devil contracts cost no toner to print.
+ */
 /obj/machinery/photocopier/proc/make_devil_paper_copy()
 	if(!paper_copy)
 		return
@@ -223,10 +223,10 @@
 	give_pixel_offset(C)
 
 /**
-  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
-  *
-  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
-  */
+ * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
+ *
+ * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ */
 /obj/machinery/photocopier/proc/make_paper_copy()
 	if(!paper_copy)
 		return
@@ -251,10 +251,10 @@
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
-  * Handles the copying of photos, which can be printed in either color or greyscale.
-  *
-  * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
-  */
+ * Handles the copying of photos, which can be printed in either color or greyscale.
+ *
+ * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ */
 /obj/machinery/photocopier/proc/make_photo_copy()
 	if(!photo_copy)
 		return
@@ -263,10 +263,10 @@
 	toner_cartridge.charges -= PHOTO_TONER_USE
 
 /**
-  * Handles the copying of documents.
-  *
-  * Checks first if `document_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
-  */
+ * Handles the copying of documents.
+ *
+ * Checks first if `document_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ */
 /obj/machinery/photocopier/proc/make_document_copy()
 	if(!document_copy)
 		return
@@ -275,11 +275,11 @@
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
 
 /**
-  * Handles the copying of an ass photo.
-  *
-  * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
-  * Additionally checks that the mob has their clothes off.
-  */
+ * Handles the copying of an ass photo.
+ *
+ * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
+ * Additionally checks that the mob has their clothes off.
+ */
 /obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return
@@ -311,27 +311,27 @@
 	toner_cartridge.charges -= ASS_TONER_USE
 
 /**
-  * Inserts the item into the copier. Called in `attackby()` after a human mob clicked on the copier with a paper, photo, or document.
-  *
-  * Arugments:
-  * * object - the object that got inserted.
-  * * user - the mob that inserted the object.
-  */
+ * Inserts the item into the copier. Called in `attackby()` after a human mob clicked on the copier with a paper, photo, or document.
+ *
+ * Arugments:
+ * * object - the object that got inserted.
+ * * user - the mob that inserted the object.
+ */
 /obj/machinery/photocopier/proc/do_insertion(obj/item/object, mob/user)
 	object.forceMove(src)
 	to_chat(user, "<span class='notice'>You insert [object] into [src].</span>")
 	flick("photocopier1", src)
 
 /**
-  * Called when someone hits the "remove item" button on the copier UI.
-  *
-  * If the user is a silicon, it drops the object at the location of the copier. If the user is not a silicon, it tries to put the object in their hands first.
-  * Sets `busy` to `FALSE` because if the inserted item is removed, the copier should halt copying.
-  *
-  * Arguments:
-  * * object - the item we're trying to remove.
-  * * user - the user removing the item.
-  */
+ * Called when someone hits the "remove item" button on the copier UI.
+ *
+ * If the user is a silicon, it drops the object at the location of the copier. If the user is not a silicon, it tries to put the object in their hands first.
+ * Sets `busy` to `FALSE` because if the inserted item is removed, the copier should halt copying.
+ *
+ * Arguments:
+ * * object - the item we're trying to remove.
+ * * user - the user removing the item.
+ */
 /obj/machinery/photocopier/proc/remove_photocopy(obj/item/object, mob/user)
 	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
 		object.forceMove(user.loc)
@@ -432,10 +432,10 @@
 	return ..()
 
 /**
-  * Checks the living mob `ass` exists and its location is the same as the photocopier.
-  *
-  * Returns FALSE if `ass` doesn't exist or is not at the copier's location. Returns TRUE otherwise.
-  */
+ * Checks the living mob `ass` exists and its location is the same as the photocopier.
+ *
+ * Returns FALSE if `ass` doesn't exist or is not at the copier's location. Returns TRUE otherwise.
+ */
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
 		return FALSE
@@ -445,8 +445,8 @@
 	return TRUE
 
 /**
-  * Checks if the copier is deleted, or has something dense at its location. Called in `MouseDrop_T()`
-  */
+ * Checks if the copier is deleted, or has something dense at its location. Called in `MouseDrop_T()`
+ */
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(QDELETED(src))
 		return
@@ -460,10 +460,10 @@
 	return FALSE
 
 /**
-  * Checks if there is an item inserted into the copier or a mob sitting on top of it.
-  *
-  * Return `FALSE` is the copier has something inside of it. Returns `TRUE` if it doesn't.
-  */
+ * Checks if there is an item inserted into the copier or a mob sitting on top of it.
+ *
+ * Return `FALSE` is the copier has something inside of it. Returns `TRUE` if it doesn't.
+ */
 /obj/machinery/photocopier/proc/copier_empty()
 	if(paper_copy || photo_copy || document_copy || check_ass())
 		return FALSE
@@ -471,8 +471,8 @@
 		return TRUE
 
 /**
-  * Toner cartridge
-  */
+ * Toner cartridge
+ */
 /obj/item/toner
 	name = "toner cartridge"
 	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."

@@ -3,9 +3,9 @@
 #define PROXIMITY_NEAR "_yellow"
 
 /**
-  * Multitool -- A multitool is used for hacking electronic devices.
-  *
-  */
+ * Multitool -- A multitool is used for hacking electronic devices.
+ *
+ */
 /obj/item/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."

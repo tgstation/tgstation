@@ -259,13 +259,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return ..()
 
 /**
-  * Installs an upgrade into the RPD
-  *
-  * Installs an upgrade into the RPD checking if it is already installed
-  * Arguments:
-  * * rpd_up - RPD upgrade
-  * * user - mob that use upgrade on RPD
-  */
+ * Installs an upgrade into the RPD
+ *
+ * Installs an upgrade into the RPD checking if it is already installed
+ * Arguments:
+ * * rpd_up - RPD upgrade
+ * * user - mob that use upgrade on RPD
+ */
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
 	if(rpd_up.upgrade_flags& upgrade_flags)
 		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//Unwrench pipe before we build one over/paint it.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
-		A = A.wrench_act(user, src)	
+		A = A.wrench_act(user, src)
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist

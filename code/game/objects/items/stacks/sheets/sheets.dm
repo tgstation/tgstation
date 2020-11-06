@@ -22,14 +22,14 @@
 	pixel_y = rand(-4, 4)
 
 /**
-  * Facilitates sheets being smacked on the floor
-  *
-  * This is used for crafting by hitting the floor with items.
-  * The inital use case is glass sheets breaking in to shards when the floor is hit.
-  * Args:
-  * * user: The user that did the action
-  * * params: paramas passed in from attackby
-  */
+ * Facilitates sheets being smacked on the floor
+ *
+ * This is used for crafting by hitting the floor with items.
+ * The inital use case is glass sheets breaking in to shards when the floor is hit.
+ * Args:
+ * * user: The user that did the action
+ * * params: paramas passed in from attackby
+ */
 /obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)

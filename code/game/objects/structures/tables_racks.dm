@@ -1,16 +1,16 @@
 /* Tables and Racks
-  * Contains:
-  *		Tables
-  *		Glass Tables
-  *		Wooden Tables
-  *		Reinforced Tables
-  *		Racks
-  *		Rack Parts
-  */
+ * Contains:
+ *		Tables
+ *		Glass Tables
+ *		Wooden Tables
+ *		Reinforced Tables
+ *		Racks
+ *		Rack Parts
+ */
 
 /*
-  * Tables
-  */
+ * Tables
+ */
 
 /obj/structure/table
 	name = "table"
@@ -300,8 +300,8 @@
 			RemoveItemFromTable(AM, AM.loc)
 
 /**
-  * Glass tables
-  */
+ * Glass tables
+ */
 /obj/structure/table/glass
 	name = "glass table"
 	desc = "What did I say about leaning on the glass tables? Now you need surgery."
@@ -379,8 +379,8 @@
 		S.color = NARSIE_WINDOW_COLOUR
 
 /**
-  * Wooden tables
-  */
+ * Wooden tables
+ */
 
 /obj/structure/table/wood
 	name = "wooden table"
@@ -487,8 +487,8 @@
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
 
 /**
-  * Reinforced tables
-  */
+ * Reinforced tables
+ */
 /obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A reinforced version of the four legged table."
@@ -541,8 +541,8 @@
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /**
-  * Surgery Tables
-  */
+ * Surgery Tables
+ */
 
 /obj/structure/table/optable
 	name = "operating table"
@@ -595,8 +595,8 @@
 	return FALSE
 
 /**
-  * Racks
-  */
+ * Racks
+ */
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
@@ -669,8 +669,8 @@
 			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
 
 /**
-  * Rack destruction
-  */
+ * Rack destruction
+ */
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags_1&NODECONSTRUCT_1))
@@ -681,8 +681,8 @@
 
 
 /**
-  * Rack Parts
-  */
+ * Rack Parts
+ */
 
 /obj/item/rack_parts
 	name = "rack parts"

@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")
 
 /**
-  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
+ *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
 */
 /obj/item/computer_hardware/card_slot/proc/swap_slot()
 	expansion_hw = !expansion_hw

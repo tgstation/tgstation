@@ -114,12 +114,12 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  * * part The body part that is being customized
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ * * part The body part that is being customized
+ */
 /obj/machinery/aug_manipulator/proc/check_menu(mob/living/user, obj/item/bodypart/part)
 	if(!istype(user))
 		return FALSE

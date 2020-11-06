@@ -1,12 +1,12 @@
 /* Beds... get your mind out of the gutter, they're for sleeping!
-  * Contains:
-  * 		Beds
-  *		Roller beds
-  */
+ * Contains:
+ * 		Beds
+ *		Roller beds
+ */
 
 /**
-  * Beds
-  */
+ * Beds
+ */
 /obj/structure/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
@@ -44,8 +44,8 @@
 		return ..()
 
 /**
-  * Roller beds
-  */
+ * Roller beds
+ */
 /obj/structure/bed/roller
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'

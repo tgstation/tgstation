@@ -6,8 +6,8 @@
 	*/
 
 /*
-  * Security
-  */
+ * Security
+ */
 
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
@@ -97,8 +97,8 @@
 	alt_covers_chest = TRUE
 
 /**
-  * Detective
-  */
+ * Detective
+ */
 /obj/item/clothing/under/rank/security/detective
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
@@ -138,8 +138,8 @@
 	fitted = FEMALE_UNIFORM_TOP
 
 /**
-  * Head of Security
-  */
+ * Head of Security
+ */
 /obj/item/clothing/under/rank/security/head_of_security
 	name = "head of security's jumpsuit"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
@@ -206,8 +206,8 @@
 	alt_covers_chest = TRUE
 
 /**
-  *Spacepol
-  */
+ *Spacepol
+ */
 
 /obj/item/clothing/under/rank/security/officer/spacepol
 	name = "police uniform"

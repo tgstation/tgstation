@@ -1,12 +1,12 @@
 /*
-  * Holds procs designed to change one type of value, into another.
-  * Contains:
-  *			file2list
-  *			angle2dir
-  *			angle2text
-  *			worldtime2text
-  *			text2dir_extended & dir2text_short
-  */
+ * Holds procs designed to change one type of value, into another.
+ * Contains:
+ *			file2list
+ *			angle2dir
+ *			angle2text
+ *			worldtime2text
+ *			text2dir_extended & dir2text_short
+ */
 
 
 

@@ -8,7 +8,7 @@
 
 	When a player clicks the atom with a hand labeler to apply a label, this component gets applied to it.
 	If the labeler is off, the component will be removed from it, and the label will be removed from its name.
-  */
+ */
 /datum/component/label
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The name of the label the player is applying to the parent.

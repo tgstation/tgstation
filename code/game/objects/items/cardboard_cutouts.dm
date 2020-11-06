@@ -94,12 +94,12 @@
 	return BULLET_ACT_HIT
 
 /**
-  * change_appearance: Changes a skin of the cardboard cutout based on a user's choice
-  *
-  * Arguments:
-  * * crayon The crayon used to change and recolor the cardboard cutout
-  * * user The mob choosing a skin of the cardboard cutout
-  */
+ * change_appearance: Changes a skin of the cardboard cutout based on a user's choice
+ *
+ * Arguments:
+ * * crayon The crayon used to change and recolor the cardboard cutout
+ * * user The mob choosing a skin of the cardboard cutout
+ */
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	var/new_appearance = show_radial_menu(user, src, possible_appearances, custom_check = CALLBACK(src, .proc/check_menu, user, crayon), radius = 36, require_near = TRUE)
 	if(!new_appearance)
@@ -201,12 +201,12 @@
 	return TRUE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  * * crayon The crayon used to interact with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ * * crayon The crayon used to interact with a menu
+ */
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE

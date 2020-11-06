@@ -11,8 +11,8 @@
 	*/
 
 /*
-  * Bookcase
-  */
+ * Bookcase
+ */
 
 /obj/structure/bookcase
 	name = "bookcase"
@@ -198,8 +198,8 @@
 
 
 /**
-  * Book
-  */
+ * Book
+ */
 /obj/item/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
@@ -336,8 +336,8 @@
 
 
 /**
-  * Barcode Scanner
-  */
+ * Barcode Scanner
+ */
 /obj/item/barcodescanner
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'

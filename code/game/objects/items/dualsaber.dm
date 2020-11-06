@@ -1,6 +1,6 @@
 /**
-  * Double-Bladed Energy Swords - Cheridan
-  */
+ * Double-Bladed Energy Swords - Cheridan
+ */
 /obj/item/dualsaber
 	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "dualsaber0"

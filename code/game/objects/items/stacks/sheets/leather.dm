@@ -141,8 +141,8 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	var/drying_threshold_temperature = 500 //Kelvin to start drying
 
 /**
-  * Leather SHeet
-  */
+ * Leather SHeet
+ */
 /obj/item/stack/sheet/leather
 	name = "leather"
 	desc = "The by-product of mob grinding."
@@ -167,8 +167,8 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	. = ..()
 	. += GLOB.leather_recipes
 /**
-  * Sinew
-  */
+ * Sinew
+ */
 /obj/item/stack/sheet/sinew
 	name = "watcher sinew"
 	icon = 'icons/obj/mining.dmi'
@@ -192,8 +192,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	. += GLOB.sinew_recipes
 
 /**
-  * Plates
-  */
+ * Plates
+ */
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."

@@ -1,13 +1,13 @@
 /**
-  * Copyright (c) 2020 Aleksej Komarov
-  * SPDX-License-Identifier: MIT
-  */
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
 
 /client/var/datum/tgui_panel/tgui_panel
 
 /**
-  * tgui panel / chat troubleshooting verb
-  */
+ * tgui panel / chat troubleshooting verb
+ */
 /client/verb/fix_tgui_panel()
 	set name = "Fix chat"
 	set category = "OOC"

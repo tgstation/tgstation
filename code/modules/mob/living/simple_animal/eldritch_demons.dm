@@ -39,10 +39,10 @@
 	add_spells()
 
 /**
-  * Add_spells
-  *
-  * Goes through spells_to_add and adds each spell to the mind.
-  */
+ * Add_spells
+ *
+ * Goes through spells_to_add and adds each spell to the mind.
+ */
 /mob/living/simple_animal/hostile/eldritch/proc/add_spells()
 	for(var/spell in spells_to_add)
 		AddSpell(new spell())

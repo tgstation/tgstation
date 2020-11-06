@@ -1,6 +1,6 @@
 /**
-  * Check that standard food items fit on the serving tray
-  */
+ * Check that standard food items fit on the serving tray
+ */
 /datum/unit_test/servingtray/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 	var/obj/structure/table/the_table = allocate(/obj/structure/table)

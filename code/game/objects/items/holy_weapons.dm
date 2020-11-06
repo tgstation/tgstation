@@ -219,11 +219,11 @@
 		reskin_holy_weapon(user)
 
 /**
-  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
-  *
-  * Arguments:
-  * * M The mob choosing a nullrod reskin
-  */
+ * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
+ *
+ * Arguments:
+ * * M The mob choosing a nullrod reskin
+ */
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
 	if(GLOB.holy_weapon_type)
 		return
@@ -252,11 +252,11 @@
 		M.put_in_hands(holy_weapon)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/nullrod/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE

@@ -162,8 +162,8 @@
 			M.GiveTarget(L)
 
 /**
-  * Bone Spear
-  */
+ * Bone Spear
+ */
 /obj/item/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
 	name = "bone spear"

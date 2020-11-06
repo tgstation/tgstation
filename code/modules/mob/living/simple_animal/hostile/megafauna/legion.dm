@@ -1,21 +1,21 @@
 /**
-  *LEGION
-  *
-  *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
-  *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
-  *
-  *It has three attacks.
-  *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
-  *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
-  *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
-  *
-  *When Legion dies, it will split into three smaller skulls up to three times.
-  *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
-  *
-  *Difficulty: Medium
-  *
-  *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
-  */
+ *LEGION
+ *
+ *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+ *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
+ *
+ *It has three attacks.
+ *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
+ *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
+ *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
+ *
+ *When Legion dies, it will split into three smaller skulls up to three times.
+ *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+ *
+ *Difficulty: Medium
+ *
+ *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
+ */
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 700

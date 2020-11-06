@@ -193,8 +193,8 @@
 	return TRUE
 
 /**
-  * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
-  */
+ * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
+ */
 /datum/job/proc/GetMapChanges()
 	var/string_type = "[type]"
 	var/list/splits = splittext(string_type, "/")

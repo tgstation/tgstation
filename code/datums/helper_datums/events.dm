@@ -1,6 +1,6 @@
 /**
-  * WARRANTY VOID IF CODE USED
-  */
+ * WARRANTY VOID IF CODE USED
+ */
 
 
 /datum/events

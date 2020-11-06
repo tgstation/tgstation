@@ -1,16 +1,16 @@
 /* Types of tanks!
-  * Contains:
-  *		Oxygen
-  *		Anesthetic
-  *		Air
-  *		Plasma
-  *		Emergency Oxygen
-  *		Generic
-  */
+ * Contains:
+ *		Oxygen
+ *		Anesthetic
+ *		Air
+ *		Plasma
+ *		Emergency Oxygen
+ *		Generic
+ */
 
 /**
-  * Oxygen
-  */
+ * Oxygen
+ */
 /obj/item/tank/internals/oxygen
 	name = "oxygen tank"
 	desc = "A tank of oxygen, this one is blue."
@@ -42,8 +42,8 @@
 	return
 
 /**
-  * Anesthetic
-  */
+ * Anesthetic
+ */
 /obj/item/tank/internals/anesthetic
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
@@ -58,8 +58,8 @@
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 /**
-  * Plasma
-  */
+ * Plasma
+ */
 /obj/item/tank/internals/plasma
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
@@ -96,8 +96,8 @@
 	return
 
 /**
-  * Plasmaman Plasma Tank
-  */
+ * Plasmaman Plasma Tank
+ */
 
 /obj/item/tank/internals/plasmaman
 	name = "plasma internals tank"
@@ -138,8 +138,8 @@
 
 
 /**
-  * Emergency Oxygen
-  */
+ * Emergency Oxygen
+ */
 /obj/item/tank/internals/emergency_oxygen
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."

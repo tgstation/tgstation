@@ -14,7 +14,7 @@
 
 	PROPERTIES
 
-  */
+ */
 
 /datum/disease/advance
 	name = "Unknown" // We will always let our Virologist name our disease.
@@ -74,7 +74,7 @@
 
 	OLD PROCS
 
-  */
+ */
 
 /datum/disease/advance/New()
 	Refresh()
@@ -166,7 +166,7 @@
 
 	NEW PROCS
 
-  */
+ */
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)

@@ -17,7 +17,7 @@
 
 
 /**
-  * Landmarks - Instead of spawning a new object type, I'll spawn the bible using a landmark!
+ * Landmarks - Instead of spawning a new object type, I'll spawn the bible using a landmark!
 */
 /obj/effect/landmark/sc_bible_spawner
 	name = "Safecode hint spawner"
@@ -36,8 +36,8 @@
 	return INITIALIZE_HINT_QDEL
 
 /*
-  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
-  */
+ * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
+ */
 ///Captain's retro laser - Fires practice laser shots instead.
 /obj/item/gun/energy/laser/retro/sc_retro
 	name ="retro laser"
@@ -70,8 +70,8 @@
 	clumsy_check = FALSE
 
 /**
-  * Safe code hints
-  */
+ * Safe code hints
+ */
 
 //These vars hold the code itself, they'll be generated at round-start
 GLOBAL_VAR_INIT(sc_safecode1, "[rand(0,9)]")
@@ -121,8 +121,8 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 			It is completely fly-by-wire meaning you have just have to enjoy the ride and when the red light comes on... find something to hold onto!
 			"}
 /**
-  * Captain's safe
-  */
+ * Captain's safe
+ */
 /obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
@@ -137,8 +137,8 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	new /obj/item/stack/ore/diamond(src)
 
 /**
-  * Modified Nar'Sie
-  */
+ * Modified Nar'Sie
+ */
 /obj/singularity/narsie/mini
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!

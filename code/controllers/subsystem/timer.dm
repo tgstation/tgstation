@@ -8,14 +8,14 @@
 #define TIMER_ID_MAX (2**24)
 
 /**
-  * # Timer Subsystem
-  *
-  * Handles creation, callbacks, and destruction of timed events.
-  *
-  * It is important to understand the buckets used in the timer subsystem are just a series of circular doubly-linked
-  * lists. The object at a given index in bucket_list is a /datum/timedevent, the head of a circular list, which has prev
-  * and next references for the respective elements in that bucket's circular list.
-  */
+ * # Timer Subsystem
+ *
+ * Handles creation, callbacks, and destruction of timed events.
+ *
+ * It is important to understand the buckets used in the timer subsystem are just a series of circular doubly-linked
+ * lists. The object at a given index in bucket_list is a /datum/timedevent, the head of a circular list, which has prev
+ * and next references for the respective elements in that bucket's circular list.
+ */
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 // SS_TICKER subsystem, so wait is in ticks
@@ -254,8 +254,8 @@ SUBSYSTEM_DEF(timer)
 	invoked_timers.len = 0
 
 /**
-  * Generates a string with details about the timed event for debugging purposes
-  */
+ * Generates a string with details about the timed event for debugging purposes
+ */
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
 	. = "Timer: [TE]"
 	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
@@ -267,8 +267,8 @@ SUBSYSTEM_DEF(timer)
 		. += ", NO CALLBACK"
 
 /**
-  * Destroys the existing buckets and creates new buckets from the existing timed events
-  */
+ * Destroys the existing buckets and creates new buckets from the existing timed events
+ */
 /datum/controller/subsystem/timer/proc/reset_buckets()
 	var/list/bucket_list = src.bucket_list // Store local reference to datum var, this is faster
 	var/list/alltimers = list()
@@ -365,14 +365,14 @@ SUBSYSTEM_DEF(timer)
 	bucket_list |= SStimer.bucket_list
 
 /**
-  * # Timed Event
-  *
-  * This is the actual timer, it contains the callback and necessary data to maintain
-  * the timer.
-  *
-  * See the documentation for the timer subsystem for an explanation of the buckets referenced
-  * below in next and prev
-  */
+ * # Timed Event
+ *
+ * This is the actual timer, it contains the callback and necessary data to maintain
+ * the timer.
+ *
+ * See the documentation for the timer subsystem for an explanation of the buckets referenced
+ * below in next and prev
+ */
 /datum/timedevent
 	/// ID used for timers when the TIMER_STOPPABLE flag is present
 	var/id
@@ -469,8 +469,8 @@ SUBSYSTEM_DEF(timer)
 	return QDEL_HINT_IWILLGC
 
 /**
-  * Removes this timed event from any relevant buckets, or the secondary queue
-  */
+ * Removes this timed event from any relevant buckets, or the secondary queue
+ */
 /datum/timedevent/proc/bucketEject()
 	// Attempt to find bucket that contains this timed event
 	var/bucketpos = BUCKET_POS(src)
@@ -510,13 +510,13 @@ SUBSYSTEM_DEF(timer)
 	prev = next = null
 
 /**
-  * Attempts to add this timed event to a bucket, will enter the secondary queue
-  * if there are no appropriate buckets at this time.
-  *
-  * Secondary queueing of timed events will occur when the timespan covered by the existing
-  * buckets is exceeded by the time at which this timed event is scheduled to be invoked.
-  * If the timed event is tracking client time, it will be added to a special bucket.
-  */
+ * Attempts to add this timed event to a bucket, will enter the secondary queue
+ * if there are no appropriate buckets at this time.
+ *
+ * Secondary queueing of timed events will occur when the timespan covered by the existing
+ * buckets is exceeded by the time at which this timed event is scheduled to be invoked.
+ * If the timed event is tracking client time, it will be added to a special bucket.
+ */
 /datum/timedevent/proc/bucketJoin()
 	// Check if this timed event should be diverted to the client time bucket, or the secondary queue
 	var/list/L
@@ -552,8 +552,8 @@ SUBSYSTEM_DEF(timer)
 	prev.next = src
 
 /**
-  * Returns a string of the type of the callback for this timer
-  */
+ * Returns a string of the type of the callback for this timer
+ */
 /datum/timedevent/proc/getcallingtype()
 	. = "ERROR"
 	if (callBack.object == GLOBAL_PROC)
@@ -562,14 +562,14 @@ SUBSYSTEM_DEF(timer)
 		. = "[callBack.object.type]"
 
 /**
-  * Create a new timer and insert it in the queue.
-  * You should not call this directly, and should instead use the addtimer macro, which includes source information.
-  *
-  * Arguments:
-  * * callback the callback to call on timer finish
-  * * wait deciseconds to run the timer for
-  * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
-  */
+ * Create a new timer and insert it in the queue.
+ * You should not call this directly, and should instead use the addtimer macro, which includes source information.
+ *
+ * Arguments:
+ * * callback the callback to call on timer finish
+ * * wait deciseconds to run the timer for
+ * * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+ */
 /proc/_addtimer(datum/callback/callback, wait = 0, flags = 0, file, line)
 	if (!callback)
 		CRASH("addtimer called without a callback")
@@ -614,11 +614,11 @@ SUBSYSTEM_DEF(timer)
 	return timer.id
 
 /**
-  * Delete a timer
-  *
-  * Arguments:
-  * * id a timerid or a /datum/timedevent
-  */
+ * Delete a timer
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ */
 /proc/deltimer(id)
 	if (!id)
 		return FALSE
@@ -635,11 +635,11 @@ SUBSYSTEM_DEF(timer)
 	return FALSE
 
 /**
-  * Get the remaining deciseconds on a timer
-  *
-  * Arguments:
-  * * id a timerid or a /datum/timedevent
-  */
+ * Get the remaining deciseconds on a timer
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ */
 /proc/timeleft(id)
 	if (!id)
 		return null

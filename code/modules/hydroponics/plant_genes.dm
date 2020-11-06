@@ -160,10 +160,10 @@
 	return TRUE
 
 /**
-  * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
-  *
-  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
-  */
+ * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+ *
+ * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+ */
 
 /datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
 	for(var/datum/plant_gene/reagent/reagent in seed.genes)
@@ -394,11 +394,11 @@
 		qdel(G)
 
 /**
-  * A plant trait that causes the plant's capacity to double.
-  *
-  * When harvested, the plant's individual capacity is set to double it's default.
-  * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
-  */
+ * A plant trait that causes the plant's capacity to double.
+ *
+ * When harvested, the plant's individual capacity is set to double it's default.
+ * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+ */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
@@ -513,19 +513,19 @@
 				HY.name = initial(HY.name)
 
 /**
-  * A plant trait that causes the plant's food reagents to ferment instead.
-  *
-  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
-  * This exception is executed in seeds.dm under 'prepare_result'.
-  */
+ * A plant trait that causes the plant's food reagents to ferment instead.
+ *
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * This exception is executed in seeds.dm under 'prepare_result'.
+ */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
 
 /**
-  * A plant trait that causes the plant to gain aesthetic googly eyes.
-  *
-  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
-  */
+ * A plant trait that causes the plant to gain aesthetic googly eyes.
+ *
+ * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
+ */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly

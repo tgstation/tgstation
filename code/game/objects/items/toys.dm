@@ -1,29 +1,29 @@
 /* Toys!
-  * Contains
-  *		Balloons
-  *		Fake singularity
-  *		Toy gun
-  *		Toy crossbow
-  *		Toy swords
-  *		Crayons
-  *		Snap pops
-  *		AI core prizes
-  *		Toy codex gigas
-  * 		Skeleton toys
-  *		Cards
-  *		Toy nuke
-  *		Fake meteor
-  *		Foam armblade
-  *		Toy big red button
-  *		Beach ball
-  *		Toy xeno
-  *      Kitty toys!
-  *		Snowballs
-  *		Clockwork Watches
-  *		Toy Daggers
-  *		Squeaky Brain
-  *		Broken Radio
-  */
+ * Contains
+ *		Balloons
+ *		Fake singularity
+ *		Toy gun
+ *		Toy crossbow
+ *		Toy swords
+ *		Crayons
+ *		Snap pops
+ *		AI core prizes
+ *		Toy codex gigas
+ * 		Skeleton toys
+ *		Cards
+ *		Toy nuke
+ *		Fake meteor
+ *		Foam armblade
+ *		Toy big red button
+ *		Beach ball
+ *		Toy xeno
+ *      Kitty toys!
+ *		Snowballs
+ *		Clockwork Watches
+ *		Toy Daggers
+ *		Squeaky Brain
+ *		Broken Radio
+ */
 
 /obj/item/toy
 	throwforce = 0
@@ -33,8 +33,8 @@
 
 
 /**
-  * Balloons
-  */
+ * Balloons
+ */
 /obj/item/toy/waterballoon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
@@ -178,8 +178,8 @@
 	random_color = FALSE
 
 /**
-  * Fake singularity
-  */
+ * Fake singularity
+ */
 /obj/item/toy/spinningtoy
 	name = "gravitational singularity"
 	desc = "\"Singulo\" brand spinning toy."
@@ -198,14 +198,14 @@
 	return MANUAL_SUICIDE
 
 /**
-  * Internal function used in the toy singularity suicide
-  *
-  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
-  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
-  * Throwing the singularity away will cause the user to start choking themself to death.
-  * Arguments:
-  * * user - Whoever is doing the suiciding
-  */
+ * Internal function used in the toy singularity suicide
+ *
+ * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+ * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+ * Throwing the singularity away will cause the user to start choking themself to death.
+ * Arguments:
+ * * user - Whoever is doing the suiciding
+ */
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
 		return
@@ -232,8 +232,8 @@
 
 
 /**
-  * Toy gun: Why isn't this an /obj/item/gun?
-  */
+ * Toy gun: Why isn't this an /obj/item/gun?
+ */
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
@@ -312,8 +312,8 @@
 	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /**
-  * Toy swords
-  */
+ * Toy swords
+ */
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
@@ -378,8 +378,8 @@
 		return ..()
 
 /**
-  * Foam armblade
-  */
+ * Foam armblade
+ */
 /obj/item/toy/foamblade
 	name = "foam armblade"
 	desc = "It says \"Sternside Changs #1 fan\" on it."
@@ -441,8 +441,8 @@
 	animate(src, transform=matrix())
 
 /**
-  * Subtype of Double-Bladed Energy Swords
-  */
+ * Subtype of Double-Bladed Energy Swords
+ */
 /obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
@@ -483,8 +483,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /*
-  * Snap pops
-  */
+ * Snap pops
+ */
 
 /obj/item/toy/snappop
 	name = "snap pop"
@@ -585,8 +585,8 @@
 		chatter(message, phomeme, user)
 
 /**
-  * AI core prizes
-  */
+ * AI core prizes
+ */
 /obj/item/toy/talking/ai
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
@@ -862,11 +862,11 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -875,8 +875,8 @@
 	return TRUE
 
 /**
-  * This proc updates the sprite for when you create a hand of cards
-  */
+ * This proc updates the sprite for when you create a hand of cards
+ */
 /obj/item/toy/cards/cardhand/proc/update_sprite()
 	cut_overlays()
 	var/overlay_cards = currenthand.len
@@ -999,8 +999,8 @@
 	resistance_flags = NONE
 
 /**
-  * Fake nuke
-  */
+ * Fake nuke
+ */
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
@@ -1042,8 +1042,8 @@
 	obj_flags |= EMAGGED
 
 /**
-  * Fake meteor
-  */
+ * Fake meteor
+ */
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
@@ -1071,8 +1071,8 @@
 				shake_camera(M, 3, 1)
 
 /**
-  * Toy big red button
-  */
+ * Toy big red button
+ */
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
@@ -1096,8 +1096,8 @@
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
 
 /**
-  * Snowballs
-  */
+ * Snowballs
+ */
 
 /obj/item/toy/snowball
 	name = "snowball"
@@ -1118,8 +1118,8 @@
 		qdel(src)
 
 /**
-  * Beach ball
-  */
+ * Beach ball
+ */
 /obj/item/toy/beach_ball
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
@@ -1128,8 +1128,8 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /**
-  * Clockwork Watch
-  */
+ * Clockwork Watch
+ */
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
@@ -1153,8 +1153,8 @@
 	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
 
 /**
-  * Toy Dagger
-  */
+ * Toy Dagger
+ */
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
@@ -1166,8 +1166,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /**
-  * Xenomorph action figure
-  */
+ * Xenomorph action figure
+ */
 /obj/item/toy/toy_xeno
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
@@ -1203,8 +1203,8 @@
 
 
 /**
-  * Action Figures
-  */
+ * Action Figures
+ */
 /obj/item/toy/figure
 	name = "Non-Specific Action Figure action figure"
 	desc = null
