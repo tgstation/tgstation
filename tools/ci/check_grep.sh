@@ -26,6 +26,10 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
+echo "Checking for pixel_[xy]"
+if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
+    echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
+fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
     st=1
