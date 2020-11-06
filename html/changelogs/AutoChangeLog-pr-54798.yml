@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "You can now unbuckle others from the toolbox training machine with altclick."
