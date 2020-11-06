@@ -1615,7 +1615,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi)
-	//when in a statis bed or dead the air still effects your skin temp
+	//when in a cryo unit we suspend all natural body regulation
+	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
+	//when dead the air still effects your skin temp
 	if(humi.stat == DEAD)
 		body_temperature_skin(humi)
 	else //when alive do all the things
