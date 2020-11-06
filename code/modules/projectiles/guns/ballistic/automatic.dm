@@ -328,6 +328,13 @@
 /obj/item/gun/ballistic/automatic/sniper_rifle
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+
+	/// PM: Frontier specific icons.
+	icon = 'icons/FrontierProgramIcons/icons/obj/guns/48x32_projectile.dmi'
+	worn_icon = 'icons/FrontierProgramIcons/icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_righthand.dmi'
+	
 	icon_state = "sniper"
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
