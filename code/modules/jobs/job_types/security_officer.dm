@@ -22,6 +22,9 @@
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	bounty_types = CIV_JOB_SEC
 
+	// KF: Used instead of user preferences to determine security officer department.
+	var/department = null
+
 /datum/job/officer/get_access()
 	var/list/L = list()
 	L |= ..() | check_config_for_sec_maint()
@@ -32,15 +35,16 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 /datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	// Assign department security
-	var/department
-	if(M && M.client && M.client.prefs)
-		department = M.client.prefs.prefered_security_department
-		if(!LAZYLEN(GLOB.available_depts) || department == "None")
-			return
-		else if(department in GLOB.available_depts)
-			LAZYREMOVE(GLOB.available_depts, department)
-		else
-			department = pick_n_take(GLOB.available_depts)
+	// KF: Disable preference code and use child classes to determine department.
+	// var/department
+	// if(M && M.client && M.client.prefs)
+	// 	department = M.client.prefs.prefered_security_department
+	// 	if(!LAZYLEN(GLOB.available_depts) || department == "None")
+	// 		return
+	// 	else if(department in GLOB.available_depts)
+	// 		LAZYREMOVE(GLOB.available_depts, department)
+	// 	else
+	// 		department = pick_n_take(GLOB.available_depts)
 	var/ears = null
 	var/accessory = null
 	var/list/dep_access = null
