@@ -35,110 +35,67 @@ export const Techweb = (props, context) => {
     <Window
       width={640}
       height={880}
-      scrollable>
+      scrollable
+      title={`${web_org} Research and Development Network`}>
       <Window.Content>
-        <Section title={`${web_org} Research and Development Network`}
-          className="Techweb__ViewportContainer">
-          <Flex direction="column" className="Techweb__Viewport">
-            <Flex.Item className="Techweb__HeaderSection">
-              <Box className="Techweb__HeaderContent">
-                Available points:
-                <ul className="Techweb__PointSummary">
-                  {Object.keys(points).map((k) => (
-                    <li key={`ps${k}`}>
-                      <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
-                    </li>
-                  ))}
-                </ul>
-                Security protocols:
-                <span
-                  className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
-                  {sec_protocols ? "Engaged" : "Disengaged"}
-                </span> <br />
-                Disks:
-                <span>
-                  {d_disk && (
-                    <Button
-                      icon="lightbulb"
-                      onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
-                      Design Disk
-                    </Button>
-                  )}
-                  {t_disk && (
-                    <Button
-                      icon="lightbulb"
-                      onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
-                      Tech Disk
-                    </Button>
-                  )}
-                </span>
-              </Box>
-              <Flex justify={"space-between"} className="Techweb__HeaderSectionTabs">
-                <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-                  <span>Nodes</span>
-                </Flex.Item>
-                <Flex.Item grow={1}>
-                  <Tabs>
-                    <Tabs.Tab
-                      selected={tabIndex === 0}
-                      onClick={() => setTabIndex(0)}>
-                      Researched
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                      selected={tabIndex === 1}
-                      onClick={() => setTabIndex(1)}>
-                      Available
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                      selected={tabIndex === 2}
-                      onClick={() => setTabIndex(2)}>
-                      Future
-                    </Tabs.Tab>
-                  </Tabs>
-                </Flex.Item>
-                <Flex.Item align={"center"}>
-                  <Input
-                    value={searchText}
-                    onInput={(e, value) => setSearchText(value)}
-                    placeholder={"Search..."} />
-                </Flex.Item>
-              </Flex>
-            </Flex.Item>
+        <Flex direction="column" className="Techweb__Viewport" height="100%">
+          <Flex.Item className="Techweb__HeaderSection">
+            <Box className="Techweb__HeaderContent">
+              Available points:
+              <ul className="Techweb__PointSummary">
+                {Object.keys(points).map((k) => (
+                  <li key={`ps${k}`}>
+                    <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
+                  </li>
+                ))}
+              </ul>
+              Security protocols:
+              <span
+                className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
+                {sec_protocols ? "Engaged" : "Disengaged"}
+              </span> <br />
+              Disks:
+              <span>
+                {d_disk && (
+                  <Button
+                    icon="lightbulb"
+                    onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                    Design Disk
+                  </Button>
+                )}
+                {t_disk && (
+                  <Button
+                    icon="lightbulb"
+                    onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                    Tech Disk
+                  </Button>
+                )}
+              </span>
+            </Box>
+          </Flex.Item>
+          <Flex.Item className="Techweb__RouterContent" height="100%">
             <TechwebRouter />
-          </Flex>
-        </Section>
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );
 };
 
 const TechwebRouter = (props, context) => {
-  const { act, data } = useBackend(context);
   const [
     techwebRoute,
-    setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null)
 
-  if (!techwebRoute?.route) {
-    return (<TechwebOverview />);
-  }
-
-  let content = null;
-  switch (techwebRoute.route) {
-    case "details":
-      content = (<TechwebNodeDetail {...techwebRoute} />);
-      break;
-    case "disk":
-      content = (<TechwebDiskMenu {...techwebRoute} />);
-      break;
-    default:
-      content = (<TechwebOverview {...techwebRoute} />);
-  };
+  const route = techwebRoute?.route;
+  const RoutedComponent = (
+    route === "details" && TechwebNodeDetail
+    || route === "disk" && TechwebDiskMenu
+    || TechwebOverview
+  );
 
   return (
-    <Flex.Item grow={1} className={"Techweb__NodesSection"}>
-      {content}
-    </Flex.Item>
+    <RoutedComponent {...techwebRoute} />
   );
 };
 
@@ -176,13 +133,47 @@ const TechwebOverview = (props, context) => {
   }
 
   return (
-    <Fragment>
-      {displayedNodes.map((n) => {
-        return (
-          <TechNode node={n} key={`n${n.id}`} />
-        );
-      })}
-    </Fragment>
+    <Flex direction="column" height="100%">
+      <Flex.Item>
+        <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
+          <Flex.Item align="center" className="Techweb__HeaderTabTitle">
+            <span>Nodes</span>
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Tabs>
+              <Tabs.Tab
+                selected={tabIndex === 0}
+                onClick={() => setTabIndex(0)}>
+                Researched
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tabIndex === 1}
+                onClick={() => setTabIndex(1)}>
+                Available
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tabIndex === 2}
+                onClick={() => setTabIndex(2)}>
+                Future
+              </Tabs.Tab>
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item align={"center"}>
+            <Input
+              value={searchText}
+              onInput={(e, value) => setSearchText(value)}
+              placeholder={"Search..."} />
+          </Flex.Item>
+        </Flex>
+      </Flex.Item>
+      <Flex.Item className={"Techweb__OverviewNodes"}>
+        {displayedNodes.map((n) => {
+          return (
+            <TechNode node={n} key={`n${n.id}`} />
+          );
+        })}
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -282,7 +273,7 @@ const TechNodeDetail = (props, context) => {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       <TechNode node={node} />
       {prereqNodes.length > 0 && (
         <Section title="Required">
@@ -298,7 +289,7 @@ const TechNodeDetail = (props, context) => {
           )}
         </Section>
       )}
-    </div>
+    </Fragment>
   );
 };
 

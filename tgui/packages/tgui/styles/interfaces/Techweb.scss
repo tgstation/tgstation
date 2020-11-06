@@ -21,27 +21,10 @@
   margin-right: 0.25rem;
 }
 
-.Techweb__ViewportContainer {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.Techweb__ViewportContainer > *:last-child {
-  flex: 1;
-  flex-direction: column;
-  display: flex;
-}
-
-.Techweb__Viewport {
-  height: 100%;
-}
-
-.Techweb__NodesSection {
+.Techweb__OverviewNodes {
   overflow-y: scroll;
   overflow-x: hidden;
   padding-right: 6px;
-  //padding-left: 6px;
   padding-top: 4px;
 }
 
