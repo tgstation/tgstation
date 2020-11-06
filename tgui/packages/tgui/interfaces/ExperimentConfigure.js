@@ -2,6 +2,7 @@ import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Section, Box, Button, Flex, Icon, LabeledList } from '../components';
+import { sortBy } from 'common/collections';
 
 export const ExperimentStage = props => {
   const [type, description, value, altValue] = props;
@@ -82,22 +83,11 @@ export const Techweb = (props, context) => {
 export const ExperimentConfigure = (props, context) => {
   const { act, data } = useBackend(context);
   let servers = data.servers ?? [];
-  let experiments = data.experiments ?? [];
 
-  // Toss the selected experiment to the top if it isn't already, sort lexically
-  experiments = experiments.sort((a, b) => {
-    if (a.selected !== b.selected) {
-      return a.selected ? -1 : 1;
-    }
-    else {
-      if (a.name === b.name) {
-        return 0;
-      }
-      else {
-        return a.name < b.name ? -1 : 1;
-      }
-    }
-  });
+  const experiments = sortBy(
+    exp => exp.selected,
+    exp => exp.name
+  )(data.experiments ?? []);
 
   // Group servers together by web
   let webs = new Map();

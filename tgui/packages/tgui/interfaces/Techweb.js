@@ -2,6 +2,7 @@ import { Button, Section, NoticeBox, Tabs, Box, Input, Flex, ProgressBar, Collap
 import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
+import { Fragment } from 'inferno';
 
 export const Techweb = (props, context) => {
   const { act, data } = useBackend(context);
@@ -23,25 +24,6 @@ export const Techweb = (props, context) => {
     searchText,
     setSearchText,
   ] = useLocalState(context, 'searchText');
-
-  let displayedNodes = tabIndex < 2
-    ? nodes.filter(x => x.tier === tabIndex)
-    : nodes.filter(x => x.tier >= tabIndex);
-  displayedNodes.sort((a, b) => {
-    const an = node_cache[a.id];
-    const bn = node_cache[b.id];
-    return an.name.localeCompare(bn.name);
-  });
-
-  if (searchText && searchText.trim() !== '') {
-    displayedNodes = displayedNodes.filter(x => {
-      const n = node_cache[x.id];
-      return n.name.toLowerCase().includes(searchText)
-        || n.description.toLowerCase().includes(searchText)
-        || Object.keys(n.design_ids).some(e =>
-          design_cache[e].name.toLowerCase().includes(searchText));
-    });
-  }
 
   return (
     <Window
@@ -99,17 +81,152 @@ export const Techweb = (props, context) => {
                 </Flex.Item>
               </Flex>
             </Flex.Item>
-            <Flex.Item grow={1} className={"Techweb__NodesSection"}>
-              {displayedNodes.map((n, idx) => {
-                return (
-                  <TechNode node={n} key={`n${idx}`} />
-                );
-              })}
-            </Flex.Item>
+            <TechwebRouter />
           </Flex>
         </Section>
       </Window.Content>
     </Window>
+  );
+};
+
+const TechwebRouter = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [
+    techwebRoute,
+    setTechwebRoute,
+  ] = useLocalState(context, 'techwebRoute', null)
+
+  if (!techwebRoute?.route) {
+    return (<TechwebOverview />);
+  }
+
+  let content = null;
+  switch (techwebRoute.route) {
+    case "details":
+      content = (<TechwebNodeDetail {...techwebRoute} />);
+      break;
+    default:
+      content = (<TechwebOverview {...techwebRoute} />);
+  };
+
+  return (
+    <Flex.Item grow={1} className={"Techweb__NodesSection"}>
+      {content}
+    </Flex.Item>
+  );
+};
+
+const TechwebOverview = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    nodes,
+    node_cache,
+    design_cache,
+  } = data;
+  const [
+    tabIndex,
+  ] = useLocalState(context, 'tabIndex', 1);
+  const [
+    searchText,
+  ] = useLocalState(context, 'searchText');
+
+  let displayedNodes = tabIndex < 2
+    ? nodes.filter(x => x.tier === tabIndex)
+    : nodes.filter(x => x.tier >= tabIndex);
+  displayedNodes.sort((a, b) => {
+    const an = node_cache[a.id];
+    const bn = node_cache[b.id];
+    return an.name.localeCompare(bn.name);
+  });
+
+  if (searchText && searchText.trim() !== '') {
+    displayedNodes = displayedNodes.filter(x => {
+      const n = node_cache[x.id];
+      return n.name.toLowerCase().includes(searchText)
+        || n.description.toLowerCase().includes(searchText)
+        || Object.keys(n.design_ids).some(e =>
+          design_cache[e].name.toLowerCase().includes(searchText));
+    });
+  }
+
+  return (
+    <Fragment>
+      {displayedNodes.map((n, idx) => {
+        return (
+          <TechNode node={n} key={`n${idx}`} />
+        );
+      })}
+    </Fragment>
+  );
+};
+
+const TechwebNodeDetail = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    nodes,
+  } = data;
+  const { selectedNode } = props;
+
+  const selectedNodeData = selectedNode && nodes.filter(x => x.id == selectedNode)[0];
+  return (
+    <TechNodeDetail node={selectedNodeData} />
+  );
+}
+
+const TechwebDesignDetail = (props, context) => {
+
+};
+
+// rework the selected node to be included in route data because otherwise there will be issues with route transitions
+const TechNodeDetail = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    nodes,
+    node_cache,
+    design_cache,
+    experiments,
+    points,
+  } = data;
+  const { node } = props;
+  const {
+    id,
+    can_unlock,
+    tier,
+  } = node;
+  let thisNode = node_cache[id];
+
+  const prereqNodes = thisNode.prereq_ids.reduce((arr, val) => {
+    const foundNode = nodes.filter(x => x.id == val)[0];
+    if (foundNode)
+      arr.push(foundNode);
+    return arr;
+  }, []);
+
+  const unlockedNodes = Object.keys(thisNode.unlock_ids).reduce((arr, val) => {
+    const foundNode = nodes.filter(x => x.id == val)[0];
+    if (foundNode)
+      arr.push(foundNode);
+    return arr;
+  }, []);
+
+  return (
+    <div>
+      <TechNode node={node} />
+      {prereqNodes.length > 0 && (
+        <Section title="Required">
+          {prereqNodes.map((n, idx) =>
+            (<TechNode node={n} key={`nr${idx}`} />)
+          )}
+        </Section>
+      )}
+      {unlockedNodes.length > 0 && (
+        <Section title="Unlocks">
+          {unlockedNodes.map((n, idx) =>
+            (<TechNode node={n} key={`nu${idx}`} />)
+          )}
+        </Section>
+      )}
+    </div>
   );
 };
 
@@ -129,6 +246,11 @@ const TechNode = (props, context) => {
   } = node;
   let thisNode = node_cache[id];
   let reqExp = thisNode?.required_experiments;
+  const [
+    techwebRoute,
+    setTechwebRoute,
+  ] = useLocalState(context, 'techwebRoute', null)
+  const selected = false;
 
   const expcompl = reqExp.filter(x => experiments[x]?.completed).length;
   const experimentProgress = (
@@ -145,14 +267,24 @@ const TechNode = (props, context) => {
 
   return (
     <Section title={thisNode.name}
-      buttons={tier === 1 && (
-        <Button
-          icon="lightbulb"
-          disabled={!can_unlock}
-          onClick={() => act("researchNode", { node_id: thisNode.id })}>
-          Research
-        </Button>
-      )}
+      buttons={
+        <span>
+          <Button
+            icon={selected ? "arrow-left" : "tasks"}
+            onClick={() => {
+              setTechwebRoute(selected ? null : { route: "details", selectedNode: node.id });
+            }}>
+            {selected ? "Back" : "Details"}
+          </Button>
+          {tier === 1 && (
+          <Button
+            icon="lightbulb"
+            disabled={!can_unlock}
+            onClick={() => act("researchNode", { node_id: thisNode.id })}>
+            Research
+          </Button>)}
+        </span>
+      }
       level={1}
       className="Techweb__NodeContainer">
       {tier !== 0 && (
