@@ -528,7 +528,7 @@
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
-	display_name = "rapid device upgrade designs"
+	display_name = "Rapid Device Upgrade Designs"
 	description = "Unlocks new designs that improve rapid devices."
 	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing", "rpd_upgrade_unwrench")
 	prereq_ids = list("adv_engi")
@@ -536,7 +536,7 @@
 
 /datum/techweb_node/adv_rcd_upgrade
 	id = "adv_rcd_upgrade"
-	display_name = "Advanced RCD designs upgrade"
+	display_name = "Advanced RCD Designs Upgrade"
 	description = "Unlocks new RCD designs."
 	design_ids = list("rcd_upgrade_silo_link")
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
