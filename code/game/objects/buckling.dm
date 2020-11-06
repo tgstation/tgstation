@@ -14,7 +14,7 @@
 	. = ..()
 	if(.)
 		return
-	if(buckle_flags & CAN_BUCKLE && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
+	if((buckle_flags & CAN_BUCKLE) && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
@@ -40,7 +40,7 @@
 	. = ..()
 	if(.)
 		return
-	if(Adjacent(user) && buckle_flags & CAN_BUCKLE && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
+	if(Adjacent(user) && (buckle_flags & CAN_BUCKLE) && !(buckle_flags & NO_ATTACK_HAND_UNBUCKLE) && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			return user_unbuckle_mob(unbuckled,user)
@@ -191,7 +191,7 @@
 		return FALSE
 
 	// If the buckle requires restraints, make sure the target is actually restrained.
-	if(buckle_flags & BUCKLE_REQUIRE_RESTRAINTS && !HAS_TRAIT(target, TRAIT_RESTRAINED))
+	if((buckle_flags & BUCKLE_REQUIRE_RESTRAINTS) && !HAS_TRAIT(target, TRAIT_RESTRAINED))
 		return FALSE
 
 	//If buckling is forbidden for the target, cancel

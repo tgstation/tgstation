@@ -1233,7 +1233,7 @@
 	C.Paralyze(40)
 
 /mob/living/can_be_pulled()
-	return ..() && !(buckled && buckled.buckle_flags & BUCKLE_PREVENT_PULL)
+	return ..() && !(buckled?.buckle_flags & BUCKLE_PREVENT_PULL)
 
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
