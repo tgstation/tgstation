@@ -223,7 +223,7 @@
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked))
 			return
-		H.forceMove(picked)
+		do_teleport(owner, get_turf(picked), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/structure/table(get_turf(owner))
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
