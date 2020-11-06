@@ -522,7 +522,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) + 1 * (current_damper * 0.01) //Max around 350 KW
+		active_power_usage = (((current_damper * 0.002) + power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
