@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Newscasters internal scanners have been updated, and now correctly obtain crewmembers  ID cards from their wallets/ID holding devices."
