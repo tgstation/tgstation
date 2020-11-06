@@ -44,8 +44,8 @@ export const Techweb = (props, context) => {
               <Box className="Techweb__HeaderContent">
                 Available points:
                 <ul className="Techweb__PointSummary">
-                  {Object.keys(points).map((k, i) => (
-                    <li key={`ps${i}`}>
+                  {Object.keys(points).map((k) => (
+                    <li key={`ps${k}`}>
                       <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
                     </li>
                   ))}
@@ -177,9 +177,9 @@ const TechwebOverview = (props, context) => {
 
   return (
     <Fragment>
-      {displayedNodes.map((n, idx) => {
+      {displayedNodes.map((n) => {
         return (
-          <TechNode node={n} key={`n${idx}`} />
+          <TechNode node={n} key={`n${n.id}`} />
         );
       })}
     </Fragment>
@@ -286,15 +286,15 @@ const TechNodeDetail = (props, context) => {
       <TechNode node={node} />
       {prereqNodes.length > 0 && (
         <Section title="Required">
-          {prereqNodes.map((n, idx) =>
-            (<TechNode node={n} key={`nr${idx}`} />)
+          {prereqNodes.map((n) =>
+            (<TechNode node={n} key={`nr${n.id}`} />)
           )}
         </Section>
       )}
       {unlockedNodes.length > 0 && (
         <Section title="Unlocks">
-          {unlockedNodes.map((n, idx) =>
-            (<TechNode node={n} key={`nu${idx}`} />)
+          {unlockedNodes.map((n) =>
+            (<TechNode node={n} key={`nu${n.id}`} />)
           )}
         </Section>
       )}
@@ -389,7 +389,7 @@ const TechNode = (props, context) => {
       <Box className="Techweb__NodeUnlockedDesigns">
         {Object.keys(thisNode.design_ids).map((k, i) => {
           return (
-            <Button key={`${thisNode.id}${i}`}
+            <Button key={`d${thisNode.id}`}
               className={`${design_cache[k].class} Techweb__DesignIcon`}
               tooltip={design_cache[k].name}
               tooltipPosition={i % 15 < 7 ? "right" : "left"} />
@@ -401,7 +401,7 @@ const TechNode = (props, context) => {
           <Collapsible
             className="Techweb__NodeExperimentsRequired"
             title="Required Experiments">
-            {thisNode.required_experiments.map((k, i) => {
+            {thisNode.required_experiments.map((k) => {
               const thisExp = experiments[k];
               if (thisExp === null || thisExp === undefined) {
                 return (
@@ -409,7 +409,7 @@ const TechNode = (props, context) => {
                 );
               }
               return (
-                <Experiment key={`n${thisNode.id}e${i}`} exp={thisExp} />
+                <Experiment key={`n${thisNode.id}e${thisExp}`} exp={thisExp} />
               );
             })}
           </Collapsible>
