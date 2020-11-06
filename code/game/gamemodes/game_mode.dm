@@ -196,7 +196,7 @@
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
 		round_converted = 0
 		return
-	 //somewhere between 1 and 3 minutes from now
+	//somewhere between 1 and 3 minutes from now
 	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
 		round_converted = 0
 		return TRUE

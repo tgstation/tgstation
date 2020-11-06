@@ -1,18 +1,18 @@
 /**
-  * # Outfit datums
-  *
-  * This is a clean system of applying outfits to mobs, if you need to equip someone in a uniform
-  * this is the way to do it cleanly and properly.
-  *
-  * You can also specify an outfit datum on a job to have it auto equipped to the mob on join
-  *
-  * /mob/living/carbon/human/proc/equipOutfit(outfit) is the mob level proc to equip an outfit
-  * and you pass it the relevant datum outfit
-  *
-  * outfits can also be saved as json blobs downloadable by a client and then can be uploaded
-  * by that user to recreate the outfit, this is used by admins to allow for custom event outfits
-  * that can be restored at a later date
-  */
+ * # Outfit datums
+ *
+ * This is a clean system of applying outfits to mobs, if you need to equip someone in a uniform
+ * this is the way to do it cleanly and properly.
+ *
+ * You can also specify an outfit datum on a job to have it auto equipped to the mob on join
+ *
+ * /mob/living/carbon/human/proc/equipOutfit(outfit) is the mob level proc to equip an outfit
+ * and you pass it the relevant datum outfit
+ *
+ * outfits can also be saved as json blobs downloadable by a client and then can be uploaded
+ * by that user to recreate the outfit, this is used by admins to allow for custom event outfits
+ * that can be restored at a later date
+ */
 /datum/outfit
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
@@ -88,14 +88,14 @@
 	/// Internals box. Will be inserted at the start of backpack_contents
 	var/box
 
-	/** 
+	/**
 	  * Any implants the mob should start implanted with
 	  *
 	  * Format of this list is (typepath, typepath, typepath)
 	  */
 	var/list/implants = null
 
-  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
 	/// Any clothing accessory item
@@ -114,43 +114,43 @@
 	var/list/chameleon_extras
 
 /**
-  * Called at the start of the equip proc
-  *
-  * Override to change the value of the slots depending on client prefs, species and
-  * other such sources of change
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Called at the start of the equip proc
+ *
+ * Override to change the value of the slots depending on client prefs, species and
+ * other such sources of change
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for customization depending on client prefs,species etc
 	return
 
 /**
-  * Called after the equip proc has finished
-  *
-  * All items are on the mob at this point, use this proc to toggle internals
-  * fiddle with id bindings and accesses etc
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Called after the equip proc has finished
+ *
+ * All items are on the mob at this point, use this proc to toggle internals
+ * fiddle with id bindings and accesses etc
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
 /**
-  * Equips all defined types and paths to the mob passed in
-  *
-  * Extra Arguments
-  * * visualsOnly true if this is only for display (in the character setup screen)
-  *
-  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
-  */
+ * Equips all defined types and paths to the mob passed in
+ *
+ * Extra Arguments
+ * * visualsOnly true if this is only for display (in the character setup screen)
+ *
+ * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
+ */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
@@ -237,12 +237,12 @@
 	return TRUE
 
 /**
-  * Apply a fingerprint from the passed in human to all items in the outfit
-  *
-  * Used for forensics setup when the mob is first equipped at roundstart
-  * essentially calls add_fingerprint to every defined item on the human
-  *
-  */
+ * Apply a fingerprint from the passed in human to all items in the outfit
+ *
+ * Used for forensics setup when the mob is first equipped at roundstart
+ * essentially calls add_fingerprint to every defined item on the human
+ *
+ */
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return

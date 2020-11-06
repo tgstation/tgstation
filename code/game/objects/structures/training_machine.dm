@@ -7,11 +7,11 @@
 #define MAX_ATTACK_DELAY 15
 
 /**
-  * Machine that runs around wildly so people can practice clickin on things
-  *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess, 
-  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
-  */
+ * Machine that runs around wildly so people can practice clickin on things
+ *
+ * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
+ * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
+ */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
@@ -74,7 +74,7 @@
 	return data
 
 /**
- * Control the attached variables. 
+ * Control the attached variables.
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
@@ -184,7 +184,7 @@
 	playsound(src, "rustle", 50, TRUE)
 
 /**
- * Toggle the machine's movement 
+ * Toggle the machine's movement
  */
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
@@ -221,8 +221,8 @@
 /**
  * Main movement method for the machine
  *
- * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started. 
- * Will only move if the move_cooldown cooldown macro is finished. 
+ * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started.
+ * Will only move if the move_cooldown cooldown macro is finished.
  * If it can't find a place to go, it will stop moving.
  */
 /obj/structure/training_machine/process()
@@ -327,10 +327,10 @@
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
 /**
-  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
-  *
-  * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
-  */
+ * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
+ *
+ * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
+ */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"

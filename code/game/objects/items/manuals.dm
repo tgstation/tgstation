@@ -264,7 +264,7 @@
 				function pageloaded(myframe) {
 					document.getElementById("loading").style.display = "none";
 					myframe.style.display = "inline";
-    			}
+			}
 			</script>
 			<p id='loading'>You start skimming through the manual...</p>
 			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>

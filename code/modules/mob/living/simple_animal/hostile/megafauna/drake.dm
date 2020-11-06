@@ -9,31 +9,30 @@
 ///used whenever the drake generates a hotspot
 #define DRAKE_FIRE_EXPOSURE 50
 
-/*
-
-ASH DRAKE
-
-Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
-
-It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
-
-Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
-It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
-The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
- - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
- - Sometimes, it will encase its target in an arena of lava
-
-When an ash drake dies, it leaves behind a chest that can contain four things:
- 1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
- 2. A lava staff that allows its wielder to create lava
- 3. A spellbook and wand of fireballs
- 4. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
-
-When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
-
-Difficulty: Medium
-
-*/
+/*£
+ *
+ *ASH DRAKE
+ *
+ *Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
+ *
+ *It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+ *
+ *Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
+ *It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
+ *The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
+ *Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+ *Sometimes, it will encase its target in an arena of lava
+ *
+ *When an ash drake dies, it leaves behind a chest that can contain four things:
+ *A. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
+ *B. A lava staff that allows its wielder to create lava
+ *C. A spellbook and wand of fireballs
+ *D. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
+ *
+ *When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
+ *
+ *Intended Difficulty: Medium
+ */
 
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"

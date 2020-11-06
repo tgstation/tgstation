@@ -77,11 +77,11 @@
 				return
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE

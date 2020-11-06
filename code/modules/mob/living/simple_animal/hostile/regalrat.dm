@@ -112,8 +112,8 @@
 
 
 /**
-  *This action creates trash, money, dirt, and cheese.
-  */
+ *This action creates trash, money, dirt, and cheese.
+ */
 /datum/action/cooldown/coffer
 	name = "Fill Coffers"
 	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
@@ -155,8 +155,8 @@
 	StartCooldown()
 
 /**
-  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
-  */
+ *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
+ */
 
 /datum/action/cooldown/riot
 	name = "Raise Army"

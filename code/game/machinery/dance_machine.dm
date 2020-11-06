@@ -397,7 +397,7 @@
 			M.setDir(pick(GLOB.cardinals))
 			for(var/mob/living/carbon/NS in rangers)
 				NS.set_resting(!NS.resting, TRUE, TRUE)
-		 time--
+		time--
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)

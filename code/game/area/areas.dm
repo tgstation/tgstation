@@ -1,8 +1,8 @@
 /**
-  * # area
-  *
-  * A grouping of tiles into a logical space, mostly used by map editors
-  */
+ * # area
+ *
+ * A grouping of tiles into a logical space, mostly used by map editors
+ */
 /area
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
@@ -67,28 +67,28 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-    
+
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
 
 /**
-  * A list of teleport locations
-  *
-  * Adding a wizard area teleport list because motherfucking lag -- Urist
-  * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
-  */
+ * A list of teleport locations
+ *
+ * Adding a wizard area teleport list because motherfucking lag -- Urist
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ */
 GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
-  * Generate a list of turfs you can teleport to from the areas list
-  *
-  * Includes areas if they're not a shuttle or not not teleport or have no contents
-  *
-  * The chosen turf is the first item in the areas contents that is a station level
-  *
-  * The returned list of turfs is sorted by name
-  */
+ * Generate a list of turfs you can teleport to from the areas list
+ *
+ * Includes areas if they're not a shuttle or not not teleport or have no contents
+ *
+ * The chosen turf is the first item in the areas contents that is a station level
+ *
+ * The returned list of turfs is sorted by name
+ */
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
@@ -105,10 +105,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
-  * Called when an area loads
-  *
-  *  Adds the item to the GLOB.areas_by_type list based on area type
-  */
+ * Called when an area loads
+ *
+ *  Adds the item to the GLOB.areas_by_type list based on area type
+ */
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
@@ -118,13 +118,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /**
-  * Initalize this area
-  *
-  * intializes the dynamic area lighting and also registers the area with the z level via
-  * reg_in_areas_in_z
-  *
-  * returns INITIALIZE_HINT_LATELOAD
-  */
+ * Initalize this area
+ *
+ * intializes the dynamic area lighting and also registers the area with the z level via
+ * reg_in_areas_in_z
+ *
+ * returns INITIALIZE_HINT_LATELOAD
+ */
 /area/Initialize()
 	icon_state = ""
 
@@ -155,8 +155,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return INITIALIZE_HINT_LATELOAD
 
 /**
-  * Sets machine power levels in the area
-  */
+ * Sets machine power levels in the area
+ */
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
 	update_beauty()
@@ -165,10 +165,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		map_generator.generate_terrain(get_area_turfs(src))
 
 /**
-  * Register this area as belonging to a z level
-  *
-  * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  */
+ * Register this area as belonging to a z level
+ *
+ * Ensures the item is added to the SSmapping.areas_in_z list for this z
+ */
 /area/proc/reg_in_areas_in_z()
 	if(!length(contents))
 		return
@@ -182,13 +182,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	areas_in_z["[z]"] += src
 
 /**
-  * Destroy an area and clean it up
-  *
-  * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
-  *
-  * This is despite the fact that no code appears to put it on SSobj, but
-  * who am I to argue with old coders
-  */
+ * Destroy an area and clean it up
+ *
+ * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
+ *
+ * This is despite the fact that no code appears to put it on SSobj, but
+ * who am I to argue with old coders
+ */
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
@@ -196,10 +196,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /**
-  * Generate a power alert for this area
-  *
-  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  */
+ * Generate a power alert for this area
+ *
+ * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
+ */
 /area/proc/poweralert(state, obj/source)
 	if (area_flags & NO_ALERTS)
 		return
@@ -234,10 +234,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					p.triggerAlarm("Power", src, cameras, source)
 
 /**
-  * Generate an atmospheric alert for this area
-  *
-  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  */
+ * Generate an atmospheric alert for this area
+ *
+ * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
+ */
 /area/proc/atmosalert(isdangerous, obj/source)
 	if (area_flags & NO_ALERTS)
 		return
@@ -276,8 +276,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return FALSE
 
 /**
-  * Try to close all the firedoors in the area
-  */
+ * Try to close all the firedoors in the area
+ */
 /area/proc/ModifyFiredoors(opening)
 	if(firedoors)
 		firedoors_last_closed_on = world.time
@@ -297,12 +297,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
 /**
-  * Generate a firealarm alert for this area
-  *
-  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  *
-  * Also starts the area processing on SSobj
-  */
+ * Generate a firealarm alert for this area
+ *
+ * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
+ *
+ * Also starts the area processing on SSobj
+ */
 /area/proc/firealert(obj/source)
 	if (!fire)
 		set_fire_alarm_effect()
@@ -326,13 +326,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	START_PROCESSING(SSobj, src)
 
 /**
-  * Reset the firealarm alert for this area
-  *
-  * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
-  * in the world
-  *
-  * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
-  */
+ * Reset the firealarm alert for this area
+ *
+ * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
+ * in the world
+ *
+ * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
+ */
 /area/proc/firereset(obj/source)
 	if (fire)
 		unset_fire_alarm_effects()
@@ -356,17 +356,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	STOP_PROCESSING(SSobj, src)
 
 /**
-  * If 100 ticks has elapsed, toggle all the firedoors closed again
-  */
+ * If 100 ticks has elapsed, toggle all the firedoors closed again
+ */
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
 		ModifyFiredoors(FALSE)
 
 /**
-  * Close and lock a door passed into this proc
-  *
-  * Does this need to exist on area? probably not
-  */
+ * Close and lock a door passed into this proc
+ *
+ * Does this need to exist on area? probably not
+ */
 /area/proc/close_and_lock_door(obj/machinery/door/DOOR)
 	set waitfor = FALSE
 	DOOR.close()
@@ -374,12 +374,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		DOOR.lock()
 
 /**
-  * Raise a burglar alert for this area
-  *
-  * Close and locks all doors in the area and alerts silicon mobs of a break in
-  *
-  * Alarm auto resets after 600 ticks
-  */
+ * Raise a burglar alert for this area
+ *
+ * Close and locks all doors in the area and alerts silicon mobs of a break in
+ *
+ * Alarm auto resets after 600 ticks
+ */
 /area/proc/burglaralert(obj/trigger)
 	if (area_flags & NO_ALERTS)
 		return
@@ -396,10 +396,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /**
-  * Trigger the fire alarm visual affects in an area
-  *
-  * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
-  */
+ * Trigger the fire alarm visual affects in an area
+ *
+ * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
+ */
 /area/proc/set_fire_alarm_effect()
 	fire = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -410,10 +410,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * unset the fire alarm visual affects in an area
-  *
-  * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
-  */
+ * unset the fire alarm visual affects in an area
+ *
+ * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
+ */
 /area/proc/unset_fire_alarm_effects()
 	fire = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -424,11 +424,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * Update the icon state of the area
-  *
-  * Im not sure what the heck this does, somethign to do with weather being able to set icon
-  * states on areas?? where the heck would that even display?
-  */
+ * Update the icon state of the area
+ *
+ * Im not sure what the heck this does, somethign to do with weather being able to set icon
+ * states on areas?? where the heck would that even display?
+ */
 /area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
@@ -440,18 +440,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		icon_state = null
 
 /**
-  * Update the icon of the area (overridden to always be null for space
-  */
+ * Update the icon of the area (overridden to always be null for space
+ */
 /area/space/update_icon_state()
 	icon_state = null
 
 
 /**
-  * Returns int 1 or 0 if the area has power for the given channel
-  *
-  * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
-  * per channel power_equip, power_light, power_environ
-  */
+ * Returns int 1 or 0 if the area has power for the given channel
+ *
+ * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * per channel power_equip, power_light, power_environ
+ */
 /area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!requires_power)
@@ -469,16 +469,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return FALSE
 
 /**
-  * Space is not powered ever, so this returns false
-  */
+ * Space is not powered ever, so this returns false
+ */
 /area/space/powered(chan) //Nope.avi
 	return FALSE
 
 /**
-  * Called when the area power status changes
-  *
-  * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
-  */
+ * Called when the area power status changes
+ *
+ * Updates the area icon, calls power change on all machinees in the area, and sends the `COMSIG_AREA_POWER_CHANGE` signal.
+ */
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
@@ -487,30 +487,30 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
-  * Add a static amount of power load to an area
-  *
-  * Possible channels
-  * *AREA_USAGE_STATIC_EQUIP
-  * *AREA_USAGE_STATIC_LIGHT
-  * *AREA_USAGE_STATIC_ENVIRON
-  */
+ * Add a static amount of power load to an area
+ *
+ * Possible channels
+ * *AREA_USAGE_STATIC_EQUIP
+ * *AREA_USAGE_STATIC_LIGHT
+ * *AREA_USAGE_STATIC_ENVIRON
+ */
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
 		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
 			power_usage[powerchannel] += value
 
 /**
-  * Clear all power usage in area
-  *
-  * Clears all power used for equipment, light and environment channels
-  */
+ * Clear all power usage in area
+ *
+ * Clears all power used for equipment, light and environment channels
+ */
 /area/proc/clear_usage()
 	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
 		power_usage[i] = 0
 
 /**
-  * Add a power value amount to the stored used_x variables
-  */
+ * Add a power value amount to the stored used_x variables
+ */
 /area/proc/use_power(amount, chan)
 	switch(chan)
 		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
@@ -518,12 +518,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
-  * Call back when an atom enters an area
-  *
-  * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
-  *
-  * If the area has ambience, then it plays some ambience music to the ambience channel
-  */
+ * Call back when an atom enters an area
+ *
+ * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
+ *
+ * If the area has ambience, then it plays some ambience music to the ambience channel
+ */
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
@@ -563,25 +563,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /**
-  * Called when an atom exits an area
-  *
-  * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
-  */
+ * Called when an atom exits an area
+ *
+ * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
+ */
 /area/Exited(atom/movable/M)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
 	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /**
-  * Reset the played var to false on the client
-  */
+ * Reset the played var to false on the client
+ */
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
 /**
-  * Setup an area (with the given name)
-  *
-  * Sets the area name, sets all status var's to false and adds the area to the sorted area list
-  */
+ * Setup an area (with the given name)
+ *
+ * Sets the area name, sets all status var's to false and adds the area to the sorted area list
+ */
 /area/proc/setup(a_name)
 	name = a_name
 	power_equip = FALSE
@@ -592,11 +592,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	area_flags &= ~BLOBS_ALLOWED
 	addSorted()
 /**
-  * Set the area size of the area
-  *
-  * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
-  *
-  */
+ * Set the area size of the area
+ *
+ * This is the number of open turfs in the area contents, or FALSE if the outdoors var is set
+ *
+ */
 /area/proc/update_areasize()
 	if(outdoors)
 		return FALSE
@@ -605,14 +605,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		areasize++
 
 /**
-  * Causes a runtime error
-  */
+ * Causes a runtime error
+ */
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")
 
 /**
-  * Causes a runtime error
-  */
+ * Causes a runtime error
+ */
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
 

@@ -135,11 +135,11 @@
 			borgo.toggle_headlamp(FALSE, TRUE)
 
 /**
-  * Forces a full update of the UI, if currently open.
-  *
-  * Forces an update that includes refreshing ui_static_data. Called by
-  * law changes and borg log additions.
-  */
+ * Forces a full update of the UI, if currently open.
+ *
+ * Forces an update that includes refreshing ui_static_data. Called by
+ * law changes and borg log additions.
+ */
 /datum/computer_file/program/robotact/proc/force_full_update()
 	if(tablet)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)

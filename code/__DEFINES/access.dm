@@ -2,7 +2,7 @@
 #define ACCESS_SECURITY 1
 /// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console
 #define ACCESS_BRIG 2
- /// Armory, gulag teleporter, execution chamber
+/// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY 3
 ///Detective's office, forensics lockers, security+medical records
 #define ACCESS_FORENSICS_LOCKERS 4

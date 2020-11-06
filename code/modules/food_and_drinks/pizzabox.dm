@@ -318,9 +318,10 @@
 		/obj/item/food/pizza/margherita = 1,
 		/obj/item/food/pizza/sassysage = 0.8,
 		/obj/item/food/pizza/vegetable = 0.8,
-   		/obj/item/food/pizza/pineapple = 0.5,
+		/obj/item/food/pizza/pineapple = 0.5,
 		/obj/item/food/pizza/donkpocket = 0.3,
-		/obj/item/food/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
+		/obj/item/food/pizza/dank = 0.1,
+	) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
 
 /obj/item/pizzabox/infinite/Initialize()

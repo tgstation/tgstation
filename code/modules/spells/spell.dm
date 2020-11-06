@@ -287,13 +287,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return
 
 /**
-  * can_target: Checks if we are allowed to cast the spell on a target.
-  *
-  * Arguments:
-  * * target The atom that is being targeted by the spell.
-  * * user The mob using the spell.
-  * * silent If the checks should not give any feedback messages.
-  */
+ * can_target: Checks if we are allowed to cast the spell on a target.
+ *
+ * Arguments:
+ * * target The atom that is being targeted by the spell.
+ * * user The mob using the spell.
+ * * silent If the checks should not give any feedback messages.
+ */
 /obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
 	return TRUE
 

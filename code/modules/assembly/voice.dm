@@ -16,10 +16,12 @@
 	var/listening = FALSE
 	var/recorded = "" //the activation message
 	var/mode = INCLUSIVE_MODE
-	var/static/list/modes = list("inclusive",
-								 "exclusive",
-								 "recognizer",
-								 "voice sensor")
+	var/static/list/modes = list(
+		"inclusive",
+		"exclusive",
+		"recognizer",
+		"voice sensor",
+	)
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 

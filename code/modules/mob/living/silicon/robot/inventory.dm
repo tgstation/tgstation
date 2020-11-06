@@ -2,23 +2,23 @@
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 /**
-  * Returns the thing in our active hand (whatever is in our active module-slot, in this case)
-  */
+ * Returns the thing in our active hand (whatever is in our active module-slot, in this case)
+ */
 /mob/living/silicon/robot/get_active_held_item()
 	return module_active
 
 /**
-  * Parent proc - triggers when an item/module is unequipped from a cyborg.
-  */
+ * Parent proc - triggers when an item/module is unequipped from a cyborg.
+ */
 /obj/item/proc/cyborg_unequip(mob/user)
 	return
 
 /**
-  * Finds the first available slot and attemps to put item item_module in it.
-  *
-  * Arguments
-  * * item_module - the item being equipped to a slot.
-  */
+ * Finds the first available slot and attemps to put item item_module in it.
+ *
+ * Arguments
+ * * item_module - the item being equipped to a slot.
+ */
 /mob/living/silicon/robot/proc/activate_module(obj/item/item_module)
 	if(QDELETED(item_module))
 		CRASH("activate_module called with improper item_module")
@@ -44,12 +44,12 @@
 	return equip_module_to_slot(item_module, first_free_slot)
 
 /**
-  * Is passed an item and a module slot. Equips the item to that borg slot.
-  *
-  * Arguments
-  * * item_module - the item being equipped to a slot
-  * * module_num - the slot number being equipped to.
-  */
+ * Is passed an item and a module slot. Equips the item to that borg slot.
+ *
+ * Arguments
+ * * item_module - the item being equipped to a slot
+ * * module_num - the slot number being equipped to.
+ */
 /mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/item_module, module_num)
 	var/storage_was_closed = FALSE //Just to be consistant and all
 	if(!shown_robot_modules) //Tools may be invisible if the collection is hidden
@@ -82,12 +82,12 @@
 	return TRUE
 
 /**
-  * Unequips item item_module from slot module_num. Deletes it if delete_after = TRUE.
-  *
-  * Arguments
-  * * item_module - the item being unequipped
-  * * module_num - the slot number being unequipped.
-  */
+ * Unequips item item_module from slot module_num. Deletes it if delete_after = TRUE.
+ *
+ * Arguments
+ * * item_module - the item being unequipped
+ * * module_num - the slot number being unequipped.
+ */
 /mob/living/silicon/robot/proc/unequip_module_from_slot(obj/item/item_module, module_num)
 	if(QDELETED(item_module))
 		CRASH("unequip_module_from_slot called with improper item_module")
@@ -133,11 +133,11 @@
 	return TRUE
 
 /**
-  * Breaks the slot number, changing the icon.
-  *
-  * Arguments
-  * * module_num - the slot number being repaired.
-  */
+ * Breaks the slot number, changing the icon.
+ *
+ * Arguments
+ * * module_num - the slot number being repaired.
+ */
 /mob/living/silicon/robot/proc/break_cyborg_slot(module_num)
 	if(is_invalid_module_number(module_num, TRUE))
 		return FALSE
@@ -188,18 +188,18 @@
 	return TRUE
 
 /**
-  * Breaks all of a cyborg's slots.
-  */
+ * Breaks all of a cyborg's slots.
+ */
 /mob/living/silicon/robot/proc/break_all_cyborg_slots()
 	for(var/cyborg_slot in 1 to 3)
 		break_cyborg_slot(cyborg_slot)
 
 /**
-  * Repairs the slot number, updating the icon.
-  *
-  * Arguments
-  * * module_num - the module number being repaired.
-  */
+ * Repairs the slot number, updating the icon.
+ *
+ * Arguments
+ * * module_num - the module number being repaired.
+ */
 /mob/living/silicon/robot/proc/repair_cyborg_slot(module_num)
 	if(is_invalid_module_number(module_num, TRUE))
 		return FALSE
@@ -232,18 +232,18 @@
 	return TRUE
 
 /**
-  * Repairs all slots. Unbroken slots are unaffected.
-  */
+ * Repairs all slots. Unbroken slots are unaffected.
+ */
 /mob/living/silicon/robot/proc/repair_all_cyborg_slots()
 	for(var/cyborg_slot in 1 to 3)
 		repair_cyborg_slot(cyborg_slot)
 
 /**
-  * Updates the observers's screens with cyborg itemss.
-  * Arguments
-  * * item_module - the item being added or removed from the screen
-  * * add - whether or not the item is being added, or removed.
-  */
+ * Updates the observers's screens with cyborg itemss.
+ * Arguments
+ * * item_module - the item being added or removed from the screen
+ * * add - whether or not the item is being added, or removed.
+ */
 /mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module, add = TRUE)
 	if(observers?.len)
 		for(var/M in observers)
@@ -260,15 +260,15 @@
 					break
 
 /**
-  * Unequips the active held item, if there is one.
-  */
+ * Unequips the active held item, if there is one.
+ */
 /mob/living/silicon/robot/proc/uneq_active()
 	if(module_active)
 		unequip_module_from_slot(module_active, get_selected_module())
 
 /**
-  * Unequips all held items.
-  */
+ * Unequips all held items.
+ */
 /mob/living/silicon/robot/proc/uneq_all()
 	for(var/cyborg_slot in 1 to 3)
 		if(!held_items[cyborg_slot])
@@ -276,26 +276,26 @@
 		unequip_module_from_slot(held_items[cyborg_slot], cyborg_slot)
 
 /**
-  * Checks if the item is currently in a slot.
-  *
-  * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
-  * Arguments
-  * * item_module - the item being checked
-  */
+ * Checks if the item is currently in a slot.
+ *
+ * If the item is found in a slot, this returns TRUE. Otherwise, it returns FALSE
+ * Arguments
+ * * item_module - the item being checked
+ */
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
 	if(item_module in held_items)
 		return TRUE
 	return FALSE
 
 /**
-  * Checks if the provided module number is a valid number.
-  *
-  * If the number is between 1 and 3 (if check_all_slots is true) or between 1 and the number of disabled
-  * modules (if check_all_slots is false), then it returns FALSE. Otherwise, it returns TRUE.
-  * Arguments
-  * * module_num - the passed module num that is checked for validity.
-  * * check_all_slots - TRUE = the proc checks all slots | FALSE = the proc only checks un-disabled slots
-  */
+ * Checks if the provided module number is a valid number.
+ *
+ * If the number is between 1 and 3 (if check_all_slots is true) or between 1 and the number of disabled
+ * modules (if check_all_slots is false), then it returns FALSE. Otherwise, it returns TRUE.
+ * Arguments
+ * * module_num - the passed module num that is checked for validity.
+ * * check_all_slots - TRUE = the proc checks all slots | FALSE = the proc only checks un-disabled slots
+ */
 /mob/living/silicon/robot/proc/is_invalid_module_number(module_num, check_all_slots = FALSE)
 	if(!module_num)
 		return TRUE
@@ -313,8 +313,8 @@
 	return module_num < 1 || module_num > max_number
 
 /**
-  * Returns the slot number of the selected module, or zero if no modules are selected.
-  */
+ * Returns the slot number of the selected module, or zero if no modules are selected.
+ */
 /mob/living/silicon/robot/proc/get_selected_module()
 	if(module_active)
 		return held_items.Find(module_active)
@@ -322,10 +322,10 @@
 	return 0
 
 /**
-  * Selects the module in the slot module_num.
-  * Arguments
-  * * module_num - the slot number being selected
-  */
+ * Selects the module in the slot module_num.
+ * Arguments
+ * * module_num - the slot number being selected
+ */
 /mob/living/silicon/robot/proc/select_module(module_num)
 	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
@@ -344,10 +344,10 @@
 	return TRUE
 
 /**
-  * Deselects the module in the slot module_num.
-  * Arguments
-  * * module_num - the slot number being de-selected
-  */
+ * Deselects the module in the slot module_num.
+ * Arguments
+ * * module_num - the slot number being de-selected
+ */
 /mob/living/silicon/robot/proc/deselect_module(module_num)
 	switch(module_num)
 		if(1)
@@ -363,10 +363,10 @@
 	return TRUE
 
 /**
-  * Toggles selection of the module in the slot module_num.
-  * Arguments
-  * * module_num - the slot number being toggled
-  */
+ * Toggles selection of the module in the slot module_num.
+ * Arguments
+ * * module_num - the slot number being toggled
+ */
 /mob/living/silicon/robot/proc/toggle_module(module_num)
 	if(is_invalid_module_number(module_num))
 		return FALSE
@@ -381,8 +381,8 @@
 	return select_module(module_num)
 
 /**
-  * Cycles through the list of enabled modules, deselecting the current one and selecting the next one.
-  */
+ * Cycles through the list of enabled modules, deselecting the current one and selecting the next one.
+ */
 /mob/living/silicon/robot/proc/cycle_modules()
 	var/slot_start = get_selected_module()
 	var/slot_num

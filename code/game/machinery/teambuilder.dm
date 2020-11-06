@@ -1,6 +1,6 @@
 /**
-  * Simple admin tool that enables players to be assigned to a VERY SHITTY, very visually distinct team, quickly and affordably.
-  */
+ * Simple admin tool that enables players to be assigned to a VERY SHITTY, very visually distinct team, quickly and affordably.
+ */
 /obj/machinery/teambuilder
 	name = "Teambuilding Machine"
 	desc = "A machine that, when passed, colors you based on the color of your team. Lead free!"

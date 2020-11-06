@@ -1,15 +1,15 @@
 
 #define FINAL_BUD_GROWTH_ICON 3
 /**
-  * Kudzu Flower Bud
-  *
-  * A flower created by flowering kudzu which spawns a venus human trap after a certain amount of time has passed.
-  *
-  * A flower created by kudzu with the flowering mutation.  Spawns a venus human trap after 2 minutes under normal circumstances.
-  * Also spawns 4 vines going out in diagonal directions from the bud.  Any living creature not aligned with plants is damaged by these vines.
-  * Once it grows a venus human trap, the bud itself will destroy itself.
-  *
-  */
+ * Kudzu Flower Bud
+ *
+ * A flower created by flowering kudzu which spawns a venus human trap after a certain amount of time has passed.
+ *
+ * A flower created by kudzu with the flowering mutation.  Spawns a venus human trap after 2 minutes under normal circumstances.
+ * Also spawns 4 vines going out in diagonal directions from the bud.  Any living creature not aligned with plants is damaged by these vines.
+ * Once it grows a venus human trap, the bud itself will destroy itself.
+ *
+ */
 /obj/structure/alien/resin/flower_bud //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
 	desc = "A large pulsating plant..."
@@ -46,10 +46,10 @@
 	countdown.start()
 
 /**
-  * Spawns a venus human trap, then qdels itself.
-  *
-  * Displays a message, spawns a human venus trap, then qdels itself.
-  */
+ * Spawns a venus human trap, then qdels itself.
+ *
+ * Displays a message, spawns a human venus trap, then qdels itself.
+ */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
@@ -76,17 +76,17 @@
 			to_chat(L, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /**
-  * Venus Human Trap
-  *
-  * The result of a kudzu flower bud, these enemies use vines to drag prey close to them for attack.
-  *
-  * A carnivorious plant which uses vines to catch and ensnare prey.  Spawns from kudzu flower buds.
-  * Each one has a maximum of four vines, which can be attached to a variety of things.  Carbons are stunned when a vine is attached to them, and movable entities are pulled closer over time.
-  * Attempting to attach a vine to something with a vine already attached to it will pull all movable targets closer on command.
-  * Once the prey is in melee range, melee attacks from the venus human trap heals itself for 10% of its max health, assuming the target is alive.
-  * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
-  *
-  */
+ * Venus Human Trap
+ *
+ * The result of a kudzu flower bud, these enemies use vines to drag prey close to them for attack.
+ *
+ * A carnivorious plant which uses vines to catch and ensnare prey.  Spawns from kudzu flower buds.
+ * Each one has a maximum of four vines, which can be attached to a variety of things.  Carbons are stunned when a vine is attached to them, and movable entities are pulled closer over time.
+ * Attempting to attach a vine to something with a vine already attached to it will pull all movable targets closer on command.
+ * Once the prey is in melee range, melee attacks from the venus human trap heals itself for 10% of its max health, assuming the target is alive.
+ * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
+ *
+ */
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
@@ -172,13 +172,13 @@
 	humanize_plant(user)
 
 /**
-  * Sets a ghost to control the plant if the plant is eligible
-  *
-  * Asks the interacting ghost if they would like to control the plant.
-  * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the plant.
-  * Arguments:
-  * * mob/user - The ghost to possibly control the plant
-  */
+ * Sets a ghost to control the plant if the plant is eligible
+ *
+ * Asks the interacting ghost if they would like to control the plant.
+ * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the plant.
+ * Arguments:
+ * * mob/user - The ghost to possibly control the plant
+ */
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
@@ -192,12 +192,12 @@
 	log_game("[key_name(src)] took control of [name].")
 
 /**
-  * Manages how the vines should affect the things they're attached to.
-  *
-  * Pulls all movable targets of the vines closer to the plant
-  * If the target is on the same tile as the plant, destroy the vine
-  * Removes any QDELETED vines from the vines list.
-  */
+ * Manages how the vines should affect the things they're attached to.
+ *
+ * Pulls all movable targets of the vines closer to the plant
+ * If the target is on the same tile as the plant, destroy the vine
+ * Removes any QDELETED vines from the vines list.
+ */
 /mob/living/simple_animal/hostile/venus_human_trap/proc/pull_vines()
 	for(var/datum/beam/B in vines)
 		if(istype(B.target, /atom/movable))
@@ -208,12 +208,12 @@
 			B.End()
 
 /**
-  * Removes a vine from the list.
-  *
-  * Removes the vine from our list.
-  * Called specifically when the vine is about to be destroyed, so we don't have any null references.
-  * Arguments:
-  * * datum/beam/vine - The vine to be removed from the list.
-  */
+ * Removes a vine from the list.
+ *
+ * Removes the vine from our list.
+ * Called specifically when the vine is about to be destroyed, so we don't have any null references.
+ * Arguments:
+ * * datum/beam/vine - The vine to be removed from the list.
+ */
 /mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
 	vines -= vine

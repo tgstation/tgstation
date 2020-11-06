@@ -35,8 +35,8 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	return
 
 /** When randomly generating the bounty list, duplicate bounties must be avoided.
-  * This proc is used to determine if two bounties are duplicates, or incompatible in general.
-  */
+ * This proc is used to determine if two bounties are duplicates, or incompatible in general.
+ */
 /datum/bounty/proc/compatible_with(other_bounty)
 	return TRUE
 
@@ -47,8 +47,8 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	reward = round(reward * scale_reward)
 
 /** This proc is called when the shuttle docks at CentCom.
-  * It handles items shipped for bounties.
-  */
+ * It handles items shipped for bounties.
+ */
 /proc/bounty_ship_item_and_contents(atom/movable/AM, dry_run=FALSE)
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
@@ -78,9 +78,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	return TRUE
 
 /** Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
-  *
-  * *Guided determines what specific catagory of bounty should be chosen.
-  */
+ *
+ * *Guided determines what specific catagory of bounty should be chosen.
+ */
 /proc/random_bounty(guided = 0)
 	var/bounty_num
 	if(guided && (guided != CIV_JOB_RANDOM))

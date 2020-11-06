@@ -702,7 +702,7 @@
 	name = "[source_item.name] steak"
 
 /obj/item/food/meat/steak/plain
-    foodtypes = MEAT
+	foodtypes = MEAT
 
 /obj/item/food/meat/steak/plain/human
 	tastes = list("tender meat" = 1)
@@ -804,7 +804,7 @@
 		meat_type = original_atom.name
 
 /obj/item/food/meat/rawcutlet/plain
-    foodtypes = MEAT
+	foodtypes = MEAT
 
 /obj/item/food/meat/rawcutlet/plain
 

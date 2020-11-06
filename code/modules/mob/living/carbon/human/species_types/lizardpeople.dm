@@ -102,7 +102,7 @@
 		new_tail.Insert(C, TRUE, FALSE)
 
 /*
- Lizard subspecies: ASHWALKERS
+Lizard subspecies: ASHWALKERS
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"

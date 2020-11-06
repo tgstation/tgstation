@@ -56,7 +56,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] labels [A] with \"[label]\".</span>", \
-						 "<span class='notice'>You label [A] with \"[label]\".</span>")
+		"<span class='notice'>You label [A] with \"[label]\".</span>")
 	A.AddComponent(/datum/component/label, label)
 	playsound(A, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 	labels_left--

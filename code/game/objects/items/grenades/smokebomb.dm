@@ -1,8 +1,8 @@
 /**
-  *This is smoke bomb, mezum koman. It is a grenade subtype. All craftmanship is of the highest quality.
-  *It menaces with spikes of iron. On it is a depiction of an assistant.
-  *The assistant is bleeding. The assistant has a painful expression. The assistant is dead.
-  */
+ *This is smoke bomb, mezum koman. It is a grenade subtype. All craftmanship is of the highest quality.
+ *It menaces with spikes of iron. On it is a depiction of an assistant.
+ *The assistant is bleeding. The assistant has a painful expression. The assistant is dead.
+ */
 /obj/item/grenade/smokebomb
 	name = "smoke grenade"
 	desc = "Real bruh moment if you ever see this. Probably tell a c*der or something."

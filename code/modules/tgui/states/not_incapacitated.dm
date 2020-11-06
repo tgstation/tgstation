@@ -1,10 +1,12 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: not_incapacitated_state
  *
  * Checks that the user isn't incapacitated
- *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 GLOBAL_DATUM_INIT(not_incapacitated_state, /datum/ui_state/not_incapacitated_state, new)

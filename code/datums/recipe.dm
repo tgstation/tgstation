@@ -9,7 +9,7 @@
  * * items are objects. Fruits, tools, circuit boards.
  * * result is type to create as new object
  * * time is optional parameter, you shall use in in your machine,
-     default /datum/recipe/ procs does not rely on this parameter.
+ *  default /datum/recipe/ procs does not rely on this parameter.
  *
  *  Functions you need:
  *  /datum/recipe/proc/make(obj/container as obj)

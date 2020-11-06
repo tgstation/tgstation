@@ -116,7 +116,7 @@ by John Walker 2015, released under public domain
 		//  First of all, dispose of fixed-length 29 day months
 		if (2, 4, 6, 10, 13)
 			return 29
-   		//  If it's not a leap year, Adar has 29 days
+		//  If it's not a leap year, Adar has 29 days
 		if (12)
 			if (!hebrew_leap(year))
 				return 29

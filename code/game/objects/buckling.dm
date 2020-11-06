@@ -55,19 +55,19 @@
 	return mouse_buckle_handling(M, user)
 
 /**
-  * Does some typechecks and then calls user_buckle_mob
-  *
-  * Arguments:
-  * M - The mob being buckled to src
-  * user - The mob buckling M to src
-  */
+ * Does some typechecks and then calls user_buckle_mob
+ *
+ * Arguments:
+ * M - The mob being buckled to src
+ * user - The mob buckling M to src
+ */
 /atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
 		return user_buckle_mob(M, user)
 
 /**
-  * Returns TRUE if there are mobs buckled to this atom and FALSE otherwise
-  */
+ * Returns TRUE if there are mobs buckled to this atom and FALSE otherwise
+ */
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
 		return FALSE
@@ -75,14 +75,14 @@
 		return TRUE
 
 /**
-  * Set a mob as buckled to src
-  *
-  * If you want to have a mob buckling another mob to something, or you want a chat message sent, use user_buckle_mob instead.
-  * Arguments:
-  * M - The mob to be buckled to src
-  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
-  * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
-  */
+ * Set a mob as buckled to src
+ *
+ * If you want to have a mob buckling another mob to something, or you want a chat message sent, use user_buckle_mob instead.
+ * Arguments:
+ * M - The mob to be buckled to src
+ * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
+ * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
+ */
 /atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
@@ -118,13 +118,13 @@
 			M.IgniteMob()
 
 /**
-  * Set a mob as unbuckled from src
-  *
-  * The mob must actually be buckled to src or else bad things will happen.
-  * Arguments:
-  * buckled_mob - The mob to be unbuckled
-  * force - TRUE if we should ignore buckled_mob.can_buckle_to
-  */
+ * Set a mob as unbuckled from src
+ *
+ * The mob must actually be buckled to src or else bad things will happen.
+ * Arguments:
+ * buckled_mob - The mob to be unbuckled
+ * force - TRUE if we should ignore buckled_mob.can_buckle_to
+ */
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
@@ -143,8 +143,8 @@
 	post_unbuckle_mob(.)
 
 /**
-  * Call [/atom/movable/proc/unbuckle_mob] for all buckled mobs
-  */
+ * Call [/atom/movable/proc/unbuckle_mob] for all buckled mobs
+ */
 /atom/movable/proc/unbuckle_all_mobs(force=FALSE)
 	if(!has_buckled_mobs())
 		return
@@ -159,15 +159,15 @@
 /atom/movable/proc/post_unbuckle_mob(mob/living/M)
 
 /**
-  * Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.
-  *
-  * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
-  * Called from [/atom/movable/proc/buckle_mob] and [/atom/movable/proc/is_user_buckle_possible].
-  * Arguments:
-  * * target - Target mob to check against buckling to src.
-  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle_to
-  * * check_loc - TRUE if target and src have to be on the same tile, FALSE if they are allowed to just be adjacent
-  */
+ * Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.
+ *
+ * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+ * Called from [/atom/movable/proc/buckle_mob] and [/atom/movable/proc/is_user_buckle_possible].
+ * Arguments:
+ * * target - Target mob to check against buckling to src.
+ * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var and target's can_buckle_to
+ * * check_loc - TRUE if target and src have to be on the same tile, FALSE if they are allowed to just be adjacent
+ */
 /atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
 	// Make sure target is mob/living
 	if(!istype(target))
@@ -204,15 +204,15 @@
 	return TRUE
 
 /**
-  * Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.
-  *
-  * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
-  * Called from [/atom/movable/proc/user_buckle_mob].
-  * Arguments:
-  * * target - Target mob to check against buckling to src.
-  * * user - The mob who is attempting to buckle the target to src.
-  * * check_loc - TRUE if target and src have to be on the same tile, FALSE if buckling is allowed from adjacent tiles
-  */
+ * Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.
+ *
+ * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+ * Called from [/atom/movable/proc/user_buckle_mob].
+ * Arguments:
+ * * target - Target mob to check against buckling to src.
+ * * user - The mob who is attempting to buckle the target to src.
+ * * check_loc - TRUE if target and src have to be on the same tile, FALSE if buckling is allowed from adjacent tiles
+ */
 /atom/movable/proc/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
 	// Standard adjacency and other checks.
 	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
@@ -225,17 +225,17 @@
 	return TRUE
 
 /**
-  * Handles a mob buckling another mob to src and sends a visible_message
-  *
-  * Basically exists to do some checks on the user and then call buckle_mob where the real buckling happens.
-  * First, checks if the buckle is valid and cancels if it isn't.
-  * Second, checks if src is on a different turf from the target; if it is, does a do_after and another check for sanity
-  * Finally, calls [/atom/movable/proc/buckle_mob] to buckle the target to src then gives chat feedback
-  * Arguments:
-  * * M - The target mob/living being buckled to src
-  * * user - The other mob that's buckling M to src
-  * * check_loc - TRUE if src and M have to be on the same turf, false otherwise
-  */
+ * Handles a mob buckling another mob to src and sends a visible_message
+ *
+ * Basically exists to do some checks on the user and then call buckle_mob where the real buckling happens.
+ * First, checks if the buckle is valid and cancels if it isn't.
+ * Second, checks if src is on a different turf from the target; if it is, does a do_after and another check for sanity
+ * Finally, calls [/atom/movable/proc/buckle_mob] to buckle the target to src then gives chat feedback
+ * Arguments:
+ * * M - The target mob/living being buckled to src
+ * * user - The other mob that's buckling M to src
+ * * check_loc - TRUE if src and M have to be on the same turf, false otherwise
+ */
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	// Is buckling even possible? Do a full suite of checks.
 	if(!is_user_buckle_possible(M, user, check_loc))
@@ -268,14 +268,14 @@
 				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='hear'>You hear metal clanking.</span>")
 /**
-  * Handles a user unbuckling a mob from src and sends a visible_message
-  *
-  * Basically just calls unbuckle_mob, sets fingerprint, and sends a visible_message
-  * about the user unbuckling the mob
-  * Arguments:
-  * buckled_mob - The mob/living to unbuckle
-  * user - The mob unbuckling buckled_mob
-  */
+ * Handles a user unbuckling a mob from src and sends a visible_message
+ *
+ * Basically just calls unbuckle_mob, sets fingerprint, and sends a visible_message
+ * about the user unbuckling the mob
+ * Arguments:
+ * buckled_mob - The mob/living to unbuckle
+ * user - The mob unbuckling buckled_mob
+ */
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)

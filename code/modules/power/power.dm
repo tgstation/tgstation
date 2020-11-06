@@ -111,12 +111,12 @@
 	addStaticPower(-value, powerchannel)
 
 /**
-  * Called whenever the power settings of the containing area change
-  *
-  * by default, check equipment channel & set flag, can override if needed
-  *
-  * Returns TRUE if the NOPOWER flag was toggled
-  */
+ * Called whenever the power settings of the containing area change
+ *
+ * by default, check equipment channel & set flag, can override if needed
+ *
+ * Returns TRUE if the NOPOWER flag was toggled
+ */
 /obj/machinery/proc/power_change()
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)

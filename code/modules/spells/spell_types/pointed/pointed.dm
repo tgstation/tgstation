@@ -39,20 +39,20 @@
 	on_activation(user)
 
 /**
-  * on_activation: What happens upon pointed spell activation.
-  *
-  * Arguments:
-  * * user The mob interacting owning the spell.
-  */
+ * on_activation: What happens upon pointed spell activation.
+ *
+ * Arguments:
+ * * user The mob interacting owning the spell.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/on_activation(mob/user)
 	return
 
 /**
-  * on_activation: What happens upon pointed spell deactivation.
-  *
-  * Arguments:
-  * * user The mob interacting owning the spell.
-  */
+ * on_activation: What happens upon pointed spell deactivation.
+ *
+ * Arguments:
+ * * user The mob interacting owning the spell.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/on_deactivation(mob/user)
 	return
 
@@ -84,13 +84,13 @@
 	return TRUE // Do not do any underlying actions after the spell cast
 
 /**
-  * intercept_check: Specific spell checks for InterceptClickOn() targets.
-  *
-  * Arguments:
-  * * user The mob using the ranged spell via intercept.
-  * * target The atom that is being targeted by the spell via intercept.
-  * * silent If the checks should produce not any feedback messages for the user.
-  */
+ * intercept_check: Specific spell checks for InterceptClickOn() targets.
+ *
+ * Arguments:
+ * * user The mob using the ranged spell via intercept.
+ * * target The atom that is being targeted by the spell via intercept.
+ * * silent If the checks should produce not any feedback messages for the user.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target, silent = FALSE)
 	if(!self_castable && target == user)
 		if(!silent)
