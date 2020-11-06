@@ -172,12 +172,25 @@
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
+			// А  .. Я
+			if (1040 to 1071)		//Uppercase Letters RU
+				number_of_alphanumeric++
+				last_char_group = LETTERS_DETECTED
+
 			// a  .. z
 			if(97 to 122)			//Lowercase Letters
 				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
+
+			// а  .. я
+			if (1072 to 1103)		//Lowercase Letters RU
+				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || last_char_group == SYMBOLS_DETECTED) //start of a word
+					char = uppertext(char)
+				number_of_alphanumeric++
+				last_char_group = LETTERS_DETECTED
+
 
 			// 0  .. 9
 			if(48 to 57)			//Numbers

@@ -48,9 +48,9 @@
 	if(random)
 		switch(rand(0,1))
 			if(0)
-				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names_male)]"
 			if(1)
-				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names_female)]"
 
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
