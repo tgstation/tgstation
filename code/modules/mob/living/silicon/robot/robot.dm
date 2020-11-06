@@ -850,10 +850,7 @@
 
 	// Remove upgrades.
 	for(var/obj/item/borg/upgrade/I in upgrades)
-		I.deactivate(src)
 		I.forceMove(get_turf(src))
-
-	upgrades.Cut()
 
 	ionpulse = FALSE
 	revert_shell()
@@ -902,6 +899,10 @@
 		hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
+	if(upgrades.len && (A in upgrades))
+		var/obj/item/borg/upgrade/I = A
+		I.deactivate(src)
+		upgrades -= I
 	. = ..()
 
 /**
