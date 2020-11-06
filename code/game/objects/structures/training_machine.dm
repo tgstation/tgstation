@@ -174,6 +174,11 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
+		return
+	if(has_buckled_mobs())
+		user_unbuckle_mob(buckled_mobs[1], user)
+		return
 	if (!attached_item)
 		return
 	if (obj_flags & EMAGGED)
@@ -320,9 +325,12 @@
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
+	var/has_buckled_mob = has_buckled_mobs()
+	if(has_buckled_mob)
+		. += "<span class='notice'><b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b></span>"
 	if (obj_flags & EMAGGED)
 		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
-	else if (attached_item) //Can't removed the syndicate toolbox!
+	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
 		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
