@@ -433,11 +433,12 @@
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/reagent_containers/food/snacks/deadmouse,
+		/obj/item/reagent_containers/food/snacks,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
 		/obj/item/bodypart
-		))
+		)
+		list(/obj/item/reagent_containers/food/snacks/grown))
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
@@ -448,7 +449,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "construction_bag"
 	worn_icon_state = "construction_bag"
-	desc = "A bag for storing small construction components."
+	desc = "A bag for storing construction components."
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()
@@ -459,6 +460,7 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
+		/obj/item/stack/sheet,
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/assembly,
 		/obj/item/stock_parts,
