@@ -234,6 +234,11 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
+/obj/structure/chair/stool/buckleable //for the escape bar shuttle.
+	name = "buckleable bar stool"
+	desc = "Apply butt and buckle up."
+	buckle_flags = CAN_BUCKLE
+
 /obj/structure/chair/stool/narsie_act()
 	return
 
@@ -245,7 +250,8 @@
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
-		var/obj/item/C = new item_chair(loc)
+		var/obj/item/chair/C = new item_chair(loc)
+		C.origin_type = type
 		C.set_custom_materials(custom_materials)
 		TransferComponents(C)
 		usr.put_in_hands(C)

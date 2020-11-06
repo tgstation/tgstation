@@ -842,5 +842,5 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from base of species/datum/attack_hand(), but keep in mind the source is the assailant: (mob/target, attacker_style)
+///from base of species/datum/attack_hand(), but keep in mind the signal is sent to the assailant: (mob/target, attacker_style)
 #define COMSIG_HUMAN_SPEC_ATTACK_HAND "human_spec_attack_hand"

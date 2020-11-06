@@ -183,9 +183,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool{
-	can_buckle = 1
-	},
+/obj/structure/chair/stool/buckleable,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aH" = (
@@ -239,10 +237,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/chair/stool/bar{
-	can_buckle = 1;
-	name = "buckleable bar stool"
-	},
+/obj/structure/chair/stool/buckleable,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
