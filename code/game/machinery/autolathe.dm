@@ -34,18 +34,7 @@
 	var/base_price = 25
 	var/hacked_price = 50
 
-	var/list/categories = list(
-							"Tools",
-							"Electronics",
-							"Construction",
-							"T-Comm",
-							"Security",
-							"Machinery",
-							"Medical",
-							"Misc",
-							"Dinnerware",
-							"Imported"
-							)
+	var/list/categories = CATEGORIES_AUTOLATHE
 
 /obj/machinery/autolathe/Initialize()
 	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))

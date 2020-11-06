@@ -12,7 +12,7 @@
 
 	// List of catagories this machine supports and displays.  Order of this
 	// list is the order that is displayed
-	var/list/categories = list()
+	var/list/categories = null
 
 	// Associated list of catagories that have sub catagories.  The order of
 	// the sub catagories are displayed in the listed ordered
@@ -49,8 +49,10 @@
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
-	/// Coefficient for the speed of item building AND material usage  Based on the installed parts.
-	var/efficiency_coeff = 1.2
+	/// Coefficient for the speed of item building. Based on the installed parts.
+	var/time_coeff = 1
+	/// Coefficient for the efficiency of material usage in item building. Based on the installed parts.
+	var/component_coeff = 1
 
 	/// Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
@@ -66,55 +68,41 @@
 		/obj/item/stack/sheet,
 		/obj/item/stack/ore/bluespace_crystal
 	)
+	/// If we use regents in building stuff
+	var/uses_regents = FALSE	// Make a bitflag, like lathe_settings?
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	rmat = AddComponent(/datum/component/remote_materials, "lathe", mapload && link_on_init, breakdown_flags=BREAKDOWN_FLAGS_LATHE) // _after_insert = CALLBACK(.proc/AfterMaterialInsert))
 	// To make life easier for ui, we insert BASE_OF_CATEGORY at the front so
 	// items without a sub category get displayed first
-	create_reagents(0, OPENCONTAINER)
+	if(uses_regents)
+		create_reagents(0, OPENCONTAINER)
 	// converts to assoc list for quicker finds
 	ignore_coeff = make_associative(ignore_coeff)
-	#if 0
-	var/list/category_order
-	for(var/category_name in categories)
-		category_order = categories[category_name]
-		category_order.Insert(1,BASE_OF_CATEGORY)
-		#endif
+
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	return ..
+	return ..()
 
 //we eject the materials upon deconstruction.
-/obj/machinery/rnd/production/on_deconstruction()
+/obj/machinery/rnd/production/on_deconstruction(disassembled)
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
+
+	log_game("[name] of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
 	return ..()
 
 /obj/machinery/rnd/production/RefreshParts()
-	var/T = 0
-
-	reagents.maximum_volume = 0
-	for(var/obj/item/reagent_containers/glass/G in component_parts)
-		reagents.maximum_volume += G.volume
-		G.reagents.trans_to(src, G.reagents.total_volume)
-
-	T = 0
-	//maximum stocking amount (default 300000, 600000 at T4)
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	rmat.set_local_size((200000 + (T*50000)))
-
-
-	// Unlike the mechfab we don't got lasers so the manipulators control
-	// both the speed and consumption of materials
-	efficiency_coeff = inital(efficiency_coeff)
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		efficiency_coeff = clamp(efficiency_coeff - (M.rating * 0.1), 0, 1)
-	if(total_rating == 0)
-		efficiency_coeff = INFINITY
-	else
-		efficiency_coeff = 1/efficiency_coeff
-
+	SHOULD_CALL_PARENT(1)
+	// Be sure to call this parent at the end of the overwritten proc so
+	// it can adjust the build time and update the ui
 	// Adjust the build time of any item currently being built.
+
+	if(uses_regents)
+		reagents.maximum_volume = 0
+		for(var/obj/item/reagent_containers/glass/G in component_parts)
+			reagents.maximum_volume += G.volume
+			G.reagents.trans_to(src, G.reagents.total_volume)
+
 	if(being_built)
 		var/last_const_time = build_finish - build_start
 		var/new_const_time = get_construction_time_w_coeff(initial(being_built.construction_time))
@@ -122,8 +110,10 @@
 		var/new_build_time = (new_const_time / last_const_time) * const_time_left
 		build_finish = world.time + new_build_time
 
-	testing("/obj/machinery/rnd/production/RefreshParts: reagents.maximum_volume=[reagents.maximum_volume] time_coeff=[time_coeff] component_coeff=[component_coeff] ")
 	update_static_data(usr)
+
+
+
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
@@ -138,21 +128,28 @@
   * * parse_categories - tex,t name of the category to find if its a sub category we want to use
   */
 /obj/machinery/rnd/production/proc/output_part_info(datum/design/D, parse_categories = null)
+	var/list/default_sub_category = list(CATEGORY_FLAG_ALL)
 	var/cost = list()
 	for(var/c in D.materials)
 		var/datum/material/M = c
 		cost[M.name] = get_resource_cost_w_coeff(D, M)
 
 	var/obj/built_item = D.build_path
-	var/list/sub_category = null
+	var/list/sub_category = default_sub_category
 
 	if(parse_categories)
 		// Unlike mechfab that needs hard coded sub_catagories, we are using the sub
 		// category var off the design
 
 		if(D.sub_category)
-			sub_category = list(D.sub_category)
-
+			sub_category = D.sub_category
+				if(!istype(sub_category)) // if its not a list, make it a list
+					sub_category = list(sub_category)
+			var/list/sub_catagories = categories[parse_categories]
+			if(istype(sub_catagories) && sub_catagories.len > 0) // if we DO care about order or sub_catagories
+				sub_category &= sub_catagories
+				if(sub_category.len) // its not in the catagory list so clear it to the general top
+					sub_category = default_sub_category
 
 	var/list/part = list(
 		"name" = D.name,
@@ -161,7 +158,6 @@
 		"cost" = cost,
 		"id" = D.id,
 		"subCategory" = sub_category,
-		"categoryOverride" = null,
 		"searchMeta" = D.search_metadata
 	)
 
@@ -306,7 +302,7 @@
 	if(stored_part)
 		var/turf/exit = dispense_direction ? get_step(src, dispense_direction) : get_turf(src)
 		if(dispense_direction && exit.density)
-			testing("/obj/machinery/rnd/process: Obstruction in machine")
+			say("Obstruction in machine, cannot continue building.")
 			on_finish_printing()
 			return PROCESS_KILL
 		testing("/obj/machinery/rnd/process: Obstruction cleared")
@@ -319,6 +315,7 @@
 		// If we're not processing the queue anymore or there's nothing to build, end processing.
 		if(!process_queue || !build_next_in_queue())
 			on_finish_printing()
+			say("Finished building queue.")
 			return PROCESS_KILL
 		on_start_printing()
 
@@ -326,9 +323,9 @@
 	if(being_built && (build_finish < world.time))
 		// Then attempt to dispense it and if appropriate build the next item.
 		dispense_built_part()
-		if(process_queue)
+		if(process_queue && dispense_built_part())
 			build_next_in_queue(FALSE)
-		return
+
 
 /**
   * Dispenses a part to the tile infront of the Exosuit Fab.
@@ -338,9 +335,10 @@
   */
 /obj/machinery/rnd/production/proc/dispense_built_part()
 	var/obj/I = new being_built.build_path(src)
+
 	var/backup_material_flags = I.material_flags
 	I.material_flags |= MATERIAL_NO_EFFECTS		// prevents discoloration
-	I.set_custom_materials(build_materials)
+	I.set_custom_materials(build_materials)		// side note...ugh fine I will fix it
 	I.material_flags = backup_material_flags
 
 	being_built = null
@@ -353,7 +351,8 @@
 		stored_part = I
 		return FALSE
 
-	say("\The [I] is complete.")
+	if(!process_queue)
+		say("\The [I] is complete.")
 	I.forceMove(exit)
 	return TRUE
 
@@ -411,6 +410,18 @@
 		var/list/part = output_part_info(D)
 		queued_parts += list(part)
 	return queued_parts
+/obj/machinery/rnd/production/protolathe/deconstruct(disassembled)
+	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
+
+	return ..()
+
+/obj/machinery/rnd/production/protolathe/Initialize(mapload)
+	if(!mapload)
+		log_game("Protolathe of type [type] constructed by [key_name(usr)] at [get_area_name(src, TRUE)]")
+
+	return ..()
+
+
 
 /**
   * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
@@ -418,20 +429,20 @@
   * Returns coefficient-modified resource cost for the given material component.
   * * D - Design datum to pull the resource cost from.
   * * resource - Material datum reference to the resource to calculate the cost of.
-  * * roundto - Rounding value for round() proc
+  * * round_to - Rounding value for round() proc
   */
-/obj/machinery/rnd/production/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
-	return ignore_coeff[d.build_path] ? 1 : round(D.materials[resource]/efficiency_coeff, roundto)
+/obj/machinery/rnd/production/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, round_to = 1)
+	return ignore_coeff[D.build_path] ? 1 : round(D.materials[resource]/component_coeff, round_to)
 
 /**
   * Calculates the coefficient-modified build time of a design.
   *
   * Returns coefficient-modified build time of a given design.
   * * D - Design datum to calculate the modified build time of.
-  * * roundto - Rounding value for round() proc
+  * * round_to - Rounding value for round() proc
   */
-/obj/machinery/rnd/production/proc/get_construction_time_w_coeff(construction_time, roundto = 1) //aran
-	return round(construction_time/efficiency_coeff, roundto)
+/obj/machinery/rnd/production/proc/get_construction_time_w_coeff(construction_time, round_to = 1) //aran
+	return round(construction_time/time_coeff, round_to)
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
@@ -451,16 +462,20 @@
 	var/list/buildable_parts = list()
 
 	// changed to stop going though the catagories on EACH freaking design
-	for(var/cat in categories)
-		final_sets += cat
-		for(var/datum/design/D in stored_research.researched_designs_by_category[cat])
+	// Use index as that will go in order
+	for(var/i in 1 to categories.len)
+		var/cat_name = categories[i]
+		var/list/sub_catagories = categories[cat_name]
+		final_sets += cat_name
+		var/list/researched_category = stored_research.researched_designs_by_category[cat_name]
+		for(var/datum/design/D in researched_category)
 			if(D.build_type && !(D.build_type & allowed_buildtypes))
 				continue	// machine cannot build this thing
 			if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 				continue 	// Not the right department
 
 			// This is for us.
-			var/list/part = output_part_info(D, TRUE)
+			var/list/part = output_part_info(D, cat_name)
 
 			if(part["category_override"])
 				for(var/cat in part["category_override"])
@@ -469,7 +484,7 @@
 						final_sets += cat
 				continue
 
-			buildable_parts[cat] += list(part)
+			buildable_parts[cat_name] += list(part)
 
 	data["partSets"] = final_sets
 	data["buildableParts"] = buildable_parts

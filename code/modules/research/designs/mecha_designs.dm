@@ -9,7 +9,7 @@
 	build_path = /obj/item/circuitboard/mecha/ripley/main
 	category = list(CATEGORY_EXOSUIT_MODULES )
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
+	
 /datum/design/board/ripley_peri
 	name = "APLU \"Ripley\" Peripherals Control module"
 	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."

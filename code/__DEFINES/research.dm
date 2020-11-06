@@ -47,10 +47,15 @@
 #define DEPARTMENTAL_FLAG_SERVICE		(1<<5)
 
 ///! Lathe catagories.  Used to sort and order the designs when being displayed or searched
+
+///! Basic catagories,
 #define CATEGORY_INITIAL        		  	"initial"
 #define CATEGORY_HACKED         			"hacked"
 #define CATEGORY_TOOLS						"Tools"
 
+#define CATEGORY_MINING						"Mining"
+#define CATEGORY_JANITOR					"Janitor"
+#define CATEGORY_ENGINEERING				"Engineering"
 #define CATEGORY_DINNERWARE					"Dinnerware"
 #define CATEGORY_MISC						"Misc"			// Misc?  So many things here:P
 #define CATEGORY_FOOD						"Food"
@@ -97,6 +102,8 @@
 #define CATEGORY_EXOSUIT_AMMO				"Exosuit Ammunition"
 #define CATEGORY_CYBORG						"Cyborg"
 #define CATEGORY_CYBORG_MODULES				"Cyborg Upgrade Modules"
+
+
 #define CATEGORY_MECH_RIPLEY				"Ripley"
 #define CATEGORY_MECH_ODYSSEUS				"Odysseus"
 #define CATEGORY_MECH_GYGAX					"Gygax"
@@ -130,7 +137,88 @@
 #define CATEGORY_NANITES_PROTOCOLS			"Protocols Nanites"
 
 ///! Helper to create a category list, just to make it a little cleaner
-#define CREATE_CATEGORY_LIST(...) list(__VA_ARGS__)
+#define CATEGORY_FLAG_ALL					"Items"		// General items that do not have a sub_category
+#define CATEGORY_FLAG_PARTS					"Parts"		// Allows the entire category to be printed at one go, aka all the parts of a cyborg
+
+
+///! Helper to create a category list, just to make it a little cleaner
+// Just don't know why these macros are fucking up
+// #define CREATE_ROOT_CATEGORY_LIST(CATAGORIES...) list(CATAGORIES)
+//#define ADD_CATEGORY(NAME, SUB_CATAGORIES...) NAME = list( SUB_CATAGORIES )
+// Fine, lets manually define them here, its either that or make a datum that processes this all
+
+#define CATEGORIES_AUTOLATHE_ITEMS 					\
+	CATEGORY_TOOLS = list(),						\
+	CATEGORY_ELECTRONICS = list(),					\
+	CATEGORY_SUBSPACE_TELECOMS = list(),			\
+	CATEGORY_SECURITY = list(),						\
+	CATEGORY_MACHINERY = list(),					\
+	CATEGORY_MEDICAL = list(),						\
+	CATEGORY_MISC = list(),							\
+	CATEGORY_DINNERWARE = list(),					\
+	CATEGORY_IMPORTED = list(),
+
+#define CATEGORIES_MECHFAB_ITEMS 					\
+	CATEGORY_CYBORG = list()						\
+	CATEGORY_RIPLEY = list()						\
+	CATEGORY_ODYSSEUS = list()						\
+	CATEGORY_CLARKE = list()						\
+	CATEGORY_GYGAX = list()							\
+	CATEGORY_DURAND = list()						\
+	CATEGORY_HONK = list()							\
+	CATEGORY_PHAZON = list()						\
+	CATEGORY_EXOSUIT_EQUIPMENT = list()				\
+	CATEGORY_EXOSUIT_AMMUNITION = list()			\
+	CATEGORY_CYBORG_MODULES = list()				\
+	CATEGORY_CYBERNETICS = list()					\
+	CATEGORY_IMPLANTS = list()						\
+	CATEGORY_CONTROL_INTERFACES = list()			\
+	CATEGORY_MISC = list()
+
+#define CATEGORIES_CIRCUIT_IMPRINTER_ITEMS 			\
+		CATEGORY_AI_MODULES = list(),				\
+		CATEGORY_COMPUTER_BOARDS = list(),			\
+		CATEGORY_MACHINERY_TELEPORTATION = list(),	\
+		CATEGORY_MACHINERY_MEDICAL = list(),		\
+		CATEGORY_MACHINERY_ENGINEERING = list(),	\
+		CATEGORY_EXOSUIT_MODULES = list(),			\
+		CATEGORY_MACHINERY_HYDRO = list(),			\
+		CATEGORY_SUBSPACE_TELECOMS = list(),		\
+		CATEGORY_MACHINERY_RESEARCH = list(),		\
+		CATEGORY_MACHINERY_MISC = list(),			\
+		CATEGORY_COMPUTER_PARTS = list(),
+
+#define CATEGORIES_PROTOLATHE_ITEMS					\
+		CATEGORY_POWER_DESIGNS = list(),			\
+		CATEGORY_MEDICAL_DESIGNS = list(),			\
+		CATEGORY_BLUESPACE_DESIGNS = list(),		\
+		CATEGORY_STOCK_PARTS = list(				\
+			CATEGORY_TIER_MATERIALS,				\
+			CATEGORY_TIER_BLUESPACE,				\
+			CATEGORY_TIER_SUPER,					\
+			CATEGORY_TIER_ADVANCED,					\
+			CATEGORY_TIER_BASIC,					\
+			CATEGORY_TIER_TELECOMS					\
+		),											\
+		CATEGORY_EQUIPMENT = list(),				\
+		CATEGORY_TOOL_DESIGNS = list(),				\
+		CATEGORY_MINING_DESIGNS = list(),			\
+		CATEGORY_ELECTRONICS = list(),				\
+		CATEGORY_WEAPONS = list(),					\
+		CATEGORY_AMMO = list(),						\
+		CATEGORY_FIRING_PINS = list(),				\
+		CATEGORY_COMPUTER_PARTS = list(),
+
+#define CATEGORIES_TECHFAB_ITEMS \
+	CATEGORIES_CIRCUIT_IMPRINTER_ITEMS \
+	CATEGORIES_PROTOLATHE_ITEMS
+
+#define CATEGORIES_AUTOLATHE 			list(CATEGORIES_AUTOLATHE_ITEMS)
+#define CATEGORIES_CATEGORIES_MECHFAB 	list(CATEGORIES_MECHFAB_ITEMS)
+#define CATEGORIES_CIRCUIT_IMPRINTER 	list(CATEGORIES_CIRCUIT_IMPRINTER_ITEMS)
+#define CATEGORIES_PROTOLATHE 			list(CATEGORIES_PROTOLATHE_ITEMS)
+#define CATEGORIES_TECHFAB  			list(CATEGORIES_TECHFAB_ITEMS)
+
 
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
