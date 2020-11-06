@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Improvised bone wound treatments with bone gel and surgical tape applied outside of surgery no longer take ridiculous amounts of time, down from 10/20 minutes for severe/critical bone wounds to 4/8 minutes."
+  - balance: "Sleeping while an improvised bone wound treatment is processing will cause it to heal about 50% faster, while laying down while awake will heal it about 25% faster. Your bones will spike with pain a bit more frequently during the healing though."
