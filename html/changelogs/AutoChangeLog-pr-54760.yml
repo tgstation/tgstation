@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Bounty boards now face the correct direction and exist everywhere that they're intended to exist."
