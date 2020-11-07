@@ -72,7 +72,7 @@ handles linking back and forth.
 		/datum/material/plastic,
 		)
 
-	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, allowed_types=/obj/item/stack, _breakdown_flags=breakdown_flags)
+	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, breakdown_flags, /obj/item/stack)
 
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
