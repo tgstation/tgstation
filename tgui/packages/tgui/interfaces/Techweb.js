@@ -6,8 +6,100 @@ import { Fragment } from 'inferno';
 import { flow } from 'common/fp';
 import { sortBy, filter, map } from 'common/collections';
 
+// Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
+// This is primarily necessary due to measures that are taken to reduce the size
+// of the sent static JSON payload to as minimal of a size as possible
+// as larger sizes cause a delay for the user when opening the UI.
+
+let remappingIdCache;
+const remapId = id => typeof(id) === "string"
+  ? remappingIdCache[parseInt(id, 10) - 1]
+  : remappingIdCache[id - 1];
+
+const selectRemappedStaticData = data => {
+  // Handle reshaping of node cache to fill in unsent fields, and
+  // decompress the node IDs
+  const node_cache = Object.keys(data.static_data.node_cache)
+    .reduce((cache, id) => {
+      const n = data.static_data.node_cache[id];
+      const costs = Object.keys(n.costs || {}).map(x => ({
+        type: remapId(x),
+        value: n.costs[x],
+      }));
+      return {
+        ...cache,
+        [remapId(id)]: {
+          ...n,
+          id: remapId(id),
+          costs: costs,
+          prereq_ids: n.prereq_ids?.map(x => remapId(x)) || [],
+          design_ids: n.design_ids?.map(x => remapId(x)) || [],
+          unlock_ids: n.unlock_ids?.map(x => remapId(x)) || [],
+          required_experiments: n.required_experiments || [],
+          discount_experiments: n.discount_experiments || [],
+        },
+      };
+    }, {});
+
+  // Do the same as the above for the design cache
+  const design_cache = Object.keys(data.static_data.design_cache)
+    .reduce((cache, id) => {
+      const d = data.static_data.design_cache[id];
+      return {
+        ...cache,
+        [remapId(id)]: {
+          ...d,
+        },
+      };
+    }, {});
+
+  return {
+    node_cache,
+    design_cache,
+  };
+};
+
+let remappedStaticData;
+
+const selectRemappedData = data => {
+  // Only remap the static data once, cache for future use
+  if (!remappedStaticData) {
+    remappingIdCache = data.static_data.id_cache;
+    remappedStaticData = selectRemappedStaticData(data);
+  }
+
+  // Take only non-static data to combine with static data
+  const {
+    static_data,
+    ...rest
+  } = data;
+
+  return {
+    ...rest,
+    ...remappedStaticData,
+  };
+};
+
+let remappedInputData;
+let remappedOutputData;
+
+const useRemappedBackend = context => {
+  const { data, ...rest } = useBackend(context);
+  // Recalculate when input data is different
+  if (remappedInputData !== data) {
+    remappedInputData = data;
+    remappedOutputData = selectRemappedData(data);
+  }
+  return {
+    data: remappedOutputData,
+    ...rest,
+  };
+};
+
+// Components
+
 export const Techweb = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const {
     points,
     points_last_tick,
@@ -113,12 +205,8 @@ const TechwebRouter = (props, context) => {
 };
 
 const TechwebOverview = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    nodes,
-    node_cache,
-    design_cache,
-  } = data;
+  const { act, data } = useRemappedBackend(context);
+  const { nodes, node_cache, design_cache } = data;
   const [
     tabIndex,
     setTabIndex,
@@ -188,7 +276,7 @@ const TechwebOverview = (props, context) => {
 };
 
 const TechwebNodeDetail = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const { nodes } = data;
   const { selectedNode } = props;
 
@@ -200,12 +288,9 @@ const TechwebNodeDetail = (props, context) => {
 };
 
 const TechwebDiskMenu = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const { diskType } = props;
-  const {
-    t_disk,
-    d_disk,
-  } = data;
+  const { t_disk, d_disk } = data;
   const [
     techwebRoute,
     setTechwebRoute,
@@ -274,15 +359,13 @@ const TechwebDiskMenu = (props, context) => {
 };
 
 const TechwebDesignDisk = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const {
     design_cache,
     researched_designs,
     d_disk,
   } = data;
-  const {
-    blueprints,
-  } = d_disk;
+  const { blueprints } = d_disk;
   const [
     selectedDesign,
     setSelectedDesign,
@@ -382,14 +465,9 @@ const TechwebDesignDisk = (props, context) => {
 };
 
 const TechwebTechDisk = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    nodes,
-    t_disk,
-  } = data;
-  const {
-    stored_research,
-  } = t_disk;
+  const { act, data } = useRemappedBackend(context);
+  const { t_disk } = data;
+  const { stored_research } = t_disk;
 
   return Object.keys(stored_research).map(x => ({ id: x })).map(n => (
     <TechNode nocontrols node={n} key={n.id} />
@@ -397,16 +475,14 @@ const TechwebTechDisk = (props, context) => {
 };
 
 const TechNodeDetail = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const {
     nodes,
     node_cache,
   } = data;
   const { node } = props;
-  const {
-    id,
-  } = node;
-  let thisNode = node_cache[id];
+  const { id } = node;
+  const { prereq_ids, unlock_ids } = node_cache[id];
   const [
     tabIndex,
     setTabIndex,
@@ -416,8 +492,8 @@ const TechNodeDetail = (props, context) => {
     setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null);
 
-  const prereqNodes = nodes.filter(x => thisNode.prereq_ids.includes(x.id));
-  const unlockedNodes = nodes.filter(x => thisNode.unlock_ids.includes(x.id));
+  const prereqNodes = nodes.filter(x => prereq_ids.includes(x.id));
+  const unlockedNodes = nodes.filter(x => unlock_ids.includes(x.id));
 
   return (
     <Flex direction="column" height="100%">
@@ -480,7 +556,7 @@ const TechNodeDetail = (props, context) => {
 };
 
 const TechNode = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useRemappedBackend(context);
   const {
     node_cache,
     design_cache,
@@ -488,13 +564,14 @@ const TechNode = (props, context) => {
     points,
   } = data;
   const { node, nodetails, nocontrols } = props;
+  const { id, can_unlock, tier } = node;
   const {
-    id,
-    can_unlock,
-    tier,
-  } = node;
-  let thisNode = node_cache[id];
-  let reqExp = thisNode?.required_experiments;
+    name,
+    description,
+    costs,
+    design_ids,
+    required_experiments,
+  } = node_cache[id];
   const [
     techwebRoute,
     setTechwebRoute,
@@ -504,7 +581,8 @@ const TechNode = (props, context) => {
     setTabIndex,
   ] = useLocalState(context, 'nodeDetailTabIndex', 0);
 
-  const expcompl = reqExp.filter(x => experiments[x]?.completed).length;
+  const expcompl = required_experiments
+    .filter(x => experiments[x]?.completed).length;
   const experimentProgress = (
     <ProgressBar
       ranges={{
@@ -512,20 +590,20 @@ const TechNode = (props, context) => {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={expcompl / reqExp.length}>
-      Experiments ({expcompl}/{reqExp.length})
+      value={expcompl / required_experiments.length}>
+      Experiments ({expcompl}/{required_experiments.length})
     </ProgressBar>
   );
 
   return (
-    <Section title={thisNode.name}
+    <Section title={name}
       buttons={!nocontrols && (
         <span>
           {!nodetails && (
             <Button
               icon="tasks"
               onClick={() => {
-                setTechwebRoute({ route: "details", selectedNode: node.id });
+                setTechwebRoute({ route: "details", selectedNode: id });
                 setTabIndex(0);
               }}>
               Details
@@ -535,7 +613,7 @@ const TechNode = (props, context) => {
             <Button
               icon="lightbulb"
               disabled={!can_unlock}
-              onClick={() => act("researchNode", { node_id: thisNode.id })}>
+              onClick={() => act("researchNode", { node_id: id })}>
               Research
             </Button>)}
         </span>
@@ -544,47 +622,47 @@ const TechNode = (props, context) => {
       className="Techweb__NodeContainer">
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
-          {Object.keys(thisNode.costs).map((k, i) => {
-            const nodeProg = Math.min(thisNode.costs[k], points[k]) || 0;
+          {costs.map(k => {
+            const nodeProg = Math.min(k.value, points[k.type]) || 0;
             return (
               <Flex.Item grow={1} basis={0}
-                key={i}>
+                key={k.type}>
                 <ProgressBar
                   ranges={{
                     good: [0.5, Infinity],
                     average: [0.25, 0.5],
                     bad: [-Infinity, 0.25],
                   }}
-                  value={Math.min(1, points[k] / thisNode.costs[k])}>
-                  {k} ({nodeProg}/{thisNode.costs[k]})
+                  value={Math.min(1, points[k.type] / k.value)}>
+                  {k.type} ({nodeProg}/{k.value})
                 </ProgressBar>
               </Flex.Item>
             );
           })}
-          {reqExp?.length > 0 && (
+          {required_experiments?.length > 0 && (
             <Flex.Item grow={1} basis={0}>
               {experimentProgress}
             </Flex.Item>
           )}
         </Flex>
       )}
-      <div className="Techweb__NodeDescription">{thisNode.description}</div>
+      <div className="Techweb__NodeDescription">{description}</div>
       <Box className="Techweb__NodeUnlockedDesigns">
-        {thisNode.design_ids.map((k, i) => {
+        {design_ids.map((k, i) => {
           return (
-            <Button key={thisNode.id}
+            <Button key={id}
               className={`${design_cache[k].class} Techweb__DesignIcon`}
               tooltip={design_cache[k].name}
               tooltipPosition={i % 15 < 7 ? "right" : "left"} />
           );
         })}
       </Box>
-      {thisNode.required_experiments?.length > 0
+      {required_experiments?.length > 0
         && (
           <Collapsible
             className="Techweb__NodeExperimentsRequired"
             title="Required Experiments">
-            {thisNode.required_experiments.map(k => {
+            {required_experiments.map(k => {
               const thisExp = experiments[k];
               if (thisExp === null || thisExp === undefined) {
                 return (

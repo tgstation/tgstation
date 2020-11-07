@@ -31,6 +31,10 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/design_disk/d_disk
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
+	/// Used for compressing data sent to the UI via static_data as payload size is of concern
+	var/id_cache = list()
+	/// Sequence var for the id cache
+	var/id_cache_seq = 1
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -201,39 +205,77 @@ Nothing else in the console has ID requirements.
 			"completed" = ex.completed
 		)
 
+/**
+ * Compresses an ID to an integer representation using the id_cache, used for deduplication
+ * in sent JSON payloads
+ *
+ * Arguments:
+ * * id - the ID to compress
+ */
+/obj/machinery/computer/rdconsole/proc/compress_id(id)
+	if (!id_cache[id])
+		id_cache[id] = id_cache_seq++
+	return id_cache[id]
+
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
 	. = list(
-		"node_cache" = list(),
-		"design_cache" = list()
+		"static_data" = list()
 	)
 
-	// Build node cache
+	// Build node cache...
+	// Note this looks a bit ugly but its to reduce the size of the JSON payload
+	// by the greatest amount that we can, as larger JSON payloads result in
+	// hanging when the user opens the UI
+	var/node_cache = list()
 	for (var/nid in SSresearch.techweb_nodes)
 		var/datum/techweb_node/n = SSresearch.techweb_nodes[nid] || SSresearch.error_node
-		.["node_cache"][n.id] = list(
-			"id" = n.id,
+		var/cid = "[compress_id(n.id)]"
+		node_cache[cid] = list(
 			"name" = n.display_name,
-			"description" = n.description,
-			"costs" = n.research_costs,
-			"prereq_ids" = n.prereq_ids,
-			"design_ids" = list(),
-			"unlock_ids" = list(),
-			"required_experiments" = n.required_experiments,
-			"discount_experiments" = n.discount_experiments
+			"description" = n.description
 		)
-		for (var/d in n.design_ids)
-			.["node_cache"][n.id]["design_ids"] += d
-		for (var/un in n.unlock_ids)
-			.["node_cache"][n.id]["unlock_ids"] += un
+		if (n.research_costs?.len)
+			node_cache[cid]["costs"] = list()
+			for (var/c in n.research_costs)
+				node_cache[cid]["costs"]["[compress_id(c)]"] = n.research_costs[c]
+		if (n.prereq_ids?.len)
+			node_cache[cid]["prereq_ids"] = list()
+			for (var/pn in n.prereq_ids)
+				node_cache[cid]["prereq_ids"] += compress_id(pn)
+		if (n.design_ids?.len)
+			node_cache[cid]["design_ids"] = list()
+			for (var/d in n.design_ids)
+				node_cache[cid]["design_ids"] += compress_id(d)
+		if (n.unlock_ids?.len)
+			node_cache[cid]["unlock_ids"] = list()
+			for (var/un in n.unlock_ids)
+				node_cache[cid]["unlock_ids"] += compress_id(un)
+		if (n.required_experiments?.len)
+			node_cache[cid]["required_experiments"] = n.required_experiments
+		if (n.discount_experiments?.len)
+			node_cache[cid]["discount_experiments"] = n.discount_experiments
 
 	// Build design cache
+	var/design_cache = list()
 	var/datum/asset/spritesheet/research_designs/ss = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	for (var/did in SSresearch.techweb_designs)
 		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
-		.["design_cache"][d.id] = list(
+		var/cid = "[compress_id(d.id)]"
+		design_cache[cid] = list(
 			"name" = d.name,
 			"class" = ss.icon_class_name(d.id)
 		)
+
+	// Ensure id cache is included for decompression
+	var/flat_id_cache = list()
+	for (var/id in id_cache)
+		flat_id_cache += id
+
+	.["static_data"] = list(
+		"node_cache" = node_cache,
+		"design_cache" = design_cache,
+		"id_cache" = flat_id_cache
+	)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)
 	. = ..()
