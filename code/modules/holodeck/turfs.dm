@@ -49,6 +49,8 @@
 		src.setDir(direction)
 	//why do i have this? some bug with turfs with dir vars not loading correctly, this only happens after mapload. turfs will be correctly rotated before
 	//mapload is finished, but not after.
+	//update: 70% sure this is because turf/ChangeTurf() only takes in the path of the new turf and not any attributes, so this will have to stay
+	//unless that is fixed
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
