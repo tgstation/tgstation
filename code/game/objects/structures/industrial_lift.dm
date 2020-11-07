@@ -118,7 +118,7 @@
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)//the edges of multi-z maps
 			return FALSE
-		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/transparent/openspace))
+		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace))
 			return FALSE
 	return TRUE
 
