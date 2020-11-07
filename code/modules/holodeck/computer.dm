@@ -132,7 +132,7 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/datum/map_template/holodeck/update_blacklist(turf/placement)
+/datum/map_template/holodeck/update_blacklist(turf/placement)//this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating)
 	turf_blacklist.Cut()
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
@@ -141,12 +141,15 @@
 				continue
 			turf_blacklist += possible_blacklist
 
-
 ///the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
 	if (program == map_id)
 		return
+
+	if (!is_operational)//load_program is called once with a timer (in toggle_power) we dont want this to load anything if its off
+		map_id = offline_program
+		force = TRUE
 
 	if (current_cd > world.time && !force)
 		say("ERROR. Recalibrating projection apparatus.")
@@ -287,7 +290,7 @@
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			load_program(last_program,TRUE)
+			addtimer(CALLBACK(src,.proc/load_program, last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
