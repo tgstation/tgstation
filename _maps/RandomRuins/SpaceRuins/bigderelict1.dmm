@@ -1655,22 +1655,6 @@
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)
-"dO" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
-/obj/effect/decal/cleanable/blood/old{
-	dir = 8;
-	icon_state = "trails_1";
-	name = "dried blood trail"
-	},
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
-	name = "melted wall"
-	},
-/area/ruin/space/has_grav/derelictoutpost)
 "dP" = (
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -2030,13 +2014,6 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"jw" = (
-/obj/item/crowbar{
-	pixel_x = -16;
-	pixel_y = -6
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "uV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2044,6 +2021,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"Ei" = (
+/obj/item/crowbar{
+	pixel_x = -16;
+	pixel_y = -6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
 "LB" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2676,7 +2660,7 @@ ae
 ae
 ae
 ae
-jw
+Ei
 ae
 ae
 cv
@@ -3010,7 +2994,7 @@ aZ
 aZ
 aZ
 aZ
-dO
+dN
 aZ
 cm
 cm
