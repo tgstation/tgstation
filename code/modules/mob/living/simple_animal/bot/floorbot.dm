@@ -311,7 +311,7 @@
 	if(check_bot_working(target_turf))
 		add_to_ignore(target_turf)
 		target = null
-		playsound(src.loc, 'sound/effects/whistlereset.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/whistlereset.ogg', 50, TRUE)
 		return
 	if(isspaceturf(target_turf))
 		 //Must be a hull breach or in line mode to continue.
@@ -400,12 +400,9 @@
 /**
   * Checks a given turf to see if another floorbot is there, working as well.
   */
-/mob/living/simple_animal/bot/floorbot/proc/check_bot_working(work_turf)
-	var/turf/active_turf
-	if(isturf(work_turf))
-		active_turf = work_turf
-	if(active_turf)
-		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf.contents)
+/mob/living/simple_animal/bot/floorbot/proc/check_bot_working(turf/active_turf)
+	if(isturf(active_turf))
+		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf)
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
