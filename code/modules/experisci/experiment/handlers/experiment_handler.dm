@@ -48,7 +48,7 @@
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_SIGNAL)
-			RegisterSignal(parent, COMSIG_EXP_CONF_SIG, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
 	GLOB.experiment_handlers += src
 
 /datum/component/experiment_handler/Destroy(force, silent)
@@ -60,7 +60,6 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 
 //This proc exists because Jared Fogle really likes async
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
@@ -116,6 +115,11 @@
 
 	return selected_experiment.perform_experiment(arglist(arguments)) //Returns true if the experiment was succesfuly handled
 
+
+/datum/component/experiment_handler/proc/ui_handle_experiment(datum/source, mob/user, action)
+	SIGNAL_HANDLER
+	if(action == "open_experiments")
+		INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
 
 /**
   * Attempts to show the user the experiment configuration panel

@@ -1,7 +1,6 @@
 #define EXPERIMENT_CONFIG_ATTACKSELF 	"experiment_config_attackself"
 #define EXPERIMENT_CONFIG_ALTCLICK 		"experiment_config_altclick"
 #define EXPERIMENT_CONFIG_SIGNAL		"experiment_config_signal"
-#define COMSIG_EXP_CONF_SIG				"comsig_exp_conf_sig"
 
 /// Boolean stage, complete/incomplete. No specific progress to report.
 #define EXP_BOOL_STAGE	"bool"
