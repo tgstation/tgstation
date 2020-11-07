@@ -37,7 +37,7 @@ export const Techweb = (props, context) => {
                 Available points:
                 <ul className="Techweb__PointSummary">
                   {Object.keys(points).map(k => (
-                    <li key={`ps${k}`}>
+                    <li key={k}>
                       <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
                     </li>
                   ))}
@@ -166,7 +166,7 @@ const TechwebOverview = (props, context) => {
       <Flex.Item className={"Techweb__OverviewNodes"} height="100%">
         {displayedNodes.map(n => {
           return (
-            <TechNode node={n} key={`n${n.id}`} />
+            <TechNode node={n} key={n.id} />
           );
         })}
       </Flex.Item>
@@ -328,7 +328,7 @@ const TechwebDesignDisk = (props, context) => {
         return (
           <Section
             title={`Slot ${i + 1}`}
-            key={`slot-${i}`}
+            key={i}
             buttons={
               <span>
                 {x !== null && (
@@ -387,7 +387,7 @@ const TechwebTechDisk = (props, context) => {
   }, []);
 
   return storedNodes.map(n => (
-    <TechNode nocontrols node={n} key={`n-${n.id}`} />
+    <TechNode nocontrols node={n} key={n.id} />
   ));
 };
 
@@ -475,14 +475,14 @@ const TechNodeDetail = (props, context) => {
       {tabIndex === 1 && (
         <Flex.Item className="Techweb__OverviewNodes">
           {prereqNodes.map(n =>
-            (<TechNode node={n} key={`nr${n.id}`} />)
+            (<TechNode node={n} key={n.id} />)
           )}
         </Flex.Item>
       )}
       {tabIndex === 2 && (
         <Flex.Item className="Techweb__OverviewNodes">
           {unlockedNodes.map(n =>
-            (<TechNode node={n} key={`nu${n.id}`} />)
+            (<TechNode node={n} key={n.id} />)
           )}
         </Flex.Item>
       )}
@@ -560,7 +560,7 @@ const TechNode = (props, context) => {
             const nodeProg = Math.min(thisNode.costs[k], points[k]) || 0;
             return (
               <Flex.Item grow={1} basis={0}
-                key={`n${thisNode.id}p${i}`}>
+                key={i}>
                 <ProgressBar
                   ranges={{
                     good: [0.5, Infinity],
@@ -584,7 +584,7 @@ const TechNode = (props, context) => {
       <Box className="Techweb__NodeUnlockedDesigns">
         {Object.keys(thisNode.design_ids).map((k, i) => {
           return (
-            <Button key={`d${thisNode.id}`}
+            <Button key={thisNode.id}
               className={`${design_cache[k].class} Techweb__DesignIcon`}
               tooltip={design_cache[k].name}
               tooltipPosition={i % 15 < 7 ? "right" : "left"} />
@@ -604,7 +604,7 @@ const TechNode = (props, context) => {
                 );
               }
               return (
-                <Experiment key={`n${thisNode.id}e${thisExp}`} exp={thisExp} />
+                <Experiment key={thisExp} exp={thisExp} />
               );
             })}
           </Collapsible>
