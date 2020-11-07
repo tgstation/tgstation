@@ -42,28 +42,31 @@
 		top_off(starting=TRUE)
 	update_icon()
 
+/**
+  * Called to recalculate the matinal cost of a bullet
+  *
+  * Should only be called when the custom_materials is changed
+  * so usually on create
+  *
+  */
 /obj/item/ammo_box/proc/_refresh_bullet_cost()
+	var/ammo_count = stored_ammo?.len || max_ammo
 	bullet_cost = list()
 	base_cost = list()
 	for (var/material in custom_materials)
 		var/material_amount = custom_materials[material]
 		base_cost[material] = (material_amount * 0.10)
 		material_amount *= 0.90 // 10% for the container
-		material_amount /= max_ammo
+		material_amount /= ammo_count
 		bullet_cost[material] = material_amount
-	for(var/atom/A in stored_ammo) // hard set all the bullets to this cost
-		A.custom_materials = bullet_cost
+	if(length(stored_ammo))
+		for(var/atom/A in stored_ammo) // hard set all the bullets to this cost
+			A.custom_materials = bullet_cost
+	custom_materials = base_cost
 
-/**
-  * First time this proc has been overwritten in 5 years.  Yea?
-  *
-  * This is run by the autolathe right after the ammo is created.  Also
-  * after custom materials was set
-  *
-  * Arguments:
-  * * A - the autolathe that made this box
-  */
-/obj/item/ammo_box/autolathe_crafted(obj/machinery/autolathe/A)
+
+/obj/item/ammo_box/set_custom_materials(list/materials_used, multiplier=1)
+	. = ..()
 	_refresh_bullet_cost()
 	update_icon()
 
