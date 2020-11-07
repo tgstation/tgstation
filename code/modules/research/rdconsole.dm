@@ -1,3 +1,5 @@
+#define RND_TECH_DISK	"tech"
+#define RND_DESIGN_DISK	"design"
 
 /*
 Research and Development (R&D) Console
@@ -19,34 +21,21 @@ Nothing else in the console has ID requirements.
 	desc = "A console used to interface with R&D tools."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	var/datum/techweb/stored_research					//Reference to global science techweb.
-	var/obj/item/disk/tech_disk/t_disk	//Stores the technology disk.
-	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
-
-	req_access = list(ACCESS_RND)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
-
-	//UI VARS
-	var/screen = RDSCREEN_MENU
-	var/back = RDSCREEN_MENU
+	req_access = list(ACCESS_RND) // Locking and unlocking the console requires science access
+	/// Reference to global science techweb
+	var/datum/techweb/stored_research
+	/// The stored technology disk, if present
+	var/obj/item/disk/tech_disk/t_disk
+	/// The stored design disk, if present
+	var/obj/item/disk/design_disk/d_disk
+	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
-	var/tdisk_uple = FALSE
-	var/ddisk_uple = FALSE
-	var/datum/selected_node_id
-	var/datum/selected_design_id
-	var/selected_category
-	var/disk_slot_selected
-	var/searchstring = ""
-	var/searchtype = ""
-	var/ui_mode = RDCONSOLE_UI_MODE_NORMAL
-
-	var/research_control = TRUE
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
 		var/datum/material/material = ID
 		return material.name
-
 	else if(GLOB.chemical_reagents_list[ID])
 		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
 		return reagent.name
@@ -315,14 +304,14 @@ Nothing else in the console has ID requirements.
 			d_disk.blueprints[n] = null
 			return TRUE
 		if ("eraseDisk")
-			if (params["type"] == "design")
+			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
 					return TRUE
 				say("Wiping design disk.")
 				for(var/i in 1 to d_disk.max_blueprints)
 					d_disk.blueprints[i] = null
-			if (params["type"] == "tech")
+			if (params["type"] == RND_TECH_DISK)
 				if(QDELETED(t_disk))
 					say("No tech disk inserted!")
 					return TRUE
@@ -331,14 +320,14 @@ Nothing else in the console has ID requirements.
 				say("Wiping technology disk.")
 			return TRUE
 		if ("uploadDisk")
-			if (params["type"] == "design")
+			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
 					return TRUE
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
-			if (params["type"] == "tech")
+			if (params["type"] == RND_TECH_DISK)
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
 					return TRUE
@@ -354,9 +343,12 @@ Nothing else in the console has ID requirements.
 			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
-	if(type == "design" && d_disk)
+	if(type == RND_DESIGN_DISK && d_disk)
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
-	if(type == "tech" && t_disk)
+	if(type == RND_TECH_DISK && t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
+
+#undef RND_TECH_DISK
+#undef RND_DESIGN_DISK
