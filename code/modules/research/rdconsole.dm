@@ -554,6 +554,7 @@ Nothing else in the console has ID requirements.
 	. = list(
 		"nodes" = list(),
 		"experiments" = list(),
+		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
 		"web_org" = stored_research.organization,
@@ -651,6 +652,77 @@ Nothing else in the console has ID requirements.
 			research_node(params["node_id"], usr)
 		if ("ejectDisk")
 			eject_disk(params["type"])
+		if ("writeDesign")
+			if(QDELETED(d_disk))
+				say("No Design Disk Inserted!")
+				return
+			var/slot = text2num(params["slot"])
+			var/datum/design/D = SSresearch.techweb_design_by_id(params["selectedDesign"])
+			if(D)
+				var/autolathe_friendly = TRUE
+				if(D.reagents_list.len)
+					autolathe_friendly = FALSE
+					D.category -= "Imported"
+				else
+					for(var/x in D.materials)
+						if( !(x in list(/datum/material/iron, /datum/material/glass)))
+							autolathe_friendly = FALSE
+							D.category -= "Imported"
+
+				if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
+					D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
+					D.category |= "Imported"
+				d_disk.blueprints[slot] = D
+		if ("uploadDesignSlot")
+			if(QDELETED(d_disk))
+				say("No design disk found.")
+				return
+			var/n = text2num(params["slot"])
+			stored_research.add_design(d_disk.blueprints[n], TRUE)
+		if ("clearDesignSlot")
+			if(QDELETED(d_disk))
+				say("No design disk inserted!")
+				return
+			var/n = text2num(params["slot"])
+			var/datum/design/D = d_disk.blueprints[n]
+			say("Wiping design [D.name] from design disk.")
+			d_disk.blueprints[n] = null
+		if ("eraseDisk")
+			if (params["type"] == "design")
+				if(QDELETED(d_disk))
+					say("No design disk inserted!")
+					return
+				say("Wiping design disk.")
+				for(var/i in 1 to d_disk.max_blueprints)
+					d_disk.blueprints[i] = null
+			if (params["type"] == "tech")
+				if(QDELETED(t_disk))
+					say("No tech disk inserted!")
+					return
+				qdel(t_disk.stored_research)
+				t_disk.stored_research = new
+				say("Wiping technology disk.")
+		if ("uploadDisk")
+			if (params["type"] == "design")
+				if(QDELETED(d_disk))
+					say("No design disk inserted!")
+					return
+				for(var/D in d_disk.blueprints)
+					if(D)
+						stored_research.add_design(D, TRUE)
+			if (params["type"] == "tech")
+				if (QDELETED(t_disk))
+					say("No tech disk inserted!")
+					return
+				say("Uploading technology disk.")
+				t_disk.stored_research.copy_research_to(stored_research)
+		if ("loadTech")
+			if(QDELETED(t_disk))
+				say("No tech disk inserted!")
+				return
+			stored_research.copy_research_to(t_disk.stored_research)
+			say("Downloading to technology disk.")
+
 
 /obj/machinery/computer/rdconsole/proc/tdisk_uple_complete()
 	tdisk_uple = FALSE

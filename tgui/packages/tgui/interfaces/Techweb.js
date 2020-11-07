@@ -1,8 +1,9 @@
-import { Button, Section, NoticeBox, Tabs, Box, Input, Flex, ProgressBar, Collapsible } from '../components';
+import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible } from '../components';
 import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Fragment } from 'inferno';
+import { sortBy } from 'common/collections';
 
 export const Techweb = (props, context) => {
   const { act, data } = useBackend(context);
@@ -207,32 +208,188 @@ const TechwebDiskMenu = (props, context) => {
     diskType === "design" && TechwebDesignDisk
     || TechwebTechDisk;
   return (
-    <div>
-      <Button
-        onClick={() => act("ejectDisk", { type: diskType })}>
-        Eject Disk
-      </Button>
-      <DiskContent />
-    </div>
+    <Flex direction="column" height="100%">
+      <Flex.Item>
+        <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
+          <Flex.Item align="center" className="Techweb__HeaderTabTitle">
+            {diskType.charAt(0).toUpperCase() + diskType.slice(1)} Disk
+          </Flex.Item>
+          <Flex.Item grow={1}>
+            <Tabs>
+              <Tabs.Tab selected>
+                Stored Data
+              </Tabs.Tab>
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item align="center">
+            {diskType === "tech" && (
+              <Button
+                icon="save"
+                onClick={() => act("loadTech")}>
+                Web &rarr; Disk
+              </Button>
+            )}
+            <Button
+              icon="upload"
+              onClick={() => act("uploadDisk", { type: diskType })}>
+              Disk &rarr; Web
+            </Button>
+            <Button
+              icon="trash"
+              onClick={() => act("eraseDisk", { type: diskType })}>
+              Erase
+            </Button>
+            <Button
+              icon="eject"
+              onClick={() => act("ejectDisk", { type: diskType })}>
+              Eject
+            </Button>
+            <Button
+              icon="home"
+              onClick={() => setTechwebRoute(null)}>
+              Home
+            </Button>
+          </Flex.Item>
+        </Flex>
+      </Flex.Item>
+      <Flex.Item grow={1} className="Techweb__OverviewNodes">
+        <DiskContent />
+      </Flex.Item>
+    </Flex>
   );
 };
 
 const TechwebDesignDisk = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    design_cache,
+    researched_designs,
+    d_disk,
+  } = data;
+  const {
+    max_blueprints,
+    blueprints,
+  } = d_disk;
+  const [
+    selectedDesign,
+    setSelectedDesign
+  ] = useLocalState(context, "designDiskSelect", null);
+  const [
+    showModal,
+    setShowModal
+  ] = useLocalState(context, 'showDesignModal', -1);
+
+  const designIdByIdx = Object.keys(researched_designs);
+  let designOptions = designIdByIdx.reduce((prev, curr, idx) => {
+    if (curr.toLowerCase() !== "error")
+      prev.push(`${design_cache[curr].name} [${idx}]`);
+    return prev;
+  }, []).sort();
 
   return (
     <Fragment>
-      Design Disk
+      {showModal >= 0 && (
+        <Modal width="20em">
+          <Flex direction="column" className="Techweb__DesignModal">
+            <Flex.Item>
+              Select a design to save...
+            </Flex.Item>
+            <Flex.Item>
+              <Dropdown
+                width="100%"
+                options={designOptions}
+                onSelected={(val) => {
+                  const idx = parseInt(val.split('[').pop().split(']')[0]);
+                  setSelectedDesign(designIdByIdx[idx]);
+                }} />
+            </Flex.Item>
+            <Flex.Item align="center">
+              <Button
+                onClick={() => setShowModal(-1)}>
+                Cancel
+              </Button>
+              <Button
+                disabled={selectedDesign === null}
+                onClick={() => {
+                  act("writeDesign", {
+                    slot: showModal + 1,
+                    selectedDesign: selectedDesign
+                  });
+                  setShowModal(-1);
+                  setSelectedDesign(null);
+                }}>
+                Select
+              </Button>
+            </Flex.Item>
+          </Flex>
+        </Modal>
+      )}
+      {blueprints.map((x, i) => {
+        return (
+          <Section
+            title={`Slot ${i + 1}`}
+            buttons={
+              <span>
+                {x !== null && (
+                  <Button
+                    icon="upload"
+                    onClick={() => act("uploadDesignSlot", { slot: i + 1 })}>
+                    Upload Design to Web
+                  </Button>
+                )}
+                <Button
+                  icon="save"
+                  onClick={() => setShowModal(i)}>
+                  {x !== null ? "Overwrite Slot" : "Load Design to Slot"}
+                </Button>
+                {x !== null && (
+                  <Button
+                    icon="trash"
+                    onClick={() => act("clearDesignSlot", { slot: i + 1 })}>
+                    Clear Slot
+                  </Button>
+                )}
+              </span>
+            }>
+            {x === null && (
+              <span>Empty</span>
+            ) || (
+            <span>
+              Contains the design for <b>{design_cache[x].name}</b>:<br />
+              <span className={`${design_cache[x].class} Techweb__DesignIcon`} />
+            </span>
+            )}
+          </Section>
+        );
+      })}
     </Fragment>
   );
 };
 
 const TechwebTechDisk = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    nodes,
+    t_disk,
+  } = data;
+  const {
+    stored_research
+  } = t_disk;
+
+  const storedNodes = Object.keys(stored_research).reduce((arr, val) => {
+    const foundNode = nodes.filter(x => x.id === val)[0];
+    if (foundNode)
+      arr.push(foundNode);
+    return arr;
+  }, []);
 
   return (
     <Fragment>
-      Tech Disk
+      {storedNodes.map((n) => {
+        return (
+          <TechNode nocontrols node={n} key={`n-${n}`} />
+        );
+      })}
     </Fragment>
   );
 };
@@ -345,7 +502,7 @@ const TechNode = (props, context) => {
     experiments,
     points,
   } = data;
-  const { node, nodetails } = props;
+  const { node, nodetails, nocontrols } = props;
   const {
     id,
     can_unlock,
@@ -379,25 +536,27 @@ const TechNode = (props, context) => {
   return (
     <Section title={thisNode.name}
       buttons={
-        <span>
-          {!nodetails && (
+        !nocontrols && (
+          <span>
+            {!nodetails && (
+              <Button
+                icon="tasks"
+                onClick={() => {
+                  setTechwebRoute({ route: "details", selectedNode: node.id });
+                  setTabIndex(0);
+                }}>
+                Details
+              </Button>
+            )}
+            {tier === 1 && (
             <Button
-              icon="tasks"
-              onClick={() => {
-                setTechwebRoute({ route: "details", selectedNode: node.id });
-                setTabIndex(0);
-              }}>
-              Details
-            </Button>
-          )}
-          {tier === 1 && (
-          <Button
-            icon="lightbulb"
-            disabled={!can_unlock}
-            onClick={() => act("researchNode", { node_id: thisNode.id })}>
-            Research
-          </Button>)}
-        </span>
+              icon="lightbulb"
+              disabled={!can_unlock}
+              onClick={() => act("researchNode", { node_id: thisNode.id })}>
+              Research
+            </Button>)}
+          </span>
+        )
       }
       level={1}
       className="Techweb__NodeContainer">

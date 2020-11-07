@@ -71,3 +71,7 @@
 .Techweb__SecProtocol.engaged {
   color: colors.$good;
 }
+
+.Techweb__DesignModal > :not(:last-child) {
+  margin-bottom: 0.5em;
+}
