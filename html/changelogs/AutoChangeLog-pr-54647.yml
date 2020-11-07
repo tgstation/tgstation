@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Non-human mobs now also benefit from held id cards and some economy features (dexterity checks still apply)."
