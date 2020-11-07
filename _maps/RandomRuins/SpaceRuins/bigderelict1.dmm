@@ -1649,11 +1649,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating{
 	icon_state = "wall_thermite";
 	name = "melted wall"
@@ -1703,11 +1699,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dR" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dS" = (
@@ -1809,11 +1801,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "ef" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/derelictoutpost)
 "eg" = (
@@ -2042,7 +2030,7 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"jf" = (
+"jw" = (
 /obj/item/crowbar{
 	pixel_x = -16;
 	pixel_y = -6
@@ -2688,7 +2676,7 @@ ae
 ae
 ae
 ae
-jf
+jw
 ae
 ae
 cv

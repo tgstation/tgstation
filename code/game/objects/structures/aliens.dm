@@ -103,6 +103,12 @@
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
+///Used in the big derelict ruin exclusively.
+/obj/structure/alien/resin/membrane/creature
+	name = "gelatinous membrane"
+	desc = "A strange combination of thin, gelatinous material."
+	color = "#4BAE56"
+
 /*
  * Weeds
  */
