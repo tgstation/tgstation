@@ -22,6 +22,8 @@
 			notices++
 	update_icon()
 
+	AddElement(/datum/element/wall_mount)
+
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))

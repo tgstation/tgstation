@@ -12,6 +12,7 @@
 	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
+	var/on_wall = TRUE
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
@@ -28,6 +29,7 @@
 	light_system = MOVABLE_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
 	light_on = FALSE
+	on_wall = FALSE
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
@@ -37,6 +39,9 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
 		bulb = new(src)
+
+	if(on_wall)
+		AddElement(/datum/element/wall_mount)
 
 
 /obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
