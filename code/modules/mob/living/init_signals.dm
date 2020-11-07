@@ -78,9 +78,10 @@
 	SIGNAL_HANDLER
 	if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
 		return // Handled by the buckle.
+	if(HAS_TRAIT(src, TRAIT_FORCED_STANDING))
+		return // Don't go horizontal if mob has forced standing trait.
 	mobility_flags &= ~MOBILITY_STAND
-	if(HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, CRYO_TRAIT))
-		return // Don't go horizontal if mob falls asleep from cryo while in cryotube
+
 	on_floored_start()
 
 

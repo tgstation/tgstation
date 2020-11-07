@@ -30,6 +30,7 @@
 	if(occupant)
 		vis_contents -= occupant
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 		if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
 			occupant.set_lying_down()
 
@@ -41,6 +42,8 @@
 	vis_contents += occupant
 	pixel_y = 22
 	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
+	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 	occupant.set_body_position(STANDING_UP)
 	occupant.set_lying_angle(0)
 
