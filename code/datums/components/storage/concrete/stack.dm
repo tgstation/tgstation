@@ -39,7 +39,7 @@
 			_S.add(can_insert)
 			S.use(can_insert, TRUE)
 			return TRUE
-	return ..(S.change_stack(null, can_insert), override)
+	return ..(S.split_stack(null, can_insert), override)
 
 /datum/component/storage/concrete/stack/remove_from_storage(obj/item/I, atom/new_location)
 	var/atom/real_location = real_location()
