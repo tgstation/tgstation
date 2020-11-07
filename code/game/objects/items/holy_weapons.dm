@@ -420,6 +420,11 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
+/obj/item/nullrod/sord/suicide_act(mob/user) //a near-exact copy+paste of the actual sord suicide_act()
+	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY.</span>", \
+	"<span class='suicide'>You try to impale yourself with [src], but it's TOO HOLY...</span>")
+	return SHAME
+
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
 	inhand_icon_state = "scythe1"
