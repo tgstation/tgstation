@@ -84,8 +84,10 @@
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED) // admins have disabled the shuttle.
 		return
+	if(!isliving(usr))
+		return
 
-	var/mob/user = usr
+	var/mob/living/user = usr
 	. = FALSE
 
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
@@ -130,7 +132,7 @@
 	acted_recently += user
 	ui_interact(user)
 
-/obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
+/obj/machinery/computer/emergency_shuttle/proc/authorize(mob/living/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
 	if(ID in authorized)

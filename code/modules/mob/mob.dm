@@ -1194,13 +1194,6 @@
 /mob/proc/can_hold_items()
 	return FALSE
 
-///Get the id card on this mob
-/mob/proc/get_idcard(hand_first)
-	return
-
-/mob/proc/get_id_in_hand()
-	return
-
 /**
   * Get the mob VV dropdown extras
   */
