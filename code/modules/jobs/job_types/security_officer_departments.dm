@@ -1,7 +1,7 @@
 // Engineering
 /datum/job/officer/engineering
 	title = "Engine Security"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	department_head = list("Head of Security", "Chief Engineer")
 	supervisors = "the head of security and the chief engineer"
@@ -14,12 +14,13 @@
 	name = "Security Officer (Engineering)"
 	jobtype = /datum/job/officer/engineering
 
+	uniform = /obj/item/clothing/under/rank/security/officer/grey
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 // Medical
 /datum/job/officer/medical
 	title = "Police Medic"
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 1
 	department_head = list("Head of Security", "Chief Medical Officer")
 	supervisors = "the head of security and the chief medical officer"
@@ -35,7 +36,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/formal
 	head = /obj/item/clothing/head/beret/sec/navyofficer
 
-// Science
+// Sciences
 /datum/job/officer/science
 	title = "Laboratory Security"
 	total_positions = 1
@@ -69,6 +70,11 @@
 	name = "Security Officer (Service)"
 	jobtype = /datum/job/officer/service
 
+	uniform = /obj/item/clothing/under/suit/black
+	gloves = null
+	head = null
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+
 // Supply
 /datum/job/officer/supply
 	title = "Customs Officer"
@@ -84,3 +90,5 @@
 /datum/outfit/job/security/supply
 	name = "Security Officer (Supply)"
 	jobtype = /datum/job/officer/supply
+
+	uniform = /obj/item/clothing/under/rank/security/officer/grey
