@@ -118,8 +118,8 @@
 
 /datum/component/experiment_handler/proc/ui_handle_experiment(datum/source, mob/user, action)
 	SIGNAL_HANDLER
-	if(action == "open_experiment")
-		INVOKE_ASYNC(src, configure_experiment, null, usr)
+	if(action == "open_experiments")
+		INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
 
 /**
   * Attempts to show the user the experiment configuration panel
