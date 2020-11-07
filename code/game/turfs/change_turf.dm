@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		baseturfs = list(baseturfs)
 	var/list/temp_baseturfs = list()
 	if(!istype(src, /turf/closed))
-		temp_baseturfs += type
+		baseturfs = baseturfs_string_list(baseturfs + type, src)
 	var/turf/change_type
 	if(length(new_baseturfs))
 		change_type = new_baseturfs[new_baseturfs.len]
