@@ -19,8 +19,6 @@
 /obj/structure/disposalpipe/sorting/proc/check_sorting(obj/structure/disposalholder/H)
 	return FALSE
 
-
-
 // Mail sorting junction, uses package tags to sort objects.
 /obj/structure/disposalpipe/sorting/mail
 	flip_type = /obj/structure/disposalpipe/sorting/mail/flip
