@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "No more clickdragging one person to another that isn't you doesn't opening inventory windows."
