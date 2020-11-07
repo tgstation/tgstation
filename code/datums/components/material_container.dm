@@ -69,7 +69,7 @@
 		var/datum/material/M = I
 		var/amt = materials[I]
 		if(amt)
-			. += "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>"
+			examine_texts += "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>"
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/I, mob/living/user)
