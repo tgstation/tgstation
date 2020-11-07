@@ -34,13 +34,8 @@
   border: 1px solid #40628a;
 }
 
-.Techweb__HeaderCol > :not(:last-child),
-.Techweb__HeaderColRight > :not(:last-child) {
+.Techweb__HeaderContent > * > :not(:last-child) {
   margin-bottom: 5px;
-}
-
-.Techweb__HeaderColRight > * > * {
-  float: right;
 }
 
 .Techweb__HeaderSectionTabs {

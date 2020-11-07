@@ -26,68 +26,62 @@ export const Techweb = (props, context) => {
       width={640}
       height={880}
       title={`${web_org} Research and Development Network`}>
+      {!!locked && (
+        <Modal width="15em" align="center" className="Techweb__LockedModal">
+          <div><b>Console Locked</b></div>
+          <Button
+            icon="unlock"
+            onClick={() => act("toggleLock")}>
+            Unlock
+          </Button>
+        </Modal>
+      )}
       <Window.Content>
-        {!!locked && (
-          <Modal width="15em" align="center" className="Techweb__LockedModal">
-            <div><b>Console Locked</b></div>
-            <Button
-              icon="unlock"
-              onClick={() => act("toggleLock")}>
-              Unlock
-            </Button>
-          </Modal>
-        )}
         <Flex direction="column" className="Techweb__Viewport" height="100%">
           <Flex.Item className="Techweb__HeaderSection">
             <Flex className="Techweb__HeaderContent">
               <Flex.Item>
-                <Flex direction="column" className="Techweb__HeaderCol">
-                  <Flex.Item>
-                    Available points:
-                    <ul className="Techweb__PointSummary">
-                      {Object.keys(points).map(k => (
-                        <li key={k}>
-                          <b>{k}</b>: {points[k]} (+{points_last_tick[k]||0}/t)
-                        </li>
-                      ))}
-                    </ul>
-                  </Flex.Item>
-                  <Flex.Item>
-                    Security protocols:
-                    <span
-                      className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
-                      {sec_protocols ? "Engaged" : "Disengaged"}
-                    </span>
-                  </Flex.Item>
-                </Flex>
+                <Box>
+                  Available points:
+                  <ul className="Techweb__PointSummary">
+                    {Object.keys(points).map(k => (
+                      <li key={k}>
+                        <b>{k}</b>: {points[k]} (+{points_last_tick[k]||0}/t)
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box>
+                  Security protocols:
+                  <span
+                    className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
+                    {sec_protocols ? "Engaged" : "Disengaged"}
+                  </span>
+                </Box>
               </Flex.Item>
               <Flex.Item grow={1} />
               <Flex.Item>
-                <Flex direction="column" className="Techweb__HeaderColRight">
+                <Button fluid
+                  onClick={() => act("toggleLock")}
+                  icon="lock">
+                  Lock Console
+                </Button>
+                {d_disk && (
                   <Flex.Item>
-                    <Button
-                      onClick={() => act("toggleLock")}
-                      icon="lock">
-                      Lock Console
+                    <Button fluid
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                      Design Disk Inserted
                     </Button>
                   </Flex.Item>
-                  {d_disk && (
-                    <Flex.Item>
-                      <Button
-                        onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
-                        Design Disk Inserted
-                      </Button>
-                    </Flex.Item>
-                  )}
-                  {t_disk && (
-                    <Flex.Item>
-                      <Button
-                        onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
-                        Tech Disk Inserted
-                      </Button>
-                    </Flex.Item>
-                  )}
-                </Flex>
+                )}
+                {t_disk && (
+                  <Flex.Item>
+                    <Button fluid
+                      onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                      Tech Disk Inserted
+                    </Button>
+                  </Flex.Item>
+                )}
               </Flex.Item>
             </Flex>
           </Flex.Item>
@@ -198,7 +192,7 @@ const TechwebNodeDetail = (props, context) => {
   const { selectedNode } = props;
 
   const selectedNodeData = selectedNode
-    && nodes.filter(x => x.id === selectedNode)[0];
+    && nodes.find(x => x.id === selectedNode);
   return (
     <TechNodeDetail node={selectedNodeData} />
   );
@@ -218,8 +212,7 @@ const TechwebDiskMenu = (props, context) => {
 
   // Check for the disk actually being inserted
   if ((diskType === "design" && !d_disk) || (diskType === "tech" && !t_disk)) {
-    setTechwebRoute(null);
-    return (<TechwebOverview />);
+    return null;
   }
 
   const DiskContent = diskType === "design" && TechwebDesignDisk
@@ -258,7 +251,10 @@ const TechwebDiskMenu = (props, context) => {
             </Button>
             <Button
               icon="eject"
-              onClick={() => act("ejectDisk", { type: diskType })}>
+              onClick={() => {
+                act("ejectDisk", { type: diskType });
+                setTechwebRoute(null);
+              }}>
               Eject
             </Button>
             <Button
