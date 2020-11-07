@@ -65,7 +65,8 @@
 		)
 
 /datum/surgery_step/manipulate_organs
-	time = 64
+	// KF: Remove this needlessly slow step.
+	//time = 64
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(/obj/item/organ = 100, /obj/item/organ_storage = 100)
