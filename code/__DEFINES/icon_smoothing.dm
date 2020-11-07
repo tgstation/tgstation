@@ -41,7 +41,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_TURF_OPEN S_TURF(0)				///turf/open
 #define SMOOTH_GROUP_TURF_CHASM S_TURF(1)				///turf/open/chasm, /turf/open/floor/fakepit
 #define SMOOTH_GROUP_FLOOR_LAVA S_TURF(2)				///turf/open/lava/smooth
-#define SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS S_TURF(3)	///turf/open/transparent/glass
+#define SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS S_TURF(3)	///turf/open/floor/glass
 
 #define SMOOTH_GROUP_OPEN_FLOOR S_TURF(4)				///turf/open/floor
 
@@ -61,6 +61,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_CARPET_RED	S_TURF(17)				///turf/open/floor/carpet/red
 #define SMOOTH_GROUP_CARPET_ROYAL_BLACK S_TURF(18)		///turf/open/floor/carpet/royalblack
 #define SMOOTH_GROUP_CARPET_ROYAL_BLUE S_TURF(19)		///turf/open/floor/carpet/royalblue
+#define SMOOTH_GROUP_CARPET_EXECUTIVE S_TURF(20)		///turf/open/floor/carpet/executive
+#define SMOOTH_GROUP_CARPET_STELLAR S_TURF(21)			///turf/open/floor/carpet/stellar
+#define SMOOTH_GROUP_CARPET_DONK S_TURF(22)				///turf/open/floor/carpet/donk
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(24)			///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(25)			///turf/closed/wall/material

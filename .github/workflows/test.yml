@@ -31,7 +31,13 @@ jobs:
           bash tools/ci/build_tgui.sh
           bash tools/ci/check_grep.sh
           python3 tools/mapmerge2/dmi.py --test
-          ~/dreamchecker
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Annotate Lints
+        uses: yogstation13/DreamAnnotate@v1
+        if: always()
+        with:
+          outputFile: output-annotations.txt
+
   compile_all_maps:
     runs-on: ubuntu-latest
     steps:
