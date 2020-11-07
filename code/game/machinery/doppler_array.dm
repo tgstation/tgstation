@@ -249,8 +249,6 @@
 	if (.)
 		return
 
-	switch(action)
-		if("open_experiments")
-			SEND_SIGNAL(src, COMSIG_EXP_CONF_SIG, usr)
+
 
 #undef PRINTER_TIMEOUT

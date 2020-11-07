@@ -42,6 +42,9 @@
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
+/// from datum ui_ct (usr, action)
+#define COMSIG_UI_ACT "COMSIG_UI_ACT"
+
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
