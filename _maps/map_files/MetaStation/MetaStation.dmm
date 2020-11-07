@@ -14765,6 +14765,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/camera/autoname,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aID" = (
@@ -15173,6 +15174,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aJS" = (
@@ -28511,6 +28513,9 @@
 /obj/structure/rack,
 /obj/item/circuitboard/machine/telecomms/bus,
 /obj/item/circuitboard/machine/telecomms/broadcaster,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
 "bph" = (
@@ -31513,6 +31518,7 @@
 /obj/item/stock_parts/micro_laser/high,
 /obj/item/stock_parts/micro_laser/high,
 /obj/item/stock_parts/micro_laser/high,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
 "bxm" = (
@@ -68910,6 +68916,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "jqA" = (
@@ -76268,6 +76275,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/belt/utility,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "sVR" = (

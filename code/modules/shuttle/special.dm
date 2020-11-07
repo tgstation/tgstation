@@ -258,10 +258,9 @@
 		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
 			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
-	else if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.get_bank_account())
-			account = H.get_bank_account()
+	else
+		var/mob/living/L = AM
+		account = L.get_bank_account()
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])

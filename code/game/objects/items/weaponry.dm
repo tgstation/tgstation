@@ -339,18 +339,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
-/obj/item/throwing_star/magspear
-	name = "magnetic spear"
-	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "magspear"
-	throwforce = 25 //kills regular carps in one hit
-	force = 10
-	throw_range = 0 //throwing these invalidates the speargun
-	attack_verb_continuous = list("stabs", "rips", "gores", "impales")
-	attack_verb_simple = list("stab", "rip", "gore", "impale")
-	embedding = list("pain_mult" = 8, "embed_chance" = 100, "fall_chance" = 0, "impact_pain_mult" = 15) //55 damage+embed on hit
-
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
@@ -536,7 +524,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
+	AddElement(/datum/element/art, impressiveness)
 	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000))
 
 /obj/item/statuebust/hippocratic
