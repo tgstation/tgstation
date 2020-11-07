@@ -185,9 +185,10 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 		return
 
 	if(!holder)
-		if(!GLOB.looc_allowed)
-			to_chat(src, "<span class='danger'>LOOC is globally muted.</span>")
-			return
+		//TODO разобраться почему по умолчанию выставляется FALSE
+		// if(!GLOB.looc_allowed)
+		// 	to_chat(src, "<span class='danger'>LOOC is globally muted.</span>")
+		// 	return
 		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "<span class='danger'>LOOC for dead mobs has been turned off.</span>")
 			return
