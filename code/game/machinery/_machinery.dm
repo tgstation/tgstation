@@ -729,3 +729,14 @@ Class Procs:
 			if(3)
 				new_name += ascii2text(rand(48, 57)) // 0 - 9
 	return new_name.Join()
+
+/**
+ * Alerts the AI that a hack is in progress.
+ *
+ * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
+ * However, the proc may also be used elsewhere.
+ */	
+/obj/machinery/proc/AI_notify_hack()
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)
