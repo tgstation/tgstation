@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - bugfix: "An issue with the UNREAL SORD's suicide text and effect has been fixed."
