@@ -8,10 +8,6 @@ import { sortBy } from 'common/collections';
 export const Techweb = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    nodes,
-    node_cache,
-    design_cache,
-    experiments,
     points,
     points_last_tick,
     web_org,
@@ -137,14 +133,9 @@ const TechwebOverview = (props, context) => {
     setSearchText,
   ] = useLocalState(context, 'searchText');
 
-  let displayedNodes = tabIndex < 2
+  let displayedNodes = sortBy(x => node_cache[x.id].name)(tabIndex < 2
     ? nodes.filter(x => x.tier === tabIndex)
-    : nodes.filter(x => x.tier >= tabIndex);
-  displayedNodes.sort((a, b) => {
-    const an = node_cache[a.id];
-    const bn = node_cache[b.id];
-    return an.name.localeCompare(bn.name);
-  });
+    : nodes.filter(x => x.tier >= tabIndex));
 
   if (searchText && searchText.trim() !== '') {
     displayedNodes = displayedNodes.filter(x => {
@@ -293,7 +284,6 @@ const TechwebDesignDisk = (props, context) => {
     d_disk,
   } = data;
   const {
-    max_blueprints,
     blueprints,
   } = d_disk;
   const [
@@ -306,12 +296,8 @@ const TechwebDesignDisk = (props, context) => {
   ] = useLocalState(context, 'showDesignModal', -1);
 
   const designIdByIdx = Object.keys(researched_designs);
-  let designOptions = designIdByIdx.reduce((prev, curr, idx) => {
-    if (curr.toLowerCase() !== "error") {
-      prev.push(`${design_cache[curr].name} [${idx}]`);
-    }
-    return prev;
-  }, []).sort();
+  const designOptions = sortBy(x => x)(designIdByIdx.filter(x => x.toLowerCase() !== "error")
+    .map((id, idx) => `${design_cache[id].name} [${idx}]`));
 
   return (
     <Fragment>
@@ -405,15 +391,7 @@ const TechwebTechDisk = (props, context) => {
     stored_research,
   } = t_disk;
 
-  const storedNodes = Object.keys(stored_research).reduce((arr, val) => {
-    const foundNode = nodes.filter(x => x.id === val)[0];
-    if (foundNode) {
-      arr.push(foundNode);
-    }
-    return arr;
-  }, []);
-
-  return storedNodes.map(n => (
+  return Object.keys(stored_research).map(x => ({ id: x })).map(n => (
     <TechNode nocontrols node={n} key={n.id} />
   ));
 };
@@ -423,15 +401,10 @@ const TechNodeDetail = (props, context) => {
   const {
     nodes,
     node_cache,
-    design_cache,
-    experiments,
-    points,
   } = data;
   const { node } = props;
   const {
     id,
-    can_unlock,
-    tier,
   } = node;
   let thisNode = node_cache[id];
   const [
@@ -443,17 +416,9 @@ const TechNodeDetail = (props, context) => {
     setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null);
 
-  const prereqNodes = thisNode.prereq_ids.reduce((arr, val) => {
-    const foundNode = nodes.filter(x => x.id === val)[0];
-    if (foundNode) { arr.push(foundNode); }
-    return arr;
-  }, []);
-
-  const unlockedNodes = Object.keys(thisNode.unlock_ids).reduce((arr, val) => {
-    const foundNode = nodes.filter(x => x.id === val)[0];
-    if (foundNode) { arr.push(foundNode); }
-    return arr;
-  }, []);
+  const prereqNodes = nodes.filter(x => thisNode.prereq_ids.includes(x.id));
+  const unlockedNodeIds = Object.keys(thisNode.unlock_ids);
+  const unlockedNodes = nodes.filter(x => unlockedNodeIds.includes(x.id));
 
   return (
     <Flex direction="column" height="100%">
@@ -539,7 +504,6 @@ const TechNode = (props, context) => {
     tabIndex,
     setTabIndex,
   ] = useLocalState(context, 'nodeDetailTabIndex', 0);
-  const selected = false;
 
   const expcompl = reqExp.filter(x => experiments[x]?.completed).length;
   const experimentProgress = (
