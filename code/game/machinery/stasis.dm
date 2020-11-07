@@ -36,7 +36,7 @@
 /obj/machinery/stasis/RefreshParts()
 	part_speed_modifier = 0.75
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		part_speed_modifier += 0.25 * M.rating
+		part_speed_modifier += 0.4 * M.rating
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()

@@ -4,7 +4,7 @@
 		return 1
 	else if(locate(/obj/machinery/stasis, T))
 		var/obj/machinery/stasis/S = locate(/obj/machinery/stasis, T)
-		return 0.9 * S.part_speed_modifier; // 0.9 at basic, 1.575 at Bluespace, 1.8 with Quantum.
+		return 0.9 * S.part_speed_modifier; // 0.9 at basic, 2.115 at Bluespace.
 	else if(locate(/obj/structure/table, T))
 		return 0.8
 	else if(locate(/obj/structure/bed, T))
