@@ -81,7 +81,6 @@
 	if(HAS_TRAIT(src, TRAIT_FORCED_STANDING))
 		return // Don't go horizontal if mob has forced standing trait.
 	mobility_flags &= ~MOBILITY_STAND
-
 	on_floored_start()
 
 
