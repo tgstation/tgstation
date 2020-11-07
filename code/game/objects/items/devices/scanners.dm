@@ -437,7 +437,12 @@ GENE SCANNER
 				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile
-					render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+					if(!belly.food_reagents[bit.type])
+						render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+					else
+						var/bit_vol = bit.volume - belly.food_reagents[bit.type]
+						if(bit_vol > 0)
+							render_list += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
 
