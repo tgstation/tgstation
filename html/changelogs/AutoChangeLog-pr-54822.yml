@@ -1,5 +1,0 @@
-author: "alphanerdd"
-delete-after: True
-changes: 
-  - tweak: "Made Nothing the cure for Gluttony's Blessing instead of Adminordazine."
-  - bugfix: "Fixed the cure text so it both no longer displays a DM path, and also displays the correct cure."
