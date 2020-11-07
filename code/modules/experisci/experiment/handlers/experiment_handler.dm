@@ -47,6 +47,8 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+		if(EXPERIMENT_CONFIG_SIGNAL)
+			RegisterSignal(parent, COMSIG_EXP_CONF_SIG, .proc/configure_experiment)
 	GLOB.experiment_handlers += src
 
 /datum/component/experiment_handler/Destroy(force, silent)

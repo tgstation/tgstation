@@ -195,7 +195,7 @@
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/explosion), \
-		config_mode = EXPERIMENT_CONFIG_ALTCLICK)
+		config_mode = EXPERIMENT_CONFIG_SIGNAL)
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 		took, orig_dev_range, orig_heavy_range, orig_light_range) //probably needs a way to ignore admin explosives later on
@@ -239,5 +239,19 @@
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
+
+/obj/machinery/doppler_array/research/ui_data(mob/user)
+	. = ..()
+	.["is_research"] = TRUE
+
+/obj/machinery/doppler_array/research/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+		if("open_experiments")
+			SEND_SIGNAL(src, COMSIG_EXP_CONF_SIG, usr)
+
 
 #undef PRINTER_TIMEOUT

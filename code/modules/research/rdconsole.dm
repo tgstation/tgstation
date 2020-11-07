@@ -247,7 +247,8 @@ Nothing else in the console has ID requirements.
 		)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)
-	if (..())
+	. = ..()
+	if (.)
 		return
 
 	add_fingerprint(usr)
@@ -255,27 +256,30 @@ Nothing else in the console has ID requirements.
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		say("Console is locked, cannot perform further actions.")
-		return
+		return TRUE
 
 	switch (action)
 		if ("toggleLock")
 			if(obj_flags & EMAGGED)
 				to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to access locking protocols.</span>")
-				return
+				return TRUE
 			if(allowed(usr))
 				locked = !locked
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
+			return TRUE
 		if ("researchNode")
 			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
-				return
+				return TRUE
 			research_node(params["node_id"], usr)
+			return TRUE
 		if ("ejectDisk")
 			eject_disk(params["type"])
+			return TRUE
 		if ("writeDesign")
 			if(QDELETED(d_disk))
 				say("No Design Disk Inserted!")
-				return
+				return TRUE
 			var/slot = text2num(params["slot"])
 			var/datum/design/D = SSresearch.techweb_design_by_id(params["selectedDesign"])
 			if(D)
@@ -293,55 +297,61 @@ Nothing else in the console has ID requirements.
 					D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 					D.category |= "Imported"
 				d_disk.blueprints[slot] = D
+			return TRUE
 		if ("uploadDesignSlot")
 			if(QDELETED(d_disk))
 				say("No design disk found.")
-				return
+				return TRUE
 			var/n = text2num(params["slot"])
 			stored_research.add_design(d_disk.blueprints[n], TRUE)
+			return TRUE
 		if ("clearDesignSlot")
 			if(QDELETED(d_disk))
 				say("No design disk inserted!")
-				return
+				return TRUE
 			var/n = text2num(params["slot"])
 			var/datum/design/D = d_disk.blueprints[n]
 			say("Wiping design [D.name] from design disk.")
 			d_disk.blueprints[n] = null
+			return TRUE
 		if ("eraseDisk")
 			if (params["type"] == "design")
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
-					return
+					return TRUE
 				say("Wiping design disk.")
 				for(var/i in 1 to d_disk.max_blueprints)
 					d_disk.blueprints[i] = null
 			if (params["type"] == "tech")
 				if(QDELETED(t_disk))
 					say("No tech disk inserted!")
-					return
+					return TRUE
 				qdel(t_disk.stored_research)
 				t_disk.stored_research = new
 				say("Wiping technology disk.")
+			return TRUE
 		if ("uploadDisk")
 			if (params["type"] == "design")
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
-					return
+					return TRUE
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
 			if (params["type"] == "tech")
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
-					return
+					return TRUE
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
+			return TRUE
 		if ("loadTech")
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")
 				return
 			stored_research.copy_research_to(t_disk.stored_research)
 			say("Downloading to technology disk.")
+			return TRUE
 
 /obj/machinery/computer/rdconsole/proc/eject_disk(type)
 	if(type == "design" && d_disk)
