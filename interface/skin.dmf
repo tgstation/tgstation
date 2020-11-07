@@ -2,21 +2,21 @@ macro "default"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -26,21 +26,21 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
@@ -98,6 +98,16 @@ window "mainwindow"
 		saved-params = "is-checked"
 		text = "OOC"
 		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
+		button-type = pushbox
+	elem "loocbutton"
+		type = BUTTON
+		pos = 520,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "LOOC"
+		command = ".winset \"loocbutton.is-checked=true ? input.command=\"!looc \\\"\" : input.command=\"\"loocbutton.is-checked=true ? mebutton.is-checked=false\"\"loocbutton.is-checked=true ? saybutton.is-checked=false\""
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
@@ -194,15 +204,15 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
-	elem "forum"
+	elem "discord"
 		type = BUTTON
 		pos = 320,5
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
 		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
+		text = "Discord"
+		command = "discord"
 	elem "github"
 		type = BUTTON
 		pos = 420,5

@@ -98,7 +98,8 @@
 	var/ok = FALSE
 	switch(item)
 		if("admin_log")
-			var/dat = "<B>Admin Log<HR></B>"
+			var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head>"
+			dat += "<B>Admin Log<HR></B>"
 			for(var/l in GLOB.admin_log)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_log.len)
@@ -254,7 +255,8 @@
 		if("manifest")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing Crew Manifest.</B><HR>"
+			var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head>"
+			dat += "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
 				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
@@ -263,7 +265,8 @@
 		if("DNA")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing DNA from blood.</B><HR>"
+			var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head>"
+			dat += "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
@@ -274,7 +277,8 @@
 		if("fingerprints")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing Fingerprints.</B><HR>"
+			var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head>"
+			dat += "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i

@@ -70,9 +70,12 @@
 
 	//Pause OOC
 	var/ooc_toggled = FALSE
+	var/looc_toggled = FALSE
 	if(is_global && stop_ooc && GLOB.ooc_allowed)
 		ooc_toggled = TRUE
+		looc_toggled = TRUE
 		toggle_ooc(FALSE)
+		toggle_looc(FALSE)
 
 	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
@@ -91,6 +94,10 @@
 	//Restore OOC
 	if(ooc_toggled)
 		toggle_ooc(TRUE)
+
+	if(looc_toggled)
+		toggle_looc(TRUE)
+
 
 /datum/cinematic/proc/show_to(mob/M, client/C)
 	SIGNAL_HANDLER

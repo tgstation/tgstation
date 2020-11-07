@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 /obj/machinery/requests_console/ui_interact(mob/user)
 	. = ..()
-	var/dat = ""
+	var/dat = "<head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head>"
 	if(!open)
 		switch(screen)
 			if(REQ_SCREEN_MAIN)

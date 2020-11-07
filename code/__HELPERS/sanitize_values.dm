@@ -90,3 +90,7 @@
 /proc/sanitize_ooccolor(color)
 	var/static/regex/color_regex = regex(@"^#[0-9a-fA-F]{6}$")
 	return findtext(color, color_regex) ? color : GLOB.normal_ooc_colour
+
+/proc/sanitize_looccolor(color)
+	var/static/regex/color_regex = regex(@"^#[0-9a-fA-F]{6}$")
+	return findtext(color, color_regex) ? color : GLOB.normal_looc_colour
