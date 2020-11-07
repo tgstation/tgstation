@@ -259,3 +259,14 @@
 	)
 	result = /obj/item/food/salad/gumbo
 	subcategory = CAT_MEAT
+
+
+/datum/crafting_recipe/food/fried_chicken
+	name = "Fried Chicken"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/corn_starch = 5,
+	)
+	result = /obj/item/food/fried_chicken
+	subcategory = CAT_MEAT

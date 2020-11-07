@@ -176,7 +176,7 @@
 	desc = "This one takes you back."
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
-	broken_states = list("damaged")
+	broken_states = list("eighties_damaged")
 
 /turf/open/floor/plating/rust
 	name = "rusted plating"

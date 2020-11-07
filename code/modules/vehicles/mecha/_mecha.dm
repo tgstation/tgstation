@@ -26,7 +26,8 @@
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	movedelay = 1 SECONDS
-	anchored = TRUE
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	emulate_door_bumps = TRUE
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = MOVABLE_LIGHT
@@ -101,13 +102,13 @@
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
-	var/list/equipment = new
+	var/list/equipment = list()
 	///Current active equipment
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	///Maximum amount of equipment we can have
 	var/max_equip = 3
 
-	///Whether our steps are silent, for example in zero-G
+	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
 	var/stepsound = 'sound/mecha/mechstep.ogg'
@@ -575,8 +576,9 @@
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
-	if(stepsound)
-		playsound(src,stepsound,40,1)
+	if(mecha_flags & QUIET_STEPS)
+		return
+	playsound(src, stepsound, 40, TRUE)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
 	SIGNAL_HANDLER
@@ -598,10 +600,9 @@
 					to_chat(occupants, "[icon2html(src, occupants)]<span class='info'>The [src] push off [backup] to propel yourself.</span>")
 		return TRUE
 
-	if(movedelay <= world.time && active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))
+	if(active_thrusters?.thrust(movement_dir))
 		step_silent = TRUE
 		return TRUE
-
 	return FALSE
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
@@ -670,9 +671,9 @@
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
-		setDir(direction)
-		if(turnsound && dir != direction)
+		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
+		setDir(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -1113,13 +1114,6 @@
 	req_access = list()
 	return allowed(M)
 
-////////////////////////////////
-/////// Messages and Log ///////
-////////////////////////////////
-
-GLOBAL_VAR_INIT(year, time2text(world.realtime,"YYYY"))
-GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
-//why is this in mecha
 
 ///////////////////////
 ///// Power stuff /////
