@@ -18,6 +18,7 @@ export const Techweb = (props, context) => {
     sec_protocols,
     t_disk,
     d_disk,
+    locked,
   } = data;
   const [
     techwebRoute,
@@ -30,42 +31,68 @@ export const Techweb = (props, context) => {
       height={880}
       title={`${web_org} Research and Development Network`}>
       <Window.Content>
+        {!!locked && (
+          <Modal width="15em" align="center" className="Techweb__LockedModal">
+            <div><b>Console Locked</b></div>
+            <Button
+              icon="unlock"
+              onClick={() => act("toggleLock")}>
+              Unlock
+            </Button>
+          </Modal>
+        )}
         <Flex direction="column" className="Techweb__Viewport" height="100%">
           <Flex.Item className="Techweb__HeaderSection">
-            <Flex direction="column" className="Techweb__HeaderContent">
+            <Flex className="Techweb__HeaderContent">
               <Flex.Item>
-                Available points:
-                <ul className="Techweb__PointSummary">
-                  {Object.keys(points).map(k => (
-                    <li key={k}>
-                      <b>{k}</b>: {points[k]} (+{points_last_tick[k] || 0}/t)
-                    </li>
-                  ))}
-                </ul>
+                <Flex direction="column" className="Techweb__HeaderCol">
+                  <Flex.Item>
+                    Available points:
+                    <ul className="Techweb__PointSummary">
+                      {Object.keys(points).map(k => (
+                        <li key={k}>
+                          <b>{k}</b>: {points[k]} (+{points_last_tick[k]||0}/t)
+                        </li>
+                      ))}
+                    </ul>
+                  </Flex.Item>
+                  <Flex.Item>
+                    Security protocols:
+                    <span
+                      className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
+                      {sec_protocols ? "Engaged" : "Disengaged"}
+                    </span>
+                  </Flex.Item>
+                </Flex>
               </Flex.Item>
+              <Flex.Item grow={1} />
               <Flex.Item>
-                Security protocols:
-                <span
-                  className={`Techweb__SecProtocol ${!!sec_protocols && "engaged"}`}>
-                  {sec_protocols ? "Engaged" : "Disengaged"}
-                </span>
-              </Flex.Item>
-              {(d_disk || t_disk) && (
-                <Flex.Item>
-                  {d_disk && (
+                <Flex direction="column" className="Techweb__HeaderColRight">
+                  <Flex.Item>
                     <Button
-                      onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
-                      Design Disk Inserted
+                      onClick={() => act("toggleLock")}
+                      icon="lock">
+                      Lock Console
                     </Button>
+                  </Flex.Item>
+                  {d_disk && (
+                    <Flex.Item>
+                      <Button
+                        onClick={() => setTechwebRoute({ route: "disk", diskType: "design" })}>
+                        Design Disk Inserted
+                      </Button>
+                    </Flex.Item>
                   )}
                   {t_disk && (
-                    <Button
-                      onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
-                      Tech Disk Inserted
-                    </Button>
+                    <Flex.Item>
+                      <Button
+                        onClick={() => setTechwebRoute({ route: "disk", diskType: "tech" })}>
+                        Tech Disk Inserted
+                      </Button>
+                    </Flex.Item>
                   )}
-                </Flex.Item>
-              )}
+                </Flex>
+              </Flex.Item>
             </Flex>
           </Flex.Item>
           <Flex.Item className="Techweb__RouterContent" height="100%">
@@ -418,15 +445,13 @@ const TechNodeDetail = (props, context) => {
 
   const prereqNodes = thisNode.prereq_ids.reduce((arr, val) => {
     const foundNode = nodes.filter(x => x.id === val)[0];
-    if (foundNode)
-    { arr.push(foundNode); }
+    if (foundNode) { arr.push(foundNode); }
     return arr;
   }, []);
 
   const unlockedNodes = Object.keys(thisNode.unlock_ids).reduce((arr, val) => {
     const foundNode = nodes.filter(x => x.id === val)[0];
-    if (foundNode)
-    { arr.push(foundNode); }
+    if (foundNode) { arr.push(foundNode); }
     return arr;
   }, []);
 
