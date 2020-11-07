@@ -42,7 +42,7 @@
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span class = 'warning'>[source.p_their()] skin seems to be shifting and morphing like is moving around below it.</span>")
+	examine_list += "<span class = 'warning'>[source.p_their()] skin seems to be shifting and morphing like is moving around below it.</span>"
 
 /datum/element/digitalcamo/proc/can_track(datum/source)
 	SIGNAL_HANDLER
