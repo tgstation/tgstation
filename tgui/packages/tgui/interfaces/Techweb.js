@@ -3,7 +3,8 @@ import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Fragment } from 'inferno';
-import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { sortBy, filter, map } from 'common/collections';
 
 export const Techweb = (props, context) => {
   const { act, data } = useBackend(context);
@@ -136,7 +137,7 @@ const TechwebOverview = (props, context) => {
       const n = node_cache[x.id];
       return n.name.toLowerCase().includes(searchText)
         || n.description.toLowerCase().includes(searchText)
-        || Object.keys(n.design_ids).some(e =>
+        || n.design_ids.some(e =>
           design_cache[e].name.toLowerCase().includes(searchText));
     });
   }
@@ -292,8 +293,11 @@ const TechwebDesignDisk = (props, context) => {
   ] = useLocalState(context, 'showDesignModal', -1);
 
   const designIdByIdx = Object.keys(researched_designs);
-  const designOptions = sortBy(x => x)(designIdByIdx.filter(x => x.toLowerCase() !== "error")
-    .map((id, idx) => `${design_cache[id].name} [${idx}]`));
+  const designOptions = flow([
+    filter(x => x.toLowerCase() !== "error"),
+    map((id, idx) => `${design_cache[id].name} [${idx}]`),
+    sortBy(x => x),
+  ])(designIdByIdx);
 
   return (
     <Fragment>
@@ -413,8 +417,7 @@ const TechNodeDetail = (props, context) => {
   ] = useLocalState(context, 'techwebRoute', null);
 
   const prereqNodes = nodes.filter(x => thisNode.prereq_ids.includes(x.id));
-  const unlockedNodeIds = Object.keys(thisNode.unlock_ids);
-  const unlockedNodes = nodes.filter(x => unlockedNodeIds.includes(x.id));
+  const unlockedNodes = nodes.filter(x => thisNode.unlock_ids.includes(x.id));
 
   return (
     <Flex direction="column" height="100%">
@@ -567,7 +570,7 @@ const TechNode = (props, context) => {
       )}
       <div className="Techweb__NodeDescription">{thisNode.description}</div>
       <Box className="Techweb__NodeUnlockedDesigns">
-        {Object.keys(thisNode.design_ids).map((k, i) => {
+        {thisNode.design_ids.map((k, i) => {
           return (
             <Button key={thisNode.id}
               className={`${design_cache[k].class} Techweb__DesignIcon`}

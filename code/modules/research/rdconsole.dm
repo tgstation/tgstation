@@ -214,17 +214,17 @@ Nothing else in the console has ID requirements.
 			"id" = n.id,
 			"name" = n.display_name,
 			"description" = n.description,
-			"category" = n.category,
 			"costs" = n.research_costs,
-			"starting_node" = n.starting_node,
 			"prereq_ids" = n.prereq_ids,
-			"design_ids" = n.design_ids,
-			"unlock_ids" = n.unlock_ids,
-			"boost_item_paths" = n.boost_item_paths,
-			"autounlock_by_boost" = n.autounlock_by_boost,
+			"design_ids" = list(),
+			"unlock_ids" = list(),
 			"required_experiments" = n.required_experiments,
 			"discount_experiments" = n.discount_experiments
 		)
+		for (var/d in n.design_ids)
+			.["node_cache"][n.id]["design_ids"] += d
+		for (var/un in n.unlock_ids)
+			.["node_cache"][n.id]["unlock_ids"] += un
 
 	// Build design cache
 	var/datum/asset/spritesheet/research_designs/ss = get_asset_datum(/datum/asset/spritesheet/research_designs)
