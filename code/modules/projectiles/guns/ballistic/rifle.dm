@@ -55,6 +55,13 @@
 	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
+	
+	/// PM: Frontier specific icons.
+	icon = 'icons/FrontierProgramIcons/icons/obj/guns/48x32_projectile.dmi'
+	worn_icon = 'icons/FrontierProgramIcons/icons/mob/clothing/back.dmi'
+	lefthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/FrontierProgramIcons/icons/mob/inhands/weapons/guns_righthand.dmi'
+	
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
@@ -69,6 +76,11 @@
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
+		
+		/// PM: Frontier specific icons.
+		icon = 'icons/FrontierProgramIcons/icons/obj/guns/projectile.dmi'
+		inhand_icon_state = "moistnugget_sawn" ///Noticeably, the in-hands don't immediately update if you are holding the Mosin. You need to drop something or whatever to get them to switch.
+
 		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
@@ -89,6 +101,12 @@
 	desc = "Pew Pew Pew."
 	fire_sound = 'sound/weapons/emitter.ogg'
 	pin = /obj/item/firing_pin/magic
+	
+	//PM: Making this use right sprites after changes to Mosin Nagant.
+	icon = 'icons/obj/guns/projectile.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	
 	icon_state = "arcane_barrage"
 	inhand_icon_state = "arcane_barrage"
 	slot_flags = null
