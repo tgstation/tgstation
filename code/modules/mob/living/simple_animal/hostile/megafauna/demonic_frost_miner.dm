@@ -146,6 +146,7 @@ Difficulty: Extremely Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	adjustBruteLoss(30 * severity - 120)
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 

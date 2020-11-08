@@ -9,7 +9,8 @@
 		linked.examine(user)
 
 /obj/effect/cult_turf/overlay/ex_act()
-	return FALSE
+	SHOULD_CALL_PARENT(FALSE)
+	return
 
 /obj/effect/cult_turf/overlay/singularity_act()
 	return

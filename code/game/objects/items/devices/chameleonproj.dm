@@ -147,7 +147,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act(S, T)
-	contents_explosion(S, T)
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()

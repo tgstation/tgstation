@@ -89,6 +89,7 @@
 			visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach

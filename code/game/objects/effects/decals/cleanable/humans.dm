@@ -72,6 +72,7 @@
 	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/L)

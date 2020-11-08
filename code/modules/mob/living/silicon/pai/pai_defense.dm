@@ -28,6 +28,7 @@
 
 
 /mob/living/silicon/pai/ex_act(severity, target)
+	. = ..()
 	take_holo_damage(severity * 50)
 	switch(severity)
 		if(1)	//RIP

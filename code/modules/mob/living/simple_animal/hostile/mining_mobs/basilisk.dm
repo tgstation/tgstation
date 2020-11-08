@@ -10,6 +10,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	move_to_delay = 20
+	//armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
 	projectiletype = /obj/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
@@ -60,6 +61,12 @@
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)//this should call parent but mobs dont have armor and Ill bet yelled at for doing balance changes in a nonbalance pr
+	if(QDELETED(src))
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target) & COMPONENT_BLOCK_EX_ACT)
+		return
+	contents_explosion(severity, target)
 	switch(severity)
 		if(1)
 			gib()

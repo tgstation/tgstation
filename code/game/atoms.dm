@@ -679,9 +679,13 @@
   * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
   */
 /atom/proc/ex_act(severity, target)
+	SHOULD_CALL_PARENT(TRUE)
 	set waitfor = FALSE
+	if(QDELETED(src))
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target) & COMPONENT_BLOCK_EX_ACT)
+		return
 	contents_explosion(severity, target)
-	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
   * React to a hit by a blob objecd

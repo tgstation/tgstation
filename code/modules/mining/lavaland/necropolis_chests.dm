@@ -378,6 +378,7 @@
 	anchored = TRUE
 
 /obj/effect/warp_cube/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 //Meat Hook
@@ -519,6 +520,7 @@
 	return
 
 /obj/effect/immortality_talisman/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -528,7 +530,7 @@
 	if(!can_destroy && !force)
 		return QDEL_HINT_LETMELIVE
 	else
-		. = ..()
+		return ..()
 
 /obj/effect/immortality_talisman/void
 	vanish_description = "is dragged into the void"

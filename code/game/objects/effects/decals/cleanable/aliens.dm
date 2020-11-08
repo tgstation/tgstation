@@ -53,6 +53,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up

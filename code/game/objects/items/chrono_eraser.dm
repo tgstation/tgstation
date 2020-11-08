@@ -270,6 +270,7 @@
 	return
 
 /obj/structure/chrono_field/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/chrono_field/blob_act(obj/structure/blob/B)

@@ -803,4 +803,5 @@
 	return
 
 /turf/closed/mineral/strong/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return

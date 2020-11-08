@@ -125,6 +125,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
+	. = ..()
 	if (severity == EXPLODE_NONE)
 		return
 	qdel(src)
@@ -277,9 +278,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/gibtonite/bullet_act(obj/projectile/P)
 	GibtoniteReaction(P.firer)
-	. = ..()
+	return ..()
 
 /obj/item/gibtonite/ex_act()
+	. = ..()
 	GibtoniteReaction(null, 1)
 
 /obj/item/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
@@ -322,6 +324,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
+	. = ..()
 	if (!severity || severity >= 2)
 		return
 	qdel(src)

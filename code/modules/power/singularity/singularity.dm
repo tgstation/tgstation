@@ -152,6 +152,7 @@
 
 
 /obj/singularity/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	switch(severity)
 		if(1)
 			if(current_size <= STAGE_TWO)

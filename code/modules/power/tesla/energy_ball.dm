@@ -40,6 +40,7 @@
 		set_light(10, 7, "#5e5edd")
 
 /obj/singularity/energy_ball/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/singularity/energy_ball/consume(severity, target)

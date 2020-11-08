@@ -123,6 +123,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/immovablerod/singularity_act()

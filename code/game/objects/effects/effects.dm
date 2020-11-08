@@ -27,6 +27,7 @@
 	return
 
 /obj/effect/ex_act(severity, target)
+	. = ..()
 	if(target == src)
 		qdel(src)
 	else
@@ -44,6 +45,7 @@
 	qdel(src)
 
 /obj/effect/abstract/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/abstract/singularity_pull()

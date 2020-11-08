@@ -51,6 +51,7 @@
 	return FALSE
 
 /obj/machinery/field/containment/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return FALSE
 
 /obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)

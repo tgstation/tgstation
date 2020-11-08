@@ -424,6 +424,7 @@ Difficulty: Medium
 	duration = 13
 
 /obj/effect/temp_visual/lava_warning/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, reset_time = 10)

@@ -268,10 +268,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)//this should call parent but mobs dont have armor and Ill bet yelled at for doing balance changes in a nonbalance pr
+	if(QDELETED(src))
+		return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target) & COMPONENT_BLOCK_EX_ACT)
+		return
+	contents_explosion(severity, target)
 	switch(severity)
 		if(1)
 			gib()
-			return
 		if(2)
 			adjustBruteLoss(60)
 		if(3)

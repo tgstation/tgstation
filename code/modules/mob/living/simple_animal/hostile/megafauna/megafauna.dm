@@ -139,6 +139,7 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			adjustBruteLoss(250)

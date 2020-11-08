@@ -90,6 +90,7 @@
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
+	#define COMPONENT_BLOCK_EX_ACT (1<<0)
 ///from base of atom/emp_act(): (severity)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)

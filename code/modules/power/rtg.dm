@@ -88,6 +88,7 @@
 	overload()
 
 /obj/machinery/power/rtg/abductor/ex_act()
+	. = ..()
 	if(going_kaboom)
 		qdel(src)
 	else

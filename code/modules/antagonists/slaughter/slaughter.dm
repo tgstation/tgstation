@@ -236,9 +236,10 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/Destroy()
 	release_friends()
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
+	. = ..()
 	switch(severity)
 		if(1)
 			death()

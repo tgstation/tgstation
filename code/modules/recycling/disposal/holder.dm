@@ -144,4 +144,5 @@
 	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return

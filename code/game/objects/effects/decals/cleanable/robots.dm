@@ -44,6 +44,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/decal/cleanable/robot_debris/limb

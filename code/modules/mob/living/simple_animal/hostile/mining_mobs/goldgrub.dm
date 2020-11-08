@@ -80,6 +80,7 @@
 	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/phased_mob/goldgrub/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/dummy/phased_mob/goldgrub/bullet_act()

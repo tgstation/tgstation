@@ -732,6 +732,7 @@ Difficulty: Hard
 	anchored = TRUE
 
 /obj/effect/hierophant/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)

@@ -88,6 +88,7 @@
 	check_light_level()
 
 /obj/effect/dummy/phased_mob/shadow/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/dummy/phased_mob/shadow/bullet_act()

@@ -53,6 +53,7 @@
 	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/phased_mob/creature/ex_act()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/effect/dummy/phased_mob/creature/bullet_act()

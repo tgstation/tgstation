@@ -144,11 +144,7 @@
 	return BULLET_ACT_HIT
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-	..()
-	if(QDELETED(src))
-		return
+	. = ..()
 	var/bomb_armor = getarmor(null, BOMB)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
@@ -156,7 +152,6 @@
 				adjustBruteLoss(500)
 			else
 				gib()
-				return
 		if (EXPLODE_HEAVY)
 			var/bloss = 60
 			if(prob(bomb_armor))

@@ -55,6 +55,7 @@
 	return
 
 /obj/machinery/door/keycard/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/keycard/try_to_activate_door(mob/user)

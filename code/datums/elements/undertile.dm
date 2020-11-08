@@ -20,6 +20,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_OBJ_HIDE, .proc/hide)
+	RegisterSignal(target, COMSIG_ATOM_EX_ACT, .proc/explosion_check)
 
 	src.invisibility_trait = invisibility_trait
 	src.invisibility_level = invisibility_level
@@ -59,3 +60,7 @@
 	. = ..()
 
 	hide(AM, FALSE)
+
+/datum/element/undertile/proc/explosion_check(atom/target, severity)
+	SIGNAL_HANDLER
+	return COMPONENT_BLOCK_EX_ACT

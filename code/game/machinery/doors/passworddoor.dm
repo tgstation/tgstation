@@ -70,4 +70,5 @@
 	return
 
 /obj/machinery/door/password/ex_act(severity, target)
+	SHOULD_CALL_PARENT(FALSE)
 	return
