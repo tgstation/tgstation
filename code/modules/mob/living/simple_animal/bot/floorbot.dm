@@ -22,9 +22,8 @@
 	var/targetdirection
 	var/replacetiles = FALSE
 	var/placetiles = FALSE
-	var/specialtiles = 0
 	var/maxtiles = 100
-	var/obj/item/stack/tile/tiletype
+	var/obj/item/stack/tile/tilestack
 	var/fixfloors = TRUE
 	var/autotile = FALSE
 	var/max_targets = 50
@@ -52,6 +51,16 @@
 	if(toolbox_color == "s")
 		health = 100
 		maxHealth = 100
+
+/mob/living/simple_animal/bot/floorbot/Exited(atom/movable/A, atom/newloc)
+	if(A == tilestack)
+		if(tilestack && tilestack.max_amount < tilestack.amount) //split the stack if it exceeds its normal max_amount
+			var/iterations = round(tilestack.amount/tilestack.max_amount) //round() without second arg floors the value
+			for(var/a in 1 to iterations)
+				if(a == iterations)
+					tilestack.change_stack(null, tilestack.amount - tilestack.max_amount)
+				tilestack.change_stack(null, tilestack.max_amount)
+		tilestack = null
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
@@ -82,8 +91,8 @@
 	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Special tiles: "
-	if(specialtiles)
-		dat += "<A href='?src=[REF(src)];operation=eject'>Loaded \[[specialtiles]/[maxtiles]\]</a><BR>"
+	if(tilestack)
+		dat += "<A href='?src=[REF(src)];operation=eject'>Loaded \[[tilestack.amount]/[maxtiles]\]</a><BR>"
 	else
 		dat += "None Loaded<BR>"
 
@@ -108,23 +117,25 @@
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
-	if(specialtiles && istype(W, /obj/item/stack/tile))
-		var/obj/item/stack/tile/usedtile = W
-		if(usedtile.type != tiletype)
-			to_chat(user, "<span class='warning'>Different custom tiles are already inside the floorbot.</span>")
-			return
 	if(istype(W, /obj/item/stack/tile))
-		if(specialtiles >= maxtiles)
-			return
-		var/obj/item/stack/tile/tiles = W //used only to get the amount
-		tiletype = W.type
-		var/loaded = min(maxtiles-specialtiles, tiles.amount)
-		tiles.use(loaded)
-		specialtiles += loaded
-		if(loaded > 0)
-			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
+		var/old_amount = tilestack ? tilestack.amount : 0
+		var/obj/item/stack/tile/tiles = W
+		if(tilestack)
+			if(!tiles.can_merge(tilestack))
+				to_chat(user, "<span class='warning'>Different custom tiles are already inside the floorbot.</span>")
+				return
+			if(tilestack.amount >= maxtiles)
+				to_chat(user, "<span class='warning'>The floorbot can't hold any more custom tiles.</span>")
+				return
+			tiles.merge(tilestack, maxtiles)
 		else
-			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
+			if(tiles.amount > maxtiles)
+				tilestack = tilestack.change_stack(null, maxtiles)
+			else
+				tilestack = src
+			tilestack.forceMove(src)
+		to_chat(user, "<span class='notice'>You load [tilestack.amount - old_amount] tiles into the floorbot. It now contains [tilestack.amount] tiles.</span>")
+		return
 	else
 		..()
 
@@ -150,8 +161,8 @@
 		if("anchor")
 			set_anchored(!anchored)
 		if("eject")
-			if(specialtiles && tiletype != null)
-				empty_tiles()
+			if(tilestack)
+				tilestack.forceMove(drop_location())
 
 		if("linemode")
 			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
@@ -167,11 +178,6 @@
 				if("disable")
 					targetdirection = null
 	update_controls()
-
-/mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
-	new tiletype(drop_location(), specialtiles)
-	specialtiles = 0
-	tiletype = null
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())
@@ -204,7 +210,7 @@
 			process_type = FIX_TILE
 			target = scan(/turf/open/floor)
 
-		if(!target && replacetiles && specialtiles > 0) //Replace a floor tile with custom tile
+		if(!target && replacetiles && tilestack) //Replace a floor tile with custom tile
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
 
@@ -325,44 +331,54 @@
 		icon_state = "[toolbox_color]floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
-		sleep(50)
-		if(mode == BOT_REPAIRING && src.loc == target_turf)
+		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+				if(replacetiles && tilestack)
+					tilestack.place_tile(target_turf)
+					if(!tilestack)
+						speak("Requesting refill of custom floor tiles to continue replacing.")
+				else
+					target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else
 		var/turf/open/floor/F = target_turf
+		var/success = FALSE
+		var/was_replacing = replacetiles
 
-		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
+		if(F.broken || F.burnt || isplatingturf(F))
 			set_anchored(TRUE)
 			icon_state = "[toolbox_color]floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
-			sleep(50)
-			if(mode == BOT_REPAIRING && F && src.loc == F)
-				F.broken = FALSE
-				F.burnt = FALSE
-				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
+				success = TRUE
 
-		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
+		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
 			set_anchored(TRUE)
 			icon_state = "[toolbox_color]floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
-			sleep(50)
-			if(mode == BOT_REPAIRING && F && loc == F && replacetiles && specialtiles) //make sure our mode and tiles are the same after sleeping.
-				F.broken = FALSE
-				F.burnt = FALSE
-				F.PlaceOnTop(initial(tiletype.turf_type), flags = CHANGETURF_INHERIT_AIR)
-				specialtiles--
-				if(specialtiles == 0)
+			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
+				success = TRUE
+
+		if(success)
+			F = F.make_plating(TRUE)
+			if(was_replacing && tilestack)
+				tilestack.place_tile(F)
+				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
-	mode = BOT_IDLE
-	update_icon()
-	anchored = FALSE
-	target = null
+			else
+				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+
+	if(!QDELETED(src))
+		mode = BOT_IDLE
+		update_icon()
+		anchored = FALSE
+		target = null
+
+/mob/living/simple_animal/bot/floorbot/proc/place_tile(turf/open/floor/F, make_plating = FALSE)
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
 	icon_state = "[toolbox_color]floorbot[on]"
@@ -370,6 +386,7 @@
 
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = FALSE
+	target = null
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
@@ -377,8 +394,8 @@
 
 	new /obj/item/assembly/prox_sensor(Tsec)
 
-	if(specialtiles && tiletype != null)
-		empty_tiles()
+	if(tilestack)
+		tilestack.forceMove(drop_location())
 
 	if(prob(50))
 		drop_part(robot_arm, Tsec)

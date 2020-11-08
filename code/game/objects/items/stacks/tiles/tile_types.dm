@@ -94,6 +94,11 @@
 	else
 		return ..()
 
+/obj/item/stack/tile/proc/place_tile(turf/open/T)
+	if(!turf_type || !use(1))
+		return
+	. = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
+
 //Grass
 /obj/item/stack/tile/grass
 	name = "grass tile"
