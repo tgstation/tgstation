@@ -600,7 +600,7 @@
 /* Full Tile Windows (more obj_integrity) */
 
 /obj/structure/window/fulltile
-	icon = 'icons/obj/smooth_structures/window.dmi'
+	icon = 'icons/obj/smooth_structures/window.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "window-0"
 	base_icon_state = "window"
 	dir = FULLTILE_WINDOW_DIR
@@ -616,7 +616,7 @@
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
+	icon = 'icons/obj/smooth_structures/plasma_window.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "plasma_window-0"
 	base_icon_state = "plasma_window"
 	dir = FULLTILE_WINDOW_DIR
@@ -632,7 +632,7 @@
 	anchored = FALSE
 
 /obj/structure/window/plasma/reinforced/fulltile
-	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
+	icon = 'icons/obj/smooth_structures/rplasma_window.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "rplasma_window-0"
 	base_icon_state = "rplasma_window"
 	dir = FULLTILE_WINDOW_DIR
@@ -650,7 +650,7 @@
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "reinforced_window-0"
 	base_icon_state = "reinforced_window"
 	dir = FULLTILE_WINDOW_DIR
@@ -668,7 +668,7 @@
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted/fulltile
-	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "tinted_window-0"
 	base_icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR

@@ -1,7 +1,7 @@
 /obj/structure/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/chairs.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = TRUE

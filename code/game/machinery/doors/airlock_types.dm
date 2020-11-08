@@ -2,6 +2,7 @@
 	Station Airlocks Regular
 */
 
+// ALL OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com

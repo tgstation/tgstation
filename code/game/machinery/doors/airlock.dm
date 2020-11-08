@@ -84,8 +84,8 @@
 	var/noPower = 'sound/machines/doorclick.ogg'
 	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
 	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
-	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
+	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock //OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -430,6 +430,7 @@
 			icon_state = "nonexistenticonstate" //MADNESS
 	set_airlock_overlays(state)
 
+/* SKYRAT EDIT MOVED TO AIRLOCK.DM IN AESTHETICS MODULE
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	var/mutable_appearance/frame_overlay
 	var/mutable_appearance/filling_overlay
@@ -577,6 +578,7 @@
 	add_overlay(note_overlay)
 	add_overlay(seal_overlay)
 	check_unres()
+*/
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/obj/machinery/door/airlock/A
@@ -586,6 +588,27 @@
 	if((!(. = airlock_overlays[iconkey])))
 		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
 
+//SKYRAT EDIT CHANGE BEGIN - AESTHETICS
+/obj/machinery/door/airlock/proc/check_unres() //unrestricted sides. This overlay indicates which directions the player can access even without an ID
+	if(hasPower() && unres_sides)
+		if(unres_sides & NORTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			I.pixel_y = 32
+			add_overlay(I)
+		if(unres_sides & SOUTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			I.pixel_y = -32
+			add_overlay(I)
+		if(unres_sides & EAST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			I.pixel_x = 32
+			add_overlay(I)
+		if(unres_sides & WEST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			I.pixel_x = -32
+			add_overlay(I)
+
+/* - SKYRAT ORIGINAL
 /obj/machinery/door/airlock/proc/check_unres() //unrestricted sides. This overlay indicates which directions the player can access even without an ID
 	if(hasPower() && unres_sides)
 		if(unres_sides & NORTH)
@@ -610,7 +633,8 @@
 			add_overlay(I)
 	else
 		set_light(0)
-
+*/
+//SKYRAT EDIT END
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
 		if("opening")
@@ -1113,7 +1137,8 @@
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		//playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE) - ORIGINAL
+		playsound(src, forcedOpen, 30, TRUE) //SKYRAT EDIT CHANGE - AESTHETICS
 
 	if(autoclose)
 		autoclose_in(normalspeed ? 150 : 15)
@@ -1162,7 +1187,8 @@
 		playsound(src, doorClose, 30, TRUE)
 
 	else
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		//playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE) //ORIGINAL
+		playsound(src, forcedClosed, 30, TRUE) //SKYRAT EDIT ADDITION - AESTHETICS
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)

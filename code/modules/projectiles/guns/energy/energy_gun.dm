@@ -1,4 +1,4 @@
-/obj/item/gun/energy/e_gun
+/obj/item/gun/energy/e_gun //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
@@ -53,7 +53,6 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
-	cell_type = /obj/item/stock_parts/cell/hos_gun
 	icon_state = "hoslaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
@@ -91,7 +90,7 @@
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
 
-/obj/item/gun/energy/e_gun/nuclear
+/obj/item/gun/energy/e_gun/nuclear //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"

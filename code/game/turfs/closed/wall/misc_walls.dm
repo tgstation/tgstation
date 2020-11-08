@@ -56,7 +56,7 @@
 /turf/closed/wall/rust
 	name = "rusted wall"
 	desc = "A rusted metal wall."
-	icon = 'icons/turf/walls/rusty_wall.dmi'
+	icon = 'icons/turf/walls/rusty_wall.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "rusty_wall-0"
 	base_icon_state = "rusty_wall"
 	smoothing_flags = SMOOTH_BITMASK
@@ -68,7 +68,7 @@
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
-	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
+	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi' //ICON OVERRIDEN IN SKYRAT AESTHETICS - SEE MODULE
 	icon_state = "rusty_reinforced_wall-0"
 	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK

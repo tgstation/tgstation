@@ -20,6 +20,11 @@
 	return ..()
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
+	//SKYRAT EDIT ADDITON BEGIN - AESTHETICS
+	if(clicksound && world.time > next_clicksound && isliving(user))
+		next_clicksound = world.time + rand(50, 100)
+		playsound(src, get_sfx_skyrat(clicksound), clickvol)
+	//SKYRAT EDIT END
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosAlertConsole", name)

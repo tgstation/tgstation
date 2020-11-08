@@ -24,8 +24,10 @@
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
+	/* - SKYRAT EDIT REMOVAL - AESTHETICS
 	if(isliving(user))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+	*/
 	var/dat
 	if(temp)
 		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
