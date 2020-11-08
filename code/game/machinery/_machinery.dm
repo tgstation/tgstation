@@ -135,7 +135,7 @@ Class Procs:
 	GLOB.machines += src
 
 	if(ispath(circuit, /obj/item/circuitboard))
-		circuit = new circuit
+		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
@@ -145,6 +145,12 @@ Class Procs:
 		occupant_typecache = typecacheof(occupant_typecache)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/proc/set_occupant(atom/movable/new_occupant)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_MACHINERY_SET_OCCUPANT, new_occupant)
+	occupant = new_occupant
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
@@ -164,7 +170,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	dropContents()
+	dump_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -203,24 +209,60 @@ Class Procs:
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
 
+/**
+  * Opens the machine.
+  *
+  * Will update the machine icon and any user interfaces currently open.
+  * Arguments:
+  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
+  */
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
 	density = FALSE
 	if(drop)
-		dropContents()
+		dump_inventory_contents()
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents(list/subset = null)
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/A in contents)
-		if(subset && !(A in subset))
+/**
+  * Drop every movable atom in the machine's contents list, including any components and circuit.
+  */
+/obj/machinery/dump_contents()
+	// Start by calling the dump_inventory_contents proc. Will allow machines with special contents
+	// to handle their dropping.
+	dump_inventory_contents()
+
+	// Then we can clean up and drop everything else.
+	var/turf/this_turf = get_turf(src)
+	for(var/atom/movable/movable_atom in contents)
+		movable_atom.forceMove(this_turf)
+
+	// We'll have dropped the occupant, circuit and component parts as part of this.
+	set_occupant(null)
+	circuit = null
+	LAZYCLEARLIST(component_parts)
+
+/**
+  * Drop every movable atom in the machine's contents list that is not a component_part.
+  *
+  * Proc does not drop components and will skip over anything in the component_parts list.
+  * Call dump_contents() to drop all contents including components.
+  * Arguments:
+  * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
+  */
+/obj/machinery/proc/dump_inventory_contents(list/subset = null)
+	var/turf/this_turf = get_turf(src)
+	for(var/atom/movable/movable_atom in contents)
+		if(subset && !(movable_atom in subset))
 			continue
-		A.forceMove(T)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.update_mobility()
-	occupant = null
+
+		if(movable_atom in component_parts)
+			continue
+
+		movable_atom.forceMove(this_turf)
+
+		if(occupant == movable_atom)
+			set_occupant(null)
 
 /**
  * Puts passed object in to user's hand
@@ -259,7 +301,7 @@ Class Procs:
 
 	var/mob/living/mobtarget = target
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
-		occupant = target
+		set_occupant(target)
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
@@ -329,27 +371,26 @@ Class Procs:
 	if(!SSeconomy.full_ancap)
 		return TRUE
 	if(occupant && !state_open)
-		if(ishuman(occupant))
-			var/mob/living/carbon/human/H = occupant
-			var/obj/item/card/id/I = H.get_idcard(TRUE)
-			if(I)
-				var/datum/bank_account/insurance = I.registered_account
-				if(!insurance)
-					say("[market_verb] NAP Violation: No bank account found.")
-					nap_violation(occupant)
-					return FALSE
-				else
-					if(!insurance.adjust_money(-fair_market_price))
-						say("[market_verb] NAP Violation: Unable to pay.")
-						nap_violation(occupant)
-						return FALSE
-					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-					if(D)
-						D.adjust_money(fair_market_price)
-			else
-				say("[market_verb] NAP Violation: No ID card found.")
-				nap_violation(occupant)
+		var/mob/living/L = occupant
+		var/obj/item/card/id/I = L.get_idcard(TRUE)
+		if(I)
+			var/datum/bank_account/insurance = I.registered_account
+			if(!insurance)
+				say("[market_verb] NAP Violation: No bank account found.")
+				nap_violation(L)
 				return FALSE
+			else
+				if(!insurance.adjust_money(-fair_market_price))
+					say("[market_verb] NAP Violation: Unable to pay.")
+					nap_violation(L)
+					return FALSE
+				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+				if(D)
+					D.adjust_money(fair_market_price)
+		else
+			say("[market_verb] NAP Violation: No ID card found.")
+			nap_violation(L)
+			return FALSE
 	return TRUE
 
 /obj/machinery/proc/nap_violation(mob/violator)
@@ -396,8 +437,6 @@ Class Procs:
 		return
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
-
-
 
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
@@ -448,12 +487,11 @@ Class Procs:
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
-		if(component_parts && component_parts.len)
+		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-			component_parts.Cut()
-			circuit = null
+			LAZYCLEARLIST(component_parts)
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -476,16 +514,22 @@ Class Procs:
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
-	if(occupant)
-		occupant.ex_act(severity, target)
+	occupant?.ex_act(severity, target)
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)
-		occupant = null
+		set_occupant(null)
 		update_icon()
 		updateUsrDialog()
+		return ..()
+
+	// The circuit should also be in component parts, so don't early return.
 	if(A == circuit)
 		circuit = null
+	if((A in component_parts) && !QDELETED(src))
+		component_parts.Remove(A)
+		// It would be unusual for a component_part to be qdel'd ordinarily.
+		deconstruct(FALSE)
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
@@ -579,7 +623,7 @@ Class Procs:
 							else
 								if(SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE, B, src))
 									component_parts += B
-									B.moveToNullspace()
+									B.forceMove(src)
 							SEND_SIGNAL(W, COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
 							to_chat(user, "<span class='notice'>[capitalize(A.name)] replaced with [B.name].</span>")
@@ -641,8 +685,8 @@ Class Procs:
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if (AM == occupant)
-		occupant = null
+	if(AM == occupant)
+		set_occupant(null)
 	if(AM == circuit)
 		circuit = null
 
@@ -656,6 +700,13 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, MELEE, 1)
+
+/obj/machinery/vv_edit_var(vname, vval)
+	if(vname == "occupant")
+		set_occupant(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
 
 /**
  * Generate a name devices
@@ -678,3 +729,14 @@ Class Procs:
 			if(3)
 				new_name += ascii2text(rand(48, 57)) // 0 - 9
 	return new_name.Join()
+
+/**
+ * Alerts the AI that a hack is in progress.
+ *
+ * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
+ * However, the proc may also be used elsewhere.
+ */	
+/obj/machinery/proc/AI_notify_hack()
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)

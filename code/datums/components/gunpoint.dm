@@ -38,7 +38,7 @@
 	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
 	shooter.visible_message("<span class='danger'>[shooter] aims [weapon] point blank at [target]!</span>", \
-		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", target)
+		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] aims [weapon] point blank at you!</span>")
 
 	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
@@ -48,7 +48,7 @@
 		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && !is_nuclear_operative(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
 
-	target.do_alert_animation(target)
+	target.do_alert_animation()
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gunpoint", /datum/mood_event/gunpoint)
 
@@ -80,7 +80,7 @@
 		return
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
+		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
 	qdel(src)
 
@@ -91,7 +91,7 @@
 	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
+		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
 	qdel(src)
 
@@ -130,7 +130,7 @@
 
 	if(!weapon.can_shoot() || !weapon.can_trigger_gun(shooter) || (weapon.weapon_weight == WEAPON_HEAVY && shooter.get_inactive_held_item()))
 		shooter.visible_message("<span class='danger'>[shooter] fumbles [weapon]!</span>", \
-			"<span class='danger'>You fumble [weapon] and fail to fire at [target]!</span>", target)
+			"<span class='danger'>You fumble [weapon] and fail to fire at [target]!</span>", ignored_mobs = target)
 		to_chat(target, "<span class='userdanger'>[shooter] fumbles [weapon] and fails to fire at you!</span>")
 		qdel(src)
 		return
@@ -159,7 +159,7 @@
 
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
-		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)
+		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", ignored_mobs = target)
 	to_chat(target, "<span class='userdanger'>[shooter] breaks [shooter.p_their()] aim on you!</span>")
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	qdel(src)

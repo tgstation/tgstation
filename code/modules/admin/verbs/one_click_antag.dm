@@ -1,7 +1,7 @@
 /client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 
 	if(holder)
 		holder.one_click_antag()
@@ -230,8 +230,8 @@
 	return TRUE
 
 /datum/admins/proc/makeSpaceNinja()
-	new /datum/round_event/ghost_role/ninja()
-	return 1
+	new /datum/round_event/ghost_role/space_ninja()
+	return TRUE
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()

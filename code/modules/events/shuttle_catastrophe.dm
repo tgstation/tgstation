@@ -5,7 +5,7 @@
 	max_occurrences = 1
 
 /datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players, gamemode)
-	if(SSshuttle.emergency.name == "Build your own shuttle kit")
+	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
 		return FALSE //don't undo manual player engineering, it also would unload people and ghost them, there's just a lot of problems
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //don't remove all players when its already on station or going to centcom
@@ -34,5 +34,5 @@
 	SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
 	SSshuttle.unload_preview()
 	SSshuttle.existing_shuttle = SSshuttle.emergency
-	SSshuttle.action_load(new_shuttle)
+	SSshuttle.action_load(new_shuttle, replace = TRUE)
 	log_shuttle("Shuttle Catastrophe set a new shuttle, [new_shuttle.name].")

@@ -84,15 +84,15 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/eggcluster/Initialize()
-	pixel_x = rand(3,-3)
-	pixel_y = rand(3,-3)
+	pixel_x = base_pixel_x + rand(3,-3)
+	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+/obj/structure/spider/eggcluster/process(delta_time)
+	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100)
-		var/num = rand(3,12)
+		var/num = round(rand(1.5, 6) * delta_time)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.faction = faction.Copy()

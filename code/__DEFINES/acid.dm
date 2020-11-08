@@ -1,6 +1,6 @@
 /// The acid power required to destroy most closed turfs.
 #define ACID_POWER_MELT_TURF	200
-/// The maximum amount of damage (per tick) acid can deal to an [/obj].
+/// The maximum amount of damage (per second) acid can deal to an [/obj].
 #define OBJ_ACID_DAMAGE_MAX		300
 /// Maximum acid volume that can be applied to an [/obj].
 #define OBJ_ACID_VOLUME_MAX		300

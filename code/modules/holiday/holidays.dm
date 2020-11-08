@@ -234,7 +234,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/rat/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -504,7 +504,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
@@ -594,7 +594,7 @@
 /datum/holiday/easter/celebrate()
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
+			/obj/item/food/egg/loaded = 15,
 			/obj/item/storage/basket/easter = 15
 		) = maint_holiday_weight,
 	)

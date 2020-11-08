@@ -80,7 +80,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return
-
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
+	if(href_list["reload_statbrowser"])
+		src << browse(file('html/statbrowser.html'), "window=statbrowser")
 	// Log all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -209,6 +212,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	tgui_panel = new(src)
 
 	GLOB.ahelp_tickets.ClientLogin(src)
+	GLOB.interviews.client_login(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	holder = GLOB.admin_datums[ckey]
@@ -310,11 +314,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(SSinput.initialized)
 		set_macros()
-		update_movement_keys()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
 	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 
 
 	if(alert_mob_dupe_login)
@@ -423,26 +427,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
-	for (var/thing in topmenus)
-		var/datum/verbs/menu/topmenu = thing
-		var/topmenuname = "[topmenu]"
-		if (topmenuname == "[topmenu.type]")
-			var/list/tree = splittext(topmenuname, "/")
-			topmenuname = tree[tree.len]
-		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
-		var/list/entries = topmenu.Generate_list(src)
-		for (var/child in entries)
-			winset(src, "[child]", "[entries[child]]")
-			if (!ispath(child, /datum/verbs/menu))
-				var/procpath/verbpath = child
-				if (verbpath.name[1] != "@")
-					new child(src)
-
-	for (var/thing in prefs.menuoptions)
-		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
-		if (menuitem)
-			menuitem.Load_checked(src)
+	if (!interviewee)
+		initialize_menus()
 
 	view_size = new(src, getScreenSize(prefs.widescreenpref))
 	view_size.resetFormat()
@@ -464,6 +450,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
+	GLOB.interviews.client_logout(src)
 	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
@@ -492,9 +479,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+		movingmob = null
+	active_mousedown_item = null
+	QDEL_NULL(view_size)
+	QDEL_NULL(void)
+	QDEL_NULL(tooltips)
 	seen_messages = null
 	Master.UpdateTickRate()
-	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -538,11 +530,19 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
-	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, CONFIG_GET(string/panic_bunker_message))
+
+	//If we aren't an admin, and the flag is set
+	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
+		var/living_recs = CONFIG_GET(number/panic_bunker_living)
+		//Relies on pref existing, but this proc is only called after that occurs, so we're fine.
+		var/minutes = get_exp_living(pure_numeric = TRUE)
+		if(minutes <= living_recs && !CONFIG_GET(flag/panic_bunker_interview))
+			var/reject_message = "Failed Login: [key] - Account attempting to connect during panic bunker, but they do not have the required living time [minutes]/[living_recs]"
+			log_access(reject_message)
+			message_admins("<span class='adminnotice'>[reject_message]</span>")
+			var/message = CONFIG_GET(string/panic_bunker_message)
+			message = replacetext(message, "%minutes%", living_recs)
+			to_chat(src, message)
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
@@ -554,6 +554,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 
+	if(!query_client_in_db.NextRow())
 		new_player = 1
 		account_join_date = findJoinDate()
 		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"
@@ -851,6 +852,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	..()
 
 /client/proc/add_verbs_from_config()
+	if (interviewee)
+		return
 	if(CONFIG_GET(flag/see_own_notes))
 		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
@@ -915,7 +918,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
-/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+/**
+  * Updates the keybinds for special keys
+  *
+  * Handles adding macros for the keys that need it
+  * And adding movement keys to the clients movement_keys list
+  * At the time of writing this, communication(OOC, Say, IC) require macros
+  * Arguments:
+  * * direct_prefs - the preference we're going to get keybinds from
+  */
+/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
 		return
@@ -931,6 +943,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
+				if("Say")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=say")
+				if("OOC")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
+				if("Me")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1009,7 +1027,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		for(var/AM in mob.contents)
 			var/atom/movable/thing = AM
 			verbstoprocess += thing.verbs
-	verb_tabs.Cut()
+	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
 	for(var/thing in verbstoprocess)
 		var/procpath/verb_to_init = thing
 		if(!verb_to_init)
@@ -1018,6 +1036,36 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			continue
 		if(!istext(verb_to_init.category))
 			continue
-		verb_tabs |= verb_to_init.category
+		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+/client/proc/check_panel_loaded()
+	if(statbrowser_ready)
+		return
+	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
+
+/**
+  * Initializes dropdown menus on client
+  */
+/client/proc/initialize_menus()
+	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
+	for (var/thing in topmenus)
+		var/datum/verbs/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[child]", "[entries[child]]")
+			if (!ispath(child, /datum/verbs/menu))
+				var/procpath/verbpath = child
+				if (verbpath.name[1] != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)

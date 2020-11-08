@@ -8,7 +8,7 @@
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
-/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+/obj/item/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	create_reagents(100)
 
@@ -19,12 +19,12 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, newloc)
+			T.on_new(src, loc)
 
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)

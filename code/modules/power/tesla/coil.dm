@@ -75,16 +75,18 @@
 	if(anchored && !panel_open)
 		//don't lose arc power when it's not connected to anything
 		//please place tesla coils all around the station to maximize effectiveness
+		obj_flags |= BEING_SHOCKED
+		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+		zap_buckle_check(power)
+		if(zap_flags & ZAP_GENERATES_POWER) //I don't want no tesla revolver making 8GW you hear
+			return power / 2
 		var/power_produced = powernet ? power * input_power_multiplier : power
 		add_avail(power_produced)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		if(D)
 			D.adjust_money(min(power_produced, 1))
 		flick("coilhit", src)
-		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		obj_flags |= BEING_SHOCKED
-		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 		return power - power_produced //You get back the amount we didn't use
 	else
 		. = ..()
@@ -102,7 +104,7 @@
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
-	desc = "Keep an area from being fried."
+	desc = "Keeps an area from being fried by Edison's Bane."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE

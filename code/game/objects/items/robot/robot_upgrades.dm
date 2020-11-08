@@ -70,6 +70,8 @@
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
+	R.logevent("WARN -- System recovered from unexpected shutdown.")
+	R.logevent("System brought online.")
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -114,6 +116,7 @@
 			return FALSE
 
 		R.ionpulse = TRUE
+		R.toggle_ionpulse() //Enabled by default
 
 /obj/item/borg/upgrade/thrusters/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -271,6 +274,8 @@
 			return FALSE
 
 		R.SetEmagged(1)
+		R.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
+		R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 
 		return TRUE
 
@@ -304,7 +309,10 @@
 	icon_state = "cyborg_upgrade5"
 	require_module = 1
 	var/repair_amount = -1
-	var/repair_tick = 1
+	/// world.time of next repair
+	var/next_repair = 0
+	/// Minimum time between repairs in seconds
+	var/repair_cooldown = 4
 	var/on = FALSE
 	var/powercost = 10
 	var/datum/action/toggle_action
@@ -354,8 +362,7 @@
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/process()
-	if(!repair_tick)
-		repair_tick = 1
+	if(world.time < next_repair)
 		return
 
 	var/mob/living/silicon/robot/cyborg = toggle_action.owner
@@ -384,7 +391,7 @@
 			cyborg.cell.use(powercost)
 		else
 			cyborg.cell.use(5)
-		repair_tick = 0
+		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)

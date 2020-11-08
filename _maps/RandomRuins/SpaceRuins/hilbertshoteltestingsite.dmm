@@ -36,7 +36,9 @@
 "h" = (
 /obj/structure/table/glass,
 /obj/item/stack/sheet/bluespace_crystal{
-	amount = 37
+	amount = 37;
+	pixel_x = 2;
+	pixel_y = 1
 	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
@@ -44,7 +46,9 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "i" = (
 /obj/structure/table/glass,
-/obj/item/bodybag/bluespace,
+/obj/item/bodybag/bluespace{
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -60,14 +64,18 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "m" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/syringe/bluespace,
+/obj/item/reagent_containers/syringe/bluespace{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "n" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -84,22 +92,30 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "q" = (
 /obj/structure/table/glass,
-/obj/item/storage/backpack/holding,
+/obj/item/raw_anomaly_core/bluespace{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "r" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/bluespace,
+/obj/item/reagent_containers/glass/beaker/bluespace{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "s" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/subspace/crystal,
-/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/crystal{
+	pixel_y = 3
+	},
+/obj/item/stock_parts/subspace/transmitter{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -112,14 +128,19 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "u" = (
 /obj/structure/table/glass,
-/obj/item/analyzer,
+/obj/item/analyzer{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "v" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -131,14 +152,18 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "x" = (
 /obj/structure/table/glass,
-/obj/item/assembly/signaler,
+/obj/item/assembly/signaler{
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "y" = (
 /obj/structure/table/glass,
-/obj/item/slimecross/industrial/bluespace,
+/obj/item/slimecross/industrial/bluespace{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -201,6 +226,15 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
+"Q" = (
+/obj/structure/table/glass,
+/obj/item/bag_of_holding_inert{
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
 "U" = (
 /turf/open/floor/plasteel/stairs/medium{
 	initial_gas_mix = "TEMP=2.7"
@@ -751,9 +785,9 @@ b
 c
 e
 f
-g
 q
 g
+Q
 y
 g
 f

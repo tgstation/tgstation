@@ -31,9 +31,9 @@ This section is for the event controller
 /datum/round_event_control/crystal_invasion
 	name = "Crystal Invasion"
 	typepath = /datum/round_event/crystal_invasion
-	weight = 8
+	weight = 0
 	min_players = 35
-	max_occurrences = 1
+	max_occurrences = 0 //no random chance to you
 	earliest_start = 25 MINUTES
 
 /datum/round_event/crystal_invasion
@@ -78,7 +78,7 @@ This section is for the event controller
 
 	for(var/t in RANGE_TURFS(8, dest_crystal.loc))
 		var/turf/turf_loc = t
-		var/distance_from_center = get_dist(turf_loc, dest_crystal.loc)
+		var/distance_from_center = get_dist(turf_loc, dest_crystal)
 		switch(distance_from_center)
 			if(0)
 				distance_from_center = 1 //Same tile, let's avoid a division by zero.
@@ -127,13 +127,13 @@ This section is for the event controller
 
 		for(var/t in RANGE_TURFS(5, center_turf))
 			var/turf/turf_loc = t
-			var/distance_from_center = get_dist(turf_loc, center_turf)
+			var/distance_from_center = GET_TRUE_DIST(turf_loc, center_turf)
 			switch(distance_from_center)
 				if(0)
 					distance_from_center = 1 //Same tile, let's avoid a division by zero.
 				if(-1)
 					kill()
-					CRASH("Negative distance error here")
+					CRASH("Negative distance measurement from the center turf detected, this should never happen")
 			if(prob(250 / distance_from_center))
 				if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 					turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -363,6 +363,10 @@ This section is for the destabilized SM
 	var/datum/gas_mixture/removed
 	var/gasefficency = 0.5
 	removed = env.remove(gasefficency * env.total_moles())
+
+	if(!removed)
+		return
+
 	removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
 	if(!removed || !removed.total_moles() || isspaceturf(loc_turf))
 		removed.gases[/datum/gas/bz][MOLES] += 0.5
@@ -619,12 +623,10 @@ This section is for the crystal portals variations
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
 	color = COLOR_BLACK
-	max_mobs = 5
-	spawn_time = 20 SECONDS
+	max_mobs = 2
+	spawn_time = 40 SECONDS
 	mob_types = list(
-		/mob/living/simple_animal/hostile/crystal_monster/recruit,
-		/mob/living/simple_animal/hostile/crystal_monster/killer,
-		/mob/living/simple_animal/hostile/crystal_monster/boss,
+		/mob/living/simple_animal/hostile/crystal_monster/boss
 		)
 
 /obj/structure/crystal_portal/huge/Initialize()
@@ -641,7 +643,7 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster
 	name = "crystal monster"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/crystal_mobs.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -678,7 +680,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/minion
 	name = "crystal minion"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -686,8 +687,8 @@ This section is for the crystal monsters variations
 	health = 20
 	speed = 0.8
 	harm_intent_damage = 7
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage_lower = 7
+	melee_damage_upper = 10
 	move_force = MOVE_FORCE_WEAK
 	move_resist = MOVE_FORCE_WEAK
 	pull_force = MOVE_FORCE_WEAK
@@ -706,16 +707,15 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/thug
 	name = "crystal thug"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_thug"
 	icon_living = "crystal_thug"
 	icon_dead = "crystal_thug"
 	maxHealth = 20
 	health = 20
 	speed = 0.9
-	harm_intent_damage = 11
-	melee_damage_lower = 10
-	melee_damage_upper = 15
+	harm_intent_damage = 8
+	melee_damage_lower = 8
+	melee_damage_upper = 11
 	move_force = MOVE_FORCE_NORMAL
 	move_resist = MOVE_FORCE_NORMAL
 	pull_force = MOVE_FORCE_NORMAL
@@ -738,16 +738,15 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/recruit
 	name = "crystal recruit"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_recruit"
 	icon_living = "crystal_recruit"
 	icon_dead = "crystal_recruit"
 	maxHealth = 20
 	health = 20
 	speed = 1.2
-	harm_intent_damage = 11
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	harm_intent_damage = 9
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	move_force = MOVE_FORCE_STRONG
 	move_resist = MOVE_FORCE_STRONG
 	pull_force = MOVE_FORCE_STRONG
@@ -764,16 +763,15 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_killer"
 	icon_living = "crystal_killer"
 	icon_dead = "crystal_killer"
 	maxHealth = 35
 	health = 35
 	speed = 0.75
-	harm_intent_damage = 15
-	melee_damage_lower = 30
-	melee_damage_upper = 35
+	harm_intent_damage = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -806,16 +804,15 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_boss"
 	icon_living = "crystal_boss"
 	icon_dead = "crystal_boss"
-	maxHealth = 300
-	health = 30
+	maxHealth = 150
+	health = 100
 	speed = 1.3
-	harm_intent_damage = 11
-	melee_damage_lower = 20
-	melee_damage_upper = 35
+	harm_intent_damage = 15
+	melee_damage_lower = 25
+	melee_damage_upper = 40
 	move_force = MOVE_FORCE_EXTREMELY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
@@ -832,7 +829,8 @@ This section is for the crystal monsters variations
 		var/mob/living/mob = clong
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
-			health += 35
+			if(health < maxHealth)
+				health = min(health+30,maxHealth)
 	else if(isturf(clong))
 		var/turf/turf_bump = clong
 		turf_bump.Melt()
@@ -844,7 +842,8 @@ This section is for the crystal monsters variations
 		var/mob/living/mob = target
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
-			health += 35
+			if(health < maxHealth)
+				health = min(health+30,maxHealth)
 		else
 			var/obj/item/bodypart/body_part = mob.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			if(body_part)

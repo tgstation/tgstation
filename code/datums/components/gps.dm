@@ -132,8 +132,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	return data
 
 /datum/component/gps/item/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
@@ -144,6 +146,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 			gpstag = a
 			. = TRUE
+			log_game("[key_name(usr)] renamed [parentasatom] to \"global positioning system ([gpstag])\".")
 			parentasatom.name = "global positioning system ([gpstag])"
 
 		if("power")

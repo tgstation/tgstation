@@ -121,10 +121,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!message_mods[MODE_ALIEN])
 				return
 		if(HARD_CRIT)
-			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_ALIEN]))
 				return
 		if(DEAD)
 			say_dead(original_message)
@@ -137,10 +137,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(!language)
 		language = get_selected_language()
-
+	var/mob/living/carbon/human/H = src
 	if(!can_speak_vocal(message))
-		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
-		return
+		if (HAS_TRAIT(src, TRAIT_SIGN_LANG) && H.mind.miming)
+			to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
+			return
+		else
+			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
+			return
 
 	var/message_range = 7
 
@@ -222,6 +226,27 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/deaf_message
 	var/deaf_type
+	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
+		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		if(speaker != src)
+			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
+				deaf_type = 1
+		else
+			deaf_type = 2
+
+		// Create map text prior to modifying message for goonchat, sign lang edition
+		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT || is_blind(src)) && (client.prefs.see_chat_non_mob || ismob(speaker)))
+			create_chat_message(speaker, message_language, raw_message, spans)
+
+		if(is_blind(src))
+			return FALSE
+
+
+		message = deaf_message
+
+		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlighting = speaker == src)
+		return message
+
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
@@ -246,6 +271,24 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
+	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		var/mob/living/carbon/mute = src
+		if(istype(mute))
+			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
+			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
+				message = stars(message)
+			if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (!mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))))//All existing hands full, can't sign
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!</span.?>", visible_message_flags = EMOTE_MESSAGE)
+				return FALSE
+			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
+				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
+				return FALSE
+			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!</span.?>", visible_message_flags = EMOTE_MESSAGE)
+				return FALSE
+			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
+				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
+				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
@@ -254,9 +297,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(M.stat != DEAD) //not dead, not important
 				continue
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
-				if(eavesdrop_range && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
-					continue
-				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				if(eavesdrop_range)
+					if(!(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+						continue
+				else if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= M
 			the_dead[M] = TRUE
@@ -303,14 +347,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return TRUE
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
+	var/mob/living/carbon/human/H = src
 	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
 
 	if(is_muzzled())
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
 
 	if(!IsVocal())
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
 
 	return TRUE
 
@@ -339,7 +384,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src
-	if(imp && imp.radio.on)
+	if(imp?.radio.on)
 		if(message_mods[MODE_HEADSET])
 			imp.radio.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
@@ -376,9 +421,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else if(message_mods[MODE_SING])
 		. = verb_sing
 	else if(stuttering)
-		. = "stammers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "shakily signs"
+		else
+			. = "stammers"
 	else if(derpspeech)
-		. = "gibbers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "incoherently signs"
+		else
+			. = "gibbers"
 	else
 		. = ..()
 

@@ -12,8 +12,10 @@
 
 	outfit = /datum/outfit/job/roboticist
 
-	access = list(ACCESS_ROBOTICS, ACCESS_RND, ACCESS_TOXINS, ACCESS_TOXINS_STORAGE, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_MECH_SCIENCE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM, ACCESS_XENOBIOLOGY, ACCESS_GENETICS)
-	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM, ACCESS_RND)
+	access = list(ACCESS_ROBOTICS, ACCESS_RND, ACCESS_TOXINS, ACCESS_TOXINS_STORAGE, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_MECH_SCIENCE,
+					ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM, ACCESS_XENOBIOLOGY, ACCESS_GENETICS, ACCESS_AUX_BASE)
+	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM,
+						ACCESS_RND, ACCESS_AUX_BASE)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
@@ -27,7 +29,7 @@
 	l_pocket = /obj/item/pda/roboticist
 	ears = /obj/item/radio/headset/headset_sci
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox

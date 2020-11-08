@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
-	if (smoothing_flags)
+	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
 	visibilityChanged()
@@ -111,11 +111,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/T = SSmapping.get_turf_above(src)
 	if(T)
 		T.multiz_turf_new(src, DOWN)
-		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, DOWN)
 	T = SSmapping.get_turf_below(src)
 	if(T)
 		T.multiz_turf_new(src, UP)
-		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, UP)
+
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
@@ -162,8 +161,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
 ///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
 /turf/proc/is_blocked_turf(exclude_mobs)
@@ -204,7 +205,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
 	if(flags & FALL_INTERCEPTED)
 		return
-	if(zFall(A, ++levels))
+	if(zFall(A, levels + 1))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
@@ -324,7 +325,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/current_target
 	if(fake_baseturf_type)
 		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
-			baseturfs = fake_baseturf_type
+			baseturfs = baseturfs_string_list(fake_baseturf_type, src)
 			return
 		current_target = fake_baseturf_type
 	else
@@ -340,9 +341,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = premade_baseturfs.Copy()
+			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		else
-			baseturfs = premade_baseturfs
+			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs
 
 	var/turf/next_target = initial(current_target.baseturfs)
@@ -363,7 +364,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		current_target = next_target
 		next_target = initial(current_target.baseturfs)
 
-	baseturfs = new_baseturfs
+	baseturfs = baseturfs_string_list(new_baseturfs, src)
 	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
 	return new_baseturfs
 
@@ -396,7 +397,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 1 SECONDS, src, NONE, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
 		stoplag(1)
 	progress.end_progress()
 
@@ -554,13 +555,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
 	if (iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.reagents)
-			clear_reagents_to_vomit_pool(C, V, purge)
+		clear_reagents_to_vomit_pool(M, V, purge)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge = FALSE)
 	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!belly)
+	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * 0.1
 	if(purge)

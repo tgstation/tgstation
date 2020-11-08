@@ -1,5 +1,9 @@
+#define MINOR_HEAL 10
+#define MEDIUM_HEAL 35
+#define MAJOR_HEAL 70
+
 /mob/living/simple_animal/hostile/regalrat
-	name = "regal rat"
+	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
@@ -26,9 +30,10 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
+	///The spell that the rat uses to scrounge up junk.
 	var/datum/action/cooldown/coffer
+	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
-	///Number assigned to rats and mice, checked when determining infighting.
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
@@ -36,7 +41,7 @@
 	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
 	riot.Grant(src)
-	INVOKE_ASYNC(src, .proc/get_player)
+	AddElement(/datum/element/waddling)
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
@@ -44,6 +49,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
+	to_chat(src, "<span class='notice'>You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!</span>")
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -78,13 +84,32 @@
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	. = ..()
+	if(health >= maxHealth)
+		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
-		if (health >= maxHealth)
-			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
-			return
-		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(10)
+		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
+		heal_bodypart_damage(MINOR_HEAL)
 		qdel(target)
+		return
+	if(istype(target, /obj/item/reagent_containers/food/snacks/store/cheesewheel))
+		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
+		heal_bodypart_damage(MEDIUM_HEAL)
+		qdel(target)
+		return
+	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
+		to_chat(src, "<span class='green'>You eat [src], revitalizing your royal resolve completely.</span>")
+		heal_bodypart_damage(MAJOR_HEAL)
+		qdel(target)
+		return
+
+/mob/living/simple_animal/hostile/regalrat/controlled
+	name = "regal rat"
+
+/mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/get_player)
+
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -185,7 +210,7 @@
 	see_in_dark = 6
 	maxHealth = 15
 	health = 15
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/mouse = 1)
+	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -202,6 +227,12 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/rat/death(gibbed)
+	if(!ckey)
+		..(TRUE)
+		if(!gibbed)
+			var/obj/item/reagent_containers/food/snacks/deadmouse/mouse = new(loc)
+			mouse.icon_state = icon_dead
+			mouse.name = name
 	SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
@@ -258,7 +289,7 @@
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 					C.deconstruct()
 					death()
-			else if(C && C.avail())
+			else if(C?.avail())
 				visible_message("<span class='warning'>[src] chews through the [C]. It looks unharmed!</span>")
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()
@@ -270,5 +301,9 @@
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(5)
+		heal_bodypart_damage(MINOR_HEAL)
 		qdel(target)
+
+#undef MINOR_HEAL
+#undef MEDIUM_HEAL
+#undef MAJOR_HEAL

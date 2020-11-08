@@ -3,6 +3,7 @@
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
+	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
@@ -29,8 +30,8 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10, 10)
-	pixel_y = rand(-10, 10)
+	pixel_x = base_pixel_x + rand(-10, 10)
+	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
 	update_icon()
 
@@ -42,7 +43,7 @@
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
 /obj/item/ammo_casing/update_icon()
-	..()
+	. = ..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
@@ -93,7 +94,7 @@
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)
-	. = ..()
+	return ..()
 
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
 	if(!heavy_metal)
@@ -101,7 +102,7 @@
 	update_icon()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
-	if(still_warm && T && T.bullet_sizzle)
+	if(still_warm && T?.bullet_sizzle)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
-	else if(T && T.bullet_bounce_sound)
+	else if(T?.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

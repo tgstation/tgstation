@@ -28,7 +28,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | NO_ALERTS
 	outdoors = TRUE
 	ambientsounds = SPACE
 	flags_1 = CAN_BE_DIRTY_1

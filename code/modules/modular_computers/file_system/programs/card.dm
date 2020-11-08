@@ -15,6 +15,7 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
+	program_icon = "id-card"
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
@@ -94,8 +95,9 @@
 	return FALSE
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2
@@ -130,7 +132,7 @@
 			if(!authenticated)
 				return
 			var/contents = {"<h4>Access Report</h4>
-						<u>Prepared By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
 						<u>Assignment:</u> [target_id_card.assignment]<br>
@@ -320,32 +322,31 @@
 /datum/computer_file/program/card_mod/ui_data(mob/user)
 	var/list/data = get_header_data()
 
+	data["station_name"] = station_name()
+
 	var/obj/item/computer_hardware/card_slot/card_slot2
 	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
 		card_slot2 = computer.all_components[MC_CARD2]
 		printer = computer.all_components[MC_PRINT]
-
-	data["station_name"] = station_name()
-
-	if(computer)
 		data["have_id_slot"] = !!(card_slot2)
-		data["have_printer"] = !!printer
+		data["have_printer"] = !!(printer)
 	else
 		data["have_id_slot"] = FALSE
 		data["have_printer"] = FALSE
 
 	data["authenticated"] = authenticated
+	if(!card_slot2)
+		return data //We're just gonna error out on the js side at this point anyway
 
-	if(computer)
-		var/obj/item/card/id/id_card = card_slot2.stored_card
-		data["has_id"] = !!id_card
-		data["id_name"] = id_card ? id_card.name : "-----"
-		if(id_card)
-			data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
-			data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
-			data["access_on_card"] = id_card.access
+	var/obj/item/card/id/id_card = card_slot2.stored_card
+	data["has_id"] = !!id_card
+	data["id_name"] = id_card ? id_card.name : "-----"
+	if(id_card)
+		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
+		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
+		data["access_on_card"] = id_card.access
 
 	return data
 

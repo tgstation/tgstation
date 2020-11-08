@@ -24,6 +24,7 @@
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
 	icon_state = "rainbow_flower"
+	worn_icon_state = "rainbow"
 	slot_flags = ITEM_SLOT_HEAD
 	force = 0
 	throwforce = 0

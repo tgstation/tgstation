@@ -158,6 +158,16 @@
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
 
+/obj/item/reagent_containers/food/snacks/donut/laugh
+	name = "sweet pea donut"
+	desc = "Goes great with a bottle of Bastion Burbon!"
+	icon_state = "donut_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("donut" = 3, "fizzy tutti frutti" = 1,)
+	is_decorated = TRUE
+	filling_color = "#803280"
+	value = FOOD_EXOTIC
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -261,6 +271,16 @@
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
 
+/obj/item/reagent_containers/food/snacks/donut/jelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a bottle of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
+	value = FOOD_EXOTIC
+
 //////////////////////////SLIME DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
@@ -342,6 +362,16 @@
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 	filling_color = "#879630"
+
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a bottle of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
+
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/muffin
@@ -667,16 +697,13 @@
 	foodtype = GRAIN | MEAT | VEGETABLES
 	value = FOOD_RARE
 
-/obj/item/reagent_containers/food/snacks/meatbun
+/obj/item/food/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	filling_color = "#8B0000"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 3, "meat" = 2)
-	foodtype = GRAIN | MEAT | VEGETABLES
-	value = FOOD_EXOTIC
+	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"

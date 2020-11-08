@@ -5,6 +5,7 @@
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6
 	tgui_id = "NtosShipping"
+	program_icon = "tags"
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
 	///The amount which the tagger will receive for the sale.
@@ -19,14 +20,15 @@
 	data["has_id_slot"] = !!card_slot
 	data["has_printer"] = !!printer
 	data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
-	data["card_owner"] = card_slot && card_slot.stored_card ? id_card.registered_name : "No Card Inserted."
+	data["card_owner"] = card_slot?.stored_card ? id_card.registered_name : "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = percent_cut
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 	if(!computer)
 		return
 
@@ -40,7 +42,7 @@
 	switch(action)
 		if("ejectid")
 			if(id_card)
-				card_slot.try_eject(TRUE, usr)
+				card_slot.try_eject(usr, TRUE)
 		if("selectid")
 			if(!id_card)
 				return

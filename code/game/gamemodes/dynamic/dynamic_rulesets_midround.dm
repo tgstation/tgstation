@@ -551,3 +551,117 @@
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Space Dragon by the midround ruleset.")
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S
+
+//////////////////////////////////////////////
+//                                          //
+//           ABDUCTORS    (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+#define ABDUCTOR_MAX_TEAMS 4
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors
+	name = "Abductors"
+	antag_flag = "Abductor"
+	antag_flag_override = ROLE_ABDUCTOR
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 2
+	weight = 4
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/datum/team/abductor_team/new_team
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/ready(forced = FALSE)
+	if (required_candidates > (dead_players.len + list_observers.len))
+		return FALSE
+	new_team = new
+	if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/finish_setup(mob/new_character, index)
+	if (index == 1) // Our first guy is the scientist.
+		var/datum/antagonist/abductor/scientist/new_role = new
+		new_character.mind.add_antag_datum(new_role, new_team)
+	else // Our second guy is the agent
+		var/datum/antagonist/abductor/agent/new_role = new
+		new_character.mind.add_antag_datum(new_role, new_team)
+
+#undef ABDUCTOR_MAX_TEAMS
+
+//////////////////////////////////////////////
+//                                          //
+//            SWARMERS    (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/swarmers
+	name = "Swarmers"
+	antag_datum = /datum/antagonist/swarmer
+	antag_flag = "Swarmer"
+	antag_flag_override = ROLE_ALIEN
+	required_type = /mob/dead/observer
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 0
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/swarmers/execute()
+	var/list/spawn_locs = list()
+	for(var/x in GLOB.xeno_spawn)
+		var/turf/spawn_turf = x
+		var/light_amount = spawn_turf.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			spawn_locs += spawn_turf
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
+		return MAP_ERROR
+	var/obj/structure/swarmer_beacon/new_beacon = new(pick(spawn_locs))
+	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
+	notify_ghosts("\A Swarmer Beacon has spawned!", source = new_beacon, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Swarmer Beacon Spawned")
+	return ..()
+
+//////////////////////////////////////////////
+//                                          //
+//            SPACE NINJA (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja
+	name = "Space Ninja"
+	antag_datum = /datum/antagonist/ninja
+	antag_flag = "Space Ninja"
+	antag_flag_override = ROLE_NINJA
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	repeatable = TRUE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/execute()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/generate_ruleset_body(mob/applicant)
+	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
+	ninja.key = applicant.key
+	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
+
+	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a Space Ninja by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(ninja)] was spawned as a Space Ninja by the midround ruleset.")
+	return ninja

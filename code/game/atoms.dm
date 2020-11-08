@@ -7,6 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -119,11 +120,17 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	///Default pixel x shifting for the atom's icon.
+	var/base_pixel_x = 0
+	///Default pixel y shifting for the atom's icon.
+	var/base_pixel_y = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
+	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
+	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable
@@ -136,7 +143,8 @@
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
-
+	///Reference to atom being orbited
+	var/atom/orbit_target
 
 /**
   * Called when an atom is created in byond (built in engine proc)
@@ -194,8 +202,8 @@
   * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
-  * * [/turf/Initialize]
-  * * [/turf/open/space/Initialize]
+  * * [/turf/proc/Initialize]
+  * * [/turf/open/space/proc/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -426,11 +434,8 @@
 					L.transferItemToLoc(M, src)
 				else
 					M.forceMove(src)
+				SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
 		parts_list.Cut()
-
-///Hook for multiz???
-/atom/proc/update_multiz(prune_on_fail = FALSE)
-	return FALSE
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -867,7 +872,7 @@
 	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+	while (do_after(user, 1 SECONDS, src, NONE, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can.</span>")
@@ -883,7 +888,7 @@
 	return null
 
 /**
-  * This proc is called when an atom in our contents has it's [Destroy][/atom/Destroy] called
+  * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
   *
   * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
   */
@@ -1016,12 +1021,57 @@
   * the object has been admin edited
   */
 /atom/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, light_range))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_range = var_value)
+			else
+				set_light_range(var_value)
+			. =  TRUE
+		if(NAMEOF(src, light_power))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_power = var_value)
+			else
+				set_light_power(var_value)
+			. =  TRUE
+		if(NAMEOF(src, light_color))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_color = var_value)
+			else
+				set_light_color(var_value)
+			. =  TRUE
+		if(NAMEOF(src, light_on))
+			set_smoothed_icon_state(var_value)
+			. =  TRUE
+		if(NAMEOF(src, light_flags))
+			set_light_flags(var_value)
+			. =  TRUE
+		if(NAMEOF(src, smoothing_junction))
+			set_smoothed_icon_state(var_value)
+			. =  TRUE
+		if(NAMEOF(src, opacity))
+			set_opacity(var_value)
+			. =  TRUE
+		if(NAMEOF(src, base_pixel_x))
+			set_base_pixel_x(var_value)
+			. =  TRUE
+		if(NAMEOF(src, base_pixel_y))
+			set_base_pixel_y(var_value)
+			. =  TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
 	if(!GLOB.Debug2)
 		flags_1 |= ADMIN_SPAWNED_1
+
 	. = ..()
+
 	switch(var_name)
 		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+
 
 /**
   * Return the markup to for the dropdown list for the VV panel for this atom
@@ -1215,15 +1265,19 @@
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/I, list/chosen_option)
-	to_chat(user, "<span class='notice'>You start working on [src]</span>")
+	to_chat(user, "<span class='notice'>You start working on [src].</span>")
 	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
-			var/atom/created_atom = new atom_to_create(loc)
+			var/atom/created_atom = new atom_to_create(drop_location())
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
-		to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)] from [src]</span>")
+			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
+		to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
 		qdel(src)
 		return
+
+/atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+	return
 
 //! Tool-specific behavior procs.
 ///
@@ -1269,7 +1323,7 @@
 	return
 
 ///Connect this atom to a shuttle
-/atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
 /// Generic logging helper
@@ -1440,7 +1494,7 @@
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
-			custom_material.on_removed(src, material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
@@ -1452,6 +1506,46 @@
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+
+
+///Setter for the `base_pixel_x` variable to append behavior related to its changing.
+/atom/proc/set_base_pixel_x(new_value)
+	if(base_pixel_x == new_value)
+		return
+	. = base_pixel_x
+	base_pixel_x = new_value
+
+	pixel_x = pixel_x + base_pixel_x - .
+
+
+///Setter for the `base_pixel_y` variable to append behavior related to its changing.
+/atom/proc/set_base_pixel_y(new_value)
+	if(base_pixel_y == new_value)
+		return
+	. = base_pixel_y
+	base_pixel_y = new_value
+
+	pixel_y = pixel_y + base_pixel_y - .
+
+
+/**Returns the material composition of the atom.
+  *
+  * Used when recycling items, specifically to turn alloys back into their component mats.
+  *
+  * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
+  * with people converting the entire stations material supply into alloys.
+  *
+  * Arguments:
+  * - flags: A set of flags determining how exactly the materials are broken down.
+  */
+/atom/proc/get_material_composition(breakdown_flags=NONE)
+	. = list()
+	var/list/cached_materials = custom_materials
+	for(var/mat in cached_materials)
+		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
+		var/list/material_comp = material.return_composition(cached_materials[material], breakdown_flags)
+		for(var/comp_mat in material_comp)
+			.[comp_mat] += material_comp[comp_mat]
 
 /**
   * Returns true if this atom has gravity for the passed in turf
@@ -1486,7 +1580,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return 0
 
@@ -1555,3 +1649,23 @@
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)
+		return TRUE
+
+/**
+  * Recursive getter method to return a list of all ghosts orbitting this atom
+  *
+  * This will work fine without manually passing arguments.
+  */
+/atom/proc/get_all_orbiters(list/processed, source = TRUE)
+	var/list/output = list()
+	if (!processed)
+		processed = list()
+	if (src in processed)
+		return output
+	if (!source)
+		output += src
+	processed += src
+	for (var/o in orbiters?.orbiter_list)
+		var/atom/atom_orbiter = o
+		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
+	return output

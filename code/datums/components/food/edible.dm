@@ -53,6 +53,7 @@ Behavior that's still missing from this component that original food items had t
 								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 								bite_consumption = 2,
 								microwaved_type,
+								junkiness,
 								datum/callback/after_eat,
 								datum/callback/on_consume)
 
@@ -71,7 +72,8 @@ Behavior that's still missing from this component that original food items had t
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
 
 		var/obj/item/item = parent
-		item.grind_results = list() //Cursed but this is how snacks did it, grinding needs a refactor in the future.
+		if (!item.grind_results)
+			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
 
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
@@ -216,9 +218,8 @@ Behavior that's still missing from this component that original food items had t
 
 	if(!microwaved_type)
 		new /obj/item/reagent_containers/food/snacks/badrecipe(parent_turf)
-		qdel(src)
+		qdel(parent)
 		return
-
 
 	var/obj/item/result
 
@@ -229,6 +230,8 @@ Behavior that's still missing from this component that original food items had t
 	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, parent, efficiency)
 
 	SSblackbox.record_feedback("tally", "food_made", 1, result.type)
+	qdel(parent)
+	return COMPONENT_SUCCESFUL_MICROWAVE
 
 ///Corrects the reagents on the newly cooked food
 /datum/component/edible/proc/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
@@ -273,7 +276,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
-	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
 		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
@@ -339,7 +342,7 @@ Behavior that's still missing from this component that original food items had t
 
 		//Invoke our after eat callback if it is valid
 		if(after_eat)
-			after_eat.Invoke(eater, feeder)
+			after_eat.Invoke(eater, feeder, bitecount)
 
 		return TRUE
 
@@ -366,9 +369,10 @@ Behavior that's still missing from this component that original food items had t
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(HAS_TRAIT(H, TRAIT_AGEUSIA) && foodtypes & H.dna.species.toxic_food)
-		to_chat(H, "<span class='warning'>You don't feel so good...</span>")
-		H.adjust_disgust(25 + 30 * fraction)
+	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
+		if(foodtypes & H.dna.species.toxic_food)
+			to_chat(H, "<span class='warning'>You don't feel so good...</span>")
+			H.adjust_disgust(25 + 30 * fraction)
 	else
 		if(foodtypes & H.dna.species.toxic_food)
 			to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
@@ -410,12 +414,11 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/mob/living/L = user
 	if(bitecount == 0 || prob(50))
-		L.manual_emote("nibbles away at \the [parent]")
+		L.manual_emote("nibbles away at \the [parent].")
 	bitecount++
-	. = COMPONENT_ITEM_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
-		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [parent] was")
-		if(sattisfaction_text)
-			L.manual_emote(sattisfaction_text)
+		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [parent] was.")
+		L.manual_emote(satisfaction_text)
 		qdel(parent)

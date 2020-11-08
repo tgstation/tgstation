@@ -9,20 +9,20 @@
   */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
-		return
+		return TRUE
 	if(pre_attack(target, user, params))
-		return
+		return TRUE
 	if(target.attackby(src,user, params))
-		return
+		return TRUE
 	if(QDELETED(src) || QDELETED(target))
 		attack_qdeleted(target, user, TRUE, params)
-		return
-	afterattack(target, user, TRUE, params)
+		return TRUE
+	return afterattack(target, user, TRUE, params)
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
-		return
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 	interact(user)
 
 /**
@@ -36,7 +36,7 @@
   * See: [/obj/item/proc/melee_attack_chain]
   */
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
-	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
@@ -65,16 +65,21 @@
 	return I.attack(src, user)
 
 /**
-  * Called from [/mob/living/attackby]
+  * Called from [/mob/living/proc/attackby]
   *
   * Arguments:
   * * mob/living/M - The mob being hit by this item
   * * mob/living/user - The mob hitting with this item
   */
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
+	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return
+
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
+
 	if(item_flags & NOBLUDGEON)
 		return
 
@@ -90,7 +95,7 @@
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -107,7 +112,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	if(item_flags & NOBLUDGEON)
 		return

@@ -11,7 +11,6 @@
 	. = ..()
 	if(!.)
 		return
-	. = FALSE
 	var/direction
 	for(var/A in ducts)
 		if(ducts[A] == net)
@@ -27,6 +26,8 @@
 			if(!S.turn_straight && S.transfer_side <= amount)
 				S.turn_straight = TRUE
 				return TRUE
+	return FALSE
+
 
 /datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
 	var/direction
@@ -42,6 +43,5 @@
 		if(EAST)
 			if(amount >= S.transfer_side)
 				amount = S.transfer_side
-	. = ..()
-
+	return ..()
 

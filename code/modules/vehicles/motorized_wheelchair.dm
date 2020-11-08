@@ -1,6 +1,7 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
+	foldabletype = null
 	max_integrity = 150
 	var/speed = 2
 	var/power_efficiency = 1
@@ -30,33 +31,34 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-	for(var/atom/movable/A in contents)
-		A.forceMove(T)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.update_mobility()
-	..()
+	for(var/c in contents)
+		var/atom/movable/thing = c
+		thing.forceMove(T)
+	return ..()
+
 
 /obj/vehicle/ridden/wheelchair/motorized/driver_move(mob/living/user, direction)
-	if(istype(user))
-		if(!canmove)
-			return FALSE
-		if(!power_cell)
-			to_chat(user, "<span class='warning'>There seems to be no cell installed in [src].</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
-			return FALSE
-		if(power_cell.charge < power_usage / max(power_efficiency, 1))
-			to_chat(user, "<span class='warning'>The display on [src] blinks 'Out of Power'.</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
-			return FALSE
-		if(user.usable_hands < arms_required)
-			to_chat(user, "<span class='warning'>You don't have enough arms to operate the motor controller!</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
-			return FALSE
-		power_cell.use(power_usage / max(power_efficiency, 1))
+	if(!istype(user))
+		return ..()
+	if(!canmove)
+		return FALSE
+	if(!power_cell)
+		to_chat(user, "<span class='warning'>There seems to be no cell installed in [src].</span>")
+		canmove = FALSE
+		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
+		return FALSE
+	if(power_cell.charge < power_usage / max(power_efficiency, 1))
+		to_chat(user, "<span class='warning'>The display on [src] blinks 'Out of Power'.</span>")
+		canmove = FALSE
+		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
+		return FALSE
+	if(rider_check_flags & REQUIRES_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		to_chat(user, "<span class='warning'>You can't operate the motor controller!</span>")
+		canmove = FALSE
+		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
+		return FALSE
+	power_cell.use(power_usage / max(power_efficiency, 1) * 0.05)
+
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/set_move_delay(mob/living/user)
@@ -120,11 +122,9 @@
 		new /obj/item/stack/rods(drop_location(), 8)
 		new /obj/item/stack/sheet/metal(drop_location(), 10)
 		var/turf/T = get_turf(src)
-		for(var/atom/movable/A in contents)
-			A.forceMove(T)
-			if(isliving(A))
-				var/mob/living/L = A
-				L.update_mobility()
+		for(var/c in contents)
+			var/atom/movable/thing = c
+			thing.forceMove(T)
 		qdel(src)
 	return TRUE
 

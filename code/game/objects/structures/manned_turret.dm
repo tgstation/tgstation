@@ -9,7 +9,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
-	buckle_lying = FALSE
+	buckle_lying = 0
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 2.5
 	var/cooldown = 0
@@ -35,8 +35,8 @@
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
 	if(istype(buckled_mob))
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = buckled_mob.base_pixel_x
+		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
 	anchored = FALSE
