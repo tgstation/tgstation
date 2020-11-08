@@ -11,47 +11,37 @@ import { sortBy, filter, map } from 'common/collections';
 // of the sent static JSON payload to as minimal of a size as possible
 // as larger sizes cause a delay for the user when opening the UI.
 
-let remappingIdCache;
-const remapId = id => typeof(id) === "string"
-  ? remappingIdCache[parseInt(id, 10) - 1]
-  : remappingIdCache[id - 1];
+let remappingIdCache = {};
+const remapId = id => remappingIdCache[id];
 
 const selectRemappedStaticData = data => {
   // Handle reshaping of node cache to fill in unsent fields, and
   // decompress the node IDs
-  const node_cache = Object.keys(data.static_data.node_cache)
-    .reduce((cache, id) => {
-      const n = data.static_data.node_cache[id];
-      const costs = Object.keys(n.costs || {}).map(x => ({
-        type: remapId(x),
-        value: n.costs[x],
-      }));
-      return {
-        ...cache,
-        [remapId(id)]: {
-          ...n,
-          id: remapId(id),
-          costs: costs,
-          prereq_ids: n.prereq_ids?.map(x => remapId(x)) || [],
-          design_ids: n.design_ids?.map(x => remapId(x)) || [],
-          unlock_ids: n.unlock_ids?.map(x => remapId(x)) || [],
-          required_experiments: n.required_experiments || [],
-          discount_experiments: n.discount_experiments || [],
-        },
-      };
-    }, {});
+  const node_cache = {};
+  for (let id of Object.keys(data.static_data.node_cache)) {
+    const node = data.static_data.node_cache[id];
+    const costs = Object.keys(node.costs || {}).map(x => ({
+      type: remapId(x),
+      value: node.costs[x],
+    }));
+    node_cache[remapId(id)] = {
+      ...node,
+      id: remapId(id),
+      costs,
+      prereq_ids: map(remapId)(node.prereq_ids || []),
+      design_ids: map(remapId)(node.design_ids || []),
+      unlock_ids: map(remapId)(node.unlock_ids || []),
+      required_experiments: node.required_experiments || [],
+      discount_experiments: node.discount_experiments || [],
+    };
+  }
 
   // Do the same as the above for the design cache
-  const design_cache = Object.keys(data.static_data.design_cache)
-    .reduce((cache, id) => {
-      const d = data.static_data.design_cache[id];
-      return {
-        ...cache,
-        [remapId(id)]: {
-          ...d,
-        },
-      };
-    }, {});
+  const design_cache = {};
+  for (let id of Object.keys(data.static_data.design_cache)) {
+    const design = data.static_data.design_cache[id];
+    design_cache[remapId(id)] = design;
+  }
 
   return {
     node_cache,
@@ -61,37 +51,21 @@ const selectRemappedStaticData = data => {
 
 let remappedStaticData;
 
-const selectRemappedData = data => {
-  // Only remap the static data once, cache for future use
-  if (!remappedStaticData) {
-    remappingIdCache = data.static_data.id_cache;
-    remappedStaticData = selectRemappedStaticData(data);
-  }
-
-  // Take only non-static data to combine with static data
-  const {
-    static_data,
-    ...rest
-  } = data;
-
-  return {
-    ...rest,
-    ...remappedStaticData,
-  };
-};
-
-let remappedInputData;
-let remappedOutputData;
-
 const useRemappedBackend = context => {
   const { data, ...rest } = useBackend(context);
-  // Recalculate when input data is different
-  if (remappedInputData !== data) {
-    remappedInputData = data;
-    remappedOutputData = selectRemappedData(data);
+  // Only remap the static data once, cache for future use
+  if (!remappedStaticData) {
+    const id_cache = data.static_data.id_cache;
+    for (let i = 0; i < id_cache.length; i++) {
+      remappingIdCache[i + 1] = id_cache[i];
+    }
+    remappedStaticData = selectRemappedStaticData(data);
   }
   return {
-    data: remappedOutputData,
+    data: {
+      ...data,
+      ...remappedStaticData,
+    },
     ...rest,
   };
 };
