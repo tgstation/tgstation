@@ -215,9 +215,9 @@
 
 		if (isobj(atoms))
 			var/obj/holo_object = atoms
-			if (length(holo_object.contents) > 0)
-				spawned -= holo_object
-				spawned += holo_object.GetAllContents()
+			//if (length(holo_object.contents) > 0)
+			//	spawned -= holo_object
+			//	spawned += holo_object.GetAllContents()
 			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 			if (ismachinery(holo_object))

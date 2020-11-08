@@ -59,11 +59,15 @@
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(areas + turfs + atoms)
+	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created)
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
+	if (returns_created)
+		created_atoms = SSatoms.created_atoms.Copy()
+		SSatoms.created_atoms.Cut()
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(
@@ -130,7 +134,6 @@
 
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
-	created_atoms = parsed.created_atoms
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
@@ -140,6 +143,7 @@
 
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
+	created_atoms = parsed.created_atoms //this has to be done after initTemplateBounds because thats when the template is initialized
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds

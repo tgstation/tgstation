@@ -391,8 +391,8 @@
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
-	if (returns_created)
-		created_atoms += .
+	//if (returns_created)
+	//	created_atoms += .
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
