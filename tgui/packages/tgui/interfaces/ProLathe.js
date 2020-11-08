@@ -42,6 +42,8 @@ const materialArrayToObj = materials => {
   return materialObj;
 };
 
+
+
 const partBuildColor = (cost, tally, material) => {
   if (cost > material) {
     return { color: COLOR_BAD, deficit: (cost - material) };
@@ -199,7 +201,7 @@ export const ProLathe = (props, context) => {
               mt={1}
               basis="content"
               grow={1}>
-              <Section
+              <Section height="100%"
                 title={selectedSettings}>
                 {selectedSettings === "Materials" ? (<Materials />)
                   : selectedSettings === "Regents"
@@ -370,6 +372,15 @@ const MaterialAmount = (props, context) => {
     </Flex>
   );
 };
+const getFirstValidPartSet = (sets, valid_sets) => {
+  for (const set of sets) {
+    if (valid_sets[set]) {
+      return set;
+    }
+  }
+  return null;
+};
+
 
 const PartSets = (props, context) => {
   const { data } = useBackend(context);
@@ -385,7 +396,7 @@ const PartSets = (props, context) => {
   ] = useSharedState(
     context,
     "part_tab",
-    categoryOrder[0] || ""
+    getFirstValidPartSet(categoryOrder, buildableParts)
   );
 
   return (
@@ -394,7 +405,7 @@ const PartSets = (props, context) => {
       {categoryOrder.map(set => (
         !!(buildableParts[set]) && (
           <Tabs.Tab
-            key={set}
+            key={"catagory_tab_" + set}
             selected={set === selectedPartTab}
             onClick={() => setSelectedPartTab(set)}>
             {set}
@@ -425,7 +436,7 @@ const PartLists = (props, context) => {
   ] = useSharedState(
     context,
     "part_tab",
-    (categoryOrder && categoryOrder[0]) || ""
+    getFirstValidPartSet(categoryOrder, buildableParts)
   );
 
   const [
@@ -433,21 +444,11 @@ const PartLists = (props, context) => {
     setSearchText,
   ] = useSharedState(context, "search_text", "");
 
-  let partsList;
-  // Build list of sub-categories if not using a search filter.
-  if (!searchText) {
-    partsList = buildableParts[selectedPartTab];
-    partsList.forEach(part => {
-      part["format"] = partCondFormat(materials, queueMaterials, part);
-    });
-  }
-  else {
-    partsList = [];
-    searchFilter(searchText, buildableParts).forEach(part => {
-      part["format"] = partCondFormat(materials, queueMaterials, part);
-      partsList.push(part);
-    });
-  }
+  const partsList = searchText ? searchFilter(searchText, buildableParts) : buildableParts[selectedPartTab]
+  partsList.forEach(part => {
+    part["format"] = partCondFormat(materials, queueMaterials, part);
+  });
+
 
 
   return (
@@ -467,13 +468,13 @@ const PartLists = (props, context) => {
           </Flex.Item>
         </Flex>
       </Section>
-      {(!!searchText && (
+      {!!searchText ? (
         <PartCategory
           name={"Search Results"}
           parts={partsList}
           forceShow
           placeholder="No matching results..." />
-      )) || (
+      ) : (
         <PartCategory
           name={selectedPartTab}
           parts={partsList} />
@@ -587,7 +588,7 @@ const PartSubCategory = (props, context) => {
           onClick={() => act("add_queue_set", {
             part_list: parts.map(part => part.id),
           })} />)}>
-      {parts.map(part => (<PartItem part={part} key={part.name} />)) }
+      {parts.map(part => (<PartItem part={part} key={"sub_cat_" + part.id} />)) }
     </Section>
   );
 };
