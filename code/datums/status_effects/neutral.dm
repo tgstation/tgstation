@@ -183,7 +183,7 @@
 
 /// Hook up the specified carbon mob for possible high-fiving, give them the alert and signals and all
 /datum/status_effect/high_fiving/proc/register_candidate(mob/living/carbon/possible_candidate)
-	var/obj/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /obj/screen/alert/highfive)
+	var/atom/movable/screen/alert/highfive/G = possible_candidate.throw_alert("[owner]", /atom/movable/screen/alert/highfive)
 	if(!G)
 		return
 	LAZYADD(possible_takers, possible_candidate)
