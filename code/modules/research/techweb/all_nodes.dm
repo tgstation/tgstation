@@ -383,7 +383,8 @@
 	description = "For the slackers on the station."
 	prereq_ids = list("comptech")
 	design_ids = list("arcade_battle", "arcade_orion", "slotmachine")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250)
+	discount_experiments = list(/datum/experiment/physical/arcade_winner = 3000)
 
 /datum/techweb_node/comp_recordkeeping
 	id = "comp_recordkeeping"

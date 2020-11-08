@@ -308,6 +308,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
+	custom_materials = list(/datum/material/glass = 2000)
 	buildstack = /obj/item/stack/sheet/glass
 	smoothing_groups = list(SMOOTH_GROUP_GLASS_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_GLASS_TABLES)
