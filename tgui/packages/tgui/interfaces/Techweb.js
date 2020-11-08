@@ -98,6 +98,10 @@ export const Techweb = (props, context) => {
     techwebRoute,
     setTechwebRoute,
   ] = useLocalState(context, 'techwebRoute', null);
+  const [
+    lastPoints,
+    setLastPoints,
+  ] = useLocalState(context, 'lastPoints', {});
 
   return (
     <Window
@@ -124,7 +128,10 @@ export const Techweb = (props, context) => {
                   <ul className="Techweb__PointSummary">
                     {Object.keys(points).map(k => (
                       <li key={k}>
-                        <b>{k}</b>: {points[k]} (+{points_last_tick[k]||0}/t)
+                        <b>{k}</b>: {points[k]}
+                        {!!points_last_tick[k] && (
+                          ` (+${points_last_tick[k]}/sec)`
+                        )}
                       </li>
                     ))}
                   </ul>

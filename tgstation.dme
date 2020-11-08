@@ -2897,6 +2897,7 @@
 #include "code\modules\research\designs\comp_board_designs.dm"
 #include "code\modules\research\designs\computer_part_designs.dm"
 #include "code\modules\research\designs\electronics_designs.dm"
+#include "code\modules\research\designs\experisci_designs.dm"
 #include "code\modules\research\designs\limbgrower_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mecha_designs.dm"

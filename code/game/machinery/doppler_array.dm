@@ -249,6 +249,4 @@
 	if (.)
 		return
 
-
-
 #undef PRINTER_TIMEOUT

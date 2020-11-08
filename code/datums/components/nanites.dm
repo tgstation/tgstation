@@ -112,6 +112,7 @@
 /datum/component/nanites/process(delta_time)
 	if(!IS_IN_STASIS(host_mob))
 		adjust_nanites(null, (regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0)) * delta_time)
+		add_research()
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
 			NP.on_process()
@@ -119,7 +120,6 @@
 			cloud_sync()
 			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-
 
 /datum/component/nanites/proc/delete_nanites()
 	SIGNAL_HANDLER
@@ -321,6 +321,19 @@
 	SIGNAL_HANDLER
 
 	nanite_programs |= programs
+
+/datum/component/nanites/proc/add_research()
+	var/research_value = NANITE_BASE_RESEARCH
+	if(!ishuman(host_mob))
+		if(!iscarbon(host_mob))
+			research_value *= 0.4
+		else
+			research_value *= 0.8
+	if(!host_mob.client)
+		research_value *= 0.5
+	if(host_mob.stat == DEAD)
+		research_value *= 0.75
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_NANITES = research_value))
 
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	SIGNAL_HANDLER
