@@ -50,6 +50,8 @@
 	handle_specials()
 	riding_mob.updating_glide_size = FALSE
 	ride_check_flags |= _ride_check_flags
+	var/atom/movable/movable_parent = parent
+
 	if(potion_boost)
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 

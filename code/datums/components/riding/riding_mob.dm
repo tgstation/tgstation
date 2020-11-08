@@ -14,7 +14,6 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
-
 // this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider)
 	var/mob/living/parent_living = parent
@@ -39,17 +38,15 @@
 
 
 ///////Yes, I said humans. No, this won't end well...//////////
-/datum/component/riding/creature/human
-
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
-	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+	var/mob/living/carbon/human/human_parent = parent
+	human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
-		H.buckle_lying = 90
+		human_parent.buckle_lying = 0
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
-		H.buckle_lying = 0
+		human_parent.buckle_lying = 90
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
@@ -59,7 +56,7 @@
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	. = ..()
+	return ..()
 
 /// If the carrier gets shoved, drop our load
 /datum/component/riding/creature/human/proc/on_host_unarmed_melee(atom/target)
@@ -77,17 +74,17 @@
 
 	for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
 		M.layer = MOB_LAYER
-	if(!AM.buckle_lying)
+
+	if(!AM.buckle_lying) // rider is vertical, must be piggybacking
 		if(dir == SOUTH)
 			AM.layer = ABOVE_MOB_LAYER
 		else
 			AM.layer = OBJ_LAYER
-	else
+	else  // laying flat, we must be firemanning the rider (extra code so they sling over the )
 		if(dir == NORTH)
 			AM.layer = OBJ_LAYER
 		else
 			AM.layer = ABOVE_MOB_LAYER
-
 
 /datum/component/riding/creature/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
@@ -95,7 +92,6 @@
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
-
 
 /datum/component/riding/creature/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
