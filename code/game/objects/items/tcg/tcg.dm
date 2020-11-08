@@ -48,13 +48,14 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	series = temp.series
 
 /obj/item/tcgcard/proc/extract_datum()
-	var/list/L = GLOB.cached_cards[series]
-	if(!L)
+	var/list/cached_cards = GLOB.cached_cards[series]
+	if(!cached_cards)
 		return null
-	var/datum/card/data_holder = L["ALL"][id]
-	return data_holder
+	return cached_cards["ALL"][id]
 
 /obj/item/tcgcard/examine(mob/user)
+	if(flipped)
+		return ..()
 	var/list/examine_data = ..()
 	var/datum/card/data_holder = extract_datum()
 	if(!data_holder)
@@ -317,15 +318,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		nu_card.flipped = flipped
 		nu_card.update_icon_state()
 	update_icon_state()
-
-/obj/item/tcg_cardhand
-	name = "\improper TGC hand"
-	desc = "A collection of TGC cards, ready to enter the battlefield."
-	icon = 'icons/obj/tcgmisc.dmi'
-	icon_state = "none"
-	var/max_hand_size = 7 //set at 7 for Long War gamemode, typical hand size is 5
-	var/list/currenthand = list()
-	var/choice = null
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
