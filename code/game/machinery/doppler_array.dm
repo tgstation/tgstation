@@ -10,7 +10,6 @@
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
-	var/list/message_log = list()
 	/// Number which will be part of the name of the next record, increased by one for each already created record
 	var/record_number = 1
 	/// Cooldown for the print function

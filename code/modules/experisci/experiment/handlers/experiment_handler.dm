@@ -55,13 +55,17 @@
 	. = ..()
 	GLOB.experiment_handlers -= src
 
-//Hooks on attack to try and run an experiment (When using a handheld handler)
+/**
+  * Hooks on attack to try and run an experiment (When using a handheld handler)
+  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-//This proc exists because Jared Fogle really likes async
+/**
+  * This proc exists because Jared Fogle really likes async
+  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
 	if (selected_experiment == null)
 		to_chat(user, "<span>You do not have an experiment selected!.</span>")
@@ -75,8 +79,9 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
 
-
-///Hooks on succesful explosions on the doppler array this is attached to
+/**
+  * Hooks on successful explosions on the doppler array this is attached to
+  */
 /datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range,
 	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 	SIGNAL_HANDLER
@@ -87,14 +92,24 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_array.say("Insufficient explosion to contribute to current experiment.")
 
-///Announces a message to all experiment handlers
+/**
+  * Announces a message to all experiment handlers
+  *
+  * Arguments:
+  * * message - The message to announce
+  */
 /datum/component/experiment_handler/proc/announce_message_to_all(var/message)
 	for(var/i in GLOB.experiment_handlers)
 		var/datum/component/experiment_handler/experi_handler = i
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
-///Announces a message to this experiment handler
+/**
+  * Announces a message to this experiment handler
+  *
+  * Arguments:
+  * * message - The message to announce
+  */
 /datum/component/experiment_handler/proc/announce_message(var/message)
 	var/atom/movable/experi_parent = parent
 	experi_parent.say(message)
@@ -115,7 +130,9 @@
 
 	return selected_experiment.perform_experiment(arglist(arguments)) //Returns true if the experiment was succesfuly handled
 
-
+/**
+  * Hook for handling UI interaction via signals
+  */
 /datum/component/experiment_handler/proc/ui_handle_experiment(datum/source, mob/user, action)
 	SIGNAL_HANDLER
 	if(action == "open_experiments")

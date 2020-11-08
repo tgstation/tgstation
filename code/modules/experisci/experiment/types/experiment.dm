@@ -57,7 +57,9 @@
 /datum/experiment/proc/actionable(...)
 	return !is_complete()
 
-///Proc that tries to perform the experiment, and then checks if its completed.
+/**
+  * Proc that tries to perform the experiment, and then checks if its completed.
+  */
 /datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
 	var/action_succesful = perform_experiment_actions(arglist(args))
 	if(is_complete())
@@ -73,7 +75,9 @@
 /datum/experiment/proc/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, ...)
 	return
 
-///Called when you complete an experiment, makes sure the techwebs knows the experiment was finished, and tells everyone it happend, yay!
+/**
+  * Called when you complete an experiment, makes sure the techwebs knows the experiment was finished, and tells everyone it happend, yay!
+  */
 /datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler)
 	completed = TRUE
 	experiment_handler.announce_message_to_all("The [name] has been completed!")

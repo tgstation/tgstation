@@ -2,9 +2,9 @@
 	name = "Physical Experiment"
 	description = "An experiment requiring a physical reaction to continue"
 	exp_tag = "Physical Experiment"
-	///The atom that is currently being watched by this experiment
+	/// The atom that is currently being watched by this experiment
 	var/atom/currently_scanned_atom
-	///Linked experiment handler
+	/// Linked experiment handler
 	var/datum/component/experiment_handler/linked_experiment_handler
 
 /datum/experiment/physical/is_complete()
@@ -20,10 +20,14 @@
 	linked_experiment_handler = null
 	return FALSE
 
-///Handles registering to events relevant to the experiment
+/**
+  * Handles registering to events relevant to the experiment
+  */
 /datum/experiment/physical/proc/register_events()
 	return FALSE
 
-///Handles unregistering to events relevant to the experiment
+/**
+  * Handles unregistering to events relevant to the experiment
+  */
 /datum/experiment/physical/proc/unregister_events()
 	return
