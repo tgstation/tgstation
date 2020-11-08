@@ -252,6 +252,7 @@
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 	assume_rgb(C)
+	// Reactivate if eyes were already active for real time colour swapping!
 	if(active)
 		set_distance(clamp(range, 0, max_light_beam_distance))
 		activate(FALSE)
@@ -309,7 +310,7 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
 	if(!active)
-		return
+		return // Don't update if we're not active!
 	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	var/turf/scanfrom = get_turf(owner)
