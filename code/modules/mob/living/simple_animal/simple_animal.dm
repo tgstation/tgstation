@@ -588,8 +588,9 @@
 			return
 	sync_lighting_plane_alpha()
 
+//Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
 /mob/living/simple_animal/get_idcard(hand_first)
-	return access_card
+	return (..() || access_card)
 
 /mob/living/simple_animal/can_hold_items()
 	return dextrous
