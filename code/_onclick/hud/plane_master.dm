@@ -154,13 +154,13 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
 
-/obj/screen/plane_master/runechat
+/atom/movable/screen/plane_master/runechat
 	name = "runechat plane master"
 	plane = RUNECHAT_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-/obj/screen/plane_master/runechat/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/runechat/backdrop(mob/mymob)
 	filters = list()
 	if(istype(mymob) && mymob.client?.prefs?.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
