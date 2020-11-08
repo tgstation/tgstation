@@ -2,8 +2,8 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	are_legs_exposed = TRUE
-	fall_off_if_missing_arms = TRUE
 
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
@@ -37,9 +37,6 @@
 /obj/vehicle/ridden/scooter/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!istype(M))
 		return FALSE
-	if(M.usable_legs < legs_required && M.usable_hands < arms_required)
-		to_chat(M, "<span class='warning'>You don't think it'd be a good idea trying to ride \the [src]...</span>")
-		return FALSE
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard
@@ -47,8 +44,7 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
-	arms_required = 0
-	fall_off_if_missing_arms = FALSE
+	rider_check_flags = REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
