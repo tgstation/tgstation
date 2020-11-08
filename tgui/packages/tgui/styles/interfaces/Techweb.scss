@@ -4,22 +4,8 @@
   margin-bottom: 1rem;
 }
 
-.Techweb__NodeProgress > * {
-  flex-grow: 1!important;
-  flex-shrink: 1!important;
-  flex-basis: 0!important;
-}
-
 .Techweb__NodeProgress > *:not(:last-child) {
   margin-right: 0.4rem;
-}
-
-.Techweb__NodeDescription {
-  margin-bottom: 1rem;
-}
-
-.Techweb__NodeUnlockedDesigns {
-  margin-bottom: 1rem;
 }
 
 .Techweb__DesignIcon {

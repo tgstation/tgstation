@@ -652,8 +652,7 @@ const TechNode = (props, context) => {
             const reqPts = Math.max(0, k.value - nodeDiscount);
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
-              <Flex.Item
-                key={k.type}>
+              <Flex.Item key={k.type} grow={1} basis={0}>
                 <ProgressBar
                   ranges={{
                     good: [0.5, Infinity],
@@ -669,19 +668,21 @@ const TechNode = (props, context) => {
             );
           })}
           {prereq_ids.length > 0 && (
-            <Flex.Item>
+            <Flex.Item grow={1} basis={0}>
               {techProgress}
             </Flex.Item>
           )}
           {required_experiments?.length > 0 && (
-            <Flex.Item>
+            <Flex.Item grow={1} basis={0}>
               {experimentProgress}
             </Flex.Item>
           )}
         </Flex>
       )}
-      <div className="Techweb__NodeDescription">{description}</div>
-      <Box className="Techweb__NodeUnlockedDesigns">
+      <Box className="Techweb__NodeDescription" mb={2}>
+        {description}
+      </Box>
+      <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
         {design_ids.map((k, i) => {
           return (
             <Button key={id}

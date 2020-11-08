@@ -1,24 +1,24 @@
-.ExperimentTechweb__Web,
+.ExperimentTechwebServer__Web,
 .ExperimentConfigure__ExperimentPanel {
   background: #000000;
   border: 1px solid #40628a;
 	margin: 3px 0;
 }
 
-.ExperimentTechweb__WebHeader {
+.ExperimentTechwebServer__WebHeader {
   background: #40628a;
   padding: 2px;
 }
 
-.ExperimentTechweb__WebName {
+.ExperimentTechwebServer__WebName {
   font-size: 18px;
 }
 
-.ExperimentTechweb__WebContent {
+.ExperimentTechwebServer__WebContent {
   padding: 4px;
 }
 
-.ExperimentTechweb__WebContent > .LabeledList {
+.ExperimentTechwebServer__WebContent > .LabeledList {
   margin: 0.25rem 0.25rem 0.25rem 1rem;
 }
 
@@ -29,14 +29,6 @@
 
 .ExperimentConfigure__ExperimentContent {
   padding: 4px;
-}
-
-.ExperimentConfigure__ExperimentDesc {
-  margin-bottom: 0.5em;
-}
-
-.ExperimentStage__StageContainer {
-  margin: 0.25rem 0.25rem 0.25rem 1rem;
 }
 
 .ExperimentStage__Indicator {

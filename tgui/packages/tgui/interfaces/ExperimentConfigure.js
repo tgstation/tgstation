@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Section, Box, Button, Flex, Icon, LabeledList } from '../components';
@@ -22,7 +21,10 @@ export const ExperimentStage = props => {
   }
 
   return (
-    <div className={`ExperimentStage__StageContainer ${completion ? "complete" : "incomplete"}`}>
+    <Box
+      className={`ExperimentStage__StageContainer ${completion ? "complete" : "incomplete"}`}
+      m={0.5}
+      ml={2}>
       <Flex>
         <Flex.Item
           className={`ExperimentStage__Indicator ${type}`}
@@ -35,19 +37,19 @@ export const ExperimentStage = props => {
           {description}
         </Flex.Item>
       </Flex>
-    </div>
+    </Box>
   );
 };
 
-export const Techweb = (props, context) => {
+export const TechwebServer = (props, context) => {
   const { act, data } = useBackend(context);
   const { servers } = props;
 
   return (
-    <Box m={1} className="ExperimentTechweb__Web">
+    <Box m={1} className="ExperimentTechwebServer__Web">
       <Flex align="center" justify="space-between"
-        className="ExperimentTechweb__WebHeader">
-        <Flex.Item className="ExperimentTechweb__WebName">
+        className="ExperimentTechwebServer__WebHeader">
+        <Flex.Item className="ExperimentTechwebServer__WebName">
           {servers[0].web_id} / {servers[0].web_org}
         </Flex.Item>
         <Flex.Item>
@@ -57,10 +59,10 @@ export const Techweb = (props, context) => {
               : act("select_server", { "ref": servers[0].ref })}
             content={servers[0].selected ? "Disconnect" : "Connect"}
             backgroundColor={servers[0].selected ? "good" : "rgba(0, 0, 0, 0.4)"}
-            className="ExperimentTechweb__ConnectButton" />
+            className="ExperimentTechwebServer__ConnectButton" />
         </Flex.Item>
       </Flex>
-      <Box className="ExperimentTechweb__WebContent">
+      <Box className="ExperimentTechwebServer__WebContent">
         <span>
           Connectivity to this web is maintained by the following servers...
         </span>
@@ -85,7 +87,6 @@ export const ExperimentConfigure = (props, context) => {
   let servers = data.servers ?? [];
 
   const experiments = sortBy(
-    exp => exp.selected,
     exp => exp.name
   )(data.experiments ?? []);
 
@@ -103,9 +104,9 @@ export const ExperimentConfigure = (props, context) => {
   return (
     <Window
       resizable
-      width={525}
-      height={650}>
-      <Window.Content scrollable>
+      width={600}
+      height={800}>
+      <Window.Content>
         <Section title="Servers">
           <Box>
             {webs.size > 0
@@ -113,7 +114,7 @@ export const ExperimentConfigure = (props, context) => {
               : "Found no available techwebs!"}
           </Box>
           {webs.size > 0 && Array.from(webs, ([techweb, servers]) =>
-            <Techweb key={techweb} servers={servers} />)}
+            <TechwebServer key={techweb} servers={servers} />)}
         </Section>
         {servers.some(e => e.selected) && (
           <Section title="Experiments">
@@ -167,7 +168,7 @@ export const Experiment = (props, context) => {
         </Flex>
       </Button>
       <Box className={"ExperimentConfigure__ExperimentContent"}>
-        <Box className="ExperimentConfigure__ExperimentDesc">
+        <Box mb={1}>
           {exp.description}
         </Box>
         {props.children}
