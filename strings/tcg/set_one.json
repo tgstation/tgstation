@@ -1492,6 +1492,7 @@
 			"name": "Disco Inferno",
 			"desc": "(Burn baby burn) burn that mother down y'all\n(Burn baby burn) Disco Inferno\n(Burn baby burn) burn that mother down",
 			"rules": "For 2 mana: Tap this card permanantly. While tapped, all active creatures take 3 damage during the first play phase of each turn. This card is destroyed after 2 turns of being tapped.",
+			"icon_state": "disco_inferno",
 			"power": "0",
 			"resolve": "0",
 			"faction": "Science",
