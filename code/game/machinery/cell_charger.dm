@@ -128,6 +128,6 @@
 
 	if(charging.percent() >= 100)
 		return
-	if(direct_cost_power(charge_rate * delta_time))
+	if(directly_use_power(charge_rate * delta_time))
 		charging.give(charge_rate * delta_time)
 		update_icon()
