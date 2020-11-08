@@ -266,7 +266,8 @@
 	free_clothes = list(/obj/item/clothing/head/beanie/purple,
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
-	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
+	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security",
+		"Bouncer", "Customs Officer", "Engine Security", "Laboratory Security", "Police Medic")
 	gang_objective = "We're looking to make a deal with the security pigs on this station after the shift. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
 	antag_hud_name = "Ballas"
 

@@ -9,7 +9,8 @@
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
-	restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//N O
+	restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel",
+		"Bouncer", "Customs Officer", "Engine Security", "Laboratory Security", "Police Medic")//N O
 	protected_jobs = list()
 
 	/// A reference to the handler that is used to run pre_setup(), post_setup(), etc..

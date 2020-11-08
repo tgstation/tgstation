@@ -39,20 +39,24 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		"Virologist" = 22,
 		"Medical Doctor" = 23,
 		"Paramedic" = 24,
+		"Police Medic" = 29,
 		//30-39: Science
 		"Research Director" = 30,
 		"Scientist" = 31,
 		"Roboticist" = 32,
 		"Geneticist" = 33,
+		"Laboratory Security" = 39,
 		//40-49: Engineering
 		"Chief Engineer" = 40,
 		"Station Engineer" = 41,
 		"Atmospheric Technician" = 42,
+		"Engine Security" = 49,
 		//50-59: Cargo
 		"Head of Personnel" = 50,
 		"Quartermaster" = 51,
 		"Shaft Miner" = 52,
 		"Cargo Technician" = 53,
+		"Customs Officer" = 59,
 		//60+: Civilian/other
 		"Bartender" = 61,
 		"Cook" = 62,
@@ -64,6 +68,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		"Janitor" = 68,
 		"Lawyer" = 69,
 		"Psychologist" = 71,
+		"Bouncer" = 79,
 		//ANYTHING ELSE = 81  //Unknowns/custom jobs will appear after civilians, and before assistants
 		"Assistant" = 999,
 

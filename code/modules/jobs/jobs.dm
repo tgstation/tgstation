@@ -54,7 +54,13 @@ GLOBAL_LIST_INIT(security_positions, list(
 	"Head of Security",
 	"Warden",
 	"Detective",
-	"Security Officer"))
+	"Security Officer",
+	// KF: Department Security
+	"Bouncer",
+	"Customs Officer",
+	"Engine Security",
+	"Laboratory Security",
+	"Police Medic"))
 
 
 GLOBAL_LIST_INIT(nonhuman_positions, list(

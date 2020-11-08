@@ -169,7 +169,7 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 			if("Warden")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
-			if("Security Officer")
+			if("Security Officer", "Bouncer", "Customs Officer", "Engine Security", "Laboratory Security", "Police Medic")
 				heirloom_type = pick(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
 			if("Detective")
 				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
