@@ -44,13 +44,18 @@
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
-		set_leaping(TRUE)
+		leaping = TRUE
+		//Because the leaping sprite is bigger than the normal one
+		body_position_pixel_x_offset = -32
+		body_position_pixel_y_offset = -32
 		LAZYADD(weather_immunities,"lava")
 		update_icons()
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
-	set_leaping(FALSE)
+	leaping = FALSE
+	body_position_pixel_x_offset = 0
+	body_position_pixel_y_offset = 0
 	LAZYREMOVE(weather_immunities, "lava")
 	update_icons()
 
@@ -80,10 +85,6 @@
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
 			Paralyze(40, ignore_canstun = TRUE)
-
-		if(leaping)
-			set_leaping(FALSE)
-			update_icons()
 
 /mob/living/carbon/alien/humanoid/float(on)
 	if(leaping)
