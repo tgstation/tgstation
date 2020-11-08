@@ -9,7 +9,7 @@
 
 /obj/vehicle/sealed/mecha/combat/restore_equipment()
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	. = ..()
+	return ..()
 
 
 /obj/vehicle/sealed/mecha/combat/proc/max_ammo() //Max the ammo stored for Nuke Ops mechs, or anyone else that calls this

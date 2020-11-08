@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Immovable rods should more consistently hit the station, will reset target if adminbused, and added more logs."

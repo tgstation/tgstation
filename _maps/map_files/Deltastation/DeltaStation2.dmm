@@ -2386,6 +2386,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"ahC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "ahD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster{
@@ -6184,9 +6195,8 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apF" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "trash"
+/obj/machinery/mass_driver/trash{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -6198,10 +6208,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apG" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "Disposals Launch Seal"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6687,8 +6694,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24;
 	pixel_y = -7
 	},
@@ -15912,10 +15918,7 @@
 "aIe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aIf" = (
 /obj/structure/table,
@@ -22200,25 +22203,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aUa" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aUb" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -24584,9 +24568,6 @@
 /obj/machinery/light_switch{
 	pixel_x = 23
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -26125,9 +26106,6 @@
 /obj/item/radio/intercom{
 	dir = 8;
 	pixel_x = 28
-	},
-/obj/machinery/computer/bounty{
-	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -62403,9 +62381,6 @@
 /area/security/range)
 "coP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/magnetic_controller{
-	autolink = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -65025,6 +65000,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/radio/intercom{
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cuE" = (
@@ -67372,6 +67350,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -67692,7 +67673,7 @@
 	dir = 4;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -69263,7 +69244,7 @@
 	dir = 4;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -71632,11 +71613,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHa" = (
-/obj/structure/chair,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/training_toolbox,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cHb" = (
@@ -77389,7 +77371,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cSP" = (
-/obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 3
@@ -77412,7 +77393,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cSQ" = (
-/obj/structure/table,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
 	pixel_y = 3
@@ -88756,7 +88736,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dpX" = (
-/obj/structure/target_stake,
+/obj/structure/training_machine,
 /obj/item/target/syndicate,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
@@ -97710,8 +97690,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
@@ -98256,10 +98235,7 @@
 /turf/open/floor/plating/airless,
 /area/science/misc_lab)
 "dLK" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "Toxins Launcher Bay Door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/misc_lab)
@@ -98285,9 +98261,8 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dLO" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "toxinsdriver"
+/obj/machinery/mass_driver/toxins{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end{
@@ -106369,12 +106344,6 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106384,6 +106353,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -106395,12 +106367,6 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -106410,6 +106376,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_y = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -107805,16 +107774,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/port/aft)
-"ehb" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/heads/hop)
 "ehs" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -111758,6 +111717,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"oUc" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/target,
+/obj/structure/training_machine,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "oUW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -151440,7 +151408,7 @@ caP
 aZa
 caP
 cge
-ehb
+caP
 cjB
 ckX
 aai
@@ -158084,7 +158052,7 @@ azy
 aOW
 axf
 aSm
-aUa
+aUc
 aVI
 aXs
 aYY
@@ -168686,7 +168654,7 @@ cRw
 cTd
 cVc
 cWC
-cYr
+ahC
 dab
 dbF
 ddv
@@ -169703,7 +169671,7 @@ cAC
 cCn
 cDL
 cxy
-cHa
+oUc
 cIm
 cCn
 cCn

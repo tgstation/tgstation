@@ -39,7 +39,7 @@
 	var/mob/living/carbon/carbontarget
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
-	. = COMPONENT_ITEM_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(iscarbon(livingtarget))
 		carbontarget = livingtarget

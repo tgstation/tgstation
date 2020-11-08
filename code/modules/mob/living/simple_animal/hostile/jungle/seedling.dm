@@ -18,7 +18,9 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	pixel_x = -16
+	base_pixel_x = -16
 	pixel_y = -14
+	base_pixel_y = -14
 	minimum_distance = 3
 	move_to_delay = 20
 	vision_range = 9

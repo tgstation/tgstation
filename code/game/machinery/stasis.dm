@@ -1,6 +1,6 @@
 #define STASIS_TOGGLE_COOLDOWN 50
 /obj/machinery/stasis
-	name = "Lifeform Stasis Unit"
+	name = "lifeform stasis unit"
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
 	icon = 'icons/obj/machines/stasis.dmi'
 	icon_state = "stasis"
@@ -123,7 +123,7 @@
 /obj/machinery/stasis/post_buckle_mob(mob/living/L)
 	if(!can_be_occupant(L))
 		return
-	occupant = L
+	set_occupant(L)
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
 	update_icon()
@@ -131,7 +131,7 @@
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
-		occupant = null
+		set_occupant(null)
 	update_icon()
 
 /obj/machinery/stasis/process()

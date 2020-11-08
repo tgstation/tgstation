@@ -250,9 +250,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/healium_input
 	name = "healium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_HEALIUM
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hexane_input
-	name = "hexane tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_HEXANE
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hydrogen_input
 	name = "hydrogen tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_H2

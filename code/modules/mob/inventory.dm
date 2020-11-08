@@ -173,8 +173,8 @@
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
 	update_inv_hands()
-	I.pixel_x = initial(I.pixel_x)
-	I.pixel_y = initial(I.pixel_y)
+	I.pixel_x = I.base_pixel_x
+	I.pixel_y = I.base_pixel_y
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
@@ -284,8 +284,8 @@
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE)
 	. = doUnEquip(I, force, drop_location(), FALSE, silent = silent)
 	if(. && I) //ensure the item exists and that it was dropped properly.
-		I.pixel_x = rand(-6,6)
-		I.pixel_y = rand(-6,6)
+		I.pixel_x = I.base_pixel_x + rand(-6, 6)
+		I.pixel_y = I.base_pixel_y + rand(-6, 6)
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
@@ -394,8 +394,8 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, swap=FALSE)
-	if(src != M.get_active_held_item())
+/obj/item/proc/equip_to_best_slot(mob/M, swap = FALSE, check_hand = TRUE)
+	if(check_hand && src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 

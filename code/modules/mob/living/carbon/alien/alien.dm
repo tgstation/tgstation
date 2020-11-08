@@ -116,7 +116,7 @@ Des: Removes all infected images from the alien.
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
+/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = FALSE)
 	return initial(pixel_y)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
