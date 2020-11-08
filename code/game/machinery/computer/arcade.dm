@@ -777,10 +777,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					R.fields["m_stat"] = "*Unstable*"
 					return
 
-/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/living/user)
+/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/_user)
 	. = ..()
-	if (!isliving(user))
+	if (!isliving(_user))
 		return
+	var/mob/living/user = _user
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
@@ -1035,7 +1036,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(obj_flags & EMAGGED)
 					user.death()
-					obj_flags &= EMAGGED
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
 
