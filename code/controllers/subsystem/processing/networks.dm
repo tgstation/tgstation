@@ -203,7 +203,7 @@ SUBSYSTEM_DEF(networks)
 /**
   * Records a message into the station logging system for the network
   *
-  * This CAN be read in station by personel so do not use it for game debugging
+  * This CAN be read in station by personal so do not use it for game debugging
   * during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
   * is undefined in this function.  It is also dumped to normal logs but remember players can read/intercept
   * these messages
@@ -238,7 +238,7 @@ SUBSYSTEM_DEF(networks)
 	log_string = log_text.Join()
 
 	logs.Add(log_string)
-	log_telecomms("NetLog: [log_string]")
+	//log_telecomms("NetLog: [log_string]") // causes runtime on startup humm
 
 	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
