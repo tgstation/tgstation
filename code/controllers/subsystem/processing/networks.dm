@@ -233,9 +233,7 @@ SUBSYSTEM_DEF(networks)
 	log_text += " - "
 	log_text += log_string
 	log_string = log_text.Join()
-#ifdef DEBUG_NETWORKS
-	to_chat(world, "<span class='notice'>NetLog: [log_string]</span>")
-#endif
+
 	logs.Add(log_string)
 	log_telecomms("NetLog: [log_string]")
 
