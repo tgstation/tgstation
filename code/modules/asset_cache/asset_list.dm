@@ -217,6 +217,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = sprite[SPR_SIZE]
 	return {"[name][size_id] [sprite_name]"}
 
+/**
+ * Returns the size class (ex design32x32) for a given sprite's icon
+ *
+ * Arguments:
+ * * sprite_name - The sprite to get the size of
+ */
+/datum/asset/spritesheet/proc/icon_size_id(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return "[name][size_id]"
+
 #undef SPR_SIZE
 #undef SPR_IDX
 #undef SPRSZ_COUNT

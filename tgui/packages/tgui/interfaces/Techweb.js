@@ -39,8 +39,11 @@ const selectRemappedStaticData = data => {
   // Do the same as the above for the design cache
   const design_cache = {};
   for (let id of Object.keys(data.static_data.design_cache)) {
-    const design = data.static_data.design_cache[id];
-    design_cache[remapId(id)] = design;
+    const [name, classes] = data.static_data.design_cache[id];
+    design_cache[remapId(id)] = {
+      name: name,
+      class: classes.startsWith("design") ? classes : `design32x32 ${classes}`,
+    };
   }
 
   return {

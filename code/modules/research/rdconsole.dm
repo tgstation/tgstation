@@ -258,12 +258,14 @@ Nothing else in the console has ID requirements.
 	// Build design cache
 	var/design_cache = list()
 	var/datum/asset/spritesheet/research_designs/ss = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[ss.name]32x32"
 	for (var/did in SSresearch.techweb_designs)
 		var/datum/design/d = SSresearch.techweb_designs[did] || SSresearch.error_design
 		var/cid = "[compress_id(d.id)]"
+		var/size = ss.icon_size_id(d.id)
 		design_cache[cid] = list(
-			"name" = d.name,
-			"class" = ss.icon_class_name(d.id)
+			d.name,
+			"[size == size32x32 ? "" : "[size] "][d.id]"
 		)
 
 	// Ensure id cache is included for decompression
