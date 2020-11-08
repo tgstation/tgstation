@@ -85,7 +85,7 @@
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_mobs[mob_linked] = action
 	action.Grant(mob_linked)
-	RegisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
+	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
 	return TRUE
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
@@ -93,7 +93,7 @@
 
 	if(!linked_mobs[mob_linked])
 		return
-	UnregisterSignal(mob_linked, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
 	action.Remove(mob_linked)
 	qdel(action)

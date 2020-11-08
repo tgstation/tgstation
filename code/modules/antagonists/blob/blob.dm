@@ -49,7 +49,7 @@
 	button_icon_state = "blob"
 
 /datum/action/innate/blobpop/Activate()
-	var/mob/old_body = owner
+	var/mob/living/old_body = owner
 	var/datum/antagonist/blob/blobtag = owner.mind.has_antag_datum(/datum/antagonist/blob)
 	if(!blobtag)
 		Remove()

@@ -371,7 +371,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		return
 
 	// Prepare for...
-	var/mob/unforeseen_consequences = get_atom_on_turf(H, /mob)
+	var/mob/living/unforeseen_consequences = get_atom_on_turf(H, /mob/living)
 
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
 	// Let's gib the last person to have selected a room number in it.
