@@ -48,6 +48,8 @@
 	integer = TRUE
 	min_val = 0
 
+/datum/config_entry/flag/log_looc	// log LOOC channel
+
 /datum/config_entry/flag/log_ooc	// log OOC channel
 
 /datum/config_entry/flag/log_access	// log login/logout
@@ -97,6 +99,8 @@
 /datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
+
+/datum/config_entry/flag/allow_admin_looccolor
 
 /datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
 
@@ -212,6 +216,9 @@
 
 /datum/config_entry/string/forumurl
 	config_entry_value = "http://tgstation13.org/phpBB/index.php"
+
+/datum/config_entry/string/discordurl
+	config_entry_value = "https://discord.gg/Y2TS8ZGPSp"
 
 /datum/config_entry/string/rulesurl
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"

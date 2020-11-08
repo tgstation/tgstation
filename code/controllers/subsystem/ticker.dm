@@ -204,6 +204,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
+				toggle_looc(TRUE)
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				check_maprotate()
@@ -274,6 +275,9 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
+
+	if(!CONFIG_GET(flag/looc_during_round))
+		toggle_looc(FALSE) // Turn it off
 
 	CHECK_TICK
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left

@@ -832,7 +832,7 @@ What a mess.*/
 					if(prob(10))
 						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
-						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(pick(GLOB.last_names_male), pick(GLOB.last_names_female))]"
 				if(2)
 					R.fields["gender"] = pick("Male", "Female", "Other")
 				if(3)

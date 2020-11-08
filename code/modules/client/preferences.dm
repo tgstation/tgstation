@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"
+	var/looccolor = "#6699CC"
 	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
@@ -1884,9 +1885,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/firstspace = findtext(real_name, " ")
 			var/name_length = length(real_name)
 			if(!firstspace)	//we need a surname
-				real_name += " [pick(GLOB.last_names)]"
+				real_name += " [pick(GLOB.last_names_male)]"
 			else if(firstspace == name_length)
-				real_name += "[pick(GLOB.last_names)]"
+				real_name += "[pick(GLOB.last_names_male)]"
 
 	character.real_name = real_name
 	character.name = character.real_name

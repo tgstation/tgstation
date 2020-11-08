@@ -56,6 +56,9 @@
 	if (CONFIG_GET(flag/log_adminchat))
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: DSAY: [text]")
 
+/proc/log_looc(text, client/user)
+	if (CONFIG_GET(flag/log_looc))
+		WRITE_LOG(GLOB.world_game_log, "LOOC: [text]")
 
 /* All other items are public. */
 /proc/log_game(text)

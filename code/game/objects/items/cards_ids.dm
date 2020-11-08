@@ -392,9 +392,9 @@ update_label()
 			if(!input_name)
 				// Invalid/blank names give a randomly generated one.
 				if(user.gender == MALE)
-					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names_male)]"
 				else if(user.gender == FEMALE)
-					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names_female)]"
 				else
 					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 

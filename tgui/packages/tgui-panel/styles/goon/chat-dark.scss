@@ -244,6 +244,7 @@ a.popt {
 .ooc,
 .looc,
 .adminooc,
+.adminlooc,
 .admin,
 .medal,
 .yell {
@@ -287,13 +288,29 @@ em {
   font-weight: bold;
 }
 
+.looc {
+  color: #cca30059;
+  font-weight: bold;
+}
+
 .adminobserverooc {
   color: #0099cc;
   font-weight: bold;
 }
 
+.adminobserverlooc {
+  color: #6699CC;
+  font-weight: bold;
+}
+
+
 .adminooc {
   color: #3d5bc3;
+  font-weight: bold;
+}
+
+.adminlooc {
+  color: #6699CC;
   font-weight: bold;
 }
 

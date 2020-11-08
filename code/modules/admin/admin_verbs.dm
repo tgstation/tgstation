@@ -33,6 +33,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
+	/datum/admins/proc/togglelooc,
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
 	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
@@ -95,7 +96,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/client/proc/set_ooc,
+	/client/proc/set_looc,
 	/client/proc/reset_ooc,
+	/client/proc/reset_looc,
 	/client/proc/forceEvent,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
@@ -196,7 +199,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 //verbs which can be hidden - needs work
 GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/set_ooc,
+	/client/proc/set_looc,
 	/client/proc/reset_ooc,
+	/client/proc/reset_looc,
 	/client/proc/deadmin,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/show_skill_panel,
