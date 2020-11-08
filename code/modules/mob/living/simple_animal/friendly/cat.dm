@@ -83,10 +83,11 @@
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
 	held_state = "cat2"
+	speak_chance = 3
 	speak = list("EDF!", "I might be stupid.", "Bigger.", "BIGGER.", "Fuck you.",
-	"I am NOTHING like you fuckers.", "Where is my buff tomboy GF?", ":catbuff:", "I come from a world you will NEVER understand.",
+	"I am NOTHING like you fuckers.", "Holy fucking shit. I want to bang the animal crossing dog so goddamn bad. I can't stand it anymore. Every time I go to the town hall I get a massive erection. I've seen literally every rule 34 post there is of her online. My dreams are nothing but constant fucking sex with Isabelle. I'm sick of waking up every morning with six nuts in my boxers and knowing that those are nuts that should've been busted inside of Isabelle's tight dog pussy. I want her to have my mutant cat/dog babies.", "catbuff", "I come from a world you will NEVER understand.",
 	"People have asked me what I would do if I was sucked into the cold, airless vacuum of space. I simply would not die.", "I am the reason ambulances can't be called anymore!!",
-	"Have you seen a rabbit around here? I've got some bullshit to sort out with the fucker.", "Dame Da Ne...")
+	"Have you seen a rabbit around here? I've got some bullshit to sort out with the fucker.")
 	response_harm_continuous = "punts"
 	response_harm_simple = "punt"
 

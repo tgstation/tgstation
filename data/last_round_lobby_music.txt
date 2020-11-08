@@ -97,3 +97,5 @@ config/title_music/sounds/Noise channel theme.ogg
 config/title_music/sounds/Gastly.ogg
 config/title_music/sounds/Pamp radion.ogg
 config/title_music/sounds/Jupiter's Child.ogg
+config/title_music/sounds/Funny2.ogg
+config/title_music/sounds/Funny2.ogg

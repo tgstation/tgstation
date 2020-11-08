@@ -382,3 +382,15 @@ obj/item/clothing/under/costume/servicesuit
 	resistance_flags = NONE
 	strip_delay = 99180
 	can_be_bloody = FALSE
+
+/obj/item/clothing/under/costume/broken
+	name = "A Shell"
+	desc = "You aren't a Goat, aren't you? You don't have to hide who you are anymore."
+	icon_state = "broken"
+	inhand_icon_state = "nothing"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	can_adjust = FALSE
+	resistance_flags = NONE
+	strip_delay = 99180
+	can_be_bloody = FALSE
