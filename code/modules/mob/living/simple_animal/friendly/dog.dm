@@ -169,7 +169,7 @@
 	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
-		if(!D.owner)
+		if(!D.owned) //No muscling in on my turf you fucking parrot
 			D.update_owner(src)
 			break
 

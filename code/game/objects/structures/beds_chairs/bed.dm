@@ -170,7 +170,7 @@
 	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
-	var/mob/living/owner = null
+	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
 	desc = "Ian's bed! Looks comfy."
@@ -202,7 +202,7 @@
 	anchored = TRUE
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
-	owner = M
+	owned = TRUE
 	name = "[M]'s bed"
 	desc = "[M]'s bed! Looks comfy."
 
