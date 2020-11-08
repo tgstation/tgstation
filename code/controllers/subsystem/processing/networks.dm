@@ -66,6 +66,9 @@ SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/networks/Initialize()
 	station_network.register_map_supremecy() // sigh
 	assign_areas_root_ids(GLOB.sortedAreas) // setup area names before Initialize
+	station_network.build_software_lists()
+	syndie_network.build_software_lists()
+
 	// At round start, fix the network_id's so the station root is on them
 	initialized = TRUE
 	// Now when the objects Initialize they will join the right network

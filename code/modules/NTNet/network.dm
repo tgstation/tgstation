@@ -260,7 +260,6 @@
 // If new NTNet datum is spawned, it replaces the old one.
 /datum/ntnet/station_root/New(root_name)
 	. = ..(root_name)
-	build_software_lists()
 	SSnetworks.add_log("NTNet logging system activated for [root_name]")
 
 
