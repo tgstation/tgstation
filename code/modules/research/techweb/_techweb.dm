@@ -2,7 +2,7 @@
 //Used \n[\s]*origin_tech[\s]*=[\s]*"[\S]+" to delete all origin techs.
 //Or \n[\s]*origin_tech[\s]*=[\s]list\([A-Z_\s=0-9,]*\)
 //Used \n[\s]*req_tech[\s]*=[\s]*list\(["a-z\s=0-9,]*\) to delete all req_techs.
-
+#define TECHWEB_COOLODWN (2 SECONDS)
 //Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
 /datum/techweb
 	var/list/researched_nodes = list()		//Already unlocked and all designs are now available. Assoc list, id = TRUE
@@ -23,6 +23,9 @@
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	// We use cooldowns to save signal spam if a bunch of designs are done at once
+	COOLDOWN_DECLARE(delayed_updated_design_signal)	// To prevent signal spam, this is marked if we need to send a signal
+	COOLDOWN_DECLARE(delayed_updated_nodes_signal)	// To prevent signal spam, this is marked if we need to send a signal
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -181,29 +184,39 @@
 
 /datum/techweb/proc/_add_design(datum/design/design)
 	PRIVATE_PROC(1)
+	if(researched_designs[design.id])
+		return // already in there
 	researched_designs[design.id] = TRUE
+
 	for(var/category_name in design.category)
 		if(!researched_designs_by_category[category_name])
 			researched_designs_by_category[category_name] = list()
 		researched_designs_by_category[category_name] += design
 
-/datum/techweb/proc/_remove_design(datum/design/design)
+	COOLDOWN_START(src, delayed_updated_design_signal, TECHWEB_COOLODWN)
+
+
+/datum/techweb/proc/_remove_design(datum/design/design, delay_signal)
 	PRIVATE_PROC(1)
 	var/list/L
-	researched_designs -= design.id
+	if(!researched_designs[design.id])
+		return
+	researched_designs.Remove(design.id)
 	for(var/category_name in design.category)
 		L = researched_designs_by_category[category_name]
 		L -= design
 		if(!L.len)
 			researched_designs_by_category.Remove(category_name)
 
+	COOLDOWN_START(src, delayed_updated_design_signal, TECHWEB_COOLODWN)
+
 /datum/techweb/proc/add_design_by_id(id, custom = FALSE)
 	return add_design(SSresearch.techweb_design_by_id(id), custom)
 
-/datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
+/datum/techweb/proc/add_design(datum/design/design, custom = FALSE, delay_signal = FALSE)
 	if(!istype(design))
 		return FALSE
-	_add_design(design)
+	_add_design(design, delay_signal)
 	if(custom)
 		custom_designs[design.id] = TRUE
 	return TRUE
@@ -256,6 +269,7 @@
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(SSeconomy.techweb_bounty)
+	COOLDOWN_START(src, delayed_updated_nodes_signal, TECHWEB_COOLODWN)
 	return TRUE
 
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
@@ -269,8 +283,11 @@
 /datum/techweb/proc/unresearch_node(datum/techweb_node/node)
 	if(!istype(node))
 		return FALSE
-	researched_nodes -= node.id
+	if(!researched_nodes[node.id])
+		return // no reason to remove if its not researched
+	researched_nodes.Remove(node.id)
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
+	COOLDOWN_START(src, delayed_updated_nodes_signal, TECHWEB_COOLODWN)
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
 	if(!istype(N) || !ispath(itempath))
@@ -413,3 +430,5 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
+
+#undef TECHWEB_COOLODWN

@@ -82,9 +82,16 @@
 		create_reagents(0, OPENCONTAINER)
 	// converts to assoc list for quicker finds
 	ignore_coeff = make_associative(ignore_coeff)
+	. = ..()
 
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	return ..()
+	RegisterSignal(stored_research, COMSIG_TECHWEB_DESIGNS_UPDATED, .proc/update_designs)
+
+
+/obj/machinery/rnd/production/proc/update_designs()
+	SIGNAL_HANDLER
+	say("updated stuff")
+	update_static_data(usr)
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction(disassembled)
@@ -114,8 +121,6 @@
 		build_finish = world.time + new_build_time
 
 	update_static_data(usr)
-
-
 
 
 /obj/machinery/rnd/production/examine(mob/user)
@@ -605,11 +610,6 @@
 			// remove all reagents
 			reagents.clear_reagents()
 			say("Successfully purged all reagents")
-			return
-		if("sync_rnd")
-			// Syncronises designs on interface with R&D techweb.
-			update_static_data(usr)
-			say("Successfully synchronized with R&D server.")
 			return
 		if("add_queue_set")
 			// Add all parts of a set to queue

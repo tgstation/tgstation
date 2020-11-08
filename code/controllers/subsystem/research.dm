@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
 	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
@@ -83,6 +83,14 @@ SUBSYSTEM_DEF(research)
 			bitcoins[i] *= income_time_difference / 10
 		science_tech.add_point_list(bitcoins)
 	last_income = world.time
+	// checks update cooldown on techwebs
+	for(var/datum/techweb/web in techwebs)
+		if(web.delayed_updated_design_signal != 0 && COOLDOWN_FINISHED(web, delayed_updated_design_signal))
+			COOLDOWN_RESET(web, delayed_updated_design_signal)
+			SEND_SIGNAL(web, COMSIG_TECHWEB_DESIGNS_UPDATED)
+		if(web.delayed_updated_nodes_signal != 0 && COOLDOWN_FINISHED(web, delayed_updated_nodes_signal))
+			COOLDOWN_RESET(web, delayed_updated_nodes_signal)
+			SEND_SIGNAL(web, COMSIG_TECHWEB_NODES_UPDATED)
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
 	var/amt = servers.len
@@ -109,7 +117,7 @@ SUBSYSTEM_DEF(research)
 /datum/controller/subsystem/research/proc/on_design_deletion(datum/design/D)
 	for(var/i in techweb_nodes)
 		var/datum/techweb_node/TN = techwebs[i]
-		TN.on_design_deletion(TN)
+		TN.on_design_deletion(D)
 	for(var/i in techwebs)
 		var/datum/techweb/T = i
 		T.recalculate_nodes(TRUE)

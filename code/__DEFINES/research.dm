@@ -53,6 +53,7 @@
 #define CATEGORY_HACKED         			"hacked"
 #define CATEGORY_TOOLS						"Tools"
 
+///! Catagories mainly for the autolathe
 #define CATEGORY_MINING						"Mining"
 #define CATEGORY_JANITOR					"Janitor"
 #define CATEGORY_ENGINEERING				"Engineering"
@@ -66,6 +67,11 @@
 #define CATEGORY_IMPORTED					"Imported"
 #define CATEGORY_WEAPONS					"Weapons"
 #define CATEGORY_STOCK_PARTS				"Stock Parts"
+#define CATEGORY_MACHINERY					"Machinery"
+#define CATEGORY_MEDICAL					"Medical"
+#define CATEGORY_SECURITY					"Security"
+
+
 ///! Stock parts sub catagories
 #define CATEGORY_TIER_BASIC					"Basic"
 #define CATEGORY_TIER_ADVANCED				"Advanced"
@@ -73,10 +79,6 @@
 #define CATEGORY_TIER_BLUESPACE				"Bluespace"
 #define CATEGORY_TIER_TELECOMS				CATEGORY_SUBSPACE_TELECOMS
 #define CATEGORY_TIER_MATERIALS				"Smelted Materials"
-
-#define CATEGORY_MACHINERY					"Machinery"
-#define CATEGORY_MEDICAL					"Medical"
-#define CATEGORY_SECURITY					"Security"
 
 #define CATEGORY_COMPUTER_BOARDS			"Computer Boards"
 #define CATEGORY_AI_MODULES					"AI Modules"
@@ -103,7 +105,7 @@
 #define CATEGORY_CYBORG						"Cyborg"
 #define CATEGORY_CYBORG_MODULES				"Cyborg Upgrade Modules"
 
-
+///! Categories for the mechfab
 #define CATEGORY_MECH_RIPLEY				"Ripley"
 #define CATEGORY_MECH_ODYSSEUS				"Odysseus"
 #define CATEGORY_MECH_GYGAX					"Gygax"
@@ -147,6 +149,13 @@
 //#define ADD_CATEGORY(NAME, SUB_CATAGORIES...) NAME = list( SUB_CATAGORIES )
 // Fine, lets manually define them here, its either that or make a datum that processes this all
 
+///! Category constants for the various lathe devices we have.
+/*
+ * The order is important as the order of the catagories is how its displayed in
+ * the interface.  The assigned list can be filled in to custom order the sub catagories
+ * of items.  Otherwise they will be sorted by alpha if subcategories are defined for that
+ * datum.
+*/
 #define CATEGORIES_AUTOLATHE_ITEMS 					\
 	CATEGORY_TOOLS = list(),						\
 	CATEGORY_ELECTRONICS = list(),					\

@@ -844,3 +844,9 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
+
+// Research
+/// from Techweb, updated when the node count is changed
+#define COMSIG_TECHWEB_NODES_UPDATED "research_updated_nodes"
+/// from Techweb, updated when the design count is changed
+#define COMSIG_TECHWEB_DESIGNS_UPDATED "research_updated_designs"
