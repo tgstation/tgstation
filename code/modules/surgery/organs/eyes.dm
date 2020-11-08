@@ -251,9 +251,9 @@
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
-	assume_rgb(C)
 	var/old_active = active // Get old active because set_distance() -> clear_visuals()  will set it to FALSE.
 	set_distance(clamp(range, 0, max_light_beam_distance))
+	assume_rgb(C)
 	// Reactivate if eyes were already active for real time colour swapping!
 	if(old_active)
 		activate(FALSE)
