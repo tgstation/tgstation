@@ -144,6 +144,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
+	GLOB.perf_log = "[GLOB.log_directory]/perf.csv"
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
@@ -163,6 +164,31 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
+	log_perf(
+		list(
+			"time",
+			"players",
+			"tidi",
+			"tidi_fastavg",
+			"tidi_avg",
+			"tidi_slowavg",
+			"maptick",
+			"num_timers",
+			"air_turf_cost",
+			"air_eg_cost",
+			"air_highpressure_cost",
+			"air_hotspots_cost",
+			"air_superconductivity_cost",
+			"air_pipenets_cost",
+			"air_rebuilds_cost",
+			"air_turf_count",
+			"air_eg_count",
+			"air_hotspot_count",
+			"air_network_count",
+			"air_delta_count",
+			"air_superconductive_count"
+		)
+	)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))

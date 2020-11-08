@@ -1,0 +1,5 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - tweak: "medipen boxes have their own box icon."
+  - imageadd: "You can tell first aid, blood clot, and formaldehyde medipens apart."
