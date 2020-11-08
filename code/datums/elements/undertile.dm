@@ -58,7 +58,7 @@
 
 /datum/element/undertile/Detach(atom/movable/AM, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()
-
+	UnregisterSignal(src, list(COMSIG_OBJ_HIDE, COMSIG_ATOM_EX_ACT)
 	hide(AM, FALSE)
 
 /datum/element/undertile/proc/explosion_check(atom/target, severity)
