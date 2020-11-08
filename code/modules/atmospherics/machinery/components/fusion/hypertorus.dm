@@ -161,11 +161,11 @@
 	var/active = FALSE
 	///Checks if the user has started the machine
 	var/start_power = FALSE
-
+	///Checks for the cooling to start
 	var/start_cooling = FALSE
-
+	///Checks for the fuel to be injected
 	var/start_fuel = FALSE
-
+	///Checks for fusion to have gone past the power level 0
 	var/fusion_started = FALSE
 
 	///Stores the informations of the interface machine
@@ -184,7 +184,7 @@
 	var/datum/gas_mixture/internal_output
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
-
+	///Set the filtering type of the waste remove
 	var/filter_type = null
 
 	///E=mc^2 with some addition to allow it gameplaywise
@@ -254,10 +254,12 @@
 	var/fuel_injection_rate = 250
 	///User controlled variable to control the flow of the fusion by changing the amount of moderators injected
 	var/moderator_injection_rate = 250
-	///Used for debug, maybe will be ported into the final phase
+	///Used to make the hypertorus fusion process tick once per second
 	COOLDOWN_DECLARE(hypertorus_reactor)
 
+	///Integrity of the machine, if reaches 900 the machine will explode
 	var/critical_threshold_proximity = 0
+	///Store the integrity for calculations
 	var/critical_threshold_proximity_archived = 0
 	///Our "Shit is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
 	var/safe_alert = "Main containment field returning to safe operating parameters."
@@ -290,11 +292,12 @@
 	///cooldown tracker for accent sounds
 	var/last_accent_sound = 0
 
+	///These vars store the temperatures to be used in the GUI
 	var/fusion_temperature = 0
 	var/moderator_temperature = 0
 	var/coolant_temperature = 0
 	var/output_temperature = 0
-
+	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
@@ -519,7 +522,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = (((current_damper * 0.002) + power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
@@ -659,10 +662,10 @@
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
 	if(power_level > 5)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e5	 + internal_fusion.temperature) / 1e5, 1) - 1500) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e5 + internal_fusion.temperature) / 1e5, 1) - 2500) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() < 1200 || power_level < 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1400) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 800) / 150, 0), 0)
 
 	critical_threshold_proximity += max(round(iron_content, 1) - 1, 0)
 
@@ -1212,7 +1215,7 @@
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, "<span class='notice'>Check all parts and then try again.</span>")
 		return TRUE
-
+	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
 	connected_core = centre
 
 	connected_core.activate(user)
@@ -1365,5 +1368,9 @@
 	icon_state_off = "corner_off"
 	icon_state_open = "corner_open"
 	icon_state_active = "corner_active"
+
+/obj/item/paper/guides/jobs/atmos/hypertorus
+	name = "paper- 'Quick guide to safe handling of the HFR'"
+	info = "<B>How to operate the Hypertorus</B><BR>-Build the machine as it’s shown in the main guide<BR>-Make a 50/50 gasmix of tritium and hydrogen totalling over 2000 moles.<BR>-Start the machine, fill up the cooling loop with plasma/hypernoblium and use space or freezers to cool it<BR>-Connect the fuel mix into the fuel injector port, allow only 1000 moles into the machine to ease the kickstart of the reaction<BR>-Set the Heat conductor to 500 when starting the reaction, reset it to 100 when power level is higher than 1<BR>-In the event of a meltdown, set the heat conductor to max and set the current damper to max. Set the fuel injection to min. If the heat output doesn’t go negative, try changing the magnetic costrictors untill heat output goes negative. Make the cooling stronger, put high heat capacity gases inside the moderator (hypernoblium will help dealing with the problem)<BR>-You cannot dismantle the machine if the power level is over 0<BR>-You cannot power of the machine if the power level is over 0<BR>-You cannot dispose of waste gases if power level is over 5<BR>-You cannot remove gases from the fusion mix if they are not helium and antinoblium<BR>-Hypernoblium will decrease the power of the mix by a lot<BR>-Antinoblium will INCREASE the power of the mix by a lot more<BR>-High heat capacity gases are harder to heat<BR>-Low heat capacity gases are easier to heat<BR>-The machine consumes 50 KW per power level, reaching 350 KW at power level 6 so prepare the SM accordingly<BR>-In case of a power shortage, the fusion reaction will CONTINUE but the cooling will STOP<BR>The writer of the quick guide will not be held responsible for misuses and meltdown caused by the use of the guide, use more advanced guides to understando how the various gases will act as moderators."
 
 #undef HALLUCINATION_RANGE
