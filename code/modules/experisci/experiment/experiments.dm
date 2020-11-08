@@ -102,7 +102,6 @@
 	total_requirement = 6
 	possible_types = list(/obj/structure/chair, /obj/structure/toilet, /obj/structure/table)
 	possible_material_types = list(/datum/material/iron, /datum/material/glass)
-	traits = EXP_TRAIT_DESTRUCTIVE
 
 /datum/experiment/scanning/random/material/medium
 	name = "Medium Grade Material Scanning Experiment"

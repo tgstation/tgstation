@@ -167,7 +167,10 @@ export const Experiment = (props, context) => {
         </Flex>
       </Button>
       <Box className={"ExperimentConfigure__ExperimentContent"}>
-        {exp.description} <br /><br />
+        <Box className="ExperimentConfigure__ExperimentDesc">
+          {exp.description}
+        </Box>
+        {props.children}
         {exp.progress?.map((progressItem, index) => {
           return (
             <ExperimentStage key={index} {...progressItem} />

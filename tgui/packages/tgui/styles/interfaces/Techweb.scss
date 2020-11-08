@@ -4,6 +4,12 @@
   margin-bottom: 1rem;
 }
 
+.Techweb__NodeProgress > * {
+  flex-grow: 1!important;
+  flex-shrink: 1!important;
+  flex-basis: 0!important;
+}
+
 .Techweb__NodeProgress > *:not(:last-child) {
   margin-right: 0.4rem;
 }
@@ -78,4 +84,9 @@
 
 .Techweb__LockedModal > :not(:last-child) {
   margin-bottom: 0.5em;
+}
+
+.Techweb__ExperimentDiscount {
+  color: colors.$label;
+  margin: 0.5em 0;
 }

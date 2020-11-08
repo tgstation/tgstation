@@ -1,4 +1,4 @@
-import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible } from '../components';
+import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon } from '../components';
 import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
@@ -73,7 +73,15 @@ const useRemappedBackend = context => {
   };
 };
 
-// Components
+// Utility Functions
+
+const abbreviations = {
+  "General Research": "Gen. Res.",
+  "Nanite Research": "Nanite Res.",
+};
+const abbreviateName = name => abbreviations[name] ?? name;
+
+// Actual Components
 
 export const Techweb = (props, context) => {
   const { act, data } = useRemappedBackend(context);
@@ -193,11 +201,11 @@ const TechwebOverview = (props, context) => {
     setSearchText,
   ] = useLocalState(context, 'searchText');
 
-  let displayedNodes = sortBy(x => node_cache[x.id].name)(tabIndex < 2
-    ? nodes.filter(x => x.tier === tabIndex)
-    : nodes.filter(x => x.tier >= tabIndex));
+  // Only search when 3 or more characters have been input
+  const searching = searchText && searchText.trim().length > 1;
 
-  if (searchText && searchText.trim() !== '') {
+  let displayedNodes = nodes;
+  if (searching) {
     displayedNodes = displayedNodes.filter(x => {
       const n = node_cache[x.id];
       return n.name.toLowerCase().includes(searchText)
@@ -205,7 +213,16 @@ const TechwebOverview = (props, context) => {
         || n.design_ids.some(e =>
           design_cache[e].name.toLowerCase().includes(searchText));
     });
+  } else {
+    displayedNodes = sortBy(x => node_cache[x.id].name)(tabIndex < 2
+      ? nodes.filter(x => x.tier === tabIndex)
+      : nodes.filter(x => x.tier >= tabIndex));
   }
+
+  const switchTab = tab => {
+    setTabIndex(tab);
+    setSearchText(null);
+  };
 
   return (
     <Flex direction="column" height="100%">
@@ -217,20 +234,26 @@ const TechwebOverview = (props, context) => {
           <Flex.Item grow={1}>
             <Tabs>
               <Tabs.Tab
-                selected={tabIndex === 0}
-                onClick={() => setTabIndex(0)}>
+                selected={!searching && tabIndex === 0}
+                onClick={() => switchTab(0)}>
                 Researched
               </Tabs.Tab>
               <Tabs.Tab
-                selected={tabIndex === 1}
-                onClick={() => setTabIndex(1)}>
+                selected={!searching && tabIndex === 1}
+                onClick={() => switchTab(1)}>
                 Available
               </Tabs.Tab>
               <Tabs.Tab
-                selected={tabIndex === 2}
-                onClick={() => setTabIndex(2)}>
+                selected={!searching && tabIndex === 2}
+                onClick={() => switchTab(2)}>
                 Future
               </Tabs.Tab>
+              {!!searching && (
+                <Tabs.Tab
+                  selected>
+                  Search Results
+                </Tabs.Tab>
+              )}
             </Tabs>
           </Flex.Item>
           <Flex.Item align={"center"}>
@@ -470,6 +493,8 @@ const TechNodeDetail = (props, context) => {
   ] = useLocalState(context, 'techwebRoute', null);
 
   const prereqNodes = nodes.filter(x => prereq_ids.includes(x.id));
+  const complPrereq = prereq_ids
+    .filter(x => nodes.find(y => y.id === x)?.tier === 0).length;
   const unlockedNodes = nodes.filter(x => unlock_ids.includes(x.id));
 
   return (
@@ -490,7 +515,7 @@ const TechNodeDetail = (props, context) => {
                 selected={tabIndex === 1}
                 disabled={prereqNodes.length === 0}
                 onClick={() => setTabIndex(1)}>
-                Required ({prereqNodes.length})
+                Required ({complPrereq}/{prereqNodes.length})
               </Tabs.Tab>
               <Tabs.Tab
                 selected={tabIndex === 2}
@@ -539,6 +564,7 @@ const TechNode = (props, context) => {
     design_cache,
     experiments,
     points,
+    nodes,
   } = data;
   const { node, nodetails, nocontrols } = props;
   const { id, can_unlock, tier } = node;
@@ -547,6 +573,7 @@ const TechNode = (props, context) => {
     description,
     costs,
     design_ids,
+    prereq_ids,
     required_experiments,
     discount_experiments,
   } = node_cache[id];
@@ -573,6 +600,27 @@ const TechNode = (props, context) => {
     </ProgressBar>
   );
 
+  const techcompl = prereq_ids
+    .filter(x => nodes.find(y => y.id === x)?.tier === 0).length;
+  const techProgress = (
+    <ProgressBar
+      ranges={{
+        good: [0.5, Infinity],
+        average: [0.25, 0.5],
+        bad: [-Infinity, 0.25],
+      }}
+      value={techcompl / prereq_ids.length}>
+      Tech ({techcompl}/{prereq_ids.length})
+    </ProgressBar>
+  );
+
+  // Notice this logic will have te be changed if we make the discounts
+  // pool-specific
+  const nodeDiscount = Object.keys(discount_experiments)
+    .filter(x => experiments[x]?.completed).reduce((tot, curr) => {
+      return tot + discount_experiments[curr];
+    }, 0);
+
   return (
     <Section title={name}
       buttons={!nocontrols && (
@@ -587,10 +635,10 @@ const TechNode = (props, context) => {
               Details
             </Button>
           )}
-          {tier === 1 && (
+          {tier > 0 && (
             <Button
               icon="lightbulb"
-              disabled={!can_unlock}
+              disabled={!can_unlock || tier > 1}
               onClick={() => act("researchNode", { node_id: id })}>
               Research
             </Button>)}
@@ -601,9 +649,10 @@ const TechNode = (props, context) => {
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
           {costs.map(k => {
-            const nodeProg = Math.min(k.value, points[k.type]) || 0;
+            const reqPts = Math.max(0, k.value - nodeDiscount);
+            const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
-              <Flex.Item grow={1} basis={0}
+              <Flex.Item
                 key={k.type}>
                 <ProgressBar
                   ranges={{
@@ -611,14 +660,21 @@ const TechNode = (props, context) => {
                     average: [0.25, 0.5],
                     bad: [-Infinity, 0.25],
                   }}
-                  value={Math.min(1, points[k.type] / k.value)}>
-                  {k.type} ({nodeProg}/{k.value})
+                  value={reqPts === 0
+                    ? 1
+                    : Math.min(1, (points[k.type]||0) / reqPts)}>
+                  {abbreviateName(k.type)} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
             );
           })}
+          {prereq_ids.length > 0 && (
+            <Flex.Item>
+              {techProgress}
+            </Flex.Item>
+          )}
           {required_experiments?.length > 0 && (
-            <Flex.Item grow={1} basis={0}>
+            <Flex.Item>
               {experimentProgress}
             </Flex.Item>
           )}
@@ -643,7 +699,7 @@ const TechNode = (props, context) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
               return (
-                <div>Failed to find experiment &apos;{k}&apos;</div>
+                <LockedExperiment />
               );
             }
             return (
@@ -660,15 +716,47 @@ const TechNode = (props, context) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
               return (
-                <div>Failed to find experiment &apos;{k}&apos;</div>
+                <LockedExperiment />
               );
             }
             return (
-              <Experiment key={thisExp} exp={thisExp} />
+              <Experiment key={thisExp} exp={thisExp}>
+                <Box className="Techweb__ExperimentDiscount">
+                  Provides a discount of {discount_experiments[k]} points
+                  to all required point pools.
+                </Box>
+              </Experiment>
             );
           })}
         </Collapsible>
       )}
     </Section>
+  );
+};
+
+const LockedExperiment = (props, context) => {
+  return (
+    <Box m={1} className="ExperimentConfigure__ExperimentPanel">
+      <Button fluid
+        backgroundColor="#40628a"
+        className="ExperimentConfigure__ExperimentName"
+        disabled>
+        <Flex align="center" justify="space-between">
+          <Flex.Item
+            color="rgba(0, 0, 0, 0.6)">
+            <Icon name="lock" />
+            Undiscovered Experiment
+          </Flex.Item>
+          <Flex.Item
+            color="rgba(0, 0, 0, 0.5)">
+            ???
+          </Flex.Item>
+        </Flex>
+      </Button>
+      <Box className={"ExperimentConfigure__ExperimentContent"}>
+        This experiment has not been discovered yet, continue researching
+        nodes in the tree to discover the contents of this experiment.
+      </Box>
+    </Box>
   );
 };
