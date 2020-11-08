@@ -15900,7 +15900,7 @@
 /area/quartermaster/warehouse)
 "aPV" = (
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -26709,6 +26709,10 @@
 /obj/structure/table/glass,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/mask/surgical,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bub" = (
@@ -54387,6 +54391,10 @@
 "pYw" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-03"
+	},
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)

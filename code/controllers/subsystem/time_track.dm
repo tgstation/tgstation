@@ -37,3 +37,28 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
 	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
+	log_perf(
+		list(
+			world.time,
+			length(GLOB.clients),
+			time_dilation_current,
+			time_dilation_avg_fast,
+			time_dilation_avg,
+			time_dilation_avg_slow,
+			MAPTICK_LAST_INTERNAL_TICK_USAGE,
+			length(SStimer.timer_id_dict),
+			SSair.cost_turfs,
+			SSair.cost_groups,
+			SSair.cost_highpressure,
+			SSair.cost_hotspots,
+			SSair.cost_superconductivity,
+			SSair.cost_pipenets,
+			SSair.cost_rebuilds,
+			length(SSair.active_turfs),
+			length(SSair.excited_groups),
+			length(SSair.hotspots),
+			length(SSair.networks),
+			length(SSair.high_pressure_delta),
+			length(SSair.active_super_conductivity)
+		)
+	)

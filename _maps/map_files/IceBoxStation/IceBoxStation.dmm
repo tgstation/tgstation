@@ -12362,7 +12362,7 @@
 /area/crew_quarters/toilet)
 "aBB" = (
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 32
 	},
 /turf/open/floor/plastic,
@@ -19382,7 +19382,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -30870,7 +30870,7 @@
 	dir = 1
 	},
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white,
