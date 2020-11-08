@@ -1376,9 +1376,7 @@
 /obj/item/pda,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "aVo" = (
 /obj/structure/cable,
 /obj/machinery/light{
@@ -1974,9 +1972,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "bsW" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes,
@@ -5430,9 +5426,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "evt" = (
 /obj/machinery/computer/nanite_chamber_control,
 /obj/effect/turf_decal/tile/purple{
@@ -7062,9 +7056,7 @@
 "fKY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "fLg" = (
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/sunglasses,
@@ -7971,9 +7963,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "gEe" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Office";
@@ -8882,9 +8872,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "hsf" = (
 /obj/structure/cable,
 /obj/machinery/light,
@@ -9208,9 +9196,7 @@
 /area/quartermaster/storage)
 "hGS" = (
 /turf/closed/wall/r_wall,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "hHH" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/purple{
@@ -12184,9 +12170,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "kor" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
@@ -12673,6 +12657,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"kJB" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "kJG" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
@@ -13727,9 +13723,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "lFH" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4
@@ -14129,9 +14123,7 @@
 /area/tcommsat/server)
 "mah" = (
 /turf/closed/wall/r_wall/rust,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "mat" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -14616,9 +14608,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/plating,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "myy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -17786,6 +17776,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "oMJ" = (
@@ -17887,9 +17880,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "oRW" = (
 /obj/structure/table,
 /obj/machinery/camera/autoname,
@@ -19543,9 +19534,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "qib" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/plasteel/dark,
@@ -20113,9 +20102,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "qIL" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/disposalpipe/segment,
@@ -20940,9 +20927,7 @@
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "rrz" = (
 /obj/machinery/camera/autoname{
 	dir = 4
@@ -22572,9 +22557,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/engine,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "sAY" = (
 /obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel,
@@ -22686,9 +22669,7 @@
 	id = "executionspaceblast"
 	},
 /turf/open/space/basic,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "sHw" = (
 /obj/machinery/requests_console{
 	department = "Robotics";
@@ -23601,9 +23582,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "twi" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -24660,9 +24639,7 @@
 "upl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "upy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -25005,6 +24982,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/office)
+"uHt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "uHA" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -25261,9 +25252,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "uTh" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -26855,6 +26844,9 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/mop,
 /obj/structure/mopbucket,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "wqa" = (
@@ -27688,9 +27680,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
-/area/security/execution/transfer{
-	name = "Former Transfer Centre"
-	})
+/area/security/execution/transfer)
 "wUz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -64983,7 +64973,7 @@ siH
 gkH
 gSV
 wsa
-wsa
+kJB
 wsa
 rcr
 ueC
@@ -67039,7 +67029,7 @@ siH
 qzP
 fvQ
 kkk
-kkk
+uHt
 kkk
 axY
 ueC
