@@ -1,6 +1,6 @@
 
 
-/datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
+/datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
 	var/mob/living/parent_living = parent
 	parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
@@ -41,7 +41,7 @@
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/creature/human
 
-/datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
+/datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)

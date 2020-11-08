@@ -1,4 +1,4 @@
-/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS))
+/datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS), potion_boost = FALSE)
 	. = ..()
 
 /datum/component/riding/vehicle/RegisterWithParent()
@@ -45,7 +45,7 @@
 	handle_vehicle_layer(AM.dir)
 	handle_vehicle_offsets(AM.dir)
 
-	moved_successfully()
+	moved_successfully(user)
 
 /datum/component/riding/vehicle/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	if(!keycheck(user))
@@ -213,22 +213,9 @@
 	set_vehicle_dir_offsets(WEST, -18, 0)
 
 
-/datum/component/riding/vehicle/wheelchair
-	vehicle_move_delay = 0
-	ride_check_flags = RIDER_NEEDS_ARMS
-
-/datum/component/riding/vehicle/wheelchair/handle_specials()
-	. = ..()
-	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	set_vehicle_dir_layer(WEST, OBJ_LAYER)
-
-
 /datum/component/riding/vehicle/car
 	//vehicle_move_delay = movedelay
 	vehicle_move_delay = 1
-	slowvalue = 0
 	COOLDOWN_DECLARE(enginesound_cooldown)
 
 /datum/component/riding/vehicle/car/moved_successfully()
@@ -258,3 +245,35 @@
 	set_vehicle_dir_offsets(WEST, -48, -48)
 	for(var/i in GLOB.cardinals)
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
+
+
+
+
+/datum/component/riding/vehicle/wheelchair
+	vehicle_move_delay = 0
+	ride_check_flags = RIDER_NEEDS_ARMS
+
+/datum/component/riding/vehicle/wheelchair/handle_specials()
+	. = ..()
+	set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
+	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/vehicle/wheelchair/moved_successfully(mob/living/user)
+	. = ..()
+	set_speed(user)
+
+/datum/component/riding/vehicle/wheelchair/proc/set_speed(mob/living/user)
+	var/delay_multiplier = 6.7 // magic number from wheelchair code
+	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
+
+/datum/component/riding/vehicle/wheelchair/motorized/set_speed(mob/living/user)
+	var/speed = 1 // Should never be under 1
+	var/delay_multiplier = 6.7 // magic number from wheelchair code
+
+	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
+	for(var/obj/item/stock_parts/manipulator/M in our_chair.contents)
+		speed += M.rating
+	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
+

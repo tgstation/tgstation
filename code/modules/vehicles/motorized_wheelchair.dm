@@ -22,9 +22,6 @@
 		speed += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in contents)
 		power_efficiency = C.rating
-	var/datum/component/riding/D = GetComponent(/datum/component/riding)
-	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
-
 
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
@@ -60,9 +57,6 @@
 	power_cell.use(power_usage / max(power_efficiency, 1) * 0.05)
 
 	return ..()
-
-/obj/vehicle/ridden/wheelchair/motorized/set_move_delay(mob/living/user)
-	return
 
 /obj/vehicle/ridden/wheelchair/motorized/post_buckle_mob(mob/living/user)
 	. = ..()

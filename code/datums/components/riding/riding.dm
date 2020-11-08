@@ -16,9 +16,6 @@
 	/// If the driver needs a specific item in hand (or inserted, for vehicles) in order to move this vehicle
 	var/keytype
 
-	var/slowed = FALSE
-	var/slowvalue = 1
-
 	/// If the vehicle is a mob with abilities, and this is TRUE, then the rider can trigger those abilities while mounted
 	var/can_use_abilities = FALSE
 
@@ -46,14 +43,15 @@
 	COOLDOWN_DECLARE(message_cooldown)
 
 
-/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, _ride_check_flags = NONE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, _ride_check_flags = NONE, potion_boost = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	handle_specials()
 	riding_mob.updating_glide_size = FALSE
 	ride_check_flags |= _ride_check_flags
-
+	if(potion_boost)
+		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 
 
 /datum/component/riding/RegisterWithParent()
@@ -266,7 +264,7 @@
 
 
 /// This proc is only used for cars so that they can play an engine rumble on movement. If we run this, we successfully moved a tile thru driving.
-/datum/component/riding/proc/moved_successfully(atom/movable/M)
+/datum/component/riding/proc/moved_successfully()
 	return
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
