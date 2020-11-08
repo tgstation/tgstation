@@ -280,6 +280,7 @@
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(id)
 		if (n.required_experiments.len > 0)
 			add_experiments(n.required_experiments)
+		if (n.discount_experiments.len > 0)
 			add_experiments(n.discount_experiments)
 		update_node_status(n)
 	for(var/id in node.design_ids)

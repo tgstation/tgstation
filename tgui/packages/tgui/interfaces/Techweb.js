@@ -548,6 +548,7 @@ const TechNode = (props, context) => {
     costs,
     design_ids,
     required_experiments,
+    discount_experiments,
   } = node_cache[id];
   const [
     techwebRoute,
@@ -634,24 +635,40 @@ const TechNode = (props, context) => {
           );
         })}
       </Box>
-      {required_experiments?.length > 0
-        && (
-          <Collapsible
-            className="Techweb__NodeExperimentsRequired"
-            title="Required Experiments">
-            {required_experiments.map(k => {
-              const thisExp = experiments[k];
-              if (thisExp === null || thisExp === undefined) {
-                return (
-                  <div>Failed to find experiment &apos;{k}&apos;</div>
-                );
-              }
+      {required_experiments?.length > 0 && (
+        <Collapsible
+          className="Techweb__NodeExperimentsRequired"
+          title="Required Experiments">
+          {required_experiments.map(k => {
+            const thisExp = experiments[k];
+            if (thisExp === null || thisExp === undefined) {
               return (
-                <Experiment key={thisExp} exp={thisExp} />
+                <div>Failed to find experiment &apos;{k}&apos;</div>
               );
-            })}
-          </Collapsible>
-        )}
+            }
+            return (
+              <Experiment key={thisExp} exp={thisExp} />
+            );
+          })}
+        </Collapsible>
+      )}
+      {Object.keys(discount_experiments).length > 0 && (
+        <Collapsible
+          className="TechwebNodeExperimentsRequired"
+          title="Discount-Eligible Experiments">
+          {Object.keys(discount_experiments).map(k => {
+            const thisExp = experiments[k];
+            if (thisExp === null || thisExp === undefined) {
+              return (
+                <div>Failed to find experiment &apos;{k}&apos;</div>
+              );
+            }
+            return (
+              <Experiment key={thisExp} exp={thisExp} />
+            );
+          })}
+        </Collapsible>
+      )}
     </Section>
   );
 };
