@@ -46,6 +46,9 @@
 	var/build_start = 0
 	/// Reference to all materials used in the creation of the item being_built.
 	var/list/build_materials
+	/// References to all regents used in the creation of the item being_built
+	var/list/build_regents
+
 	/// Part currently stored in the Exofab.
 	var/obj/item/stored_part
 
@@ -130,9 +133,11 @@
 /obj/machinery/rnd/production/proc/output_part_info(datum/design/D, parse_categories = null)
 	var/list/default_sub_category = list(CATEGORY_FLAG_ALL)
 	var/cost = list()
-	for(var/c in D.materials)
-		var/datum/material/M = c
+	for(var/datum/material/M in D.materials)
 		cost[M.name] = get_resource_cost_w_coeff(D, M)
+	if(uses_regents)
+		for(var/datum/reagent/R in D.reagents_list)
+			cost[R.name] = get_regent_cost_w_coeff(D, R)
 
 	var/obj/built_item = D.build_path
 	var/list/sub_category = default_sub_category
@@ -143,13 +148,9 @@
 
 		if(D.sub_category)
 			sub_category = D.sub_category
-				if(!istype(sub_category)) // if its not a list, make it a list
-					sub_category = list(sub_category)
-			var/list/sub_catagories = categories[parse_categories]
-			if(istype(sub_catagories) && sub_catagories.len > 0) // if we DO care about order or sub_catagories
-				sub_category &= sub_catagories
-				if(sub_category.len) // its not in the catagory list so clear it to the general top
-					sub_category = default_sub_category
+			if(!istype(sub_category)) // if its not a list, make it a list
+				sub_category = list(sub_category)
+
 
 	var/list/part = list(
 		"name" = D.name,
@@ -157,11 +158,38 @@
 		"printTime" = get_construction_time_w_coeff(initial(D.construction_time))/10,
 		"cost" = cost,
 		"id" = D.id,
+		"category" = parse_categories,
 		"subCategory" = sub_category,
 		"searchMeta" = D.search_metadata
 	)
 
+
 	return part
+
+/**
+  * Generates a list of regents available to this Exosuit Fab
+  *
+  * Returns null if there is no regents container available.
+  * List format is list(material_name = list(amount = ..., ref = ..., etc.))
+  */
+/obj/machinery/rnd/production/proc/output_available_reagents()
+	var/list/regent_list= list()
+
+	if(length(reagents.reagent_list))
+		for(var/regent_id in reagents.reagent_list)
+			var/datum/reagent/R = regent_id
+			var/list/regent_info = list()
+			var/amount = reagents.reagent_list[R]
+
+			regent_info = list(
+				"name" = R.name,
+				"ref" = REF(R),
+				"amount" = amount,
+			)
+
+			regent_list += list(regent_info)
+
+	return regent_list
 
 /**
   * Generates a list of resources / materials available to this Exosuit Fab
@@ -217,6 +245,19 @@
 	process_queue = FALSE
 
 /**
+  * Calculates regent costs for printing an item based on the machine's resource coefficient.
+  *
+  * Returns a list of k,v resources with their amounts.
+  * * D - Design datum to calculate the modified resource cost of.
+  */
+/obj/machinery/rnd/production/proc/get_regents_w_coeff(datum/design/D)
+	var/list/regent_list = list()
+	if(length(D.reagents_list))
+		for(var/datum/reagent/R in D.reagents_list)
+			regent_list[R] = get_regent_cost_w_coeff(D, R)
+	return regent_list
+
+/**
   * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
   *
   * Returns a list of k,v resources with their amounts.
@@ -232,13 +273,16 @@
 /**
   * Checks if the Exofab has enough resources to print a given item.
   *
-  * Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
+  * Returns FALSE if there are insufficient resources.
   * Returns TRUE if there are sufficient resources to print the item.
   * * D - Design datum to calculate the modified resource cost of.
   */
 /obj/machinery/rnd/production/proc/check_resources(datum/design/D)
 	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
-		return FALSE
+		for(var/R in D.reagents_list)
+			if(!reagents.has_reagent(R,  get_regent_cost_w_coeff(D,R)))
+				return FALSE
+
 	var/datum/component/material_container/materials = rmat.mat_container
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return TRUE
@@ -286,8 +330,14 @@
 		return FALSE
 
 	build_materials = get_resources_w_coeff(D)
-
 	materials.use_materials(build_materials)
+
+	if(uses_regents)
+		build_regents = get_regents_w_coeff(D)
+		if(build_regents.len > 0)
+			for(var/R in build_regents)
+				reagents.remove_reagent(R, build_regents[R])
+
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
@@ -342,7 +392,8 @@
 	I.material_flags = backup_material_flags
 
 	being_built = null
-	build_materials.Cut()
+	build_materials = list()
+	build_regents = list()
 
 	var/turf/exit = dispense_direction ? get_step(src, dispense_direction) : get_turf(src)
 	if(dispense_direction && exit.density)
@@ -410,9 +461,9 @@
 		var/list/part = output_part_info(D)
 		queued_parts += list(part)
 	return queued_parts
+
 /obj/machinery/rnd/production/protolathe/deconstruct(disassembled)
 	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
-
 	return ..()
 
 /obj/machinery/rnd/production/protolathe/Initialize(mapload)
@@ -422,6 +473,16 @@
 	return ..()
 
 
+/**
+  * Calculates the coefficient-modified resource cost of a single regent component of a design's recipe.
+  *
+  * Returns coefficient-modified resource cost for the given regent component.
+  * * D - Design datum to pull the resource cost from.
+  * * resource - Tegent datum reference to the resource to calculate the cost of.
+  * * round_to - Rounding value for round() proc
+  */
+/obj/machinery/rnd/production/proc/get_regent_cost_w_coeff(datum/design/D, datum/reagent/resource, round_to = 1)
+	return ignore_coeff[D.build_path] ? 1 : round(D.reagents_list[resource]/component_coeff, round_to)
 
 /**
   * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
@@ -458,44 +519,55 @@
 /obj/machinery/rnd/production/ui_static_data(mob/user)
 	var/list/data = list()
 
-	var/list/final_sets = list()
 	var/list/buildable_parts = list()
-
+	var/list/category_order = list()
+#ifdef TESTING
+	var/list/check_dups = list()
+#endif
 	// changed to stop going though the catagories on EACH freaking design
 	// Use index as that will go in order
 	for(var/i in 1 to categories.len)
 		var/cat_name = categories[i]
-		var/list/sub_catagories = categories[cat_name]
-		final_sets += cat_name
+		category_order += cat_name
 		var/list/researched_category = stored_research.researched_designs_by_category[cat_name]
 		for(var/datum/design/D in researched_category)
 			if(D.build_type && !(D.build_type & allowed_buildtypes))
 				continue	// machine cannot build this thing
-			if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
+			if(!isnull(allowed_department_flags) && !(D.departmental_flags & allowed_department_flags))
 				continue 	// Not the right department
+#ifdef TESTING
+			if(check_dups[D])
+				check_dups[D]++
+				var/number = check_dups[D]
+				testing("FUCK we got a dup of [D] [D.name] = [number]")
+#endif
+			check_dups[D] = 1
 
 			// This is for us.
 			var/list/part = output_part_info(D, cat_name)
-
-			if(part["category_override"])
-				for(var/cat in part["category_override"])
-					buildable_parts[cat] += list(part)
-					if(!(cat in part_sets))
-						final_sets += cat
-				continue
+#ifdef DEBUG
+			if(length(D.reagents_list))
+				buildable_parts["DEBUG_REGENT"]  += list(part)
+#endif
 
 			buildable_parts[cat_name] += list(part)
-
-	data["partSets"] = final_sets
+#ifdef DEBUG
+	category_order += "DEBUG_REGENT"
+#endif
 	data["buildableParts"] = buildable_parts
-	data["department_tag"] = department_tag
-	data["parts_mode"] = FALSE
+	data["subCategoryOrder"] = categories
+	data["categoryOrder"] = category_order
+	data["departmentTag"] = department_tag
 	return data
 
 /obj/machinery/rnd/production/ui_data(mob/user)
 	var/list/data = list()
 
 	data["materials"] = output_available_resources()
+
+	if(uses_regents)
+		data["regents"] = output_available_reagents()
+		data["regents_max_volume"] = reagents.maximum_volume
 
 	if(being_built)
 		var/list/part = list(
@@ -529,6 +601,11 @@
 	// usr.set_machine(src) Done in ui_interact?
 
 	switch(action)
+		if("purge_reagents")
+			// remove all reagents
+			reagents.clear_reagents()
+			say("Successfully purged all reagents")
+			return
 		if("sync_rnd")
 			// Syncronises designs on interface with R&D techweb.
 			update_static_data(usr)

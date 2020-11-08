@@ -9,7 +9,8 @@
 	uses_regents = FALSE
 	time_coeff = 1.2
 	component_coeff = 1.2
-
+	uses_regents = TRUE
+	
 /obj/machinery/rnd/production/protolathe/RefreshParts()
 	var/T = 0
 	//maximum stocking amount (default 300000, 600000 at T4)

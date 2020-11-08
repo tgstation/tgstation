@@ -50,7 +50,6 @@
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
 	SIGNAL_HANDLER
-custom_materials
 	if(show_on_examine)
 		for(var/I in materials)
 			var/datum/material/M = I

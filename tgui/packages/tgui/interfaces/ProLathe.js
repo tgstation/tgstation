@@ -5,6 +5,9 @@ import { formatSiUnit, formatMoney } from '../format';
 import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Icon, Input } from '../components';
 import { Window } from '../layouts';
 import { createSearch } from 'common/string';
+import { createLogger } from "../logging";
+
+const logger = createLogger("Prolathe");
 
 const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",
@@ -124,12 +127,16 @@ const searchFilter = (search, allparts) => {
   return searchResults;
 };
 
+
+
 export const ProLathe = (props, context) => {
   const { act, data } = useBackend(context);
 
   const queue = data.queue || [];
   const materialAsObj = materialArrayToObj(data.materials || []);
-  const department_tag = data.department_tag || "BAD DEPARTMENT TAG"
+  const department_tag = data.departmentTag || "BAD DEPARTMENT TAG"
+  const regents = data.regents || [];
+
 
   const {
     materialTally,
@@ -142,6 +149,11 @@ export const ProLathe = (props, context) => {
     setDisplayMatCost,
   ] = useSharedState(context, "display_mats", false);
 
+  const [
+    selectedSettings,
+    setSelectedSettings
+  ] = useSharedState(context, "settings_tab", "Materials");
+
   return (
     <Window
       resizable
@@ -153,7 +165,34 @@ export const ProLathe = (props, context) => {
         <Flex
           fillPositionedParent
           direction="column">
-          <Flex>
+          <Flex >
+          <Flex.Item height="125px"
+              mt={1}
+              ml={1}>
+                <Section height="100%">
+              <Tabs
+                    vertical>
+                      <Tabs.Tab
+                        selected={selectedSettings === "Materials"}
+                        onClick={() => setSelectedSettings("Materials")}>
+                        Materials Storage
+                      </Tabs.Tab>
+                      {(!!(data.regents) && (
+                      <Tabs.Tab
+                        selected={selectedSettings === "Regents"}
+                        disabled={!(data.regents)}
+                        onClick={() => setSelectedSettings("Regents")}>
+                        Regent Storage
+                      </Tabs.Tab>
+                      ))}
+                      <Tabs.Tab
+                        selected={selectedSettings === "Settings"}
+                        onClick={() => setSelectedSettings("Settings")}>
+                        Settings
+                      </Tabs.Tab>
+                  </Tabs>
+                  </Section>
+            </Flex.Item>
             <Flex.Item
               ml={1}
               mr={1}
@@ -161,21 +200,17 @@ export const ProLathe = (props, context) => {
               basis="content"
               grow={1}>
               <Section
-                title="Materials">
-                <Materials />
-              </Section>
-            </Flex.Item>
-            <Flex.Item
-              mt={1}
-              mr={1}>
-              <Section
-                title="Settings"
-                height="100%">
+                title={selectedSettings}>
+                {selectedSettings == "Materials" ? (<Materials />) :
+                selectedSettings == "Regents" ?
+                  regents.map(regent => (regent.name + " | " + formatSiUnit(amount, 0) +"u"))
+                 : (
                 <Button.Checkbox
-                  onClick={() => setDisplayMatCost(!displayMatCost)}
-                  checked={displayMatCost}>
+                    onClick={() => setDisplayMatCost(!displayMatCost)}
+                    checked={displayMatCost}>
                   Display Material Costs
                 </Button.Checkbox>
+               )}
               </Section>
             </Flex.Item>
           </Flex>
@@ -339,7 +374,7 @@ const MaterialAmount = (props, context) => {
 const PartSets = (props, context) => {
   const { data } = useBackend(context);
 
-  const partSets = data.partSets || [];
+  const category_order = data.categoryOrder || [];
   const buildableParts = data.buildableParts || {};
 
   const [
@@ -348,18 +383,17 @@ const PartSets = (props, context) => {
   ] = useSharedState(
     context,
     "part_tab",
-    partSets.length ? buildableParts[0] : ""
+    category_order[0] || ""
   );
 
   return (
     <Tabs
       vertical>
-      {partSets.map(set => (
+      {category_order.map(set => (
         !!(buildableParts[set]) && (
           <Tabs.Tab
             key={set}
             selected={set === selectedPartTab}
-            disabled={!(buildableParts[set])}
             onClick={() => setSelectedPartTab(set)}>
             {set}
           </Tabs.Tab>
@@ -372,16 +406,8 @@ const PartSets = (props, context) => {
 const PartLists = (props, context) => {
   const { data } = useBackend(context);
 
-  const getFirstValidPartSet = (sets => {
-    for (let set of sets) {
-      if (buildableParts[set]) {
-        return set;
-      }
-    }
-    return null;
-  });
 
-  const partSets = data.partSets || [];
+  const category_order = data.categoryOrder || [];
   const buildableParts = data.buildableParts || [];
 
   const {
@@ -395,7 +421,7 @@ const PartLists = (props, context) => {
   ] = useSharedState(
     context,
     "part_tab",
-    getFirstValidPartSet(partSets)
+    category_order[0] || ""
   );
 
   const [
@@ -403,30 +429,12 @@ const PartLists = (props, context) => {
     setSearchText,
   ] = useSharedState(context, "search_text", "");
 
-  if (!selectedPartTab || !buildableParts[selectedPartTab]) {
-    const validSet = getFirstValidPartSet(partSets);
-    if (validSet) {
-      setSelectedPartTab(validSet);
-    }
-    else {
-      return;
-    }
-  }
-
   let partsList;
   // Build list of sub-categories if not using a search filter.
   if (!searchText) {
-    partsList = { "Parts": [] };
+    partsList = buildableParts;
     buildableParts[selectedPartTab].forEach(part => {
       part["format"] = partCondFormat(materials, queueMaterials, part);
-      if (!part.subCategory) {
-        partsList["Parts"].push(part);
-        return;
-      }
-      if (!(part.subCategory in partsList)) {
-        partsList[part.subCategory] = [];
-      }
-      partsList[part.subCategory].push(part);
     });
   }
   else {
@@ -462,23 +470,125 @@ const PartLists = (props, context) => {
           forceShow
           placeholder="No matching results..." />
       )) || (
-        Object.keys(partsList).map(category => (
           <PartCategory
-            key={category}
-            name={category}
-            parts={partsList[category]} />
-        ))
-      )}
+            name={selectedPartTab}
+            parts={partsList[selectedPartTab]} />
+        )
+      }
     </Fragment>
   );
 };
 
-const PartCategory = (props, context) => {
+const PartItem = (props, context) => {
   const { act, data } = useBackend(context);
+
+  const {
+    part,
+  } = props;
 
   const {
     buildingPart,
   } = data;
+
+  const [
+    displayMatCost,
+  ] = useSharedState(context, "display_mats", false);
+
+  return (
+    <Fragment>
+    <Flex
+      align="center">
+      <Flex.Item>
+        <Button
+          disabled={buildingPart
+          || (part.format.textColor === COLOR_BAD)}
+          color="good"
+          height="20px"
+          mr={1}
+          icon="play"
+          onClick={() => act("build_part", { id: part.id })} />
+      </Flex.Item>
+      <Flex.Item>
+        <Button
+          color="average"
+          height="20px"
+          mr={1}
+          icon="plus-circle"
+          onClick={() => act("add_queue_part", { id: part.id })} />
+      </Flex.Item>
+      <Flex.Item>
+        <Box
+          inline
+          textColor={COLOR_KEYS[part.format.textColor]}>
+          {part.name}
+        </Box>
+      </Flex.Item>
+      <Flex.Item
+        grow={1} />
+      <Flex.Item>
+        <Button
+          icon="question-circle"
+          transparent
+          height="20px"
+          tooltip={
+            "Build Time: "
+          + part.printTime + "s. "
+          + (part.desc || "")
+          }
+          tooltipPosition="left" />
+      </Flex.Item>
+    </Flex>
+    {(displayMatCost && (
+      <Flex mb={2}>
+        {Object.keys(part.cost).map(material => (
+          <Flex.Item
+            width={"50px"}
+            key={material}
+            color={COLOR_KEYS[part.format[material].color]}>
+            <MaterialAmount
+              formatmoney
+              style={{
+                transform: 'scale(0.75) translate(0%, 10%)',
+              }}
+              name={material}
+              amount={part.cost[material]} />
+          </Flex.Item>
+        ))}
+      </Flex>
+    ))}
+
+  </Fragment>
+
+
+  );
+};
+
+const PartSubCategory = (props, context) => {
+  const {
+    parts,
+    name,
+  } = props;
+
+  return (
+      <Section
+        title={name}
+        buttons={name == "Parts" && (
+          <Button
+            disabled={!parts.length}
+            color="good"
+            content="Queue All"
+            icon="plus-circle"
+            onClick={() => act("add_queue_set", {
+              part_list: parts.map(part => part.id),
+            })} />)
+        }>
+        {parts.map(part => (<PartItem part={part} key={part.name}/>)) }
+      </Section>
+  );
+}
+
+const PartCategory = (props, context) => {
+  const { data } = useBackend(context);
 
   const {
     parts,
@@ -486,81 +596,51 @@ const PartCategory = (props, context) => {
     forceShow,
     placeholder,
   } = props;
+ //  catagories
 
-  const [
-    displayMatCost,
-  ] = useSharedState(context, "display_mats", false);
+ logger.log("Error:", "Cat: " + name + " ugh: " + data.categories[name]+ " errr " + parts[0].name);
+  const sub_category_fixed_order = [];//data.categories[name] || [];
 
+  let all_sub_category = {};
+  const insert_into_subcategory = (sub_category_name, part) => {
+    if (typeof all_sub_category[sub_category_name] != "array")
+      all_sub_category[sub_category_name] = []
+    all_sub_category[sub_category_name].push(part)
+  };
+
+  const non_categorized_parts = parts.filter(part => {
+    const sub_category = part.subCategory
+    if(typeof(sub_category) == "array" && sub_category.length > 0) {
+      if(!sub_category[sub_category_name])
+        sub_category[sub_category_name] = []
+      sub_category.forEach(sub_category_name => insert_into_subcategory(sub_category_name,part));
+      return false;
+    }
+    else if(typeof(sub_category) == "string" && sub_category.length > 0) {
+      insert_into_subcategory(sub_category_name,part)
+      return false;
+    } else
+        return true; // no sub category
+  })
+  const unsorted_categorized_parts = Object.keys(all_sub_category).filter(
+    sub_category_name => !sub_category_fixed_order.find(sub_category_name)).sort();
+
+  /* The order of printing the sub catagories is as follows.
+    1. All non categorized parts are printed FIRST
+    2. If we have a hard set category list, then that is printed next
+    3. Other sub_catagories are printed after that
+  */
   return (
     ((!!parts.length || forceShow) && (
       <Section title={name}>
         {(!parts.length) && (placeholder)}
-        {parts.map(part => (
-          <Fragment
-            key={part.name}>
-            <Flex
-              align="center">
-              <Flex.Item>
-                <Button
-                  disabled={buildingPart
-                  || (part.format.textColor === COLOR_BAD)}
-                  color="good"
-                  height="20px"
-                  mr={1}
-                  icon="play"
-                  onClick={() => act("build_part", { id: part.id })} />
-              </Flex.Item>
-              <Flex.Item>
-                <Button
-                  color="average"
-                  height="20px"
-                  mr={1}
-                  icon="plus-circle"
-                  onClick={() => act("add_queue_part", { id: part.id })} />
-              </Flex.Item>
-              <Flex.Item>
-                <Box
-                  inline
-                  textColor={COLOR_KEYS[part.format.textColor]}>
-                  {part.name}
-                </Box>
-              </Flex.Item>
-              <Flex.Item
-                grow={1} />
-              <Flex.Item>
-                <Button
-                  icon="question-circle"
-                  transparent
-                  height="20px"
-                  tooltip={
-                    "Build Time: "
-                  + part.printTime + "s. "
-                  + (part.desc || "")
-                  }
-                  tooltipPosition="left" />
-              </Flex.Item>
-            </Flex>
-            {(displayMatCost && (
-              <Flex mb={2}>
-                {Object.keys(part.cost).map(material => (
-                  <Flex.Item
-                    width={"50px"}
-                    key={material}
-                    color={COLOR_KEYS[part.format[material].color]}>
-                    <MaterialAmount
-                      formatmoney
-                      style={{
-                        transform: 'scale(0.75) translate(0%, 10%)',
-                      }}
-                      name={material}
-                      amount={part.cost[material]} />
-                  </Flex.Item>
-                ))}
-              </Flex>
-            ))}
-
-          </Fragment>
-        ))}
+        {non_categorized_parts.map(part => (<PartItem part={part} key={part.name}/>)) }
+        {sub_category_fixed_order.map(sub_category_name =>
+             (<PartSubCategory name={sub_category_name} parts={sub_parts}/>)
+        )}
+        {unsorted_categorized_parts.map(sub_category_name =>
+             (<PartSubCategory name={sub_category_name} parts={sub_parts}/>)
+        )}
       </Section>
     ))
   );

@@ -1,7 +1,7 @@
 ////////////////////////////////////////
 /////////////Stock Parts////////////////
 ////////////////////////////////////////
-GLOBAL
+
 /datum/design/rped
 	name = "Rapid Part Exchange Device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."

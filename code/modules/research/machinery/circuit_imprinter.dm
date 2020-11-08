@@ -6,7 +6,7 @@
 	categories = CATEGORIES_CIRCUIT_IMPRINTER
 	production_animation = "circuit_imprinter_ani"
 	allowed_buildtypes = IMPRINTER
-	uses_regents = FALSE
+	uses_regents = TRUE
 
 /obj/machinery/rnd/production/circuit_imprinter/RefreshParts()
 	var/total_rating = 0
