@@ -52658,6 +52658,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
+/obj/structure/rack,
+/obj/item/experi_scanner{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/experi_scanner{
+	pixel_x = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "nJI" = (

@@ -45655,6 +45655,14 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/rack,
+/obj/item/experi_scanner{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/experi_scanner{
+	pixel_x = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "chn" = (

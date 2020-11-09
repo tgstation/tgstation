@@ -26254,6 +26254,12 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/structure/rack,
+/obj/item/experi_scanner{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/experi_scanner,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "biZ" = (
