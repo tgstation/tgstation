@@ -146,8 +146,6 @@
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= ACCESS_CENT_BAR
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
-	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
