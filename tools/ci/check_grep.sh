@@ -61,6 +61,14 @@ if grep -i 'centcomm' _maps/**/*.dmm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
     st=1
 fi;
+if grep -ni 'nanotransen' code/**/*.dm; then
+    echo "Misspelling(s) of nanotrasen detected in code, please remove the extra N(s)."
+    st=1
+fi;
+if grep -ni 'nanotransen' _maps/**/*.dmm; then
+    echo "Misspelling(s) of nanotrasen detected in maps, please remove the extra N(s)."
+    st=1
+fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
     st=1
