@@ -34,8 +34,15 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+	/**
+	  * In case you have multiple types, you automatically use the most useful one.
+	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
+	  */
 	var/movement_type = GROUND
+	/// Because adding the signals to every movable on init would be a memory hog. See __DEFINES/traits.dm
+	var/has_movement_type_signals = FALSE
+
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -601,6 +608,17 @@
 	. = movement_type
 	movement_type = newval
 
+/// Called when movement_type trait is added to the mob.
+/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
+	SIGNAL_HANDLER
+	movement_type |= GLOB.movement_type_trait_to_flag[trait]
+
+/// Called when a movement_type trait is removed from the mob.
+/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
+	SIGNAL_HANDLER
+	var/flag = GLOB.movement_type_trait_to_flag[trait]
+	if(!(initial(movement_type) & flag))
+		movement_type &= ~(GLOB.movement_type_trait_to_flag[trait])
 
 /**
   * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -910,10 +928,10 @@
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
+		ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = base_pixel_y, time = 10)
-		setMovetype(movement_type & ~FLOATING)
+		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 
 
 /* 	Language procs

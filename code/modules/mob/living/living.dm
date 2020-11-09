@@ -945,10 +945,10 @@
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
+		ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
 		animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
-		setMovetype(movement_type & ~FLOATING)
+		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
