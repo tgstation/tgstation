@@ -16220,12 +16220,10 @@
 /area/maintenance/port/fore)
 "aIN" = (
 /obj/structure/table/wood,
-/obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "aIO" = (
-/obj/structure/table/wood,
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
