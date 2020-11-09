@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "The infinite table stacking exploit is fixed. One table per turf allowed only."

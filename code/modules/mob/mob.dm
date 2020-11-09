@@ -815,14 +815,11 @@
   */
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
-	if(ismob(dropping) && dropping != user)
+	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
-		if(ismob(user))
-			var/mob/U = user
-			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
-				M.show_inv(U)
-		else
-			M.show_inv(user)
+		var/mob/U = user
+		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+			M.show_inv(U)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
@@ -1159,7 +1156,7 @@
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
 	if(hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
 		if (L)
 			L.alpha = lighting_alpha
 
@@ -1196,13 +1193,6 @@
 ///Can this mob hold items
 /mob/proc/can_hold_items()
 	return FALSE
-
-///Get the id card on this mob
-/mob/proc/get_idcard(hand_first)
-	return
-
-/mob/proc/get_id_in_hand()
-	return
 
 /**
   * Get the mob VV dropdown extras

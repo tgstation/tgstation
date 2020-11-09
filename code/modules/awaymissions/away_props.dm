@@ -78,7 +78,7 @@
 		toggle()
 
 /obj/structure/pitgrate/proc/update_openspace()
-	var/turf/open/transparent/openspace/T = get_turf(src)
+	var/turf/open/openspace/T = get_turf(src)
 	if(!istype(T))
 		return
 	//Simple way to keep plane conflicts away, could probably be upgraded to something less nuclear with 513
