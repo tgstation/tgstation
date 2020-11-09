@@ -193,7 +193,7 @@
 /mob/living/simple_animal/Life()
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery)
+		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
