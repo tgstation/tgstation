@@ -446,22 +446,22 @@
 					if(0.75 to INFINITY)
 						occupant.clear_alert("charge")
 					if(0.5 to 0.75)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 1)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 1)
 					if(0.25 to 0.5)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 2)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 2)
 					if(0.01 to 0.25)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 3)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 3)
 					else
-						occupant.throw_alert("charge", /obj/screen/alert/emptycell)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/emptycell)
 
 			var/integrity = obj_integrity/max_integrity*100
 			switch(integrity)
 				if(30 to 45)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 1)
 				if(15 to 35)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 2)
 				if(-INFINITY to 15)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 3)
 				else
 					occupant.clear_alert("mech damage")
 			var/atom/checking = occupant.loc

@@ -493,7 +493,7 @@
 		button_icon_state = "slimeeject"
 	..()
 
-/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/integrate_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
 	if(species?.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
@@ -547,7 +547,7 @@
 			return TRUE
 		return FALSE
 
-/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/use_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
 	if(species?.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))

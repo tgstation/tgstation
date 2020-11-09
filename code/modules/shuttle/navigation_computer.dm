@@ -389,7 +389,7 @@
 			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 			remote_eye.setLoc(T)
 			to_chat(target, "<span class='notice'>Jumped to [selected].</span>")
-			C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 			C.clear_fullscreen("flash", 3)
 	else
 		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)

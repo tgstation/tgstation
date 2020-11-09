@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug where Space Ninja could go into infinite cooldown"
+  - bugfix: "Fixed a bug where Space Ninja could reroll an already hijacked cyborg endlessly"

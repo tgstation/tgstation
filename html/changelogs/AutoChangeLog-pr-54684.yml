@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Ghost role spawners will no longer screw up if you stop existing before hitting yes."
