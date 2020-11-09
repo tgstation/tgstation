@@ -203,7 +203,8 @@
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
 /proc/log_perf(list/perf_info)
-	WRITE_LOG_NO_FORMAT(GLOB.perf_log, perf_info.Join(","))
+	var/out = "[perf_info.Join("")]\n"
+	WRITE_LOG_NO_FORMAT(GLOB.perf_log, out)
 
 /**
  * Appends a tgui-related log entry. All arguments are optional.
