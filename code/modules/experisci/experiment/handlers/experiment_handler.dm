@@ -98,7 +98,7 @@
   * Arguments:
   * * message - The message to announce
   */
-/datum/component/experiment_handler/proc/announce_message_to_all(var/message)
+/datum/component/experiment_handler/proc/announce_message_to_all(message)
 	for(var/i in GLOB.experiment_handlers)
 		var/datum/component/experiment_handler/experi_handler = i
 		var/atom/movable/experi_parent = experi_handler.parent
@@ -110,7 +110,7 @@
   * Arguments:
   * * message - The message to announce
   */
-/datum/component/experiment_handler/proc/announce_message(var/message)
+/datum/component/experiment_handler/proc/announce_message(message)
 	var/atom/movable/experi_parent = parent
 	experi_parent.say(message)
 
