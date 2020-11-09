@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Section, Box, Button, Flex, Icon, LabeledList } from '../components';
+import { Section, Box, Button, Flex, Icon, LabeledList, Table } from '../components';
 import { sortBy } from 'common/collections';
 
 export const ExperimentStage = props => {
@@ -10,6 +10,7 @@ export const ExperimentStage = props => {
   let completion = false;
   switch (type) {
     case "bool":
+    case "detail":
       completion = value;
       break;
     case "integer":
@@ -31,13 +32,61 @@ export const ExperimentStage = props => {
           color={completion ? "good" : "bad"}>
           {(type === "bool" && <Icon name={value ? "check" : "times"} />)
             || (type === "integer" && `${value}/${altValue}`)
-            || (type === "float" && `${value * 100}%`)}
+            || (type === "float" && `${value * 100}%`)
+            || (type === "detail" && "⤷")}
         </Flex.Item>
         <Flex.Item className="ExperimentStage__Description">
           {description}
         </Flex.Item>
       </Flex>
     </Box>
+  );
+};
+
+const ExperimentStages = props => {
+  return (
+    <Table ml={2} className="ExperimentStage__Table">
+      {props.children.map((stage, idx) =>
+        (<ExperimentStageRow key={idx} {...stage} />))}
+    </Table>
+  );
+};
+
+const ExperimentStageRow = props => {
+  const [type, description, value, altValue] = props;
+
+  // Determine completion based on type of stage
+  let completion = false;
+  switch (type) {
+    case "bool":
+    case "detail":
+      completion = value;
+      break;
+    case "integer":
+      completion = value === altValue;
+      break;
+    case "float":
+      completion = value >= 1;
+      break;
+  }
+
+  return (
+    <Table.Row
+      className={`ExperimentStage__StageContainer
+        ${completion ? "complete" : "incomplete"}`}>
+      <Table.Cell
+        collapsing
+        className={`ExperimentStage__Indicator ${type}`}
+        color={completion ? "good" : "bad"}>
+        {(type === "bool" && <Icon name={value ? "check" : "times"} />)
+          || (type === "integer" && `${value}/${altValue}`)
+          || (type === "float" && `${value * 100}%`)
+          || (type === "detail" && "⤷")}
+      </Table.Cell>
+      <Table.Cell className="ExperimentStage__Description">
+        {description}
+      </Table.Cell>
+    </Table.Row>
   );
 };
 
@@ -172,11 +221,9 @@ export const Experiment = (props, context) => {
           {exp.description}
         </Box>
         {props.children}
-        {exp.progress?.map((progressItem, index) => {
-          return (
-            <ExperimentStage key={index} {...progressItem} />
-          );
-        })}
+        <ExperimentStages>
+          {exp.progress}
+        </ExperimentStages>
       </Box>
     </Box>
   );

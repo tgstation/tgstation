@@ -1,46 +1,54 @@
-/datum/experiment/scanning/random/slime
+/datum/experiment/scanning/points/slime
 	name = "Base Slime Experiment"
-	total_requirement = 10
-	max_requirement_per_type = 4
+	required_points = 1
 
-/datum/experiment/scanning/random/slime/calibration
+/datum/experiment/scanning/points/slime/calibration
 	name = "Slime Sample Test"
 	description = "Lets see if our scanners can pick up the genetic data from a simple slime extract."
 	required_atoms = list(/obj/item/slime_extract/grey = 1)
 
-/datum/experiment/scanning/random/slime/easy
+/datum/experiment/scanning/points/slime/easy
 	name = "Easy Slime Survey"
 	description = "A wealthy client has requested that we provide samples of data from several basic slime cores."
-	possible_types = list(/obj/item/slime_extract/orange,
-							/obj/item/slime_extract/purple,
-							/obj/item/slime_extract/blue,
-							/obj/item/slime_extract/metal,
-							/obj/item/slime_extract/yellow,
-							/obj/item/slime_extract/darkpurple,
-							/obj/item/slime_extract/darkblue,
-							/obj/item/slime_extract/silver)
+	required_points = 3
+	required_atoms =  list(/obj/item/slime_extract/orange = 1,
+							/obj/item/slime_extract/purple = 1,
+							/obj/item/slime_extract/blue = 1,
+							/obj/item/slime_extract/metal = 1)
 
-/datum/experiment/scanning/random/slime/moderate
+/datum/experiment/scanning/points/slime/moderate
 	name = "Moderate Slime Survey"
 	description = "Central Command has asked that you collect data from several common slime cores."
-	possible_types = list(/obj/item/slime_extract/bluespace,
-							/obj/item/slime_extract/sepia,
-							/obj/item/slime_extract/cerulean,
-							/obj/item/slime_extract/pyrite,
-							/obj/item/slime_extract/red,
-							/obj/item/slime_extract/green,
-							/obj/item/slime_extract/pink,
-							/obj/item/slime_extract/gold)
+	required_points = 5
+	required_atoms = list(/obj/item/slime_extract/yellow = 1,
+							/obj/item/slime_extract/darkpurple = 1,
+							/obj/item/slime_extract/darkblue = 1,
+							/obj/item/slime_extract/silver = 1)
 
-/datum/experiment/scanning/random/slime/hard
+/datum/experiment/scanning/points/slime/hard
 	name = "Challenging Slime Survey"
 	description = "Another station has challenged your research team to collect several challenging slime cores, \
-	 				including a very valuable rainbow core. Are you up to the task?"
-	possible_types = list(/obj/item/slime_extract/oil,
-							/obj/item/slime_extract/black,
-							/obj/item/slime_extract/lightpink,
-							/obj/item/slime_extract/adamantine)
+					are you up to the task?"
+	required_points = 10
+	required_atoms = list(/obj/item/slime_extract/bluespace = 1,
+							/obj/item/slime_extract/sepia = 1,
+							/obj/item/slime_extract/cerulean = 1,
+							/obj/item/slime_extract/pyrite = 1,
+							/obj/item/slime_extract/red = 2,
+							/obj/item/slime_extract/green = 2,
+							/obj/item/slime_extract/pink = 2,
+							/obj/item/slime_extract/gold = 2)
 
+/datum/experiment/scanning/points/slime/expert
+	name = "Expert Slime Survey"
+	description = "The intergalactic society of xenobiologists are currently looking for samples of the most complex \
+					slime cores, we are tasking your station with providing them with everything they need."
+	required_points = 10
+	required_atoms = list(/obj/item/slime_extract/adamantine = 1,
+							/obj/item/slime_extract/oil = 1,
+							/obj/item/slime_extract/black = 1,
+							/obj/item/slime_extract/lightpink = 1,
+							/obj/item/slime_extract/rainbow = 10)
 
 /datum/experiment/scanning/random/cytology/easy
 	name = "Basic Cytology Scanning Experiment"

@@ -80,6 +80,7 @@
 		scanned[idx] += traits & EXP_TRAIT_DESTRUCTIVE ? 1 : target
 		if (traits & EXP_TRAIT_DESTRUCTIVE)
 			qdel(target)
+		do_after_experiment(target, idx)
 		return TRUE
 
 /datum/experiment/scanning/actionable(datum/component/experiment_handler/experiment_handler, atom/target)
@@ -104,9 +105,9 @@
 		// Try to select a required atom that this scanned atom would contribute towards
 		var/selected
 		var/list/seen = scanned[a]
-		if (destructive && ((a in scanned) && scanned[a] < required_atoms[a]))
+		if (destructive && (a in scanned) && scanned[a] < required_atoms[a])
 			selected = a
-		else if (!destructive && (seen.len < required_atoms[a] && !(target in seen)))
+		else if (!destructive && seen.len < required_atoms[a] && !(target in seen))
 			selected = a
 
 		// Run any additonal checks if necessary
@@ -120,6 +121,20 @@
   * without having to duplicate the iteration structure of get_contributing_index()
   * Arguments:
   * * target - The atom being scanned
+  * * typepath - The typepath (selected index) of the target atom
   */
 /datum/experiment/scanning/proc/final_contributing_index_checks(atom/target, typepath)
+	return TRUE
+
+/**
+  * Performs actions following a successful experiment action
+  *
+  * This proc is intended to be used to add additional functionality to follow experiment
+  * actions without having to change the perform_experiment_actions proc to get access to the
+  * selected typepath index
+  * Arguments:
+  * * target - The atom being scanned
+  * * typepath - The typepath (selected index) of the target atom
+  */
+/datum/experiment/scanning/proc/do_after_experiment(atom/target, typepath)
 	return TRUE

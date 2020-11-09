@@ -28,15 +28,25 @@
 }
 
 .ExperimentConfigure__ExperimentContent {
-  padding: 4px;
+  padding: 0.25rem 1.5rem 0.25rem 0.25rem;
 }
 
 .ExperimentStage__Indicator {
   font-weight: bold;
   margin-right: 1rem;
+  text-align: center;
 }
 
 .ExperimentStage__StageContainer.complete .ExperimentStage__Description {
   opacity: 0.4;
   text-decoration: line-through;
+}
+
+.ExperimentStage__StageContainer {
+  margin-bottom: 5px;
+}
+
+.ExperimentStage__Table {
+  border-collapse: separate;
+  border-spacing: 0.25rem 0.25rem;
 }
