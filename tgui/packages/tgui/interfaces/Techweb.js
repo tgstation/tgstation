@@ -1,4 +1,4 @@
-import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon } from '../components';
+import { Button, Section, Modal, Dropdown, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
 import { Experiment } from './ExperimentConfigure';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
@@ -506,7 +506,7 @@ const TechNodeDetail = (props, context) => {
 
   return (
     <Flex direction="column" height="100%">
-      <Flex.Item>
+      <Flex.Item shrink={1}>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
             Node
@@ -516,18 +516,12 @@ const TechNodeDetail = (props, context) => {
               <Tabs.Tab
                 selected={tabIndex === 0}
                 onClick={() => setTabIndex(0)}>
-                Details
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={tabIndex === 1}
-                disabled={prereqNodes.length === 0}
-                onClick={() => setTabIndex(1)}>
                 Required ({complPrereq}/{prereqNodes.length})
               </Tabs.Tab>
               <Tabs.Tab
-                selected={tabIndex === 2}
+                selected={tabIndex === 1}
                 disabled={unlockedNodes.length === 0}
-                onClick={() => setTabIndex(2)}>
+                onClick={() => setTabIndex(1)}>
                 Unlocks ({unlockedNodes.length})
               </Tabs.Tab>
             </Tabs>
@@ -541,20 +535,19 @@ const TechNodeDetail = (props, context) => {
           </Flex.Item>
         </Flex>
       </Flex.Item>
+      <Flex.Item className="Techweb__OverviewNodes" shrink={0}>
+        <TechNode node={node} nodetails />
+        <Divider />
+      </Flex.Item>
       {tabIndex === 0 && (
-        <Flex.Item className="Techweb__OverviewNodes">
-          <TechNode node={node} nodetails />
-        </Flex.Item>
-      )}
-      {tabIndex === 1 && (
-        <Flex.Item className="Techweb__OverviewNodes">
+        <Flex.Item className="Techweb__OverviewNodes" grow={1}>
           {prereqNodes.map(n =>
             (<TechNode node={n} key={n.id} />)
           )}
         </Flex.Item>
       )}
-      {tabIndex === 2 && (
-        <Flex.Item className="Techweb__OverviewNodes">
+      {tabIndex === 1 && (
+        <Flex.Item className="Techweb__OverviewNodes" grow={1}>
           {unlockedNodes.map(n =>
             (<TechNode node={n} key={n.id} />)
           )}

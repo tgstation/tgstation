@@ -4,7 +4,7 @@
 
 /datum/experiment/scanning/points/slime/calibration
 	name = "Slime Sample Test"
-	description = "Lets see if our scanners can pick up the genetic data from a simple slime extract."
+	description = "Let's see if our scanners can pick up the genetic data from a simple slime extract."
 	required_atoms = list(/obj/item/slime_extract/grey = 1)
 
 /datum/experiment/scanning/points/slime/easy
@@ -127,7 +127,7 @@
 
 /datum/experiment/scanning/random/material/hard
 	name = "High Grade Material Scanning Experiment"
-	description = "NT spares no expense to test even the most valuable of materials for their qualities as construction materials. Go build us some of the fanciest"
+	description = "NT spares no expense to test even the most valuable of materials for their qualities as construction materials. Go build us some of these exotic creations and collect the data."
 	possible_material_types = list(/datum/material/diamond, /datum/material/plasma, /datum/material/uranium)
 
 /datum/experiment/scanning/random/material/hard/one
