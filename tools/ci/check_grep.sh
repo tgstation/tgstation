@@ -31,6 +31,11 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
+echo "Checking for stacked cables"
+if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
+    echo "found multiple cables on the same tile, please remove them."
+    st=1
+fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
     st=1
