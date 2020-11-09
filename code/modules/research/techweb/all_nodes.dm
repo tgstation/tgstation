@@ -62,6 +62,7 @@
 					"dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
 
 /////////////////////////Biotech/////////////////////////
+
 /datum/techweb_node/biotech
 	id = "biotech"
 	display_name = "Biological Technology"
@@ -77,9 +78,9 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 7000) //Big discount to reinforce doing it.
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -87,11 +88,11 @@
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
 	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	required_experiments = list(/datum/experiment/scanning/random/cytology)
-	discount_experiments = list(/datum/experiment/physical/meat_wall_explosion = 7000) //Big discount to reinforce doing it.
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
 
 /////////////////////////Advanced Surgery/////////////////////////
+
 /datum/techweb_node/imp_wt_surgery
 	id = "imp_wt_surgery"
 	display_name = "Improved Wound-Tending Surgery"
@@ -126,6 +127,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /////////////////////////data theory tech/////////////////////////
+
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"
 	display_name = "Data Theory"
@@ -136,6 +138,7 @@
 
 
 /////////////////////////engineering tech/////////////////////////
+
 /datum/techweb_node/engineering
 	id = "engineering"
 	display_name = "Industrial Engineering"
@@ -154,8 +157,8 @@
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
 	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/random/material/medium/one)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
 
 /datum/techweb_node/anomaly
 	id = "anomaly_research"
@@ -459,7 +462,6 @@
 	prereq_ids = list("adv_biotech", "cyber_organs")
 	design_ids = list("cybernetic_ears_u", "cybernetic_heart_tier3", "cybernetic_liver_tier3", "cybernetic_lungs_tier3", "cybernetic_stomach_tier3")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	required_experiments = list(/datum/experiment/scanning/random/cytology/medium/one)
 
 /datum/techweb_node/cyber_implants
 	id = "cyber_implants"
@@ -476,7 +478,6 @@
 	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
 	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/random/cytology/medium/two, /datum/experiment/scanning/points/slime/moderate)
 
 /datum/techweb_node/combat_cyber_implants
 	id = "combat_cyber_implants"
@@ -503,7 +504,7 @@
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
 	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/random/material/hard/one, /datum/experiment/scanning/random/material/medium/two)
+	required_experiments = list(/datum/experiment/scanning/random/material/hard/one)
 
 /datum/techweb_node/janitor
 	id = "janitor"
