@@ -2,12 +2,6 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/wall{
-	icon = 'icons/turf/shuttleold.dmi';
-	icon_state = "block"
-	},
-/area/ruin/powered/bathhouse)
 "c" = (
 /obj/structure/table/greyscale,
 /obj/item/stack/medical/aloe{
@@ -20,8 +14,11 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "d" = (
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/unexplored)
+/turf/closed/indestructible/oldshuttle{
+	desc = "It's cool to the touch, comfortably so.";
+	name = "wall"
+	},
+/area/ruin/powered/bathhouse)
 "e" = (
 /obj/structure/mirror{
 	pixel_y = 28
@@ -97,28 +94,28 @@
 /area/ruin/powered/bathhouse)
 
 (1,1,1) = {"
-b
-b
-b
-b
-b
 d
+d
+d
+d
+d
+a
 a
 a
 "}
 (2,1,1) = {"
-b
+d
 f
 g
 g
-b
+d
 j
 j
 j
 "}
 (3,1,1) = {"
-b
-b
+d
+d
 l
 g
 i
@@ -127,82 +124,82 @@ k
 j
 "}
 (4,1,1) = {"
-b
+d
 f
 g
 g
-b
+d
 h
 k
 j
 "}
 (5,1,1) = {"
-b
-b
+d
+d
 g
 g
-b
+d
 m
 o
 j
 "}
 (6,1,1) = {"
-b
+d
 f
 g
 p
-b
+d
 j
 j
 j
 "}
 (7,1,1) = {"
-b
-b
+d
+d
 g
 q
-b
-n
-n
 d
+n
+n
+a
 "}
 (8,1,1) = {"
-b
+d
 e
 g
 g
-b
-n
-n
 d
+n
+n
+a
 "}
 (9,1,1) = {"
-b
+d
 e
 g
 g
 i
 n
 n
-d
+a
 "}
 (10,1,1) = {"
-b
+d
 c
 g
 g
-b
-n
 d
+n
+a
 a
 "}
 (11,1,1) = {"
-b
-b
-b
-b
-b
 d
+d
+d
+d
+d
+a
 a
 a
 "}
