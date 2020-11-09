@@ -30,8 +30,8 @@
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < (rating_amount * recipe.multiplier), i++)
 			new recipe.output(drop_location())
-	if (ismob(what))
-		var/mob/themob = what
+	if (isliving(what))
+		var/mob/living/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
 	else
 		qdel(what)
@@ -123,7 +123,7 @@
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(P, O)
-	pixel_x = initial(pixel_x) //return to its spot after shaking
+	pixel_x = base_pixel_x //return to its spot after shaking
 	processing = FALSE
 	visible_message("<span class='notice'>\The [src] finishes processing.</span>")
 
@@ -155,12 +155,12 @@
 	if(!(i = slimecores.Find(AM.type))) // If the item is not found
 		return
 	if (i <= 16) // If in the first 12 slots
-		AM.pixel_x = -12 + ((i%4)*8)
-		AM.pixel_y = -12 + (round(i/4)*8)
+		AM.pixel_x = AM.base_pixel_x - 12 + ((i%4)*8)
+		AM.pixel_y = AM.base_pixel_y - 12 + (round(i/4)*8)
 		return i
 	var/ii = i - 16
-	AM.pixel_x = -8 + ((ii%3)*8)
-	AM.pixel_y = -8 + (round(ii/3)*8)
+	AM.pixel_x = AM.base_pixel_x - 8 + ((ii%3)*8)
+	AM.pixel_y = AM.base_pixel_y - 8 + (round(ii/3)*8)
 	return i
 
 /obj/machinery/processor/slime/process()

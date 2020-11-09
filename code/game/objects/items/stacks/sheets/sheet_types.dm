@@ -447,8 +447,9 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
 		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
 		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
-		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),					\
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
+		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
 		null,																					\
 
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
@@ -703,18 +704,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
-
-/obj/item/stack/sheet/capitalisium
-	name = "capitalisium sheet"
-	desc = "A source of raw capitalism, capable of bringing forth the prophesized Capitalist Golem."
-	icon_state = "sheet-capitalisium"
-	merge_type = /obj/item/stack/sheet/capitalisium
-
-/obj/item/stack/sheet/stalinium
-	name = "stalinium sheet"
-	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
-	icon_state = "sheet-stalinium"
-	merge_type = /obj/item/stack/sheet/stalinium
 
 /obj/item/stack/sheet/meat
 	name = "meat sheets"

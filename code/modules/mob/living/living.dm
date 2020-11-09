@@ -322,22 +322,22 @@
 	M.setDir(get_dir(M, src))
 	switch(M.dir)
 		if(NORTH)
-			animate(M, pixel_x = 0, pixel_y = offset, 3)
+			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y + offset, 3)
 		if(SOUTH)
-			animate(M, pixel_x = 0, pixel_y = -offset, 3)
+			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y - offset, 3)
 		if(EAST)
 			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
 				M.set_lying_angle(90)
-			animate(M, pixel_x = offset, pixel_y = 0, 3)
+			animate(M, pixel_x = M.base_pixel_x + offset, pixel_y = M.base_pixel_y, 3)
 		if(WEST)
 			if(M.lying_angle == 90)
 				M.set_lying_angle(270)
-			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+			animate(M, pixel_x = M.base_pixel_x - offset, pixel_y = M.base_pixel_y, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = 0, pixel_y = 0, 1)
+	animate(M, pixel_x = base_pixel_x, pixel_y = base_pixel_y, 1)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -428,6 +428,35 @@
 /mob/proc/get_contents()
 
 
+//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/mob/living/proc/get_idcard(hand_first)
+	if(!length(held_items)) //Early return for mobs without hands.
+		return
+	//Check hands
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item) //Check active hand
+		. = held_item.GetID()
+	if(!.) //If there is no id, check the other hand
+		held_item = get_inactive_held_item()
+		if(held_item)
+			. = held_item.GetID()
+
+/mob/living/proc/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()
+
+//Returns the bank account of an ID the user may be holding.
+/mob/living/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I?.registered_account)
+		account = I.registered_account
+		return account
+
 /mob/living/proc/toggle_resting()
 	set name = "Rest"
 	set category = "IC"
@@ -445,7 +474,7 @@
 		if(body_position == LYING_DOWN)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to stay lying down on the floor.</span>")
-		else if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		else if(HAS_TRAIT(src, TRAIT_FORCED_STANDING) || (buckled && buckled.buckle_lying != NO_BUCKLE_LYING))
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now lay down as soon as you are able to.</span>")
 		else
@@ -502,6 +531,7 @@
 	density = FALSE // We lose density and stop bumping passable dense things.
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
+	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
 
 
 /// Proc to append behavior related to lying down.
@@ -511,6 +541,7 @@
 	density = initial(density) // We were prone before, so we become dense and things can bump into us again.
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	body_position_pixel_y_offset = 0
 
 
 
@@ -556,7 +587,7 @@
 	var/severity = 0
 	var/healthpercent = (health/maxHealth) * 100
 	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
-		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		var/atom/movable/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
 			if(100 to INFINITY)
 				severity = 0
@@ -582,7 +613,7 @@
 			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
-		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -898,11 +929,11 @@
 			clear_alert("gravity")
 		else
 			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
-				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
 			else
-				throw_alert("gravity", /obj/screen/alert/highgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/highgravity)
 	else
-		throw_alert("gravity", /obj/screen/alert/weightless)
+		throw_alert("gravity", /atom/movable/screen/alert/weightless)
 	if(!override && !is_flying())
 		float(!has_gravity)
 
@@ -918,7 +949,7 @@
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		setMovetype(movement_type | FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = get_standard_pixel_y_offset(lying_angle), time = 10)
+		animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
 		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
@@ -930,6 +961,7 @@
 	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>You try to remove [who]'s [what.name]...</span>")
+	log_combat(src, who, "started stripping [what] off")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -1005,8 +1037,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = get_standard_pixel_x_offset(body_position == LYING_DOWN)
-	var/final_pixel_y = get_standard_pixel_y_offset(body_position == LYING_DOWN)
+	var/final_pixel_x = base_pixel_x + body_position_pixel_x_offset
+	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
@@ -1022,12 +1054,6 @@
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 	return loc_temp
-
-/mob/living/proc/get_standard_pixel_x_offset(lying = 0)
-	return initial(pixel_x)
-
-/mob/living/proc/get_standard_pixel_y_offset(lying = 0)
-	return initial(pixel_y)
 
 /mob/living/cancel_camera()
 	..()
@@ -1146,7 +1172,7 @@
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /obj/screen/alert/fire)
+		throw_alert("fire", /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
@@ -1256,17 +1282,6 @@
 	for(var/obj/effect/proc_holder/A in abilities)
 		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
 	return L
-
-/mob/living/lingcheck()
-	if(mind)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			if(changeling.changeling_speak)
-				return LINGHIVE_LING
-			return LINGHIVE_OUTSIDER
-	if(mind?.linglink)
-		return LINGHIVE_LINK
-	return LINGHIVE_NONE
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

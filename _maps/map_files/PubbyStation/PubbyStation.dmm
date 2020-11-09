@@ -15892,7 +15892,7 @@
 /area/quartermaster/warehouse)
 "aPV" = (
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -26701,6 +26701,10 @@
 /obj/structure/table/glass,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/mask/surgical,
+/obj/machinery/bounty_board{
+	dir = 8;
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bub" = (
@@ -30957,8 +30961,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
@@ -32528,9 +32531,7 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "bJV" = (
-/obj/machinery/mass_driver{
-	id = "toxinsdriver"
-	},
+/obj/machinery/mass_driver/toxins,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -33348,10 +33349,7 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "bMq" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "toxins launcher bay door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -41012,9 +41010,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main/monastery)
 "ckv" = (
-/obj/machinery/mass_driver{
-	id = "chapelgun"
-	},
+/obj/machinery/mass_driver/chapelgun,
 /obj/machinery/door/window/eastleft{
 	dir = 8;
 	name = "Mass Driver"
@@ -41023,9 +41019,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "ckw" = (
-/obj/machinery/mass_driver{
-	id = "chapelgun"
-	},
+/obj/machinery/mass_driver/chapelgun,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -41174,10 +41168,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "clb" = (
-/obj/machinery/door/poddoor{
-	id = "chapelgun";
-	name = "mass driver door"
-	},
+/obj/machinery/door/poddoor/massdriver_chapel,
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "cld" = (
@@ -42950,20 +42941,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"crL" = (
-/obj/structure/chair/wood,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
-/area/chapel/main/monastery)
-"crM" = (
-/obj/structure/chair/wood,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/plasteel/chapel{
-	dir = 1
-	},
-/area/chapel/main/monastery)
 "crN" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -44154,8 +44131,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "chapelgun";
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -46545,8 +46521,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24;
 	pixel_y = -5
 	},
@@ -47935,10 +47910,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "gDQ" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "Disposals Launch Seal"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -53922,9 +53894,8 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
 "pmw" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "trash"
+/obj/machinery/mass_driver/trash{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -54412,6 +54383,10 @@
 "pYw" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-03"
+	},
+/obj/machinery/bounty_board{
+	dir = 4;
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
@@ -74865,7 +74840,7 @@ bXJ
 bXJ
 bZm
 bYB
-crL
+bZm
 caV
 cbM
 ccH
@@ -75636,7 +75611,7 @@ bXJ
 bXJ
 bZl
 bYA
-crM
+bZl
 caW
 cbP
 cdu

@@ -149,11 +149,12 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	stored.RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/shape_death)
-	stored.RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
-	shape.RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
+	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
+	// because restore() qdel'd src.
 	if(!restoring)
 		restore()
 	stored = null
@@ -191,6 +192,10 @@
 		restore()
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
+	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
+	// when caster and shape both die at the same time.
+	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
@@ -207,5 +212,10 @@
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
-	QDEL_NULL(shape)
+
+	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
+	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
+	if(!QDELETED(shape))
+		QDEL_NULL(shape)
+
 	qdel(src)

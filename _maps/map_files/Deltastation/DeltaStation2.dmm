@@ -6184,9 +6184,8 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apF" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "trash"
+/obj/machinery/mass_driver/trash{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -6198,10 +6197,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apG" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "Disposals Launch Seal"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6687,8 +6683,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24;
 	pixel_y = -7
 	},
@@ -15912,10 +15907,7 @@
 "aIe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aIf" = (
 /obj/structure/table,
@@ -16228,12 +16220,10 @@
 /area/maintenance/port/fore)
 "aIN" = (
 /obj/structure/table/wood,
-/obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "aIO" = (
-/obj/structure/table/wood,
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
@@ -64997,6 +64987,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/radio/intercom{
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cuE" = (
@@ -67344,6 +67337,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -67664,7 +67660,7 @@
 	dir = 4;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -69235,7 +69231,7 @@
 	dir = 4;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -77362,7 +77358,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cSP" = (
-/obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 3
@@ -77385,7 +77380,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cSQ" = (
-/obj/structure/table,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
 	pixel_y = 3
@@ -97683,8 +97677,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
@@ -98229,10 +98222,7 @@
 /turf/open/floor/plating/airless,
 /area/science/misc_lab)
 "dLK" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "Toxins Launcher Bay Door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/misc_lab)
@@ -98258,9 +98248,8 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dLO" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "toxinsdriver"
+/obj/machinery/mass_driver/toxins{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end{
@@ -108552,6 +108541,17 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"gsX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "gvO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -168652,7 +168652,7 @@ cRw
 cTd
 cVc
 cWC
-cYr
+gsX
 dab
 dbF
 ddv

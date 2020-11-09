@@ -61,11 +61,26 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 
+/obj/machinery/door/poddoor/massdriver_toxins
+	name = "Toxins Launcher Bay Door"
+	id = MASSDRIVER_TOXINS
+
+/obj/machinery/door/poddoor/massdriver_chapel
+	name = "Chapel Launcher Bay Door"
+	id = MASSDRIVER_CHAPEL
+
+/obj/machinery/door/poddoor/massdriver_trash
+	name = "Disposals Launcher Bay Door"
+	id = MASSDRIVER_DISPOSALS
+
 /obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
 	else
 		return ..()
+
+/obj/machinery/door/poddoor/shutters/bumpopen()
+	return
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)

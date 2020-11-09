@@ -34,7 +34,7 @@
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/obj/screen/inventory/hand/H
+		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
 			H.update_icon()
@@ -98,8 +98,8 @@
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			victim.Paralyze(20)
 			Paralyze(20)
-			visible_message("<span class='danger'>[src] crashes into [victim] [extra_speed ? "really hard" : ""], knocking them both over!</span>",\
-				"<span class='userdanger'>You violently crash into [victim] [extra_speed ? "extra hard" : ""]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!</span>",\
+				"<span class='userdanger'>You violently crash into [victim][extra_speed ? " extra hard" : ""]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 
 
@@ -133,7 +133,7 @@
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
-	if(istype(target, /obj/screen))
+	if(istype(target, /atom/movable/screen))
 		return
 
 	var/atom/movable/thrown_thing
@@ -404,12 +404,6 @@
 			update_inv_legcuffed()
 			return TRUE
 
-/mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
-	if(lying)
-		return -6
-	else
-		return initial(pixel_y)
-
 /mob/living/carbon/proc/accident(obj/item/I)
 	if(!I || (I.item_flags & ABSTRACT) || HAS_TRAIT(I, TRAIT_NODROP))
 		return
@@ -459,7 +453,7 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
-	if(nutrition < 100 && !blood)
+	if(nutrition < 100 && !blood && !force)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
@@ -517,7 +511,7 @@
  * * bite: /atom the reagents to expel
  * * amount: int The amount of reagent
  */
-/mob/living/carbon/proc/expel_ingested(var/atom/bite, amount)
+/mob/living/carbon/proc/expel_ingested(atom/bite, amount)
 	visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 					"<span class='userdanger'>You are unable to keep the [bite] down without a stomach!</span>")
 
@@ -649,7 +643,7 @@
 		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
 	else
 		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
@@ -724,10 +718,10 @@
 					visionseverity = 9
 				if(-INFINITY to -24)
 					visionseverity = 10
-			overlay_fullscreen("critvision", /obj/screen/fullscreen/crit/vision, visionseverity)
+			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/crit/vision, visionseverity)
 		else
 			clear_fullscreen("critvision")
-		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
 		clear_fullscreen("critvision")
@@ -750,7 +744,7 @@
 				severity = 6
 			if(45 to INFINITY)
 				severity = 7
-		overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
 
@@ -771,7 +765,7 @@
 				severity = 5
 			if(85 to INFINITY)
 				severity = 6
-		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -849,7 +843,7 @@
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
-		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")

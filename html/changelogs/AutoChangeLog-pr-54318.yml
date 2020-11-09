@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "Runechat messages will now also display the icon."

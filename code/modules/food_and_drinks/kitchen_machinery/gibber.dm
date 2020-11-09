@@ -220,7 +220,7 @@
 			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
-	pixel_x = initial(pixel_x) //return to its spot after shaking
+	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
 	update_icon()
 
@@ -230,9 +230,9 @@
 
 /obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/victim = AM
 
-		if(M.loc == input)
-			M.forceMove(src)
-			M.gib()
+		if(victim.loc == input)
+			victim.forceMove(src)
+			victim.gib()
