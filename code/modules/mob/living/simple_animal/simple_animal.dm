@@ -192,7 +192,8 @@
 
 /mob/living/simple_animal/Life()
 	. = ..()
-	update_stamina()
+	if(staminaloss > 0)
+		adjustStaminaLoss(-stamina_recovery)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -259,7 +260,6 @@
   * Reduces the stamina loss by stamina_recovery
   */
 /mob/living/simple_animal/update_stamina()
-	staminaloss = max(0, staminaloss - stamina_recovery)
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
