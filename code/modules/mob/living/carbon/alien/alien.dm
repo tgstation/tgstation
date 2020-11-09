@@ -54,7 +54,7 @@
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -115,9 +115,6 @@ Des: Removes all infected images from the alien.
 	if(num_hands < 2)
 		return FALSE
 	return TRUE
-
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = FALSE)
-	return initial(pixel_y)
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
