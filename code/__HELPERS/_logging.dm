@@ -203,7 +203,7 @@
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
 /proc/log_perf(list/perf_info)
-	var/out = "[perf_info.Join("")]\n"
+	var/out = "[perf_info.Join(",")]\n"
 	WRITE_LOG_NO_FORMAT(GLOB.perf_log, out)
 
 /**
