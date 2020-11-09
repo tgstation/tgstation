@@ -121,14 +121,14 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 /atom/movable/visual/split_vis/Initialize(mapload, icon, junction, dir, shadow, custom_alpha, custom_pixel_x, custom_pixel_y, custom_plane, custom_layer)
 	. = ..()
 	src.icon = icon
-	var/junction = isnull(junction) ? 0 : junction
-	icon_state = "[dir]-[junction]"
+	var/junc = junction ? junction : "0"
+	icon_state = "[dir]-[junc]"
 	if(shadow)
 		vis_contents += get_splitvis_object(icon, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
 	if(!isnull(custom_alpha))
 		alpha = custom_alpha
 	if(!isnull(custom_pixel_x))
-		pixel_x = custom_pixel_x
+		pixel_x = custom_pixel_x l
 	if(!isnull(custom_pixel_y))
 		pixel_y = custom_pixel_y
 	if(!isnull(custom_plane))

@@ -348,6 +348,8 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
+	AddElement(/datum/element/wall_mount)
+
 	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir, alpha = 0, unique = TRUE)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
@@ -358,7 +360,6 @@
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
-	AddElement(/datum/element/wall_mount)
 
 	return INITIALIZE_HINT_LATELOAD
 
