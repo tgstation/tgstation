@@ -201,7 +201,9 @@
 	name = "Runtime's bed"
 	anchored = TRUE
 
-/obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
+/obj/structure/bed/dogbed/proc/update_owner(mob/living/M)\
+	if(type != /obj/structure/bed/dogbed) //Only marked beds
+		continue
 	owned = TRUE
 	name = "[M]'s bed"
 	desc = "[M]'s bed! Looks comfy."
