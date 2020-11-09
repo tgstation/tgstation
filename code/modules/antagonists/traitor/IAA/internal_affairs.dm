@@ -52,14 +52,14 @@
 	id = "agent_pinpointer"
 	duration = -1
 	tick_interval = PINPOINTER_PING_TIME
-	alert_type = /obj/screen/alert/status_effect/agent_pinpointer
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
 	var/range_fuzz_factor = PINPOINTER_EXTRA_RANDOM_RANGE
 	var/mob/scan_target = null
 	var/range_mid = 8
 	var/range_far = 16
 
-/obj/screen/alert/status_effect/agent_pinpointer
+/atom/movable/screen/alert/status_effect/agent_pinpointer
 	name = "Internal Affairs Integrated Pinpointer"
 	desc = "Even stealthier than a normal implant."
 	icon = 'icons/obj/device.dmi'
