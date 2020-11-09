@@ -231,6 +231,7 @@
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_frequency(frequency)
+	AddElement(/datum/element/wall_mount)
 
 
 /obj/machinery/airalarm/setDir(newdir)
