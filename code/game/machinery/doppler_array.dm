@@ -190,7 +190,7 @@
 	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
 	var/datum/techweb/linked_techweb
 
-/obj/machinery/doppler_array/research/ComponentInitialize()
+/obj/machinery/doppler_array/research/Initialize()
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/explosion), \
