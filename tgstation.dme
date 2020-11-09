@@ -586,6 +586,7 @@
 #include "code\datums\elements\rad_insulation.dm"
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\snail_crawl.dm"
+#include "code\datums\elements\split_visibility.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\swabbable.dm"
 #include "code\datums\elements\tool_flash.dm"

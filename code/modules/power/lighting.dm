@@ -358,6 +358,8 @@
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
+	AddElement(/datum/element/wall_mount)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()

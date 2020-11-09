@@ -3,8 +3,8 @@
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	icon = 'icons/turf/walls/wall.dmi'
-	icon_state = "wall-0"
+	icon = 'icons/turf/walls/bases.dmi'
+	icon_state = "wall"
 	base_icon_state = "wall"
 	explosion_block = 1
 
@@ -18,7 +18,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
-	frill_icon = 'icons/effects/frills/wall_metal_frill.dmi'
+	split_vis_icon = 'icons/turf/walls/wall.dmi'
 
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
@@ -45,6 +45,8 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+
+	icon_state = "black"
 
 
 /turf/closed/wall/Destroy()

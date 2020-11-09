@@ -16259,7 +16259,7 @@
 /obj/item/ai_module/core/full/custom,
 /obj/machinery/flasher{
 	id = "AI";
-	pixel_y = 24
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -17890,6 +17890,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/flasher{
+	dir = 1;
 	id = "AI";
 	pixel_y = -24
 	},
@@ -17938,6 +17939,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/flasher{
+	dir = 1;
 	id = "AI";
 	pixel_y = -24
 	},
@@ -18522,6 +18524,7 @@
 /area/quartermaster/warehouse)
 "aRT" = (
 /obj/machinery/flasher{
+	dir = 1;
 	id = "AI";
 	pixel_y = -24
 	},
@@ -67283,6 +67286,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/flasher{
+	dir = 8;
+	id = "secentranceflasher"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "gQV" = (
@@ -73082,8 +73089,7 @@
 /area/security/prison)
 "oYd" = (
 /obj/machinery/flasher{
-	id = "visitorflash";
-	pixel_y = 28
+	id = "visitorflash"
 	},
 /obj/structure/chair/stool,
 /obj/effect/turf_decal/trimline/red/warning{
@@ -73925,9 +73931,9 @@
 /area/medical/patients_rooms)
 "pVK" = (
 /obj/machinery/flasher{
+	dir = 8;
 	id = "justiceflash";
-	name = "mounted justice flash";
-	pixel_x = 28
+	name = "mounted justice flash"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
