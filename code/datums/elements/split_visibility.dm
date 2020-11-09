@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(split_visibility_objects)
 
-/proc/get_splitvis_object(icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = FRILL_PLANE)
+/proc/get_splitvis_object(icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = WALL_PLANE)
 	. = GLOB.split_visibility_objects["[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]"]
 	if(.)
 		return
@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	//north
 	operating_turf = get_step(target_turf, NORTH)
 	if(!istype(operating_turf, target_turf.type))
-		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, NORTH, TRUE, pixel_y = -32)
+		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, NORTH, TRUE, pixel_y = -32, plane = FRILL_PLANE)
 	//south
 	operating_turf = get_step(target_turf, SOUTH)
 	if(!istype(operating_turf, target_turf.type))
@@ -48,13 +48,29 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	if(!istype(operating_turf, target_turf.type))
 		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, WEST, FALSE, pixel_x = 32)
 
+	if((junction & NORTH) && (junction & EAST))
+		operating_turf = get_step(target_turf, NORTHEAST)
+		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, NORTHEAST, FALSE, pixel_x = -32, pixel_y = -32)
+
+	if((junction & NORTH) && (junction & WEST))
+		operating_turf = get_step(target_turf, NORTHWEST)
+		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, NORTHWEST, FALSE, pixel_x = 32, pixel_y = -32)
+
+	if((junction & SOUTH) && (junction & EAST))
+		operating_turf = get_step(target_turf, SOUTHEAST)
+		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, SOUTHEAST, FALSE, pixel_x = -32, pixel_y = 32)
+
+	if((junction & SOUTH) && (junction & WEST))
+		operating_turf = get_step(target_turf, SOUTHWEST)
+		operating_turf.vis_contents += get_splitvis_object(icon_path, junction, SOUTHWEST, SOUTHWEST, pixel_x = 32, pixel_y = 32)
+
 /datum/element/split_visibility/proc/remove_split_vis_objects(turf/target_turf, icon_path, new_junction)
 	var/junction = new_junction ? new_junction : target_turf.smoothing_junction
 
 	var/turf/operating_turf
 	//north
 	operating_turf = get_step(target_turf, NORTH)
-	operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, NORTH, TRUE, pixel_y = -32)
+	operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, NORTH, TRUE, pixel_y = -32, plane = FRILL_PLANE)
 	//south
 	operating_turf = get_step(target_turf, SOUTH)
 	operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, SOUTH, FALSE, pixel_y = 32)
@@ -64,6 +80,22 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	//west
 	operating_turf = get_step(target_turf, WEST)
 	operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, WEST, FALSE, pixel_x = 32)
+
+	if(junction & (NORTH | EAST))
+		operating_turf = get_step(target_turf, NORTHEAST)
+		operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, NORTH, FALSE, pixel_x = -32, pixel_y = -32)
+
+	if(junction & (NORTH | WEST))
+		operating_turf = get_step(target_turf, NORTHWEST)
+		operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, NORTH, FALSE, pixel_x = 32, pixel_y = -32)
+
+	if(junction & (SOUTH | EAST))
+		operating_turf = get_step(target_turf, SOUTHEAST)
+		operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, SOUTH, FALSE, pixel_x = -32, pixel_y = 32)
+
+	if(junction & (SOUTH | WEST))
+		operating_turf = get_step(target_turf, SOUTHWEST)
+		operating_turf.vis_contents -= get_splitvis_object(icon_path, junction, SOUTH, FALSE, pixel_x = 32, pixel_y = 32)
 
 /datum/element/split_visibility/Detach(turf/target)
 	remove_split_vis_objects(target, icon_path)
@@ -82,7 +114,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = TILE_BOUND
 	layer = ABOVE_MOB_LAYER
-	plane = FRILL_PLANE
+	plane = WALL_PLANE
 	vis_flags = NONE
 
 
@@ -91,7 +123,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	src.icon = icon
 	icon_state = "[dir]-[junction]"
 	if(shadow)
-		vis_contents += get_frill_object(icon, junction, dir, FALSE, 120, 0, 0, UNDER_FRILL_PLANE)
+		vis_contents += get_splitvis_object(icon, junction, dir, FALSE, 120, custom_pixel_x, custom_pixel_y, UNDER_FRILL_PLANE)
 	if(!isnull(custom_alpha))
 		alpha = custom_alpha
 	if(!isnull(custom_pixel_x))
