@@ -67361,13 +67361,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"caK" = (
-/obj/machinery/door/poddoor{
-	id = "atmosventco2";
-	name = "Emergency CO2 Chamber Vent"
-	},
-/turf/open/floor/engine/vacuum,
-/area/engine/atmos)
 "caL" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -68637,13 +68630,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmos)
-"ccT" = (
-/obj/machinery/door/poddoor{
-	id = "atmosventplasma";
-	name = "Emergency Plasma Chamber Vent"
-	},
-/turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "ccU" = (
 /obj/machinery/telecomms/processor/preset_four,
@@ -75756,12 +75742,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/button/door{
-	id = "atmosventco2";
-	name = "Emergency CO2 Vent Toggle";
-	pixel_x = 6;
-	pixel_y = -24
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -75936,12 +75916,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "atmosventplasma";
-	name = "Emergency Plasma Vent Toggle";
-	pixel_x = 6;
-	pixel_y = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -78416,13 +78390,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
-"ctr" = (
-/obj/machinery/door/poddoor{
-	id = "atmosventn2o";
-	name = "Emergency N2O Chamber Vent"
-	},
-/turf/open/floor/engine/vacuum,
-/area/engine/atmos)
 "cts" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -85455,25 +85422,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/starboard/aft)
-"cFt" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "atmosventn2o";
-	name = "Emergency N2O Vent Toggle";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel/dark,
-/area/engine/atmos)
 "cFu" = (
 /obj/structure/sign/warning/vacuum,
 /obj/structure/grille,
@@ -120885,7 +120833,7 @@ cBA
 aHe
 aFm
 aFc
-caK
+aFM
 acK
 acm
 cow
@@ -121913,7 +121861,7 @@ cBA
 aHh
 aFn
 aFd
-ccT
+aFM
 acK
 aaa
 cow
@@ -122677,7 +122625,7 @@ aMG
 aIu
 aHI
 coG
-cFt
+cpo
 aJI
 ckE
 cBz
@@ -122941,7 +122889,7 @@ cBA
 aHk
 aFo
 aFe
-ctr
+aFM
 acK
 acm
 cow
