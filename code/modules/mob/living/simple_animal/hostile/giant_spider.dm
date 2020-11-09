@@ -108,9 +108,6 @@
 	else
 		clear_alert("temp")
 
-/mob/living/simple_animal/hostile/poison/giant_spider/adjustStaminaLoss(amount, updating_health, forced = FALSE)
-	staminaloss = min(200, staminaloss + (amount * damage_coeff[STAMINA]))
-
 /**
   * # Spider Hunter
   *

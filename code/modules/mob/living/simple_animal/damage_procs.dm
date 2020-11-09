@@ -38,4 +38,4 @@
 		. = adjustHealth(amount * damage_coeff[CLONE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount, updating_health, forced = FALSE)
-	return
+	staminaloss = min(max_staminaloss, staminaloss + (amount * damage_coeff[STAMINA]))

@@ -80,9 +80,6 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
-	staminaloss = max(0, staminaloss - 10)
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
-	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -110,6 +107,10 @@
 				addtimer(cb, (i - 1)*sidestep_delay)
 		else //Otherwise randomize it to make the players guessing.
 			addtimer(cb,rand(1,SSnpcpool.wait))
+
+/mob/living/simple_animal/hostile/update_stamina()
+	. = ..()
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
