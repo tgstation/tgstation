@@ -428,6 +428,35 @@
 /mob/proc/get_contents()
 
 
+//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/mob/living/proc/get_idcard(hand_first)
+	if(!length(held_items)) //Early return for mobs without hands.
+		return
+	//Check hands
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item) //Check active hand
+		. = held_item.GetID()
+	if(!.) //If there is no id, check the other hand
+		held_item = get_inactive_held_item()
+		if(held_item)
+			. = held_item.GetID()
+
+/mob/living/proc/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()
+
+//Returns the bank account of an ID the user may be holding.
+/mob/living/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I?.registered_account)
+		account = I.registered_account
+		return account
+
 /mob/living/proc/toggle_resting()
 	set name = "Rest"
 	set category = "IC"
@@ -445,7 +474,7 @@
 		if(body_position == LYING_DOWN)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to stay lying down on the floor.</span>")
-		else if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		else if(HAS_TRAIT(src, TRAIT_FORCED_STANDING) || (buckled && buckled.buckle_lying != NO_BUCKLE_LYING))
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now lay down as soon as you are able to.</span>")
 		else
@@ -502,6 +531,7 @@
 	density = FALSE // We lose density and stop bumping passable dense things.
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
+	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
 
 
 /// Proc to append behavior related to lying down.
@@ -511,6 +541,7 @@
 	density = initial(density) // We were prone before, so we become dense and things can bump into us again.
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	body_position_pixel_y_offset = 0
 
 
 
@@ -918,7 +949,7 @@
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		setMovetype(movement_type | FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
+		animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
 		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
@@ -1006,8 +1037,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = base_pixel_x + get_standard_pixel_x_offset(body_position == LYING_DOWN)
-	var/final_pixel_y = base_pixel_y + get_standard_pixel_y_offset(body_position == LYING_DOWN)
+	var/final_pixel_x = base_pixel_x + body_position_pixel_x_offset
+	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
@@ -1023,12 +1054,6 @@
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 	return loc_temp
-
-/mob/living/proc/get_standard_pixel_x_offset(lying = FALSE)
-	return initial(pixel_x)
-
-/mob/living/proc/get_standard_pixel_y_offset(lying = FALSE)
-	return initial(pixel_y)
 
 /mob/living/cancel_camera()
 	..()

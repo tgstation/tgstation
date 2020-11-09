@@ -286,7 +286,7 @@ Difficulty: Extremely Hard
 		return
 	forceMove(user)
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
-	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
+	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)

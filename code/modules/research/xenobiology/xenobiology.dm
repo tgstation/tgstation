@@ -765,7 +765,7 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/user, proximity)
+/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/living/user, proximity)
 	if(!proximity)
 		return
 	if(prompted || !ismob(M))
