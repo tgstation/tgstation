@@ -117,7 +117,7 @@
 	if(!s_initialized)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
 		return FALSE
-	if(s_coold != 0)
+	if(s_coold > 0)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
 		return FALSE
 	if(IS_NINJA_SUIT_STATUS(action))
