@@ -1,14 +1,14 @@
 /*
 	Map Template Holodeck
 
-	Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the same holodeck_access
-	flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this flag), these program templates are then
-	given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the ui calls load_program with the id of the selected program.
-	There are two modified map template procs for the holodeck, map_template/holodeck/load and parsed_map/holodeckTemplateBounds. These are similar to their
-	non holodeck counterparts, map_template/load and parsed_map/initTemplateBounds. the main difference is that holodeckTemplateBounds records how many non turf
-	atoms it created, and passes this to map_template/holodeck/load, which passes it to load_program as the spawned list. if something spawned by the holodeck
-	doesnt get deleted when it should, then for whatever reason it is not being put inside the spawned list. usually this is because it was created by an object
-	that was inside the spawned list (like how deconstructing a dresser spawns 10 wood planks, which are themselves not put into spawned)
+	Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the
+	same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
+	flag), these program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
+	ui calls load_program with the id of the selected program. load program map_template/load() on map_template/holodeck, holodeck map templates
+	1. have an update_blacklist that doesnt allow placing on non holofloors
+	2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
+	3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
+	all the fancy flags and shit are added to holodeck objects in finish_spawn()
 
 
 	Easiest way to add new holodeck programs
@@ -49,7 +49,6 @@
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
-	var/list/non_holo_items_in_area = list()
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -143,7 +142,6 @@
 
 ///the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
-
 	if (program == map_id)
 		return
 
@@ -159,7 +157,6 @@
 		current_cd = world.time + HOLODECK_CD
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
-
 	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
@@ -176,8 +173,6 @@
 			holo_effect.deactivate(src)
 
 	template = SSmapping.holodeck_templates[map_id]
-	non_holo_items_in_area.Cut()
-
 	for (var/_turf in linked)
 		var/turf/holo_turf = _turf
 		if (istype(holo_turf, /turf/closed))
@@ -185,8 +180,6 @@
 				if (ispath(_baseturf, /turf/open/floor/holofloor))
 					holo_turf.baseturfs -= _baseturf
 					holo_turf.baseturfs += /turf/open/floor/holofloor/plating
-
-		non_holo_items_in_area += holo_turf.contents
 
 	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
 
@@ -215,9 +208,6 @@
 
 		if (isobj(atoms))
 			var/obj/holo_object = atoms
-			//if (length(holo_object.contents) > 0)
-			//	spawned -= holo_object
-			//	spawned += holo_object.GetAllContents()
 			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 			if (ismachinery(holo_object))
@@ -238,10 +228,6 @@
 		return
 
 	spawned -= object
-	for (var/_object in non_holo_items_in_area)
-		var/obj/is_holo = _object
-		if (object == is_holo)
-			return
 	var/turf/target_turf = get_turf(object)
 	for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
 		object_contents.forceMove(target_turf)
