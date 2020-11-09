@@ -400,5 +400,11 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+///Called when parent slips.
+/datum/component/mood/proc/on_slip(datum/source)
+	SIGNAL_HANDLER
+
+	add_event(null, "slipped", /datum/mood_event/slipped)
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
 
+	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
+
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
 	if(ishuman(parent))
