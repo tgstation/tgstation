@@ -1,5 +1,0 @@
-author: "prodirus"
-delete-after: True
-changes: 
-  - tweak: "Luminescent eyes can now alter their color and distance while on without turning themselves off."
-  - bugfix: "Luminescent eyes should now stop turning on again on movement!"
