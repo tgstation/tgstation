@@ -628,6 +628,9 @@
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	if(target == src)
+		return
+
 	var/panicking = FALSE
 
 	do
