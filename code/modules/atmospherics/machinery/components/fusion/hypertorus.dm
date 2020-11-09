@@ -21,7 +21,7 @@
 ///Max amount of allowed heat change
 #define MAX_HEAT_VARIATION 					1e5
 ///Max mole consumption per reaction cycle
-#define MAX_MODERATOR_USAGE 				20
+#define MAX_FUEL_USAGE 				36
 ///Mole count required (tritium/hydrogen) to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				25
 ///Used to reduce the gas_power to a more useful amount
@@ -433,7 +433,6 @@
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
 			if(linked_interface && linked_interface != object)
-				linked_interface = null
 				. =  FALSE
 			linked_interface = object
 
@@ -449,19 +448,16 @@
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
 			if(linked_input && linked_input != object)
-				linked_input = null
 				. =  FALSE
 			linked_input = object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
-				linked_output = null
 				. =  FALSE
 			linked_output = object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
-				linked_moderator = null
 				. =  FALSE
 			linked_moderator = object
 
@@ -478,17 +474,31 @@
 	update_icon()
 	linked_interface.active = TRUE
 	linked_interface.update_icon()
+	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_input.active = TRUE
 	linked_input.update_icon()
+	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_output.active = TRUE
 	linked_output.update_icon()
+	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	linked_moderator.active = TRUE
 	linked_moderator.update_icon()
+	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
 		corner.update_icon()
+		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
 	soundloop = new(list(src), TRUE)
 	soundloop.volume = 5
+
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/unregister_signals()
+	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+	for(var/obj/machinery/hypertorus/corner/corner in corners)
+		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
+	deactivate()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
 	if(!active)
@@ -498,25 +508,28 @@
 	if(linked_interface)
 		linked_interface.active = FALSE
 		linked_interface.update_icon()
+		linked_interface = null
 	if(linked_input)
 		linked_input.active = FALSE
 		linked_input.update_icon()
+		linked_input = null
 	if(linked_output)
 		linked_output.active = FALSE
 		linked_output.update_icon()
+		linked_output = null
 	if(linked_moderator)
 		linked_moderator.active = FALSE
 		linked_moderator.update_icon()
+		linked_moderator = null
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
 			corner.update_icon()
+		corners = null
 	QDEL_NULL(soundloop)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
-	if(internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
-		return TRUE
-	return FALSE
+	return (internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_power_use()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -720,8 +733,12 @@
 
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
 	var/datum/gas_mixture/buffer
-	buffer = linked_input.airs[1].remove(fuel_injection_rate * 0.1)
-	internal_fusion.merge(buffer)
+	if(linked_input.airs[1].gases[/datum/gas/hydrogen][MOLES] > 0)
+		buffer = linked_input.airs[1].remove_specific(/datum/gas/hydrogen, fuel_injection_rate * 0.1)
+		internal_fusion.merge(buffer)
+	if(linked_input.airs[1].gases[/datum/gas/tritium][MOLES] > 0)
+		buffer = linked_input.airs[1].remove_specific(/datum/gas/tritium, fuel_injection_rate * 0.1)
+		internal_fusion.merge(buffer)
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
 
@@ -770,7 +787,7 @@
 		magnetic_constrictor = 100
 		heating_conductor = 500
 		current_damper = 0
-		fuel_injection_rate = 600
+		fuel_injection_rate = 200
 		moderator_injection_rate = 500
 		waste_remove = FALSE
 		iron_content += 0.01
@@ -965,7 +982,7 @@
 	//better gas usage and consumption
 	//To do
 	if(check_fuel())
-		var/fuel_consumption = clamp(5 * power_level, 5, max(5, (fuel_injection_rate * 0.1) - MAX_MODERATOR_USAGE))
+		var/fuel_consumption = clamp(5 * power_level, 5, max(5, (fuel_injection_rate * 0.1) - MAX_FUEL_USAGE))
 		internal_fusion.gases[/datum/gas/tritium][MOLES] -= min(tritium, fuel_consumption * 0.75)
 		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= min(hydrogen, fuel_consumption * 0.85)
 		internal_fusion.gases[/datum/gas/helium][MOLES] += fuel_consumption * 0.5
@@ -1010,8 +1027,8 @@
 				if(3, 4)
 					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption)
 					if(power_level == 3)
-						moderator_internal.gases[/datum/gas/oxygen][MOLES] += scaled_production * 0.35
-						moderator_internal.gases[/datum/gas/nitrogen][MOLES] += scaled_production * 0.75
+						moderator_internal.gases[/datum/gas/oxygen][MOLES] += scaled_production * 0.05
+						moderator_internal.gases[/datum/gas/nitrogen][MOLES] += scaled_production * 0.15
 					if(power_level == 4)
 						moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.65
 						moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production * 0.25
@@ -1073,7 +1090,7 @@
 						if(critical_threshold_proximity > 400)
 							critical_threshold_proximity -= m_healium / 100
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-					if(moderator_internal.temperature < 1e7)
+					if(moderator_internal.temperature < 1e7 || (m_plasma > 100 && m_bz > 50))
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)

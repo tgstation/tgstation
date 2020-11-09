@@ -81,7 +81,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//PV = nRT
 
 	///joules per kelvin
-
 /datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
