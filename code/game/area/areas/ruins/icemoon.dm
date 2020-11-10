@@ -14,3 +14,7 @@
 	desc = "It's cool to the touch, pleasantly so."
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
+	base_icon_state = "block"
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
