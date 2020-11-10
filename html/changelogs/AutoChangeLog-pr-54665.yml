@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Player monkeys can now wield chairs through clickdrag and be given items to."
