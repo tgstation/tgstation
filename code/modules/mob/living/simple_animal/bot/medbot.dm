@@ -435,7 +435,7 @@
 	if((C.getBruteLoss() >= heal_threshold) && C.getBruteLoss() != 0)
 		treat_me_for += BRUTE
 
-	if((C.getOxyLoss() >= 5 + heal_threshold) && C.getOxyLoss() != 0)
+	if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
 		treat_me_for += OXY
 
 	if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
@@ -519,7 +519,7 @@
 		else if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
 			potential_methods += BURN
 
-		else if((C.getOxyLoss() >= 5 + heal_threshold) && C.getOxyLoss() != 0)
+		else if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
 			potential_methods += OXY
 
 		else if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
