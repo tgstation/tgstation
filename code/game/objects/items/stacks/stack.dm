@@ -49,9 +49,9 @@
 	if(!merge_type)
 		merge_type = type
 
-	if(mats_per_unit?.len)
+	if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)
-	else if(custom_materials?.len)
+	else if(LAZYLEN(custom_materials))
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
 
 	. = ..()
@@ -90,7 +90,7 @@
 	set_custom_materials(mats_per_unit, amount)
 
 /obj/item/stack/on_grind()
-	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
+	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
 		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
 
 /obj/item/stack/grind_requirements()
@@ -257,7 +257,7 @@
 				O.setDir(usr.dir)
 			use(R.req_amount * multiplier)
 
-			if(R.applies_mats && mats_per_unit?.len)
+			if(R.applies_mats && LAZYLEN(mats_per_unit))
 				if(isstack(O))
 					var/obj/item/stack/crafted_stack = O
 					crafted_stack.set_mats_per_unit(mats_per_unit, R.req_amount / R.res_amount)
@@ -423,7 +423,7 @@
 	return transfer
 
 /obj/item/stack/Crossed(atom/movable/crossing)
-	if(can_merge(crossing) && !crossing.throwing)
+	if(!crossing.throwing && can_merge(crossing))
 		merge(crossing)
 	. = ..()
 

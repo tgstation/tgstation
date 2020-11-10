@@ -327,9 +327,10 @@
 	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()
-	return custom_materials?.len
+	return LAZYLEN(custom_materials)
 
 /turf/open/floor/material/spawn_tile()
-	var/obj/item/stack/tile = ..()
-	tile.set_mats_per_unit(custom_materials, 1)
-	return tile
+	. = ..()
+	if(.)
+		var/obj/item/stack/tile = .
+		tile.set_mats_per_unit(custom_materials, 1)
