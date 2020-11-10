@@ -79,7 +79,11 @@
 	if (idx)
 		scanned[idx] += traits & EXP_TRAIT_DESTRUCTIVE ? 1 : target
 		if (traits & EXP_TRAIT_DESTRUCTIVE)
-			qdel(target)
+			if(isliving(target))
+				var/mob/living/fucked_up_thing = target
+				fucked_up_thing.gib()
+			else
+				qdel(target)
 		do_after_experiment(target, idx)
 		return TRUE
 
