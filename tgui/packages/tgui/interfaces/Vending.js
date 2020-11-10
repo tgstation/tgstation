@@ -81,7 +81,8 @@ const VendingRow = (props, context) => {
                 || product.price > data.user.cash
               )
             )}
-            content={(free && discount) ? `${redPrice} cr` : `${product.price} cr`}
+            content={(free && discount) ?
+            `${redPrice} cr` : `${product.price} cr`}
             onClick={() => act('vend', {
               'ref': product.ref,
             })} />
