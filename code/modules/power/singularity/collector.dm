@@ -52,7 +52,7 @@
 		loaded_tank.air_contents.garbage_collect()
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
-		add_avail(power_produced)
+		add_avail(power_produced, FALSE)
 		stored_energy-=power_produced
 
 /obj/machinery/power/rad_collector/interact(mob/user)
@@ -180,7 +180,9 @@
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		stored_energy += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+		var/power_created = (pulse_strength - RAD_COLLECTOR_EFFICIENCY) * RAD_COLLECTOR_COEFFICIENT
+		record_power_production(power_created)
+		stored_energy += power_created
 
 /obj/machinery/power/rad_collector/update_overlays()
 	. = ..()

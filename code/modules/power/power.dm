@@ -35,7 +35,16 @@
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
 
-/obj/machinery/power/proc/add_avail(amount)
+/// Records the amount of power produced for feedback
+/obj/machinery/power/proc/record_power_production(amount)
+	if (!powernet)
+		return
+
+	SSblackbox.record_feedback("tally", "power_production", amount, "[type]")
+
+/obj/machinery/power/proc/add_avail(amount, record_production = TRUE)
+	if(record_production)
+		record_power_production(amount)
 	if(powernet)
 		powernet.newavail += amount
 		return TRUE
