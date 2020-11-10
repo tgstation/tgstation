@@ -441,7 +441,7 @@
 	if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
 		treat_me_for += BURN
 
-	if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
+	if((C.getToxLoss() >= 5 + heal_threshold) && C.getToxLoss() != 0)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
