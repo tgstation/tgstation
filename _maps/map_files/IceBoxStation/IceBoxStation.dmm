@@ -22966,15 +22966,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bbk" = (
-/obj/structure/table,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -22984,7 +22975,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
-/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbl" = (
@@ -23013,16 +23003,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bbp" = (
-/obj/structure/table,
-/obj/item/circuitboard/machine/HFR_core,
-/obj/item/circuitboard/machine/HFR_fuel_input,
-/obj/item/circuitboard/machine/HFR_interface,
-/obj/item/circuitboard/machine/HFR_moderator_input,
-/obj/item/circuitboard/machine/HFR_waste_output,
-/obj/item/stack/cable_coil{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},

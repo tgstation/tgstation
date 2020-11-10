@@ -32689,6 +32689,9 @@
 	pixel_y = -32
 	},
 /obj/item/stack/sheet/plasteel/fifty,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bna" = (
@@ -32712,6 +32715,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
