@@ -375,6 +375,14 @@
 	custom_premium_price = 100
 	custom_price = 100
 
+/obj/item/clothing/shoes/wheelys/skishoes/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		ADD_MOVE_TRAIT(user, TRAIT_MOVE_SNOWSHOEING, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/wheelys/skishoes/dropped(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_MOVE_SNOWSHOEING, SHOES_TRAIT)
+	return ..()
 
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"

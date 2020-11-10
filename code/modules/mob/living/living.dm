@@ -9,6 +9,8 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(movement_type & (FLYING|FLOATING))
+		floating_anim_check()
 
 /mob/living/prepare_huds()
 	..()
@@ -918,10 +920,11 @@
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(has_gravity, override)
+/mob/living/update_gravity(has_gravity)
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
+	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /obj/screen/alert/weightless)
 	if(has_gravity)
 		if(has_gravity == 1)
 			clear_alert("gravity")
@@ -930,25 +933,32 @@
 				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
 			else
 				throw_alert("gravity", /obj/screen/alert/highgravity)
+		if(was_weightless)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
-	if(!override && !is_flying())
-		float(!has_gravity)
+		if(!was_weightless)
+			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 
-/mob/living/float(on)
-	if(throwing)
+/mob/living/floating_anim_check(do_anim = TRUE, timed = FALSE)
+	if(timed)
+		floating_anim_timerid = null
+	. = (!throwing && movement_type & (FLOATING|FLYING) && !(buckled?.anchored))
+	if(!do_anim || floating_anim_status == HAS_FLOATING_ANIM || floating_anim_timerid)
 		return
-	var/fixed = 0
-	if(anchored || (buckled?.anchored))
-		fixed = 1
-	if(on && !(movement_type & FLOATING) && !fixed)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
-	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
-		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
+	if(!.)
+		floating_anim_status = NO_FLOATING_ANIM
+	else
+		floating_anim_status = HAS_FLOATING_ANIM
+		do_floating_anim()
+
+/mob/living/halt_floating_anim(update = TRUE, timer = 2 SECONDS, animate = TRUE)
+	if(floating_anim_status == HAS_FLOATING_ANIM)
+		if(animate)
+			animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
+		else
+			pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle)
+	..(update, timer, FALSE)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -1032,6 +1042,7 @@
 		step_towards(src,S)
 
 /mob/living/proc/do_jitter_animation(jitteriness)
+	halt_floating_anim(animate = FALSE)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
@@ -1039,7 +1050,6 @@
 	var/final_pixel_y = base_pixel_y + get_standard_pixel_y_offset(body_position == LYING_DOWN)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C

@@ -85,10 +85,3 @@
 			leaping = FALSE
 			update_icons()
 
-
-/mob/living/carbon/alien/humanoid/float(on)
-	if(leaping)
-		return
-	..()
-
-

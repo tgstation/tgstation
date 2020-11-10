@@ -253,13 +253,14 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/colossus/float(on) //we don't want this guy to float, messes up his animations
-	if(throwing)
-		return
-	if(on && !(movement_type & FLOATING))
-		setMovetype(movement_type | FLOATING)
-	else if(!on && (movement_type & FLOATING))
-		setMovetype(movement_type & ~FLOATING)
+/mob/living/simple_animal/hostile/megafauna/colossus/do_floating_anim() //we don't want this guy to float, messes up his animations
+	return
+
+/mob/living/simple_animal/hostile/megafauna/colossus/floating_anim_check(do_anim = TRUE, timed = FALSE)
+	return FALSE
+
+/mob/living/simple_animal/hostile/megafauna/colossus/halt_floating_anim(update = TRUE, timer = 2 SECONDS)
+	return
 
 /obj/projectile/colossus
 	name ="death bolt"

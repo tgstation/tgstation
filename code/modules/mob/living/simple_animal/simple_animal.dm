@@ -490,7 +490,9 @@
 	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	setMovetype(initial(movement_type))
+	if(initial(movement_type) & (FLYING)) //regain its intrisic flight
+		movement_type |= FLYING
+		floating_anim_check(TRUE)
 
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3

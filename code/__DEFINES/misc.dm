@@ -527,3 +527,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<2)
 #define IGNORE_HELD_ITEM (1<<3)
 #define IGNORE_INCAPACITATED (1<<4)
+
+/// Floating status defines for the floating in space looping animation.
+#define NO_FLOATING_ANIM			0
+#define HAS_FLOATING_ANIM			1
+#define UPDATE_FLOATING_ANIM		2

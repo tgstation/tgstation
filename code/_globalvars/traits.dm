@@ -195,5 +195,5 @@ GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
 	TRAIT_MOVE_UNSTOPPABLE = UNSTOPPABLE,
 	TRAIT_MOVE_SNOWSHOEING = SNOWSHOEING,
 	))
-GLOBAL_LIST_EMPTY(movement_type_trait_add_signals)
-GLOBAL_LIST_EMPTY(movement_type_trait_remove_signals)
+GLOBAL_LIST(movement_type_trait_add_signals)
+GLOBAL_LIST(movement_type_trait_remove_signals)

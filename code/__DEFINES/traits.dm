@@ -234,8 +234,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 				GLOB.movement_type_trait_remove_signals += SIGNAL_REMOVETRAIT(_trait)\
 			};\
 		};\
-		RegisterSignal(AM, GLOB.movement_type_trait_add_signals, /atom/movable/.proc/on_movement_type_trait_gain);\
-		RegisterSignal(AM, GLOB.movement_type_trait_remove_signals, /atom/movable/.proc/on_movement_type_trait_loss);\
+		AM.RegisterSignal(AM, GLOB.movement_type_trait_add_signals, /atom/movable/.proc/on_movement_type_trait_gain);\
+		AM.RegisterSignal(AM, GLOB.movement_type_trait_remove_signals, /atom/movable/.proc/on_movement_type_trait_loss);\
 		AM.has_movement_type_signals = TRUE\
 	};\
 	ADD_TRAIT(AM, trait, source)
@@ -377,6 +377,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
+#define LIFECANDLE_TRAIT "lifecandle"
+#define VENTCRAWLING_TRAIT "ventcrawling"
+#define SPECIES_FLIGHT_TRAIT "species-flight"
+#define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
+#define FLOATING_IN_SPACE_TRAIT "floating-in-space"
+#define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define SKILLCHIP_TRAIT "skillchip"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
