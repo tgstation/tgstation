@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "aab" = (
 /obj/machinery/firealarm{
@@ -69,7 +69,7 @@
 	name = "northeast of station";
 	width = 23
 	},
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors)
 "aah" = (
 /obj/structure/cable,
@@ -56868,7 +56868,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ydz" = (
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors)
 "ydA" = (
 /obj/effect/turf_decal/tile/blue{
