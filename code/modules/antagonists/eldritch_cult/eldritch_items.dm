@@ -257,6 +257,7 @@
 	local_user = null
 	STOP_PROCESSING(SSobj,src)
 	REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	return ..()
 
 /obj/item/clothing/mask/void_mask/process(delta_time)
 	if(!local_user)
