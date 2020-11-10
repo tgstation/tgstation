@@ -90493,7 +90493,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/frame/machine,
+/obj/machinery/mecha_part_fabricator/maint,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (
@@ -90502,7 +90502,6 @@
 /obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/item/circuitboard/machine/mechfab,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dut" = (
