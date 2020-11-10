@@ -12,6 +12,9 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FLOORED), .proc/on_floored_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FLOORED), .proc/on_floored_trait_loss)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_loss)
+
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_loss)
 
@@ -78,6 +81,8 @@
 	SIGNAL_HANDLER
 	if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
 		return // Handled by the buckle.
+	if(HAS_TRAIT(src, TRAIT_FORCED_STANDING))
+		return // Don't go horizontal if mob has forced standing trait.
 	mobility_flags &= ~MOBILITY_STAND
 	on_floored_start()
 
@@ -88,6 +93,15 @@
 	mobility_flags |= MOBILITY_STAND
 	on_floored_end()
 
+/// Called when [TRAIT_FORCED_STANDING] is added to the mob.
+/mob/living/proc/on_forced_standing_trait_gain(datum/source)
+	set_body_position(STANDING_UP)
+	set_lying_angle(0)
+
+/// Called when [TRAIT_FORCED_STANDING] is removed from the mob.
+/mob/living/proc/on_forced_standing_trait_loss(datum/source)
+	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
+		set_lying_down()
 
 /// Called when [TRAIT_HANDS_BLOCKED] is added to the mob.
 /mob/living/proc/on_handsblocked_trait_gain(datum/source)
@@ -163,6 +177,6 @@
 /mob/living/proc/update_succumb_action()
 	SIGNAL_HANDLER
 	if (CAN_SUCCUMB(src))
-		throw_alert("succumb", /obj/screen/alert/succumb)
+		throw_alert("succumb", /atom/movable/screen/alert/succumb)
 	else
 		clear_alert("succumb")

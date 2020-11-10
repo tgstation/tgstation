@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "Removed a stacked suit storage unit in mining base"

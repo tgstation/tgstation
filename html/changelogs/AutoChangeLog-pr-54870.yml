@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "radial menus now ignore the anchor's current alpha, color and transform."

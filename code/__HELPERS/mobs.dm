@@ -628,3 +628,5 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(temp_diff < 0)
 		return (log((temp_diff * -1) * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR) * -1
 	return log(temp_diff * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR
+
+#define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_MONKEYLIKE))

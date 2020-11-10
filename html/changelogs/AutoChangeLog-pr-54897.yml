@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "The code for the mutant organs of flypeople has been slightly cleaned up. This shouldn't have any effects on actual gameplay."

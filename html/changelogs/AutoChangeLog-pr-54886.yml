@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Cell rechargers now actually attempt to fill the power cell with the amount of power necessary to fill the cell, based on the APC's charge, preventing infinite energy."
