@@ -2,6 +2,9 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"b" = (
+/turf/closed/wall/bathhouse,
+/area/ruin/powered/bathhouse)
 "c" = (
 /obj/structure/table/greyscale,
 /obj/item/stack/medical/aloe{
@@ -12,12 +15,6 @@
 	},
 /obj/item/clothing/under/misc/pj/blue,
 /turf/open/floor/plasteel/white,
-/area/ruin/powered/bathhouse)
-"d" = (
-/turf/closed/indestructible/oldshuttle{
-	desc = "It's cool to the touch, comfortably so.";
-	name = "wall"
-	},
 /area/ruin/powered/bathhouse)
 "e" = (
 /obj/structure/mirror{
@@ -94,28 +91,28 @@
 /area/ruin/powered/bathhouse)
 
 (1,1,1) = {"
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
 a
 a
 a
 "}
 (2,1,1) = {"
-d
+b
 f
 g
 g
-d
+b
 j
 j
 j
 "}
 (3,1,1) = {"
-d
-d
+b
+b
 l
 g
 i
@@ -124,57 +121,57 @@ k
 j
 "}
 (4,1,1) = {"
-d
+b
 f
 g
 g
-d
+b
 h
 k
 j
 "}
 (5,1,1) = {"
-d
-d
+b
+b
 g
 g
-d
+b
 m
 o
 j
 "}
 (6,1,1) = {"
-d
+b
 f
 g
 p
-d
+b
 j
 j
 j
 "}
 (7,1,1) = {"
-d
-d
+b
+b
 g
 q
-d
+b
 n
 n
 a
 "}
 (8,1,1) = {"
-d
+b
 e
 g
 g
-d
+b
 n
 n
 a
 "}
 (9,1,1) = {"
-d
+b
 e
 g
 g
@@ -184,21 +181,21 @@ n
 a
 "}
 (10,1,1) = {"
-d
+b
 c
 g
 g
-d
+b
 n
 a
 a
 "}
 (11,1,1) = {"
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
 a
 a
 a
