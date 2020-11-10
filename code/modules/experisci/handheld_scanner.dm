@@ -11,8 +11,12 @@
 	inhand_icon_state = "analyzer"
 
 /obj/item/experi_scanner/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+// Late initialize to allow for the rnd servers to initialize first
+/obj/item/experi_scanner/LateInitialize()
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical),\
 		disallowed_traits = EXP_TRAIT_DESTRUCTIVE)
-

@@ -105,8 +105,9 @@ export const Techweb = (props, context) => {
 
   return (
     <Window
+      resizable
       width={640}
-      height={880}
+      height={735}
       title={`${web_org} Research and Development Network`}>
       {!!locked && (
         <Modal width="15em" align="center" className="Techweb__LockedModal">

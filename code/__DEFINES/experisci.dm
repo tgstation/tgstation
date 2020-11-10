@@ -25,3 +25,10 @@
 
 /// Destructive experiments which will destroy the sample
 #define EXP_TRAIT_DESTRUCTIVE 	(1 << 0)
+
+/// Will always attempt to action every experiment eligible with a single input,
+/// no experiment selection required
+#define EXPERIMENT_CONFIG_ALWAYS_ACTIVE		(1 << 0)
+/// Experiment handlers with this flag will not automatically connect to the first techweb they find
+/// on initialization
+#define EXPERIMENT_CONFIG_NO_AUTOCONNECT 	(1 << 1)

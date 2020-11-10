@@ -133,6 +133,7 @@ export const TechwebServer = (props, context) => {
 
 export const ExperimentConfigure = (props, context) => {
   const { act, data } = useBackend(context);
+  const { always_active } = data;
   let servers = data.servers ?? [];
 
   const experiments = sortBy(
@@ -154,7 +155,7 @@ export const ExperimentConfigure = (props, context) => {
     <Window
       resizable
       width={600}
-      height={800}>
+      height={735}>
       <Window.Content>
         <Section title="Servers">
           <Box>
@@ -168,9 +169,14 @@ export const ExperimentConfigure = (props, context) => {
         {servers.some(e => e.selected) && (
           <Section title="Experiments">
             <Box>
-              {experiments.length
-                ? "Select one of the following experiments..."
-                : "No experiments found on this web"}
+              {experiments.length && always_active && (
+                "This device is configured to attempt to perform all available"
+                  + " experiments, so no further configuration is necessary."
+              ) || experiments.length && (
+                "Select one of the following experiments..."
+              ) || (
+                "No experiments found on this web"
+              )}
             </Box>
             {experiments.map((exp, i) => {
               return (

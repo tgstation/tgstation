@@ -16,6 +16,8 @@
 	var/list/blacklisted_experiments
 	/// A set of optional experiment traits (see defines) that are disallowed for any experiments
 	var/disallowed_traits
+	/// Additional configuration flags for how the experiment_handler operates
+	var/config_flags
 
 /**
   * Initializes a new instance of the experiment_handler component
@@ -28,13 +30,15 @@
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
 												blacklisted_experiments = list(),
 												config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
-												disallowed_traits = null)
+												disallowed_traits = null,
+												config_flags = null)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
 	src.disallowed_traits = disallowed_traits
+	src.config_flags = config_flags
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
@@ -51,6 +55,16 @@
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_UI)
 			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
+
+	// Auto connect to the first visible techweb (useful for always active handlers)
+	// Note this won't work at the moment for non-machines that have been included
+	// on the map as the servers aren't initialized when the non-machines are initializing
+	if (!(config_flags & EXPERIMENT_CONFIG_NO_AUTOCONNECT))
+		var/list/found_servers = get_available_servers(parent)
+		var/obj/machinery/rnd/server/s = found_servers.len ? found_servers[1] : null
+		if (s)
+			link_techweb(s.stored_research)
+
 	GLOB.experiment_handlers += src
 
 /datum/component/experiment_handler/Destroy(force, silent)
@@ -69,7 +83,7 @@
   * This proc exists because Jared Fogle really likes async
   */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
-	if (selected_experiment == null)
+	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		to_chat(user, "<span>You do not have an experiment selected!.</span>")
 		return
 	if(!do_after(user, 10, target = target))
@@ -142,16 +156,18 @@
   */
 /datum/component/experiment_handler/proc/action_experiment(datum/source, ...)
 	// Check if an experiment is selected
-	if (selected_experiment == null)
+	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		return FALSE
 
 	// Attempt to run
 	var/list/arguments = list(src)
 	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
-	if (!selected_experiment.actionable(arglist(arguments)))
-		return FALSE
-
-	return selected_experiment.perform_experiment(arglist(arguments)) //Returns true if the experiment was succesfuly handled
+	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+		for (var/datum/experiment/e in linked_web.available_experiments)
+			. = e.actionable(arglist(arguments)) && e.perform_experiment(arglist(arguments))
+	else
+		// Returns true if the experiment was succesfuly handled
+		. = selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
   * Hook for handling UI interaction via signals
@@ -269,7 +285,7 @@
 		ui.open()
 
 /datum/component/experiment_handler/ui_data(mob/user)
-	. = list()
+	. = list("always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
 	.["servers"] = list()
 	for (var/obj/machinery/rnd/server/s in get_available_servers())
 		var/list/data = list(
@@ -311,6 +327,9 @@
 			unlink_techweb()
 		if ("select_experiment")
 			. = TRUE
+			// Don't allow selection for always actives (no concept of active)
+			if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+				return
 			var/datum/experiment/e = locate(params["ref"])
 			if (e)
 				link_experiment(e)
