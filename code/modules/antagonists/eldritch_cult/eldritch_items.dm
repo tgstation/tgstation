@@ -243,6 +243,8 @@
 
 /obj/item/clothing/mask/void_mask/equipped(mob/user, slot)
 	. = ..()
+	if(slot != ITEM_SLOT_MASK)
+		return
 	if(ishuman(user) && user.mind && slot == ITEM_SLOT_MASK)
 		local_user = user
 		START_PROCESSING(SSobj,src)
