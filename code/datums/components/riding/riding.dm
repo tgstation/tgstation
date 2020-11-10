@@ -29,28 +29,25 @@
 	var/list/allowed_turf_typecache
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/forbid_turf_typecache
-	/// allow moving one tile away from a valid turf but not more.
-	var/allow_one_away_from_valid_turf = TRUE
 	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
 
-	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
-	var/respect_mob_mobility = TRUE
-
-	/// necroanne's rider flags to see if the rider needs arms/legs/falls over if they lack those, should be merged with the above
+	/**
+	  * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
+	  * Takes additional flags from the ridable element and the buckle proc (addl_ride_flags) for riding cyborgs/humans in case we need to reserve arms
+	  */
 	var/ride_check_flags = NONE
-
+	/// For telling someone they can't drive
 	COOLDOWN_DECLARE(message_cooldown)
 
 
-/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, _ride_check_flags = NONE, potion_boost = FALSE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, addl_ride_flags = NONE, potion_boost = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	handle_specials()
 	riding_mob.updating_glide_size = FALSE
-	ride_check_flags |= _ride_check_flags
-	var/atom/movable/movable_parent = parent
+	ride_check_flags |= addl_ride_flags
 
 	if(potion_boost)
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
@@ -62,11 +59,6 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/Destroy(force, silent)
-	if(isliving(parent))
-		unequip_buckle_inhands(parent)
-	return ..()
-
 /**
   * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
   *
@@ -76,15 +68,6 @@
   */
 /datum/component/riding/proc/handle_specials()
 	return
-
-/// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
-/datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
-	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
-		return
-
-	for(var/mob/yeet_mob in user.buckled_mobs)
-		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
-
 
 /// This proc is called when a rider unbuckles, whether they chose to or not. If there's no more riders, this will be the riding component's death knell.
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
@@ -134,7 +117,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-
+/// This is called after the ridden atom is successfully moved and is used to handle icon stuff
 /datum/component/riding/proc/vehicle_moved(datum/source, dir)
 	SIGNAL_HANDLER
 
@@ -151,6 +134,7 @@
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
 
+/// Turning is like moving
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
 	SIGNAL_HANDLER
 
@@ -159,27 +143,6 @@
 /// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
 /datum/component/riding/proc/ride_check(mob/living/rider)
 	return
-
-/// We're launching off a given rider, used for cyborg spinning
-/datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
-	var/atom/movable/parent_movable = parent
-	parent_movable.unbuckle_mob(rider)
-
-	if(!isanimal(parent_movable) && !iscyborg(parent_movable))
-		return
-
-	var/turf/target = get_edge_target_turf(parent_movable, parent_movable.dir)
-	var/turf/targetm = get_step(get_turf(parent_movable), parent_movable.dir)
-	rider.Move(targetm)
-	rider.Knockdown(3 SECONDS)
-	if(gentle)
-		rider.visible_message("<span class='warning'>[rider] is thrown clear of [parent_movable]!</span>", \
-		"<span class='warning'>You're thrown clear of [parent_movable]!</span>")
-		rider.throw_at(target, 8, 3, parent_movable, gentle = TRUE)
-	else
-		rider.visible_message("<span class='warning'>[rider] is thrown violently from [parent_movable]!</span>", \
-		"<span class='warning'>You're thrown violently from [parent_movable]!</span>")
-		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -258,9 +221,9 @@
 //MOVEMENT
 /datum/component/riding/proc/turf_check(turf/next, turf/current)
 	if(allowed_turf_typecache && !allowed_turf_typecache[next.type])
-		return (allow_one_away_from_valid_turf && allowed_turf_typecache[current.type])
+		return allowed_turf_typecache[current.type]
 	else if(forbid_turf_typecache && forbid_turf_typecache[next.type])
-		return (allow_one_away_from_valid_turf && !forbid_turf_typecache[current.type])
+		return !forbid_turf_typecache[current.type]
 	return TRUE
 
 

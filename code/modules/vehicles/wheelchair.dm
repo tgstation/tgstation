@@ -33,15 +33,6 @@
 		unbuckle_mob(H)
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
-	if(istype(user))
-		if(canmove && ride_check_flags & RIDER_NEEDS_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			to_chat(user, "<span class='warning'>You can't grip the wheelchair well enough to move it!</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
-			return FALSE
-	return ..()
-
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()

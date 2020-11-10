@@ -41,7 +41,6 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
-	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE

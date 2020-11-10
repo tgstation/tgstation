@@ -1021,7 +1021,7 @@
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, ride_check_flags = RIDER_NEEDS_ARM)
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, addl_ride_flags = RIDER_NEEDS_ARM)
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
@@ -1032,7 +1032,7 @@
 		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
 
-	ride_check_flags = RIDER_NEEDS_ARM
+	addl_ride_flags = RIDER_NEEDS_ARM // just in case
 	return ..()
 
 /mob/living/silicon/robot/resist()

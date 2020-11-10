@@ -10,12 +10,18 @@
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
+	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
+	/// If we have a xenobio red potion applied to us, we get split off so we can pass our special status onto new riding components
 	var/potion_boosted = FALSE
 
 /datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, potion_boost = FALSE)
 	. = ..()
 	if(!ismovable(target))
+		return COMPONENT_INCOMPATIBLE
+
+	if(component_type == /datum/component/riding)
+		stack_trace("Tried attaching a ridable element to [target] with basic/abstract /datum/component/riding component type. Please designate a specific riding component subtype when adding the ridable element.")
 		return COMPONENT_INCOMPATIBLE
 
 	riding_component_type = component_type
@@ -29,7 +35,7 @@
 	UnregisterSignal(target, list(COMSIG_MOVABLE_TRY_MOUNTING, COMSIG_PARENT_ATTACKBY))
 	return ..()
 
-/// Someone is buckling to this movable, which is literally the only thing we care about.
+/// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
 /datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, ride_check_flags = NONE)
 	SIGNAL_HANDLER
 
@@ -104,16 +110,18 @@
 
 	if(!istype(speed_potion))
 		return
-
 	if(potion_boosted)
 		to_chat(user, "<span class='warning'>[ridable_atom] has already been coated with red, that's as fast as it'll go!</span>")
+		return
+	if(ridable_atom.has_buckled_mobs()) // effect won't take place til the next time someone mounts it, so just prevent that situation
+		to_chat(user, "<span class='warning'>It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!</span>")
 		return
 
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 	var/datum/component/riding/theoretical_riding_component = riding_component_type
 	var/theoretical_speed = initial(theoretical_riding_component.vehicle_move_delay)
 
-	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit
+	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit to pass
 		to_chat(user, "<span class='warning'>[ridable_atom] can't be made any faster!</span>")
 		return
 

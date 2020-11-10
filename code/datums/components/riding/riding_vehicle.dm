@@ -6,47 +6,7 @@
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
 
 
-/datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)
-	var/atom/movable/AM = parent
-	if(user.incapacitated())
-		Unbuckle(user)
-		return
-
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
-		return
-	last_vehicle_move = world.time
-
-	if(!keycheck(user))
-		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to operate [AM].</span>")
-		return
-
-	var/turf/next = get_step(AM, direction)
-	var/turf/current = get_turf(AM)
-	if(!istype(next) || !istype(current))
-		return	//not happening.
-	if(!turf_check(next, current))
-		to_chat(user, "<span class='warning'>Your \the [AM] can not go onto [next]!</span>")
-		return
-	if(!Process_Spacemove(direction) || !isturf(AM.loc))
-		return
-	if(isliving(AM) && respect_mob_mobility)
-		var/mob/living/M = AM
-		if(!(M.mobility_flags & MOBILITY_MOVE))
-			return
-	step(AM, direction)
-
-	if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
-		last_move_diagonal = TRUE
-	else
-		last_move_diagonal = FALSE
-
-	if(QDELETED(src))
-		return
-	handle_vehicle_layer(AM.dir)
-	handle_vehicle_offsets(AM.dir)
-
-	moved_successfully(user)
-
+/// Every time the driver tries to drive us, see if we can actually move or not
 /datum/component/riding/vehicle/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	if(!keycheck(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
@@ -55,6 +15,12 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	if(HAS_TRAIT(user, TRAIT_INCAPACITATED))
+		if(ride_check_flags & UNBUCKLE_DISABLED_RIDER)
+			vehicle_parent.unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
+			"<span class='danger'>You slip off \the [vehicle_parent] as your body slumps!</span>")
+			user.Stun(3 SECONDS)
+
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You cannot operate \the [vehicle_parent] right now!</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
@@ -66,7 +32,7 @@
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it while unable to stand!</span>")
 			user.Stun(3 SECONDS)
-			return COMPONENT_DRIVER_BLOCK_MOVE
+
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [vehicle_parent]...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
@@ -78,20 +44,41 @@
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!</span>")
 			user.Stun(3 SECONDS)
-			return COMPONENT_DRIVER_BLOCK_MOVE
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [vehicle_parent] to move it...</span>")
+			to_chat(user, "<span class='warning'>You can't seem to hold onto \the [vehicle_parent] to move it...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	handle_ride(user, direction)
 
+/// This handles the actual movement for vehicles once [/datum/component/riding/vehicle/proc/driver_move] has given us the green light
+/datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)
+	var/atom/movable/AM = parent
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
+		return
+	last_vehicle_move = world.time
 
+	var/turf/next = get_step(AM, direction)
+	var/turf/current = get_turf(AM)
+	if(!istype(next) || !istype(current))
+		return	//not happening.
+	if(!turf_check(next, current))
+		to_chat(user, "<span class='warning'>\The [AM] can not go onto [next]!</span>")
+		return
+	if(!Process_Spacemove(direction) || !isturf(AM.loc))
+		return
 
+	step(AM, direction)
 
+	last_move_diagonal = ((direction & (direction - 1)) && (AM.loc == next))
 
+	if(QDELETED(src))
+		return
+	handle_vehicle_layer(AM.dir)
+	handle_vehicle_offsets(AM.dir)
 
+	moved_successfully(user)
 
 /datum/component/riding/vehicle/atv
 	keytype = /obj/item/key
@@ -222,10 +209,9 @@
 	. = ..()
 	var/obj/vehicle/sealed/car/car_parent = parent
 	if(!COOLDOWN_FINISHED(src, enginesound_cooldown))
-		return FALSE
+		return
 	COOLDOWN_START(src, enginesound_cooldown, car_parent.engine_sound_length)
 	playsound(car_parent, car_parent.engine_sound, 100, TRUE)
-	return TRUE
 
 /datum/component/riding/vehicle/car/clowncar
 	keytype = /obj/item/bikehorn
@@ -260,13 +246,24 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-/datum/component/riding/vehicle/wheelchair/moved_successfully(mob/living/user)
-	. = ..()
-	set_speed(user)
 
 /datum/component/riding/vehicle/wheelchair/proc/set_speed(mob/living/user)
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
+
+// special messaging for those without arms
+/datum/component/riding/vehicle/wheelchair/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
+	if((ride_check_flags & ~RIDER_NEEDS_ARMS) || !HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return ..()
+
+	if(COOLDOWN_FINISHED(src, message_cooldown))
+		to_chat(user, "<span class='warning'>You can't grip \the [vehicle_parent] well enough to move it!</span>")
+		COOLDOWN_START(src, message_cooldown, 5 SECONDS)
+	return COMPONENT_DRIVER_BLOCK_MOVE
+
+/datum/component/riding/vehicle/wheelchair/moved_successfully(mob/living/user)
+	. = ..()
+	set_speed(user)
 
 /datum/component/riding/vehicle/wheelchair/motorized/set_speed(mob/living/user)
 	var/speed = 1 // Should never be under 1
@@ -277,3 +274,16 @@
 		speed += M.rating
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
 
+/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
+	if((ride_check_flags & ~RIDER_NEEDS_ARMS) || !HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return ..()
+
+	if(COOLDOWN_FINISHED(src, message_cooldown))
+		to_chat(user, "<span class='warning'>You can't operate the motor controller!</span>")
+		COOLDOWN_START(src, message_cooldown, 5 SECONDS)
+	return COMPONENT_DRIVER_BLOCK_MOVE
+
+/datum/component/riding/vehicle/wheelchair/motorized/moved_successfully(mob/living/user)
+	. = ..()
+	var/obj/vehicle/ridden/wheelchair/motorized/motor_parent = parent
+	motor_parent.power_cell.use(motor_parent.power_usage / max(motor_parent.power_efficiency, 1) * 0.05)

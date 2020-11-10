@@ -10,6 +10,10 @@
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
 
+/datum/component/riding/creature/Destroy(force, silent)
+	unequip_buckle_inhands(parent)
+	return ..()
+
 /datum/component/riding/creature/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
@@ -17,8 +21,11 @@
 // this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider)
 	var/mob/living/parent_living = parent
-	var/kick_us_off
 
+	if(parent_living.mobility_flags & ~MOBILITY_MOVE)
+		return
+
+	var/kick_us_off
 	// no matter what, you can't ride something that's on the floor
 	if(parent_living.body_position != STANDING_UP)
 		kick_us_off = TRUE
@@ -34,8 +41,38 @@
 
 	rider.visible_message("<span class='warning'>[rider] falls off of [parent_living]!</span>", \
 					"<span class='warning'>You fall off of [parent_living]!</span>")
+	rider.Paralyze(1 SECONDS)
+	rider.Knockdown(4 SECONDS)
 	parent_living.unbuckle_mob(rider)
 
+/// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
+/datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
+	var/atom/movable/parent_movable = parent
+	parent_movable.unbuckle_mob(rider)
+
+	if(!isanimal(parent_movable) && !iscyborg(parent_movable))
+		return
+
+	var/turf/target = get_edge_target_turf(parent_movable, parent_movable.dir)
+	var/turf/targetm = get_step(get_turf(parent_movable), parent_movable.dir)
+	rider.Move(targetm)
+	rider.Knockdown(3 SECONDS)
+	if(gentle)
+		rider.visible_message("<span class='warning'>[rider] is thrown clear of [parent_movable]!</span>", \
+		"<span class='warning'>You're thrown clear of [parent_movable]!</span>")
+		rider.throw_at(target, 8, 3, parent_movable, gentle = TRUE)
+	else
+		rider.visible_message("<span class='warning'>[rider] is thrown violently from [parent_movable]!</span>", \
+		"<span class='warning'>You're thrown violently from [parent_movable]!</span>")
+		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
+
+/// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
+/datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
+	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
+		return
+
+	for(var/mob/yeet_mob in user.buckled_mobs)
+		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
@@ -50,7 +87,7 @@
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
+	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	unequip_buckle_inhands(parent)
@@ -59,12 +96,12 @@
 	return ..()
 
 /// If the carrier gets shoved, drop our load
-/datum/component/riding/creature/human/proc/on_host_unarmed_melee(atom/target)
+/datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target)
 	SIGNAL_HANDLER
 
-	var/mob/living/carbon/human/H = parent
-	if(H.a_intent == INTENT_DISARM && (target in H.buckled_mobs))
+	if(human_parent.a_intent == INTENT_DISARM && (target in human_parent.buckled_mobs))
 		force_dismount(target)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/riding/creature/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
@@ -80,7 +117,7 @@
 			AM.layer = ABOVE_MOB_LAYER
 		else
 			AM.layer = OBJ_LAYER
-	else  // laying flat, we must be firemanning the rider (extra code so they sling over the )
+	else  // laying flat, we must be firemanning the rider
 		if(dir == NORTH)
 			AM.layer = OBJ_LAYER
 		else
@@ -96,24 +133,25 @@
 /datum/component/riding/creature/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Paralyze(60)
+	user.Paralyze(1 SECONDS)
+	user.Knockdown(4 SECONDS)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>", \
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 
-/datum/component/riding/creature/cyborg
 
-/datum/component/riding/creature/cyborg/ride_check(mob/user)
+//Now onto cyborg riding//
+/datum/component/riding/creature/cyborg/ride_check(mob/living/user)
 	var/mob/living/silicon/robot/robot_parent = parent
-	if(iscarbon(user))
-		var/mob/living/carbon/carbonuser = user
-		if(!carbonuser.usable_hands)
-			Unbuckle(user)
-			to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
-			return
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/carbonuser = user
+	if(!carbonuser.usable_hands)
+		Unbuckle(user)
+		to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
 
 /datum/component/riding/creature/cyborg/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
-	if(AM.buckled_mobs && AM.buckled_mobs.len)
+	if(AM.buckled_mobs && AM.buckled_mobs?.len)
 		if(dir == SOUTH)
 			AM.layer = ABOVE_MOB_LAYER
 		else
@@ -138,17 +176,7 @@
 				..()
 
 
-
-
-
-
-
-
-
-
-
-
-
+//now onto every other ridable mob//
 
 /datum/component/riding/creature/mulebot/handle_specials()
 	. = ..()
@@ -178,7 +206,7 @@
 	set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 
 
-/datum/component/riding/carp
+/datum/component/riding/creature/carp
 	override_allow_spacemove = TRUE
 
 /datum/component/riding/creature/carp/handle_specials()

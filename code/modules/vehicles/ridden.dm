@@ -3,8 +3,6 @@
 	can_buckle = TRUE
 	max_buckled_mobs = 1
 	buckle_lying = 0
-	/// necroanne's rider flags to see if the rider needs arms/legs/falls over if they lack those, handled in the riding component, should be removed from here
-	var/ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS
 	COOLDOWN_DECLARE(message_cooldown)
 
 /obj/vehicle/ridden/examine(mob/user)
