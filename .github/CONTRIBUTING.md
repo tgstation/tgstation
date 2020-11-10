@@ -132,32 +132,6 @@ In the above example, we made our health_loss variable a per second value rather
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
-
-The use of this is not allowed in this project as it makes finding definitions via full text searching next to impossible. The only exception is the variables of an object may be nested to the object, but must not nest further.
-
-The previous code made compliant:
-
-```DM
-/datum/datum1
-	var/varname1
-	var/varname2
-	var/static/varname3
-	var/static/varname4
-
-/datum/datum1/proc/proc1()
-	code
-/datum/datum1/proc/proc2()
-	code
-/datum/datum1/datum2
-	varname1 = 0
-/datum/datum1/datum2/proc/proc3()
-	code
-/datum/datum1/datum2/proc2()
-	. = ..()
-	code
-```
-
-
 ### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
