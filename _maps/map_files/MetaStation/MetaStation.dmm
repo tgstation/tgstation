@@ -4585,7 +4585,6 @@
 /obj/item/bikehorn/rubberducky,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/item/clothing/gloves/color/fyellow,
-/obj/item/grenade/empgrenade,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "akq" = (
@@ -47604,6 +47603,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "clY" = (
@@ -47613,6 +47613,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "clZ" = (
@@ -47622,12 +47623,13 @@
 	dir = 4
 	},
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cma" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/apron,
 /obj/item/clothing/mask/surgical,
+/obj/item/clothing/suit/apron/chef,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cmb" = (
@@ -49276,6 +49278,7 @@
 /area/maintenance/starboard/secondary)
 "cpI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -49327,14 +49330,13 @@
 /area/space/nearstation)
 "cpQ" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/dropper,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cpR" = (
@@ -49901,6 +49903,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cqZ" = (
@@ -49909,6 +49912,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cra" = (
@@ -49916,6 +49920,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "crb" = (
@@ -50253,7 +50258,7 @@
 "csa" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
-/obj/item/gun/syringe,
+/obj/item/toy/plush/pkplush,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "csb" = (
@@ -57485,27 +57490,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cNj" = (
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
-/obj/item/reagent_containers/food/snacks/grown/cocoapod,
-/obj/structure/rack,
-/obj/item/seeds/wheat,
-/obj/item/seeds/watermelon,
-/obj/item/seeds/watermelon,
-/obj/item/seeds/grape,
-/obj/item/seeds/glowshroom,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/seeds/cannabis/rainbow,
+/obj/machinery/seed_extractor,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cNk" = (
-/obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/plant_analyzer,
 /obj/item/cultivator,
@@ -57525,7 +57514,6 @@
 	},
 /obj/item/seeds/carrot,
 /obj/effect/turf_decal/stripes/line,
-/obj/item/seeds/cannabis/white,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cNm" = (
@@ -58104,7 +58092,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOB" = (
-/obj/item/seeds/sunflower/moonflower,
+/obj/item/vending_refill/hydroseeds,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOC" = (
@@ -58112,10 +58100,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"cOD" = (
-/obj/item/seeds/berry,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOE" = (
@@ -58255,7 +58239,7 @@
 	},
 /obj/item/seeds/cannabis/ultimate,
 /turf/open/floor/plating,
-/area/maintenance/starboard/aft)
+/area/space)
 "cPg" = (
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
@@ -63299,7 +63283,6 @@
 	pixel_y = 8
 	},
 /obj/item/seeds/glowshroom,
-/obj/item/seeds/corn,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -77523,6 +77506,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "uLZ" = (
@@ -77983,6 +77967,7 @@
 /obj/structure/girder,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "vxU" = (
@@ -112811,7 +112796,7 @@ cPe
 dvY
 cNi
 cgs
-cOB
+ciL
 cPf
 dvY
 cRe
@@ -113324,7 +113309,7 @@ cIg
 dxQ
 dvY
 cNk
-ciL
+cOB
 ciL
 cPh
 dvY
@@ -113839,7 +113824,7 @@ cxM
 dvY
 cNl
 dAZ
-cOD
+ciL
 cPi
 dvY
 aaa

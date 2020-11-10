@@ -45881,7 +45881,6 @@
 /obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/surgical_drapes,
 /obj/item/hemostat,
 /obj/item/cautery,
 /obj/item/hemostat,
@@ -48753,7 +48752,6 @@
 /obj/structure/table/optable{
 	name = "Robotics Operating Table"
 	},
-/obj/item/surgical_drapes,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
