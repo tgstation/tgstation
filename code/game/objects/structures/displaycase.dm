@@ -429,7 +429,10 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/item/card/id/potential_acc = usr.get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/potential_acc
+	if(isliving(usr))
+		var/mob/living/L = usr
+		potential_acc = L.get_idcard(hand_first = TRUE)
 	switch(action)
 		if("Buy")
 			if(!showpiece)

@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Cyborgs synced to a Malf AI that activates Doomsday will now have their lamps forced to a red color and enabled to at least light level one. Stealth is no longer an option. Lamp options return to normal upon Doomsday deactivation, no matter the reason, or if the borg somehow loses sync with the AI."

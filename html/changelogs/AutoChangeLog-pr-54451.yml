@@ -1,0 +1,6 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "New spider subtype - Flesh Spider.  Unique to changeling."
+  - balance: "Changeling's spider ability now creates a bloody egg cluster, which produces a singular player-controlled flesh spider per cluster."
+  - balance: "Spiders have been rebalanced."

@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Fixed various bugs involving generic material floortiles. They're actually usable now."
