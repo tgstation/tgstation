@@ -134,7 +134,7 @@
 	return FALSE
 
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
-	for(chosen_clothing in get_turf(religious_tool))
+	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
 		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
@@ -169,16 +169,18 @@
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
 		to_chat(user, "<span class='warning'>Nothing is buckled to the altar!</span>")
 		return FALSE
-	for(var/mob/living/carbon/corpse in movable_reltool.buckled_mobs) //works with any carbon corpse,not just humans
-		if(corpse.stat != DEAD)
-			to_chat(user, "<span class='warning'>You can only sacrifice dead bodies, this one is still alive!</span>")
-			return FALSE
-		if(!corpse.on_fire)
-			to_chat(user, "<span class='warning'>This corpse needs to be on fire to be sacrificed!</span>")
+	for(var/mob/living/corpse in movable_reltool.buckled_mobs)
+		if(!iscarbon(corpse))// only works with carbon corpse since normal mobs can't be set on fire.
+			to_chat(user, "<span class='warning'>This sacrifice cannot be set on fire!</span>")
 			return FALSE
 		chosen_sacrifice = corpse
+		if(chosen_sacrifice.stat != DEAD)
+			to_chat(user, "<span class='warning'>You can only sacrifice dead bodies, this one is still alive!</span>")
+			return FALSE
+		if(!chosen_sacrifice.on_fire)
+			to_chat(user, "<span class='warning'>This corpse needs to be on fire to be sacrificed!</span>")
+			return FALSE
 		return ..()
-	return FALSE
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	for(chosen_sacrifice in religious_tool.buckled_mobs) //checks one last time if the right corpse is still buckled
