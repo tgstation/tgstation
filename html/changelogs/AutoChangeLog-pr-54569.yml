@@ -1,0 +1,4 @@
+author: "Gogo9001"
+delete-after: True
+changes: 
+  - bugfix: "fixes yellow slime cores being consumed for nothing"
