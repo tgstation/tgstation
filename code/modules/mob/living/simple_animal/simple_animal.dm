@@ -49,6 +49,10 @@
 	var/harm_intent_damage = 3
 	///Minimum force required to deal any damage.
 	var/force_threshold = 0
+	///Maximum amount of stamina damage the mob can be inflicted with total
+	var/max_staminaloss = 200
+	///How much stamina the mob recovers per call of update_stamina
+	var/stamina_recovery = 10
 
 	///Temperature effect.
 	var/minbodytemp = 250
@@ -186,6 +190,10 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 
+/mob/living/simple_animal/Life()
+	. = ..()
+	if(staminaloss > 0)
+		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -244,6 +252,15 @@
 	..()
 	if(stuttering)
 		stuttering = 0
+
+/**
+  * Updates the simple mob's stamina loss.
+  *
+  * Updates the speed and staminaloss of a given simplemob.
+  * Reduces the stamina loss by stamina_recovery
+  */
+/mob/living/simple_animal/update_stamina()
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
 	set waitfor = FALSE
