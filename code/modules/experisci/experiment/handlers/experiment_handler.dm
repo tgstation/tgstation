@@ -47,7 +47,7 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
-		if(EXPERIMENT_CONFIG_SIGNAL)
+		if(EXPERIMENT_CONFIG_UI)
 			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
 	GLOB.experiment_handlers += src
 

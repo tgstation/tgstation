@@ -194,7 +194,7 @@
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/explosion), \
-		config_mode = EXPERIMENT_CONFIG_SIGNAL)
+		config_mode = EXPERIMENT_CONFIG_UI)
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 		took, orig_dev_range, orig_heavy_range, orig_light_range) //probably needs a way to ignore admin explosives later on
