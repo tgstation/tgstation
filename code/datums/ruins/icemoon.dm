@@ -115,3 +115,9 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndiecomms
+	name = "Syndie Communications Base"
+	id = "syndiecomms"
+	description = "Hail Syndicate."
+	suffix = "icemoon_underground_syndicate_base1.dmm"

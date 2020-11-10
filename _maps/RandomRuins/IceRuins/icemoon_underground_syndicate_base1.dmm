@@ -3,11 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "ac" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "ad" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -324,8 +324,8 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dG" = (
 /obj/structure/lattice/catwalk,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "dI" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
@@ -649,7 +649,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "ej" = (
 /obj/structure/bed/roller,
@@ -2682,7 +2682,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "ih" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2692,7 +2692,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "ii" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
@@ -2827,7 +2827,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/no_lava,
@@ -2835,7 +2835,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "iw" = (
 /obj/structure/chair{
 	dir = 4
@@ -3211,7 +3211,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "jf" = (
 /obj/machinery/door/airlock{
 	name = "Cabin 1"
@@ -3261,7 +3261,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "jl" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4337,7 +4337,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/no_lava,
@@ -4345,7 +4345,7 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/lavaland/surface/outdoors)
+/area/icemoon/underground/explored)
 "lx" = (
 /obj/structure/bookcase/random,
 /obj/effect/decal/cleanable/dirt,
@@ -5997,8 +5997,8 @@
 	dir = 8;
 	volume_rate = 200
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "wE" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
