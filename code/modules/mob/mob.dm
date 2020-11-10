@@ -925,10 +925,6 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-///This might need a rename but it should replace the can this mob use things check
-/mob/proc/IsAdvancedToolUser()
-	return FALSE
-
 /mob/proc/swap_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
@@ -1192,7 +1188,7 @@
 
 ///Can this mob hold items
 /mob/proc/can_hold_items()
-	return FALSE
+	return length(held_items)
 
 /**
   * Get the mob VV dropdown extras
