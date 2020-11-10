@@ -47031,6 +47031,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
+"ckU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "ckV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -77029,6 +77034,11 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"tWl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "tXK" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
@@ -77260,6 +77270,11 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"unx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/atmospheric_technician,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "uow" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -125479,9 +125494,9 @@ wxc
 vBQ
 bKG
 weu
-oSx
+tWl
 hvF
-oSx
+unx
 oSx
 gdQ
 bza
@@ -126507,7 +126522,7 @@ ccY
 bxc
 tnI
 kAu
-oSx
+ckU
 cjn
 oSx
 wRM
