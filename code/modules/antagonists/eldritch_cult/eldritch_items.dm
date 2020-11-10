@@ -250,7 +250,8 @@
 		START_PROCESSING(SSobj,src)
 		if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
 			return
-		ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+		else
+			ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 /obj/item/clothing/mask/void_mask/dropped(mob/M)
 	local_user = null
