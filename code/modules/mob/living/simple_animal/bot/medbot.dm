@@ -435,13 +435,13 @@
 	if((C.getBruteLoss() >= heal_threshold) && C.getBruteLoss() != 0)
 		treat_me_for += BRUTE
 
-	if((C.getOxyLoss() >= heal_threshold) && C.getOxyLoss() != 0)
+	if((C.getOxyLoss() >= 5 + heal_threshold) && C.getOxyLoss() != 0)
 		treat_me_for += OXY
 
 	if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
 		treat_me_for += BURN
 
-	if((C.getToxLoss() >= 5 + heal_threshold) && C.getToxLoss() != 0)
+	if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
