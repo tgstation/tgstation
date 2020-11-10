@@ -121,7 +121,7 @@ How do we solve this? By using delta-time. Delta-time is the amount of seconds y
 
 ```DM
 /mob/testmob
-	var/health = 2
+	var/health = 100
 	var/health_loss = 2 //Health loss every second
 
 /mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
