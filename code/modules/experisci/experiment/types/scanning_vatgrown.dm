@@ -4,6 +4,7 @@
 	exp_tag = "Cytology Scan"
 	total_requirement = 1
 	possible_types = list(/mob/living/simple_animal/hostile/cockroach)
+	traits = EXP_TRAIT_DESTRUCTIVE
 
 /datum/experiment/scanning/random/cytology/final_contributing_index_checks(atom/target, typepath)
 	return ..() && HAS_TRAIT(target, TRAIT_VATGROWN)

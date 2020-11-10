@@ -10,7 +10,7 @@
 	name = "Scanning Experiment"
 	description = "Base experiment for scanning atoms"
 	exp_tag = "Scan"
-	allowed_experimentors = list(/obj/item/experi_scanner)
+	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner)
 	/// The typepaths and number of atoms that must be scanned
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment

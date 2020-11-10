@@ -40,6 +40,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
 	if(istype(parent, /obj/machinery/doppler_array))
 		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
+	if(istype(parent, /obj/machinery/destructive_scanner))
+		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
 
 	// Determine UI display mode
 	switch(config_mode)
@@ -79,6 +81,27 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
 
+
+/**
+  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
+  */
+/datum/component/experiment_handler/proc/try_run_destructive_experiment(datum/source, list/scanned_atoms)
+	SIGNAL_HANDLER
+	var/atom/movable/our_scanner = parent
+	if (selected_experiment == null)
+		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
+		to_chat(our_scanner, "<span>No experiment selected!.</span>")
+		return
+	var/successful_scan
+	for(var/scan_target in scanned_atoms)
+		if(action_experiment(source, scan_target))
+			successful_scan = TRUE
+	if(successful_scan)
+		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
+		to_chat(our_scanner, "<span>The scan succeeds.</span>")
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		our_scanner.say("The scan did not result in anything.")
 /**
   * Hooks on successful explosions on the doppler array this is attached to
   */
