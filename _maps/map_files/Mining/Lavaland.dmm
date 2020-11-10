@@ -4433,12 +4433,6 @@
 /obj/machinery/suit_storage_unit/mining,
 /turf/open/floor/plasteel,
 /area/foremanoffice)
-"Ap" = (
-/obj/machinery/door/poddoor/incinerator_atmos_aux{
-	id = "minetechauxvent"
-	},
-/turf/open/floor/engine/vacuum,
-/area/miningtech)
 "Aw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -4693,9 +4687,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "Ey" = (
-/obj/machinery/door/poddoor/incinerator_atmos_main{
-	id = "minetechmainvent"
-	},
 /turf/open/floor/engine/vacuum,
 /area/miningtech)
 "EG" = (
@@ -5155,18 +5146,6 @@
 	dir = 4
 	},
 /obj/machinery/vending/tool,
-/obj/machinery/button{
-	id = "minetechmainvent";
-	name = "Turbine Vent";
-	pixel_x = 32;
-	pixel_y = 7
-	},
-/obj/machinery/button{
-	id = "minetechauxvent";
-	name = "Aux Vent";
-	pixel_x = 32;
-	pixel_y = -7
-	},
 /turf/open/floor/plasteel,
 /area/miningtech)
 "Na" = (
@@ -17116,7 +17095,7 @@ Hd
 Wr
 ZG
 RG
-Ap
+Hd
 ab
 Hd
 Vc
