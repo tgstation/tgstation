@@ -85,12 +85,9 @@
   * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
 /obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
-	to_chat(world, "DEBUG -- dropkey proc started")
 	if(!host)
-		to_chat(world, "DEBUG -- No host")
 		return //How did we even get here
 	if(hand != host.hand_bodyparts[host.active_hand_index])
-		to_chat(world, "DEBUG -- var hand ([hand]) does not equal host's active hand ([host.active_hand_index])")
 		return //wrong hand
 	Retract()
 
