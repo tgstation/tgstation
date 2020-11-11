@@ -328,6 +328,7 @@
 				selectable = can_select_experiment(e),
 				selected = selected_experiment == e,
 				progress = e.check_progress(),
+				performance_hint = e.performance_hint,
 				ref = REF(e)
 			)
 			.["experiments"] += list(data)

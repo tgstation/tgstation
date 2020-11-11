@@ -19,6 +19,9 @@
 	var/completed = FALSE
 	/// Traits related to the experiment
 	var/traits
+	/// A textual hint shown on the UI in a tooltip to help a user determine how to perform
+	/// the experiment
+	var/performance_hint
 
 /**
   * Performs any necessary initialization of tags and other variables

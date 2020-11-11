@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Section, Box, Button, Flex, Icon, LabeledList, Table } from '../components';
+import { Section, Box, Button, Flex, Icon, LabeledList, Table, Tooltip } from '../components';
 import { sortBy } from 'common/collections';
 
 const ExperimentStages = props => {
@@ -176,39 +176,57 @@ export const Experiment = (props, context) => {
     exp,
     controllable,
   } = props;
+  const {
+    name,
+    description,
+    tag,
+    selectable,
+    selected,
+    progress,
+    performance_hint,
+    ref,
+  } = exp;
 
   return (
-    <Box m={1} key={exp.ref}
+    <Box m={1} key={ref}
       className="ExperimentConfigure__ExperimentPanel">
       <Button fluid
-        onClick={() => controllable && (exp.selected
+        onClick={() => controllable && (selected
           ? act("clear_experiment")
-          : act("select_experiment", { "ref": exp.ref }))}
-        backgroundColor={exp.selected ? "good" : "#40628a"}
+          : act("select_experiment", { "ref": ref }))}
+        backgroundColor={selected ? "good" : "#40628a"}
         className="ExperimentConfigure__ExperimentName"
-        disabled={controllable && !exp.selectable}>
+        disabled={controllable && !selectable}>
         <Flex align="center" justify="space-between">
           <Flex.Item
-            color={!controllable || exp.selectable
+            color={!controllable || selectable
               ? "white"
               : "rgba(0, 0, 0, 0.6)"}>
-            {exp.name}
+            {name}
           </Flex.Item>
           <Flex.Item
-            color={!controllable || exp.selectable
+            color={!controllable || selectable
               ? "rgba(255, 255, 255, 0.5)"
               : "rgba(0, 0, 0, 0.5)"}>
-            {exp.tag}
+            <Box position="relative">
+              {tag}
+              <Icon
+                name="question-circle"
+                mx={0.5} />
+              <Tooltip
+                content={performance_hint}
+                position="bottom-left" />
+            </Box>
           </Flex.Item>
         </Flex>
       </Button>
       <Box className={"ExperimentConfigure__ExperimentContent"}>
         <Box mb={1}>
-          {exp.description}
+          {description}
         </Box>
         {props.children}
         <ExperimentStages>
-          {exp.progress}
+          {progress}
         </ExperimentStages>
       </Box>
     </Box>

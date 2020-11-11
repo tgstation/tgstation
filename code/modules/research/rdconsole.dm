@@ -202,7 +202,8 @@ Nothing else in the console has ID requirements.
 			"description" = ex.description,
 			"tag" = ex.exp_tag,
 			"progress" = ex.check_progress(),
-			"completed" = ex.completed
+			"completed" = ex.completed,
+			"performance_hint" = ex.performance_hint
 		)
 
 /**
