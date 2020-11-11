@@ -516,13 +516,13 @@
 		if((C.getBruteLoss() >= heal_threshold) && C.getBruteLoss() != 0)
 			potential_methods += BRUTE
 
-		else if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
+		if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
 			potential_methods += BURN
 
-		else if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
+		if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
 			potential_methods += OXY
 
-		else if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
+		if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
 			potential_methods += TOX
 
 		for(var/i in potential_methods)
