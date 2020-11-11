@@ -18,6 +18,8 @@
 	var/disallowed_traits
 	/// Additional configuration flags for how the experiment_handler operates
 	var/config_flags
+	/// Callback that, when supplied, can be called from the UI
+	var/datum/callback/start_experiment_callback
 
 /**
   * Initializes a new instance of the experiment_handler component
@@ -26,12 +28,16 @@
   * * allowed_experiments - The list of /datum/experiment types that can be performed with this component
   * * blacklisted_experiments - The list of /datum/experiment types that explicitly cannot be performed with this component
   * * config_mode - The define that determines how the experiment_handler should display the configuration UI
+  * * disallowed_traits - Flags that control what experiment traits are blacklisted by this experiment handler
+  * * config_flags - Flags that control the operational behaviour of the experiment handler, see experiment defines
+  * * start_experiment_callback - When provided adds a UI button to use this callback to the start the experiment
   */
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
 												blacklisted_experiments = list(),
 												config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
 												disallowed_traits = null,
-												config_flags = null)
+												config_flags = null,
+												var/datum/callback/start_experiment_callback = null)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -39,6 +45,7 @@
 	src.blacklisted_experiments = blacklisted_experiments
 	src.disallowed_traits = disallowed_traits
 	src.config_flags = config_flags
+	src.start_experiment_callback = start_experiment_callback
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
@@ -53,6 +60,8 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+		if(EXPERIMENT_CONFIG_CLICK)
+			RegisterSignal(parent, COMSIG_CLICK, .proc/configure_experiment_click)
 		if(EXPERIMENT_CONFIG_UI)
 			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
 
@@ -174,8 +183,9 @@
   */
 /datum/component/experiment_handler/proc/ui_handle_experiment(datum/source, mob/user, action)
 	SIGNAL_HANDLER
-	if(action == "open_experiments")
-		INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
+	switch(action)
+		if("open_experiments")
+			INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
 
 /**
   * Attempts to show the user the experiment configuration panel
@@ -184,6 +194,15 @@
   * * user - The user to show the experiment configuration panel to
   */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
+	ui_interact(user)
+
+/**
+  * Attempts to show the user the experiment configuration panel
+  *
+  * Arguments:
+  * * user - The user to show the experiment configuration panel to
+  */
+/datum/component/experiment_handler/proc/configure_experiment_click(datum/source, location, control, params, mob/user)
 	ui_interact(user)
 
 /**
@@ -285,7 +304,9 @@
 		ui.open()
 
 /datum/component/experiment_handler/ui_data(mob/user)
-	. = list("always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+	. = list(
+		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
+		"has_start_callback" = !!start_experiment_callback)
 	.["servers"] = list()
 	for (var/obj/machinery/rnd/server/s in get_available_servers())
 		var/list/data = list(
@@ -336,3 +357,5 @@
 		if ("clear_experiment")
 			. = TRUE
 			unlink_experiment()
+		if("start_experiment_callback")
+			start_experiment_callback.Invoke(selected_experiment)

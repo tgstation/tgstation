@@ -3,46 +3,6 @@ import { useBackend } from '../backend';
 import { Section, Box, Button, Flex, Icon, LabeledList, Table } from '../components';
 import { sortBy } from 'common/collections';
 
-export const ExperimentStage = props => {
-  const [type, description, value, altValue] = props;
-
-  // Determine completion based on type of stage
-  let completion = false;
-  switch (type) {
-    case "bool":
-    case "detail":
-      completion = value;
-      break;
-    case "integer":
-      completion = value === altValue;
-      break;
-    case "float":
-      completion = value >= 1;
-      break;
-  }
-
-  return (
-    <Box
-      className={`ExperimentStage__StageContainer ${completion ? "complete" : "incomplete"}`}
-      m={0.5}
-      ml={2}>
-      <Flex>
-        <Flex.Item
-          className={`ExperimentStage__Indicator ${type}`}
-          color={completion ? "good" : "bad"}>
-          {(type === "bool" && <Icon name={value ? "check" : "times"} />)
-            || (type === "integer" && `${value}/${altValue}`)
-            || (type === "float" && `${value * 100}%`)
-            || (type === "detail" && "⤷")}
-        </Flex.Item>
-        <Flex.Item className="ExperimentStage__Description">
-          {description}
-        </Flex.Item>
-      </Flex>
-    </Box>
-  );
-};
-
 const ExperimentStages = props => {
   return (
     <Table ml={2} className="ExperimentStage__Table">
@@ -133,7 +93,7 @@ export const TechwebServer = (props, context) => {
 
 export const ExperimentConfigure = (props, context) => {
   const { act, data } = useBackend(context);
-  const { always_active } = data;
+  const { always_active, has_start_callback } = data;
   let servers = data.servers ?? [];
 
   const experiments = sortBy(
@@ -157,34 +117,54 @@ export const ExperimentConfigure = (props, context) => {
       width={600}
       height={735}>
       <Window.Content>
-        <Section title="Servers">
-          <Box>
-            {webs.size > 0
-              ? "Please select a techweb to connect to..."
-              : "Found no available techwebs!"}
-          </Box>
-          {webs.size > 0 && Array.from(webs, ([techweb, servers]) =>
-            <TechwebServer key={techweb} servers={servers} />)}
-        </Section>
-        {servers.some(e => e.selected) && (
-          <Section title="Experiments">
-            <Box>
-              {experiments.length && always_active && (
-                "This device is configured to attempt to perform all available"
-                  + " experiments, so no further configuration is necessary."
-              ) || experiments.length && (
-                "Select one of the following experiments..."
-              ) || (
-                "No experiments found on this web"
-              )}
-            </Box>
-            {experiments.map((exp, i) => {
-              return (
-                <Experiment key={`e${i}`} exp={exp} controllable />
-              );
-            })}
-          </Section>
-        )}
+        <Flex direction="column" height="100%">
+          <Flex.Item mb={1}>
+            <Section title="Servers">
+              <Box>
+                {webs.size > 0
+                  ? "Please select a techweb to connect to..."
+                  : "Found no available techwebs!"}
+              </Box>
+              {webs.size > 0 && Array.from(webs, ([techweb, servers]) =>
+                <TechwebServer key={techweb} servers={servers} />)}
+            </Section>
+          </Flex.Item>
+          <Flex.Item mb={has_start_callback ? 1 : 0} grow={1}>
+            {servers.some(e => e.selected) && (
+              <Section title="Experiments"
+                className="ExperimentConfigure__ExperimentsContainer">
+                <Flex.Item mb={1}>
+                  {experiments.length && always_active && (
+                    "This device is configured to attempt to perform all available"
+                      + " experiments, so no further configuration is necessary."
+                  ) || experiments.length && (
+                    "Select one of the following experiments..."
+                  ) || (
+                    "No experiments found on this web"
+                  )}
+                </Flex.Item>
+                <Flex.Item>
+                  {experiments.map((exp, i) => {
+                    return (
+                      <Experiment key={i} exp={exp} controllable />
+                    );
+                  })}
+                </Flex.Item>
+              </Section>
+            )}
+          </Flex.Item>
+          {!!has_start_callback && (
+            <Flex.Item>
+              <Button
+                fluid
+                className="ExperimentConfigure__PerformExperiment"
+                onClick={() => act("start_experiment_callback")}
+                icon="flask">
+                Perform Experiment
+              </Button>
+            </Flex.Item>
+          )}
+        </Flex>
       </Window.Content>
     </Window>
   );

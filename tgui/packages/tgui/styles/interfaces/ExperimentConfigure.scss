@@ -50,3 +50,18 @@
   border-collapse: separate;
   border-spacing: 0.25rem 0.25rem;
 }
+
+.ExperimentConfigure__PerformExperiment {
+  text-align: center;
+}
+
+.ExperimentConfigure__ExperimentsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ExperimentConfigure__ExperimentsContainer > :last-child {
+  flex: 1;
+  overflow-y: auto;
+}

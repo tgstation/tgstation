@@ -4,33 +4,35 @@
   * Placed machine that handles destructive experiments (but can also do the normal ones)
   */
 /obj/machinery/destructive_scanner
-	name = "Experi-Scanner"
-	desc = "A handheld scanner used for completing the many experiments of modern science."
+	name = "Experimental Destructive Scanner"
+	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
 	icon = 'icons/obj/machines/experisci.dmi'
 	icon_state = "tube_closed"
+	circuit = /obj/item/circuitboard/machine/destructive_scanner
 	var/scanning = FALSE
 
 /obj/machinery/destructive_scanner/Initialize()
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning),\
-		config_mode = EXPERIMENT_CONFIG_ALTCLICK)
+		config_mode = EXPERIMENT_CONFIG_CLICK, \
+		start_experiment_callback = CALLBACK(src, .proc/activate))
 
 
 ///Activates the machine; checks if it can actually scan, then starts.
 /obj/machinery/destructive_scanner/proc/activate()
 	var/atom/L = drop_location()
-	var/agressive = FALSE
+	var/aggressive = FALSE
 	for(var/mob/living/living_mob in L)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emaggedishuman(living_mob))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 			say("Cannot scan with humans inside.")
 			return
-		agressive = TRUE
-	start_closing(agressive)
+		aggressive = TRUE
+	start_closing(aggressive)
 
 ///Closes the machine to kidnap everything in the turf into it.
-/obj/machinery/destructive_scanner/proc/start_closing(var/agressive)
+/obj/machinery/destructive_scanner/proc/start_closing(aggressive)
 	if(scanning)
 		return
 	var/atom/L = drop_location()
@@ -40,28 +42,27 @@
 	scanning = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
-	addtimer(CALLBACK(src, .proc/start_scanning, agressive), 1.2 SECONDS)
+	addtimer(CALLBACK(src, .proc/start_scanning, aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
-/obj/machinery/destructive_scanner/proc/start_scanning(var/agressive)
-
-	if(agressive)
+/obj/machinery/destructive_scanner/proc/start_scanning(aggressive)
+	if(aggressive)
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
 		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
-	addtimer(CALLBACK(src, .proc/finish_scanning, agressive), 6 SECONDS)
+	addtimer(CALLBACK(src, .proc/finish_scanning, aggressive), 6 SECONDS)
 
 
 ///Performs the actual scan, happens once the tube effects are done
-/obj/machinery/destructive_scanner/proc/finish_scanning(var/agressive)
+/obj/machinery/destructive_scanner/proc/finish_scanning(aggressive)
 	flick("tube_up", src)
 	scanning = FALSE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg', 100)
-	addtimer(CALLBACK(src, .proc/open, agressive), 1.2 SECONDS)
+	addtimer(CALLBACK(src, .proc/open, aggressive), 1.2 SECONDS)
 
 ///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
-/obj/machinery/destructive_scanner/proc/open(var/agressive)
+/obj/machinery/destructive_scanner/proc/open(aggressive)
 	var/turf/this_turf = get_turf(src)
 	var/list/scanned_atoms = list()
 
@@ -71,10 +72,7 @@
 		scanned_atoms += movable_atom
 		movable_atom.forceMove(this_turf)
 
-
-
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)
-
 
 
 /obj/machinery/destructive_scanner/emag_act(mob/user)
@@ -86,7 +84,11 @@
 
 /obj/machinery/destructive_scanner/update_icon_state()
 	. = ..()
-	if(scanning)
-		icon_state = "tube_on"
-	else
-		icon_state = "tube_open"
+	icon_state = scanning ? "tube_on" : "tube_open"
+
+/obj/machinery/destructive_scanner/attackby(obj/item/I, mob/user, params)
+	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", I) \
+		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	return ..()
