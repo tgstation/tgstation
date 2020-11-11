@@ -56812,6 +56812,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"trH" = (
+/obj/machinery/destructive_scanner,
+/turf/open/floor/plasteel/white,
+/area/science/lab)
 "tue" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -94083,7 +94087,7 @@ cCl
 brq
 cCt
 cCt
-cCt
+trH
 bxc
 nIU
 bAo

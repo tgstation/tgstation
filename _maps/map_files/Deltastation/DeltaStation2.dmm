@@ -83363,6 +83363,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/destructive_scanner,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "deh" = (

@@ -46817,6 +46817,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/destructive_scanner,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ckb" = (
