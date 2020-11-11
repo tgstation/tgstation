@@ -341,6 +341,17 @@
 	mineralType = /obj/item/stack/ore/diamond
 	scan_state = "rock_Diamond"
 
+/turf/closed/mineral/diamond/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_iron"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	base_icon_state = "icerock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/gold
 	mineralType = /obj/item/stack/ore/gold
 	scan_state = "rock_Gold"
