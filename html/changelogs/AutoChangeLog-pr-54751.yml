@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - refactor: "Pies use the new food refactor and processing component."
