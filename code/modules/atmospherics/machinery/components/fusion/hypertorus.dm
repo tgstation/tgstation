@@ -642,7 +642,7 @@
 	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
 	var/datum/gas_mixture/remove_fusion
 	if(internal_fusion.total_moles() > 0)
-	 	remove_fusion = internal_fusion.remove(fusion_moles)
+		remove_fusion = internal_fusion.remove(fusion_moles)
 		loc.assume_air(remove_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
