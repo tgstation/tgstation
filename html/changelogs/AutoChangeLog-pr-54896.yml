@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - bugfix: "Bathhouse ruin now has proper walls"
