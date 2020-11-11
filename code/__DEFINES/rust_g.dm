@@ -47,8 +47,8 @@
 
 #define rustg_noise_get_at_coordinates(seed, x, y) call(RUST_G, "noise_get_at_coordinates")(seed, x, y)
 
-#define rustg_cnoise_generate(precentage, smoothing_iterations, name) call(RUST_G, "cnoise_generate")(precentage, smoothing_iterations, name)
-#define rustg_cnoise_get_at_coordinates(name,xcord,ycord) call(RUST_G, "cnoise_get_at_coordinates")(name,xcord,ycord)
+#define rustg_cnoise_generate(precentage, smoothing_iterations, birth_limit, death_limit) call(RUST_G, "cnoise_generate")(precentage, smoothing_iterations, birth_limit, death_limit)
+#define rustg_cnoise_get_at_coordinates(grid,xcord,ycord) call(RUST_G, "cnoise_get_at_coordinates")(grid,xcord,ycord)
 
 #define rustg_git_revparse(rev) call(RUST_G, "rg_git_revparse")(rev)
 #define rustg_git_commit_date(rev) call(RUST_G, "rg_git_commit_date")(rev)

@@ -1,8 +1,8 @@
 /datum/map_generator/cave_generator
 	///Weighted list of the types that spawns if the turf is open
-	var/open_turf_types = list(/turf/open/floor/plating/asteroid/airless = 1)
+	var/open_turf_types = list(/turf/open/floor/plating/asteroid/basalt/lava_land_surface = 1)
 	///Weighted list of the types that spawns if the turf is closed
-	var/closed_turf_types =  list(/turf/closed/mineral/random = 1)
+	var/closed_turf_types =  list(/turf/closed/mineral/random/volcanic = 1)
 
 
 	///Weighted list of extra features that can spawn in the area, such as geysers.
@@ -19,26 +19,27 @@
 
 
 	///Base chance of spawning a mob
-	var/mob_spawn_chance = 30
+	var/mob_spawn_chance = 6
 	///Base chance of spawning flora
-	var/flora_spawn_chance = 12
+	var/flora_spawn_chance = 2
 	///Base chance of spawning features
-	var/feature_spawn_chance = 1
+	var/feature_spawn_chance = 0.1
 	///Unique ID for this spawner
-	var/unique_id
-	///Static ID for iterating with
-	var/static/id_count = 0
+	var/string_gen
+
+	var/perc = 55
+	var/cycles = 50
+	var/birth_limit = 4
+	var/death_limit = 3
 
 /datum/map_generator/cave_generator/New()
 	. = ..()
-	unique_id = id_count
-	id_count++
 	if(!megafauna_spawn_list)
 		megafauna_spawn_list  = GLOB.megafauna_spawn_list
 
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
-	rustg_cnoise_generate(40, 20, unique_id)
+	string_gen = rustg_cnoise_generate("[perc]", "[cycles]", "[birth_limit]", "[death_limit]")
 
 	for(var/i in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i
@@ -47,7 +48,7 @@
 		if(!(A.area_flags & CAVES_ALLOWED))
 			continue
 
-		var/closed = text2num(rustg_cnoise_get_at_coordinates(unique_id, gen_turf.x, gen_turf.y))
+		var/closed = text2num(rustg_cnoise_get_at_coordinates(string_gen, "[gen_turf.x]", "[gen_turf.y]"))
 
 		var/stored_flags
 		if(gen_turf.flags_1 & NO_RUINS_1)
@@ -56,7 +57,7 @@
 		var/turf/new_turf = gen_turf.ChangeTurf(pickweight(closed ? closed_turf_types : open_turf_types), null, CHANGETURF_DEFER_CHANGE)
 		new_turf.flags_1 |= stored_flags
 
-		if(closed)//Open turfs have some special behavior related to spawning flora and mobs.
+		if(!closed)//Open turfs have some special behavior related to spawning flora and mobs.
 
 			var/turf/open/new_open_turf = new_turf
 
@@ -109,13 +110,13 @@
 				for(var/thing in urange(12, new_open_turf)) //prevents mob clumps
 					if(!ishostile(thing) && !istype(thing, /obj/structure/spawner))
 						continue
-					if((ispath(picked_mob, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(thing)) && get_dist(src, thing) <= 7)
+					if((ispath(picked_mob, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(thing)) && get_dist(new_open_turf, thing) <= 7)
 						can_spawn = FALSE //if there's a megafauna within standard view don't spawn anything at all
 						break
 					if(ispath(picked_mob, /mob/living/simple_animal/hostile/asteroid) || istype(thing, /mob/living/simple_animal/hostile/asteroid))
 						can_spawn = FALSE //if the random is a standard mob, avoid spawning if there's another one within 12 tiles
 						break
-					if((ispath(picked_mob, /obj/structure/spawner/lavaland) || istype(thing, /obj/structure/spawner/lavaland)) && get_dist(src, thing) <= 2)
+					if((ispath(picked_mob, /obj/structure/spawner/lavaland) || istype(thing, /obj/structure/spawner/lavaland)) && get_dist(new_open_turf, thing) <= 2)
 						can_spawn = FALSE //prevents tendrils spawning in each other's collapse range
 						break
 

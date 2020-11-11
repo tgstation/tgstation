@@ -67,7 +67,7 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-    
+
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
@@ -163,6 +163,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(map_generator)
 		map_generator = new map_generator()
 		map_generator.generate_terrain(get_area_turfs(src))
+
+/area/proc/test_gen()
+	if(map_generator)
+		map_generator.generate_terrain(get_area_turfs(src))
+
 
 /**
   * Register this area as belonging to a z level
