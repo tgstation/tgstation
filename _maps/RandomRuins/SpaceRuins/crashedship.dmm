@@ -1895,7 +1895,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/fore)
 "xA" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/awaymission/bmpship)
 "ya" = (
 /obj/machinery/door/poddoor/shutters{

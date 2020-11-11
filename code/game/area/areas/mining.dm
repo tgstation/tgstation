@@ -29,7 +29,7 @@
 	outdoors = TRUE
 	flags_1 = NONE
 	ambientsounds = MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | TUNNELS_ALLOWED | NO_ALERTS
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
 /area/mine/lobby
 	name = "Mining Station"
@@ -121,11 +121,12 @@
 
 /area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | NO_ALERTS
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | NO_ALERTS
 
 /area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+	map_generator = /datum/map_generator/cave_generator
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
@@ -162,13 +163,14 @@
 
 /area/icemoon/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | TUNNELS_ALLOWED | NO_ALERTS
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
+	map_generator = /datum/map_generator/cave_generator
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED | TUNNELS_ALLOWED | NO_ALERTS
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
 /area/icemoon/underground
 	name = "Icemoon Caves"
@@ -184,7 +186,8 @@
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+	map_generator = /datum/map_generator/cave_generator
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"

@@ -20,7 +20,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "d" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "e" = (
 /obj/structure/mirror{

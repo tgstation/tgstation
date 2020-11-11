@@ -1735,7 +1735,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dA" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/awaymission/moonoutpost19/main)
 "dB" = (
 /obj/structure/sign/warning/vacuum{

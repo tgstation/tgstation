@@ -11689,7 +11689,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aAe" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors)
 "aAf" = (
 /obj/structure/closet/wardrobe/pjs,
@@ -50168,7 +50168,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "gQb" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "gQz" = (
 /obj/machinery/firealarm{

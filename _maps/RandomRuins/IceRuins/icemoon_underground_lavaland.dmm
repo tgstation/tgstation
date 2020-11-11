@@ -3,7 +3,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/icemoon/underground/unexplored)
 "b" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "d" = (
 /obj/item/grown/bananapeel,

@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/unpowered/buried_library)
 "ad" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "ae" = (
 /turf/open/floor/wood{
@@ -48,7 +48,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ak" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "al" = (
 /turf/closed/wall/mineral/iron,
@@ -96,7 +96,7 @@
 /area/ruin/unpowered/buried_library)
 "av" = (
 /obj/structure/bookcase/random,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "aw" = (
 /turf/open/floor/plating/icemoon,
@@ -191,7 +191,7 @@
 /area/ruin/unpowered/buried_library)
 "aP" = (
 /obj/item/keycard/library,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -319,7 +319,7 @@
 /area/ruin/unpowered/buried_library)
 "bj" = (
 /obj/item/book/manual/random,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "bk" = (
 /obj/structure/fluff/paper/stack,
@@ -330,11 +330,11 @@
 /area/ruin/unpowered/buried_library)
 "bl" = (
 /obj/item/storage/box/fountainpens,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "bm" = (
 /obj/structure/fluff/paper/stack,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "bn" = (
 /obj/item/book/manual/random,
@@ -343,7 +343,7 @@
 /area/ruin/unpowered/buried_library)
 "bo" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "bq" = (
 /obj/structure/mineral_door/wood,
@@ -354,7 +354,7 @@
 /area/ruin/unpowered/buried_library)
 "br" = (
 /obj/structure/girder,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "bs" = (
 /obj/structure/girder,
@@ -366,7 +366,7 @@
 /area/template_noop)
 "bu" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "bv" = (
 /obj/effect/decal/cleanable/dirt/dust,
