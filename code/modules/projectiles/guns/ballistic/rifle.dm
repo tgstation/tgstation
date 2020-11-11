@@ -73,9 +73,19 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
+
+/obj/item/gun/ballistic/rifle/boltaction/harpoon
+	name = "ballistic harpoon gun"
+	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
+	icon_state = "speargun"
+	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	can_be_sawn_off = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -102,6 +112,8 @@
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
 	. = ..()
 	guns_left = 0
+	magazine = null
+	chambered = null
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))

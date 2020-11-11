@@ -277,7 +277,7 @@
 
 /obj/item/fakeartefact
 	name = "expensive forgery"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,

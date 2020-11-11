@@ -58,6 +58,7 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -163,9 +164,6 @@
 	if(error_msg)
 		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 	return FALSE
-
-/mob/living/silicon/IsAdvancedToolUser()
-	return TRUE
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -425,3 +423,15 @@
 
 /mob/living/silicon/rust_heretic_act()
 	adjustBruteLoss(500)
+
+/mob/living/silicon/on_floored_start()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_floored_end()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_lying_down()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_standing_up()
+	return // Silicons are always standing by default.

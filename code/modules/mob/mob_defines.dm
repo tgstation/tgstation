@@ -118,8 +118,6 @@
 
 	/// movable atom we are buckled to
 	var/atom/movable/buckled = null//Living
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckling
 
 	//Hands
 	///What hand is the active hand
@@ -209,7 +207,7 @@
 
 	var/memory_throttle_time = 0
 
-	/// Contains [/obj/screen/alert] only.
+	/// Contains [/atom/movable/screen/alert] only.
 	///
 	/// On [/mob] so clientless mobs will throw alerts properly.
 	var/list/alerts = list()

@@ -1,6 +1,6 @@
 /mob/living/carbon/human/Initialize()
 	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -20,8 +20,9 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -81,34 +82,6 @@
 			. += ""
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbedcount]"
-	//NINJACODE
-	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
-		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
-		. += "SpiderOS Status: [SN.s_initialized ? "Initialized" : "Disabled"]"
-		. += "Current Time: [station_time_timestamp()]"
-		if(SN.s_initialized)
-			//Suit gear
-			. += "Energy Charge: [round(SN.cell.charge/100)]%"
-			. += "Smoke Bombs: \Roman [SN.s_bombs]"
-			//Ninja status
-			. += "Fingerprints: [md5(dna.uni_identity)]"
-			. += "Unique Identity: [dna.unique_enzymes]"
-			. += "Overall Status: [stat > 1 ? "dead" : "[health]% healthy"]"
-			. += "Nutrition Status: [nutrition]"
-			. += "Oxygen Loss: [getOxyLoss()]"
-			. += "Toxin Levels: [getToxLoss()]"
-			. += "Burn Severity: [getFireLoss()]"
-			. += "Brute Trauma: [getBruteLoss()]"
-			. += "Radiation Levels: [radiation] rad"
-			. += "Body Temperature: [bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)"
-
-			//Diseases
-			if(length(diseases))
-				. += "Viruses:"
-				for(var/thing in diseases)
-					var/datum/disease/D = thing
-					. += "* [D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]"
-
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -188,7 +161,7 @@
 		dat += "</td></tr>"
 
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
+	if((w_uniform == null && !(dna?.species.nojumpsuit) && (!O || O.status != BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -604,7 +577,7 @@
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(R && R.fields["criminal"])
+		if(R?.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
 					threatcount += 5
@@ -656,6 +629,9 @@
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	if(target == src)
+		return
+
 	var/panicking = FALSE
 
 	do
@@ -717,7 +693,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna?.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -806,7 +782,7 @@
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
-	if(dna && dna.species)
+	if(dna?.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
 		var/static/mutable_appearance/electrocution_skeleton_anim
 		if(!electrocution_skeleton_anim)
@@ -834,7 +810,7 @@
 	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
-	if(wear_suit && wear_suit.breakouttime)
+	if(wear_suit?.breakouttime)
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		cuff_resist(wear_suit)
@@ -901,11 +877,11 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
 				for(var/t in get_disabled_limbs()) //Disabled limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -925,11 +901,8 @@
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
-/mob/living/carbon/human/can_hold_items()
-	return TRUE
-
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+	if(dna?.species) //prevents a runtime while a human is being monkeyfied
 		override = dna.species.override_float
 	..()
 
@@ -1069,13 +1042,19 @@
 	else if(can_be_firemanned(target))
 		fireman_carry(target)
 
+/mob/living/carbon/human/limb_attack_self()
+	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
+	if(arm)
+		arm.attack_self(src)
+	return ..()
+
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
 	return (istype(target) && target.stat == CONSCIOUS)
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
+	return ishuman(target) && target.body_position == LYING_DOWN
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
@@ -1091,7 +1070,7 @@
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
 		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, TRUE, target))
+		if(do_after(src, carrydelay, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
 				if(target.loc != loc)
@@ -1289,12 +1268,6 @@
 
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
-
-/mob/living/carbon/human/species/golem/capitalist
-	race = /datum/species/golem/capitalist
-
-/mob/living/carbon/human/species/golem/soviet
-	race = /datum/species/golem/soviet
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

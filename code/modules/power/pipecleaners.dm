@@ -194,7 +194,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
@@ -208,7 +208,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/cyborg
 	is_cyborg = 1
-	custom_materials = null
+	mats_per_unit = null
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
@@ -233,8 +233,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(pipe_cleaner_colors[pipe_cleaner_color])
 		pipe_cleaner_color = pipe_cleaner_colors[pipe_cleaner_color]
 
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 ///////////////////////////////////
@@ -460,8 +460,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	if(!amount)
 		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red

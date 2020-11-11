@@ -62,7 +62,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	switch(M.a_intent)
 		if ("help")
@@ -125,6 +125,6 @@
 	Proj.on_hit(src)
 	return BULLET_ACT_HIT
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()

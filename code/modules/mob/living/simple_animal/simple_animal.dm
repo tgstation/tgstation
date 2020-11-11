@@ -4,7 +4,7 @@
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
-
+	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
 
 	var/icon_living = ""
@@ -49,6 +49,10 @@
 	var/harm_intent_damage = 3
 	///Minimum force required to deal any damage.
 	var/force_threshold = 0
+	///Maximum amount of stamina damage the mob can be inflicted with total
+	var/max_staminaloss = 200
+	///How much stamina the mob recovers per call of update_stamina
+	var/stamina_recovery = 10
 
 	///Temperature effect.
 	var/minbodytemp = 250
@@ -172,6 +176,7 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
+		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -186,6 +191,10 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 
+/mob/living/simple_animal/Life()
+	. = ..()
+	if(staminaloss > 0)
+		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -245,6 +254,15 @@
 	if(stuttering)
 		stuttering = 0
 
+/**
+  * Updates the simple mob's stamina loss.
+  *
+  * Updates the speed and staminaloss of a given simplemob.
+  * Reduces the stamina loss by stamina_recovery
+  */
+/mob/living/simple_animal/update_stamina()
+	set_varspeed(initial(speed) + (staminaloss * 0.06))
+
 /mob/living/simple_animal/proc/handle_automated_action()
 	set waitfor = FALSE
 	return
@@ -266,12 +284,12 @@
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
+			if(speak?.len)
+				if((emote_hear?.len) || (emote_see?.len))
 					var/length = speak.len
-					if(emote_hear && emote_hear.len)
+					if(emote_hear?.len)
 						length += emote_hear.len
-					if(emote_see && emote_see.len)
+					if(emote_see?.len)
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
@@ -285,11 +303,11 @@
 				else
 					say(pick(speak), forced = "poly")
 			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if(!(emote_hear?.len) && (emote_see?.len))
 					manual_emote(pick(emote_see))
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
+				if((emote_hear?.len) && !(emote_see?.len))
 					manual_emote(pick(emote_hear))
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if((emote_hear?.len) && (emote_see?.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
@@ -354,7 +372,7 @@
 	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage)
 		if(unsuitable_atmos_damage > 0)
-			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert("not_enough_oxy")
 
@@ -365,20 +383,20 @@
 		adjustHealth(unsuitable_atmos_damage)
 		switch(unsuitable_atmos_damage)
 			if(1 to 5)
-				throw_alert("temp", /obj/screen/alert/cold, 1)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 			if(5 to 10)
-				throw_alert("temp", /obj/screen/alert/cold, 2)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 			if(10 to INFINITY)
-				throw_alert("temp", /obj/screen/alert/cold, 3)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
 		adjustHealth(unsuitable_atmos_damage)
 		switch(unsuitable_atmos_damage)
 			if(1 to 5)
-				throw_alert("temp", /obj/screen/alert/hot, 1)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			if(5 to 10)
-				throw_alert("temp", /obj/screen/alert/hot, 2)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			if(10 to INFINITY)
-				throw_alert("temp", /obj/screen/alert/hot, 3)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")
 
@@ -481,15 +499,16 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
+
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
-	if(..()) //successfully ressuscitated from death
-		icon = initial(icon)
-		icon_state = icon_living
-		density = initial(density)
-		mobility_flags = MOBILITY_FLAGS_DEFAULT
-		update_mobility()
-		. = TRUE
-		setMovetype(initial(movement_type))
+	. = ..()
+	if(!.)
+		return
+	icon = initial(icon)
+	icon_state = icon_living
+	density = initial(density)
+	setMovetype(initial(movement_type))
+
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -552,23 +571,6 @@
 	return ..()
 
 
-/mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT))
-		drop_all_held_items()
-		mobility_flags = NONE
-	else if(buckled)
-		mobility_flags = MOBILITY_FLAGS_INTERACTION
-	else
-		if(value_otherwise)
-			mobility_flags = MOBILITY_FLAGS_DEFAULT
-		else
-			mobility_flags = NONE
-	if(!(mobility_flags & MOBILITY_MOVE))
-		walk(src, 0) //stop mid walk
-
-	update_transform()
-	update_action_buttons_icon()
-
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/changed = FALSE
@@ -604,14 +606,12 @@
 			return
 	sync_lighting_plane_alpha()
 
+//Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
 /mob/living/simple_animal/get_idcard(hand_first)
-	return access_card
+	return (..() || access_card)
 
 /mob/living/simple_animal/can_hold_items()
-	return dextrous
-
-/mob/living/simple_animal/IsAdvancedToolUser()
-	return dextrous
+	return dextrous && ..()
 
 /mob/living/simple_animal/activate_hand(selhand)
 	if(!dextrous)
@@ -640,7 +640,7 @@
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
 	if(hud_used)
-		var/obj/screen/inventory/hand/H
+		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
 			H.update_icon()

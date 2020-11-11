@@ -14,7 +14,7 @@
 #define COMSIG_GLOB_EXPLOSION "!explosion"
 /// mob was created somewhere : (mob)
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"
-/// mob died somewhere : (mob , gibbed)
+/// mob died somewhere : (mob/living, gibbed)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
 /// global living say plug - use sparingly: (mob/speaker , message)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
@@ -98,6 +98,8 @@
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
 ///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
+///from base of atom/CheckParts(): (atom/movable/new_craft) - The atom has just been used in a crafting recipe and has been moved inside new_craft.
+#define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
@@ -115,7 +117,7 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
-///from base of atom/set_light(): (l_range, l_power, l_color)
+///from base of atom/set_light(): (l_range, l_power, l_color, l_on)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
@@ -149,21 +151,13 @@
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
 ///called when an atom stops orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
-/////////////////
-///from base of atom/attack_ghost(): (mob/dead/observer/ghost)
-#define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
-///from base of atom/attack_hand(): (mob/user)
-#define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
-///from base of atom/attack_paw(): (mob/user)
-#define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
-	#define COMPONENT_NO_ATTACK_HAND (1<<0)								//works on all 3.
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
-#define COMISG_STORAGE_ENTERED "storage_entered"
+#define COMSIG_STORAGE_ENTERED "storage_entered"
 //from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
-#define CONSIG_STORAGE_EXITED "storage_exited"
+#define COMSIG_STORAGE_EXITED "storage_exited"
 
 ///from base of atom/expose_reagents(): (/list, /datum/reagents, methods, volume_modifier, show_message)
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
@@ -219,6 +213,8 @@
 	#define COMPONENT_NO_MOUSEDROP (1<<0)
 ///from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+///from base of mob/MouseWheelOn(): (/atom, delta_x, delta_y, params)
+#define COMSIG_MOUSE_SCROLL_ON "mousescroll_on"
 
 // /area signals
 
@@ -235,7 +231,9 @@
 #define COMSIG_TURF_CHANGE "turf_change"
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
-///from base of turf/New(): (turf/source, direction)
+///from base of turf/multiz_turf_del(): (turf/source, direction)
+#define COMSIG_TURF_MULTIZ_DEL "turf_multiz_del"
+///from base of turf/multiz_turf_new: (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
 
 // /atom/movable signals
@@ -287,6 +285,8 @@
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
+// called when movable is expelled from a disposal pipe, bin or outlet on obj/pipe_eject: (direction)
+#define COMSIG_MOVABLE_PIPE_EJECTING "movable_pipe_ejecting"
 ///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 ///from base of atom/movable/setGrabState(): (newstate)
@@ -301,6 +301,8 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
+///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_obj()
+#define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 
 // /mob signals
 
@@ -308,8 +310,6 @@
 #define COMSIG_MOB_LOGIN "mob_login"
 ///from base of /mob/Logout(): ()
 #define COMSIG_MOB_LOGOUT "mob_logout"
-///from base of mob/death(): (gibbed)
-#define COMSIG_MOB_DEATH "mob_death"
 ///from base of mob/set_stat(): (new_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
 ///from base of mob/clickon(): (atom/A, params)
@@ -327,19 +327,9 @@
 	#define COMPONENT_BLOCK_MAGIC (1<<0)
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
-///from base of atom/attack_hand(): (mob/user)
-#define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
-///from base of /obj/item/attack(): (mob/M, mob/user)
-#define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-	#define COMPONENT_ITEM_NO_ATTACK (1<<0)
+
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
-///from base of mob/RangedAttack(): (atom/A, params)
-#define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)
@@ -395,6 +385,9 @@
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
+///from base of mob/living/death(): (gibbed)
+#define COMSIG_LIVING_DEATH "living_death"
+
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
 ///sent when a mob/login() finishes: (client)
@@ -404,26 +397,35 @@
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 
-///from base of mob/living/Stun() (amount, update, ignore)
+///from base of mob/living/Stun() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_STUN "living_stun"
-///from base of mob/living/Knockdown() (amount, update, ignore)
+///from base of mob/living/Knockdown() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_KNOCKDOWN "living_knockdown"
-///from base of mob/living/Paralyze() (amount, update, ignore)
+///from base of mob/living/Paralyze() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_PARALYZE "living_paralyze"
-///from base of mob/living/Immobilize() (amount, update, ignore)
+///from base of mob/living/Immobilize() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_IMMOBILIZE "living_immobilize"
-///from base of mob/living/Unconscious() (amount, update, ignore)
+///from base of mob/living/Unconscious() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"
-///from base of mob/living/Sleeping() (amount, update, ignore)
+///from base of mob/living/Sleeping() (amount, ignore_canstun)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"
 	#define COMPONENT_NO_STUN (1<<0)									//For all of them
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 
+///From /datum/component/creamed/Initialize()
+#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /obj/item/gun/proc/check_botched()
+#define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
+
 ///When a carbon mob hugs someone, this is called on the carbon mob.
 #define COMSIG_CARBON_HUG "carbon_hug"
 
+///When a carbon slips. Called on /turf/open/handle_slip()
+#define COMSIG_ON_CARBON_SLIP "carbon_slip"
+///When a carbon gets a vending machine tilted on them
+#define COMSIG_ON_VENDOR_CRUSH "carbon_vendor_crush"
 // /mob/living/carbon physiology signals
 #define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound"				//from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
 #define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound"				//from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
@@ -456,6 +458,10 @@
 
 // /obj signals
 
+///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
+#define COMSIG_OBJ_TAKE_DAMAGE	"obj_take_damage"
+	/// Return bitflags for the above signal which prevents the object taking any damage.
+	#define COMPONENT_NO_TAKE_DAMAGE	(1<<0)
 ///from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"
 ///from base of code/game/machinery
@@ -473,6 +479,13 @@
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
+///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
+#define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
+
+// /obj/machinery/atmospherics/components/unary/cryo_cell signals
+
+/// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
+#define COMSIG_CRYO_SET_ON "cryo_set_on"
 
 // /obj/machinery/door/airlock signals
 
@@ -483,21 +496,6 @@
 
 // /obj/item signals
 
-///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
-#define COMSIG_ITEM_ATTACK "item_attack"
-///from base of obj/item/attack_self(): (/mob)
-#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
-	#define COMPONENT_NO_INTERACT (1<<0)
-///from base of obj/item/attack_obj(): (/obj, /mob)
-#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
-	#define COMPONENT_NO_ATTACK_OBJ (1<<0)
-///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
-	#define COMPONENT_NO_ATTACK (1<<0)
-///from base of obj/item/afterattack(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
@@ -638,12 +636,6 @@
 
 // /mob/living/carbon/human signals
 
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
-#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
@@ -829,3 +821,42 @@
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
 #define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
+
+/* Attack signals. They should share the returned flags, to standardize the attack chain. */
+/// tool_act -> pre_attack -> target.attackby (item.attack) -> afterattack
+	///Ends the attack chain. If sent early might cause posterior attacks not to happen.
+	#define COMPONENT_CANCEL_ATTACK_CHAIN (1<<0)
+	///Skips the specific attack step, continuing for the next one to happen.
+	#define COMPONENT_SKIP_ATTACK (1<<1)
+///from base of atom/attack_ghost(): (mob/dead/observer/ghost)
+#define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
+///from base of atom/attack_hand(): (mob/user)
+#define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
+///from base of atom/attack_paw(): (mob/user)
+#define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
+///from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
+#define COMSIG_ITEM_ATTACK "item_attack"
+///from base of obj/item/attack_self(): (/mob)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
+///from base of obj/item/attack_obj(): (/obj, /mob)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
+///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
+///from base of obj/item/afterattack(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_AFTERATTACK "item_afterattack"
+///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of atom/attack_hand(): (mob/user)
+#define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
+///from base of /obj/item/attack(): (mob/M, mob/user)
+#define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
+///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
+///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
+///from base of mob/RangedAttack(): (atom/A, params)
+#define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"

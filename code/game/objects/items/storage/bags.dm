@@ -90,6 +90,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
@@ -119,7 +120,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
+	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -318,7 +319,17 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/glass,
+		/obj/item/food,
+		/obj/item/kitchen/knife,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/kitchen/fork,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
 	STR.insert_preposition = "on"
+	STR.max_items = 7
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -457,3 +468,24 @@
 		/obj/item/electronics,
 		/obj/item/wallframe/camera
 		))
+
+/obj/item/storage/bag/harpoon_quiver
+	name = "harpoon quiver"
+	desc = "A quiver for holding harpoons."
+	icon_state = "quiver"
+	inhand_icon_state = "quiver"
+	worn_icon_state = "harpoon_quiver"
+
+/obj/item/storage/bag/harpoon_quiver/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_TINY
+	STR.max_items = 40
+	STR.max_combined_w_class = 100
+	STR.set_holdable(list(
+		/obj/item/ammo_casing/caseless/harpoon
+		))
+
+/obj/item/storage/bag/harpoon_quiver/PopulateContents()
+	for(var/i in 1 to 40)
+		new /obj/item/ammo_casing/caseless/harpoon(src)

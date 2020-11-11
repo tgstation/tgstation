@@ -664,7 +664,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		return
 
-/client/proc/cmd_admin_gib(mob/M in GLOB.mob_list)
+/client/proc/cmd_admin_gib(mob/victim in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Gib"
 
@@ -675,19 +675,23 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
-	if(!M)
+	if(!victim)
 		return
 
-	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
-	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
+	log_admin("[key_name(usr)] has gibbed [key_name(victim)]")
+	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(victim)]")
 
-	if(isobserver(M))
-		new /obj/effect/gibspawner/generic(get_turf(M))
+	if(isobserver(victim))
+		new /obj/effect/gibspawner/generic(get_turf(victim))
 		return
-	if(confirm == "Yes")
-		M.gib()
-	else
-		M.gib(1)
+
+	var/mob/living/living_victim = victim
+	if (istype(living_victim))
+		if(confirm == "Yes")
+			living_victim.gib()
+		else
+			living_victim.gib(TRUE)
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_gib_self()
@@ -699,7 +703,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		mob.gib(1, 1, 1)
+
+		var/mob/living/ourself = mob
+		if (istype(ourself))
+			ourself.gib(TRUE, TRUE, TRUE)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in GLOB.mob_list)
 	set category = "Debug"
@@ -1128,7 +1135,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_SCARIFY,
 									ADMIN_PUNISHMENT_SHOES,
 									ADMIN_PUNISHMENT_DOCK,
-									ADMIN_PUNISHMENT_BREAD
+									ADMIN_PUNISHMENT_BREAD,
+									ADMIN_PUNISHMENT_BADLUCK
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1325,6 +1333,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
 			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
+		if(ADMIN_PUNISHMENT_BADLUCK)
+			if(!isliving(target))
+				to_chat(usr, "<span class='warning'>This must be used on a /mob/living type of mob.</span>", confidential = TRUE)
+				return
+			var/silent = alert("Do you want to apply the omen with a player notification?", "Notify Player?", "Notify", "Silent") == "Silent"
+			var/permanent = alert("Would you like this to be permanent or removed automatically after the first accident?", "Permanent?", "Permanent", "Temporary") == "Permanent"
+			target.AddComponent(/datum/component/omen, silent, null, permanent)
 
 	punish_log(target, punishment)
 
@@ -1395,22 +1410,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
-/datum/admins/proc/cmd_show_exp_panel(client/C)
+/datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
 		return
-	if(!C)
+	if(!client_to_check)
 		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
 		return
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>", confidential = TRUE)
 		return
 
-	var/list/body = list()
-	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
-	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=[REF(C)]'>Toggle Exempt status</a>"
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
+	new /datum/job_report_menu(client_to_check, usr)
 
 /datum/admins/proc/toggle_exempt_status(client/C)
 	if(!check_rights(R_ADMIN))

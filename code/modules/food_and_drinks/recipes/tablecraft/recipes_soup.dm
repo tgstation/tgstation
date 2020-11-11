@@ -287,9 +287,21 @@
 	name = "Electron Soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/datum/reagent/consumable/sodiumchloride = 5,
+		/datum/reagent/consumable/salt = 5,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 1
 	)
 	result = /obj/item/food/soup/electron
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/peasoup
+	name = "Pea soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/food/snacks/grown/peas = 2,
+		/obj/item/reagent_containers/food/snacks/grown/parsnip = 1,
+		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
+		/obj/item/reagent_containers/glass/bowl = 1
+	)
+	result = /obj/item/food/soup/peasoup
 	subcategory = CAT_SOUP

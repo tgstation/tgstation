@@ -88,6 +88,11 @@
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
+/obj/structure/alien/resin/wall/creature
+	name = "gelatinous wall"
+	desc = "Thick material shaped into a wall. Eugh."
+	color = "#8EC127"
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
@@ -102,6 +107,12 @@
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
+
+///Used in the big derelict ruin exclusively.
+/obj/structure/alien/resin/membrane/creature
+	name = "gelatinous membrane"
+	desc = "A strange combination of thin, gelatinous material."
+	color = "#4BAE56"
 
 /*
  * Weeds
@@ -140,7 +151,8 @@
 		blacklisted_turfs = typecacheof(list(
 			/turf/open/space,
 			/turf/open/chasm,
-			/turf/open/lava))
+			/turf/open/lava,
+			/turf/open/openspace))
 
 	set_base_icon()
 
@@ -219,6 +231,11 @@
 
 /obj/structure/alien/weeds/node/set_base_icon()
 	return //No icon randomization at init. The node's icon is already well defined.
+
+/obj/structure/alien/weeds/creature
+	name = "gelatinous floor"
+	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."
+	color = "#4BAE56"
 
 
 #undef NODERANGE

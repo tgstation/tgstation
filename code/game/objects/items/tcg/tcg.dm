@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -55,9 +55,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/list/choices = GLOB.tcgcard_radial_choices
 	if(!length(choices))
 		choices = GLOB.tcgcard_radial_choices = list(
-		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
-		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
-		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -171,9 +171,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "deck_up"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
-	var/static/radial_draw = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw")
-	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
-	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
+	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
+	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
+	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
 /obj/item/tcgcard_deck/Initialize()
 	. = ..()
@@ -198,10 +198,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/attack_hand(mob/user)
 	var/list/choices = list(
-		"Draw" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw"),
-		"Shuffle" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle"),
-		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
-		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		"Draw" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw"),
+		"Shuffle" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle"),
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
   * *User: The person doing the shuffling, used in visable message and closing UI.
   * *Visible: Will anyone need to hear the visable message about the shuffling?
   */
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
@@ -350,8 +350,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/Initialize()
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])

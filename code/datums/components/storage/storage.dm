@@ -34,8 +34,8 @@
 
 	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
 
-	var/obj/screen/storage/boxes					//storage display object
-	var/obj/screen/close/closer						//close button object
+	var/atom/movable/screen/storage/boxes					//storage display object
+	var/atom/movable/screen/close/closer						//close button object
 
 	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
 
@@ -115,10 +115,10 @@
 	can_hold_description = generate_hold_desc(can_hold_list)
 
 	if (can_hold_list != null)
-		can_hold = typecacheof(can_hold_list)
+		can_hold = string_list(typecacheof(can_hold_list))
 
 	if (cant_hold_list != null)
-		cant_hold = typecacheof(cant_hold_list)
+		cant_hold = string_list(typecacheof(cant_hold_list))
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
 	var/list/desc = list()
@@ -195,7 +195,7 @@
 
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
-	. = COMPONENT_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
@@ -215,7 +215,7 @@
 		return
 	var/datum/progressbar/progress = new(M, len, I.loc)
 	var/list/rejections = list()
-	while(do_after(M, 10, TRUE, parent, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
+	while(do_after(M, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
 		stoplag(1)
 	progress.end_progress()
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
@@ -273,7 +273,7 @@
 	var/turf/T = get_turf(A)
 	var/list/things = contents()
 	var/datum/progressbar/progress = new(M, length(things), T)
-	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+	while (do_after(M, 1 SECONDS, T, NONE, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
 	progress.end_progress()
 
@@ -567,14 +567,14 @@
 	// this must come before the screen objects only block, dunno why it wasn't before
 	if(over_object == M)
 		user_show_to_mob(M)
-	if(!istype(over_object, /obj/screen))
+	if(!istype(over_object, /atom/movable/screen))
 		dump_content_at(over_object, M)
 		return
 	if(A.loc != M)
 		return
 	playsound(A, "rustle", 50, TRUE, -5)
-	if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 		return
 	A.add_fingerprint(M)
@@ -635,7 +635,7 @@
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
 	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
-	if(biggerfish && biggerfish.max_w_class < max_w_class)//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
+	if(biggerfish && biggerfish.max_w_class < max_w_class) //return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] can't fit in [host] while [real_location.loc] is in the way!</span>")
 		return FALSE
@@ -766,6 +766,7 @@
 				return TRUE
 	return TRUE
 
+
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
 	SIGNAL_HANDLER_DOES_SLEEP
 
@@ -775,7 +776,7 @@
 	if(user.active_storage == src && A.loc == user) //if you're already looking inside the storage item
 		user.active_storage.close(user)
 		close(user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		return
 
 	if(rustle_sound)
@@ -784,22 +785,23 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.l_store == A && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
-			. = COMPONENT_NO_ATTACK_HAND
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
 			H.put_in_hands(A)
 			H.l_store = null
 			return
 		if(H.r_store == A && !H.get_active_held_item())
-			. = COMPONENT_NO_ATTACK_HAND
+			. = COMPONENT_CANCEL_ATTACK_CHAIN
 			H.put_in_hands(A)
 			H.r_store = null
 			return
 
 	if(A.loc == user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		if(locked)
 			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		else
 			show_to(user)
+
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER

@@ -9,14 +9,14 @@
 	var/obj/target = null
 	var/check_flags = NONE
 	var/processing = FALSE
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
 
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
 
-	var/icon_icon = 'icons/mob/actions.dmi' //This is the file for the ACTION icon
+	var/icon_icon = 'icons/hud/actions.dmi' //This is the file for the ACTION icon
 	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
@@ -101,7 +101,7 @@
 		return FALSE
 	if((check_flags & AB_CHECK_LYING) && isliving(owner))
 		var/mob/living/action_user = owner
-		if(!(action_user.mobility_flags & MOBILITY_STAND))
+		if(action_user.body_position == LYING_DOWN)
 			return FALSE
 	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
 		return FALSE
@@ -113,7 +113,7 @@
 		if(!status_only)
 			button.name = name
 			button.desc = desc
-			if(owner && owner.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			if(owner?.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
 				var/list/settings = owner.hud_used.get_action_buttons_icons()
 				if(button.icon != settings["bg_icon"])
 					button.icon = settings["bg_icon"]
@@ -133,7 +133,7 @@
 			button.color = rgb(255,255,255,255)
 			return 1
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+/datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
@@ -146,7 +146,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -172,7 +172,7 @@
 		I.ui_action_click(owner, src)
 	return TRUE
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
@@ -741,7 +741,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "storage_gather_switch"
 
-/datum/action/item_action/storage_gather_mode/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
 	var/old_layer = target.layer
 	var/old_plane = target.plane

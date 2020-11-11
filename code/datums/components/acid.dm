@@ -198,7 +198,8 @@
 	to_chat(user, "<span class='warning'>The acid on \the [parent_atom] burns your hand!</span>")
 	playsound(parent_atom, 'sound/weapons/sear.ogg', 50, TRUE)
 	user.update_damage_overlays()
-	return COMPONENT_NO_ATTACK_HAND
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
 /datum/component/acid/proc/on_crossed(atom/parent_atom, mob/living/crosser)

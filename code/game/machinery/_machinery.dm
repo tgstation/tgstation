@@ -146,6 +146,12 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/proc/set_occupant(atom/movable/new_occupant)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_MACHINERY_SET_OCCUPANT, new_occupant)
+	occupant = new_occupant
+
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
@@ -232,7 +238,7 @@ Class Procs:
 		movable_atom.forceMove(this_turf)
 
 	// We'll have dropped the occupant, circuit and component parts as part of this.
-	occupant = null
+	set_occupant(null)
 	circuit = null
 	LAZYCLEARLIST(component_parts)
 
@@ -254,12 +260,9 @@ Class Procs:
 			continue
 
 		movable_atom.forceMove(this_turf)
-		if(isliving(movable_atom))
-			var/mob/living/living_mob = movable_atom
-			living_mob.update_mobility()
 
 		if(occupant == movable_atom)
-			occupant = null
+			set_occupant(null)
 
 /**
  * Puts passed object in to user's hand
@@ -298,7 +301,7 @@ Class Procs:
 
 	var/mob/living/mobtarget = target
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
-		occupant = target
+		set_occupant(target)
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
@@ -368,27 +371,26 @@ Class Procs:
 	if(!SSeconomy.full_ancap)
 		return TRUE
 	if(occupant && !state_open)
-		if(ishuman(occupant))
-			var/mob/living/carbon/human/H = occupant
-			var/obj/item/card/id/I = H.get_idcard(TRUE)
-			if(I)
-				var/datum/bank_account/insurance = I.registered_account
-				if(!insurance)
-					say("[market_verb] NAP Violation: No bank account found.")
-					nap_violation(occupant)
-					return FALSE
-				else
-					if(!insurance.adjust_money(-fair_market_price))
-						say("[market_verb] NAP Violation: Unable to pay.")
-						nap_violation(occupant)
-						return FALSE
-					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-					if(D)
-						D.adjust_money(fair_market_price)
-			else
-				say("[market_verb] NAP Violation: No ID card found.")
-				nap_violation(occupant)
+		var/mob/living/L = occupant
+		var/obj/item/card/id/I = L.get_idcard(TRUE)
+		if(I)
+			var/datum/bank_account/insurance = I.registered_account
+			if(!insurance)
+				say("[market_verb] NAP Violation: No bank account found.")
+				nap_violation(L)
 				return FALSE
+			else
+				if(!insurance.adjust_money(-fair_market_price))
+					say("[market_verb] NAP Violation: Unable to pay.")
+					nap_violation(L)
+					return FALSE
+				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+				if(D)
+					D.adjust_money(fair_market_price)
+		else
+			say("[market_verb] NAP Violation: No ID card found.")
+			nap_violation(L)
+			return FALSE
 	return TRUE
 
 /obj/machinery/proc/nap_violation(mob/violator)
@@ -512,12 +514,11 @@ Class Procs:
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
-	if(occupant)
-		occupant.ex_act(severity, target)
+	occupant?.ex_act(severity, target)
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)
-		occupant = null
+		set_occupant(null)
 		update_icon()
 		updateUsrDialog()
 		return ..()
@@ -685,7 +686,7 @@ Class Procs:
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if(AM == occupant)
-		occupant = null
+		set_occupant(null)
 	if(AM == circuit)
 		circuit = null
 
@@ -699,6 +700,13 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, MELEE, 1)
+
+/obj/machinery/vv_edit_var(vname, vval)
+	if(vname == "occupant")
+		set_occupant(vval)
+		datum_flags |= DF_VAR_EDITED
+		return TRUE
+	return ..()
 
 /**
  * Generate a name devices
@@ -721,3 +729,14 @@ Class Procs:
 			if(3)
 				new_name += ascii2text(rand(48, 57)) // 0 - 9
 	return new_name.Join()
+
+/**
+ * Alerts the AI that a hack is in progress.
+ *
+ * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
+ * However, the proc may also be used elsewhere.
+ */	
+/obj/machinery/proc/AI_notify_hack()
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)

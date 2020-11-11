@@ -26,7 +26,7 @@
 
 /obj/item/grenade/c4/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
@@ -57,7 +57,7 @@
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target && target.density)
+		if(directional && target?.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
@@ -143,7 +143,7 @@
 			message_say = "FOR THE FEDERATION!"
 	M.say(message_say, forced="C4 suicide")
 
-/obj/item/grenade/c4/suicide_act(mob/user)
+/obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")

@@ -365,7 +365,7 @@
 						/datum/reagent/liquidgibs = 1)
 
 	suppressive_reagents = list(
-						/datum/reagent/consumable/sodiumchloride = -3,
+						/datum/reagent/consumable/salt = -3,
 						/datum/reagent/medicine/c2/syriniver = -2)
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
@@ -403,7 +403,7 @@
 	resulting_atoms[random_result] = 1
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 

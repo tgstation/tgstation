@@ -44,6 +44,7 @@ Difficulty: Very Hard
 	move_to_delay = 10
 	ranged = TRUE
 	pixel_x = -32
+	base_pixel_x = -32
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
 	achievement_type = /datum/award/achievement/boss/colossus_kill
@@ -816,7 +817,7 @@ Difficulty: Very Hard
 	action_icon_state = "exit_possession"
 	sound = null
 
-/obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/living/user = usr)
 	if(!isfloorturf(user.loc))
 		return
 	var/datum/mind/target_mind = user.mind

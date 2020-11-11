@@ -158,7 +158,7 @@
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
 	set hidden = TRUE
-	var/mob/user = src && src.mob
+	var/mob/user = src?.mob
 	if(!user)
 		return
 	// Close all tgui datums based on window_id.

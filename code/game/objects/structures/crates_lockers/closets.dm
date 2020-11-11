@@ -280,6 +280,7 @@
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='hear'>You hear welding.</span>")
+			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_icon()
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
@@ -302,9 +303,9 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /obj/screen))
+	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
-	if(!istype(user) || user.incapacitated() || !(user.mobility_flags & MOBILITY_STAND))
+	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -353,15 +354,17 @@
 		return
 	container_resist_act(user)
 
+
 /obj/structure/closet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
+	if(user.body_position == LYING_DOWN && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
+
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -372,7 +375,8 @@
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
-	return attack_hand(user)
+	if(attack_hand(user))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)
@@ -468,14 +472,14 @@
 			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 							"<span class='hear'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, TRUE)
+		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_icon()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
 	. = ..()

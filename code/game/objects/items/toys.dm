@@ -281,7 +281,7 @@
 	. = ..()
 	if (flag)
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
@@ -650,6 +650,15 @@
 	var/list/card_attack_verb_continuous = list("attacks")
 	var/list/card_attack_verb_simple = list("attack")
 
+
+/obj/item/toy/cards/Initialize()
+	. = ..()
+	if(card_attack_verb_continuous)
+		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
+	if(card_attack_verb_simple)
+		card_attack_verb_simple = string_list(card_attack_verb_simple)
+
+
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
@@ -769,8 +778,8 @@
 			M.put_in_hands(src)
 			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
-		else if(istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		else if(istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 				to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
@@ -848,8 +857,8 @@
 	newobj.card_throwforce = sourceobj.card_throwforce
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
@@ -968,10 +977,8 @@
 	newobj.throw_speed = newobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.throw_range = newobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
-	newobj.attack_verb_simple = newobj.card_attack_verb_simple
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||

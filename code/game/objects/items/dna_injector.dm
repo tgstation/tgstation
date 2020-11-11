@@ -3,6 +3,7 @@
 	desc = "This injects the person with DNA."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dnainjector"
+	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -47,7 +48,7 @@
 	return FALSE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(used)

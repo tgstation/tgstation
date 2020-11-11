@@ -72,8 +72,8 @@
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
-	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
@@ -112,7 +112,7 @@
 				to_chat(user, "<span class='warning'>You require 3 [cloth_repair.name] to repair [src].</span>")
 				return TRUE
 			to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [cloth_repair]...</span>")
-			if(!do_after(user, 6 SECONDS, TRUE, src) || !cloth_repair.use(3))
+			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
 				return TRUE
 			repair(user, params)
 			return TRUE

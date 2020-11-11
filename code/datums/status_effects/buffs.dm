@@ -4,16 +4,16 @@
 	id = "his_grace"
 	duration = -1
 	tick_interval = 4
-	alert_type = /obj/screen/alert/status_effect/his_grace
+	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
 
-/obj/screen/alert/status_effect/his_grace
+/atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
 	desc = "His Grace hungers, and you must feed Him."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+/atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/his_grace/HG = attached_effect
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
@@ -54,18 +54,19 @@
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
 	id = "wish_granters_gift"
 	duration = 50
-	alert_type = /obj/screen/alert/status_effect/wish_granters_gift
+	alert_type = /atom/movable/screen/alert/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
 	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
 	return ..()
 
+
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
-	owner.update_mobility()
 
-/obj/screen/alert/status_effect/wish_granters_gift
+
+/atom/movable/screen/alert/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"
@@ -103,9 +104,9 @@
 	id = "blooddrunk"
 	duration = 10
 	tick_interval = 0
-	alert_type = /obj/screen/alert/status_effect/blooddrunk
+	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
-/obj/screen/alert/status_effect/blooddrunk
+/atom/movable/screen/alert/status_effect/blooddrunk
 	name = "Blood-Drunk"
 	desc = "You are drunk on blood! Your pulse thunders in your ears! Nothing can harm you!" //not true, and the item description mentions its actual effect
 	icon_state = "blooddrunk"
@@ -176,7 +177,7 @@
 /datum/status_effect/fleshmend
 	id = "fleshmend"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/fleshmend
+	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
 
 /datum/status_effect/fleshmend/tick()
 	if(owner.on_fire)
@@ -192,7 +193,7 @@
 	var/mob/living/carbon/C = owner
 	QDEL_LIST(C.all_scars)
 
-/obj/screen/alert/status_effect/fleshmend
+/atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
 	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
 	icon_state = "fleshmend"
@@ -326,7 +327,7 @@
 		owner.set_confusion(max(0, owner.get_confusion() - 1))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
-/obj/screen/alert/status_effect/regenerative_core
+/atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
 	icon_state = "regenerative_core"
@@ -335,7 +336,7 @@
 	id = "Regenerative Core"
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /obj/screen/alert/status_effect/regenerative_core
+	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)

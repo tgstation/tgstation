@@ -7,6 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
+	worn_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list()
@@ -137,7 +138,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
-	if(reagents && reagents.reagent_list.len)
+	if(reagents?.reagent_list.len)
 		. += "<span class='notice'>It is currently loaded.</span>"
 	else
 		. += "<span class='notice'>It is spent.</span>"
@@ -286,6 +287,7 @@
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
 	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
+	icon_state = "firstaid"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
@@ -293,6 +295,7 @@
 /obj/item/reagent_containers/hypospray/medipen/blood_loss
 	name = "hypovolemic-response autoinjector"
 	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	icon_state = "hypovolemic"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)

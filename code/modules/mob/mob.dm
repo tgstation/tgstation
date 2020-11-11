@@ -30,7 +30,7 @@
 		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
-	if(observers && observers.len)
+	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
@@ -586,6 +586,16 @@
 
 	return TRUE
 
+/**
+  * Called by using Activate Held Object with an empty hand/limb
+  *
+  * Does nothing by default. The intended use is to allow limbs to call their
+  * own attack_self procs. It is up to the individual mob to override this
+  * parent and actually use it.
+  */
+/mob/proc/limb_attack_self()
+	return
+
 ///Can this mob resist (default FALSE)
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -641,6 +651,10 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+		return
+
+	limb_attack_self()
+
 
 /**
   * Get the notes of this mob
@@ -801,14 +815,11 @@
   */
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
-	if(ismob(dropping) && dropping != user)
+	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
-		if(ismob(user))
-			var/mob/U = user
-			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
-				M.show_inv(U)
-		else
-			M.show_inv(user)
+		var/mob/U = user
+		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+			M.show_inv(U)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
@@ -914,10 +925,6 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-///This might need a rename but it should replace the can this mob use things check
-/mob/proc/IsAdvancedToolUser()
-	return FALSE
-
 /mob/proc/swap_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
@@ -979,7 +986,7 @@
 		return src
 
 /**
-  * Buckle to another mob
+  * Buckle a living mob to this mob
   *
   * You can buckle on mobs if you're next to them since most are dense
   *
@@ -1016,14 +1023,6 @@
 		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
 			return 0
 	return 9
-
-///can the mob be buckled to something by default?
-/mob/proc/can_buckle()
-	return TRUE
-
-///can the mob be unbuckled from something by default?
-/mob/proc/can_unbuckle()
-	return TRUE
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
@@ -1153,7 +1152,7 @@
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
 	if(hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
 		if (L)
 			L.alpha = lighting_alpha
 
@@ -1189,14 +1188,7 @@
 
 ///Can this mob hold items
 /mob/proc/can_hold_items()
-	return FALSE
-
-///Get the id card on this mob
-/mob/proc/get_idcard(hand_first)
-	return
-
-/mob/proc/get_id_in_hand()
-	return
+	return length(held_items)
 
 /**
   * Get the mob VV dropdown extras
@@ -1325,3 +1317,47 @@
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
 	. = stat
 	stat = new_stat
+
+
+/mob/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, control_object))
+			var/obj/O = var_value
+			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
+				return FALSE
+		if(NAMEOF(src, machine))
+			set_machine(var_value)
+			. =  TRUE
+		if(NAMEOF(src, focus))
+			set_focus(var_value)
+			. =  TRUE
+		if(NAMEOF(src, nutrition))
+			set_nutrition(var_value)
+			. =  TRUE
+		if(NAMEOF(src, stat))
+			set_stat(var_value)
+			. =  TRUE
+		if(NAMEOF(src, dizziness))
+			set_dizziness(var_value)
+			. =  TRUE
+		if(NAMEOF(src, eye_blind))
+			set_blindness(var_value)
+			. =  TRUE
+		if(NAMEOF(src, eye_blurry))
+			set_blurriness(var_value)
+			. =  TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
+	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
+	var/diff
+	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
+		remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
+		diff = var_value - cached_multiplicative_slowdown
+
+	. = ..()
+
+	if(. && slowdown_edit && isnum(diff))
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)

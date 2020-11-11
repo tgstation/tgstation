@@ -20,7 +20,7 @@
 	data["has_id_slot"] = !!card_slot
 	data["has_printer"] = !!printer
 	data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
-	data["card_owner"] = card_slot && card_slot.stored_card ? id_card.registered_name : "No Card Inserted."
+	data["card_owner"] = card_slot?.stored_card ? id_card.registered_name : "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = percent_cut
 	return data
@@ -42,7 +42,7 @@
 	switch(action)
 		if("ejectid")
 			if(id_card)
-				card_slot.try_eject(TRUE, usr)
+				card_slot.try_eject(usr, TRUE)
 		if("selectid")
 			if(!id_card)
 				return

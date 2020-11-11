@@ -62,6 +62,7 @@
 								"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
+			log_combat(user, C, "attempted to handcuff")
 			if(do_mob(user, C, 30) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
@@ -74,6 +75,7 @@
 				log_combat(user, C, "handcuffed")
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				log_combat(user, C, "failed to handcuff")
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
@@ -268,7 +270,7 @@
 			var/def_zone = BODY_ZONE_CHEST
 			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				if(C.mobility_flags & MOBILITY_STAND)
+				if(C.body_position == STANDING_UP)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src

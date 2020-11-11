@@ -68,7 +68,9 @@
 			continue
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
-		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+		var/list/sanity = place.baseturfs.Copy()
+		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
+		place.baseturfs = baseturfs_string_list(sanity, place)
 
 		for(var/obj/docking_port/mobile/port in place)
 			if(register)
@@ -101,7 +103,7 @@
 /datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
 	if(movement_force)
 		M.movement_force = movement_force.Copy()
-	M.linkup(src)
+	M.linkup()
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
@@ -552,7 +554,7 @@
 	name = "basic syndicate infiltrator"
 
 /datum/map_template/shuttle/infiltrator/advanced
-	suffix = "basic"
+	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
 
 /datum/map_template/shuttle/cargo/delta

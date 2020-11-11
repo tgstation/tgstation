@@ -457,7 +457,7 @@
 	safety = TRUE
 	update_icon()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	if(SSticker && SSticker.mode)
+	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 
@@ -585,9 +585,10 @@
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
 		return
-	for(var/mob/M in GLOB.mob_list)
-		if(M.stat != DEAD && M.z == z)
-			M.gib()
+	for(var/_victim in GLOB.mob_living_list)
+		var/mob/living/victim = _victim
+		if(victim.stat != DEAD && victim.z == z)
+			victim.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.

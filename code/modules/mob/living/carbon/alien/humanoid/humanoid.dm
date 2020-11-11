@@ -13,8 +13,6 @@
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	var/custom_pixel_x_offset = 0 //for admin fuckery.
-	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/drooling = 0 //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
@@ -29,7 +27,7 @@
 
 /mob/living/carbon/alien/humanoid/Initialize()
 	. = ..()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
@@ -79,22 +77,6 @@
 						"<span class='danger'>You break free of [pulledby]'s grip!</span>")
 	pulledby.stop_pulling()
 	. = 0
-
-/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
-	if(leaping)
-		return -32
-	else if(custom_pixel_y_offset)
-		return custom_pixel_y_offset
-	else
-		return initial(pixel_y)
-
-/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
-	if(leaping)
-		return -32
-	else if(custom_pixel_x_offset)
-		return custom_pixel_x_offset
-	else
-		return initial(pixel_x)
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
 	return 0.8

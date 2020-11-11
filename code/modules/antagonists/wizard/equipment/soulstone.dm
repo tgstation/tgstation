@@ -174,7 +174,7 @@
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team.is_sacrifice_target(T.mind))
+			if(C?.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -280,15 +280,15 @@
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
 	newstruct.key = target.key
-	var/obj/screen/alert/bloodsense/BS
-	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
+	var/atom/movable/screen/alert/bloodsense/BS
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker?.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs.</b>")
 	newstruct.clear_alert("bloodsense")
-	BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	BS = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(BS)
 		BS.Cviewer = newstruct
 	newstruct.cancel_camera()

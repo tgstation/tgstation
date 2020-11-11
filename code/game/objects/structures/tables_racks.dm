@@ -37,6 +37,11 @@
 	smoothing_groups = list(SMOOTH_GROUP_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_TABLES)
 
+/obj/structure/table/Initialize(mapload, _buildstack)
+	. = ..()
+	if(_buildstack)
+		buildstack = _buildstack
+
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
@@ -88,8 +93,10 @@
 				user.stop_pulling()
 	return ..()
 
-/obj/structure/table/attack_tk()
-	return FALSE
+
+/obj/structure/table/attack_tk(mob/user)
+	return
+
 
 /obj/structure/table/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -649,7 +656,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) || user.usable_legs < 2)
+	if(user.body_position == LYING_DOWN || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

@@ -6,7 +6,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/H = user.hud_used
-	var/obj/screen/craft/C = new()
+	var/atom/movable/screen/craft/C = new()
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
@@ -311,9 +311,17 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
+		// Snowflake handling of reagent containers and storage atoms.
+		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
+		if(istype(DL, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/container = DL
+			container.reagents.expose(container.loc, TOUCH)
+		else if(istype(DL, /obj/item/storage))
+			var/obj/item/storage/container = DL
+			container.emptyStorage()
 		qdel(DL)
 
-/datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
+/datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
 	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(user == parent)

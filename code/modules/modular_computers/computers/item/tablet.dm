@@ -14,6 +14,7 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
+	looping_sound = FALSE
 	var/has_variants = TRUE
 	var/finish_color = null
 
