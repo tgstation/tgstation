@@ -26,7 +26,7 @@
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
 
-/datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, var/list/access, var/contraband)
+/datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
 	if(computer.obj_flags & EMAGGED)

@@ -376,10 +376,13 @@
 	inhand_icon_state = "multiverse"
 	worn_icon_state = "multiverse"
 	slot_flags = ITEM_SLOT_BACK
+	force = 15
 
-/obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
-	force = rand(1, 30)
-	..()
+/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, params)
+	var/old_force = force
+	force += rand(-14, 15)
+	. = ..()
+	force = old_force
 
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
