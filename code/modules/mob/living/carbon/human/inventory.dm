@@ -88,27 +88,31 @@
 	switch(slot)
 		if(ITEM_SLOT_BELT)
 			if (belt && swap)
-				belt.dropped(src, TRUE)
 				current_equip = belt
+				if (!temporarilyRemoveItemFromInventory(belt))
+					return
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if (wear_id && swap)
-				wear_id.dropped(src, TRUE)
 				current_equip = wear_id
+				if (!temporarilyRemoveItemFromInventory(wear_id))
+					return
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if (ears && swap)
-				ears.dropped(src, TRUE)
 				current_equip = ears
+				if (!temporarilyRemoveItemFromInventory(ears))
+					return
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
 			if (glasses && swap)
-				glasses.dropped(src, TRUE)
 				current_equip = glasses
+				if (!temporarilyRemoveItemFromInventory(glasses))
+					return
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -122,25 +126,29 @@
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if (gloves && swap)
-				gloves.dropped(src, TRUE)
 				current_equip = gloves
+				if (!temporarilyRemoveItemFromInventory(gloves))
+					return
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if (shoes && swap)
-				shoes.dropped(src, TRUE)
 				current_equip = shoes
+				if (!temporarilyRemoveItemFromInventory(shoes))
+					return
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
-			if (wear_suit && swap)
-				wear_suit.dropped(src, TRUE)
+			var/obj/item/s_store_backup = s_store
+
+			if (swap && wear_suit)
 				current_equip = wear_suit
+				if (!temporarilyRemoveItemFromInventory(wear_suit))
+					return
 
 			wear_suit = I
 
-			if (s_store && swap)
-				var/obj/item/s_store_backup = s_store
+			if (swap && s_store_backup)
 				dropItemToGround(s_store_backup)
 				put_in_inactive_hand(s_store_backup)
 				equip_to_slot_if_possible(s_store_backup, ITEM_SLOT_SUITSTORE)
@@ -154,8 +162,9 @@
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if (w_uniform && swap)
-				w_uniform.dropped(src, TRUE)
 				current_equip = w_uniform
+				if (!temporarilyRemoveItemFromInventory(w_uniform))
+					return
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -167,8 +176,9 @@
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if (s_store && swap)
-				s_store.dropped(src, TRUE)
 				current_equip = s_store
+				if (!temporarilyRemoveItemFromInventory(s_store))
+					return
 			s_store = I
 			update_inv_s_store()
 		else
