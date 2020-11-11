@@ -329,6 +329,7 @@
 			initialize_directions = NORTH|SOUTH
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
+	unregister_signals(TRUE)
 	if(linked_input)
 		QDEL_NULL(linked_input)
 	if(linked_output)
@@ -337,9 +338,8 @@
 		QDEL_NULL(linked_moderator)
 	if(linked_interface)
 		QDEL_NULL(linked_interface)
-	if(corners.len)
-		for(var/corner in corners)
-			QDEL_NULL(corner)
+	for(var/obj/machinery/hypertorus/corner/corner in corners)
+		QDEL_NULL(corner)
 	QDEL_NULL(radio)
 	QDEL_NULL(soundloop)
 	return..()
@@ -499,14 +499,15 @@
 	soundloop = new(list(src), TRUE)
 	soundloop.volume = 5
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/unregister_signals()
+/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
-	deactivate()
+	if(!only_signals)
+		deactivate()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
 	if(!active)
@@ -635,15 +636,17 @@
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/meltdown()
 	explosion(loc, 0, 0, power_level * 5, power_level * 6, 1, 1)
-	radiation_pulse(loc, power_level * 2000)
-	var/fusion_moles = internal_fusion.total_moles()
+	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
+	empulse(loc, power_level * 5, power_level * 7)
+	var/fusion_moles = internal_fusion.total_moles() ? internal_fusion.total_moles() : 0
 	var/moderator_moles = moderator_internal.total_moles() ? moderator_internal.total_moles() : 0
-	var/datum/gas_mixture/remove_fusion = internal_fusion.remove(fusion_moles)
+	var/datum/gas_mixture/remove_fusion
+	if(internal_fusion.total_moles() > 0)
+	 	remove_fusion = internal_fusion.remove(fusion_moles)
+		loc.assume_air(remove_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove(moderator_moles)
-	loc.assume_air(remove_fusion)
-	if(moderator_internal.total_moles() > 0)
 		loc.assume_air(remove_moderator)
 	air_update_turf()
 	qdel(src)
@@ -1135,7 +1138,7 @@
 
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(moderator_internal.total_moles() > 0)
-		moderator_internal.remove(moderator_internal.total_moles() * 0.015)
+		moderator_internal.remove(moderator_internal.total_moles() * 0.005 * power_level)
 	if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
 		iron_content += 0.0005 * delta_time
 	if(iron_content > 0 && power_level <= 4 && prob(20 / power_level))
