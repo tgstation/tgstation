@@ -527,9 +527,8 @@ Class Procs:
 	if(A == circuit)
 		circuit = null
 	if((A in component_parts) && !QDELETED(src))
-		component_parts.Remove(A)
 		// It would be unusual for a component_part to be qdel'd ordinarily.
-		deconstruct(FALSE)
+		component_parts.Remove(A)
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
@@ -735,7 +734,7 @@ Class Procs:
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
  * However, the proc may also be used elsewhere.
- */	
+ */
 /obj/machinery/proc/AI_notify_hack()
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)

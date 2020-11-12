@@ -87,7 +87,14 @@
 		if(curr_bounty.applies_to(AM))
 			active_stack ++
 			curr_bounty.ship(AM)
-			qdel(AM)
+			if(ismachinery(AM))
+				var/obj/machinery/machine_bounty = AM
+				for(var/obj/part in machine_bounty.component_parts)
+					qdel(part)
+				qdel(machine_bounty.circuit)
+				qdel(machine_bounty)
+			else
+				qdel(AM)
 	if(active_stack >= 1)
 		status_report += "Bounty Target Found x[active_stack]. "
 	else
