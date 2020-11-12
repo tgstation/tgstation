@@ -525,7 +525,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000))
+	AddComponent(/datum/component/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"

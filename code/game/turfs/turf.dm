@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = baseturfs_string_list(premade_baseturfs, src)
+			baseturfs = baseturfs_string_list(premade_baseturfs.Copy(), src)
 		else
 			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs

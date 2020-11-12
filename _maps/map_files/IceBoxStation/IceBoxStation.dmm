@@ -10399,6 +10399,7 @@
 "axg" = (
 /obj/structure/table/glass,
 /obj/item/storage/bag/trash,
+/obj/structure/bedsheetbin,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axh" = (
@@ -20543,7 +20544,7 @@
 "aVA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/food/pie/cream,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVB" = (
@@ -30380,7 +30381,6 @@
 /obj/structure/table/optable{
 	name = "Robotics Operating Table"
 	},
-/obj/item/surgical_drapes,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bsV" = (
