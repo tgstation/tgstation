@@ -63,5 +63,6 @@
 	var/slabel = label
 	if(selected_type == log_type && selected_src == log_src)
 		slabel = "<b>\[[label]\]</b>"
+	//This is necessary because num2text drops digits and rounds on big numbers. If more defines get added in the future it could break again.
 	log_type = num2text(log_type, 10)
 	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
