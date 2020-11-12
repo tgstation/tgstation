@@ -13,7 +13,12 @@
 	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower
 	var/vehicle_move_delay = 2
-	/// If the driver needs a specific item in hand (or inserted, for vehicles) in order to move this vehicle (uses an istype, so children of this work too)
+
+	/**
+	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on the actual vehicle object in their
+	  * [/obj/vehicle/var/key_type] variable because the vehicle objects still have a few special checks/functions of their own I'm not porting over to the riding component
+	  * quite yet. Make sure if you define it on the vehicle, you define it here too.
+	  */
 	var/keytype
 
 	/// If the vehicle is a mob with abilities, and this is TRUE, then the rider can trigger those abilities while mounted

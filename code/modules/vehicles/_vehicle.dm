@@ -15,7 +15,11 @@
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
-	///The typepath for the key we use to turn on this car if it has one (uses an istype, so children of this work too)
+	/**
+	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on their riding component subtype
+	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component
+	  * Eventually the remaining checks should be moved to the component and this var removed.
+	  */
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
