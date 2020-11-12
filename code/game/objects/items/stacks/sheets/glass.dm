@@ -29,15 +29,12 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	point_value = 1
 	tableVariant = /obj/structure/table/glass
 	matter_amount = 4
+	cost = 500
+	source = /datum/robot_energy_storage/glass
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
-
-/obj/item/stack/sheet/glass/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 500
 
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
@@ -152,21 +149,25 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 
 /obj/item/stack/sheet/rglass/cyborg
 	mats_per_unit = null
-	var/datum/robot_energy_storage/glasource
-	var/metcost = 250
+	cost = 250
+	source = /datum/robot_energy_storage/metal
+
+	/// What energy storage this draws glass from as a robot module.
+	var/datum/robot_energy_storage/glasource = /datum/robot_energy_storage/glass
+	/// The amount of energy this draws from the glass source per stack unit.
 	var/glacost = 500
 
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
-	return min(round(source.energy / metcost), round(glasource.energy / glacost))
+	return min(round(source.energy / cost), round(glasource.energy / glacost))
 
 /obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE) // Requires special checks, because it uses two storages
 	if(get_amount(used)) //ensure we still have enough energy if called in a do_after chain
-		source.use_charge(used * metcost)
+		source.use_charge(used * cost)
 		glasource.use_charge(used * glacost)
 		return TRUE
 
 /obj/item/stack/sheet/rglass/cyborg/add(amount)
-	source.add_charge(amount * metcost)
+	source.add_charge(amount * cost)
 	glasource.add_charge(amount * glacost)
 
 /obj/item/stack/sheet/rglass/get_main_recipes()

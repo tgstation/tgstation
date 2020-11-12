@@ -130,6 +130,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
+	cost = 500
+	source = /datum/robot_energy_storage/metal
 
 /obj/item/stack/sheet/metal/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -146,11 +148,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/metal/five
 	amount = 5
-
-/obj/item/stack/sheet/metal/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 500
 
 /obj/item/stack/sheet/metal/get_main_recipes()
 	. = ..()

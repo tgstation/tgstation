@@ -203,13 +203,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	cost = 1
+	source = /datum/robot_energy_storage/pipe_cleaner
 	/// Currently set cable color
 	var/pipe_cleaner_color = COLOR_RED
-
-/obj/item/stack/pipe_cleaner_coil/cyborg
-	is_cyborg = 1
-	mats_per_unit = null
-	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
 	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") as null|anything in list("blue", "cyan", "green", "orange", "pink", "red", "white", "yellow")

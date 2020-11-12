@@ -77,50 +77,23 @@
 			. += m
 
 /obj/item/robot_module/proc/get_or_create_estorage(storage_type)
-	for(var/datum/robot_energy_storage/S in storages)
-		if(istype(S, storage_type))
-			return S
-
-	return new storage_type(src)
+	return (locate(storage_type) in storages) || new storage_type(src)
 
 /obj/item/robot_module/proc/add_module(obj/item/I, nonstandard, requires_rebuild)
 	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
+		var/obj/item/stack/sheet_module = I
+		if(ispath(sheet_module.source, /datum/robot_energy_storage))
+			sheet_module.source = get_or_create_estorage(sheet_module.source)
 
-		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.custom_materials?.len)
-				if(S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-					S.cost = S.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] * 0.25
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
+		if(istype(sheet_module, /obj/item/stack/sheet/rglass/cyborg))
+			var/obj/item/stack/sheet/rglass/cyborg/rglass_module = sheet_module
+			if(ispath(rglass_module.glasource, /datum/robot_energy_storage))
+				rglass_module.glasource = get_or_create_estorage(rglass_module.glasource)
 
-		else if(istype(S, /obj/item/stack/sheet/glass))
-			S.cost = 500
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/glass)
-
-		else if(istype(S, /obj/item/stack/sheet/rglass/cyborg))
-			var/obj/item/stack/sheet/rglass/cyborg/G = S
-			G.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
-			G.glasource = get_or_create_estorage(/datum/robot_energy_storage/glass)
-
-		else if(istype(S, /obj/item/stack/medical))
-			S.cost = 250
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
-
-		else if(istype(S, /obj/item/stack/cable_coil))
-			S.cost = 1
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
-
-		else if(istype(S, /obj/item/stack/marker_beacon))
-			S.cost = 1
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
-
-		else if(istype(S, /obj/item/stack/pipe_cleaner_coil))
-			S.cost = 1
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
-
-		if(S?.source)
-			S.set_custom_materials(null)
-			S.is_cyborg = 1
+		if(istype(sheet_module.source))
+			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
+			sheet_module.set_mats_per_unit(null)
+			sheet_module.is_cyborg = TRUE
 
 	if(I.loc != src)
 		I.forceMove(src)
@@ -274,8 +247,8 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
-		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/stack/medical/bone_gel/cyborg,
+		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/bone_gel,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
@@ -305,12 +278,12 @@
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/stack/cable_coil/cyborg)
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/cable_coil)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
@@ -378,7 +351,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/tile/plasteel,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
@@ -606,7 +579,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/medical/gauze,
 		/obj/item/gun/medbeam,
 		/obj/item/organ_storage)
 
@@ -630,13 +603,13 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/multitool/cyborg,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/tile/plasteel,
 		/obj/item/dest_tagger/borg,
-		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/stack/cable_coil,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		)

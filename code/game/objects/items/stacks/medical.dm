@@ -12,6 +12,8 @@
 	max_integrity = 40
 	novariants = FALSE
 	item_flags = NOBLUDGEON
+	cost = 250
+	source = /datum/robot_energy_storage/medical
 	var/self_delay = 50
 	var/other_delay = 0
 	var/repeating = FALSE
@@ -188,11 +190,6 @@
 	other_delay = 30
 	absorption_rate = 0.15
 	absorption_capacity = 4
-
-/obj/item/stack/medical/gauze/cyborg
-	custom_materials = null
-	is_cyborg = 1
-	cost = 250
 
 /obj/item/stack/medical/suture
 	name = "suture"
@@ -444,11 +441,6 @@
 		else
 			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
 			return (BRUTELOSS)
-
-/obj/item/stack/medical/bone_gel/cyborg
-	custom_materials = null
-	is_cyborg = 1
-	cost = 250
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"
