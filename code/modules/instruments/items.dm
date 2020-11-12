@@ -114,7 +114,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = 1800
+	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/instrument/banjo
 	name = "banjo"
