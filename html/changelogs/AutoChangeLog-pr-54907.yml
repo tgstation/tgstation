@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Old Medibot on the Authorship space ruin should now heal all damage types properly."
