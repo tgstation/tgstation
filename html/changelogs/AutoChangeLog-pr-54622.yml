@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Added \"beautiful\" and \"ugly\" (plus synonyms) fantasy prefixes. They all affect the beauty of the item."

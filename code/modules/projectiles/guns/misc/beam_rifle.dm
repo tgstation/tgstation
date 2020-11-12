@@ -279,7 +279,7 @@
 /obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
 	if(istype(mob))
 		set_user(mob)
-	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
+	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
 		return
 	if((object in mob.contents) || (object == mob))
 		return
@@ -287,7 +287,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
-	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
+	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
 		return
 	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())

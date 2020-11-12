@@ -1,4 +1,4 @@
-name: Run tests
+name: CI Suite
 on:
   push:
     branches:
@@ -8,6 +8,7 @@ on:
     - master
 jobs:
   run_linters:
+    name: Run Linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,8 +32,15 @@ jobs:
           bash tools/ci/build_tgui.sh
           bash tools/ci/check_grep.sh
           python3 tools/mapmerge2/dmi.py --test
-          ~/dreamchecker
+          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+      - name: Annotate Lints
+        uses: yogstation13/DreamAnnotate@v1
+        if: always()
+        with:
+          outputFile: output-annotations.txt
+
   compile_all_maps:
+    name: Compile Maps
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -48,6 +56,7 @@ jobs:
           python3 tools/ci/template_dm_generator.py
           bash tools/ci/dm.sh -DCIBUILDING -DCITESTING -DALL_MAPS tgstation.dme
   run_all_tests:
+    name: Integration Tests
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -74,7 +83,7 @@ jobs:
       - name: Install rust-g
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt update
+          sudo apt update || true
           sudo apt install libssl1.1:i386
           bash tools/ci/install_rust_g.sh
       - name: Compile and run tests
@@ -84,6 +93,7 @@ jobs:
           bash tools/ci/dm.sh -DCIBUILDING tgstation.dme
           bash tools/ci/run_server.sh
   test_windows:
+    name: Windows Build
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2

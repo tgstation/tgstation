@@ -14,10 +14,10 @@
 	var/taped
 	/// Have we been bone gel'd?
 	var/gelled
-	/// If we did the gel + surgical tape healing method for fractures, how many regen points we need
-	var/regen_points_needed
+	/// If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default
+	var/regen_ticks_needed
 	/// Our current counter for gel + surgical tape regeneration
-	var/regen_points_current
+	var/regen_ticks_current
 	/// If we suffer severe head booboos, we can get brain traumas tied to them
 	var/datum/brain_trauma/active_trauma
 	/// What brain trauma group, if any, we can draw from for head wounds
@@ -65,16 +65,22 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	if(!regen_points_needed)
+	if(!gelled || !taped)
 		return
 
-	regen_points_current++
-	if(prob(severity * 2))
+	regen_ticks_current++
+	if(victim.body_position == LYING_DOWN)
+		if(prob(50))
+			regen_ticks_current += 0.5
+		if(victim.IsSleeping() && prob(50))
+			regen_ticks_current += 0.5
+
+	if(prob(severity * 3))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")
 
-	if(regen_points_current > regen_points_needed)
+	if(regen_ticks_current > regen_ticks_needed)
 		if(!victim || !limb)
 			qdel(src)
 			return
@@ -313,6 +319,7 @@
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/critical
@@ -336,6 +343,7 @@
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)
@@ -397,8 +405,9 @@
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return
 
-	regen_points_current = 0
-	regen_points_needed = 30 SECONDS * (user == victim ? 1.5 : 1) * (severity - 1)
+	if(victim == user)
+		regen_ticks_needed *= 1.5
+
 	I.use(1)
 	if(user != victim)
 		user.visible_message("<span class='notice'>[user] finishes applying [I] to [victim]'s [limb.name], emitting a fizzing noise!</span>", "<span class='notice'>You finish applying [I] to [victim]'s [limb.name]!</span>", ignored_mobs=victim)
@@ -423,9 +432,9 @@
 	if(!gelled)
 		. += "Alternative Treatment: Apply bone gel directly to injured limb, then apply surgical tape to begin bone regeneration. This is both excruciatingly painful and slow, and only recommended in dire circumstances.\n"
 	else if(!taped)
-		. += "<span class='notice'>Continue Alternative Treatment: Apply surgical tape directly to injured limb to begin bone regeneration. Note, this is both excruciatingly painful and slow.</span>\n"
+		. += "<span class='notice'>Continue Alternative Treatment: Apply surgical tape directly to injured limb to begin bone regeneration. Note, this is both excruciatingly painful and slow, though sleep or laying down will speed recovery.</span>\n"
 	else
-		. += "<span class='notice'>Note: Bone regeneration in effect. Bone is [round(regen_points_current*100/regen_points_needed)]% regenerated.</span>\n"
+		. += "<span class='notice'>Note: Bone regeneration in effect. Bone is [round(regen_ticks_current*100/regen_ticks_needed)]% regenerated.</span>\n"
 
 	if(limb.body_zone == BODY_ZONE_HEAD)
 		. += "Cranial Trauma Detected: Patient will suffer random bouts of [severity == WOUND_SEVERITY_SEVERE ? "mild" : "severe"] brain traumas until bone is repaired."

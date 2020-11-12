@@ -13,13 +13,13 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a charger carp, that likes running at people. But it doesn't have any legs...</span>"
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Titanium, a lightweight, agile fighter.</span>"
 	var/charging = 0
-	var/obj/screen/alert/chargealert
+	var/atom/movable/screen/alert/chargealert
 
 /mob/living/simple_animal/hostile/guardian/charger/Life()
 	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
-			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
+			chargealert = throw_alert("charge", /atom/movable/screen/alert/cancharge)
 	else
 		clear_alert("charge")
 		chargealert = null

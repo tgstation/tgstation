@@ -59,6 +59,7 @@
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
+	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else
@@ -77,6 +78,17 @@
 	if(isliving(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
 	. = ..()
+
+/obj/effect/decal/cleanable/blood/gibs/proc/on_pipe_eject(atom/source, direction)
+	SIGNAL_HANDLER
+
+	var/list/dirs
+	if(direction)
+		dirs = list(direction, turn(direction, -45), turn(direction, 45))
+	else
+		dirs = GLOB.alldirs.Copy()
+
+	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE

@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Vehicles bumping into doors will now check access on all occupants at the same time. This means that clown cars now correctly open doors immediately."
