@@ -48,7 +48,7 @@
 	name = "holobarrier"
 	desc = "A short holographic barrier which can only be passed by walking."
 	icon_state = "holosign_sec"
-	pass_flags = LETPASSTHROW
+	pass_flags_self = PASSTABLE | PASSGRILLE | PASSGLASS | LETPASSTHROW
 	density = TRUE
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
@@ -57,8 +57,6 @@
 	. = ..()
 	if(.)
 		return
-	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
-		return TRUE
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
 		if(C.stat)	// Lets not prevent dragging unconscious/dead people.

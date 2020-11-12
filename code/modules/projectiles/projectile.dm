@@ -12,6 +12,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
 	wound_bonus = CANT_WOUND // can't wound by default
+	generic_canpass = FALSE
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -25,7 +26,6 @@
 	var/xo = null
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
-	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 	var/p_x = 16
 	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
 
@@ -37,6 +37,20 @@
 	var/time_offset = 0
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
+	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
+	var/list/impacted
+	/// If TRUE, we can hit our firer.
+	var/ignore_source_check = FALSE
+	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
+	var/temporary_unstoppable_movement = FALSE
+
+	// PROJECTILE PIERCING
+	/// If FALSE, allow us to hit something directly targeted/clicked/whatnot even if we're able to phase through it
+	var/phasing_ignore_direct_target = FALSE
+	/// Bitflag for things the projectile should just phase through entirely - No hitting unless direct target and [phasing_ignore_direct_target] is FALSE. Uses pass_flags flags.
+	var/projectile_phasing = NONE
+	/// Bitflag for things the projectile should hit, but pierce through without deleting itself. Defers to projectile_phasing. Uses pass_flags flags.
+	var/projectile_piercing = NONE
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
@@ -93,8 +107,6 @@
 	var/homing_offset_x = 0
 	var/homing_offset_y = 0
 
-	var/ignore_source_check = FALSE
-
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
@@ -123,8 +135,6 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-	var/temporary_unstoppable_movement = FALSE
-
 	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
@@ -140,10 +150,8 @@
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
 
-
 /obj/projectile/Initialize()
 	. = ..()
-	permutated = list()
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
@@ -301,7 +309,8 @@
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
-			ignore_source_check = TRUE
+			impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
+			ignore_source_check = TRUE // Firer is no longer immune
 			decayedRange = max(0, decayedRange - reflect_range_decrease)
 			ricochet_chance *= ricochet_decay_chance
 			damage *= ricochet_decay_damage
@@ -321,13 +330,13 @@
 
 	return process_hit(T, select_target(T, A))
 
-#define QDEL_SELF 1			//Delete if we're not UNSTOPPABLE flagged non-temporarily
+#define QDEL_SELF 1			//Delete if we're not PHASING flagged non-temporarily
 #define DO_NOT_QDEL 2		//Pass through.
 #define FORCE_QDEL 3		//Force deletion.
 
 /obj/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
 	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
-		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & UNSTOPPABLE)))
+		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & PHASING)))
 			qdel(src)
 		return hit_something
 	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
@@ -336,16 +345,16 @@
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
 	var/result = target.bullet_act(src, def_zone)
 	if(result == BULLET_ACT_FORCE_PIERCE)
-		if(!(movement_type & UNSTOPPABLE))
+		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
-			movement_type |= UNSTOPPABLE
+			movement_type |= PHASING
 		return process_hit(T, select_target(T), qdel_self, TRUE)		//Hit whatever else we can since we're piercing through but we're still on the same tile.
 	else if(result == BULLET_ACT_TURF)									//We hit the turf but instead we're going to also hit something else on it.
 		return process_hit(T, select_target(T), QDEL_SELF, TRUE)
 	else		//Whether it hit or blocked, we're done!
 		qdel_self = QDEL_SELF
 		hit_something = TRUE
-	if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & UNSTOPPABLE)))
+	if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & PHASING)))
 		qdel(src)
 	return hit_something
 
@@ -469,6 +478,7 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	impacted = list()
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -500,6 +510,8 @@
 	if(zc)
 		before_z_change(old, target)
 	. = ..()
+	if(QDELETED(src))		// we coulda bumped something
+		return
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		if(hitscan)
 			finalize_hitscan_and_generate_tracers(FALSE)
@@ -695,21 +707,45 @@
 		angle = ATAN2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 
-/obj/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
+/**
+  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
+  */
+/obj/projectile/Crossed(atom/movable/AM)
 	. = ..()
-	if(isliving(AM) && !(pass_flags & PASSMOB))
-		var/mob/living/L = AM
-		if(can_hit_target(L, permutated, (AM == original)))
-			Bump(AM)
+	scan_for_hit(AM)
 
-/obj/projectile/Move(atom/newloc, dir = NONE)
+/**
+  * Projectile can pass through
+  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
+  */
+/obj/projectile/CanAllowThrough(atom/movable/mover, turf/target)
+	if(impacted[mover])
+		return TRUE
+	return ..()
+
+/**
+  * Projectile moved:
+  *
+  * If not fired yet, do not do anything. Else,
+  *
+  * If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
+  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
+  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
+  */
+/obj/projectile/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(.)
-		if(temporary_unstoppable_movement)
-			temporary_unstoppable_movement = FALSE
-			movement_type &= ~(UNSTOPPABLE)
-		if(fired && can_hit_target(original, permutated, TRUE))
-			Bump(original)
+	if(!fired)
+		return
+	if(temporary_unstoppable_movement)
+		temporary_unstoppable_movement = FALSE
+		movement_type &= ~PHASING
+	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
+
+/**
+  * Scan our current turf, hitting anything that we should hit.
+  */
+/obj/projectile/proc/scan_moved_turf()
+	scan_for_hit(loc)
 
 /obj/projectile/Destroy()
 	if(hitscan)

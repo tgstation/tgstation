@@ -9,6 +9,9 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
 
+	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
+	var/pass_flags_self = NONE
+
 	///If non-null, overrides a/an/some in all cases
 	var/article
 
@@ -310,7 +313,7 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
-	if(mover.movement_type & UNSTOPPABLE)
+	if(mover.movement_type & PHASING)
 		return TRUE
 	. = CanAllowThrough(mover, target)
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
@@ -321,6 +324,10 @@
 /atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)
 	//SHOULD_BE_PURE(TRUE)
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
+	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
+		return TRUE
 	return !density
 
 /**
@@ -511,7 +518,7 @@
 	return FALSE
 
 /atom/proc/CheckExit()
-	return 1
+	return TRUE
 
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)

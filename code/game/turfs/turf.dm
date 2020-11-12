@@ -267,7 +267,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, src)
-	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
+	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE		//We were deleted, do not attempt to proceed with movement.
@@ -277,7 +277,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!thing.Cross(mover))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
+				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
 					continue
 				else
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
-		return (mover.movement_type & UNSTOPPABLE)
+		return (mover.movement_type & PHASING)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			if(!(mover.movement_type & UNSTOPPABLE))
+			if(!(mover.movement_type & PHASING))
 				return FALSE
 		if(QDELETED(mover))
 			return FALSE		//We were deleted.

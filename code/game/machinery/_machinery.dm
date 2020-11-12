@@ -87,6 +87,7 @@ Class Procs:
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
+	pass_flags_self = PASSMACHINE
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
@@ -532,12 +533,6 @@ Class Procs:
 		deconstruct(FALSE)
 	return ..()
 
-/obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-
-	if(mover.pass_flags & PASSMACHINE)
-		return TRUE
-
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src, 50)
@@ -735,7 +730,7 @@ Class Procs:
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
  * However, the proc may also be used elsewhere.
- */	
+ */
 /obj/machinery/proc/AI_notify_hack()
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)

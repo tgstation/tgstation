@@ -116,7 +116,7 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	movement_type = FLYING | UNSTOPPABLE
+	movement_type = FLYING | PHASING
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0

@@ -17,7 +17,7 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
-	movement_type |= UNSTOPPABLE
+	movement_type |= PHASING
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
 
@@ -31,7 +31,7 @@
 
 /obj/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
-		movement_type &= ~(UNSTOPPABLE)
+		movement_type &= ~(PHASING)
 	else if(!isturf(target))
 		return FALSE
 	return ..()
@@ -40,7 +40,7 @@
 	if(arm)
 		arm.End()
 		arm = null
-	if((movement_type & UNSTOPPABLE))
+	if((movement_type & PHASING))
 		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_step(src, dir)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
