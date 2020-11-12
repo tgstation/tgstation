@@ -3,7 +3,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to charge at a chosen position."
-	cooldown_time = 20
+	cooldown_time = 15
 	text_cooldown = FALSE
 	click_to_activate = TRUE
 	shared_cooldown = MOB_SHARED_COOLDOWN
@@ -29,20 +29,22 @@
 		destroy_objects = destroy
 
 /datum/action/cooldown/charge/Activate(atom/target_atom)
-	do_charge(owner, target_atom, charge_delay, charge_past, TRUE)
+	// start pre-cooldown so that the ability can't come up while the charge is happening
+	StartCooldown(100)
+	do_charge(owner, target_atom, charge_delay, charge_past)
+	StartCooldown()
 
-/datum/action/cooldown/charge/proc/do_charge(atom/movable/charger, atom/target_atom, delay, past, apply_cooldown)
+/datum/action/cooldown/charge/proc/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	if(!target_atom || target_atom == owner)
 		return
 	var/chargeturf = get_turf(target_atom)
 	if(!chargeturf)
 		return
+	charger.setDir(get_dir(charger, target_atom))
 	var/distance = get_dist(charger, chargeturf) + past
-	var/turf/T = get_ranged_target_turf(chargeturf, owner.dir, past)
+	var/turf/T = get_ranged_target_turf(chargeturf, charger.dir, past)
 	if(!T)
 		return
-	if(apply_cooldown)
-		StartCooldown()
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	revving_charge[charger] = TRUE
 	charging[charger] = TRUE
@@ -60,9 +62,11 @@
 	SLEEP_CHECK_DEATH(distance * charge_speed, charger)
 	walk(charger, 0) // cancel the movement
 	charging[charger] = FALSE
+	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	UnregisterSignal(charger, COMSIG_MOVABLE_BUMP)
 	UnregisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(charger, COMSIG_MOVABLE_MOVED)
+	return TRUE
 
 /datum/action/cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -120,33 +124,39 @@
 	charge_delay = 6
 
 /datum/action/cooldown/charge/triple_charge/Activate(var/atom/target_atom)
+	StartCooldown(100)
 	for(var/i in 0 to 2)
-		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past, TRUE)
+		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past)
+	StartCooldown()
 
 /datum/action/cooldown/charge/hallucination_charge
 	name = "Hallucination Charge"
 	icon_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
 	desc = "Allows you to create hallucinations that charge around your target."
-	charge_past = 0
+	cooldown_time = 20
+	charge_delay = 6
 	var/hallucination_damage = 15
 	var/enraged = FALSE
 
 /datum/action/cooldown/charge/hallucination_charge/Activate(var/atom/target_atom)
+	StartCooldown(100)
 	if(!enraged)
-		hallucination_charge(target_atom, 6, 8, charge_past, 6, TRUE, TRUE)
+		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
+		StartCooldown(cooldown_time * 0.5)
 		return
 	for(var/i in 0 to 2)
-		hallucination_charge(target_atom, 4, 9 - i, charge_past, 4, TRUE, TRUE)
+		hallucination_charge(target_atom, 4, 9 - i, 0, 4, TRUE)
 	for(var/i in 0 to 2)
-		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past, TRUE)
+		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past)
+	StartCooldown()
 
-/datum/action/cooldown/charge/hallucination_charge/do_charge(atom/movable/charger, atom/target_atom, delay, past, apply_cooldown)
+/datum/action/cooldown/charge/hallucination_charge/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()
 	if(charger != owner)
 		qdel(charger)
 
-/datum/action/cooldown/charge/hallucination_charge/proc/hallucination_charge(atom/target_atom, clone_amount, delay, past, radius, apply_cooldown, use_self)
+/datum/action/cooldown/charge/hallucination_charge/proc/hallucination_charge(atom/target_atom, clone_amount, delay, past, radius, use_self)
 	var/starting_angle = rand(1, 360)
 	if(!radius)
 		return
@@ -162,9 +172,9 @@
 			self_placed = TRUE
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(place)
-		INVOKE_ASYNC(src, .proc/do_charge, B, target_atom, delay, past, apply_cooldown)
+		INVOKE_ASYNC(src, .proc/do_charge, B, target_atom, delay, past)
 	if(use_self)
-		do_charge(owner, target_atom, delay, past, apply_cooldown)
+		do_charge(owner, target_atom, delay, past)
 
 /datum/action/cooldown/charge/hallucination_charge/hit_target(atom/movable/source, atom/A, damage_dealt)
 	var/applied_damage = charge_damage
@@ -181,33 +191,8 @@
 	charge_past = 2
 
 /datum/action/cooldown/charge/hallucination_charge/hallucination_surround/Activate(var/atom/target_atom)
+	StartCooldown(100)
 	for(var/i in 1 to 5)
-		hallucination_charge(target_atom, 2, 8, 2, 2, TRUE, FALSE)
-		do_charge(owner, target_atom, charge_delay, charge_past, TRUE)
-
-/datum/action/cooldown/blood_warp
-	name = "Blood Warp"
-	icon_icon = 'icons/effects/blood.dmi'
-	button_icon_state = "floor1"
-	desc = "Allows you to teleport to blood at a clicked position."
-	cooldown_time = 20
-	text_cooldown = FALSE
-	click_to_activate = TRUE
-	shared_cooldown = MOB_SHARED_COOLDOWN
-
-/datum/action/cooldown/blood_warp/Activate(var/atom/target_atom)
-	return
-
-/datum/action/cooldown/blood_warp/proc/get_mobs_on_blood(var/mob/target)
-	var/list/targets = list(target)
-	. = list()
-	for(var/mob/living/L in targets)
-		var/list/bloodpool = get_pools(get_turf(L), 0)
-		if(bloodpool.len && (!owner.faction_check_mob(L) || L.stat == DEAD))
-			. += L
-
-/datum/action/cooldown/blood_warp/proc/get_pools(turf/T, range)
-	. = list()
-	for(var/obj/effect/decal/cleanable/nearby in view(T, range))
-		if(nearby.can_bloodcrawl_in())
-			. += nearby
+		hallucination_charge(target_atom, 2, 8, 2, 2, FALSE)
+		do_charge(owner, target_atom, charge_delay, charge_past)
+	StartCooldown()
