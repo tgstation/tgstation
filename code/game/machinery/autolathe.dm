@@ -123,16 +123,15 @@
 	return ..()
 
 
-/obj/machinery/autolathe/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
+/obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
-	else if(custom_materials && custom_materials.len && custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
+	else if(istype(item_inserted) && length(item_inserted.custom_materials) && item_inserted.custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation
 
-
-		use_power(min(1000, amount_inserted / 100))
+	use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)
@@ -172,11 +171,15 @@
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 			var/list/materials_used = list()
-			var/list/custom_materials = list() //These will apply their material effect, This should usually only be one.
+			var/list/total_materials_used = list() //These will apply their material effect, This should usually only be one.
+			var/metal_or_glass_used = FALSE
 
 			for(var/MAT in being_built.materials)
 				var/datum/material/used_material = MAT
-				var/amount_needed = being_built.materials[MAT] * coeff * multiplier
+				if(istype(used_material, /datum/material/glass) ||istype(used_material, /datum/material/iron))
+					metal_or_glass_used = TRUE
+				var/amount_needed = being_built.materials[MAT] * coeff
+				var/total_amount_needed = amount_needed  * multiplier
 				if(istext(used_material)) //This means its a category
 					var/list/list_to_show = list()
 					for(var/i in SSmaterials.materials_by_category[used_material])
@@ -186,16 +189,16 @@
 					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
-					custom_materials[used_material] += amount_needed
 
 				materials_used[used_material] = amount_needed
+				total_materials_used[used_material] = total_amount_needed
 
 			if(materials.has_materials(materials_used))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
+				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, total_materials_used, multiplier, is_stack, (metal_or_glass_used ? null : usr)), time)
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
 
@@ -213,13 +216,26 @@
 	updateUsrDialog()
 
 	return
-
-/obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
+/*
+ * Makes the item and dispenses it
+ *
+ * Called by addtimer, this physically makes the item that was previously selected in the menu, uses the materials
+ * and releases the busy flag
+ *
+ * Arguments
+ * power - Amount of power used to make it
+ * materials_used - Amount of materials used to make just one of the obj
+ * total_materials_used - The total amount of materials used to make all the items in the queue
+ * multiplier - amount of items made
+ * is_stack - If its a stack obj, aka stack of metal sheets
+ * user - User who ordered the items, null if metal or glass was used
+*/
+/obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/total_materials_used, multiplier, is_stack, mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
 
-	materials.use_materials(materials_used)
+	materials.use_materials(total_materials_used)
 
 	if(is_stack)
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
@@ -229,21 +245,15 @@
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
 
-			if(length(picked_materials))
-				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
-				for(var/x in picked_materials)
-					var/datum/material/M = x
-					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
-						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
+			if(!(new_item.material_flags & MATERIAL_NO_EFFECTS))
+				new_item.set_custom_materials(materials_used) // the object has effects that change the object depending on the material.
+				if(!isnull(user))
+					// Get an achievement for making a gold toolbox!
+					user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 			else
-				// we STILL need to set custom materials or we get unlimited autolathe works happening
-				var/old_material_flags = new_item.material_flags
-				new_item.material_flags |= MATERIAL_NO_EFFECTS
-				new_item.set_custom_materials(materials_used, 1 / multiplier)
-				new_item.material_flags = old_material_flags
+				new_item.custom_materials = materials_used // it has no effects, so just set the amount of materials being used to make it
 
 			new_item.autolathe_crafted(src)
-
 
 	icon_state = "autolathe"
 	busy = FALSE

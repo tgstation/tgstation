@@ -315,7 +315,7 @@
 
 ///returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags=src.breakdown_flags)
-	if(!istype(I) || !I.custom_materials)
+	if(!istype(I) || !length(I.custom_materials))
 		return 0
 	var/material_amount = 0
 	var/list/item_materials = I.get_material_composition(breakdown_flags)
