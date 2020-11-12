@@ -14,6 +14,9 @@
 	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
+	var/static/list/allowed_cookables = typecacheof(list(
+		/obj/item/food,
+		/obj/item/reagent_containers/food))
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -62,7 +65,9 @@
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/S in T.contents)
+			if(!is_type_in_typecache(S, allowed_cookables))
+				continue
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))

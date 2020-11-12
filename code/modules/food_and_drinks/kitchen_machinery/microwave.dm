@@ -24,6 +24,11 @@
 	var/datum/looping_sound/microwave/soundloop
 	var/list/ingredients = list() // may only contain /atom/movables
 
+	///Static list of cookable items that can be mass-deposited into the microwave.
+	var/static/list/allowed_cookables = typecacheof(list(
+		/obj/item/food,
+		/obj/item/reagent_containers/food))
+
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
 	var/static/radial_use = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_use")
@@ -165,7 +170,9 @@
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/S in T.contents)
+			if(!is_type_in_typecache(S, allowed_cookables))
+				continue
 			if(ingredients.len >= max_n_of_items)
 				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 				return TRUE
