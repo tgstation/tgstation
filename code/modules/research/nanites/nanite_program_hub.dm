@@ -26,7 +26,7 @@
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
-/obj/machinery/nanite_program_hub/update_icon()
+/obj/machinery/nanite_program_hub/update_overlays()
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
