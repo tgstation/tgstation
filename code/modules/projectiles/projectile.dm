@@ -44,7 +44,18 @@
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
 	var/temporary_unstoppable_movement = FALSE
 
-	// PROJECTILE PIERCING
+	/** PROJECTILE PIERCING
+	  * WARNING:
+	  * Projectile piercing MUST be done using these variables.
+	  * Ordinary passflags will be **IGNORED**.
+	  * The two flag variables below both use pass flags.
+	  * In the context of LETPASStHROW, it means the projectile will ignore things that are currently "in the air" from a throw.
+	  *
+	  * Also, projectiles sense hits using Bump(), and then pierce them if necessary.
+	  * They simply do not follow conventional movement rules.
+	  * NEVER flag a projectile as PHASING movement type.
+	  * If you so badly need to make one go through *everything*, override check_pierce() for your projectile to always return PROJECTILE_PIERCE_PHASE/HIT.
+	  */
 	/// If FALSE, allow us to hit something directly targeted/clicked/whatnot even if we're able to phase through it
 	var/phasing_ignore_direct_target = FALSE
 	/// Bitflag for things the projectile should just phase through entirely - No hitting unless direct target and [phasing_ignore_direct_target] is FALSE. Uses pass_flags flags.
@@ -390,6 +401,62 @@
 		return T
 	//Returns null if nothing at all was found.
 
+
+/**
+  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
+  */
+/obj/projectile/Crossed(atom/movable/AM)
+	. = ..()
+	scan_for_hit(AM)
+
+/**
+  * Projectile can pass through
+  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
+  */
+/obj/projectile/CanAllowThrough(atom/movable/mover, turf/target)
+	if(impacted[mover])
+		return TRUE
+	// Otherwise, ALWAYS attempt to bump so we can scan for a hit.
+	return FALSE
+
+/**
+  * Projectile moved:
+  *
+  * If not fired yet, do not do anything. Else,
+  *
+  * If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
+  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
+  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
+  */
+/obj/projectile/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(!fired)
+		return
+	if(temporary_unstoppable_movement)
+		temporary_unstoppable_movement = FALSE
+		movement_type &= ~PHASING
+	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
+
+/**
+  * Scan our current turf, hitting anything that we should hit.
+  */
+/obj/projectile/proc/scan_moved_turf()
+	scan_for_hit(loc)
+
+/**
+  * Checks if we should pierce something.
+  */
+/obj/projectile/proc/check_pierce(atom/A)
+	if(projectile_phasing & A.pass_flags_self)
+		return PROJECTILE_PIERCE_PHASE
+	if(projectile_piercing & A.pass_Flags_self)
+		return PROJECTILE_PIERCE_HIT
+	if(ismovable(A))
+		var/atom/movable/AM = A
+		if(AM.throwing)
+			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERC_NONE)
+	return PROJECTILE_PIERCE_NONE
+
 /obj/projectile/proc/check_ricochet(atom/A)
 	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
@@ -706,46 +773,6 @@
 		var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
 		angle = ATAN2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
-
-/**
-  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
-  */
-/obj/projectile/Crossed(atom/movable/AM)
-	. = ..()
-	scan_for_hit(AM)
-
-/**
-  * Projectile can pass through
-  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
-  */
-/obj/projectile/CanAllowThrough(atom/movable/mover, turf/target)
-	if(impacted[mover])
-		return TRUE
-	return ..()
-
-/**
-  * Projectile moved:
-  *
-  * If not fired yet, do not do anything. Else,
-  *
-  * If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
-  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
-  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
-  */
-/obj/projectile/Moved(atom/OldLoc, Dir)
-	. = ..()
-	if(!fired)
-		return
-	if(temporary_unstoppable_movement)
-		temporary_unstoppable_movement = FALSE
-		movement_type &= ~PHASING
-	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
-
-/**
-  * Scan our current turf, hitting anything that we should hit.
-  */
-/obj/projectile/proc/scan_moved_turf()
-	scan_for_hit(loc)
 
 /obj/projectile/Destroy()
 	if(hitscan)
