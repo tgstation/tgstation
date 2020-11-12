@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		message_range = 1
-		log_talk(message, LOG_WHISPER)
+		log_talk(message, LOG_WHISPER, "whispers")
 		if(stat == HARD_CRIT)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mods[WHISPER_MODE] = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		log_talk(message, LOG_SAY, forced_by=forced)
+		log_talk(message, LOG_SAY, "whispers", forced_by=forced)
 
 	message = treat_message(message) // unfortunately we still need this
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
