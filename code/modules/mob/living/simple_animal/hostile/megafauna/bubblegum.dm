@@ -75,13 +75,16 @@ Difficulty: Hard
 	new /datum/action/cooldown/charge/hallucination_charge().Grant(src)
 	new /datum/action/cooldown/charge/hallucination_charge/hallucination_surround().Grant(src)
 	new /datum/action/cooldown/blood_warp().Grant(src)
+	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
+	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	if(client)
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		blood_warp()
+		var/datum/action/cooldown/BW = locate(/datum/action/cooldown/blood_warp) in actions
+		BW.Trigger(target)
 
 	if(!BUBBLEGUM_SMASH)
 		var/datum/action/cooldown/TC = locate(/datum/action/cooldown/charge/triple_charge) in actions
@@ -95,8 +98,16 @@ Difficulty: Hard
 			var/datum/action/cooldown/HCS = locate(/datum/action/cooldown/charge/hallucination_charge/hallucination_surround) in actions
 			HCS.Trigger(target)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(var/mob/target)
+	var/list/targets = list(target)
+	. = list()
+	for(var/mob/living/L in targets)
+		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)
+		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
+			. += L
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
-	var/list/targets = list()//get_mobs_on_blood()
+	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
 		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
 		return TRUE
@@ -115,7 +126,7 @@ Difficulty: Hard
 			bloodsmack(target_two_turf, handedness)
 
 	if(target_one)
-		var/list/pools = list()//get_pools(get_turf(target_one), 0)
+		var/list/pools = get_bloodcrawlable_pools(get_turf(target_one), 0)
 		if(pools.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
@@ -125,7 +136,7 @@ Difficulty: Hard
 					bloodsmack(target_one_turf, !handedness)
 
 	if(!target_two && target_one)
-		var/list/poolstwo = list()//get_pools(get_turf(target_one), 0)
+		var/list/poolstwo = get_bloodcrawlable_pools(get_turf(target_one), 0)
 		if(poolstwo.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
@@ -167,44 +178,6 @@ Difficulty: Hard
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	SLEEP_CHECK_DEATH(1, src)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	if(Adjacent(target))
-		return FALSE
-	var/list/can_jaunt = list()//get_pools(get_turf(src), 1)
-	if(!can_jaunt.len)
-		return FALSE
-
-	var/list/pools = list()//get_pools(get_turf(target), 5)
-	var/list/pools_to_remove = list()//get_pools(get_turf(target), 4)
-	pools -= pools_to_remove
-	if(!pools.len)
-		return FALSE
-
-	var/obj/effect/temp_visual/decoy/DA = new /obj/effect/temp_visual/decoy(loc,src)
-	DA.color = "#FF0000"
-	var/oldtransform = DA.transform
-	DA.transform = matrix()*2
-	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
-	SLEEP_CHECK_DEATH(3, src)
-	qdel(DA)
-
-	var/obj/effect/decal/cleanable/blood/found_bloodpool
-	pools = list()//get_pools(get_turf(target), 5)
-	pools_to_remove = list()//get_pools(get_turf(target), 4)
-	pools -= pools_to_remove
-	if(pools.len)
-		shuffle_inplace(pools)
-		found_bloodpool = pick(pools)
-	if(found_bloodpool)
-		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
-		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
-		forceMove(get_turf(found_bloodpool))
-		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
-		visible_message("<span class='danger'>And springs back out!</span>")
-		blood_enrage()
-		return TRUE
-	return FALSE
-
 /**
   * Attack by override for bubblegum
   *
@@ -224,7 +197,6 @@ Difficulty: Hard
 	if(BUBBLEGUM_IS_ENRAGED)
 		return TRUE
 	return isliving(target) && HAS_TRAIT(target, TRAIT_INCAPACITATED)
-
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_retreat_distance()
 	return (be_aggressive() ? null : initial(retreat_distance))
@@ -247,6 +219,9 @@ Difficulty: Hard
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
 	addtimer(cb, enrage_time)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/after_charge()
+	try_bloodattack()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(newcolor = rgb(149, 10, 10))
 	update_approach()
 	change_move_delay()
@@ -256,12 +231,6 @@ Difficulty: Hard
 	move_to_delay = newmove
 	set_varspeed(move_to_delay)
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
-
-/obj/effect/decal/cleanable/blood/bubblegum
-	bloodiness = 0
-
-/obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
-	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -275,15 +244,6 @@ Difficulty: Hard
 			step(B, pick(GLOB.cardinals))
 		else
 			B.setDir(pick(GLOB.cardinals))
-
-/obj/effect/decal/cleanable/blood/gibs/bubblegum
-	name = "thick blood"
-	desc = "Thick, splattered blood."
-	random_icon_states = list("gib3", "gib5", "gib6")
-	bloodiness = 20
-
-/obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
-	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
@@ -321,33 +281,6 @@ Difficulty: Hard
 	. = ..()
 	new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
-
-/obj/effect/temp_visual/dragon_swoop/bubblegum
-	duration = 10
-
-/obj/effect/temp_visual/bubblegum_hands
-	icon = 'icons/effects/bubblegum.dmi'
-	duration = 9
-
-/obj/effect/temp_visual/bubblegum_hands/rightthumb
-	icon_state = "rightthumbgrab"
-
-/obj/effect/temp_visual/bubblegum_hands/leftthumb
-	icon_state = "leftthumbgrab"
-
-/obj/effect/temp_visual/bubblegum_hands/rightpaw
-	icon_state = "rightpawgrab"
-	layer = BELOW_MOB_LAYER
-
-/obj/effect/temp_visual/bubblegum_hands/leftpaw
-	icon_state = "leftpawgrab"
-	layer = BELOW_MOB_LAYER
-
-/obj/effect/temp_visual/bubblegum_hands/rightsmack
-	icon_state = "rightsmack"
-
-/obj/effect/temp_visual/bubblegum_hands/leftsmack
-	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
@@ -391,3 +324,45 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()
 	return
+
+/obj/effect/decal/cleanable/blood/bubblegum
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
+	return TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/bubblegum
+	name = "thick blood"
+	desc = "Thick, splattered blood."
+	random_icon_states = list("gib3", "gib5", "gib6")
+	bloodiness = 20
+
+/obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
+	return TRUE
+
+/obj/effect/temp_visual/dragon_swoop/bubblegum
+	duration = 10
+
+/obj/effect/temp_visual/bubblegum_hands
+	icon = 'icons/effects/bubblegum.dmi'
+	duration = 9
+
+/obj/effect/temp_visual/bubblegum_hands/rightthumb
+	icon_state = "rightthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/leftthumb
+	icon_state = "leftthumbgrab"
+
+/obj/effect/temp_visual/bubblegum_hands/rightpaw
+	icon_state = "rightpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/leftpaw
+	icon_state = "leftpawgrab"
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/temp_visual/bubblegum_hands/rightsmack
+	icon_state = "rightsmack"
+
+/obj/effect/temp_visual/bubblegum_hands/leftsmack
+	icon_state = "leftsmack"

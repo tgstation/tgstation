@@ -840,3 +840,7 @@
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
 #define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
+
+//Mob ability signals
+#define COMSIG_BLOOD_WARP "mob_ability_blood_warp"
+#define COMSIG_FINISHED_CHARGE "mob_ability_charge_finished"

@@ -622,13 +622,16 @@
 /datum/action/cooldown/IsAvailable()
 	return next_use_time <= world.time
 
-/datum/action/cooldown/proc/StartCooldown(shared_cooldown_time)
-	if(shared_cooldown && !isnum(shared_cooldown_time))
+/datum/action/cooldown/proc/StartCooldown(override_cooldown_time, original = TRUE)
+	if(shared_cooldown && original)
 		for(var/datum/action/cooldown/C in owner.actions - src)
 			if(shared_cooldown == C.shared_cooldown)
-				C.StartCooldown(cooldown_time)
-	if(shared_cooldown_time)
-		next_use_time = world.time + shared_cooldown_time
+				if(isnum(override_cooldown_time))
+					C.StartCooldown(override_cooldown_time, FALSE)
+				else
+					C.StartCooldown(cooldown_time, FALSE)
+	if(isnum(override_cooldown_time))
+		next_use_time = world.time + override_cooldown_time
 	else
 		next_use_time = world.time + cooldown_time
 	UpdateButtonIcon()
@@ -644,6 +647,8 @@
 				InterceptClickOn(owner, null, A)
 				return
 			owner.click_intercept = src
+			for(var/datum/action/cooldown/C in owner.actions)
+				C.UpdateButtonIcon()
 			to_chat(owner, "<b>You are now prepared to use [src]</b>")
 			return
 		Activate(owner)
@@ -668,6 +673,8 @@
 			button.maptext = "<b>[round(time_left/10, 0.1)]</b>"
 	if(!owner || time_left == 0)
 		button.maptext = ""
+	if(IsAvailable() && owner.click_intercept == src)
+		button.color = rgb(0,255,0)
 
 /datum/action/cooldown/process()
 	var/time_left = max(next_use_time - world.time, 0)
