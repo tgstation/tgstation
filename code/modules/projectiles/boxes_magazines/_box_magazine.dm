@@ -50,7 +50,7 @@
   *
   */
 /obj/item/ammo_box/proc/_refresh_bullet_cost()
-	var/ammo_count = stored_ammo?.len || max_ammo
+	var/ammo_count = length(stored_ammo) || max_ammo
 	bullet_cost = list()
 	base_cost = list()
 	for (var/material in custom_materials)
