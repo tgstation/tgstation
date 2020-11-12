@@ -374,12 +374,12 @@
   */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
 	// note that these are fed into an exponent, so these are magnified
-	if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
+	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	if(HAS_TRAIT(owner,TRAIT_HARDLIMBWOUND))
+	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
 		damage *= 0.85
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
