@@ -432,16 +432,16 @@
 
 	//They're injured enough for it!
 	var/list/treat_me_for = list()
-	if((C.getBruteLoss() >= heal_threshold) && C.getBruteLoss() != 0)
+	if(C.getBruteLoss() > heal_threshold)
 		treat_me_for += BRUTE
 
-	if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
+	if(C.getOxyLoss() > (5 + heal_threshold))
 		treat_me_for += OXY
 
-	if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
+	if(C.getFireLoss() > heal_threshold)
 		treat_me_for += BURN
 
-	if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
+	if(C.getToxLoss() > heal_threshold)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
@@ -513,16 +513,16 @@
 		var/treatment_method
 		var/list/potential_methods = list()
 
-		if((C.getBruteLoss() >= heal_threshold) && C.getBruteLoss() != 0)
+		if(C.getBruteLoss() > heal_threshold)
 			potential_methods += BRUTE
 
-		if((C.getFireLoss() >= heal_threshold) && C.getFireLoss() != 0)
+		if(C.getFireLoss() > heal_threshold)
 			potential_methods += BURN
 
-		if((C.getOxyLoss() >= (5 + heal_threshold)) && C.getOxyLoss() != 0)
+		if(C.getOxyLoss() > (5 + heal_threshold))
 			potential_methods += OXY
 
-		if((C.getToxLoss() >= heal_threshold) && C.getToxLoss() != 0)
+		if(C.getToxLoss() > heal_threshold)
 			potential_methods += TOX
 
 		for(var/i in potential_methods)
