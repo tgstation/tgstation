@@ -22,6 +22,7 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -628,6 +629,9 @@
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	if(target == src)
+		return
+
 	var/panicking = FALSE
 
 	do
@@ -895,9 +899,6 @@
 	return ..()
 
 /mob/living/carbon/human/is_literate()
-	return TRUE
-
-/mob/living/carbon/human/can_hold_items()
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
