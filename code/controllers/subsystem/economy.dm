@@ -15,37 +15,8 @@ SUBSYSTEM_DEF(economy)
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
 							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
-	var/alive_humans_bounty = 50
-	var/crew_safety_bounty = 1500
-	var/monster_bounty = 150
-	var/mood_bounty = 100
+	/// Departmental cash provided to science when a node is researched in specific configs.
 	var/techweb_bounty = 250
-	var/civ_bounty_value = 25
-	var/slime_bounty = list("grey" = 1,
-							// tier 1
-							"orange" = 10,
-							"metal" = 10,
-							"blue" = 10,
-							"purple" = 10,
-							// tier 2
-							"dark purple" = 50,
-							"dark blue" = 50,
-							"green" = 50,
-							"silver" = 50,
-							"gold" = 50,
-							"yellow" = 50,
-							"red" = 50,
-							"pink" = 50,
-							// tier 3
-							"cerulean" = 75,
-							"sepia" = 75,
-							"bluespace" = 75,
-							"pyrite" = 75,
-							"light pink" = 75,
-							"oil" = 75,
-							"adamantine" = 75,
-							// tier 4
-							"rainbow" = 100)
 	/**
 	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
@@ -100,27 +71,11 @@ SUBSYSTEM_DEF(economy)
   * Iterates over every department account for the same payment.
   */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
-	var/datum/bank_account/engine = get_dep_account(ACCOUNT_ENG)
-	var/datum/bank_account/cargo = get_dep_account(ACCOUNT_CAR)
-	var/datum/bank_account/service = get_dep_account(ACCOUNT_SRV)
-	var/datum/bank_account/medical = get_dep_account(ACCOUNT_MED)
-	var/datum/bank_account/security = get_dep_account(ACCOUNT_SEC)
-	var/datum/bank_account/science = get_dep_account(ACCOUNT_SCI)
-	var/datum/bank_account/civilian = get_dep_account(ACCOUNT_CIV)
-	if(engine)
-		engine.adjust_money(MAX_GRANT_DPT)
-	if(cargo)
-		cargo.adjust_money(MAX_GRANT_DPT)
-	if(service)
-		service.adjust_money(MAX_GRANT_DPT)
-	if(medical)
-		medical.adjust_money(MAX_GRANT_DPT)
-	if(security)
-		security.adjust_money(MAX_GRANT_DPT)
-	if(science)
-		science.adjust_money(MAX_GRANT_DPT)
-	if(civilian)
-		civilian.adjust_money(MAX_GRANT_DPT)
+	for(var/iteration in department_accounts)
+		var/datum/bank_account/dept_account = get_dep_account(iteration)
+		if(!dept_account)
+			continue
+		dept_account.adjust_money(MAX_GRANT_DPT)
 
 /**
   * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
