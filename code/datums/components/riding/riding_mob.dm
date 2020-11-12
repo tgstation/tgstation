@@ -1,6 +1,9 @@
-
+// For any mob that can be ridden
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	. = ..()
 	var/mob/living/parent_living = parent
 	parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
@@ -22,12 +25,9 @@
 /datum/component/riding/creature/ride_check(mob/living/rider)
 	var/mob/living/parent_living = parent
 
-	if(parent_living.mobility_flags & ~MOBILITY_MOVE)
-		return
-
 	var/kick_us_off
 	// no matter what, you can't ride something that's on the floor
-	if(parent_living.body_position != STANDING_UP)
+	if(parent_living.body_position != STANDING_UP) // should really happen when they fall over, but there's no signal for that now so someone else can do it
 		kick_us_off = TRUE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
 	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
@@ -44,6 +44,10 @@
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	parent_living.unbuckle_mob(rider)
+
+/datum/component/riding/creature/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	remove_abilities(M)
+	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
@@ -73,6 +77,26 @@
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
 		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
+
+/// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
+/datum/component/riding/creature/proc/setup_abilities(mob/living/M)
+	var/mob/living/ridden_creature = parent
+
+	for(var/i in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = i
+		M.AddAbility(proc_holder)
+
+/// Takes away the riding parent's abilities from the rider
+/datum/component/riding/creature/proc/remove_abilities(mob/living/M)
+	if(!istype(parent, /mob/living))
+		return
+
+	var/mob/living/ridden_creature = parent
+
+	for(var/i in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = i
+		M.RemoveAbility(proc_holder)
+
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)

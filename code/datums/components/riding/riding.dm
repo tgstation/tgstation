@@ -79,34 +79,11 @@
 	SIGNAL_HANDLER
 
 	var/atom/movable/movable_parent = parent
-	remove_abilities(rider)
 	restore_position(rider)
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
-
-/// If the ridden atom is a creature with abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
-/datum/component/riding/proc/setup_abilities(mob/living/M)
-	if(!istype(parent, /mob/living))
-		return
-
-	var/mob/living/ridden_creature = parent
-
-	for(var/i in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = i
-		M.AddAbility(proc_holder)
-
-/// Takes away the riding parent's abilities from the rider
-/datum/component/riding/proc/remove_abilities(mob/living/M)
-	if(!istype(parent, /mob/living))
-		return
-
-	var/mob/living/ridden_creature = parent
-
-	for(var/i in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = i
-		M.RemoveAbility(proc_holder)
 
 /// Some ridable atoms may want to only show on top of the rider in certain directions, like wheelchairs
 /datum/component/riding/proc/handle_vehicle_layer(dir)
@@ -132,8 +109,8 @@
 	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for (var/m in movable_parent.buckled_mobs)
 		var/mob/buckled_mob = m
-		ride_check(buckled_mob)
 		buckled_mob.set_glide_size(movable_parent.glide_size)
+		ride_check(buckled_mob)
 	if(QDELETED(src))
 		return // runtimed with piggy's without this, look into this more
 	handle_vehicle_offsets(dir)

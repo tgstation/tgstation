@@ -1,10 +1,13 @@
+// For any /obj/vehicle's that can be ridden
+
 /datum/component/riding/vehicle/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = (RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS), potion_boost = FALSE)
-	. = ..()
+	if(!isvehicle(parent))
+		return COMPONENT_INCOMPATIBLE
+	return ..()
 
 /datum/component/riding/vehicle/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
-
 
 /// Every time the driver tries to drive us, see if we can actually move or not
 /datum/component/riding/vehicle/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
@@ -70,14 +73,12 @@
 		return
 
 	step(AM, direction)
-
 	last_move_diagonal = ((direction & (direction - 1)) && (AM.loc == next))
 
 	if(QDELETED(src))
 		return
 	handle_vehicle_layer(AM.dir)
 	handle_vehicle_offsets(AM.dir)
-
 	moved_successfully(user)
 
 /datum/component/riding/vehicle/atv
@@ -100,7 +101,6 @@
 /datum/component/riding/vehicle/bicycle/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
-
 
 
 /datum/component/riding/vehicle/lavaboat
@@ -201,7 +201,6 @@
 
 
 /datum/component/riding/vehicle/car
-	//vehicle_move_delay = movedelay
 	vehicle_move_delay = 1
 	COOLDOWN_DECLARE(enginesound_cooldown)
 
@@ -231,8 +230,6 @@
 	set_vehicle_dir_offsets(WEST, -48, -48)
 	for(var/i in GLOB.cardinals)
 		set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
-
-
 
 
 /datum/component/riding/vehicle/wheelchair
