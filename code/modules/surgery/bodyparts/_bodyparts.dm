@@ -561,7 +561,7 @@
 
 	var/total_damage = max(brute_dam + burn_dam, stamina_dam)
 
-	// this block of checks is for limbs with no disable_threshold just to see if we scream when we hit max damage on the limb
+	// this block of checks is for limbs that can be disabled, but not through pure damage (AKA limbs that suffer wounds, human/monkey parts and such)
 	if(!disable_threshold)
 		if(total_damage < max_damage)
 			last_maxed = FALSE
@@ -569,9 +569,10 @@
 			if(!last_maxed && owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, /mob.proc/emote, "scream")
 			last_maxed = TRUE
+		set_disabled(FALSE) // we only care about the paralysis trait
 		return
 
-	// we're now dealing solely with limbs with disable_threshold
+	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
 	if(total_damage >= max_damage * disable_threshold)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
@@ -1001,6 +1002,5 @@
 	current_gauze.absorption_capacity -= seep_amt
 	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
-		testing("sent signal gauze lost")
 		QDEL_NULL(current_gauze)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
