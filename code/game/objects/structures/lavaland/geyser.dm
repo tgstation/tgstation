@@ -126,4 +126,4 @@
 	plunge_mod = 0.8
 	layer_mode_sprite = "reinforced_plunger_layer"
 
-	custom_premium_price = 600
+	custom_premium_price = PAYCHECK_MEDIUM * 8

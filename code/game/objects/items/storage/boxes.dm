@@ -693,7 +693,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
-	custom_price = 20
+	custom_price = PAYCHECK_ASSISTANT * 0.4
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -1160,7 +1160,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
 	foldable = null
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
@@ -1186,8 +1186,8 @@
 	name = "HP+ gum packet"
 	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
 	icon_state = "bubblegum_happiness"
-	custom_price = 300
-	custom_premium_price = 300
+	custom_price = PAYCHECK_HARD * 3
+	custom_premium_price = PAYCHECK_HARD * 3
 
 /obj/item/storage/box/gum/happiness/Initialize()
 	. = ..()

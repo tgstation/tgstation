@@ -208,7 +208,7 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	clothing_flags = LARGE_WORN_ICON
-	custom_price = 350
+	custom_price = PAYCHECK_HARD * 1.5
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"

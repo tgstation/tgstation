@@ -324,7 +324,7 @@
 	maxcharge = 300
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
-	custom_premium_price = 50
+	custom_premium_price = PAYCHECK_ASSISTANT
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

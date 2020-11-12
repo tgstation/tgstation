@@ -83,7 +83,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 125
+	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
@@ -319,5 +319,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = 237
-	custom_premium_price = 237
+	custom_price = PAYCHECK_HARD * 2.37
+	custom_premium_price = PAYCHECK_HARD * 2.37
