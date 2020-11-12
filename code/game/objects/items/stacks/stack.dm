@@ -403,7 +403,7 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(mats_per_unit != check.mats_per_unit)
+	if(!check.is_cyborg && (mats_per_unit != check.mats_per_unit)) // Cyborg stacks don't have materials. This lets them recycle sheets and floor tiles.
 		return FALSE
 	return TRUE
 
