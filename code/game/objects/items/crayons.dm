@@ -287,6 +287,8 @@
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
+	if(check_empty(user, cost))
+		return
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
 		return
