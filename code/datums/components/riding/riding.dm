@@ -13,7 +13,7 @@
 	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower
 	var/vehicle_move_delay = 2
-	/// If the driver needs a specific item in hand (or inserted, for vehicles) in order to move this vehicle
+	/// If the driver needs a specific item in hand (or inserted, for vehicles) in order to move this vehicle (uses an istype, so children of this work too)
 	var/keytype
 
 	/// If the vehicle is a mob with abilities, and this is TRUE, then the rider can trigger those abilities while mounted

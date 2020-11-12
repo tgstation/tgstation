@@ -15,12 +15,10 @@
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
-	///The typepath for the key we use to turn on this car if it has one
+	///The typepath for the key we use to turn on this car if it has one (uses an istype, so children of this work too)
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	///Whether the key must be strict type and not a subtype to put it in the car
-	var/key_type_exact = TRUE
 	/// Whether the vehicle os currently able to move
 	var/canmove = TRUE
 	///Whether the occupants will bump into a door when the car bumps it
@@ -56,7 +54,7 @@
 			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/vehicle/proc/is_key(obj/item/I)
-	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
+	return istype(I, key_type)
 
 /obj/vehicle/proc/return_occupants()
 	return occupants

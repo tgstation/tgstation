@@ -81,7 +81,7 @@
 	moved_successfully(user)
 
 /datum/component/riding/vehicle/atv
-	keytype = /obj/item/key
+	keytype = /obj/item/key/atv
 	ride_check_flags = RIDER_NEEDS_LEGS | RIDER_NEEDS_ARMS | UNBUCKLE_DISABLED_RIDER
 	vehicle_move_delay = 1.5
 
