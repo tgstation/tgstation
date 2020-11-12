@@ -109,6 +109,7 @@
 		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon()
+	. = ..()
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(active)
@@ -150,6 +151,7 @@
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	layer = OBJ_LAYER
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	use_power = IDLE_POWER_USE
@@ -349,6 +351,7 @@
 	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/update_icon()
+	. = ..()
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(active)

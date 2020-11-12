@@ -211,7 +211,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "helium"
 	specific_heat = 15
 	name = "Helium"
-	dangerous = FALSE
 	fusion_power = 7
 	rarity = 50
 
@@ -220,6 +219,8 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 1
 	name = "Antinoblium"
 	dangerous = TRUE
+	gas_overlay = "antinoblium"
+	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 20
 	rarity = 1
 

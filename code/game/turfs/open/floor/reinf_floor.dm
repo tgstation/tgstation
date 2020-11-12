@@ -177,6 +177,14 @@
 	name = "\improper Zauker floor"
 	initial_gas_mix = ATMOS_TANK_ZAUKER
 
+/turf/open/floor/engine/helium
+	name = "\improper Helium floor"
+	initial_gas_mix = ATMOS_TANK_HELIUM
+
+/turf/open/floor/engine/antinoblium
+	name = "\improper Antinoblium floor"
+	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
+
 /turf/open/floor/engine/air
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX
