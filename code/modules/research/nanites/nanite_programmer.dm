@@ -11,7 +11,7 @@
 	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
 
-/obj/machinery/nanite_programmer/update_icon()
+/obj/machinery/nanite_programmer/update_overlays()
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
