@@ -528,6 +528,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
 
+			SEND_SIGNAL(L, COMSIG_ON_VENDOR_CRUSH)
+
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 

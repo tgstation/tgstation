@@ -101,6 +101,23 @@
 		chan = power_channel
 	A.use_power(amount, chan)
 
+/**
+  * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
+  * - Amount: How much power the APC's cell is to be costed.
+  */
+/obj/machinery/proc/directly_use_power(amount)
+	var/area/A = get_area(src)
+	var/obj/machinery/power/apc/local_apc
+	if(!A)
+		return FALSE
+	local_apc = A.get_apc()
+	if(!local_apc)
+		return FALSE
+	if(!local_apc.cell)
+		return FALSE
+	local_apc.cell.use(amount)
+	return TRUE
+
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
 	if(!A)
