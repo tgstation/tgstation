@@ -24,8 +24,8 @@
 
 	///If disabled, limb is as good as missing.
 	var/bodypart_disabled = FALSE
-	///Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1.
-	var/disable_threshold = 1
+	///Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1. 0 means no disable thru damage
+	var/disable_threshold = 0
 	///Controls whether bodypart_disabled makes sense or not for this limb.
 	var/can_be_disabled = FALSE
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -179,8 +179,7 @@
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	if(current_gauze)
-		QDEL_NULL(current_gauze)
+	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/drop_organ in get_organs())
 		drop_organ.transfer_to_limb(src, owner)
 	for(var/obj/item/I in src)
@@ -562,7 +561,18 @@
 
 	var/total_damage = max(brute_dam + burn_dam, stamina_dam)
 
-	if(total_damage >= max_damage * disable_threshold) //Easy limb disable disables the limb at 40% health instead of 0%
+	// this block of checks is for limbs with no disable_threshold just to see if we scream when we hit max damage on the limb
+	if(!disable_threshold)
+		if(total_damage < max_damage)
+			last_maxed = FALSE
+		else
+			if(!last_maxed && owner.stat < UNCONSCIOUS)
+				INVOKE_ASYNC(owner, /mob.proc/emote, "scream")
+			last_maxed = TRUE
+		return
+
+	// we're now dealing solely with limbs with disable_threshold
+	if(total_damage >= max_damage * disable_threshold)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, /mob.proc/emote, "scream")
@@ -570,7 +580,7 @@
 		set_disabled(TRUE)
 		return
 
-	if(bodypart_disabled && total_damage <= max_damage * 0.8) // reenabled at 80% now instead of 50% as of wounds update
+	if(bodypart_disabled && total_damage <= max_damage * 0.5) // reenable the limb at 50% health
 		last_maxed = FALSE
 		set_disabled(FALSE)
 
@@ -917,7 +927,7 @@
 		var/datum/wound/iter_wound = i
 		dam_mul *= iter_wound.damage_mulitplier_penalty
 
-	if(!LAZYLEN(wounds) && current_gauze && !replaced)
+	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] fall away.</span>", "<span class='notice'>The [current_gauze] on your [name] fall away.</span>")
 		QDEL_NULL(current_gauze)
 
@@ -967,9 +977,15 @@
 /obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
 	if(!istype(gauze) || !gauze.absorption_capacity)
 		return
+	var/newly_gauzed = FALSE
+	if(!current_gauze)
+		newly_gauzed = TRUE
 	QDEL_NULL(current_gauze)
 	current_gauze = new gauze.type(src, 1)
 	gauze.use(1)
+	if(newly_gauzed)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, gauze)
+		testing("sent signal gain gauze")
 
 /**
   * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
@@ -983,6 +999,8 @@
 	if(!current_gauze)
 		return
 	current_gauze.absorption_capacity -= seep_amt
-	if(current_gauze.absorption_capacity < 0)
+	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
+		testing("sent signal gauze lost")
 		QDEL_NULL(current_gauze)
