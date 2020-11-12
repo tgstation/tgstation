@@ -38,6 +38,14 @@
 	paralyze = 0
 	breakthings = FALSE
 
+// Snowflake to make these work until projectiles get a proper refactor/fix to penetration
+/obj/projectile/bullet/p50/penetrator/Moved()
+	. = ..()
+	for(var/mob/M in loc)
+		if(M == firer)
+			continue
+		Bump(M)
+
 /obj/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety
 	icon_state = "gaussstrong"
 	damage = 25
