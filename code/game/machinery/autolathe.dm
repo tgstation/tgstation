@@ -245,13 +245,10 @@
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
 
-			if(!(new_item.material_flags & MATERIAL_NO_EFFECTS))
-				new_item.set_custom_materials(materials_used) // the object has effects that change the object depending on the material.
-				if(!isnull(user))
-					// Get an achievement for making a gold toolbox!
-					user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
-			else
-				new_item.custom_materials = materials_used // it has no effects, so just set the amount of materials being used to make it
+			new_item.set_custom_materials(materials_used) // the object has effects that change the object depending on the material.
+			if(!isnull(user))
+				// Get an achievement for making a gold toolbox!
+				user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 
 			new_item.autolathe_crafted(src)
 
