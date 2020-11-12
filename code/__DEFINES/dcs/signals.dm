@@ -264,9 +264,10 @@
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"
-///from base of atom/movable/unbuckle_mob(): (mob, force)
+///from /atom/movable/proc/buckle_mob, used by the ridable element to see if someone can successfully ride the target
 #define COMSIG_MOVABLE_TRY_MOUNTING "try_mounting"
 	#define MOUNTING_HALT_BUCKLE	(1<<0)
+///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
 #define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
 	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
 ///from base of atom/movable/throw_at(): (list/args)
