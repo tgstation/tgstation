@@ -14,8 +14,8 @@
 	if(!target)
 		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
 		return
-	var/dist = get_dist(user.loc,target.loc)
-	var/dir = get_dir(user.loc,target.loc)
+	var/dist = get_dist(get_turf(user),get_turf(target))
+	var/dir = get_dir(get_turf(user),get_turf(target))
 	if(user.z != target.z)
 		to_chat(user,"<span class='warning'>[target.real_name] is on another plane of existance!</span>")
 	else
