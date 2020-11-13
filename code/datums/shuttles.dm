@@ -226,6 +226,14 @@
 	credit_cost = 15000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
+/datum/map_template/shuttle/emergency/chapel
+	suffix = "chapel"
+	name = "The Grand Monastery"
+	description = "Due to budget cuts, the Holy Order of Chaplains has made this mobile monastery available for evacuation in exchange for appropriate donation. The order is particularly callous about human life, so expect this shuttle to do significant damage to the station upon arrival."
+	admin_notes = "This shuttle will likely crush HALF THE STATION, killing a significant number of people."
+	credit_cost = 150000
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
 	name = "Luxury Shuttle"
