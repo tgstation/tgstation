@@ -1231,13 +1231,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /obj/screen/alert/fat)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /obj/screen/alert/hungry)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			H.throw_alert("nutrition", /obj/screen/alert/starving)
+			H.throw_alert("nutrition", /atom/movable/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return FALSE
@@ -1345,7 +1345,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
-			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(src, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
+			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
 				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
@@ -1658,11 +1658,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
-					H.throw_alert("temp", /obj/screen/alert/hot, 1)
+					H.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 				if(2 to 4)
-					H.throw_alert("temp", /obj/screen/alert/hot, 2)
+					H.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 				else
-					H.throw_alert("temp", /obj/screen/alert/hot, 3)
+					H.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 
 		// Apply species and physiology modifiers to heat damage
 		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
@@ -1685,13 +1685,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// Apply more damage based on how cold you are
 		switch(H.bodytemperature)
 			if(200 to bodytemp_cold_damage_limit)
-				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * H.physiology.cold_mod, BURN)
 			if(120 to 200)
-				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 				H.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * H.physiology.cold_mod, BURN)
 			else
-				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * H.physiology.cold_mod, BURN)
 
 	// We are not to hot or cold, remove status and moods
@@ -1714,13 +1714,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * \
 					PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod)
-				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+				H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 			else
 				H.clear_alert("pressure")
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
@@ -1732,7 +1732,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert("pressure")
 			else
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 		// Very low pressure, show an alert and take damage
 		else
@@ -1741,7 +1741,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 
 /**
  * Used to stabilize the body temperature back to normal on living mobs
