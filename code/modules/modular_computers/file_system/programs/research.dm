@@ -1,7 +1,7 @@
 /datum/computer_file/program/research
 	filename = "research"
 	filedesc = "Research and Development"
-	program_icon_state = "arcade"
+	program_icon_state = "research"
 	extended_desc = "NT's proprietary management software for research and development."
 	requires_ntnet = TRUE
 	size = 5
