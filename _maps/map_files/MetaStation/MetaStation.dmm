@@ -52583,6 +52583,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAF" = (
@@ -52877,6 +52878,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cBA" = (
@@ -53493,10 +53495,8 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "cDm" = (
-/obj/machinery/airalarm/mixingchamber{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing/chamber)
 "cDn" = (
@@ -53872,7 +53872,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -54163,13 +54163,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/science/mixing/chamber";
-	dir = 4;
-	name = "Toxins Chamber APC";
-	pixel_x = 24
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cFu" = (
@@ -54456,8 +54449,9 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cGm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -54466,6 +54460,7 @@
 	dir = 4;
 	name = "manual inlet valve"
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cGn" = (
@@ -54718,6 +54713,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cHk" = (
@@ -65238,6 +65234,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_c)
+"eUV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing/chamber)
 "eUX" = (
 /obj/item/instrument/violin,
 /obj/structure/table/wood,
@@ -113027,11 +113029,11 @@ crR
 cyG
 czz
 cAD
-cCB
-cCB
+cBs
+cBs
 cDm
 cEw
-cFr
+eUV
 cGl
 cyK
 cIh
