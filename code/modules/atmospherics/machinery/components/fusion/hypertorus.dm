@@ -65,10 +65,13 @@
 	layer = OBJ_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	circuit = /obj/item/circuitboard/machine/thermomachine
+	///Vars for the state of the icon of the object (open, off, active)
 	var/icon_state_open
 	var/icon_state_off
 	var/icon_state_active
+	///Check if the machine has been activated
 	var/active = FALSE
+	///Check if fusion has started
 	var/fusion_started = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
@@ -156,6 +159,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
+	///Vars for the state of the icon of the object (open, off, active)
 	var/icon_state_open = "core_open"
 	var/icon_state_off = "core_off"
 	var/icon_state_active = "core_active"
