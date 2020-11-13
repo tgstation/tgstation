@@ -19494,6 +19494,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/conveyor{
+	id = "TrashMover"
+	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -52528,6 +52531,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "Delivery"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "nBw" = (
@@ -60152,6 +60159,9 @@
 	dir = 4
 	},
 /obj/structure/disposaloutlet,
+/obj/machinery/conveyor{
+	id = "CargoUnload"
+	},
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
