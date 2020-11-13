@@ -52,11 +52,11 @@
 		if(nlog_type & ntype)
 			var/list/all_the_entrys = log_source[log_type]
 			for(var/entry in all_the_entrys)
-				concatenated_logs += "[entry]</b><br>[all_the_entrys[entry]]"
+				concatenated_logs += "<b>[entry]</b><br>[all_the_entrys[entry]]"
 	if(length(concatenated_logs))
 		sortTim(concatenated_logs, cmp = /proc/cmp_text_dsc) //Sort by timestamp.
-		dat += "<font size=2px><b>"
-		dat += concatenated_logs.Join("<br><b>")
+		dat += "<font size=2px>"
+		dat += concatenated_logs.Join("<br>")
 		dat += "</font>"
 
 	var/datum/browser/popup = new(usr, "invidual_logging_[key_name(M)]", "Individual Logs", 600, 600)
