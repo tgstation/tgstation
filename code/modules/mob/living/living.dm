@@ -1102,7 +1102,7 @@
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
 		return FALSE
-	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, "<span class='warning'>You try to fire [G], but can't use the trigger!</span>")
 		return FALSE
 	return TRUE

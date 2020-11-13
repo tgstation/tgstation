@@ -12,7 +12,6 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
 
-	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
@@ -70,9 +69,6 @@
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
-
-/mob/living/carbon/alien/IsAdvancedToolUser()
-	return has_fine_manipulation
 
 /mob/living/carbon/alien/get_status_tab_items()
 	. = ..()
@@ -135,7 +131,7 @@ Des: Removes all infected images from the alien.
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items()
-	return has_fine_manipulation
+	return ISADVANCEDTOOLUSER(src) && ..()
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

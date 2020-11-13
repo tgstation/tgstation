@@ -49,7 +49,7 @@
 	name = "Pie"
 	description = "3.14159? No! CentCom management wants edible pie! Ship a whole one."
 	reward = 3142
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/pie)
+	wanted_types = list(/obj/item/food/pie)
 
 /datum/bounty/item/chef/salad
 	name = "Salad or Rice Bowls"
