@@ -20,8 +20,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/onehuman_module
-	name = "Module Design (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
+	name = "Module Design (OneCrew)"
+	desc = "Allows for the construction of a OneCrew AI Module."
 	id = "onehuman_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 6000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/zeroth/onehuman
@@ -47,7 +47,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/oxygen_module
-	name = "Module Design (OxygenIsToxicToHumans)"
+	name = "Module Design (OxygenIsToxicToCrew)"
 	desc = "Allows for the construction of a Safeguard AI Module."
 	id = "oxygen_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/bluespace = 1000)
@@ -101,8 +101,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/asimov
-	name = "Core Module Design (Asimov)"
-	desc = "Allows for the construction of an Asimov AI Core Module."
+	name = "Core Module Design (Crewsimov)"
+	desc = "Allows for the construction of an Crewsimov AI Core Module."
 	id = "asimov_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/asimov
