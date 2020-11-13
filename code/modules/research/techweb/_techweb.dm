@@ -5,7 +5,9 @@
 
 //Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
 /datum/techweb
-	var/list/researched_nodes = list()		//Already unlocked and all designs are now available. Assoc list, id = TRUE
+	var/list/researched_nodes = list()		// Already unlocked and all designs are now available. Assoc list, id = TRUE
+	var/list/research_queue = list()		// List of research nodes in
+	var/list/researching_nodes = list()		// Nodes which are partially researched. (id = (points = value,),)
 	var/list/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
 	var/list/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
 	var/list/researched_designs = list()	//Designs that are available for use. Assoc list, id = TRUE
@@ -22,6 +24,8 @@
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	// Data which is cached and sent to the user interface.
+	var/list/serialized_ui_data = list()
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -29,6 +33,19 @@
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
+	// Serialize and cache static information about this techweb.
+	serialized_ui_data["techweb_nodes"] = list()
+	for(var/ni in SSresearch.techweb_nodes)
+		var/datum/techweb_node/TN = SSresearch.techweb_nodes[ni]
+ 		serialized_ui_data["techweb_nodes"][ni] = TN.serialize_list()
+	serialized_ui_data["techweb_designs"] = list()
+	for(var/di in SSresearch.techweb_designs)
+		var/datum/design/TD = SSresearch.techweb_designs[di]
+ 		serialized_ui_data["techweb_designs"][di] = list(
+			"id" = TD.id,
+			"name" = TD.name,
+			"desc" = TD.desc
+		)
 	return ..()
 
 /datum/techweb/admin
@@ -152,6 +169,14 @@
 /datum/techweb/proc/get_available_nodes()
 	return available_nodes - hidden_nodes
 
+/datum/techweb/proc/get_available_nodes_not_in_queue()
+	var/list/return_nodes = list()
+	var/list/leftover_nodes = get_available_nodes()
+	for(var/NID in leftover_nodes)
+		if(!research_queue.Find(NID))
+			return_nodes[NID] = TRUE
+	return return_nodes
+
 /datum/techweb/proc/get_researched_nodes()
 	return researched_nodes - hidden_nodes
 
@@ -221,23 +246,66 @@
 			return FALSE
 	if(auto_adjust_cost)
 		remove_point_list(node.get_price(src))
-	researched_nodes[node.id] = TRUE				//Add to our researched list
-	for(var/id in node.unlock_ids)
-		visible_nodes[id] = TRUE
-		update_node_status(SSresearch.techweb_node_by_id(id))
-	for(var/id in node.design_ids)
-		add_design_by_id(id)
-	update_node_status(node)
+	set_node_researched(node)
 	if(get_that_dosh)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
+/datum/techweb/proc/add_research_points_to_node(datum/techweb_node/node, list/pointlist)
+	// If already researched, return true to get interested processes to move on
+	if(researched_nodes[node.id])
+		CRASH("Attempted to research node which was already researched.")
+	// If not available, we cannot do research.
+	if(!available_nodes[node.id])
+		CRASH("Attempted to research node which was not available to be researched.")
+	// Add points to node progress.
+	if (!researching_nodes[node.id] || !islist(researching_nodes[node.id]))
+		researching_nodes[node.id] = pointlist
+	else
+		for(var/i in pointlist)
+			researching_nodes[node.id][i] += pointlist[i]
+	// Determine if there is remaining research.
+	for(var/ip in node.research_costs)
+		if (!researching_nodes[node.id][ip])
+			return FALSE
+		if(researching_nodes[node.id][ip] < node.research_costs[ip])
+			return FALSE
+	// Consider the node researched.
+	set_node_researched(node)
+	return TRUE
+
+// Determines if a type of research point can further progress a node's research.
+/datum/techweb/proc/can_node_use_research_points(datum/techweb_node/node, department_pool)
+	if(!node.research_costs[department_pool])
+		return FALSE
+	if(!researching_nodes[node.id])
+		return TRUE
+	if(node.research_costs[department_pool] <= researching_nodes[node.id][department_pool])
+		return FALSE
+	return TRUE
+
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
 	. = ..()
 	if(.)
 		node.on_research()
+
+/datum/techweb/proc/set_node_researched(datum/techweb_node/node)
+	// Add to our researched list
+	researched_nodes[node.id] = TRUE
+	for(var/id in node.unlock_ids)
+		visible_nodes[id] = TRUE
+		update_node_status(SSresearch.techweb_node_by_id(id))
+	for(var/id in node.design_ids)
+		add_design_by_id(id)
+	update_node_status(node)
+	// Delete research work record.
+	if (!researching_nodes[node.id])
+		del(researching_nodes[node.id])
+	// Remove research from queue.
+	research_queue.Remove(node.id)
+	//SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 
 /datum/techweb/proc/unresearch_node_id(id)
 	return unresearch_node(SSresearch.techweb_node_by_id(id))
@@ -247,6 +315,53 @@
 		return FALSE
 	researched_nodes -= node.id
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
+
+// Adds a techweb node to the research queue, if possible.
+// Returns the position in the queue if successful, or if already present. 0 if unsuccessful.
+/datum/techweb/proc/add_research_to_queue(datum/techweb_node/N)
+	var/pos = research_queue.Find(N.id)
+	// Check if already in queue
+	if(pos > 0)
+		return pos
+	// Do not allow hidden nodes or researched ndoes
+	if(researched_nodes[N.id] || hidden_nodes[N.id])
+		return 0
+	// Check if available
+	if(available_nodes.Find(N.id) > 0)
+		// Node is immediately available, so just add it to the list.
+		research_queue.Add(N.id)
+		return research_queue.len
+	// Check if pre-reqs are met in the queue.
+	for(var/PID in N.prereq_ids)
+		if(!researched_nodes[PID] && !research_queue.Find(PID))
+			// Prereqs not met and not in qeuue.
+			return 0
+	// Prereqs are in queue, move ahead.
+	research_queue.Add(N.id)
+	return research_queue.len
+
+// Removes a techweb node from the research queue, if possible.
+// Returns true if successful
+/datum/techweb/proc/remove_research_from_queue(datum/techweb_node/N, list/recursion_list = list())
+	var/pos = research_queue.Find(N.id)
+	// Check if this is actually in the queue, or is behind our recursion pointer.
+	if(!pos)
+		return FALSE
+	// Check if this node is a prereq of other nodes.nus
+	var/i
+	recursion_list.Add(N.id)
+	for(i = pos + 1, i <= research_queue.len, i++)
+		var/datum/techweb_node/RQ = SSresearch.techweb_node_by_id(research_queue[i])
+		for(var/PID in RQ.prereq_ids)
+			if(PID != N.id)
+				continue
+			if(recursion_list.Find(RQ.id))
+				continue
+			remove_research_from_queue(RQ, recursion_list)
+			break
+	// Remove this now to stop recursions.
+	research_queue.Remove(N.id)
+	return TRUE
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
 	if(!istype(N) || !ispath(itempath))

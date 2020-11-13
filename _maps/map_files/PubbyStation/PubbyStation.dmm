@@ -6874,7 +6874,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arS" = (
@@ -9304,7 +9304,7 @@
 	dir = 8;
 	pixel_x = 28
 	},
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -27211,7 +27211,7 @@
 /area/medical/medbay/lobby)
 "bvw" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/console/preset/research{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -30135,7 +30135,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -30741,7 +30741,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,

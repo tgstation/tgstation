@@ -831,7 +831,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple,

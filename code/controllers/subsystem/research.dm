@@ -26,16 +26,13 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
 	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	var/list/slime_already_researched = list() 	//Slime cores that have already been researched
-	//----------------------------------------------
+	// Income per second
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
-	var/multiserver_calculation = FALSE
-	var/last_income
-	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
@@ -45,11 +42,11 @@ SUBSYSTEM_DEF(research)
 	var/list/created_anomaly_types = list()
 	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
 	var/list/anomaly_hard_limit_by_type = list(
-	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
-	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
-	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
-	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
-	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+		ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
+		ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
+		ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
+		ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
+		ANOMALY_CORE_FLUX = MAX_CORES_FLUX
 	)
 
 /datum/controller/subsystem/research/Initialize()
@@ -64,26 +61,43 @@ SUBSYSTEM_DEF(research)
 	return ..()
 
 /datum/controller/subsystem/research/fire()
-	var/list/bitcoins = list()
-	if(multiserver_calculation)
-		var/eff = calculate_server_coefficient()
-		for(var/obj/machinery/rnd/server/miner in servers)
-			var/list/result = (miner.mine())	//SLAVE AWAY, SLAVE.
-			for(var/i in result)
-				result[i] *= eff
-				bitcoins[i] = bitcoins[i]? bitcoins[i] + result[i] : result[i]
-	else
-		for(var/obj/machinery/rnd/server/miner in servers)
-			if(miner.working)
-				bitcoins = single_server_income.Copy()
-				break			//Just need one to work.
-	if (!isnull(last_income))
-		var/income_time_difference = world.time - last_income
-		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
-		for(var/i in bitcoins)
-			bitcoins[i] *= income_time_difference / 10
-		science_tech.add_point_list(bitcoins)
-	last_income = world.time
+	var/work = TECHWEB_SINGLE_SERVER_INCOME
+	var/list/nodes_in_research = list()
+	var/i = 1
+	// Proc each server into doing work
+	for(var/obj/machinery/rnd/server/S in servers)
+		if(!S.working)
+			continue
+		// Take the first available node in the research queue.
+		while(i <= science_tech.research_queue.len)
+			var/NID = science_tech.research_queue[i]
+			// It is possible for there to be unavailable technology in the queue that servers can reach.
+			// i.e. a node and a node that requires it as a prereq are queued together with 2 servers.
+			// in this instance a server could theoretically research technology which is unavailable to it.
+			if(science_tech.available_nodes[NID])
+				var/datum/techweb_node/NN = techweb_node_by_id(NID)
+				// Check if we can actually do research on this tech.
+				// Nanites can be skipped.
+				if(science_tech.can_node_use_research_points(NN, S.department_pool))
+					S.researching_node = NN
+					i++
+					break
+			i++ // move marker down so servers do not work on the same thing.
+		// If research server is not busy or a more important research server has it already,
+		// pick available research at random.
+		if(!S.researching_node || nodes_in_research.Find(S.researching_node.id))
+			var/list/free_nodes = science_tech.get_available_nodes_not_in_queue()
+			if (free_nodes.len == 0)
+				continue
+			var/datum/techweb_node/RN = techweb_node_by_id(pick(free_nodes))
+			science_tech.add_research_to_queue(RN)
+			S.researching_node = RN
+			i++
+		// Prohibit multiple servers from researching the same thing.
+		nodes_in_research.Add(S.researching_node.id)
+		S.mine(work)
+		// Each subsequent server is less efficient.
+		work /= 2
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
 	var/amt = servers.len

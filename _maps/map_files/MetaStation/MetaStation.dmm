@@ -25326,7 +25326,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bht" = (
@@ -46790,7 +46790,7 @@
 /area/medical/pharmacy)
 "cjX" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/console/preset/research{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -50742,7 +50742,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -51936,7 +51936,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -29
 	},
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria{

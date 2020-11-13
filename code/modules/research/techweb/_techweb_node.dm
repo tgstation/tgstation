@@ -6,15 +6,18 @@
 	var/id
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
-	var/hidden = FALSE			//Whether it starts off hidden.
-	var/experimental = FALSE	//If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
-	var/starting_node = FALSE	//Whether it's available without any research.
+	// Whether it starts off hidden.
+	var/hidden = FALSE
+	// If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
+	var/experimental = FALSE
+	// Whether it's available without any research.
+	var/starting_node = FALSE
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()
 	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
 	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/list/research_costs = list()					//Point cost to research. type = amount
+	var/list/research_costs = list() // Point cost to research. (type = amount,)
 	var/category = "Misc"				//Category
 
 /datum/techweb_node/error_node
@@ -39,6 +42,7 @@
 	. = list()
 	VARSET_TO_LIST(., id)
 	VARSET_TO_LIST(., display_name)
+	VARSET_TO_LIST(., description)
 	VARSET_TO_LIST(., hidden)
 	VARSET_TO_LIST(., starting_node)
 	VARSET_TO_LIST(., assoc_list_strip_value(prereq_ids))
@@ -54,6 +58,7 @@
 		return
 	VARSET_FROM_LIST(input, id)
 	VARSET_FROM_LIST(input, display_name)
+	VARSET_FROM_LIST(input, description)
 	VARSET_FROM_LIST(input, hidden)
 	VARSET_FROM_LIST(input, starting_node)
 	VARSET_FROM_LIST(input, prereq_ids)

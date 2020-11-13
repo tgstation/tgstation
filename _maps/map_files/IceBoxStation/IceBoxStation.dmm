@@ -27453,7 +27453,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "blN" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
@@ -28842,7 +28842,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bpf" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/console/preset/research{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -54407,7 +54407,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "rRX" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -56035,7 +56035,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "wmy" = (
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
