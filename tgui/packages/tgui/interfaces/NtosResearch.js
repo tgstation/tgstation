@@ -1,13 +1,13 @@
 import { RdManagementContent } from './RdManagement.js';
 import { NtosWindow } from '../layouts';
 
-export const NtosCargo = (props, context) => {
+export const NtosResearch = (props, context) => {
   return (
     <NtosWindow
       width={1280}
       height={640}
       resizable>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content>
         <RdManagementContent />
       </NtosWindow.Content>
     </NtosWindow>

@@ -445,7 +445,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /turf/open/floor/plasteel,
 /area/science)
 "bG" = (

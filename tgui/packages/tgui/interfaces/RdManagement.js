@@ -3,8 +3,7 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, BlockQuote, Button, Collapsible, Flex, Icon, Input, LabeledList, Layout, Pane, ProgressBar, Section, Tabs, Tooltip } from '../components';
-import { NtosWindow } from '../layouts';
+import { Box, BlockQuote, Button, Collapsible, Flex, Input, LabeledList, ProgressBar, Section, Tabs, Tooltip, Window } from '../components';
 
 const PAGES = [
   { title: 'Researched' },
@@ -67,14 +66,14 @@ export const selectResearchNodes = (nodes, searchText = '', designs = []) => {
 
 export const RdManagement = (props, context) => {
   return (
-    <NtosWindow
+    <Window
       width={1280}
       height={640}
       resizable>
       <Window.Content>
-        <CargoContent />
+        <RdManagementContent />
       </Window.Content>
-    </NtosWindow>
+    </Window>
   );
 };
 

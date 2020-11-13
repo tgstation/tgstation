@@ -38795,7 +38795,7 @@
 /area/bridge)
 "byo" = (
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -90635,7 +90635,7 @@
 /area/crew_quarters/heads/hor)
 "duM" = (
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{

@@ -25327,7 +25327,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/modular_computer/console/preset/research_director,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bht" = (
@@ -50737,7 +50737,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/machinery/computer/rdconsole{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
