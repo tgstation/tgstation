@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "The shocks from the shock touch mutation now ignore insulated gloves."
+  - bugfix: "The shocks from punching or running into charged energy fields now DON'T ignore insulated gloves."
+  - bugfix: "The shocks from liquid electricity now ignore insulated gloves."
