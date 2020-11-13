@@ -124,9 +124,5 @@
 	reinforced = TRUE
 	plunge_mod = 0.8
 	layer_mode_sprite = "reinforced_plunger_layer"
-<<<<<<< HEAD
-	custom_premium_price = 1200
-=======
 
 	custom_premium_price = PAYCHECK_MEDIUM * 8
->>>>>>> upstream/master
