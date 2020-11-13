@@ -17432,7 +17432,7 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "Ny" = (
-/obj/machinery/modular_computer/console/preset/research,
+/obj/machinery/modular_computer/console/preset/research_director,
 /obj/machinery/light{
 	dir = 1
 	},

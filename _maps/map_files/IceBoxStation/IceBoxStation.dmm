@@ -28841,7 +28841,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bpf" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/console/preset/research{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -56035,7 +56035,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "wmy" = (
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/console/preset/research_director{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

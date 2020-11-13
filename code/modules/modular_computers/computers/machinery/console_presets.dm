@@ -41,9 +41,24 @@
 	hard_drive.store_file(new/datum/computer_file/program/supermatter_monitor())
 
 // ===== RESEARCH CONSOLE =====
-/obj/machinery/modular_computer/console/preset/research
+/obj/machinery/modular_computer/console/preset/research_director
 	console_department = "Research"
 	name = "research director's console"
+	desc = "A stationary computer. This one comes preloaded with research command programs."
+	_has_ai = TRUE
+
+/obj/machinery/modular_computer/console/preset/research_director/install_programs()
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
+	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/aidiag())
+	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
+	hard_drive.store_file(new/datum/computer_file/program/research())
+
+
+/obj/machinery/modular_computer/console/preset/research
+	console_department = "Research"
+	name = "research console"
 	desc = "A stationary computer. This one comes preloaded with research programs."
 	_has_ai = TRUE
 
@@ -51,8 +66,7 @@
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	hard_drive.store_file(new/datum/computer_file/program/aidiag())
-	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
+	hard_drive.store_file(new/datum/computer_file/program/research())
 
 
 // ===== COMMAND CONSOLE =====
