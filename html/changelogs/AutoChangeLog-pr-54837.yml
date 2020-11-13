@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being unable to put scooped up mobs (ian, bees, etc) in storage containers"

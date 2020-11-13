@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "The Medical NanoMed vending machine has been split into two, with the all new NanoDrug vending machine taking most chemical medicines."
+  - balance: "Literally everything purchasable in a vending machine has had it's prices adjusted to better suit players to buy more things, while still enabling them to interact with each other using money."
