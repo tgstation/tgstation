@@ -50,11 +50,9 @@
 	for(var/log_type in log_source)
 		var/nlog_type = text2num(log_type)
 		if(nlog_type & ntype)
-			var/list/reversed = log_source[log_type]
-			if(islist(reversed))
-				reversed = reverseRange(reversed.Copy())
-				for(var/entry in reversed)
-					concatenated_logs += "<font size=2px><b>[entry]</b><br>[reversed[entry]]</font><br>"
+			var/list/all_the_entrys = log_source[log_type]
+			for(var/entry in all_the_entrys)
+				concatenated_logs += "<font size=2px><b>[entry]</b><br>[all_the_entrys[entry]]</font><br>"
 	for(var/string in sortList(concatenated_logs,cmp=/proc/cmp_text_dsc))
 		dat += string
 
