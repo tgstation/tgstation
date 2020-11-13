@@ -106,9 +106,6 @@
 		butcher.visible_message("<span class='notice'>[butcher] butchers [meat].</span>", \
 								"<span class='notice'>You butcher [meat].</span>")
 	ButcherEffects(meat)
-	if(iscarbon(meat))
-		var/mob/living/carbon/carbonized_meat = meat
-		carbonized_meat.remove_all_embedded_objects()
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)
 
