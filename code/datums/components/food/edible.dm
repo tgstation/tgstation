@@ -251,7 +251,7 @@ Behavior that's still missing from this component that original food items had t
 			this_food.reagents.add_reagent(r_id, amount)
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
-/datum/component/edible/proc/IsFoodGone(var/atom/owner, mob/living/feeder)
+/datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
 	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
 		return TRUE
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
