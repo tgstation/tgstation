@@ -1,0 +1,7 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscdel: "Player passive income has been removed."
+  - balance: "Departmental budgets income has been thoroughly reworked, as they no longer need to balance the whole of the crew's income off of them, making them a more reasonable resource pool scaled to the station's size or efforts."
+  - balance: "Departmental income is a static value for every department, getting more funds every 5 minutes (Plus whatever's added from vending machines!)"
+  - balance: "Buying goods through your department's vendors now provides an 80% discount as opposed to being completely free."
