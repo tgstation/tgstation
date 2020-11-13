@@ -23,8 +23,8 @@
 				   /obj/item/clothing/gloves/tackler = 5,
 				   /obj/item/grenade/stingbang = 1)
 	refill_canister = /obj/item/vending_refill/security
-	default_price = 650
-	extra_price = 700
+	default_price = PAYCHECK_MEDIUM
+	extra_price = PAYCHECK_HARD * 1.5
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
