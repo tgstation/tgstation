@@ -708,13 +708,13 @@
 /turf/open/floor/plasteel/white,
 /area/science)
 "aAE" = (
-/obj/structure/cable,
 /obj/machinery/requests_console{
 	department = "AI";
 	departmentType = 5;
 	pixel_x = 28;
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat)
 "aAH" = (
@@ -3328,7 +3328,6 @@
 /area/maintenance/port/aft)
 "cIQ" = (
 /obj/machinery/camera/autoname,
-/obj/structure/cable,
 /obj/machinery/porta_turret/ai,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat)
@@ -5510,7 +5509,6 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "eyJ" = (
@@ -6008,7 +6006,6 @@
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "eTN" = (
@@ -6864,7 +6861,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "fAO" = (
-/obj/structure/cable,
 /obj/structure/railing/corner{
 	dir = 1
 	},
@@ -6903,8 +6899,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "fCu" = (
-/obj/structure/cable,
 /obj/machinery/porta_turret/ai,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "fCL" = (
@@ -8050,8 +8046,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "gII" = (
+/obj/machinery/power/terminal,
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat)
 "gIQ" = (
 /obj/structure/displaycase,
@@ -8717,7 +8714,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "hks" = (
-/obj/structure/cable,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -9370,7 +9366,6 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "hPX" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Core";
 	req_access_txt = "65"
@@ -11294,9 +11289,9 @@
 	name = "AI Core";
 	req_access_txt = "65"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plasteel/rockvault,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "jFK" = (
@@ -11419,8 +11414,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "jJK" = (
-/obj/structure/cable,
 /obj/machinery/ai_slipper,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
 "jJQ" = (
@@ -11792,7 +11787,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "jZc" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Core";
 	req_access_txt = "65"
@@ -12525,7 +12519,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "kCo" = (
-/obj/structure/cable,
+/obj/machinery/camera/autoname,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "kCK" = (
@@ -13591,7 +13585,6 @@
 /area/chapel/main)
 "lAq" = (
 /obj/effect/landmark/start/ai,
-/obj/structure/cable,
 /obj/item/radio/intercom{
 	freerange = 1;
 	frequency = 1447;
@@ -13615,9 +13608,10 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat)
 "lBf" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/ai_monitored/turret_protected/aisat)
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/space/basic,
+/area/space)
 "lBt" = (
 /turf/open/floor/plating,
 /area/library)
@@ -17059,7 +17053,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "oni" = (
-/obj/structure/cable,
 /obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 10
@@ -17099,7 +17092,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "opc" = (
-/obj/structure/cable,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -17305,9 +17297,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "oyX" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
@@ -19163,7 +19152,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "pSG" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/dark,
@@ -19783,7 +19771,6 @@
 /turf/open/floor/plasteel/white,
 /area/science)
 "qrZ" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
 	dir = 4
 	},
@@ -20736,7 +20723,6 @@
 /area/hallway/primary/starboard)
 "rkf" = (
 /obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
 /turf/open/floor/plasteel/airless/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "rkr" = (
@@ -21065,7 +21051,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "rwu" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/airless/dark,
@@ -21668,7 +21653,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "rUn" = (
-/obj/structure/cable,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -24965,10 +24949,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "uGY" = (
+/obj/structure/cable,
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat)
 "uHb" = (
@@ -25150,7 +25134,6 @@
 	name = "AI Core Door";
 	req_access_txt = "16"
 	},
-/obj/structure/cable,
 /obj/machinery/turretid{
 	name = "AI Chamber turret control";
 	pixel_x = -1;
@@ -25320,7 +25303,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "uXk" = (
-/obj/structure/cable,
 /obj/structure/railing/corner{
 	dir = 4
 	},
@@ -26474,7 +26456,6 @@
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "vWD" = (
-/obj/structure/cable,
 /mob/living/simple_animal/bot/secbot/pingsky,
 /obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer2,
@@ -26496,7 +26477,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "vXJ" = (
-/obj/structure/cable,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -63306,8 +63286,8 @@ qoo
 lXF
 lXF
 lXF
-qRC
-qRC
+exN
+exN
 exN
 exN
 exN
@@ -63555,17 +63535,17 @@ lXF
 lXF
 lXF
 lXF
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
+uey
+uey
+uey
+uey
+uey
+uey
+uey
+uey
+uey
 xHQ
-exN
+qRC
 pwc
 uAL
 xTo
@@ -63811,22 +63791,22 @@ lXF
 lXF
 lXF
 lXF
-vdZ
-uey
-uey
-uey
-uey
-uey
-uey
-uey
 uey
 uey
 vdZ
-exN
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+qRC
 dvI
 ntq
 dvI
-exN
+qRC
 quM
 sSi
 exN
@@ -64067,23 +64047,23 @@ lXF
 lXF
 lXF
 lXF
+uey
+uey
 vdZ
-uey
-uey
 oBM
 mOb
-lBf
+bxI
 ann
 bxI
 mOb
 oBM
-uey
-uey
-exN
+vdZ
+vdZ
+qRC
 dKs
 jZO
 dvI
-exN
+qRC
 dvI
 dvI
 qRC
@@ -64323,9 +64303,9 @@ lXF
 lXF
 lXF
 lXF
+uey
+uey
 vdZ
-uey
-uey
 mAB
 nVG
 nVG
@@ -64335,12 +64315,12 @@ nVG
 nVG
 nVG
 dJm
-uey
-exN
+vdZ
+qRC
 qRC
 wbj
 qRC
-exN
+qRC
 dvI
 dvI
 awU
@@ -64581,7 +64561,7 @@ lXF
 lXF
 vdZ
 uey
-uey
+vdZ
 nnC
 nVG
 oBM
@@ -64593,14 +64573,14 @@ nVG
 oBM
 rQz
 oBM
-exN
+qRC
 rkf
 hqb
 dOc
-exN
-kCo
-kCo
-exN
+qRC
+lZp
+lZp
+qRC
 vXJ
 vXJ
 vXJ
@@ -64617,12 +64597,12 @@ bKF
 bKF
 bKF
 bKF
+lBf
+lBf
 bKF
 bKF
-bKF
-bKF
-bKF
-bKF
+lBf
+lBf
 bKF
 exN
 mqG
@@ -64837,7 +64817,7 @@ lXF
 lXF
 wZh
 vdZ
-uey
+gII
 uGY
 oyX
 jJK
@@ -64845,9 +64825,9 @@ fCu
 gUh
 aAE
 lAq
-lBf
+bxI
 cIQ
-gII
+nVG
 oni
 pSG
 hPX
@@ -65095,7 +65075,7 @@ lXF
 lXF
 vdZ
 uey
-uey
+vdZ
 oBM
 nVG
 oBM
@@ -65107,14 +65087,14 @@ nVG
 oBM
 jiB
 oBM
-exN
+qRC
 tob
 hqb
 mDk
-exN
+qRC
 kCo
-kCo
-exN
+lZp
+qRC
 opc
 opc
 opc
@@ -65351,9 +65331,9 @@ lXF
 lXF
 lXF
 lXF
+uey
+uey
 vdZ
-uey
-uey
 mAB
 nVG
 nVG
@@ -65363,12 +65343,12 @@ nVG
 nVG
 nVG
 dJm
-uey
-exN
+vdZ
+qRC
 qRC
 wbj
 qRC
-exN
+qRC
 dvI
 dvI
 awU
@@ -65609,23 +65589,23 @@ lXF
 lXF
 lXF
 lXF
+uey
+uey
 vdZ
-uey
-uey
 oBM
 mOb
-lBf
+bxI
 ctN
 bxI
 mOb
 oBM
-uey
-uey
-exN
+vdZ
+vdZ
+qRC
 pwc
 ejc
 dvI
-exN
+qRC
 dvI
 dvI
 qRC
@@ -65867,22 +65847,22 @@ lXF
 lXF
 lXF
 lXF
-vdZ
-uey
-uey
-uey
-uey
-uey
-uey
-uey
 uey
 uey
 vdZ
-exN
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+vdZ
+qRC
 cTh
 mjB
 dvI
-exN
+qRC
 eYE
 sSi
 exN
@@ -66125,17 +66105,17 @@ lXF
 lXF
 lXF
 lXF
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
-vdZ
+uey
+uey
+uey
+uey
+uey
+uey
+uey
+uey
+uey
 xHQ
-exN
+qRC
 mol
 pJM
 kXj
@@ -66390,8 +66370,8 @@ lil
 lXF
 lXF
 lXF
-qRC
-qRC
+exN
+exN
 exN
 exN
 exN
