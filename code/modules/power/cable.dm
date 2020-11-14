@@ -29,14 +29,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/layer1
 	color = "red"
 	cable_layer = CABLE_LAYER_1
-	machinery_layer = null
-	layer = WIRE_LAYER - 0.01
-	icon_state = "l1-1-2-4-8-node"
+	machinery_layer = MACHINERY_LAYER_1 // <- original null, makes different colored wired not usesless and can connect to machines
+	layer = WIRE_LAYER - 0.01			// possibly can make it so machines can have it's layered adjusted in-game
+	icon_state = "l1-1-2-4-8-node"		// furthermore, the multilayer hub (non z) does not actually connect machines on top of it
 
 /obj/structure/cable/layer3
 	color = "blue"
 	cable_layer = CABLE_LAYER_3
-	machinery_layer = null
+	machinery_layer = MACHINERY_LAYER_1 // refer to above
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l4-1-2-4-8-node"
 
@@ -756,5 +756,3 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
-
-
