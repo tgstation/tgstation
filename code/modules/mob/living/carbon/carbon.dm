@@ -881,6 +881,85 @@
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
+#define CPR_PANIC_SPEED (0.8 SECONDS)
+
+/// Performs CPR on the target after a delay.
+/mob/living/carbon/proc/do_cpr(mob/living/carbon/target, tool_assisted = FALSE)
+	if(target == src)
+		return
+
+	var/panicking = FALSE
+
+	do
+		CHECK_DNA_AND_SPECIES(target)
+
+		if (INTERACTING_WITH(src, target))
+			return FALSE
+
+		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+			to_chat(src, "<span class='warning'>[target.name] is dead!</span>")
+			return FALSE
+
+		if (target.is_mouth_covered())
+			to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
+			return FALSE
+
+		if (!tool_assisted)
+			if (is_mouth_covered())
+				to_chat(src, "<span class='warning'>Remove your mask first!</span>")
+				return FALSE
+
+			if (!getorganslot(ORGAN_SLOT_LUNGS))
+				to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
+				return FALSE
+
+			if (HAS_TRAIT(src, TRAIT_NOBREATH))
+				to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
+				return FALSE
+
+		visible_message("<span class='notice'>[src] is trying to perform CPR on [target.name]!</span>", \
+						"<span class='notice'>You try to perform CPR on [target.name]... Hold still!</span>")
+
+		if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : (3 SECONDS)))
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [target]!</span>")
+			return FALSE
+
+		if (target.health > target.crit_threshold)
+			return FALSE
+
+		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		log_combat(src, target, "CPRed")
+
+		// Spread disease
+		if (!tool_assisted)
+			// In ordinary circumstances this includes nearly assured air, skin, and fluid spread.
+			var/contact_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
+			// Check heads. If either person's head is battered, we will also include blood contact.
+			var/obj/item/bodypart/our_head = get_bodypart(BODY_ZONE_HEAD)
+			var/obj/item/bodypart/their_head = target.get_bodypart(BODY_ZONE_HEAD)
+			if((our_head && our_head.get_damage() >= 10) || (their_head && their_head.get_damage() >= 10))
+				contact_flags |= DISEASE_SPREAD_BLOOD
+			viral_contact(target, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_MOUTH, contact_flags)
+
+		if (HAS_TRAIT(target, TRAIT_NOBREATH))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
+		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
+		else
+			target.adjustOxyLoss(-min(target.getOxyLoss(), tool_assisted ? 7 : 14))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
+
+		if (target.health <= target.crit_threshold)
+			if (!panicking)
+				to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
+			panicking = TRUE
+		else
+			panicking = FALSE
+	while (panicking)
+
+#undef CPR_PANIC_SPEED
+
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))

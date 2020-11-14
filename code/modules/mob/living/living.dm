@@ -82,16 +82,9 @@
 	if(isliving(M))
 		var/mob/living/L = M
 		they_can_move = L.mobility_flags & MOBILITY_MOVE
-		//Also spread diseases
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				L.ContactContractDisease(D)
 
-		for(var/thing in L.diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
+		// Spread diseases
+		viral_contact(L, BODY_ZONE_CHEST, BODY_ZONE_CHEST, DISEASE_SPREAD_CONTACT_SKIN)
 
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && HAS_TRAIT(L, TRAIT_RESTRAINED))
@@ -286,16 +279,12 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
-			//Share diseases that are spread by touch
-			for(var/thing in diseases)
-				var/datum/disease/D = thing
-				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-					L.ContactContractDisease(D)
-
-			for(var/thing in L.diseases)
-				var/datum/disease/D = thing
-				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-					ContactContractDisease(D)
+			// Share diseases that are spread by touch
+			viral_contact(L,
+				BODY_ZONE_R_ARM,
+				ran_zone(zone_selected),
+				DISEASE_SPREAD_CONTACT_SKIN
+			)
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L

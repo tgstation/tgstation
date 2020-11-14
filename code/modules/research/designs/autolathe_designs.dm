@@ -504,6 +504,15 @@
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/bag_valve_mask
+	name = "Bag Valve Mask"
+	id = "bag_valve_mask"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 5000)
+	build_path = /obj/item/bag_valve_mask
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"

@@ -135,3 +135,19 @@
 
 /mob/living/proc/reset_shocked()
 	flags_1 &= ~ SHOCKED_1
+
+// Both the mob and the target will exchange viral payloads.
+/mob/living/proc/viral_contact(mob/living/them, our_contact_zone = BODY_ZONE_CHEST, their_contact_zone = BODY_ZONE_CHEST, contact_flags = DISEASE_SPREAD_CONTACT_SKIN)
+	// Our diseases first
+	if(iscarbon(src))
+		for(var/thing in diseases)
+			var/datum/disease/D = thing
+			if(D.spread_flags & contact_flags)
+				them.ContactContractDisease(D, their_contact_zone)
+
+	// Then their disease
+	if(iscarbon(them))
+		for(var/thing in them.diseases)
+			var/datum/disease/D = thing
+			if(D.spread_flags & contact_flags)
+				ContactContractDisease(D, our_contact_zone)
