@@ -34,7 +34,7 @@
 
 /datum/action/innate/heretic_shatter
 	name = "Shattering Offer"
-	desc = "By breaking your blade you are noticed by the Rusted Hills and are granted salvation from a dire sitatuion. (Teleports you to a random safe turf on your current z level, but destroys your blade.)"
+	desc = "By breaking your blade, you will be granted salvation from a dire situation. (Teleports you to a random safe turf on your current z level, but destroys your blade.)"
 	background_icon_state = "bg_ecult"
 	button_icon_state = "shatter"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -57,7 +57,7 @@
 /datum/action/innate/heretic_shatter/Activate()
 	var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
 	do_teleport(holder,safe_turf,forceMove = TRUE)
-	to_chat(holder,"<span class='warning'> You feel a gust of energy flow through your body... the Rusted Hills heard your call...")
+	to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
 	qdel(sword)
 
 
