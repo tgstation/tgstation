@@ -17,9 +17,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   window.__windowId__ = null;
 }
 
-// BYOND API object
-window.Byond = (function () {
-  var Byond = {};
+(function () {
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
   var assign = function (target) {
@@ -33,6 +31,11 @@ window.Byond = (function () {
     }
     return target;
   };
+
+  // BYOND API object
+  // ------------------------------------------------------
+
+  var Byond = window.Byond = {};
   // Trident engine version
   var tridentVersion = (function () {
     var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
@@ -170,7 +173,135 @@ window.Byond = (function () {
     }
   };
 
-  return Byond;
+
+  // Asset loaders
+  // ------------------------------------------------------
+
+  var RETRY_ATTEMPTS = 5;
+  var RETRY_INTERVAL = 2000;
+
+  var loadedCssByUrl = {};
+  var loadedJsByUrl = {};
+
+  var isStyleSheetLoaded = function (node, url) {
+    // Method #1 (works on IE10+)
+    var styleSheet = node.sheet;
+    if (styleSheet) {
+      return styleSheet.rules.length > 0;
+    }
+    // Method #2
+    var styleSheets = document.styleSheets;
+    var len = styleSheets.length;
+    for (var i = 0; i < len; i++) {
+      var styleSheet = styleSheets[i];
+      if (styleSheet.href.indexOf(url) !== -1) {
+        return styleSheet.rules.length > 0;
+      }
+    }
+    // All methods failed
+    return false;
+  };
+
+  var onDocumentBodyReady = function (done) {
+    if (document.body) {
+      return done();
+    }
+    setTimeout(function () {
+      onDocumentBodyReady(done);
+    });
+  };
+
+  var getRefNode = function () {
+    var refs = (document.body || document.getElementsByTagName('head')[0])
+      .childNodes;
+    return refs[refs.length - 1];
+  };
+
+  // Based on fg-loadcss package
+  // See: https://github.com/filamentgroup/loadCSS
+  Byond.loadCss = function (url, sync, attempt) {
+    if (loadedCssByUrl[url]) {
+      return;
+    }
+    if (!attempt) {
+      attempt = 1;
+    }
+    loadedCssByUrl[url] = true;
+    // Inject the stylesheet
+    var ref = getRefNode();
+    /** @type {HTMLLinkElement} */
+    var node = document.createElement('link');
+    node.type = 'text/css';
+    node.rel = 'stylesheet';
+    node.href = url;
+    // Temporarily set media to something inapplicable
+    // to ensure it'll fetch without blocking render
+    if (!sync) {
+      node.media = 'only x';
+    }
+    onDocumentBodyReady(function () {
+      ref.parentNode.insertBefore(node, ref.nextSibling);
+    });
+    // Listen for the load event
+    node.onload = function () {
+      node.onload = null;
+      if (isStyleSheetLoaded(node, url)) {
+        // Render the stylesheet
+        node.media = 'all';
+        return;
+      }
+      // Try again
+      node.parentNode.removeChild(node);
+      node = null;
+      loadedCssByUrl[url] = null;
+      if (attempt >= RETRY_ATTEMPTS) {
+        throw new Error("Error: Failed to load the stylesheet "
+          + "'" + url + "' after " + RETRY_ATTEMPTS + " attempts.\n"
+          + "It was either not found, or you're trying to load "
+          + "an empty stylesheet that has no CSS rules in it.");
+      }
+      setTimeout(function () {
+        Byond.loadCss(url, sync, attempt + 1);
+      }, RETRY_INTERVAL);
+    };
+  };
+
+  Byond.loadJs = function (url, sync, attempt) {
+    if (loadedJsByUrl[url]) {
+      return;
+    }
+    if (!attempt) {
+      attempt = 1;
+    }
+    loadedJsByUrl[url] = true;
+    // Inject the stylesheet
+    var ref = getRefNode();
+    var node = document.createElement('script');
+    node.type = 'text/javascript';
+    if (sync) {
+      node.defer = true;
+    }
+    else {
+      node.async = true;
+    }
+    node.src = url;
+    onDocumentBodyReady(function () {
+      ref.parentNode.insertBefore(node, ref.nextSibling);
+    });
+    node.onerror = function () {
+      node.onerror = null;
+      node.parentNode.removeChild(node);
+      node = null;
+      loadedJsByUrl[url] = null;
+      if (attempt >= RETRY_ATTEMPTS) {
+        throw new Error("Error: Failed to load the script "
+          + "'" + url + "' after " + RETRY_ATTEMPTS + " attempts.");
+      }
+      setTimeout(function () {
+        Byond.loadJs(url, sync, attempt + 1);
+      }, RETRY_INTERVAL);
+    };
+  };
 })();
 
 // Global error handling
@@ -190,7 +321,7 @@ window.onerror = function (msg, url, line, col, error) {
   var errorRoot = document.getElementById('FatalError');
   var errorStack = document.getElementById('FatalError__stack');
   if (errorRoot) {
-    errorRoot.className = 'FatalError';
+    errorRoot.className = 'FatalError FatalError--visible';
     if (errorStack.textContent) {
       errorStack.textContent += '\n\n' + stack;
     }
@@ -263,14 +394,96 @@ if (!Function.prototype.bind) (function () {
 })();
 </script>
 
-<!-- Styles -->
-<!-- tgui:styles -->
+<style>
+.FatalError {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px;
+  font-size: 12px;
+  font-family: Consolas, monospace;
+  color: #ffffff;
+  background-color: #0000dd;
+  z-index: 1000;
+  overflow: hidden;
+  text-align: center;
+}
 
-<!-- Scripts -->
-<!-- tgui:scripts -->
+.FatalError--visible {
+  display: block !important;
+}
 
+.FatalError__logo {
+  display: inline-block;
+  text-align: left;
+  font-size: 10px;
+  line-height: 12px;
+  position: relative;
+  margin: 16px;
+  top: 0;
+  left: 0;
+  animation:
+    FatalError__rainbow 2s linear infinite alternate,
+    FatalError__shadow 4s linear infinite alternate,
+    FatalError__tfmX 3s infinite alternate,
+    FatalError__tfmY 4s infinite alternate;
+  white-space: pre;
+}
+
+.FatalError__header {
+  margin-top: 12px;
+}
+
+.FatalError__stack {
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.FatalError__footer {
+  margin-bottom: 24px;
+}
+
+@keyframes FatalError__rainbow {
+  0% { color: #ff0; }
+  50% { color: #0ff; }
+  100% { color: #f0f; }
+}
+
+@keyframes FatalError__shadow {
+  0% {
+    left: -2px;
+    text-shadow: 4px 0 #f0f;
+  }
+  50% {
+    left: 0px;
+    text-shadow: 0px 0 #0ff;
+  }
+  100% {
+    left: 2px;
+    text-shadow: -4px 0 #ff0;
+  }
+}
+
+@keyframes FatalError__tfmX {
+  0% { left: 15px; }
+  100% { left: -15px; }
+}
+
+@keyframes FatalError__tfmY {
+  100% { top: -15px; }
+}
+</style>
 </head>
 <body>
+
+<!-- Inline assets -->
+<!-- tgui:assets -->
 
 <!-- Inline HTML -->
 <!-- tgui:html -->
@@ -279,36 +492,22 @@ if (!Function.prototype.bind) (function () {
 <div id="react-root"></div>
 
 <!-- Fatal error container -->
-<div id="FatalError" style="display: none">
+<div id="FatalError" class="FatalError">
 <div class="FatalError__logo">
-          _____            _____                  _______                  _____
-         /\    \          /\    \                /::\    \                /\    \
-        /::\____\        /::\    \              /::::\    \              /::\    \
-       /::::|   |        \:::\    \            /::::::\    \            /::::\    \
-      /:::::|   |         \:::\    \          /::::::::\    \          /::::::\    \
-     /::::::|   |          \:::\    \        /:::/~~\:::\    \        /:::/\:::\    \
-    /:::/|::|   |           \:::\    \      /:::/    \:::\    \      /:::/__\:::\    \
-   /:::/ |::|   |           /::::\    \    /:::/    / \:::\    \     \:::\   \:::\    \
-  /:::/  |::|   | _____    /::::::\    \  /:::/____/   \:::\____\  ___\:::\   \:::\    \
- /:::/   |::|   |/\    \  /:::/\:::\    \|:::|    |     |:::|    |/\   \:::\   \:::\    \
-/:: /    |::|   /::\____\/:::/  \:::\____\:::|____|     |:::|    /::\   \:::\   \:::\____\
-\::/    /|::|  /:::/    /:::/    \::/    /\:::\    \   /:::/    /\:::\   \:::\   \::/    /
- \/____/ |::| /:::/    /:::/    / \/____/  \:::\    \ /:::/    /  \:::\   \:::\   \/____/
-         |::|/:::/    /:::/    /            \:::\    /:::/    /    \:::\   \:::\    \
-         |::::::/    /:::/    /              \:::\__/:::/    /      \:::\   \:::\____\
-         |:::::/    /\::/    /                \::::::::/    /        \:::\  /:::/    /
-         |::::/    /  \/____/                  \::::::/    /          \:::\/:::/    /
-         /:::/    /                             \::::/    /            \::::::/    /
-        /:::/    /                               \::/____/              \::::/    /
-        \::/    /                                                        \::/    /
-         \/____/                                                          \/____/
+ooooo      ooo     .     .oooooo.    .oooooo..o
+`888b.     `8'   .o8    d8P'  `Y8b  d8P'    `Y8
+ 8 `88b.    8  .o888oo 888      888 Y88bo.
+ 8   `88b.  8    888   888      888  `"Y8888o.
+ 8     `88b.8    888   888      888      `"Y88b
+ 8       `888    888 . `88b    d88' oo     .d8P
+o8o        `8    "888"  `Y8bood8P'  8""88888P'
 </div>
 <marquee class="FatalError__header">
 A fatal exception has occurred at 002B:C562F1B7 in TGUI.
 The current application will be terminated.
-Please remain calm. Get to the nearest NTNet workstation
-and send the copy of the following stack trace to:
-www.github.com/tgstation/tgstation. Thank you for your cooperation.
+Send the copy of the following stack trace to an authorized
+Nanotrasen incident handler at https://github.com/tgstation/tgstation.
+Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>
 <div class="FatalError__footer">
