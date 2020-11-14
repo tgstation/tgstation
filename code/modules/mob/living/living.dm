@@ -926,7 +926,7 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /obj/screen/alert/weightless)
+	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/weightless)
 	if(has_gravity)
 		if(has_gravity == 1)
 			clear_alert("gravity")
@@ -960,7 +960,7 @@
 		if(animate)
 			animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
 		else
-			pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle)
+			pixel_y = base_pixel_y + body_position_pixel_y_offset
 		floating_anim_status = NO_FLOATING_ANIM //to stop the parent call from affecting pixel_y
 	..()
 
