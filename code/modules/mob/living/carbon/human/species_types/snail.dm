@@ -55,6 +55,11 @@
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/storage/backpack/snail/dropped(mob/user, silent)
+	. = ..()
+	emptyStorage()
+	qdel(src)
+
 /obj/item/storage/backpack/snail/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")
