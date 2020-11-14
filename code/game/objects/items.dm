@@ -110,7 +110,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/body_parts_covered = 0
 	///Literally does nothing right now
 	var/gas_transfer_coefficient = 1
-	/// How likely a disease or chemical is to get through a piece of clothing
+	/// How likely a disease is to get through a piece of clothing
 	var/permeability_coefficient = 1
 	/// for electrical admittance/conductance (electrocution checks and shit)
 	var/siemens_coefficient = 1
