@@ -442,3 +442,33 @@
 	attack_verb_simple = list("pumps", "siphons")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+
+/obj/item/bag_valve_mask
+	name = "bag valve mask"
+	desc = "When you want someone to breathe less than you want to kiss them."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bag valve mask"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=2500)
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb_continuous = list("pumps", "bags")
+	attack_verb_simple = list("pumps", "bags")
+	tool_behaviour = TOOL_AIRBAG
+	toolspeed = 1
+
+/obj/item/bag_valve_mask/attack(mob/living/M, mob/user)
+	if(!iscarbon(M) || !iscarbon(user) || user.a_intent != INTENT_HELP)
+		return ..()
+
+	var/mob/living/carbon/CM = M
+	var/mob/living/carbon/CU = user
+
+	if(!check_zone(CU.zone_selected) == BODY_ZONE_HEAD)
+		return ..()
+
+	if(CM.body_position != LYING_DOWN  || (CM.health >= 0 && !HAS_TRAIT(CM, TRAIT_FAKEDEATH)))
+		return ..()
+
+	CU.do_cpr(CM, TRUE)

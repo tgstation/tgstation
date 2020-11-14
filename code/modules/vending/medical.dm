@@ -10,6 +10,7 @@
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
 					/obj/item/wrench/medical = 1,
+					/obj/item/bag_valve_mask = 2,
 					/obj/item/stack/sticky_tape/surgical = 3,
 					/obj/item/healthanalyzer/wound = 4,
 					/obj/item/stack/medical/ointment = 2,

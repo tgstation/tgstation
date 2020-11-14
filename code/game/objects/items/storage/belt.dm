@@ -171,6 +171,7 @@
 		/obj/item/cautery,
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
+		/obj/item/bag_valve_mask,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
