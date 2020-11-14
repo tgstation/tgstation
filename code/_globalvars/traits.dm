@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_MOVE_VENTCRAWLING" = TRAIT_MOVE_VENTCRAWLING,
 		"TRAIT_MOVE_FLOATING" = TRAIT_MOVE_FLOATING,
 		"TRAIT_MOVE_UNSTOPPABLE" = TRAIT_MOVE_UNSTOPPABLE
-		),
+		)
 	))
 
 /// value -> trait name, generated on use from trait_by_type global

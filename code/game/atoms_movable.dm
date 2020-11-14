@@ -41,14 +41,16 @@
 	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
 	  */
 	var/movement_type = GROUND
-	/// Because adding the signals to every movable on init would be a memory hog. See __DEFINES/traits.dm
+	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
 	var/has_movement_type_signals = FALSE
-	/// Whether the movable is floating, not floating or needs an update.
+	/// Whether the movable is floating, not floating or is queued for update.
 	var/floating_anim_status = NO_FLOATING_ANIM
 	/**
-	  * Stores the timer id for the floating anim update event.
-	  * Used to avoid the timed event from being overridden by timer events that would run sooner.
+	  * Stores the timer id for the floating anim update.
+	  * Used to avoid the timed event from being overridden by others that would run sooner.
 	  */
+	var/floating_halt_timerid
+	/// Stores the timer id for the next half of the floating anim loop
 	var/floating_anim_timerid
 
 	var/atom/movable/pulling
@@ -97,8 +99,6 @@
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
-	if(floating_anim_timerid)
-		deltimer(floating_anim_timerid)
 
 	unbuckle_all_mobs(force = TRUE)
 
@@ -230,11 +230,10 @@
 			if(var_value != floating_anim_status)
 				switch(var_value)
 					if(HAS_FLOATING_ANIM)
+						floating_anim_status = HAS_FLOATING_ANIM
 						do_floating_anim()
-					if(UPDATE_FLOATING_ANIM)
-						halt_floating_anim()
 					else
-						halt_floating_anim(FALSE)
+						halt_floating_anim(var_value)
 			. = TRUE
 
 	if(!isnull(.))
@@ -634,7 +633,7 @@
 	if(!(initial(movement_type) & flag))
 		movement_type &= ~(GLOB.movement_type_trait_to_flag[trait])
 		if(trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING && !(movement_type & (FLOATING|FLYING)))
-			halt_floating_anim(FALSE)
+			halt_floating_anim(NO_FLOATING_ANIM)
 
 /**
   * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -774,7 +773,7 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	halt_floating_anim(FALSE)
+	halt_floating_anim(NO_FLOATING_ANIM, animate = !spin)
 	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
@@ -938,42 +937,40 @@
 	acted_explosions += ex_id
 	return TRUE
 
-///The bouncing anim that stops once 'floating_anim_status' is reset.
+///The bouncing animation loop that stops once halt_floating_anim is called.
 /atom/movable/proc/do_floating_anim(shift = 2)
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		animate(src, pixel_y = pixel_y + shift, time = 1 SECONDS)
-		addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1 SECONDS)
+		floating_anim_timerid = addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
-///Checks if the conditions for the floating animation are met, also possibly (re)starting it if the do_anim arg is TRUE.
-/atom/movable/proc/floating_anim_check(do_anim = TRUE, timed = FALSE)
+///Restarts the floating animation are met.
+/atom/movable/proc/floating_anim_check(timed = FALSE)
 	if(timed)
-		floating_anim_timerid = null
-	. = (!throwing && movement_type & (FLOATING|FLYING))
-	if(!do_anim || floating_anim_status == HAS_FLOATING_ANIM || floating_anim_timerid)
+		floating_halt_timerid = null
+	if(floating_anim_status == HAS_FLOATING_ANIM || floating_anim_status == NEVER_FLOATING_ANIM || floating_halt_timerid)
 		return
-	if(!.)
+	if(throwing || !(movement_type & (FLOATING|FLYING)))
 		floating_anim_status = NO_FLOATING_ANIM
 	else
 		floating_anim_status = HAS_FLOATING_ANIM
 		do_floating_anim()
 
 /// Stops the floating anim. If the update arg is TRUE, a callback will be a invoked after a time set by the timer arg.
-/atom/movable/proc/halt_floating_anim(update = TRUE, timer = 1.1 SECONDS, animate = TRUE)
+/atom/movable/proc/halt_floating_anim(new_status = UPDATE_FLOATING_ANIM, timer = 1 SECONDS, animate = TRUE)
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		if(animate)
 			animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
 		else
 			pixel_y = base_pixel_y
-	if(update)
-		floating_anim_status = UPDATE_FLOATING_ANIM
-		timer = max(1.1 SECONDS, timer) //can't be lower than the wait between do_floating_anim calls or issues arise.
-		if(!floating_anim_timerid || timeleft(floating_anim_timerid) < timer)
-			floating_anim_timerid = addtimer(CALLBACK(src, .proc/floating_anim_check, TRUE, TRUE), timer, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_NO_HASH_WAIT)
-	else
-		floating_anim_status = NO_FLOATING_ANIM
-		if(floating_anim_status)
-			deltimer(floating_anim_status)
-			floating_anim_status = null
+	if(new_status == UPDATE_FLOATING_ANIM)
+		if(!floating_halt_timerid || timeleft(floating_halt_timerid) < timer)
+			floating_halt_timerid = addtimer(CALLBACK(src, .proc/floating_anim_check, TRUE), timer, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_NO_HASH_WAIT)
+	else if(floating_anim_timerid)
+		deltimer(floating_anim_timerid)
+		floating_anim_timerid = null
+
+	if(floating_anim_status != NEVER_FLOATING_ANIM)
+		floating_anim_status = new_status
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.

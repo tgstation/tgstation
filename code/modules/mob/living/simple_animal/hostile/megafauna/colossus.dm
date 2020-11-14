@@ -45,6 +45,7 @@ Difficulty: Very Hard
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
+	floating_anim_status = NEVER_FLOATING_ANIM //we don't want this guy to float, messes up his animations
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
 	achievement_type = /datum/award/achievement/boss/colossus_kill
@@ -252,15 +253,6 @@ Difficulty: Very Hard
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
 	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/colossus/do_floating_anim() //we don't want this guy to float, messes up his animations
-	return
-
-/mob/living/simple_animal/hostile/megafauna/colossus/floating_anim_check(do_anim = TRUE, timed = FALSE)
-	return FALSE
-
-/mob/living/simple_animal/hostile/megafauna/colossus/halt_floating_anim(update = TRUE, timer = 1.1 SECONDS)
-	return
 
 /obj/projectile/colossus
 	name ="death bolt"

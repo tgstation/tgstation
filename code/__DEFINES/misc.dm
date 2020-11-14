@@ -528,7 +528,12 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_HELD_ITEM (1<<3)
 #define IGNORE_INCAPACITATED (1<<4)
 
-/// Floating status defines for the floating in space looping animation.
+// Floating status defines. Used for the floating animation loop code.
+///The mob will never ever bob up and down when floating. (eg. Colossus, winged flying humanoids)
+#define NEVER_FLOATING_ANIM			-1
+///Isn't currently bobbing.
 #define NO_FLOATING_ANIM			0
+///Is currently bobbing.
 #define HAS_FLOATING_ANIM			1
+///The bobbing animation has been halted and will be updated by a timed callback.
 #define UPDATE_FLOATING_ANIM		2

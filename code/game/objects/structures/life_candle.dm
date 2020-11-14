@@ -35,12 +35,12 @@
 		user.visible_message("<span class='notice'>[user] reaches out and pinches the flame of [src].</span>", "<span class='warning'>You sever the connection between yourself and [src].</span>")
 		linked_minds -= user.mind
 		if(old_len)
-			REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, LIFECANDLE_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 	else
 		user.visible_message("<span class='notice'>[user] touches [src]. It seems to respond to [user.p_their()] presence!</span>", "<span class='warning'>You create a connection between you and [src].</span>")
 		linked_minds |= user.mind
 		if(!old_len)
-			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLYING, LIFECANDLE_TRAIT)
+			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 
 	update_icon()
 	if(linked_minds.len)

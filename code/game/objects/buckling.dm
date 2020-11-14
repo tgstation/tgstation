@@ -101,7 +101,7 @@
 		M.forceMove(loc)
 
 	if(anchored)
-		M.halt_floating_anim(FALSE)
+		M.halt_floating_anim(NO_FLOATING_ANIM)
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M

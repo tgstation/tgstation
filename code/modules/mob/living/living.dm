@@ -9,7 +9,7 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	if(movement_type & (FLYING|FLOATING))
+	if(movement_type & (FLYING|FLOATING) && floating_anim_status != NEVER_FLOATING_ANIM)
 		floating_anim_check()
 
 /mob/living/prepare_huds()
@@ -940,19 +940,20 @@
 		if(!was_weightless)
 			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 
-/mob/living/floating_anim_check(do_anim = TRUE, timed = FALSE)
+/mob/living/floating_anim_check(timed = FALSE)
 	if(timed)
-		floating_anim_timerid = null
-	. = (!throwing && movement_type & (FLOATING|FLYING) && !(buckled?.anchored))
-	if(!do_anim || floating_anim_status == HAS_FLOATING_ANIM || floating_anim_timerid)
+		floating_halt_timerid = null
+	if(floating_anim_status == HAS_FLOATING_ANIM || floating_anim_status == NEVER_FLOATING_ANIM || floating_halt_timerid)
 		return
-	if(!.)
+	if(throwing || !(movement_type & (FLOATING|FLYING)) || buckled?.anchored)
 		floating_anim_status = NO_FLOATING_ANIM
 	else
 		floating_anim_status = HAS_FLOATING_ANIM
 		do_floating_anim()
 
-/mob/living/halt_floating_anim(update = TRUE, timer = 1.1 SECONDS, animate = TRUE)
+/mob/living/halt_floating_anim(new_status = UPDATE_FLOATING_ANIM, timer = 1 SECONDS, animate = TRUE)
+	if(floating_anim_status == NEVER_FLOATING_ANIM)
+		return
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		if(animate)
 			animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
