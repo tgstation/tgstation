@@ -1,0 +1,4 @@
+author: "UnderARock"
+delete-after: True
+changes: 
+  - bugfix: "Hardcore random characters will now receive points for surviving."
