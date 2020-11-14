@@ -183,25 +183,26 @@
 		return ..()
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
-	for(chosen_sacrifice in religious_tool.buckled_mobs) //checks one last time if the right corpse is still buckled
-		if(!chosen_sacrifice.on_fire)
-			to_chat(user, "<span class='warning'>The sacrifice is no longer on fire, it needs to burn until the end of the rite!</span>")
-			. = FALSE
-		else if(chosen_sacrifice.stat != DEAD)
-			to_chat(user, "<span class='warning'>The sacrifice has to stay dead for the rite to work!</span>")
-			. = FALSE
-		else
-			var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
-			GLOB.religious_sect?.adjust_favor(favor_gained, user)
-			to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
-			chosen_sacrifice.dust(force = TRUE)
-			playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
-			. = TRUE
+	if(!(chosen_sacrifice in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
+		to_chat(user, "<span class='warning'>The right sacrifice is no longer on the altar!</span>")
 		chosen_sacrifice = null
-		return
-	to_chat(user, "<span class='warning'>The sacrifice has been moved before you could finish the rite!</span>")
+		return FALSE
+	if(!chosen_sacrifice.on_fire)
+		to_chat(user, "<span class='warning'>The sacrifice is no longer on fire, it needs to burn until the end of the rite!</span>")
+		chosen_sacrifice = null
+		return FALSE
+	if(chosen_sacrifice.stat != DEAD)
+		to_chat(user, "<span class='warning'>The sacrifice has to stay dead for the rite to work!</span>")
+		chosen_sacrifice = null
+		return FALSE
+	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
+	GLOB.religious_sect?.adjust_favor(favor_gained, user)
+	to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
+	chosen_sacrifice.dust(force = TRUE)
+	playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
 	chosen_sacrifice = null
-	return FALSE
+	return TRUE
+
 
 
 /datum/religion_rites/infinite_candle
