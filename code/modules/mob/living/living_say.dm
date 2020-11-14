@@ -383,6 +383,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
+	if(stat >= SOFT_CRIT)
+		return NO_RADIO
 	var/obj/item/implant/radio/imp = locate() in src
 	if(imp?.radio.on)
 		if(message_mods[MODE_HEADSET])
