@@ -57,9 +57,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
 
-/proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
-	return B.priority - A.priority
-
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
 	return initial(A.cost) - initial(B.cost)
 
@@ -141,7 +138,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
   * This prevents any reagent_containers from being consumed before the reagents they contain, which can
   * lead to runtimes and item duplication when it happens.
   */
-/proc/cmp_crafting_req_priority(var/A, var/B)
+/proc/cmp_crafting_req_priority(A, B)
 	var/lhs
 	var/rhs
 

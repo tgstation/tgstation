@@ -77,45 +77,12 @@
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
-//Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
-	//Check hands
-	var/obj/item/card/id/id_card
-	var/obj/item/held_item
-	held_item = get_active_held_item()
-	if(held_item) //Check active hand
-		id_card = held_item.GetID()
-	if(!id_card) //If there is no id, check the other hand
-		held_item = get_inactive_held_item()
-		if(held_item)
-			id_card = held_item.GetID()
-
-	if(id_card)
-		if(hand_first)
-			return id_card
-		else
-			. = id_card
-
-	//Check inventory slots
-	if(wear_id)
-		id_card = wear_id.GetID()
-		if(id_card)
-			return id_card
-	else if(belt)
-		id_card = belt.GetID()
-		if(id_card)
-			return id_card
-
-/mob/living/carbon/human/get_id_in_hand()
-	var/obj/item/held_item = get_active_held_item()
-	if(!held_item)
+	. = ..()
+	if(. && hand_first)
 		return
-	return held_item.GetID()
-
-/mob/living/carbon/human/IsAdvancedToolUser()
-	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
-		return FALSE
-	return TRUE//Humans can use guns and such
+	//Check inventory slots
+	return (wear_id?.GetID() || belt?.GetID())
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)
@@ -141,17 +108,6 @@
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
 		return FALSE
-
-/mob/living/carbon/human/proc/get_bank_account()
-	RETURN_TYPE(/datum/bank_account)
-	var/datum/bank_account/account
-	var/obj/item/card/id/I = get_idcard()
-
-	if(I?.registered_account)
-		account = I.registered_account
-		return account
-
-	return FALSE
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()

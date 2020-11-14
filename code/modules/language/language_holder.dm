@@ -298,6 +298,11 @@ Key procs
 	spoken_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
 	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
+/datum/language_holder/spider
+	understood_languages = list(/datum/language/buzzwords = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/buzzwords = list(LANGUAGE_ATOM))
+	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+
 /datum/language_holder/synthetic
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/uncommon = list(LANGUAGE_ATOM),

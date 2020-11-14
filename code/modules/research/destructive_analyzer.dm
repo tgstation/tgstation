@@ -63,8 +63,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
-	for(var/mob/M in thing)
-		M.death()
+	for(var/mob/living/victim in thing)
+		victim.death()
 
 	qdel(thing)
 	loaded_item = null
