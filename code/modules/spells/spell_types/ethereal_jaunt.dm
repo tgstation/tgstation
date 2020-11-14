@@ -75,10 +75,10 @@
 
 /obj/effect/dummy/phased_mob/spell_jaunt/phased_check(mob/living/user, direction)
 	if(reappearing)
-		return FALSE
+		return
 	. = ..()
 	if(!.)
 		return
 	if (locate(/obj/effect/blessing, .))
 		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
-		return FALSE
+		return null

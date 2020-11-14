@@ -28,20 +28,21 @@
 	setDir(direction)
 	forceMove(newloc)
 
+/// Checks if the conditions are valid to be able to phase. Returns a turf destination if positive.
 /obj/effect/dummy/phased_mob/proc/phased_check(mob/living/user, direction)
 	RETURN_TYPE(/turf)
 	if (movedelay > world.time || !direction)
-		return FALSE
+		return
 	var/turf/newloc = get_step(src,direction)
 	if(!newloc)
-		return FALSE
+		return
 	movedelay = world.time + movespeed
 	if(newloc.flags_1 & NOJAUNT_1)
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
-		return FALSE
+		return
 	return newloc
 
-//used for bloodcrawl.
+/// React to signals by deleting the effect. Used for bloodcrawl.
 /obj/effect/dummy/phased_mob/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
 	SIGNAL_HANDLER
 	qdel(src)
