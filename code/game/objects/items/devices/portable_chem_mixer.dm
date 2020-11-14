@@ -7,8 +7,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	custom_price = 2000
-	custom_premium_price = 2000
+	custom_price = PAYCHECK_MEDIUM * 10
+	custom_premium_price = PAYCHECK_MEDIUM * 14
 
 	var/obj/item/reagent_containers/beaker = null	///Creating an empty slot for a beaker that can be added to dispense into
 	var/amount = 30	///The amount of reagent that is to be dispensed currently
@@ -133,8 +133,8 @@
 	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/storage/portable_chem_mixer/ui_interact(mob/user, datum/tgui/ui)

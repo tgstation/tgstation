@@ -73,7 +73,7 @@
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = MATERIAL_NO_EFFECTS
-	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
 	scan_state = "rock_Uranium"
@@ -85,7 +85,7 @@
 	inhand_icon_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 	mine_experience = 1
 	scan_state = "rock_Iron"
@@ -97,7 +97,7 @@
 	inhand_icon_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
-	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
 	scan_state = "rock_Plasma"
@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
-	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 	scan_state = "rock_Silver"
 	spreadChance = 5
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
-	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 	scan_state = "rock_Gold"
 	spreadChance = 5
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
-	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
 	scan_state = "rock_Diamond"
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
-	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 	scan_state = "rock_Bananium"
@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
-	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
 	scan_state = "rock_Titanium"
@@ -318,8 +318,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/Initialize()
 	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
@@ -353,8 +353,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
+	pixel_x = base_pixel_x + rand(0, 16) - 8
+	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
 	. = ..()

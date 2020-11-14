@@ -244,21 +244,13 @@
 	opened = 1
 	},
 /obj/item/paper/crumpled/ruins/bigderelict1/manifest,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aV" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aW" = (
@@ -295,11 +287,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "be" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bf" = (
@@ -307,11 +295,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bg" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
@@ -321,20 +305,12 @@
 	name = "shuttle cargo doors";
 	pixel_x = 24
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bi" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bj" = (
@@ -347,19 +323,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bl" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bm" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 9;
 	icon_state = "trails_1";
@@ -368,11 +336,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bn" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
 	icon_state = "trails_1";
@@ -381,11 +345,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bo" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
@@ -398,11 +358,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bp" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 5;
 	icon_state = "trails_1";
@@ -445,11 +401,7 @@
 "bv" = (
 /obj/item/chair,
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bw" = (
@@ -458,19 +410,11 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bx" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "by" = (
@@ -505,11 +449,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 "bA" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -555,19 +495,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bF" = (
-/obj/structure/alien/resin/wall{
-	color = "#8EC127";
-	desc = "Thick material shaped into a wall. Eugh.";
-	name = "gelatinous wall"
-	},
+/obj/structure/alien/resin/wall/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bG" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
@@ -620,29 +552,17 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bO" = (
 /obj/item/shard,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bP" = (
 /obj/effect/gibspawner/human,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "bQ" = (
@@ -664,11 +584,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bR" = (
 /obj/item/shard,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -683,11 +599,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bS" = (
 /obj/item/chair,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -707,11 +619,7 @@
 	name = "security checkpoint control";
 	pixel_y = -24
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -752,11 +660,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bX" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
 	icon_state = "trails_1";
@@ -792,24 +696,15 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "cd" = (
 /obj/structure/grille/broken,
-/obj/item/shard,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
-/turf/open/floor/plating,
+/obj/structure/alien/weeds/creature,
+/turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "ce" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -835,11 +730,7 @@
 /obj/item/stack/cable_coil{
 	amount = 2
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/table_frame,
 /obj/item/stack/sheet/metal,
 /obj/item/stack/sheet/plasteel,
@@ -862,11 +753,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "ci" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -884,11 +771,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
@@ -898,11 +781,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cm" = (
-/obj/structure/alien/resin/wall{
-	color = "#8EC127";
-	desc = "Thick material shaped into a wall. Eugh.";
-	name = "gelatinous wall"
-	},
+/obj/structure/alien/resin/wall/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "cn" = (
@@ -935,19 +814,11 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cv" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cy" = (
@@ -961,20 +832,12 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cA" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cC" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
@@ -985,11 +848,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cD" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 10;
 	icon_state = "trails_1";
@@ -1005,11 +864,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cE" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
 	icon_state = "trails_1";
@@ -1018,11 +873,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "cF" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 5;
 	icon_state = "trails_1";
@@ -1050,11 +901,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cJ" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/item/mop,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1065,11 +912,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1079,20 +922,12 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cM" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1113,19 +948,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cR" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "cS" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
 	icon_state = "trails_1";
@@ -1142,6 +969,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cU" = (
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1159,28 +987,16 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cY" = (
 /obj/structure/grille/broken,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "cZ" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 1;
@@ -1190,12 +1006,10 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "da" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1205,19 +1019,11 @@
 	desc = "A .45 bullet casing. This one is spent.";
 	name = "spent bullet casing"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dc" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1243,11 +1049,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/machinery/light,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1258,11 +1060,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1272,17 +1070,14 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/door_assembly/door_assembly_mai{
 	density = 0;
 	desc = "A pried-open airlock. Scratch marks mark the sidings of the door.";
 	name = "pried-open airlock"
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "di" = (
@@ -1292,59 +1087,35 @@
 	name = "dried blood trail"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dj" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/item/shard,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dk" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dl" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /mob/living/simple_animal/hostile/netherworld{
 	name = "Miss Tiggles"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dm" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/alien/gelpod,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dn" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 8;
 	icon_state = "trails_1";
@@ -1353,11 +1124,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "do" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 6;
 	icon_state = "trails_1";
@@ -1373,11 +1140,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dq" = (
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dr" = (
@@ -1385,11 +1148,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1397,20 +1156,12 @@
 /turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/derelictoutpost)
 "dt" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "du" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
@@ -1423,11 +1174,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dw" = (
@@ -1436,16 +1183,8 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dx" = (
@@ -1454,11 +1193,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dy" = (
@@ -1467,11 +1202,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1482,11 +1213,7 @@
 	name = "dried blood trail"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dA" = (
@@ -1503,20 +1230,12 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dC" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
 	name = "dried blood trail"
@@ -1524,25 +1243,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dD" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dE" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dF" = (
@@ -1551,11 +1258,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dG" = (
@@ -1564,11 +1267,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dH" = (
@@ -1577,19 +1276,11 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dI" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1597,11 +1288,7 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1611,11 +1298,7 @@
 	desc = "A .45 bullet casing. This one is spent.";
 	name = "spent bullet casing"
 	},
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 5;
 	icon_state = "trails_1";
@@ -1627,11 +1310,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dM" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 9;
 	icon_state = "trails_1";
@@ -1646,33 +1325,14 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
-	name = "melted wall"
-	},
-/area/ruin/space/has_grav/derelictoutpost)
-"dO" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
-/obj/effect/decal/cleanable/blood/old{
-	dir = 8;
-	icon_state = "trails_1";
-	name = "dried blood trail"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating{
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)
 "dP" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 8;
@@ -1682,11 +1342,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dQ" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	dir = 6;
 	icon_state = "trails_1";
@@ -1695,19 +1351,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "dR" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dS" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
 	name = "dried blood trail"
@@ -1801,19 +1449,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "ef" = (
-/obj/structure/alien/resin/membrane{
-	color = "#4BAE56";
-	desc = "A strange combination of thin, gelatinous material.";
-	name = "gelatinous membrane"
-	},
+/obj/structure/alien/resin/membrane/creature,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/derelictoutpost)
 "eg" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
@@ -1903,11 +1543,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ev" = (
-/obj/structure/alien/weeds{
-	color = "#4BAE56";
-	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
-	name = "gelatinous floor"
-	},
+/obj/structure/alien/weeds/creature,
 /obj/structure/alien/gelpod,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -2032,6 +1668,13 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "eL" = (
 /obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"lk" = (
+/obj/item/crowbar{
+	pixel_x = -16;
+	pixel_y = -6
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "uV" = (
@@ -2673,7 +2316,7 @@ ae
 ae
 ae
 ae
-ae
+lk
 ae
 ae
 cv
@@ -3007,7 +2650,7 @@ aZ
 aZ
 aZ
 aZ
-dO
+dN
 aZ
 cm
 cm

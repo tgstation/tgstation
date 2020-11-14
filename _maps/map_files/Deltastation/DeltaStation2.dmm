@@ -4262,9 +4262,9 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/donkpockets,
-/obj/item/kitchen/knife/butcher,
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/bot,
+/obj/item/kitchen/knife,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "alM" = (
@@ -4758,7 +4758,6 @@
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
-/obj/item/wirerod,
 /obj/item/wrench,
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/accessory/waistcoat,
@@ -6219,9 +6218,8 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apF" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "trash"
+/obj/machinery/mass_driver/trash{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -6233,10 +6231,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apG" = (
-/obj/machinery/door/poddoor{
-	id = "trash";
-	name = "Disposals Launch Seal"
-	},
+/obj/machinery/door/poddoor/massdriver_trash,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6722,8 +6717,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "trash";
+/obj/machinery/computer/pod/old/mass_driver_controller/trash{
 	pixel_x = -24;
 	pixel_y = -7
 	},
@@ -15948,10 +15942,7 @@
 "aIe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aIf" = (
 /obj/structure/table,
@@ -16264,12 +16255,10 @@
 /area/maintenance/port/fore)
 "aIN" = (
 /obj/structure/table/wood,
-/obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "aIO" = (
-/obj/structure/table/wood,
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
@@ -18321,7 +18310,6 @@
 /area/space/nearstation)
 "aMQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den/secondary)
 "aMR" = (
@@ -63514,11 +63502,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "crC" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "crD" = (
@@ -65017,6 +65005,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/item/radio/intercom{
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -67365,6 +67356,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -67686,7 +67680,7 @@
 	dir = 4;
 	name = "Magboot Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -68271,9 +68265,9 @@
 /area/maintenance/port)
 "cAZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/delivery,
+/obj/structure/tank_holder/emergency_oxygen,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cBa" = (
@@ -69156,7 +69150,7 @@
 /area/maintenance/port)
 "cCF" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/tank_holder/emergency_oxygen,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cCG" = (
@@ -69257,7 +69251,7 @@
 	dir = 4;
 	name = "Jetpack Storage";
 	pixel_x = -1;
-	req_access_txt = "19"
+	req_access_txt = "18"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
@@ -71807,7 +71801,7 @@
 /area/maintenance/port)
 "cHy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
+/obj/structure/tank_holder/emergency_oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cHz" = (
@@ -75046,8 +75040,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cOs" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cOt" = (
@@ -77372,7 +77366,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cSP" = (
-/obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 3
@@ -77395,7 +77388,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cSQ" = (
-/obj/structure/table,
 /obj/item/storage/box/gloves{
 	pixel_x = 3;
 	pixel_y = 3
@@ -80452,7 +80444,6 @@
 /area/maintenance/department/electrical)
 "cYD" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/electrical,
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = -32
@@ -80500,7 +80491,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cYJ" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cYK" = (
@@ -85713,7 +85704,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase,
-/obj/item/restraints/handcuffs,
 /obj/item/grenade/smokebomb,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -85794,8 +85784,8 @@
 /area/crew_quarters/abandoned_gambling_den)
 "djn" = (
 /obj/structure/table/reinforced,
-/obj/item/multitool,
 /obj/item/screwdriver,
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "djo" = (
@@ -87897,10 +87887,8 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dob" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c1000{
-	pixel_y = 8
-	},
-/obj/item/stack/spacecash/c500,
+/obj/item/storage/pill_bottle/dice,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "doc" = (
@@ -88650,24 +88638,17 @@
 /area/maintenance/starboard/aft)
 "dpN" = (
 /obj/structure/table/wood/poker,
-/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/toy/cards/deck,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpO" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c10{
-	pixel_x = -16;
-	pixel_y = 8
-	},
-/obj/item/stack/spacecash/c100,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpP" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck/syndicate{
-	pixel_y = 6
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpQ" = (
@@ -90490,10 +90471,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/mecha_part_fabricator/maint{
-	name = "forgotten exosuit fabricator"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/mecha_part_fabricator/maint,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (
@@ -92408,7 +92387,6 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzm" = (
-/obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_one_access_txt = "12;47"
@@ -92426,6 +92404,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzo" = (
@@ -93120,7 +93099,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/vending/medical,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -93128,6 +93106,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
+/obj/machinery/vending/medical/chems,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dBh" = (
@@ -93448,7 +93427,6 @@
 "dBS" = (
 /obj/structure/table/wood/poker,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
@@ -93479,8 +93457,8 @@
 "dBX" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "dBY" = (
@@ -93952,8 +93930,8 @@
 	amount = 23
 	},
 /obj/item/stack/cable_coil,
-/obj/item/flashlight/seclite,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/glowstick,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "dDh" = (
@@ -97693,8 +97671,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "toxinsdriver";
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
@@ -98239,10 +98216,7 @@
 /turf/open/floor/plating/airless,
 /area/science/misc_lab)
 "dLK" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "Toxins Launcher Bay Door"
-	},
+/obj/machinery/door/poddoor/massdriver_toxins,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/misc_lab)
@@ -98268,9 +98242,8 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dLO" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "toxinsdriver"
+/obj/machinery/mass_driver/toxins{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end{
@@ -102702,10 +102675,8 @@
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dUW" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/plasteel/dark,
 /area/library/abandoned)
 "dUX" = (
@@ -102998,8 +102969,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dVI" = (
-/obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/bookcase/random,
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dVJ" = (
@@ -103370,7 +103341,9 @@
 /area/library/abandoned)
 "dWH" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/organ/tongue/bone,
+/obj/effect/spawner/lootdrop/memeorgans{
+	lootcount = 1
+	},
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dWI" = (
@@ -107929,6 +107902,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
+"eui" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/library/abandoned)
 "exE" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
@@ -108562,6 +108540,17 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"gsX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "gvO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -110562,6 +110551,10 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"lUo" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/library/abandoned)
 "lUX" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
@@ -114220,7 +114213,7 @@
 /area/science/research)
 "vec" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/tank_holder/emergency_oxygen,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "vjn" = (
@@ -114639,6 +114632,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"woC" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/library/abandoned)
 "wqd" = (
 /obj/effect/landmark/start/medical_doctor,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -144310,7 +144307,7 @@ dON
 dPv
 dQr
 dRp
-dSq
+lUo
 dTm
 dRr
 dSu
@@ -145341,7 +145338,7 @@ dRr
 dSu
 dSq
 dUe
-dSp
+eui
 dVJ
 dUf
 dXt
@@ -145856,7 +145853,7 @@ dSv
 dTq
 dSq
 dSu
-dSq
+lUo
 dWE
 dXv
 dYq
@@ -146111,7 +146108,7 @@ dQw
 dRu
 dPB
 dTr
-dSq
+woC
 dUU
 dRr
 dWF
@@ -168690,7 +168687,7 @@ cRw
 cTd
 cVc
 cWC
-cYr
+gsX
 dab
 dbF
 ddv

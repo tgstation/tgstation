@@ -36,7 +36,7 @@
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/static/list/blacklist_typecache = typecacheof(list(
-	/obj/screen,
+	/atom/movable/screen,
 	/obj/singularity,
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))
@@ -97,8 +97,8 @@
 	copy_overlays(target)
 	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
-	pixel_y = initial(pixel_y)
-	pixel_x = initial(pixel_x)
+	pixel_y = base_pixel_y
+	pixel_x = base_pixel_x
 
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised

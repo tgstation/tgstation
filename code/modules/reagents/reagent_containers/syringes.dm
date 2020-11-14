@@ -6,6 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
+	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 15
@@ -14,7 +15,7 @@
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = 150
+	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
 
 /obj/item/reagent_containers/syringe/Initialize()

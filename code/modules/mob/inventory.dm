@@ -173,8 +173,8 @@
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
 	update_inv_hands()
-	I.pixel_x = initial(I.pixel_x)
-	I.pixel_y = initial(I.pixel_y)
+	I.pixel_x = I.base_pixel_x
+	I.pixel_y = I.base_pixel_y
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
@@ -219,13 +219,13 @@
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && istype(I_stack, active_stack.merge_type))
+			if (istype(active_stack) && active_stack.can_merge(I_stack))
 				if (I_stack.merge(active_stack))
 					to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && istype(I_stack, inactive_stack.merge_type))
+				if (istype(inactive_stack) && inactive_stack.can_merge(I_stack))
 					if (I_stack.merge(inactive_stack))
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
@@ -284,8 +284,8 @@
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE)
 	. = doUnEquip(I, force, drop_location(), FALSE, silent = silent)
 	if(. && I) //ensure the item exists and that it was dropped properly.
-		I.pixel_x = rand(-6,6)
-		I.pixel_y = rand(-6,6)
+		I.pixel_x = I.base_pixel_x + rand(-6, 6)
+		I.pixel_y = I.base_pixel_y + rand(-6, 6)
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)

@@ -324,6 +324,7 @@
 	maxcharge = 300
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
+	custom_premium_price = PAYCHECK_ASSISTANT
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
@@ -338,7 +339,7 @@
 
 /obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return

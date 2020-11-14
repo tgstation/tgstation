@@ -403,3 +403,6 @@
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
 
+/mob/living/silicon/robot/can_hold_items()
+	return FALSE //held_items are used for modules.
+

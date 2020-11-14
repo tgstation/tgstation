@@ -61,6 +61,11 @@
 		trunk.linked = null
 	return ..()
 
+/obj/machinery/disposal/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE)
+
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -170,10 +175,7 @@
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/AM in src)
-		AM.forceMove(T)
-		AM.pipe_eject(0)
+	pipe_eject(src, FALSE, FALSE)
 	update_icon()
 
 /obj/machinery/disposal/proc/flush()
@@ -206,18 +208,9 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
-	var/turf/T = get_turf(src)
-	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
-	for(var/A in H)
-		var/atom/movable/AM = A
-
-		target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
-
-		AM.forceMove(T)
-		AM.pipe_eject(0)
-		AM.throw_at(target, 5, 1)
+	pipe_eject(H)
 
 	H.vent_gas(loc)
 	qdel(H)
@@ -433,7 +426,7 @@
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 //Delivery Chute
 
