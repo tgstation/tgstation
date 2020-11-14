@@ -254,15 +254,9 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
 	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
 		return TRUE
-	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
-		if(isturf(owner))
-			var/turf/T = owner
-			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
-		else
-			qdel(owner)
-		return TRUE
-	return FALSE
+	if(owner.reagents.total_volume)
+		return FALSE
+	return TRUE
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
@@ -404,6 +398,7 @@ Behavior that's still missing from this component that original food items had t
 
 	on_consume?.Invoke(eater, feeder)
 
+	to_chat(feeder, "<span class='warning'>There is nothing left of [parent], oh no!</span>")
 	if(isturf(parent))
 		var/turf/T = parent
 		T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
