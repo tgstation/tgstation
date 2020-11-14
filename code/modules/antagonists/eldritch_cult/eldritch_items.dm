@@ -338,7 +338,7 @@
 /obj/item/melee/rune_knife/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
 	if(elder)
-		to_chat(user,"<span class='notice'>You can't draw runes that clsoe to each other!</span>")
+		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
 		return
 
 	for(var/X in current_runes)
