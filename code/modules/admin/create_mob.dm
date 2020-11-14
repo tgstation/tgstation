@@ -20,7 +20,7 @@
 	H.skin_tone = random_skin_tone()
 	H.hairstyle = random_hairstyle(H.gender)
 	H.facial_hairstyle = random_facial_hairstyle(H.gender)
-	H.hair_color = random_short_color_natural()
+	H.hair_color = num2text(rand(0,255), 1, 16) + num2text(rand(0,128), 1, 16) + "00"
 	H.facial_hair_color = H.hair_color
 	H.eye_color = random_eye_color()
 	H.dna.blood_type = random_blood_type()
