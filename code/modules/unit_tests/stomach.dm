@@ -9,22 +9,21 @@
 
 	fooditem.attack(human, human)
 
-	TEST_ASSERT(human.has_reagent(/datum/reagent/consumable/ketchup), "Human doesn't have ketchup after eating")
 	TEST_ASSERT(belly.reagents.has_reagent(/datum/reagent/consumable/ketchup), "Stomach doesn't have ketchup after eating")
+	TEST_ASSERT_EQUAL(human.reagents.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human body has ketchup after eating it should only be in the stomach")
 
 	//Give them meth and let it kick in
 	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
 	pill.attack(human, human)
 	human.Life()
 
-	TEST_ASSERT(belly.reagents.has_reagent(/datum/reagent/consumable/ketchup), "Stomach doesn't have ketchup after eating")
-	TEST_ASSERT(human.has_reagent(meth), "Human does not have meth in their system after consuming it")
+	TEST_ASSERT(human.reagents.has_reagent(meth), "Human body does not have meth after life tick")
 	TEST_ASSERT(human.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "Human consumed meth, but did not gain movespeed modifier")
 
 	belly.Remove(human)
+	human.reagents.remove_all(human.reagents.total_volume)
 
-	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human still has ketchup after removal of stomach")
-	TEST_ASSERT(!human.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "Human still has movespeed modifier despite not containing any more meth")
+	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human has reagents after clearing")
 
 	fooditem.attack(human, human)
 
