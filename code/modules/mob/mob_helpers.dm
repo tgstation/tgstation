@@ -34,12 +34,18 @@
   * probability controls the chance it chooses the passed in zone, or another random zone
   * defaults to 80
   */
-/proc/ran_zone(zone, probability = 80)
-	if(prob(probability))
-		zone = check_zone(zone)
-	else
-		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
-	return zone
+/proc/ran_zone(zone = FALSE, probability = 80)
+	if(zone && prob(probability))
+		return check_zone(zone)
+
+	return pickweight(list(
+		BODY_ZONE_HEAD = 1,
+		BODY_ZONE_CHEST = 1,
+		BODY_ZONE_L_ARM = 4,
+		BODY_ZONE_R_ARM = 4,
+		BODY_ZONE_L_LEG = 4,
+		BODY_ZONE_R_LEG = 4
+	))
 
 ///Would this zone be above the neck
 /proc/above_neck(zone)

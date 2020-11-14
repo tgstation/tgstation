@@ -36,87 +36,70 @@
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
 		return FALSE
+	// Base chance of contracting considering disease's transmittability.
+	if(prob(15 / D.permeability_mod))
+		return FALSE
+	// Positive satiety makes it harder to contract the disease.
+	if(satiety > 0 && prob(satiety / 10))
+		return FALSE
 
-	var/obj/item/clothing/Cl = null
-	var/passed = TRUE
-
-	var/head_ch = 80
-	var/body_ch = 100
-	var/hands_ch = 35
-	var/feet_ch = 15
-
-	if(prob(15/D.permeability_mod))
-		return
-
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
-		return
-
-	//Lefts and rights do not matter for arms and legs, they both run the same checks
-	if(!target_zone)
-		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;BODY_ZONE_CHEST,hands_ch;BODY_ZONE_L_ARM,feet_ch;BODY_ZONE_L_LEG)
-	else
+	// If we're not manually supplying a zone, pull one at random.
+	if(target_zone)
 		target_zone = check_zone(target_zone)
+	else
+		target_zone = ran_zone()
 
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
+	// The body coverage flags we care about.
+	var/target_parts = 0
+	for(var/part in zone2body_parts_covered(target_zone))
+		target_parts |= part
+	// The multiplicative protection value that our equipment providers for this zone.
+	var/permeability_product = 1
 
-		switch(target_zone)
-			if(BODY_ZONE_HEAD)
-				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
-					Cl = H.head
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(H.wear_mask))
-					Cl = H.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(H.wear_neck))
-					Cl = H.wear_neck
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(BODY_ZONE_CHEST)
-				if(isobj(H.wear_suit))
-					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(ITEM_SLOT_ICLOTHING))
-					Cl = ITEM_SLOT_ICLOTHING
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
-					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+	// Cycle through inventory and determine if the virus passes through the mob's equipment.
+	var/list/items = get_equipped_items()
+	for(var/obj/item/I in items)
+		// Does this item provide relevant coverage?
+		if(!(target_parts & I.body_parts_covered))
+			continue
+		permeability_product *= I.permeability_coefficient;
 
-				if(passed && isobj(H.gloves))
-					Cl = H.gloves
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
-					Cl = H.wear_suit
-					passed = prob((Cl.permeability_coefficient*100) - 1)
+	if(prob(permeability_product * 100))
+		return D.try_infect(src)
 
-				if(passed && isobj(H.shoes))
-					Cl = H.shoes
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-
-	else if(ismonkey(src))
-		var/mob/living/carbon/monkey/M = src
-		switch(target_zone)
-			if(BODY_ZONE_HEAD)
-				if(M.wear_mask && isobj(M.wear_mask))
-					Cl = M.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-
-	if(passed)
-		D.try_infect(src)
+	return FALSE
 
 /mob/living/proc/AirborneContractDisease(datum/disease/D, force_spread)
-	if( ((D.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*D.permeability_mod) - 1))
-		ForceContractDisease(D)
+	if(!CanContractDisease(D))
+		return FALSE
+	// Feasibility / force check.
+	if(!force_spread && !(D.spread_flags & DISEASE_SPREAD_AIRBORNE))
+		return FALSE
+	// Base chance.
+	if(!prob((50 * D.permeability_mod) - 1))
+		return FALSE
+
+	// Hood and mask check.
+	var/target_parts = 0
+	for(var/part in zone2body_parts_covered(BODY_ZONE_HEAD))
+		target_parts |= part
+	var/permeability_product = 1
+	var/list/items = get_equipped_items()
+	for(var/obj/item/I in items)
+		// Does this item provide relevant coverage?
+		if(!(target_parts & I.body_parts_covered))
+			continue
+		permeability_product *= I.permeability_coefficient;
+
+	if(prob(permeability_product * 100))
+		return ForceContractDisease(D)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
-		return
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return
+		return FALSE
 	..()
-
 
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
 /mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
