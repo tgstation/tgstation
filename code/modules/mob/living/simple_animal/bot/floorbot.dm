@@ -147,7 +147,7 @@
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 ///mobs should use move_resistance instead of anchored.
-/mob/living/simple_animal/bot/proc/toggle_anchor(engage = TRUE, change_icon = TRUE)
+/mob/living/simple_animal/bot/floorbot/proc/toggle_anchor(engage = TRUE, change_icon = TRUE)
 	if(engage)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = INFINITY
