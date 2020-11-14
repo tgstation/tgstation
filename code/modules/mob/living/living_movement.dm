@@ -32,7 +32,7 @@
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
 	if(isopenturf(T))
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, TRUE, T.slowdown, T.blacklisted_movetypes)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, TRUE, T.slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
 

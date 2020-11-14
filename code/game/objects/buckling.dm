@@ -100,13 +100,13 @@
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
 
+	if(anchored)
+		M.halt_floating_anim(FALSE)
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	M.set_glide_size(glide_size)
-	if(anchored)
-		M.halt_floating_anim(FALSE)
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)

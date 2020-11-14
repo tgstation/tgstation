@@ -78,7 +78,7 @@
 		return
 	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
 		return
-	if(!(user.is_flying() || user.is_floating()) || user.buckled)//You don't want use jet in gravity or while buckled.
+	if(!(user.movement_type & FLOATING) || user.buckled)//You don't want use jet in gravity or while buckled.
 		return
 	if(user.pulledby)//You don't must use jet if someone pull you
 		return

@@ -259,7 +259,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/floating_anim_check(do_anim = TRUE, timed = FALSE)
 	return FALSE
 
-/mob/living/simple_animal/hostile/megafauna/colossus/halt_floating_anim(update = TRUE, timer = 2 SECONDS)
+/mob/living/simple_animal/hostile/megafauna/colossus/halt_floating_anim(update = TRUE, timer = 1.1 SECONDS)
 	return
 
 /obj/projectile/colossus

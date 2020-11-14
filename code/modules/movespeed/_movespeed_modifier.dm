@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	4. If any of the rest of the args are not null (see: multiplicative slowdown), modify the datum
 	5. Update if necessary
 */
-/mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE, multiplicative_slowdown, blacklisted_movetypes)
+/mob/proc/add_or_update_variable_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE, multiplicative_slowdown)
 	var/modified = FALSE
 	var/inject = FALSE
 	var/datum/movespeed_modifier/final
@@ -135,9 +135,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			modified = TRUE
 	if(!isnull(multiplicative_slowdown))
 		final.multiplicative_slowdown = multiplicative_slowdown
-		modified = TRUE
-	if(!isnull(multiplicative_slowdown))
-		final.blacklisted_movetypes = blacklisted_movetypes
 		modified = TRUE
 	if(inject)
 		add_movespeed_modifier(final, FALSE)
