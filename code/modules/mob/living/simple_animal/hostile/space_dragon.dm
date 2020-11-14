@@ -191,7 +191,7 @@
 		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
 		dragon_name()
 		return
-	visible_message("<span class='notice'>Your name is now <span class='name'>[chosen_name]</span>, the feared Space Dragon.</span>")
+	to_chat(src, "<span class='notice'>Your name is now <span class='name'>[chosen_name]</span>, the feared Space Dragon.</span>")
 	fully_replace_character_name(null, chosen_name)
 
 /**

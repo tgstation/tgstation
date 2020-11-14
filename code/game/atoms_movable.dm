@@ -941,7 +941,7 @@
 /atom/movable/proc/do_floating_anim(shift = 2)
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		animate(src, pixel_y = pixel_y + shift, time = 1 SECONDS)
-		floating_anim_timerid = addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+		floating_anim_timerid = addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1.1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 ///Restarts the floating animation are met.
 /atom/movable/proc/floating_anim_check(timed = FALSE)

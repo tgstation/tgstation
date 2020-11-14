@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - tweak: "Reworks the speargun BACK to being a gun! Complete with embedding harpoons! How exciting."
-  - imageadd: "Adds new mob sprites for the harpoon gun and a suit storage sprite for the mosin nagant. Also adds a new quiver sprite."

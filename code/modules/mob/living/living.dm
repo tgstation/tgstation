@@ -476,7 +476,7 @@
 		if(body_position == LYING_DOWN)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to stay lying down on the floor.</span>")
-		else if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		else if(HAS_TRAIT(src, TRAIT_FORCED_STANDING) || (buckled && buckled.buckle_lying != NO_BUCKLE_LYING))
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now lay down as soon as you are able to.</span>")
 		else
@@ -533,6 +533,7 @@
 	density = FALSE // We lose density and stop bumping passable dense things.
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
+	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
 
 
 /// Proc to append behavior related to lying down.
@@ -542,6 +543,7 @@
 	density = initial(density) // We were prone before, so we become dense and things can bump into us again.
 	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	body_position_pixel_y_offset = 0
 
 
 
@@ -587,7 +589,7 @@
 	var/severity = 0
 	var/healthpercent = (health/maxHealth) * 100
 	if(hud_used?.healthdoll) //to really put you in the boots of a simplemob
-		var/obj/screen/healthdoll/living/livingdoll = hud_used.healthdoll
+		var/atom/movable/screen/healthdoll/living/livingdoll = hud_used.healthdoll
 		switch(healthpercent)
 			if(100 to INFINITY)
 				severity = 0
@@ -613,7 +615,7 @@
 			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
-		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
 
@@ -930,13 +932,13 @@
 			clear_alert("gravity")
 		else
 			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
-				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
 			else
-				throw_alert("gravity", /obj/screen/alert/highgravity)
+				throw_alert("gravity", /atom/movable/screen/alert/highgravity)
 		if(was_weightless)
 			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 	else
-		throw_alert("gravity", /obj/screen/alert/weightless)
+		throw_alert("gravity", /atom/movable/screen/alert/weightless)
 		if(!was_weightless)
 			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, FLOATING_IN_SPACE_TRAIT)
 
@@ -956,7 +958,7 @@
 		return
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		if(animate)
-			animate(src, pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle), time = 1 SECONDS)
+			animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
 		else
 			pixel_y = base_pixel_y + get_standard_pixel_y_offset(lying_angle)
 		floating_anim_status = NO_FLOATING_ANIM //to stop the parent call from affecting pixel_y
@@ -1048,8 +1050,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = base_pixel_x + get_standard_pixel_x_offset(body_position == LYING_DOWN)
-	var/final_pixel_y = base_pixel_y + get_standard_pixel_y_offset(body_position == LYING_DOWN)
+	var/final_pixel_x = base_pixel_x + body_position_pixel_x_offset
+	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 
@@ -1064,12 +1066,6 @@
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 	return loc_temp
-
-/mob/living/proc/get_standard_pixel_x_offset(lying = FALSE)
-	return initial(pixel_x)
-
-/mob/living/proc/get_standard_pixel_y_offset(lying = FALSE)
-	return initial(pixel_y)
 
 /mob/living/cancel_camera()
 	..()
@@ -1118,7 +1114,7 @@
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
 		return FALSE
-	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !ISADVANCEDTOOLUSER(src))
 		to_chat(src, "<span class='warning'>You try to fire [G], but can't use the trigger!</span>")
 		return FALSE
 	return TRUE
@@ -1188,7 +1184,7 @@
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /obj/screen/alert/fire)
+		throw_alert("fire", /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE

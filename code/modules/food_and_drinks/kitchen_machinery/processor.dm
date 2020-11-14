@@ -30,8 +30,8 @@
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < (rating_amount * recipe.multiplier), i++)
 			new recipe.output(drop_location())
-	if (ismob(what))
-		var/mob/themob = what
+	if (isliving(what))
+		var/mob/living/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
 	else
 		qdel(what)

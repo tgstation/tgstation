@@ -40,16 +40,6 @@
 	/// Amount of matter for RCD
 	var/matter_amount = 0
 
-/obj/item/stack/on_grind()
-	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
-
-/obj/item/stack/grind_requirements()
-	if(is_cyborg)
-		to_chat(usr, "<span class='warning'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
-		return
-	return TRUE
-
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
 	if(new_amount != null)
 		amount = new_amount
@@ -58,16 +48,16 @@
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
-	if(custom_materials?.len)
-		mats_per_unit = list()
-		var/in_process_mat_list = custom_materials.Copy()
-		for(var/i in custom_materials)
-			mats_per_unit[SSmaterials.GetMaterialRef(i)] = in_process_mat_list[i]
-			custom_materials[i] *= amount
+
+	if(LAZYLEN(mats_per_unit))
+		set_mats_per_unit(mats_per_unit, 1)
+	else if(LAZYLEN(custom_materials))
+		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
+
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
-			if(S.merge_type == merge_type)
+			if(can_merge(S))
 				INVOKE_ASYNC(src, .proc/merge, S)
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
@@ -83,6 +73,31 @@
 					recipes += temp
 	update_weight()
 	update_icon()
+
+/** Sets the amount of materials per unit for this stack.
+  *
+  * Arguments:
+  * - [mats][/list]: The value to set the mats per unit to.
+  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
+  */
+/obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
+	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
+	update_custom_materials()
+
+/** Updates the custom materials list of this stack.
+  */
+/obj/item/stack/proc/update_custom_materials()
+	set_custom_materials(mats_per_unit, amount)
+
+/obj/item/stack/on_grind()
+	for(var/i in 1 to length(grind_results)) //This should only call if it's ground, so no need to check if grind_results exists
+		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+
+/obj/item/stack/grind_requirements()
+	if(is_cyborg)
+		to_chat(usr, "<span class='warning'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		return
+	return TRUE
 
 /obj/item/stack/proc/get_main_recipes()
 	SHOULD_CALL_PARENT(TRUE)
@@ -242,11 +257,12 @@
 				O.setDir(usr.dir)
 			use(R.req_amount * multiplier)
 
-			if(R.applies_mats && custom_materials?.len)
-				var/list/used_materials = list()
-				for(var/i in custom_materials)
-					used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
-				O.set_custom_materials(used_materials)
+			if(R.applies_mats && LAZYLEN(mats_per_unit))
+				if(isstack(O))
+					var/obj/item/stack/crafted_stack = O
+					crafted_stack.set_mats_per_unit(mats_per_unit, R.req_amount / R.res_amount)
+				else
+					O.set_custom_materials(mats_per_unit, R.req_amount / R.res_amount)
 
 			if(istype(O, /obj/structure/windoor_assembly))
 				var/obj/structure/windoor_assembly/W = O
@@ -337,10 +353,7 @@
 	if(check && zero_amount())
 		return TRUE
 	if(length(mats_per_unit))
-		var/temp_materials = custom_materials.Copy()
-		for(var/i in mats_per_unit)
-			temp_materials[i] = mats_per_unit[i] * src.amount
-		set_custom_materials(temp_materials)
+		update_custom_materials()
 	update_icon()
 	update_weight()
 	return TRUE
@@ -367,18 +380,32 @@
 		return TRUE
 	return FALSE
 
-/obj/item/stack/proc/add(amount)
+/** Adds some number of units to this stack.
+  *
+  * Arguments:
+  * - _amount: The number of units to add to this stack.
+  */
+/obj/item/stack/proc/add(_amount)
 	if (is_cyborg)
-		source.add_charge(amount * cost)
+		source.add_charge(_amount * cost)
 	else
-		src.amount += amount
+		amount += _amount
 	if(length(mats_per_unit))
-		var/temp_materials = custom_materials.Copy()
-		for(var/i in mats_per_unit)
-			temp_materials[i] = mats_per_unit[i] * src.amount
-		set_custom_materials(temp_materials)
+		update_custom_materials()
 	update_icon()
 	update_weight()
+
+/** Checks whether this stack can merge itself into another stack.
+  *
+  * Arguments:
+  * - [check][/obj/item/stack]: The stack to check for mergeability.
+  */
+/obj/item/stack/proc/can_merge(obj/item/stack/check)
+	if(!istype(check, merge_type))
+		return FALSE
+	if(mats_per_unit != check.mats_per_unit)
+		return FALSE
+	return TRUE
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
@@ -395,14 +422,14 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/AM)
-	if(istype(AM, merge_type) && !AM.throwing)
-		merge(AM)
+/obj/item/stack/Crossed(atom/movable/crossing)
+	if(!crossing.throwing && can_merge(crossing))
+		merge(crossing)
 	. = ..()
 
-/obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(istype(AM, merge_type))
-		merge(AM)
+/obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(can_merge(hitting))
+		merge(hitting)
 	. = ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -410,7 +437,7 @@
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		return change_stack(user,1)
+		return split_stack(user, 1)
 	else
 		. = ..()
 
@@ -433,14 +460,21 @@
 		if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return
 		else
-			change_stack(user, stackmaterial)
+			split_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
+/** Splits the stack into two stacks.
+  *
+  * Arguments:
+  * - [user][/mob]: The mob splitting the stack.
+  * - amount: The number of units to split from this stack.
+  */
+/obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
-		return FALSE
+		return null
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE)
 	. = F
+	F.set_mats_per_unit(mats_per_unit, 1) // Required for greyscale sheets and tiles.
 	F.copy_evidences(src)
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
@@ -450,7 +484,7 @@
 	zero_amount()
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(istype(W, merge_type))
+	if(can_merge(W))
 		var/obj/item/stack/S = W
 		if(merge(S))
 			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")

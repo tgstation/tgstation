@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixing GBJ cases where the disposal holder (the sctructure holding and moving all that was flushed around the pipenet) is forcemoved outside a disposal pipe."

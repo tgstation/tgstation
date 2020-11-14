@@ -132,3 +132,4 @@
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_price = PAYCHECK_ASSISTANT * 0.6

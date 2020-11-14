@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Personal AI emitters now regenerate at their properly intended speed instead of 1/10th of that speed."
