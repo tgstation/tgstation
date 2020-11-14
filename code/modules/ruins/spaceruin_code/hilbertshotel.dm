@@ -321,7 +321,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
 		user.reset_perspective(parentSphere)
 		var/datum/action/peephole_cancel/PHC = new
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
 
@@ -371,7 +371,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		return
 
 	// Prepare for...
-	var/mob/unforeseen_consequences = get_atom_on_turf(H, /mob)
+	var/mob/living/unforeseen_consequences = get_atom_on_turf(H, /mob/living)
 
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
 	// Let's gib the last person to have selected a room number in it.
