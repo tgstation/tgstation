@@ -370,7 +370,7 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
@@ -380,7 +380,7 @@
 	matter_amount = 1
 
 /obj/item/stack/tile/plasteel/cyborg
-	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
+	mats_per_unit = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
 
@@ -389,7 +389,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	custom_materials = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=500)
 	turf_type = /turf/open/floor/plastic
 
 /obj/item/stack/tile/material
@@ -400,6 +400,11 @@
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/item/stack/tile/material/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/material/F = .
+	F?.set_custom_materials(mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"

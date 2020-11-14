@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Floorbots had had a software update, preventing them from dogpiling on their target as easily as they did before."
-  - soundadd: "Floorbots will now play a small chime when stacked on top of each other to indicate that they're moving apart."

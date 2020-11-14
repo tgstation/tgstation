@@ -82,6 +82,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMOBILIZED		"immobilized"
 /// Prevents voluntary standing or staying up on its own.
 #define TRAIT_FLOORED			"floored"
+/// Forces user to stay standing
+#define TRAIT_FORCED_STANDING	"forcedstanding"
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED		"handsblocked"
 /// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
@@ -105,7 +107,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY			"clumsy"
 #define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB				"dumb"
-#define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
+#define TRAIT_ADVANCEDTOOLUSER	"advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
+#define TRAIT_MONKEYLIKE		"monkeylike" //Antagonizes the above.
 #define TRAIT_PACIFISM			"pacifism"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
@@ -323,6 +326,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define NUKEOP_TRAIT "nuke-op"
+#define JUNGLE_FEVER_TRAIT "jungle_fever"
 #define DEATHSQUAD_TRAIT "deathsquad"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define CLOWN_NUKE_TRAIT "clown-nuke"
@@ -348,6 +352,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TIMESTOP_TRAIT "timestop"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define SKILLCHIP_TRAIT "skillchip"
+#define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float

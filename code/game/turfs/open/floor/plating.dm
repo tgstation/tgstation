@@ -107,7 +107,7 @@
 	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/plating/make_plating(force = FALSE)
-	return src
+	return
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"

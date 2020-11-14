@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = baseturfs_string_list(premade_baseturfs, src)
+			baseturfs = baseturfs_string_list(premade_baseturfs.Copy(), src)
 		else
 			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs
@@ -568,7 +568,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	//clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
-		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		if(!belly.food_reagents[reagent.type])
+			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		else
+			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+			if(bit_vol > 0)
+				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
