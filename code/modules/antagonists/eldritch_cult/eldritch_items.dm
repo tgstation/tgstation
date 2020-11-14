@@ -346,7 +346,7 @@
 		if(QDELETED(eldritch) || !eldritch)
 			current_runes -= eldritch
 
-	if(current_runes.len == max_rune_amt)
+	if(current_runes.len >= max_rune_amt)
 		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
 		return
 
