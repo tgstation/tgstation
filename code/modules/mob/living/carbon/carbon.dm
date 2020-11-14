@@ -928,6 +928,7 @@
 			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
+	remove_all_embedded_objects()
 
 /mob/living/carbon/extinguish_mob()
 	for(var/X in get_equipped_items())
