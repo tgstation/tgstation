@@ -95,6 +95,7 @@
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
 
+///What happens to the heretic once he dies, used to remove any custom perks
 /datum/antagonist/heretic/proc/on_death()
 
 	for(var/X in researched_knowledge)

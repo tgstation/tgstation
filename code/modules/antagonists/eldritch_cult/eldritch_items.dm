@@ -239,6 +239,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	///Who is wearing this
 	var/mob/living/carbon/human/local_user
 
 /obj/item/clothing/mask/void_mask/equipped(mob/user, slot)
@@ -248,10 +249,10 @@
 	if(ishuman(user) && user.mind && slot == ITEM_SLOT_MASK)
 		local_user = user
 		START_PROCESSING(SSobj,src)
+
 		if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
 			return
-		else
-			ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 /obj/item/clothing/mask/void_mask/dropped(mob/M)
 	local_user = null
@@ -271,6 +272,7 @@
 			continue
 
 		SEND_SIGNAL(human_in_range,COMSIG_VOID_MASK_ACT,rand(-2,-20)*delta_time)
+
 		if(DT_PROB(60,delta_time))
 			human_in_range.hallucination += 5
 
@@ -332,6 +334,7 @@
 	if(!is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
 		carve_rune(target,user,proximity_flag,click_parameters)
 
+///Action of carving runes, gives you the ability to click on floor and choose a rune of your need.
 /obj/item/melee/rune_knife/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
 	if(elder)
