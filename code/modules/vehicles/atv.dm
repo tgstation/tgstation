@@ -7,6 +7,7 @@
 	armor = list(MELEE = 50, BULLET = 25, LASER = 20, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	key_type = /obj/item/key
 	integrity_failure = 0.5
+	rider_check_flags = REQUIRES_ARMS | REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER 
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
@@ -49,20 +50,20 @@
 	turret.forceMove(get_turf(src))
 	switch(dir)
 		if(NORTH)
-			turret.pixel_x = 0
-			turret.pixel_y = 4
+			turret.pixel_x = base_pixel_x
+			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
 		if(EAST)
-			turret.pixel_x = -12
-			turret.pixel_y = 4
+			turret.pixel_x = base_pixel_x - 12
+			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
 		if(SOUTH)
-			turret.pixel_x = 0
-			turret.pixel_y = 4
+			turret.pixel_x = base_pixel_x
+			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
 		if(WEST)
-			turret.pixel_x = 12
-			turret.pixel_y = 4
+			turret.pixel_x = base_pixel_x + 12
+			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
 
 /obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)

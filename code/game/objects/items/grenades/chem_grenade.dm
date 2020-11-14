@@ -18,7 +18,7 @@
 
 /obj/item/grenade/chem_grenade/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/chem_grenade/Initialize()
 	. = ..()

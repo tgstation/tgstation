@@ -90,7 +90,8 @@
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	density = TRUE
 	icon_state = "up"
-	M.pixel_y = initial(M.pixel_y)
+	//Push them up from the normal lying position
+	M.pixel_y = M.base_pixel_y
 
 /obj/structure/bed/roller/Moved()
 	. = ..()
@@ -101,8 +102,8 @@
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(M.body_position == LYING_DOWN)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.body_position == LYING_DOWN)
+	//Set them back down to the normal lying position
+	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 
 
 /obj/item/roller

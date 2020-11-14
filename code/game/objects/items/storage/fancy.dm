@@ -77,6 +77,7 @@
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
 	appearance_flags = KEEP_TOGETHER
+	custom_premium_price = PAYCHECK_HARD * 1.75
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
@@ -179,7 +180,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	custom_price = 75
+	custom_price = PAYCHECK_MEDIUM
 	age_restricted = TRUE
 	///for cigarette overlay
 	var/candy = FALSE
@@ -361,7 +362,7 @@
 	///The value in here has NOTHING to do with icons. It needs to be this for the proper examine.
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
-	custom_price = 25
+	custom_price = PAYCHECK_PRISONER
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()

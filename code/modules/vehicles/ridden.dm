@@ -4,10 +4,8 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	default_driver_move = FALSE
-	var/legs_required = 2
-	var/arms_required = 1	//why not?
-	var/fall_off_if_missing_arms = FALSE //heh...
-	var/message_cooldown = 0
+	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
+	COOLDOWN_DECLARE(message_cooldown)
 
 /obj/vehicle/ridden/Initialize()
 	. = ..()
@@ -59,31 +57,46 @@
 
 /obj/vehicle/ridden/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
-		if(message_cooldown < world.time)
+		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
-			message_cooldown = world.time + 5 SECONDS
+			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return FALSE
-	if(legs_required)
-		if(user.usable_legs < legs_required)
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_legs ? " your leg[user.usable_legs > 1 ? "s" : null]" : "out legs"]...</span>")
-				message_cooldown = world.time + 5 SECONDS
-			return FALSE
-	if(arms_required)
-		if(user.usable_hands < arms_required)
-			if(fall_off_if_missing_arms)
-				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
-				"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
-				if(isliving(user))
-					var/mob/living/L = user
-					L.Stun(30)
-				return FALSE
 
-			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_hands ? " your arm[user.usable_hands > 1 ? "s" : null]" : "out arms"]...</span>")
-				message_cooldown = world.time + 5 SECONDS
+	if(HAS_TRAIT(user, TRAIT_INCAPACITATED))
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			to_chat(user, "<span class='warning'>You cannot operate \the [src] right now!</span>")
+			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
+		return FALSE
+
+	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)	
+			unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+			"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
+			if(isliving(user))
+				var/mob/living/L = user
+				L.Stun(3 SECONDS)
 			return FALSE
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [src]...</span>")
+			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
+		return FALSE
+
+	if(rider_check_flags & REQUIRES_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
+			unbuckle_mob(user, TRUE)
+			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+			"<span class='danger'>You fall off \the [src] while trying to operate it without being able to hold on!</span>")
+			if(isliving(user))
+				var/mob/living/rider = user
+				rider.Stun(3 SECONDS)
+			return FALSE
+
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
+			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
+		return FALSE
+	
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()
@@ -101,3 +114,9 @@
 /obj/vehicle/ridden/zap_act(power, zap_flags)
 	zap_buckle_check(power)
 	return ..()
+
+/obj/vehicle/ridden/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+
+	if(mover.pass_flags & PASSTABLE)
+		return TRUE

@@ -65,14 +65,14 @@
 			"<span class='hear'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
-	M.pixel_y = 0
-	M.pixel_x = initial(M.pixel_x) + 2
+	M.pixel_y = M.base_pixel_y
+	M.pixel_x = M.base_pixel_x + 2
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
-	M.pixel_x = M.get_standard_pixel_x_offset(M.body_position == LYING_DOWN)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.body_position == LYING_DOWN)
+	M.pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
+	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 
