@@ -91,7 +91,7 @@
 	var/chnotify = 0
 
 	var/multicam_on = FALSE
-	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
 	var/list/all_eyes = list()
 	var/max_multicams = 6
@@ -958,7 +958,7 @@
 		return
 
 	else if(mind)
-		RegisterSignal(target, COMSIG_MOB_DEATH, .proc/disconnect_shell)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
@@ -996,7 +996,7 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, "<span class='danger'>Your remote connection has been reset!</span>")
 		deployed_shell.undeploy()
-		UnregisterSignal(deployed_shell, COMSIG_MOB_DEATH)
+		UnregisterSignal(deployed_shell, COMSIG_LIVING_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()

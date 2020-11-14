@@ -19,8 +19,8 @@
 				   /obj/item/assembly/igniter/condenser = 2)
 	refill_canister = /obj/item/vending_refill/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-	default_price = 125
-	extra_price = 100
+	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of 35.
+	extra_price = PAYCHECK_EASY
 	payment_department = NO_FREEBIES
 	light_mask = "generic-light-mask"
 

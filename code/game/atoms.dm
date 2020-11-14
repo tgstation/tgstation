@@ -62,9 +62,9 @@
 
 	var/list/filter_data //For handling persistent filters
 
-	///Economy cost of item
+	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Economy cost of item in premium vendor
+	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
@@ -434,11 +434,8 @@
 					L.transferItemToLoc(M, src)
 				else
 					M.forceMove(src)
+				SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
 		parts_list.Cut()
-
-///Hook for multiz???
-/atom/proc/update_multiz(prune_on_fail = FALSE)
-	return FALSE
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -1272,7 +1269,7 @@
 	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
-			var/atom/created_atom = new atom_to_create(get_turf(src))
+			var/atom/created_atom = new atom_to_create(drop_location())
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 		to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
@@ -1583,7 +1580,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return 0
 

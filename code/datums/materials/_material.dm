@@ -26,7 +26,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit
+	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
 	var/item_sound_override
@@ -58,11 +58,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 			source.filters += cached_texture_filter
 
+	if(alpha < 255)
+		source.opacity = FALSE
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
+		source.AddComponent(/datum/component/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -107,13 +109,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
-		if(!turf_sound_override)
-			return
-		var/turf/open/O = T
-		O.footstep = turf_sound_override
-		O.barefootstep = turf_sound_override
-		O.clawfootstep = turf_sound_override
-		O.heavyfootstep = turf_sound_override
+		if(turf_sound_override)
+			var/turf/open/O = T
+			O.footstep = turf_sound_override
+			O.barefootstep = turf_sound_override
+			O.clawfootstep = turf_sound_override
+			O.heavyfootstep = turf_sound_override
+	if(alpha < 255)
+		T.AddElement(/datum/element/turf_z_transparency, TRUE)
 	return
 
 ///This proc is called when the material is removed from an object.
@@ -128,6 +131,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
+
+	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
+		source.AddComponent(/datum/component/beauty, -beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
@@ -144,7 +150,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.throwforce = initial(o.throwforce)
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
-	return
+	if(alpha)
+		RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
   *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
