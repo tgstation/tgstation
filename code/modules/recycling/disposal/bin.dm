@@ -61,6 +61,11 @@
 		trunk.linked = null
 	return ..()
 
+/obj/machinery/disposal/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE)
+
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)

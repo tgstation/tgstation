@@ -4,9 +4,6 @@
 	say_mod = "buzzes"
 	species_traits = list(NOEYESPRITES,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutanttongue = /obj/item/organ/tongue/fly
-	mutantliver = /obj/item/organ/liver/fly
-	mutantstomach = /obj/item/organ/stomach/fly
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
@@ -14,6 +11,7 @@
 	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 0.75
 
+	mutanttongue = /obj/item/organ/tongue/fly
 	mutantheart = /obj/item/organ/heart/fly
 	mutantlungs = /obj/item/organ/lungs/fly
 	mutantliver = /obj/item/organ/liver/fly

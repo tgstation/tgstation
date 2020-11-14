@@ -216,11 +216,7 @@
 	. = ..()
 	if(.)
 		update_time_of_death()
-		if(istype(owner, /mob/living/carbon))
-			var/mob/living/carbon/body = owner
-			body.end_metabolization(FALSE)
-		else
-			owner.reagents?.end_metabolization(owner, FALSE)
+		owner.reagents?.end_metabolization(owner, FALSE)
 
 /datum/status_effect/grouped/stasis/on_apply()
 	. = ..()

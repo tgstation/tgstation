@@ -153,35 +153,20 @@
 	///sets the hp of the head to be exactly the length times hp, so the head is de facto the hardest to destroy.
 	maxHealth = len * maxHealth
 	health = maxHealth
-	///next link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/next
 	///previous link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/prev
+	var/mob/living/simple_animal/hostile/eldritch/armsy/prev = src
 	///current link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/current
-	for(var/i in 0 to len)
+	for(var/i in 1 to len)
+		current = new type(drop_location(),FALSE)
+		current.icon_state = "armsy_mid"
+		current.icon_living = "armsy_mid"
+		current.AIStatus = AI_OFF
+		current.front = prev
+		prev.back = current
 		prev = current
-		//i tried using switch, but byond is really fucky and it didnt work as intended. Im sorry
-		if(i == 0)
-			current = new type(drop_location(),FALSE)
-			current.icon_state = "armsy_mid"
-			current.icon_living = "armsy_mid"
-			current.front = src
-			current.AIStatus = AI_OFF
-			back = current
-		else if(i < len)
-			current = new type(drop_location(),FALSE)
-			prev.back = current
-			prev.icon_state = "armsy_mid"
-			prev.icon_living = "armsy_mid"
-			prev.front = next
-			prev.AIStatus = AI_OFF
-		else
-			prev.icon_state = "armsy_end"
-			prev.icon_living = "armsy_end"
-			prev.front = next
-			prev.AIStatus = AI_OFF
-		next = prev
+	prev.icon_state = "armsy_end"
+	prev.icon_living = "armsy_end"
 
 /mob/living/simple_animal/hostile/eldritch/armsy/adjustBruteLoss(amount, updating_health, forced)
 	if(back)
