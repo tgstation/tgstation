@@ -395,6 +395,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_color()
 	return random_string(6, GLOB.hex_characters)
 
+/proc/random_short_color_natural()	//For use in natural haircolors.
+	var red = num2text(rand(0,255), 1, 16)
+	var green = num2text(rand(0,128), 1, 16)	//Conversion to hex
+	var blue = "00"
+	return red + green + blue
+
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
 //     from = "Seeya______"
