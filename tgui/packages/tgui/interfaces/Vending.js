@@ -25,7 +25,7 @@ const VendingRow = (props, context) => {
       && user
     )
   );
-  const discount = department === user.department;
+  const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   return (
     <Table.Row>
