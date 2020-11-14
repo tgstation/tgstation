@@ -81,13 +81,11 @@
 /datum/reagents/Destroy()
 	. = ..()
 	//We're about to delete all reagents, so lets cleanup
-	addiction_list?.Cut()
-	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
+	addiction_list = null
+	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
-	cached_reagents.Cut()
-	cached_reagents = null
+	reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -410,25 +408,24 @@
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			if(cached_addictions)
-				for(var/addiction in cached_addictions)
-					var/datum/reagent/R = addiction
-					if(!C || !R)
-						continue
-					R.addiction_stage++
-					switch(R.addiction_stage)
-						if(1 to 10)
-							need_mob_update += R.addiction_act_stage1(C)
-						if(10 to 20)
-							need_mob_update += R.addiction_act_stage2(C)
-						if(20 to 30)
-							need_mob_update += R.addiction_act_stage3(C)
-						if(30 to 40)
-							need_mob_update += R.addiction_act_stage4(C)
-						if(40 to INFINITY)
-							remove_addiction(R)
-						else
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+			for(var/addiction in cached_addictions)
+				var/datum/reagent/R = addiction
+				if(!C)
+					break
+				R.addiction_stage++
+				switch(R.addiction_stage)
+					if(1 to 10)
+						need_mob_update += R.addiction_act_stage1(C)
+					if(10 to 20)
+						need_mob_update += R.addiction_act_stage2(C)
+					if(20 to 30)
+						need_mob_update += R.addiction_act_stage3(C)
+					if(30 to 40)
+						need_mob_update += R.addiction_act_stage4(C)
+					if(40 to INFINITY)
+						remove_addiction(R)
+					else
+						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()

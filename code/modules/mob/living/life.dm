@@ -177,12 +177,10 @@
 /mob/living/proc/get_addiction_list()
 	. = list()
 	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
-	if(reagents.addiction_list)
-		for(var/datum/reagent/reagent in reagents.addiction_list)
-			. += reagent
-	if(belly?.reagents.addiction_list)
-		for(var/bile in belly.reagents.addiction_list)
-			. += bile
+	for(var/datum/reagent/reagent in reagents.addiction_list)
+		. += reagent
+	for(var/bile in belly?.reagents.addiction_list)
+		. += bile
 
 /**
  * Removes an addiction from the mob
