@@ -273,17 +273,6 @@
 	icon_state = "marx"
 	art_type = /datum/element/art/rev
 
-///////////Elder Atmosian///////////////////////////////////////////
-
-/obj/structure/statue/elder_atmosian
-	name = "Elder Atmosian"
-	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
-	icon_state = "eng"
-	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
-	max_integrity = 1000
-	impressiveness = 100
-	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
-
 /obj/item/chisel
 	name = "chisel"
 	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."

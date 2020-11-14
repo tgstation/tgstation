@@ -1102,7 +1102,6 @@
 #include "code\game\objects\items\food\soup.dm"
 #include "code\game\objects\items\food\spaghetti.dm"
 #include "code\game\objects\items\grenades\antigravity.dm"
-#include "code\game\objects\items\grenades\atmos_grenades.dm"
 #include "code\game\objects\items\grenades\chem_grenade.dm"
 #include "code\game\objects\items\grenades\clusterbuster.dm"
 #include "code\game\objects\items\grenades\emgrenade.dm"
