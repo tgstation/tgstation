@@ -192,7 +192,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     // Method #2
     var styleSheets = document.styleSheets;
     var len = styleSheets.length;
-    for (let i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       var styleSheet = styleSheets[i];
       if (styleSheet.href.indexOf(url) !== -1) {
         return styleSheet.rules.length > 0;
@@ -420,9 +420,9 @@ if (!Function.prototype.bind) (function () {
   display: inline-block;
   text-align: left;
   font-size: 10px;
-  line-height: 8px;
+  line-height: 12px;
   position: relative;
-  margin-top: 12px;
+  margin: 16px;
   top: 0;
   left: 0;
   animation:
@@ -494,33 +494,19 @@ if (!Function.prototype.bind) (function () {
 <!-- Fatal error container -->
 <div id="FatalError" class="FatalError">
 <div class="FatalError__logo">
-          _____            _____                  _______                  _____
-         /\    \          /\    \                /::\    \                /\    \
-        /::\____\        /::\    \              /::::\    \              /::\    \
-       /::::|   |        \:::\    \            /::::::\    \            /::::\    \
-      /:::::|   |         \:::\    \          /::::::::\    \          /::::::\    \
-     /::::::|   |          \:::\    \        /:::/~~\:::\    \        /:::/\:::\    \
-    /:::/|::|   |           \:::\    \      /:::/    \:::\    \      /:::/__\:::\    \
-   /:::/ |::|   |           /::::\    \    /:::/    / \:::\    \     \:::\   \:::\    \
-  /:::/  |::|   | _____    /::::::\    \  /:::/____/   \:::\____\  ___\:::\   \:::\    \
- /:::/   |::|   |/\    \  /:::/\:::\    \|:::|    |     |:::|    |/\   \:::\   \:::\    \
-/:: /    |::|   /::\____\/:::/  \:::\____\:::|____|     |:::|    /::\   \:::\   \:::\____\
-\::/    /|::|  /:::/    /:::/    \::/    /\:::\    \   /:::/    /\:::\   \:::\   \::/    /
- \/____/ |::| /:::/    /:::/    / \/____/  \:::\    \ /:::/    /  \:::\   \:::\   \/____/
-         |::|/:::/    /:::/    /            \:::\    /:::/    /    \:::\   \:::\    \
-         |::::::/    /:::/    /              \:::\__/:::/    /      \:::\   \:::\____\
-         |:::::/    /\::/    /                \::::::::/    /        \:::\  /:::/    /
-         |::::/    /  \/____/                  \::::::/    /          \:::\/:::/    /
-         /:::/    /                             \::::/    /            \::::::/    /
-        /:::/    /                               \::/____/              \::::/    /
-        \::/    /                                                        \::/    /
-         \/____/                                                          \/____/
+ooooo      ooo     .     .oooooo.    .oooooo..o
+`888b.     `8'   .o8    d8P'  `Y8b  d8P'    `Y8
+ 8 `88b.    8  .o888oo 888      888 Y88bo.
+ 8   `88b.  8    888   888      888  `"Y8888o.
+ 8     `88b.8    888   888      888      `"Y88b
+ 8       `888    888 . `88b    d88' oo     .d8P
+o8o        `8    "888"  `Y8bood8P'  8""88888P'
 </div>
 <marquee class="FatalError__header">
 A fatal exception has occurred at 002B:C562F1B7 in TGUI.
 The current application will be terminated.
 Send the copy of the following stack trace to an authorized
-Nanotrasen employee at https://github.com/tgstation/tgstation.
+Nanotrasen incident handler at https://github.com/tgstation/tgstation.
 Thank you for your cooperation.
 </marquee>
 <div id="FatalError__stack" class="FatalError__stack"></div>
