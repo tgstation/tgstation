@@ -380,6 +380,7 @@
 	button_icon_state = "rune_break"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
+	///Reference to the rune knife it is inside of
 	var/obj/item/melee/rune_knife/sword
 
 /datum/action/innate/rune_shatter/Grant(mob/user, obj/object)
@@ -396,6 +397,7 @@
 	name = "Brew of Day and Night"
 	desc = "You should never see this"
 	icon = 'icons/obj/eldritch.dmi'
+	///Typepath to the status effect this is supposed to hold
 	var/status_effect
 
 /obj/item/eldritch_potion/attack_self(mob/user)
@@ -404,6 +406,7 @@
 	effect(user)
 	qdel(src)
 
+///The effect of the potion if it has any special one, in general try not to override this and utilize the status_effect var to make custom effects.
 /obj/item/eldritch_potion/proc/effect(mob/user)
 	if(!iscarbon(user))
 		return
@@ -424,6 +427,6 @@
 
 /obj/item/eldritch_potion/wounded
 	name = "Brew of Wounded Soldier"
-	desc = "For the next 60 seconds each wound will heal you, minor wounds heal 1 of it's damage type per second, moderate heal 3 and critical heal 6."
+	desc = "For the next 60 seconds each wound will heal you, minor wounds heal 1 of it's damage type per second, moderate heal 3 and critical heal 6. You also become immune to damage slowdon."
 	icon_state = "marshal"
 	status_effect = /datum/status_effect/marshal

@@ -17,7 +17,7 @@
 
 /datum/eldritch_knowledge/void_grasp
 	name = "Grasp of Void"
-	desc = "Lowers your victims body temperature by 20 degrees, also temporarily mutes them."
+	desc = "Temporarily mutes your victim, also lowers their body temperature."
 	gain_text = "I found the cold watcher who observes me. The resonance of cold grows within me. This isn't the end of the mystery."
 	cost = 1
 	route = PATH_VOID
@@ -70,8 +70,8 @@
 
 /datum/eldritch_knowledge/void_mark
 	name = "Mark of Void"
-	gain_text = "I saw them, the marked ones. The screams.. the silence."
-	desc = "Your mansus grasp now applies mark of flesh status effect. To proc the mark, use your sickly blade on the marked. Mark of flesh when procced causeds additional bleeding."
+	gain_text = "A gust of wind? Maybe a shimmer in the air. Presence is overwhelming, my senses betrayed me, my mind is my enemy."
+	desc = "Your mansus grasp now applies mark of void status effect. To proc the mark, use your sickly blade on the marked. Mark of void when procced lowers the victims body temperature significantly."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
@@ -79,10 +79,11 @@
 
 /datum/eldritch_knowledge/void_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(isliving(target))
-		. = TRUE
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/eldritch/void)
+	if(!isliving(target))
+		return
+	. = TRUE
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/eldritch/void)
 
 /datum/eldritch_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -150,7 +151,9 @@
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_VOID
+	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop
+	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
 
 /datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)

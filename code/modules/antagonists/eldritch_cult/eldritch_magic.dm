@@ -717,7 +717,7 @@
 
 /obj/effect/proc_holder/spell/pointed/void_blink
 	name = "Void Phase"
-	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location"
+	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "RE'L'TY PH'S'E"
 	clothes_req = FALSE
@@ -730,7 +730,7 @@
 
 /obj/effect/proc_holder/spell/pointed/void_blink/can_target(atom/target, mob/user, silent)
 	. = ..()
-	if(get_dist(get_turf(user),get_turf(target)) < 2 )
+	if(get_dist(get_turf(user),get_turf(target)) < 3 )
 		return FALSE
 
 /obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
@@ -754,8 +754,7 @@
 			continue
 		living_mob.adjustBruteLoss(40)
 
-	user.forceMove(targeted_turf)
-
+	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'
@@ -774,7 +773,7 @@
 	pixel_y = -32
 
 /obj/effect/proc_holder/spell/targeted/void_pull
-	name = "Void pull"
+	name = "Void Pull"
 	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "BR'NG F'RTH TH'M T' M'"
@@ -796,8 +795,11 @@
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	new /obj/effect/temp_visual/voidin(user.drop_location())
 	for(var/mob/living/livies in view(7,user)-user)
+
+		if(get_dist(user,livies) < 4)
+			livies.AdjustKnockdown(3 SECONDS)
+			livies.AdjustParalyzed(0.5 SECONDS)
+
 		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
-			if(get_dist(user,livies) < 4)
-				livies.AdjustKnockdown(3 SECONDS)
-				livies.AdjustParalyzed(0.5 SECONDS)
+

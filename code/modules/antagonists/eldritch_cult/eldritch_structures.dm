@@ -5,8 +5,11 @@
 	icon_state = "crucible"
 	anchored = FALSE
 	density = TRUE
+	///How much mass this currently holds
 	var/current_mass = 5
+	///Maximum amount of mass
 	var/max_mass = 5
+	///Check to see if it is currently being used.
 	var/in_use = FALSE
 
 /obj/structure/eldritch_crucible/examine(mob/user)
@@ -84,6 +87,7 @@
 	in_use = FALSE
 	update_icon_state()
 
+///Proc that eats the active limb of the victim
 /obj/structure/eldritch_crucible/proc/devour(mob/living/carbon/user)
 	if(HAS_TRAIT(user,TRAIT_NODISMEMBER))
 		return
@@ -107,6 +111,7 @@
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/eldritch.dmi'
 	charges = 1
+	///Owner of the trap
 	var/mob/owner
 
 /obj/structure/trap/eldritch/Crossed(atom/movable/AM)
@@ -122,6 +127,7 @@
 	if(istype(I,/obj/item/melee/rune_knife) || istype(I,/obj/item/nullrod))
 		qdel(src)
 
+///Proc that sets the owner
 /obj/structure/trap/eldritch/proc/set_owner(mob/_owner)
 	owner = _owner
 
