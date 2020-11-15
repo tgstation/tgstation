@@ -198,7 +198,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
 	baseturfs = baseturfs_string_list(new_baseturfs + baseturfs, src)
-	baseturfs.Insert(1, new_baseturfs)
 
 // Make a new turf and put it on top
 // The args behave identical to PlaceOnBottom except they go on top
@@ -237,15 +236,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		return ChangeTurf(fake_turf_type, null, flags)
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	var/list/temp_baseturfs = list()
 	if(!istype(src, /turf/closed))
-		temp_baseturfs += type
+		baseturfs = baseturfs_string_list(baseturfs + type, src)
 	var/turf/change_type
 	if(length(new_baseturfs))
 		change_type = new_baseturfs[new_baseturfs.len]
 		new_baseturfs.len--
 		if(new_baseturfs.len)
-			baseturfs = baseturfs_string_list(baseturfs + temp_baseturfs + new_baseturfs, src)
+			baseturfs = baseturfs_string_list(baseturfs + new_baseturfs, src)
 	else
 		change_type = new_baseturfs
 	return ChangeTurf(change_type, null, flags)

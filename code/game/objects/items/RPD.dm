@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
-	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
+	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
 
 	var/atom/attack_target = A

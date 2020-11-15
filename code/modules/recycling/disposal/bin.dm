@@ -61,6 +61,11 @@
 		trunk.linked = null
 	return ..()
 
+/obj/machinery/disposal/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE)
+
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -421,7 +426,7 @@
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 //Delivery Chute
 

@@ -54,6 +54,11 @@
 	QDEL_NULL(stored)
 	return ..()
 
+/obj/structure/disposalpipe/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE) //pipe has broken.
+
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
