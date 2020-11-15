@@ -1,5 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - refactor: "TGUI will keep trying to load for 10 seconds in case of a network problem and will show a bluescreen if it completely fails."
-  - bugfix: "This hopefully fixes the whitescreen problem."
