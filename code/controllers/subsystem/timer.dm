@@ -100,7 +100,10 @@ SUBSYSTEM_DEF(timer)
 		log_world(to_log.Join("\n"))
 
 	// Process client-time timers
-	var/next_clienttime_timer_index = 0
+	var/static/next_clienttime_timer_index = 0
+	if (next_clienttime_timer_index)
+		clienttime_timers.Cut(1, next_clienttime_timer_index+1)
+		next_clienttime_timer_index = 0
 	for (next_clienttime_timer_index in 1 to length(clienttime_timers))
 		if (MC_TICK_CHECK)
 			next_clienttime_timer_index--
@@ -129,6 +132,7 @@ SUBSYSTEM_DEF(timer)
 	// Remove invoked client-time timers
 	if (next_clienttime_timer_index)
 		clienttime_timers.Cut(1, next_clienttime_timer_index+1)
+		next_clienttime_timer_index = 0
 
 	if (MC_TICK_CHECK)
 		return
