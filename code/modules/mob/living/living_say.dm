@@ -65,6 +65,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	MODE_INTERCOM = HARD_CRIT,
 	MODE_ALIEN = HARD_CRIT,
 	MODE_BINARY = HARD_CRIT, //extra stat check on human/binarycheck()
+	MODE_MONKEY = HARD_CRIT,
 	MODE_MAFIA = HARD_CRIT
 ))
 
