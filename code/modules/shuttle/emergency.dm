@@ -240,7 +240,7 @@
 		if(STAGE_4)
 			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... NT key mismatch. Confirm load? Y...###Reboot complete. $SET transponder_state = 0; System link initiated with connected engines..."
 		if(HIJACKED)
-			msg = "<font color='red'><b>SYSTEM OVERRIDE</b></font> - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
+			msg = "SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
 			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
 	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)

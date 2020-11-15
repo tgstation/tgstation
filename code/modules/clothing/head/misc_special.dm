@@ -278,7 +278,7 @@
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	color = "#FFF"
 	adjustablecolor = FALSE
-	custom_price = 100
+	custom_price = PAYCHECK_HARD
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")

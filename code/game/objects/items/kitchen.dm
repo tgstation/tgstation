@@ -33,6 +33,7 @@
 	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
+	custom_price = PAYCHECK_PRISONER
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
@@ -63,7 +64,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
-	custom_price = 50
+	custom_price = PAYCHECK_PRISONER * 2
 	var/break_chance = 25
 
 /obj/item/kitchen/fork/plastic/afterattack(atom/target, mob/user)
@@ -92,7 +93,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	item_flags = EYE_STAB
 	var/bayonet = FALSE	//Can this be attached to a gun?
-	custom_price = 250
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE
@@ -124,7 +124,7 @@
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
-	custom_price = 50
+	custom_price = PAYCHECK_PRISONER * 2
 	var/break_chance = 25
 
 /obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
@@ -178,7 +178,7 @@
 	attack_verb_continuous = list("cleaves", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_price = 600
+	custom_price = PAYCHECK_EASY * 5
 
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
@@ -268,7 +268,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
-	custom_price = 200
+	custom_price = PAYCHECK_EASY * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
@@ -284,7 +284,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=120)
-	custom_price = 50
+	custom_price = PAYCHECK_PRISONER * 2
 	var/break_chance = 25
 
 /obj/item/kitchen/spoon/plastic/afterattack(atom/target, mob/user)
