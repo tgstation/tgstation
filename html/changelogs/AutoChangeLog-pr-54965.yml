@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Rats and Regal Rats now properly trigger mouse traps when crossed."
