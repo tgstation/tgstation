@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Condiments work with food items more consistently, and packets don't give useless feedback."
