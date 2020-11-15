@@ -115,7 +115,6 @@ SUBSYSTEM_DEF(timer)
 
 		var/datum/callback/callBack = ctime_timer.callBack
 		if (!callBack)
-			clienttime_timers.Cut(next_clienttime_timer_index,next_clienttime_timer_index + 1)
 			CRASH("Invalid timer: [get_timer_debug_string(ctime_timer)] world.time: [world.time], \
 				head_offset: [head_offset], practical_offset: [practical_offset], REALTIMEOFDAY: [REALTIMEOFDAY]")
 
