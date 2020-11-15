@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "adds a training machine to delta firing range"
