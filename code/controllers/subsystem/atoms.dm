@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, var/returns_atoms = FALSE)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, returns_atoms = FALSE)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 

@@ -141,7 +141,7 @@
 			turf_blacklist += possible_blacklist
 
 ///the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
-/obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
+/obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
 	if (program == map_id)
 		return
 
@@ -303,7 +303,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/holodeck/proc/nerf(var/nerf_this)
+/obj/machinery/computer/holodeck/proc/nerf(nerf_this)
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
 	for(var/to_be_nerfed in effects)
