@@ -290,9 +290,6 @@
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	active = FALSE
-	for (var/_item in spawned)
-		var/obj/to_remove = _item
-		derez(to_remove)
 	load_program(offline_program, TRUE)
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
