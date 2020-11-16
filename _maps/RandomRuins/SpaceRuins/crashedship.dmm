@@ -3,10 +3,9 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/item/circular_saw,
-/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/awaymission/bmpship/aft)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/aft)
@@ -14,270 +13,355 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/bmpship/aft)
 "ag" = (
-/obj/machinery/porta_turret{
-	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
-/turf/open/floor/engine,
-/area/awaymission/bmpship/aft)
-"ah" = (
-/turf/open/floor/engine,
-/area/awaymission/bmpship/aft)
-"ai" = (
-/obj/machinery/light/small{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/structure/table,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
-"aj" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+"ah" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/obj/structure/table,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
-"ak" = (
-/obj/machinery/door/airlock/titanium,
+"ai" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/projectile/magic/locker,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"aj" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "al" = (
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/projectile/magic/locker,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "am" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "an" = (
-/obj/structure/window/reinforced,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "ao" = (
-/obj/machinery/light/small,
-/turf/open/floor/engine,
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "ap" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/bmpship/midship)
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "aq" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/midship)
 "ar" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/awaymission/bmpship/aft)
-"as" = (
-/obj/structure/bed/roller,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"at" = (
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"au" = (
-/obj/item/restraints/handcuffs,
-/obj/item/restraints/handcuffs,
-/obj/structure/closet/crate,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"av" = (
-/obj/item/scalpel,
-/obj/structure/closet/crate,
-/obj/item/tank/internals/anesthetic,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"aw" = (
-/obj/item/bodybag,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"ax" = (
-/obj/item/storage/box/syringes,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"az" = (
-/obj/structure/table/optable,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"aA" = (
-/obj/machinery/computer/operating{
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"as" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"at" = (
+/obj/machinery/processor,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/bmpship/midship)
+"au" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"av" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"aw" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"ax" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/ce,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"az" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/bmpship/midship)
+"aA" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/bmpship/midship)
 "aB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/obj/machinery/chem_dispenser,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "aC" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/organ/appendix,
-/obj/item/food/meat/slab,
-/obj/item/food/meat/slab/human/mutant/golem,
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/chem_master,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "aD" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/organ/brain,
-/obj/item/food/meat/slab,
-/obj/item/food/meat/slab/human/mutant/slime,
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/door/airlock/command{
+	name = "Chief Engineer"
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "aE" = (
-/obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/chem_heater,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "aF" = (
-/obj/structure/table,
-/obj/item/storage/box,
-/obj/machinery/light/small{
+/obj/machinery/computer/operating,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "aG" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/table/optable,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "aI" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/bmpship/fore)
 "aM" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"aN" = (
-/obj/item/storage/box,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"aO" = (
-/obj/item/hand_labeler,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"aP" = (
-/obj/structure/closet/crate/large,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"aN" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "aR" = (
-/obj/structure/table/wood,
-/obj/item/stack/spacecash/c500,
-/obj/item/stack/spacecash/c100,
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/wood,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "aS" = (
-/obj/structure/bed,
-/obj/item/bedsheet/yellow,
-/turf/open/floor/wood,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "aT" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/fore)
-"aU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
-"aV" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
 "aW" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "aX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "aY" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/fore)
-"bb" = (
-/obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/gibspawner/human,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
 "bc" = (
-/obj/item/clothing/glasses/regular/hipster,
-/turf/open/floor/plating/airless,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "be" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "bh" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"bi" = (
-/obj/machinery/computer/teleporter,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"bj" = (
-/obj/machinery/teleport/station,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"bk" = (
-/obj/machinery/teleport/hub,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"bl" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"bm" = (
-/turf/open/floor/wood,
-/area/awaymission/bmpship/fore)
-"bn" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/awaymission/bmpship/fore)
-"bo" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine/n2,
+/area/awaymission/bmpship/aft)
+"bi" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"bm" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "bp" = (
 /turf/open/floor/plating,
@@ -287,374 +371,274 @@
 /turf/open/floor/plating,
 /area/awaymission/bmpship/fore)
 "bs" = (
-/obj/structure/closet/crate,
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c50,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
+/turf/open/floor/engine/n2,
 /area/awaymission/bmpship/aft)
-"bt" = (
-/obj/structure/window/reinforced,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
 "bu" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
-/area/awaymission/bmpship/fore)
-"bv" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
-"bw" = (
-/obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
-"bx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
-"by" = (
-/obj/machinery/light,
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"bA" = (
-/obj/machinery/sleeper{
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"bB" = (
-/obj/machinery/sleep_console,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"bC" = (
-/obj/machinery/light,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"bH" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"bv" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"bw" = (
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"bx" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"bK" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "packerMed"
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"bA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"bB" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"bC" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"bH" = (
+/obj/machinery/gibber,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/bmpship/midship)
+"bK" = (
+/obj/machinery/smartfridge/food,
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/midship)
 "bL" = (
-/obj/structure/closet/crate/large,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/machinery/door/window,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "bM" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "bN" = (
-/obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
 /area/awaymission/bmpship/aft)
 "bO" = (
-/obj/structure/kitchenspike,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "bP" = (
-/obj/structure/closet/crate,
-/obj/item/analyzer,
-/obj/item/stack/spacecash/c10,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "bQ" = (
-/obj/structure/closet/crate,
-/obj/item/stack/spacecash/c1000,
-/obj/item/stack/spacecash/c200,
-/obj/item/stack/spacecash/c500,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "bR" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
-/obj/item/organ/appendix,
-/obj/item/food/meat/slab,
-/obj/item/food/meat/slab/human/mutant/golem/adamantine,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "bU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
+/turf/open/floor/engine/o2,
 /area/awaymission/bmpship/aft)
 "bV" = (
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
-"bW" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 0;
-	pixel_y = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
 "bX" = (
-/obj/structure/table,
-/obj/item/screwdriver,
-/obj/item/screwdriver,
-/obj/item/paper/fluff/ruins/crashedship/scribbled,
-/obj/item/screwdriver,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/rack,
+/obj/item/gps/spaceruin,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"bY" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "bZ" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/structure/rack,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"ca" = (
-/obj/structure/sink,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "cb" = (
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "cc" = (
-/obj/machinery/vending/hydronutrients,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cd" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"ce" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/engine/n2,
+/area/awaymission/bmpship/aft)
 "cf" = (
-/obj/structure/table,
-/obj/item/kitchen/knife/butcher,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/food/meat/slab/human,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/midship)
-"cg" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/midship)
-"ch" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/midship)
-"ci" = (
-/obj/machinery/processor,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/midship)
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "cj" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "ck" = (
-/obj/structure/table,
-/obj/item/kitchen/knife,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "cl" = (
-/obj/structure/table,
-/obj/machinery/light/small{
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "cm" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cp" = (
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cq" = (
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cr" = (
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"cs" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "ct" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "cu" = (
-/obj/structure/chair/stool,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "cv" = (
-/obj/structure/kitchenspike,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"cw" = (
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"cx" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"cy" = (
-/turf/open/floor/plasteel/white,
-/area/awaymission/bmpship/aft)
-"cz" = (
-/obj/machinery/light/small{
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cA" = (
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cB" = (
-/obj/machinery/gibber,
-/turf/open/floor/plasteel/white,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cE" = (
 /turf/open/floor/plasteel,
@@ -662,181 +646,201 @@
 "cG" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/fore)
-"cJ" = (
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"cK" = (
-/obj/machinery/door/airlock/titanium,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+"cH" = (
+/obj/structure/closet/firecloset/full,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"cJ" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"cK" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
 /area/awaymission/bmpship/midship)
 "cL" = (
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	pixel_y = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/bmpship/midship)
 "cM" = (
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/chair/sofa/bench/right{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "cN" = (
-/obj/machinery/door/window,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "cO" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
-"cP" = (
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+"cQ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"cR" = (
+/obj/machinery/door/airlock/atmos/glass,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"cS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
-"cQ" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"cR" = (
-/obj/structure/closet/secure_closet/freezer/meat/open{
-	opened = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/bmpship/aft)
-"cS" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/food/meat/slab,
-/obj/item/food/meat/slab,
-/turf/open/floor/plasteel/white,
-/area/awaymission/bmpship/aft)
 "cT" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/white,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cU" = (
-/obj/item/crowbar,
-/turf/open/floor/plasteel/white,
-/area/awaymission/bmpship/aft)
-"cV" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
 	},
+/turf/open/floor/engine/n2,
+/area/awaymission/bmpship/aft)
+"cV" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cW" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 0;
-	pixel_y = 23
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"cX" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"cX" = (
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "cY" = (
-/obj/structure/table,
-/obj/item/paper/fluff/ruins/crashedship/captains_log,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/bmpship/midship)
 "cZ" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"da" = (
-/obj/structure/frame/computer{
-	anchored = 1
-	},
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"db" = (
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"dc" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"dd" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"de" = (
-/obj/machinery/seed_extractor,
-/obj/item/seeds/plump/walkingmushroom,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"df" = (
-/obj/machinery/hydroponics,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/spawner/lootdrop/space/rareseed,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
-"dg" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+"da" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/grass,
+/area/awaymission/bmpship/aft)
+"dc" = (
+/obj/machinery/portable_atmospherics/canister/pluoxium,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"dd" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
+/area/awaymission/bmpship/midship)
+"de" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"df" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/awaymission/bmpship/midship)
+"dg" = (
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/bmpship/midship)
 "dk" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -846,12 +850,35 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "dm" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "dq" = (
-/obj/item/multitool,
-/turf/open/floor/engine,
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "dr" = (
 /obj/structure/shuttle/engine/heater{
@@ -869,714 +896,634 @@
 /turf/template_noop,
 /area/awaymission/bmpship/aft)
 "dt" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/turf/open/floor/carpet,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "du" = (
-/obj/structure/chair/stool,
-/turf/open/floor/carpet,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "dv" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"dw" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
-/turf/open/floor/carpet,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
-"dw" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
 "dA" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "dB" = (
-/turf/closed/wall/r_wall,
+/obj/machinery/door/airlock/public/glass{
+	name = "Canteen"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "dC" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/showroomfloor,
+/obj/structure/table,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "dD" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
-"dG" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/fore)
 "dH" = (
-/obj/item/shard,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"dJ" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
-"dL" = (
-/obj/machinery/power/shieldwallgen,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"dN" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	pixel_y = 23
+/obj/item/shard{
+	icon_state = "small"
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"dO" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"dP" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meatConvey1"
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"dQ" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meatConvey1"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"dR" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal/delivery_chute{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"dS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/awaymission/bmpship/midship)
-"dT" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"dU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/area/awaymission/bmpship/fore)
+"dI" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "dV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"dW" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"dX" = (
-/obj/structure/window/reinforced{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"dY" = (
-/obj/structure/rack,
-/obj/item/storage/box/lights,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
-"ea" = (
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
-	name = "power storage unit"
+/area/awaymission/bmpship/fore)
+"dW" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"eb" = (
-/obj/machinery/power/terminal{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"ed" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"dX" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"dY" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"ea" = (
+/obj/machinery/door/airlock{
+	name = "Kitchen"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"eb" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "ee" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/space/fancytech,
-/turf/open/floor/carpet,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "ef" = (
-/obj/structure/chair{
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "eg" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/closed/wall/mineral/titanium,
+/area/awaymission/bmpship/midship)
 "eh" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"ei" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"ej" = (
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"ek" = (
-/obj/item/reagent_containers/glass/bucket,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"el" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "meatConvey1"
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"em" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "en" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "eo" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/airlock/public/glass{
+	name = "Workplace Aft"
 	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"ep" = (
-/obj/structure/disposalpipe/segment{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"ep" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eq" = (
-/obj/structure/window/reinforced{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
-/obj/structure/disposaloutlet{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"er" = (
-/obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "es" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "et" = (
-/obj/structure/rack,
-/obj/item/storage/belt/utility/full,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
-"ey" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/gibspawner/xeno,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"eC" = (
-/obj/machinery/light/small{
+/obj/structure/bookcase/random,
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/wood,
 /area/awaymission/bmpship/midship)
-"eD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
 "eE" = (
-/obj/effect/gibspawner/human,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"eF" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"eG" = (
-/obj/structure/rack,
-/obj/item/stock_parts/cell/high,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/computer/crew{
 	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"eG" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eH" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 6
-	},
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/fore)
-"eI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
 "eJ" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"eK" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"eL" = (
-/obj/effect/gibspawner/generic,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "eP" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eS" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/power/port_gen/pacman/super,
-/turf/open/floor/engine,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eT" = (
-/obj/structure/closet,
-/turf/open/floor/carpet,
-/area/awaymission/bmpship/fore)
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/engine/o2,
+/area/awaymission/bmpship/aft)
 "eU" = (
-/obj/machinery/light{
-	dir = 4
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/structure/closet,
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "eV" = (
-/obj/item/wrench,
-/turf/open/floor/plating,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
 "eW" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"eX" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/door/window/eastleft,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"eX" = (
+/obj/machinery/door/window/westright,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "eY" = (
-/obj/structure/mopbucket,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/research/glass,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eZ" = (
-/obj/structure/window/reinforced{
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"fa" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/kitchen/knife,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"fa" = (
-/obj/item/stock_parts/cell/high,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
+/area/awaymission/bmpship/midship)
 "fc" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/carpet,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "fe" = (
-/obj/effect/gibspawner/xeno,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
+/area/awaymission/bmpship/aft)
 "ff" = (
-/obj/structure/window/reinforced{
+/obj/machinery/biogenerator,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "fg" = (
-/obj/structure/kitchenspike,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+/obj/machinery/vending/hydroseeds,
+/obj/effect/turf_decal/tile/green{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "fi" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meatConvey2"
+/obj/structure/closet/secure_closet/miner/unlocked{
+	icon_state = "qm";
+	name = "\proper quartermaster's locker"
 	},
-/obj/item/kitchen/knife,
-/turf/open/floor/plating,
+/turf/open/floor/carpet/stellar,
 /area/awaymission/bmpship/midship)
 "fj" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meatConvey2"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"fk" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "meatConvey2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"fl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/suit_storage_unit/mining/eva,
+/turf/open/floor/carpet/stellar,
 /area/awaymission/bmpship/midship)
 "fm" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/midship)
-"fn" = (
-/obj/structure/window/reinforced{
+"fq" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"fo" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"fp" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"fq" = (
-/obj/item/stack/cable_coil,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "fr" = (
-/obj/machinery/light/small{
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "fs" = (
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 50
-	},
-/turf/open/floor/engine,
-/area/awaymission/bmpship/aft)
-"ft" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/bmpship/fore)
-"fu" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/awaymission/bmpship/fore)
-"fv" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/awaymission/bmpship/fore)
-"fw" = (
+/obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"fx" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"fy" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/awaymission/bmpship/fore)
-"fA" = (
-/obj/item/kitchen/knife,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"fB" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "meatConvey2"
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
-"fF" = (
-/obj/item/mop,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"fG" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/aft)
-"fH" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
-"fI" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
+"ft" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"fw" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"fx" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"fy" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"fF" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Fabrication Lab"
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"fG" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"fH" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "fJ" = (
-/obj/item/shard,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/area/awaymission/bmpship/fore)
-"fK" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
-/area/awaymission/bmpship/fore)
-"fL" = (
-/obj/item/stack/cable_coil{
-	amount = 5
-	},
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "fO" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/food/meat/slab/human,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
-"fP" = (
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/rack,
+/obj/item/tank/jetpack/carbondioxide,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "fQ" = (
-/obj/structure/reagent_dispensers,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/bmpship/aft)
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "fS" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "fT" = (
-/obj/structure/frame/computer{
-	anchored = 1;
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
-/area/awaymission/bmpship/fore)
-"fU" = (
-/obj/structure/frame/computer{
-	anchored = 1;
-	dir = 1
-	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/bmpship/fore)
-"fV" = (
-/obj/machinery/light/small,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/midship)
+/area/awaymission/bmpship/fore)
 "fW" = (
-/turf/open/floor/plasteel{
-	icon_state = "platingdmg3"
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "fX" = (
-/turf/open/floor/plasteel{
-	icon_state = "platingdmg1"
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "fY" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/titanium,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
+/area/awaymission/bmpship/midship)
 "fZ" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/titanium,
-/obj/structure/cable,
+/obj/machinery/door/airlock/command{
+	name = "E.V.A.";
+	req_access_txt = "18"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
+/area/awaymission/bmpship/fore)
 "ga" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
+/area/awaymission/bmpship/midship)
 "gb" = (
 /turf/closed/mineral/random,
 /area/awaymission/bmpship)
@@ -1587,119 +1534,148 @@
 	},
 /area/awaymission/bmpship)
 "gd" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"ge" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plating,
-/area/awaymission/bmpship/midship)
-"gf" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
-"gg" = (
-/obj/structure/chair/stool,
+/area/awaymission/bmpship/fore)
+"ge" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"gf" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plating/grass,
 /area/awaymission/bmpship/aft)
 "gh" = (
-/obj/structure/table,
-/obj/item/paper/fluff/ruins/crashedship/old_diary,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
+/area/awaymission/bmpship/midship)
 "gi" = (
-/obj/structure/table,
-/obj/item/pen/red,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gj" = (
-/obj/structure/closet,
-/obj/item/clothing/under/misc/overalls,
+/obj/machinery/mecha_part_fabricator/maint,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
-"gk" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
 "gl" = (
-/obj/machinery/porta_turret{
-	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/engine,
-/area/awaymission/bmpship/fore)
-"gm" = (
-/obj/machinery/light/small{
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "gn" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
+/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/vending/tool,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "go" = (
-/obj/machinery/light/small{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"gp" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "gq" = (
-/obj/structure/rack,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
-"gr" = (
-/obj/machinery/light/small{
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"gr" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "gs" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/awaymission/bmpship/midship)
-"gt" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
-/area/awaymission/bmpship/midship)
-"gv" = (
-/obj/item/wallframe/apc,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"gx" = (
-/obj/item/stack/cable_coil{
-	amount = 5
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"gy" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
 "gz" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gA" = (
-/obj/effect/decal/remains/human,
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gD" = (
-/obj/item/wallframe/apc,
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gE" = (
@@ -1708,58 +1684,46 @@
 /obj/effect/gibspawner/generic,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
-"gF" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 4
-	},
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/fore)
 "gG" = (
-/turf/open/floor/engine,
-/area/awaymission/bmpship/fore)
-"gH" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "gI" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "gJ" = (
-/obj/effect/gibspawner/robot,
-/turf/open/floor/plasteel/airless{
-	icon_state = "floorscorched2"
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "gK" = (
 /turf/closed/mineral/random,
 /area/awaymission/bmpship/fore)
 "gL" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/awaymission/bmpship/midship)
-"gM" = (
-/obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/plating/airless,
+/turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/bmpship/midship)
 "gN" = (
-/obj/structure/bed,
-/turf/open/floor/plasteel,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/grass,
 /area/awaymission/bmpship/aft)
 "gO" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/item/storage/wallet/random,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
-"gP" = (
-/obj/structure/closet,
-/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
-/obj/item/clothing/suit/apron,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gQ" = (
@@ -1767,25 +1731,13 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "gR" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 6
-	},
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/fore)
 "gS" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship)
 "gT" = (
-/obj/effect/gibspawner/robot,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"gU" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"gW" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/bmpship/midship)
 "gZ" = (
@@ -1795,95 +1747,117 @@
 /turf/template_noop,
 /area/template_noop)
 "ha" = (
-/turf/open/floor/plating/airless{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/bmpship/midship)
 "hb" = (
-/obj/effect/decal/remains/human,
+/obj/structure/cable,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hc" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
-"hd" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/aft)
-"he" = (
-/obj/structure/mirror{
-	pixel_y = 28
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/bmpship/aft)
-"hf" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/machinery/light/small{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"hf" = (
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/electronics/tracker,
+/obj/item/circuitboard/computer/solar_control,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "hg" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/awaymission/bmpship/midship)
-"hh" = (
-/obj/item/clothing/suit/caution,
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"hi" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/airless,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/midship)
 "hk" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hl" = (
-/obj/structure/sink,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "hn" = (
 /obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
-"ho" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/awaymission/bmpship/aft)
-"hp" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/awaymission/bmpship/aft)
 "hq" = (
-/obj/item/storage/box/matches,
-/obj/item/storage/fancy/cigarettes/dromedaryco,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hr" = (
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/rd,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hs" = (
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "ht" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/aft)
 "hu" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
-/turf/open/floor/engine,
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/awaymission/bmpship/aft)
 "hv" = (
 /turf/closed/mineral/diamond,
@@ -1894,94 +1868,1224 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/fore)
+"hL" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"hS" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"iw" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"iy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"jj" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"jw" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Command"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"jy" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"jD" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"kt" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"kY" = (
+/obj/machinery/door/airlock/command{
+	name = "E.V.A.";
+	req_access_txt = "18"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"lr" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Botany"
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"lT" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/grass,
+/area/awaymission/bmpship/aft)
+"mm" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Library"
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"mq" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"mx" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"oa" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"ok" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"pI" = (
+/obj/structure/frame/machine,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"pW" = (
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"rr" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"rs" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"rG" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"rI" = (
+/turf/open/floor/plasteel{
+	icon_state = "damaged5"
+	},
+/area/awaymission/bmpship/midship)
+"rZ" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"sf" = (
+/obj/structure/cable,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"sl" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"sq" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plating/grass,
+/area/awaymission/bmpship/aft)
+"sO" = (
+/turf/open/floor/plasteel{
+	icon_state = "damaged2"
+	},
+/area/awaymission/bmpship/midship)
+"sV" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet/stellar,
+/area/awaymission/bmpship/midship)
+"te" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"tD" = (
+/obj/machinery/door/window/westleft,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"un" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"wz" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"wN" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"wR" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "xA" = (
 /turf/closed/mineral/random/no_caves,
 /area/awaymission/bmpship)
+"xC" = (
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"xN" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Command"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"xO" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "ya" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "packerMine"
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/obj/machinery/button/door{
-	id = "packerMine";
-	pixel_x = -24
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"yk" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"yp" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"yz" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"yC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Command"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"yF" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"zo" = (
+/obj/machinery/door/window/eastright,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"zq" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"zs" = (
+/turf/open/floor/plasteel{
+	icon_state = "damaged1"
+	},
 /area/awaymission/bmpship/midship)
+"zD" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Ah" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"AI" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"AU" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Br" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Bs" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Bt" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"BS" = (
+/obj/machinery/door/airlock/command{
+	name = "Research Director"
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Cm" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Cs" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Workplace Aft"
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Dj" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Dk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Do" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Dp" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Dr" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "DS" = (
-/obj/machinery/hydroponics,
+/turf/open/floor/wood,
+/area/awaymission/bmpship/midship)
+"DZ" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plating/grass,
+/area/awaymission/bmpship/aft)
+"Eq" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Er" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Eu" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"EG" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"EK" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"EQ" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/modular_computer/laptop/preset/civilian{
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"EZ" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Fr" = (
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"FL" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/turf/open/floor/carpet/stellar,
+/area/awaymission/bmpship/midship)
+"FM" = (
+/obj/machinery/vending/hydronutrients,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Gt" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
-"EQ" = (
-/obj/structure/lattice,
-/turf/template_noop,
+"Gy" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Gz" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "GF" = (
-/obj/machinery/hydroponics,
+/obj/machinery/vending/wallmed{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"GL" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"GT" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/carpet/stellar,
+/area/awaymission/bmpship/midship)
+"Hm" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Hn" = (
+/obj/structure/frame/machine,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"HA" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/grass,
+/area/awaymission/bmpship/aft)
+"IA" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"IW" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Ja" = (
+/obj/machinery/seed_extractor,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Jw" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
-"Hy" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "packerMine"
+"JQ" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/awaymission/bmpship/midship)
-"IA" = (
-/obj/structure/table,
-/obj/item/gps/spaceruin,
-/turf/open/floor/carpet,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
-"Kj" = (
-/obj/machinery/light/small{
+"Kf" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/airless,
-/area/awaymission/bmpship/midship)
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"KF" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
 "KU" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "packerMed"
-	},
-/obj/machinery/button/door{
-	id = "packerMed";
-	pixel_x = -24
-	},
-/turf/open/floor/plating/airless,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/bmpship/midship)
+"Lo" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
+"LA" = (
+/obj/machinery/vending/wallmed{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"LH" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
 "Mx" = (
 /turf/closed/mineral/random,
 /area/awaymission/bmpship/midship)
-"QM" = (
-/obj/machinery/light/small{
+"MI" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Nh" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/bmpship/aft)
+"Nl" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"NV" = (
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
+"OR" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Pr" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Pu" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"PB" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"PM" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
+"PP" = (
+/obj/machinery/door/window/southleft,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"PZ" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Qv" = (
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"QL" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"QM" = (
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Sz" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"SE" = (
+/obj/machinery/door/window/northleft,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"SV" = (
+/obj/structure/chair/sofa/bench{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Ty" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"TV" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Command"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Ua" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/material/mining,
+/turf/open/floor/carpet/stellar,
+/area/awaymission/bmpship/midship)
+"Uu" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"UO" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"UY" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"VH" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Xa" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
 "Xc" = (
-/obj/structure/frame/computer{
-	anchored = 1;
+/obj/machinery/computer{
 	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
-"Zb" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
+"Yf" = (
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"Yw" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics"
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/machinery/light/small,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/aft)
+"YA" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
+"YD" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"YE" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"YX" = (
+/obj/machinery/door/airlock/mining{
+	name = "Quartermaster's Office"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Za" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/fore)
+"Zb" = (
+/turf/open/floor/carpet/stellar,
+/area/awaymission/bmpship/midship)
+"ZK" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 
@@ -2311,9 +3415,9 @@ aa
 aa
 aI
 aT
-dG
-ed
-ed
+eH
+eH
+eH
 eH
 aT
 aI
@@ -2361,13 +3465,13 @@ aa
 aa
 aI
 hE
-bV
+ya
 IA
 Xc
 Xc
 ee
-bV
-aT
+Bs
+hE
 aI
 aa
 aa
@@ -2411,16 +3515,16 @@ aa
 aa
 aI
 hE
-bV
-bV
-dH
-ef
-ef
-bV
-bV
 aT
-ft
-fu
+go
+dH
+bV
+bV
+go
+rs
+aT
+hE
+aI
 aa
 am
 aa
@@ -2461,18 +3565,18 @@ aa
 aa
 aI
 hE
-bV
-bV
-bV
-bV
-bV
-bV
-bV
-bV
 aT
-fu
-fI
-fu
+aT
+go
+rs
+YA
+bV
+go
+rs
+aT
+aT
+hE
+aI
 aa
 aa
 aa
@@ -2506,27 +3610,27 @@ aa
 aa
 aa
 cG
-gk
-bl
-bt
+gR
+gR
+gR
 hE
 hE
-bV
-bV
-cY
+aT
+aT
+aT
 dt
-bV
-eg
-bV
+rs
 bV
 bV
-fc
-fv
-fJ
-cG
+go
+Sz
+aT
+aT
+aT
 hE
-gk
-gF
+hE
+gR
+gR
 gR
 cG
 fS
@@ -2560,25 +3664,25 @@ cG
 aR
 bm
 bu
+dc
+eq
+eq
+fq
 aT
-bV
-bV
-bV
-cZ
 du
+Dr
+NV
 bV
-bV
-db
-db
-db
-dJ
+xC
+Sz
+aT
 fw
-fu
 fT
-cG
+fT
+zD
 gl
 gG
-gl
+jD
 cG
 gb
 gb
@@ -2609,27 +3713,27 @@ aa
 aa
 cG
 aS
-bn
-bm
+gI
+bw
 fc
+gI
+gI
+fG
+aT
+EQ
+iw
+NV
 bV
-bV
-bV
-da
-bV
-bV
-bV
-db
-bV
-bV
+Bt
+JQ
 aT
 fx
-fK
-fU
-cG
-gm
-gG
-gG
+gI
+gI
+dI
+gq
+gI
+EZ
 cG
 gb
 gb
@@ -2659,28 +3763,28 @@ aa
 aa
 aa
 cG
+bi
+gI
+bw
+fc
+gI
+gI
+fH
 aT
 aT
 aT
-hE
-bW
-db
-db
-bV
-bV
-bV
-bV
-db
-bV
-eT
+Lo
+KF
+aT
+aT
 aT
 fy
-fL
-fv
-cG
-cG
-gH
-cG
+gI
+gI
+dI
+gq
+gI
+LH
 cG
 gb
 gb
@@ -2710,28 +3814,28 @@ aa
 aa
 aa
 cG
-aU
-bo
-bp
-fc
-bV
-bV
-db
-db
+aW
+gI
+bw
+de
+es
+eW
+fJ
+aT
 dv
-db
-db
-db
-bV
+gG
+wN
+gG
+gG
 eU
 aT
 gn
-fw
-fw
+zo
+mx
 gd
-gn
+gq
 gI
-fv
+rs
 cG
 gb
 gb
@@ -2761,28 +3865,28 @@ aa
 aa
 aa
 cG
-aV
-bp
+aW
+gI
 bv
-aT
-aT
-aT
-aT
-aT
-aT
-dJ
-aT
-aT
-fc
-aT
-aT
-aT
-aT
-aT
-aT
+dV
+dV
+dV
+dV
+fZ
 go
-fI
-fv
+gI
+eh
+gI
+gI
+bv
+kY
+UY
+UY
+UY
+UY
+go
+gI
+rs
 cG
 gb
 gb
@@ -2813,27 +3917,27 @@ aa
 aa
 cG
 aW
-bp
-bv
-aq
-bX
-ce
-ce
-ce
-dw
-dg
-ce
-ce
-ce
-dw
-ce
-ce
-ce
-ce
-aq
-gp
 gI
-gp
+bw
+dW
+bX
+eX
+fO
+aT
+dw
+gJ
+Za
+gJ
+gJ
+Dk
+aT
+Pu
+tD
+GL
+Eu
+gq
+gI
+rs
 gK
 gb
 gb
@@ -2863,29 +3967,29 @@ aa
 aa
 aa
 cG
-aV
-bp
+aW
+gI
 bw
-aq
-bY
-cp
-ce
-ce
-dg
-dg
-ce
-ce
-ce
-ce
-ce
-ce
-ce
-fV
-aq
+aW
+gI
+gI
+fQ
+aT
+aT
+aT
+jw
+TV
+aT
+aT
+aT
+YE
+gI
+gI
+rs
 gq
-gp
-ft
-gp
+gI
+rs
+cG
 gb
 gb
 gb
@@ -2914,28 +4018,28 @@ aa
 aa
 aa
 cG
-aW
-bp
-bv
-aq
+bx
+cf
+cW
+dX
 bZ
-bZ
+gI
 GF
-dc
-dg
-dB
-dB
-dB
-dB
-dB
-dB
-dB
-ce
-ce
-aq
+aT
+QL
+gG
+wN
+gG
+gG
+Nl
+aT
+LA
+gI
+PZ
+wR
 ft
 gJ
-gp
+iw
 aT
 gb
 gb
@@ -2965,28 +4069,28 @@ aa
 aa
 aa
 cG
-aV
-bp
-bv
-aq
-ca
-cq
-cq
-dd
-dg
-dB
-eh
-eh
-eI
-eh
-ej
-dB
-ce
-ce
-aq
-gr
+aT
+bq
+aT
+aW
 gI
-fv
+gI
+bv
+aT
+yp
+gI
+eh
+gI
+gI
+Er
+aT
+go
+gI
+gI
+rs
+aT
+bq
+aT
 gK
 gb
 gb
@@ -3016,28 +4120,28 @@ aa
 aa
 aa
 cG
-aX
+aT
 bp
-bx
-aq
+aT
+dY
 cb
-cq
+cb
 cJ
-dd
-dg
-dB
-eh
-ey
-eh
-ej
-ej
-dB
-ce
-ce
-aq
-fv
-gp
-gp
+aT
+cH
+gJ
+Za
+gJ
+gJ
+PB
+aT
+kt
+Dp
+Dp
+yF
+aT
+bp
+aT
 gK
 gb
 gb
@@ -3070,25 +4174,25 @@ aI
 aY
 bq
 aT
-aq
-cc
-cq
-cq
-de
-dg
-dB
-eh
-ej
-ej
-ej
-fe
-dB
-ce
-ce
-aq
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+yC
+xN
+aT
+aT
+aT
+aT
+aT
+aT
+aT
 aT
 gK
-aT
+aY
 gK
 gb
 gb
@@ -3122,19 +4226,19 @@ aa
 aa
 aa
 aq
-ca
-cr
-cq
+cK
+cK
+cK
 dd
-dg
-dB
-ei
-ei
+eV
 eJ
-ei
+en
+QM
+eJ
+eV
 ff
-dB
-ce
+Jw
+Jw
 fW
 aq
 gb
@@ -3174,19 +4278,19 @@ aa
 aa
 aq
 DS
-cd
-cd
+DS
+DS
 df
-dg
-dL
-ej
-ej
-ej
 eV
-ej
-dL
-ce
-ce
+QM
+en
+QM
+QM
+eV
+Ja
+QM
+QM
+wz
 aq
 gb
 gb
@@ -3224,21 +4328,21 @@ aa
 aa
 aa
 aq
-bY
-ce
-ce
-ce
-ce
-dg
-dg
-dg
-dg
-dg
-dg
-fA
-ej
+et
+cK
+cK
+df
+mm
+QM
+en
+QM
+QM
+lr
+ZK
+QM
+QM
 fX
-ge
+aq
 gb
 gb
 gb
@@ -3272,23 +4376,23 @@ aa
 aa
 aa
 aa
-am
-ap
+aa
+aa
 aq
-ce
-ce
-ce
-ce
-ce
-ce
-ek
-dg
-ce
-ce
+DS
+DS
+DS
+df
+eV
+QM
+en
+QM
+QM
+eV
 fg
-ce
-ce
-fW
+QM
+QM
+wz
 fm
 Mx
 gb
@@ -3323,23 +4427,23 @@ aa
 aa
 aa
 aa
-ap
-aq
-aq
-aq
+aa
+gL
 aq
 cK
-aq
-aq
-dN
-dg
-dg
-eK
-aq
-aq
 cK
-aq
-aq
+cK
+dd
+eV
+QM
+en
+QM
+QM
+eV
+FM
+Gt
+Gt
+ok
 fm
 aq
 Mx
@@ -3371,28 +4475,28 @@ aa
 aa
 aa
 aa
-am
 aa
-EQ
+aa
+aa
+gL
+hg
 aq
-gt
 aq
-cf
-cs
-cL
-ce
-ce
-ce
-ce
-dg
-ce
-ce
-ce
-ce
-ce
-ce
+aq
+aq
+aq
+aq
+Gz
+en
+QM
+rZ
+aq
+aq
+aq
+aq
+aq
 fm
-gs
+aq
 aq
 Mx
 gb
@@ -3420,31 +4524,31 @@ aa
 aa
 aa
 aa
-am
 aa
 aa
-EQ
-gt
-at
-ha
+aa
+aa
+gL
+hg
 aq
-cg
+aq
+dg
 cs
 cM
 dg
-dg
-dg
-dg
-dg
-dg
-dg
-dg
-dg
-dg
-fV
-fm
+aq
+QM
+en
+QM
+QM
+aq
+Zb
+GT
+sV
+FL
+aq
 gs
-gs
+gT
 Mx
 Mx
 gb
@@ -3472,31 +4576,31 @@ aa
 aa
 aa
 aa
-am
-EQ
+aa
+aa
 gL
 hg
-ha
-at
+cL
+cY
 aq
-ch
-cs
+dg
+cN
 cN
 dg
-ce
-dO
-ce
-ce
-ce
-ce
-dO
-ce
-dg
-ce
-fm
-at
-gL
+dA
+QM
+en
+QM
+QM
+aq
+Zb
+Zb
+Ua
+Zb
+aq
+QM
 gs
+gT
 Mx
 Mx
 gb
@@ -3523,32 +4627,32 @@ aa
 aa
 aa
 aa
-ap
-aq
+aa
+gL
 hg
-at
-hg
-by
-aq
-ci
+bH
+ha
+ha
+KU
+dg
 ct
 cO
 dg
 dA
-dP
-el
-ce
-ce
-dA
+QM
+en
+QM
+QM
+aq
 fi
-fB
-dg
-ce
-fm
-gt
-gM
+Zb
+Zb
+Zb
+YX
+rI
+QM
 gT
-gt
+gT
 aq
 Mx
 gb
@@ -3567,7 +4671,8 @@ aa
 aa
 "}
 (32,1,1) = {"
-ab
+aa
+aa
 aa
 aa
 aa
@@ -3575,32 +4680,31 @@ aa
 aa
 aa
 aq
-as
 at
 ha
-at
-at
+ha
+ha
+KU
+dg
+dg
+dg
+dg
+dB
+QM
+en
+QM
+QM
 aq
-ce
-ce
-ce
-dg
-dB
-dQ
-dB
-ce
-eL
-dB
 fj
-dB
-dg
 Zb
-fm
-Kj
-at
+Zb
+Zb
+aq
+QM
+QM
+QM
 gs
-gL
-gs
+gT
 fm
 gb
 gb
@@ -3625,33 +4729,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-at
-at
-bb
+az
 ha
-at
+ha
+ha
 KU
-ce
-ce
-ce
 dg
-dB
-dP
-dB
-ce
-ce
-dB
-fk
-dB
+cs
+cM
 dg
-ce
-ya
-at
+dA
+QM
+en
+QM
+QM
+aq
+aq
+aq
+aq
+aq
+aq
+QM
+QM
+zs
+QM
 gs
-at
-at
-gL
 fm
 gb
 gb
@@ -3676,33 +4780,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-au
-at
-at
-at
-at
+ha
+ha
+ha
+ha
 bK
-ce
-ce
-ce
 dg
-dB
-dP
-dB
-ce
-ce
-dB
-fk
-dB
+cN
+cN
 dg
-ce
-Hy
-at
-gt
-at
-at
-at
+dA
+QM
+en
+QM
+QM
+aq
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+sO
 fm
 gb
 gb
@@ -3727,33 +4831,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-av
-at
-at
-at
-at
-bK
-ce
-ce
-ce
+aA
+aA
+ha
+ha
+ea
 dg
-dB
-dP
-dB
-eC
-ce
-dB
-fk
-dB
+ct
+cO
 dg
-ce
-Hy
-gs
-at
-at
-gs
-at
+aq
+QM
+en
+QM
+QM
+aq
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
 fm
 fS
 fS
@@ -3778,33 +4882,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-aw
-at
-as
-at
-bA
 aq
-cj
-cu
-ce
-dg
-dB
-dP
-dB
-ce
-ce
-dB
-fk
-dB
-dg
-Zb
-fm
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+Gz
+en
 QM
-at
-at
-at
-hg
+rZ
+aq
+QM
+PM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
+QM
 fm
 fS
 fS
@@ -3829,33 +4933,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-ax
-at
-at
-at
+aB
+bL
+cS
 bB
-aq
+ef
 ck
 cu
-ce
-dg
-dB
-dR
-dB
-ce
-ce
-dB
-dR
-dB
-dg
-ce
-fm
-gv
-at
-at
-at
-hh
+cu
+ga
+aq
+QM
+en
+QM
+QM
+aq
+EK
+EK
+EK
+aq
+aq
+QM
+QM
+QM
+QM
+QM
 fm
 aa
 aa
@@ -3880,33 +4984,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-at
-at
+aC
 bc
-at
+QM
 bC
 aq
 cl
-ce
-cP
-dg
-dB
-dS
-dB
-ce
-ce
-dB
-dS
-dB
-dg
-ce
-fm
-gy
-at
-at
-ha
-hh
+eZ
+QM
+ge
+aq
+QM
+en
+QM
+QM
+aq
+QM
+QM
+QM
+oa
+aq
+QM
+QM
+QM
+QM
+QM
 fm
 aa
 aa
@@ -3931,33 +5035,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-az
-at
-at
-at
+aE
+bO
+QM
 bA
-aq
+eg
 cj
-cu
-ce
-dg
-dg
-dT
-dg
-dg
-dg
-dg
-dT
-dg
-dg
-Zb
-fm
-gx
-at
-gU
-at
-hh
+eZ
+QM
+ge
+Br
+QM
+en
+QM
+QM
+Do
+QM
+QM
+QM
+QM
+Do
+QM
+QM
+QM
+QM
+QM
 fm
 aa
 aa
@@ -3982,33 +5086,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-aA
-at
-at
-at
-bB
-aq
+aF
+QM
+QM
+bA
+ef
 cm
-ce
-ce
-ce
-ce
-dU
-em
-ce
-dg
-eW
-fl
-ce
-ce
-ce
-fm
-gy
-at
-gU
-at
-hi
+eZ
+QM
+ge
+aq
+QM
+en
+QM
+QM
+aq
+QM
+QM
+QM
+QM
+aq
+QM
+QM
+QM
+QM
+QM
 fm
 aa
 aa
@@ -4033,33 +5137,33 @@ aa
 aa
 aa
 aa
+aa
 aq
-aq
-aq
+aG
 be
+be
+cZ
 aq
+eE
+fa
+fY
+gh
 aq
-aq
-aq
-aq
-aq
-aq
-aq
-aq
+IW
 en
-ce
-dg
-eX
-fm
-fm
-fm
-fm
-fm
-fm
-fm
-gW
-fm
-fm
+QM
+Gy
+aq
+rr
+SV
+YD
+hS
+aq
+QM
+QM
+QM
+QM
+QM
 fm
 aa
 aa
@@ -4080,40 +5184,40 @@ aa
 aa
 aa
 aa
+aa
 ac
-ho
 aj
 an
-ac
-aB
-aM
-aM
-aM
-aM
-bL
-ac
-cv
-cw
-cw
-cw
-cw
-eo
-cw
-cQ
-eo
-cw
-cw
-fO
-ac
-cE
-gz
-gg
-dl
-cE
-hk
+an
 ht
-ho
-aj
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+eo
+Cs
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+ht
+hu
+hu
 hu
 dk
 aa
@@ -4131,41 +5235,41 @@ aa
 aa
 aa
 aa
+aa
 ht
-ag
 ah
 ag
-ac
-aC
-al
-al
-al
-al
+au
+ht
+aM
+bP
+bP
 bM
-ac
+bM
+eG
 cv
+ht
 cQ
-cQ
-cQ
-cQ
+MI
+MI
 ep
-cQ
-cQ
-ep
-cQ
-cQ
-cw
-ac
-cE
-cE
-cE
-dl
-cE
+MI
+Dj
+ht
+Kf
+Eq
+Eq
+Eq
+Eq
+Eq
+Eq
+Eq
+Eq
 hk
 ht
-ag
-ah
-ag
+Uu
+VH
+jj
 ac
 aa
 aa
@@ -4182,41 +5286,41 @@ aa
 aa
 aa
 aa
+aa
 ht
-ah
-ah
+aN
 ao
-ac
+av
 aD
-al
-al
-al
-aO
-bN
-ac
-cw
-cw
-cw
-cw
-dV
-eq
-eD
-eD
-eq
-fn
-cQ
-cw
-fY
+aN
 cE
-al
+cE
+cE
+cE
+cE
+cA
+ht
+gr
+cE
 cE
 dl
-hb
 cE
+eP
 ht
-hp
-ah
-ah
+hq
+cE
+cE
+cE
+cE
+cE
+cE
+cE
+cE
+xO
+BS
+hq
+ao
+xO
 ac
 aa
 aa
@@ -4233,41 +5337,41 @@ aa
 aa
 aa
 aa
+aa
 ht
-ac
-ak
-ac
-ac
-aE
 aN
-bh
-al
-al
-bO
-ac
-cx
-ac
-dk
-cw
-dW
-er
-al
-er
-eY
-fo
-cQ
-cw
-ac
 cE
-cE
-gN
-dl
-hc
-al
+aw
 ht
-ac
-ak
-ac
+aN
+cE
+cE
+cE
+cE
+cE
+cA
+cR
+gr
+cE
+cE
+dl
+cE
+eP
+eY
+hq
+cE
+lT
+gN
+gN
+gN
+gN
+HA
+cE
+xO
+ht
+Pr
+cE
+xO
 ac
 aa
 aa
@@ -4284,40 +5388,40 @@ aa
 aa
 aa
 aa
+aa
 ht
-ai
 al
-al
-ac
-aF
-al
-al
-al
-al
-bM
-ac
-cy
+ap
+av
+ht
+aN
+cE
+cE
+da
+cE
+cE
+cA
 cR
-ac
-cw
-dW
-er
-eE
-al
-al
-fo
-cQ
-cw
-ac
-gf
+gr
 cE
 cE
 dl
 cE
+eP
+eY
+hq
 cE
+sq
+gf
+gf
+gf
+gf
+DZ
+cE
+xO
 ht
 hq
-al
+Fr
 ai
 ac
 aa
@@ -4335,39 +5439,39 @@ aa
 aa
 aa
 aa
+aa
 ae
 ht
-al
-al
+as
 ar
-aG
-al
-al
-al
+ht
 aN
-bM
-ac
-cz
-cS
-ac
-cw
-dX
-es
-eF
-eF
-eZ
-fp
-cQ
-cQ
-fZ
-dl
-gA
-gO
-dl
-gN
 cE
-fY
-al
+cE
+cE
+cE
+cE
+cA
+ht
+gr
+cE
+cE
+dl
+cE
+eP
+ht
+hq
+cE
+cE
+cE
+cE
+cE
+cE
+cE
+cE
+xO
+ht
+AU
 hs
 ht
 ae
@@ -4387,41 +5491,41 @@ aa
 aa
 aa
 aa
+ab
 ae
 ht
-al
-ac
-aG
-al
-bi
-al
-al
-bP
-ac
+ax
+ht
+aN
+cE
+cE
+cE
+cE
+cE
 cA
-cT
-ac
-cw
-cw
-cw
-cw
-cw
-cw
-cw
-cw
-fP
-ac
-gg
+ht
+gz
+mq
+cE
 dl
 cE
-cE
-cE
-cE
+eP
+ht
+Cm
+gD
+gD
+gD
+gD
+gD
+gD
+gD
+gD
+zq
 ht
 hr
 ht
 ae
-aa
+ab
 aa
 aa
 aa
@@ -4439,35 +5543,35 @@ aa
 aa
 aa
 aa
+aa
 ae
 ht
 ht
-aG
-al
-bj
-al
-al
+aX
+eS
+cT
+eS
 bQ
-ac
+eS
 cB
-cU
-ac
+ht
+gA
 dC
-cw
-cw
-cw
-cw
-dC
-cw
-fF
-fQ
-ac
-gh
+cE
 dl
-gN
 cE
-gN
-cE
+eP
+ht
+ht
+fF
+ht
+ht
+ht
+Yw
+ht
+ht
+ht
+Nh
 ht
 ac
 ae
@@ -4491,34 +5595,34 @@ aa
 aa
 aa
 aa
+aa
 ae
 ht
-aG
-al
-bk
-al
-al
+bR
+hu
 bR
 ht
+bR
+hu
+bR
 ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-gi
+gO
+yk
+cE
 dl
 cE
-cE
-cE
-cE
+eP
+ht
+sl
+Eq
+UO
+ht
+gi
+Eq
+UO
+ht
+hl
+hl
 ht
 ae
 aa
@@ -4544,32 +5648,32 @@ aa
 aa
 aa
 ht
-aG
-al
-al
-al
-al
+ht
+bh
+bs
+cU
+ht
 bN
-ac
+bU
+fe
+ht
+cV
+dD
 cE
-cV
-cV
-dD
-dY
-et
-eG
-eP
-dD
-cV
-cV
-cV
-ac
-gf
 dl
 cE
+eP
 ht
-hd
+pI
+Ty
+xO
 ht
+pI
+cE
+xO
+ht
+hl
+hl
 ht
 aa
 aa
@@ -4595,31 +5699,31 @@ aa
 aa
 aa
 ht
-aG
-aO
-al
-al
-al
-bM
-ak
-cE
-cE
-dl
-dl
-dl
-dl
-dl
-dl
-fa
-dl
-dl
-dm
-ga
-dl
-dl
-cE
 ht
-he
+bs
+cc
+bs
+ht
+bU
+eT
+bU
+ht
+gA
+dC
+cE
+dl
+cE
+eP
+ht
+hq
+cE
+xO
+ht
+Xa
+cE
+xO
+ht
+hl
 hl
 ht
 aa
@@ -4647,28 +5751,28 @@ aa
 aa
 ae
 ht
-aP
-aP
 bs
-bH
+bs
+bs
+ht
+bU
+bU
 bU
 ht
-cE
-cE
 dm
-al
-al
-al
-al
-al
-al
-al
-cE
-al
-ac
+rG
+Ah
+AI
+Ah
+jy
+ht
+EG
+Hn
+hs
+ht
 gj
 gD
-gP
+hs
 ht
 hf
 ht
@@ -4705,16 +5809,16 @@ ht
 ht
 ht
 ht
-cE
-dm
-dm
-ea
-dm
-dm
-ea
-al
-fq
-cE
+ac
+ac
+ac
+ac
+pW
+Qv
+ac
+ac
+ac
+ac
 ht
 ht
 ht
@@ -4756,16 +5860,16 @@ aa
 aa
 ae
 ac
-cW
-dm
-al
+ht
+hb
+te
 eb
-al
-al
-eb
-al
-al
-fG
+un
+un
+un
+hL
+sf
+ht
 ht
 ae
 aa
@@ -4807,16 +5911,16 @@ aa
 aa
 aa
 ac
-cX
+ht
 fr
 cX
-cX
-cX
-cX
-cX
-cX
-fr
-fH
+cE
+cE
+cE
+cE
+Hm
+OR
+ht
 ht
 aa
 aa
@@ -4859,14 +5963,14 @@ aa
 aa
 ac
 ht
-ht
-ak
-ht
-ht
-ac
-ht
-ak
-ht
+hc
+PP
+cE
+cE
+cE
+cE
+SE
+iy
 ht
 ht
 aa
@@ -4911,12 +6015,12 @@ aa
 ae
 ht
 dq
-ah
-ah
-ht
-ht
+Yf
 eS
-ah
+eS
+eS
+eS
+yz
 fs
 ht
 ae
