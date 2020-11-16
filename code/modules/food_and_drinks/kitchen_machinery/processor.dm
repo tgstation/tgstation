@@ -66,7 +66,7 @@
 		var/obj/item/storage/T = O
 		var/loaded = 0
 		for(var/obj/S in T.contents)
-			if(!is_type_in_typecache(S, allowed_cookables))
+			if(!IS_EDIBLE(S))
 				continue
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
