@@ -141,7 +141,7 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location)
+		new /obj/effect/reality_smash(chosen_location)
 		smashes++
 
 /obj/effect/broken_illusion
