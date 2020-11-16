@@ -35,20 +35,6 @@
 /obj/item/food/donut/proc/in_box_sprite()
 	return "[icon_state]_inbox"
 
-/*
-/obj/item/food/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
-	if(last_check_time + 50 < world.time)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
-				to_chat(H,"<span class='notice'>I love this taste!</span>")
-				H.adjust_disgust(-5 + -2.5 * fraction)
-				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
-				last_check_time = world.time
-				return
-	..()
-*/
-
 //Use this donut ingame
 /obj/item/food/donut/plain
 
