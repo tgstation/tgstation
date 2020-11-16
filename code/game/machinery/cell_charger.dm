@@ -136,6 +136,4 @@
 	charging.give(main_draw)
 	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
 
-	//if(directly_use_power(charge_rate * delta_time))
-	//	charging.give(charge_rate * delta_time)
 	update_icon()
