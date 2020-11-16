@@ -220,6 +220,7 @@
 	density = FALSE //allows shuttle airlocks to close, nothing but an approved passenger gets past CanPass
 	locked = TRUE
 	use_power = FALSE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
@@ -231,9 +232,16 @@
 	if(mover in approved_passengers)
 		set_scanline("scanning", 10)
 		return TRUE
+	if(isitem(mover))
+		return TRUE
+	if(isstructure(mover))
+		var/obj/structure/struct = mover
+		for(var/mob/living/rat in struct.contents)
+			say("<span class='robot'>Stowaway detected. Please exist the structure first.</span>")
+			return FALSE
+		return TRUE
 
-	if(!isliving(mover)) //No stowaways
-		return FALSE
+	return FALSE
 
 /obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
@@ -246,7 +254,7 @@
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
-	if(!isliving(AM))
+	if(!isliving(AM) && !isvehicle(AM))
 		alarm_beep()
 		return ..()
 
@@ -258,9 +266,20 @@
 		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
 			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
-	else
+	else if(isliving(AM))
 		var/mob/living/L = AM
 		account = L.get_bank_account()
+
+	else if(isvehicle(AM))
+		var/obj/vehicle/vehicle = AM
+		for(var/passenger in vehicle.occupants)
+			if(!isliving(vehicle.occupants[passenger]))
+				continue
+			var/mob/living/rider = vehicle.occupants[passenger]
+			if(vehicle.is_driver(rider))
+				var/obj/item/card/id/id = rider.get_idcard(TRUE)
+				account = id.registered_account
+				break
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
