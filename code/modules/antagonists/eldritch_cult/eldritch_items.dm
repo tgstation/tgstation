@@ -210,8 +210,6 @@
 	// slightly worse than normal cult robes
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
-	///reference to the componenet so we dont have to call get_component every time we toggle hood
-	var/datum/component/storage/concrete/pockets/void_cloak/cloak
 	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()

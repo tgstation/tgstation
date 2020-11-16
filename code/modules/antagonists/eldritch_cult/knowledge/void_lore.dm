@@ -36,12 +36,14 @@
 
 /datum/eldritch_knowledge/void_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)  || H.has_status_effect(/datum/status_effect/eldritch/void)
-		if(E)
-			E.on_effect()
-			H.silent += 3
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)  || H.has_status_effect(/datum/status_effect/eldritch/void)
+	if(!E)
+		return
+	E.on_effect()
+	H.silent += 3
 
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
