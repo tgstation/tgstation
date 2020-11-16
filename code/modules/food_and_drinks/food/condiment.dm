@@ -82,7 +82,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
-	else if(target.is_drainable() || istype(target, /obj/item/reagent_containers/food/snacks))
+	else if(target.is_drainable() || IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
@@ -244,12 +244,11 @@
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	. = ..()
 	if(!proximity)
 		return
 
 	//You can tear the bag open above food to put the condiments on it, obviously.
-	if(istype(target, /obj/item/reagent_containers/food/snacks))
+	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>You tear open [src], but there's nothing in it.</span>")
 			qdel(src)
@@ -262,6 +261,8 @@
 			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
 			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
+			return
+	. = ..()
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
 	if(reagents.reagent_list.len > 0)
