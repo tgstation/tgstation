@@ -123,7 +123,7 @@
 	max_amount = 12
 	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT * 2
 	absorption_rate = 0.25
 	absorption_capacity = 5
 	splint_factor = 0.35

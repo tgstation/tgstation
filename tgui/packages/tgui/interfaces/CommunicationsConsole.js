@@ -3,6 +3,7 @@ import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
+import { sanitizeText } from "../sanitize";
 
 const STATE_BUYING_SHUTTLE = "buying_shuttle";
 const STATE_CHANGING_STATUS = "changing_status";
@@ -609,6 +610,10 @@ const PageMessages = (props, context) => {
       );
     }
 
+    const textHtml = {
+      __html: sanitizeText(message.content),
+    };
+
     messageElements.push((
       <Section
         title={message.title}
@@ -623,7 +628,8 @@ const PageMessages = (props, context) => {
             })}
           />
         )}>
-        <Box>{message.content}</Box>
+        <Box
+          dangerouslySetInnerHTML={textHtml} />
 
         {answers}
       </Section>

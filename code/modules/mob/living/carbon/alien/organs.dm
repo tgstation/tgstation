@@ -137,7 +137,7 @@
 	owner.stuttering += 30
 
 	recent_queen_death = TRUE
-	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
+	owner.throw_alert("alien_noqueen", /atom/movable/screen/alert/alien_vulnerable)
 	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
 
