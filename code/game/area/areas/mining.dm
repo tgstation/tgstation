@@ -126,7 +126,7 @@
 /area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
-	map_generator = /datum/map_generator/cave_generator
+	map_generator = /datum/map_generator/cave_generator/lavaland
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
@@ -167,7 +167,7 @@
 
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
-	map_generator = /datum/map_generator/cave_generator
+	map_generator = /datum/map_generator/cave_generator/icemoon/surface
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
@@ -186,11 +186,10 @@
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
-	map_generator = /datum/map_generator/cave_generator
-
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
+	map_generator = /datum/map_generator/cave_generator/icemoon
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"
