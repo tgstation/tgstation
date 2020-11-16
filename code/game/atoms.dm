@@ -1503,6 +1503,7 @@
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
+	UNSETEMPTY(filter_data)
 
 /obj/item/update_filters()
 	. = ..()
@@ -1518,6 +1519,10 @@
 	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
+
+/atom/movable/proc/animate_filter(name, time, loop, easing, flags, x, y, size, offset, radius, size, color, repeat)
+	var/filter = get_filter(name)
+	animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, radius = radius, size = size, color = color, repeat = repeat)
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

@@ -56,7 +56,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.alpha = alpha
 		if(texture_layer_icon_state)
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-			source.filters += cached_texture_filter
+			source. += cached_texture_filter
 
 	if(alpha < 255)
 		source.opacity = FALSE
