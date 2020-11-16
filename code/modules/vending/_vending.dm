@@ -305,6 +305,8 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
   */
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, start_empty = FALSE)
+	default_price = round(initial(default_price) * SSeconomy.inflation_value())
+	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		if(isnull(amount))
@@ -318,6 +320,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
+		///Prices of vending machines are all increased uniformly.
 		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
 		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
@@ -332,6 +335,8 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
   */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
+	default_price = round(initial(default_price) * SSeconomy.inflation_value())
+	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
 		var/atom/potential_product = record.product_path

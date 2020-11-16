@@ -1,0 +1,6 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "Fixed \"Show All\" tab in player panel logs being broken."
+  - bugfix: "Whispers display differently in logs, distinguishing them from say logs in display."
+  - refactor: "Player panel logs will now show all logs chronologically, so you'll see commingled say and attack logs if you're on the \"Show All\" tab, etc..."
