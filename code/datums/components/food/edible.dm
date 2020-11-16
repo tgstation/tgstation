@@ -385,21 +385,21 @@ Behavior that's still missing from this component that original food items had t
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
 
-/datum/component/edible/proc/toxic_disgustless(fraction, var/mob/living/carbon/human/H)
+/datum/component/edible/proc/toxic_disgustless(fraction, /mob/living/carbon/human/H)
 	to_chat(H, "<span class='warning'>You don't feel so good...</span>")
 	H.adjust_disgust(25 + 30 * fraction)
 
-/datum/component/edible/proc/toxic_disgust(fraction, var/mob/living/carbon/human/H)
+/datum/component/edible/proc/toxic_disgust(fraction, /mob/living/carbon/human/H)
 	to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
 	H.adjust_disgust(25 + 30 * fraction)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "toxic_food", /datum/mood_event/disgusting_food)
 
-/datum/component/edible/proc/gross_disgust(fraction, var/mob/living/carbon/human/H)
+/datum/component/edible/proc/gross_disgust(fraction, /mob/living/carbon/human/H)
 	to_chat(H,"<span class='notice'>That didn't taste very good...</span>")
 	H.adjust_disgust(11 + 15 * fraction)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
 
-/datum/component/edible/proc/love_flavor(fraction, var/mob/living/carbon/human/H)
+/datum/component/edible/proc/love_flavor(fraction, /mob/living/carbon/human/H)
 	to_chat(H,"<span class='notice'>I love this taste!</span>")
 	H.adjust_disgust(-5 + -2.5 * fraction)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
