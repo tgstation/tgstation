@@ -5,7 +5,7 @@
 	name = "black shoes"
 	icon_state = "black"
 	desc = "A pair of black shoes."
-	custom_price = 50
+	custom_price = PAYCHECK_ASSISTANT
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

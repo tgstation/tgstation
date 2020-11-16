@@ -25,3 +25,15 @@
 	name = "enchanted 7.62 bullet"
 	damage = 20
 	stamina = 80
+
+// Harpoons (Harpoon Gun)
+
+/obj/projectile/bullet/harpoon
+	name = "harpoon"
+	icon_state = "gauss"
+	damage = 60
+	armour_penetration = 50
+	wound_bonus = -20
+	bare_wound_bonus = 80
+	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	wound_falloff_tile = -5
