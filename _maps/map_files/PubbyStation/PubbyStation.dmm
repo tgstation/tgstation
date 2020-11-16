@@ -28268,32 +28268,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"byu" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/northleft{
-	dir = 2;
-	name = "Chemistry Desk";
-	req_access_txt = "5; 69"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters";
-	name = "chemistry shutters"
-	},
-/obj/item/folder/white,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/medical/chemistry)
 "byv" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
@@ -90489,7 +90463,7 @@ bsH
 blo
 crd
 cqs
-byu
+bpW
 brk
 bsK
 bsK
