@@ -23,14 +23,14 @@
 			if(0 to 15)
 				to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [dir2text(dir)] of you!</span>")
 			if(16 to 31)
-				to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [dir2text(dir)] of you!</span>")
+				to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinity. They are to the [dir2text(dir)] of you!</span>")
 			if(32 to 127)
 				to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!</span>")
 			else
 				to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
 
 	if(target.stat == DEAD)
-		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
+		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them to a transmutation rune!</span>")
 
 /datum/action/innate/heretic_shatter
 	name = "Shattering Offer"
