@@ -4636,7 +4636,6 @@
 /obj/structure/closet/secure_closet/engineering_welding{
 	req_access = list(54)
 	},
-/obj/structure/cable,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
