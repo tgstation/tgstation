@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Things made of edible materials are more consistently edible, and can no longer be eaten multiple times over by spam clicking them. One serving per pizza floor only, please."
