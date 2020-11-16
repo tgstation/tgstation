@@ -958,7 +958,7 @@ nobiliumsuppression = INFINITY
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
+			air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 		return REACTING
 	return NO_REACTION
 
