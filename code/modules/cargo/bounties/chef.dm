@@ -75,7 +75,7 @@
 	name = "Poppy Pretzel"
 	description = "Central Command needs a reason to fire their HR head. Send over a poppy pretzel to force a failed drug test."
 	reward = 3000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/poppypretzel)
+	wanted_types = list(/obj/item/food/poppypretzel)
 
 /datum/bounty/item/chef/cubancarp
 	name = "Cuban Carp"
@@ -87,7 +87,7 @@
 	name = "Hot Dog"
 	description = "Nanotrasen is conducting taste tests to determine the best hot dog recipe. Ship your station's version to participate."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/hotdog)
+	wanted_types = list(/obj/item/food/hotdog)
 
 /datum/bounty/item/chef/eggplantparm
 	name = "Eggplant Parmigianas"
@@ -101,13 +101,13 @@
 	description = "The Muffin Man is visiting CentCom, but he's forgotten his muffins! Your order is to rectify this."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/muffin)
+	wanted_types = list(/obj/item/food/muffin)
 
 /datum/bounty/item/chef/chawanmushi
 	name = "Chawanmushi"
 	description = "Nanotrasen wants to improve relations with its sister company, Japanotrasen. Ship Chawanmushi immediately."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/chawanmushi)
+	wanted_types = list(/obj/item/food/chawanmushi)
 
 /datum/bounty/item/chef/kebab
 	name = "Kebabs"
@@ -120,14 +120,14 @@
 	name = "Soylent Green"
 	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you endulge them, expect a pleasant bonus."
 	reward = 5000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/soylentgreen)
+	wanted_types = list(/obj/item/food/soylentgreen)
 
 /datum/bounty/item/chef/pancakes
 	name = "Pancakes"
 	description = "Here at Nanotrasen we consider employees to be family. And you know what families love? Pancakes. Ship a baker's dozen."
 	reward = 5000
 	required_count = 13
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/pancakes)
+	wanted_types = list(/obj/item/food/pancakes)
 
 /datum/bounty/item/chef/nuggies
 	name = "Chicken Nuggets"
