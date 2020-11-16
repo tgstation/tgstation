@@ -214,3 +214,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EWDIRFLIP(d)     (d^(EAST|WEST))
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
+
+/// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
+#define MAX_BITFLAG_DIGITS 8

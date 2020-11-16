@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Multiple input fields on paper should no longer lead to fields disappearing when filled. Bureaucrats rejoice!"

@@ -163,7 +163,7 @@
 		return
 	AI_notify_hack()
 	if(do_after(ninja, 300))
-		var/announcement_pick = rand(0, 2)
+		var/announcement_pick = rand(0, 1)
 		switch(announcement_pick)
 			if(0)
 				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")

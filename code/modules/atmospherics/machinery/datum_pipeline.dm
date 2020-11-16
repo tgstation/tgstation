@@ -19,6 +19,8 @@
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
+		if(!QDELETED(P))
+			SSair.add_to_rebuild_queue(P)
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
 	return ..()
