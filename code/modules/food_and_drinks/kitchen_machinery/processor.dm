@@ -14,9 +14,6 @@
 	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
-	var/static/list/allowed_cookables = typecacheof(list(
-		/obj/item/food,
-		/obj/item/reagent_containers/food))
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

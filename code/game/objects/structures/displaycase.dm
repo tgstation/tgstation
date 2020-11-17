@@ -582,6 +582,6 @@
 
 /obj/structure/displaycase/forsale/insert_showpiece(obj/item/wack, mob/user)
 	if(!IS_EDIBLE(wack))
-		to_chat(user, "<span class='notice'>\The [src] smartly rejects [wack], as it only accepts food and drink.</span>")
+		to_chat(user, "<span class='notice'>\The [src] smartly rejects [wack], as it only accepts food and drinks.</span>")
 		return TRUE
 	. = ..()
