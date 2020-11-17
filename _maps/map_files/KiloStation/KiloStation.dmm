@@ -41623,7 +41623,7 @@
 	name = "Hallway Hatch"
 	},
 /obj/structure/window/reinforced,
-/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/food/pie/cream,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bmT" = (
@@ -43772,7 +43772,7 @@
 /obj/structure/mirror{
 	pixel_x = -26
 	},
-/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/food/pie/cream,
 /obj/item/clothing/head/lobsterhat,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -55684,11 +55684,6 @@
 /obj/item/key/security,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"bIT" = (
-/obj/machinery/power/apc/auto_name/east,
-/obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/prison)
 "bIU" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - O2";
@@ -89784,6 +89779,15 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
 /area/security/prison)
+"ddv" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Prison Forestry"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/security/prison)
 "dgX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -89881,11 +89885,6 @@
 /obj/structure/flora/rock/pile,
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
-"dPT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/security/prison)
 "dQm" = (
 /obj/machinery/plate_press,
 /obj/machinery/light/small,
@@ -90257,10 +90256,6 @@
 	icon_state = "panelscorched"
 	},
 /area/security/prison)
-"gDm" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/prison)
 "gEN" = (
 /obj/structure/table/reinforced,
 /obj/structure/reagent_dispensers/servingdish,
@@ -90377,6 +90372,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "hyC" = (
@@ -90401,6 +90399,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -91261,6 +91262,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ogA" = (
@@ -91527,6 +91529,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
@@ -91855,6 +91860,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "rkn" = (
@@ -91907,6 +91913,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -92803,12 +92812,6 @@
 /obj/machinery/pinpointer_dispenser,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
-"xKs" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/solar/port/aft)
 "xNf" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -100543,9 +100546,9 @@ ihn
 tFc
 lXx
 kfC
-dPT
-dPT
-kfC
+qKa
+qKa
+ddv
 hQk
 vbU
 ddk
@@ -102861,7 +102864,6 @@ llY
 rsm
 aau
 aeU
-aeU
 cmU
 aeu
 aeu
@@ -102874,7 +102876,8 @@ aaa
 aaa
 aaa
 aaa
-aeU
+aaa
+aaa
 vQF
 aeU
 aeU
@@ -103118,7 +103121,6 @@ vJw
 eNG
 aau
 aeU
-aUz
 cmU
 coy
 aeU
@@ -103126,6 +103128,7 @@ aeU
 aeU
 aeU
 cAm
+aaa
 aaa
 aaa
 aaa
@@ -103376,10 +103379,9 @@ lGn
 aav
 cmU
 cmU
-cmU
-coT
-coT
-xKs
+cAm
+cAm
+cAm
 cAm
 cAm
 ckj
@@ -103388,7 +103390,8 @@ cAm
 cAm
 cAm
 cAm
-cmU
+aaa
+aaa
 acm
 aaa
 acm
@@ -103632,7 +103635,6 @@ gGp
 uJr
 aau
 aeU
-aeU
 cmU
 coS
 coS
@@ -103645,7 +103647,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 aeo
@@ -103889,7 +103892,6 @@ sBj
 gEN
 aau
 aeU
-aeU
 cmU
 coS
 coS
@@ -103902,7 +103904,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 acm
@@ -104147,7 +104150,6 @@ tBY
 koT
 cmU
 cmU
-cmU
 cAm
 cAm
 cAm
@@ -104159,7 +104161,8 @@ cAm
 cAm
 cAm
 cAm
-cmU
+aaa
+aaa
 acm
 aaa
 aeo
@@ -104403,7 +104406,6 @@ sLz
 oUy
 aau
 aUz
-aeU
 cmU
 coS
 coS
@@ -104416,7 +104418,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 aeo
@@ -104660,7 +104663,6 @@ cJG
 vAM
 aau
 aeU
-aeU
 cmU
 coS
 coS
@@ -104673,7 +104675,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 acm
@@ -104918,7 +104921,6 @@ vAM
 aav
 cmU
 cmU
-cmU
 cAm
 cAm
 cAm
@@ -104930,7 +104932,8 @@ cAm
 cAm
 cAm
 cAm
-cmU
+aaa
+aaa
 acm
 aaa
 aeo
@@ -105174,7 +105177,6 @@ tnI
 oUy
 aau
 aeU
-aeU
 cmU
 coS
 coS
@@ -105187,7 +105189,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 aeo
@@ -105431,7 +105434,6 @@ ndf
 cQM
 aau
 aeU
-aeU
 cmU
 coS
 coS
@@ -105444,7 +105446,8 @@ coS
 coS
 coS
 coS
-cmU
+aaa
+aaa
 aeo
 aaa
 acm
@@ -105689,7 +105692,6 @@ aav
 asO
 cmU
 cmU
-cmU
 ckj
 ckj
 ckj
@@ -105701,7 +105703,8 @@ ckj
 ckj
 ckj
 ckj
-cmU
+aaa
+aaa
 acm
 aaa
 aeo
@@ -105933,8 +105936,8 @@ crm
 cuF
 aat
 ana
-bIT
-gDm
+cam
+cam
 cCu
 aav
 acK
@@ -105943,7 +105946,6 @@ acK
 acK
 acm
 aeo
-aeU
 aeU
 aeU
 cmU
@@ -105958,7 +105960,8 @@ cmU
 cmU
 cmU
 cmU
-cmU
+aaa
+aaa
 aeo
 aaa
 acm
@@ -106209,8 +106212,8 @@ aeU
 aeU
 cmU
 cCa
-cCa
-cmU
+aeU
+aeU
 aeU
 aeU
 aeU
@@ -106467,7 +106470,7 @@ aeU
 cmU
 cCa
 cmU
-cmU
+aeU
 aeU
 aeU
 aeU
