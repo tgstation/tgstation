@@ -7,15 +7,16 @@
 		all_possible_knowledge[X] = FALSE
 
 	var/list/list_to_check = list(/datum/eldritch_knowledge/spell/basic)
+	var/list/already_checked = list()
+	for(var/X in list_to_check - already_checked)
 
-	for(var/X in list_to_check)
 		var/datum/eldritch_knowledge/knowledge = X
 
 		if(all_possible_knowledge[knowledge])
 			continue
 
 		all_possible_knowledge[knowledge] = TRUE
-
+		already_checked += knowledge
 		list_to_check += initial(knowledge.next_knowledge)
 
 	for(var/X in all_possible_knowledge)
