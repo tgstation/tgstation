@@ -61665,6 +61665,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/structure/training_machine,
 /turf/open/floor/plasteel,
 /area/security/range)
 "cns" = (
