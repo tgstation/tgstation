@@ -29,6 +29,7 @@
 #include "component_tests.dm"
 #include "confusion.dm"
 #include "emoting.dm"
+#include "heretic_knowledge.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
