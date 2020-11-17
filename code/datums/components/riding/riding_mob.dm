@@ -137,22 +137,9 @@
 		human_parent.unbuckle_mob(rider)
 		rider.Paralyze(1 SECONDS)
 		rider.Knockdown(4 SECONDS)
-
-		if(ride_check_flags & RIDER_NEEDS_ARMS && prob(50)) // piggyback is more dangerous to drop
-			playsound(human_parent,'sound/weapons/punch1.ogg',50,TRUE)
-			var/mob/living/carbon/extra_injured_party = prob(50) ? human_parent : rider
-			if(prob(50) && istype(extra_injured_party)) // 25% of the time someone twists a limb
-				var/obj/item/bodypart/injured_part = pick(extra_injured_party.bodyparts)
-				injured_part.receive_damage(rand(5, 15), wound_bonus = 25) // that's what you get for horsing around!
-			human_parent.apply_damage(rand(5, 15), BRUTE, BODY_ZONE_HEAD)
-			rider.apply_damage(rand(5, 20), BRUTE, spread_damage = TRUE)
-			human_parent.visible_message("<span class='danger'>[rider] topples violently off of [human_parent] as they both crash to the ground!</span>", \
-						"<span class='userdanger'>You fall to the ground, bringing [rider] down on top of your head!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
-			to_chat(rider, "<span class='userdanger'>[human_parent] falls to the ground, violently bringing you down on top of [human_parent.p_them()]!</span>")
-		else
-			human_parent.visible_message("<span class='danger'>[rider] topples off of [human_parent] as they both fall to the ground!</span>", \
-						"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
-			to_chat(rider, "<span class='danger'>[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!</span>")
+		human_parent.visible_message("<span class='danger'>[rider] topples off of [human_parent] as they both fall to the ground!</span>", \
+					"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
+		to_chat(rider, "<span class='danger'>[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!</span>")
 
 /datum/component/riding/creature/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
