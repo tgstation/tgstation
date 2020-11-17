@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Organic bodyparts once again cannot be disabled by reaching maximum damage, and are back to being disabled by compound fracture, burn wound infections, and paralysis."
-  - bugfix: "Limbs disabled by compound fractures can be temporarily restored to working order by applying gauze to the limb as a sling."
-  - tweak: "Robotic bodyparts can still be disabled by pure damage, as they cannot be wounded."
