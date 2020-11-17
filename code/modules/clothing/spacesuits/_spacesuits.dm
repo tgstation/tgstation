@@ -207,7 +207,7 @@
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	if(user || ishuman(user) || (user.wear_suit == src))
+	if(user)
 		to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator.</span>")
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
