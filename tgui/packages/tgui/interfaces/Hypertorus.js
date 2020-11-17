@@ -54,40 +54,37 @@ export const Hypertorus = (props, context) => {
       title="Fusion Reactor">
       <Window.Content>
         <Section title="Switches">
-          <Flex>
-            <LabeledList>
-              <LabeledList.Item label="Start power">
-                <Button
-                  disabled={data.power_level > 0}
-                  icon={data.start_power ? 'power-off' : 'times'}
-                  content={data.start_power ? 'On' : 'Off'}
-                  selected={data.start_power}
-                  onClick={() => act('start_power')} />
-              </LabeledList.Item>
-            </LabeledList>
-            <LabeledList>
-              <LabeledList.Item label="Start cooling">
-                <Button
-                  disabled={start_fuel === 1
+          <Flex m={-0.5}>
+            <Flex.Item m={0.5} color="label">
+              {'Start power: '}
+              <Button
+                disabled={data.power_level > 0}
+                icon={data.start_power ? 'power-off' : 'times'}
+                content={data.start_power ? 'On' : 'Off'}
+                selected={data.start_power}
+                onClick={() => act('start_power')} />
+            </Flex.Item>
+            <Flex.Item m={0.5} color="label">
+              {'Start cooling: '}
+              <Button
+                disabled={start_fuel === 1
                     || start_power === 0
                     || data.power_level > 0}
-                  icon={data.start_cooling ? 'power-off' : 'times'}
-                  content={data.start_cooling ? 'On' : 'Off'}
-                  selected={data.start_cooling}
-                  onClick={() => act('start_cooling')} />
-              </LabeledList.Item>
-            </LabeledList>
-            <LabeledList>
-              <LabeledList.Item label="Start fuel injection">
-                <Button
-                  disabled={start_power === 0
+                icon={data.start_cooling ? 'power-off' : 'times'}
+                content={data.start_cooling ? 'On' : 'Off'}
+                selected={data.start_cooling}
+                onClick={() => act('start_cooling')} />
+            </Flex.Item>
+            <Flex.Item m={0.5} color="label">
+              {'Start fuel injection: '}
+              <Button
+                disabled={start_power === 0
                     || start_cooling === 0}
-                  icon={data.start_fuel ? 'power-off' : 'times'}
-                  content={data.start_fuel ? 'On' : 'Off'}
-                  selected={data.start_fuel}
-                  onClick={() => act('start_fuel')} />
-              </LabeledList.Item>
-            </LabeledList>
+                icon={data.start_fuel ? 'power-off' : 'times'}
+                content={data.start_fuel ? 'On' : 'Off'}
+                selected={data.start_fuel}
+                onClick={() => act('start_fuel')} />
+            </Flex.Item>
           </Flex>
         </Section>
         <Section>
@@ -246,7 +243,7 @@ export const Hypertorus = (props, context) => {
               animated
               value={parseFloat(data.fuel_injection_rate)}
               width="63px"
-              unit="mol/s"
+              unit="g/s"
               minValue={5}
               maxValue={1500}
               onDrag={(e, value) => act('fuel_injection_rate', {
@@ -258,7 +255,7 @@ export const Hypertorus = (props, context) => {
               animated
               value={parseFloat(data.moderator_injection_rate)}
               width="63px"
-              unit="mol/s"
+              unit="g/s"
               minValue={5}
               maxValue={1500}
               onDrag={(e, value) => act('moderator_injection_rate', {
@@ -270,7 +267,7 @@ export const Hypertorus = (props, context) => {
               animated
               value={parseFloat(data.current_damper)}
               width="63px"
-              unit="mol/s"
+              unit="W"
               minValue={0}
               maxValue={1000}
               onDrag={(e, value) => act('current_damper', {
