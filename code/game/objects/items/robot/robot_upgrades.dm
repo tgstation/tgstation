@@ -469,10 +469,6 @@
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
 	module_flags = BORG_MODULE_MEDICAL
-	var/backpack = FALSE //True if we get the defib from a physical backpack unit rather than an upgrade card, so that we can return that upon deactivate()
-
-/obj/item/borg/upgrade/defib/backpack
-	backpack = TRUE
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -490,9 +486,35 @@
 	if (.)
 		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
-		if(backpack)
-			new /obj/item/defibrillator(get_turf(R))
-			qdel(src)
+
+///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
+/obj/item/borg/upgrade/defib/backpack
+	var/obj/item/defibrillator/defib_instance
+
+/obj/item/borg/upgrade/defib/backpack/Initialize(mapload, obj/item/defibrillator/D)
+	. = ..()
+	if(!D)
+		D = new /obj/item/defibrillator
+	defib_instance = D
+	name = defib_instance.name
+	defib_instance.moveToNullspace()
+	RegisterSignal(defib_instance, COMSIG_PARENT_QDELETING, .proc/on_defib_instance_qdel)
+
+/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel(obj/item/defibrillator/D)
+	defib_instance = null
+	qdel(src)
+
+/obj/item/borg/upgrade/defib/backpack/Destroy()
+	if(defib_instance)
+		QDEL_NULL(defib_instance)
+	. = ..()
+
+/obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		if(defib_instance)
+			defib_instance.forceMove(R.drop_location())
+		qdel(src)
 
 
 /obj/item/borg/upgrade/processor

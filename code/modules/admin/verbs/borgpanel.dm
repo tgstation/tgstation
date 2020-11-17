@@ -151,7 +151,7 @@
 			if (installedupgrade)
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
-				qdel(installedupgrade) // [mob/living/silicon/robot/Exited()] will handle it.
+				qdel(installedupgrade) // see [mob/living/silicon/robot/on_upgrade_deleted()].
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
 				upgrade.action(borg, user)

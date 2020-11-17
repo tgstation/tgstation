@@ -116,6 +116,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!istype(module, /obj/item/robot_module/medical))
 			to_chat(user, "<span class='warning'>[src] does not have correct mounting points for a defibrillator!</span>")
 			return
+		if(stat == DEAD)
+			to_chat(user, "<span class='warning'>This defibrillator unit will not function on a deceased cyborg!</span>")
+			return
 		var/obj/item/defibrillator/D = W
 		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
 			to_chat(user, "<span class='warning'>This defibrillator unit doesn't seem to fit correctly!</span>")
@@ -126,13 +129,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(locate(/obj/item/borg/upgrade/defib) in src || locate(/obj/item/borg/upgrade/defib/backpack) in src)
 			to_chat(user, "<span class='warning'>[src] already has a defibrillator!</span>")
 			return
-		var/obj/item/borg/upgrade/defib/backpack/B = new /obj/item/borg/upgrade/defib/backpack(src)
-		B.action(src, user)
-		to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-		to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[D]</b>\"...Setup complete.\n----------------")
-		upgrades += B
-		logevent("Hardware [D] detected and installed successfully.")
-		qdel(D)
+		var/obj/item/borg/upgrade/defib/backpack/B = new(null, D)
+		add_to_upgrades(B, user)
 		return
 
 	if(istype(W, /obj/item/ai_module))
@@ -190,23 +188,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>The cyborg must choose a module before it can be upgraded!</span>")
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
-		else
-			if(!user.temporarilyRemoveItemFromInventory(U))
-				return
-			if(U.action(src))
-				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-				to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[U]</b>\"...Setup complete.\n----------------")
-				if(U.one_use)
-					logevent("Firmware [U] run successfully.")
-					qdel(U)
-				else
-					U.forceMove(src)
-					upgrades += U
-					logevent("Hardware [U] installed successfully.")
-
-			else
-				to_chat(user, "<span class='danger'>Upgrade error.</span>")
-				U.forceMove(drop_location())
+		else if(user.canUnEquip(U))
+			return
+		add_to_upgrades(U, user)
 		return
 
 	if(istype(W, /obj/item/toner))
