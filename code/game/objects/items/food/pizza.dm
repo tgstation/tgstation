@@ -11,6 +11,7 @@
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
 		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 30)
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 45)
 		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 60)
 
 // Pizza Slice
