@@ -174,6 +174,7 @@
 /datum/component/riding/vehicle/secway/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 
 /datum/component/riding/vehicle/secway/driver_move(mob/living/user, direction)
 	var/obj/vehicle/ridden/secway/the_secway = parent

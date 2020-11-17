@@ -50,7 +50,7 @@
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
-/datum/component/riding/proc/force_dismount(mob/living/rider, gentle = FALSE)
+/datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
 	var/atom/movable/parent_movable = parent
 	parent_movable.unbuckle_mob(rider)
 
@@ -71,7 +71,7 @@
 		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
-/datum/component/riding/proc/check_emote(mob/living/user, datum/emote/emote)
+/datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
 	if((!iscyborg(user) && !isanimal(user)) || !istype(emote, /datum/emote/spin))
 		return
 
@@ -112,6 +112,7 @@
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
+	RegisterSignal(parent, COMSIG_LIVING_UPDATE_BODY_POSITION, .proc/check_carrier_fall_over)
 
 /datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	unequip_buckle_inhands(parent)
@@ -119,13 +120,39 @@
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	return ..()
 
-/// If the carrier gets shoved, drop our load
+/// If the carrier shoves the person they're carrying, force the carried mob off
 /datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target)
 	SIGNAL_HANDLER
 
 	if(human_parent.a_intent == INTENT_DISARM && (target in human_parent.buckled_mobs))
 		force_dismount(target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/// If the carrier gets knocked over, force the rider(s) off and see if someone got hurt
+/datum/component/riding/creature/human/proc/check_carrier_fall_over(mob/living/carbon/human/human_parent)
+	SIGNAL_HANDLER
+
+	for(var/i in human_parent.buckled_mobs)
+		var/mob/living/rider = i
+		human_parent.unbuckle_mob(rider)
+		rider.Paralyze(1 SECONDS)
+		rider.Knockdown(4 SECONDS)
+
+		if(ride_check_flags & RIDER_NEEDS_ARMS && prob(50)) // piggyback is more dangerous to drop
+			playsound(human_parent,'sound/weapons/punch1.ogg',50,TRUE)
+			var/mob/living/carbon/extra_injured_party = prob(50) ? human_parent : rider
+			if(prob(50) && istype(extra_injured_party)) // 25% of the time someone twists a limb
+				var/obj/item/bodypart/injured_part = pick(extra_injured_party.bodyparts)
+				injured_part.receive_damage(rand(5, 15), wound_bonus = 25) // that's what you get for horsing around!
+			human_parent.apply_damage(rand(5, 15), BRUTE, BODY_ZONE_HEAD)
+			rider.apply_damage(rand(5, 20), BRUTE, spread_damage = TRUE)
+			human_parent.visible_message("<span class='danger'>[rider] topples violently off of [human_parent] as they both crash to the ground!</span>", \
+						"<span class='userdanger'>You fall to the ground, bringing [rider] down on top of your head!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
+			to_chat(rider, "<span class='userdanger'>[human_parent] falls to the ground, violently bringing you down on top of [human_parent.p_them()]!</span>")
+		else
+			human_parent.visible_message("<span class='danger'>[rider] topples off of [human_parent] as they both fall to the ground!</span>", \
+						"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
+			to_chat(rider, "<span class='danger'>[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!</span>")
 
 /datum/component/riding/creature/human/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
@@ -154,12 +181,12 @@
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
-/datum/component/riding/creature/human/force_dismount(mob/living/user)
+/datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider)
 	var/atom/movable/AM = parent
-	AM.unbuckle_mob(user)
-	user.Paralyze(1 SECONDS)
-	user.Knockdown(4 SECONDS)
-	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>", \
+	AM.unbuckle_mob(dismounted_rider)
+	dismounted_rider.Paralyze(1 SECONDS)
+	dismounted_rider.Knockdown(4 SECONDS)
+	dismounted_rider.visible_message("<span class='warning'>[AM] pushes [dismounted_rider] off of [AM.p_them()]!</span>", \
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 
 
@@ -174,31 +201,23 @@
 		to_chat(user, "<span class='warning'>You can't grab onto [robot_parent] with no hands!</span>")
 
 /datum/component/riding/creature/cyborg/handle_vehicle_layer(dir)
-	var/atom/movable/AM = parent
-	if(AM.buckled_mobs && AM.buckled_mobs?.len)
-		if(dir == SOUTH)
-			AM.layer = ABOVE_MOB_LAYER
-		else
-			AM.layer = OBJ_LAYER
+	var/atom/movable/robot_parent = parent
+	if(dir == SOUTH)
+		robot_parent.layer = ABOVE_MOB_LAYER
 	else
-		AM.layer = MOB_LAYER
+		robot_parent.layer = OBJ_LAYER
 
 /datum/component/riding/creature/cyborg/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list( 6, 3))
 
 /datum/component/riding/creature/cyborg/handle_vehicle_offsets(dir)
-	var/atom/movable/AM = parent
-	if(AM.has_buckled_mobs())
-		for(var/mob/living/M in AM.buckled_mobs)
-			M.setDir(dir)
-			if(iscyborg(AM))
-				var/mob/living/silicon/robot/R = AM
-				if(istype(R.module))
-					M.pixel_x = R.module.ride_offset_x[dir2text(dir)]
-					M.pixel_y = R.module.ride_offset_y[dir2text(dir)]
-			else
-				..()
+	var/mob/living/silicon/robot/robot_parent = parent
 
+	for(var/mob/living/rider in robot_parent.buckled_mobs)
+		rider.setDir(dir)
+		if(istype(robot_parent.module))
+			rider.pixel_x = robot_parent.module.ride_offset_x[dir2text(dir)]
+			rider.pixel_y = robot_parent.module.ride_offset_y[dir2text(dir)]
 
 //now onto every other ridable mob//
 
