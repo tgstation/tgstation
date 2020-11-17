@@ -67,7 +67,8 @@ SUBSYSTEM_DEF(atoms)
 		late_loaders.Cut()
 
 	if (atoms_to_return)
-		return atoms_to_return
+		atoms_to_return = created_atoms.Copy()
+		created_atoms = null
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
@@ -105,7 +106,7 @@ SUBSYSTEM_DEF(atoms)
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
-	if (created_atoms)
+	if (created_atoms)//if created_atoms isnt null, then ssatoms must currently be initializing a template that requested a list of atoms
 		created_atoms += A
 
 	return qdeleted || QDELING(A)
@@ -170,3 +171,4 @@ SUBSYSTEM_DEF(atoms)
 #undef BAD_INIT_DIDNT_INIT
 #undef BAD_INIT_SLEPT
 #undef BAD_INIT_NO_HINT
+

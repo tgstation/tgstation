@@ -29,12 +29,12 @@
 			cached_map = parsed
 	return bounds
 
-/datum/map_template/proc/initTemplateBounds()
+///initializes all atoms, atmos, and power within and just outside of bounds
+/datum/map_template/proc/initTemplateBounds(list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 	var/list/area/areas = list()
-	var/bounds = cached_map?.bounds
 	if (!bounds)
 		return
 	var/list/turfs = block(
@@ -61,15 +61,13 @@
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created)
+	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created ? created_atoms : null)
+	//if the template is set to return a list, then pass ssatoms the list, otherwise give it null
+
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-
-	if (returns_created)
-		created_atoms = SSatoms.created_atoms.Copy()
-		SSatoms.created_atoms.Cut()
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(
@@ -102,12 +100,13 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds()
+	initTemplateBounds(bounds)
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
 	return level
 
+///loads in the current template on turf T
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
@@ -132,7 +131,6 @@
 
 	update_blacklist(T)
 	parsed.turf_blacklist = turf_blacklist
-	//parsed.returns_created = returns_created
 
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
@@ -144,8 +142,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds()
-	//created_atoms = parsed.created_atoms //this has to be done after initTemplateBounds because thats when the template is initialized
+	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
@@ -168,5 +165,6 @@
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()
 
+///in case the template has turf types it doesnt want to place itself on
 /datum/map_template/proc/update_blacklist(turf/placement)
 	return

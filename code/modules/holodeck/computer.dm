@@ -121,11 +121,13 @@
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]
-			if (!ispath(program_to_load))
-				return FALSE
+
 			var/list/checked = program_cache.Copy()
+			if (obj_flags & EMAGGED)
+				checked |= emag_programs
 			var/valid = FALSE //dont tell security about this
-			for (var/prog in checked)
+
+			for (var/prog in checked)//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
 				var/list/check_list = prog
 				if (check_list["id"] == program_to_load)
 					valid = TRUE
@@ -142,7 +144,8 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/datum/map_template/holodeck/update_blacklist(turf/placement)//this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating)
+///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating)
+/datum/map_template/holodeck/update_blacklist(turf/placement)
 	turf_blacklist.Cut()
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
@@ -151,7 +154,7 @@
 				continue
 			turf_blacklist += possible_blacklist
 
-///the main engine of the holodeck, it loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
+///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
 	if (program == map_id)
 		return
