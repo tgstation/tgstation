@@ -514,7 +514,8 @@
 	if(.)
 		if(defib_instance)
 			defib_instance.forceMove(R.drop_location())
-		qdel(src)
+		if(!QDELETED(src))
+			qdel(src)
 
 
 /obj/item/borg/upgrade/processor
