@@ -165,6 +165,7 @@
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
+	set_disabling(FALSE)
 	if(limb && !already_scarred && !replaced)
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
@@ -229,6 +230,8 @@
 	else if(. && limb) //Lost disabling.
 		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
 		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+	if(limb?.can_be_disabled)
+		limb.update_disabled()
 
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand

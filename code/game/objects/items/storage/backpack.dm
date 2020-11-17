@@ -492,6 +492,7 @@
 	new /obj/item/mmi/syndie(src)
 	new /obj/item/blood_filter(src)
 	new /obj/item/bag_valve_mask(src)
+	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
