@@ -109,7 +109,7 @@
 	return attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, NEED_HANDS))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	toggle_cabinet(user)
 

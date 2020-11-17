@@ -242,7 +242,7 @@
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, NEED_HANDS))
+		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/obj/item/C = new item_chair(loc)

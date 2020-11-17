@@ -71,12 +71,11 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
+//used by canUseTopic()
 #define BE_CLOSE TRUE		//in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERITY TRUE	//if other mobs (monkeys, aliens, etc) can use this // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
 #define NO_TK TRUE			// if you can't use it from a distance with telekinesis
 #define FLOOR_OKAY TRUE		// if you can use it while resting
-#define NEED_HANDS TRUE		// if the mob needs an usable hand, regardless of dexterity.
-//used by canUseTopic()
 
 //singularity defines
 #define STAGE_ONE 1

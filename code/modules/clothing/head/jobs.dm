@@ -100,7 +100,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
 	. = ..()
-	if(loc != user || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, NEED_HANDS))
+	if(loc != user || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(candy_cooldown < world.time)
 		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
