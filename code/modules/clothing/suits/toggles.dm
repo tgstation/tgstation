@@ -48,8 +48,7 @@
 			hood.forceMove(src)
 
 		if(alternative_mode)
-			qdel(hood)
-			hood = null
+			QDEL_NULL(hood)
 
 	for(var/X in actions)
 		var/datum/action/A = X
