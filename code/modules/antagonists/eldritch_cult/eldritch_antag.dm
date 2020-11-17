@@ -38,6 +38,7 @@
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
+	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)
 		equip_cultist()
 	return ..()
@@ -53,6 +54,8 @@
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
+
+	on_death()
 
 	return ..()
 
@@ -85,9 +88,19 @@
 
 /datum/antagonist/heretic/process()
 
+	if(owner.current.stat == DEAD)
+		return
+
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
+
+///What happens to the heretic once he dies, used to remove any custom perks
+/datum/antagonist/heretic/proc/on_death()
+
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		EK.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()

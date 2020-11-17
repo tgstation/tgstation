@@ -311,3 +311,4 @@
 	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
 	name = "\improper" + pick(prefix) + " " + pick(postfix)
+
