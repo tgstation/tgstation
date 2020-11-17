@@ -1,6 +1,6 @@
 /obj/effect/eldritch
 	name = "Generic rune"
-	desc = "Weird combination of shapes and symbols etched into the floor itself. The indentation is filled with thick black tar-like fluid."
+	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
 	anchored = TRUE
 	icon_state = ""
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -97,10 +97,10 @@
 
 		return
 	is_in_use = FALSE
-	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
+	to_chat(user,"<span class='warning'>Your ritual failed! You either used the wrong components or are missing something important!</span>")
 
 /obj/effect/eldritch/big
-	name = "Transmutation rune"
+	name = "transmutation rune"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "eldritch_rune1"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
@@ -221,7 +221,7 @@
 			arm.dismember()
 			qdel(arm)
 		else
-			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to catch onto the existance itself!</span>")
+			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to latch onto existance itself!</span>")
 
 
 /obj/effect/broken_illusion/attack_tk(mob/user)
@@ -251,12 +251,12 @@
 	. = ..()
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
+		to_chat(human_user,"<span class='warning'>Your mind burns as you stare at the tear!</span>")
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
 		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
-	name = "/improper reality smash"
+	name = "reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -310,4 +310,4 @@
 	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
 	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
-	name = pick(prefix) + " " + pick(postfix)
+	name = "\improper" + pick(prefix) + " " + pick(postfix)

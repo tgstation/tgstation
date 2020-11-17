@@ -62,9 +62,9 @@
 
 	var/list/filter_data //For handling persistent filters
 
-	///Economy cost of item
+	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Economy cost of item in premium vendor
+	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
@@ -434,11 +434,8 @@
 					L.transferItemToLoc(M, src)
 				else
 					M.forceMove(src)
+				SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
 		parts_list.Cut()
-
-///Hook for multiz???
-/atom/proc/update_multiz(prune_on_fail = FALSE)
-	return FALSE
 
 ///Take air from the passed in gas mixture datum
 /atom/proc/assume_air(datum/gas_mixture/giver)
@@ -1379,6 +1376,8 @@
 /// Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
 /atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
 	var/prefix = tag ? "([tag]) " : ""
+	if(message_type == LOG_WHISPER)
+		prefix += "whispers "
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
 	log_message("[prefix]\"[message]\"[suffix]", message_type, log_globally=log_globally)
 
@@ -1583,7 +1582,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return 0
 

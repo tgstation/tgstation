@@ -90,7 +90,7 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING

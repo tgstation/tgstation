@@ -15,7 +15,7 @@
 	mutatelist = list(/obj/item/seeds/watermelon/holy, /obj/item/seeds/watermelon/barrel)
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
-/obj/item/seeds/watermelon/suicide_act(mob/user)
+/obj/item/seeds/watermelon/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.gib()
 	new product(drop_location())
