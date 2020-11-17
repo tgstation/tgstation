@@ -17,8 +17,6 @@
 
 	var/list/modelCache
 
-	var/list/created_atoms = list()
-	var/returns_created = FALSE
 	var/list/turf_blacklist = list()
 
 	/// Unoffset bounds. Null on parse failure.
@@ -391,8 +389,6 @@
 /datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
-	//if (returns_created)
-	//	created_atoms += .
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)

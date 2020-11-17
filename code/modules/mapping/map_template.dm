@@ -29,12 +29,14 @@
 			cached_map = parsed
 	return bounds
 
-/datum/parsed_map/proc/initTemplateBounds()
+/datum/map_template/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 	var/list/area/areas = list()
-
+	var/bounds = cached_map?.bounds
+	if (!bounds)
+		return
 	var/list/turfs = block(
 		locate(
 			bounds[MAP_MINX],
@@ -100,7 +102,7 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
+	initTemplateBounds()
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
@@ -130,7 +132,7 @@
 
 	update_blacklist(T)
 	parsed.turf_blacklist = turf_blacklist
-	parsed.returns_created = returns_created
+	//parsed.returns_created = returns_created
 
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
@@ -142,8 +144,8 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
-	created_atoms = parsed.created_atoms //this has to be done after initTemplateBounds because thats when the template is initialized
+	initTemplateBounds()
+	//created_atoms = parsed.created_atoms //this has to be done after initTemplateBounds because thats when the template is initialized
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds

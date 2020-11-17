@@ -16,8 +16,7 @@ SUBSYSTEM_DEF(atoms)
 
 	initialized = INITIALIZATION_INSSATOMS
 
-	var/should_return_atoms = FALSE
-	var/list/created_atoms = list()
+	var/list/created_atoms = null
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
@@ -28,14 +27,16 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, returns_atoms = FALSE)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
 	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-	should_return_atoms = returns_atoms
 
+	created_atoms = null
+	if (atoms_to_return)
+		created_atoms = atoms_to_return
 	var/count
 	var/list/mapload_arg = list(TRUE)
 	if(atoms)
@@ -65,8 +66,8 @@ SUBSYSTEM_DEF(atoms)
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 
-	if (should_return_atoms)
-		should_return_atoms = FALSE
+	if (atoms_to_return)
+		return atoms_to_return
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
@@ -104,7 +105,7 @@ SUBSYSTEM_DEF(atoms)
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
-	if (should_return_atoms)
+	if (created_atoms)
 		created_atoms += A
 
 	return qdeleted || QDELING(A)

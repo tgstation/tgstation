@@ -121,13 +121,24 @@
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]
+			if (!ispath(program_to_load))
+				return FALSE
+			var/list/checked = program_cache.Copy()
+			var/valid = FALSE //dont tell security about this
+			for (var/prog in checked)
+				var/list/check_list = prog
+				if (check_list["id"] == program_to_load)
+					valid = TRUE
+					break
+			if (!valid)
+				return FALSE
 			//load the map_template that program_to_load represents
 			if(program_to_load)
 				load_program(program_to_load)
 		if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
-			nerf(obj_flags & EMAGGED)
+			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
@@ -172,15 +183,15 @@
 			effects -= holo_effect
 			holo_effect.deactivate(src)
 
-	template = SSmapping.holodeck_templates[map_id]
-	for (var/_turf in linked)
-		var/turf/holo_turf = _turf
-		if (istype(holo_turf, /turf/closed))
-			for (var/_baseturf in holo_turf.baseturfs)
-				if (ispath(_baseturf, /turf/open/floor/holofloor))
-					holo_turf.baseturfs -= _baseturf
-					holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+	//makes sure that any time a holoturf is inside a baseturf list (if someone put a wall over it) its set to the OFFLINE turf
+	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
+	for (var/turf/closed/holo_turf in linked)
+		for (var/_baseturf in holo_turf.baseturfs)
+			if (ispath(_baseturf, /turf/open/floor/holofloor))
+				holo_turf.baseturfs -= _baseturf
+				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
+	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
 
 	spawned = template.created_atoms
@@ -228,11 +239,11 @@
 		return
 
 	spawned -= object
-	var/turf/target_turf = get_turf(object)
-	for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
-		object_contents.forceMove(target_turf)
-		if(ismob(object_contents))
-			silent = FALSE // otherwise make sure they are dropped
+	//var/turf/target_turf = get_turf(object)
+	//for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
+	//	object_contents.forceMove(target_turf)
+	//	if(ismob(object_contents))
+		//	silent = FALSE // otherwise make sure they are dropped
 
 	if(!silent)
 		visible_message("<span class='notice'>[object] fades away!</span>")
@@ -300,7 +311,10 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/computer/holodeck/proc/nerf(nerf_this)
+///changes all weapons in the holodeck to do stamina damage if set
+/obj/machinery/computer/holodeck/proc/nerf(nerf_this, is_loading = TRUE)
+	if (!nerf_this && is_loading)
+		return
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
 	for(var/to_be_nerfed in effects)
@@ -318,7 +332,7 @@
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
-	nerf(!(obj_flags & EMAGGED))
+	nerf(!(obj_flags & EMAGGED),FALSE)
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()
