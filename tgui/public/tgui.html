@@ -209,8 +209,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       });
       return;
     }
-    var refs = (document.body || document.getElementsByTagName('head')[0])
-      .childNodes;
+    var refs = document.body.childNodes;
     var ref = refs[refs.length - 1];
     ref.parentNode.insertBefore(node, ref.nextSibling);
   };
