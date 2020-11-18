@@ -281,6 +281,8 @@
 #define ATMOS_TANK_TRITIUM			"tritium=100000;TEMP=293.15"
 #define ATMOS_TANK_H2O				"water_vapor=100000;TEMP=293.15"
 #define ATMOS_TANK_ZAUKER			"zauker=100000;TEMP=293.15"
+#define ATMOS_TANK_HELIUM			"helium=100000;TEMP=293.15"
+#define ATMOS_TANK_ANTINOBLIUM		"antinoblium=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
 
 //LAVALAND
@@ -375,6 +377,14 @@
 #define ATMOS_GAS_MONITOR_INPUT_ZAUKER "zauker_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_ZAUKER "zauker_out"
 #define ATMOS_GAS_MONITOR_SENSOR_ZAUKER "zauker_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HELIUM "helium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HELIUM "helium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HELIUM "helium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_ANTINOBLIUM "antinoblium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_ANTINOBLIUM "antinoblium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_ANTINOBLIUM "antinoblium_sensor"
 
 #define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"

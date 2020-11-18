@@ -4717,7 +4717,6 @@
 /area/mine/laborcamp)
 "PL" = (
 /obj/machinery/suit_storage_unit/mining,
-/obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},

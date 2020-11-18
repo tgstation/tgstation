@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/current_target
 	if(fake_baseturf_type)
 		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
-			baseturfs = fake_baseturf_type
+			baseturfs = baseturfs_string_list(fake_baseturf_type, src)
 			return
 		current_target = fake_baseturf_type
 	else
@@ -341,9 +341,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = premade_baseturfs.Copy()
+			baseturfs = baseturfs_string_list(premade_baseturfs.Copy(), src)
 		else
-			baseturfs = premade_baseturfs
+			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs
 
 	var/turf/next_target = initial(current_target.baseturfs)
@@ -364,7 +364,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		current_target = next_target
 		next_target = initial(current_target.baseturfs)
 
-	baseturfs = new_baseturfs
+	baseturfs = baseturfs_string_list(new_baseturfs, src)
 	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
 	return new_baseturfs
 
@@ -568,7 +568,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	//clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
-		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		if(!belly.food_reagents[reagent.type])
+			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		else
+			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+			if(bit_vol > 0)
+				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf

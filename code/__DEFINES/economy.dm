@@ -12,10 +12,10 @@
 
 #define STATION_TARGET_BUFFER 40
 
-#define MAX_GRANT_CIV 2500
-#define MAX_GRANT_ENG 3000
-#define MAX_GRANT_SCI 5000
-#define MAX_GRANT_SECMEDSRV 3000
+#define MAX_GRANT_DPT 500
+
+//What should vending machines charge when you buy something in-department.
+#define VENDING_DISCOUNT 0.2
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"

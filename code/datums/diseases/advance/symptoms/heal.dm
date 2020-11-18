@@ -343,11 +343,11 @@
 	if(M.fire_stacks < 0)
 		M.set_fire_stacks(min(M.fire_stacks + 1 * absorption_coeff, 0))
 		. += power
-	if(M.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
-		M.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
+	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
+		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(M.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
-		M.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
+	else if(M.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
+		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -408,7 +408,7 @@
 		gases = environment.gases
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
-	if(M.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. +=  power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)

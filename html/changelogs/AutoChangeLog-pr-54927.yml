@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Food trays may deposit old and new foods into the microwave and food processor again."
+  - bugfix: "Food trays give you the switch gathering mode button when bought from a vending machine again."

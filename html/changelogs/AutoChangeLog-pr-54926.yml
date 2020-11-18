@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - imageadd: "Basic wooden texture is visible to wood, material crafted objects."

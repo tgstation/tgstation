@@ -22,6 +22,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/aimed = alert("Aimed at current location?","Sniperod", "Yes", "No")
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
+	message_admins("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
+	log_admin("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
 	announceWhen = 5
@@ -34,8 +36,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/startside = pick(GLOB.cardinals)
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
-	var/turf/endT = spaceDebrisFinishLoc(startside, z)
+	var/turf/endT = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target)
+	C.special_target = null //Cleanup for future event rolls.
 	announce_to_ghosts(rod)
 
 /obj/effect/immovablerod
@@ -106,7 +109,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 
 /obj/effect/immovablerod/Moved()
-	if((z != z_original) || (loc == destination))
+	if((z != z_original))
 		qdel(src)
 	if(special_target && loc == get_turf(special_target))
 		complete_trajectory()
