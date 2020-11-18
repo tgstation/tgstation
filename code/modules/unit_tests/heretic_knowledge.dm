@@ -9,17 +9,18 @@
 	var/datum/antagonist/heretic/ref = /datum/antagonist/heretic
 
 	var/list/list_to_check = initial(ref.initial_knowledge)
+	var/list/already_checked = list()
 	for(var/X in list_to_check)
+		var/datum/eldritch_knowledge/EK = X
 
-		var/datum/eldritch_knowledge/knowledge = X
 
-		if(all_possible_knowledge[knowledge])
-			continue
+		already_checked += X
 
-		all_possible_knowledge[knowledge] = TRUE
-		list_to_check |= initial(knowledge.next_knowledge)
+		for(var/Y in initial(EK.next_knowledge))
+			if((Y in already_checked) || (Y in list_to_check))
+				continue
+			list_to_check += Y
 
-	for(var/X in all_possible_knowledge)
-		if(!all_possible_knowledge[X])
-			var/datum/eldritch_knowledge/knowledge = X
-			Fail("[initial(knowledge.name)] is not accessible by the player! If this is done on purpose add it to the blacklist!")
+
+	if(length(all_possible_knowledge) != length(all_possible_knowledge | list_to_check))
+		Fail("Some eldritch knowledge is inaccessible. If this is on purpose add the path to the blacklist.")
