@@ -16,6 +16,6 @@
 			list_to_check += Y
 
 
-	if(length(all_possible_knowledge) != length(all_possible_knowledge | list_to_check))
+	if(length(all_possible_knowledge) != length(all_possible_knowledge & already_checked))
 		Fail("Some eldritch knowledge is inaccessible. If this is on purpose add the path to the blacklist.")
 
