@@ -287,10 +287,8 @@
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
+	if(check_empty(user, cost))
 		return
-	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -377,6 +375,11 @@
 	if(gang_mode || !instant)
 		if(!do_after(user, 50, target = target))
 			return
+
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
+		return
+	. = charges_used
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
