@@ -933,3 +933,17 @@
 /obj/item/food/meat/cutlet/chicken
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
+
+/obj/item/food/fried_chicken
+	name = "fried chicken"
+	desc = "A juicy hunk of chicken meat, fried to perfection."
+	icon_state = "fried_chicken1"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("chicken" = 3, "fried batter" = 1)
+	foodtypes = MEAT | FRIED
+	junkiness = 25
+
+/obj/item/food/fried_chicken/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "fried_chicken2"

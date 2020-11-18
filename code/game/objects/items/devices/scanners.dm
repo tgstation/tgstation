@@ -21,7 +21,7 @@ GENE SCANNER
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
-	custom_price = 150
+	custom_price = PAYCHECK_ASSISTANT * 0.7
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -97,7 +97,7 @@ GENE SCANNER
 	var/mode = SCANNER_VERBOSE
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
-	custom_price = 300
+	custom_price = PAYCHECK_HARD
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -437,15 +437,19 @@ GENE SCANNER
 				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile
-					render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+					if(!belly.food_reagents[bit.type])
+						render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+					else
+						var/bit_vol = bit.volume - belly.food_reagents[bit.type]
+						if(bit_vol > 0)
+							render_list += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
 
-		var/list/addictions = M.get_addiction_list()
-		if(addictions.len)
+		if(M.reagents.addiction_list.len)
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
-			for(var/datum/reagent/reagent in addictions)
-				render_list += "<span class='alert ml-2'>[reagent.name]</span>\n"
+			for(var/datum/reagent/R in M.reagents.addiction_list)
+				render_list += "<span class='alert ml-2'>[R.name]</span>\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject is not addicted to any reagents.</span>\n"
 
@@ -535,7 +539,7 @@ GENE SCANNER
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT * 0.9
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
 	inhand_icon_state = "analyzer"

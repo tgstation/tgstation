@@ -287,10 +287,8 @@
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
+	if(check_empty(user, cost))
 		return
-	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -378,6 +376,11 @@
 		if(!do_after(user, 50, target = target))
 			return
 
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
+		return
+	. = charges_used
+
 	if(length(text_buffer))
 		drawing = text_buffer[1]
 
@@ -411,9 +414,9 @@
 						return
 			C.add_hiddenprint(user)
 			if(istagger)
-				C.AddComponent(/datum/component/art, GOOD_ART)
+				C.AddElement(/datum/element/art, GOOD_ART)
 			else
-				C.AddComponent(/datum/component/art, BAD_ART)
+				C.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")

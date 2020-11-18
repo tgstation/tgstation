@@ -60,7 +60,7 @@
 
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
+		RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/on_death)
 		RegisterSignal(parent, COMSIG_MOB_ALLOWED, .proc/check_access)
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
@@ -85,7 +85,7 @@
 								COMSIG_NANITE_SCAN,
 								COMSIG_NANITE_SYNC,
 								COMSIG_ATOM_EMP_ACT,
-								COMSIG_MOB_DEATH,
+								COMSIG_LIVING_DEATH,
 								COMSIG_MOB_ALLOWED,
 								COMSIG_LIVING_ELECTROCUTE_ACT,
 								COMSIG_LIVING_MINOR_SHOCK,
