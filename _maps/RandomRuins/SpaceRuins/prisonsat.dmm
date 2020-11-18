@@ -1,0 +1,2136 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bc" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"bf" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"bj" = (
+/obj/structure/cable,
+/obj/machinery/power/solar_control,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"br" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"co" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"cu" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/template_noop,
+/area/ruin/space/has_grav/prisonsat)
+"cV" = (
+/obj/machinery/power/smes,
+/obj/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"dd" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"ds" = (
+/obj/structure/closet/secure_closet/brig,
+/obj/structure/disposalpipe/junction/flip,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"dA" = (
+/obj/structure/table,
+/obj/item/storage/firstaid,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"dJ" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"dL" = (
+/obj/structure/closet/wardrobe/orange,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"eg" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"fs" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"fK" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"ga" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"gF" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"hs" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"hu" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"iM" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"iN" = (
+/obj/structure/table,
+/obj/item/restraints/handcuffs,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"iU" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"jl" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"jY" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"kf" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"kt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"ky" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"lF" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"mM" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"ne" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"nf" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space)
+"nw" = (
+/obj/structure/bed,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"nN" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"nS" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"oj" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"ol" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"oE" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"oQ" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"pl" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"pt" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"pN" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"qZ" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"rx" = (
+/obj/item/radio/intercom{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"rF" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"se" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"tb" = (
+/obj/structure/grille,
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/space)
+"tf" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"tr" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"ts" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"uC" = (
+/obj/machinery/door/airlock/security,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"vf" = (
+/obj/structure/closet/secure_closet/brig,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"vE" = (
+/obj/machinery/door/window,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"wq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"wD" = (
+/obj/machinery/computer/security,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"xx" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"xG" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"yJ" = (
+/obj/structure/grille,
+/turf/template_noop,
+/area/space)
+"yW" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"zd" = (
+/obj/machinery/firealarm{
+	pixel_x = 32
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"zj" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"zC" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"zG" = (
+/obj/machinery/door/airlock/security,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"zH" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"zY" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"As" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Bs" = (
+/turf/template_noop,
+/area/space)
+"Bx" = (
+/obj/structure/table,
+/obj/item/pen/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"BL" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"BR" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"CR" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Dr" = (
+/obj/machinery/vending/coffee,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"DN" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/prisonsat)
+"DO" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"DU" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"FD" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Gl" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"Gq" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Gt" = (
+/obj/structure/table,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"GR" = (
+/obj/machinery/door/window{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"GX" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Hs" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Hu" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Hv" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Hx" = (
+/obj/structure/closet/secure_closet/brig,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Hy" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"HE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"In" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"IE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"IS" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/has_grav/prisonsat)
+"IY" = (
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/prisonsat)
+"Jz" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"JD" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Ko" = (
+/turf/open/floor/plating/airless,
+/area/space)
+"KU" = (
+/obj/structure/chair/stool,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Lc" = (
+/obj/structure/table,
+/obj/item/dice/d20,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"LT" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"Mc" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Mr" = (
+/obj/structure/table,
+/obj/item/camera,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Mu" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"MS" = (
+/obj/structure/closet/secure_closet/brig,
+/obj/structure/disposalpipe/junction,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"MU" = (
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Nc" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"NK" = (
+/obj/machinery/computer,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"NU" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Oh" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Oi" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space)
+"OH" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"PB" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"QM" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"QO" = (
+/obj/machinery/computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"QT" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/radio/intercom{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Rh" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Rp" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Rr" = (
+/obj/structure/window/reinforced,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/obj/machinery/light_switch{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Rw" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Rx" = (
+/obj/structure/chair/stool,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Sd" = (
+/obj/structure/table,
+/obj/item/pen,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Sw" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Ta" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Tm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Tw" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Ve" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"VG" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Ww" = (
+/obj/machinery/power/solar,
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/space)
+"Wz" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"WJ" = (
+/obj/machinery/vending/snack/green,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"WU" = (
+/obj/structure/table,
+/obj/item/dice/d20,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Xb" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Xr" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/machinery/firealarm{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"XR" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/prisonsat)
+"Yl" = (
+/obj/machinery/computer{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"Yn" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space)
+"YJ" = (
+/obj/structure/chair/stool,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+"YK" = (
+/obj/structure/disposalpipe/junction,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/prisonsat)
+"Zl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/prisonsat)
+"Zr" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/prisonsat)
+
+(1,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+IS
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(2,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+nf
+Bs
+Bs
+Bs
+Bs
+nf
+Bs
+Bs
+nf
+Bs
+Mu
+Bs
+nf
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(3,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+Bs
+Ko
+nf
+Bs
+nf
+Bs
+nf
+Bs
+Bs
+Bs
+"}
+(4,1,1) = {"
+yJ
+yJ
+yJ
+tb
+yJ
+yJ
+yJ
+yJ
+yJ
+Bs
+Bs
+Bs
+zY
+nw
+oE
+zY
+nw
+oE
+zY
+nw
+oE
+zY
+nw
+oE
+zY
+Mu
+zY
+nf
+Ko
+nf
+Ko
+nf
+Bs
+Bs
+Bs
+"}
+(5,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+nf
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+Mu
+zY
+zY
+zY
+Mu
+Mu
+zY
+Bs
+Bs
+Bs
+"}
+(6,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+nf
+zY
+pN
+vf
+dJ
+iU
+MS
+dJ
+iU
+MS
+dJ
+iU
+MS
+kt
+Mu
+zY
+pN
+xG
+IY
+DN
+zY
+Bs
+Bs
+Bs
+"}
+(7,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+nf
+zY
+uC
+zY
+zY
+uC
+zY
+zY
+uC
+zY
+zY
+uC
+zY
+HE
+Mu
+zY
+pN
+zY
+IY
+IY
+zY
+Bs
+Bs
+Bs
+"}
+(8,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+yJ
+yJ
+zY
+zY
+nN
+pt
+zY
+nN
+pt
+zY
+nN
+pt
+zY
+nN
+pt
+HE
+GR
+zY
+xG
+zY
+gF
+zH
+zY
+zY
+Bs
+Bs
+"}
+(9,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+Bs
+Bs
+zY
+nN
+nN
+nN
+Jz
+nN
+nN
+Jz
+nN
+nN
+Jz
+nN
+nN
+wq
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+zY
+nf
+nf
+"}
+(10,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+nf
+nf
+zY
+CR
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+wq
+rx
+yW
+nN
+zd
+nN
+nN
+rx
+zY
+nf
+Bs
+"}
+(11,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+Bs
+Bs
+zY
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hs
+Hu
+Hs
+BR
+nN
+HE
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+Ko
+Bs
+"}
+(12,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+nf
+nf
+zY
+zY
+zY
+bf
+zG
+gF
+zH
+zG
+bf
+zY
+zY
+Ve
+nN
+Hv
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Ko
+nf
+nf
+"}
+(13,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+dd
+LT
+Gl
+zC
+cV
+dL
+iM
+xx
+wD
+Tm
+xx
+bc
+QO
+Gq
+fK
+nN
+fs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(14,1,1) = {"
+yJ
+nf
+Oi
+Oi
+Oi
+Oi
+Oi
+Oi
+BL
+XR
+BL
+Ta
+vE
+Ta
+Rp
+nN
+nN
+nN
+nN
+nN
+iN
+kf
+Oh
+se
+fs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(15,1,1) = {"
+yJ
+nf
+Oi
+Ko
+Ko
+Ko
+Oi
+Ko
+DU
+PB
+Hy
+bj
+OH
+Ta
+nN
+nN
+nN
+nN
+nN
+nN
+NU
+kf
+Oh
+se
+fs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(16,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+ky
+Yn
+ky
+zY
+Rr
+Wz
+ne
+DO
+NK
+Rh
+DO
+Rw
+tf
+mM
+fK
+nN
+hu
+jl
+Sw
+In
+qZ
+jl
+zH
+zY
+Bs
+Bs
+Bs
+"}
+(17,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+nf
+nf
+zY
+zY
+zY
+bf
+zG
+gF
+zH
+zG
+bf
+zY
+zY
+Ve
+nN
+wq
+Yl
+kf
+pN
+kf
+ts
+hs
+zY
+Bs
+Bs
+Bs
+"}
+(18,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+Bs
+Bs
+zY
+ol
+ol
+ol
+ol
+ol
+ol
+ol
+ol
+GX
+ol
+pl
+nN
+wq
+nN
+mM
+In
+mM
+ts
+zj
+zY
+nf
+nf
+Bs
+"}
+(19,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+nf
+nf
+zY
+CR
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+nN
+wq
+nN
+nN
+nN
+nN
+nN
+zj
+zY
+nf
+Bs
+Bs
+"}
+(20,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+nf
+Bs
+Bs
+zY
+nN
+nN
+nN
+yW
+nN
+nN
+yW
+nN
+nN
+yW
+nN
+nN
+co
+JD
+oQ
+Nc
+Xb
+As
+zj
+zY
+nf
+nf
+nf
+"}
+(21,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+yJ
+yJ
+zY
+zY
+nN
+pt
+zY
+nN
+pt
+zY
+nN
+pt
+zY
+nN
+pt
+HE
+tr
+eg
+Gt
+FD
+YJ
+zj
+zY
+nf
+Bs
+Bs
+"}
+(22,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+Bs
+zY
+uC
+zY
+zY
+uC
+zY
+zY
+uC
+zY
+zY
+uC
+zY
+HE
+Mc
+ga
+Mr
+Lc
+QM
+IE
+zY
+nf
+Bs
+Bs
+"}
+(23,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+Bs
+zY
+pN
+Hx
+dJ
+iU
+ds
+dJ
+iU
+ds
+dJ
+iU
+ds
+YK
+Dr
+KU
+br
+Sd
+Rx
+Zr
+dJ
+cu
+nf
+nf
+"}
+(24,1,1) = {"
+yJ
+Ww
+Oi
+Ww
+nf
+Ww
+Oi
+Ww
+yJ
+Bs
+Bs
+Bs
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+Tw
+Zl
+zY
+MU
+ga
+dA
+Bx
+QM
+QT
+zY
+Bs
+Bs
+Bs
+"}
+(25,1,1) = {"
+yJ
+yJ
+yJ
+yJ
+yJ
+yJ
+yJ
+yJ
+yJ
+Bs
+Bs
+Bs
+zY
+nw
+nS
+zY
+nw
+nS
+zY
+nw
+nS
+zY
+nw
+nS
+zY
+WJ
+eg
+WU
+oj
+YJ
+zj
+zY
+Bs
+Bs
+Bs
+"}
+(26,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+Xr
+rF
+lF
+jY
+rF
+VG
+zY
+Bs
+Bs
+Bs
+"}
+(27,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+nf
+Bs
+Bs
+Bs
+Ko
+Bs
+nf
+Bs
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+zY
+Bs
+Bs
+Bs
+"}
+(28,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+nf
+Bs
+Mu
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}
+(29,1,1) = {"
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+IS
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+Bs
+"}

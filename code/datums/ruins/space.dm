@@ -299,3 +299,9 @@
 	suffix = "hellfactory.dmm"
 	name = "Heck Brewery"
 	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
+
+/datum/map_template/ruin/space/prisonsat
+	id = "prisonsat"
+	suffix = "prisonsat.dmm"
+	name = "Prison Station"
+	description = "An abandoned permanent prison. Nanotrasen officials claim the design was 'absolutely flawed' and 'doomed to fail', but they're probably exaggerating."

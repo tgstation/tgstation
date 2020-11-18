@@ -414,3 +414,8 @@
 	name = "Hell Factory Office"
 	icon_state = "red"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT
+
+//Prison Sat
+/area/ruin/space/has_grav/prisonsat
+	name = "Prison Station"
+	icon_state = "awaycontent1"
