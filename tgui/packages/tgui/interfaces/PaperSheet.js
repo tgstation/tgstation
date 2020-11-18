@@ -240,8 +240,6 @@ const PaperSheetView = (props, context) => {
     value = "",
     stamps = [],
     backgroundColor,
-    width,
-    height,
     readOnly,
   } = props;
   const stamp_list = stamps;
@@ -254,17 +252,17 @@ const PaperSheetView = (props, context) => {
     <Box
       position="relative"
       backgroundColor={backgroundColor}
-      width={width || "100%"}
-      height={height || "100%"} >
+      width="100%"
+      height="100%" >
       <Box
         color="black"
         fillPositionedParent
-        width={width || "100%"}
-        height={height || "100%"}
+        width="100%"
+        height="100%"
         dangerouslySetInnerHTML={text_html}
         p="10px" />
       {stamp_list.map((o, i) => (
-        <Stamp key={i}
+        <Stamp key={o[0] + i}
           image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
       ))}
     </Box>
