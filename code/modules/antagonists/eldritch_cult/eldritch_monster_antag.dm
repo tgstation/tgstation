@@ -7,6 +7,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic_beast"
+	show_in_antagpanel = FALSE
 	var/datum/antagonist/master
 
 /datum/antagonist/heretic_monster/admin_add(datum/mind/new_owner,mob/admin)
@@ -29,6 +30,7 @@
 	var/datum/objective/master_obj = new
 	master_obj.owner = src
 	master_obj.explanation_text = "Assist your master in any way you can!"
+	master_obj.completed = TRUE
 	objectives += master_obj
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>Your master is [master.owner.current.real_name]</span>")
