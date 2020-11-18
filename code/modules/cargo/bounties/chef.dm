@@ -43,7 +43,7 @@
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
+	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/food/bun, /obj/item/food/pizzabread, /obj/item/food/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
