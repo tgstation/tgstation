@@ -15,8 +15,8 @@
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
 	destroy_network(FALSE)
 	for(var/obj/machinery/duct/D in ducting.neighbours)
-		addtimer(CALLBACK(D, /obj/machinery/duct/proc/reconnect), 0) //all needs to happen after the original duct that was destroyed finishes destroying itself
-		addtimer(CALLBACK(D, /obj/machinery/duct/proc/generate_connects), 0)
+		addtimer(CALLBACK(D, /obj/machinery/duct/proc/reconnect), 1, TIMER_UNIQUE) //all needs to happen after the original duct that was destroyed finishes destroying itself
+		addtimer(CALLBACK(D, /obj/machinery/duct/proc/generate_connects), 1, TIMER_UNIQUE) // cant use signals here either because it needs to wait until after the destroy
 	qdel(src)
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
