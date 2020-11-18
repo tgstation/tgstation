@@ -73,15 +73,14 @@
 		if(isFull())
 			to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
 		else
-			var/obj/item/reagent_containers/food/snacks/S = O
+			var/obj/item/S = O
 			if(!user.transferItemToLoc(S, src))
 				return
+			food_stored++
 			if(stored_food[sanitize(S.name)])
 				stored_food[sanitize(S.name)]++
 			else
 				stored_food[sanitize(S.name)] = 1
-			to_chat(user, "<span class='notice'>You place [O] inside [src].</span>")
-			food_stored++
 	else if(istype(O, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = O
 		if(G.get_amount() >= 1)
@@ -90,26 +89,19 @@
 			to_chat(user, "<span class='notice'>[src] accepts a sheet of glass.</span>")
 	else if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = O
-		var/list/food_contents = list()
-		var/items_placed_count = 0
-		for(var/obj/item/things in T.contents)
-			if(IS_EDIBLE(things))
-				food_contents += things
-		for(var/obj/item/stuff in food_contents)
+		for(var/obj/item/S in T.contents)
 			if(isFull())
+				to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
 				break
 			else
-				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, stuff, src))
+				if(!IS_EDIBLE(S))
+					continue
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 					food_stored++
-					items_placed_count++
-					if(stored_food[sanitize(stuff.name)])
-						stored_food[sanitize(stuff.name)]++
+					if(stored_food[sanitize(S.name)])
+						stored_food[sanitize(S.name)]++
 					else
-						stored_food[sanitize(stuff.name)] = 1
-		if(items_placed_count)
-			to_chat(user, "<span class='notice'>You put [items_placed_count] item\s in [src].</span>")
-		if(isFull())
-			to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
+						stored_food[sanitize(S.name)] = 1
 	else if(O.is_drainable())
 		return
 	else
