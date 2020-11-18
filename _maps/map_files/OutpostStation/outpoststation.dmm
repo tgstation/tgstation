@@ -1159,10 +1159,10 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "aNV" = (
-/obj/machinery/computer/gateway_control,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/computer/gateway_control,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aOb" = (
@@ -2185,6 +2185,7 @@
 /area/maintenance/department/medical)
 "bDI" = (
 /obj/machinery/light,
+/obj/structure/closet/secure_closet/exile,
 /turf/open/floor/plasteel,
 /area/gateway)
 "bEl" = (
@@ -13592,6 +13593,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"lyP" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/gateway)
 "lzD" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -15542,6 +15547,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/gateway)
 "nfn" = (
@@ -19984,6 +19990,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "qCH" = (
@@ -22871,6 +22878,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science)
+"sMU" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/gateway)
 "sNp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -66706,10 +66717,10 @@ kka
 fdA
 fdA
 iRf
-fdA
+sMU
 qCr
-hNY
-hNY
+lyP
+lyP
 neX
 hNY
 lXk
