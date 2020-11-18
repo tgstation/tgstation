@@ -197,6 +197,8 @@
 	var/datum/gas_mixture/internal_fusion
 	///Stores the information of the moderators gasmix
 	var/datum/gas_mixture/moderator_internal
+	///Stores the information of the output gasmix
+	var/datum/gas_mixture/internal_output
 	///Set the filtering type of the waste remove
 	var/filter_type = null
 
@@ -320,6 +322,7 @@
 	internal_fusion = new
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
 	moderator_internal = new
+	internal_output = new
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -336,6 +339,12 @@
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
+	if(internal_fusion)
+		internal_fusion = null
+	if(moderator_internal)
+		moderator_internal = null
+	if(internal_output)
+		internal_output = null
 	if(linked_input)
 		QDEL_NULL(linked_input)
 	if(linked_output)
@@ -638,7 +647,6 @@
 		radio.talk_into(src, speaking, common_channel)
 		sleep(10)
 
-	deactivate()
 	meltdown()
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/proc/meltdown()
@@ -695,10 +703,12 @@
 	if(power_level >= 5)
 		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e5 + internal_fusion.temperature) / 1e5, 1) - 2500) / 200, 0), 0)
 
+		critical_threshold_proximity = max(critical_threshold_proximity + max(log(10, internal_fusion.temperature) - 5, 0), 0)
+
 	if(internal_fusion.total_moles() < 1200 || power_level <= 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 800) / 150, 0), 0)
 
-	if(internal_fusion.temperature < 5e5 && power_level <= 4)
+	if(internal_fusion.total_moles() > 0 && internal_fusion.temperature < 5e5 && power_level <= 4)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 5.5, 0), 0)
 
 	critical_threshold_proximity += max(round(iron_content, 1) - 1, 0)
@@ -770,6 +780,8 @@
 		return
 
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
+	if(!linked_input.airs[1].total_moles())
+		return
 	var/datum/gas_mixture/buffer
 	if(linked_input.airs[1].gases[/datum/gas/hydrogen][MOLES] > 0)
 		buffer = linked_input.airs[1].remove_specific(/datum/gas/hydrogen, fuel_injection_rate * 0.1)
@@ -827,7 +839,7 @@
 		fuel_injection_rate = 200
 		moderator_injection_rate = 500
 		waste_remove = FALSE
-		iron_content += 0.01 * delta_time
+		iron_content += 0.1 * delta_time
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -999,7 +1011,6 @@
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
 
 	//gas consumption and production
-	var/datum/gas_mixture/internal_output
 	if(check_fuel())
 		var/fuel_consumption = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * delta_time
 		internal_fusion.gases[/datum/gas/tritium][MOLES] -= min(tritium, fuel_consumption * 0.85)
@@ -1137,17 +1148,18 @@
 					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0095)) * delta_time
 
 	//heat up and output what's in the internal_output into the linked_output port
-	if(moderator_internal.total_moles() > 0)
-		internal_output.temperature = moderator_internal.temperature * HIGH_EFFICIENCY_CONDUCTIVITY
-	else
-		internal_output.temperature = internal_fusion.temperature * METALLIC_VOID_CONDUCTIVITY
-	linked_output.airs[1].merge(internal_output)
+	if(internal_output.total_moles() > 0)
+		if(moderator_internal.total_moles() > 0)
+			internal_output.temperature = moderator_internal.temperature * HIGH_EFFICIENCY_CONDUCTIVITY
+		else
+			internal_output.temperature = internal_fusion.temperature * METALLIC_VOID_CONDUCTIVITY
+		linked_output.airs[1].merge(internal_output)
 
 	//High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(moderator_internal.total_moles() > 0)
-		moderator_internal.remove(moderator_internal.total_moles() * 0.005 * power_level)
+		moderator_internal.remove(moderator_internal.total_moles() * 0.0005 * power_level)
 	if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
-		iron_content += 0.0005 * delta_time
+		iron_content += 0.005 * delta_time
 	if(iron_content > 0 && power_level <= 4 && prob(20 / power_level))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 

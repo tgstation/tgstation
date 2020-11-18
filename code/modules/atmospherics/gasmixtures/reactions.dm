@@ -978,26 +978,6 @@ nobiliumsuppression = INFINITY
 			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
 	return REACTING
 
-/datum/gas_reaction/proto_nitrate_zauker_response
-	priority = 18
-	name = "Proto Nitrate Zauker response"
-	id = "proto_nitrate_zauker_response"
-
-/datum/gas_reaction/proto_nitrate_zauker_response/init_reqs()
-	min_requirements = list(
-		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
-		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	)
-
-/datum/gas_reaction/proto_nitrate_zauker_response/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/turf/open/location = isturf(holder) ? holder : null
-	var max_power = min(5, cached_gases[/datum/gas/zauker][MOLES])
-	cached_gases[/datum/gas/zauker][MOLES] = 0
-	explosion(location, max_power * 0.55, max_power * 0.95, max_power * 1.25, max_power* 3)
-	return REACTING
-
 /datum/gas_reaction/pluox_formation
 	priority = 2
 	name = "Pluoxium formation"
