@@ -68,6 +68,11 @@ All the important duct code:
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
+///all needs to happen a neighbouring duct finishes destroying itself
+/obj/machinery/duct/proc/on_neighbour_del()
+	reconnect()
+	generate_connects()
+
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
 

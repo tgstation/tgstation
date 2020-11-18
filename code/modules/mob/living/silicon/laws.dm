@@ -15,8 +15,8 @@
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, "<b>Your laws have been changed.</b>")
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
-		addtimer(CALLBACK(src, .proc/show_laws), 0)
-		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0)
+		addtimer(CALLBACK(src, .proc/show_laws), 1, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 1, TIMER_UNIQUE)
 		last_lawchange_announce = world.time
 
 /mob/living/silicon/proc/set_zeroth_law(law, law_borg, announce = TRUE)

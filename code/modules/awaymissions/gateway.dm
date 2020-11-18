@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
-	addtimer(CALLBACK(AM,/atom/movable.proc/setDir,SOUTH),0)
+	AM.setDir(SOUTH)
 
 /* Special home destination, so we can check exile implants */
 /datum/gateway_destination/gateway/home

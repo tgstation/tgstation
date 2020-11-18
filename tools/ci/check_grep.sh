@@ -44,9 +44,15 @@ if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
     echo "ERROR: base /turf path use detected in maps, please replace with proper paths."
     st=1
 fi;
+echo "Checking for unmanaged globals"
 if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
+fi;
+echo "Checking for 0 length timers"
+if grep -nP 'addtimer\(.+, ?0\)($| |/)'code/**/*,dm; then
+	echo "Default timer type with no length detected. Please add the correct flags or use the async macro call"
+	st=1
 fi;
 nl='
 '

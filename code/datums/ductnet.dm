@@ -28,6 +28,7 @@
 	else if(dir & P.demand_connects)
 		demanders += P
 	return TRUE
+
 ///remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
 	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine

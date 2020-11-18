@@ -39,9 +39,7 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
 	if(start)
-		//timer 0 so it can finish returning initialize, after which we're added to the parent.
-		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
-		addtimer(CALLBACK(src, .proc/enable), 0)
+		RegisterSignal(parent, COMSIG_ATOM_CREATED, .proc/enable)
 
 /datum/component/plumbing/Destroy()
 	ducts = null
@@ -192,7 +190,10 @@
 					duct.update_icon()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
-/datum/component/plumbing/proc/enable()
+/datum/component/plumbing/proc/enable(atom/target)
+	SIGNAL_HANDLER
+	if(target)
+		UnregisterSignal(target, COMSIG_ATOM_CREATED)
 	if(active)
 		return
 

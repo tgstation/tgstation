@@ -21,10 +21,9 @@
 	if(!has_buckled_mobs() && can_buckle)
 		. += "<span class='notice'>While standing on [src], drag and drop your sprite onto [src] to buckle to it.</span>"
 
-/obj/structure/chair/Initialize()
-	. = ..()
+/obj/structure/chair/LateInitialize()
 	if(!anchored)	//why would you put these on the shuttle?
-		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+		RemoveFromLatejoin()
 
 /obj/structure/chair/ComponentInitialize()
 	. = ..()
