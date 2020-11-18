@@ -28,7 +28,7 @@
 	if(..())
 		return
 	if(linked_radio)
-		qdel(linked_radio)
+		QDEL_NULL(linked_radio)
 
 /datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
