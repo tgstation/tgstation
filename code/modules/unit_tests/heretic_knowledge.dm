@@ -6,7 +6,9 @@
 	for(var/X in all_possible_knowledge)
 		all_possible_knowledge[X] = FALSE
 
-	var/list/list_to_check = initial(/datum/antagonist/heretic.initial_knowledge)
+	var/datum/antagonist/heretic/ref = /datum/antagonist/heretic
+
+	var/list/list_to_check = initial(ref.initial_knowledge)
 	for(var/X in list_to_check)
 
 		var/datum/eldritch_knowledge/knowledge = X
