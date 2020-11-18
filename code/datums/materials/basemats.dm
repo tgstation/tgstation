@@ -240,6 +240,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.01
 	beauty_modifier = 0.1
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, RAD = 0, FIRE = 0, ACID = 0.3)
+	texture_layer_icon_state = "woodgrain"
 
 /datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
