@@ -139,7 +139,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		var/dy = (turf_source.z - T.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
 		S.y = dy
 
-		S.falloff = max_distance || 0 //use max_distance, else just use 0 as we are a direct sound so falloff isnt relevant.
+		S.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
 	SEND_SOUND(src, S)
 
