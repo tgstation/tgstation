@@ -253,9 +253,9 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
-					R.expose_single(T, target, methods, transfer_amount, show_message)
+					R.expose_single(T, target, methods, part, show_message)
 				else
-					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
+					R.expose_single(T, target_atom, methods, part, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
