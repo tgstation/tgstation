@@ -134,8 +134,9 @@
 	if(temp_damage >= 0 && temp_damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed!</span>")
 		return FALSE
-	else if(actuallydamage)
-		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+	else
+		if(actuallydamage)
+			apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 		return TRUE
 
 /mob/living/simple_animal/bullet_act(obj/projectile/Proj)
