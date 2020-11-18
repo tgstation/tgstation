@@ -3259,6 +3259,8 @@
 #include "modular_frontier\modules\miningbase\code\modules\clothing\under\jobs\cargo.dm"
 #include "modular_frontier\modules\miningbase\code\modules\jobs\job_types\miningforeman.dm"
 #include "modular_frontier\modules\miningbase\code\modules\jobs\job_types\miningtech.dm"
+#include "modular_skyrat\modules\admin\code\admin_help.dm"
+#include "modular_skyrat\modules\admin\code\loud_say.dm"
 #include "modular_skyrat\modules\aesthetics\airalarm\code\airalarm.dm"
 #include "modular_skyrat\modules\aesthetics\airlock\code\airlock.dm"
 #include "modular_skyrat\modules\aesthetics\apc\code\apc.dm"
@@ -3297,5 +3299,6 @@
 #include "modular_skyrat\modules\aesthetics\windows\code\windows.dm"
 #include "modular_skyrat\modules\cryosleep\code\cryopod.dm"
 #include "modular_skyrat\modules\gunsafety\code\gun_safety.dm"
-#include "modular_skyrat\modules\radiosound\code\game\objects\items\devices\radio\headset.dm"
+#include "modular_skyrat\modules\inflatables\code\inflatable.dm"
+#include "modular_skyrat\modules\SiliconQoL\code\_onclick.dm"
 // END_INCLUDE
