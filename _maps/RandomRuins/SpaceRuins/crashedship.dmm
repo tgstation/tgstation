@@ -640,6 +640,18 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"cC" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "cE" = (
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
@@ -954,6 +966,10 @@
 	name = "Canteen"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "dC" = (
@@ -984,6 +1000,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"dN" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "dV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1049,6 +1074,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"ec" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/food/meat/steak/plain,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/bmpship/midship)
 "ee" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -1102,6 +1133,12 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "ep" = (
@@ -1168,6 +1205,15 @@
 "eJ" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
@@ -1884,6 +1930,26 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"ig" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/closet/crate/medical,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "iw" = (
@@ -1904,6 +1970,15 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"iY" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/closet/crate/engineering,
+/obj/item/clothing/suit/hazardvest,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "jj" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -1975,6 +2050,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"kN" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/closet/crate/freezer,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "kY" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
@@ -2002,6 +2094,12 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "lT" = (
@@ -2020,6 +2118,10 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "mq" = (
@@ -2041,6 +2143,13 @@
 	dir = 8
 	},
 /obj/machinery/autolathe,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "ok" = (
@@ -2080,11 +2189,27 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"qP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "rr" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
 	},
 /obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -2107,12 +2232,22 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "rI" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
 /area/awaymission/bmpship/midship)
 "rZ" = (
 /obj/machinery/light,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "sf" = (
@@ -2151,7 +2286,18 @@
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/grass,
 /area/awaymission/bmpship/aft)
+"sL" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "sO" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "damaged2"
 	},
@@ -2181,6 +2327,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"ue" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "un" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
@@ -2191,6 +2348,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"uD" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/closet/crate/wooden,
+/obj/item/toy/crayon/spraycan/lubecan,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"vD" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "wz" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green,
@@ -2241,6 +2415,10 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "xO" = (
@@ -2306,6 +2484,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
 "yF" = (
@@ -2343,6 +2525,19 @@
 	icon_state = "damaged1"
 	},
 /area/awaymission/bmpship/midship)
+"zy" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "zD" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/yellow,
@@ -2361,6 +2556,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"Ai" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "AI" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -2369,6 +2574,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"AL" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "AU" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -2390,6 +2602,10 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "Bs" = (
@@ -2455,6 +2671,12 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "Dj" = (
@@ -2562,6 +2784,36 @@
 "EK" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"EO" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"EP" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "EQ" = (
@@ -2610,6 +2862,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
+"FQ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "Gt" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -2621,11 +2881,24 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "Gz" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
@@ -2685,10 +2958,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/fore)
+"IE" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "IW" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -2710,6 +2998,13 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"JC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "JQ" = (
@@ -2815,6 +3110,25 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
+"Os" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"OG" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "OR" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -2867,6 +3181,10 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "PP" = (
@@ -2909,6 +3227,37 @@
 "QM" = (
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
+"QW" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Rl" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"Sq" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "Sz" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
@@ -2924,6 +3273,10 @@
 "SV" = (
 /obj/structure/chair/sofa/bench{
 	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
@@ -2999,6 +3352,16 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
+"WH" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/closet/crate/engineering,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/head/welding,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "Xa" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/purple{
@@ -3050,6 +3413,10 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "YE" = (
@@ -3065,6 +3432,16 @@
 "YX" = (
 /obj/machinery/door/airlock/mining{
 	name = "Quartermaster's Office"
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
@@ -3084,6 +3461,21 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"ZX" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
+"ZZ" = (
+/obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -4232,9 +4624,9 @@ cK
 dd
 eV
 eJ
-en
-QM
-eJ
+Rl
+ZX
+zy
 eV
 ff
 Jw
@@ -4282,10 +4674,10 @@ DS
 DS
 df
 eV
-QM
+qP
 en
 QM
-QM
+JC
 eV
 Ja
 QM
@@ -4333,10 +4725,10 @@ cK
 cK
 df
 mm
-QM
+qP
 en
 QM
-QM
+JC
 lr
 ZK
 QM
@@ -4384,10 +4776,10 @@ DS
 DS
 df
 eV
-QM
+qP
 en
 QM
-QM
+JC
 eV
 fg
 QM
@@ -4435,10 +4827,10 @@ cK
 cK
 dd
 eV
-QM
+qP
 en
 QM
-QM
+JC
 eV
 FM
 Gt
@@ -4537,10 +4929,10 @@ cs
 cM
 dg
 aq
-QM
+qP
 en
 QM
-QM
+JC
 aq
 Zb
 GT
@@ -4588,17 +4980,17 @@ cN
 cN
 dg
 dA
-QM
+qP
 en
 QM
-QM
+JC
 aq
 Zb
 Zb
 Ua
 Zb
 aq
-QM
+dN
 gs
 gT
 Mx
@@ -4633,16 +5025,16 @@ hg
 bH
 ha
 ha
-KU
+ec
 dg
 ct
 cO
 dg
 dA
-QM
+qP
 en
 QM
-QM
+JC
 aq
 fi
 Zb
@@ -4690,17 +5082,17 @@ dg
 dg
 dg
 dB
-QM
+qP
 en
 QM
-QM
+JC
 aq
 fj
 Zb
 Zb
 Zb
 aq
-QM
+dN
 QM
 QM
 gs
@@ -4741,17 +5133,17 @@ cs
 cM
 dg
 dA
-QM
+qP
 en
 QM
-QM
+JC
 aq
 aq
 aq
 aq
 aq
 aq
-QM
+dN
 QM
 zs
 QM
@@ -4792,17 +5184,17 @@ cN
 cN
 dg
 dA
-QM
+qP
 en
 QM
-QM
+JC
 aq
-QM
-QM
-QM
-QM
-QM
-QM
+kN
+QW
+ig
+uD
+Sq
+vD
 QM
 QM
 QM
@@ -4843,11 +5235,12 @@ ct
 cO
 dg
 aq
-QM
+qP
 en
 QM
-QM
+JC
 aq
+dN
 QM
 QM
 QM
@@ -4856,8 +5249,7 @@ QM
 QM
 QM
 QM
-QM
-QM
+Os
 fm
 fS
 fS
@@ -4899,16 +5291,16 @@ en
 QM
 rZ
 aq
-QM
+Ai
 PM
+AL
+AL
+AL
+ZZ
 QM
 QM
 QM
-QM
-QM
-QM
-QM
-QM
+Os
 fm
 fS
 fS
@@ -4945,21 +5337,21 @@ cu
 cu
 ga
 aq
-QM
+qP
 en
 QM
-QM
+JC
 aq
 EK
 EK
 EK
 aq
 aq
+EO
 QM
 QM
 QM
-QM
-QM
+Os
 fm
 aa
 aa
@@ -4996,21 +5388,21 @@ eZ
 QM
 ge
 aq
-QM
+qP
 en
 QM
-QM
+JC
 aq
-QM
-QM
-QM
+OG
+Sq
+Sq
 oa
 aq
+EO
 QM
 QM
 QM
-QM
-QM
+Os
 fm
 aa
 aa
@@ -5047,21 +5439,21 @@ eZ
 QM
 ge
 Br
-QM
+qP
 en
 QM
+JC
+cC
+EO
 QM
+QM
+Os
 Do
+EO
 QM
 QM
 QM
-QM
-Do
-QM
-QM
-QM
-QM
-QM
+Os
 fm
 aa
 aa
@@ -5098,21 +5490,21 @@ eZ
 QM
 ge
 aq
-QM
+qP
 en
 QM
-QM
+JC
 aq
+dN
 QM
 QM
-QM
-QM
+Os
 aq
+EO
 QM
 QM
 QM
-QM
-QM
+Os
 fm
 aa
 aa
@@ -5150,8 +5542,8 @@ fY
 gh
 aq
 IW
-en
-QM
+FQ
+sL
 Gy
 aq
 rr
@@ -5159,11 +5551,11 @@ SV
 YD
 hS
 aq
-QM
-QM
-QM
-QM
-QM
+EP
+WH
+iY
+IE
+ue
 fm
 aa
 aa
@@ -6068,8 +6460,8 @@ ht
 dr
 dr
 dr
-ht
-ht
+dk
+dk
 dr
 dr
 dr
