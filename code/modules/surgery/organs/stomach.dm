@@ -29,6 +29,12 @@
 	var/metabolism_efficiency = 0.1 // the lowest we should go is 0.05
 
 
+/obj/item/organ/stomach/Initialize()
+	. = ..()
+	//None edible organs do not get a reagent holder by default
+	if(!reagents)
+		create_reagents(reagent_vol)
+
 /obj/item/organ/stomach/on_life()
 	. = ..()
 
