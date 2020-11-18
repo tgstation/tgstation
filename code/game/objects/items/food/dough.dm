@@ -47,6 +47,7 @@
 	icon_state = "doughslice"
 	microwaved_type = /obj/item/food/bun
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 
@@ -57,6 +58,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
 
@@ -67,7 +69,6 @@
 	icon_state = "cakebatter"
 	microwaved_type = /obj/item/food/cake/plain
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9)
-	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("batter" = 1)
 	foodtypes = GRAIN | DAIRY
 
@@ -81,7 +82,6 @@
 	icon_state = "piedough"
 	microwaved_type = /obj/item/food/pie/plain
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9)
-	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN | DAIRY
 
@@ -95,6 +95,7 @@
 	icon_state = "rawpastrybase"
 	microwaved_type = /obj/item/food/pastrybase
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("raw pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 
@@ -104,5 +105,6 @@
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pastrybase"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
