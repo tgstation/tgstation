@@ -2,9 +2,6 @@
 	///List of all knowledge excluding the unreachable base types.
 	var/list/blacklist = list(/datum/eldritch_knowledge/spell,/datum/eldritch_knowledge/curse,/datum/eldritch_knowledge/final,/datum/eldritch_knowledge/summon)
 	var/list/all_possible_knowledge = subtypesof(/datum/eldritch_knowledge) - blacklist
-	//Convert to assoc
-	for(var/X in all_possible_knowledge)
-		all_possible_knowledge[X] = FALSE
 
 	var/datum/antagonist/heretic/ref = /datum/antagonist/heretic
 
