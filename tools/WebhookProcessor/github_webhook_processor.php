@@ -653,8 +653,8 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
-		'Feature' => -1,
-		'Balance/Rebalance' => -1,
+		'Feature' => -10,
+		'Balance/Rebalance' => -10,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
