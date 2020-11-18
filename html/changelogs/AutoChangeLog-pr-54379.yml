@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscdel: "remove fusion from reactions"
+  - rscadd: "hypertorus fusion machine"
