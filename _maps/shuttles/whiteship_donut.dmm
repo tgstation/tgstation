@@ -28,7 +28,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "af" = (
@@ -129,6 +128,7 @@
 /area/shuttle/abandoned)
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/metal,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
@@ -233,6 +233,8 @@
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "aO" = (
@@ -284,6 +286,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light,
 /obj/effect/spawner/lootdrop/whiteship_cere_ripley,
+/obj/item/stack/sheet/mineral/titanium/fifty,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (
@@ -319,6 +322,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -517,6 +521,29 @@
 /obj/item/crowbar/red,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
+"HU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/rods,
+/turf/open/floor/plasteel/airless,
+/area/shuttle/abandoned)
+"Iu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"LL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plasteel/airless,
+/area/shuttle/abandoned)
+"Pd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -605,7 +632,7 @@ aa
 aa
 ac
 ac
-ag
+Iu
 al
 al
 al
@@ -631,7 +658,7 @@ aq
 al
 ai
 ap
-ao
+LL
 ab
 bg
 bl
@@ -721,7 +748,7 @@ bq
 (11,1,1) = {"
 ab
 ah
-ag
+Pd
 ak
 al
 aq
@@ -751,7 +778,7 @@ al
 aq
 ag
 ag
-ax
+HU
 ab
 bh
 bo
@@ -763,7 +790,7 @@ aa
 aa
 aa
 aa
-aq
+al
 aq
 aq
 al
@@ -783,7 +810,7 @@ aa
 aa
 aa
 aa
-aq
+al
 aq
 al
 ag
@@ -824,8 +851,8 @@ aa
 aa
 aa
 aq
-aq
-aq
+al
+al
 aw
 aB
 aE
