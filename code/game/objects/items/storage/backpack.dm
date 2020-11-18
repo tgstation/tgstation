@@ -231,6 +231,12 @@
 	icon_state = "satchel-norm"
 	inhand_icon_state = "satchel-norm"
 
+/obj/item/storage/backpack/satchel/carrot
+	name = "carrot satchel"
+	desc = "A carrot looking satchel."
+	icon_state = "satchel_carrot"
+	inhand_icon_state = "satchel-norm"
+
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
