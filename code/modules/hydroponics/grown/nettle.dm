@@ -83,8 +83,8 @@
 /obj/item/food/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
-/obj/item/food/grown/nettle/basic/add_juice()
-	..()
+/obj/item/food/grown/nettle/basic/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
 	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/food/grown/nettle/death
@@ -96,8 +96,8 @@
 	wound_bonus = CANT_WOUND
 	throwforce = 15
 
-/obj/item/food/grown/nettle/death/add_juice()
-	..()
+/obj/item/food/grown/nettle/death/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
 	force = round((5 + seed.potency / 2.5), 1)
 
 /obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)

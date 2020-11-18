@@ -252,7 +252,7 @@
 
 /datum/plant_gene/trait/slip/on_new(obj/item/food/grown/G, newloc)
 	..()
-	if(istype(G) && ispath(G.trash, /obj/item/grown))
+	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
 		return
 	var/obj/item/seeds/seed = G.seed
 	var/stun_len = seed.potency * rate

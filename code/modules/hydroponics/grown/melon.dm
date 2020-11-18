@@ -27,13 +27,14 @@
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
-	slice_path = /obj/item/food/watermelonslice
-	slices_num = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
+
+/obj/item/food/grown/watermelon/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20)
 
 /obj/item/food/grown/watermelon/make_dryable()
 	return //No drying
@@ -80,6 +81,8 @@
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
+
+/*
 /obj/item/food/grown/holymelon/checkLiked(fraction, mob/M)    //chaplains sure love holymelons
 	if(!ishuman(M))
 		return
@@ -92,6 +95,9 @@
 	M.adjust_disgust(-5 + -2.5 * fraction)
 	SEND_SIGNAL(holy_person, COMSIG_ADD_MOOD_EVENT, "Divine_chew", /datum/mood_event/holy_consumption)
 	last_check_time = world.time
+
+
+*/
 
 /// Barrel melon Seeds
 /obj/item/seeds/watermelon/barrel

@@ -207,7 +207,7 @@
 	icon_state = "cherry_bomb"
 	seed = /obj/item/seeds/cherry/bomb
 	bite_consumption_mod = 2
-	volume = 125 //Gives enough room for the gunpowder at max potency
+	max_volume = 125 //Gives enough room for the gunpowder at max potency
 	max_integrity = 40
 	wine_power = 80
 

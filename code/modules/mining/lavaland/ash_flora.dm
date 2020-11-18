@@ -272,7 +272,7 @@
 	icon_state = "starcactus"
 	filling_color = "#1c801c"
 	bite_consumption_mod = 3
-	foodtype = VEGETABLES
+	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/seeds/lavaland/polypore

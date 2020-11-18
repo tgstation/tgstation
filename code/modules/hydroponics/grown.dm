@@ -7,18 +7,25 @@
 /obj/item/food/grown
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	name = "fresh produce" // so recipe text doesn't say 'snack'
-	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
+	max_volume = 100
+	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
+	var/obj/item/seeds/seed = null
+	///Name of the plant
 	var/plantname = ""
+	/// If set, bitesize = 1 + round(reagents.total_volume / bite_consumption_mod)
 	var/bite_consumption_mod = 0
+	///the splat it makes when it splats lol
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
-	// If set, bitesize = 1 + round(reagents.total_volume / bite_consumption_mod)
+
 	resistance_flags = FLAMMABLE
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
 	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
-	volume = 100
+	///Color of the grown object
+	var/filling_color
+
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
@@ -26,6 +33,7 @@
 
 	if(new_seed)
 		seed = new_seed.Copy()
+
 	else if(ispath(seed))
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
@@ -36,12 +44,13 @@
 
 	make_dryable()
 
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, loc)
-		seed.prepare_result(src)
-		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
-		add_juice()
+	for(var/datum/plant_gene/trait/T in seed.genes)
+		T.on_new(src, loc)
+
+	..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
+
+	seed.prepare_result(src)
+	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\
@@ -52,7 +61,7 @@
 				eat_time = eat_time,\
 				tastes = tastes,\
 				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
+				bite_consumption = bite_consumption_mod ? 1 + round(max_volume / bite_consumption_mod) : bite_consumption,\
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
 				on_consume = CALLBACK(src, .proc/OnConsume))
@@ -60,13 +69,6 @@
 
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
-
-/obj/item/food/grown/proc/add_juice()
-	if(reagents)
-		if(bite_consumption_mod)
-			bite_consumption_mod = 1 + round(reagents.total_volume / bite_consumption_mod)
-		return TRUE
-	return FALSE
 
 /obj/item/food/grown/examine(user)
 	. = ..()
@@ -106,6 +108,11 @@
 				T.on_attackby(src, O, user)
 
 
+/obj/item/food/grown/MakeLeaveTrash()
+	if(trash_type)
+		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
+	return
+
 // Various gene procs
 /obj/item/food/grown/attack_self(mob/user)
 	if(seed?.get_gene(/datum/plant_gene/trait/squash))
@@ -131,9 +138,6 @@
 	else if(splat_type)
 		new splat_type(T)
 
-	if(trash)
-		generate_trash(T)
-
 	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
 	if(seed)
 		for(var/datum/plant_gene/trait/trait in seed.genes)
@@ -151,12 +155,9 @@
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_consume(src, usr)
 
-/obj/item/food/grown/generate_trash(atom/location)
-	if(trash && (ispath(trash, /obj/item/grown) || ispath(trash, /obj/item/food/grown)))
-		. = new trash(location, seed)
-		trash = null
-		return
-	return ..()
+///Callback for bonus behavior for generating trash of grown food.
+/obj/item/food/grown/proc/generate_trash(atom/location)
+	return new trash_type(location, seed)
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
@@ -179,22 +180,3 @@
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
-
-/*
- * Attack self for growns
- *
- * Spawns the trash item at the growns drop_location()
- *
- * Then deletes the grown object
- *
- * Then puts trash item into the hand of user attack selfing, or drops it back on the ground
- */
-/obj/item/food/grown/shell/attack_self(mob/user)
-	var/obj/item/T
-	if(trash)
-		T = generate_trash(drop_location())
-		//Delete grown so our hand is free
-		qdel(src)
-		//put trash obj in hands or drop to ground
-		user.put_in_hands(T, user.active_hand_index, TRUE)
-		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")

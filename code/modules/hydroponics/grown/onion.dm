@@ -24,9 +24,10 @@
 	icon_state = "onion"
 	bite_consumption_mod = 2
 	tastes = list("onions" = 1)
-	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice
-	slices_num = 2
 	wine_power = 30
+
+/obj/item/food/grown/onion/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15)
 
 /obj/item/seeds/onion/red
 	name = "pack of red onion seeds"
@@ -43,29 +44,31 @@
 	name = "red onion"
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
-	slice_path = /obj/item/reagent_containers/food/snacks/onion_slice/red
 	wine_power = 60
 
-/obj/item/food/grown/onion/slice(accuracy, obj/item/W, mob/user)
+/obj/item/food/grown/onion/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)
+
+/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
 	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
 	S.attach(splat_location)
 	S.set_up(reagents, 0, splat_location, 0)
-	if(..())
-		S.start()
-		return TRUE
+	S.start()
 	qdel(S)
+	return ..()
 
-/obj/item/reagent_containers/food/snacks/onion_slice
+/obj/item/food/onion_slice
 	name = "onion slices"
 	desc = "Rings, not for wearing."
 	icon_state = "onionslice"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	gender = PLURAL
-	cooked_type = /obj/item/food/onionrings
+	w_class = WEIGHT_CLASS_TINY
+	microwaved_type = /obj/item/food/onionrings
 
-/obj/item/reagent_containers/food/snacks/onion_slice/red
+/obj/item/food/onion_slice/red
 	name = "red onion slices"
 	desc = "They shine like exceptionally low quality amethyst."
 	icon_state = "onionslice_red"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)

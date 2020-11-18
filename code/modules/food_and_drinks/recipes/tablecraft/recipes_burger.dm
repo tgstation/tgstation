@@ -343,7 +343,7 @@
 	name = "McRib"
 	reqs = list(
 			/obj/item/food/bbqribs = 1,     //The sauce is already included in the ribs
-			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/food/onion_slice = 1, //feel free to remove if too burdensome.
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/food/burger/rib

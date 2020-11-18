@@ -262,7 +262,7 @@
 	var/reagent_max = 0
 	for(var/rid in reagents_add)
 		reagent_max += reagents_add[rid]
-	if(istype(T, /obj/item/food/grown))
+	if(IS_EDIBLE(T))
 		var/obj/item/food/grown/grown_edible = T
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
