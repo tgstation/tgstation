@@ -21380,7 +21380,7 @@
 /area/crew_quarters/bar)
 "beD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/item/kitchen/fork,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -24929,7 +24929,7 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/storage/belt/fannypack/red,
-/obj/item/reagent_containers/food/snacks/chewable/lollipop,
+/obj/item/food/chewable/lollipop,
 /obj/item/radio/intercom{
 	pixel_x = -28
 	},
@@ -36267,7 +36267,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUc" = (
-/obj/item/reagent_containers/food/snacks/canned/beans,
+/obj/item/food/canned/beans,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUd" = (
@@ -42367,7 +42367,7 @@
 /area/crew_quarters/kitchen)
 "cpA" = (
 /obj/structure/rack,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
