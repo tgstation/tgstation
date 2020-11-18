@@ -174,7 +174,8 @@
 	tastes = list("stale crust" = 1, "rancid cheese" = 2, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
 
-/obj/item/food/pizzaslice/moldy/MakeProcessable()
+/obj/item/food/pizzaslice/moldy/Initialize()
+	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
 
