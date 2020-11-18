@@ -89631,6 +89631,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "cQP" = (
@@ -90205,6 +90206,14 @@
 /obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
+"geJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/item/trash/cheesie,
+/obj/item/trash/syndi_cakes,
+/turf/open/floor/plasteel/white,
+/area/security/prison)
 "gkX" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -90224,7 +90233,7 @@
 /area/medical/chemistry)
 "gmS" = (
 /obj/structure/sign/poster/official/help_others,
-/turf/closed/wall/r_wall,
+/turf/closed/wall/r_wall/rust,
 /area/security/prison)
 "gmT" = (
 /obj/structure/cable,
@@ -90318,6 +90327,10 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
+"gUp" = (
+/obj/effect/spawner/lootdrop/cigbutt,
+/turf/open/floor/plating,
+/area/security/prison)
 "gUU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -90504,6 +90517,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/item/storage/crayons{
 	pixel_x = -6;
 	pixel_y = 1
@@ -90562,6 +90576,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"iyN" = (
+/obj/structure/urinal{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/rust,
+/area/security/prison)
 "izW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -90600,6 +90620,9 @@
 	dir = 4;
 	pixel_x = 24;
 	pixel_y = 8
+	},
+/obj/structure/urinal{
+	pixel_y = 32
 	},
 /turf/open/floor/plating/rust,
 /area/security/prison)
@@ -90749,6 +90772,13 @@
 	pixel_y = 8;
 	req_access = "2"
 	},
+/obj/machinery/button/door{
+	id = "Isolation";
+	name = "Isolation Shutter Button";
+	pixel_x = -23;
+	pixel_y = -5;
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "khg" = (
@@ -90795,9 +90825,16 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
 "koT" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall/rust,
-/area/security/prison)
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/dresser,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/effect/spawner/lootdrop/prison_contraband,
+/turf/open/floor/plasteel,
+/area/security/prison/safe)
 "kzW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/trash,
@@ -90842,6 +90879,12 @@
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
+"kOw" = (
+/obj/structure/table,
+/obj/structure/cable,
+/obj/item/food/sausage,
+/turf/open/floor/plasteel/white,
+/area/security/prison)
 "kTB" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -91038,6 +91081,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/plasteel/white,
 /area/security/prison/safe)
 "lXx" = (
@@ -91086,6 +91130,7 @@
 /obj/item/trash/candy,
 /obj/item/trash/chips,
 /obj/effect/spawner/lootdrop/prison_contraband,
+/obj/item/weldingtool/mini,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
 "mGQ" = (
@@ -91103,6 +91148,7 @@
 "mIK" = (
 /obj/structure/table,
 /obj/structure/cable,
+/obj/item/food/spiderleg,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "mJj" = (
@@ -91273,6 +91319,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "olb" = (
@@ -91355,6 +91402,8 @@
 /area/maintenance/port)
 "oBY" = (
 /obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/rust,
 /area/security/prison)
 "oDs" = (
@@ -91374,6 +91423,7 @@
 	},
 /obj/machinery/washing_machine,
 /obj/structure/cable,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "oGn" = (
@@ -91621,6 +91671,7 @@
 	pixel_y = 24;
 	prison_radio = 1
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "qgG" = (
@@ -91898,6 +91949,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/item/photo/old,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "rHf" = (
@@ -91927,6 +91979,7 @@
 /obj/structure/rack,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
+/obj/item/watertank/janitor,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
 "sbe" = (
@@ -91961,6 +92014,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/vault,
 /area/security/prison)
 "swn" = (
@@ -92169,6 +92223,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/cigbutt,
 /turf/open/floor/plating,
 /area/security/prison)
 "tSE" = (
@@ -92185,6 +92240,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
+/area/security/prison)
+"tVR" = (
+/obj/item/shrapnel/bullet,
+/turf/open/floor/plating,
 /area/security/prison)
 "tWf" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -92244,6 +92303,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
 "urE" = (
@@ -92370,6 +92430,10 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"uWN" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall/rust,
+/area/security/prison)
 "var" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -92562,8 +92626,12 @@
 "vSd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/turf/open/space/basic,
-/area/security/prison)
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Isolation";
+	name = "Isolation Shutters"
+	},
+/turf/open/floor/plating,
+/area/security/prison/safe)
 "vXv" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/ywflowers,
@@ -97706,7 +97774,7 @@ aeu
 aeU
 aeU
 aeu
-cPa
+cpx
 cQP
 cpx
 ivj
@@ -97966,12 +98034,12 @@ anu
 cPa
 cTj
 lWU
-anu
+vSd
 hTQ
 vcb
 lAy
 itU
-aat
+aav
 aeU
 aeU
 aeU
@@ -98223,7 +98291,7 @@ cjL
 cPa
 gGw
 uHJ
-anu
+vSd
 jmh
 var
 eci
@@ -98734,19 +98802,19 @@ aeU
 cpx
 cpx
 cjN
-cPa
+cpx
 kgW
 lAn
-aav
+aat
 fXW
 cVr
 jOl
 nYL
-aav
-aau
-aau
-aau
 aat
+aau
+aau
+aau
+aav
 aav
 aeu
 aeu
@@ -98995,7 +99063,7 @@ chR
 chR
 qYP
 tFc
-chR
+gUp
 mBd
 iBG
 chR
@@ -99762,8 +99830,8 @@ aeu
 cpx
 cgy
 cCw
-cpx
-cgy
+cPa
+koT
 cCw
 cpx
 aaa
@@ -99780,10 +99848,10 @@ aeU
 asO
 aau
 aav
-aat
+aav
 aau
 aau
-asO
+uWN
 aaa
 aaa
 aaa
@@ -100028,7 +100096,7 @@ aau
 kLr
 xFp
 xFp
-vSd
+aau
 uNu
 cFO
 aav
@@ -100285,7 +100353,7 @@ aav
 kLr
 xFp
 xFp
-vSd
+aau
 sqU
 cFO
 aav
@@ -100799,7 +100867,7 @@ aau
 oix
 nhV
 xFp
-aat
+aav
 chR
 cFO
 aav
@@ -101053,7 +101121,7 @@ aaa
 aaa
 aaa
 aav
-aav
+aat
 aav
 aav
 aav
@@ -101068,7 +101136,7 @@ oeA
 rkm
 hnw
 fGe
-aat
+aav
 aeu
 aeu
 aeu
@@ -101316,12 +101384,12 @@ pwv
 aav
 tFc
 mVo
-aat
+aav
 aav
 aav
 aav
 aau
-aat
+aav
 qwo
 tUw
 irF
@@ -101567,7 +101635,7 @@ aaa
 aaa
 aaa
 aav
-xQj
+iyN
 nLY
 chR
 oub
@@ -102083,13 +102151,13 @@ aaa
 aav
 yfT
 aav
-aav
+aat
 aav
 vIj
 kfw
 ujw
 dQm
-aat
+aav
 aeU
 aeU
 aeU
@@ -102338,7 +102406,7 @@ aaa
 aaa
 aaa
 aau
-chR
+tVR
 hyC
 pWJ
 lNB
@@ -102855,7 +102923,7 @@ ivj
 cpx
 dRb
 cpx
-cPa
+cpx
 fdJ
 izW
 sQD
@@ -103365,7 +103433,7 @@ aaa
 bpm
 aaa
 aaa
-cPa
+cpx
 urB
 gUU
 kzW
@@ -103376,7 +103444,7 @@ aau
 dUZ
 vJw
 lGn
-aav
+aat
 cmU
 cmU
 cAm
@@ -104147,7 +104215,7 @@ wJc
 wJc
 ehK
 tBY
-koT
+asO
 cmU
 cmU
 cAm
@@ -104393,12 +104461,12 @@ cqJ
 bYp
 coo
 cpv
-aat
+aav
 eUZ
 bTQ
 czR
 aau
-cSZ
+geJ
 cJC
 dFw
 mIK
@@ -105172,7 +105240,7 @@ bNH
 bTu
 cDg
 cjE
-mIK
+kOw
 tnI
 oUy
 aau
@@ -105934,7 +106002,7 @@ cqF
 aer
 crm
 cuF
-aat
+aav
 ana
 cam
 cam
