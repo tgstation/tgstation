@@ -249,6 +249,7 @@
 		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
 		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
 		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
+		"voidascend" = 'icons/UI_Icons/Achievements/Misc/voidascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
