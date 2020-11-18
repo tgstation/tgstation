@@ -28,7 +28,7 @@
 	if(..())
 		return
 	if(linked_radio)
-		linked_radio.Destroy()
+		qdel(linked_radio)
 
 /datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
