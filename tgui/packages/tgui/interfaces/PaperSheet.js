@@ -16,25 +16,8 @@ import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
-
+import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
-
-const sanitize_text = value => {
-  // This is VERY important to think first if you NEED
-  // the tag you put in here.  We are pushing all this
-  // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it doesn't
-  // kill href links or such
-  return DOMPurify.sanitize(value, {
-    FORBID_ATTR: ['class', 'style'],
-    ALLOWED_TAGS: [
-      'br', 'code', 'li', 'p', 'pre',
-      'span', 'table', 'td', 'tr',
-      'th', 'ul', 'ol', 'menu', 'font', 'b',
-      'center', 'table', 'tr', 'th',
-    ],
-  });
-};
 
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
@@ -164,7 +147,7 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
       if (sanitized_text.length === 0) {
         continue;
       }
-      // this is easyer than doing a bunch of text manipulations
+      // this is easier than doing a bunch of text manipulations
       const target = dom.cloneNode(true);
       // in case they sign in a field
       if (sanitized_text.match(sign_regex)) {
@@ -277,52 +260,33 @@ class PaperSheetStamper extends Component {
       x: 0,
       y: 0,
       rotate: 0,
-      center: [0, 0],
     };
     this.style = null;
     this.handleMouseMove = e => {
       const pos = this.findStampPosition(e);
       if (!pos) { return; }
-      // center offset of stamp
+      // center offset of stamp & rotate
       pauseEvent(e);
-      this.setState({ x: pos[0], y: pos[1] });
+      this.setState({ x: pos[0], y: pos[1], rotate: pos[3] });
     };
     this.handleMouseClick = e => {
       if (e.pageY <= 30) { return; }
-      let pos = this.findStampPosition(e);
-      if (!pos) {
-        pos = [
-          this.state.x,
-          this.state.y,
-        ];
-      }
       const { act, data } = useBackend(this.context);
       const stamp_obj = {
-        x: pos[0], y: pos[1], r: this.state.rotate,
+        x: this.state.x, y: this.state.y, r: this.state.rotate,
         stamp_class: this.props.stamp_class,
         stamp_icon_state: data.stamp_icon_state,
       };
       act("stamp", stamp_obj);
-      this.setState({ x: pos[0], y: pos[1] });
-    };
-    this.getScroll = e => {
-      return window.scrollX;
     };
   }
 
   findStampPosition(e) {
     let rotating;
+    let rotate;
     const windowRef = document.querySelector('.Layout__content');
     if (e.shiftKey) {
       rotating = true;
-      const radians = Math.atan2(
-        e.pageX - this.state.center[0],
-        e.pageY - this.state.center[1]
-      );
-
-      const degreeOffset = (radians * (180 / Math.PI) * -1);
-      const rotate = { rotate: degreeOffset };
-      this.setState(() => rotate);
     }
 
     if (document.getElementById("stamp"))
@@ -343,13 +307,18 @@ class PaperSheetStamper extends Component {
       const heightMax = (windowRef.clientHeight - windowRef.scrollTop) - (
         stampHeight);
 
+      const radians = Math.atan2(
+        e.pageX - currentWidth,
+        e.pageY - currentHeight
+      );
+
+      rotate = (radians * (180 / Math.PI) * -1);
+
       const pos = [
         clamp(currentWidth, widthMin, widthMax),
         clamp(currentHeight, heightMin, heightMax),
+        rotate,
       ];
-
-      const centerState = { center: pos };
-      this.setState(() => centerState);
       return pos;
     }
   }
@@ -426,7 +395,7 @@ class PaperSheetEdit extends Component {
       // First lets make sure it ends in a new line
       value += value[value.length] === "\n" ? " \n" : "\n \n";
       // Second, we sanitize the text of html
-      const sanitized_text = sanitize_text(value);
+      const sanitized_text = sanitizeText(value);
       const signed_text = signDocument(sanitized_text, pen_color, edit_usr);
       // Third we replace the [__] with fields as markedjs fucks them up
       const fielded_text = createFields(
