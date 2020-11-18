@@ -221,6 +221,13 @@
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.7 // not as good at digestion
 
+/obj/item/organ/stomach/cybernetic/Initialize()
+	. = ..()
+	// If we didn't get any reagents as part of parent proc calls, we'll create our own.
+	// This is because stomachs are now an important part of eating and even cybernetic ones need to be able to store nutriment.
+	if(!reagents)
+		create_reagents(reagent_vol)
+
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
 	icon_state = "stomach-c-u"
