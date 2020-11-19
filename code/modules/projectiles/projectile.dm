@@ -232,6 +232,11 @@
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
+		if(isturf(target) && hitsound_wall)
+			var/volume = clamp(vol_by_damage() + 20, 0, 100)
+			if(suppressed)
+				volume = 5
+			playsound(loc, hitsound_wall, volume, TRUE, -1)
 		return BULLET_ACT_HIT
 
 	var/mob/living/L = target
@@ -333,12 +338,6 @@
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
-	if(isturf(A) && hitsound_wall)
-		var/volume = clamp(vol_by_damage() + 20, 0, 100)
-		if(suppressed)
-			volume = 5
-		playsound(loc, hitsound_wall, volume, TRUE, -1)
-
 	return process_hit(T, select_target(T, A))
 
 #define QDEL_SELF 1			//Delete if we're not PHASING flagged non-temporarily
@@ -413,11 +412,8 @@
   * Projectile can pass through
   * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
   */
-/obj/projectile/CanAllowThrough(atom/movable/mover, turf/target)
-	if(impacted[mover])
-		return TRUE
-	// Otherwise, ALWAYS attempt to bump so we can scan for a hit.
-	return FALSE
+/obj/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+	return impacted[blocker]? TRUE : ..()
 
 /**
   * Projectile moved:
