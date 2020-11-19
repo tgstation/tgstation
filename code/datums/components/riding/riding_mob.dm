@@ -5,11 +5,11 @@
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()
-	var/mob/living/parent_living = parent
-	parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
-	log_riding(parent_living, riding_mob)
-	riding_mob.set_glide_size(parent_living.glide_size)
-	handle_vehicle_offsets(parent_living.dir)
+	var/mob/living/living_parent = parent
+	living_parent.stop_pulling() // was only used on humans previously, may change some other behavior
+	log_riding(living_parent, riding_mob)
+	riding_mob.set_glide_size(living_parent.glide_size)
+	handle_vehicle_offsets(living_parent.dir)
 
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
@@ -24,31 +24,31 @@
 
 // this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider)
-	var/mob/living/parent_living = parent
+	var/mob/living/living_parent = parent
 
 	var/kick_us_off
-	if(parent_living.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
+	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		kick_us_off = TRUE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
 	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
 		kick_us_off = TRUE
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(parent_living, TRAIT_RESTRAINED) || parent_living.incapacitated(TRUE, TRUE)))
+	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(TRUE, TRUE)))
 		kick_us_off = TRUE
 
 	if(!kick_us_off)
 		return TRUE
 
-	rider.visible_message("<span class='warning'>[rider] falls off of [parent_living]!</span>", \
-					"<span class='warning'>You fall off of [parent_living]!</span>")
+	rider.visible_message("<span class='warning'>[rider] falls off of [living_parent]!</span>", \
+					"<span class='warning'>You fall off of [living_parent]!</span>")
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
-	parent_living.unbuckle_mob(rider)
+	living_parent.unbuckle_mob(rider)
 
-/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/parent_living, mob/living/former_rider, force = FALSE)
-	if(istype(parent_living) && istype(former_rider))
-		parent_living.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
-		former_rider.log_message("is no longer riding [parent_living]", LOG_ATTACK, color="pink")
+/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
+	if(istype(living_parent) && istype(former_rider))
+		living_parent.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
+		former_rider.log_message("is no longer riding [living_parent]", LOG_ATTACK, color="pink")
 	remove_abilities(former_rider)
 	return ..()
 
@@ -61,24 +61,24 @@
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
-	var/atom/movable/parent_movable = parent
-	parent_movable.unbuckle_mob(rider)
+	var/atom/movable/movable_parent = parent
+	movable_parent.unbuckle_mob(rider)
 
-	if(!isanimal(parent_movable) && !iscyborg(parent_movable))
+	if(!isanimal(movable_parent) && !iscyborg(movable_parent))
 		return
 
-	var/turf/target = get_edge_target_turf(parent_movable, parent_movable.dir)
-	var/turf/targetm = get_step(get_turf(parent_movable), parent_movable.dir)
+	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)
+	var/turf/targetm = get_step(get_turf(movable_parent), movable_parent.dir)
 	rider.Move(targetm)
 	rider.Knockdown(3 SECONDS)
 	if(gentle)
-		rider.visible_message("<span class='warning'>[rider] is thrown clear of [parent_movable]!</span>", \
-		"<span class='warning'>You're thrown clear of [parent_movable]!</span>")
-		rider.throw_at(target, 8, 3, parent_movable, gentle = TRUE)
+		rider.visible_message("<span class='warning'>[rider] is thrown clear of [movable_parent]!</span>", \
+		"<span class='warning'>You're thrown clear of [movable_parent]!</span>")
+		rider.throw_at(target, 8, 3, movable_parent, gentle = TRUE)
 	else
-		rider.visible_message("<span class='warning'>[rider] is thrown violently from [parent_movable]!</span>", \
-		"<span class='warning'>You're thrown violently from [parent_movable]!</span>")
-		rider.throw_at(target, 14, 5, parent_movable, gentle = FALSE)
+		rider.visible_message("<span class='warning'>[rider] is thrown violently from [movable_parent]!</span>", \
+		"<span class='warning'>You're thrown violently from [movable_parent]!</span>")
+		rider.throw_at(target, 14, 5, movable_parent, gentle = FALSE)
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
 /datum/component/riding/creature/proc/check_emote(mob/living/user, datum/emote/emote)
@@ -235,12 +235,12 @@
 
 /datum/component/riding/creature/mulebot/handle_specials()
 	. = ..()
-	var/atom/movable/parent_movable = parent
+	var/atom/movable/movable_parent = parent
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(0, 12), TEXT_WEST = list(0, 12)))
-	set_vehicle_dir_layer(SOUTH, parent_movable.layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
-	set_vehicle_dir_layer(NORTH, parent_movable.layer)
-	set_vehicle_dir_layer(EAST, parent_movable.layer)
-	set_vehicle_dir_layer(WEST, parent_movable.layer)
+	set_vehicle_dir_layer(SOUTH, movable_parent.layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
+	set_vehicle_dir_layer(NORTH, movable_parent.layer)
+	set_vehicle_dir_layer(EAST, movable_parent.layer)
+	set_vehicle_dir_layer(WEST, movable_parent.layer)
 
 
 /datum/component/riding/creature/cow/handle_specials()
@@ -275,12 +275,12 @@
 
 /datum/component/riding/creature/megacarp/handle_specials()
 	. = ..()
-	var/atom/movable/parent_movable = parent
+	var/atom/movable/movable_parent = parent
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
-	set_vehicle_dir_offsets(SOUTH, parent_movable.pixel_x, 0)
-	set_vehicle_dir_offsets(NORTH, parent_movable.pixel_x, 0)
-	set_vehicle_dir_offsets(EAST, parent_movable.pixel_x, 0)
-	set_vehicle_dir_offsets(WEST, parent_movable.pixel_x, 0)
+	set_vehicle_dir_offsets(SOUTH, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(NORTH, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(EAST, movable_parent.pixel_x, 0)
+	set_vehicle_dir_offsets(WEST, movable_parent.pixel_x, 0)
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
