@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Hardsuit Thermal regulators will tell you if your cell is keeping you warm, if the internal cell is dead, or when the cell turns itself off."
