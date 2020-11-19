@@ -83,7 +83,7 @@
 			if((I.obj_flags & HAND_ITEM))
 				qdel(I)
 
-		// this would be put_in_hands() if it didn't have the chance to sleep
+		// this would be put_in_hands() if it didn't have the chance to sleep, since this proc gets called from a signal handler that relies on what this returns
 		var/inserted_successfully = FALSE
 		if(user.put_in_active_hand(inhand))
 			inserted_successfully = TRUE

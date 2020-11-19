@@ -26,8 +26,7 @@
 	var/mob/living/parent_living = parent
 
 	var/kick_us_off
-	// no matter what, you can't ride something that's on the floor
-	if(parent_living.body_position != STANDING_UP) // should really happen when they fall over, but there's no signal for that now so someone else can do it
+	if(parent_living.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		kick_us_off = TRUE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
 	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))

@@ -12,6 +12,9 @@
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
 
+/obj/vehicle/ridden/wheelchair/motorized/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
+
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
 	..()
 	refresh_parts()
@@ -74,33 +77,34 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 		return
-	if(panel_open)
-		if(istype(I, /obj/item/stock_parts/cell))
-			if(power_cell)
-				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
-			else
-				I.forceMove(src)
-				power_cell = I
-				to_chat(user, "<span class='notice'>You install the [I].</span>")
-			refresh_parts()
-			return
-		if(istype(I, /obj/item/stock_parts))
-			var/obj/item/stock_parts/B = I
-			var/P
-			for(var/obj/item/stock_parts/A in contents)
-				for(var/D in required_parts)
-					if(ispath(A.type, D))
-						P = D
-						break
-				if(istype(B, P) && istype(A, P))
-					if(B.get_part_rating() > A.get_part_rating())
-						B.forceMove(src)
-						user.put_in_hands(A)
-						user.visible_message("<span class='notice'>[user] replaces [A] with [B] in [src].</span>", "<span class='notice'>You replace [A] with [B].</span>")
-						break
-			refresh_parts()
-			return
-	return ..()
+	if(!panel_open)
+		return ..()
+
+	if(istype(I, /obj/item/stock_parts/cell))
+		if(power_cell)
+			to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
+		else
+			I.forceMove(src)
+			power_cell = I
+			to_chat(user, "<span class='notice'>You install the [I].</span>")
+		refresh_parts()
+		return
+	if(istype(I, /obj/item/stock_parts))
+		var/obj/item/stock_parts/B = I
+		var/P
+		for(var/obj/item/stock_parts/A in contents)
+			for(var/D in required_parts)
+				if(ispath(A.type, D))
+					P = D
+					break
+			if(istype(B, P) && istype(A, P))
+				if(B.get_part_rating() > A.get_part_rating())
+					B.forceMove(src)
+					user.put_in_hands(A)
+					user.visible_message("<span class='notice'>[user] replaces [A] with [B] in [src].</span>", "<span class='notice'>You replace [A] with [B].</span>")
+					break
+		refresh_parts()
+		return
 
 /obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")

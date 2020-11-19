@@ -11,6 +11,9 @@
 
 /// Every time the driver tries to drive us, see if we can actually move or not
 /datum/component/riding/vehicle/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
+		return COMPONENT_DRIVER_BLOCK_MOVE
+
 	if(!keycheck(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>[vehicle_parent] has no key inserted!</span>")
@@ -58,8 +61,7 @@
 /// This handles the actual movement for vehicles once [/datum/component/riding/vehicle/proc/driver_move] has given us the green light
 /datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)
 	var/atom/movable/AM = parent
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
-		return
+
 	last_vehicle_move = world.time
 
 	var/turf/next = get_step(AM, direction)
@@ -79,7 +81,7 @@
 		return
 	handle_vehicle_layer(AM.dir)
 	handle_vehicle_offsets(AM.dir)
-	moved_successfully(user)
+	return TRUE
 
 /datum/component/riding/vehicle/atv
 	keytype = /obj/item/key/atv
@@ -205,8 +207,10 @@
 	vehicle_move_delay = 1
 	COOLDOWN_DECLARE(enginesound_cooldown)
 
-/datum/component/riding/vehicle/car/moved_successfully()
+/datum/component/riding/vehicle/car/handle_ride(mob/user, direction)
 	. = ..()
+	if(!.)
+		return
 	var/obj/vehicle/sealed/car/car_parent = parent
 	if(!COOLDOWN_FINISHED(src, enginesound_cooldown))
 		return
@@ -244,26 +248,13 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-
-/datum/component/riding/vehicle/wheelchair/proc/set_speed(mob/living/user)
+// special messaging for those without arms
+/datum/component/riding/vehicle/wheelchair/hand/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
+	return ..()
 
-// special messaging for those without arms
-/datum/component/riding/vehicle/wheelchair/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
-	if((ride_check_flags & ~RIDER_NEEDS_ARMS) || !HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		return ..()
-
-	if(COOLDOWN_FINISHED(src, message_cooldown))
-		to_chat(user, "<span class='warning'>You can't grip \the [vehicle_parent] well enough to move it!</span>")
-		COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-	return COMPONENT_DRIVER_BLOCK_MOVE
-
-/datum/component/riding/vehicle/wheelchair/moved_successfully(mob/living/user)
-	. = ..()
-	set_speed(user)
-
-/datum/component/riding/vehicle/wheelchair/motorized/set_speed(mob/living/user)
+/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	var/speed = 1 // Should never be under 1
 	var/delay_multiplier = 6.7 // magic number from wheelchair code
 
@@ -271,17 +262,10 @@
 	for(var/obj/item/stock_parts/manipulator/M in our_chair.contents)
 		speed += M.rating
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
+	return ..()
 
-/datum/component/riding/vehicle/wheelchair/motorized/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
-	if((ride_check_flags & ~RIDER_NEEDS_ARMS) || !HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		return ..()
-
-	if(COOLDOWN_FINISHED(src, message_cooldown))
-		to_chat(user, "<span class='warning'>You can't operate the motor controller!</span>")
-		COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-	return COMPONENT_DRIVER_BLOCK_MOVE
-
-/datum/component/riding/vehicle/wheelchair/motorized/moved_successfully(mob/living/user)
+/datum/component/riding/vehicle/wheelchair/motorized/handle_ride(mob/user, direction)
 	. = ..()
-	var/obj/vehicle/ridden/wheelchair/motorized/motor_parent = parent
-	motor_parent.power_cell.use(motor_parent.power_usage / max(motor_parent.power_efficiency, 1) * 0.05)
+	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
+	if(istype(our_chair) && our_chair.power_cell)
+		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)

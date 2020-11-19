@@ -16,7 +16,7 @@
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair)
+	make_ridable()
 
 /obj/vehicle/ridden/wheelchair/ComponentInitialize()	//Since it's technically a chair I want it to have chair properties
 	. = ..()
@@ -88,6 +88,10 @@
 	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
 	return FALSE
+
+/// I assign the ridable element in this so i don't have to fuss with hand wheelchairs and motor wheelchairs having different subtypes
+/obj/vehicle/ridden/wheelchair/proc/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS

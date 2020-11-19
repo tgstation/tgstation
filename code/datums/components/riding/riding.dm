@@ -109,7 +109,6 @@
 	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for (var/m in movable_parent.buckled_mobs)
 		var/mob/buckled_mob = m
-		buckled_mob.set_glide_size(movable_parent.glide_size)
 		ride_check(buckled_mob)
 	if(QDELETED(src))
 		return // runtimed with piggy's without this, look into this more
@@ -208,11 +207,6 @@
 		return !forbid_turf_typecache[current.type]
 	return TRUE
 
-
-
-/// This proc is only used for cars so that they can play an engine rumble on movement. If we run this, we successfully moved a tile thru driving.
-/datum/component/riding/proc/moved_successfully()
-	return
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
