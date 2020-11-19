@@ -196,7 +196,7 @@
 /datum/religion_sect/candle_sect
 	name = "Ever-Burning Candle"
 	desc = "A sect dedicated to candles."
-	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Bibles now deal burn damage and double as a lighter. Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
+	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
 	desired_items = list(/obj/item/candle)
