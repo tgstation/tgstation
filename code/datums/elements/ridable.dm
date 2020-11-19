@@ -85,11 +85,11 @@
 
 		// this would be put_in_hands() if it didn't have the chance to sleep
 		var/inserted_successfully = FALSE
-		if(user.put_in_active_hand(inhand, TRUE))
+		if(user.put_in_active_hand(inhand))
 			inserted_successfully = TRUE
 		else
 			var/hand = user.get_empty_held_index_for_side(LEFT_HANDS) || user.get_empty_held_index_for_side(RIGHT_HANDS)
-			if(hand && user.put_in_hand(inhand, hand, TRUE))
+			if(hand && user.put_in_hand(inhand, hand))
 				inserted_successfully = TRUE
 
 		if(inserted_successfully)
