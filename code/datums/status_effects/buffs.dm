@@ -370,7 +370,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
 	examine_text = "<span class='notice'>They don't seem to be all here.</span>"
-	alert_type = /obj/screen/alert/status_effect/crucible_soul
+	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -392,7 +392,7 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
-	alert_type =/obj/screen/alert/status_effect/duskndawn
+	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
 	. = ..()
@@ -409,7 +409,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
 	tick_interval = 1 SECONDS
-	alert_type = /obj/screen/alert/status_effect/marshal
+	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
 	. = ..()
