@@ -445,17 +445,17 @@
 				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
 
 
-/obj/screen/alert/status_effect/crucible_soul
+/atom/movable/screen/alert/status_effect/crucible_soul
 	name = "Blessing of Crucible Soul"
 	desc = "You phased through the reality, you are halfway to your final destination..."
 	icon_state = "crucible"
 
-/obj/screen/alert/status_effect/duskndawn
+/atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
 	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
 	icon_state = "duskndawn"
 
-/obj/screen/alert/status_effect/marshal
+/atom/movable/screen/alert/status_effect/marshal
 	name = "Blessing of Wounded Soldier"
 	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"
