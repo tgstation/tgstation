@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - rscadd: "You can now craft ladders using 15 rods. Note: crafted ladders can only be connected to other crafter ladders."
