@@ -133,6 +133,12 @@
 	if(amount <= 0) //just in case
 		return FALSE
 	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
 	var/obj/machinery/power/apc/local_apc = home?.get_apc()
 	if(!local_apc)
 		return FALSE
