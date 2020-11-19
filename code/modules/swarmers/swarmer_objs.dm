@@ -54,6 +54,14 @@
 	///Whether or not a swarmer is currently being created by this beacon
 	var/processing_swarmer = FALSE
 
+/obj/structure/swarmer_beacon/Initialize()
+	. = ..()
+	GLOB.poi_list |= src
+
+/obj/structure/swarmer_beacon/Destroy()
+	. = ..()
+	GLOB.poi_list.Remove(src)
+
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
 	if(processing_swarmer)
