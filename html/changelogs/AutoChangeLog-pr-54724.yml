@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "NT CIMS will now send notifications if the app is closed with a supermatter selected, and the selected supermatter starts delaminating."
