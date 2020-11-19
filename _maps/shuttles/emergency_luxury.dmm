@@ -162,7 +162,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aD" = (
-/obj/item/reagent_containers/food/snacks/candiedapple{
+/obj/item/food/candiedapple{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -239,7 +239,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aO" = (
-/obj/item/reagent_containers/food/snacks/melonfruitbowl{
+/obj/item/food/melonfruitbowl{
 	pixel_y = 4
 	},
 /obj/structure/table/wood/fancy/black,

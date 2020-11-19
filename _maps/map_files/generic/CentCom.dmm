@@ -15064,7 +15064,7 @@
 /area/tdome/tdomeobserve)
 "HB" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /obj/item/reagent_containers/food/condiment/enzyme{
 	pixel_y = 5
 	},
