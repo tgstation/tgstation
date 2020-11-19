@@ -387,8 +387,8 @@
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
-///from base of mob/living/set_body_position(): (new_value)
-#define COMSIG_LIVING_UPDATE_BODY_POSITION "spessmen_go_horizontal"
+///from base of mob/living/set_body_position()
+#define COMSIG_LIVING_UPDATE_BODY_POSITION "living_update_horizontal"
 
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
