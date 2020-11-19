@@ -1084,14 +1084,12 @@
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 		return
 
-	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
-		return
+	if(target.loc != loc)
+		var/old_density = density
+		density = FALSE
+		step_towards(target, loc)
+		density = old_density
 
-	var/old_density = density
-	density = FALSE
-	step_towards(target, loc)
-	density = old_density
 	if(target.loc == loc)
 		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 

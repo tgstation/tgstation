@@ -7,6 +7,7 @@
 	. = ..()
 	var/mob/living/parent_living = parent
 	parent_living.stop_pulling() // was only used on humans previously, may change some other behavior
+	log_riding(parent_living, riding_mob)
 	riding_mob.set_glide_size(parent_living.glide_size)
 	handle_vehicle_offsets(parent_living.dir)
 
@@ -44,9 +45,19 @@
 	rider.Knockdown(4 SECONDS)
 	parent_living.unbuckle_mob(rider)
 
-/datum/component/riding/creature/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
-	remove_abilities(M)
+/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/parent_living, mob/living/former_rider, force = FALSE)
+	if(istype(parent_living) && istype(former_rider))
+		parent_living.log_message("is no longer being ridden by [former_rider]", LOG_ATTACK, color="pink")
+		former_rider.log_message("is no longer riding [parent_living]", LOG_ATTACK, color="pink")
+	remove_abilities(former_rider)
 	return ..()
+
+/datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
+	if(!istype(living_parent) || !istype(rider))
+		return
+
+	living_parent.log_message("is now being ridden by [rider]", LOG_ATTACK, color="pink")
+	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
@@ -105,6 +116,9 @@
 
 	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
 		human_parent.buckle_lying = 0
+		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
+		// since pulled movables are moved before buckled movables
+		riding_mob.density = FALSE
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
@@ -113,10 +127,22 @@
 	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 	RegisterSignal(parent, COMSIG_LIVING_UPDATE_BODY_POSITION, .proc/check_carrier_fall_over)
 
-/datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+/datum/component/riding/creature/human/log_riding(mob/living/living_parent, mob/living/rider)
+	if(!istype(living_parent) || !istype(rider))
+		return
+
+	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
+		living_parent.log_message("started giving [rider] a piggyback ride", LOG_ATTACK, color="pink")
+		rider.log_message("started piggyback riding [living_parent]", LOG_ATTACK, color="pink")
+	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
+		living_parent.log_message("started fireman carrying [rider]", LOG_ATTACK, color="pink")
+		rider.log_message("was fireman carried by [living_parent]", LOG_ATTACK, color="pink")
+
+/datum/component/riding/creature/human/vehicle_mob_unbuckle(datum/source, mob/living/former_rider, force = FALSE)
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+	former_rider.density = TRUE
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
