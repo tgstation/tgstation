@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a 18.18% chance of gibs streaking 50 tiles away... by canonizing it into an intentional 3% chance upon the request of the bunch of you on github."

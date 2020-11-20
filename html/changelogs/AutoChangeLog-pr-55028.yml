@@ -1,5 +1,0 @@
-author: "ThePotato97"
-delete-after: True
-changes: 
-  - refactor: "Rotating stamps on paper by holding shift and moving your mouse."
-  - bugfix: "Fixed chat message for stamping paper."
