@@ -316,9 +316,27 @@
 	beam_segments[beam_index] = null
 
 /obj/projectile/Bump(atom/A)
+	. = ..()
+	if(!can_hit_target(A, A == original, TRUE))
+		return
+	Impact(A)
+
+/**
+  * Called when the projectile hits something
+  * This can either be from it bumping something,
+  * or it passing over a turf/being crossed and scanning that there is infact
+  * a valid target it needs to hit.
+  * This target isn't however necessarily WHAT it hits
+  * that is determined by process_hit and select_target.
+  *
+  * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
+  */
+/obj/projectile/proc/Impact(atom/A)
 	if(!trajectory)
 		qdel(src)
 		return
+	if(impacted[A])		// NEVER doublehit
+		return ..()
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
@@ -400,13 +418,60 @@
 		return T
 	//Returns null if nothing at all was found.
 
+//Returns true if the target atom is on our current turf and above the right layer
+//If direct target is true it's the originally clicked target.
+/obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
+	if(QDELETED(target) || imapcted[target])
+		return FALSE
+	if((target.pass_flags_self & projectile_phasing) && (phasing_ignore_direct_target || !direct_target))		// phasing
+		return FALSE
+	if(!ignore_source_check && firer)
+		var/mob/M = firer
+		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
+			return FALSE
+	if(!ignore_loc && (loc != target.loc))
+		return FALSE
+	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+		return TRUE
+	if(!isliving(target))
+		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
+			return FALSE
+	else
+		var/mob/living/L = target
+		if(direct_target)
+			return TRUE
+		// If target not able to use items, move and stand - or if they're just dead, pass over.
+		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
+			return FALSE
+	return TRUE
+
+/**
+  * Scan if we should hit something and hit it if we need to
+  * The difference between this and handling in Impact is
+  * In this we strictly check if we need to Impact() something in specific
+  * If we do, we do
+  * We don't even check if it got hit already - Impact() does that
+  * In impact there's more code for selecting WHAT to hit
+  * So this proc is more of checking if we should hit something at all BY having an atom cross us.
+  */
+/obj/projectile/proc/scan_crossed_hit(atom/movable/A)
+	if(can_hit_target(A, direct_target = (A == original)))
+		Impact(A)
+
+/**
+  * Scans if we should hit something on the turf we just moved to if we haven't already
+  */
+/obj/projectile/proc/scan_moved_turf()
+	for(var/atom/A in loc)
+		if(can_hit_target(A, direct_target = (A == original)))	// if we got directly aimed at osmething, hit it
+			Impact(original)
 
 /**
   * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
   */
 /obj/projectile/Crossed(atom/movable/AM)
 	. = ..()
-	scan_for_hit(AM)
+	scan_crossed_hit(AM)
 
 /**
   * Projectile can pass through
@@ -432,12 +497,6 @@
 		temporary_unstoppable_movement = FALSE
 		movement_type &= ~PHASING
 	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
-
-/**
-  * Scan our current turf, hitting anything that we should hit.
-  */
-/obj/projectile/proc/scan_moved_turf()
-	scan_for_hit(loc)
 
 /**
   * Checks if we should pierce something.
@@ -683,33 +742,6 @@
 		homing_offset_x = -homing_offset_x
 	if(prob(50))
 		homing_offset_y = -homing_offset_y
-
-//Returns true if the target atom is on our current turf and above the right layer
-//If direct target is true it's the originally clicked target.
-/obj/projectile/proc/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
-	if(QDELETED(target))
-		return FALSE
-	if(!ignore_source_check && firer)
-		var/mob/M = firer
-		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
-			return FALSE
-	if(!ignore_loc && (loc != target.loc))
-		return FALSE
-	if(target in passthrough)
-		return FALSE
-	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
-		return TRUE
-	if(!isliving(target))
-		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
-			return FALSE
-	else
-		var/mob/living/L = target
-		if(direct_target)
-			return TRUE
-		// If target not able to use items, move and stand - or if they're just dead, pass over.
-		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
-			return FALSE
-	return TRUE
 
 //Spread is FORCED!
 /obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)

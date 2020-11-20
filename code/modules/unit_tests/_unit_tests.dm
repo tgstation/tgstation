@@ -36,6 +36,7 @@
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "projectiles.dm"
 #include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"

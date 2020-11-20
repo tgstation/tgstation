@@ -7,9 +7,6 @@
 	. = ..()
 	if(.)
 		return
-	if(istype(mover, /obj/projectile))
-		var/obj/projectile/P = mover
-		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
 	if(mover.throwing)
 		return (!density || body_position == LYING_DOWN || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
