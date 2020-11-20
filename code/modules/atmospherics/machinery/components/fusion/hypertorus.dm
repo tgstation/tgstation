@@ -778,14 +778,13 @@
 
 	if(!start_fuel)
 		return
-
+	var/datum/gas_mixture/buffer
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
 
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
 	if(!linked_input.airs[1].total_moles())
 		return
-	var/datum/gas_mixture/buffer
 	if(linked_input.airs[1].gases[/datum/gas/hydrogen][MOLES] > 0)
 		buffer = linked_input.airs[1].remove_specific(/datum/gas/hydrogen, fuel_injection_rate * 0.1)
 		internal_fusion.merge(buffer)
