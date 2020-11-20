@@ -124,13 +124,12 @@
 
 /obj/machinery/cell_charger/process(delta_time)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
-		//to_chat(world, "DEBUG -- CELL CHARGER EARLY RETURN(generic error)")
 		return
 
 	if(charging.percent() >= 100)
 		return
 
-	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the power net for the cell itself
+	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
 	if(!main_draw)
 		return
 	charging.give(main_draw)
