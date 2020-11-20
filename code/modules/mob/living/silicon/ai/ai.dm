@@ -138,7 +138,8 @@
 	if(client)
 		INVOKE_ASYNC(src, .proc/apply_pref_name,"ai",client)
 
-	set_core_display_icon()
+	INVOKE_ASYNC(src, .proc/set_core_display_icon)
+
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
