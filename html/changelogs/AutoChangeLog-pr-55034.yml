@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - admin: "Admins now have the option to remove a language from the blocked_languages list when granting it to a mob through the language menu."
