@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "You can now put stuff in someone else's hand through the stripping menu again."
