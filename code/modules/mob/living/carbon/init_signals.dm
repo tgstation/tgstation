@@ -41,4 +41,4 @@
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 			LAZYREMOVE(reagents.addiction_list, R)
 			qdel(R)
-	end_metabolization(keep_liverless = TRUE)
+	reagents.end_metabolization(keep_liverless = TRUE)
