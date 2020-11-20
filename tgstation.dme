@@ -3137,7 +3137,6 @@
 #include "code\modules\tgchat\message.dm"
 #include "code\modules\tgchat\to_chat.dm"
 #include "code\modules\tgs\includes.dm"
-#include "code\modules\tgs\v5\undefs.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
 #include "code\modules\tgui\tgui.dm"
