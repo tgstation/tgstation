@@ -1,3 +1,7 @@
+/*
+it checks all heretic knowledge nodes - excluding the ones which are unreachable on purpose - if players can reach them in game,
+if it finds a single node that is unreachable it throws an error
+*/
 /datum/unit_test/heretic_knowledge/Run()
 	///List of all knowledge excluding the unreachable base types.
 	var/list/blacklist = list(/datum/eldritch_knowledge/spell,/datum/eldritch_knowledge/curse,/datum/eldritch_knowledge/final,/datum/eldritch_knowledge/summon)
