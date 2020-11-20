@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Plasmamen who are gulag'd via the teleporter with non-plasmaman gloves will now be given a free pair of basic plasmaman gloves so they don't die."
