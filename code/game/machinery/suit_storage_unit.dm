@@ -9,6 +9,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	max_integrity = 250
+	circuit = /obj/item/circuitboard/machine/suit_storage_unit
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -197,13 +198,6 @@
 	mask = null
 	storage = null
 	set_occupant(null)
-
-/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		open_machine()
-		dump_inventory_contents()
-		new /obj/item/stack/sheet/metal(loc, 2)
-	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
 	var/static/list/items
@@ -512,9 +506,11 @@
 	if(!state_open)
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
+/obj/machinery/suit_storage_unit/crowbar_act(mob/living/user, obj/item/I)
 	if(default_pry_open(I))
-		dump_inventory_contents()
-		return
+		return TRUE
+	if(default_deconstruction_crowbar(I))
+		return TRUE
 
 	return ..()
 
