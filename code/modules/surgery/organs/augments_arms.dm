@@ -20,9 +20,6 @@
 	update_icon()
 	SetSlotFromZone()
 	items_list = contents.Copy()
-	for(var/a in items_list)
-		var/obj/item/I = a
-		ADD_TRAIT(I, TRAIT_NO_STORAGE_INSERT, ORGAN_TRAIT)
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
@@ -88,6 +85,7 @@
 
 	owner.transferItemToLoc(active_item, src, TRUE)
 	UnregisterSignal(active_item, COMSIG_ITEM_DROPPED)
+	REMOVE_TRAIT(active_item, TRAIT_NO_STORAGE_INSERT, ORGAN_TRAIT)
 	active_item = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
@@ -97,6 +95,7 @@
 
 	active_item = item
 	RegisterSignal(active_item, COMSIG_ITEM_DROPPED, .proc/Retract) //Drop it to put away.
+	ADD_TRAIT(active_item, TRAIT_NO_STORAGE_INSERT, ORGAN_TRAIT)
 
 	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	active_item.slot_flags = null
