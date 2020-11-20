@@ -65,7 +65,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	filling_color = "#C0C9A0"
 	gender = PLURAL
-	cooked_type = /obj/item/reagent_containers/food/snacks/onionrings
+	cooked_type = /obj/item/food/onionrings
 
 /obj/item/reagent_containers/food/snacks/onion_slice/red
 	name = "red onion slices"

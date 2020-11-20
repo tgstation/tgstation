@@ -26,6 +26,8 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
 
+	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
@@ -400,11 +402,19 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+
+///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
+/datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	SIGNAL_HANDLER
+	setSanity(sanity + amount, override = TRUE)
+
 ///Called when parent slips.
 /datum/component/mood/proc/on_slip(datum/source)
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
 
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+

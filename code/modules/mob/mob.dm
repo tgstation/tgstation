@@ -364,7 +364,7 @@
   *
   * returns 0 if it cannot, 1 if successful
   */
-/mob/proc/equip_to_appropriate_slot(obj/item/W, swap=FALSE)
+/mob/proc/equip_to_appropriate_slot(obj/item/W, swap=FALSE, qdel_on_fail = FALSE)
 	if(!istype(W))
 		return FALSE
 	var/slot_priority = W.slot_equipment_priority
@@ -385,6 +385,8 @@
 		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE, swap)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
 			return TRUE
 
+	if(qdel_on_fail)
+		qdel(W)
 	return FALSE
 /**
   * Reset the attached clients perspective (viewpoint)

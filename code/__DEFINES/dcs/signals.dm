@@ -438,6 +438,8 @@
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
 #define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"			//from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
+#define COMSIG_BODYPART_GAUZED	"bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
+#define COMSIG_BODYPART_GAUZE_DESTROYED	"bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
 
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
@@ -490,6 +492,12 @@
 #define COMSIG_MACHINERY_DESTRUCTIVE_SCAN "machinery_destructive_scan"
 ///from /obj/machinery/computer/arcade/prizevend(mob/user, prizes = 1)
 #define COMSIG_ARCADE_PRIZEVEND "arcade_prizevend"
+
+// /obj/machinery/power/supermatter_crystal signals
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
+#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
+#define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
 // /obj/machinery/atmospherics/components/unary/cryo_cell signals
 
@@ -687,6 +695,8 @@
 
 ///from base of obj/item/reagent_containers/food/snacks/attack() & Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
+///from base of datum/component/edible/oncrossed: (mob/crosser, bitecount)
+#define COMSIG_FOOD_CROSSED "food_crossed"
 
 ///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"
@@ -716,6 +726,9 @@
 #define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood"
 ///called when you clear a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
+
+///sent to everyone in range of being affected by mask of madness
+#define COMSIG_VOID_MASK_ACT "void_mask_act"
 
 //NTnet
 

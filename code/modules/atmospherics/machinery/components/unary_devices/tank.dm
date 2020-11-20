@@ -107,3 +107,9 @@
 
 /obj/machinery/atmospherics/components/unary/tank/zauker
 	gas_type = /datum/gas/zauker
+
+/obj/machinery/atmospherics/components/unary/tank/helium
+	gas_type = /datum/gas/helium
+
+/obj/machinery/atmospherics/components/unary/tank/antinoblium
+	gas_type = /datum/gas/antinoblium

@@ -12,6 +12,7 @@
 	desc = "The cornerstone of every nutritious breakfast."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT
+	custom_price = PAYCHECK_ASSISTANT * 0.8
 
 /obj/item/food/burger/plain/Initialize()
 	. = ..()
@@ -304,6 +305,7 @@
 	icon_state = "baseball"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GRAIN | GROSS
+	custom_price = PAYCHECK_ASSISTANT * 0.8
 
 /obj/item/food/burger/baconburger
 	name = "bacon burger"
@@ -312,6 +314,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bacon" = 4, "bun" = 2)
 	foodtypes = GRAIN | MEAT
+	custom_premium_price = PAYCHECK_ASSISTANT * 1.6
 
 /obj/item/food/burger/empoweredburger
 	name = "empowered burger"

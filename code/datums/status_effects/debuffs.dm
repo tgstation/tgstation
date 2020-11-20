@@ -216,11 +216,7 @@
 	. = ..()
 	if(.)
 		update_time_of_death()
-		if(istype(owner, /mob/living/carbon))
-			var/mob/living/carbon/body = owner
-			body.end_metabolization(FALSE)
-		else
-			owner.reagents?.end_metabolization(owner, FALSE)
+		owner.reagents?.end_metabolization(owner, FALSE)
 
 /datum/status_effect/grouped/stasis/on_apply()
 	. = ..()
@@ -460,6 +456,16 @@
 		//Affects roughly 75% of items
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
+	return ..()
+
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
 	return ..()
 
 /// A status effect used for specifying confusion on a living mob.
