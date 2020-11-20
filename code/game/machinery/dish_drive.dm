@@ -26,6 +26,7 @@
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
+	var/list/dish_drive_contents = list()
 
 /obj/machinery/dish_drive/Initialize()
 	. = ..()
@@ -37,10 +38,11 @@
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user)
-	if(!contents.len)
+	if(!dish_drive_contents.len)
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return
-	var/obj/item/I = contents[contents.len] //the most recently-added item
+	var/obj/item/I = dish_drive_contents[dish_drive_contents.len] //the most recently-added item
+	dish_drive_contents -= I
 	user.put_in_hands(I)
 	to_chat(user, "<span class='notice'>You take out [I] from [src].</span>")
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
@@ -50,6 +52,7 @@
 	if(is_type_in_list(I, collectable_items) && user.a_intent != INTENT_HARM)
 		if(!user.transferItemToLoc(I, src))
 			return
+		dish_drive_contents += I
 		to_chat(user, "<span class='notice'>You put [I] in [src], and it's beamed into energy!</span>")
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
@@ -88,6 +91,7 @@
 	for(var/obj/item/I in view(4, src))
 		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
 			if(I.Adjacent(src))
+				dish_drive_contents += I
 				visible_message("<span class='notice'>[src] beams up [I]!</span>")
 				I.forceMove(src)
 				playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
