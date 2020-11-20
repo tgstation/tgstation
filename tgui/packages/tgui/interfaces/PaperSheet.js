@@ -265,7 +265,7 @@ class PaperSheetStamper extends Component {
       if (!pos) { return; }
       // center offset of stamp & rotate
       pauseEvent(e);
-      this.setState({ x: pos[0], y: pos[1], rotate: pos[3] });
+      this.setState({ x: pos[0], y: pos[1], rotate: pos[2] });
     };
     this.handleMouseClick = e => {
       if (e.pageY <= 30) { return; }
@@ -281,7 +281,6 @@ class PaperSheetStamper extends Component {
 
   findStampPosition(e) {
     let rotating;
-    let rotate;
     const windowRef = document.querySelector('.Layout__content');
     if (e.shiftKey) {
       rotating = true;
@@ -310,7 +309,8 @@ class PaperSheetStamper extends Component {
         e.pageY - currentHeight
       );
 
-      rotate = (radians * (180 / Math.PI) * -1);
+      const rotate = rotating ? (radians * (180 / Math.PI) * -1)
+        : this.state.rotate;
 
       const pos = [
         clamp(currentWidth, widthMin, widthMax),
