@@ -32,8 +32,8 @@
 	var/mob/living/current = owner.current
 	if(ishuman(current))
 		forge_primary_objectives()
-		for(var/EK in GLOB.heretic_start_knowledge)
-			gain_knowledge(EK)
+		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
+			gain_knowledge(eldritch_knowledge)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)

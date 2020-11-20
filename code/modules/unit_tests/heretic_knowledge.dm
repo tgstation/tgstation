@@ -6,12 +6,11 @@
 	var/list/list_to_check = GLOB.heretic_start_knowledge.Copy()
 	var/i = 0
 	while(i < length(list_to_check))
-		var/datum/eldritch_knowledge/EK = allocate(list_to_check[++i])
-		for(var/Y in EK.next_knowledge)
-			if(Y in list_to_check)
+		var/datum/eldritch_knowledge/eldritch_knowledge = allocate(list_to_check[++i])
+		for(var/next_knowledge in eldritch_knowledge.next_knowledge)
+			if(next_knowledge in list_to_check)
 				continue
-			list_to_check += Y
+			list_to_check += next_knowledge
 
 	if(length(all_possible_knowledge) != length(all_possible_knowledge & list_to_check))
 		Fail("Some eldritch knowledge is inaccessible. If this is on purpose add the path to the blacklist.")
-
