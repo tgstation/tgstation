@@ -309,7 +309,8 @@ class PaperSheetStamper extends Component {
         e.pageY - currentHeight
       );
 
-      const rotate = rotating ? (radians * (180 / Math.PI) * -1) : this.state.rotate;
+      const rotate = rotating ? (radians * (180 / Math.PI) * -1)
+        : this.state.rotate;
 
       const pos = [
         clamp(currentWidth, widthMin, widthMax),
