@@ -192,9 +192,6 @@
 	else //when a limb is missing the damage is actually passed to the chest
 		return BODY_ZONE_CHEST
 
-/obj/projectile/proc/prehit(atom/target)
-	return TRUE
-
 /// Called when the projectile hits something
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	if(fired_from)
@@ -330,6 +327,7 @@
   * that is determined by process_hit and select_target.
   *
   * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
+  * Also, we select_target to find what to process_hit first.
   */
 /obj/projectile/proc/Impact(atom/A)
 	if(!trajectory)
@@ -356,67 +354,108 @@
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
-	return process_hit(T, select_target(T, A))
+	return process_hit(T, select_target(T, A))		// SELECT TARGET FIRST!
 
-#define QDEL_SELF 1			//Delete if we're not PHASING flagged non-temporarily
-#define DO_NOT_QDEL 2		//Pass through.
-#define FORCE_QDEL 3		//Force deletion.
-
-/obj/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
-	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
-		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & PHASING)))
-			qdel(src)
+/**
+  * The primary workhorse proc of projectile impacts.
+  * This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.
+  *
+  * Order of operations:
+  * 1. Checks if we are deleted, or if we're somehow trying to hit a null, in which case, bail out
+  * 2. Adds the thing we're hitting to impacted so we can make sure we don't doublehit
+  * 3. Checks piercing - stores this.
+  * Afterwards:
+  * Hit and delete, hit without deleting and pass through, pass through without hitting, or delete without hitting depending on result
+  * If we're going through without hitting, find something else to hit if possible and recurse, set unstoppable movement to true
+  * If we're deleting without hitting, delete and return
+  * Otherwise, send signal of COMSIG_PROJECTILE_PREHIT to target
+  * Then, hit, deleting ourselves if necessary.
+  * @params
+  * T - Turf we're on/supposedly hitting
+  * target - target we're hitting
+  * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
+  *
+  * Returns if we hit something.
+  */
+/obj/projectile/proc/process_hit(turf/T, atom/target, hit_something = FALSE)
+	// 1.
+	if(QDELETED(src) || !T || !target)
+		return
+	// 2.
+	impacted[target] = TRUE		//hash lookup > in for performance in hit-checking
+	// 3.
+	var/mode = check_pierce(target)
+	if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
+		qdel(src)
 		return hit_something
-	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
-	if(!prehit(target))
-		return process_hit(T, select_target(T), qdel_self, hit_something)		//Hit whatever else we can since that didn't work.
+	else if(mode == PROJECTILE_PIERCE_PHASE)
+		if(!(movement_type & PHASING))
+			temporary_unstoppable_movement = TRUE
+			movement_type |= PHASING
+		return process_hit(T, select_target(T, target), hit_something)	// try to hit something else
+	// at this point we are going to hit the thing
+	// in which case send signal to it
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
 	var/result = target.bullet_act(src, def_zone)
 	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T), qdel_self, TRUE)		//Hit whatever else we can since we're piercing through but we're still on the same tile.
-	else if(result == BULLET_ACT_TURF)									//We hit the turf but instead we're going to also hit something else on it.
-		return process_hit(T, select_target(T), QDEL_SELF, TRUE)
-	else		//Whether it hit or blocked, we're done!
-		qdel_self = QDEL_SELF
+		return process_hit(T, select_target(T, target), TRUE)
+	else if(result == BULLET_ACT_TURF)
+		qdel(src)
+		return TRUE
+	else
 		hit_something = TRUE
-	if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !(movement_type & PHASING)))
+	if(mode != PROJECTILE_PIERCE_HIT)		// not piercing and we aren't force piercing
 		qdel(src)
 	return hit_something
 
-#undef QDEL_SELF
-#undef DO_NOT_QDEL
-#undef FORCE_QDEL
-
-/obj/projectile/proc/select_target(turf/T, atom/target)			//Select a target from a turf.
-	if((original in T) && can_hit_target(original, permutated, TRUE, TRUE))
+/**
+  * Selects a target to hit from a turf
+  *
+  * @params
+  * T - The turf
+  * target - The "preferred" atom to hit, usually what we Bumped() first.
+  *
+  * Priority:
+  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
+  * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
+  * 1. The thing originally aimed at/clicked on
+  * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
+  * 3. Objs
+  * 4. Turf
+  * 5. Nothing
+  */
+/obj/projectile/proc/select_target(turf/T, atom/target)
+	// 1. original
+	if(can_hit_target(original, TRUE, FALSE))
 		return original
-	if(target && can_hit_target(target, permutated, target == original, TRUE))
-		return target
-	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob)
-	var/list/mob/mobs = list()
-	for(var/mob/living/M in possible_mobs)
-		if(!can_hit_target(M, permutated, M == original, TRUE))
+	var/list/atom/possible = list()		// let's define these ONCE
+	var/list/atom/considering = list()
+	// 2. mobs
+	possible = typecache_filter_list(T, GLOB.typecache_living)	// living only
+	for(var/i in possible)
+		if(!can_hit_target(i, i == original, TRUE))
 			continue
-		mobs += M
-	if (length(mobs))
-		var/mob/M = pick(mobs)
+		considering += i
+	if(length(considering))
+		var/mob/living/M = pick(considering)
 		return M.lowest_buckled_mob()
-	var/list/obj/possible_objs = typecache_filter_list(T, GLOB.typecache_machine_or_structure)
-	var/list/obj/objs = list()
-	for(var/obj/O in possible_objs)
-		if(!can_hit_target(O, permutated, O == original, TRUE))
+	considering.len = 0
+	// 3. objs
+	possible = typecache_filter_list(T, GLOB.typecache_machine_or_structure)	// because why are items ever dense?
+	for(var/i in possible)
+		if(!can_hit_target(i, i == original, TRUE))
 			continue
-		objs += O
-	if (length(objs))
-		var/obj/O = pick(objs)
-		return O
-	//Nothing else is here that we can hit, hit the turf if we haven't.
-	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))
+		considering += i
+	if(length(considering))
+		return pick(considering)
+	// 4. turf
+	if(can_hit_target(T, T == original, TRUE))
 		return T
-	//Returns null if nothing at all was found.
+	// 5. nothing
+		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
@@ -500,6 +539,7 @@
 
 /**
   * Checks if we should pierce something.
+  * Replaces prehit - Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
   */
 /obj/projectile/proc/check_pierce(atom/A)
 	if(projectile_phasing & A.pass_flags_self)

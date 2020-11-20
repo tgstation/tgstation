@@ -5,3 +5,5 @@
 #define PROJECTILE_PIERCE_HIT		1
 /// Entirely phase through the thing without ever hitting.
 #define PROJECITLE_PIERCE_PHASE		2
+// Delete self without hitting
+#define PROJECTILE_DELETE_WITHOUT_HITTING		3
