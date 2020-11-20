@@ -99,3 +99,8 @@
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
 	icon_state = "red"
+
+//xenoarch ruins
+/area/ruin/unpowered/xenoarch
+	name = "Derelict Xenoarch"
+	icon_state = "red"

@@ -256,3 +256,11 @@
 	suffix = "lavaland_surface_elephant_graveyard.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/xenoarchruins
+	name = "Xenoarch Ruins"
+	id = "xenoarchruins"
+	description = "An unfinished shell of a structure, haunting the surface of lavaland, forever unable to fufill it's true purpose."
+	suffix = "lavaland_surface_xenoarch.dmm"
+	allow_duplicates = FALSE
+	cost = 10
