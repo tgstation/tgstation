@@ -460,7 +460,7 @@
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
 /obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
-	if(QDELETED(target) || imapcted[target])
+	if(QDELETED(target) || impacted[target])
 		return FALSE
 	if((target.pass_flags_self & projectile_phasing) && (phasing_ignore_direct_target || !direct_target))		// phasing
 		return FALSE
@@ -546,12 +546,12 @@
 /obj/projectile/proc/prehit_pierce(atom/A)
 	if(projectile_phasing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_PHASE
-	if(projectile_piercing & A.pass_Flags_self)
+	if(projectile_piercing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_HIT
 	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(AM.throwing)
-			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERC_NONE)
+			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
 	return PROJECTILE_PIERCE_NONE
 
 /obj/projectile/proc/check_ricochet(atom/A)
@@ -621,9 +621,8 @@
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
-		if(prehit(direct_target))
-			direct_target.bullet_act(src, def_zone)
-			qdel(src)
+		process_hit(get_turf(direct_target), direct_target)
+		if(QDELETED(src))
 			return
 	if(isnum(angle))
 		setAngle(angle)
