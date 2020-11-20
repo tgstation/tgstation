@@ -1242,7 +1242,7 @@
 					/obj/item/stack/medical/bone_gel,
 					/obj/item/stack/medical/bone_gel,
 					/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/medical/chems)
+					/obj/item/vending_refill/drugs)
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
@@ -2586,7 +2586,7 @@
 	desc = "Contains one NanoMed Plus refill, one NanoDrug Plus refill, and one wall-mounted NanoMed refill."
 	cost = 2500
 	contains = list(/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/medical/chems,
+					/obj/item/vending_refill/drugs,
 					/obj/item/vending_refill/wallmed)
 	crate_name = "medical vending crate"
 

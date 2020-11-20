@@ -93113,7 +93113,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/obj/machinery/vending/medical/chems,
+/obj/machinery/vending/drugs,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dBh" = (
