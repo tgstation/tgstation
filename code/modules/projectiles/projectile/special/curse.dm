@@ -17,7 +17,6 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
-	movement_type |= PHASING
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
 
@@ -29,12 +28,8 @@
 		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
-/obj/projectile/curse_hand/prehit(atom/target)
-	if(target == original)
-		movement_type &= ~(PHASING)
-	else if(!isturf(target))
-		return FALSE
-	return ..()
+/obj/projectile/curse_hand/prehit_pierce(atom/target)
+	return (target == original)? PROJECTILE_PIERCE_NONE : PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/curse_hand/Destroy()
 	if(arm)

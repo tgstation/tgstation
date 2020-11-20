@@ -332,9 +332,9 @@
 /obj/projectile/proc/Impact(atom/A)
 	if(!trajectory)
 		qdel(src)
-		return
+		return FALSE
 	if(impacted[A])		// NEVER doublehit
-		return ..()
+		return FALSE
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
@@ -384,7 +384,7 @@
 	// 2.
 	impacted[target] = TRUE		//hash lookup > in for performance in hit-checking
 	// 3.
-	var/mode = check_pierce(target)
+	var/mode = prehit_pierce(target)
 	if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
 		qdel(src)
 		return hit_something
@@ -539,9 +539,11 @@
 
 /**
   * Checks if we should pierce something.
-  * Replaces prehit - Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
+  *
+  * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
+  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
   */
-/obj/projectile/proc/check_pierce(atom/A)
+/obj/projectile/proc/prehit_pierce(atom/A)
 	if(projectile_phasing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_PHASE
 	if(projectile_piercing & A.pass_Flags_self)
@@ -640,7 +642,7 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
-	impacted = list()
+	LAZYINITLIST(impacted)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE

@@ -502,9 +502,11 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
+#error TODO: REFACTOR BEAM RIFLES USING NEW SYSTEM!!
+
 /obj/projectile/beam/beam_rifle/Bump(atom/target)
 	if(check_pierce(target))
-		permutated += target
+		impacted[target] = TRUE
 		trajectory_ignore_forcemove = TRUE
 		forceMove(target.loc)
 		trajectory_ignore_forcemove = FALSE
