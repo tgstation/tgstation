@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "map_name": "Min Station",
+    "map_path": "map_files/MinStation",
+    "map_file": "minstation.dmm",
+	"shuttles": {
+	    "emergency": "emergency_box",
+	    "whiteship": "whiteship_pubby",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_min"
+		
+	}
+}

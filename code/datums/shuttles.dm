@@ -508,6 +508,10 @@
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
 
+/datum/map_template/shuttle/cargo/min
+	suffix = "min"
+	name = "supply shuttle (Min)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
