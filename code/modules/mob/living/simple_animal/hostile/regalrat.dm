@@ -87,17 +87,17 @@
 	if(health >= maxHealth)
 		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
+	if(istype(target, /obj/item/food/cheesewedge))
 		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
 		heal_bodypart_damage(MINOR_HEAL)
 		qdel(target)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/store/cheesewheel))
+	if(istype(target, /obj/item/food/cheesewheel))
 		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
 		heal_bodypart_damage(MEDIUM_HEAL)
 		qdel(target)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
+	if(istype(target, /obj/item/food/royalcheese))
 		to_chat(src, "<span class='green'>You eat [src], revitalizing your royal resolve completely.</span>")
 		heal_bodypart_damage(MAJOR_HEAL)
 		qdel(target)
@@ -131,7 +131,7 @@
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
-			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
+			new /obj/item/food/cheesewedge(T)
 		if(6 to 10)
 			var/pickedcoin = pick(GLOB.ratking_coins)
 			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
@@ -296,7 +296,7 @@
 
 /mob/living/simple_animal/hostile/rat/AttackingTarget()
 	. = ..()
-	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
+	if(istype(target, /obj/item/food/cheesewedge))
 		if (health >= maxHealth)
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return

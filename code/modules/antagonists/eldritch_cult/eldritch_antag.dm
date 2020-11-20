@@ -35,7 +35,7 @@
 		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
 			gain_knowledge(eldritch_knowledge)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.AddMind(owner)
+	GLOB.reality_smash_track.Generate()
 	START_PROCESSING(SSprocessing,src)
 	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)
@@ -51,7 +51,7 @@
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.RemoveMind(owner)
+	GLOB.reality_smash_track.targets--
 	STOP_PROCESSING(SSprocessing,src)
 
 	on_death()

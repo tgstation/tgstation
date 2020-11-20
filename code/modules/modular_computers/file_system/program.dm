@@ -35,6 +35,12 @@
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
+	/// Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager
+	var/alert_able = FALSE
+	/// Whether the user has muted this program's ability to send alerts.
+	var/alert_silenced = FALSE
+	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
+	var/alert_pending = FALSE
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
