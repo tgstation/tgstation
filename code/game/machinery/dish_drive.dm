@@ -110,7 +110,9 @@
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
-	if(!contents.len)
+	if(!dish_drive_contents.len)
+		if(manual)
+			visible_message("<span class='notice'>[src] is empty!</span>")
 		return
 	var/obj/machinery/disposal/bin/bin = locate() in view(7, src)
 	if(!bin)
@@ -119,8 +121,9 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/disposed = 0
-	for(var/obj/item/I in contents)
+	for(var/obj/item/I in dish_drive_contents)
 		if(is_type_in_list(I, disposable_items))
+			dish_drive_contents -= I
 			I.forceMove(bin)
 			use_power(active_power_usage)
 			disposed++
@@ -131,4 +134,6 @@
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
 		bin.update_icon()
 		flick("synthesizer_beam", src)
+	else
+		visible_message("<span class='notice'>There are no disposable items in [src]!</span>")
 	time_since_dishes = world.time + 600
