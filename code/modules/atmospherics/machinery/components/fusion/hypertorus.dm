@@ -779,6 +779,9 @@
 	if(!start_fuel)
 		return
 
+	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
+	moderator_internal.merge(buffer)
+
 	//Start by storing the gasmix of the inputs inside the internal_fusion and moderator_internal
 	if(!linked_input.airs[1].total_moles())
 		return
@@ -789,8 +792,6 @@
 	if(linked_input.airs[1].gases[/datum/gas/tritium][MOLES] > 0)
 		buffer = linked_input.airs[1].remove_specific(/datum/gas/tritium, fuel_injection_rate * 0.1)
 		internal_fusion.merge(buffer)
-	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
-	moderator_internal.merge(buffer)
 
 /obj/machinery/atmospherics/components/binary/hypertorus/core/process(delta_time)
 	fusion_process(delta_time)
@@ -1012,7 +1013,7 @@
 
 	//gas consumption and production
 	if(check_fuel())
-		var/fuel_consumption = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * delta_time
+		var/fuel_consumption = clamp(2 * power_level, 0.05, 10) * delta_time
 		internal_fusion.gases[/datum/gas/tritium][MOLES] -= min(tritium, fuel_consumption * 0.85)
 		internal_fusion.gases[/datum/gas/hydrogen][MOLES] -= min(hydrogen, fuel_consumption * 0.95)
 		internal_fusion.gases[/datum/gas/helium][MOLES] += fuel_consumption * 0.5
@@ -1021,87 +1022,87 @@
 		if(power_output)
 			switch(power_level)
 				if(1)
-					var/scaled_production = clamp(heat_output * 1e-2, 0, fuel_consumption) * delta_time
-					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.95
-					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production *0.75
+					var/scaled_production = clamp(heat_output * 1e-2, 0, fuel_consumption)
+					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.45
+					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production *0.35
 					if(m_plasma > 100)
 						moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
+						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
 					if(m_bz > 150)
 						internal_output.assert_gases(/datum/gas/healium, /datum/gas/halon, /datum/gas/proto_nitrate)
-						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 0.75
-						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.55
-						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
-						moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
+						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 0.35
+						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.15
+						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.05
+						moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.55)
 				if(2)
-					var/scaled_production = clamp(heat_output * 1e-3, 0, fuel_consumption) * delta_time
-					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 1.65
+					var/scaled_production = clamp(heat_output * 1e-3, 0, fuel_consumption)
+					moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.45
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma > 50)
 						internal_output.assert_gases(/datum/gas/bz)
-						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-						moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 1.15
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
+						internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 0.25
+						moderator_internal.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.25
+						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.55)
 					if(m_proto_nitrate > 20)
 						radiation *= 1.55
 						heat_output *= 1.025
 						internal_output.assert_gases(/datum/gas/stimulum)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
-						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 1.65
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.15
+						moderator_internal.gases[/datum/gas/plasma][MOLES] += scaled_production * 0.25
+						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.35)
 					if(m_n2o > 50)
 						radiation *= 0.55
 						heat_output *= 1.055
-						moderator_internal.gases[/datum/gas/halon] += scaled_production * 1.35
-						moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES] -= min(moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES], scaled_production * 1.5)
+						moderator_internal.gases[/datum/gas/halon] += scaled_production * 0.35
+						moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES] -= min(moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES], scaled_production * 0.55)
 				if(3, 4)
-					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption) * delta_time
+					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption)
 					if(power_level == 3)
 						moderator_internal.gases[/datum/gas/oxygen][MOLES] += scaled_production * 0.5
 						moderator_internal.gases[/datum/gas/nitrogen][MOLES] += scaled_production * 0.45
 					if(power_level == 4)
-						moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 1.65
-						moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production * 1.25
+						moderator_internal.gases[/datum/gas/carbon_dioxide][MOLES] += scaled_production * 0.55
+						moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production * 0.25
 					if(m_plasma > 10)
-						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.1
+						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.15
 						internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
 						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
-						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.15
+						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.95)
 					if(m_freon > 50)
 						heat_output *= 0.9
 						radiation *= 0.8
 					if(m_proto_nitrate> 15)
 						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/halon)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.25
-						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.25
+						internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.35
+						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 0.65)
 						radiation *= 1.95
 						heat_output *= 1.25
 					if(m_bz > 100)
 						internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
-						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
-						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
+						internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.15
+						internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 0.25
 						for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(heat_output))) // If they can see it without mesons on.  Bad on them.
 							if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 								var/D = sqrt(1 / max(1, get_dist(l, src)))
 								l.hallucination += power_level * 50 * D * delta_time
 								l.hallucination = clamp(l.hallucination, 0, 200)
 				if(5)
-					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption) * delta_time
-					moderator_internal.gases[/datum/gas/nitryl][MOLES] += scaled_production * 1.65
+					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption)
+					moderator_internal.gases[/datum/gas/nitryl][MOLES] += scaled_production * 0.25
 					moderator_internal.gases[/datum/gas/water_vapor][MOLES] += scaled_production
 					if(m_plasma > 15)
-						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.35
+						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 0.15
 						internal_output.assert_gases(/datum/gas/freon)
-						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
+						internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.25
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 					if(m_freon > 500)
 						heat_output *= 0.5
 						radiation *= 0.2
 					if(m_proto_nitrate > 50)
 						internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
-						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.95
+						internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 0.25
 						internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
 						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 						radiation *= 1.95
@@ -1114,8 +1115,8 @@
 								var/D = sqrt(1 / max(1, get_dist(l, src)))
 								l.hallucination += power_level * 100 * D
 								l.hallucination = clamp(l.hallucination, 0, 200)
-						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.25
-						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
+						moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 0.25
+						moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
 					if(m_healium > 100)
 						if(critical_threshold_proximity > 400)
 							critical_threshold_proximity = max(critical_threshold_proximity - (m_healium / 100), 0)
@@ -1124,7 +1125,7 @@
 						internal_output.assert_gases(/datum/gas/antinoblium)
 						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.1 * (scaled_helium / (fuel_injection_rate * 0.0065))
 				if(6)
-					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption) * delta_time
+					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption)
 					if(m_plasma > 30)
 						moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 						moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
@@ -1336,8 +1337,8 @@
 
 	data["internal_fusion_temperature"] = connected_core.fusion_temperature
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
-	data["internal_output_temperature"] = connected_core.coolant_temperature
-	data["internal_coolant_temperature"] = connected_core.output_temperature
+	data["internal_output_temperature"] = connected_core.output_temperature
+	data["internal_coolant_temperature"] = connected_core.coolant_temperature
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()
