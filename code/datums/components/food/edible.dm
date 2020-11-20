@@ -65,6 +65,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
+	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -75,8 +76,8 @@ Behavior that's still missing from this component that original food items had t
 		if (!item.grind_results)
 			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
 
-	else if(isturf(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
+	else if(isturf(parent) || isstructure(parent))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatIt)
 
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
@@ -149,7 +150,7 @@ Behavior that's still missing from this component that original food items had t
 
 	return TryToEat(M, user)
 
-/datum/component/edible/proc/TryToEatTurf(datum/source, mob/user)
+/datum/component/edible/proc/TryToEatIt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	return TryToEat(user, user)
@@ -217,7 +218,7 @@ Behavior that's still missing from this component that original food items had t
 	var/turf/parent_turf = get_turf(parent)
 
 	if(!microwaved_type)
-		new /obj/item/reagent_containers/food/snacks/badrecipe(parent_turf)
+		new /obj/item/food/badrecipe(parent_turf)
 		qdel(parent)
 		return
 
@@ -250,36 +251,37 @@ Behavior that's still missing from this component that original food items had t
 		else
 			this_food.reagents.add_reagent(r_id, amount)
 
+///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
+/datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
+	if(QDELETED(owner)|| !(IS_EDIBLE(owner)))
+		return TRUE
+	if(owner.reagents.total_volume)
+		return FALSE
+	return TRUE
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
 
 	set waitfor = FALSE
 
-	if(QDELETED(parent))
-		return
-
 	var/atom/owner = parent
-
 
 	if(feeder.a_intent == INTENT_HARM)
 		return
-	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
-		if(isturf(parent))
-			var/turf/T = parent
-			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
-		else
-			qdel(parent)
+
+	if(IsFoodGone(owner, feeder))
 		return
+
 	if(!CanConsume(eater, feeder))
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
-	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
 		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
+			return
+		if(IsFoodGone(owner, feeder))
 			return
 		var/eatverb = pick(eatverbs)
 		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
@@ -309,7 +311,8 @@ Behavior that's still missing from this component that original food items had t
 			return
 		if(!do_mob(feeder, eater)) //Wait 3 seconds before you can feed
 			return
-
+		if(IsFoodGone(owner, feeder))
+			return
 		log_combat(feeder, eater, "fed", owner.reagents.log_list())
 		eater.visible_message("<span class='danger'>[feeder] forces [eater] to eat [parent]!</span>", \
 									"<span class='userdanger'>[feeder] forces you to eat [parent]!</span>")
@@ -396,6 +399,7 @@ Behavior that's still missing from this component that original food items had t
 
 	on_consume?.Invoke(eater, feeder)
 
+	to_chat(feeder, "<span class='warning'>There is nothing left of [parent], oh no!</span>")
 	if(isturf(parent))
 		var/turf/T = parent
 		T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
@@ -416,9 +420,15 @@ Behavior that's still missing from this component that original food items had t
 	if(bitecount == 0 || prob(50))
 		L.manual_emote("nibbles away at \the [parent].")
 	bitecount++
-	. = COMPONENT_ITEM_NO_ATTACK
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [parent] was.")
 		L.manual_emote(satisfaction_text)
 		qdel(parent)
+
+
+///Ability to feed food to puppers
+/datum/component/edible/proc/onCrossed(datum/source, mob/user)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)

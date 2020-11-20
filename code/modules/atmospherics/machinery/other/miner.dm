@@ -193,11 +193,6 @@
 	overlay_color = "#da4646"
 	spawn_id = /datum/gas/healium
 
-/obj/machinery/atmospherics/miner/hexane
-	name = "\improper Hexane Gas Miner"
-	overlay_color = "#d113e2"
-	spawn_id = /datum/gas/hexane
-
 /obj/machinery/atmospherics/miner/hydrogen
 	name = "\improper Hydrogen Gas Miner"
 	overlay_color = "#ffffff"
@@ -242,3 +237,13 @@
 	name = "\improper Zauker Gas Miner"
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/zauker
+
+/obj/machinery/atmospherics/miner/helium
+	name = "\improper Helium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/helium
+
+/obj/machinery/atmospherics/miner/antinoblium
+	name = "\improper Antinoblium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/antinoblium

@@ -1,7 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
-	custom_price = 100
+	custom_price = PAYCHECK_EASY
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
@@ -13,7 +13,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
@@ -32,10 +32,13 @@
 	else
 		icon_state = initial(icon_state)
 	set_light_on(on)
+	if(light_system == STATIC_LIGHT)
+		update_light()
 
 
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
+	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -56,7 +59,7 @@
 		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
-		if(!user.IsAdvancedToolUser())
+		if(!ISADVANCEDTOOLUSER(user))
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
@@ -230,6 +233,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
 	light_range = 5
+	light_system = STATIC_LIGHT
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = null
@@ -276,6 +280,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
+	light_system = MOVABLE_LIGHT
 	grind_results = list(/datum/reagent/sulfur = 15)
 
 /obj/item/flashlight/flare/Initialize()
@@ -353,6 +358,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	light_range = 6			// luminosity when on
+	light_system = MOVABLE_LIGHT
 
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
@@ -443,9 +449,10 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
-	custom_price = 50
+	custom_price = PAYCHECK_PRISONER
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
+	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
@@ -556,6 +563,7 @@
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
+	light_system = MOVABLE_LIGHT
 	light_range = 4
 	light_power = 10
 	alpha = 0
@@ -604,6 +612,7 @@
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	light_system = MOVABLE_LIGHT
 	light_range = 15
 	light_power = 1
 	flags_1 = CONDUCT_1

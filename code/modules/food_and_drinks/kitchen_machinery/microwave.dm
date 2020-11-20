@@ -165,7 +165,9 @@
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/S in T.contents)
+			if(!IS_EDIBLE(S))
+				continue
 			if(ingredients.len >= max_n_of_items)
 				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 				return TRUE
@@ -353,7 +355,7 @@
 
 	for(var/obj/item/reagent_containers/food/snacks/S in src)
 		if(prob(50))
-			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
+			new /obj/item/food/badrecipe(src)
 			qdel(S)
 
 	after_finish_loop()

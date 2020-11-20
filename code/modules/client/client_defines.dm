@@ -72,7 +72,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/obj/screen/click_catcher/void
+	var/atom/movable/screen/click_catcher/void
 
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_up_icon = null
@@ -109,7 +109,7 @@
  	///these persist between logins/logouts during the same round.
 	var/datum/player_details/player_details
 
-	///Should only be a key-value list of north/south/east/west = obj/screen.
+	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
 
 	///Amount of keydowns in the last keysend checking interval
@@ -177,7 +177,7 @@
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.
 	 *
-	 * Format: list(<mapname> = list(/obj/screen))
+	 * Format: list(<mapname> = list(/atom/movable/screen))
 	 */
 	var/list/screen_maps = list()
 
@@ -204,3 +204,6 @@
 	var/next_move_dir_add
  	/// On next move, subtract this dir from the move that would otherwise be done
 	var/next_move_dir_sub
+
+	/// If the client is currently under the restrictions of the interview system
+	var/interviewee = FALSE

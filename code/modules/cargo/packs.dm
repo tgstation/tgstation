@@ -1241,7 +1241,8 @@
 					/obj/item/reagent_containers/pill/neurine,
 					/obj/item/stack/medical/bone_gel,
 					/obj/item/stack/medical/bone_gel,
-					/obj/item/vending_refill/medical)
+					/obj/item/vending_refill/medical,
+					/obj/item/vending_refill/medical/chems)
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
@@ -2451,6 +2452,18 @@
 					/obj/item/toner)
 	crate_name = "toner crate"
 
+/datum/supply_pack/misc/toner_large
+	name = "Toner Crate (Large)"
+	desc = "Tired of changing toner cartridges? These six extra heavy duty refills contain roughly five times as much toner as the base model!"
+	cost = 3000
+	contains = list(/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large,
+					/obj/item/toner/large)
+	crate_name = "large toner crate"
+
 /datum/supply_pack/misc/training_toolbox
 	name = "Training Toolbox Crate"
 	desc = "Hone your combat abiltities with two AURUMILL-Brand Training Toolboxes! Guarenteed to count hits made against living beings!"
@@ -2570,9 +2583,10 @@
 
 /datum/supply_pack/vending/medical
 	name = "Medical Vending Crate"
-	desc = "Contains one NanoMed Plus refill and one wall-mounted NanoMed refill."
-	cost = 2000
+	desc = "Contains one NanoMed Plus refill, one NanoDrug Plus refill, and one wall-mounted NanoMed refill."
+	cost = 2500
 	contains = list(/obj/item/vending_refill/medical,
+					/obj/item/vending_refill/medical/chems,
 					/obj/item/vending_refill/wallmed)
 	crate_name = "medical vending crate"
 

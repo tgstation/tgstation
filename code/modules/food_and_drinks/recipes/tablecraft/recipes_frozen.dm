@@ -60,7 +60,7 @@
 	name = "Cornuto"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/cream = 4,
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/sugar = 4
@@ -287,7 +287,7 @@
 	name = "Jumbo icecream"
 	reqs = list(
 		/obj/item/popsicle_stick = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/cream = 2,
 		/datum/reagent/consumable/vanilla = 3,

@@ -224,14 +224,6 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/board/bounty
-	name = "Computer Design (Bounty Console)"
-	desc = "Allows for the construction of circuit boards used to build a Bounty Console."
-	id = "bounty"
-	build_path = /obj/item/circuitboard/computer/bounty
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
 /datum/design/board/mining
 	name = "Computer Design (Outpost Status Display)"
 	desc = "Allows for the construction of circuit boards used to build an outpost status display console."

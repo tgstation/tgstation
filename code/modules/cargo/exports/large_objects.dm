@@ -121,11 +121,12 @@
 								/datum/gas/healium,
 								/datum/gas/proto_nitrate,
 								/datum/gas/zauker,
-								/datum/gas/halon,
-								/datum/gas/hexane
+								/datum/gas/helium,
+								/datum/gas/antinoblium,
+								/datum/gas/halon
 								)
 
-	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
+	worth += gases[/datum/gas/hypernoblium][MOLES]*5
 	worth += gases[/datum/gas/stimulum][MOLES]*100
 	worth += gases[/datum/gas/freon][MOLES]*15
 	worth += gases[/datum/gas/tritium][MOLES]*5
@@ -136,6 +137,7 @@
 	worth += gases[/datum/gas/healium][MOLES]*19
 	worth += gases[/datum/gas/proto_nitrate][MOLES]*5
 	worth += gases[/datum/gas/zauker][MOLES]*1050
+	worth += gases[/datum/gas/helium][MOLES]*6
+	worth += gases[/datum/gas/antinoblium][MOLES]*10
 	worth += gases[/datum/gas/halon][MOLES]*9
-	worth += gases[/datum/gas/hexane][MOLES]*6
 	return worth

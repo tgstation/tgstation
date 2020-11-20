@@ -11,15 +11,22 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	var/turf_type = null
-	var/mineralType = null
 	novariants = TRUE
+	/// What type of turf does this tile produce.
+	var/turf_type = null
+	/// Determines certain welder interactions.
+	var/mineralType = null
+	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
+	var/list/tile_reskin_types
 
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+	if(tile_reskin_types)
+		tile_reskin_types = tile_reskin_list(tile_reskin_types)
+
 
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()
@@ -39,6 +46,7 @@
 		if(!verb)
 			return
 		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
+
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -199,6 +207,23 @@
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
 
+/obj/item/stack/tile/carpet/executive
+	name = "executive carpet"
+	icon_state = "tile_carpet_executive"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/executive
+
+/obj/item/stack/tile/carpet/stellar
+	name = "stellar carpet"
+	icon_state = "tile_carpet_stellar"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/stellar
+
+/obj/item/stack/tile/carpet/donk
+	name = "donk co promotional carpet"
+	icon_state = "tile_carpet_donk"
+	inhand_icon_state = "tile-carpet-orange"
+	turf_type = /turf/open/floor/carpet/donk
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
@@ -230,6 +255,14 @@
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/executive/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/stellar/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/donk/thirty
+	amount = 30
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -332,7 +365,7 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
@@ -342,7 +375,7 @@
 	matter_amount = 1
 
 /obj/item/stack/tile/plasteel/cyborg
-	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
+	mats_per_unit = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
 
@@ -351,7 +384,7 @@
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	custom_materials = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=500)
 	turf_type = /turf/open/floor/plastic
 
 /obj/item/stack/tile/material

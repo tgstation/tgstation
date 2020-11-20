@@ -119,10 +119,6 @@
 	name = "Healium Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/healium_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
-	name = "Hexane Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/hexane_tank
-
 /obj/item/circuitboard/computer/atmos_control/tank/hydrogen_tank
 	name = "Hydrogen Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/hydrogen_tank
@@ -162,6 +158,14 @@
 /obj/item/circuitboard/computer/atmos_control/tank/zauker_tank
 	name = "Zauker Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/zauker_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/helium_tank
+	name = "Helium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/helium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/antinoblium_tank
+	name = "Antinoblium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/antinoblium_tank
 
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console (Computer Board)"
@@ -473,11 +477,6 @@
 //Service
 
 //Supply
-
-/obj/item/circuitboard/computer/bounty
-	name = "\improper Nanotrasen Bounty Console (Computer Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/computer/bounty
 
 /obj/item/circuitboard/computer/cargo
 	name = "Supply Console (Computer Board)"

@@ -106,7 +106,7 @@
 "as" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "at" = (
@@ -2699,7 +2699,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "kw" = (
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/storage/mining)
 "ky" = (
 /obj/machinery/light/small{
@@ -5107,7 +5107,7 @@
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "Ma" = (
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/icemoon/underground/explored)
 "Mk" = (
 /obj/machinery/camera{

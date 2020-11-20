@@ -16,14 +16,14 @@
 	description = "Upper management wants to host a movie night. Ship bags of popcorn for the occasion."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/popcorn)
+	wanted_types = list(/obj/item/food/popcorn)
 
 /datum/bounty/item/chef/onionrings
 	name = "Onion Rings"
 	description = "Nanotrasen is remembering Saturn day. Ship onion rings to show the station's support."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/onionrings)
+	wanted_types = list(/obj/item/food/onionrings)
 
 /datum/bounty/item/chef/icecreamsandwich
 	name = "Ice Cream Sandwiches"
@@ -49,7 +49,7 @@
 	name = "Pie"
 	description = "3.14159? No! CentCom management wants edible pie! Ship a whole one."
 	reward = 3142
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/pie)
+	wanted_types = list(/obj/item/food/pie)
 
 /datum/bounty/item/chef/salad
 	name = "Salad or Rice Bowls"
@@ -63,7 +63,7 @@
 	description = "Night sight can mean life or death! A shipment of carrot fries is the order."
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/carrotfries)
+	wanted_types = list(/obj/item/food/carrotfries)
 
 /datum/bounty/item/chef/superbite
 	name = "Super Bite Burger"

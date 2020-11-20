@@ -103,7 +103,7 @@
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
+	M.throw_alert("buckled", /atom/movable/screen/alert/restrained/buckled)
 	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
 
@@ -249,7 +249,7 @@
 		M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
 			"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
 			"<span class='hear'>You hear metal clanking.</span>")
-		if(!do_after(user, 2 SECONDS, TRUE, M))
+		if(!do_after(user, 2 SECONDS, M))
 			return FALSE
 
 		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?

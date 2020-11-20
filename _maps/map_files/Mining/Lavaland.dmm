@@ -997,7 +997,7 @@
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dd" = (
@@ -4716,7 +4716,6 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "PL" = (
-/obj/machinery/suit_storage_unit/mining,
 /obj/machinery/suit_storage_unit/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1

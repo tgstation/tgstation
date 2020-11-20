@@ -22,6 +22,8 @@
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
+	/// var that makes express console use rockets
+	var/is_express = FALSE
 
 
 /obj/machinery/computer/cargo/request
@@ -86,6 +88,7 @@
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
 	data["can_send"] = can_send
+	data["can_approve_requests"] = can_approve_requests
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -176,6 +179,8 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
+			if(is_express)
+				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
@@ -195,9 +200,9 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid && ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+			if(self_paid && isliving(usr))
+				var/mob/living/L = usr
+				var/obj/item/card/id/id_card = L.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
 					return

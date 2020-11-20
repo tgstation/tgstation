@@ -92,6 +92,7 @@
 	if(!cell.use(THERMAL_REGULATOR_COST))
 		toggle_spacesuit()
 		update_hud_icon(user)
+		to_chat(user, "<span class='warning'>The thermal regulator cuts off as [cell] runs out of charge.</span>")
 		return
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
@@ -199,11 +200,15 @@
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
+	var/mob/living/carbon/human/user = src.loc
 	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
+		to_chat(user, "<span class='warning'>The thermal regulator on \the [src] has no charge.</span>")
 		return
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	if(user)
+		to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator.</span>")
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
 // let emags override the temperature settings
@@ -212,7 +217,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
