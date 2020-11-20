@@ -20,6 +20,9 @@
 	update_icon()
 	SetSlotFromZone()
 	items_list = contents.Copy()
+	for(var/a in items_list)
+		var/obj/item/I = a
+		ADD_TRAIT(I, TRAIT_NO_STORAGE_INSERT, ORGAN_TRAIT)
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
