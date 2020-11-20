@@ -9,7 +9,6 @@
 
 import { classes } from 'common/react';
 import { Fragment } from 'inferno';
-import DOMPurify from 'dompurify';
 import { Component } from 'inferno';
 import marked from 'marked';
 import { useBackend } from '../backend';
@@ -141,9 +140,7 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
       if (dom_text.length === 0) {
         continue;
       }
-      const sanitized_text = DOMPurify.sanitize(dom.value.trim(), {
-        ALLOWED_TAGS: [],
-      });
+      const sanitized_text = sanitizeText(dom.value.trim(), []);
       if (sanitized_text.length === 0) {
         continue;
       }
@@ -238,6 +235,7 @@ const PaperSheetView = (props, context) => {
       width="100%"
       height="100%" >
       <Box
+        className="Paper__Page"
         color="black"
         fillPositionedParent
         width="100%"
@@ -528,7 +526,7 @@ class PaperSheetEdit extends Component {
                   this.setState({ previewSelected: "confirm" });
                 }
               }}>
-              {this.state.previewSelected === "confirm" ? "confirm" : "save"}
+              {this.state.previewSelected === "confirm" ? "Confirm" : "Save"}
             </Tabs.Tab>
           </Tabs>
         </Flex.Item>
@@ -561,7 +559,7 @@ export const PaperSheet = (props, context) => {
   const {
     edit_mode,
     text,
-    paper_color,
+    paper_color = "white",
     pen_color = "black",
     pen_font = "Verdana",
     stamps,
