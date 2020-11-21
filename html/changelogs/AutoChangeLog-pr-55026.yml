@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen bounty boards no longer leave behind 95% of the machine when tasked with selling one! (Special thanks to ArcaneMusic)"
-  - bugfix: "The BSA will no longer refund all of its component parts and circuitboard when constructed."

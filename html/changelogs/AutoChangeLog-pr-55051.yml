@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Xenomorph drones and higher will once again generate plasma, allowing them to use abilities and evolve once more."
-  - bugfix: "Things with the Xenomorph plasma vessel organ will once again heal on alien weeds."
