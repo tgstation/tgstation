@@ -8,7 +8,6 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
 	wound_bonus = CANT_WOUND // can't wound by default
@@ -56,6 +55,8 @@
 	  * NEVER flag a projectile as PHASING movement type.
 	  * If you so badly need to make one go through *everything*, override check_pierce() for your projectile to always return PROJECTILE_PIERCE_PHASE/HIT.
 	  */
+	/// The "usual" flags of pass_flags is used in that can_hit_target ignores these unless they're specifically targeted/clicked on. This behavior entirely bypasses process_hit if triggered, rather than phasing which uses prehit_pierce() to check.
+	pass_flags = PASSTABLE
 	/// If FALSE, allow us to hit something directly targeted/clicked/whatnot even if we're able to phase through it
 	var/phasing_ignore_direct_target = FALSE
 	/// Bitflag for things the projectile should just phase through entirely - No hitting unless direct target and [phasing_ignore_direct_target] is FALSE. Uses pass_flags flags.
@@ -471,14 +472,15 @@
 /obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
 	if(QDELETED(target) || impacted[target])
 		return FALSE
-	if((target.pass_flags_self & projectile_phasing) && (phasing_ignore_direct_target || !direct_target))		// phasing
+	if(!ignore_loc && (loc != target.loc))
+		return FALSE
+	// if pass_flags match, pass through entirely
+	if(target.pass_flags_self & pass_flags)		// phasing
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(!ignore_loc && (loc != target.loc))
-		return FALSE
 	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
@@ -514,9 +516,20 @@
   * This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.
   */
 /obj/projectile/proc/scan_moved_turf()
-	for(var/atom/A in loc)
-		if(can_hit_target(A, direct_target = (A == original)))	// if we got directly aimed at something, hit it
-			Impact(A)
+	// Optimally, we scan: mobs --> objs --> turf for impact
+	// but, overhead is a thing and 2 for loops every time it moves is a no-go.
+	// realistically, since we already do select_target in impact, we can not do that
+	// and hope projectiles get refactored again in the future to have a less stupid impact detection system
+	// that hopefully won't also involve a ton of overhead
+	if(can_hit_target(original, TRUE, FALSE))
+		Impact(original)		// try to hit thing clicked on
+	// else, try to hit mobs
+	else		// because if we impacted original and pierced we'll already have select target'd and hit everything else we should be hitting
+		for(var/mob/M in loc)		// so I guess we're STILL doing a for loop of mobs because living movement would otherwise have snowflake code for projectile CanPass
+			// so the snowflake vs performance is pretty arguable here
+			if(can_hit_target(M, M == original, TRUE))
+				Impact(M)
+				break
 
 /**
   * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
