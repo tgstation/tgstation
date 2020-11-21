@@ -47,6 +47,11 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+// This totally isn't overengineered to hell, shut up
+/**
+  * Alright so some brief details here, we store all "immutable" (Think like power) card variables in a global list, indexed by id
+  * This proc gets the card's associated card datum to play with
+  */
 /obj/item/tcgcard/proc/extract_datum()
 	var/list/cached_cards = GLOB.cached_cards[series]
 	if(!cached_cards)
