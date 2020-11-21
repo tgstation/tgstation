@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/nuclearbomb,
 		/obj/item/beacon,
 		/obj/narsie,
-		/obj/singularity/wizard,
+		/obj/tear_in_reality,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,

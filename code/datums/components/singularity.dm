@@ -43,6 +43,9 @@
 	/// Can this singularity be BSA'd?
 	var/bsa_targetable
 
+	/// Should the admins be alerted when this is created?
+	var/notify_admins
+
 	/// If specified, the singularity will slowly move to this target
 	var/atom/target
 
@@ -52,6 +55,7 @@
 	consume_callback = CALLBACK(src, .proc/default_singularity_act),
 	disregard_failed_movements = FALSE,
 	grav_pull = 4,
+	notify_admins = TRUE,
 	singularity_size = STAGE_ONE,
 	roaming = TRUE,
 )
@@ -63,8 +67,9 @@
 	src.consume_range = consume_range
 	src.disregard_failed_movements = disregard_failed_movements
 	src.grav_pull = grav_pull
-	src.singularity_size = singularity_size
+	src.notify_admins = notify_admins
 	src.roaming = roaming
+	src.singularity_size = singularity_size
 
 /datum/component/singularity/RegisterWithParent()
 	START_PROCESSING(SSdcs, src)
@@ -87,7 +92,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
 	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_CROSSED), .proc/consume)
 
-	admin_investigate_setup()
+	if (notify_admins)
+		admin_investigate_setup()
 
 /datum/component/singularity/UnregisterFromParent()
 	STOP_PROCESSING(SSdcs, src)
