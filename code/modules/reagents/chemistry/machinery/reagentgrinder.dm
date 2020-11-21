@@ -17,6 +17,11 @@
 	var/limit = 10
 	var/speed = 1
 	var/list/holdingitems
+	///What objects will this allow for you to just insert and grind?
+	var/static/list/allowed_grindables = typecacheof(list(
+		/obj/item/food,
+		/obj/item/reagent_containers,
+		/obj/item/grown))
 
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
@@ -149,15 +154,20 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
-		var/list/inserted = list()
-		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
-			for(var/i in inserted)
-				holdingitems[i] = TRUE
-			if(!I.contents.len)
-				to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
-			else
-				to_chat(user, "<span class='notice'>You fill [src] to the brim.</span>")
-		return TRUE
+		var/obj/item/storage/T = I
+		var/loaded = holdingitems.len
+		for(var/obj/S in T.contents)
+			if(!is_type_in_typecache(S, allowed_grindables))
+				continue
+			if(holdingitems.len >= limit)
+				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
+				return TRUE
+			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+				loaded++
+				holdingitems += S
+		if(loaded)
+			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
+		return
 
 	if(!I.grind_results && !I.juice_results)
 		if(user.a_intent == INTENT_HARM)
