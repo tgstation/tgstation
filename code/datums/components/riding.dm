@@ -245,7 +245,7 @@
 		handle_vehicle_layer(AM.dir)
 		handle_vehicle_offsets(AM.dir)
 	else
-		to_chat(user, "<span class='warning'>You'll need a [initial(keytype.name)] in your hands to [drive_verb] [AM].</span>")
+		to_chat(user, "<span class='warning'>You'll need \an [initial(keytype.name)] in your hands to [drive_verb] [AM].</span>")
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
