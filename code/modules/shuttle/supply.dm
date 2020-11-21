@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/beacon,
-		/obj/singularity/narsie,
+		/obj/narsie,
 		/obj/singularity/wizard,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,

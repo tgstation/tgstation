@@ -8,6 +8,9 @@
 /// The range at which a singularity is considered "contained" to admins
 #define FIELD_CONTAINMENT_DISTANCE 30
 
+/// What's the chance that, when a singularity moves, it'll go to its target?
+#define CHANCE_TO_MOVE_TO_TARGET 60
+
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
 /datum/component/singularity
@@ -37,17 +40,25 @@
 	/// Should we disregard the possibility of failed movements? Used by stage five singularities
 	var/disregard_failed_movements
 
+	/// Can this singularity be BSA'd?
+	var/bsa_targetable
+
+	/// If specified, the singularity will slowly move to this target
+	var/atom/target
+
 /datum/component/singularity/Initialize(
+	bsa_targetable = TRUE,
 	consume_range = 0,
 	consume_callback = CALLBACK(src, .proc/default_singularity_act),
+	disregard_failed_movements = FALSE,
 	grav_pull = 4,
 	singularity_size = STAGE_ONE,
-	disregard_failed_movements = FALSE,
 	roaming = TRUE,
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.bsa_targetable = bsa_targetable
 	src.consume_callback = consume_callback
 	src.consume_range = consume_range
 	src.disregard_failed_movements = disregard_failed_movements
@@ -97,6 +108,7 @@
 	))
 
 /datum/component/singularity/InheritComponent(datum/component/singularity/old_singularity)
+	bsa_targetable = old_singularity.bsa_targetable
 	consume_callback = old_singularity.consume_callback
 	consume_range = old_singularity.consume_range
 	disregard_failed_movements = old_singularity.disregard_failed_movements
@@ -157,6 +169,10 @@
 
 /datum/component/singularity/proc/move()
 	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
+
+	if (!QDELETED(target) && prob(CHANCE_TO_MOVE_TO_TARGET))
+		drifting_dir = get_dir(parent, target)
+
 	step(parent, drifting_dir)
 
 /datum/component/singularity/proc/moved(datum/source, atom/new_location)
@@ -262,8 +278,12 @@
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
+	if (!bsa_targetable)
+		return
+
 	var/atom/atom_parent = parent
 	atom_parent.investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
 	qdel(parent)
 
+#undef CHANCE_TO_MOVE_TO_TARGET
 #undef FIELD_CONTAINMENT_DISTANCE
