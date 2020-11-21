@@ -11,6 +11,7 @@
 		target.health = 80
 
 /datum/unit_test/reagent_mob_expose/Run()
+	// Spawn the human somewhere outside of nullspace, so the fire doesn't get extinguished by lack of air and fail the test in the process
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human, pick(GLOB.prisonwarp))
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/food/drinks/drink = allocate(/obj/item/reagent_containers/food/drinks/bottle)
