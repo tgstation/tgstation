@@ -480,17 +480,18 @@
 		L.adjustFireLoss(impact_direct_damage)
 		L.emote("scream")
 
-/obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target)
+/obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
 	if(nodamage)
 		return FALSE
-	playsound(cached, 'sound/effects/explosion3.ogg', 100, TRUE)
-	AOE(get_turf(target) || get_turf(src))
+	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	if(!piercing_hit)
+		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
-	handle_hit(target)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, pierce_hit = FALSE)
+	handle_hit(target, piercing_hit)
 	return ..()
 
 /obj/projectile/beam/beam_rifle/hitscan

@@ -62,7 +62,7 @@
 	var/projectile_phasing = NONE
 	/// Bitflag for things the projectile should hit, but pierce through without deleting itself. Defers to projectile_phasing. Uses pass_flags flags.
 	var/projectile_piercing = NONE
-	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc, and is passed to them!
+	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
@@ -200,9 +200,9 @@
   * @params
   * target - thing hit
   * blocked - percentage of hit blocked
-  * pierced - number of things pierced INCLUDING THIS ONE. For a regular hit-delete, it'd be 0, when piercing one object, 1 on the hit, etc.
+  * pierce_hit - are we piercing through or regular hitting
   */
-/obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierced = 0)
+/obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	// i know that this is probably more with wands and gun mods in mind, but it's a bit silly that the projectile on_hit signal doesn't ping the projectile itself.
@@ -405,7 +405,9 @@
 	// at this point we are going to hit the thing
 	// in which case send signal to it
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
-	var/result = target.bullet_act(src, def_zone, ++pierces)
+	if(mode == PROJECTILE_PIERCE_HIT)
+		++pierces
+	var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
 	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
