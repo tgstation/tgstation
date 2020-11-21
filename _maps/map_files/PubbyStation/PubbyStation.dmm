@@ -3254,28 +3254,22 @@
 /obj/structure/sign/barsign,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"aiV" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "aiW" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/cable,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "aiX" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
-/obj/item/reagent_containers/glass/beaker,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "aiY" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/table/wood,
+/obj/item/pinpointer/crew,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "aiZ" = (
 /obj/structure/table,
 /obj/item/storage/box/bodybags,
@@ -3603,24 +3597,25 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard)
 "ajB" = (
-/obj/item/storage/box/mousetraps,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "ajC" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "ajD" = (
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajE" = (
-/obj/structure/bed,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/obj/item/bedsheet/dorms,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "ajF" = (
 /obj/machinery/atmospherics/components/unary/tank/oxygen,
 /turf/open/floor/plating,
@@ -3985,29 +3980,27 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "akr" = (
-/obj/machinery/washing_machine,
 /obj/item/radio/intercom{
 	dir = 4;
 	pixel_x = -31
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/table/wood,
+/obj/machinery/camera/autoname{
+	dir = 1;
+	pixel_x = 20
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "aks" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "akt" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "mainthideout";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
+/obj/machinery/computer/security{
+	dir = 8
 	},
-/obj/item/bedsheet/dorms,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "aku" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
 	dir = 1;
@@ -4367,13 +4360,13 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
-/obj/machinery/door/airlock{
-	id_tag = "mainthideout";
-	name = "Hideout"
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "58"
 	},
-/obj/effect/mapping_helpers/airlock/abandoned,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "alj" = (
 /obj/item/wrench,
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
@@ -5238,6 +5231,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "anq" = (
 /obj/structure/grille/broken,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "anr" = (
@@ -55887,6 +55881,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"scw" = (
+/turf/closed/wall,
+/area/blueshieldoffice)
 "scz" = (
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
@@ -55987,6 +55984,11 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"smU" = (
+/obj/structure/chair,
+/obj/effect/landmark/start/blueshield,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "smW" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -58022,6 +58024,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
+"uVS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/blueshieldoffice)
 "uVW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -76543,11 +76549,11 @@ aaa
 aaa
 aaa
 aaa
-ait
-ait
-ait
-aiu
-aiu
+uVS
+uVS
+uVS
+scw
+scw
 aht
 aht
 aiu
@@ -76800,11 +76806,11 @@ aaa
 aaa
 aaa
 aaa
-ait
-aiV
+uVS
+ajB
 ajB
 akr
-aiu
+scw
 ait
 ait
 aiu
@@ -77057,13 +77063,13 @@ aaa
 aaa
 aaa
 aaa
-ait
+uVS
 aiW
 ajC
-ajD
+ajC
 ali
-ajD
-ajD
+aoe
+aoe
 anq
 aoe
 aiu
@@ -77314,11 +77320,11 @@ aaa
 aaa
 aaa
 aaa
-aiu
+scw
 aiX
-ajD
+smU
 aks
-aiu
+scw
 ait
 ait
 aiu
@@ -77571,11 +77577,11 @@ adR
 adR
 adR
 aht
-ait
+uVS
 aiY
 ajE
 akt
-aiu
+scw
 aaa
 aaa
 aiu
@@ -77828,11 +77834,11 @@ aht
 aht
 aht
 aht
-aiu
-aiu
-aiu
-aiu
-aiu
+scw
+scw
+scw
+scw
+scw
 aiu
 aiu
 aiu

@@ -17,6 +17,7 @@
 /area/security/prison)
 "ae" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "af" = (
@@ -1066,6 +1067,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "gz" = (
@@ -2300,6 +2302,14 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
+"oV" = (
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "58"
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/hallway/secondary/exit/departure_lounge)
 "oX" = (
 /obj/machinery/pipedispenser,
 /turf/open/floor/plasteel,
@@ -2741,6 +2751,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
+"ra" = (
+/turf/closed/wall/r_wall,
+/area/blueshieldoffice)
 "rc" = (
 /obj/effect/landmark/start/botanist,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -2896,6 +2909,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"sf" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "sg" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer";
@@ -3535,6 +3552,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
+"vZ" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "wb" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plasteel,
@@ -3656,6 +3677,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"wL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "wM" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
@@ -3780,6 +3806,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xy" = (
+/obj/structure/table/wood,
+/obj/item/pinpointer/crew,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "xz" = (
 /obj/machinery/recharge_station,
 /obj/machinery/airalarm/directional/north,
@@ -4809,6 +4840,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"DN" = (
+/obj/structure/cable,
+/obj/effect/landmark/start/blueshield,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "DQ" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4827,6 +4866,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"DU" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "DV" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -5058,6 +5101,12 @@
 "FB" = (
 /turf/closed/wall,
 /area/janitor)
+"FC" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "FE" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Robotics Lab";
@@ -6892,6 +6941,11 @@
 "Qo" = (
 /turf/closed/wall,
 /area/science/robotics/lab)
+"Qq" = (
+/obj/machinery/camera/autoname,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "Qr" = (
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -7065,6 +7119,12 @@
 /obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
+"Rt" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "Rx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -7222,6 +7282,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
+"Ss" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "St" = (
 /turf/closed/wall/r_wall,
 /area/medical/virology)
@@ -8188,6 +8254,13 @@
 "XX" = (
 /turf/closed/wall/r_wall,
 /area/quartermaster/storage)
+"Ya" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "Yb" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 10
@@ -48523,11 +48596,11 @@ ZG
 ZG
 ZG
 ZG
-ZG
+ra
 XR
-XR
-XR
-XR
+gO
+gO
+gO
 gO
 gO
 gO
@@ -48780,11 +48853,11 @@ ZG
 ZG
 ZG
 ZG
-ZG
-ZG
-ZG
-ZG
-NG
+ra
+Qq
+Ya
+vZ
+Vo
 Fg
 Qr
 Qr
@@ -49037,20 +49110,20 @@ ZG
 ZG
 ZG
 ZG
-ZG
-ZG
-ZG
-ZG
-NG
-Qr
+ra
+Rt
+DN
+sf
+oV
+DU
 ae
-OM
-OM
-OM
-OM
+wL
+wL
+wL
+wL
 gy
-OM
-OM
+wL
+wL
 Vn
 Yg
 NG
@@ -49294,11 +49367,11 @@ ZG
 ZG
 ZG
 ZG
-ZG
-ZG
-ZG
-ZG
-NG
+ra
+xy
+Ss
+FC
+Vo
 Qr
 Qr
 Qr
@@ -49551,10 +49624,10 @@ ZG
 ZG
 ZG
 ZG
-ZG
-ZG
-ZG
-ZG
+ra
+ra
+ra
+ra
 NG
 Qr
 Qr

@@ -3675,11 +3675,11 @@
 /area/maintenance/port/fore)
 "aky" = (
 /turf/closed/wall,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "akz" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "akA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -3693,24 +3693,22 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "akB" = (
-/obj/machinery/door/airlock{
-	name = "Auxiliary Office";
-	req_access_txt = "32"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "58"
+	},
 /turf/open/floor/plasteel,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "akC" = (
 /obj/machinery/status_display/evac,
 /turf/closed/wall,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "akD" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -3987,7 +3985,7 @@
 /obj/item/folder,
 /obj/item/pen,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alk" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -3996,14 +3994,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "all" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alm" = (
 /obj/structure/table/wood,
 /obj/item/stack/package_wrap,
@@ -4012,19 +4010,19 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aln" = (
 /obj/structure/table/wood,
 /obj/item/storage/briefcase,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alo" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alp" = (
 /obj/machinery/light_switch{
 	pixel_x = 26;
@@ -4033,29 +4031,30 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alq" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alr" = (
 /obj/structure/table/wood,
-/obj/item/taperecorder,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "als" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
+/obj/item/pinpointer/crew,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "alt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -4350,35 +4349,32 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
-"ama" = (
-/turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "ame" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amf" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue{
@@ -4388,20 +4384,23 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amg" = (
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/effect/landmark/start/blueshield,
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "amh" = (
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/structure/frame/computer,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "ami" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -4842,43 +4841,44 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "ana" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "anb" = (
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "anc" = (
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "and" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "ane" = (
 /obj/structure/table/wood,
 /obj/item/paicard,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "anf" = (
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "ang" = (
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
-/obj/structure/frame/computer,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "anh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -5323,16 +5323,16 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aoa" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/carpet,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aob" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aoc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -5342,7 +5342,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aod" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -5352,7 +5352,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aoe" = (
 /obj/machinery/light_switch{
 	pixel_x = 26;
@@ -5367,13 +5367,8 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aof" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Office Maintenance";
-	req_access_txt = "32"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -5388,8 +5383,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "58"
+	},
 /turf/open/floor/plasteel,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aog" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -5869,18 +5868,17 @@
 "aoZ" = (
 /obj/structure/chair/office,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "apa" = (
-/mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "apb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "apc" = (
 /obj/structure/table/wood,
 /obj/item/camera_film{
@@ -5889,7 +5887,7 @@
 	},
 /obj/item/camera_film,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "apd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -6342,7 +6340,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small,
@@ -6350,7 +6348,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqd" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -6359,7 +6357,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqe" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -6368,21 +6366,17 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqf" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqg" = (
-/obj/machinery/power/apc{
-	areastring = "/area/vacant_room/office";
-	name = "Auxiliary Office APC";
-	pixel_y = -23
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqh" = (
 /obj/structure/table/wood,
 /obj/item/camera,
@@ -6391,7 +6385,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqi" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -6399,7 +6393,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/wood,
-/area/vacant_room/office)
+/area/blueshieldoffice)
 "aqj" = (
 /obj/structure/closet/secure_closet/contraband/heads,
 /obj/machinery/airalarm{
@@ -111395,6 +111389,15 @@
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
+"oah" = (
+/obj/structure/table/wood,
+/obj/item/folder,
+/obj/item/pen,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/blueshieldoffice)
 "oaQ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -113044,6 +113047,12 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating,
 /area/security/prison)
+"sdU" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/blueshieldoffice)
 "sfb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -148776,7 +148785,7 @@ alZ
 amZ
 anZ
 aoZ
-alj
+oah
 aky
 alg
 aIK
@@ -149029,10 +149038,10 @@ ajy
 ajV
 aky
 alk
-ama
+apa
 ana
 anf
-ama
+apa
 aqb
 aky
 arC
@@ -149544,9 +149553,9 @@ ajV
 aky
 alm
 amc
-amg
-amg
-ama
+sdU
+sdU
+apa
 aqd
 aky
 arE
@@ -149801,8 +149810,8 @@ hxG
 aky
 aln
 amc
-ama
-ama
+apa
+apa
 aoZ
 aqe
 aky
