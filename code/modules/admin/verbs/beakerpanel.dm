@@ -65,8 +65,11 @@
 	set name = "Spawn reagent container"
 	if(!check_rights())
 		return
+/*
+	// Maybe some day, but this doesn't work without a client
 	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/namespaced/common)
 	asset_datum.send()
+*/
 	//Could somebody tell me why this isn't using the browser datum, given that it copypastes all of browser datum's html
 	var/dat = {"
 		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
