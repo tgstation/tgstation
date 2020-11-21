@@ -448,19 +448,19 @@
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, LASER, FALSE)
 
 /obj/projectile/beam/beam_rifle/prehit_pierce(atom/A)
-	if(iscloseturf(A) && (wall_pierce < wall_pierce_amount))
+	if(isclosedturf(A) && (wall_pierce < wall_pierce_amount))
 		if(prob(wall_devastate))
 			if(iswallturf(A))
 				var/turf/closed/wall/W = A
 				W.dismantle_wall(TRUE, TRUE)
 			else
-				SSexplosions.medturf += target
+				SSexplosions.medturf += A
 		++wall_pierce
 		return PROJECTILE_PIERCE_PHASE			// yeah this gun is a snowflakey piece of garbage
 	if(isobj(A) && (structure_pierce < structure_pierce_amount))
 		++structure_pierce
 		var/obj/O = A
-		A.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
+		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
 		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly
 	return ..()
 
@@ -490,7 +490,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, pierce_hit = FALSE)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
 	handle_hit(target, piercing_hit)
 	return ..()
 
