@@ -408,16 +408,14 @@
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
 	if(mode == PROJECTILE_PIERCE_HIT)
 		++pierces
+	hit_something = TRUE
 	var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
-	if(result == BULLET_ACT_FORCE_PIERCE)
+	if((result == BULLET_ACT_FORCE_PIERCE) || (mode == PROJECTILE_PIERCE_HIT))
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
 		return process_hit(T, select_target(T, target), TRUE)
-	else
-		hit_something = TRUE
-	if(mode != PROJECTILE_PIERCE_HIT)		// not piercing and we aren't force piercing
-		qdel(src)
+	qdel(src)
 	return hit_something
 
 /**
@@ -484,6 +482,8 @@
 	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
+		if(isturf(target))		// non dense turfs
+			return FALSE
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
 			return FALSE
 		else if(!direct_target)		// non dense objects do not get hit unless specifically clicked
