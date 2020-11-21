@@ -102,6 +102,8 @@
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
+	/// if returned, forces nothing to happen when the atom is attacked by a blob
+	#define COMPONENT_CANCEL_BLOB_ACT (1<<0)
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
