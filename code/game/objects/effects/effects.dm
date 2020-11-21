@@ -32,9 +32,6 @@
 /obj/effect/singularity_act()
 	qdel(src)
 
-/obj/effect/abstract/ex_act(severity, target)
-	return
-
 /obj/effect/abstract/singularity_pull()
 	return
 

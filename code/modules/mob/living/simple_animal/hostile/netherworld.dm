@@ -52,9 +52,6 @@
 /obj/effect/dummy/phased_mob/creature/relaymove(mob/living/user, direction)
 	forceMove(get_step(src,direction))
 
-/obj/effect/dummy/phased_mob/creature/ex_act()
-	return
-
 /obj/effect/dummy/phased_mob/creature/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 

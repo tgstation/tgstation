@@ -87,9 +87,6 @@
 		qdel(src)
 	check_light_level()
 
-/obj/effect/dummy/phased_mob/shadow/ex_act()
-	return
-
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 

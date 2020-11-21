@@ -11,9 +11,6 @@
 /obj/effect/dummy/phased_mob/slaughter/relaymove(mob/living/user, direction)
 	forceMove(get_step(src,direction))
 
-/obj/effect/dummy/phased_mob/slaughter/ex_act()
-	return
-
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 
