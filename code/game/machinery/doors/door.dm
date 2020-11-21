@@ -126,7 +126,7 @@
 				return
 			if(try_safety_unlock(M))
 				return
-			if(M.buckled_mobs.len && isanimal(M))
+			if(M.buckled_mobs?.len && isanimal(M))
 				var/mob/living/simple_animal/S = M
 				if(S.tame)
 					for(var/mob/living/mob in M.buckled_mobs)
