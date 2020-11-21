@@ -50,7 +50,6 @@
 	riding.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 	riding.drive_verb = "ride"
 	riding.override_allow_spacemove = TRUE
-	faction = list("neutral")
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
