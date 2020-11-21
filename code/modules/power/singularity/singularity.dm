@@ -11,6 +11,10 @@
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = LONG_GLIDE
+
+	/// The singularity component itself
+	var/datum/component/singularity/singularity_component
+
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
