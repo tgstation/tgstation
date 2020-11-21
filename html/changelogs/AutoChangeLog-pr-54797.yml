@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Being species-swapped to a species without reagent metabolism (such as android and skeleton) will set you free of any chemical addiction your previously fleshy body may have had."
