@@ -175,6 +175,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item)
 		overlay.icon_state = "insert_overlay"
 		. += new /mutable_appearance(overlay)
+	if(cartridge)
+		overlay.icon_state = "cartridge_overlay"
+		. += new /mutable_appearance(overlay)
 	if(light_on)
 		overlay.icon_state = "light_overlay"
 		. += new /mutable_appearance(overlay)
