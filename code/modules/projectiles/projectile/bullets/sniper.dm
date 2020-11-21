@@ -34,6 +34,8 @@
 	icon_state = "gauss"
 	damage = 60
 	movement_type = FLYING | PHASING
+	projectile_piercing = PASSMOB
+	projectile_phasing = (ALL & (~PASSMOB))
 	dismemberment = 0 //It goes through you cleanly.
 	paralyze = 0
 	breakthings = FALSE

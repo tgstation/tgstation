@@ -274,7 +274,7 @@
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
-				playsound(loc, hitsound, volume, TRUE, -1)
+				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 					"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)
@@ -449,7 +449,7 @@
 		if(!can_hit_target(i, i == original, TRUE))
 			continue
 		considering += i
-	if(length(considering))
+	if(considering.len)
 		var/mob/living/M = pick(considering)
 		return M.lowest_buckled_mob()
 	considering.len = 0
@@ -459,7 +459,7 @@
 		if(!can_hit_target(i, i == original, TRUE))
 			continue
 		considering += i
-	if(length(considering))
+	if(considering.len)
 		return pick(considering)
 	// 4. turf
 	if(can_hit_target(T, T == original, TRUE))
