@@ -172,7 +172,8 @@
 	if(sound_loop)
 		sound_loop.stop()
 	if(storm)
-		storm.wind_down()
+		storm.end()
+		QDEL_NULL(storm)
 
 /datum/eldritch_knowledge/final/void_final/on_life(mob/user)
 	. = ..()
