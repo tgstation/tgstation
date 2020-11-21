@@ -128,7 +128,7 @@
 				return
 			if(M.buckled_mobs.len && isanimal(M))
 				var/mob/living/simple_animal/S = M
-				if(tame)
+				if(S.tame)
 					for(var/mob/living/mob in M.buckled_mobs)
 						Bumped(mob)
 					return
