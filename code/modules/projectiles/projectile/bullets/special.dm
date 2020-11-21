@@ -3,7 +3,8 @@
 /obj/projectile/bullet/honker
 	name = "banana"
 	damage = 0
-	movement_type = FLYING | PHASING
+	movement_type = FLYING
+	projecitle_piercing = ALL
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'
