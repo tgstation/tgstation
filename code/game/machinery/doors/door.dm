@@ -126,9 +126,11 @@
 				return
 			if(try_safety_unlock(M))
 				return
-			if(M.buckled_mobs.len)
-				for(var/mob/living/mob in M.buckled_mobs)
-					Bumped(mob)
+			if(isanimal(M))
+				var/mob/living/simple_animal/S = M
+				if(S.tame && S.buckled_mobs.len)
+					for(var/mob/living/mob in S.buckled_mobs)
+						Bumped(mob)
 			else
 				bumpopen(M)
 			return
