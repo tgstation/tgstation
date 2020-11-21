@@ -126,7 +126,11 @@
 				return
 			if(try_safety_unlock(M))
 				return
-			bumpopen(M)
+			if(M.buckled_mobs.len)
+				for(var/mob/living/mob in M.buckled_mobs)
+					Bumped(mob)
+			else
+				bumpopen(M)
 			return
 		return
 
