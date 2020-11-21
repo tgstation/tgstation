@@ -529,10 +529,9 @@
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
-	qdel(src)
-	return FALSE
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
+	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
-	return BULLET_ACT_HIT
+	return BULLET_ACT_BLOCK

@@ -8,7 +8,7 @@
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread
 				spread = round(1 - 0.5) * distro
-		if(!throw_proj(target, targloc, user, params, spread))
+		if(!throw_proj(target, targloc, user, params, spread, fired_from))
 			return FALSE
 	else
 		if(isnull(BB))
@@ -40,10 +40,17 @@
 		reagents.trans_to(BB, reagents.total_volume, transfered_by = user) //For chemical darts/bullets
 		qdel(reagents)
 
-/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
+/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(user)
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return FALSE
+
+	if(istype(fired_from, /obj/item/gun))			// See gun.dm for why this is in here.
+		var/obj/item/gun/G = fired_from
+		if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+			G.shoot_live_shot(user, 1, target, message)
+		else
+			G.shoot_live_shot(user, 0, target, message)
 
 	var/firing_dir
 	if(BB.firer)

@@ -413,9 +413,6 @@
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
 		return process_hit(T, select_target(T, target), TRUE)
-	else if(result == BULLET_ACT_TURF)
-		qdel(src)
-		return TRUE
 	else
 		hit_something = TRUE
 	if(mode != PROJECTILE_PIERCE_HIT)		// not piercing and we aren't force piercing
@@ -432,6 +429,7 @@
   * Priority:
   * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
   * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
+  *		FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
   * 1. The thing originally aimed at/clicked on
   * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
   * 3. Objs
@@ -486,6 +484,8 @@
 	if(!isliving(target))
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
 			return FALSE
+		else if(!direct_target)		// non dense objects do not get hit unless specifically clicked
+			return FALSE
 	else
 		var/mob/living/L = target
 		if(direct_target)
@@ -510,11 +510,13 @@
 
 /**
   * Scans if we should hit something on the turf we just moved to if we haven't already
+  *
+  * This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.
   */
 /obj/projectile/proc/scan_moved_turf()
 	for(var/atom/A in loc)
-		if(can_hit_target(A, direct_target = (A == original)))	// if we got directly aimed at osmething, hit it
-			Impact(original)
+		if(can_hit_target(A, direct_target = (A == original)))	// if we got directly aimed at something, hit it
+			Impact(A)
 
 /**
   * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
@@ -631,7 +633,7 @@
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
-	if(direct_target)
+	if(direct_target && (get_dist(direct_Target, get_turf(src)) <= 1))		// point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
 			return

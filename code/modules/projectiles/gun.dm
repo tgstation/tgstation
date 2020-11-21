@@ -304,10 +304,10 @@
 			firing_burst = FALSE
 			return FALSE
 		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target, message)
-			else
-				shoot_live_shot(user, 0, target, message)
+			// shoot_live_shot - why is this not in here you ask?
+			// because the "less" snowflakey way PROBABLY was putting it
+			// to be triggered by th shot itself
+			// If it was here, you'd see the firing message after the projectile potentially already impacted.
 			if (iteration >= burst_size)
 				firing_burst = FALSE
 	else
@@ -351,11 +351,11 @@
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
 				return
-			else
-				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-					shoot_live_shot(user, 1, target, message)
-				else
-					shoot_live_shot(user, 0, target, message)
+			// else
+			// shoot_live_shot - why is this not in here you ask?
+			// because the "less" snowflakey way PROBABLY was putting it
+			// to be triggered by th shot itself
+			// If it was here, you'd see the firing message after the projectile potentially already impacted.
 		else
 			shoot_with_empty_chamber(user)
 			return
