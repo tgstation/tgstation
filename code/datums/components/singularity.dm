@@ -68,8 +68,8 @@
 
 	RegisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
-		COMSIG_MOB_ATTACK_HAND,
 	), .proc/consume_attack)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
 
@@ -86,11 +86,11 @@
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOB_ATTACK_HAND,
 		COMSIG_MOVABLE_CROSSED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_PARENT_ATTACKBY,
@@ -138,13 +138,21 @@
 		else
 			consume(src, tile)
 
-		for (var/thing in tile)
-			if(isturf(atom_parent.loc) && thing != parent)
+		for (var/_thing in tile)
+			var/atom/thing = _thing
+
+			// Because we can possibly yield in the middle of iteration, let's make sure what were looking at is still there
+			// Without this, you get "Qdeleted thing being thrown around"
+			if (QDELETED(thing))
+				continue
+
+			if (isturf(atom_parent.loc) && thing != parent)
 				var/atom/movable/movable_thing = thing
-				if(get_dist(movable_thing, parent) > consume_range)
+				if (get_dist(movable_thing, parent) > consume_range)
 					movable_thing.singularity_pull(parent, singularity_size)
 				else
 					consume(src, movable_thing)
+
 			CHECK_TICK
 
 /datum/component/singularity/proc/move()
