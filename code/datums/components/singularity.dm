@@ -190,57 +190,56 @@
 			return FALSE
 	return TRUE
 
-// TODO: Figure out what the hell this does, and fix the names
-/datum/component/singularity/proc/check_turfs_in(direction = 0, step = 0)
-	if(!direction)
+/// Makes sure we don't move out of the z-level by checking the turfs around us.
+/// Takes in the direction we're going, and optionally how many steps forward to look.
+/// If steps are not provided, it will be inferred by singularity_size.
+/datum/component/singularity/proc/check_turfs_in(direction, steps)
+	if (!direction)
 		return FALSE
 	var/atom/atom_parent = parent
-	var/steps = 0
-	if(!step)
-		switch(singularity_size)
-			if(STAGE_ONE)
+	if (!steps)
+		switch (singularity_size)
+			if (STAGE_ONE)
 				steps = 1
-			if(STAGE_TWO)
+			if (STAGE_TWO)
 				steps = 3//Yes this is right
-			if(STAGE_THREE)
+			if (STAGE_THREE)
 				steps = 3
-			if(STAGE_FOUR)
+			if (STAGE_FOUR)
 				steps = 4
-			if(STAGE_FIVE)
+			if (STAGE_FIVE)
 				steps = 5
-	else
-		steps = step
 	var/list/turfs = list()
-	var/turf/T = atom_parent.loc
-	for(var/i = 1 to steps)
-		T = get_step(T,direction)
-	if(!isturf(T))
+	var/turf/farthest_turf = atom_parent.loc
+	for (var/_ = 1 to steps)
+		farthest_turf = get_step(farthest_turf, direction)
+	if (!isturf(farthest_turf))
 		return FALSE
-	turfs.Add(T)
-	var/dir2 = 0
-	var/dir3 = 0
-	switch(direction)
-		if(NORTH||SOUTH)
-			dir2 = 4
-			dir3 = 8
-		if(EAST||WEST)
-			dir2 = 1
-			dir3 = 2
-	var/turf/T2 = T
-	for(var/j = 1 to steps-1)
-		T2 = get_step(T2,dir2)
-		if(!isturf(T2))
+	turfs.Add(farthest_turf)
+	var/dir2
+	var/dir3
+	switch (direction)
+		if (NORTH || SOUTH)
+			dir2 = EAST
+			dir3 = WEST
+		if (EAST || WEST)
+			dir2 = NORTH
+			dir3 = SOUTH
+	var/turf/farthest_perpendicular_turf = farthest_turf
+	for (var/_ = 1 to steps - 1)
+		farthest_perpendicular_turf = get_step(farthest_perpendicular_turf, dir2)
+		if (!isturf(farthest_perpendicular_turf))
 			return FALSE
-		turfs.Add(T2)
-	for(var/k = 1 to steps-1)
-		T = get_step(T,dir3)
-		if(!isturf(T))
+		turfs.Add(farthest_perpendicular_turf)
+	for (var/_ = 1 to steps - 1)
+		farthest_turf = get_step(farthest_turf, dir3)
+		if (!isturf(farthest_turf))
 			return FALSE
-		turfs.Add(T)
-	for(var/turf/T3 in turfs)
-		if(isnull(T3))
+		turfs.Add(farthest_turf)
+	for (var/turf_in_range in turfs)
+		if (isnull(turf_in_range))
 			continue
-		if(!can_move(T3))
+		if (!can_move(turf_in_range))
 			return FALSE
 	return TRUE
 
