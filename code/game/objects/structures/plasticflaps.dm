@@ -71,7 +71,8 @@
 
 /obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
 	. = ..()
-
+	if(A.pass_flags & PASSFLAPS) //For anything specifically engineered to cross plastic flaps.
+		return TRUE
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
