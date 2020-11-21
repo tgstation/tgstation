@@ -217,9 +217,6 @@
 	. = ..()
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
-
-/mob/living/simple_animal/hostile/carp/megacarp/Life()
-	. = ..()
 	if(!rideable && mind)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
@@ -231,8 +228,6 @@
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-		D.drive_verb = "ride"
-		D.override_allow_spacemove = TRUE
 		rideable = TRUE
 
 /mob/living/simple_animal/hostile/carp/cayenne

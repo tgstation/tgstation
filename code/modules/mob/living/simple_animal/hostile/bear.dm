@@ -46,7 +46,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 	var/armored = FALSE
-	var/rideable = TRUE
+	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
