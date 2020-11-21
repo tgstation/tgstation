@@ -229,6 +229,16 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/hygienebot
+	name = "Hygienebot"
+	result = /mob/living/simple_animal/bot/hygienebot
+	reqs = list(/obj/item/bot_assembly/hygienebot = 1,
+				/obj/item/stack/ducts = 1,
+				/obj/item/assembly/prox_sensor = 1)
+	tools = list(TOOL_WELDER)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
