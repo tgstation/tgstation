@@ -1,0 +1,5 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - bugfix: "Fixes heretic brews being permanent."
+  - bugfix: "Fixes void storm breaking after resurrecting."
