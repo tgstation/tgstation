@@ -551,9 +551,6 @@
 	var/obj/effect/pod_landingzone_effect/helper
 	var/list/smoke_effects = new /list(13)
 
-/obj/effect/ex_act()
-	return
-
 /obj/effect/pod_landingzone/Initialize(mapload, podParam, single_order = null, clientman)
 	. = ..()
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
