@@ -510,6 +510,8 @@
 	if(default_pry_open(I))
 		return TRUE
 	if(default_deconstruction_crowbar(I))
+		open_machine()
+		dump_inventory_contents()
 		return TRUE
 
 	return ..()
