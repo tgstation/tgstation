@@ -3778,7 +3778,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hS" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006

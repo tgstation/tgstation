@@ -171,7 +171,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	dump_contents()
+	dump_inventory_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()

@@ -23,7 +23,6 @@
 @include meta.load-css('./components/Dimmer.scss');
 @include meta.load-css('./components/Divider.scss');
 @include meta.load-css('./components/Dropdown.scss');
-@include meta.load-css('./components/FatalError.scss');
 @include meta.load-css('./components/Flex.scss');
 @include meta.load-css('./components/Icon.scss');
 @include meta.load-css('./components/Input.scss');
@@ -43,6 +42,7 @@
 // Interfaces
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');
+@include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 
 // Layouts

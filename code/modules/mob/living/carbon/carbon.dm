@@ -449,7 +449,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE, purge = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
@@ -482,7 +482,6 @@
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
@@ -490,12 +489,8 @@
 			if(harm)
 				adjustBruteLoss(3)
 		else
-			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
-				if(T)
-					T.add_vomit_floor(src, VOMIT_PURPLE)
-			else
-				if(T)
-					T.add_vomit_floor(src, VOMIT_TOXIC, purge) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+			if(T)
+				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (T?.is_blocked_turf())
 			break
@@ -854,6 +849,10 @@
 
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
+	if(reagents)
+		reagents.clear_reagents()
+		for(var/addi in reagents.addiction_list)
+			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -872,7 +871,8 @@
 		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
-	clear_addictions()
+		if(reagents)
+			reagents.addiction_list = list()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
@@ -928,6 +928,7 @@
 			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
+	remove_all_embedded_objects()
 
 /mob/living/carbon/extinguish_mob()
 	for(var/X in get_equipped_items())

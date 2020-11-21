@@ -159,6 +159,14 @@
 	name = "Zauker Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/zauker_tank
 
+/obj/item/circuitboard/computer/atmos_control/tank/helium_tank
+	name = "Helium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/helium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/antinoblium_tank
+	name = "Antinoblium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/antinoblium_tank
+
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console (Computer Board)"
 	icon_state = "engineering"
