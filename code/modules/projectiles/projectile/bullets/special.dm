@@ -4,7 +4,7 @@
 	name = "banana"
 	damage = 0
 	movement_type = FLYING
-	projecitle_piercing = ALL
+	projectile_piercing = ALL
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'
