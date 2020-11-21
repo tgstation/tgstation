@@ -9,11 +9,23 @@
 
 /// Asserts that the two parameters passed are equal, fails otherwise
 /// Optionally allows an additional message in the case of a failure
-#define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [isnull(a) ? "null" : a] to be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
+#define TEST_ASSERT_EQUAL(a, b, message) do { \
+	var/lhs = ##a; \
+	var/rhs = ##b; \
+	if (lhs != rhs) { \
+		return Fail("Expected [isnull(lhs) ? "null" : lhs] to be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]"); \
+	} \
+} while (FALSE)
 
 /// Asserts that the two parameters passed are not equal, fails otherwise
 /// Optionally allows an additional message in the case of a failure
-#define TEST_ASSERT_NOTEQUAL(a, b, message) if ((a) == (b)) { return Fail("Expected [isnull(a) ? "null" : a] to not be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
+#define TEST_ASSERT_NOTEQUAL(a, b, message) do { \
+	var/lhs = ##a; \
+	var/rhs = ##b; \
+	if (lhs == rhs) { \
+		return Fail("Expected [isnull(lhs) ? "null" : lhs] to not be equal to [isnull(rhs) ? "null" : rhs].[message ? " [message]" : ""]"); \
+	} \
+} while (FALSE)
 
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
