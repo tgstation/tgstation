@@ -558,7 +558,6 @@
 	desc = "You can't get enough of hard drugs."
 	value = -2
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
-	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
 	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
@@ -606,15 +605,22 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
+/datum/quirk/junkie/remove()
+	if(quirk_holder && reagent_instance)
+		quirk_holder.reagents.remove_addiction(reagent_instance) //chat feedback here. No need of lose_text.
+
 /datum/quirk/junkie/proc/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+		return
 	var/mob/living/carbon/human/H = quirk_holder
 	if(world.time > next_process)
 		next_process = world.time + process_interval
-		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(QDELETED(reagent_instance))
+		var/deleted = QDELETED(reagent_instance)
+		if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
+			if(deleted)
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0
@@ -626,7 +632,6 @@
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
 	value = -1
 	gain_text = "<span class='danger'>You could really go for a smoke right about now.</span>"
-	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
