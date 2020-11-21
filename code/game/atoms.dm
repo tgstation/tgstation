@@ -544,10 +544,15 @@
   * React to a hit by a projectile object
   *
   * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+  *
+  * @params
+  * P - projectile
+  * def_zone - zone hit
+  * pierced - number of times the projectile pierced something INCLUDING THIS. 0 on first impact without piercing.
   */
-/atom/proc/bullet_act(obj/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/projectile/P, def_zone, pierced = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
-	. = P.on_hit(src, 0, def_zone)
+	. = P.on_hit(src, 0, def_zone, pierced)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument

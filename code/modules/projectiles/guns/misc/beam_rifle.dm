@@ -431,11 +431,9 @@
 	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
-	var/turf/cached
 	var/list/pierced = list()
 
 /obj/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
-	set waitfor = FALSE
 	if(!epicenter)
 		return
 	new /obj/effect/temp_visual/explosion/fast(epicenter)
@@ -449,31 +447,22 @@
 		if(!isitem(O))
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, LASER, FALSE)
 
-/obj/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
-	if(!do_pierce)
-		return FALSE
-	if(pierced[target])		//we already pierced them go away
-		return TRUE
-	if(isclosedturf(target))
-		if(wall_pierce++ < wall_pierce_amount)
-			if(prob(wall_devastate))
-				if(iswallturf(target))
-					var/turf/closed/wall/W = target
-					W.dismantle_wall(TRUE, TRUE)
-				else
-					SSexplosions.medturf += target
-			return TRUE
-	if(ismovable(target))
-		var/atom/movable/AM = target
-		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
-			if(structure_pierce < structure_pierce_amount)
-				if(isobj(AM))
-					var/obj/O = AM
-					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, ENERGY, FALSE)
-				pierced[AM] = TRUE
-				structure_pierce++
-				return TRUE
-	return FALSE
+/obj/projectile/beam/beam_rifle/prehit_pierce(atom/A)
+	if(iscloseturf(A) && (wall_pierce < wall_pierce_amount))
+		if(prob(wall_devastate))
+			if(iswallturf(A))
+				var/turf/closed/wall/W = A
+				W.dismantle_wall(TRUE, TRUE)
+			else
+				SSexplosions.medturf += target
+		++wall_pierce
+		return PROJECTILE_PIERCE_PHASE			// yeah this gun is a snowflakey piece of garbage
+	if(isobj(A) && (structure_pierce < structure_pierce_amount))
+		++structure_pierce
+		var/obj/O = A
+		A.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
+		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly
+	return ..()
 
 /obj/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
 	if(istype(target, /obj/machinery/door))
@@ -493,31 +482,14 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target)
 	set waitfor = FALSE
-	if(!cached && !QDELETED(target))
-		cached = get_turf(target)
 	if(nodamage)
 		return FALSE
 	playsound(cached, 'sound/effects/explosion3.ogg', 100, TRUE)
-	AOE(cached)
+	AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)
 
-#error TODO: REFACTOR BEAM RIFLES USING NEW SYSTEM!!
-
-/obj/projectile/beam/beam_rifle/Bump(atom/target)
-	if(check_pierce(target))
-		impacted[target] = TRUE
-		trajectory_ignore_forcemove = TRUE
-		forceMove(target.loc)
-		trajectory_ignore_forcemove = FALSE
-		return FALSE
-	if(!QDELETED(target))
-		cached = get_turf(target)
-	return ..()
-
 /obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
-	if(!QDELETED(target))
-		cached = get_turf(target)
 	handle_hit(target)
 	return ..()
 
