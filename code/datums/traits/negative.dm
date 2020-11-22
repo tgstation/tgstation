@@ -575,6 +575,8 @@
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
+	if(!H.reagents.addiction_list)
+		H.reagents.addiction_list = list()
 	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)

@@ -446,7 +446,7 @@ GENE SCANNER
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
 
-		if(M.reagents.addiction_list.len)
+		if(M.reagents.addiction_list?.len)
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
 			for(var/datum/reagent/R in M.reagents.addiction_list)
 				render_list += "<span class='alert ml-2'>[R.name]</span>\n"
