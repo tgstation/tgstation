@@ -115,41 +115,23 @@
   */
 /datum/reality_smash_tracker
 	///list of tracked reality smashes
-	var/list/smashes = list()
+	var/smashes = 0
 	///List of mobs with ability to see the smashes
-	var/list/targets = list()
+	var/targets = 0
 
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
-		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")
-	QDEL_LIST(smashes)
-	targets.Cut()
+		stack_trace("/datum/reality_smash_tracker was deleted. New heretics will no longer generate new influences")
 	return ..()
-
-/**
-  * Automatically fixes the target and smash network
-  *
-  * Fixes any bugs that are caused by late Generate() or exchanging clients
-  */
-/datum/reality_smash_tracker/proc/ReworkNetwork()
-	listclearnulls(smashes)
-	for(var/mind in targets)
-		if(isnull(mind))
-			stack_trace("A null somehow landed in a list of minds")
-			continue
-		for(var/X in smashes)
-			var/obj/effect/reality_smash/reality_smash = X
-			reality_smash.AddMind(mind)
 
 /**
   * Generates a set amount of reality smashes based on the N value
   *
   * Automatically creates more reality smashes
   */
-/datum/reality_smash_tracker/proc/_Generate()
-	var/targ_len = length(targets)
-	var/smash_len = length(smashes)
-	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
+/datum/reality_smash_tracker/proc/Generate()
+	targets++
+	var/number = max(targets * (4-(targets-1)) - smashes,1)
 
 	for(var/i in 0 to number)
 
@@ -159,35 +141,8 @@
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(chosen_location)
-		smashes += RS
-	ReworkNetwork()
-
-
-/**
-  * Adds a mind to the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to add someone to the list
-  */
-/datum/reality_smash_tracker/proc/AddMind(datum/mind/M)
-	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
-	targets |= M
-	_Generate()
-	for(var/X in smashes)
-		var/obj/effect/reality_smash/reality_smash = X
-		reality_smash.AddMind(M)
-
-
-/**
-  * Removes a mind from the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to remove someone from the list
-  */
-/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/M)
-	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
-	targets -= M
-	for(var/obj/effect/reality_smash/RS in smashes)
-		RS.RemoveMind(M)
+		new /obj/effect/reality_smash(chosen_location)
+		smashes++
 
 /obj/effect/broken_illusion
 	name = "pierced reality"
@@ -200,9 +155,15 @@
 /obj/effect/broken_illusion/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
-	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+
+	var/image/I = image('icons/effects/eldritch.dmi',src,null,OBJ_LAYER)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
+
+	I = image('icons/effects/eldritch.dmi',src, "pierced_illusion",OBJ_LAYER)
+	I.override = TRUE
+	I.alpha = 255
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"pierced_reality",I)
 
 ///Makes this obj appear out of nothing
 /obj/effect/broken_illusion/proc/show_presence()
@@ -261,17 +222,12 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
-	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
-	var/image_state = "reality_smash"
-	///Who can see us?
-	var/list/minds = list()
-	///Tracked image
-	var/image/img
 
 /obj/effect/reality_smash/Initialize()
 	. = ..()
-	img = image(icon, src, image_state, OBJ_LAYER)
+	var/img = image(icon, src, "reality_smash", OBJ_LAYER)
 	generate_name()
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"influence",img)
 
 /obj/effect/reality_smash/Destroy()
 	on_destroy()
@@ -279,30 +235,9 @@
 
 ///Custom effect that happens on destruction
 /obj/effect/reality_smash/proc/on_destroy()
-	for(var/cm in minds)
-		var/datum/mind/cultie = cm
-		if(cultie.current?.client)
-			cultie.current.client.images -= img
-		//clear the list
-		minds -= cultie
-	GLOB.reality_smash_track.smashes -= src
-	img = null
-	new /obj/effect/broken_illusion(drop_location())
-
-///Makes the mind able to see this effect
-/obj/effect/reality_smash/proc/AddMind(datum/mind/cultie)
-	minds |= cultie
-	if(cultie.current.client)
-		cultie.current.client.images |= img
-
-
-
-///Makes the mind not able to see this effect
-/obj/effect/reality_smash/proc/RemoveMind(datum/mind/cultie)
-	minds -= cultie
-	if(cultie.current.client)
-		cultie.current.client.images -= img
-
+	GLOB.reality_smash_track.smashes--
+	var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
+	illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
 
 
 ///Generates random name

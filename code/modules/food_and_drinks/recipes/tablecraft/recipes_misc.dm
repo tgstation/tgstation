@@ -100,7 +100,7 @@
 	time = 40
 	reqs = list(/datum/reagent/consumable/salt = 1,
 				/datum/reagent/consumable/blackpepper = 1,
-				/obj/item/reagent_containers/food/snacks/pastrybase = 2
+				/obj/item/food/pastrybase = 2
 	)
 	result = /obj/item/food/baguette
 	subcategory = CAT_MISCFOOD
@@ -261,7 +261,7 @@
 	name = "Powercrepe"
 	time = 40
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/flatdough = 1,
+		/obj/item/food/flatdough = 1,
 		/datum/reagent/consumable/milk = 1,
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/stock_parts/cell/super =1,
@@ -326,7 +326,7 @@
 /datum/crafting_recipe/food/crab_rangoon
 	name = "Crab Rangoon"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/doughslice = 1,
+		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/food/cheesewedge = 1,
 		/obj/item/food/meat/rawcrab = 1

@@ -76,6 +76,7 @@
 			var/obj/item/S = O
 			if(!user.transferItemToLoc(S, src))
 				return
+			food_stored++
 			if(stored_food[sanitize(S.name)])
 				stored_food[sanitize(S.name)]++
 			else
@@ -96,6 +97,7 @@
 				if(!IS_EDIBLE(S))
 					continue
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+					food_stored++
 					if(stored_food[sanitize(S.name)])
 						stored_food[sanitize(S.name)]++
 					else
@@ -120,6 +122,7 @@
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])
 					O.forceMove(drop_location())
+					food_stored--
 					break
 				log_combat(usr, src, "dispensed [O] from", null, "with [stored_food[href_list["dispense"]]] remaining")
 

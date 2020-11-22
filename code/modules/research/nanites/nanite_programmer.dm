@@ -11,6 +11,14 @@
 	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
 
+/obj/machinery/nanite_programmer/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", layer, plane)
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", EMISSIVE_LAYER, EMISSIVE_PLANE)
+
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
