@@ -619,14 +619,13 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		var/deleted = QDELETED(reagent_instance)
-		if(H.reagents.addiction_list)
-			if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
-				if(deleted)
-					reagent_instance = new reagent_type()
-				else
-					reagent_instance.addiction_stage = 0
-				H.reagents.addiction_list += reagent_instance
-				to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
+		if(deleted || !(LAZYFIND(H.reagents.addiction_list, reagent_instance)))
+			if(deleted)
+				reagent_instance = new reagent_type()
+			else
+				reagent_instance.addiction_stage = 0
+			H.reagents.addiction_list += reagent_instance
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
