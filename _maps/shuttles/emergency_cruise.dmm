@@ -82,13 +82,8 @@
 /area/shuttle/escape)
 "cz" = (
 /obj/structure/table/wood/fancy,
-<<<<<<< HEAD
-/obj/item/reagent_containers/food/snacks/nachos,
-/obj/item/food/honeybun{
-=======
 /obj/item/food/nachos,
-/obj/item/reagent_containers/food/snacks/honeybun{
->>>>>>> upstream/master
+/obj/item/food/honeybun{
 	pixel_x = 3;
 	pixel_y = 13
 	},

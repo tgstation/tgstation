@@ -1096,9 +1096,9 @@
 #include "code\game\objects\items\food\egg.dm"
 #include "code\game\objects\items\food\frozen.dm"
 #include "code\game\objects\items\food\meat.dm"
+#include "code\game\objects\items\food\misc.dm"
 #include "code\game\objects\items\food\pastries.dm"
 #include "code\game\objects\items\food\pie.dm"
-#include "code\game\objects\items\food\misc.dm"
 #include "code\game\objects\items\food\pizza.dm"
 #include "code\game\objects\items\food\salad.dm"
 #include "code\game\objects\items\food\sandwichtoast.dm"
@@ -1951,12 +1951,6 @@
 #include "code\modules\food_and_drinks\food\condiment.dm"
 #include "code\modules\food_and_drinks\food\customizables.dm"
 #include "code\modules\food_and_drinks\food\snacks.dm"
-<<<<<<< HEAD
-#include "code\modules\food_and_drinks\food\snacks_other.dm"
-#include "code\modules\food_and_drinks\food\snacks\dough.dm"
-=======
-#include "code\modules\food_and_drinks\food\snacks_pastry.dm"
->>>>>>> upstream/master
 #include "code\modules\food_and_drinks\kitchen_machinery\deep_fryer.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\food_cart.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\gibber.dm"
