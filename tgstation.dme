@@ -1097,10 +1097,7 @@
 #include "code\game\objects\items\food\frozen.dm"
 #include "code\game\objects\items\food\meat.dm"
 #include "code\game\objects\items\food\misc.dm"
-<<<<<<< HEAD
 #include "code\game\objects\items\food\pastries.dm"
-=======
->>>>>>> upstream/master
 #include "code\game\objects\items\food\pie.dm"
 #include "code\game\objects\items\food\pizza.dm"
 #include "code\game\objects\items\food\salad.dm"
