@@ -82,7 +82,7 @@
 /area/shuttle/escape)
 "cz" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/nachos,
+/obj/item/food/nachos,
 /obj/item/reagent_containers/food/snacks/honeybun{
 	pixel_x = 3;
 	pixel_y = 13
@@ -760,7 +760,7 @@
 	pixel_x = -5;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/snacks/fries{
+/obj/item/food/fries{
 	pixel_x = 16;
 	pixel_y = 11
 	},
@@ -814,7 +814,7 @@
 	pixel_x = 16;
 	pixel_y = -8
 	},
-/obj/item/reagent_containers/food/snacks/burrito{
+/obj/item/food/burrito{
 	pixel_x = -6;
 	pixel_y = -4
 	},

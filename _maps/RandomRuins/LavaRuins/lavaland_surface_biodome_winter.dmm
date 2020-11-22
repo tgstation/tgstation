@@ -101,7 +101,7 @@
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/canned/beans,
+/obj/item/food/canned/beans,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "ay" = (
