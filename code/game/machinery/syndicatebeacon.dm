@@ -22,8 +22,10 @@
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return
-	for(var/obj/singularity/singulo in GLOB.singularities)
-		if(singulo.z == z)
+	for (var/_singulo in GLOB.singularities)
+		var/datum/component/singularity/singulo = _singulo
+		var/atom/singulo_atom = singulo.parent
+		if(singulo_atom.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
 	active = TRUE
@@ -32,7 +34,8 @@
 
 
 /obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/singularity/singulo in GLOB.singularities)
+	for(var/_singulo in GLOB.singularities)
+		var/datum/component/singularity/singulo = _singulo
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"

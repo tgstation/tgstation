@@ -15,8 +15,6 @@
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
 /datum/component/singularity
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-
 	/// Callback for consuming objects (for example, Nar'Sie replaces this to call narsie_act)
 	var/datum/callback/consume_callback
 
@@ -93,8 +91,16 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
 	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_CROSSED), .proc/consume)
 
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+
 	if (notify_admins)
 		admin_investigate_setup()
+
+	GLOB.singularities |= src
+
+/datum/component/singularity/Destroy(force, silent)
+	GLOB.singularities -= src
+	return ..()
 
 /datum/component/singularity/UnregisterFromParent()
 	STOP_PROCESSING(SSdcs, src)
@@ -108,20 +114,12 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
+		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_CROSSED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_PARENT_ATTACKBY,
 	))
-
-/datum/component/singularity/InheritComponent(datum/component/singularity/old_singularity)
-	bsa_targetable = old_singularity.bsa_targetable
-	consume_callback = old_singularity.consume_callback
-	consume_range = old_singularity.consume_range
-	disregard_failed_movements = old_singularity.disregard_failed_movements
-	grav_pull = old_singularity.grav_pull
-	roaming = old_singularity.roaming
-	singularity_size = old_singularity.singularity_size
 
 /datum/component/singularity/process(delta_time)
 	if (roaming)
@@ -140,6 +138,10 @@
 
 /datum/component/singularity/proc/consume_attackby(datum/source, obj/item/item, mob/user)
 	consume(source, user)
+
+// Will there be an impact? Who knows.  Will we see it? No.
+/datum/component/singularity/proc/consume_bullets(obj/projectile/projectile)
+	qdel(projectile)
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)
