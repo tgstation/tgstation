@@ -323,7 +323,7 @@
 	beam_segments[beam_index] = null
 
 /obj/projectile/Bump(atom/A)
-	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
 	if(!can_hit_target(A, A == original, TRUE))
 		return
 	Impact(A)
