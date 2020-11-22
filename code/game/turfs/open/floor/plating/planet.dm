@@ -43,7 +43,7 @@
 
 /turf/open/floor/plating/grass/jungle
 	name = "jungle grass"
-	baseturf = /turf/open/floor/plating/dirt/jungle
+	baseturfs = /turf/open/floor/plating/dirt/jungle
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	desc = "Greener on the other side."
