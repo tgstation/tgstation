@@ -141,3 +141,9 @@
 	desc = "You've summoned a piece of the Hill of rust, and so the Hills welcome you."
 	database_id = MEDAL_RUST_ASCENSION
 	icon = "rustascend"
+
+/datum/award/achievement/misc/void_ascension
+	name = "All that perish"
+	desc = "Place of a diffrent being, diffrent time. Everything ends there... but maybe it is just the beginning?"
+	database_id = MEDAL_VOID_ASCENSION
+	icon = "voidascend"

@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Hydroponics trays growing replica pod seeds will now correctly harvest into seeds if depowered when there's nobody being cloned.."

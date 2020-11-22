@@ -3,7 +3,7 @@
 
 /datum/component/spill
 	can_transfer = TRUE
-	var/preexisting_item_flags
+	var/preexisting_slot_flags
 
 	var/list/droptext
 	var/list/dropsound
@@ -30,14 +30,14 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
 	var/obj/item/master = parent
-	preexisting_item_flags = master.item_flags
-	master.item_flags |= ITEM_SLOT_POCKETS
+	preexisting_slot_flags = master.slot_flags
+	master.slot_flags |= ITEM_SLOT_POCKETS
 
 /datum/component/spill/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	var/obj/item/master = parent
-	if(!(preexisting_item_flags & ITEM_SLOT_POCKETS))
-		master.item_flags &= ~ITEM_SLOT_POCKETS
+	if(!(preexisting_slot_flags & ITEM_SLOT_POCKETS))
+		master.slot_flags &= ~ITEM_SLOT_POCKETS
 
 /datum/component/spill/proc/equip_react(obj/item/source, mob/equipper, slot)
 	SIGNAL_HANDLER

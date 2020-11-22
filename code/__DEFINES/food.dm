@@ -13,7 +13,6 @@
 #define PINEAPPLE	(1<<12)
 #define BREAKFAST	(1<<13)
 #define CLOTH 		(1<<14)
-#define GRILLED		(1<<15)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
@@ -22,6 +21,7 @@
 #define FOOD_AMAZING 5
 
 #define FOOD_IN_CONTAINER (1<<0)
+#define FOOD_CLOSED (1<<0)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
 
@@ -44,3 +44,7 @@
 #define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER  0.5
 
 #define IS_EDIBLE(O) (istype(O, /obj/item/reagent_containers/food/snacks) || O.GetComponent(/datum/component/edible))
+
+
+///Food trash flags
+#define FOOD_TRASH_POPABLE (1<<0)

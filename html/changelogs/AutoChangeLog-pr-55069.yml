@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "The Nanodrug Plus now correctly deconstructs and can be refilled by it's own refill."
+  - imageadd: "The NanoDrug Plus vendor now has a unique coat of paint to distinguish it from the NanoMed Plus."
