@@ -498,9 +498,9 @@
 	defib_instance = D
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
-	RegisterSignal(defib_instance, COMSIG_PARENT_QDELETING, .proc/on_defib_instance_qdel)
+	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
 
-/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel(obj/item/defibrillator/D)
+/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	defib_instance = null
 	qdel(src)
 
@@ -512,10 +512,7 @@
 /obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		defib_instance?.forceMove(R.drop_location())
-		if(!QDELETED(src))
-			qdel(src)
-
+		defib_instance?.forceMove(R.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
