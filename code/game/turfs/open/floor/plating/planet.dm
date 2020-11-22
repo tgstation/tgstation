@@ -4,7 +4,7 @@
 	desc = "Upon closer examination, it's still dirt."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "dirt"
-	baseturfs = /turf/open/chasm/jungle
+	baseturfs = /turf/open/water/jungle
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
@@ -42,6 +42,7 @@
 
 /turf/open/floor/plating/grass/jungle
 	name = "jungle grass"
+	baseturf = /turf/open/floor/plating/dirt
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	desc = "Greener on the other side."
