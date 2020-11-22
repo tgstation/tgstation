@@ -1,0 +1,72 @@
+/**
+ * Copyright (c) 2020 dearmochi
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #3d566b,
+  $fg-map-keys: (),
+  $bg-map-keys: ()
+);
+@use '../base.scss' with (
+  $color-bg: #222b3a,
+  $color-bg-grad-spread: 1%
+);
+
+.theme-safe {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Section.scss', $with: (
+    'background-color': #b2ae74,
+  ));
+
+  // Layouts
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #35435a,
+  ));
+
+  // Interfaces
+  @include meta.load-css('../interfaces/Safe.scss');
+
+  .Layout__content {
+    background-image: none;
+  }
+
+  .Section {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-style: italic;
+    color: black;
+    box-shadow: 5px 5px #111111;
+    background-image: linear-gradient(to bottom,
+      #b2ae74 0%,
+      #8e8b5d 100%);
+    transform: rotate(-1deg);
+
+    &__title {
+      padding-bottom: 0;
+      border: 0;
+    }
+
+    &:before {
+      content: " ";
+      display: block;
+      width: 24px;
+      height: 40px;
+      background-image: linear-gradient(to bottom,
+        transparent 0%,
+        #ffffff 100%);
+      box-shadow: 1px 1px #111111;
+      opacity: 0.2;
+      position: absolute;
+      top: -30px;
+      left: calc(50% - 12px);
+      transform: rotate(-5deg);
+    }
+  }
+}

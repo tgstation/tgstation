@@ -1,0 +1,78 @@
+.Safe
+{
+  &--engraving
+  {
+    position: absolute;
+    width: 95%;
+    height: 96%;
+    left: 2.5%;
+    top: 2%;
+    border: 5px outset #3e4f6a;
+    padding: 5px;
+    text-align: center;
+
+    &--arrow
+    {
+      color: #35435a;
+    }
+
+    &--hinge
+    {
+      content: " ";
+      background-color: #191f2a;
+      width: 25px;
+      height: 40px;
+      position: absolute;
+      right: -15px;
+      margin-top: -20px;
+    }
+  }
+
+  &--dialer
+  {
+    margin-bottom: 0.5rem;
+
+    &--number
+    {
+      color: #bbbbbb;
+      display: inline;
+      background-color: #191f2a;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 0 0.5rem;
+    }
+
+    &--right
+    {
+      .Button
+      {
+        i
+        {
+          z-index: -100;
+        }
+      }
+    }
+
+    .Button
+    {
+      width: 80px;
+    }
+  }
+
+  &--contents
+  {
+    border: 10px solid #191f2a;
+    background-color: #0f131a;
+    height: calc(85% + 7.5px);
+    text-align: left;
+    padding: 5px;
+  }
+
+  &--help
+  {
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+  }
+}
