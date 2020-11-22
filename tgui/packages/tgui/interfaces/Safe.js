@@ -13,21 +13,21 @@ export const Safe = (properties, context) => {
   return (
     <Window
       width={625}
-      height={750}
-      theme="safe">
+      height={760}
+      theme="ntos">
       <Window.Content>
-        <Box className="Safe--engraving">
+        <Box className="Safe__engraving">
           <Dialer />
           <Box>
             <Box
-              className="Safe--engraving--hinge"
+              className="Safe__engraving-hinge"
               top="25%" />
             <Box
-              className="Safe--engraving--hinge"
+              className="Safe__engraving-hinge"
               top="75%" />
           </Box>
           <Icon
-            className="Safe--engraving--arrow"
+            className="Safe__engraving-arrow"
             name="long-arrow-alt-down"
             size="3"
           /><br />
@@ -36,7 +36,7 @@ export const Safe = (properties, context) => {
           ) : (
             <Box
               as="img"
-              className="Safe--dial"
+              className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
                 "transform": "rotate(-" + (3.6 * dial) + "deg)",
@@ -66,7 +66,7 @@ const Dialer = (properties, context) => {
         disabled={open || (right && !locked) || broken}
         icon={"arrow-" + (right ? "right" : "left")}
         content={(right ? "Right" : "Left") + " " + amount}
-        iconRight={right}
+        iconPosition={right}
         onClick={() => act(!right ? "turnright" : "turnleft", {
           num: amount,
         })}
@@ -74,7 +74,7 @@ const Dialer = (properties, context) => {
     );
   };
   return (
-    <Box className="Safe--dialer">
+    <Box className="Safe__dialer">
       <Button
         disabled={locked && !broken}
         icon={open ? "lock" : "lock-open"}
@@ -86,11 +86,11 @@ const Dialer = (properties, context) => {
         {[dialButton(50), dialButton(10), dialButton(1)]}
       </Box>
       <Box
-        className="Safe--dialer--right"
+        className="Safe__dialer-right"
         position="absolute" right="5px">
         {[dialButton(1, true), dialButton(10, true), dialButton(50, true)]}
       </Box>
-      <Box className="Safe--dialer--number">
+      <Box className="Safe__dialer-number">
         {dial}
       </Box>
     </Box>
@@ -104,7 +104,7 @@ const Contents = (properties, context) => {
   } = data;
   return (
     <Box
-      className="Safe--contents"
+      className="Safe__contents"
       overflow="auto">
       {contents.map((item, index) => (
         <Fragment key={item}>
@@ -132,7 +132,7 @@ const Contents = (properties, context) => {
 const Help = (properties, context) => {
   return (
     <Section
-      className="Safe--help"
+      className="Safe__help"
       title="Safe opening instructions (because you all keep forgetting)">
       <Box>
         1. Turn the dial left to the first number.<br />

@@ -22,7 +22,7 @@ export const Button = props => {
     iconRotation,
     iconSpin,
     iconColor,
-    iconRight,
+    iconPosition,
     color,
     disabled,
     selected,
@@ -60,7 +60,6 @@ export const Button = props => {
         ellipsis && 'Button--ellipsis',
         circular && 'Button--circular',
         compact && 'Button--compact',
-        iconRight && 'Button--iconRight',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
@@ -90,7 +89,7 @@ export const Button = props => {
         }
       }}
       {...rest}>
-      {(icon && !iconRight) && (
+      {(icon && iconPosition !== 'right') && (
         <Icon
           name={icon}
           color={iconColor}
@@ -99,7 +98,7 @@ export const Button = props => {
       )}
       {content}
       {children}
-      {(icon && iconRight) && (
+      {(icon && iconPosition === 'right') && (
         <Icon
           name={icon}
           color={iconColor}
