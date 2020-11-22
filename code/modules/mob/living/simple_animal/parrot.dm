@@ -189,12 +189,17 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
+	var/list/dat = list()
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
+	dat += "<table>"
+	dat += "<tr><td><B>Headset:</B></td><td><A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
 
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "window=mob[REF(src)]")
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
@@ -218,6 +223,7 @@
 				for(var/possible_phrase in speak)
 					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
 						possible_phrase = copytext_char(possible_phrase, 3)
+		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -266,6 +272,8 @@
 
 					if(headset_to_add.translate_binary)
 						available_channels.Add(MODE_TOKEN_BINARY)
+		show_inv(usr)
+
 	else
 		return ..()
 
