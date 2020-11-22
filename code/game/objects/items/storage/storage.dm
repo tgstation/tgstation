@@ -10,10 +10,19 @@
 
 /obj/item/storage/Initialize()
 	. = ..()
-	PopulateContents()
+	if (!(item_flags & ITEM_LAZY_STORAGE))
+		PopulateContents()
 
 /obj/item/storage/ComponentInitialize()
-	AddComponent(component_type)
+	. = ..()
+	if (!(item_flags & ITEM_LAZY_STORAGE))
+		var/STR = AddComponent(component_type)
+		StorageInitialize(STR)
+	else
+		AddElement(/datum/element/lazystorage)
+
+/// Set up vars for the storage component
+/obj/item/storage/proc/StorageInitialize(datum/component/storage/STR)
 
 /obj/item/storage/AllowDrop()
 	return FALSE

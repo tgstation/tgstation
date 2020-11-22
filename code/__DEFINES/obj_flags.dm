@@ -34,6 +34,7 @@
 #define EYE_STAB				(1<<13) /// Item can be used to eyestab
 #define HAND_ITEM				(1<<14) /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP			(1<<15) /// Makes the Examine proc not read out this item.
+#define ITEM_LAZY_STORAGE		(1<<16) /// Contents are populated on first access
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

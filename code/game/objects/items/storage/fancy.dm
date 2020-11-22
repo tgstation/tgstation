@@ -46,7 +46,7 @@
 	fancy_open = !fancy_open
 	update_icon()
 	. = ..()
-	if(!contents.len)
+	if(!(item_flags & ITEM_LAZY_STORAGE) && !contents.len)
 		new fold_result(user.drop_location())
 		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
 		user.put_in_active_hand(fold_result)
@@ -79,9 +79,7 @@
 	appearance_flags = KEEP_TOGETHER
 	custom_premium_price = PAYCHECK_HARD * 1.75
 
-/obj/item/storage/fancy/donut_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/donut_box/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
 
@@ -130,9 +128,7 @@
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
 
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/egg_box/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 12
 	STR.set_holdable(list(/obj/item/food/egg))
 
@@ -182,6 +178,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	custom_price = PAYCHECK_MEDIUM
 	age_restricted = TRUE
+	item_flags = ITEM_LAZY_STORAGE
 	///for cigarette overlay
 	var/candy = FALSE
 	/// Does this cigarette packet come with a coupon attached?
@@ -190,7 +187,7 @@
 	var/rigged_omen = FALSE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
-	if(contents.len == 0 && spawn_coupon)
+	if(!(item_flags & ITEM_LAZY_STORAGE) && contents.len == 0 && spawn_coupon)
 		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
 		var/obj/item/coupon/attached_coupon = new
 		user.put_in_hands(attached_coupon)
@@ -204,9 +201,7 @@
 		return
 	return ..()
 
-/obj/item/storage/fancy/cigarettes/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/cigarettes/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
@@ -220,6 +215,8 @@
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
+	if (item_flags & ITEM_LAZY_STORAGE)
+		SEND_SIGNAL(src, COMSIG_CONTAINS_STORAGE)
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
@@ -364,9 +361,7 @@
 	spawn_type = /obj/item/rollingpaper
 	custom_price = PAYCHECK_PRISONER
 
-/obj/item/storage/fancy/rollingpapers/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/rollingpapers/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/rollingpaper))
 
@@ -393,9 +388,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 	spawn_coupon = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/cigarettes/cigars/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
@@ -441,12 +434,9 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	spawn_type = /obj/item/food/tinychocolate
 
-/obj/item/storage/fancy/heart_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/heart_box/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 8
 	STR.set_holdable(list(/obj/item/food/tinychocolate))
-
 
 /obj/item/storage/fancy/nugget_box
 	name = "nugget box"
@@ -456,8 +446,6 @@
 	icon_type = "nugget"
 	spawn_type = /obj/item/food/nugget
 
-/obj/item/storage/fancy/nugget_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+/obj/item/storage/fancy/heart_box/StorageInitialize(datum/component/storage/STR)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/food/nugget))
