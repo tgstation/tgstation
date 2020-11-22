@@ -2332,14 +2332,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/explored)
-"gJ" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/silver,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
 "gL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2607,11 +2599,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/garage)
-"hz" = (
-/obj/structure/necropolis_gate/legion_gate,
-/obj/structure/necropolis_arch,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "hA" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -4956,35 +4943,11 @@
 	},
 /turf/open/space,
 /area/space)
-"oq" = (
-/mob/living/simple_animal/hostile/megafauna{
-	desc = "huh";
-	health = 1500;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
-	icon_dead = "Goldgrub_dead";
-	icon_living = "Goldgrub";
-	icon_state = "Goldgrub";
-	loot = list(/obj/item/stack/sheet/mineral/mythril = 15, /obj/item/disk/design_disk/adv/knight_gear, /obj/item/disk/design_disk/adv/cleric_mace);
-	maxHealth = 1500;
-	melee_damage_lower = 30;
-	melee_damage_upper = 50;
-	move_to_delay = 1;
-	name = "Gigagrub";
-	pixel_y = 16
-	},
-/turf/open/indestructible/light,
-/area/mine/unexplored)
 "oR" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
-"oU" = (
-/obj/effect/decal/remains/human,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
 "pr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -4993,38 +4956,20 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
-"pP" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/titanium,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "qa" = (
 /obj/item/clothing/mask/facehugger/dead,
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
-"qL" = (
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "re" = (
 /mob/living/simple_animal/hostile/asteroid/hivelord,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
-"tP" = (
-/mob/living/simple_animal/hostile/asteroid/goldgrub,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "xK" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
-"yx" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/diamond,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "zp" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
@@ -5037,94 +4982,24 @@
 /mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/airless,
 /area/mine/abandoned)
-"By" = (
-/obj/item/stack/ore/titanium,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"BD" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/gold,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"Ce" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/gold,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"CV" = (
-/obj/item/stack/ore/titanium,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
 "Dt" = (
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
-"DG" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/silver,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
 "Fj" = (
 /mob/living/simple_animal/hostile/asteroid/goldgrub,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
-"HI" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/titanium,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
 "In" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
-"KV" = (
-/obj/item/stack/ore/plasma,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"MI" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/uranium,
-/obj/item/stack/ore/plasma,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"MK" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/diamond,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
-"NH" = (
-/obj/item/stack/ore/plasma,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
-"OI" = (
-/turf/closed/indestructible/riveted/boss,
-/area/mine/unexplored)
 "QM" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
-"Rj" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/uranium,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
 "RO" = (
 /mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/asteroid/airless,
@@ -5133,47 +5008,6 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/unexplored)
-"TE" = (
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
-"TT" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
-"Uk" = (
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/explored)
-"Xe" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/turf/open/indestructible/crystal_floor,
-/area/mine/unexplored)
-"Yf" = (
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/item/stack/ore/gold,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/unexplored)
-"YA" = (
-/obj/structure/necropolis_gate,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/mine/explored)
 
 (1,1,1) = {"
 aa
@@ -30764,13 +30598,13 @@ ad
 ad
 ad
 ad
-OI
-OI
-OI
-OI
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -31019,17 +30853,17 @@ ad
 ad
 ad
 ad
-OI
-OI
-OI
-qL
-qL
-qL
-qL
-qL
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -31275,19 +31109,19 @@ ad
 ad
 ad
 ad
-OI
-OI
-qL
-qL
-qL
-TE
-TE
-TE
-qL
-qL
-qL
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -31531,21 +31365,21 @@ ad
 ad
 ad
 ad
-OI
-OI
-tP
-qL
-TE
-TE
-TE
-TE
-TE
-TE
-TE
-qL
-tP
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -31788,21 +31622,21 @@ ad
 ad
 ad
 ad
-OI
-pP
-Xe
-TE
-TE
-TE
-qL
-qL
-qL
-TE
-TE
-TE
-qL
-qL
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -32044,23 +31878,23 @@ ad
 ad
 ad
 ad
-OI
-OI
-BD
-MK
-TE
-TE
-qL
-TE
-TE
-TE
-qL
-TE
-TE
-TE
-qL
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -32301,25 +32135,25 @@ ad
 ad
 ad
 ad
-OI
-yx
-MI
-CV
-TE
-qL
-TE
-TE
-TE
-TE
-TE
-qL
-TE
-TE
-qL
-qL
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -32558,30 +32392,30 @@ ad
 ad
 ad
 ad
-OI
-BD
-Rj
-gJ
-qL
-TE
-TE
-qL
-qL
-qL
-TE
-TE
-qL
-TE
-TE
-qL
-OI
-TE
-OI
-OI
-OI
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -32815,33 +32649,33 @@ ad
 ad
 ad
 ad
-OI
-BD
-TT
-gJ
-qL
-TE
-TE
-qL
-oq
-qL
-TE
-TE
-qL
-TE
-TE
-qL
-hz
-TE
-TE
-TE
-TE
-TE
-TE
-OI
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 bS
 bS
 bS
@@ -33072,33 +32906,33 @@ ad
 ad
 ad
 ad
-OI
-DG
-Yf
-HI
-qL
-TE
-TE
-qL
-qL
-qL
-TE
-TE
-qL
-TE
-TE
-qL
-OI
-TE
-OI
-OI
-OI
-TE
-TE
-TE
-Uk
-Uk
-YA
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+bS
+bS
+bS
 bS
 bS
 bS
@@ -33329,35 +33163,35 @@ ad
 ad
 ad
 ad
-OI
-By
-Xe
-NH
-TE
-qL
-TE
-TE
-TE
-TE
-TE
-qL
-TE
-TE
-qL
-qL
-OI
-OI
-OI
 ad
-OI
-TE
-OI
-OI
-OI
-OI
-OI
-cj
-ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 bS
 bS
 bS
@@ -33586,30 +33420,30 @@ ad
 ad
 ad
 ad
-OI
-OI
-Ce
-HI
-TE
-TE
-qL
-TE
-TE
-TE
-qL
-TE
-TE
-TE
-qL
-OI
-OI
 ad
 ad
 ad
-OI
-TE
-OI
-ac
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ac
 ac
 ac
@@ -33844,28 +33678,28 @@ ad
 ad
 ad
 ad
-OI
-KV
-qL
-TE
-TE
-TE
-qL
-qL
-qL
-TE
-TE
-TE
-qL
-qL
-OI
 ad
 ad
 ad
 ad
-OI
-oU
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -34101,28 +33935,28 @@ ad
 ak
 ad
 ad
-OI
-OI
-tP
-qL
-TE
-TE
-TE
-TE
-TE
-TE
-TE
-qL
-tP
-OI
-OI
 ad
 ad
 ad
 ad
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -34359,19 +34193,19 @@ ad
 ad
 ad
 ad
-OI
-OI
-qL
-qL
-qL
-TE
-TE
-TE
-qL
-qL
-qL
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -34617,17 +34451,17 @@ ad
 ad
 ad
 ad
-OI
-OI
-OI
-qL
-qL
-qL
-qL
-qL
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
@@ -34876,13 +34710,13 @@ ad
 ad
 ad
 ad
-OI
-OI
-OI
-OI
-OI
-OI
-OI
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 ad
