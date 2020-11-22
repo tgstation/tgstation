@@ -41,11 +41,6 @@
 	UnregisterSignal(source, COMSIG_MOUSEDROPPED_ONTO)
 
 
-/datum/element/lazystorage/proc/monkeymagic(obj/item/storage/target)
-	SIGNAL_HANDLER
-
-	target.item_flags &= ~ITEM_LAZY_STORAGE
-
 #define LAZYSTORAGE_PASSTHROUGH_PROC(name, signal) \
 /datum/element/lazystorage/proc/##name(obj/item/storage/source, ...) {\
 	var/datum/component/storage/real_storage = source.AddComponent(source.component_type);\
