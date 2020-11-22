@@ -60,6 +60,7 @@ export const Button = props => {
         ellipsis && 'Button--ellipsis',
         circular && 'Button--circular',
         compact && 'Button--compact',
+        iconPosition && 'Button--iconPosition--' + iconPosition,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
