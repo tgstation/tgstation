@@ -507,13 +507,12 @@
 /obj/item/borg/upgrade/defib/backpack/Destroy()
 	if(defib_instance)
 		QDEL_NULL(defib_instance)
-	. = ..()
+	return ..()
 
 /obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		if(defib_instance)
-			defib_instance.forceMove(R.drop_location())
+		defib_instance?.forceMove(R.drop_location())
 		if(!QDELETED(src))
 			qdel(src)
 
