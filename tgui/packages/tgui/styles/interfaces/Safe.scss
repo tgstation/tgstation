@@ -85,32 +85,4 @@
     left: calc(50% - 12px);
     transform: rotate(-5deg);
   }
-
-}
-
-.Safe__helper {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  font-style: italic;
-  color: black;
-  box-shadow: 5px 5px #111111;
-  background-image: linear-gradient(to bottom,
-    #b2ae74 0%,
-    #8e8b5d 100%);
-  transform: rotate(-1deg);
-
-  &:before {
-    content: " ";
-    display: block;
-    width: 24px;
-    height: 40px;
-    background-image: linear-gradient(to bottom,
-      transparent 0%,
-      #ffffff 100%);
-    box-shadow: 1px 1px #111111;
-    opacity: 0.2;
-    position: absolute;
-    top: -30px;
-    left: calc(50% - 12px);
-    transform: rotate(-5deg);
-  }
 }
