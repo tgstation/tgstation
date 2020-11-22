@@ -1,8 +1,3 @@
-/* TODO:
-- Make an element that adds/removes things from poi_list
-- Check that this is actually containable
-*/
-
 /// The range at which a singularity is considered "contained" to admins
 #define FIELD_CONTAINMENT_DISTANCE 30
 
@@ -97,6 +92,9 @@
 
 /datum/component/singularity/Destroy(force, silent)
 	GLOB.singularities -= src
+	QDEL_NULL(consume_callback)
+	target = null
+
 	return ..()
 
 /datum/component/singularity/UnregisterFromParent()
