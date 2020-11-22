@@ -76,8 +76,8 @@
 	name = "Fish burger"
 	reqs = list(
 		/obj/item/food/carpmeat = 1,
-		/obj/item/food/bun = 1
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/bun = 1,
+		/obj/item/food/cheesewedge = 1
 	)
 	result = /obj/item/food/burger/fish
 	subcategory = CAT_BURGER
@@ -221,9 +221,8 @@
 	name = "Big bite burger"
 	reqs = list(
 		/obj/item/food/meat/steak/plain = 3,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
-		/obj/item/food/bun = 1
-		/obj/item/food/cheesewedge = 2,
+		/obj/item/food/bun = 1,
+		/obj/item/food/cheesewedge = 2
 	)
 	result = /obj/item/food/burger/bigbite
 	subcategory = CAT_BURGER
@@ -324,7 +323,7 @@
 	name = "Cheese Burger"
 	reqs = list(
 			/obj/item/food/meat/steak/plain = 1,
-			/obj/item/food/bun = 1
+			/obj/item/food/bun = 1,
 			/obj/item/food/cheesewedge = 1,
 	)
 	result = /obj/item/food/burger/cheese
@@ -334,7 +333,7 @@
 	name = "Soylent Burger"
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/soylentgreen = 1, //two full meats worth.
-			/obj/item/food/bun = 1
+			/obj/item/food/bun = 1,
 			/obj/item/food/cheesewedge = 2,
 	)
 	result = /obj/item/food/burger/soylent
