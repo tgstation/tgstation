@@ -134,7 +134,11 @@
 	if(!loc)
 		return
 
-	var/obj/energy_ball/miniball = new(loc, starting_energy = 0, is_miniball = TRUE)
+	var/obj/energy_ball/miniball = new /obj/energy_ball(
+		loc,
+		/* starting_energy = */ 0,
+		/* is_miniball = */ TRUE
+	)
 
 	miniball.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon, icon_state,dir)
