@@ -29863,7 +29863,7 @@
 /area/crew_quarters/kitchen)
 "bhQ" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/dough,
+/obj/item/food/dough,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)

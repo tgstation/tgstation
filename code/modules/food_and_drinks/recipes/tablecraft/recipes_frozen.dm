@@ -59,7 +59,7 @@
 /datum/crafting_recipe/food/cornuto
 	name = "Cornuto"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/food/pastrybase = 1,
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/cream = 4,
 		/datum/reagent/consumable/ice = 2,
