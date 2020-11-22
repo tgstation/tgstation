@@ -1,8 +1,6 @@
 /* TODO:
 - Make an element that adds/removes things from poi_list
 - SIGNAL_HANDLER
-- Change singularity_pull to no longer provide the singularity itself, nothing uses it
-- Make this component handle /obj/machinery/field/generator/proc/notify_admins(), it never made sense that generators did that in the first place
 - Check that this is actually containable
 */
 
@@ -155,7 +153,7 @@
 		if (!tile || !isturf(atom_parent.loc))
 			continue
 		if (get_dist(tile, parent) > consume_range)
-			tile.singularity_pull(parent, singularity_size)
+			tile.singularity_pull(src, singularity_size)
 		else
 			consume(src, tile)
 

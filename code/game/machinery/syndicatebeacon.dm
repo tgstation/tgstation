@@ -96,7 +96,9 @@
 		add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80
-			for(var/obj/singularity/singulo in GLOB.singularities)
+			for(var/_singulo_component in GLOB.singularities)
+				var/datum/component/singularity/singulo_component = _singulo_component
+				var/atom/singulo = singulo_component.parent
 				if(singulo.z == z)
 					say("[singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 	else
