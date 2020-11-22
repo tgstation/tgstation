@@ -64,7 +64,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 1,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1,
 		/obj/item/reagent_containers/food/snacks/grown/grapes = 1,
-		/obj/item/reagent_containers/food/snacks/watermelonslice = 2
+		/obj/item/food/watermelonslice = 2
 
 	)
 	result = /obj/item/food/salad/fruit
@@ -77,7 +77,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1,
 		/obj/item/reagent_containers/food/snacks/grown/grapes = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-		/obj/item/reagent_containers/food/snacks/watermelonslice = 2
+		/obj/item/food/watermelonslice = 2
 
 	)
 	result = /obj/item/food/salad/jungle

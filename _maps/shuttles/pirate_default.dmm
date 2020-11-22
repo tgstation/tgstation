@@ -114,7 +114,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{

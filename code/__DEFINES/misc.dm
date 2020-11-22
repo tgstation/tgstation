@@ -474,6 +474,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
+#define VOMIT_NANITE 3
 
 //chem grenades defines
 #define GRENADE_EMPTY 1

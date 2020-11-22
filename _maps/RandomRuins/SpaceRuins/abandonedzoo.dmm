@@ -411,7 +411,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bn" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/carrotfries,
+/obj/item/food/carrotfries,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bp" = (

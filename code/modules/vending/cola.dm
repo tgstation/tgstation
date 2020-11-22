@@ -34,6 +34,7 @@
 	name = "\improper Random Drinkies"
 	icon_state = "random_cola"
 	desc = "Uh oh!"
+	circuit = null
 
 /obj/machinery/vending/cola/random/Initialize()
 	// No need to call parent, we're not doing anything with this machine. Just picking a new type of machine to use, spawning it and deleting ourselves.

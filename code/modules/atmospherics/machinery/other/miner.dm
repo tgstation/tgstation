@@ -237,3 +237,13 @@
 	name = "\improper Zauker Gas Miner"
 	overlay_color = "#022e00"
 	spawn_id = /datum/gas/zauker
+
+/obj/machinery/atmospherics/miner/helium
+	name = "\improper Helium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/helium
+
+/obj/machinery/atmospherics/miner/antinoblium
+	name = "\improper Antinoblium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/antinoblium

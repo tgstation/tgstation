@@ -244,7 +244,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bar)
 "ax" = (
