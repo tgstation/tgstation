@@ -62,11 +62,11 @@
 
 /// The immobile, close pulling singularity seen in the academy away mission
 /obj/singularity/academy
+	move_self = FALSE
 
 /obj/singularity/academy/Initialize()
 	. = ..()
 	singularity_component.grav_pull = 1
-	singularity_component.roaming = FALSE
 
 /obj/singularity/academy/process(delta_time)
 	if(DT_PROB(0.5, delta_time))
