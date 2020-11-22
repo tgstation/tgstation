@@ -58,6 +58,7 @@ field_generator power level display
 	. = ..()
 	fields = list()
 	connected_gens = list()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/field/generator/anchored/Initialize()
 	. = ..()
@@ -398,6 +399,10 @@ field_generator power level display
 				investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 				notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
 		O.last_warning = world.time
+
+/obj/machinery/field/generator/proc/block_singularity_if_active()
+	if (active)
+		return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

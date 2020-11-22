@@ -467,7 +467,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else if(power > POWER_PENALTY_THRESHOLD)
 		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
 		if(T)
-			var/obj/singularity/energy_ball/E = new(T)
+			var/obj/energy_ball/E = new(T)
 			E.energy = 200 //Gets us about 9 balls
 	else if(power > EVENT_POWER_PENALTY_THRESHOLD && prob(power/50) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
 		var/datum/round_event_control/crystal_invasion/crystals = new/datum/round_event_control/crystal_invasion

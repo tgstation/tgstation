@@ -3,6 +3,7 @@
 - SIGNAL_HANDLER
 - Change singularity_pull to no longer provide the singularity itself, nothing uses it
 - Make this component handle /obj/machinery/field/generator/proc/notify_admins(), it never made sense that generators did that in the first place
+- Check that this is actually containable
 */
 
 /// The range at which a singularity is considered "contained" to admins
@@ -131,7 +132,7 @@
 	return COMPONENT_CANCEL_BLOB_ACT
 
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
-	consume_callback.Invoke(thing, src)
+	consume_callback?.Invoke(thing, src)
 
 /datum/component/singularity/proc/consume_attack(datum/source, mob/user)
 	consume(source, user)
@@ -202,22 +203,15 @@
 		last_failed_movement = current_direction
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-// TODO: Replace this whole thing with signals these types can check for
 /datum/component/singularity/proc/can_move(turf/to_move)
 	if (!to_move)
 		return FALSE
 
-	// TODO: Trait for blocking singularities
-	if ((locate(/obj/machinery/field/containment) in to_move) || (locate(/obj/machinery/shieldwall) in to_move))
-		return FALSE
-	else if (locate(/obj/machinery/field/generator) in to_move)
-		var/obj/machinery/field/generator/generator = locate(/obj/machinery/field/generator) in to_move
-		if (generator?.active)
+	for (var/_thing in to_move)
+		var/atom/thing = _thing
+		if (SEND_SIGNAL(thing, COMSIG_ATOM_SINGULARITY_TRY_MOVE) & SINGULARITY_TRY_MOVE_BLOCK)
 			return FALSE
-	else if (locate(/obj/machinery/power/shieldwallgen) in to_move)
-		var/obj/machinery/power/shieldwallgen/shieldwallgen = locate(/obj/machinery/power/shieldwallgen) in to_move
-		if (shieldwallgen?.active)
-			return FALSE
+
 	return TRUE
 
 /// Makes sure we don't move out of the z-level by checking the turfs around us.
@@ -276,11 +270,9 @@
 /// Logs to admins that a singularity was created
 /datum/component/singularity/proc/admin_investigate_setup()
 	var/turf/spawned_turf = get_turf(parent)
-	var/count = locate(/obj/machinery/field/containment) in urange(FIELD_CONTAINMENT_DISTANCE, parent, TRUE)
-	if(!count)
-		message_admins("A singulo has been created without containment fields active at [ADMIN_VERBOSEJMP(spawned_turf)].")
+	message_admins("A singulo has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)]. [count?"":"<font color='red'>No containment fields were active</font>"]", INVESTIGATE_SINGULO)
+	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_SINGULO)
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
