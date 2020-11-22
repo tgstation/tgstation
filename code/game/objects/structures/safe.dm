@@ -4,7 +4,10 @@ SAFES
 FLOOR SAFES
 */
 
+/// Chance for a sound clue
 #define SOUND_CHANCE 10
+/// Explosion number threshold for opening safe
+#define BROKEN_THRESHOLD 2
 
 //SAFES
 /obj/structure/safe
@@ -61,13 +64,12 @@ FLOOR SAFES
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
-		. = 1 //no afterattack
+		. = TRUE //no afterattack
 		if(I.w_class + space <= maxspace)
+			space += I.w_class
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
 				return
-			space += I.w_class
-			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			SStgui.update_uis(src)
 		else
@@ -115,6 +117,8 @@ FLOOR SAFES
 	data["open"] = open
 	data["locked"] = locked
 	data["broken"] = broken
+	if(explosion_count > BROKEN_THRESHOLD)
+		data["broken"] = TRUE
 
 	if(open)
 		var/list/contents_names = list()
@@ -208,7 +212,7 @@ FLOOR SAFES
   * Called every dial turn to determine whether the safe should unlock or not.
   */
 /obj/structure/safe/proc/check_unlocked()
-	if(explosion_count > 2)
+	if(explosion_count > BROKEN_THRESHOLD)
 		return TRUE
 	if(current_tumbler_index > number_of_tumblers)
 		locked = FALSE
@@ -240,3 +244,4 @@ FLOOR SAFES
 	AddElement(/datum/element/undertile)
 
 #undef SOUND_CHANCE
+#undef BROKEN_THRESHOLD
