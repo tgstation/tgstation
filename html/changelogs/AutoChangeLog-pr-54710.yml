@@ -1,8 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added Nanite Storage Protocols, unlockable through B.E.P.I.S. research. They can modify nanite max volume, increasing the cap or sacrificing some for extra replication rate."
-  - rscdel: "Removed the Nanite Tinker Replication Protocol."
-  - rscadd: "Added the Nanite Pyramid Replication Protocol to replace it. It increases replication rate if the volume is above 80% of the maximum."
-  - tweak: "Renamed the Nanite Offline Production Protocol into Eclipse Protocol. Functionality unchanged."
-  - balance: "The Chain Detonation nanite program now scales more gradually in power with nanite volume."
