@@ -1488,14 +1488,14 @@
 
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
-/atom/movable/proc/add_filter(name,priority,list/params)
+/atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
 
-/atom/movable/proc/update_filters()
+/atom/proc/update_filters()
 	filters = null
 	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
@@ -1511,18 +1511,62 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/atom/movable/proc/get_filter(name)
+/atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/movable/proc/remove_filter(name)
+/atom/proc/remove_filter(name)
 	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
 
-/atom/movable/proc/animate_filter(name, time, loop, easing, flags, x, y, size, offset, radius, size, color, repeat)
+/atom/proc/animate_filter(name, time, loop, easing, flags, x, y, size, offset, radius, size, color, repeat, transform)
+	var/filter_type = filter_data[name]["type"]
+	if(isnull(filter_type))
+		CRASH("Failed to find filter with name \"[name]\"")
 	var/filter = get_filter(name)
-	animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, radius = radius, size = size, color = color, repeat = repeat)
+	/*
+		So this is going to need an explanation
+		"Why not just pass all parameters to animate?"
+		Because animate actually has inconsistent parameters!
+		Yes, you read that right.
+		What parameters animate actually has depends on what is being animated
+		Somehow because it's an internal proc it has overloads based on type in a dynamically typed language
+		If what is being animated doesn't have the correct values to be animated, you get a bad parameter runtime error.
+		This includes if the parameter is null!
+		And even better! filters have totally different parameters between the types!
+		This means that generically handling it is actually impossible without the below horror!
+		I'm so sorry
+	*/
+	switch(filter_type)
+		if("alpha")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y)
+		if("angular_blur")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
+		if("color")
+			animate(filter, time, loop, easing, flags = flags, color = color)
+		if("displace")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
+		if("drop_shadow")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, color = color)
+		if("blur")
+			animate(filter, time, loop, easing, flags = flags, size = size)
+		if("layer")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, color = color, transform = transform)
+		if("motion_blur")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y)
+		if("outline")
+			animate(filter, time, loop, easing, flags = flags, size = size, color = color)
+		if("radial_blur")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
+		if("rays")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, size = size, color = color)
+		if("ripple")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, radius = radius, color = color, repeat = repeat)
+		if("wave")
+			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset)
+		else
+			CRASH("animate_filter needs updating with new filter types! New needed filter: [filter_type]")
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

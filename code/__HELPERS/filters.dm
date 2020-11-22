@@ -154,13 +154,22 @@
 		.["flags"] = flags
 
 /proc/apply_wibbly_filters(atom/in_atom, length)
-	var/current_filter
 	for(var/i in 1 to 7)
-		in_atom.add_filter("wibbly-[i]", 5, wave_filter())
-		animate_filter("wibbly-[i]")
+		//This is a very baffling and strange way of doing this but I am just preserving old functionality
+		var/X
+		var/Y
+		var/rsq
+		do
+			X = 60*rand() - 30
+			Y = 60*rand() - 30
+			rsq = X*X + Y*Y
+		while(rsq<100 || rsq>900) // Yeah let's just loop infinitely due to bad luck what's the worst that could happen?
+		var/random_roll = rand()
+		in_atom.add_filter("wibbly-[i]", 5, wave_filter(x = X, y = Y, size = rand() * 2.5 + 0.5, offset = random_roll))
+		in_atom.animate_filter("wibbly-[i]", offset = random_roll, time = 0, loop = 3, flags = ANIMATION_PARALLEL)
+		in_atom.animate_filter("wibbly-[i]", offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom)
-	var/current_filter
 	for(var/i in 1 to 7)
-		animate_filter("wibbly-[i]")
+		in_atom.animate_filter("wibbly-[i]")
 		in_atom.remove_filter("wibbly-[i]")
