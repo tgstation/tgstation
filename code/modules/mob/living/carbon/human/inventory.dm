@@ -88,31 +88,31 @@
 	switch(slot)
 		if(ITEM_SLOT_BELT)
 			if (belt && swap)
-				current_equip = belt
 				if (!temporarilyRemoveItemFromInventory(belt))
 					return
+				current_equip = belt
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if (wear_id && swap)
-				current_equip = wear_id
 				if (!temporarilyRemoveItemFromInventory(wear_id))
 					return
+				current_equip = wear_id
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if (ears && swap)
-				current_equip = ears
 				if (!temporarilyRemoveItemFromInventory(ears))
 					return
+				current_equip = ears
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
 			if (glasses && swap)
-				current_equip = glasses
 				if (!temporarilyRemoveItemFromInventory(glasses))
 					return
+				current_equip = glasses
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -126,25 +126,25 @@
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if (gloves && swap)
-				current_equip = gloves
 				if (!temporarilyRemoveItemFromInventory(gloves))
 					return
+				current_equip = gloves
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if (shoes && swap)
-				current_equip = shoes
 				if (!temporarilyRemoveItemFromInventory(shoes))
 					return
+				current_equip = shoes
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			var/obj/item/s_store_backup = s_store
 
 			if (swap && wear_suit)
-				current_equip = wear_suit
 				if (!temporarilyRemoveItemFromInventory(wear_suit))
 					return
+				current_equip = wear_suit
 
 			wear_suit = I
 
@@ -162,9 +162,9 @@
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if (w_uniform && swap)
-				current_equip = w_uniform
 				if (!temporarilyRemoveItemFromInventory(w_uniform))
 					return
+				current_equip = w_uniform
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -176,9 +176,9 @@
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if (s_store && swap)
-				current_equip = s_store
 				if (!temporarilyRemoveItemFromInventory(s_store))
 					return
+				current_equip = s_store
 			s_store = I
 			update_inv_s_store()
 		else

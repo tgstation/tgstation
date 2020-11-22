@@ -55,31 +55,31 @@
 	switch(slot)
 		if(ITEM_SLOT_BACK)
 			if (back && swap)
-				current_equip = back
 				if (!temporarilyRemoveItemFromInventory(back))
 					return
+				current_equip = back
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
 			if (wear_mask && swap)
-				current_equip = wear_mask
 				if (!temporarilyRemoveItemFromInventory(wear_mask))
 					return
+				current_equip = wear_mask
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
 			if (head && swap)
-				current_equip = head
 				if (!temporarilyRemoveItemFromInventory(head))
 					return
+				current_equip = head
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
 			if (wear_neck && swap)
-				current_equip = wear_neck
 				if (!temporarilyRemoveItemFromInventory(wear_neck))
 					return
+				current_equip = wear_neck
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)
