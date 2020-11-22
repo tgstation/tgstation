@@ -366,6 +366,8 @@
 			qdel(F)
 
 /obj/machinery/power/shieldwallgen/proc/block_singularity_if_active()
+	SIGNAL_HANDLER
+
 	if (active)
 		return SINGULARITY_TRY_MOVE_BLOCK
 
@@ -496,6 +498,8 @@
 			gen_secondary.add_load(drain_amount * 0.5)
 
 /obj/machinery/shieldwall/proc/block_singularity()
+	SIGNAL_HANDLER
+
 	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)

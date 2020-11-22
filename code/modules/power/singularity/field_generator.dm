@@ -384,6 +384,8 @@ field_generator power level display
 			qdel(S)
 
 /obj/machinery/field/generator/proc/block_singularity_if_active()
+	SIGNAL_HANDLER
+
 	if (active)
 		return SINGULARITY_TRY_MOVE_BLOCK
 

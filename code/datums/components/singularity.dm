@@ -1,6 +1,5 @@
 /* TODO:
 - Make an element that adds/removes things from poi_list
-- SIGNAL_HANDLER
 - Check that this is actually containable
 */
 
@@ -125,20 +124,28 @@
 	eat()
 
 /datum/component/singularity/proc/block_blob()
+	SIGNAL_HANDLER
+
 	return COMPONENT_CANCEL_BLOB_ACT
 
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
 	consume_callback?.Invoke(thing, src)
 
 /datum/component/singularity/proc/consume_attack(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	consume(source, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/singularity/proc/consume_attackby(datum/source, obj/item/item, mob/user)
+	SIGNAL_HANDLER
+
 	consume(source, user)
 
 // Will there be an impact? Who knows.  Will we see it? No.
 /datum/component/singularity/proc/consume_bullets(obj/projectile/projectile)
+	SIGNAL_HANDLER
+
 	qdel(projectile)
 
 /// Calls singularity_act on the thing passed, usually destroying the object
@@ -183,6 +190,8 @@
 	step(parent, drifting_dir)
 
 /datum/component/singularity/proc/moved(datum/source, atom/new_location)
+	SIGNAL_HANDLER
+
 	var/atom/atom_parent = parent
 	var/current_direction = atom_parent.dir
 	var/turf/current_turf = get_turf(parent)

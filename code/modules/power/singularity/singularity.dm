@@ -1,5 +1,4 @@
-
-
+/// The gravitational singularity
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."

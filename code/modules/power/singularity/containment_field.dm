@@ -81,6 +81,8 @@
 	return TRUE
 
 /obj/machinery/field/containment/proc/block_singularity()
+	SIGNAL_HANDLER
+
 	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/containment/shock(mob/living/user)
