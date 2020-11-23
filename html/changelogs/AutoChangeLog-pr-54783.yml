@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "squeaking objects should no longer squeak when crossed by abstract or floating objects such as directional lights."
+  - bugfix: "All forms of phasings shouldn't be able to pass through certain restricted turfs now, not just wiz jaunts."
