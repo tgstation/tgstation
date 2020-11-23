@@ -913,6 +913,7 @@
 #include "code\game\objects\effects\mines.dm"
 #include "code\game\objects\effects\misc.dm"
 #include "code\game\objects\effects\overlays.dm"
+#include "code\game\objects\effects\phased_mob.dm"
 #include "code\game\objects\effects\portals.dm"
 #include "code\game\objects\effects\proximity.dm"
 #include "code\game\objects\effects\spiders.dm"
