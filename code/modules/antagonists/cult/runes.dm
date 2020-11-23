@@ -30,7 +30,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
 	var/log_when_erased = FALSE //Used when you want to keep track of who erased the rune
-	var/erase_time = 15 //How the rune takes to erase
+	var/erase_time = 1.5 SECONDS //How the rune takes to erase
 
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
@@ -475,7 +475,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
-	erase_time = 50
+	erase_time = 5 SECONDS
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
