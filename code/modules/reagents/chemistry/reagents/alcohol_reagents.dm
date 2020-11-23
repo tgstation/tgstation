@@ -409,7 +409,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/amaretto
 	name = "Amaretto"
 	description = "A gentle drink that carries a sweet aroma."
-	color = "#E17600" 
+	color = "#E17600"
 	boozepwr = 25
 	taste_description = "fruity and nutty sweetness"
 	glass_icon_state = "amarettoglass"
@@ -2222,7 +2222,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(prob(10))
 			stored_teleports += rand(2,6)
 			if(prob(70))
-				M.vomit()
+				M.vomit(vomit_type = VOMIT_PURPLE)
 	return ..()
 
 
@@ -2313,7 +2313,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "godfather"
 	glass_name = "Godfather"
 	glass_desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth."
-			
+
 /datum/reagent/consumable/ethanol/godmother
 	name = "Godmother"
 	description = "A twist on a classic, liked more by mature women."
@@ -2324,4 +2324,4 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "godmother"
 	glass_name = "Godmother"
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
-	
+

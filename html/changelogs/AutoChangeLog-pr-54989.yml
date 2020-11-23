@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Cell chargers will no longer powersink the room they're in, as they now draw all the power for the cell from the powernet directly through the APC. They still require a trickle of power on the equipment breaker, though."

@@ -1,5 +1,5 @@
 /// Test that quick swap correctly swaps items and invalidates suit storage
-/datum/unit_test/quick_swap_sanity/Run()
+/datum/unit_test/quick_swap_suit_storage/Run()
 	// Create a human with a medical winter coat and a health analyzer in suit storage
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
@@ -29,3 +29,21 @@
 	// Since the tank is a valid suit storage item, it should not be dropped
 	TEST_ASSERT(human.equip_to_appropriate_slot(coat, swap = TRUE), "Couldn't quick swap to coat")
 	TEST_ASSERT_EQUAL(human.s_store, tank, "Human dropped the oxygen tank, when it was a valid item to keep in suit storage")
+
+/// Tests that doUnEquip code is ran by checking vision correcting glasses
+/datum/unit_test/quick_swap_glasses/Run()
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+
+	ADD_TRAIT(human, TRAIT_NEARSIGHT, TRAIT_GENERIC)
+
+	var/obj/item/clothing/glasses/regular/glasses = allocate(/obj/item/clothing/glasses/regular)
+	TEST_ASSERT(human.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES), "Couldn't equip glasses")
+	TEST_ASSERT_EQUAL(human.screens["nearsighted"], null, "Human equipped glasses, but still has overlay")
+
+	var/obj/item/clothing/glasses/monocle/monocle = allocate(/obj/item/clothing/glasses/monocle)
+
+	TEST_ASSERT(human.equip_to_slot_if_possible(monocle, ITEM_SLOT_EYES, swap = TRUE), "Couldn't quick swap to monocle")
+	TEST_ASSERT_NOTEQUAL(human.screens["nearsighted"], null, "Human quick swapped to monocle, but has no nearsighted overlay")
+
+	TEST_ASSERT(human.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, swap = TRUE), "Couldn't quick swap to glasses")
+	TEST_ASSERT_EQUAL(human.screens["nearsighted"], null, "Human quick swapped to glasses, but still has nearsighted overlay")

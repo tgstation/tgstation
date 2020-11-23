@@ -14,6 +14,7 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
+	pass_flags = PASSFLAPS
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
