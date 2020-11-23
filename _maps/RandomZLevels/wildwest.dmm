@@ -765,7 +765,7 @@
 /area/awaymission/wildwest/gov)
 "df" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
+/obj/item/food/grown/citrus/lemon,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

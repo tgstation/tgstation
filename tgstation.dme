@@ -574,6 +574,7 @@
 #include "code\datums\elements\cleaning.dm"
 #include "code\datums\elements\decal.dm"
 #include "code\datums\elements\digitalcamo.dm"
+#include "code\datums\elements\dryable.dm"
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\embed.dm"
 #include "code\datums\elements\empprotection.dm"
