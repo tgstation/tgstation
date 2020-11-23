@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Paystands now properly signal out when attached to a paystand and their pay threshold is met."
