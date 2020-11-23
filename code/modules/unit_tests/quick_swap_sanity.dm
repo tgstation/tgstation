@@ -19,6 +19,7 @@
 	// Make sure the health analyzer was dropped as part of the swap
 	// Since health analyzers are an invalid suit storage item
 	TEST_ASSERT_EQUAL(human.s_store, null, "Human didn't drop the health analyzer")
+	TEST_ASSERT_EQUAL(human.get_inactive_held_item(), analyzer, "Human doesn't have the health analyzer in their other hand")
 
 	// Give the human an emergency oxygen tank
 	// This is valid suit storage for both the winter coat AND the hardsuit
@@ -41,8 +42,10 @@
 	TEST_ASSERT_EQUAL(human.screens["nearsighted"], null, "Human equipped glasses, but still has overlay")
 
 	var/obj/item/clothing/glasses/monocle/monocle = allocate(/obj/item/clothing/glasses/monocle)
+	human.put_in_active_hand(monocle)
 
 	TEST_ASSERT(human.equip_to_slot_if_possible(monocle, ITEM_SLOT_EYES, swap = TRUE), "Couldn't quick swap to monocle")
+	TEST_ASSERT_EQUAL(human.get_active_held_item(), glasses, "Human doesn't have previously equipped glasses in their hand")
 	TEST_ASSERT_NOTEQUAL(human.screens["nearsighted"], null, "Human quick swapped to monocle, but has no nearsighted overlay")
 
 	TEST_ASSERT(human.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, swap = TRUE), "Couldn't quick swap to glasses")

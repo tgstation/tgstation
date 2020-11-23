@@ -199,8 +199,8 @@
 
 
 //Puts the item into our inactive hand if possible, returns TRUE on success
-/mob/proc/put_in_inactive_hand(obj/item/I)
-	return put_in_hand(I, get_inactive_hand_index())
+/mob/proc/put_in_inactive_hand(obj/item/I, forced = FALSE)
+	return put_in_hand(I, get_inactive_hand_index(), forced)
 
 
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
