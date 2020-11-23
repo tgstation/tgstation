@@ -91,7 +91,7 @@
 
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
-	var/consume_gas = 0
+	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
@@ -270,7 +270,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, CRYO_TX_QTY * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
-				consume_gas += delta_time // Keep track of how many transfers we do so we can consume gas in process_atmos()
+				consume_gas = TRUE
 			reagent_transfer += 1
 			if(reagent_transfer >= CRYO_THROTTLE_CTR_MAX * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
@@ -307,8 +307,11 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 			air1.temperature = clamp(air1.temperature - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
-		air1.gases[/datum/gas/oxygen][MOLES] -= max(0, (delta_time / efficiency) + (consume_gas / efficiency)) // Magically consume gas? Why not, we run on cryo magic.
-		consume_gas = 0
+		if(consume_gas) // Transferring reagent costs us extra gas
+			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, delta_time / efficiency + 1 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+			consume_gas = FALSE
+		if(!consume_gas)
+			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, delta_time / efficiency)
 		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
