@@ -127,6 +127,7 @@
 #define INIT_ORDER_TIMER			1
 #define INIT_ORDER_DEFAULT			0
 #define INIT_ORDER_AIR				-1
+#define INIT_ORDER_PERSISTENCE		-2 //before assets because some assets take data from SSPersistence
 #define INIT_ORDER_ASSETS			-4
 #define INIT_ORDER_ICON_SMOOTHING	-5
 #define INIT_ORDER_OVERLAY			-6
@@ -138,7 +139,6 @@
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_EXPLOSIONS		-69
-#define INIT_ORDER_PERSISTENCE		-95
 #define INIT_ORDER_STATPANELS		-98
 #define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
@@ -233,7 +233,6 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-#define SSAIR_REBUILD_PIPENETS 8
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

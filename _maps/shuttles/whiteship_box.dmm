@@ -344,14 +344,14 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/item/reagent_containers/food/snacks/muffin/berry{
 	pixel_x = 4;
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/muffin/berry,
 /obj/item/food/tofu,
-/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/food/burrito,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Crew Quarters APC";

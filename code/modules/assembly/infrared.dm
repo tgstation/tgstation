@@ -167,7 +167,7 @@
 	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
@@ -177,7 +177,7 @@
 		var/obj/item/I = offender
 		if (I.item_flags & ABSTRACT)
 			return
-	return refreshBeam()
+	INVOKE_ASYNC(src, .proc/refreshBeam)
 
 /obj/item/assembly/infra/setDir()
 	. = ..()

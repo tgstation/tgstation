@@ -973,7 +973,8 @@
 	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>You try to remove [who]'s [what.name]...</span>")
-	log_combat(src, who, "started stripping [what] off")
+	who.log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
+	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -981,10 +982,12 @@
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
 					if(what.doStrip(src, who))
-						log_combat(src, who, "stripped [what] off")
+						who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
+						log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			if(what == who.get_item_by_slot(where))
 				if(what.doStrip(src, who))
-					log_combat(src, who, "stripped [what] off")
+					who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
+					log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
 	if(Adjacent(who)) //update inventory window
 		who.show_inv(src)
@@ -1022,6 +1025,8 @@
 				who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
 							"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
 		to_chat(src, "<span class='notice'>You try to put [what] on [who]...</span>")
+		who.log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
+		log_message("[key_name(who)] is having [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -1030,6 +1035,8 @@
 							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
+					who.log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
+					log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
 		if(Adjacent(who)) //update inventory window
 			who.show_inv(src)

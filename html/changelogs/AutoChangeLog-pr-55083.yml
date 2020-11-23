@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Picture frames no longer always appear empty"
