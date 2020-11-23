@@ -1515,10 +1515,20 @@
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/proc/remove_filter(name)
-	if(filter_data && filter_data[name])
-		filter_data -= name
-		update_filters()
+/atom/proc/remove_filter(name_or_names)
+	if(!filter_data)
+		return
+
+	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
+
+	for(var/name in names)
+		if(filter_data[name])
+			filter_data -= name
+	update_filters()
+
+/atom/proc/clear_filters()
+	filter_data = null
+	filters = null
 
 /atom/proc/animate_filter(name, time, loop, easing, flags, x, y, size, offset, radius, size, color, repeat, transform)
 	var/filter_type = filter_data[name]["type"]
