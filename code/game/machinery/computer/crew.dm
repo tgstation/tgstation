@@ -1,4 +1,4 @@
-#define SENSORS_UPDATE_PERIOD 100 //How often the sensor data updates.
+#define SENSORS_UPDATE_PERIOD 10 SECONDS //How often the sensor data updates.
 
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
@@ -9,7 +9,6 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/circuitboard/computer/crew
-
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/crew/syndie
