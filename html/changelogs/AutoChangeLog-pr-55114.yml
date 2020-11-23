@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "shuttle catastrophe now cant trigger if it already happened"
