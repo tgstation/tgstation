@@ -1,0 +1,5 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "Moves grown food to newfood"
+  - code_imp: "Gives trash element support for callbacks for item creation override"
