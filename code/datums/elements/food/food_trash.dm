@@ -16,9 +16,6 @@
 	src.trash = trash
 	src.flags = flags
 	RegisterSignal(target, COMSIG_FOOD_CONSUMED, .proc/generate_trash)
-	if(flags & FOOD_TRASH_POPABLE)
-		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
-
 	if(!src.generate_trash_callback && generate_trash)
 		generate_trash_callback = CALLBACK(target, generate_trash)
 	if(flags & FOOD_TRASH_OPENABLE)

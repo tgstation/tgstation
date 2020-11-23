@@ -515,7 +515,6 @@
 				on_consume = CALLBACK(src, .proc/OnConsume))
 
 /obj/item/food/chewable/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
-	. = ..()
 	if(iscarbon(eater))
 		hallucinate(eater)
 
