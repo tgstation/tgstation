@@ -15,6 +15,9 @@
 #define LIGHT_DRAIN_TIME 25
 #define LIGHT_POWER_GAIN 35
 
+//How many reagents the lights can hold
+#define LIGHT_REAGENT_CAPACITY 5
+
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
@@ -863,7 +866,7 @@
 
 /obj/item/light/Initialize()
 	. = ..()
-	create_reagents(5, INJECTABLE | DRAINABLE)
+	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
 	update()
 
 /obj/item/light/ComponentInitialize()
@@ -883,7 +886,7 @@
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
 /obj/item/light/on_reagent_change(changetype)
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
+	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
 	return ..()
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
