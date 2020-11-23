@@ -113,7 +113,6 @@
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
-
 		for(var/obj/C in src)
 			C.forceMove(loc)
 	qdel(src)
