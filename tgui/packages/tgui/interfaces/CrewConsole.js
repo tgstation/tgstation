@@ -1,8 +1,8 @@
+import { sortBy } from 'common/collections';
 import { useBackend } from '../backend';
 import { Box, Button, ColorBox, Section, Table } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { sortBy } from 'common/collections';
 
 const HEALTH_COLOR_BY_LEVEL = [
   '#17d568',
