@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Hygiene Robots are now craftable and deconstructable in the same way as other simple robots."
+  - bugfix: "Hygiene Robots must be opened in order to be emagged just like the rest."
