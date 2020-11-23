@@ -8,6 +8,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	name = "fresh produce" // so recipe text doesn't say 'snack'
 	max_volume = 100
+	w_class = WEIGHT_CLASS_SMALL
 	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/obj/item/seeds/seed = null
 	///Name of the plant
