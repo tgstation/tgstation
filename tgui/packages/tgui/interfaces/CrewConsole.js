@@ -120,7 +120,7 @@ const CrewTableEntry = (props, context) => {
     burndam,
     brutedam,
     area,
-    can_track
+    can_track,
   } = sensor_data;
 
   return (
@@ -129,7 +129,7 @@ const CrewTableEntry = (props, context) => {
         bold={jobIsHead(ijob)}
         color={jobToColor(ijob)}>
         {name} ({assignment})
-          </Table.Cell>
+      </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <ColorBox
           color={healthToColor(
@@ -150,8 +150,8 @@ const CrewTableEntry = (props, context) => {
             <HealthStat type="brute" value={brutedam} />
           </Box>
         ) : (
-            life_status ? 'Alive' : 'Dead'
-          )}
+          life_status ? 'Alive' : 'Dead'
+        )}
       </Table.Cell>
       <Table.Cell>
         {area !== undefined ? area : 'N/A'}
@@ -168,4 +168,4 @@ const CrewTableEntry = (props, context) => {
       )}
     </Table.Row>
   );
-}
+};
