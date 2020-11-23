@@ -63,7 +63,7 @@ export const CrewConsole = () => {
   return (
     <Window
       title="Crew Monitor"
-      width={800}
+      width={600}
       height={600}
       resizable>
       <Window.Content scrollable>
@@ -128,7 +128,7 @@ const CrewTableEntry = (props, context) => {
       <Table.Cell
         bold={jobIsHead(ijob)}
         color={jobToColor(ijob)}>
-        {name} ({assignment})
+        {name}{assignment !== undefined ? ` (${assignment})` : ""}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <ColorBox
