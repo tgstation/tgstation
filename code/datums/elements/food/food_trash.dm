@@ -65,7 +65,7 @@
 /datum/element/food_trash/proc/open_trash(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user, "<span class='notice'>You open the [src]\'s shell, revealing \a [initial(trash.name)].</span>")
+	to_chat(user, "<span class='notice'>You open the [source], revealing \a [initial(trash.name)].</span>")
 
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 	qdel(source)
