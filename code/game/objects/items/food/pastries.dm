@@ -19,7 +19,7 @@
 
 /obj/item/food/donut/Initialize()
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	AddElement(/datum/element/dunkable, amount_per_dunk = 10)
 	if(prob(30))
 		decorate_donut()
 
