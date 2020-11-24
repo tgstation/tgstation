@@ -47,8 +47,6 @@
 		var/datum/tgs_revision_information/test_merge/tm = line
 		var/cm = tm.pull_request_commit
 		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
-		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
-			continue
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
 /client/verb/showrevinfo()
