@@ -140,6 +140,7 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_inv_legcuffed()
+	update_equipment_speed_mods()
 
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
