@@ -889,7 +889,7 @@
 	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
 	return ..()
 	
-	#undef LIGHT_REAGENT_CAPACITY
+#undef LIGHT_REAGENT_CAPACITY
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()
