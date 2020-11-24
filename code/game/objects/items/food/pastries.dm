@@ -2,6 +2,8 @@
 //This file contains pastries that don't fit any existing categories.
 ////////////////////////////////////////////DONUTS////////////////////////////////////////////
 
+#define DONUT_SPRINKLE_CHANCE 30
+
 /obj/item/food/donut
 	name = "donut"
 	desc = "Goes great with robust coffee."
@@ -11,7 +13,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
 	foodtypes = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
-	eat_time = 5
+	food_flags = FOOD_FINGER_FOOD
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null
@@ -20,7 +22,7 @@
 /obj/item/food/donut/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, amount_per_dunk = 10)
-	if(prob(30))
+	if(prob(DONUT_SPRINKLE_CHANCE))
 		decorate_donut()
 
 ///Override for checkliked callback
@@ -36,7 +38,7 @@
 				bite_consumption = bite_consumption,\
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
-				check_liked = CALLBACK(src, .proc/checkLiked))
+				check_liked = CALLBACK(src, .proc/check_liked))
 
 /obj/item/food/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)
@@ -52,7 +54,7 @@
 	return "[icon_state]_inbox"
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
-/obj/item/food/donut/proc/checkLiked(fraction, mob/living/carbon/human/H)
+/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/H)
 	if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 		return FOOD_LIKED
 
@@ -734,28 +736,28 @@
 
 /obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/food/pancakes))
-		var/obj/item/food/pancakes/P = I
-		if((contents.len >= PANCAKE_MAX_STACK) || ((P.contents.len + contents.len) > PANCAKE_MAX_STACK))
+		var/obj/item/food/pancakes/pancake = item
+		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
 			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
 		else
-			if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(pancake, src))
 				return
-			to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-			P.name = initial(P.name)
-			contents += P
-			update_snack_overlays(P)
-			if (P.contents.len)
-				for(var/V in P.contents)
-					P = V
-					P.name = initial(P.name)
-					contents += P
-					update_snack_overlays(P)
-			P = I
-			P.contents.Cut()
+			to_chat(user, "<span class='notice'>You add the [pancake] to the [src].</span>")
+			pancake.name = initial(pancake.name)
+			contents += pancake
+			update_snack_overlays(pancake)
+			if (pancake.contents.len)
+				for(var/pancake_content in pancake.contents)
+					pancake = pancake_content
+					pancake.name = initial(pancake.name)
+					contents += pancake
+					update_snack_overlays(pancake)
+			pancake = item
+			pancake.contents.Cut()
 		return
 	else if(contents.len)
 		var/obj/O = contents[contents.len]
-		return O.attackby(I, user, params)
+		return O.attackby(item, user, params)
 	..()
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
@@ -781,3 +783,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+
+
+#undef DONUT_SPRINKLE_CHANCE
