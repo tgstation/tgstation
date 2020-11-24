@@ -233,7 +233,7 @@
 		/datum/reagent/consumable/salt = 5,
 		/datum/reagent/consumable/blackpepper = 5,
 		/obj/item/food/meat/steak/plain = 5,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 4,
+		/obj/item/food/grown/tomato = 4,
 		/obj/item/food/cheesewedge = 3,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
@@ -265,7 +265,7 @@
 	name = "Five alarm burger"
 	reqs = list(
 			/obj/item/food/meat/steak/plain = 1,
-			/obj/item/reagent_containers/food/snacks/grown/ghost_chili = 2,
+			/obj/item/food/grown/ghost_chili = 2,
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/fivealarm
@@ -343,7 +343,7 @@
 	name = "McRib"
 	reqs = list(
 			/obj/item/food/bbqribs = 1,     //The sauce is already included in the ribs
-			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/food/onion_slice = 1, //feel free to remove if too burdensome.
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/rib
@@ -375,8 +375,8 @@
 			/obj/item/food/meat/steak/plain = 2,
 			/obj/item/food/bun = 1,
 			/obj/item/food/cheesewedge = 2,
-			/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-			/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
+			/obj/item/food/grown/chili = 1,
+			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,
 			/obj/item/flashlight/flare = 1,
 			/datum/reagent/consumable/cooking_oil = 15

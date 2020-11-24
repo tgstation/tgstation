@@ -85,7 +85,7 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/flatdough/MakeProcessable()
+/obj/item/food/piedough/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 3, 30)
 
 /obj/item/food/rawpastrybase

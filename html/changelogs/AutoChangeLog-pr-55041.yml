@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "The chef's food cart can no longer store an infinite amount of food stuff."

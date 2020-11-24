@@ -169,7 +169,7 @@
 	name = "botanical waste spawner"
 	loot = list(/obj/item/grown/bananapeel = 60,
 				/obj/item/grown/corncob = 30,
-				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
+				/obj/item/food/grown/bungopit = 10)
 
 /obj/effect/spawner/lootdrop/refreshing_beverage
 	name = "good soda spawner"

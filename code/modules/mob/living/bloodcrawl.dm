@@ -1,30 +1,3 @@
-/obj/effect/dummy/phased_mob/slaughter //Can't use the wizard one, blocked by jaunt/slow
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/canmove = TRUE
-
-/obj/effect/dummy/phased_mob/slaughter/relaymove(mob/living/user, direction)
-	forceMove(get_step(src,direction))
-
-/obj/effect/dummy/phased_mob/slaughter/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/slaughter/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/slaughter/singularity_act()
-	return
-
-/obj/effect/dummy/phased_mob/slaughter/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
-	SIGNAL_HANDLER
-	qdel(src)
-
-
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -54,7 +27,7 @@
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 50, TRUE, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
-	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(mobloc)
+	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(mobloc)
 	extinguish_mob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()

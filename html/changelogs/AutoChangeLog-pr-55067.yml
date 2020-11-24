@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Support holoparasite should no longer have missing bluespace beacon sprites."
