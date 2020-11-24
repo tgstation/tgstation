@@ -65,16 +65,21 @@
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
 		if(tgalert(src, message, "Report Issue","Yes","No")!="Yes")
 			return
+
+		// Keep a static version of the template to avoid reading file
 		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE/bug_report.md")
 
+		// Get a local copy of the template for modification
+		var/local_template = issue_template
+
 		// Remove comment header
-		var/content_start = findtext(issue_template, "<")
+		var/content_start = findtext(local_template, "<")
 		if(content_start)
-			issue_template = copytext(issue_template, content_start)
+			local_template = copytext(local_template, content_start)
 
 		// Insert round
 		if(GLOB.round_id)
-			issue_template = replacetext(issue_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
+			local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
 
 		// Insert testmerges
 		if(GLOB.revdata.testmerge.len)
@@ -83,10 +88,9 @@
 				var/datum/tgs_revision_information/test_merge/tm = entry
 				all_tms += "- #[tm.number]"
 			var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
-			issue_template = replacetext(issue_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
+			local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
 
-		var/servername = CONFIG_GET(string/servername)
-		var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[issue_template]"
+		var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[local_template]"
 		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
