@@ -130,7 +130,8 @@
 
 /obj/structure/barricade/security/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
+	if(deploy_time)
+		addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
