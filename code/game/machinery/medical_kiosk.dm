@@ -231,13 +231,13 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(LAZYLEN(altPatient.reagents.reagent_list))	//Chemical Analysis details.
+	if(altPatient.reagents?.reagent_list.len)	//Chemical Analysis details.
 		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
 			if(R.overdosed)
 				overdose_list += list(list("name" = R.name))
 	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
-	if(LAZYLEN(belly.reagents.reagent_list)) //include the stomach contents if it exists
+	if(belly?.reagents?.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
 			if(!belly.food_reagents[bit.type])
@@ -246,9 +246,8 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	if(LAZYLEN(altPatient.reagents.addiction_list))
-		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
-			addict_list += list(list("name" = R.name))
+	for(var/datum/reagent/R in altPatient.reagents.addiction_list)
+		addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
