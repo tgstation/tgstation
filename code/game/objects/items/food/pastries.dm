@@ -740,7 +740,7 @@
 		else
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, "<span class='notice'>You add the [I] to the [name].</span>")
+			to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 			P.name = initial(P.name)
 			contents += P
 			update_snack_overlays(P)
