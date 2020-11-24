@@ -59,11 +59,13 @@
 	hand = owner.hand_bodyparts[side]
 	if(hand)
 		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+		RegisterSignal(M, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	if(hand)
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
+		UnregisterSignal(M, COMSIG_KB_MOB_DROPITEM_DOWN)
 	..()
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
@@ -75,6 +77,20 @@
 		// give the owner an idea about why his implant is glitching
 		Retract()
 
+/**
+  * Called when the mob uses the "drop item" hotkey
+  *
+  * Items inside toolset implants have TRAIT_NODROP, but we can still use the drop item hotkey as a
+  * quick way to store implant items. In this case, we check to make sure the user has the correct arm
+  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
+**/
+/obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
+	if(!host)
+		return //How did we even get here
+	if(hand != host.hand_bodyparts[host.active_hand_index])
+		return //wrong hand
+	Retract()
+
 /obj/item/organ/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return
@@ -84,7 +100,6 @@
 		"<span class='hear'>You hear a short mechanical noise.</span>")
 
 	owner.transferItemToLoc(active_item, src, TRUE)
-	UnregisterSignal(active_item, COMSIG_ITEM_DROPPED)
 	active_item = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
@@ -93,9 +108,9 @@
 		return
 
 	active_item = item
-	RegisterSignal(active_item, COMSIG_ITEM_DROPPED, .proc/Retract) //Drop it to put away.
 
 	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	ADD_TRAIT(active_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	active_item.slot_flags = null
 	active_item.set_custom_materials(null)
 

@@ -44,6 +44,7 @@
 @include meta.load-css('./interfaces/NuclearBomb.scss');
 @include meta.load-css('./interfaces/Paper.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
+@include meta.load-css('./interfaces/Safe.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

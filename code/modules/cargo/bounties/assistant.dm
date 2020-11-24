@@ -122,7 +122,7 @@
 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
 	reward = 4000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
+	wanted_types = list(/obj/item/food/grown/poppy/geranium)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/poppy
@@ -130,7 +130,7 @@
 	description = "Commander Zot really wants to sweep Security Officer Olivia off her feet. Send a shipment of Poppies - her favorite flower - and he'll happily reward you."
 	reward = 1000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy)
+	wanted_types = list(/obj/item/food/grown/poppy)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/shadyjims

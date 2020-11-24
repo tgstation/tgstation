@@ -5,7 +5,7 @@
 	icon_state = "seed-peas"
 	species = "peas"
 	plantname = "Pea Vines"
-	product = /obj/item/reagent_containers/food/snacks/grown/peas
+	product = /obj/item/food/grown/peas
 	maturation = 3
 	potency = 25
 	instability = 15
@@ -17,14 +17,13 @@
 	mutatelist = list(/obj/item/seeds/peas/laugh)
 	reagents_add = list (/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/water = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/peas
+/obj/item/food/grown/peas
 	seed = /obj/item/seeds/peas
 	name = "peapod"
 	desc = "Finally... peas."
 	icon_state = "peas"
-	filling_color = "#739122"
-	bitesize_mod = 1
-	foodtype = VEGETABLES
+	bite_consumption_mod = 1
+	foodtypes = VEGETABLES
 	tastes = list ("peas" = 1, "chalky saltiness" = 1)
 	wine_power = 50
 	wine_flavor = "what is, distressingly, fermented peas."
@@ -36,7 +35,7 @@
 	icon_state = "seed-laughpeas"
 	species = "laughpeas"
 	plantname = "Laughin' Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/laugh
+	product = /obj/item/food/grown/laugh
 	maturation = 7
 	potency = 10
 	yield = 7
@@ -50,14 +49,13 @@
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
 	graft_gene = /datum/plant_gene/trait/glow/purple
 
-/obj/item/reagent_containers/food/snacks/grown/laugh
+/obj/item/food/grown/laugh
 	seed = /obj/item/seeds/peas/laugh
 	name = "pod of laughin' peas"
 	desc = "Ridens Cicer, guaranteed to improve your mood dramatically upon consumption!"
 	icon_state = "laughpeas"
-	filling_color = "#ee7bee"
-	bitesize_mod = 2
-	foodtype = VEGETABLES
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES
 	juice_results = list (/datum/reagent/consumable/laughsyrup = 0)
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
@@ -70,7 +68,7 @@
 	icon_state = "seed-worldpeas"
 	species = "worldpeas"
 	plantname = "World Peas"
-	product = /obj/item/reagent_containers/food/snacks/grown/peace
+	product = /obj/item/food/grown/peace
 	maturation = 20
 	potency = 75
 	yield = 1
@@ -84,14 +82,13 @@
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax.
 	graft_gene = /datum/plant_gene/trait/glow/blue
 
-/obj/item/reagent_containers/food/snacks/grown/peace
+/obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
 	desc = "A plant discovered through extensive genetic engineering, and iterative graft work. It's rumored to bring peace to any who consume it. In the wider AgSci community, it's attained the nickname of 'Pax Mundi'." //at last... world peas. I'm not sorry.
 	icon_state = "worldpeas"
-	filling_color = "#0099CC"
-	bitesize_mod = 4
-	foodtype = VEGETABLES
+	bite_consumption_mod = 4
+	foodtypes = VEGETABLES
 	tastes = list ("numbing tranquility" = 2, "warmth" = 1)
 	wine_power = 100
 	wine_flavor = "mind-numbing peace and warmth"

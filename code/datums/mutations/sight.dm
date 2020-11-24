@@ -99,7 +99,7 @@
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(source.a_intent != INTENT_HARM)
 		return
@@ -110,7 +110,7 @@
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, mouseparams)
-	LE.fire()
+	INVOKE_ASYNC(LE, /obj/projectile.proc/fire)
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes

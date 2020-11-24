@@ -283,6 +283,7 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_inv_s_store()
+	update_equipment_speed_mods()
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
 	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
