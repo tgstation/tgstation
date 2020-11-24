@@ -14,33 +14,34 @@
 	RegisterSignal(target, COMSIG_TRY_STORAGE_SET_LOCKSTATE, .proc/set_locked)
 	RegisterSignal(target, COMSIG_TRY_STORAGE_TAKE, .proc/signal_take_obj)
 	RegisterSignal(target, COMSIG_TRY_STORAGE_QUICK_EMPTY, .proc/signal_quick_empty)
-	RegisterSignal(target, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
-	RegisterSignal(target, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
 	RegisterSignal(target, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
 	RegisterSignal(target, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
 
 /datum/element/lazystorage/Detach(obj/item/storage/source, force)
 	. = ..()
-	UnregisterSignal(source, COMSIG_CONTAINS_STORAGE)
-	UnregisterSignal(source, COMSIG_IS_STORAGE_LOCKED)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_SHOW)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_INSERT)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_CAN_INSERT)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_TAKE_TYPE)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_FILL_TYPE)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_SET_LOCKSTATE)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_TAKE)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_QUICK_EMPTY)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_HIDE_FROM)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_HIDE_ALL)
-	UnregisterSignal(source, COMSIG_TRY_STORAGE_RETURN_INVENTORY)
-	UnregisterSignal(source, COMSIG_CLICK_ALT)
-	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
-	UnregisterSignal(source, COMSIG_MOUSEDROPPED_ONTO)
+	UnregisterSignal(source, list(
+		COMSIG_CONTAINS_STORAGE,
+		COMSIG_IS_STORAGE_LOCKED,
+		COMSIG_TRY_STORAGE_SHOW,
+		COMSIG_TRY_STORAGE_INSERT,
+		COMSIG_TRY_STORAGE_CAN_INSERT,
+		COMSIG_TRY_STORAGE_TAKE_TYPE,
+		COMSIG_TRY_STORAGE_FILL_TYPE,
+		COMSIG_TRY_STORAGE_SET_LOCKSTATE,
+		COMSIG_TRY_STORAGE_TAKE,
+		COMSIG_TRY_STORAGE_QUICK_EMPTY,
+		COMSIG_TRY_STORAGE_RETURN_INVENTORY,
+		COMSIG_CLICK_ALT,
+		COMSIG_MOUSEDROP_ONTO,
+		COMSIG_MOUSEDROPPED_ONTO,
+		COMSIG_ITEM_ATTACK_SELF,
+	))
 
 
+/// ( ͡° ͜ʖ ͡°)
 #define LAZYSTORAGE_PASSTHROUGH_PROC(name, signal) \
 /datum/element/lazystorage/proc/##name(obj/item/storage/source, ...) {\
 	var/datum/component/storage/real_storage = source.AddComponent(source.component_type);\
@@ -63,9 +64,8 @@ LAZYSTORAGE_PASSTHROUGH_PROC(signal_fill_type, COMSIG_TRY_STORAGE_FILL_TYPE)
 LAZYSTORAGE_PASSTHROUGH_PROC(set_locked, COMSIG_TRY_STORAGE_SET_LOCKSTATE)
 LAZYSTORAGE_PASSTHROUGH_PROC(signal_take_obj, COMSIG_TRY_STORAGE_TAKE)
 LAZYSTORAGE_PASSTHROUGH_PROC(signal_quick_empty, COMSIG_TRY_STORAGE_QUICK_EMPTY)
-LAZYSTORAGE_PASSTHROUGH_PROC(signal_hide_attempt, COMSIG_TRY_STORAGE_HIDE_FROM)
-LAZYSTORAGE_PASSTHROUGH_PROC(close_all, COMSIG_TRY_STORAGE_HIDE_ALL)
 LAZYSTORAGE_PASSTHROUGH_PROC(signal_return_inv, COMSIG_TRY_STORAGE_RETURN_INVENTORY)
 LAZYSTORAGE_PASSTHROUGH_PROC(on_alt_click, COMSIG_CLICK_ALT)
 LAZYSTORAGE_PASSTHROUGH_PROC(mousedrop_onto, COMSIG_MOUSEDROP_ONTO)
 LAZYSTORAGE_PASSTHROUGH_PROC(mousedrop_receive, COMSIG_MOUSEDROPPED_ONTO)
+LAZYSTORAGE_PASSTHROUGH_PROC(attack_self, COMSIG_ITEM_ATTACK_SELF)

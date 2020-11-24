@@ -228,7 +228,7 @@
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	if(fancy_open || !contents.len)
-		if(!contents.len)
+		if(!(item_flags & ITEM_LAZY_STORAGE) && !contents.len)
 			icon_state = "[initial(icon_state)]_empty"
 		else
 			icon_state = initial(icon_state)
