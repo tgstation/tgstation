@@ -48,3 +48,11 @@
 
 ///Food trash flags
 #define FOOD_TRASH_POPABLE (1<<0)
+#define FOOD_TRASH_OPENABLE (1<<1)
+
+
+
+///Food preference enums
+#define FOOD_LIKED 1
+#define FOOD_DISLIKED 2
+#define FOOD_TOXIC 3

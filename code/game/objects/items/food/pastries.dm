@@ -22,6 +22,21 @@
 	if(prob(30))
 		decorate_donut()
 
+///Override for checkliked callback
+/obj/item/food/donut/MakeEdible()
+	AddComponent(/datum/component/edible,\
+				initial_reagents = food_reagents,\
+				food_flags = food_flags,\
+				foodtypes = foodtypes,\
+				volume = max_volume,\
+				eat_time = eat_time,\
+				tastes = tastes,\
+				eatverbs = eatverbs,\
+				bite_consumption = bite_consumption,\
+				microwaved_type = microwaved_type,\
+				junkiness = junkiness,\
+				check_liked = CALLBACK(src, .proc/checkLiked))
+
 /obj/item/food/donut/proc/decorate_donut()
 	if(is_decorated || !decorated_icon)
 		return
@@ -34,6 +49,11 @@
 /// Returns the sprite of the donut while in a donut box
 /obj/item/food/donut/proc/in_box_sprite()
 	return "[icon_state]_inbox"
+
+///Override for checkliked in edible component, because all cops LOVE donuts
+/obj/item/food/donut/proc/checkLiked(fraction, mob/living/carbon/human/H)
+	if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
+		return FOOD_LIKED
 
 //Use this donut ingame
 /obj/item/food/donut/plain

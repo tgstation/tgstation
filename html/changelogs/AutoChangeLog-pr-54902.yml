@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - imageadd: "Nanite machinery's screens now turn off if they're broken or are unpowered, and are visible through darkness when on."

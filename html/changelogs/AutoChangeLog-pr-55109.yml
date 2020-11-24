@@ -1,0 +1,4 @@
+author: "Arkatos, original by dearmochi"
+delete-after: True
+changes: 
+  - refactor: "Safe now uses tgui."

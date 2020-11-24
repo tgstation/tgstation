@@ -1945,7 +1945,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/grown/harebell{
+/obj/item/food/grown/harebell{
 	pixel_x = 6;
 	pixel_y = 3
 	},

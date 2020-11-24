@@ -379,7 +379,6 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
-	//dried_type = /obj/item/food/sosjerky/healthy Re-add this when I figure out how to make drying an element
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2) //Meat has fats that a food processor can process into cooking oil
 	microwaved_type = /obj/item/food/meat/steak/plain
@@ -387,6 +386,10 @@
 	foodtypes = MEAT | RAW
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
 	var/slab_color = "#FF0000"
+
+/obj/item/food/meat/slab/Initialize()
+	. = ..()
+	AddElement(/datum/element/dryable,  /obj/item/food/sosjerky/healthy)
 
 /obj/item/food/meat/slab/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 30)

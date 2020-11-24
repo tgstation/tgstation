@@ -1,5 +1,15 @@
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
+// Multiply factor is used with efficiency to multiply Tx quantity
+// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by delta_time
+// Throttle Counter Max is how many calls of process() between ones that inject reagents.
+// These three defines control how fast and efficient cryo is
+#define CRYO_MULTIPLY_FACTOR 25
+#define CRYO_TX_QTY 0.5
+#define CRYO_THROTTLE_CTR_MAX 10
+// The minimum O2 moles in the cryotube before it switches off.
+#define CRYO_MIN_GAS_MOLES 5
+#define CRYO_BREAKOUT_TIME 30 SECONDS
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
@@ -81,6 +91,7 @@
 
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
+	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
@@ -89,9 +100,7 @@
 	/// Visual content - Occupant
 	var/atom/movable/visual/cryo_occupant/occupant_vis
 
-	var/escape_in_progress = FALSE
 	var/message_cooldown
-	var/breakout_time = 300
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
 	fair_market_price = 10
@@ -254,17 +263,16 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(air1.gases.len)
+	if(air1.gases[/datum/gas/oxygen][MOLES] > CRYO_MIN_GAS_MOLES)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
 			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 1000 * delta_time)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 1000 * delta_time)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, efficiency * 12.5 * delta_time, methods = VAPOR) // Transfer reagents.
-				air1.gases[/datum/gas/oxygen][MOLES] -= max(0, air1.gases[/datum/gas/oxygen][MOLES] - delta_time / efficiency) //Let's use gas for this
-				air1.garbage_collect()
-			reagent_transfer += 0.5 * delta_time
-			if(reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
+				beaker.reagents.trans_to(occupant, CRYO_TX_QTY * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+				consume_gas = TRUE
+			reagent_transfer += 1
+			if(reagent_transfer >= CRYO_THROTTLE_CTR_MAX * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
 	return 1
@@ -277,7 +285,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+		var/msg = "Insufficient cryogenic gas, shutting down."
+		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
 		return
 
@@ -297,8 +307,11 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 			air1.temperature = clamp(air1.temperature - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
-
-		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+		if(consume_gas) // Transferring reagent costs us extra gas
+			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, delta_time / efficiency + 1 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+			consume_gas = FALSE
+		if(!consume_gas)
+			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, delta_time / efficiency)
 		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
@@ -316,7 +329,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	reagent_transfer = efficiency * 10 - 5 // wait before injecting the next occupant
+	reagent_transfer = efficiency * CRYO_THROTTLE_CTR_MAX * 0.5 // wait before injecting the next occupant
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
@@ -330,9 +343,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
-		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)</span>", \
 		"<span class='hear'>You hear a thump from [src].</span>")
-	if(do_after(user, breakout_time, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -358,7 +371,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			close_machine(target)
 	else
 		user.visible_message("<span class='notice'>[user] starts shoving [target] inside [src].</span>", "<span class='notice'>You start shoving [target] inside [src].</span>")
-		if (do_after(user, 25, target=target))
+		if (do_after(user, 2.5 SECONDS, target=target))
 			close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
@@ -524,3 +537,8 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		SSair.add_to_rebuild_queue(src)
 
 #undef MAX_TEMPERATURE
+#undef CRYO_MULTIPLY_FACTOR
+#undef CRYO_TX_QTY
+#undef CRYO_THROTTLE_CTR_MAX
+#undef CRYO_MIN_GAS_MOLES
+#undef CRYO_BREAKOUT_TIME
