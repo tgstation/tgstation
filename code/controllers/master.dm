@@ -204,6 +204,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	if (!current_runlevel)
 		SetRunLevel(1)
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_INITIALIZAION_COMPLETE)
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.

@@ -30,12 +30,17 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
-	if (force_connect || (mapload && is_station_level(T.z)))
-		addtimer(CALLBACK(src, .proc/LateInitialize))
+	if (mapload && is_station_level(T.z))
+		RegisterSignal(SSdcs, COMSIG_GLOB_INITIALIZAION_COMPLETE, .proc/LateInitialize)
+	else if (force_connect)
+		LateInitialize()
 	else if (allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/proc/LateInitialize()
+/datum/component/remote_materials/proc/LateInitialize(datum/source)
+	SIGNAL_HANDLER
+	if(source)
+		UnregisterSignal(SSdcs, COMSIG_GLOB_INITIALIZAION_COMPLETE)
 	silo = GLOB.ore_silo_default
 	if (silo)
 		silo.connected += src
