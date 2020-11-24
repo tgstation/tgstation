@@ -320,11 +320,11 @@ Behavior that's still missing from this component that original food items had t
 		log_combat(feeder, eater, "fed", owner.reagents.log_list())
 		eater.visible_message("<span class='danger'>[feeder] forces [eater] to eat [parent]!</span>", \
 									"<span class='userdanger'>[feeder] forces you to eat [parent]!</span>")
-	if(eat_time) //Multi-eat is cursed if eat_time isn't a thing
-		TakeBite(eater, feeder)
 
-	//If we're not force-feeding, try take another bite
-	if(eater == feeder)
+	TakeBite(eater, feeder)
+
+	//If we're not force-feeding and there's an eat delay, try take another bite
+	if(eater == feeder && eat_time)
 		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
 
 
