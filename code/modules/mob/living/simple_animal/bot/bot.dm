@@ -525,7 +525,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
-		for(var/step_number = 0, step_number < step_count,step_number++)
+		for(var/step_number = 1, step_number < step_count,step_number++)
 			addtimer(CALLBACK(src, .proc/bot_step, dest), BOT_STEP_DELAY*step_number)
 	else
 		return FALSE
