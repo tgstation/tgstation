@@ -101,7 +101,7 @@
 /obj/item/seeds/tower,
 /obj/item/seeds/reishi,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/item/food/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "Ou" = (

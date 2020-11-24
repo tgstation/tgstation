@@ -26,6 +26,7 @@ jobs:
         library-path: 'code/modules/tgs'
 
     - name: Commit and Push
+      continue-on-error: true
       run: |
         git config user.name tgstation-server
         git config user.email tgstation-server@users.noreply.github.com
@@ -35,6 +36,7 @@ jobs:
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
+      if: ${{ success() }}
       with:
         source_branch: "tgs-dmapi-update"
         destination_branch: "master"

@@ -66,6 +66,14 @@
 	return TRUE
 
 /**
+  * A proc that handles the code when the mob dies
+  *
+  * This proc is primarily used to end any soundloops when the heretic dies
+  */
+/datum/eldritch_knowledge/proc/on_death(mob/user)
+	return
+
+/**
   * What happens once the recipe is succesfully finished
   *
   * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
@@ -107,6 +115,14 @@
   * Gives addtional effects to sickly blade weapon
   */
 /datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
+	return
+
+/**
+  * Sickly blade distant act
+  *
+  * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
+  */
+/datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 
 //////////////
@@ -228,7 +244,7 @@
 	name = "Break of Dawn"
 	desc = "Starts your journey in the Mansus. Allows you to select a target using a living heart on a transmutation rune."
 	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
-	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
+	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/base_void)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	required_atoms = list(/obj/item/living_heart)
@@ -287,7 +303,7 @@
 	desc = "Allows you to create additional living hearts, using a heart, a pool of blood and a poppy. Living hearts when used on a transmutation rune will grant you a person to hunt and sacrifice on the rune. Every sacrifice gives you an additional charge in the book."
 	gain_text = "The Gates of Mansus open up to your mind."
 	cost = 0
-	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/reagent_containers/food/snacks/grown/poppy)
+	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/food/grown/poppy)
 	result_atoms = list(/obj/item/living_heart)
 	route = "Start"
 

@@ -14,40 +14,40 @@
 	output = /obj/item/food/meat/rawbacon
 
 /datum/food_processor_process/potatowedges
-	input = /obj/item/reagent_containers/food/snacks/grown/potato/wedges
-	output = /obj/item/reagent_containers/food/snacks/fries
+	input = /obj/item/food/grown/potato/wedges
+	output = /obj/item/food/fries
 
 /datum/food_processor_process/sweetpotato
-	input = /obj/item/reagent_containers/food/snacks/grown/potato/sweet
-	output = /obj/item/reagent_containers/food/snacks/yakiimo
+	input = /obj/item/food/grown/potato/sweet
+	output = /obj/item/food/yakiimo
 
 /datum/food_processor_process/potato
-	input = /obj/item/reagent_containers/food/snacks/grown/potato
-	output = /obj/item/reagent_containers/food/snacks/tatortot
+	input = /obj/item/food/grown/potato
+	output = /obj/item/food/tatortot
 
 /datum/food_processor_process/carrot
-	input = /obj/item/reagent_containers/food/snacks/grown/carrot
-	output = /obj/item/reagent_containers/food/snacks/carrotfries
+	input = /obj/item/food/grown/carrot
+	output = /obj/item/food/carrotfries
 
 /datum/food_processor_process/soybeans
-	input = /obj/item/reagent_containers/food/snacks/grown/soybeans
-	output = /obj/item/reagent_containers/food/snacks/soydope
+	input = /obj/item/food/grown/soybeans
+	output = /obj/item/food/soydope
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/reagent_containers/food/snacks/doughslice
+	input = /obj/item/food/doughslice
 	output = /obj/item/food/spaghetti
 
 /datum/food_processor_process/corn
-	input = /obj/item/reagent_containers/food/snacks/grown/corn
-	output = /obj/item/reagent_containers/food/snacks/tortilla
+	input = /obj/item/food/grown/corn
+	output = /obj/item/food/tortilla
 
 /datum/food_processor_process/tortilla
-	input = /obj/item/reagent_containers/food/snacks/tortilla
-	output = /obj/item/reagent_containers/food/snacks/cornchips
+	input = /obj/item/food/tortilla
+	output = /obj/item/food/cornchips
 
 /datum/food_processor_process/parsnip
-	input = /obj/item/reagent_containers/food/snacks/grown/parsnip
-	output = /obj/item/reagent_containers/food/snacks/roastparsnip
+	input = /obj/item/food/grown/parsnip
+	output = /obj/item/food/roastparsnip
 
 /datum/food_processor_process/mob/slime
 	input = /mob/living/simple_animal/slime
