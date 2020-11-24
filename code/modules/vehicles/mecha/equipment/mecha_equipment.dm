@@ -108,6 +108,11 @@
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
 	if(!chassis)
 		return
+
+	// You can't drill harder by clicking more.
+	if(target in user.do_afters)
+		return
+
 	var/C = chassis.loc
 	. = do_after(user, delay, target=target)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
