@@ -184,6 +184,11 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || !target)
 		return FALSE
+
+	if(target && INTERACTING_WITH(user, target))
+		to_chat(user, "<span class='warning'>You're already interacting with [target]!</span>")
+		return
+
 	var/user_loc = user.loc
 
 	var/drifting = FALSE
@@ -254,6 +259,11 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user)
 		return FALSE
+
+	if(target && INTERACTING_WITH(user, target))
+		to_chat(user, "<span class='warning'>You're already interacting with [target]!</span>")
+		return
+
 	var/atom/target_loc = null
 	if(target && !isturf(target))
 		target_loc = target.loc
@@ -329,6 +339,13 @@ GLOBAL_LIST_EMPTY(species_list)
 		targets = list(targets)
 	if(!length(targets))
 		return FALSE
+
+	for(var/i in targets)
+		var/mob/living/target = i
+		if(INTERACTING_WITH(user, target))
+			to_chat(user, "<span class='warning'>You're already interacting with [target]!</span>")
+			return
+
 	var/user_loc = user.loc
 
 	time *= user.cached_multiplicative_actions_slowdown
