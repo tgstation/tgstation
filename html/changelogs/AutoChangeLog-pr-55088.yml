@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Living crates now properly behave like crates when faced against plastic flaps."

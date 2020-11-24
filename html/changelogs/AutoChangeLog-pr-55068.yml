@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Fixed infinite gas consumption by cryogenics pods"

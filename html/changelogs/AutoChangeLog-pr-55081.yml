@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Lockers/Closets/Bodybags close all open inventories of items and internal items enclosed inside of itself. For real this time."
