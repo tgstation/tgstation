@@ -574,8 +574,8 @@ SUBSYSTEM_DEF(timer)
 	if (!callback)
 		CRASH("addtimer called without a callback")
 
-	if (wait < 0)
-		stack_trace("addtimer called with a negative wait. Converting to [world.tick_lag]")
+	if (wait <= 0)
+		stack_trace("addtimer called with a negative or 0 wait. Converting to [world.tick_lag]")
 
 	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not \
