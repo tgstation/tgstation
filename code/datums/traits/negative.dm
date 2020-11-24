@@ -619,7 +619,7 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		var/deleted = QDELETED(reagent_instance)
-		if(deleted || !(LAZYFIND(H.reagents.addiction_list, reagent_instance)))
+		if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
 			if(deleted)
 				reagent_instance = new reagent_type()
 			else
