@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing the point emote outputting the \"unusable emote\" message even if actually usable."
