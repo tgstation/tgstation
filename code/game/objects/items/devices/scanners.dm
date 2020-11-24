@@ -425,7 +425,7 @@ GENE SCANNER
 
 	if(istype(M) && M.reagents)
 		var/render_list = list()
-		if(M.reagents.reagent_list.len)
+		if(LAZYLEN(M.reagents.reagent_list))
 			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
 			for(var/datum/reagent/R in M.reagents.reagent_list)
 				render_list += "<span class='notice ml-2'>[round(R.volume, 0.001)] units of [R.name][R.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
@@ -433,7 +433,7 @@ GENE SCANNER
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
 		var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 		if(belly)
-			if(belly.reagents.reagent_list.len)
+			if(LAZYLEN(belly.reagents.reagent_list))
 				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile
@@ -446,7 +446,7 @@ GENE SCANNER
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
 
-		if(M.reagents.addiction_list?.len)
+		if(LAZYLEN(M.reagents.addiction_list))
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
 			for(var/datum/reagent/R in M.reagents.addiction_list)
 				render_list += "<span class='alert ml-2'>[R.name]</span>\n"
