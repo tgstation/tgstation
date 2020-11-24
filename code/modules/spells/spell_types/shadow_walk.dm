@@ -83,28 +83,4 @@
 		playsound(loc, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	qdel(src)
 
-/obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/dummy/phased_mob/shadow/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/effect/dummy/phased_mob/shadow/process()
-	if(!jaunter)
-		qdel(src)
-	if(jaunter.loc != src)
-		qdel(src)
-	check_light_level()
-	shadow_heal()
-
-/obj/effect/dummy/phased_mob/shadow/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/shadow/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/shadow/singularity_act()
-	return
 
