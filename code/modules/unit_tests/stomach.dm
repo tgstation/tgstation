@@ -1,4 +1,8 @@
 /datum/unit_test/stomach/Run()
+
+	// Pause natural mob life so it can be handled entirely by the test
+	SSmobs.pause()
+
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 	var/obj/item/food/hotdog/debug/fooditem = allocate(/obj/item/food/hotdog/debug)
 	var/obj/item/organ/stomach/belly = human.getorganslot(ORGAN_SLOT_STOMACH)
@@ -31,3 +35,9 @@
 	fooditem.attack(human, human)
 
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human has ketchup without a stomach")
+
+
+
+/datum/unit_test/stomach/Destroy()
+	SSmobs.ignite()
+	return ..()
