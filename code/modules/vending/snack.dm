@@ -35,7 +35,9 @@
 /obj/machinery/vending/snack/random/Initialize()
 	// No need to call parent, we're not doing anything with this machine. Just picking a new type of machine to use, spawning it and deleting ourselves.
 	SHOULD_CALL_PARENT(FALSE)
-
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
 	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
 	new T(loc)
 	return INITIALIZE_HINT_QDEL
