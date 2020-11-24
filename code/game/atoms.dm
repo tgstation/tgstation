@@ -90,8 +90,6 @@
 
 	var/list/alternate_appearances
 
-	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
-	var/list/targeted_by
 
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
@@ -279,11 +277,6 @@
 
 	LAZYCLEARLIST(overlays)
 
-	for(var/i in targeted_by)
-		var/mob/M = i
-		LAZYREMOVE(M.do_afters, src)
-
-	targeted_by = null
 	QDEL_NULL(light)
 
 	if(smoothing_flags & SMOOTH_QUEUED)

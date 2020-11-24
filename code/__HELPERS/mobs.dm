@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving two mobs, the user and the target.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -192,8 +192,13 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/target_loc = target.loc
 
-	LAZYADD(user.do_afters, target)
-	LAZYADD(target.targeted_by, user)
+	if(source)
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			to_chat(user, "<span class='warning'>You can't interact with [target] at the moment!</span>")
+			return
+		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
+
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
@@ -217,7 +222,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 		if(
 			QDELETED(user) || QDELETED(target) \
-			|| (!(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters)) \
 			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
 			|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
@@ -230,9 +234,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(!QDELETED(target))
-		LAZYREMOVE(user.do_afters, target)
-		LAZYREMOVE(target.targeted_by, user)
+	if(source)
+		LAZYREMOVE(user.do_afters, source)
 
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
@@ -250,17 +253,21 @@ GLOBAL_LIST_EMPTY(species_list)
 	return ..()
 
 
-///Timed action involving one mob user. Target is optional.
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+///Timed action involving one mob user. Target is optional. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
 	if(target && !isturf(target))
 		target_loc = target.loc
 
-	if(target)
-		LAZYADD(user.do_afters, target)
-		LAZYADD(target.targeted_by, user)
+	if(source)
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			to_chat(user, "<span class='warning'>You can't interact with [target] at the moment!</span>")
+			return
+		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
+
 
 	var/atom/user_loc = user.loc
 
@@ -309,20 +316,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 
-		if(target && !(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters))
-			. = FALSE
-			break
-
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(!QDELETED(target))
-		LAZYREMOVE(user.do_afters, target)
-		LAZYREMOVE(target.targeted_by, user)
+	if(source)
+		LAZYREMOVE(user.do_afters, source)
 
 
 ///Timed action involving at least one mob user and a list of targets.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
@@ -338,10 +340,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		drifting = TRUE
 
 	var/list/originalloc = list()
-	for(var/atom/target in targets)
-		originalloc[target] = target.loc
-		LAZYADD(user.do_afters, target)
-		LAZYADD(target.targeted_by, user)
+
+	if(source)
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			to_chat(user, "<span class='warning'>You can't do this at the moment!</span>")
+			return
+		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
+
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -388,12 +394,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	for(var/thing in targets)
-		var/atom/target = thing
-		if(!QDELETED(target))
-			LAZYREMOVE(user.do_afters, target)
-			LAZYREMOVE(target.targeted_by, user)
-
+	if(source)
+		LAZYREMOVE(user.do_afters, source)
 
 /proc/is_species(A, species_datum)
 	. = FALSE
