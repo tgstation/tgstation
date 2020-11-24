@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Mecha drills can no longer infinitely stack up actions as fast as the player can click their mouse."
