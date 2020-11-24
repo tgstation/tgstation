@@ -5,10 +5,14 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
+/datum/component/riding/vehicle/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
+
 /datum/component/riding/vehicle/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	var/obj/vehicle/vehicle_parent = parent
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
 		return COMPONENT_DRIVER_BLOCK_MOVE
+	var/obj/vehicle/vehicle_parent = parent
 
 	if(!keycheck(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
@@ -56,27 +60,26 @@
 
 /// This handles the actual movement for vehicles once [/datum/component/riding/vehicle/proc/driver_move] has given us the green light
 /datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)
-	var/atom/movable/AM = parent
+	var/atom/movable/movable_parent = parent
 
-	last_vehicle_move = world.time
-
-	var/turf/next = get_step(AM, direction)
-	var/turf/current = get_turf(AM)
+	var/turf/next = get_step(movable_parent, direction)
+	var/turf/current = get_turf(movable_parent)
 	if(!istype(next) || !istype(current))
 		return	//not happening.
 	if(!turf_check(next, current))
-		to_chat(user, "<span class='warning'>\The [AM] can not go onto [next]!</span>")
+		to_chat(user, "<span class='warning'>\The [movable_parent] can not go onto [next]!</span>")
 		return
-	if(!Process_Spacemove(direction) || !isturf(AM.loc))
+	if(!Process_Spacemove(direction) || !isturf(movable_parent.loc))
 		return
 
-	step(AM, direction)
-	last_move_diagonal = ((direction & (direction - 1)) && (AM.loc == next))
+	step(movable_parent, direction)
+	last_move_diagonal = ((direction & (direction - 1)) && (movable_parent.loc == next))
+	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
 
 	if(QDELETED(src))
 		return
-	handle_vehicle_layer(AM.dir)
-	handle_vehicle_offsets(AM.dir)
+	handle_vehicle_layer(movable_parent.dir)
+	handle_vehicle_offsets(movable_parent.dir)
 	return TRUE
 
 /datum/component/riding/vehicle/atv

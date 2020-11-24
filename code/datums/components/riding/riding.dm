@@ -9,7 +9,6 @@
 /datum/component/riding
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-	var/last_vehicle_move = 0 //used for move delays
 	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower
 	var/vehicle_move_delay = 2
@@ -20,9 +19,6 @@
 	  * quite yet. Make sure if you define it on the vehicle, you define it here too.
 	  */
 	var/keytype
-
-	/// If the vehicle is a mob with abilities, and this is TRUE, then the rider can trigger those abilities while mounted
-	var/can_use_abilities = FALSE
 
 	/// position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
 	var/list/riding_offsets = list()
@@ -44,6 +40,8 @@
 	var/ride_check_flags = NONE
 	/// For telling someone they can't drive
 	COOLDOWN_DECLARE(message_cooldown)
+	/// For telling someone they can't drive
+	COOLDOWN_DECLARE(vehicle_move_cooldown)
 
 
 /datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, addl_ride_flags = NONE, potion_boost = FALSE)
@@ -63,7 +61,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
-	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move) // only actually needed for vehicles and drivable mobs
 
 /**
   * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation

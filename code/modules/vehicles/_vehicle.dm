@@ -129,7 +129,7 @@
 		return
 	if(!canmove)
 		return
-	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) == COMPONENT_DRIVER_BLOCK_MOVE)
+	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
 		return
 	vehicle_move(direction)
 	return TRUE

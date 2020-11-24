@@ -1,5 +1,11 @@
 // For any mob that can be ridden
 
+/datum/component/riding/creature
+	/// If TRUE, this creature's movements can be controlled by the rider while mounted (as opposed to riding cyborgs and humans, which is passive)
+	var/can_be_driven = TRUE
+	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
+	var/can_use_abilities = FALSE
+
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -28,6 +34,8 @@
 /datum/component/riding/creature/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
+	if(can_be_driven)
+		RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
 
 /// Creatures need to be logged when being mounted
 /datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
@@ -68,15 +76,14 @@
 	return ..()
 
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	var/mob/living/living_parent = parent
-
-	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
+	var/mob/living/living_parent = parent
 	var/turf/next = get_step(living_parent, direction)
-	last_vehicle_move = world.time
 	step(living_parent, direction)
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
+	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)
@@ -128,6 +135,9 @@
 
 
 ///////Yes, I said humans. No, this won't end well...//////////
+/datum/component/riding/creature/human
+	can_be_driven = FALSE
+
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/human_parent = parent
@@ -222,6 +232,9 @@
 
 
 //Now onto cyborg riding//
+/datum/component/riding/creature/cyborg
+	can_be_driven = FALSE
+
 /datum/component/riding/creature/cyborg/ride_check(mob/living/user)
 	var/mob/living/silicon/robot/robot_parent = parent
 	if(!iscarbon(user))
