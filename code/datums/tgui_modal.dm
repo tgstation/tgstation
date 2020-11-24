@@ -1,4 +1,4 @@
-/proc/tguialert(mob/user, message, title, list/buttons, timeout = 60 SECONDS)
+/proc/tgui_alert(mob/user, message, title, list/buttons, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -8,41 +8,61 @@
 		else
 			return
 	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
+	alert.ui_interact(user)
 	alert.wait()
-	return alert?.choice
+	if (alert)
+		. = alert.choice
+		qdel(alert)
+
+/proc/tgui_alert_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS)
+	if (!user)
+		user = usr
+	if (!istype(user))
+		if (istype(user, /client/))
+			var/client/C = user
+			user = C.mob
+		else
+			return
+	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
+	alert.ui_interact(user)
 
 /datum/tgui_modal
 	var/title
 	var/message
 	var/list/buttons
 	var/choice
-	var/datum/tgui/parent_ui
+	var/timeout
+	var/closed
 
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
 	src.title = title
 	src.message = message
 	src.buttons = buttons.Copy()
-	ui_interact(user)
 	if (timeout)
+		src.timeout = timeout
 		QDEL_IN(src, timeout)
 
 /datum/tgui_modal/Destroy(force, ...)
+	SStgui.close_uis(src)
 	title = null
 	message = null
-	parent_ui.close()
-	parent_ui = null
 	QDEL_NULL(buttons)
+	choice = null
 	. = ..()
 
 /datum/tgui_modal/proc/wait()
-	while (!choice)
+	while (!choice && !closed)
 		stoplag(1)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
-	parent_ui = SStgui.try_update_ui(user, src, ui)
-	if(!parent_ui)
-		parent_ui = new(user, src, "AlertModal")
-		parent_ui.open()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AlertModal")
+		ui.open()
+
+/datum/tgui_modal/ui_close(mob/user)
+	. = ..()
+	closed = TRUE
 
 /datum/tgui_modal/ui_state(mob/user)
 	return GLOB.always_state
@@ -51,7 +71,8 @@
 	. = list(
 		"title" = title,
 		"message" = message,
-		"buttons" = buttons
+		"buttons" = buttons,
+		"timeout" = timeout
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)
@@ -63,7 +84,7 @@
 			if (!(params["choice"] in buttons))
 				return
 			choice = params["choice"]
-			parent_ui.close()
+			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_modal/async
@@ -77,6 +98,10 @@
 	QDEL_NULL(callback)
 	. = ..()
 
+/datum/tgui_modal/async/ui_close(mob/user)
+	. = ..()
+	qdel(src)
+
 /datum/tgui_modal/async/ui_act(action, list/params)
 	. = ..()
 	if (.)
@@ -84,3 +109,6 @@
 			callback.InvokeAsync(choice)
 			qdel(src)
 		return
+
+/datum/tgui_modal/async/wait()
+	return
