@@ -11,6 +11,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
 	foodtypes = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
+	eat_time = 5
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null
@@ -596,6 +597,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+
+/obj/item/food/hotdog/debugdog
+	eat_time = 0
 
 /obj/item/food/meatbun
 	name = "meat bun"

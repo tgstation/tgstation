@@ -283,7 +283,7 @@ Behavior that's still missing from this component that original food items had t
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
 
 	if(eater == feeder)//If you're eating it yourself.
-		if(!do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
+		if(eat_time && !do_mob(feeder, eater, eat_time)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return

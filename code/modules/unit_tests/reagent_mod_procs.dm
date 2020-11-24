@@ -1,6 +1,6 @@
 /datum/unit_test/reagent_mob_procs/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
-	var/obj/item/food/hotdog/food = allocate(/obj/item/food/hotdog)
+	var/obj/item/food/hotdog/debug/food = allocate(/obj/item/food/hotdog/debug)
 
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human somehow has ketchup before eating")
 	TEST_ASSERT_EQUAL(human.has_reagent(/datum/reagent/medicine/epinephrine), FALSE, "Human somehow has epinephrine before injecting")

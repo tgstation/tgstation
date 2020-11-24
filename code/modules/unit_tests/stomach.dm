@@ -1,6 +1,6 @@
 /datum/unit_test/stomach/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
-	var/obj/item/food/hotdog/fooditem = allocate(/obj/item/food/hotdog)
+	var/obj/item/food/hotdog/debug/fooditem = allocate(/obj/item/food/debug)
 	var/obj/item/organ/stomach/belly = human.getorganslot(ORGAN_SLOT_STOMACH)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
