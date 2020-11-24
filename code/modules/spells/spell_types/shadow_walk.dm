@@ -73,7 +73,7 @@
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(3,3, 0, BODYPART_ORGANIC)
+		jaunter.heal_overall_damage(2,2, 0, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)
