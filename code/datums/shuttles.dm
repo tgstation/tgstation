@@ -464,6 +464,10 @@
 	suffix = "box"
 	name = "Hospital Ship"
 
+/datum/map_template/shuttle/whiteship/outpost
+	suffix = "outpost"
+	name = "Lyons' Pride"
+
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "Salvage Ship"
