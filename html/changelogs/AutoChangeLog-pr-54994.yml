@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Foam darts and other unembeddable bullet subtypes will no longer leave ghost shrapnel when hitting people"
