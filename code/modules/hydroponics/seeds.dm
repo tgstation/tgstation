@@ -210,7 +210,7 @@
 	if(get_gene(/datum/plant_gene/trait/maxchem))
 		product_count = clamp(round(product_count/2),0,5)
 	while(t_amount < product_count)
-		var/obj/item/reagent_containers/food/snacks/grown/t_prod
+		var/obj/item/food/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
 			var/obj/item/seeds/new_prod = pick(mutatelist)
 			t_prod = initial(new_prod.product)
@@ -262,8 +262,8 @@
 	var/reagent_max = 0
 	for(var/rid in reagents_add)
 		reagent_max += reagents_add[rid]
-	if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+	if(IS_EDIBLE(T))
+		var/obj/item/food/grown/grown_edible = T
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
 			if(reagent_max > 1)

@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "removes a direct use of Destroy()"

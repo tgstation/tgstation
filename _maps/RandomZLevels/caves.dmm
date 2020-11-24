@@ -324,8 +324,13 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "aX" = (
 /obj/effect/bump_teleporter{
-	id = "minedeepdown";
-	id_target = "minedeepup"
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	icon_state = "unres_w";
+	id = "minedeepup";
+	id_target = "minedeepdown";
+	invisibility = 0;
+	mouse_opacity = 0;
+	name = "light of the tunnel"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
@@ -583,8 +588,13 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "bU" = (
 /obj/effect/bump_teleporter{
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	icon_state = "unres_w";
 	id = "minedeepdown";
-	id_target = "minedeepup"
+	id_target = "minedeepup";
+	invisibility = 0;
+	mouse_opacity = 0;
+	name = "light of the tunnel"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
@@ -1016,8 +1026,13 @@
 /area/awaymission/caves/research)
 "dg" = (
 /obj/effect/bump_teleporter{
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	icon_state = "unres_e";
 	id = "mineintrodown";
-	id_target = "mineintroup"
+	id_target = "mineintroup";
+	invisibility = 0;
+	mouse_opacity = 0;
+	name = "light of the tunnel"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
@@ -1693,8 +1708,13 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fx" = (
 /obj/effect/bump_teleporter{
+	icon = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	icon_state = "unres_e";
 	id = "mineintroup";
-	id_target = "mineintrodown"
+	id_target = "mineintrodown";
+	invisibility = 0;
+	mouse_opacity = 0;
+	name = "light of the tunnel"
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14"
@@ -2164,6 +2184,17 @@
 /obj/effect/baseturf_helper/asteroid/basalt,
 /turf/closed/wall,
 /area/awaymission/caves/northblock)
+"lO" = (
+/turf/open/floor/plating/asteroid/basalt/airless,
+/area/awaymission/caves/bmp_asteroid/level_two)
+"OX" = (
+/turf/closed/indestructible/oldshuttle{
+	desc = "Go through.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "black";
+	name = "the other side"
+	},
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -3912,10 +3943,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+OX
+OX
+OX
+OX
 aa
 aa
 aa
@@ -5594,11 +5625,11 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -5851,11 +5882,11 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -5916,10 +5947,10 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
-bJ
+lO
 ab
 ab
 aa
@@ -6109,11 +6140,9 @@ aa
 aa
 ab
 ab
-bJ
+lO
 ab
-bJ
-ab
-ab
+lO
 ab
 ab
 ab
@@ -6172,11 +6201,13 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+ab
+ab
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 aa
@@ -6433,7 +6464,7 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 aa
@@ -6622,11 +6653,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -6687,7 +6718,7 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -6879,9 +6910,9 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -6943,11 +6974,11 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
 ab
 aa
@@ -7137,12 +7168,10 @@ aa
 aa
 ab
 ab
-bJ
+lO
 ab
-bJ
-bJ
-ab
-ab
+lO
+lO
 ab
 ab
 ab
@@ -7200,11 +7229,13 @@ ab
 ab
 ab
 ab
-bJ
 ab
-bJ
 ab
-bJ
+lO
+ab
+lO
+ab
+lO
 ab
 ab
 aa
@@ -7460,7 +7491,7 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -7650,11 +7681,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -7907,15 +7938,11 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
 ab
 ab
-bJ
-ab
-ab
-ab
-ab
+lO
 ab
 ab
 ab
@@ -7971,7 +7998,11 @@ ab
 ab
 ab
 ab
-bJ
+ab
+ab
+ab
+ab
+lO
 ab
 ab
 ab
@@ -8165,9 +8196,9 @@ aa
 aa
 ab
 ab
-bJ
-bJ
-bJ
+lO
+lO
+lO
 ab
 ab
 ab
@@ -8228,11 +8259,11 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 aa
@@ -8485,7 +8516,7 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -20718,10 +20749,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+OX
+OX
+OX
+OX
 aa
 aa
 aa
@@ -51688,10 +51719,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+OX
+OX
+OX
+OX
 aa
 aa
 aa
@@ -54450,8 +54481,8 @@ aa
 aa
 aa
 ab
-bJ
-bJ
+lO
+lO
 ab
 ab
 ab
@@ -54709,7 +54740,7 @@ aa
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -54964,11 +54995,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -55478,7 +55509,7 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -55735,11 +55766,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -55773,11 +55804,11 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
-bJ
-bJ
+lO
+lO
 ab
 aa
 aa
@@ -55992,7 +56023,7 @@ aa
 aa
 aa
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -56030,11 +56061,11 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
-bJ
+lO
 ab
 aa
 aa
@@ -56288,10 +56319,10 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
-bJ
+lO
 ab
 aa
 aa
@@ -56506,11 +56537,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -56765,7 +56796,7 @@ aa
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -56801,11 +56832,11 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 aa
 aa
@@ -57020,11 +57051,11 @@ aa
 aa
 aa
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 ab
 ab
@@ -57059,7 +57090,7 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
@@ -57317,9 +57348,9 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
+lO
+lO
+lO
 ab
 aa
 aa
@@ -57829,11 +57860,11 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
-bJ
-bJ
+lO
+lO
+lO
+lO
+lO
 ab
 aa
 aa
@@ -58086,11 +58117,11 @@ ab
 ab
 ab
 ab
-bJ
+lO
 ab
 ab
 ab
-bJ
+lO
 ab
 aa
 aa
@@ -58344,9 +58375,9 @@ ab
 ab
 ab
 ab
-bJ
-bJ
-bJ
+lO
+lO
+lO
 ab
 ab
 aa
@@ -66068,10 +66099,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+OX
+OX
+OX
+OX
 aa
 aa
 aa

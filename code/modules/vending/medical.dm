@@ -41,9 +41,13 @@
 	req_access = list(ACCESS_SYNDICATE)
 
 //Created out of a necessity to get these dumb chems out of the medical tools vendor.
-/obj/machinery/vending/medical/chems
+/obj/machinery/vending/drugs
 	name = "\improper NanoDrug Plus"
 	desc = "Medical drugs dispenser."
+	icon_state = "med"
+	icon_deny = "med-deny"
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+	req_access = list(ACCESS_MEDICAL)
 	products = list(/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
 					/obj/item/reagent_containers/syringe/convermol = 2,
@@ -67,8 +71,8 @@
 					/obj/item/plunger/reinforced = 2)
 	default_price = 50
 	extra_price = 100
-	refill_canister = /obj/item/vending_refill/medical/chems
+	refill_canister = /obj/item/vending_refill/drugs
 
-/obj/item/vending_refill/medical/chems
+/obj/item/vending_refill/drugs
 	machine_name = "NanoDrug Plus"
 	icon_state = "refill_medical"

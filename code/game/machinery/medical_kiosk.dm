@@ -231,7 +231,7 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient.reagents?.reagent_list.len)	//Chemical Analysis details.
+	if(altPatient?.reagents?.reagent_list.len)	//Chemical Analysis details.
 		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
 			if(R.overdosed)
@@ -246,7 +246,7 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	for(var/datum/reagent/R in altPatient.reagents.addiction_list)
+	for(var/datum/reagent/R in altPatient.reagents?.addiction_list)
 		addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
