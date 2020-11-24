@@ -50,3 +50,16 @@
 
 	TEST_ASSERT(human.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES, swap = TRUE), "Couldn't quick swap to glasses")
 	TEST_ASSERT_EQUAL(human.screens["nearsighted"], null, "Human quick swapped to glasses, but still has nearsighted overlay")
+
+/datum/unit_test/quick_swap_jumpsuit/Run()
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+
+	var/obj/item/jumpsuit = allocate(/obj/item/clothing/under/color/grey)
+	TEST_ASSERT(human.equip_to_slot_if_possible(jumpsuit, ITEM_SLOT_ICLOTHING), "Couldn't equip grey jumpsuit")
+
+	var/obj/item/toolbelt = allocate(/obj/item/storage/belt/utility)
+	TEST_ASSERT(human.equip_to_slot_if_possible(toolbelt, ITEM_SLOT_BELT), "Couldn't equip belt")
+
+	var/obj/item/other_jumpsuit = allocate(/obj/item/clothing/under/color/red)
+	TEST_ASSERT(human.equip_to_slot_if_possible(other_jumpsuit, ITEM_SLOT_ICLOTHING, swap = TRUE), "Couldn't quick swap to other jumpsuit")
+	TEST_ASSERT_EQUAL(human.belt, toolbelt, "Human dropped belt after quick swapping to jumpsuit")

@@ -143,7 +143,7 @@
 
 			if (swap && wear_suit)
 				current_equip = wear_suit
-				if (!dropItemToGround(wear_suit))
+				if (!dropItemToGround(wear_suit, invdrop = FALSE))
 					return
 
 			wear_suit = I
@@ -163,7 +163,7 @@
 		if(ITEM_SLOT_ICLOTHING)
 			if (w_uniform && swap)
 				current_equip = w_uniform
-				if (!dropItemToGround(w_uniform))
+				if (!dropItemToGround(w_uniform, invdrop = FALSE))
 					return
 			w_uniform = I
 			update_suit_sensors()
