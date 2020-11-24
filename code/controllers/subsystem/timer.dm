@@ -176,69 +176,72 @@ SUBSYSTEM_DEF(timer)
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
 
-			if (MC_TICK_CHECK)
-				return
-
 			// Break once we've invoked the entire bucket
 			timer = timer.next
 			if (timer == head)
 				break
-
-		// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
-		bucket_list[practical_offset++] = null
-		var/i = 0
-		for (i in 1 to length(second_queue))
-			timer = second_queue[i]
-			if (timer.timeToRun >= TIMER_MAX)
-				i--
+				
+			if (MC_TICK_CHECK)
 				break
+		
+		if (timer == head)
+			// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
+			bucket_list[practical_offset++] = null
+			var/i = 0
+			for (i in 1 to length(second_queue))
+				timer = second_queue[i]
+				if (timer.timeToRun >= TIMER_MAX)
+					i--
+					break
 
-			// Check for timers that are scheduled to run in the past
-			if (timer.timeToRun < head_offset)
-				bucket_resolution = null // force bucket recreation
-				stack_trace("[i] Invalid timer state: Timer in long run queue with a time to run less then head_offset. \
-					[get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+				// Check for timers that are scheduled to run in the past
+				if (timer.timeToRun < head_offset)
+					bucket_resolution = null // force bucket recreation
+					stack_trace("[i] Invalid timer state: Timer in long run queue with a time to run less then head_offset. \
+						[get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 
-				if (timer.callBack && !timer.spent)
-					timer.callBack.InvokeAsync()
-					invoked_timers += timer
-					bucket_count++
-				else if(!QDELETED(timer))
-					qdel(timer)
-				continue
+					if (timer.callBack && !timer.spent)
+						timer.callBack.InvokeAsync()
+						invoked_timers += timer
+						bucket_count++
+					else if(!QDELETED(timer))
+						qdel(timer)
+					continue
 
-			// Check for timers that are not capable of being scheduled to run without rebuilding buckets
-			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset - 1))
-				bucket_resolution = null // force bucket recreation
-				stack_trace("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to \
-					short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
-				if (timer.callBack && !timer.spent)
-					timer.callBack.InvokeAsync()
-					invoked_timers += timer
-					bucket_count++
-				else if(!QDELETED(timer))
-					qdel(timer)
-				continue
+				// Check for timers that are not capable of being scheduled to run without rebuilding buckets
+				if (timer.timeToRun < head_offset + TICKS2DS(practical_offset - 1))
+					bucket_resolution = null // force bucket recreation
+					stack_trace("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to \
+						short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
+					if (timer.callBack && !timer.spent)
+						timer.callBack.InvokeAsync()
+						invoked_timers += timer
+						bucket_count++
+					else if(!QDELETED(timer))
+						qdel(timer)
+					continue
 
-			// Transfer the timer into the bucket, performing necessary circular doubly-linked list operations
-			bucket_count++
-			var/bucket_pos = max(1, BUCKET_POS(timer))
-			var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
-			if (!bucket_head)
-				bucket_list[bucket_pos] = timer
-				timer.next = null
-				timer.prev = null
-				continue
+				// Transfer the timer into the bucket, performing necessary circular doubly-linked list operations
+				bucket_count++
+				var/bucket_pos = max(1, BUCKET_POS(timer))
+				var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
+				if (!bucket_head)
+					bucket_list[bucket_pos] = timer
+					timer.next = null
+					timer.prev = null
+					continue
 
-			if (!bucket_head.prev)
-				bucket_head.prev = bucket_head
-			timer.next = bucket_head
-			timer.prev = bucket_head.prev
-			timer.next.prev = timer
-			timer.prev.next = timer
-		if (i)
-			second_queue.Cut(1, i+1)
-		timer = null
+				if (!bucket_head.prev)
+					bucket_head.prev = bucket_head
+				timer.next = bucket_head
+				timer.prev = bucket_head.prev
+				timer.next.prev = timer
+				timer.prev.next = timer
+			if (i)
+				second_queue.Cut(1, i+1)
+			timer = null
+		if (MC_TICK_CHECK)
+				break
 
 	// Process each invoked timer
 	bucket_count -= length(invoked_timers)
