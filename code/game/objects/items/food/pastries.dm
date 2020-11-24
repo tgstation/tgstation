@@ -600,7 +600,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
-/obj/item/food/hotdog/debugdog
+/obj/item/food/hotdog/debug
 	eat_time = 0
 
 /obj/item/food/meatbun
