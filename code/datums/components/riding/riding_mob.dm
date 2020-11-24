@@ -14,13 +14,13 @@
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
 
-	if(isanimal(living_parent))
+	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = TRUE
 
 /datum/component/riding/creature/Destroy(force, silent)
 	unequip_buckle_inhands(parent)
-	if(isanimal(living_parent))
+	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = FALSE
 	return ..()
