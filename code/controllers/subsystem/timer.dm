@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(timer)
 				second_queue.Cut(1, i+1)
 			timer = null
 		if (MC_TICK_CHECK)
-				break
+			break
 
 	// Process each invoked timer
 	bucket_count -= length(invoked_timers)
