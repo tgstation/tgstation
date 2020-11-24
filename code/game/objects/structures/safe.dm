@@ -7,7 +7,7 @@ FLOOR SAFES
 /// Chance for a sound clue
 #define SOUND_CHANCE 10
 /// Explosion number threshold for opening safe
-#define BROKEN_THRESHOLD 2
+#define BROKEN_THRESHOLD 3
 
 //SAFES
 /obj/structure/safe
@@ -71,7 +71,6 @@ FLOOR SAFES
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
 				return
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='warning'>[I] won't fit in [src].</span>")
 	else
@@ -86,7 +85,7 @@ FLOOR SAFES
 	return
 
 /obj/structure/safe/ex_act(severity, target)
-	if(((severity == 2 && target == src) || severity == 1) && explosion_count < 3)
+	if(((severity == 2 && target == src) || severity == 1) && explosion_count < BROKEN_THRESHOLD)
 		explosion_count++
 		switch(explosion_count)
 			if(1)
@@ -109,16 +108,13 @@ FLOOR SAFES
 	if(!ui)
 		ui = new(user, src, "Safe", name)
 		ui.open()
-		ui.set_autoupdate(FALSE)
 
 /obj/structure/safe/ui_data(mob/user)
 	var/list/data = list()
 	data["dial"] = dial
 	data["open"] = open
 	data["locked"] = locked
-	data["broken"] = broken
-	if(explosion_count > BROKEN_THRESHOLD)
-		data["broken"] = TRUE
+	data["broken"] = check_broken()
 
 	if(open)
 		var/list/contents_names = list()
@@ -209,10 +205,20 @@ FLOOR SAFES
 			return TRUE
 
 /**
+  * Checks if safe is considered in a broken state for force-opening the safe
+  */
+/obj/structure/safe/proc/check_broken()
+	if(broken)
+		return TRUE
+	if(explosion_count >= BROKEN_THRESHOLD)
+		return TRUE
+	return FALSE
+
+/**
   * Called every dial turn to determine whether the safe should unlock or not.
   */
 /obj/structure/safe/proc/check_unlocked()
-	if(explosion_count > BROKEN_THRESHOLD)
+	if(check_broken())
 		return TRUE
 	if(current_tumbler_index > number_of_tumblers)
 		locked = FALSE
