@@ -645,9 +645,6 @@
 	do
 		CHECK_DNA_AND_SPECIES(target)
 
-		if (INTERACTING_WITH(src, target))
-			return FALSE
-
 		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
 			to_chat(src, "<span class='warning'>[target.name] is dead!</span>")
 			return FALSE

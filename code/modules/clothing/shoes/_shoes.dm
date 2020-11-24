@@ -141,9 +141,6 @@
 		return
 
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
-		if(INTERACTING_WITH(user, our_guy))
-			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
-			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
 
 		if(do_after(user, lace_time, target = our_guy, extra_checks = CALLBACK(src, .proc/still_shoed, our_guy)))
@@ -160,9 +157,6 @@
 			return
 		if(tied == SHOES_KNOTTED)
 			to_chat(user, "<span class='warning'>The laces on [loc]'s [src.name] are already a hopelessly tangled mess!</span>")
-			return
-		if(INTERACTING_WITH(user, our_guy))
-			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 
 		var/mod_time = lace_time
@@ -246,10 +240,6 @@
 
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
-
-	if(INTERACTING_WITH(user, src))
-		to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
-		return
 
 	to_chat(user, "<span class='notice'>You begin [tied ? "untying" : "tying"] the laces on [src]...</span>")
 

@@ -283,9 +283,6 @@
 		return FALSE
 
 	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
-	if(INTERACTING_WITH(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
-		return TRUE
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for

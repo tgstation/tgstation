@@ -37,9 +37,7 @@
 
 /datum/element/art/proc/on_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
-
-	if(!INTERACTING_WITH(user, source))
-		INVOKE_ASYNC(src, .proc/appraise, source, user) //Do not sleep the proc.
+	INVOKE_ASYNC(src, .proc/appraise, source, user) //Do not sleep the proc.
 
 /datum/element/art/proc/appraise(atom/source, mob/user)
 	to_chat(user, "<span class='notice'>You start appraising [source]...</span>")
