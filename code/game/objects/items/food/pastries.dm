@@ -732,8 +732,8 @@
 			ingredients_listed += "[ING.name], "
 		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 
-/obj/item/food/pancakes/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/food/pancakes/))
+/obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/P = I
 		if((contents.len >= PANCAKE_MAX_STACK) || ((P.contents.len + contents.len) > PANCAKE_MAX_STACK))
 			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
