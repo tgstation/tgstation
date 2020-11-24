@@ -45,7 +45,7 @@
 					 "<span class='hear'>You hear drilling.</span>")
 
 	// You can't drill harder by clicking more.
-	if(!(target in source.do_afters) && do_after_cooldown(target, source))
+	if(!do_after_cooldown(target, source))
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
