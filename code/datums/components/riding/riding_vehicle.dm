@@ -5,12 +5,8 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
-/datum/component/riding/vehicle/RegisterWithParent()
-	. = ..()
-	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
-
-/// Every time the driver tries to drive us, see if we can actually move or not
-/datum/component/riding/vehicle/proc/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
+/datum/component/riding/vehicle/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	var/obj/vehicle/vehicle_parent = parent
 	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 

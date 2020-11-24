@@ -14,13 +14,28 @@
 	if(can_use_abilities)
 		setup_abilities(riding_mob)
 
+	if(isanimal(living_parent))
+		var/mob/living/simple_animal/simple_parent = parent
+		simple_parent.stop_automated_movement = TRUE
+
 /datum/component/riding/creature/Destroy(force, silent)
 	unequip_buckle_inhands(parent)
+	if(isanimal(living_parent))
+		var/mob/living/simple_animal/simple_parent = parent
+		simple_parent.stop_automated_movement = FALSE
 	return ..()
 
 /datum/component/riding/creature/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
+
+/// Creatures need to be logged when being mounted
+/datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
+	if(!istype(living_parent) || !istype(rider))
+		return
+
+	living_parent.log_message("is now being ridden by [rider]", LOG_ATTACK, color="pink")
+	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
 
 // this applies to humans and most creatures, but is replaced again for cyborgs
 /datum/component/riding/creature/ride_check(mob/living/rider)
@@ -52,12 +67,16 @@
 	remove_abilities(former_rider)
 	return ..()
 
-/datum/component/riding/creature/proc/log_riding(mob/living/living_parent, mob/living/rider)
-	if(!istype(living_parent) || !istype(rider))
-		return
+/datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	var/mob/living/living_parent = parent
 
-	living_parent.log_message("is now being ridden by [rider]", LOG_ATTACK, color="pink")
-	rider.log_message("started riding [living_parent]", LOG_ATTACK, color="pink")
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
+		return COMPONENT_DRIVER_BLOCK_MOVE
+
+	var/turf/next = get_step(living_parent, direction)
+	last_vehicle_move = world.time
+	step(living_parent, direction)
+	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
 /datum/component/riding/creature/proc/force_dismount(mob/living/rider, gentle = FALSE)

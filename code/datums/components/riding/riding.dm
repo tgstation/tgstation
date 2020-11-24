@@ -63,6 +63,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move) // only actually needed for vehicles and drivable mobs
 
 /**
   * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
@@ -207,6 +208,10 @@
 		return !forbid_turf_typecache[current.type]
 	return TRUE
 
+/// Every time the driver tries to move, this is called to see if they can actually drive and move the vehicle (via relaymove)
+/datum/component/riding/proc/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	SIGNAL_HANDLER
+	return
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)

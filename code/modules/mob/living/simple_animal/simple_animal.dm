@@ -214,18 +214,17 @@
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
-		..()
+		return ..()
+
+	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+	qdel(O)
+	if(tame)
 		return
+	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+		tame = TRUE
+		tamed(user)
 	else
-		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
-		qdel(O)
-		if(tame)
-			return
-		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			tame = TRUE
-			tamed(user)
-		else
-			tame_chance += bonus_tame_chance
+		tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
@@ -709,3 +708,10 @@
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
 	return
+
+/mob/living/simple_animal/relaymove(mob/living/user, direction)
+	if(user.incapacitated())
+		return
+	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) == COMPONENT_DRIVER_BLOCK_MOVE)
+		return
+	return TRUE
