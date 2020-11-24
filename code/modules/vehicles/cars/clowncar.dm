@@ -58,8 +58,8 @@
 
 /obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/banana))
-		var/obj/item/reagent_containers/food/snacks/grown/banana/banana = I
+	if(istype(I, /obj/item/food/grown/banana))
+		var/obj/item/food/grown/banana/banana = I
 		obj_integrity += min(banana.seed.potency, max_integrity-obj_integrity)
 		to_chat(user, "<span class='danger'>You use the [banana] to repair the [src]!</span>")
 		qdel(banana)

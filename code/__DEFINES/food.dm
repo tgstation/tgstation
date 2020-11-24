@@ -13,7 +13,6 @@
 #define PINEAPPLE	(1<<12)
 #define BREAKFAST	(1<<13)
 #define CLOTH 		(1<<14)
-#define GRILLED		(1<<15)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
@@ -49,3 +48,4 @@
 
 ///Food trash flags
 #define FOOD_TRASH_POPABLE (1<<0)
+#define FOOD_TRASH_OPENABLE (1<<1)

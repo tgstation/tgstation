@@ -12,12 +12,12 @@
 	if(!IS_HERETIC(user))
 		return
 	if(!target)
-		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
+		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on a transmutation rune and activate the rune to recieve a target.</span>")
 		return
-	var/dist = get_dist(user.loc,target.loc)
-	var/dir = get_dir(user.loc,target.loc)
+	var/dist = get_dist(get_turf(user),get_turf(target))
+	var/dir = get_dir(get_turf(user),get_turf(target))
 	if(user.z != target.z)
-		to_chat(user,"<span class='warning'>[target.real_name] is on another plane of existance!</span>")
+		to_chat(user,"<span class='warning'>[target.real_name] is on another plane of existence!</span>")
 	else
 		switch(dist)
 			if(0 to 15)
@@ -30,7 +30,7 @@
 				to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
 
 	if(target.stat == DEAD)
-		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
+		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them to a transmutation rune!</span>")
 
 /datum/action/innate/heretic_shatter
 	name = "Shattering Offer"

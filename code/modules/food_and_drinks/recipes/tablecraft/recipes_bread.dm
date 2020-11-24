@@ -39,7 +39,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/boiledegg = 3,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1
+		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/bread/banana
 	subcategory = CAT_BREAD
@@ -70,7 +70,7 @@
 		/datum/reagent/consumable/soymilk = 5,
 		/obj/item/food/bread/plain = 1,
 		/obj/item/food/tofu = 3,
-		/obj/item/reagent_containers/food/snacks/grown/banana/mime = 1
+		/obj/item/food/grown/banana/mime = 1
 	)
 	result = /obj/item/food/bread/mimana
 	subcategory = CAT_BREAD
@@ -78,7 +78,7 @@
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
 	time = 40
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
+	reqs = list(/obj/item/food/grown/garlic = 1,
 				/obj/item/food/breadslice/plain = 1,
 				/obj/item/food/butter = 1
 	)
@@ -88,7 +88,7 @@
 /datum/crafting_recipe/food/butterbiscuit
 	name = "Butter Biscuit"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/food/bun = 1,
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/butterbiscuit
@@ -97,7 +97,7 @@
 /datum/crafting_recipe/food/butterdog
 	name = "Butterdog"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/food/bun = 1,
 		/obj/item/food/butter = 3,
 		)
 	result = /obj/item/food/butterdog
@@ -107,7 +107,7 @@
 	name = "Moldy Bread"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita = 1
+		/obj/item/food/grown/mushroom/amanita = 1
 		)
 	result = /obj/item/food/breadslice/moldy
 	subcategory = CAT_BREAD

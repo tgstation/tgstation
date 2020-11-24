@@ -95,7 +95,7 @@
 	var/list/diseases = list()
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
-	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
+	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50; 3, 17; 50)) //the 3% chance of 50 steps is intentional and played for laughs.
 		if (!mapload)
 			sleep(2)
 		if(i > 0)

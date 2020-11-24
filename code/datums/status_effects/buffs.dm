@@ -370,7 +370,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
 	examine_text = "<span class='notice'>They don't seem to be all here.</span>"
-	alert_type = /obj/screen/alert/status_effect/crucible_soul
+	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -392,7 +392,7 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
-	alert_type =/obj/screen/alert/status_effect/duskndawn
+	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
 	. = ..()
@@ -409,7 +409,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
 	tick_interval = 1 SECONDS
-	alert_type = /obj/screen/alert/status_effect/marshal
+	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
 	. = ..()
@@ -445,17 +445,17 @@
 				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
 
 
-/obj/screen/alert/status_effect/crucible_soul
+/atom/movable/screen/alert/status_effect/crucible_soul
 	name = "Blessing of Crucible Soul"
 	desc = "You phased through the reality, you are halfway to your final destination..."
 	icon_state = "crucible"
 
-/obj/screen/alert/status_effect/duskndawn
+/atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
 	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
 	icon_state = "duskndawn"
 
-/obj/screen/alert/status_effect/marshal
+/atom/movable/screen/alert/status_effect/marshal
 	name = "Blessing of Wounded Soldier"
 	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"

@@ -437,7 +437,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "nA" = (
@@ -668,7 +668,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "yI" = (
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "yR" = (
@@ -1220,7 +1220,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "UE" = (
