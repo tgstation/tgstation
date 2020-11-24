@@ -41,8 +41,8 @@
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return
-	var/obj/item/I = dish_drive_contents[dish_drive_contents.len] //the most recently-added item
-	dish_drive_contents -= I
+	var/obj/item/I = LAZYACCESS(dish_drive_contents, LAZYLEN(dish_drive_contents)) //the most recently-added item
+	LAZYREMOVE(dish_drive_contents, I)
 	user.put_in_hands(I)
 	to_chat(user, "<span class='notice'>You take out [I] from [src].</span>")
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
@@ -123,7 +123,7 @@
 	var/disposed = 0
 	for(var/obj/item/I in dish_drive_contents)
 		if(is_type_in_list(I, disposable_items))
-			dish_drive_contents -= I
+			LAZYREMOVE(dish_drive_contents, I)
 			I.forceMove(bin)
 			use_power(active_power_usage)
 			disposed++
