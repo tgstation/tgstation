@@ -88,31 +88,31 @@
 	switch(slot)
 		if(ITEM_SLOT_BELT)
 			if (belt && swap)
-				if (!temporarilyRemoveItemFromInventory(belt))
-					return
 				current_equip = belt
+				if (!dropItemToGround(belt))
+					return
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if (wear_id && swap)
-				if (!temporarilyRemoveItemFromInventory(wear_id))
-					return
 				current_equip = wear_id
+				if (!dropItemToGround(wear_id))
+					return
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if (ears && swap)
-				if (!temporarilyRemoveItemFromInventory(ears))
-					return
 				current_equip = ears
+				if (!dropItemToGround(ears))
+					return
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
 			if (glasses && swap)
-				if (!temporarilyRemoveItemFromInventory(glasses))
-					return
 				current_equip = glasses
+				if (!dropItemToGround(glasses))
+					return
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -126,31 +126,31 @@
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if (gloves && swap)
-				if (!temporarilyRemoveItemFromInventory(gloves))
-					return
 				current_equip = gloves
+				if (!dropItemToGround(gloves))
+					return
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if (shoes && swap)
-				if (!temporarilyRemoveItemFromInventory(shoes))
-					return
 				current_equip = shoes
+				if (!dropItemToGround(shoes))
+					return
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			var/obj/item/s_store_backup = s_store
 
 			if (swap && wear_suit)
-				if (!temporarilyRemoveItemFromInventory(wear_suit))
-					return
 				current_equip = wear_suit
+				if (!dropItemToGround(wear_suit, invdrop = FALSE))
+					return
 
 			wear_suit = I
 
 			if (swap && s_store_backup)
 				dropItemToGround(s_store_backup)
-				put_in_inactive_hand(s_store_backup)
+				put_in_inactive_hand(s_store_backup, forced = TRUE)
 				equip_to_slot_if_possible(s_store_backup, ITEM_SLOT_SUITSTORE)
 
 			if(I.flags_inv & HIDEJUMPSUIT)
@@ -162,9 +162,9 @@
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if (w_uniform && swap)
-				if (!temporarilyRemoveItemFromInventory(w_uniform))
-					return
 				current_equip = w_uniform
+				if (!dropItemToGround(w_uniform, invdrop = FALSE))
+					return
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -176,16 +176,16 @@
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if (s_store && swap)
-				if (!temporarilyRemoveItemFromInventory(s_store))
-					return
 				current_equip = s_store
+				if (!dropItemToGround(s_store))
+					return
 			s_store = I
 			update_inv_s_store()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 	if (current_equip)
-		put_in_active_hand(current_equip)
+		put_in_hands(current_equip)
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
