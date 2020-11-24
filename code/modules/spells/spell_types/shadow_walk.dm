@@ -76,5 +76,7 @@
 			visible_message("<span class='boldwarning'>[jaunter] is revealed by the light!</span>")
 		else
 			visible_message("<span class='boldwarning'>[jaunter] emerges from the darkness!</span>")
+		jaunter.forceMove(get_turf(src))
+		jaunter = null
 		playsound(loc, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	qdel(src)
