@@ -49,6 +49,7 @@
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
 	check_light_level()
+	shadow_heal()
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/oldloc = loc
