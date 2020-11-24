@@ -208,11 +208,7 @@ FLOOR SAFES
   * Checks if safe is considered in a broken state for force-opening the safe
   */
 /obj/structure/safe/proc/check_broken()
-	if(broken)
-		return TRUE
-	if(explosion_count >= BROKEN_THRESHOLD)
-		return TRUE
-	return FALSE
+  return broken || explosion_count >= BROKEN_THRESHOLD
 
 /**
   * Called every dial turn to determine whether the safe should unlock or not.
