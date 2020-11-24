@@ -132,6 +132,8 @@
 	. = ..()
 	if(deploy_time)
 		addtimer(CALLBACK(src, .proc/deploy), deploy_time)
+	else
+		deploy()
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
