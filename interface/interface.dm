@@ -86,7 +86,7 @@
 			var/list/all_tms = list()
 			for(var/entry in GLOB.revdata.testmerge)
 				var/datum/tgs_revision_information/test_merge/tm = entry
-				all_tms += "- #[tm.number]"
+				all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
 			var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
 			local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
 
