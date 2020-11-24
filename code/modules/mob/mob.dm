@@ -492,7 +492,7 @@
 		return FALSE
 
 	//you can only queue up one examine on something at a time
-	if(examined_thing in do_afters)
+	if(DOING_INTERACTION(src, DOAFTER_SOURCE_FEELYTOUCHY))
 		return FALSE
 
 	to_chat(src, "<span class='notice'>You start feeling around for something...</span>")
@@ -507,7 +507,7 @@
 	else if(ismob(examined_thing) && examined_thing != src)
 		examine_delay_length *= 2
 
-	if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = examined_thing))
+	if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = examined_thing, source = DOAFTER_SOURCE_FEELYTOUCHY))
 		to_chat(src, "<span class='notice'>You can't get a good feel for what is there.</span>")
 		return FALSE
 

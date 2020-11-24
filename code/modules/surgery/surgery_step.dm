@@ -92,7 +92,7 @@
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
-	if(do_after(user, modded_time, target = target, source = DOAFTER_SOURCE_SURGERY, max_interact_count = 1))
+	if(do_after(user, modded_time, target = target, source = DOAFTER_SOURCE_SURGERY))
 
 		var/chem_check_result = chem_check(target)
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)

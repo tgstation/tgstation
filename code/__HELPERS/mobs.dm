@@ -180,8 +180,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			return "unknown"
 
 
-///Timed action involving two mobs, the user and the target.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
+///Timed action involving two mobs, the user and the target. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving one mob user. Target is optional. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -323,8 +323,8 @@ GLOBAL_LIST_EMPTY(species_list)
 		LAZYREMOVE(user.do_afters, source)
 
 
-///Timed action involving at least one mob user and a list of targets.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count)
+///Timed action involving at least one mob user and a list of targets. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
