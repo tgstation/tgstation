@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020
+ * @author bobbahbrown (https://github.com/bobbahbrown)
+ * @license MIT
+ */
+
 import { clamp01 } from 'common/math';
 import { useBackend } from '../backend';
 import { Button, Flex, Box } from '../components';
