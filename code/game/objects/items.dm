@@ -1004,7 +1004,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return TRUE
 
 /// How many different types of mats will be counted in a bite?
-#define MAX_BONUS_MATS_PER_BITE 2
+#define MAX_MATS_PER_BITE 2
 
 /*
  * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
@@ -1023,43 +1023,35 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  * * source_item - the item that held the item being consumed - bread, cake, etc
  * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
  */
-/obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	/// If source_item is a snack, we can adjust its taste
-	var/obj/item/reagent_containers/food/snacks/S = source_item
-	if(!istype(S))
-		S = null
-
+/obj/item/proc/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
-		INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bit something they shouldn't have!</span>", \
+		INVOKE_ASYNC(victim, /mob.proc/emote, "scream")
+		victim.visible_message("<span class='warning'>[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!</span>", \
 							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
 
-		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
-		M.losebreath += 2
-		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
-			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
-			M.losebreath += 6
+		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
+		victim.losebreath += 2
+		if(tryEmbed(victim.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
+			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+			victim.losebreath += 6
 			discover_after = FALSE
 		if(QDELETED(src)) // in case trying to embed it caused its deletion (say, if it's DROPDEL)
 			return
-
-		if(S?.tastes?.len) //is that blood in my mouth?
-			S.tastes += "iron"
-			S.tastes["iron"] = 2
+		source_item?.reagents?.add_reagent(/datum/reagent/blood, 2)
 
 	else if(custom_materials?.len) //if we've got materials, lets see whats in it
-		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
+		/// How many mats have we found? You can only be affected by two material datums by default
 		var/found_mats = 0
 		/// How much of each material is in it? Used to determine if the glass should break
 		var/total_material_amount = 0
 
 		for(var/mats in custom_materials)
 			total_material_amount += custom_materials[mats]
-			if(found_mats >= MAX_BONUS_MATS_PER_BITE)
+			if(found_mats >= MAX_MATS_PER_BITE)
 				continue //continue instead of break so we can finish adding up all the mats to the total
 
-			var/datum/material/FM = mats
-			if(FM.on_accidental_mat_consumption(M, S))
+			var/datum/material/discovered_mat = mats
+			if(discovered_mat.on_accidental_mat_consumption(victim, source_item))
 				found_mats++
 
 		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
@@ -1069,38 +1061,38 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(M, "shatter", 25, TRUE)
+				playsound(victim, "shatter", 25, TRUE)
 				qdel(src)
-				if(QDELETED(S))
-					broken_glass.on_accidental_consumption(M, user)
+				if(QDELETED(source_item))
+					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(M, "shatter", 15, TRUE)
+				playsound(victim, "shatter", 15, TRUE)
 			discover_after = FALSE
 
-		M.adjust_disgust(33)
-		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
+		victim.adjust_disgust(33)
+		victim.visible_message("<span class='warning'>[victim] looks like [victim.p_theyve()] just bitten into something hard.</span>", \
 						"<span class='warning'>Eugh! Did I just bite into something?</span>")
 
 	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
-		/// M's chest (for cavity implanting the item)
-		var/obj/item/bodypart/chest/CV = M.get_bodypart(BODY_ZONE_CHEST)
-		if(CV.cavity_item)
-			M.vomit(5, FALSE, FALSE, distance = 0)
+		/// victim's chest (for cavity implanting the item)
+		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
+		if(victim_cavity.cavity_item)
+			victim.vomit(5, FALSE, FALSE, distance = 0)
 			forceMove(drop_location())
-			to_chat(M, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
+			to_chat(victim, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
 		else
-			M.transferItemToLoc(src, M, TRUE)
-			M.losebreath += 2
-			CV.cavity_item = src
-			to_chat(M, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
+			victim.transferItemToLoc(src, victim, TRUE)
+			victim.losebreath += 2
+			victim_cavity.cavity_item = src
+			to_chat(victim, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
 		discover_after = FALSE
 
 	else
-		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
+		to_chat(victim, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
 
 	return discover_after
 
-#undef MAX_BONUS_MATS_PER_BITE
+#undef MAX_MATS_PER_BITE
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)

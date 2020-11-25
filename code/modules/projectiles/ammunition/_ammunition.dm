@@ -50,19 +50,12 @@
 /*
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
  */
-/obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+/obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(BB)
 		BB = null
 		update_icon()
-		var/obj/item/reagent_containers/food/snacks/S = source_item
-		if(istype(S))
-			if(S.reagents)
-				S.reagents.add_reagent(/datum/reagent/gunpowder, S.reagents.total_volume*(2/3))
-			if(S.tastes?.len)
-				S.tastes += "salt"
-				S.tastes["salt"] = 3
-
-		M.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
+		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
+		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
 
 	return ..()
 
