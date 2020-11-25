@@ -353,11 +353,6 @@
 	dirty_anim_playing = FALSE
 	operating = FALSE
 
-	for(var/obj/item/reagent_containers/food/snacks/S in src)
-		if(prob(50))
-			new /obj/item/food/badrecipe(src)
-			qdel(S)
-
 	after_finish_loop()
 
 /obj/machinery/microwave/proc/after_finish_loop()

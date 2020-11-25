@@ -230,7 +230,7 @@
 	if(!ckey)
 		..(TRUE)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/mouse = new(loc)
+			var/obj/item/food/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
 			mouse.name = name
 	SSmobs.cheeserats -= src // remove rats on death

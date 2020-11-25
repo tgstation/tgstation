@@ -267,7 +267,6 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
-		check_trash(I)
 		if(I.juice_results)
 			juice_item(I)
 
@@ -287,7 +286,6 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
-		check_trash(I)
 		if(I.grind_results)
 			grind_item(i, user)
 
@@ -299,12 +297,6 @@
 	if(I.reagents)
 		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
-
-/obj/machinery/reagentgrinder/proc/check_trash(obj/item/I)
-	if (istype(I, /obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/R = I
-		if (R.trash)
-			R.generate_trash(get_turf(src))
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing

@@ -375,7 +375,7 @@
 	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/))
+	if(IS_EDIBLE(O))
 		return TRUE
 	return FALSE
 

@@ -523,7 +523,7 @@
 /datum/chemical_reaction/yuck
 	results = list(/datum/reagent/yuck = 4)
 	required_reagents = list(/datum/reagent/fuel = 3)
-	required_container = /obj/item/reagent_containers/food/snacks/deadmouse
+	required_container = /obj/item/food/deadmouse
 
 
 /datum/chemical_reaction/slimejelly

@@ -178,7 +178,7 @@
 	description = "Station 14 ran out of freeze-dried mice. Ship some fresh ones so their janitor doesn't go on strike."
 	reward = 5000
 	required_count = 5
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/deadmouse)
+	wanted_types = list(/obj/item/food/deadmouse)
 
 /datum/bounty/item/assistant/paper_bin
 	name = "Paper Bins"

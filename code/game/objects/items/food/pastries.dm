@@ -760,8 +760,8 @@
 		return O.attackby(item, user, params)
 	..()
 
-/obj/item/food/pancakes/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
-	var/mutable_appearance/pancake = mutable_appearance(icon, "[P.inhand_icon_state]_[rand(1,3)]")
+/obj/item/food/pancakes/proc/update_snack_overlays(obj/item/pancake)
+	var/mutable_appearance/pancake = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1,3)]")
 	pancake.pixel_x = rand(-1,1)
 	pancake.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake)

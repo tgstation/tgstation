@@ -506,6 +506,10 @@
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/on_grind(): ())
+#define COMSIG_ITEM_ON_GRIND "on_grind"
+///from base of obj/item/on_juice(): ()
+#define COMSIG_ITEM_ON_JUICE "on_juice"
 ///Called when an item is dried by a drying rack:
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
@@ -686,7 +690,7 @@
 
 //Food
 
-///from base of obj/item/reagent_containers/food/snacks/attack() & Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
+///from Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
 ///from base of datum/component/edible/oncrossed: (mob/crosser, bitecount)
 #define COMSIG_FOOD_CROSSED "food_crossed"

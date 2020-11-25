@@ -42,8 +42,8 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = FALSE
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
+				for(var/obj/item/potential_snack in oview(src,3))
+					if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
 						movement_target = S
 						break
 			if(movement_target)
