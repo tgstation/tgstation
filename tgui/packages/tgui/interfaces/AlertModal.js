@@ -7,9 +7,8 @@
 
 import { clamp01 } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Flex, Box } from '../components';
+import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
-import { computeBoxProps } from '../components/Box';
 
 export const AlertModal = (props, context) => {
   const { act, data } = useBackend(context);
@@ -61,12 +60,11 @@ export const AlertModal = (props, context) => {
 };
 
 export const Loader = props => {
-  const { value, ...rest } = props;
+  const { value } = props;
   return (
     <div
-      className="AlertModal__Loader"
-      {...computeBoxProps(rest)}>
-      <div
+      className="AlertModal__Loader">
+      <Box
         className="AlertModal__LoaderProgress"
         style={{
           width: clamp01(value) * 100 + '%',

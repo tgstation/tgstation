@@ -13,9 +13,9 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client/))
-			var/client/C = user
-			user = C.mob
+		if (istype(user, /client))
+			var/client/client = user
+			user = client.mob
 		else
 			return
 	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
@@ -41,9 +41,9 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client/))
-			var/client/C = user
-			user = C.mob
+		if (istype(user, /client))
+			var/client/client = user
+			user = client.mob
 		else
 			return
 	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
@@ -82,10 +82,7 @@
 
 /datum/tgui_modal/Destroy(force, ...)
 	SStgui.close_uis(src)
-	title = null
-	message = null
 	QDEL_NULL(buttons)
-	choice = null
 	. = ..()
 
 /**
@@ -154,11 +151,10 @@
 
 /datum/tgui_modal/async/ui_act(action, list/params)
 	. = ..()
-	if (.)
-		if (choice != null)
-			callback.InvokeAsync(choice)
-			qdel(src)
+	if (!. || choice == null)
 		return
+	callback.InvokeAsync(choice)
+	qdel(src)
 
 /datum/tgui_modal/async/wait()
 	return

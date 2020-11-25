@@ -171,9 +171,9 @@
 	if (!User)
 		User = usr
 	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
-			User = C.mob
+		if (istype(User, /client))
+			var/client/client = User
+			User = client.mob
 		else
 			return
 
