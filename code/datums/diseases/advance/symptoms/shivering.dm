@@ -40,7 +40,6 @@ Bonus
 		unsafe = TRUE
 	if(A.properties["stage_rate"] >= 10)
 		power = 2.5
-	set_body_temp(A.affected_mob, A)
 
 /datum/symptom/shivering/Activate(datum/disease/advance/A)
 	if(!..())
@@ -50,6 +49,7 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
+	set_body_temp(A.affected_mob, A)
 
 /**
  * set_body_temp Sets the body temp change
@@ -60,7 +60,10 @@ Bonus
  * * datum/disease/advance/A The disease applying the symptom
  */
 /datum/symptom/shivering/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
-	M.add_body_temperature_change("shivering", -((6 * power) * A.stage))
+	if(!unsafe)
+		M.add_body_temperature_change("shivering", max(-((6 * power) * A.stage), (BODYTEMP_COLD_DAMAGE_LIMIT + 1)))
+	else
+		M.add_body_temperature_change("shivering", max(-((6 * power) * A.stage), (BODYTEMP_COLD_DAMAGE_LIMIT - 20)))
 
 /// Update the body temp change based on the new stage
 /datum/symptom/shivering/on_stage_change(datum/disease/advance/A)

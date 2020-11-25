@@ -41,7 +41,6 @@ Bonus
 		unsafe = TRUE
 	if(A.properties["resistance"] >= 10)
 		power = 2.5
-	set_body_temp(A.affected_mob, A)
 
 /datum/symptom/fever/Activate(datum/disease/advance/A)
 	if(!..())
@@ -51,6 +50,7 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel hot.", "You feel like you're burning.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel too hot.", "You feel like your blood is boiling.")]</span>")
+	set_body_temp(A.affected_mob, A)
 
 /**
  * set_body_temp Sets the body temp change
@@ -61,7 +61,10 @@ Bonus
  * * datum/disease/advance/A The disease applying the symptom
  */
 /datum/symptom/fever/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
-	M.add_body_temperature_change("fever", (6 * power) * A.stage)
+	if(!unsafe)
+		M.add_body_temperature_change("fever", max((6 * power) * A.stage, (BODYTEMP_HEAT_DAMAGE_LIMIT - 1)))
+	else
+		M.add_body_temperature_change("fever", max((6 * power) * A.stage, (BODYTEMP_HEAT_DAMAGE_LIMIT + 20)))
 
 /// Update the body temp change based on the new stage
 /datum/symptom/fever/on_stage_change(datum/disease/advance/A)
