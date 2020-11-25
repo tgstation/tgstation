@@ -315,6 +315,13 @@
 	max_fuel = 40
 	custom_materials = list(/datum/material/glass=60)
 
+/obj/item/weldingtool/brass
+	name = "brass welding tool"
+	desc = "On first examination, what looks almost like a drill is actually a brass welding tool, with a leather grip and remarkable sheen."
+	inhand_icon_state = "brasswelder"
+	icon_state = "brasswelder"
+	custom_materials = list(/datum/material/bronze=100)
+
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
 

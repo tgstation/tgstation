@@ -86,6 +86,14 @@
 	toolspeed = 0.1
 	random_color = FALSE
 
+/obj/item/screwdriver/brass
+	name = "brass screwdriver"
+	desc = "A dark, neat screwdriver. It's grip is made of obsidian, an emblem of a cog etched onto the top."
+	inhand_icon_state = "screwdriver_brass"
+	icon_state = "screwdriver_brass"
+	custom_materials = list(/datum/material/bronze=75)
+	random_color = FALSE
+
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
 

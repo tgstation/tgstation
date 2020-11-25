@@ -31,6 +31,13 @@
 	icon_state = "crowbar_red"
 	force = 8
 
+/obj/item/crowbar/brass
+	name = "brass crowbar"
+	desc = "A small, intricately decorated crowbar. Little cogs are etched into the leather grip."
+	inhand_icon_state = "crowbar_brass"
+	icon_state = "crowbar_brass"
+	custom_materials = list(/datum/material/bronze=50)
+
 /obj/item/crowbar/abductor
 	name = "alien crowbar"
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."

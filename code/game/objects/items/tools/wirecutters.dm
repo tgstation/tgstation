@@ -77,6 +77,14 @@
 	toolspeed = 0.1
 	random_color = FALSE
 
+/obj/item/wirecutters/brass
+	name = "brass wirecutters"
+	desc = "Leather and brass wirecutters, with a little cog mechanism used to open and close them."
+	inhand_icon_state = "cutters_brass"
+	icon_state = "cutters_brass"
+	random_color = FALSE
+	custom_materials = list(/datum/material/bronze=80)
+
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"
 	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."

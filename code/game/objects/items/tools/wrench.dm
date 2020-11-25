@@ -35,6 +35,13 @@
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 
+/obj/item/wrench/brass
+	name = "brass wrench"
+	desc = "A small wrench made of pure brass."
+	inhand_icon_state = "wrench_brass"
+	icon_state = "wrench_brass"
+	custom_materials = list(/datum/material/bronze=150)
+
 
 /obj/item/wrench/medical
 	name = "medical wrench"
