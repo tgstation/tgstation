@@ -141,7 +141,7 @@
 		return
 
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
-		if(INTERACTING_WITH(user, our_guy))
+		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
@@ -161,7 +161,7 @@
 		if(tied == SHOES_KNOTTED)
 			to_chat(user, "<span class='warning'>The laces on [loc]'s [src.name] are already a hopelessly tangled mess!</span>")
 			return
-		if(INTERACTING_WITH(user, our_guy))
+		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 
@@ -247,7 +247,7 @@
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
 
-	if(INTERACTING_WITH(user, src))
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 		return
 

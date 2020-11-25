@@ -192,12 +192,13 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/target_loc = target.loc
 
-	if(source)
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+	if(!source && target)
+		source = target //Use the direct ref to the target
+	if(source) //Do we have a source now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
-			to_chat(user, "<span class='warning'>You can't interact with [target] at the moment!</span>")
 			return
-		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
+		LAZYSET(user.do_afters, source, current_interaction_count + 1)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -261,13 +262,13 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target && !isturf(target))
 		target_loc = target.loc
 
-	if(source)
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+	if(!source && target)
+		source = target //Use the direct ref to the target
+	if(source) //Do we have a source now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
-			to_chat(user, "<span class='warning'>You can't interact with [target] at the moment!</span>")
 			return
-		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
-
+		LAZYSET(user.do_afters, source, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
 
@@ -342,11 +343,11 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/originalloc = list()
 
 	if(source)
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) | 0
+		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
 			to_chat(user, "<span class='warning'>You can't do this at the moment!</span>")
 			return
-		LAZYADDASSOC(user.do_afters, source, current_interaction_count++)
+		LAZYSET(user.do_afters, source, current_interaction_count + 1)
 
 
 	var/holding = user.get_active_held_item()
