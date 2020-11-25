@@ -213,16 +213,17 @@
 	var/brain_status = "Brain patterns normal."
 	if(LAZYLEN(altPatient.get_traumas()))
 		var/list/trauma_text = list()
-		for(var/datum/brain_trauma/B in altPatient.get_traumas())
+		for(var/t in altPatient.get_traumas())
+			var/datum/brain_trauma/trauma = t
 			var/trauma_desc = ""
-			switch(B.resilience)
+			switch(trauma.resilience)
 				if(TRAUMA_RESILIENCE_SURGERY)
 					trauma_desc += "severe "
 				if(TRAUMA_RESILIENCE_LOBOTOMY)
 					trauma_desc += "deep-rooted "
 				if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
 					trauma_desc += "permanent "
-			trauma_desc += B.scan_desc
+			trauma_desc += trauma.scan_desc
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
@@ -231,11 +232,12 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient?.reagents?.reagent_list.len)	//Chemical Analysis details.
-		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
-			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
-			if(R.overdosed)
-				overdose_list += list(list("name" = R.name))
+	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
+		for(var/r in altPatient.reagents.reagent_list)
+			var/datum/reagent/reagent = r
+			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
+			if(reagent.overdosed)
+				overdose_list += list(list("name" = reagent.name))
 	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
@@ -246,9 +248,9 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	if(altPatient?.reagents?.addiction_list.len)
-		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
-			addict_list += list(list("name" = R.name))
+	for(var/a in altPatient.reagents.addiction_list)
+		var/datum/reagent/addiction = a
+		addict_list += list(list("name" = addiction.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
