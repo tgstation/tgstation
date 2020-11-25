@@ -421,6 +421,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	max_amount = 30
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
+	merge_type = /obj/item/stack/conveyor
 	///id for linking
 	var/id = ""
 
@@ -452,6 +453,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/thirty
 	amount = 30
+	merge_type = /obj/item/stack/conveyor
 
 /obj/item/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"
