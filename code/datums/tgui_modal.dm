@@ -31,6 +31,7 @@
 	var/message
 	var/list/buttons
 	var/choice
+	var/start_time
 	var/timeout
 	var/closed
 
@@ -40,6 +41,7 @@
 	src.buttons = buttons.Copy()
 	if (timeout)
 		src.timeout = timeout
+		start_time = world.time
 		QDEL_IN(src, timeout)
 
 /datum/tgui_modal/Destroy(force, ...)
@@ -71,9 +73,11 @@
 	. = list(
 		"title" = title,
 		"message" = message,
-		"buttons" = buttons,
-		"timeout" = timeout
+		"buttons" = buttons
 	)
+
+	if(timeout)
+		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 
 /datum/tgui_modal/ui_act(action, list/params)
 	. = ..()

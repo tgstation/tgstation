@@ -392,7 +392,7 @@
 	if(flashwindow)
 		window_flash(M.client)
 	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
-	switch(tgui_alert(M,Question,"Please answer in [DisplayTimeText(poll_time)]!",answers, timeout=poll_time))
+	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)

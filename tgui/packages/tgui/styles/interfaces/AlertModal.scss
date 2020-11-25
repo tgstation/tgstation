@@ -1,3 +1,5 @@
+@use '../colors.scss';
+
 .AlertModal__Message {
   text-align: center;
   justify-content: center;
@@ -5,4 +7,17 @@
 
 .AlertModal__Buttons {
   justify-content: center;
+}
+
+.AlertModal__Loader {
+  width: 100%;
+  position: relative;
+  height: 4px;
+}
+
+.AlertModal__LoaderProgress {
+  position: absolute;
+  transition: background-color 500ms, width 500ms;
+  background-color: colors.bg(colors.$primary);
+  height: 100%;
 }
