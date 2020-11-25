@@ -710,7 +710,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aY" = (
-/obj/machinery/vending/snack/random{
+/obj/effect/spawner/randomsnackvend{
 	extended_inventory = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -827,7 +827,7 @@
 /turf/open/floor/plasteel/white/side,
 /area/ruin/space/has_grav/listeningstation)
 "bh" = (
-/obj/machinery/vending/cola/random{
+/obj/effect/spawner/randomcolavend{
 	extended_inventory = 1
 	},
 /obj/effect/decal/cleanable/dirt,
