@@ -5068,7 +5068,7 @@
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
 /obj/effect/turf_decal/tile/red,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aiL" = (
@@ -31065,7 +31065,7 @@
 /area/science/server)
 "aXS" = (
 /obj/structure/window/reinforced,
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -38301,7 +38301,7 @@
 "biD" = (
 /obj/structure/flora/junglebush,
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /mob/living/carbon/monkey,
@@ -41095,8 +41095,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
+/obj/item/food/dough,
+/obj/item/food/dough,
 /obj/item/kitchen/rollingpin,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/dark,
@@ -41270,14 +41270,14 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/snacks/grown/corn{
+/obj/item/food/grown/corn{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/grown/pumpkin{
+/obj/item/food/grown/pumpkin{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/grown/carrot,
-/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/food/grown/carrot,
+/obj/item/food/grown/tomato,
 /obj/machinery/door/window/eastleft{
 	dir = 8;
 	name = "Hydroponics Desk";
@@ -44854,7 +44854,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
 "bsE" = (
-/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/food/grown/banana,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
@@ -47752,15 +47752,15 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy/lily{
+/obj/item/food/grown/poppy{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy/geranium{
+/obj/item/food/grown/poppy{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/food/grown/poppy,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "bxv" = (
@@ -82093,10 +82093,10 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/item/clipboard,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/grapes,
 /obj/machinery/door/window/eastright{
 	dir = 8;
 	name = "Hydroponics Desk";
@@ -90625,10 +90625,10 @@
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/grown/onion,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/onion,
+/obj/item/food/grown/onion,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
