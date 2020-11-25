@@ -67,11 +67,32 @@
 		// then the report issue button being tgui-based would be problematic.
 		if(tgalert(src, message, "Report Issue","Yes","No")!="Yes")
 			return
-		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
-		var/servername = CONFIG_GET(string/servername)
-		var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[issue_template]"
-		if(GLOB.round_id || servername)
-			url_params = "Issue reported from [GLOB.round_id ? " Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]" : servername]\n\n[url_params]"
+
+		// Keep a static version of the template to avoid reading file
+		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE/bug_report.md")
+
+		// Get a local copy of the template for modification
+		var/local_template = issue_template
+
+		// Remove comment header
+		var/content_start = findtext(local_template, "<")
+		if(content_start)
+			local_template = copytext(local_template, content_start)
+
+		// Insert round
+		if(GLOB.round_id)
+			local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
+
+		// Insert testmerges
+		if(GLOB.revdata.testmerge.len)
+			var/list/all_tms = list()
+			for(var/entry in GLOB.revdata.testmerge)
+				var/datum/tgs_revision_information/test_merge/tm = entry
+				all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
+			var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
+			local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
+
+		var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[local_template]"
 		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
