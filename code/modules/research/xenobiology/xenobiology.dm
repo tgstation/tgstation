@@ -160,7 +160,7 @@
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message("<span class='warning'>[user] spits out [food_item]!</span>", "<span class='notice'>You spit out [O]!</span>")
+			user.visible_message("<span class='warning'>[user] spits out [food_item]!</span>", "<span class='notice'>You spit out [food_item]!</span>")
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
 			var/drink_type = get_random_drink()

@@ -149,7 +149,7 @@
 			fried.fry() // actually set the name and colour it
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
-				step(B, pick(NORTH,SOUTH,EAST,WEST))
+				step(food_item, pick(NORTH,SOUTH,EAST,WEST))
 	..()
 
 /datum/chemical_reaction/slime/slimebork/proc/getbork()

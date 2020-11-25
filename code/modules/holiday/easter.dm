@@ -170,6 +170,8 @@
 	name = "hot-cross bun"
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
+	foodtypes = SUGAR | GRAIN
+	tastes = list("easter", "fikou")
 
 /datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"

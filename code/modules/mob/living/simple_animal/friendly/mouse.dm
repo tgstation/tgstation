@@ -184,7 +184,7 @@
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
-	bite_consumption =  = 3
+	bite_consumption = 3
 	eatverbs = list("devour")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GROSS | MEAT | RAW

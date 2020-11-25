@@ -574,7 +574,7 @@
 		if(item.microwave_act())
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [item]!</span>")
 	else
-		I.attackby(fire, owner)
+		item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
