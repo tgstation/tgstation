@@ -42,6 +42,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/dummy/phased_mob/shadow/Destroy()
+	jaunter = null
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 

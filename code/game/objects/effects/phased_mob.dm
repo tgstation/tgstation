@@ -8,7 +8,7 @@
 	var/movedelay = 0
 	var/movespeed = 0
 
-/obj/effect/dummy/phased_mob/spell_jaunt/Destroy()
+/obj/effect/dummy/phased_mob/Destroy()
 	// Eject contents if deleted somehow
 	for(var/a in contents)
 		var/atom/movable/AM = a
