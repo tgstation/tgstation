@@ -1035,7 +1035,7 @@
 		return TRUE
 
 ///Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return
 
 ///Can this mob use storage
@@ -1187,10 +1187,6 @@
 		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
 		return
 	return TRUE
-
-///Can this mob hold items
-/mob/proc/can_hold_items()
-	return length(held_items)
 
 /**
   * Get the mob VV dropdown extras
