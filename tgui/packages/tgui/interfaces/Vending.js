@@ -105,7 +105,7 @@ export const Vending = (props, context) => {
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
-    inventory = data.vending_machine_input || [];
+    inventory = data.vending_machine_input;
     custom = true;
   }
   else {
