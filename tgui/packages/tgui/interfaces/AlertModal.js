@@ -1,7 +1,6 @@
 /**
  * @file
- * @copyright 2020
- * @author bobbahbrown (https://github.com/bobbahbrown)
+ * @copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
 
