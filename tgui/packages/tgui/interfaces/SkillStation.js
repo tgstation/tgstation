@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox, TimeDisplay, Flex, Icon, Table, Fragment, LabeledList } from '../components';
-import { Window } from '../layouts';
 import { toFixed } from 'common/math';
+import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props, context) => {
   const { act, data } = useBackend(context);
