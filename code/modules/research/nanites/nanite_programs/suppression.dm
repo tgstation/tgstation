@@ -137,6 +137,7 @@
 	var/static/list/blacklist = list(
 		"*surrender",
 		"*collapse"
+		"*faint"
 	)
 
 /datum/nanite_program/comm/speech/register_extra_settings()
