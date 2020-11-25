@@ -4,6 +4,7 @@
 	icon_state = "sheet-hide"
 	inhand_icon_state = "sheet-hide"
 	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/animalhide
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
@@ -111,6 +112,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "chitin"
 	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/xenochitin
 
 /obj/item/xenos_claw
 	name = "alien claw"
@@ -130,6 +132,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
 	inhand_icon_state = "sheet-hairlesshide"
+	merge_type = /obj/item/stack/sheet/hairlesshide
 
 /obj/item/stack/sheet/wethide
 	name = "wet hide"
@@ -137,8 +140,11 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
 	inhand_icon_state = "sheet-wetleather"
-	var/wetness = 30 //Reduced when exposed to high temperautres
-	var/drying_threshold_temperature = 500 //Kelvin to start drying
+	merge_type = /obj/item/stack/sheet/wethide
+	/// Reduced when exposed to high temperatures
+	var/wetness = 30
+	/// Kelvin to start drying
+	var/drying_threshold_temperature = 500
 
 /obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge)
 	. = ..()
@@ -153,6 +159,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
 	inhand_icon_state = "sheet-leather"
+	merge_type = /obj/item/stack/sheet/leather
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
@@ -180,6 +187,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	singular_name = "watcher sinew"
 	icon_state = "sinew"
 	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew
 
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
