@@ -167,6 +167,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
+/obj/item/storage/box/stockparts/basic,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/engine)
 "bi" = (
@@ -439,7 +440,7 @@
 /obj/machinery/vending/wallmed{
 	pixel_x = 32
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/clockwork{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -730,12 +731,14 @@
 /area/shuttle/abandoned/crew)
 "Ir" = (
 /obj/structure/table/bronze,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north{
 	req_access = null
+	},
+/obj/item/crowbar/brass,
+/obj/item/wrench/brass{
+	pixel_x = -10;
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/abandoned/engine)
@@ -753,6 +756,17 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/screwdriver/brass{
+	pixel_x = 6;
+	pixel_y = -15
+	},
+/obj/item/wirecutters/brass{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/stock_parts/capacitor{
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/shuttle/abandoned/engine)
 "JN" = (
@@ -787,7 +801,7 @@
 "KT" = (
 /obj/structure/table/bronze,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/capacitor,
+/obj/item/weldingtool/brass,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/engine)
 "Lw" = (
@@ -852,6 +866,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/abandoned/crew)
+"Rz" = (
+/obj/structure/table/bronze,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/wood,
+/area/shuttle/abandoned/crew)
 "RH" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -897,8 +917,12 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/frame/machine,
 /obj/machinery/power/apc/auto_name/west,
+/obj/structure/closet/crate,
+/obj/item/pickaxe/mini,
+/obj/item/mining_scanner,
+/obj/item/storage/bag/ore,
+/obj/item/seeds/tower,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/engine)
 "Ue" = (
@@ -1383,7 +1407,7 @@ cj
 Xh
 dg
 df
-df
+Rz
 as
 as
 as
