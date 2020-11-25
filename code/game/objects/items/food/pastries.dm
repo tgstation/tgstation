@@ -411,6 +411,7 @@
 	microwaved_type = /obj/item/food/donkpocket/warm
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
