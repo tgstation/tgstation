@@ -2,6 +2,6 @@
 	var/list/paths = subtypesof(/obj/item/stack) - /obj/item/stack/sheet - /obj/item/stack/sheet/mineral
 
 	for(var/stackpath in paths)
-		var/obj/item/stack = stackpath
+		var/obj/item/stack/stack = stackpath
 		if(!initial(stack.merge_type))
 			Fail("([stack]) lacks set merge_type variable!")
