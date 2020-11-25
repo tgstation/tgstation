@@ -26,18 +26,6 @@
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
 
-/obj/machinery/vending/snack/random
-	name = "\improper Random Snackies"
-	icon_state = "random_snack"
-	desc = "Uh oh!"
-	circuit = null
-
-/obj/machinery/vending/snack/random/Initialize()
-	. = ..()
-	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
-	new T(loc)
-	return INITIALIZE_HINT_QDEL
-
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
 

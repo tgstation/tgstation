@@ -447,7 +447,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "Pp" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/holofloor/wood,
 /area/ruin/powered)
 "PQ" = (
