@@ -439,7 +439,7 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()
     for(var/i in 1 to 6)
@@ -448,37 +448,37 @@
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+	STR.set_holdable(list(/obj/item/food/donkpocket))
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
 	icon_state = "donkpocketboxspicy"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
+	donktype = /obj/item/food/donkpocket/spicy
 
 /obj/item/storage/box/donkpockets/donkpocketteriyaki
 	name = "box of teriyaki-flavoured donk-pockets"
 	icon_state = "donkpocketboxteriyaki"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
+	donktype = /obj/item/food/donkpocket/teriyaki
 
 /obj/item/storage/box/donkpockets/donkpocketpizza
 	name = "box of pizza-flavoured donk-pockets"
 	icon_state = "donkpocketboxpizza"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
+	donktype = /obj/item/food/donkpocket/pizza
 
 /obj/item/storage/box/donkpockets/donkpocketgondola
 	name = "box of gondola-flavoured donk-pockets"
 	icon_state = "donkpocketboxgondola"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
+	donktype = /obj/item/food/donkpocket/gondola
 
 /obj/item/storage/box/donkpockets/donkpocketberry
 	name = "box of berry-flavoured donk-pockets"
 	icon_state = "donkpocketboxberry"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/berry
+	donktype = /obj/item/food/donkpocket/berry
 
 /obj/item/storage/box/donkpockets/donkpockethonk
 	name = "box of banana-flavoured donk-pockets"
 	icon_state = "donkpocketboxbanana"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/honk
+	donktype = /obj/item/food/donkpocket/honk
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"

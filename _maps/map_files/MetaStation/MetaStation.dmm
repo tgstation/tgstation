@@ -12725,7 +12725,7 @@
 "aDm" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/safe/floor,
-/obj/item/reagent_containers/food/snacks/fortunecookie,
+/obj/item/food/fortunecookie,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aDn" = (
@@ -42731,11 +42731,11 @@
 /obj/structure/table/reinforced{
 	name = "Jim Norton's Quebecois Coffee table"
 	},
-/obj/item/reagent_containers/food/snacks/poppypretzel{
+/obj/item/food/poppypretzel{
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/muffin/berry{
+/obj/item/food/muffin/berry{
 	pixel_x = -4;
 	pixel_y = 9
 	},

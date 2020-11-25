@@ -304,7 +304,7 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bb" = (
-/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/food/donkpocket,
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bc" = (
