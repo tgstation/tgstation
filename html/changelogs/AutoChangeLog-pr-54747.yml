@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Jungle fever monkeys will now pass canUseTopic() dexterity checks and be able to use tgui machineries."
