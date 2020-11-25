@@ -51,6 +51,67 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">25 November 2020</h2>
+			<h3 class="author">ArcaneDefence updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Regenerative black slime extracts won't duplicate megafauna any more.</li>
+				<li class="bugfix">Flat dough and pie doughs cut into the proper results again</li>
+			</ul>
+			<h3 class="author">ArcaneMusic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Stasis beds will now properly glow right above the bed, not inbetween structures.</li>
+			</ul>
+			<h3 class="author">Arkatos, original by dearmochi updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Safe now uses tgui.</li>
+			</ul>
+			<h3 class="author">CoffeeDragon16 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You can no longer inject infinite plasma into a light bulb with no addition effect</li>
+			</ul>
+			<h3 class="author">Ghommie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixing the point emote outputting the "unusable emote" message even if actually usable.</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Quick swapping items no longer deletes them.</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">removes a direct use of Destroy()</li>
+			</ul>
+			<h3 class="author">TheBonded updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">PDAs with manifest access now properly have more protection against PDA bombs</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Disassembling computers will now correctly drop the circuitboard.</li>
+				<li class="bugfix">Mecha drills can no longer infinitely stack up actions as fast as the player can click their mouse.</li>
+			</ul>
+			<h3 class="author">antropod updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Examinining head without body shows proper message if client has reentered corpse.</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Most objects renamable with a pen can no longer have their labels erased or duplicated or names and descriptions blanked</li>
+				<li class="tweak">Most objects renamable with a pen can now have their names and descriptions reset to default</li>
+			</ul>
+			<h3 class="author">prodirus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">More robust dish drive construction no longer allows user to simply pull out components bare handed!</li>
+				<li class="tweak">Updated dish drive software now lets the user know if it is empty or trying to beam non-disposable items.</li>
+				<li class="bugfix">Support holoparasite should no longer have missing bluespace beacon sprites.</li>
+				<li class="bugfix">Signature macros within papercode should now work properly</li>
+			</ul>
+			<h3 class="author">zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You can no longer store tool implant tools in boxes or other container items.</li>
+				<li class="bugfix">Admins placing an APC in space will no longer create a runtime factory that breaks everything</li>
+			</ul>
+
 			<h2 class="date">24 November 2020</h2>
 			<h3 class="author">ArcaneMusic updated:</h3>
 			<ul class="changes bgimages16">
@@ -2049,58 +2110,6 @@
 				<li class="rscadd">Added RoboTact, a borg self-management app to said tablet. This replaces all borg verbs.</li>
 				<li class="rscdel">Removed all borg verbs in favor of the app.</li>
 				<li class="tweak">Some lesser-used elements on the borg hud are now in the management app.</li>
-			</ul>
-
-			<h2 class="date">23 September 2020</h2>
-			<h3 class="author">ATHATH updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Adding a symptom to a virus that already has 4 or 5 symptoms in it no longer has a chance of removing a random symptom from that virus.</li>
-			</ul>
-			<h3 class="author">AnturK updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added custom statues. Create carving block from 5 sheets of material then use a chisel on it.</li>
-			</ul>
-			<h3 class="author">Dennok updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Some fixes to map_template.load() to make it less runtime.</li>
-			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Projectiles now properly display impact messages on people as well as blood impact splatters</li>
-				<li class="bugfix">Embedded objects now properly use the "a" article rather than "the" when relevant</li>
-				<li class="bugfix">Dismemberment will no longer lead to phantom scars showing up on a person's missing limbs. Insert your own MGSV joke here.</li>
-				<li class="bugfix">Fixed some bad logic that made self-treating severe/critical broken bones with bone gel have 63%/83% base fail rates, instead of 25%/45% as intended. As such, self-treating these wounds is now far less likely to fail, though you'll still have to wait for the effect.</li>
-				<li class="tweak">The bonuses to the above self-treatment success rates from drunkenness, morphine, and determination are a bit higher as well.</li>
-				<li class="tweak">You can now see what wound types a detached limb is suffering by inspecting it</li>
-			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The AI can now move its camera up z-levels as well as down by using the option in the IC tab. If you're an AI and you can't see anything, your camera may be on the wrong Z-level. Try moving it up or returning hitting the button to return to your core.</li>
-			</ul>
-			<h3 class="author">TiviPlus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Removed devil and affiliated shitcode</li>
-				<li class="refactor">Mecha medical and other_equipment refactor</li>
-			</ul>
-			<h3 class="author">imsxz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">you can now pat carbon mobs on the head.</li>
-			</ul>
-			<h3 class="author">necromanceranne updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Makes the darkblade fit on your back instead of your belt.</li>
-				<li class="imageadd">Adds a whole bunch of missing sprites for: the nullrod, cult blade, spellblade, claymores and dark scythe, among others.</li>
-				<li class="imageadd">Updates the on-mobs for shotguns a little, and fixes several high powered firearms being concealable in suit storage slots.</li>
-				<li class="imageadd">Makes stunprods visible in suit storage slots.</li>
-				<li class="imageadd">Knife sprites for you belt and suit storage!</li>
-			</ul>
-			<h3 class="author">nightred updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Added request console to meta bar</li>
-			</ul>
-			<h3 class="author">tralezab updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Flower Buds now have a countdown for ghosts</li>
 			</ul>
 		</div>
 

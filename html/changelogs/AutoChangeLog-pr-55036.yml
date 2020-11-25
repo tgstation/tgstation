@@ -1,4 +1,0 @@
-author: "TheBonded"
-delete-after: True
-changes: 
-  - bugfix: "PDAs with manifest access now properly have more protection against PDA bombs"

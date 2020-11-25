@@ -1,5 +1,0 @@
-author: "prodirus"
-delete-after: True
-changes: 
-  - bugfix: "More robust dish drive construction no longer allows user to simply pull out components bare handed!"
-  - tweak: "Updated dish drive software now lets the user know if it is empty or trying to beam non-disposable items."

@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Admins placing an APC in space will no longer create a runtime factory that breaks everything"
