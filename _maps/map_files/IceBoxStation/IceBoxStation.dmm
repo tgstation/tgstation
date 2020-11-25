@@ -8405,7 +8405,7 @@
 /area/maintenance/starboard/fore)
 "asz" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asA" = (
