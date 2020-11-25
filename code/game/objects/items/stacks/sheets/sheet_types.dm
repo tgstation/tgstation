@@ -628,7 +628,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/greatergem
 
-	/*
+/*
  * Bones
  */
 /obj/item/stack/sheet/bone
