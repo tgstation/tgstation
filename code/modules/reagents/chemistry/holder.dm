@@ -337,8 +337,8 @@
 		else
 			remove_reagent(T.type, abs(T.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
-	src.update_total()
-	src.handle_reactions()
+	update_total()
+	handle_reactions()
 
 /// Transfer a specific reagent id to the target object
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
