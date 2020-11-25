@@ -63,6 +63,8 @@
 		if(GLOB.revdata.testmerge.len)
 			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 			message += GLOB.revdata.GetTestMergeInfo(FALSE)
+		// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
+		// then the report issue button being tgui-based would be problematic.
 		if(tgalert(src, message, "Report Issue","Yes","No")!="Yes")
 			return
 		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
