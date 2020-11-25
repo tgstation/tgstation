@@ -76,7 +76,7 @@
 		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
-///This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
+//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
