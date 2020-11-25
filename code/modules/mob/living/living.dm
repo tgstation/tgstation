@@ -964,7 +964,7 @@
 	who.log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
 	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay, max_interact_count = 20))
+	if(do_mob(src, who, what.strip_delay, source = what))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where

@@ -40,12 +40,13 @@
 		if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 			return
 
-	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+	// You can't drill harder by clicking more.
+	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
+
+		target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='hear'>You hear drilling.</span>")
 
-	// You can't drill harder by clicking more.
-	if(!do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
@@ -53,7 +54,7 @@
 			T.drill_act(src, source)
 			return ..()
 		// Drilling objects and mobs is a repeating procedure.
-		while(do_after_mecha(target, source, drill_delay, DOAFTER_SOURCE_MECHADRILL))
+		while(do_after_mecha(target, source, drill_delay))
 			if(isliving(target))
 				drill_mob(target, source)
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
@@ -73,13 +74,13 @@
 	return
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
-	if(drill.do_after_mecha(src, user, 60 / drill.drill_level, DOAFTER_SOURCE_MECHADRILL))
+	if(drill.do_after_mecha(src, user, 60 / drill.drill_level))
 		drill.log_message("Drilled through [src]", LOG_MECHA)
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	if(drill.drill_level >= DRILL_HARDENED)
-		if(drill.do_after_mecha(src, user, 120 / drill.drill_level, DOAFTER_SOURCE_MECHADRILL))
+		if(drill.do_after_mecha(src, user, 120 / drill.drill_level,))
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
