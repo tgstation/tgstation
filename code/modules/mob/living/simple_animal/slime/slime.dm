@@ -81,6 +81,9 @@
 	var/effectmod //What core modification is being used.
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
+	// Transformative extract effects - get passed down
+	var/transformeffects = SLIME_EFFECT_DEFAULT
+
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new

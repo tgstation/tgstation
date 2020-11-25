@@ -203,6 +203,31 @@
 #define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
+//Slime transformative extract effects
+#define SLIME_EFFECT_DEFAULT		(1<<0) //done
+#define SLIME_EFFECT_GREY			(1<<1) //done
+#define SLIME_EFFECT_ORANGE			(1<<2) //done
+#define SLIME_EFFECT_PURPLE			(1<<3)  //done, need to check, line 17 in life.dm
+#define SLIME_EFFECT_BLUE			(1<<4) //done
+#define SLIME_EFFECT_METAL			(1<<5) //done
+#define SLIME_EFFECT_YELLOW			(1<<6) //done
+#define SLIME_EFFECT_DARK_PURPLE	(1<<7) //done
+#define SLIME_EFFECT_DARK_BLUE		(1<<8) //done
+#define SLIME_EFFECT_SILVER			(1<<9) //done
+#define SLIME_EFFECT_BLUESPACE		(1<<10) //done
+#define SLIME_EFFECT_SEPIA			(1<<11) //done
+#define SLIME_EFFECT_CERULEAN		(1<<12) //done
+#define SLIME_EFFECT_PYRITE			(1<<13)
+#define SLIME_EFFECT_RED			(1<<14)
+#define SLIME_EFFECT_GREEN			(1<<15) //done
+#define SLIME_EFFECT_PINK			(1<<16) //done
+#define SLIME_EFFECT_GOLD			(1<<17) //done
+#define SLIME_EFFECT_OIL			(1<<18) //done
+#define SLIME_EFFECT_BLACK			(1<<19) //done
+#define SLIME_EFFECT_LIGHT_PINK		(1<<20) //done
+#define SLIME_EFFECT_ADAMANTINE		(1<<21) //done
+#define SLIME_EFFECT_RAINBOW		(1<<22)
+
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2

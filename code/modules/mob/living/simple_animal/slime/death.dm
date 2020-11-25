@@ -1,6 +1,13 @@
 /mob/living/simple_animal/slime/death(gibbed)
 	if(stat == DEAD)
 		return
+
+	if (transformeffects & SLIME_EFFECT_OIL)
+		for (var/i in 1 to rand(2,2 + cores))
+			var/atom/movable/item = new coretype(loc)
+		qdel(src)
+		return
+
 	if(!gibbed)
 		if(is_adult)
 			var/mob/living/simple_animal/slime/M = new(drop_location(), colour)

@@ -13,6 +13,8 @@
 		if(buckled)
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+			if (transformeffects & SLIME_EFFECT_PURPLE && prob(10))
+				adjustBruteLoss(-1*round(rand(0.1,0.2)*maxHealth))
 			handle_nutrition()
 			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
 				return
@@ -66,10 +68,11 @@
 				break
 
 			if(Target in view(1,src))
+				var/feedcooldown = (transformeffects & SLIME_EFFECT_SEPIA) ? 4.5 SECONDS : 2.5 SECONDS
 				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = TRUE
-						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
+						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), feedcooldown)
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
@@ -79,7 +82,7 @@
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
 							Atkcool = TRUE
-							addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
+							addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), feedcooldown)
 
 							if(Target.Adjacent(src))
 								Target.attack_slime(src)
@@ -93,7 +96,9 @@
 						Feedon(Target)
 
 			else if(Target in view(7, src))
-				if(!Target.Adjacent(src))
+				if (transformeffect & SLIME_EFFECT_BLUESPACE && powerlevel == 10)
+					do_teleport(src, get_turf(Target),null,TRUE,null,null,null,null,TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+				else if(!Target.Adjacent(src))
 				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
 					step_to(src, Target)
 			else
@@ -121,20 +126,20 @@
 			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
 	else // This is a hot place
 		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
+	if (!(transformeffects & SLIME_EFFECT_ADAMANTINE))
+		if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
+			if(bodytemperature <= (T0C - 40)) // stun temperature
+				ADD_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
+			else
+				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
 
-	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
-		if(bodytemperature <= (T0C - 40)) // stun temperature
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
+			if(bodytemperature <= (T0C - 50)) // hurt temperature
+				if(bodytemperature <= 50) // sqrting negative numbers is bad
+					adjustBruteLoss(200)
+				else
+					adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
 		else
 			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
-
-		if(bodytemperature <= (T0C - 50)) // hurt temperature
-			if(bodytemperature <= 50) // sqrting negative numbers is bad
-				adjustBruteLoss(200)
-			else
-				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
-	else
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, SLIME_COLD)
 
 	if(stat != DEAD)
 		var/bz_percentage =0
@@ -188,6 +193,14 @@
 			if(prob(85))
 				rabid = 1 //we go rabid after finishing to feed on a human with a client.
 
+		if(istype(M,/mob/living/carbon/monkey))
+			if (transformeffects & SLIME_EFFECT_BLACK)
+				make_baby(drop_location(),round(nutrition * 0.9),round(powerlevel / 4))
+			if (transformeffects & SLIME_EFFECT_GREEN)
+				visible_message("<span class='warning'>[src] slurps up [M]!</span>")
+				adjust_nutrition(100)
+				layer = initial(layer)
+				qdel(M)
 		Feedstop()
 		return
 
@@ -231,8 +244,8 @@
 		set_nutrition(700) //fuck you for using the base nutrition var
 		return
 
-	if(prob(15))
-		adjust_nutrition(-(1 + is_adult))
+	if(prob(15) && !(transformeffect & SLIME_EFFECT_SILVER))
+		adjust_nutrition((-(1 + is_adult)) * (transformeffects & SLIME_EFFECT_GREY) ? 2 : 1)
 
 	if(nutrition <= 0)
 		set_nutrition(0)
@@ -251,15 +264,16 @@
 			Evolve()
 
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
+	var/gainpower = (transformeffects & SLIME_EFFECT_YELLOW) ? 2 : 1
 	set_nutrition(min((nutrition + nutrition_to_add), get_max_nutrition()))
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
 			if(prob(30-powerlevel*2))
-				powerlevel++
+				powerlevel = powerlevel + gainpower
 	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
 		if(powerlevel<5)
 			if(prob(25-powerlevel*5))
-				powerlevel++
+				powerlevel + gainpower
 
 
 
@@ -316,7 +330,8 @@
 
 					if(isslime(L) || L.stat == DEAD) // Ignore other slimes and dead mobs
 						continue
-
+					if (transformeffects & SLIME_EFFECT_LIGHT_PINK && ishuman(L)) //ignore humans when the light pink transformative effect is on
+						continue
 					if(L in Friends) // No eating friends!
 						continue
 

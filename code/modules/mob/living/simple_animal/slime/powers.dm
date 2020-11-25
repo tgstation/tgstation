@@ -58,7 +58,8 @@
 	if(buckled)
 		Feedstop()
 		return FALSE
-
+	if (transformeffects & SLIME_EFFECT_LIGHT_PINK && ishuman(M))
+		return FALSE
 	if(issilicon(M))
 		return FALSE
 
@@ -91,7 +92,7 @@
 		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
 		return FALSE
 
-	if(M.stat == DEAD)
+	if(M.stat == DEAD && !(transformeffects & SLIME_EFFECT_GREEN))
 		if(silent)
 			return FALSE
 		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
@@ -136,7 +137,7 @@
 	if(!is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			is_adult = 1
-			maxHealth = 200
+			maxHealth = (transformeffects & SLIME_EFFECT_METAL) ? 300 : 200
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
@@ -178,30 +179,22 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			var/datum/component/nanites/original_nanites = GetComponent(/datum/component/nanites)
 			var/turf/drop_loc = drop_location()
+			var/childamount = 4
+			var/new_adult = FALSE
+			if (transformeffects & SLIME_EFFECT_CERULEAN)
+				childamount = 2
+				new_nutrition = round(nutrition * 0.5)
+				new_powerlevel = round(powerlevel / 2)
+				new_adult = TRUE
+			if (transformeffects & SLIME_EFFECT_GREY)
+				childamount++
 
-			for(var/i=1,i<=4,i++)
-				var/child_colour
-				if(mutation_chance >= 100)
-					child_colour = "rainbow"
-				else if(prob(mutation_chance))
-					child_colour = slime_mutation[rand(1,4)]
-				else
-					child_colour = colour
-				var/mob/living/simple_animal/slime/M
-				M = new(drop_loc, child_colour)
-				if(ckey)
-					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
-				M.powerlevel = new_powerlevel
-				if(i != 1)
-					step_away(M,src)
-				M.Friends = Friends.Copy()
-				babies += M
-				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
-				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
-
-				if(original_nanites)
-					M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
-					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
+				for(var/i=1,i<=childamount,i++)
+					var/force_colour = FALSE
+					if (transformeffects & SLIME_EFFECT_BLUE && i == 1)
+						force_colour = TRUE
+					var/mob/living/simple_animal/slime/M = make_baby(drop_loc, new_nutrition, new_powerlevel, force_colour, i != 1)
+					babies += M
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
@@ -214,6 +207,38 @@
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
 	else
 		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
+
+/mob/living/simple_animal/slime/proc/make_baby(drop_loc, new_nutrition, new_powerlevel, force_original_colour=FALSE, step_away=TRUE)
+	var/child_colour = colour
+	if (!force_original_colour)
+		if(mutation_chance >= 100)
+			child_colour = "rainbow"
+		else if(prob(mutation_chance))
+			child_colour = slime_mutation[rand(1,4)]
+		else
+			child_colour = colour
+	var/mob/living/simple_animal/slime/M
+	M = new(drop_loc, child_colour, new_adult)
+	M.transformeffects = transformeffects
+	if(ckey || transformeffects & SLIME_EFFECT_CERULEAN)
+		M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+	M.powerlevel = new_powerlevel
+	if (transformeffects & SLIME_EFFECT_DARK_PURPLE)
+		M.cores = 5
+	if (transformeffects & SLIME_EFFECT_METAL)
+		M.maxHealth = round(M.maxHealth * 1.5)
+		M.health = M.maxHealth
+	if (transformeffects & SLIME_EFFECT_PINK)
+		M.grant_language(/datum/language/common, TRUE, TRUE)
+	M.Friends = Friends.Copy()
+	if(step_away)
+		step_away(M,src)
+	M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
+	SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
+	if(original_nanites)
+		M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
+		SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
+	return M
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
