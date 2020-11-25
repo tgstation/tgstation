@@ -1,0 +1,8 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - refactor: "Humans body temperature stabilization overhauled"
+  - refactor: "Humans will now receive temperature alerts before they taking damage"
+  - refactor: "Humans now take wounds and burn damage based on body temperature"
+  - refactor: "Watchers temperature shot reworked"
+  - refactor: "Fever and Shivers have a more reasonable cap"

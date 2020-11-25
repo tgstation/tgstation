@@ -20,14 +20,21 @@
 	allow_pai = FALSE
 	layer = ABOVE_MOB_LAYER
 
+	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target
+	///The mob's current speed, which varies based on how long the bot chases it's target.
 	var/currentspeed = 5
+	///Is the bot currently washing it's target/everything else that crosses it?
 	var/washing = FALSE
+	///Have the target evaded the bot for long enough that it will swear at it like kirk did to kahn?
 	var/mad = FALSE
+	///The last time that the previous/current target was found.
 	var/last_found
+	///Name of the previous target the bot was pursuing.
 	var/oldtarget_name
-
+	///Visual overlay of the bot spraying water.
 	var/mutable_appearance/water_overlay
+	///Visual overlay of the bot commiting warcrimes.
 	var/mutable_appearance/fire_overlay
 
 /mob/living/simple_animal/bot/hygienebot/Initialize()
@@ -220,7 +227,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	return	dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
-	if(emagged && L.stat != DEAD)
+	if((emagged == 2) && L.stat != DEAD)
 		return FALSE
 
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))

@@ -204,7 +204,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aJ" = (
-/obj/item/reagent_containers/food/snacks/cherrycupcake{
+/obj/item/food/cherrycupcake{
 	pixel_y = 2
 	},
 /obj/structure/table/wood/fancy/black,
@@ -246,7 +246,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aP" = (
-/obj/item/reagent_containers/food/snacks/khachapuri{
+/obj/item/food/khachapuri{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
@@ -316,7 +316,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aZ" = (
-/obj/item/reagent_containers/food/snacks/honeybun{
+/obj/item/food/honeybun{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
