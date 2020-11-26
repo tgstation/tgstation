@@ -189,15 +189,16 @@
 			if (transformeffects & SLIME_EFFECT_GREY)
 				childamount++
 
-				for(var/i=1,i<=childamount,i++)
-					var/force_colour = FALSE
-					var/step_away = TRUE
-					if (i == 1)
-						step_away = FALSE
-						if (transformeffects & SLIME_EFFECT_BLUE)
-							force_colour = TRUE
-					var/mob/living/simple_animal/slime/M = make_baby(drop_loc, new_adult, new_nutrition, new_powerlevel, force_colour, step_away, original_nanites)
-					babies += M
+			for(var/i=1,i<=childamount,i++)
+				var/force_colour = FALSE
+				var/step_away = TRUE
+				if (i == 1)
+					step_away = FALSE
+					if (transformeffects & SLIME_EFFECT_BLUE)
+						force_colour = TRUE
+				var/mob/living/simple_animal/slime/M = make_baby(drop_loc, new_adult, new_nutrition, new_powerlevel, force_colour, step_away, original_nanites)
+				babies += M
+				message_admins("[babies] and [M] and [i]")
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
@@ -222,10 +223,13 @@
 			child_colour = colour
 	var/mob/living/simple_animal/slime/M
 	M = new(drop_loc, child_colour, new_adult)
+	message_admins("got here safely, [M]")
 	M.transformeffects = transformeffects
+	M.effectsapplied = effectsapplied
 	if(ckey || transformeffects & SLIME_EFFECT_CERULEAN)
 		M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 	M.powerlevel = new_powerlevel
+	message_admins("got here safely, [M]")
 	if (transformeffects & SLIME_EFFECT_DARK_PURPLE)
 		M.cores = cores
 	if (transformeffects & SLIME_EFFECT_METAL)
@@ -238,11 +242,13 @@
 	M.Friends = Friends.Copy()
 	if(step_away)
 		step_away(M,src)
+	message_admins("got here safely, [M]")
 	M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 	SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 	if(original_nanites)
 		M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
 		SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
+	message_admins("got here safely, [M]")
 	return M
 
 /datum/action/innate/slime/reproduce

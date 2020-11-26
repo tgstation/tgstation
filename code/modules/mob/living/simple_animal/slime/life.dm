@@ -13,10 +13,11 @@
 		if(buckled)
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
-			if (transformeffects & SLIME_EFFECT_PYRITE && prob(20)) //change this to lower later
-				colour = pick(slime_colours)
+			if (transformeffects & SLIME_EFFECT_PYRITE && prob(2))
+				set_colour(pick(slime_colours))
+				regenerate_icons()
 				update_name()
-			if (transformeffects & SLIME_EFFECT_PURPLE && prob(10))
+			if (transformeffects & SLIME_EFFECT_PURPLE && prob(2))
 				adjustBruteLoss(-1*round(rand(0.1,0.2)*maxHealth))
 			handle_nutrition()
 			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
@@ -71,7 +72,7 @@
 				break
 
 			if(Target in view(1,src))
-				var/feedcooldown = (transformeffects & SLIME_EFFECT_SEPIA) ? 4.5 SECONDS : 2.5 SECONDS
+				var/feedcooldown = (transformeffects & SLIME_EFFECT_SEPIA) ? 2.5 SECONDS : 4.5 SECONDS
 				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = TRUE
@@ -199,11 +200,11 @@
 		if(istype(M,/mob/living/carbon/monkey))
 			if (transformeffects & SLIME_EFFECT_BLACK)
 				make_baby(drop_location(),FALSE,round(nutrition * 0.9),round(powerlevel / 4))
-			if (transformeffects & SLIME_EFFECT_GREEN)
-				visible_message("<span class='warning'>[src] slurps up [M]!</span>")
-				adjust_nutrition(100)
-				layer = initial(layer)
-				qdel(M)
+		if (transformeffects & SLIME_EFFECT_GREEN)
+			visible_message("<span class='warning'>[src] slurps up [M]!</span>")
+			adjust_nutrition(100)
+			layer = initial(layer)
+			M.force_move(src)
 		Feedstop()
 		return
 

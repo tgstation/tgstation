@@ -83,6 +83,7 @@
 
 	// Transformative extract effects - get passed down
 	var/transformeffects = SLIME_EFFECT_DEFAULT
+	var/effectsapplied = 0 //for use in the slime scanner
 
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
@@ -411,11 +412,12 @@
 	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	if(!client)
-		if(Target) // Like cats
-			Target = null
-			++Discipline
+	if (!(transformeffects & SLIME_EFFECT_DARK_BLUE))
+		adjustBruteLoss(rand(15,20))
+		if(!client)
+			if(Target) // Like cats
+				Target = null
+				++Discipline
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
