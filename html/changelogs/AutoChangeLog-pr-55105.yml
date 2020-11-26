@@ -1,6 +1,0 @@
-author: "prodirus"
-delete-after: True
-changes: 
-  - bugfix: "Health analyzer chemical scan should now work again."
-  - bugfix: "Medical kiosks should no longer reset loop."
-  - bugfix: "Crew with the smoker quirk are addicted to nicotine on shift start again."

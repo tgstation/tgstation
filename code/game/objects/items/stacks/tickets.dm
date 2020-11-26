@@ -31,4 +31,3 @@
 
 /obj/item/stack/arcadeticket/thirty
 	amount = 30
-	merge_type = /obj/item/stack/arcadeticket

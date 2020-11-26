@@ -1,6 +1,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, NoticeBox, Section, Tabs } from '../components';
+import { Button, Flex, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const PortraitPicker = (props, context) => {
@@ -40,21 +40,26 @@ export const PortraitPicker = (props, context) => {
             <Section fitted>
               <Tabs fluid textAlign="center">
                 {TABS.map((tabObj, i) => (
-                  !!tabObj.list !== 0 && (
-                    <Tabs.Tab
-                      key={i}
-                      selected={i === tabIndex}
-                      onClick={() => { setListIndex(0); setTabIndex(i); }}>
-                      {tabObj.name}
-                    </Tabs.Tab>
-                  )
+                  <Tabs.Tab
+                    key={i}
+                    selected={i === tabIndex}
+                    onClick={() => {
+                      setListIndex(0);
+                      setTabIndex(i);
+                    }}>
+                    {tabObj.name}
+                  </Tabs.Tab>
                 ))}
               </Tabs>
             </Section>
           </Flex.Item>
           <Flex.Item mb={1} grow={2}>
             <Section fill>
-              <Flex height="100%" align="center" justify="center" direction="column">
+              <Flex
+                height="100%"
+                align="center"
+                justify="center"
+                direction="column">
                 <Flex.Item>
                   <img
                     src={resolveAsset(current_portrait)}

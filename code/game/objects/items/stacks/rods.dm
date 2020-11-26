@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embedding = list()
 	novariants = TRUE
 	matter_amount = 2
+	cost = 250
+	source = /datum/robot_energy_storage/metal
 	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
@@ -69,27 +71,18 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	else
 		return ..()
 
-/obj/item/stack/rods/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 250
-	merge_type = /obj/item/stack/rods/cyborg
-
 /obj/item/stack/rods/cyborg/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/ten
 	amount = 10
-	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/twentyfive
 	amount = 25
-	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/fifty
 	amount = 50
-	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/lava
 	name = "heat resistant rod"
@@ -107,4 +100,3 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30
-	merge_type = /obj/item/stack/rods/lava

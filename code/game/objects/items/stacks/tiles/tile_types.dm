@@ -244,55 +244,42 @@
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet
 
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/black
 
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/blue
 
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/cyan
 
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/green
 
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/orange
 
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/purple
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/red
 
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/royalblack
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
-	merge_type = /obj/item/stack/tile/carpet/royalblue
 
 /obj/item/stack/tile/carpet/executive/thirty
 	amount = 30
-	merge_type = /obj/item/stack/tile/carpet/executive
 
 /obj/item/stack/tile/carpet/stellar/thirty
 	amount = 30
-	merge_type = /obj/item/stack/tile/carpet/stellar
 
 /obj/item/stack/tile/carpet/donk/thirty
 	amount = 30
-	merge_type = /obj/item/stack/tile/carpet/donk
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -306,7 +293,6 @@
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
-	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakepit
 	name = "fake pits"
@@ -320,7 +306,6 @@
 
 /obj/item/stack/tile/fakepit/loaded
 	amount = 30
-	merge_type = /obj/item/stack/tile/fakepit
 
 //High-traction
 /obj/item/stack/tile/noslip
@@ -334,7 +319,6 @@
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
-	merge_type = /obj/item/stack/tile/noslip
 
 //Circuit
 /obj/item/stack/tile/circuit
@@ -414,13 +398,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	merge_type = /obj/item/stack/tile/plasteel
-
-/obj/item/stack/tile/plasteel/cyborg
-	mats_per_unit = null // All other Borg versions of items have no Metal or Glass - RR
-	is_cyborg = 1
 	cost = 125
-	merge_type = /obj/item/stack/tile/plasteel/cyborg
+	source = /datum/robot_energy_storage/metal
+	merge_type = /obj/item/stack/tile/plasteel
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
@@ -451,4 +431,3 @@
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
-	merge_type = /obj/item/stack/tile/eighties

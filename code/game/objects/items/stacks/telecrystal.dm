@@ -24,8 +24,6 @@
 
 /obj/item/stack/telecrystal/five
 	amount = 5
-	merge_type = /obj/item/stack/telecrystal
 
 /obj/item/stack/telecrystal/twenty
 	amount = 20
-	merge_type = /obj/item/stack/telecrystal
