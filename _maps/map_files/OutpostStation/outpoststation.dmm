@@ -5970,9 +5970,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
-/obj/machinery/airlock_sensor/incinerator_toxmix{
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/components/binary/pump/on,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
@@ -9577,8 +9574,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/central)
 "hsl" = (
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "hsz" = (
@@ -11357,6 +11354,9 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
+	},
+/obj/machinery/airlock_sensor/incinerator_toxmix{
+	pixel_x = -24
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
