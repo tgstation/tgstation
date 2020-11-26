@@ -360,6 +360,11 @@
 	reinf = 1
 	explosion_block = 1
 
+/obj/machinery/door/window/bronze
+	name = "bronze windoor"
+	icon_state = "clockwork"
+	base_state = "clockwork"
+
 /obj/machinery/door/window/brigdoor/security/cell
 	name = "cell door"
 	desc = "For keeping in criminal scum."

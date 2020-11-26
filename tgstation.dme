@@ -3289,6 +3289,7 @@
 #include "modular_skyrat\modules\aesthetics\chairs\code\chair.dm"
 #include "modular_skyrat\modules\aesthetics\computer\code\computer.dm"
 #include "modular_skyrat\modules\aesthetics\crates\code\crates.dm"
+#include "modular_skyrat\modules\aesthetics\directwindow\code\window.dm"
 #include "modular_skyrat\modules\aesthetics\disposals\code\disposals.dm"
 #include "modular_skyrat\modules\aesthetics\emitter\code\emitter.dm"
 #include "modular_skyrat\modules\aesthetics\extinguisher\code\extinguisher.dm"
