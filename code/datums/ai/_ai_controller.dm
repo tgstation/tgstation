@@ -34,30 +34,30 @@ have ways of interacting with a specific mob and control it.
 
 /// Generates a plan and see if our existing one is still valid.
 /datum/ai_controller/process(delta_time)
-	if(!current_behavior)
+	if(!current_behavior && !creat)
+		PerformIdleBehavior() //Do some stupid shit while we have nothing to do
 		return
-	if(target && current_behavior.required_distance >= get_dist(pawn, current_target)) //Move
+	if(current_target && current_behavior.required_distance >= get_dist(pawn, current_target)) //Move closer
+		MoveTo()
 		if(current_behavior.move_while_performing) //Move and perform the action
-			current_behavior.perform(controller,
+			current_behavior.perform(delta_time, controller)
 	else //Perform the action
-
+		current_behavior.perform(delta_time, controller)
 
 ///Move somewhere using dumb movement (byond base)
-/datum/ai_controller/proc/MoveTo(datum/ai_action/action)
-	if(!action.target)
+/datum/ai_controller/proc/MoveTo()
+	if(!current_target)
 		return
-	if(get_dist(pawn, action.target) > 1)
-		if(!is_type_in_typecache(get_step(pawn, get_dir(pawn, action.target)), GLOB.dangerous_turfs))
-			step_towards(pawn, action.target)
-			action.PerformWhileMoving(src)
-	if(get_dist(pawn, action.target) <= 1)
-		action.is_in_range = TRUE
-		brain_state = STATE_ACTING
+	if(!is_type_in_typecache(get_step(pawn, get_dir(pawn, action.target)), GLOB.dangerous_turfs))
+		step_towards(pawn, action.target)
+		action.PerformWhileMoving(src)
 
-///This is where you decide what actions are taken by the AI in parallel. By default this means AI_BEHAVIOR_MOVEMENT and AI_BEHAVIOR_ACTION.
-/datum/ai_controller/proc/generate_plan()
+///Perform some dumb idle behavior.
+/datum/ai_controller/proc/PerformIdleBehavior()
+
+///This is where you decide what actions are taken by the AI.
+/datum/ai_controller/proc/pick_behavior()
 	. = list()
-
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)

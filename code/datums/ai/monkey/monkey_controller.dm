@@ -7,3 +7,8 @@ have ways of interacting with a specific mob and control it.
 #define SHOULD_RESIST(source) (source.pawn.on_fire || source.pawn.buckled || HAS_TRAIT(source.pawn, TRAIT_RESTRAINED) || (source.pawn.pulledby && source.pawn.pulledby.grab_state > GRAB_PASSIVE))
 #define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source.pawn, TRAIT_INCAPACITATED) || HAS_TRAIT(source.pawn, TRAIT_HANDS_BLOCKED))
 
+/datum/ai_controller/monkey
+
+/datum/ai_controller/proc/generate_plan()
+	. = list()
+
