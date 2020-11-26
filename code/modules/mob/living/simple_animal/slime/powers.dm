@@ -191,9 +191,12 @@
 
 				for(var/i=1,i<=childamount,i++)
 					var/force_colour = FALSE
-					if (transformeffects & SLIME_EFFECT_BLUE && i == 1)
-						force_colour = TRUE
-					var/mob/living/simple_animal/slime/M = make_baby(drop_loc, new_nutrition, new_powerlevel, force_colour, i != 1)
+					var/step_away = TRUE
+					if (i == 1)
+						step_away = FALSE
+						if (transformeffects & SLIME_EFFECT_BLUE)
+							force_colour = TRUE
+					var/mob/living/simple_animal/slime/M = make_baby(drop_loc, new_adult, new_nutrition, new_powerlevel, force_colour, step_away, original_nanites)
 					babies += M
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
@@ -208,7 +211,7 @@
 	else
 		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
 
-/mob/living/simple_animal/slime/proc/make_baby(drop_loc, new_nutrition, new_powerlevel, force_original_colour=FALSE, step_away=TRUE)
+/mob/living/simple_animal/slime/proc/make_baby(drop_loc, new_adult, new_nutrition, new_powerlevel, force_original_colour=FALSE, step_away=TRUE,datum/component/nanites/original_nanites=null)
 	var/child_colour = colour
 	if (!force_original_colour)
 		if(mutation_chance >= 100)
@@ -224,12 +227,14 @@
 		M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 	M.powerlevel = new_powerlevel
 	if (transformeffects & SLIME_EFFECT_DARK_PURPLE)
-		M.cores = 5
+		M.cores = cores
 	if (transformeffects & SLIME_EFFECT_METAL)
 		M.maxHealth = round(M.maxHealth * 1.5)
 		M.health = M.maxHealth
 	if (transformeffects & SLIME_EFFECT_PINK)
 		M.grant_language(/datum/language/common, TRUE, TRUE)
+	if (transformeffects & SLIME_EFFECT_RED)
+		M.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_redmod, multiplicative_slowdown = -1)
 	M.Friends = Friends.Copy()
 	if(step_away)
 		step_away(M,src)

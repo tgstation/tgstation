@@ -217,7 +217,7 @@
 #define SLIME_EFFECT_BLUESPACE		(1<<10) //done
 #define SLIME_EFFECT_SEPIA			(1<<11) //done
 #define SLIME_EFFECT_CERULEAN		(1<<12) //done
-#define SLIME_EFFECT_PYRITE			(1<<13)
+#define SLIME_EFFECT_PYRITE			(1<<13) //done, do we need to update sprites?
 #define SLIME_EFFECT_RED			(1<<14)
 #define SLIME_EFFECT_GREEN			(1<<15) //done
 #define SLIME_EFFECT_PINK			(1<<16) //done
@@ -226,7 +226,7 @@
 #define SLIME_EFFECT_BLACK			(1<<19) //done
 #define SLIME_EFFECT_LIGHT_PINK		(1<<20) //done
 #define SLIME_EFFECT_ADAMANTINE		(1<<21) //done
-#define SLIME_EFFECT_RAINBOW		(1<<22)
+#define SLIME_EFFECT_RAINBOW		(1<<22) //done
 
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1

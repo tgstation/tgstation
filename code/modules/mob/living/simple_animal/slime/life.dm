@@ -13,6 +13,9 @@
 		if(buckled)
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+			if (transformeffects & SLIME_EFFECT_PYRITE && prob(20)) //change this to lower later
+				colour = pick(slime_colours)
+				update_name()
 			if (transformeffects & SLIME_EFFECT_PURPLE && prob(10))
 				adjustBruteLoss(-1*round(rand(0.1,0.2)*maxHealth))
 			handle_nutrition()
@@ -96,7 +99,7 @@
 						Feedon(Target)
 
 			else if(Target in view(7, src))
-				if (transformeffect & SLIME_EFFECT_BLUESPACE && powerlevel == 10)
+				if (transformeffects & SLIME_EFFECT_BLUESPACE && powerlevel == 10)
 					do_teleport(src, get_turf(Target),null,TRUE,null,null,null,null,TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 				else if(!Target.Adjacent(src))
 				// Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
@@ -195,7 +198,7 @@
 
 		if(istype(M,/mob/living/carbon/monkey))
 			if (transformeffects & SLIME_EFFECT_BLACK)
-				make_baby(drop_location(),round(nutrition * 0.9),round(powerlevel / 4))
+				make_baby(drop_location(),FALSE,round(nutrition * 0.9),round(powerlevel / 4))
 			if (transformeffects & SLIME_EFFECT_GREEN)
 				visible_message("<span class='warning'>[src] slurps up [M]!</span>")
 				adjust_nutrition(100)
@@ -244,7 +247,7 @@
 		set_nutrition(700) //fuck you for using the base nutrition var
 		return
 
-	if(prob(15) && !(transformeffect & SLIME_EFFECT_SILVER))
+	if(prob(15) && !(transformeffects & SLIME_EFFECT_SILVER))
 		adjust_nutrition((-(1 + is_adult)) * (transformeffects & SLIME_EFFECT_GREY) ? 2 : 1)
 
 	if(nutrition <= 0)
@@ -273,10 +276,7 @@
 	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
 		if(powerlevel<5)
 			if(prob(25-powerlevel*5))
-				powerlevel + gainpower
-
-
-
+				powerlevel = powerlevel + gainpower
 
 /mob/living/simple_animal/slime/proc/handle_targets()
 	if(attacked > 50)

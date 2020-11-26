@@ -493,3 +493,22 @@
 
 /mob/living/simple_animal/slime/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/slime/attack_ghost(mob/user)
+	. = ..()
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		return
+	if (transformeffects & SLIME_EFFECT_RAINBOW)
+		humanize_slime(user)
+
+/mob/living/simple_animal/slime/proc/humanize_slime(mob/user)
+	if(key || stat)
+		return
+	var/slime_ask = alert("Become a slime?", "Slime time?", "Yes", "No")
+	if(slime_ask == "No" || QDELETED(src))
+		return
+	if(key)
+		to_chat(user, "<span class='warning'>Someone else already took this slime!</span>")
+		return
+	key = user.key
+	log_game("[key_name(src)] took control of [name].")

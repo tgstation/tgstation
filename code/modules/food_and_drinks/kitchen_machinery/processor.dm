@@ -194,7 +194,9 @@
 			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 			return
 		for(var/i in 1 to (C+rating_amount-1))
-			var/atom/movable/item = new S.coretype(drop_location())
+			var/obj/item/slime_extract/item = new S.coretype(drop_location())
+			if (S.transformeffects & SLIME_EFFECT_GOLD)
+				item.sparkly = TRUE
 			adjust_item_drop_location(item)
 			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
 	..()

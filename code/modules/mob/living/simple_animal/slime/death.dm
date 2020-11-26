@@ -4,7 +4,9 @@
 
 	if (transformeffects & SLIME_EFFECT_OIL)
 		for (var/i in 1 to rand(2,2 + cores))
-			var/atom/movable/item = new coretype(loc)
+			var/obj/item/slime_extract/item = new coretype(loc)
+			if (transformeffects & SLIME_EFFECT_GOLD)
+				item.sparkly = TRUE
 		qdel(src)
 		return
 
