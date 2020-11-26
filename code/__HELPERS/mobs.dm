@@ -180,8 +180,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			return "unknown"
 
 
-///Timed action involving two mobs, the user and the target. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
+///Timed action involving two mobs, the user and the target. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -192,13 +192,13 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/target_loc = target.loc
 
-	if(!source && target)
-		source = target //Use the direct ref to the target
-	if(source) //Do we have a source now?
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
+	if(!interaction_key && target)
+		interaction_key = target //Use the direct ref to the target
+	if(interaction_key) //Do we have a interaction_key now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
 			return
-		LAZYSET(user.do_afters, source, current_interaction_count + 1)
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -235,8 +235,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(source)
-		LAZYREMOVE(user.do_afters, source)
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
@@ -254,21 +254,21 @@ GLOBAL_LIST_EMPTY(species_list)
 	return ..()
 
 
-///Timed action involving one mob user. Target is optional. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
+///Timed action involving one mob user. Target is optional. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
 	if(target && !isturf(target))
 		target_loc = target.loc
 
-	if(!source && target)
-		source = target //Use the direct ref to the target
-	if(source) //Do we have a source now?
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
+	if(!interaction_key && target)
+		interaction_key = target //Use the direct ref to the target
+	if(interaction_key) //Do we have a interaction_key now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
 			return
-		LAZYSET(user.do_afters, source, current_interaction_count + 1)
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
 
@@ -320,12 +320,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(source)
-		LAZYREMOVE(user.do_afters, source)
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 
-///Timed action involving at least one mob user and a list of targets. source is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, source, max_interact_count = 1)
+///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
@@ -342,12 +342,12 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/list/originalloc = list()
 
-	if(source)
-		var/current_interaction_count = LAZYACCESS(user.do_afters, source) || 0
+	if(interaction_key)
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
 			to_chat(user, "<span class='warning'>You can't do this at the moment!</span>")
 			return
-		LAZYSET(user.do_afters, source, current_interaction_count + 1)
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 
 	var/holding = user.get_active_held_item()
@@ -395,8 +395,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(source)
-		LAZYREMOVE(user.do_afters, source)
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 /proc/is_species(A, species_datum)
 	. = FALSE
@@ -453,10 +453,10 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	return spawned_mobs
 
-// Displays a message in deadchat, sent by source. Source is not linkified, message is, to avoid stuff like character names to be linkified.
-// Automatically gives the class deadsay to the whole message (message + source)
-/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
+// Displays a message in deadchat, sent by interaction_key. interaction_key is not linkified, message is, to avoid stuff like character names to be linkified.
+// Automatically gives the class deadsay to the whole message (message + interaction_key)
+/proc/deadchat_broadcast(message, interaction_key=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='deadsay'>[interaction_key]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
@@ -533,16 +533,16 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
 
-/proc/passtable_on(target, source)
+/proc/passtable_on(target, interaction_key)
 	var/mob/living/L = target
 	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
 		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
-	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, interaction_key)
 	L.pass_flags |= PASSTABLE
 
-/proc/passtable_off(target, source)
+/proc/passtable_off(target, interaction_key)
 	var/mob/living/L = target
-	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, interaction_key)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
 
