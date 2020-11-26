@@ -46,7 +46,7 @@
 
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		prime()
+		detonate()
 	if(!QDELETED(src))
 		qdel(src)
 
@@ -104,9 +104,9 @@
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/proc/prime(mob/living/lanced_by)
+/obj/item/grenade/proc/detonate(mob/living/lanced_by)
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
@@ -164,7 +164,7 @@
 		var/turf/T = get_turf(src)
 		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(T)]")
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(T)]")
-		prime()
+		detonate()
 		return TRUE //It hit the grenade, not them
 
 /obj/item/grenade/afterattack(atom/target, mob/user)

@@ -66,7 +66,7 @@
 
 /datum/wires/explosive/c4/explode()
 	var/obj/item/grenade/c4/P = holder
-	P.prime()
+	P.detonate()
 
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox

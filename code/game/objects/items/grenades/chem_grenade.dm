@@ -172,9 +172,9 @@
 		landminemode.activate()
 		return
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/chem_grenade/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 
@@ -213,7 +213,7 @@
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
 
-/obj/item/grenade/chem_grenade/large/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 
@@ -280,7 +280,7 @@
 			to_chat(user, "<span class='notice'>The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units.</span>")
 	..()
 
-/obj/item/grenade/chem_grenade/adv_release/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 
@@ -298,7 +298,7 @@
 	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
 
 	var/turf/DT = get_turf(src)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, .proc/detonate), det_time)
 	log_game("A grenade detonated at [AREACOORD(DT)]")
 
 

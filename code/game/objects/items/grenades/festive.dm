@@ -84,7 +84,7 @@
 		return ..()
 
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
-	prime()
+	detonate()
 
 /obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 	if(active)
@@ -108,9 +108,9 @@
 	playsound(src, 'sound/effects/fuse.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/firecracker/prime(mob/living/lanced_by)
+/obj/item/grenade/firecracker/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)
