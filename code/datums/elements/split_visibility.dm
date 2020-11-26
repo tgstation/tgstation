@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	if(!isnull(custom_alpha))
 		alpha = custom_alpha
 	if(!isnull(custom_pixel_x))
-		pixel_x = custom_pixel_x l
+		pixel_x = custom_pixel_x
 	if(!isnull(custom_pixel_y))
 		pixel_y = custom_pixel_y
 	if(!isnull(custom_plane))
