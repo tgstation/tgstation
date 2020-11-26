@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embedding = list()
 	novariants = TRUE
 	matter_amount = 2
+	cost = 250
+	source = /datum/robot_energy_storage/metal
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
@@ -69,9 +71,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 250
+	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/cyborg/ComponentInitialize()
 	. = ..()

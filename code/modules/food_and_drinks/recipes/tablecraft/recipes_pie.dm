@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/pie/plain = 1,
-		 /obj/item/reagent_containers/food/snacks/grown/banana = 1
+		 /obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/pie/cream
 	subcategory = CAT_PIE
@@ -46,7 +46,7 @@
 	name = "Cherry pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		 /obj/item/reagent_containers/food/snacks/grown/cherries = 1
+		 /obj/item/food/grown/cherries = 1
 	)
 	result = /obj/item/food/pie/cherrypie
 	subcategory = CAT_PIE
@@ -55,7 +55,7 @@
 	name = "Berry clafoutis"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/pie/berryclafoutis
 	subcategory = CAT_PIE
@@ -64,7 +64,7 @@
 	name = "Beary Pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
+		/obj/item/food/grown/berries = 1,
 		/obj/item/food/meat/steak/bear = 1
 	)
 	result = /obj/item/food/pie/bearypie
@@ -74,7 +74,7 @@
 	name = "Amanita pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita = 1
+		/obj/item/food/grown/mushroom/amanita = 1
 	)
 	result = /obj/item/food/pie/amanita_pie
 	subcategory = CAT_PIE
@@ -83,7 +83,7 @@
 	name = "Plump pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1
+		/obj/item/food/grown/mushroom/plumphelmet = 1
 	)
 	result = /obj/item/food/pie/plump_pie
 	subcategory = CAT_PIE
@@ -92,7 +92,7 @@
 	name = "Apple pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple = 1
+		/obj/item/food/grown/apple = 1
 	)
 	result = /obj/item/food/pie/applepie
 	subcategory = CAT_PIE
@@ -103,7 +103,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/pumpkin = 1
+		/obj/item/food/grown/pumpkin = 1
 	)
 	result = /obj/item/food/pie/pumpkinpie
 	subcategory = CAT_PIE
@@ -114,7 +114,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple/gold = 1
+		/obj/item/food/grown/apple/gold = 1
 	)
 	result = /obj/item/food/pie/appletart
 	subcategory = CAT_PIE
@@ -125,7 +125,7 @@
             /datum/reagent/consumable/milk = 5,
             /datum/reagent/consumable/sugar = 5,
             /obj/item/food/pie/plain = 1,
-	        /obj/item/reagent_containers/food/snacks/grown/grapes = 3
+	        /obj/item/food/grown/grapes = 3
 	        )
 	result = /obj/item/food/pie/grapetart
 	subcategory = CAT_PIE
@@ -149,7 +149,7 @@
             /datum/reagent/consumable/milk = 5,
             /datum/reagent/consumable/sugar = 5,
             /obj/item/food/pie/plain = 1,
-	        /obj/item/reagent_containers/food/snacks/grown/berries = 3
+	        /obj/item/food/grown/berries = 3
 	        )
 	result = /obj/item/food/pie/berrytart
 	subcategory = CAT_PIE
@@ -173,7 +173,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/blumpkin = 1
+		/obj/item/food/grown/blumpkin = 1
 	)
 	result = /obj/item/food/pie/blumpkinpie
 	subcategory = CAT_PIE
@@ -183,7 +183,7 @@
 	reqs = list(
 		/datum/reagent/consumable/vanilla = 5,
 		/datum/reagent/water = 5,
-		/obj/item/reagent_containers/food/snacks/grown/potato/sweet = 2
+		/obj/item/food/grown/potato/sweet = 2
 	)
 	result = /obj/item/food/pie/dulcedebatata
 	subcategory = CAT_PIE
@@ -192,7 +192,7 @@
 	name = "Frosty pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1
+		/obj/item/food/grown/bluecherries = 1
 	)
 	result = /obj/item/food/pie/frostypie
 	subcategory = CAT_PIE

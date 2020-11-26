@@ -566,6 +566,7 @@
 		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
 		/obj/machinery/vending/clothing = "ClothesMate",
 		/obj/machinery/vending/medical = "NanoMed Plus",
+		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/wallmed = "NanoMed",
 		/obj/machinery/vending/assist  = "Vendomat",
 		/obj/machinery/vending/engivend = "Engi-Vend",
