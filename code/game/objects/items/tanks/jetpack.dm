@@ -127,23 +127,11 @@
 	full_speed = FALSE //moves at hardsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
-	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off(user)
-		return
 	if(rand(0,250) == 0)
 		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
 		turn_off(user)
 		return
-
-	var/datum/gas_mixture/removed = air_contents.remove(num)
-	if(removed.total_moles() < 0.005)
-		turn_off(user)
-		return
-
-	var/turf/T = get_turf(user)
-	T.assume_air(removed)
-	ion_trail.generate_effect()
-
+	else ..()
 	return TRUE
 
 /obj/item/tank/jetpack/void
