@@ -613,7 +613,7 @@
 // /obj/item/grenade signals
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
-#define COMSIG_GRENADE_PRIME "grenade_prime"
+#define COMSIG_GRENADE_DETONATE "grenade_prime"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 

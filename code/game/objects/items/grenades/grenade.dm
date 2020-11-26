@@ -19,7 +19,7 @@
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 	var/sticky = FALSE
-	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/prime] so we can send COMSIG_GRENADE_PRIME
+	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/prime] so we can send COMSIG_GRENADE_DETONATE
 	///how big of a devastation explosion radius on prime
 	var/ex_dev = 0
 	///how big of a heavy explosion radius on prime
@@ -77,10 +77,9 @@
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		to_chat(user, "<span class='notice'>You try prying [src] off your hand...</span>")
-		if(do_after(user, 70, target=src))
+		if(do_after(user, 7 SECONDS, target=src))
 			to_chat(user, "<span class='notice'>You manage to remove [src] from your hand.</span>")
 			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
-
 		return
 
 	if(!active)
@@ -90,6 +89,7 @@
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
 	log_bomber(user, "has primed a", src, "for detonation")
 
+///
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T) //Inbuilt admin procs already handle null users
@@ -111,7 +111,7 @@
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
 
-	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME, lanced_by)
+	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
 		explosion(loc, ex_dev, ex_heavy, ex_light, flame_range = ex_flame)
 
