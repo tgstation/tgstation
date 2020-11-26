@@ -46,7 +46,7 @@
 	var/mob/M = get_mob_by_ckey(fingerprint)
 	var/turf/T = get_turf(M)
 	G.log_grenade(M, T) //Used in arm_grenade() too but this one convays where the mob who triggered the bomb is
-	G.arm_grenade() //The one here convays where the bomb was when it went boom
+	G.arm_grenade() //The one here conveys where the bomb was when it went boom
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)

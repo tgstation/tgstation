@@ -19,7 +19,7 @@
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 	var/sticky = FALSE
-	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/prime] so we can send COMSIG_GRENADE_DETONATE
+	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/detonate] so we can send COMSIG_GRENADE_DETONATE
 	///how big of a devastation explosion radius on prime
 	var/ex_dev = 0
 	///how big of a heavy explosion radius on prime
@@ -29,7 +29,7 @@
 	///how big of a flame explosion radius on prime
 	var/ex_flame = 0
 
-	// dealing with creating a [/datum/component/pellet_cloud] on prime
+	// dealing with creating a [/datum/component/pellet_cloud] on detonate
 	/// if set, will spew out projectiles of this type
 	var/shrapnel_type
 	/// the higher this number, the more projectiles are created as shrapnel
@@ -89,7 +89,10 @@
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
 	log_bomber(user, "has primed a", src, "for detonation")
 
-///
+/**
+  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
+  * Grenades with other triggers like remote igniters probably skip this step and go straight to [/obj/item/grenade/proc/detonate]
+  */
 /obj/item/grenade/proc/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T) //Inbuilt admin procs already handle null users
@@ -106,6 +109,12 @@
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
+/**
+  * detonate (formerly prime) refers to when the grenade actually delivers its payload (whether or not a boom/bang/detonation is involved)
+  *
+  * Arguments:
+  * * lanced_by- If this grenade was detonated by an elance, we need to pass that along with the COMSIG_GRENADE_DETONATE signal for pellet clouds
+  */
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
@@ -121,20 +130,20 @@
 		M.dropItemToGround(src)
 
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(!active)
-		if(W.tool_behaviour == TOOL_MULTITOOL)
-			var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
-			if (newtime != null && user.canUseTopic(src, BE_CLOSE))
-				if(change_det_time(newtime))
-					to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
-					if (round(newtime * 10) != det_time)
-						to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
-			return
-		else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-			if(change_det_time())
-				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
-	else
+	if(active)
 		return ..()
+
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
+		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
+			if(change_det_time(newtime))
+				to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
+				if (round(newtime * 10) != det_time)
+					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
+		return
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(change_det_time())
+			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE
