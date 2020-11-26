@@ -476,7 +476,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
-		if(TRUE)
+		if(prob(5))
 			AdjustSleeping(100)
 
 	//Jitteriness
