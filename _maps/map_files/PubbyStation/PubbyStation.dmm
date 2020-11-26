@@ -47245,6 +47245,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
+"fJw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "fKj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mineral Room"
@@ -53931,6 +53938,12 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"pln" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "plA" = (
 /obj/structure/musician/piano,
 /turf/open/floor/plasteel/dark,
@@ -96728,11 +96741,11 @@ bMa
 bMf
 bOk
 bOU
-bPS
+fJw
 bPS
 bRw
 bMf
-bMf
+pln
 bTN
 bUt
 bMf
