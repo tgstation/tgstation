@@ -40,28 +40,26 @@
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
 	update_icon()
 
-/obj/item/robot_suit/update_icon()
-	cut_overlays()
+/obj/item/robot_suit/update_overlays()
+	. = ..()
 	if(l_arm)
-		add_overlay("[l_arm.icon_state]+o")
+		. += "[l_arm.icon_state]+o"
 	if(r_arm)
-		add_overlay("[r_arm.icon_state]+o")
+		. += "[r_arm.icon_state]+o"
 	if(chest)
-		add_overlay("[chest.icon_state]+o")
+		. += "[chest.icon_state]+o"
 	if(l_leg)
-		add_overlay("[l_leg.icon_state]+o")
+		. += "[l_leg.icon_state]+o"
 	if(r_leg)
-		add_overlay("[r_leg.icon_state]+o")
+		. += "[r_leg.icon_state]+o"
 	if(head)
-		add_overlay("[head.icon_state]+o")
+		. += "[head.icon_state]+o"
 
 /obj/item/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm)
-		if(src.l_leg && src.r_leg)
-			if(src.chest && src.head)
-				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
-				return 1
-	return 0
+	if(l_arm && r_arm && l_leg && r_leg && head && head.flash1 && head.flash2 && chest && chest.wired && chest.cell)
+		SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
+		return TRUE
+	return FALSE
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	. = ..()
@@ -243,42 +241,23 @@
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
-			if(!M.brainmob)
-				to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
+			if(!M.brain_check(user))
 				return
 
-			var/mob/living/brain/BM = M.brainmob
-			if(!BM.key || !BM.mind)
-				to_chat(user, "<span class='warning'>The MMI indicates that their mind is completely unresponsive; there's no point!</span>")
-				return
-
-			if(!BM.client) //braindead
-				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
-				return
-
-			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
-				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
-				return
-
-			if(M.brain?.organ_flags & ORGAN_FAILING)
-				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
-				return
-
-			if(is_banned_from(BM.ckey, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+			var/mob/living/brain/B = M.brainmob
+			if(is_banned_from(B.ckey, "Cyborg") || QDELETED(src) || QDELETED(B) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
 				if(!QDELETED(M))
 					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
-
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
 			if(!O)
 				return
-
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
-				aisync = 0
-				lawsync = 0
+				aisync = FALSE
+				lawsync = FALSE
 				O.laws = M.laws
 				M.laws.associate(O)
 
@@ -287,18 +266,18 @@
 			O.custom_name = created_name
 			O.locked = panel_locked
 			if(!aisync)
-				lawsync = 0
-				O.connected_ai = null
+				lawsync = FALSE
+				O.set_connected_ai(null)
 			else
 				O.notify_ai(NEW_BORG)
 				if(forced_ai)
-					O.connected_ai = forced_ai
+					O.set_connected_ai(forced_ai)
 			if(!lawsync)
-				O.lawupdate = 0
+				O.lawupdate = FALSE
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			SSticker.mode.remove_antag_for_borging(BM.mind)
+			SSticker.mode.remove_antag_for_borging(B.mind)
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
@@ -309,9 +288,9 @@
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 
-			O.updatename(BM.client)
+			O.updatename(B.client)
 
-			BM.mind.transfer_to(O)
+			B.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
@@ -325,8 +304,7 @@
 			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
 
 			if(!locomotion)
-				O.lockcharge = TRUE
-				O.update_mobility()
+				O.set_lockcharge(TRUE)
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
@@ -346,15 +324,14 @@
 
 			if(!aisync)
 				lawsync = FALSE
-				O.connected_ai = null
+				O.set_connected_ai(null)
 			else
 				if(forced_ai)
-					O.connected_ai = forced_ai
+					O.set_connected_ai(forced_ai)
 				O.notify_ai(AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
-
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
@@ -364,8 +341,7 @@
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)
-				O.lockcharge = TRUE
-				O.update_mobility()
+				O.set_lockcharge(TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
@@ -385,7 +361,8 @@
 			popup.open()
 
 /obj/item/robot_suit/Topic(href, href_list)
-	if(usr.incapacitated() || !Adjacent(usr))
+	. = ..()
+	if(. || usr.incapacitated() || !Adjacent(usr)) // atom/topic only returns true if clicked
 		return
 
 	var/mob/living/living_user = usr
@@ -400,11 +377,12 @@
 			return
 		if(new_name)
 			created_name = new_name
+			log_game("[key_name(usr)] have set \"[new_name]\" as a cyborg shell name at [loc_name(usr)]")
 		else
 			created_name = ""
 
 	else if(href_list["Master"])
-		forced_ai = select_active_ai(usr)
+		forced_ai = select_active_ai(usr, z)
 		if(!forced_ai)
 			to_chat(usr, "<span class='alert'>No active AIs detected.</span>")
 

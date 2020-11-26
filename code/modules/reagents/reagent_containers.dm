@@ -50,7 +50,7 @@
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = eater
 	var/covered = ""
 	if(C.is_mouth_covered(head_only = 1))
@@ -60,8 +60,19 @@
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
 		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
+
+/*
+ * On accidental consumption, transfer a portion of the reagents to the eater and the item it's in, then continue to the base proc (to deal with shattering glass containers)
+ */
+/obj/item/reagent_containers/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	M.losebreath += 2
+	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transfered_by = user, methods = INGEST)
+	if(source_item?.reagents)
+		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, methods = TOUCH)
+
+	return ..()
 
 /obj/item/reagent_containers/ex_act()
 	if(reagents)
@@ -92,14 +103,14 @@
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
-		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
-						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		target.visible_message("<span class='danger'>[M] is splashed with something!</span>", \
+						"<span class='userdanger'>[M] is splashed with something!</span>")
 		for(var/datum/reagent/A in reagents.reagent_list)
 			R += "[A.type]  ([num2text(A.volume)]),"
 
 		if(thrownby)
 			log_combat(thrownby, M, "splashed", R)
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
@@ -111,7 +122,7 @@
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
 
@@ -127,12 +138,10 @@
 /obj/item/reagent_containers/on_reagent_change(changetype)
 	update_icon()
 
-/obj/item/reagent_containers/update_icon(dont_fill=FALSE)
-	if(!fill_icon_thresholds || dont_fill)
-		return ..()
-
-	cut_overlays()
-
+/obj/item/reagent_containers/update_overlays()
+	. = ..()
+	if(!fill_icon_thresholds)
+		return
 	if(reagents.total_volume)
 		var/fill_name = fill_icon_state? fill_icon_state : icon_state
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
@@ -145,5 +154,4 @@
 				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	. = ..()
+		. += filling

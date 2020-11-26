@@ -9,14 +9,25 @@
 #define CHANNEL_BUZZ 1017
 #define CHANNEL_BICYCLE 1016
 
+///Default range of a sound.
+#define SOUND_RANGE 17
+///default extra range for sounds considered to be quieter
+#define SHORT_RANGE_SOUND_EXTRARANGE -9
+///The range deducted from sound range for things that are considered silent / sneaky
+#define SILENCED_SOUND_EXTRARANGE -11
+///Percentage of sound's range where no falloff is applied
+#define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
+///The default exponent of sound falloff
+#define SOUND_FALLOFF_EXPONENT 6
+
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
 #define CHANNEL_HIGHEST_AVAILABLE 1015
 
+#define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
 #define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS 1
 
 
 //Ambience types
@@ -46,7 +57,8 @@
 #define MINING list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
 											'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
 											'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
-											'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg', 'sound/ambience/ambilava.ogg')
+											'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint1.ogg',\
+											'sound/ambience/ambilava1.ogg', 'sound/ambience/ambilava2.ogg', 'sound/ambience/ambilava3.ogg')
 
 #define MEDICAL list('sound/ambience/ambinice.ogg')
 
@@ -78,5 +90,5 @@
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
 #define EQUIP_SOUND_VOLUME 30
 #define PICKUP_SOUND_VOLUME 15
-#define DROP_SOUND_VOLUME 20 
+#define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90

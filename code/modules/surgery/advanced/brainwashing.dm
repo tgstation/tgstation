@@ -27,7 +27,7 @@
 
 /datum/surgery_step/brainwash
 	name = "brainwash"
-	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/package_wrap = 35, /obj/item/stack/cable_coil = 15)
 	time = 200
 	var/objective
 
@@ -39,7 +39,7 @@
 		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
-/datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(!target.mind)
 		to_chat(user, "<span class='warning'>[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind...</span>")
 		return FALSE
@@ -53,7 +53,7 @@
 	brainwash(target, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
-	return TRUE
+	return ..()
 
 /datum/surgery_step/brainwash/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))

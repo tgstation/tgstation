@@ -3,7 +3,7 @@
 	desc = "A device used to project your voice. Loudly."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
-	item_state = "megaphone"
+	inhand_icon_state = "megaphone"
 	lefthand_file = 'icons/mob/inhands/misc/megaphone_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -19,7 +19,7 @@
 
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HANDS)
+	if (slot == ITEM_SLOT_HANDS && !HAS_TRAIT(M, TRAIT_SIGN_LANG))
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -47,21 +47,21 @@
 /obj/item/megaphone/sec
 	name = "security megaphone"
 	icon_state = "megaphone-sec"
-	item_state = "megaphone-sec"
+	inhand_icon_state = "megaphone-sec"
 
 /obj/item/megaphone/command
 	name = "command megaphone"
 	icon_state = "megaphone-command"
-	item_state = "megaphone-command"
+	inhand_icon_state = "megaphone-command"
 
 /obj/item/megaphone/cargo
 	name = "supply megaphone"
 	icon_state = "megaphone-cargo"
-	item_state = "megaphone-cargo"
+	inhand_icon_state = "megaphone-cargo"
 
 /obj/item/megaphone/clown
 	name = "clown's megaphone"
 	desc = "Something that should not exist."
 	icon_state = "megaphone-clown"
-	item_state = "megaphone-clown"
+	inhand_icon_state = "megaphone-clown"
 	voicespan = list(SPAN_CLOWN)

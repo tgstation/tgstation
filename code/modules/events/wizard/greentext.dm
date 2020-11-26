@@ -12,7 +12,7 @@
 		if(!ishuman(M))
 			holder_canadates -= M
 	if(!holder_canadates) //Very unlikely, but just in case
-		return 0
+		return FALSE
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/greentext(H.loc)

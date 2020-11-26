@@ -4,7 +4,7 @@
 	max_stages = 5
 	spread_text = "Airborne"
 	cure_text = "Spaceacillin & Convermol"
-	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/C2/convermol)
+	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/c2/convermol)
 	agent = "Fungal Tubercle bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 5//like hell are you getting out of hell
@@ -14,7 +14,10 @@
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
 /datum/disease/tuberculosis/stage_act() //it begins
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if(prob(2))
@@ -30,23 +33,23 @@
 				affected_mob.Dizzy(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a sharp pain from your lower chest!</span>")
-				affected_mob.adjustOxyLoss(5)
+				affected_mob.adjustOxyLoss(5, FALSE)
 				affected_mob.emote("gasp")
 			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You feel air escape from your lungs painfully.</span>")
-				affected_mob.adjustOxyLoss(25)
+				affected_mob.adjustOxyLoss(25, FALSE)
 				affected_mob.emote("gasp")
 		if(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>")
-				affected_mob.adjustStaminaLoss(70)
+				affected_mob.adjustStaminaLoss(70, FALSE)
 			if(prob(10))
-				affected_mob.adjustStaminaLoss(100)
+				affected_mob.adjustStaminaLoss(100, FALSE)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
 				affected_mob.AdjustSleeping(100)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")
-				affected_mob.confused = min(100, affected_mob.confused + 8)
+				affected_mob.set_confusion(min(100, affected_mob.get_confusion() + 8))
 			if(prob(10))
 				affected_mob.vomit(20)
 			if(prob(3))
@@ -56,4 +59,3 @@
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.adjust_bodytemperature(40)
-	return

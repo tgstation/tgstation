@@ -6,6 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	health_doll_icon = "clown" //if >32x32, it will use this generic. for all the huge clown mobs that subtype from this
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	turns_per_move = 5
 	response_disarm_continuous = "gently pushes aside"
@@ -40,8 +41,12 @@
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(10)
+		throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(15)
+		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
 	..()
@@ -157,6 +162,7 @@
 	maxHealth = 150
 	health = 150
 	pixel_x = -16
+	base_pixel_x = -16
 	speed = 10
 	harm_intent_damage = 5
 	melee_damage_lower = 5
@@ -182,6 +188,7 @@
 	maxHealth = 400
 	health = 400
 	pixel_x = -16
+	base_pixel_x = -16
 	speed = 2
 	harm_intent_damage = 15
 	melee_damage_lower = 15
@@ -253,7 +260,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 40
 	armour_penetration = 30
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	attack_verb_continuous = "acts out divine vengeance on"
 	attack_verb_simple = "act out divine vengeance on"
 	obj_damage = 50
@@ -279,6 +286,7 @@
 	maxHealth = 130
 	health = 130
 	pixel_x = -16
+	base_pixel_x = -16
 	speed = -5
 	harm_intent_damage = 10
 	melee_damage_lower = 10
@@ -286,6 +294,10 @@
 	attack_verb_continuous = "awkwardly flails at"
 	attack_verb_simple = "awkwardly flail at"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow
+	speed = 20
+	move_to_delay = 60
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
 	name = "Something that was once a clown"
@@ -301,3 +313,7 @@
 	attack_verb_simple = "bounce off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 	attack_reagent = /datum/reagent/toxin/mindbreaker
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow
+	speed = 50
+	move_to_delay = 120

@@ -17,7 +17,7 @@
 	name = "Syndicate VR Operative - Basic"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol

@@ -4,7 +4,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -32,24 +32,36 @@
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
 				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
-			reagents.reaction(M, TOUCH)
+			reagents.expose(M, TOUCH)
 			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
-							"<span class='userdanger'>[user] attempts to feed you something.</span>")
+				M.visible_message("<span class='danger'>[user] attempts to feed [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] attempts to feed you something from [src].</span>")
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds [M] something.</span>", \
-							"<span class='userdanger'>[user] feeds you something.</span>")
+				M.visible_message("<span class='danger'>[user] feeds [M] something from [src].</span>", \
+							"<span class='userdanger'>[user] feeds you something from [src].</span>")
 				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
+			SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+			if(iscarbon(M))
+				var/mob/living/carbon/carbon_drinker = M
+				var/list/diseases = carbon_drinker.get_static_viruses()
+				if(LAZYLEN(diseases))
+					var/list/datum/disease/diseases_to_add = list()
+					for(var/d in diseases)
+						var/datum/disease/malady = d
+						if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+							diseases_to_add += malady
+					if(LAZYLEN(diseases_to_add))
+						AddComponent(/datum/component/infective, diseases_to_add)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -87,7 +99,7 @@
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-			reagents.reaction(target, TOUCH)
+			reagents.expose(target, TOUCH)
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
@@ -96,8 +108,8 @@
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 
-	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
-		var/obj/item/reagent_containers/food/snacks/egg/E = I
+	if(istype(I, /obj/item/food/egg)) //breaking eggs
+		var/obj/item/food/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
@@ -108,13 +120,21 @@
 			return
 	..()
 
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	if(!custom_materials)
+		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+	return ..()
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
-	item_state = "beaker"
+	inhand_icon_state = "beaker"
+	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
@@ -144,15 +164,11 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
+	fill_icon_state = "beakerlarge"
 	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
-
-/obj/item/reagent_containers/glass/beaker/plastic/update_icon()
-	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
-	..()
-	icon_state = "beakerwhite"
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
@@ -196,29 +212,29 @@
 
 /obj/item/reagent_containers/glass/beaker/large/libital
 	name = "libital reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/aiuri
 	name = "aiuri reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/c2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/instabitaluri
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
+/obj/item/reagent_containers/glass/beaker/synthflesh
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
-	item_state = "bucket"
+	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	custom_materials = list(/datum/material/iron=200)
@@ -229,7 +245,7 @@
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 75, ACID = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		ITEM_SLOT_BACK, ITEM_SLOT_ID,\
 		ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
@@ -244,9 +260,9 @@
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
-	item_state = "woodbucket"
-	custom_materials = null
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	inhand_icon_state = "woodbucket"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	resistance_flags = FLAMMABLE
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
@@ -270,7 +286,7 @@
 	if (slot == ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-			reagents.reaction(user, TOUCH)
+			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
 		reagents.flags = NONE
 
@@ -278,7 +294,7 @@
 	. = ..()
 	reagents.flags = initial(reagent_flags)
 
-/obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
+/obj/item/reagent_containers/glass/bucket/equip_to_best_slot(mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
 		var/index = slot_equipment_priority.Find(ITEM_SLOT_HEAD)
 		slot_equipment_priority.Remove(ITEM_SLOT_HEAD)
@@ -287,138 +303,10 @@
 		return
 	return ..()
 
-/obj/item/reagent_containers/glass/waterbottle
-	name = "bottle of water"
-	desc = "A bottle of water filled at an old Earth bottling facility."
-	icon = 'icons/obj/drinks.dmi'
-	icon_state = "smallbottle"
-	item_state = "bottle"
-	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
-	volume = 50
-	amount_per_transfer_from_this = 10
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
-
-	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
-	var/cap_icon_state = "bottle_cap_small"
-	var/cap_on = TRUE
-	var/cap_lost = FALSE
-	var/mutable_appearance/cap_overlay
-	var/flip_chance = 10
-
-/obj/item/reagent_containers/glass/waterbottle/Initialize()
-	. = ..()
-	cap_overlay = mutable_appearance(icon, cap_icon_state)
-	if(cap_on)
-		spillable = FALSE
-		add_overlay(cap_overlay, TRUE)
-
-/obj/item/reagent_containers/glass/waterbottle/examine(mob/user)
-	. = ..()
-	if(cap_lost)
-		. += "<span class='notice'>The cap seems to be missing.</span>"
-	else if(cap_on)
-		. += "<span class='notice'>The cap is firmly on to prevent spilling. Alt-click to remove the cap.</span>"
-	else
-		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
-
-/obj/item/reagent_containers/glass/waterbottle/AltClick(mob/user)
-	. = ..()
-	if(cap_lost)
-		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
-		return
-
-	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
-	if(cap_on || fumbled)
-		cap_on = FALSE
-		spillable = TRUE
-		cut_overlay(cap_overlay, TRUE)
-		animate(src, transform = null, time = 2, loop = 0)
-		if(fumbled)
-			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
-			cap_lost = TRUE
-		else
-			to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
-	else
-		cap_on = TRUE
-		spillable = FALSE
-		add_overlay(cap_overlay, TRUE)
-		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
-	update_icon()
-
-/obj/item/reagent_containers/glass/waterbottle/is_refillable()
-	if(cap_on)
-		return FALSE
-	. = ..()
-
-/obj/item/reagent_containers/glass/waterbottle/is_drainable()
-	if(cap_on)
-		return FALSE
-	. = ..()
-
-/obj/item/reagent_containers/glass/waterbottle/attack(mob/M, mob/user, obj/target)
-	if(cap_on && reagents.total_volume && istype(M))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
-		return
-	. = ..()
-
-/obj/item/reagent_containers/glass/waterbottle/afterattack(obj/target, mob/user, proximity)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
-		return
-
-	else if(istype(target, /obj/item/reagent_containers/glass/waterbottle))
-		var/obj/item/reagent_containers/glass/waterbottle/WB = target
-		if(WB.cap_on)
-			to_chat(user, "<span class='warning'>[WB] has a cap firmly twisted on!</span>")
-	. = ..()
-
-// heehoo bottle flipping
-/obj/item/reagent_containers/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(cap_on && reagents.total_volume)
-		if(prob(flip_chance)) // landed upright
-			src.visible_message("<span class='notice'>[src] lands upright!</span>")
-			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
-		else // landed on it's side
-			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
-
-/obj/item/reagent_containers/glass/waterbottle/pickup(mob/user)
-	. = ..()
-	animate(src, transform = null, time = 1, loop = 0)
-
-/obj/item/reagent_containers/glass/waterbottle/empty
-	list_reagents = list()
-	cap_on = FALSE
-
-/obj/item/reagent_containers/glass/waterbottle/large
-	desc = "A fresh commercial-sized bottle of water."
-	icon_state = "largebottle"
-	custom_materials = list(/datum/material/plastic=3000)
-	list_reagents = list(/datum/reagent/water = 100)
-	volume = 100
-	amount_per_transfer_from_this = 20
-	cap_icon_state = "bottle_cap"
-
-/obj/item/reagent_containers/glass/waterbottle/large/empty
-	list_reagents = list()
-	cap_on = FALSE
-
-// Admin spawn
-/obj/item/reagent_containers/glass/waterbottle/relic
-	name = "mysterious bottle"
-	desc = "A bottle quite similar to a water bottle, but with some words scribbled on with a marker. It seems to be radiating some kind of energy."
-	flip_chance = 100 // FLIPP
-
-/obj/item/reagent_containers/glass/waterbottle/relic/Initialize()
-	var/datum/reagent/random_reagent = get_random_reagent_id()
-	list_reagents = list(random_reagent = 50)
-	. = ..()
-	desc +=  "<span class='notice'>The writing reads '[random_reagent.name]'.</span>"
-
 /obj/item/pestle
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
@@ -430,6 +318,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
@@ -454,12 +343,12 @@
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
 					to_chat(user, "<span class='notice'>You juice [grinded] into a fine liquid.</span>")
-					if(grinded.reagents) //food and pills
-						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 					QDEL_NULL(grinded)
 					return
 				grinded.on_grind()
 				reagents.add_reagent_list(grinded.grind_results)
+				if(grinded.reagents) //food and pills
+					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 				to_chat(user, "<span class='notice'>You break [grinded] into powder.</span>")
 				QDEL_NULL(grinded)
 				return
@@ -480,22 +369,3 @@
 	name = "saline canister"
 	volume = 5000
 	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
-
-/obj/item/reagent_containers/glass/colocup
-	name = "colo cup"
-	desc = "A cheap, mass produced style of cup, typically used at parties. They never seem to come out red, for some reason..."
-	icon = 'icons/obj/drinks.dmi'
-	icon_state = "colocup"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	item_state = "colocup"
-	custom_materials = list(/datum/material/plastic = 1000)
-	possible_transfer_amounts = list(5, 10, 15, 20)
-	volume = 20
-	amount_per_transfer_from_this = 5
-
-/obj/item/reagent_containers/glass/colocup/Initialize()
-	.=..()
-	icon_state = "colocup[rand(0, 6)]"
-	pixel_x = rand(-4,4)
-	pixel_y = rand(-4,4)

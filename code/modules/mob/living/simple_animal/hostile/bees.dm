@@ -32,10 +32,10 @@
 	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
+	ventcrawler = VENTCRAWLER_ALWAYS
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -43,8 +43,9 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	movement_type = FLYING
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
+	can_be_held = TRUE
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -61,8 +62,18 @@
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	generate_bee_visuals()
 	AddComponent(/datum/component/swarming)
+
+/mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	if(beegent)
+		reee[beegent.type] = 5
+	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)
@@ -76,6 +87,13 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	var/obj/item/trash/bee/bee_to_eat = new(loc)
+	bee_to_eat.pixel_x = pixel_x
+	bee_to_eat.pixel_y = pixel_y
+	if(beegent)
+		bee_to_eat.beegent = beegent
+		bee_to_eat.reagents.add_reagent(beegent.type, 5)
+	bee_to_eat.update_icon()
 	beegent = null
 	..()
 
@@ -101,9 +119,10 @@
 	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
-	if(beegent && beegent.color)
+	if(beegent?.color)
 		col = beegent.color
 
+	icon_state = "[icon_base]_base"
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
@@ -155,9 +174,13 @@
 		if(. && beegent && isliving(target))
 			var/mob/living/L = target
 			if(L.reagents)
-				beegent.reaction_mob(L, INJECT)
+				beegent.expose_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
+/mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
+	if(beegent && istype(L) && L.reagents)
+		beegent.expose_mob(L, INJECT)
+		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
@@ -218,6 +241,9 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
+/mob/living/simple_animal/hostile/poison/bees/will_escape_storage()
+	return TRUE
+
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
@@ -240,7 +266,7 @@
 	. = ..()
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
-		beegent.reaction_mob(L, TOUCH)
+		beegent.expose_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 
@@ -248,6 +274,8 @@
 /mob/living/simple_animal/hostile/poison/bees/queen/pollinate()
 	return
 
+/mob/living/simple_animal/hostile/poison/bees/queen/will_escape_storage()
+	return FALSE
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
@@ -261,7 +289,7 @@
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
-	item_state = ""
+	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
 	var/mob/living/simple_animal/hostile/poison/bees/queen/queen
 
@@ -274,7 +302,7 @@
 				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
 				var/obj/item/queen_bee/qb = new(user.drop_location())
 				qb.queen = new(qb)
-				if(queen && queen.beegent)
+				if(queen?.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
 				user.put_in_active_hand(qb)
 				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
@@ -316,3 +344,22 @@
 /mob/living/simple_animal/hostile/poison/bees/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), timetolive)
+
+/obj/item/trash/bee
+	name = "bee"
+	desc = "No wonder the bees are dying out, you monster."
+	icon = 'icons/mob/bees.dmi'
+	icon_state = "bee_item"
+	var/datum/reagent/beegent
+
+/obj/item/trash/bee/Initialize()
+	. = ..()
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+
+/obj/item/trash/bee/update_icon()
+	. = ..()
+	cut_overlays()
+	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
+	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	add_overlay(body_overlay)
+

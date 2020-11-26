@@ -7,6 +7,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Drone, a dextrous master of construction and repair.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Gold, a malleable constructor.</span>"
 	dextrous = TRUE
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
@@ -75,7 +76,7 @@
 	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used && hud_used.hud_shown)
+	if(internal_storage && client && hud_used?.hud_shown)
 		internal_storage.screen_loc = ui_id
 		client.screen += internal_storage
 

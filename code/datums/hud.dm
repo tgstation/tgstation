@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
 	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
+	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
@@ -22,17 +23,17 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_NINJA = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CHANGELING = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_ABDUCTOR = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_DEVIL = new/datum/atom_hud/antag(),
-	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_OBSESSED = new/datum/atom_hud/antag/hidden(),
-	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag()
+	ANTAG_HUD_FUGITIVE = new/datum/atom_hud/antag(),
+	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag(),
+	ANTAG_HUD_HERETIC = new/datum/atom_hud/antag/hidden()
 	))
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
-	var/list/mob/hudusers = list() //list with all mobs who can see the hud
+	var/list/hudusers = list() //list with all mobs who can see the hud
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
 
 	var/list/next_time_allowed = list() //mobs associated with the next time this hud can be added to them
@@ -130,7 +131,7 @@ GLOBAL_LIST_INIT(huds, list(
 //MOB PROCS
 /mob/proc/reload_huds()
 	for(var/datum/atom_hud/hud in GLOB.all_huds)
-		if(hud && hud.hudusers[src])
+		if(hud?.hudusers[src])
 			for(var/atom/A in hud.hudatoms)
 				hud.add_to_single_hud(src, A)
 

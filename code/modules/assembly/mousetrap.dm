@@ -2,7 +2,7 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
-	item_state = "mousetrap"
+	inhand_icon_state = "mousetrap"
 	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE
@@ -62,6 +62,13 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
+	else if(israt(target))
+		var/mob/living/simple_animal/hostile/rat/ratt = target
+		visible_message("<span class='boldannounce'>Clink!</span>")
+		ratt.apply_damage(5) //Not lethal, but just enought to make a mark.
+		ratt.Stun(1 SECONDS)
+	else if(isregalrat(target))
+		visible_message("<span class='boldannounce'>Skreeeee!</span>") //He's simply too large to be affected by a tiny mouse trap.
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	armed = FALSE
 	update_icon()
@@ -111,7 +118,7 @@
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")
-				else if(ismouse(MM))
+				else if(ismouse(MM) || israt(MM) || isregalrat(MM))
 					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)

@@ -15,8 +15,8 @@
 	icon_state = "drone_synd"
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
-	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	health = 120
+	maxHealth = 120
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
@@ -35,10 +35,6 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
-
-/mob/living/simple_animal/drone/syndrone/Login()
-	..()
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -86,15 +82,15 @@
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
-	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
-	if(visualAppearence == MAINTDRONE)
+	visualAppearance = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
+	if(visualAppearance == MAINTDRONE)
 		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
-		icon_state = "[visualAppearence]_[colour]"
+		icon_state = "[visualAppearance]_[colour]"
 	else
-		icon_state = visualAppearence
+		icon_state = visualAppearance
 
 	icon_living = icon_state
-	icon_dead = "[visualAppearence]_dead"
+	icon_dead = "[visualAppearance]_dead"
 
 /obj/effect/mob_spawn/drone/derelict
 	name = "derelict drone shell"
@@ -124,3 +120,10 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+
+/mob/living/simple_animal/drone/derelict/Initialize()
+	. = ..()
+	AddComponent(/datum/component/stationstuck, PUNISHMENT_GIB, "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self-destruct activated.")
+
+
+

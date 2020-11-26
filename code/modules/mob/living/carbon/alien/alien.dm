@@ -10,24 +10,23 @@
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
+	type_of_meat = /obj/item/food/meat/slab/xeno
 
-	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
-	var/leaping = 0
+	heat_protection = 0.5 // minor heat insulation
+
+	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
-	unique_name = 1
+	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize()
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
 
@@ -48,26 +47,13 @@
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-
-	var/loc_temp = get_temperature(environment)
-
-	// Aliens are now weak to fire.
-
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
-	if(!on_fire) // If you're on fire, ignore local air temperature
-		if(loc_temp > bodytemperature)
-			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
-			if(thermal_protection < 1)
-				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
-		else
-			adjust_bodytemperature(1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the environment and natural stabilization
+	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -84,14 +70,9 @@
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 
-/mob/living/carbon/alien/IsAdvancedToolUser()
-	return has_fine_manipulation
-
-/mob/living/carbon/alien/Stat()
-	..()
-
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
+/mob/living/carbon/alien/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -121,20 +102,23 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
+			var/searchfor = "infected"
+			if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				qdel(I)
 	return
 
 /mob/living/carbon/alien/canBeHandcuffed()
-	return 1
-
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
-	return initial(pixel_y)
+	if(num_hands < 2)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
 	new_xeno.setDir(dir)
+	if(numba && unique_name)
+		new_xeno.numba = numba
+		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
@@ -146,5 +130,13 @@ Des: Removes all infected images from the alien.
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
-/mob/living/carbon/alien/can_hold_items()
-	return has_fine_manipulation
+/mob/living/carbon/alien/can_hold_items(obj/item/I)
+	return ((I && istype(I, /obj/item/clothing/mask/facehugger)) || (ISADVANCEDTOOLUSER(src) && ..()))
+
+/mob/living/carbon/alien/on_lying_down(new_lying_angle)
+	. = ..()
+	update_icons()
+
+/mob/living/carbon/alien/on_standing_up()
+	. = ..()
+	update_icons()

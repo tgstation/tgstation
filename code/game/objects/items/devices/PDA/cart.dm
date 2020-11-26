@@ -21,7 +21,7 @@
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -83,7 +83,7 @@
 /obj/item/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
-	access = CART_SECURITY
+	access = CART_SECURITY | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
 /obj/item/cartridge/detective
@@ -231,13 +231,8 @@ Code:
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
-
 			menu = "<h4>[PDAIMG(notes)] Crew Manifest</h4>"
-			menu += "Entries cannot be modified from this terminal.<br><br>"
-			if(GLOB.data_core.general)
-				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
-					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-			menu += "<br>"
+			menu += "<center>[GLOB.data_core.get_manifest_html(monochrome=TRUE)]</center>"
 
 
 		if (42) //status displays
@@ -263,7 +258,7 @@ Code:
 
 			var/turf/pda_turf = get_turf(src)
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(pMon.stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
+				if(pMon.machine_stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
 					continue
 				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
 					continue
@@ -306,10 +301,14 @@ Code:
 
 					var/list/S = list(" Off","AOff","  On", " AOn")
 					var/list/chg = list("N","C","F")
-
+//Neither copytext nor copytext_char is appropriate here; neither 30 UTF-8 code units nor 30 code points equates to 30 columns of output.
+//Some glyphs are very tall or very wide while others are small or even take up no space at all.
+//Emojis can take modifiers which are many characters but render as only one glyph.
+//A proper solution here (as far as Unicode goes, maybe not ideal as far as markup goes, a table would be better)
+//would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
 					for(var/obj/machinery/power/apc/A in L)
-						menu += copytext(add_tspace(A.area.name, 30), 1, 30)
-						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(DisplayPower(A.lastused_total), 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+						menu += copytext_char(add_trailing(A.area.name, 30, " "), 1, 30)
+						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(DisplayPower(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
@@ -383,7 +382,7 @@ Code:
 			if(active3 in GLOB.data_core.security)
 				menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
-				menu += text("<BR>\nMinor Crimes:")
+				menu += text("<BR>\nCrimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
@@ -392,31 +391,13 @@ Code:
 <th>Author</th>
 <th>Time Added</th>
 </tr>"}
-				for(var/datum/data/crime/c in active3.fields["mi_crim"])
+				for(var/datum/data/crime/c in active3.fields["crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
 					menu += "<td>[c.author]</td>"
 					menu += "<td>[c.time]</td>"
 					menu += "</tr>"
 				menu += "</table>"
-
-				menu += text("<BR>\nMajor Crimes:")
-
-				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
-				for(var/datum/data/crime/c in active3.fields["ma_crim"])
-					menu += "<tr><td>[c.crimeName]</td>"
-					menu += "<td>[c.crimeDetails]</td>"
-					menu += "<td>[c.author]</td>"
-					menu += "<td>[c.time]</td>"
-					menu += "</tr>"
-				menu += "</table>"
-
 				menu += "<BR>\nImportant Notes:<br>"
 				menu += "[active3.fields["notes"]]"
 			else
@@ -565,7 +546,7 @@ Code:
 			var/static/list/emoji_icon_states
 			var/static/emoji_table
 			if(!emoji_table)
-				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
 				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")

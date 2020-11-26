@@ -3,13 +3,12 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/cult.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
 	mob_biotypes = MOB_SPIRIT
 	maxHealth = 40
 	health = 40
-	spacewalk = TRUE
 	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
@@ -27,6 +26,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	speed = -1 //they don't have to lug a body made of runed metal around
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
@@ -34,6 +34,11 @@
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
+	ventcrawler = VENTCRAWLER_ALWAYS
+
+/mob/living/simple_animal/shade/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
 	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
@@ -41,7 +46,7 @@
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)

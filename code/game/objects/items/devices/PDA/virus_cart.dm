@@ -69,8 +69,6 @@
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
 			if(target.cartridge.access & CART_MANIFEST)
 				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-			else
-				difficulty += 2
 		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", MSG_VISUAL)
 		else
@@ -101,6 +99,18 @@
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals
 		telecrystals = 0
+		hidden_uplink.locked = FALSE
 		hidden_uplink.active = TRUE
 	else
 		to_chat(U, "<span class='alert'>PDA not found.</span>")
+		
+/obj/item/cartridge/virus/frame/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/stack/telecrystal))
+		if(!charges)
+			to_chat(user, "<span class='notice'>[src] is out of charges, it's refusing to accept [I].</span>")
+			return
+		var/obj/item/stack/telecrystal/telecrystalStack = I
+		telecrystals += telecrystalStack.amount
+		to_chat(user, "<span class='notice'>You slot [telecrystalStack] into [src]. The next time it's used, it will also give telecrystals.</span>")
+		telecrystalStack.use(telecrystalStack.amount)

@@ -4,7 +4,7 @@
 
 /obj/item/door_remote
 	icon_state = "gangtool-white"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	icon = 'icons/obj/device.dmi'
@@ -93,7 +93,7 @@
 	icon_state = "gangtool-blue"
 	region_access = 3
 
-/obj/item/door_remote/civillian
+/obj/item/door_remote/civilian
 	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1

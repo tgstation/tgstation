@@ -1,11 +1,11 @@
 /datum/action/changeling/regenerate
 	name = "Regenerate"
-	desc = "Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel and restoring blood volume. Costs 10 chemicals."
+	desc = "Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel, healing major wounds, and restoring blood volume. Costs 10 chemicals."
 	helptext = "Will alert nearby crew if any external limbs are regenerated. Can be used while unconscious."
 	button_icon_state = "regenerate"
 	chemical_cost = 10
 	dna_cost = 0
-	req_stat = UNCONSCIOUS
+	req_stat = HARD_CRIT
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	..()
@@ -26,14 +26,17 @@
 			C.regenerate_limbs(1)
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/B
-			if(C.has_dna() && C.dna.species.mutant_brain)
-				B = new C.dna.species.mutant_brain()
+			if(C.has_dna() && C.dna.species.mutantbrain)
+				B = new C.dna.species.mutantbrain()
 			else
 				B = new()
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 			B.Insert(C)
 		C.regenerate_organs()
+		for(var/i in C.all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.remove_wound()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

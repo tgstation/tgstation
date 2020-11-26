@@ -175,6 +175,12 @@
 "p" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+"S" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -397,7 +403,7 @@ f
 f
 f
 f
-f
+S
 h
 "}
 (9,1,1) = {"

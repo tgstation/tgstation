@@ -6,13 +6,13 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
-	var/mask_adjusted = 0
+	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 
 /obj/item/clothing/mask/attack_self(mob/user)
-	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
-		TOGGLE_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
-		var/status = !CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
+	if((clothing_flags & VOICEBOX_TOGGLABLE))
+		clothing_flags ^= (VOICEBOX_DISABLED)
+		var/status = !(clothing_flags & VOICEBOX_DISABLED)
 		to_chat(user, "<span class='notice'>You turn the voice box in [src] [status ? "on" : "off"].</span>")
 
 /obj/item/clothing/mask/equipped(mob/M, slot)
@@ -26,7 +26,19 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
+/obj/item/clothing/mask/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, modifies_speech) && ismob(loc))
+		var/mob/M = loc
+		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
+			if(vval)
+				if(!modifies_speech)
+					RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+			else if(modifies_speech)
+				UnregisterSignal(M, COMSIG_MOB_SAY)
+	return ..()
+
 /obj/item/clothing/mask/proc/handle_speech()
+	SIGNAL_HANDLER
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -37,7 +49,7 @@
 			if(HAS_BLOOD_DNA(src))
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
-/obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/mask/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -45,7 +57,7 @@
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
-	if(user && user.incapacitated())
+	if(user?.incapacitated())
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)

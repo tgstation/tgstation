@@ -43,11 +43,9 @@
 	light_range = source_atom.light_range
 	light_color = source_atom.light_color
 
-	parse_light_color()
+	PARSE_LIGHT_COLOR(src)
 
 	update()
-
-	return ..()
 
 /datum/light_source/Destroy(force)
 	remove_lum()
@@ -73,7 +71,7 @@
 
 
 // This proc will cause the light source to update the top atom, and add itself to the update queue.
-/datum/light_source/proc/update(var/atom/new_top_atom)
+/datum/light_source/proc/update(atom/new_top_atom)
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
@@ -93,17 +91,6 @@
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
 /datum/light_source/proc/vis_update()
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
-
-// Decompile the hexadecimal colour into lumcounts of each perspective.
-/datum/light_source/proc/parse_light_color()
-	if (light_color)
-		lum_r = GetRedPart   (light_color) / 255
-		lum_g = GetGreenPart (light_color) / 255
-		lum_b = GetBluePart  (light_color) / 255
-	else
-		lum_r = 1
-		lum_g = 1
-		lum_b = 1
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -154,7 +141,7 @@
 
 	effect_str = null
 
-/datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
+/datum/light_source/proc/recalc_corner(datum/lighting_corner/C)
 	LAZYINITLIST(effect_str)
 	if (effect_str[C]) // Already have one.
 		REMOVE_CORNER(C)
@@ -162,6 +149,7 @@
 
 	APPLY_CORNER(C)
 	UNSETEMPTY(effect_str)
+
 
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
@@ -212,7 +200,7 @@
 
 	if (source_atom.light_color != light_color)
 		light_color = source_atom.light_color
-		parse_light_color()
+		PARSE_LIGHT_COLOR(src)
 		update = TRUE
 
 	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
@@ -229,13 +217,19 @@
 	var/thing
 	var/datum/lighting_corner/C
 	var/turf/T
+
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
 		for(T in view(CEILING(light_range, 1), source_turf))
-			for (thing in T.get_corners(source_turf))
-				C = thing
-				corners[C] = 0
+			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources))
+				continue
+			if(!IS_OPAQUE_TURF(T))
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				for (thing in T.corners)
+					C = thing
+					corners[C] = 0
 			turfs += T
 		source_turf.luminosity = oldlum
 

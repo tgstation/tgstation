@@ -88,7 +88,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "as" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -168,6 +168,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aI" = (
+/obj/item/gps/spaceruin,
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered/clownplanet)

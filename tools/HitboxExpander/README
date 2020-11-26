@@ -1,5 +1,8 @@
-Setup: Unzip the zip files in third_party/ so that you have the directories
-third_party/Imaging-1.1.7/ and third_party/zlib/.
+Setup: Install python3 and run install.bat for windows, install.sh for unix.
+Alternatively, you can manually install the Pillow package with
+```
+pip install Pillow
+```
 
 Usage: python hitbox_expander.py <path_to_file.dmi or png>
 

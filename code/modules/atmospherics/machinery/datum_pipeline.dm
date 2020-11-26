@@ -15,10 +15,12 @@
 
 /datum/pipeline/Destroy()
 	SSair.networks -= src
-	if(air && air.volume)
+	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
+		if(!QDELETED(P))
+			SSair.add_to_rebuild_queue(P)
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
 	return ..()
@@ -46,7 +48,7 @@
 	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
 			var/list/result = borderline.pipeline_expansion(src)
-			if(result && result.len)
+			if(result?.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P
@@ -129,7 +131,6 @@
 	var/datum/pipeline/P = returnPipenet(A)
 	if(!P)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
-		return
 	P.addMember(A, src)
 
 
@@ -139,11 +140,7 @@
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air)
-		var/member_gases = member.air_temporary.gases
-
-		for(var/id in member_gases)
-			member_gases[id][MOLES] *= member.volume/air.volume
+		member.air_temporary.copy_from(air, member.volume/air.volume)
 
 		member.air_temporary.temperature = air.temperature
 
@@ -259,7 +256,4 @@
 		//Update individual gas_mixtures by volume ratio
 		for(var/i in GL)
 			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+			G.copy_from(total_gas_mixture, G.volume/total_gas_mixture.volume)

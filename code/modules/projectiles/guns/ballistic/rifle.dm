@@ -2,7 +2,8 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon_state = "moistnugget"
-	item_state = "moistnugget"
+	inhand_icon_state = "moistnugget"
+	worn_icon_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_STANDARD
@@ -15,11 +16,11 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 
-obj/item/gun/ballistic/rifle/update_icon()
-	..()
-	add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+/obj/item/gun/ballistic/rifle/update_overlays()
+	. = ..()
+	. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
 
-obj/item/gun/ballistic/rifle/rack(mob/user = null)
+/obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
 		to_chat(user, "<span class='notice'>You open the bolt of \the [src].</span>")
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
@@ -29,12 +30,12 @@ obj/item/gun/ballistic/rifle/rack(mob/user = null)
 		return
 	drop_bolt(user)
 
-obj/item/gun/ballistic/rifle/can_shoot()
+/obj/item/gun/ballistic/rifle/can_shoot()
 	if (bolt_locked)
 		return FALSE
 	return ..()
 
-obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if (!bolt_locked)
 		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
 		return
@@ -55,7 +56,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
-	item_state = "moistnugget"
+	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
@@ -68,12 +69,23 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
+		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
+
+/obj/item/gun/ballistic/rifle/boltaction/harpoon
+	name = "ballistic harpoon gun"
+	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
+	icon_state = "speargun"
+	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	can_be_sawn_off = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -88,7 +100,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	fire_sound = 'sound/weapons/emitter.ogg'
 	pin = /obj/item/firing_pin/magic
 	icon_state = "arcane_barrage"
-	item_state = "arcane_barrage"
+	inhand_icon_state = "arcane_barrage"
 	slot_flags = null
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
@@ -100,6 +112,8 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
 	. = ..()
 	guns_left = 0
+	magazine = null
+	chambered = null
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))

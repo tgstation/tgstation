@@ -7,6 +7,8 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
 	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
  	///Needs to implement InterceptClickOn(user,params,atom) proc
@@ -24,8 +26,8 @@
 	var/total_message_count = 0
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
-	///Internal counter for clients sending irc relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
-	var/ircreplyamount = 0
+	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
+	var/externalreplyamount = 0
 
 		/////////
 		//OTHER//
@@ -70,7 +72,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/obj/screen/click_catcher/void
+	var/atom/movable/screen/click_catcher/void
 
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_up_icon = null
@@ -101,16 +103,13 @@
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
-	///goonchat chatoutput of the client
-	var/datum/chatOutput/chatOutput
-
  	///lazy list of all credit object bound to this client
 	var/list/credits
 
  	///these persist between logins/logouts during the same round.
 	var/datum/player_details/player_details
 
-	///Should only be a key-value list of north/south/east/west = obj/screen.
+	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
 
 	///Amount of keydowns in the last keysend checking interval
@@ -123,3 +122,88 @@
 	var/keysend_tripped = FALSE
 	///custom movement keys for this client
 	var/list/movement_keys = list()
+
+	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
+	var/list/atom/selected_target[2]
+	///Autoclick variable referencing the associated item.
+	var/obj/item/active_mousedown_item = null
+	///Used in MouseDrag to preserve the original mouse click parameters
+	var/mouseParams = ""
+	///Used in MouseDrag to preserve the last mouse-entered location.
+	var/mouseLocation = null
+	///Used in MouseDrag to preserve the last mouse-entered object.
+	var/mouseObject = null
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
+	var/middragtime = 0
+	//Middle-mouse-button clicked object control for aimbot exploit detection.
+	var/atom/middragatom
+
+	/// Messages currently seen by this client
+	var/list/seen_messages
+
+	/// datum wrapper for client view
+	var/datum/view_data/view_size
+
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
+	/// list of tabs containing spells and abilities
+	var/list/spell_tabs = list()
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
+	var/list/recent_examines
+
+	var/list/parallax_layers
+	var/list/parallax_layers_cached
+	var/atom/movable/movingmob
+	var/turf/previous_turf
+	///world.time of when we can state animate()ing parallax again
+	var/dont_animate_parallax
+	///world.time of last parallax update
+	var/last_parallax_shift
+	///ds between parallax updates
+	var/parallax_throttle = 0
+	var/parallax_movedir = 0
+	var/parallax_layers_max = 4
+	var/parallax_animate_timer
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
+
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/atom/movable/screen))
+	 */
+	var/list/screen_maps = list()
+
+	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
+	var/list/sent_assets = list()
+	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
+	var/list/completed_asset_jobs = list()
+	/// Last asset send job id.
+	var/last_asset_job = 0
+	var/last_completed_asset_job = 0
+
+	/// rate limiting for the crew manifest
+	var/crew_manifest_delay
+
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
+	var/list/key_combos_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+
+	/// If the client is currently under the restrictions of the interview system
+	var/interviewee = FALSE

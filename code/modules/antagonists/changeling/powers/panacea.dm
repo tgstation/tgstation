@@ -1,11 +1,11 @@
 /datum/action/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, and resetting our genetic code completely. Costs 20 chemicals."
+	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, curing traumas and brain damage, and resetting our genetic code completely. Costs 20 chemicals."
 	helptext = "Can be used while unconscious."
 	button_icon_state = "panacea"
 	chemical_cost = 20
 	dna_cost = 1
-	req_stat = UNCONSCIOUS
+	req_stat = HARD_CRIT
 
 //Heals the things that the other regenerative abilities don't.
 /datum/action/changeling/panacea/sting_action(mob/user)
@@ -23,13 +23,17 @@
 		O.Remove(user)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.vomit(0, toxic = TRUE)
+			C.vomit(0)
 		O.forceMove(get_turf(user))
 
 	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/pen_acid, 20)
 	user.reagents.add_reagent(/datum/reagent/medicine/antihol, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/mannitol, 25)
+
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 
 	if(isliving(user))
 		var/mob/living/L = user

@@ -27,6 +27,20 @@
 	..()
 	icon_state = "46x30mmtI-[round(ammo_count(),4)]"
 
+/obj/item/ammo_box/magazine/plastikov9mm
+	name = "PP-95 magazine (9x19mm)"
+	icon_state = "9x19-50"
+	ammo_type = /obj/item/ammo_casing/c9x19mm
+	caliber = "9x19mm"
+	max_ammo = 50
+
+/obj/item/ammo_box/magazine/plastikov9mm/update_icon()
+	. = ..()
+	if(ammo_count())
+		icon_state = "9x19-50"
+		return
+	icon_state = "9x19-0"
+
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
@@ -55,7 +69,7 @@
 
 /obj/item/ammo_box/magazine/smgm9mm/fire
 	name = "SMG Magazine (Incendiary 9mm)"
-	ammo_type = /obj/item/ammo_casing/c9mm/inc
+	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
@@ -67,6 +81,14 @@
 /obj/item/ammo_box/magazine/smgm45/update_icon()
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/smgm45/ap
+	name = "SMG magazine (Armour Piercing .45)"
+	ammo_type = /obj/item/ammo_casing/c45/ap
+
+/obj/item/ammo_box/magazine/smgm45/incen
+	name = "SMG magazine (Incendiary .45)"
+	ammo_type = /obj/item/ammo_casing/c45/inc
 
 /obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"

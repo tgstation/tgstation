@@ -3,7 +3,7 @@
 #define MINEDRONE_ATTACK 2
 
 /mob/living/simple_animal/hostile/mining_drone
-	name = "nanotrasen minebot"
+	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
 	icon = 'icons/mob/aibots.dmi'
@@ -35,8 +35,10 @@
 	healable = 0
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
+	light_system = MOVABLE_LIGHT
+	light_range = 6
+	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT
-	var/light_on = 0
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
@@ -59,6 +61,7 @@
 
 	SetCollectBehavior()
 
+
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
 	for (var/datum/action/innate/minedrone/action in actions)
 		qdel(action)
@@ -80,7 +83,7 @@
 			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
 	. += {"<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n
 	Field repairs can be done with a welder."}
-	if(stored_gun && stored_gun.max_mod_capacity)
+	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in stored_gun.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
@@ -132,7 +135,8 @@
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
 
-/mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
+/mob/living/simple_animal/hostile/mining_drone/CanAllowThrough(atom/movable/O)
+	. = ..()
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
@@ -142,7 +146,6 @@
 					return TRUE
 	if(istype(O, /obj/projectile/destabilizer))
 		return TRUE
-	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
@@ -234,15 +237,12 @@
 	name = "Toggle Light"
 	button_icon_state = "mech_lights_off"
 
+
 /datum/action/innate/minedrone/toggle_light/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	if(user.light_on)
-		user.set_light(0)
-	else
-		user.set_light(6)
-	user.light_on = !user.light_on
+	user.set_light_on(!user.light_on)
 	to_chat(user, "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>")
+
 
 /datum/action/innate/minedrone/toggle_mode
 	name = "Toggle Mode"

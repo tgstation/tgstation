@@ -8,6 +8,10 @@
 /datum/config_entry/flag/auto_deadmin_players
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/number/auto_deadmin_timegate
+	config_entry_value = null
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/auto_deadmin_antagonists
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -39,6 +43,11 @@
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
 
+/datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
+	config_entry_value = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /datum/config_entry/flag/log_ooc	// log OOC channel
 
 /datum/config_entry/flag/log_access	// log login/logout
@@ -68,6 +77,8 @@
 
 /datum/config_entry/flag/log_emote	// log emotes
 
+/datum/config_entry/flag/log_econ	// log economy actions
+
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -82,6 +93,8 @@
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
 /datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
+
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
@@ -106,8 +119,6 @@
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
 
 /datum/config_entry/flag/no_dead_vote	// dead people can't vote
-
-/datum/config_entry/flag/allow_metadata	// Metadata is supported.
 
 /datum/config_entry/flag/popup_admin_pm	// adminPMs to non-admins show in a pop-up 'reply' window when set
 
@@ -171,8 +182,6 @@
 
 /datum/config_entry/flag/norespawn
 
-/datum/config_entry/flag/guest_jobban
-
 /datum/config_entry/flag/usewhitelist
 
 /datum/config_entry/flag/use_age_restriction_for_jobs	//Do jobs use account age restrictions? --requires database
@@ -208,15 +217,11 @@
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+	config_entry_value = "https://www.github.com/tgstation/tgstation"
 
 /datum/config_entry/string/roundstatsurl
 
 /datum/config_entry/string/gamelogurl
-
-/datum/config_entry/number/githubrepoid
-	config_entry_value = null
-	min_val = 0
 
 /datum/config_entry/flag/guest_ban
 
@@ -282,12 +287,6 @@
 
 /datum/config_entry/flag/maprotation
 
-/datum/config_entry/number/maprotatechancedelta
-	config_entry_value = 0.75
-	min_val = 0
-	max_val = 1
-	integer = FALSE
-
 /datum/config_entry/number/soft_popcap
 	config_entry_value = null
 	min_val = 0
@@ -312,6 +311,11 @@
 /datum/config_entry/flag/byond_member_bypass_popcap
 
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
+
+/datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker
+
+/// Flag for requiring players who would otherwise be denied access by the panic bunker to complete a written interview
+/datum/config_entry/flag/panic_bunker_interview
 
 /datum/config_entry/string/panic_bunker_message
 	config_entry_value = "Sorry but the server is currently not accepting connections from never before seen players."
@@ -432,6 +436,9 @@
 /datum/config_entry/string/chat_announce_new_game
 	config_entry_value = null
 
+/datum/config_entry/string/chat_new_game_notifications
+	config_entry_value = null
+
 /datum/config_entry/flag/debug_admin_hrefs
 
 /datum/config_entry/number/mc_tick_rate/base_mc_tick_rate
@@ -487,3 +494,8 @@
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
+/datum/config_entry/flag/auto_profile
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
+
+/datum/config_entry/string/centcom_source_whitelist

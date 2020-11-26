@@ -7,7 +7,7 @@
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -97,13 +97,19 @@
 	icon_state = "phaseout"
 
 /obj/effect/temp_visual/dir_setting/wraith
-	name = "blood"
+	name = "shadow"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "phase_shift2"
-	duration = 12
+	duration = 6
+
+/obj/effect/temp_visual/dir_setting/wraith/angelic
+	icon_state = "phase_shift2_angelic"
 
 /obj/effect/temp_visual/dir_setting/wraith/out
 	icon_state = "phase_shift"
+
+/obj/effect/temp_visual/dir_setting/wraith/out/angelic
+	icon_state = "phase_shift_angelic"
 
 /obj/effect/temp_visual/dir_setting/tailsweep
 	icon_state = "tailsweep"
@@ -137,9 +143,6 @@
 /obj/effect/temp_visual/dir_setting/curse/hand
 	icon_state = "cursehand"
 
-/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
-	. = ..()
-	update_icon()
 
 /obj/effect/temp_visual/bsa_splash
 	name = "\improper Bluespace energy wave"
@@ -157,9 +160,6 @@
 			icon_state = "beam_splash_w"
 		if(EAST)
 			icon_state = "beam_splash_e"
-
-/obj/projectile/curse_hand/update_icon()
-	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
 	name = "water"
@@ -372,6 +372,13 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/temp_visual/impact_effect/energy
+	icon_state = "impact_energy"
+	duration = 6
+
+/obj/effect/temp_visual/impact_effect/neurotoxin
+	icon_state = "impact_neurotoxin"
+
 /obj/effect/temp_visual/heart
 	name = "heart"
 	icon = 'icons/mob/animal.dmi'
@@ -402,7 +409,7 @@
 /obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "heart", I, seer)
 	I.alpha = 255
 	I.appearance_flags = RESET_ALPHA
 	animate(I, alpha = 0, time = duration)
@@ -462,3 +469,43 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/constructing_effect
+	icon = 'icons/effects/effects_rcd.dmi'
+	icon_state = ""
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/status = 0
+	var/delay = 0
+
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+	. = ..()
+	status = rcd_status
+	delay = rcd_delay
+	if (status == RCD_DECONSTRUCT)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
+		delay -= 11
+		icon_state = "rcd_end_reverse"
+	else
+		update_icon()
+
+/obj/effect/constructing_effect/update_icon_state()
+	icon_state = "rcd"
+	if (delay < 10)
+		icon_state += "_shortest"
+	else if (delay < 20)
+		icon_state += "_shorter"
+	else if (delay < 37)
+		icon_state += "_short"
+	if (status == RCD_DECONSTRUCT)
+		icon_state += "_reverse"
+
+/obj/effect/constructing_effect/proc/end_animation()
+	if (status == RCD_DECONSTRUCT)
+		qdel(src)
+	else
+		icon_state = "rcd_end"
+		addtimer(CALLBACK(src, .proc/end), 15)
+
+/obj/effect/constructing_effect/proc/end()
+	qdel(src)

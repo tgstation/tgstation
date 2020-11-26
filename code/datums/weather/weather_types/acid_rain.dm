@@ -17,15 +17,16 @@
 	end_message = "<span class='boldannounce'>The downpour gradually slows to a light shower. It should be safe outside now.</span>"
 	end_sound = 'sound/ambience/acidrain_end.ogg'
 
-	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	area_type = /area
+	protect_indoors = TRUE
+	target_trait = ZTRAIT_ACIDRAIN
 
-	immunity_type = "acid" // temp
+	immunity_type = ACID // temp
 
 	barometer_predictable = TRUE
 
 
 /datum/weather/acid_rain/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, "acid")
+	var/resist = L.getarmor(null, ACID)
 	if(prob(max(0,100-resist)))
 		L.acid_act(20,20)

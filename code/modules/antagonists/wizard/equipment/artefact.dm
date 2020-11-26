@@ -8,7 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
@@ -20,7 +20,7 @@
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
-	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+	var/spawn_fast = FALSE //if TRUE, ignores checking for mobs on loc before spawning
 
 /obj/item/veilrender/attack_self(mob/user)
 	if(charges > 0)
@@ -39,7 +39,7 @@
 	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
-	var/spawn_fast = 0
+	var/spawn_fast = FALSE
 
 /obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
 	src.spawn_path = spawn_type
@@ -66,7 +66,7 @@
 	else
 		return ..()
 
-/obj/effect/rend/singularity_pull()
+/obj/effect/rend/singularity_act()
 	return
 
 /obj/effect/rend/singularity_pull()
@@ -119,17 +119,21 @@
 	eat()
 	return
 
+
 /obj/singularity/wizard/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		var/datum/component/mood/insaneinthemembrane = C.GetComponent(/datum/component/mood)
-		if(insaneinthemembrane.sanity < 15)
-			return //they've already seen it and are about to die, or are just too insane to care
-		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
-		insaneinthemembrane.sanity = 0
-		for(var/lore in typesof(/datum/brain_trauma/severe))
-			C.gain_trauma(lore)
-		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/jedi = user
+	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
+	if(insaneinthemembrane.sanity < 15)
+		return //they've already seen it and are about to die, or are just too insane to care
+	to_chat(jedi, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+	insaneinthemembrane.sanity = 0
+	for(var/lore in typesof(/datum/brain_trauma/severe))
+		jedi.gain_trauma(lore)
+	addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, jedi), 10 SECONDS)
+
 
 /obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
@@ -197,7 +201,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -268,7 +272,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), ITEM_SLOT_FEET)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), ITEM_SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/spear(H), ITEM_SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -276,7 +280,7 @@
 	desc = "Something creepy about it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
@@ -293,14 +297,16 @@
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
-		else if(is_pointed(I))
+		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			target.adjustEarDamage(0,3)
+			var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				ears.adjustEarDamage(0, 3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return
@@ -340,9 +346,7 @@
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)
-				spawn(100)
-					user.reset_perspective(null)
-					user.unset_machine()
+				addtimer(CALLBACK(src, .proc/reset, user), 10 SECONDS)
 			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
 				var/turf/T = get_step(target,pick(GLOB.cardinals))
@@ -356,6 +360,12 @@
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
 				GiveHint(target,user)
 		cooldown = world.time + cooldown_time
+
+/obj/item/voodoo/proc/reset(mob/user)
+	if(QDELETED(user))
+		return
+	user.reset_perspective(null)
+	user.unset_machine()
 
 /obj/item/voodoo/proc/update_targets()
 	possible = list()
@@ -396,7 +406,6 @@
 	heal_oxy = 25
 
 //Warp Whistle: Provides uncontrolled long distance teleportation.
-
 /obj/item/warpwhistle
 	name = "warp whistle"
 	desc = "One toot on this whistle will send you to a far away land!"
@@ -414,7 +423,8 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.update_mobility()
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
+
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -423,10 +433,11 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
-	user.mobility_flags &= ~MOBILITY_MOVE
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
+		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, WARPWHISTLE_TRAIT)
 		return
 	user.invisibility = INVISIBILITY_MAXIMUM
 	user.status_flags |= GODMODE
@@ -439,7 +450,6 @@
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1

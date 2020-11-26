@@ -10,12 +10,12 @@
 	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
-	var/dissipate = 1 //Do we lose energy over time?
+	var/dissipate = TRUE //Do we lose energy over time?
 	var/dissipate_delay = 10
 	var/dissipate_track = 0
 	var/dissipate_strength = 1 //How much energy do we lose?
@@ -27,6 +27,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/drifting_dir = 0 // Chosen direction to drift in
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
@@ -53,12 +54,23 @@
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
+	var/turf/T = get_turf(src)
+	for(var/dir in GLOB.cardinals)
+		if(direct & dir)
+			T = get_step(T, dir)
+			if(!T)
+				break
+			// eat the stuff if we're going to move into it so it doesn't mess up our movement
+			for(var/atom/A in T.contents)
+				consume(A)
+			consume(T)
+
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
 	else
 		last_failed_movement = direct
-		return 0
+		return FALSE
 
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
@@ -75,27 +87,69 @@
 
 /obj/singularity/attackby(obj/item/W, mob/user, params)
 	consume(user)
-	return 1
+	return TRUE
 
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
-	return 0
+	return FALSE
 
 /obj/singularity/blob_act(obj/structure/blob/B)
 	return
 
+
 /obj/singularity/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='hear'>You hear something crack and explode in gore.</span>")
-		var/turf/T = get_turf(C)
-		for(var/i in 1 to 3)
-			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-			new /obj/effect/gibspawner/generic(T, C)
-			sleep(1)
-		C.ghostize()
-		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/jedi = user
+	jedi.visible_message(
+		"<span class='danger'>[jedi]'s head begins to collapse in on itself!</span>",
+		"<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>",
+		"<span class='hear'>You hear something crack and explode in gore.</span>"
+		)
+	jedi.Stun(3 SECONDS)
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_two, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_two(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+		if(rip_u)
+			rip_u.dismember(BURN)
+			qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_three, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_three(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	jedi.ghostize()
+	var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+	if(rip_u)
+		rip_u.dismember(BURN)
+		qdel(rip_u)
+
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
@@ -120,8 +174,13 @@
 
 /obj/singularity/Bump(atom/A)
 	consume(A)
+	if(QDELETED(A)) // don't keep moving into objects that weren't destroyed infinitely
+		step(src, drifting_dir)
 	return
 
+/obj/singularity/Crossed(atom/A)
+	..()
+	consume(A)
 
 /obj/singularity/Bumped(atom/movable/AM)
 	consume(AM)
@@ -130,7 +189,6 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		radiation_pulse(src, min(5000, (energy*4.5)+1000), RAD_DISTANCE_COEFFICIENT*0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -236,18 +294,18 @@
 			dissipate = 0
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
-		return 1
+		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
 	else
-		return 0
+		return FALSE
 
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
 		investigate_log("collapsed.", INVESTIGATE_SINGULO)
 		qdel(src)
-		return 0
+		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
@@ -264,7 +322,7 @@
 				allowed_size = STAGE_FIVE
 	if(current_size != allowed_size)
 		expand()
-	return 1
+	return TRUE
 
 
 /obj/singularity/proc/eat()
@@ -300,17 +358,17 @@
 
 /obj/singularity/proc/move(force_move = 0)
 	if(!move_self)
-		return 0
+		return FALSE
 
-	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
+	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
 
 	if(force_move)
-		movement_dir = force_move
+		drifting_dir = force_move
 
 	if(target && prob(60))
-		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+		drifting_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	step(src, movement_dir)
+	step(src, drifting_dir)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals)			//Should be 4.
@@ -321,11 +379,11 @@
 			if(step(src, i))			//Move in each direction.
 				if(check_cardinals_range(steps, FALSE))		//New location passes, return true.
 					return TRUE
-	. = !.
+	return !.
 
 /obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
 	if(!direction)
-		return 0
+		return FALSE
 	var/steps = 0
 	if(!step)
 		switch(current_size)
@@ -346,7 +404,7 @@
 	for(var/i = 1 to steps)
 		T = get_step(T,direction)
 	if(!isturf(T))
-		return 0
+		return FALSE
 	turfs.Add(T)
 	var/dir2 = 0
 	var/dir3 = 0
@@ -361,35 +419,35 @@
 	for(var/j = 1 to steps-1)
 		T2 = get_step(T2,dir2)
 		if(!isturf(T2))
-			return 0
+			return FALSE
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
 		T = get_step(T,dir3)
 		if(!isturf(T))
-			return 0
+			return FALSE
 		turfs.Add(T)
 	for(var/turf/T3 in turfs)
 		if(isnull(T3))
 			continue
 		if(!can_move(T3))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/can_move(turf/T)
 	if(!T)
-		return 0
+		return FALSE
 	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
-		return 0
+		return FALSE
 	else if(locate(/obj/machinery/field/generator) in T)
 		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
-		if(G && G.active)
-			return 0
+		if(G?.active)
+			return FALSE
 	else if(locate(/obj/machinery/power/shieldwallgen) in T)
 		var/obj/machinery/power/shieldwallgen/S = locate(/obj/machinery/power/shieldwallgen) in T
-		if(S && S.active)
-			return 0
-	return 1
+		if(S?.active)
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/event()
@@ -401,11 +459,11 @@
 			mezzer()
 		if(3,4) //Sets all nearby mobs on fire
 			if(current_size < STAGE_SIX)
-				return 0
+				return FALSE
 			combust_mobs()
 		else
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 
 /obj/singularity/proc/combust_mobs()

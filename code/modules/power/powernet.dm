@@ -80,7 +80,7 @@
 	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
 
-	if(netexcess > 100 && nodes && nodes.len)		// if there was excess power last cycle
+	if(netexcess > 100 && nodes?.len)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 
@@ -96,6 +96,6 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	if(avail >= 1000)
-		return CLAMP(20 + round(avail/25000), 20, 195) + rand(-5,5)
+		return clamp(20 + round(avail/25000), 20, 195) + rand(-5,5)
 	else
 		return 0

@@ -30,10 +30,12 @@ Bonus
 	var/excludemuts = NONE
 	var/no_reset = FALSE
 	var/mutadone_proof = NONE
-	threshold_desc = "<b>Resistance 8:</b> The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
-					  <b>Resistance 14:</b> The host's genetic alterations are not undone when the virus is cured.<br>\
-					  <b>Stage Speed 10:</b> The virus activates dormant mutations at a much faster rate.<br>\
-					  <b>Stealth 5:</b> Only activates negative mutations in hosts."
+	threshold_descs = list(
+		"Resistance 8" = "The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).",
+		"Resistance 14" = "The host's genetic alterations are not undone when the virus is cured.",
+		"Stage Speed 10" = "The virus activates dormant mutations at a much faster rate.",
+		"Stealth 5" = "Only activates negative mutations in hosts."
+	)
 
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
 	if(!..())

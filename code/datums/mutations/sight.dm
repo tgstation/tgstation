@@ -36,7 +36,7 @@
 ///Thermal Vision lets you see mobs through walls
 /datum/mutation/human/thermal
 	name = "Thermal Vision"
-	desc = "The user of this genome can visually percieve the unique human thermal signature."
+	desc = "The user of this genome can visually perceive the unique human thermal signature."
 	quality = POSITIVE
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
@@ -99,6 +99,8 @@
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
+	SIGNAL_HANDLER
+
 	if(source.a_intent != INTENT_HARM)
 		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
@@ -108,7 +110,7 @@
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, mouseparams)
-	LE.fire()
+	INVOKE_ASYNC(LE, /obj/projectile.proc/fire)
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes

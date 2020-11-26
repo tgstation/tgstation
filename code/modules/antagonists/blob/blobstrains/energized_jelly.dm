@@ -10,25 +10,26 @@
 	reagent = /datum/reagent/blob/energized_jelly
 
 /datum/blobstrain/reagent/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
+	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && B.obj_integrity - damage <= 0 && prob(10))
 		do_sparks(rand(2, 4), FALSE, B)
 	return ..()
 
 /datum/blobstrain/reagent/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
-	return 0
+	return FALSE
 
 /datum/blobstrain/reagent/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
 	var/damage = rand(30, 50) - severity * rand(10, 15)
-	B.take_damage(damage, BURN, "energy")
+	B.take_damage(damage, BURN, ENERGY)
 
 /datum/reagent/blob/energized_jelly
 	name = "Energized Jelly"
 	taste_description = "gelatin"
 	color = "#EFD65A"
 
-/datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.losebreath += round(0.2*reac_volume)
-	M.adjustStaminaLoss(reac_volume)
-	if(M)
-		M.apply_damage(0.6*reac_volume, OXY)
+/datum/reagent/blob/energized_jelly/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
+	exposed_mob.losebreath += round(0.2*reac_volume)
+	exposed_mob.adjustStaminaLoss(reac_volume * 1.2)
+	if(exposed_mob)
+		exposed_mob.apply_damage(0.6*reac_volume, OXY)

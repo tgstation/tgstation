@@ -24,8 +24,10 @@ Bonus
 	symptom_delay_max = 85
 	severity = 4
 	var/yawning = FALSE
-	threshold_desc = "<b>Transmission 4:</b> Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.<br>\
-					  <b>Stage Speed 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
+	threshold_descs = list(
+		"Transmission 4" = "Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.",
+		"Stage Speed 10" = "Causes narcolepsy more often, increasing the chance of the host falling asleep.",
+	)
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
 	if(!..())
@@ -36,7 +38,7 @@ Bonus
 		symptom_delay_min = 20
 		symptom_delay_max = 45
 
-/datum/symptom/narcolepsy/Activate(var/datum/disease/advance/A)
+/datum/symptom/narcolepsy/Activate(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1)

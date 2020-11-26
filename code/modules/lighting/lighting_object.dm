@@ -33,7 +33,7 @@
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(var/force)
+/atom/movable/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
 		if (loc != myturf)
@@ -130,7 +130,7 @@
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
-	return 0
+	return
 
 /atom/movable/lighting_object/singularity_act()
 	return
@@ -142,6 +142,9 @@
 	return
 
 /atom/movable/lighting_object/onTransitZ()
+	return
+
+/atom/movable/lighting_object/wash(clean_types)
 	return
 
 // Override here to prevent things accidentally moving around overlays.

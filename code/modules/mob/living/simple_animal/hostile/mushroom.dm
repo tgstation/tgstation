@@ -8,7 +8,7 @@
 	turns_per_move = 1
 	maxHealth = 10
 	health = 10
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
+	butcher_results = list(/obj/item/food/hugemushroomslice = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -35,7 +35,7 @@
 	deathmessage = "fainted."
 	var/cap_color = "#ffffff"
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
-	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
+	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it won't award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
 	var/static/mutable_appearance/cap_living //Where we store our cap icons so we dont generate them constantly to update our icon
@@ -154,11 +154,11 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)
-		src.visible_message("<span class='notice'>The [src.name] was bruised!</span>")
+		src.visible_message("<span class='notice'>The [src.name] is bruised!</span>")
 		bruised = 1
 
 /mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/mushroom))
+	if(istype(I, /obj/item/food/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
@@ -189,7 +189,7 @@
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
-		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
+		var/obj/item/food/hugemushroomslice/S = new /obj/item/food/hugemushroomslice(src.loc)
 		S.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
 		S.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)

@@ -19,8 +19,6 @@
 /obj/structure/disposalpipe/sorting/proc/check_sorting(obj/structure/disposalholder/H)
 	return FALSE
 
-
-
 // Mail sorting junction, uses package tags to sort objects.
 /obj/structure/disposalpipe/sorting/mail
 	flip_type = /obj/structure/disposalpipe/sorting/mail/flip
@@ -58,8 +56,8 @@
 		. += "It has no sorting tags set."
 
 /obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/destTagger))
-		var/obj/item/destTagger/O = I
+	if(istype(I, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/O = I
 
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)

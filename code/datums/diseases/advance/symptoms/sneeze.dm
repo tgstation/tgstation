@@ -29,9 +29,11 @@ Bonus
 	symptom_delay_max = 35
 	var/spread_range = 4
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
-	threshold_desc = "<b>Transmission 9:</b> Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active.<br>\
-					  <b>Stage Speed 17:</b> The force of each sneeze catapults the host backwards, potentially stunning and lightly damaging them if they hit a wall or another person mid-flight."
+	threshold_descs = list(
+		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+		"Stage Speed 17" = "The force of each sneeze catapults the host backwards, potentially stunning and lightly damaging them if they hit a wall or another person mid-flight."
+	)
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	if(!..())
@@ -60,4 +62,4 @@ Bonus
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
 				var/turf/target = get_ranged_target_turf(M, turn(M.dir, 180), sneeze_distance)
-				M.throw_at(target, sneeze_distance, 7) //flings you at the speed that a normal baseball bat would fling you at
+				M.throw_at(target, sneeze_distance, rand(1,4)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak

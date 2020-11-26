@@ -2,48 +2,41 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags_1 = 0
-	hidden = TRUE
+	flags_1 = NONE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
 
 	var/obj/machinery/computer/holodeck/linked
-	var/restricted = 0 // if true, program goes on emag list
+	var/restricted = FALSE // if true, program goes on emag list
 
 /*
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/powered(var/chan)
+/area/holodeck/powered(chan)
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
-
-/area/holodeck/usage(var/chan)
-	if(!linked)
-		return 0
-	var/area/A = get_area(linked)
-	ASSERT(!istype(A, /area/holodeck))
-	return A.usage(chan)
 
 /area/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.addStaticPower(value,powerchannel)
+	return ..()
 
 /area/holodeck/use_power(amount, chan)
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
-	return A.use_power(amount,chan)
+	return ..()
 
 
 /*
@@ -90,6 +83,9 @@
 /area/holodeck/rec_center/spacechess
 	name = "Holodeck - Space Chess"
 
+/area/holodeck/rec_center/spacecheckers
+	name = "Holodeck - Space Checkers"
+
 /area/holodeck/rec_center/kobayashi
 	name = "Holodeck - Kobayashi Maru"
 
@@ -99,32 +95,35 @@
 /area/holodeck/rec_center/photobooth
 	name = "Holodeck - Photobooth"
 
+/area/holodeck/rec_center/skatepark
+	name = "Holodeck - Skate Park"
+
 // Bad programs
 
 /area/holodeck/rec_center/medical
 	name = "Holodeck - Emergency Medical"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/thunderdome1218
 	name = "Holodeck - 1218 AD"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/wildlife
 	name = "Holodeck - Wildlife Simulation"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/anthophila
 	name = "Holodeck - Anthophila"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/refuel
 	name = "Holodeck - Refueling Station"
-	restricted = 1
+	restricted = TRUE

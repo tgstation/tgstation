@@ -9,8 +9,7 @@
 	var/allowed_turf = /turf/open/lava
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
-	legs_required = 0
-	arms_required = 0
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
@@ -22,7 +21,7 @@
 	name = "oar"
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
-	item_state = "oar"
+	inhand_icon_state = "oar"
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	desc = "Not to be confused with the kind Research hassles you for."

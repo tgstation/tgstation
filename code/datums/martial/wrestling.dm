@@ -22,24 +22,24 @@
 		if("drop")
 			streak = ""
 			drop(A,D)
-			return 1
+			return TRUE
 		if("strike")
 			streak = ""
 			strike(A,D)
-			return 1
+			return TRUE
 		if("kick")
 			streak = ""
 			kick(A,D)
-			return 1
+			return TRUE
 		if("throw")
 			streak = ""
 			throw_wrassle(A,D)
-			return 1
+			return TRUE
 		if("slam")
 			streak = ""
 			slam(A,D)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
@@ -158,11 +158,11 @@
 
 			if (get_dist(A, D) > 1)
 				to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-				return 0
+				return
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "<span class='warning'>You can't throw [D] from here!</span>")
-				return 0
+				return
 
 			A.setDir(turn(A.dir, 90))
 			var/turf/T = get_step(A, A.dir)
@@ -171,7 +171,7 @@
 				D.forceMove(T)
 				D.setDir(get_dir(D, A))
 		else
-			return 0
+			return
 
 		sleep(delay)
 
@@ -180,11 +180,11 @@
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "<span class='warning'>You can't throw [D] from here!</span>")
-			return 0
+			return
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
@@ -198,7 +198,7 @@
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Paralyze, 20))
 	log_combat(A, D, "has thrown with wrestling")
-	return 0
+	return
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
 	set waitfor = FALSE
@@ -243,43 +243,43 @@
 
 			if (get_dist(A, D) > 1)
 				to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-				A.pixel_x = 0
-				A.pixel_y = 0
-				D.pixel_x = 0
-				D.pixel_y = 0
-				return 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
+				return
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "<span class='warning'>You can't slam [D] here!</span>")
-				A.pixel_x = 0
-				A.pixel_y = 0
-				D.pixel_x = 0
-				D.pixel_y = 0
-				return 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
+				return
 		else
 			if (A)
-				A.pixel_x = 0
-				A.pixel_y = 0
+				A.pixel_x = A.base_pixel_x
+				A.pixel_y = A.base_pixel_y
 			if (D)
-				D.pixel_x = 0
-				D.pixel_y = 0
-			return 0
+				D.pixel_x = D.base_pixel_x
+				D.pixel_y = D.base_pixel_y
+			return
 
 		sleep(1)
 
 	if (A && D)
-		A.pixel_x = 0
-		A.pixel_y = 0
-		D.pixel_x = 0
-		D.pixel_y = 0
+		A.pixel_x = A.base_pixel_x
+		A.pixel_y = A.base_pixel_y
+		D.pixel_x = D.base_pixel_x
+		D.pixel_y = D.base_pixel_y
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "<span class='warning'>You can't slam [D] here!</span>")
-			return 0
+			return
 
 		D.forceMove(A.loc)
 
@@ -310,15 +310,15 @@
 
 	else
 		if (A)
-			A.pixel_x = 0
-			A.pixel_y = 0
+			A.pixel_x = A.base_pixel_x
+			A.pixel_y = A.base_pixel_y
 		if (D)
-			D.pixel_x = 0
-			D.pixel_y = 0
+			D.pixel_x = D.base_pixel_x
+			D.pixel_y = D.base_pixel_y
 
 
 	log_combat(A, D, "body-slammed")
-	return 0
+	return
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
 	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
@@ -386,7 +386,7 @@
 		A.forceMove(ST)
 		A.visible_message("<span class='danger'>[A] climbs onto [surface]!</span>", \
 						"<span class='danger'>You climb onto [surface]!</span>")
-		A.pixel_y = 10
+		A.pixel_y = A.base_pixel_y + 10
 		falling = 1
 		sleep(10)
 
@@ -394,19 +394,19 @@
 		// These are necessary because of the sleep call.
 
 		if ((falling == 0 && get_dist(A, D) > 1) || (falling == 1 && get_dist(A, D) > 2)) // We climbed onto stuff.
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 			if (falling == 1)
 				A.visible_message("<span class='danger'>...and dives head-first into the ground, ouch!</span>", \
 								"<span class='userdanger'>...and dive head-first into the ground, ouch!</span>")
 				A.adjustBruteLoss(rand(10,20))
 				A.Paralyze(60)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 			to_chat(A, "<span class='warning'>You can't drop onto [D] from here!</span>")
-			return 0
+			return
 
 		if(A)
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
@@ -432,11 +432,11 @@
 
 		D.Paralyze(40)
 
-		A.pixel_y = 0
+		A.pixel_y = A.base_pixel_y
 
 	else
 		if (A)
-			A.pixel_y = 0
+			A.pixel_y = A.base_pixel_y
 	log_combat(A, D, "leg-dropped")
 	return
 

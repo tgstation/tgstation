@@ -1,0 +1,54 @@
+{
+	"version": 1,
+	"map_name": "Ice Box Station",
+	"map_path": "map_files/IceBoxStation",
+	"map_file": [
+		"IcemoonUnderground_Below.dmm",
+		"IcemoonUnderground_Above.dmm",
+		"IceBoxStation.dmm"
+	],
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_box",
+		"emergency": "emergency_box"
+	},
+	"traits": [
+		{
+			"Up": 1,
+			"Mining": true,
+			"Station": false,
+			"Linkage": null,
+			"Gravity": true,
+			"Ice Ruins Underground": true,
+			"Baseturf": "/turf/open/lava/plasma/ice_moon"
+		},
+		{
+			"Down": -1,
+			"Up": 1,
+			"Mining": true,
+			"Linkage": null,
+			"Gravity": true,
+			"Ice Ruins Underground": true,
+			"Baseturf": "/turf/open/openspace/icemoon"
+		},
+		{
+			"Down": -1,
+			"Mining": true,
+			"Linkage": null,
+			"Gravity": true,
+			"Ice Ruins": true,
+			"Weather_Snowstorm": true,
+			"Baseturf": "/turf/open/openspace/icemoon"
+		}
+	],
+	"minetype": "none",
+	"job_changes": {
+		"prisoner": {
+			"total_positions": 4,
+			"spawn_positions": 4
+		}
+	}
+}

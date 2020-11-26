@@ -4,7 +4,7 @@
 	// Buffs/Debuffs the symptom has to the overall engineered disease.
 	var/name = ""
 	var/desc = "If you see this something went very wrong." //Basic symptom description
-	var/threshold_desc = "" //Description of threshold effects
+	var/threshold_descs = list() //Descriptions of threshold effects
 	var/stealth = 0
 	var/resistance = 0
 	var/stage_speed = 0

@@ -75,6 +75,7 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
+#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
@@ -82,6 +83,7 @@
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
+#define VV_HK_RADIATE "radiate"
 
 // /obj
 #define VV_HK_OSAY "osay"
@@ -99,6 +101,7 @@
 #define VV_HK_PLAYER_PANEL "player_panel"
 #define VV_HK_BUILDMODE "buildmode"
 #define VV_HK_DIRECT_CONTROL "direct_control"
+#define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
 
 // /mob/living/carbon
@@ -123,3 +126,6 @@
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
+
+// paintings
+#define VV_HK_REMOVE_PAINTING "remove_painting"

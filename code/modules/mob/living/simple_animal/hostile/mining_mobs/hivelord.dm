@@ -117,7 +117,7 @@
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	var/dwarf_mob = FALSE
 	var/mob/living/carbon/human/stored_mob
@@ -183,24 +183,36 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
 	del_on_death = TRUE
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	var/can_infest_dead = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(loc))
-		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == UNCONSCIOUS || (can_infest_dead && H.stat == DEAD))
-				infest(H)
-	..()
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
+	. = ..()
+	if(stat == DEAD || !isturf(loc))
+		return
+	for(var/mob/living/carbon/human/victim in range(src, 1)) //Only for corpse right next to/on same tile
+		switch(victim.stat)
+			if(UNCONSCIOUS, HARD_CRIT)
+				infest(victim)
+				return //This will qdelete the legion.
+			if(DEAD)
+				if(can_infest_dead)
+					infest(victim)
+					return //This will qdelete the legion.
+
+///Create a legion at the location of a corpse. Exists so that legion subtypes can override it with their own type of legion.
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/make_legion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+	else
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion(H.loc)
+
+///Create a new legion using the supplied human H
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(H.dna.check_mutation(DWARFISM)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
-	else
-		L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
@@ -231,6 +243,7 @@
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
+	health_doll_icon = "legion"
 	health = 450
 	maxHealth = 450
 	melee_damage_lower = 20
@@ -313,7 +326,7 @@
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
-				back = pickweight(list(/obj/item/twohanded/spear/bonespear = 3, /obj/item/twohanded/fireaxe/boneaxe = 2))
+				back = pickweight(list(/obj/item/spear/bonespear = 3, /obj/item/fireaxe/boneaxe = 2))
 			if(prob(10))
 				belt = /obj/item/storage/belt/mining/primitive
 			if(prob(30))
@@ -326,7 +339,7 @@
 			belt = null
 			backpack_contents = list()
 			if(prob(70))
-				backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/reagent_containers/food/snacks/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
+				backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
 			if(prob(30))
 				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
 			if(prob(10))
@@ -350,8 +363,11 @@
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
 			suit = /obj/item/clothing/suit/armor/riot/knight
-			back = /obj/item/shield/riot/buckler
-			belt = /obj/item/nullrod/claymore
+			if(prob(30))
+				back = /obj/item/nullrod/scythe/talking
+			else
+				back = /obj/item/shield/riot/buckler
+				belt = /obj/item/nullrod/claymore
 			r_pocket = /obj/item/tank/internals/emergency_oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
@@ -376,3 +392,29 @@
 			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 	. = ..()
+
+// Snow Legion
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
+	name = "snow legion"
+	desc = "You can still see what was once a human under the shifting snowy mass, clearly decorated by a clown."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion"
+	icon_living = "snowlegion"
+	icon_aggro = "snowlegion_alive"
+	icon_dead = "snowlegion"
+	crusher_loot = /obj/item/crusher_trophy/legion_skull
+	loot = list(/obj/item/organ/regenerative_core/legion)
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
+	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
+
+// Snow Legion skull
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+	name = "snow legion"
+	desc = "One of many."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion_head"
+	icon_living = "snowlegion_head"
+	icon_aggro = "snowlegion_head"
+	icon_dead = "snowlegion_head"

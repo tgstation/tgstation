@@ -3,7 +3,7 @@
 	set category = "Object"
 
 	if((O.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(usr, "[O] is too powerful for you to possess.")
+		to_chat(usr, "[O] is too powerful for you to possess.", confidential = TRUE)
 		return
 
 	var/turf/T = get_turf(O)
@@ -48,6 +48,6 @@
 	set desc = "Give this guy possess/release verbs"
 	set category = "Debug"
 	set name = "Give Possessing Verbs"
-	M.verbs += /proc/possess
-	M.verbs += /proc/release
+	add_verb(M, /proc/possess)
+	add_verb(M, /proc/release)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Possessing Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

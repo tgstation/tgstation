@@ -25,6 +25,9 @@
 /obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
+/obj/structure/spawner/lavaland/icewatcher
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
+
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize()
 	. = ..()
@@ -48,7 +51,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		last_tendril = FALSE
 
 	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
-		if(SSachievements.hub_enabled)
+		if(SSachievements.achievements_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat || !L.client)
 					continue

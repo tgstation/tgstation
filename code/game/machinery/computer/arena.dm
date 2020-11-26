@@ -46,7 +46,7 @@
 	var/list/team_keys = list()
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
-	/// Default team outfit if outfits[team] is empty
+	/// Default team outfit if `outfits[team]` is empty
 	var/default_outfit = /datum/outfit/job/assistant
 
 	/// Is the arena template loading in
@@ -88,7 +88,7 @@
 	var/list/default_arenas = flist(arena_dir)
 	for(var/arena_file in default_arenas)
 		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
-		add_new_arena_template(null,arena_dir + arena_file,simple_name)
+		INVOKE_ASYNC(src, .proc/add_new_arena_template, null, arena_dir + arena_file, simple_name)
 
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
@@ -323,7 +323,7 @@
 			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/G = new(get_turf(L))
 			G.name = "[L.real_name]'s Trophy"
 
-/obj/machinery/computer/arena/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/obj/machinery/computer/arena/ui_interact(mob/user)
 	. = ..()
 	var/list/dat = list()
 	dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"

@@ -2,7 +2,7 @@
 	name = "bicycle"
 	desc = "Keep away from electricity."
 	icon_state = "bicycle"
-	fall_off_if_missing_arms = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /obj/vehicle/ridden/bicycle/Initialize()
 	. = ..()
@@ -11,10 +11,12 @@
 	D.vehicle_move_delay = 0
 
 
-/obj/vehicle/ridden/bicycle/tesla_act() // :::^^^)))
+/obj/vehicle/ridden/bicycle/zap_act(power, zap_flags) // :::^^^)))
+	//This didn't work for 3 years because none ever tested it I hate life
 	name = "fried bicycle"
 	desc = "Well spent."
 	color = rgb(63, 23, 4)
 	can_buckle = FALSE
+	. = ..()
 	for(var/m in buckled_mobs)
 		unbuckle_mob(m,1)

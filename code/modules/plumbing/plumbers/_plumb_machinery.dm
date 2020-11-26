@@ -16,17 +16,15 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 	///wheter we partake in rcd construction or not
-	var/rcd_constructable = TRUE
-	///cost of the plumbing rcd construction
-	var/rcd_cost = 15
-	///delay of constructing it throught the plumbing rcd
-	var/rcd_delay = 10
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
 	anchored = bolt
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/machinery/plumbing/proc/can_be_rotated(mob/user,rotation_type)
+	return !anchored
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
@@ -38,10 +36,10 @@
 	return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, "<span class='notice'>You start furiously plunging [name].")
+	to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
 	if(do_after(user, 30, target = src))
-		to_chat(user, "<span class='notice'>You finish plunging the [name].")
-		reagents.reaction(get_turf(src), TOUCH) //splash on the floor
+		to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
+		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
 /obj/machinery/plumbing/welder_act(mob/living/user, obj/item/I)
@@ -50,7 +48,7 @@
 		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
 	if(I.tool_start_check(user, amount=0))
 		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
-		if(I.use_tool(src, user, rcd_delay * 2, volume=50))
+		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
 			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
 			return TRUE
@@ -61,8 +59,6 @@
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
 	reagent_flags = TRANSPARENT | REFILLABLE
-	rcd_cost = 5
-	rcd_delay = 5
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt)
 	. = ..()
@@ -74,8 +70,6 @@
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 5
-	rcd_delay = 5
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt)
 	. = ..()
@@ -86,8 +80,6 @@
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
-	rcd_cost = 25
-	rcd_delay = 20
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt)
 	. = ..()

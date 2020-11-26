@@ -12,6 +12,8 @@
 	var/ignore_clothes = FALSE									//This surgery ignores clothes
 	var/mob/living/carbon/target								//Operation target mob
 	var/obj/item/bodypart/operated_bodypart						//Operable body part
+	var/datum/wound/operated_wound								//The actual wound datum instance we're targeting
+	var/datum/wound/targetable_wound							//The wound type this surgery targets
 	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
 	var/speed_modifier = 0										//Step speed modifier
 	var/requires_real_bodypart = FALSE							//Some surgeries don't work on limbs that don't really exist
@@ -29,8 +31,13 @@
 			location = surgery_location
 		if(surgery_bodypart)
 			operated_bodypart = surgery_bodypart
+			if(targetable_wound)
+				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+				operated_wound.attached_surgery = src
 
 /datum/surgery/Destroy()
+	if(operated_wound)
+		operated_wound.attached_surgery = null
 	if(target)
 		target.surgeries -= src
 	target = null
@@ -79,7 +86,7 @@
 
 	if(!opcomputer)
 		return
-	if(opcomputer.stat & (NOPOWER|BROKEN))
+	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
@@ -101,7 +108,7 @@
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
-		if(tool?.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
 			return TRUE
 	return FALSE
