@@ -79,7 +79,7 @@
 	var/ignition_msg = W.ignition_effect(src, user)
 	if(ignition_msg && !active)
 		visible_message(ignition_msg)
-		preprime(user)
+		arm_grenade(user)
 	else
 		return ..()
 
@@ -98,7 +98,7 @@
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
 
-/obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
+/obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T)
 	if(user)

@@ -39,7 +39,7 @@
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
-	preprime(user, det_time)
+	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
 	return BRUTELOSS
@@ -55,11 +55,11 @@
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
 		if(prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
-			preprime(user, 5, FALSE)
+			arm_grenade(user, 5, FALSE)
 			return TRUE
 	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
 		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
-		preprime(user, 5, FALSE)
+		arm_grenade(user, 5, FALSE)
 		return TRUE
 	else if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after
 		to_chat(user, "<span class='warning'>What the... [src] is stuck to your hand!</span>")
@@ -84,13 +84,13 @@
 
 	if(!active)
 		if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
-			preprime(user)
+			arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
 	log_bomber(user, "has primed a", src, "for detonation")
 
 ///
-/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
+/obj/item/grenade/proc/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T) //Inbuilt admin procs already handle null users
 	if(user)

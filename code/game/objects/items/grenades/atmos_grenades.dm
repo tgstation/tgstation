@@ -38,7 +38,7 @@
 	ex_light = 4
 	ex_flame = 2
 
-/obj/item/grenade/gas_crystal/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
+/obj/item/grenade/gas_crystal/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/turf_loc = get_turf(src)
 	log_grenade(user, turf_loc) //Inbuilt admin procs already handle null users
 	if(user)
