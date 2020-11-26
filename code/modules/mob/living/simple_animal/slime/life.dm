@@ -204,7 +204,7 @@
 			visible_message("<span class='warning'>[src] slurps up [M]!</span>")
 			adjust_nutrition(100)
 			layer = initial(layer)
-			M.force_move(src)
+			M.forceMove(src)
 		Feedstop()
 		return
 
