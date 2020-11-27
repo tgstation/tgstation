@@ -16,17 +16,17 @@
 	var/atom/origin = null ///where the beam goes from
 	var/atom/target = null ///where the beam goes to
 	var/list/elements = list() ///list of beam objects. These have their visuals set by the visuals var which is created on starting
-	var/icon/base_icon = null
 	var/icon
 	var/icon_state = "" //icon state of the main segments of the beam
+	var/max_distance = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
 
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",btype = /obj/effect/ebeam)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",maxdistance=INFINITY,btype = /obj/effect/ebeam)
 	origin = beam_origin
 	target = beam_target
-	base_icon = new(beam_icon,beam_icon_state)
+	max_distance = maxdistance
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
@@ -46,7 +46,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
 
 /**
- * Triggered by signals set up when the beam is drawn. Removes the old beam, creates a new one.
+ * Triggered by signals set up when the beam is drawn. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
  *
  * Arguments:
  * mover: either the origin of the beam or the target of the beam that moved.
@@ -54,8 +54,11 @@
  * direction: in what direction mover moved from.
  */
 /datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
-	Reset()
-	Draw()
+	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
+		Reset()
+		Draw()
+	else
+		qdel(src)
 
 /**
  * Deletes the old beam objects from origin to target.
@@ -175,9 +178,10 @@
  * BeamTarget: Where you're beaming from. Where do you get origin? You didn't read the docs, fuck you.
  * icon_state: What the beam's icon_state is. The datum effect isn't the ebeam object, it doesn't hold any icon and isn't type dependent.
  * icon: What the beam's icon file is. Don't change this, man. All beam icons should be in beam.dmi anyways.
+ * maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',beam_type=/obj/effect/ebeam)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,beam_type)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',maxdistance=INFINITY,beam_type=/obj/effect/ebeam)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,maxdistance,beam_type)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam

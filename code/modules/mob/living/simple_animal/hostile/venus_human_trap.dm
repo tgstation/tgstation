@@ -27,7 +27,6 @@
 	var/finish_time
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
-	var/list/beams = list()
 
 /obj/structure/alien/resin/flower_bud/Initialize()
 	. = ..()
@@ -39,7 +38,7 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		beams += Beam(T, "vine", beam_type=/obj/effect/ebeam/vine)
+		Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
@@ -51,7 +50,6 @@
   * Displays a message, spawns a human venus trap, then qdels itself.
   */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
-	QDEL_LIST(beams)
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
@@ -154,7 +152,7 @@
 			if(O.density)
 				return
 
-	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
+	var/datum/beam/newVine = Beam(the_target, icon_state = "vine", maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
 	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
 	vines += newVine
 	if(isliving(the_target))
