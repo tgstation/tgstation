@@ -103,6 +103,7 @@
 	inhand_icon_state = "tile-grass"
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/grass
 
 //Fairygrass
 /obj/item/stack/tile/fairygrass
@@ -113,6 +114,7 @@
 	inhand_icon_state = "tile-fairygrass"
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fairygrass
 
 //Wood
 /obj/item/stack/tile/wood
@@ -123,6 +125,7 @@
 	inhand_icon_state = "tile-wood"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/wood
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -132,6 +135,7 @@
 	icon_state = "tile_basalt"
 	inhand_icon_state = "tile-basalt"
 	turf_type = /turf/open/floor/grass/fakebasalt
+	merge_type = /obj/item/stack/tile/basalt
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -143,6 +147,7 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 	tableVariant = /obj/structure/table/wood/fancy
+	merge_type = /obj/item/stack/tile/carpet
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
@@ -150,6 +155,7 @@
 	inhand_icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 	tableVariant = /obj/structure/table/wood/fancy/black
+	merge_type = /obj/item/stack/tile/carpet/black
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
@@ -157,6 +163,7 @@
 	inhand_icon_state = "tile-carpet-blue"
 	turf_type = /turf/open/floor/carpet/blue
 	tableVariant = /obj/structure/table/wood/fancy/blue
+	merge_type = /obj/item/stack/tile/carpet/blue
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
@@ -164,6 +171,7 @@
 	inhand_icon_state = "tile-carpet-cyan"
 	turf_type = /turf/open/floor/carpet/cyan
 	tableVariant = /obj/structure/table/wood/fancy/cyan
+	merge_type = /obj/item/stack/tile/carpet/cyan
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
@@ -171,6 +179,7 @@
 	inhand_icon_state = "tile-carpet-green"
 	turf_type = /turf/open/floor/carpet/green
 	tableVariant = /obj/structure/table/wood/fancy/green
+	merge_type = /obj/item/stack/tile/carpet/green
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
@@ -178,6 +187,7 @@
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/orange
 	tableVariant = /obj/structure/table/wood/fancy/orange
+	merge_type = /obj/item/stack/tile/carpet/orange
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
@@ -185,6 +195,7 @@
 	inhand_icon_state = "tile-carpet-purple"
 	turf_type = /turf/open/floor/carpet/purple
 	tableVariant = /obj/structure/table/wood/fancy/purple
+	merge_type = /obj/item/stack/tile/carpet/purple
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
@@ -192,6 +203,7 @@
 	inhand_icon_state = "tile-carpet-red"
 	turf_type = /turf/open/floor/carpet/red
 	tableVariant = /obj/structure/table/wood/fancy/red
+	merge_type = /obj/item/stack/tile/carpet/red
 
 /obj/item/stack/tile/carpet/royalblack
 	name = "royal black carpet"
@@ -199,6 +211,7 @@
 	inhand_icon_state = "tile-carpet-royalblack"
 	turf_type = /turf/open/floor/carpet/royalblack
 	tableVariant = /obj/structure/table/wood/fancy/royalblack
+	merge_type = /obj/item/stack/tile/carpet/royalblack
 
 /obj/item/stack/tile/carpet/royalblue
 	name = "royal blue carpet"
@@ -206,24 +219,28 @@
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
+	merge_type = /obj/item/stack/tile/carpet/royalblue
 
 /obj/item/stack/tile/carpet/executive
 	name = "executive carpet"
 	icon_state = "tile_carpet_executive"
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/executive
+	merge_type = /obj/item/stack/tile/carpet/executive
 
 /obj/item/stack/tile/carpet/stellar
 	name = "stellar carpet"
 	icon_state = "tile_carpet_stellar"
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/stellar
+	merge_type = /obj/item/stack/tile/carpet/stellar
 
 /obj/item/stack/tile/carpet/donk
 	name = "donk co promotional carpet"
 	icon_state = "tile_carpet_donk"
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/donk
+	merge_type = /obj/item/stack/tile/carpet/donk
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
@@ -311,6 +328,7 @@
 	icon_state = "tile_bcircuit"
 	inhand_icon_state = "tile-bcircuit"
 	turf_type = /turf/open/floor/circuit
+	merge_type = /obj/item/stack/tile/circuit
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
@@ -319,9 +337,11 @@
 	icon_state = "tile_gcircuit"
 	inhand_icon_state = "tile-gcircuit"
 	turf_type = /turf/open/floor/circuit/green
+	merge_type = /obj/item/stack/tile/circuit/green
 
 /obj/item/stack/tile/circuit/green/anim
 	turf_type = /turf/open/floor/circuit/green/anim
+	merge_type = /obj/item/stack/tile/circuit/green/anim
 
 /obj/item/stack/tile/circuit/red
 	name = "red circuit tile"
@@ -330,9 +350,11 @@
 	icon_state = "tile_rcircuit"
 	inhand_icon_state = "tile-rcircuit"
 	turf_type = /turf/open/floor/circuit/red
+	merge_type = /obj/item/stack/tile/circuit/red
 
 /obj/item/stack/tile/circuit/red/anim
 	turf_type = /turf/open/floor/circuit/red/anim
+	merge_type = /obj/item/stack/tile/circuit/red/anim
 
 //Pod floor
 /obj/item/stack/tile/pod
@@ -342,6 +364,7 @@
 	icon_state = "tile_pod"
 	inhand_icon_state = "tile-pod"
 	turf_type = /turf/open/floor/pod
+	merge_type = /obj/item/stack/tile/pod
 
 /obj/item/stack/tile/pod/light
 	name = "light pod floor tile"
@@ -349,6 +372,7 @@
 	desc = "A lightly colored grooved floor tile."
 	icon_state = "tile_podlight"
 	turf_type = /turf/open/floor/pod/light
+	merge_type = /obj/item/stack/tile/pod/light
 
 /obj/item/stack/tile/pod/dark
 	name = "dark pod floor tile"
@@ -356,6 +380,7 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
+	merge_type = /obj/item/stack/tile/pod/dark
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -375,6 +400,7 @@
 	matter_amount = 1
 	cost = 125
 	source = /datum/robot_energy_storage/metal
+	merge_type = /obj/item/stack/tile/plasteel
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
@@ -383,6 +409,7 @@
 	icon_state = "tile_plastic"
 	mats_per_unit = list(/datum/material/plastic=500)
 	turf_type = /turf/open/floor/plastic
+	merge_type = /obj/item/stack/tile/plastic
 
 /obj/item/stack/tile/material
 	name = "floor tile"
@@ -392,6 +419,7 @@
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	merge_type = /obj/item/stack/tile/material
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"
@@ -399,6 +427,7 @@
 	desc = "A stack of floor tiles that remind you of an age of funk."
 	icon_state = "tile_eighties"
 	turf_type = /turf/open/floor/eighties
+	merge_type = /obj/item/stack/tile/eighties
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15

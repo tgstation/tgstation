@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	matter_amount = 2
 	cost = 250
 	source = /datum/robot_energy_storage/metal
+	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
@@ -70,9 +71,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	else
 		return ..()
 
-/obj/item/stack/rods/cyborg
-	merge_type = /obj/item/stack/rods
-
 /obj/item/stack/rods/cyborg/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
@@ -98,6 +96,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	merge_type = /obj/item/stack/rods/lava
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30
