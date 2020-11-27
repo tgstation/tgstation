@@ -37,7 +37,20 @@
 	SIGNAL_HANDLER
 
 	var/atom/P = parent
-	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients]" : "no ingredient, "]making a [custom_adjective()]-sized [initial(P.name)]."
+	var/ingredients_listed = ""
+	if (LAZYLEN(ingredients))
+		for (var/i in 1 to ingredients.len)
+			var/obj/item/I = ingred
+			var/ending = ", "
+			switch(length(ingredients))
+				if (2)
+					if (i == 1)
+						ending = " and "
+				if (3 to INFINITY)
+					if (i == ingredients.len - 2)
+						ending = ", and "
+			ingredients_listed += "\a [I.name][ending]"
+	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(P.name)]."
 
 
 /datum/component/customizable/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
