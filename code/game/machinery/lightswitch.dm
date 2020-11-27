@@ -30,7 +30,7 @@
 		icon_state = "light-p"
 	else
 		luminosity = 1
-		SSvis_overlays.add_vis_overlay(src, icon, "light-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "light-glow", 0, EMISSIVE_PLANE, dir, alpha)
 		if(area.lightswitch)
 			icon_state = "light1"
 		else

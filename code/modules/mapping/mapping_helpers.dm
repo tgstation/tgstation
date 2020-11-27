@@ -10,7 +10,7 @@
 	var/list/baseturf_to_replace
 	var/baseturf
 
-	layer = POINT_LAYER
+	plane = POINT_PLANE
 
 /obj/effect/baseturf_helper/Initialize()
 	. = ..()

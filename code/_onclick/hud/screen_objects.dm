@@ -9,7 +9,6 @@
 /obj/screen
 	name = ""
 	icon = 'icons/hud/screen_gen.dmi'
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = APPEARANCE_UI
@@ -55,7 +54,6 @@
 	maptext_width = 480
 
 /obj/screen/swap_hand
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 	name = "swap hand"
 
@@ -125,7 +123,6 @@
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /obj/screen/inventory/Click(location, control, params)
@@ -241,7 +238,6 @@
 
 /obj/screen/close
 	name = "close"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
@@ -258,7 +254,6 @@
 	name = "drop"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_drop"
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
@@ -405,7 +400,6 @@
 	name = "resist"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_resist"
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /obj/screen/resist/Click()
@@ -417,7 +411,6 @@
 	name = "rest"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /obj/screen/rest/Click()
@@ -438,7 +431,6 @@
 	name = "storage"
 	icon_state = "block"
 	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
 	plane = HUD_PLANE
 
 /obj/screen/storage/Initialize(mapload, new_master)
@@ -518,7 +510,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 /obj/screen/zone_sel/MouseExited(location, control, params)
@@ -675,7 +666,6 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
-	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 

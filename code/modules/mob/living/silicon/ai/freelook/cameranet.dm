@@ -31,10 +31,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	vis_contents_transparent = new /obj/effect/overlay/camera_static/transparent()
 	vis_contents_objects = list(vis_contents_opaque, vis_contents_transparent)
 
-	obscured = new('icons/effects/cameravis.dmi', vis_contents_opaque, null, CAMERA_STATIC_LAYER)
+	obscured = new('icons/effects/cameravis.dmi', vis_contents_opaque, null)
 	obscured.plane = CAMERA_STATIC_PLANE
 
-	obscured_transparent = new('icons/effects/cameravis.dmi', vis_contents_transparent, null, CAMERA_STATIC_LAYER)
+	obscured_transparent = new('icons/effects/cameravis.dmi', vis_contents_transparent, null)
 	obscured_transparent.plane = CAMERA_STATIC_PLANE
 
 // Checks if a chunk has been Generated in x, y, z.
@@ -197,7 +197,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	mouse_opacity = MOUSE_OPACITY_ICON
 	invisibility = INVISIBILITY_ABSTRACT
 
-	layer = CAMERA_STATIC_LAYER
 	plane = CAMERA_STATIC_PLANE
 
 /obj/effect/overlay/camera_static/transparent

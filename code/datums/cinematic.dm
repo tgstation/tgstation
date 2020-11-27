@@ -22,7 +22,6 @@
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"
 	plane = SPLASHSCREEN_PLANE
-	layer = SPLASHSCREEN_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "BOTTOM,LEFT+50%"
 	appearance_flags = APPEARANCE_UI | TILE_BOUND

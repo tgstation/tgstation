@@ -108,8 +108,7 @@
 		var/mutable_appearance/MA = new()
 		MA.maptext = "<span class='maptext'>[strength]k</span>"
 		MA.color = "#04e604"
-		MA.layer = RAD_TEXT_LAYER
-		MA.plane = GAME_PLANE
+		MA.layer = RAD_TEXT_PLANE
 		pic.appearance = MA
 		flick_overlay(pic, list(user.client), 10)
 

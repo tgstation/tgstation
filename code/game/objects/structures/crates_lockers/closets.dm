@@ -81,7 +81,7 @@
 		if(secure && !broken)
 			//Overlay is similar enough for both that we can use the same mask for both
 			luminosity = 1
-			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", 0, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
 				. += "locked"
 			else

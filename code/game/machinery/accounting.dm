@@ -65,7 +65,7 @@
 	luminosity = 1
 	if(inserted_id)
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", 0, EMISSIVE_PLANE, dir, alpha)
 	else
 		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", 0, EMISSIVE_PLANE, dir, alpha)

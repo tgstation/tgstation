@@ -3,6 +3,7 @@
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	plane = LANDMARK_PLANE
 	layer = MID_LANDMARK_LAYER
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -32,6 +33,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
+	plane = GAME_PLANE
 	layer = MOB_LAYER
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE

@@ -46,7 +46,7 @@
 	icon_state = "swarmer_console"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	max_integrity = 400
-	layer = MASSIVE_OBJ_LAYER
+	layer = FLY_LAYER
 	light_color = LIGHT_COLOR_CYAN
 	light_range = 10
 	anchored = TRUE

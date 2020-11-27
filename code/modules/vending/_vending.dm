@@ -264,7 +264,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!(machine_stat & BROKEN) && powered())
-		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
+		SSvis_overlays.add_vis_overlay(src, icon, light_mask, 0, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
