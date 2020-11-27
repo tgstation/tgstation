@@ -1,4 +1,0 @@
-author: "kriskog"
-delete-after: True
-changes: 
-  - bugfix: "Admin PM replies to an admin who has deadminned while you were typing will no longer be thrown into the void. If everything fails, the message gets printed in chat."

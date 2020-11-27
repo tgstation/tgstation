@@ -1,5 +1,0 @@
-author: "LordVollkorn"
-delete-after: True
-changes: 
-  - bugfix: "The improvised jetpack has been fixed. Don't forget that it still has to be filled with gas before usage."
-  - imageadd: "New custom icons for the improvised jetpack"

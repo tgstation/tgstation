@@ -1,6 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Donk pockets now fit in donk pocket boxes"
-  - bugfix: "Donuts are no longer bigger than the box they came in"
-  - bugfix: "Many food items have been resized"
