@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a case where certain materials could have problematic or missing behavior when interacting with stacking machines."
+  - bugfix: "Fixed a case where certain materials could not be merged together even if they were the same."
