@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Dog beds are now properly tagged, and if your pet bites the dust, the bed will be kept in their memory."
+  - bugfix: "McGriff's bed actually has flavor text now"
