@@ -68,7 +68,7 @@
 
 /obj/item/food/bun/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizable, /obj/item/food/burger/custom, CUSTOM_INGREDIENTS_STACKPLUSTOP, max_ingredients = INFINITY)
+	AddComponent(/datum/component/customizable, /obj/item/food/burger/custom, CUSTOM_INGREDIENTS_STACKPLUSTOP)
 
 /obj/item/food/cakebatter
 	name = "cake batter"

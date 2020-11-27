@@ -133,3 +133,14 @@
 	custom_materials = list(/datum/material/glass = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_ASSISTANT * 0.6
+
+/obj/item/reagent_containers/glass/bowl/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable, /obj/item/food/salad, CUSTOM_INGREDIENTS_FILL, max_ingredients = 6)
+
+// empty salad for custom salads
+/obj/item/food/salad/empty
+	name = "salad"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = bowl

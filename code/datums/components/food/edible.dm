@@ -65,8 +65,8 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
-	RegisterSignal(parent, COMSIG_FOOD_TASTE_ADD, ./proc/add_taste)
-	RegisterSignal(parent, COMSIG_FOOD_TYPES_ADD, ./proc/add_foodtypes)
+	RegisterSignal(parent, COMSIG_FOOD_TASTE_ADD, .proc/add_taste)
+	RegisterSignal(parent, COMSIG_FOOD_TYPES_ADD, .proc/add_foodtypes)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -434,10 +434,10 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
 
-/datum/component/edible/proc/add_foodtypes(type)
+/datum/component/edible/proc/add_foodtypes(datum/source, type)
 	SIGNAL_HANDLER
 	foodtypes |= type
 
-/datum/component/edible/proc/add_taste(taste)
+/datum/component/edible/proc/add_taste(datum/source, taste)
 	SIGNAL_HANDLER
-	tastes.Add(taste)
+	tastes += taste

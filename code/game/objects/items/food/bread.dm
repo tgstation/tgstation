@@ -30,6 +30,10 @@
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 
+/obj/item/food/bread/plain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable, /obj/item/food/bread/tofu, CUSTOM_INGREDIENTS_FILL, max_ingredients = 8)
+
 /obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
 
@@ -39,6 +43,10 @@
 	icon_state = "breadslice"
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+
+/obj/item/food/breadslice/plain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable, null, CUSTOM_INGREDIENTS_STACK)
 
 /obj/item/food/breadslice/moldy
 	name = "moldy bread slice"

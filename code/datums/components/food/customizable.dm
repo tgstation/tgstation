@@ -17,6 +17,13 @@
 	src.max_ingredients = max_ingredients
 
 
+/datum/component/customizable/Destroy(force, silent)
+	QDEL_NULL(top_overlay)
+	if (LAZYLEN(ingredients))
+		QDEL_LIST(ingredients)
+	return ..()
+
+
 /datum/component/customizable/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
@@ -75,9 +82,11 @@
 		RemoveComponent()
 		R.TakeComponent(src)
 		qdel(P)
-	handle_fill(I)
 	handle_reagents(I)
 	handle_ingredients(I)
+	handle_fill(I)
+	// deal with food trash?
+	SEND_SIGNAL(I, COMSIG_FOOD_CONSUMED, null, null)
 
 
 /datum/component/customizable/proc/handle_fill(obj/item/I)
@@ -124,10 +133,9 @@
 	LAZYADD(ingredients, I)
 	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
 	var/datum/component/edible/E = I.GetComponent(/datum/component/edible)
-	SEND_SIGNAL(P, COMSIG_FOOD_TASTE_ADD, "[I.name]")
-	SEND_SIGNAL(P, COMSIG_FOOD_TYPES_ADD, E.foodtypes)
-	// deal with food trash?
-	SEND_SIGNAL(I, COMSIG_FOOD_CONSUMED, null, null)
+	if (E)
+		SEND_SIGNAL(P, COMSIG_FOOD_TASTE_ADD, E.tastes)
+		SEND_SIGNAL(P, COMSIG_FOOD_TYPES_ADD, E.foodtypes)
 
 
 /datum/component/customizable/proc/custom_adjective()
@@ -142,6 +150,7 @@
 			return "ridiculous"
 		if (12 to INFINITY)
 			return "monstrous"
+
 
 /datum/component/customizable/proc/custom_type()
 	var/custom_type = "empty"
