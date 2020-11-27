@@ -3269,6 +3269,8 @@
 #include "modular_frontier\modules\blueshield\code\game\objects\items\devices\radio\headset.dm"
 #include "modular_frontier\modules\blueshield\code\modules\clothing\under\jobs\security.dm"
 #include "modular_frontier\modules\blueshield\code\modules\jobs\job_types\blueshield.dm"
+#include "modular_frontier\modules\coboldchem\medicines\coboldchem_medicines.dm"
+#include "modular_frontier\modules\coboldchem\reactions\coboldchems_reactions.dm"
 #include "modular_frontier\modules\miningbase\code\game\area\Space_Station_13_areas.dm"
 #include "modular_frontier\modules\miningbase\code\game\objects\effects\landmarks.dm"
 #include "modular_frontier\modules\miningbase\code\game\objects\items\devices\PDA\PDA_types.dm"
