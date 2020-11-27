@@ -1,0 +1,4 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "cleric mace handles are no longer affected by textures or opacity"
