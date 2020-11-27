@@ -29,6 +29,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
@@ -315,6 +316,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/butterdog
 	name = "butterdog"
@@ -325,6 +327,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "exotic butter" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/butterdog/ComponentInitialize()
 	. = ..()

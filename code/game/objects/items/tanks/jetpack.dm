@@ -119,33 +119,19 @@
 	name = "improvised jetpack"
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
 	icon_state = "jetpack-improvised"
-	inhand_icon_state = "jetpack-sec"
+	inhand_icon_state = "jetpack-improvised"
 	worn_icon = null
-	worn_icon_state = "jetpack-sec"
+	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at hardsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
-	if(!on)
-		return
-	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off(user)
-		return
 	if(rand(0,250) == 0)
 		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
 		turn_off(user)
 		return
-
-	var/datum/gas_mixture/removed = air_contents.remove(num)
-	if(removed.total_moles() < 0.005)
-		turn_off(user)
-		return
-
-	var/turf/T = get_turf(user)
-	T.assume_air(removed)
-	ion_trail.generate_effect()
-
+	else ..()
 	return TRUE
 
 /obj/item/tank/jetpack/void

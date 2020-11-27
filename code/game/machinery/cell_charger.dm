@@ -128,6 +128,11 @@
 
 	if(charging.percent() >= 100)
 		return
-	if(directly_use_power(charge_rate * delta_time))
-		charging.give(charge_rate * delta_time)
-		update_icon()
+
+	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	if(!main_draw)
+		return
+	charging.give(main_draw)
+	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
+
+	update_icon()
