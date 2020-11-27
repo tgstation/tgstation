@@ -40,6 +40,10 @@
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
 
+/obj/item/food/pizzabread/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENTS_SCATTER, max_ingredients = 12)
+
 /obj/item/food/doughslice
 	name = "dough slice"
 	desc = "A slice of dough. Can be cooked into a bun."
