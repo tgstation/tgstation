@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - refactor: "Stacking Machine Console now uses tgui."
+  - bugfix: "Fixed a case where certain materials could not be released via Stacking Machine Console."
+  - bugfix: "Fixed a case where some buttons in the Safe UI could be hard to press."
