@@ -92,9 +92,6 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/getNodeConnects()
-	return list(dir)
-
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
 	if(.)
