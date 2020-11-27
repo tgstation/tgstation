@@ -72912,11 +72912,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
-"ovX" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ows" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -127466,7 +127461,7 @@ bzj
 bzj
 bzj
 bzj
-ovX
+lMJ
 aaa
 aaa
 aaa
