@@ -6,7 +6,6 @@ These items take a specific time to eat, and can do most of the things our origi
 Behavior that's still missing from this component that original food items had that should either be put into seperate components or somewhere else:
 	Components:
 	Drying component (jerky etc)
-	Customizable component (custom pizzas etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
 
 	Misc:
@@ -66,6 +65,8 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
+	RegisterSignal(parent, COMSIG_FOOD_TASTE_ADD, ./proc/add_taste)
+	RegisterSignal(parent, COMSIG_FOOD_TYPES_ADD, ./proc/add_foodtypes)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -432,3 +433,11 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/onCrossed(datum/source, mob/user)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
+
+/datum/component/edible/proc/add_foodtypes(type)
+	SIGNAL_HANDLER
+	foodtypes |= type
+
+/datum/component/edible/proc/add_taste(taste)
+	SIGNAL_HANDLER
+	tastes.Add(taste)

@@ -66,6 +66,10 @@
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
 
+/obj/item/food/bun/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable, /obj/item/food/burger/custom, CUSTOM_INGREDIENTS_STACKPLUSTOP, max_ingredients = INFINITY)
+
 /obj/item/food/cakebatter
 	name = "cake batter"
 	desc = "Cook it to get a cake."

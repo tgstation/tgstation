@@ -40,14 +40,14 @@
 	var/ingredients_listed = ""
 	if (LAZYLEN(ingredients))
 		for (var/i in 1 to ingredients.len)
-			var/obj/item/I = ingred
+			var/obj/item/I = ingredients[i]
 			var/ending = ", "
 			switch(length(ingredients))
 				if (2)
 					if (i == 1)
 						ending = " and "
 				if (3 to INFINITY)
-					if (i == ingredients.len - 2)
+					if (i == ingredients.len - 1)
 						ending = ", and "
 			ingredients_listed += "\a [I.name][ending]"
 	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(P.name)]."
@@ -120,11 +120,14 @@
 
 
 /datum/component/customizable/proc/handle_ingredients(obj/item/I)
+	var/atom/P = parent
 	LAZYADD(ingredients, I)
+	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
+	var/datum/component/edible/E = I.GetComponent(/datum/component/edible)
+	SEND_SIGNAL(P, COMSIG_FOOD_TASTE_ADD, "[I.name]")
+	SEND_SIGNAL(P, COMSIG_FOOD_TYPES_ADD, E.foodtypes)
 	// deal with food trash?
 	SEND_SIGNAL(I, COMSIG_FOOD_CONSUMED, null, null)
-	var/atom/P = parent
-	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
 
 
 /datum/component/customizable/proc/custom_adjective()
