@@ -650,6 +650,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
+		'Unit Tests' => 6,
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
