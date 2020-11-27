@@ -37,7 +37,8 @@
 		user.forceMove(T)
 		playsound(T, dash_sound, 25, TRUE)
 		var/obj/spot2 = new phasein(get_turf(user), user.dir)
-		spot1.Beam(spot2,beam_effect,time=20)
+		var/datum/beam/zip spot1.Beam(spot2,beam_effect)
+		QDEL_IN(zip, 20)
 		current_charges--
 		holder.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)

@@ -1,5 +1,5 @@
 
-/*Beam Datum and Effect
+/** Beam Datum and Effect
  * IF YOU ARE LAZY AND DO NOT WANT TO READ, GO TO THE BOTTOM OF THE FILE AND USE THAT PROC!
  * IF YOU ONLY CARE ABOUT HOW WE'RE DOING THIS, GO TO Draw() AND READ THAT DOC!
  *
@@ -23,15 +23,13 @@
 
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,btype = /obj/effect/ebeam)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",btype = /obj/effect/ebeam)
 	origin = beam_origin
 	target = beam_target
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	if(time < INFINITY)
-		QDEL_IN(src, time)
 
 /**
  * Proc called by the atom Beam() proc. Sets up signals, and draws the beam for the first time.
@@ -180,6 +178,6 @@
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',beam_type=/obj/effect/ebeam)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,beam_type)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,beam_type)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
