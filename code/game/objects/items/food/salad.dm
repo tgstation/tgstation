@@ -136,11 +136,12 @@
 
 /obj/item/reagent_containers/glass/bowl/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizable, /obj/item/food/salad, CUSTOM_INGREDIENTS_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/customizable, /obj/item/food/salad/empty, CUSTOM_INGREDIENTS_FILL, max_ingredients = 6)
 
 // empty salad for custom salads
 /obj/item/food/salad/empty
 	name = "salad"
 	foodtypes = NONE
 	tastes = list()
-	icon_state = bowl
+	icon_state = "bowl"
+	desc = "A delicious customized salad."

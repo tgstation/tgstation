@@ -396,8 +396,9 @@
 		smoke.start()
 
 // empty burger you can customize
-/obj/item/food/burger/custom
+/obj/item/food/burger/empty
 	name = "burger"
 	icon_state = "custburg"
 	tastes = list("bun")
 	foodtypes = GRAIN
+	desc = "A crazy, custom burger made by a mad cook."

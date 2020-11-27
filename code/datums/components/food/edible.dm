@@ -440,4 +440,10 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/proc/add_taste(datum/source, taste)
 	SIGNAL_HANDLER
-	tastes += taste
+	if (islist(taste))
+		// union the list
+		for (var/s in taste)
+			if (!(s in tastes))
+				tastes.Add(s)
+	else if (!(taste in tastes))
+		tastes.Add(taste)

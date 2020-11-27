@@ -19,8 +19,6 @@
 
 /datum/component/customizable/Destroy(force, silent)
 	QDEL_NULL(top_overlay)
-	if (LAZYLEN(ingredients))
-		QDEL_LIST(ingredients)
 	return ..()
 
 
@@ -28,11 +26,17 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/on_processed)
 
 
 /datum/component/customizable/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(
+			COMSIG_PARENT_ATTACKBY,
+			COMSIG_PARENT_EXAMINE,
+			COMSIG_ATOM_CREATEDBY_PROCESSING
+		)
+	)
 
 
 /datum/component/customizable/PostTransfer()
@@ -116,7 +120,10 @@
 			P.add_overlay(top_overlay)
 			return
 		if(CUSTOM_INGREDIENTS_FILL)
-			P.cut_overlays()
+			if (top_overlay)
+				filling.color = mix_color(filling.color)
+				P.cut_overlay(top_overlay)
+			top_overlay = filling
 		if(CUSTOM_INGREDIENTS_LINE)
 			filling.pixel_x = filling.pixel_y = rand(-8,3)
 	P.add_overlay(filling)
@@ -165,3 +172,31 @@
 		if (custom_type == "empty" && I.name)
 			custom_type = I.name
 	return custom_type
+
+
+/datum/component/customizable/proc/mix_color(color)
+	if(LAZYLEN(ingredients) == 1)
+		return color
+	else
+		var/list/rgbcolor = list(0,0,0,0)
+		var/customcolor = GetColors(color)
+		var/ingcolor =  GetColors(top_overlay.color)
+		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
+		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
+		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2
+		rgbcolor[4] = (customcolor[4]+ingcolor[4])/2
+		return rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
+
+
+/datum/component/customizable/proc/on_processed(datum/source, atom/original_atom, list/chosen_processing_option)
+	SIGNAL_HANDLER
+
+	var/datum/component/customizable/C = original_atom.GetComponent(/datum/component/customizable)
+	if (C)
+		replacement = null
+		max_ingredients = C.max_ingredients
+		top_overlay = null
+		for (var/ingr in C.ingredients)
+			var/obj/item/I = ingr
+			handle_ingredients(I)
+			handle_fill(I)
