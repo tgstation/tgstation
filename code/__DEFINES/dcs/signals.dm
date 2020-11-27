@@ -694,7 +694,9 @@
 ///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"
 
+///Called on edible to add more taste(s)
 #define COMSIG_FOOD_TASTE_ADD "food_taste_add"
+///Called on edible to add more foodtype(s)
 #define COMSIG_FOOD_TYPES_ADD "food_types_add"
 
 #define COMSIG_ITEM_FRIED "item_fried"

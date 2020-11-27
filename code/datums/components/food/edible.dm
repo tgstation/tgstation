@@ -455,10 +455,12 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
 
+///Add food types as integer containing food type flags.
 /datum/component/edible/proc/add_foodtypes(datum/source, type)
 	SIGNAL_HANDLER
 	foodtypes |= type
 
+///Add new taste(s) as a string or list of strings.
 /datum/component/edible/proc/add_taste(datum/source, taste)
 	SIGNAL_HANDLER
 	if (islist(taste))
