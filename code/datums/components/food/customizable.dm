@@ -12,15 +12,15 @@
  */
 /datum/component/customizable
 	can_transfer = TRUE
-	/// List of edible ingredients.
+	///List of edible ingredients.
 	var/list/obj/item/ingredients
-	/// Type path of replacement atom.
+	///Type path of replacement atom.
 	var/replacement
-	/// Type of fill, can be [CUSTOM_INGREDIENTS_NOCHANGE] for example.
+	///Type of fill, can be [CUSTOM_INGREDIENTS_NOCHANGE] for example.
 	var/fill_type
-	/// Number of max ingredients.
+	///Number of max ingredients.
 	var/max_ingredients
-	/// Overlay used for certain fill types, always shows up on top.
+	///Overlay used for certain fill types, always shows up on top.
 	var/mutable_appearance/top_overlay
 
 
@@ -60,7 +60,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 
-// Handles when the customizable food is examined.
+///Handles when the customizable food is examined.
 /datum/component/customizable/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
@@ -81,7 +81,7 @@
 	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(P.name)]."
 
 
-//  Handles when the customizable food is attacked by something.
+///Handles when the customizable food is attacked by something.
 /datum/component/customizable/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
@@ -111,7 +111,7 @@
 	SEND_SIGNAL(I, COMSIG_FOOD_CONSUMED, null, null)
 
 
-// Handles the icon update for a new ingredient.
+///Handles the icon update for a new ingredient.
 /datum/component/customizable/proc/handle_fill(obj/item/I)
 	var/atom/P = parent
 	var/mutable_appearance/filling = mutable_appearance(P.icon, "[initial(P.icon_state)]_filling")
@@ -148,14 +148,14 @@
 	P.add_overlay(filling)
 
 
-// Takes the reagents from an ingredient.
+///Takes the reagents from an ingredient.
 /datum/component/customizable/proc/handle_reagents(obj/item/I)
 	var/atom/P = parent
 	I.reagents.trans_to(P, I.reagents.total_volume)
 	return
 
 
-// Adds a new ingredient and its tastes and food types.
+///Adds a new ingredient and its tastes and food types.
 /datum/component/customizable/proc/handle_ingredients(obj/item/I)
 	var/atom/P = parent
 	LAZYADD(ingredients, I)
@@ -166,7 +166,7 @@
 		SEND_SIGNAL(P, COMSIG_FOOD_TYPES_ADD, E.foodtypes)
 
 
-// Gives an adjective to describe the size of the custom food.
+///Gives an adjective to describe the size of the custom food.
 /datum/component/customizable/proc/custom_adjective()
 	switch(LAZYLEN(ingredients))
 		if (0 to 2)
@@ -181,7 +181,7 @@
 			return "monstrous"
 
 
-// Gives the type of custom food (based on what the first ingredient was).
+///Gives the type of custom food (based on what the first ingredient was).
 /datum/component/customizable/proc/custom_type()
 	var/custom_type = "empty"
 	if (LAZYLEN(ingredients))
@@ -197,7 +197,7 @@
 	return custom_type
 
 
-// Returns the color of the input mixed with the top_overlay's color.
+///Returns the color of the input mixed with the top_overlay's color.
 /datum/component/customizable/proc/mix_color(color)
 	if(LAZYLEN(ingredients) == 1 || !top_overlay)
 		return color
@@ -212,7 +212,7 @@
 		return rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
 
-// Copies over the parent's ingredients to the processing result (such as slices when the parent is cut).
+///Copies over the parent's ingredients to the processing result (such as slices when the parent is cut).
 /datum/component/customizable/proc/on_processed(datum/source, atom/original_atom, list/chosen_processing_option)
 	SIGNAL_HANDLER
 
