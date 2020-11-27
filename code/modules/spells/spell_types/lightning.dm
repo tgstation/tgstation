@@ -57,13 +57,15 @@
 		return
 
 	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+	var/datum/beam/bzbzbz user.Beam(target,icon_state="lightning[rand(1,12)]")
+	QDEL_IN(bzbzbz, 5)
 
 	Bolt(user,target,30,5,user)
 	Reset(user)
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
-	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+	var/datum/beam/bzbzbz origin.Beam(target,icon_state="lightning[rand(1,12)]")
+	QDEL_IN(bzbzbz, 5)
 	var/mob/living/carbon/current = target
 	if(current.anti_magic_check())
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
