@@ -41,8 +41,8 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = base_pixel_x + get_standard_pixel_x_offset(body_position == LYING_DOWN)
-		pixel_y = base_pixel_y + get_standard_pixel_y_offset(body_position == LYING_DOWN)
+	pixel_x = base_pixel_x + body_position_pixel_x_offset
+	pixel_y = base_pixel_y + body_position_pixel_y_offset
 	update_inv_hands()
 	update_inv_handcuffed()
 

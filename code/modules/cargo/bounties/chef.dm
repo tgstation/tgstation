@@ -16,14 +16,14 @@
 	description = "Upper management wants to host a movie night. Ship bags of popcorn for the occasion."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/popcorn)
+	wanted_types = list(/obj/item/food/popcorn)
 
 /datum/bounty/item/chef/onionrings
 	name = "Onion Rings"
 	description = "Nanotrasen is remembering Saturn day. Ship onion rings to show the station's support."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/onionrings)
+	wanted_types = list(/obj/item/food/onionrings)
 
 /datum/bounty/item/chef/icecreamsandwich
 	name = "Ice Cream Sandwiches"
@@ -43,13 +43,13 @@
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
+	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/food/bun, /obj/item/food/pizzabread, /obj/item/food/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
 	description = "3.14159? No! CentCom management wants edible pie! Ship a whole one."
 	reward = 3142
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/pie)
+	wanted_types = list(/obj/item/food/pie)
 
 /datum/bounty/item/chef/salad
 	name = "Salad or Rice Bowls"
@@ -63,7 +63,7 @@
 	description = "Night sight can mean life or death! A shipment of carrot fries is the order."
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/carrotfries)
+	wanted_types = list(/obj/item/food/carrotfries)
 
 /datum/bounty/item/chef/superbite
 	name = "Super Bite Burger"
@@ -75,7 +75,7 @@
 	name = "Poppy Pretzel"
 	description = "Central Command needs a reason to fire their HR head. Send over a poppy pretzel to force a failed drug test."
 	reward = 3000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/poppypretzel)
+	wanted_types = list(/obj/item/food/poppypretzel)
 
 /datum/bounty/item/chef/cubancarp
 	name = "Cuban Carp"
@@ -87,7 +87,7 @@
 	name = "Hot Dog"
 	description = "Nanotrasen is conducting taste tests to determine the best hot dog recipe. Ship your station's version to participate."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/hotdog)
+	wanted_types = list(/obj/item/food/hotdog)
 
 /datum/bounty/item/chef/eggplantparm
 	name = "Eggplant Parmigianas"
@@ -101,13 +101,13 @@
 	description = "The Muffin Man is visiting CentCom, but he's forgotten his muffins! Your order is to rectify this."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/muffin)
+	wanted_types = list(/obj/item/food/muffin)
 
 /datum/bounty/item/chef/chawanmushi
 	name = "Chawanmushi"
 	description = "Nanotrasen wants to improve relations with its sister company, Japanotrasen. Ship Chawanmushi immediately."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/chawanmushi)
+	wanted_types = list(/obj/item/food/chawanmushi)
 
 /datum/bounty/item/chef/kebab
 	name = "Kebabs"
@@ -120,14 +120,14 @@
 	name = "Soylent Green"
 	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you endulge them, expect a pleasant bonus."
 	reward = 5000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/soylentgreen)
+	wanted_types = list(/obj/item/food/soylentgreen)
 
 /datum/bounty/item/chef/pancakes
 	name = "Pancakes"
 	description = "Here at Nanotrasen we consider employees to be family. And you know what families love? Pancakes. Ship a baker's dozen."
 	reward = 5000
 	required_count = 13
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/pancakes)
+	wanted_types = list(/obj/item/food/pancakes)
 
 /datum/bounty/item/chef/nuggies
 	name = "Chicken Nuggets"

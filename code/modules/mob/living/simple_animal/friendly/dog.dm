@@ -140,7 +140,7 @@
 
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
-	desc = "This dog can tell someting smells around here, and that something is CRIME!"
+	desc = "This dog can tell something smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/bullterrier
 	name = "\improper bull terrier"

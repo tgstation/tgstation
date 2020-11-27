@@ -193,7 +193,9 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	var/frequency = 0
 	var/transmission_method
 	var/list/data
+	var/logging_data
 
-/datum/signal/New(data, transmission_method = TRANSMISSION_RADIO)
+/datum/signal/New(data, transmission_method = TRANSMISSION_RADIO, logging_data = null)
 	src.data = data || list()
 	src.transmission_method = transmission_method
+	src.logging_data = logging_data

@@ -299,8 +299,8 @@
 
 /datum/disease/transformation/morph
 	name = "Gluttony's Blessing"
-	cure_text = /datum/reagent/consumable/nothing
-	cures = list(/datum/reagent/medicine/adminordrazine)
+	cure_text = "Nothing"
+	cures = list(/datum/reagent/consumable/nothing)
 	agent = "Gluttony's Blessing"
 	desc = "A 'gift' from somewhere terrible."
 	stage_prob = 20

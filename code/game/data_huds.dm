@@ -300,7 +300,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = null
-	if(src in SSnanites.nanite_monitored_mobs)
+	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
 		holder.icon_state = "nanite_ping"
 
 //For Diag health and cell bars!

@@ -25,6 +25,9 @@
 	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
+	/// Custom Ripley step and turning sounds (from TGMC)
+	stepsound = 'sound/mecha/powerloader_step.ogg'
+	turnsound = 'sound/mecha/powerloader_turn2.ogg'
 
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()

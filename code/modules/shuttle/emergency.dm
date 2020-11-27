@@ -84,8 +84,10 @@
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED) // admins have disabled the shuttle.
 		return
+	if(!isliving(usr))
+		return
 
-	var/mob/user = usr
+	var/mob/living/user = usr
 	. = FALSE
 
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
@@ -130,7 +132,7 @@
 	acted_recently += user
 	ui_interact(user)
 
-/obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
+/obj/machinery/computer/emergency_shuttle/proc/authorize(mob/living/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
 	if(ID in authorized)
@@ -211,9 +213,15 @@
 	hijack_hacking = TRUE
 	to_chat(user, "<span class='boldwarning'>You [SSshuttle.emergency.hijack_status == NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols.</span>")
 	say("Software override initiated.")
+	var/turf/console_hijack_turf = get_turf(src)
+	message_admins("[src] is being overriden for hijack by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
+	log_game("[src] is being overriden for hijack by [key_name(user)] at [AREACOORD(src)]")
 	. = FALSE
 	if(do_after(user, hijack_stage_time * (1 / user.mind.get_hijack_speed()), target = src))
 		increase_hijack_stage()
+		console_hijack_turf = get_turf(src)
+		message_admins("[src] has had its hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
+		log_game("[src] has had its hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED] by [key_name(user)] at [AREACOORD(src)]")
 		. = TRUE
 		to_chat(user, "<span class='notice'>You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds.</span>")
 	hijack_hacking = FALSE
@@ -232,7 +240,7 @@
 		if(STAGE_4)
 			msg = "~ACS_directive module_load(cyberdyne.exploit.nanotrasen.shuttlenav)... NT key mismatch. Confirm load? Y...###Reboot complete. $SET transponder_state = 0; System link initiated with connected engines..."
 		if(HIJACKED)
-			msg = "<font color='red'><b>SYSTEM OVERRIDE</b></font> - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
+			msg = "SYSTEM OVERRIDE - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
 			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
 	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)

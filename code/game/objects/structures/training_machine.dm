@@ -9,7 +9,7 @@
 /**
   * Machine that runs around wildly so people can practice clickin on things
   *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess, 
+  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
   * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
   */
 /obj/structure/training_machine
@@ -74,7 +74,7 @@
 	return data
 
 /**
- * Control the attached variables. 
+ * Control the attached variables.
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
@@ -174,6 +174,11 @@
 
 /obj/structure/training_machine/AltClick(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
+		return
+	if(has_buckled_mobs())
+		user_unbuckle_mob(buckled_mobs[1], user)
+		return
 	if (!attached_item)
 		return
 	if (obj_flags & EMAGGED)
@@ -184,7 +189,7 @@
 	playsound(src, "rustle", 50, TRUE)
 
 /**
- * Toggle the machine's movement 
+ * Toggle the machine's movement
  */
 /obj/structure/training_machine/proc/toggle()
 	if (moving)
@@ -221,8 +226,8 @@
 /**
  * Main movement method for the machine
  *
- * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started. 
- * Will only move if the move_cooldown cooldown macro is finished. 
+ * Handles movement using SSFastProcess. Moves randomly, point-to-point, in an area centered around wherever it started.
+ * Will only move if the move_cooldown cooldown macro is finished.
  * If it can't find a place to go, it will stop moving.
  */
 /obj/structure/training_machine/process()
@@ -320,9 +325,12 @@
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
+	var/has_buckled_mob = has_buckled_mobs()
+	if(has_buckled_mob)
+		. += "<span class='notice'><b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b></span>"
 	if (obj_flags & EMAGGED)
 		. += "<span class='warning'>It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...</span>"
-	else if (attached_item) //Can't removed the syndicate toolbox!
+	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
 		. += "<span class='notice'><b>Alt-Click to remove \the [attached_item]</b></span>"
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 

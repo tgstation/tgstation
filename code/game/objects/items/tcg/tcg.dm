@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
   * *User: The person doing the shuffling, used in visable message and closing UI.
   * *Visible: Will anyone need to hear the visable message about the shuffling?
   */
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
@@ -302,6 +302,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10

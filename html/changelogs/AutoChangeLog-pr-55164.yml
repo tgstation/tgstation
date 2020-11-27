@@ -1,0 +1,4 @@
+author: "CoffeeDragon16"
+delete-after: True
+changes: 
+  - bugfix: "Forced speech nanites can no longer make people faint."

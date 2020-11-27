@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Ridden vehicles always pass any object that would normally pass through tables, such as thrown weapons and bullets."
-  - balance: "Makes ridden objects more consistent with what causes you to fall off if they require hand availability, checking for the incapacitation traits."

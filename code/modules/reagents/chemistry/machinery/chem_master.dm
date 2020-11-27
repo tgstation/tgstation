@@ -355,6 +355,7 @@
 					/datum/component/storage)
 				if(STRB)
 					drop_threshold = STRB.max_items - bottle.contents.len
+					target_loc = bottle
 			for(var/i = 0; i < amount; i++)
 				if(i < drop_threshold)
 					P = new/obj/item/reagent_containers/pill(target_loc)

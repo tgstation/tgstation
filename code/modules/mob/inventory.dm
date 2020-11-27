@@ -199,8 +199,8 @@
 
 
 //Puts the item into our inactive hand if possible, returns TRUE on success
-/mob/proc/put_in_inactive_hand(obj/item/I)
-	return put_in_hand(I, get_inactive_hand_index())
+/mob/proc/put_in_inactive_hand(obj/item/I, forced = FALSE)
+	return put_in_hand(I, get_inactive_hand_index(), forced)
 
 
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
@@ -219,13 +219,13 @@
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && istype(I_stack, active_stack.merge_type))
+			if (istype(active_stack) && active_stack.can_merge(I_stack))
 				if (I_stack.merge(active_stack))
 					to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && istype(I_stack, inactive_stack.merge_type))
+				if (istype(inactive_stack) && inactive_stack.can_merge(I_stack))
 					if (I_stack.merge(inactive_stack))
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
@@ -281,8 +281,8 @@
   * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
   * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE)
-	. = doUnEquip(I, force, drop_location(), FALSE, silent = silent)
+/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
+	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
 	if(. && I) //ensure the item exists and that it was dropped properly.
 		I.pixel_x = I.base_pixel_x + rand(-6, 6)
 		I.pixel_y = I.base_pixel_y + rand(-6, 6)

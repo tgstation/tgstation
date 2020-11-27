@@ -223,7 +223,7 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
+		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
 		if(force_drop)
 			for(var/obj/item/I in C.held_items)
 				C.accident(I)
