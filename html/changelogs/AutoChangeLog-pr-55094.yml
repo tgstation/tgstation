@@ -1,0 +1,6 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - tweak: "xenomorphs, monkeys, dogs, and parrots' strip menus are updated to be like humans'"
+  - tweak: "humans now have matching remove handcuff/legcuff buttons in strip menu"
+  - tweak: "parrots' inventory will now reflect headsets worn immediately after adding/removing them"
