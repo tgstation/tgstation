@@ -2303,11 +2303,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
 "oV" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/command{
 	name = "Blueshield's Office";
-	req_access_txt = "58"
+	req_access_txt = "14"
 	},
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/hallway/secondary/exit/departure_lounge)
 "oX" = (

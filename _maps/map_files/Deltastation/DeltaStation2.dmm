@@ -3701,7 +3701,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/command{
 	name = "Blueshield's Office";
-	req_access_txt = "58"
+	req_access_txt = "14"
 	},
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)
@@ -5385,7 +5385,7 @@
 	},
 /obj/machinery/door/airlock/command{
 	name = "Blueshield's Office";
-	req_access_txt = "58"
+	req_access_txt = "14"
 	},
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)

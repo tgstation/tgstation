@@ -4,3 +4,4 @@
 	worn_icon = 'modular_frontier/modules/blueshield/icons/mob/clothing/ears.dmi'
 	icon_state = "blueshield_headset"
 	keyslot = new /obj/item/encryptionkey/blueshield
+	command = TRUE

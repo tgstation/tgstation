@@ -4360,11 +4360,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
+/obj/structure/cable,
 /obj/machinery/door/airlock/command{
 	name = "Blueshield's Office";
-	req_access_txt = "58"
+	req_access_txt = "14"
 	},
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/blueshieldoffice)
 "alj" = (

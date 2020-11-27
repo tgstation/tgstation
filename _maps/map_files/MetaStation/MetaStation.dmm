@@ -5755,6 +5755,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)
 "amu" = (
@@ -6281,11 +6284,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /obj/machinery/door/airlock/command{
 	name = "Blueshield's Office";
-	req_access_txt = "58"
+	req_access_txt = "14"
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)
 "anF" = (

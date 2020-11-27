@@ -1,3 +1,3 @@
 /obj/effect/landmark/start/blueshield
-	name = "blueshield"
+	name = "Blueshield"
 	icon_state = "Security Officer"
