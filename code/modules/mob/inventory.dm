@@ -142,7 +142,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, swap = FALSE)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -394,12 +394,12 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, swap = FALSE, check_hand = TRUE)
+/obj/item/proc/equip_to_best_slot(mob/M, check_hand = TRUE)
 	if(check_hand && src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
-	if(M.equip_to_appropriate_slot(src, swap))
+	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
 	else

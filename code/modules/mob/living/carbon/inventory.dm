@@ -23,7 +23,7 @@
 	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, swap = FALSE)
+/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
 	if(!slot)
 		return
 	if(!istype(I))
@@ -54,32 +54,16 @@
 
 	switch(slot)
 		if(ITEM_SLOT_BACK)
-			if (back && swap)
-				current_equip = back
-				if (!dropItemToGround(back))
-					return
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
-			if (wear_mask && swap)
-				current_equip = wear_mask
-				if (!dropItemToGround(wear_mask))
-					return
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
-			if (head && swap)
-				current_equip = head
-				if (!dropItemToGround(head))
-					return
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
-			if (wear_neck && swap)
-				current_equip = wear_neck
-				if (!dropItemToGround(wear_neck))
-					return
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)

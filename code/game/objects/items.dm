@@ -515,11 +515,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   * * equipper is the mob trying to equip the item
   * * bypass_equip_delay_self for whether we want to bypass the equip delay
   */
-/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, swap = FALSE)
+/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, swap)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
