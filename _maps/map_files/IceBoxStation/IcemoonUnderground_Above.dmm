@@ -419,9 +419,6 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bs" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -2274,15 +2271,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"hd" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
 "hh" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -2955,22 +2943,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "mQ" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "5"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
+/turf/closed/wall/r_wall,
+/area/medical/genetics/cloning)
 "mS" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -3561,6 +3535,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "rR" = (
@@ -4001,6 +3978,15 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"vd" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "ve" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -4423,8 +4409,9 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "yP" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "5"
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -4432,6 +4419,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "yW" = (
@@ -4540,11 +4531,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "zC" = (
-/obj/structure/railing/corner,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "zE" = (
@@ -5298,6 +5284,12 @@
 /turf/open/floor/plasteel,
 /area/foremanoffice)
 "Fe" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "Fh" = (
@@ -5756,7 +5748,6 @@
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "Iy" = (
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -6127,11 +6118,12 @@
 /turf/open/floor/plating,
 /area/miningtech)
 "Ly" = (
-/obj/structure/railing{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -6802,14 +6794,10 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "QF" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -7493,6 +7481,15 @@
 /area/mine/laborcamp)
 "VU" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "VW" = (
@@ -47209,11 +47206,11 @@ ah
 ah
 ah
 ah
-gJ
-gJ
-gJ
-gJ
-gJ
+mQ
+mQ
+mQ
+mQ
+mQ
 wc
 wc
 wc
@@ -47466,7 +47463,7 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 vJ
 Hp
 hQ
@@ -47723,17 +47720,17 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 xm
 ih
 sK
 tE
 IN
 JI
-mQ
+iI
 Iy
 zC
-hd
+zC
 JI
 wc
 ah
@@ -47980,17 +47977,17 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 mm
 ih
 sK
 gJ
 yJ
 NM
-wc
-wc
-wc
-AL
+yP
+Ly
+QF
+vd
 JI
 wc
 ah
@@ -48237,7 +48234,7 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 Rv
 ih
 Jo
@@ -48494,17 +48491,17 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 Xc
 ih
 Jo
 wK
 IN
 JI
-mQ
-yP
-QF
-Ly
+wc
+wc
+wc
+AL
 JI
 wc
 ah
@@ -48751,14 +48748,14 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 qY
 VR
 HN
 wK
 jY
 JI
-iI
+wc
 rJ
 VU
 Fe
@@ -49008,7 +49005,7 @@ ah
 ah
 ah
 ah
-gJ
+mQ
 qR
 Wi
 wp
@@ -49265,11 +49262,11 @@ ah
 ah
 ah
 ah
-gJ
-gJ
-gJ
-gJ
-gJ
+mQ
+mQ
+mQ
+mQ
+mQ
 Ey
 wc
 wc
