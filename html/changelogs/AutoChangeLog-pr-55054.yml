@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "You can now find swarmer beacons and spider egg clusters using the ghost orbit menu."
+  - bugfix: "Fixed being unable to teleport to spider egg clusters using the pop-up notification."

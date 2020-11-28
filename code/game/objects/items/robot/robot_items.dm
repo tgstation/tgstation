@@ -532,7 +532,6 @@
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/food/chewable/lollipop/cyborg
-	embedding = null
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5

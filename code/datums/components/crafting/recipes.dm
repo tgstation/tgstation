@@ -229,6 +229,16 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/hygienebot
+	name = "Hygienebot"
+	result = /mob/living/simple_animal/bot/hygienebot
+	reqs = list(/obj/item/bot_assembly/hygienebot = 1,
+				/obj/item/stack/ducts = 1,
+				/obj/item/assembly/prox_sensor = 1)
+	tools = list(TOOL_WELDER)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -399,9 +409,9 @@
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/poppy/lily =2,
+	reqs = list(/obj/item/food/grown/poppy/lily =2,
 				/obj/item/grown/sunflower = 2,
-				/obj/item/reagent_containers/food/snacks/grown/poppy/geranium = 2)
+				/obj/item/food/grown/poppy/geranium = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
@@ -413,7 +423,7 @@
 /datum/crafting_recipe/poppybouquet
 	name = "Poppy bouquet"
 	result = /obj/item/bouquet/poppy
-	reqs = list (/obj/item/reagent_containers/food/snacks/grown/poppy = 6)
+	reqs = list (/obj/item/food/grown/poppy = 6)
 	category = CAT_MISC
 
 /datum/crafting_recipe/spooky_camera
@@ -768,7 +778,7 @@
 	time = 30
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/aicard = 1,
-					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+					/obj/item/food/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
 
@@ -786,7 +796,7 @@
 	time = 30
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/aicard = 1,
-					/obj/item/reagent_containers/food/snacks/grown/pumpkin = 1,
+					/obj/item/food/grown/pumpkin = 1,
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
 
@@ -900,7 +910,7 @@
 /datum/crafting_recipe/underwater_basket/wheat
 	name = "Underwater Basket (Wheat)"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
+		/obj/item/food/grown/wheat = 50
 	)
 
 

@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Improvised jetpacks can no longer be used when empty for short bursts of airtime."
