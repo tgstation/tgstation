@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(timer)
 			if (MC_TICK_CHECK)
 				break
 		
-		if (timer == head)
+		if (!timer || !head || timer == head)
 			// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
 			bucket_list[practical_offset++] = null
 			var/i = 0
