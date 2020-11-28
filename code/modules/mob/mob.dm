@@ -1082,9 +1082,15 @@
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
  */
 /mob/proc/fully_replace_character_name(oldname,newname)
-	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
+		log_message("[src] failed name change from [oldname] as no new name was specified", LOG_OWNERSHIP)
 		return FALSE
+
+	if(CHAT_FILTER_CHECK(newname))
+		log_message("[src] failed name change from [oldname] to [newname] as new name contains a word prohibited in IC chat", LOG_OWNERSHIP)
+		to_chat(usr, "<span class='warning'>You cannot set a name that contains a word prohibited in IC chat!</span>")
+
+	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
 	log_played_names(ckey,newname)
 
