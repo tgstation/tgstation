@@ -1,0 +1,80 @@
+/**
+ * Copyright (c) 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$fg-map: colors.$fg-map !default;
+$ring-color: #6a96c9 !default;
+
+$inner-padding: 0.1em;
+
+.RoundGauge {
+  position: relative;
+  font-size: 1rem;
+  width: 2.6em;
+  height: 1.3em;
+  margin: 0 auto;
+  margin-bottom: 0.1em;
+}
+
+.RoundGauge__ring {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $inner-padding;
+}
+
+$pi: 3.1416;
+
+.RoundGauge__ringTrackPivot {
+  transform: rotateZ(180deg);
+}
+
+.RoundGauge__ringFillPivot {
+  transform: rotateZ(180deg);
+}
+
+.RoundGauge--bipolar .RoundGauge__ringFillPivot {
+  transform: rotateZ(270deg);
+}
+
+.RoundGauge__ringTrack {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 10;
+    stroke-dasharray: 50 * $pi;
+}
+
+.RoundGauge__ringFill {
+  fill: transparent;
+  stroke: $ring-color;
+  stroke-width: 10;
+  stroke-dasharray: 100 * $pi;
+  transition: stroke 50ms;
+}
+
+.RoundGauge__needle, .RoundGauge__ringFill {
+  transition: transform 50ms ease-in-out;
+}
+
+.RoundGauge__needleLine {
+  fill: colors.$bad;
+}
+
+.RoundGauge__needleMiddle {
+  fill: colors.$bad;
+}
+
+@each $color-name, $color-value in $fg-map {
+  .RoundGauge--color--#{$color-name} {
+    .RoundGauge__ringFill {
+      stroke: $color-value;
+    }
+  }
+}

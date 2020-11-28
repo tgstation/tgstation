@@ -1,7 +1,7 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, Section, Tooltip } from '../components';
+import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, Section, Tooltip, RoundGauge } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -14,16 +14,19 @@ export const Canister = (props, context) => {
     defaultReleasePressure,
     minReleasePressure,
     maxReleasePressure,
+    pressureLimit,
     valveOpen,
     isPrototype,
     hasHoldingTank,
     holdingTank,
+    holdingTankLeakPressure,
+    holdingTankFragPressure,
     restricted,
   } = data;
   return (
     <Window
       width={300}
-      height={232}>
+      height={250}>
       <Window.Content>
         <Section
           title="Canister"
@@ -49,8 +52,17 @@ export const Canister = (props, context) => {
             <LabeledControls.Item
               minWidth="66px"
               label="Pressure">
-              <AnimatedNumber
+              <RoundGauge
+                size={1.25}
+                unit="kPa"
                 value={tankPressure}
+                minValue={0}
+                maxValue={pressureLimit}
+                ranges={{
+                  "good": [0, pressureLimit * 0.70],
+                  "average": [pressureLimit * 0.70, pressureLimit * 0.85],
+                  "bad": [pressureLimit * 0.85, pressureLimit],
+                }}
                 format={value => {
                   if (value < 10000) {
                     return toFixed(value) + ' kPa';
@@ -140,7 +152,15 @@ export const Canister = (props, context) => {
                 {holdingTank.name}
               </LabeledList.Item>
               <LabeledList.Item label="Pressure">
-                <AnimatedNumber value={holdingTank.tankPressure} /> kPa
+                <RoundGauge
+                  value={holdingTank.tankPressure}
+                  minValue={0}
+                  maxValue={holdingTankFragPressure}
+                  ranges={{
+                    "good": [0, holdingTankLeakPressure],
+                    "bad": [holdingTankLeakPressure, holdingTankFragPressure],
+                  }}
+                  size={1} />
               </LabeledList.Item>
             </LabeledList>
           )}
