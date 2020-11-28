@@ -164,7 +164,6 @@ SUBSYSTEM_DEF(timer)
 			
 			// Invoke callback if possible
 			if (!timer.spent)
-				invoked_timers += timer
 				timer.spent = world.time
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
@@ -194,27 +193,14 @@ SUBSYSTEM_DEF(timer)
 					bucket_resolution = null // force bucket recreation
 					stack_trace("[i] Invalid timer state: Timer in long run queue with a time to run less then head_offset. \
 						[get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
-
-					if (timer.callBack && !timer.spent)
-						timer.callBack.InvokeAsync()
-						invoked_timers += timer
-						bucket_count++
-					else if(!QDELETED(timer))
-						qdel(timer)
-					continue
+					break
 
 				// Check for timers that are not capable of being scheduled to run without rebuilding buckets
 				if (timer.timeToRun < head_offset + TICKS2DS(practical_offset - 1))
 					bucket_resolution = null // force bucket recreation
 					stack_trace("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to \
 						short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
-					if (timer.callBack && !timer.spent)
-						timer.callBack.InvokeAsync()
-						invoked_timers += timer
-						bucket_count++
-					else if(!QDELETED(timer))
-						qdel(timer)
-					continue
+					break
 
 				timer.bucketJoin()
 			if (i)
