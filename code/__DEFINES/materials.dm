@@ -10,9 +10,18 @@
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD	(1<<0)
 
-// Breakdown flags used when decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
+//Material Container Flags.
+///If the container shows the amount of contained materials on examine.
+#define MATCONTAINER_EXAMINE		(1<<0)
+///If the container cannot have materials inserted through attackby().
+#define MATCONTAINER_NO_INSERT		(1<<1)
+///if the user can insert mats into the container despite the intent.
+#define MATCONTAINER_ANY_INTENT			(1<<2)
+///if the user won't receive a warning when attacking the container with an unallowed item.
+#define MATCONTAINER_SILENT				(1<<3)
+// The following flags are for decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
 /// Can reduce an alloy into its component materials.
-#define BREAKDOWN_ALLOYS				(1<<0)
+#define BREAKDOWN_ALLOYS				(1<<4)
 /// Breakdown flags used by techfabs and circuit printers.
 #define BREAKDOWN_FLAGS_LATHE			(BREAKDOWN_ALLOYS)
 /// Breakdown flags used by the ORM.

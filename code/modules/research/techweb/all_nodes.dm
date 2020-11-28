@@ -900,9 +900,19 @@
 /datum/techweb_node/nanite_replication_protocols
 	id = "nanite_replication_protocols"
 	display_name = "Nanite Replication Protocols"
-	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
+	description = "Protocols that overwrite the default nanite replication routine to achieve more efficiency in certain circumstances."
 	prereq_ids = list("nanite_smart")
-	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites")
+	design_ids = list("kickstart_nanites","factory_nanites","pyramid_nanites","offline_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/nanite_storage_protocols
+	id = "nanite_storage_protocols"
+	display_name = "Nanite Storage Protocols"
+	description = "Protocols that overwrite the default nanite storage routine to achieve more efficiency or greater capacity."
+	prereq_ids = list("nanite_smart")
+	design_ids = list("hive_nanites","zip_nanites","free_range_nanites","unsafe_storage_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
 	hidden = TRUE
 	experimental = TRUE

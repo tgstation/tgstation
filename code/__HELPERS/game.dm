@@ -391,8 +391,9 @@
 	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
-		if(1)
+	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
+	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
+		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
@@ -400,10 +401,10 @@
 				candidates -= M
 			else
 				candidates += M
-		if(2)
+		if("No")
 			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
 			candidates -= M
-		if(3)
+		if("Never for this round")
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()

@@ -303,7 +303,7 @@
 	desc = "Allows you to create additional living hearts, using a heart, a pool of blood and a poppy. Living hearts when used on a transmutation rune will grant you a person to hunt and sacrifice on the rune. Every sacrifice gives you an additional charge in the book."
 	gain_text = "The Gates of Mansus open up to your mind."
 	cost = 0
-	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/reagent_containers/food/snacks/grown/poppy)
+	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/food/grown/poppy)
 	result_atoms = list(/obj/item/living_heart)
 	route = "Start"
 

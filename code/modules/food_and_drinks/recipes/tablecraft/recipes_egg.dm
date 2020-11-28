@@ -46,8 +46,8 @@
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/corn = 1
 	)
 	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG

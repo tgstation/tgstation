@@ -151,6 +151,9 @@
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
+	for(var/i in reverseRange(L.GetAllContents()))
+		var/atom/movable/thing = i
+		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))

@@ -61,11 +61,11 @@
 	description = "Our botanist claims that he can distill tasty liquor from absolutely any plant. Let's see what he'll do with Inocybe mushroom caps."
 	reward = 4500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap)
+	wanted_types = list(/obj/item/food/grown/ash_flora/mushroom_cap)
 
 /datum/bounty/item/mining/porcini_mushroom
 	name = "Mushroom Leaves"
 	description = "Porcini mushroom leaves are rumored to have healing properties. Our researchers want to put that claim to the test."
 	reward = 4500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf)
+	wanted_types = list(/obj/item/food/grown/ash_flora/mushroom_leaf)
