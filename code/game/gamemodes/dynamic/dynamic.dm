@@ -611,7 +611,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
-		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // Unless the game is ending
 			return
 
 		message_admins("DYNAMIC: Checking for midround injection.")
@@ -684,7 +684,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)
 		return
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // No more rules after the point of no return
 		return
 
 	if (forced_latejoin_rule)

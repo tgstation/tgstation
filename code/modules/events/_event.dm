@@ -51,7 +51,7 @@
 		return FALSE
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return FALSE
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 		return FALSE
