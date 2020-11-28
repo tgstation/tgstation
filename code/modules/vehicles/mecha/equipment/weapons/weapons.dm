@@ -489,8 +489,8 @@
 	else
 		PG.throwforce = 0
 
-	 //has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
-	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
+	var/datum/beam/bwoingoingoing = chassis.Beam(PG, icon_state = "chain", maxdistance = missile_range + 2)
+	QDEL_IN(bwoingoingoing, missile_range * 20)
 
 /obj/item/punching_glove
 	name = "punching glove"
