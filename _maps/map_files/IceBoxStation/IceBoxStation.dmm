@@ -13904,9 +13904,6 @@
 "aEZ" = (
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
-"aFa" = (
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
 "aFb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -33594,7 +33591,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "bBL" = (
@@ -34137,10 +34134,9 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
-"bCZ" = (
-/obj/machinery/holopad,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "bDa" = (
@@ -34539,28 +34535,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
-"bEh" = (
-/obj/machinery/vending/medical{
-	pixel_x = -2
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/storage)
 "bEi" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -34573,26 +34556,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "bEk" = (
-/obj/machinery/vending/wardrobe/medi_wardrobe,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Medbay Storage";
-	dir = 1;
-	network = list("ss13","medbay")
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/openspace,
 /area/medical/storage)
 "bEl" = (
 /obj/structure/table/glass,
@@ -50902,19 +50872,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rxglasses,
-/obj/item/hand_labeler,
-/obj/item/gun/syringe,
-/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "jib" = (
@@ -53554,8 +53511,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/closet/l3closet,
 /obj/machinery/light,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "pfj" = (
@@ -54085,11 +54044,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/rnd/production/techfab/department/medical,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "qas" = (
@@ -54549,7 +54504,12 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
-/obj/structure/closet/secure_closet/medical3,
+/obj/machinery/vending/medical{
+	pixel_x = -2
+	},
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "rMf" = (
@@ -97437,8 +97397,8 @@ bvr
 bsN
 jgM
 aUV
-aFa
-bEh
+bEk
+bEk
 bsM
 bDS
 bFN
@@ -97694,7 +97654,7 @@ bvr
 bsN
 pZN
 aUV
-bCZ
+bEk
 bEk
 bsM
 xXp

@@ -827,10 +827,6 @@
 /turf/open/floor/carpet/executive,
 /area/blueshieldoffice)
 "aDE" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Ward";
-	req_access_txt = "5"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -842,6 +838,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cloning Lab";
+	req_access_txt = "68"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "aEj" = (
@@ -1850,7 +1850,7 @@
 	name = "Medbay Maintenance";
 	req_access_txt = "5"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/medical/morgue)
 "blv" = (
 /obj/machinery/keycard_auth,
@@ -2840,7 +2840,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "ccc" = (
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "ccx" = (
 /obj/machinery/navbeacon{
@@ -3657,7 +3658,7 @@
 	name = "Medbay Maintenance";
 	req_access_txt = "5"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/medical/morgue)
 "cPi" = (
 /obj/structure/chair{
@@ -3957,7 +3958,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "deo" = (
 /obj/machinery/door/airlock/public/glass,
@@ -5451,7 +5453,6 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "egF" = (
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -5799,6 +5800,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/bridge)
+"euT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/medical/morgue)
 "evf" = (
 /turf/open/floor/plasteel,
 /area/maintenance/department/cargo)
@@ -6036,7 +6041,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "eCO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -6510,6 +6516,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -7778,6 +7787,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "fTj" = (
@@ -9038,7 +9050,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -9388,6 +9400,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "hjK" = (
@@ -9710,7 +9726,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "hyb" = (
 /obj/structure/chair/pew/right{
@@ -12322,7 +12339,8 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "jFZ" = (
 /obj/effect/turf_decal/tile/purple{
@@ -12352,6 +12370,15 @@
 /obj/item/beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
+"jHm" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics/cloning)
 "jHF" = (
 /turf/closed/wall/r_wall,
 /area/hallway/primary/fore)
@@ -12380,7 +12407,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "jHY" = (
 /obj/structure/cable,
@@ -13139,7 +13167,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "kkk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -13652,7 +13681,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "kFt" = (
 /obj/structure/chair/stool/bar,
@@ -15015,7 +15045,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "lIT" = (
 /obj/structure/lattice,
@@ -16800,7 +16831,7 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "neg" = (
-/obj/machinery/atmospherics/pipe/manifold/general,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "neo" = (
@@ -17305,6 +17336,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "nub" = (
@@ -17577,7 +17611,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "nED" = (
 /obj/machinery/airalarm/directional/north,
@@ -18952,17 +18987,14 @@
 /area/bridge)
 "oEE" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/medical/morgue)
 "oEK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
@@ -19575,8 +19607,8 @@
 /area/science)
 "oWh" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Ward";
-	req_access_txt = "5"
+	name = "Cloning Lab";
+	req_access_txt = "68"
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -19590,6 +19622,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "oWD" = (
@@ -20643,7 +20678,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "pMa" = (
 /obj/machinery/light{
@@ -20948,7 +20984,8 @@
 /area/science)
 "pYB" = (
 /obj/structure/bodycontainer/morgue,
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "pYI" = (
 /obj/structure/cable,
@@ -21156,7 +21193,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/general{
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -21169,6 +21206,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "qfA" = (
@@ -21254,6 +21292,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "qjU" = (
@@ -23180,7 +23219,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "rDn" = (
 /obj/machinery/door/airlock/external/glass,
@@ -24349,6 +24389,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"srL" = (
+/obj/structure/bodycontainer/morgue,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/medical/morgue)
 "ste" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Permabrig Transfer";
@@ -24495,7 +24540,7 @@
 /area/space)
 "sxa" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
+	name = "Cryogenics";
 	req_access_txt = "5"
 	},
 /obj/structure/cable,
@@ -25071,7 +25116,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "sTG" = (
 /obj/structure/cable,
@@ -25150,6 +25196,13 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/science/xenobiology)
+"sXK" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "sYa" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -25940,7 +25993,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "tCp" = (
 /obj/machinery/airalarm/directional/north,
@@ -26237,14 +26291,11 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "tME" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/medical/morgue)
 "tNr" = (
 /obj/effect/turf_decal/tile/purple,
@@ -27839,6 +27890,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "vfH" = (
@@ -29330,6 +29384,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/security/main)
+"wjL" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "wjN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30359,7 +30420,8 @@
 /area/security/main)
 "wSV" = (
 /obj/effect/mapping_helpers/dead_body_placer,
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "wTh" = (
 /obj/machinery/hydroponics/constructable,
@@ -30466,7 +30528,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "wXe" = (
 /obj/machinery/navbeacon{
@@ -30480,6 +30543,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -64676,7 +64743,7 @@ xUL
 thB
 oZm
 uvI
-uvI
+jHm
 qjN
 wtE
 mFw
@@ -66480,8 +66547,8 @@ jeg
 mFw
 ooT
 hjl
-ooT
-ooT
+wjL
+wjL
 aSB
 luj
 mtK
@@ -66737,8 +66804,8 @@ jeg
 mFw
 ooT
 wXe
-ooT
-ooT
+sXK
+sXK
 oXv
 luj
 mtK
@@ -69554,7 +69621,7 @@ cuW
 hMY
 hxX
 ccc
-ccc
+euT
 ccc
 tBT
 hMY
@@ -70326,7 +70393,7 @@ hMY
 hxX
 pYB
 pYB
-pYB
+srL
 dcm
 hMY
 rMM

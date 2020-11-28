@@ -9262,8 +9262,9 @@
 "awZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "axa" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -10049,7 +10050,7 @@
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "azg" = (
 /obj/structure/fireaxecabinet{
 	pixel_y = -32
@@ -22880,7 +22881,7 @@
 /area/security/checkpoint/medical)
 "bjc" = (
 /turf/closed/wall,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bje" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
@@ -25626,8 +25627,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "brg" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -26197,6 +26201,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bsA" = (
@@ -27068,18 +27073,19 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/junglebush,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bvh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Recovery Ward";
-	req_access_txt = "5"
-	},
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cloning Lab";
+	req_access_txt = "68"
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bvi" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner,
@@ -27087,7 +27093,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/junglebush/c,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bvk" = (
 /obj/machinery/computer/crew,
 /obj/machinery/light{
@@ -27616,15 +27622,11 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bwC" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/structure/curtain{
-	layer = 4.5
-	},
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bwK" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -28208,14 +28210,14 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "byn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "byo" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -28855,8 +28857,9 @@
 	light_color = "#e8eaff"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/clonepod,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bzR" = (
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -29656,26 +29659,22 @@
 	pixel_y = 0
 	},
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bCg" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
-/obj/structure/curtain{
-	layer = 4.5
-	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bCh" = (
 /obj/machinery/camera{
-	c_tag = "Medbay Recovery Room";
+	c_tag = "Cloning Lab";
 	dir = 8;
 	network = list("ss13","medbay")
 	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "bCi" = (
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/valentine,
@@ -53800,6 +53799,7 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "pfP" = (
@@ -54779,6 +54779,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"qyS" = (
+/turf/open/floor/plasteel/white,
+/area/medical/genetics/cloning)
 "qzm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -55088,7 +55091,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "reH" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/disposalpipe/segment{
@@ -56563,9 +56566,12 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "tcm" = (
-/obj/structure/bed/roller,
+/obj/structure/table/glass,
+/obj/item/storage/box/bodybags,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area/medical/genetics/cloning)
 "tcV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -59097,6 +59103,11 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"wqj" = (
+/obj/structure/table/glass,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/plasteel/white,
+/area/medical/genetics/cloning)
 "wqu" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -86382,9 +86393,9 @@ bsy
 wRC
 bvg
 bwC
-bwC
-bwC
-bwC
+qyS
+qyS
+qyS
 bCg
 bjc
 bEt
@@ -86896,7 +86907,7 @@ kVN
 bua
 bvi
 tcm
-tcm
+wqj
 bub
 bub
 bub
