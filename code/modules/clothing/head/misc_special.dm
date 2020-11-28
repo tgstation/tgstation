@@ -326,6 +326,9 @@
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	paranoia = new()
+	//SKYRAT EDIT ADDITION BEGIN - CLONING
+	paranoia.clonable = FALSE
+	//SKYRAT EDIT END
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")

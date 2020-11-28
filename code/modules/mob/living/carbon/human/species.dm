@@ -63,7 +63,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	  * They also allow for faster '[]' list access versus 'in'. Other than that, they are useless right now.
 	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
 	  */
-	var/list/mutant_bodyparts = list()
+	//var/list/mutant_bodyparts = list() //ORIGINAL
+	var/list/list/mutant_bodyparts = list() //SKYRAT EDIT CHANGE - CUSTOMIZATION (typed list)
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
@@ -331,6 +332,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
   * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
   */
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
@@ -397,6 +400,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+*/
+//SKYRAT EDIT REMOVAL END
 
 /**
   * Proc called when a carbon is no longer this species.
@@ -470,7 +475,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/dynamic_fhair_suffix = ""
 
 	//for augmented heads
-	if(HD.status == BODYPART_ROBOTIC)
+	if(HD.status == BODYPART_ROBOTIC && !(ROBOTIC_LIMBS in species_traits)) //SKYRAT EDIT CHANGE - CUSTOMIZATION
 		return
 
 	//we check if our hat or helmet hides our facial hair.
@@ -607,6 +612,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * Arguments:
   * * H - Human, whoever we're handling the body for
   */
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
 
@@ -702,6 +709,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	H.apply_overlay(BODY_LAYER)
 	handle_mutant_bodyparts(H)
+*/
+//SKYRAT EDIT REMOVAL END
 
 /**
   * Handles the mutant bodyparts of a human
@@ -712,6 +721,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * * H - Human, whoever we're handling the body for
   * * forced_colour - The forced color of an accessory. Leave null to use mutant color.
   */
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
@@ -916,8 +927,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.apply_overlay(BODY_BEHIND_LAYER)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
-
-	handle_horns(H)
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
@@ -930,26 +941,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return "ADJ"
 		if(BODY_FRONT_LAYER)
 			return "FRONT"
-
-/datum/species/proc/handle_horns(mob/living/carbon/human/H)
-	var/list/standing	= list()
-	H.remove_overlay(HORN_LAYER)
-
-	var/datum/sprite_accessory/S
-	S = GLOB.horns_list[H.dna.features["horns"]]
-
-	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-
-	var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = HORN_LAYER)
-	if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
-		return
-	else
-		accessory_overlay.icon_state = "m_horns_[S.icon_state]_ADJ"
-		standing += accessory_overlay
-		H.overlays_standing[HORN_LAYER] = standing.Copy()
-		standing = list()
-
-	H.apply_overlay(HORN_LAYER)
 
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
@@ -988,7 +979,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// Anything that's small or smaller can fit into a pocket by default
 		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= WEIGHT_CLASS_SMALL)
 			excused = TRUE
-		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK)
+		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_HANDS)
 			excused = TRUE
 		if(!excused)
 			return FALSE
@@ -1015,10 +1006,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
+			//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION
+			/*
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
 				return FALSE
+			*/
+			//SKYRAT EDIT REMOVAL END
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -1902,6 +1897,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //Tail Wagging//
 ////////////////
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
 	return FALSE
 
@@ -1911,6 +1908,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+*/
+//SKYRAT EDIT REMOVAL END
 
 ///////////////
 //FLIGHT SHIT//

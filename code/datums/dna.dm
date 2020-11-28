@@ -15,6 +15,9 @@
 	var/default_mutation_genes[DNA_MUTATION_BLOCKS] //List of the default genes from this mutation to allow DNA Scanner highlighting
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	//SKYRAT EDIT BEGIN - ADDITION - CLONING
+	var/delete_species = TRUE
+	//SKYRAT EDIT END
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -27,7 +30,11 @@
 			cholder.dna = null
 	holder = null
 
-	QDEL_NULL(species)
+	//SKYRAT EDIT BEGIN - CHANGE - CLONING
+	//QDEL_NULL(species) - SKYRAT ORIGINAL
+	if(delete_species)
+		QDEL_NULL(species)
+	//SKYRAT EDIT END
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^
@@ -255,6 +262,8 @@
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
@@ -263,7 +272,8 @@
 	if(!skip_index) //I hate this
 		generate_dna_blocks()
 	features = random_features()
-
+*/
+//SKYRAT EDIT REMOVAL END
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
 
@@ -295,6 +305,8 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	if(mrace && has_dna())
 		var/datum/species/new_race
@@ -314,6 +326,8 @@
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 		update_atom_languages()
+*/
+//SKYRAT EDIT REMOVAL BEGIN
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()

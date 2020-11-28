@@ -1,0 +1,13 @@
+GLOBAL_LIST_EMPTY(sprite_accessories)
+GLOBAL_LIST_EMPTY(generic_accessories)
+
+GLOBAL_LIST_EMPTY(body_markings)
+GLOBAL_LIST_EMPTY_TYPED(body_markings_per_limb, /list)
+GLOBAL_LIST_EMPTY(body_marking_sets)
+
+GLOBAL_LIST_EMPTY(loadout_items)
+GLOBAL_LIST_EMPTY(loadout_category_to_subcategory_to_items)
+
+GLOBAL_LIST_EMPTY(augment_items)
+GLOBAL_LIST_EMPTY(augment_categories_to_slots)
+GLOBAL_LIST_EMPTY(augment_slot_to_items)

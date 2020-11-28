@@ -1,0 +1,6 @@
+GLOBAL_LIST_INIT(first_names_male_vulp, world.file2list("modular_skyrat/modules/customization/strings/names/first_male_vulp.txt"))
+GLOBAL_LIST_INIT(first_names_female_vulp, world.file2list("modular_skyrat/modules/customization/strings/names/first_female_vulp.txt"))
+GLOBAL_LIST_INIT(last_names_vulp, world.file2list("modular_skyrat/modules/customization/strings/names/last_vulp.txt"))
+GLOBAL_LIST_INIT(first_names_male_taj, world.file2list("modular_skyrat/modules/customization/strings/names/first_male_taj.txt"))
+GLOBAL_LIST_INIT(first_names_female_taj, world.file2list("modular_skyrat/modules/customization/strings/names/first_female_taj.txt"))
+GLOBAL_LIST_INIT(last_names_taj, world.file2list("modular_skyrat/modules/customization/strings/names/last_taj.txt"))

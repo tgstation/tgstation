@@ -50,6 +50,8 @@
 /proc/random_backpack()
 	return pick(GLOB.backpacklist)
 
+//SKYRAT EDIT REMOVAL - CUSTOMIZATION (moved to modular)
+/*
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
@@ -79,6 +81,9 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	//For now we will always return none for tail_human and ears.
 	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list)))
+*/
+//SKYRAT EDIT REMOVAL END
+
 
 /proc/random_hairstyle(gender)
 	switch(gender)
@@ -158,15 +163,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
 	switch(age)
-		if(0 to 1)
-			return "infant"
-		if(1 to 3)
-			return "toddler"
-		if(3 to 13)
-			return "child"
-		if(13 to 19)
-			return "teenager"
-		if(19 to 30)
+		if(0 to 30) //SKYRAT EDIT CHANGE - NO
 			return "young adult"
 		if(30 to 45)
 			return "adult"
