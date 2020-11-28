@@ -1,8 +1,8 @@
 /datum/species
 	mutant_bodyparts = list()
-	///Self explanatory
-	var/can_have_genitals = TRUE
-	///Override of icon file of which we're taking the icons from for our limbs
+	//Again, no idea why this one is required but I'm setting it to false and pretending it never existed
+	var/can_have_genitals = FALSE
+	//Override of icon file of which we're taking the icons from for our limbs
 	var/limbs_icon
 	///A list of actual body markings on the owner of the species. Associative lists with keys named by limbs defines, pointing to a list with names and colors for the marking to be rendered. This is also stored in the DNA
 	var/list/list/body_markings = list()

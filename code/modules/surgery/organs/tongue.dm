@@ -96,6 +96,8 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
+		/datum/language/vox, //SKYRAT EDIT - customization - extra languages
+		/datum/language/dwarf, //SKYRAT EDIT - customization - extra languages
 		/datum/language/nekomimetic,
 		/datum/language/buzzwords
 	))

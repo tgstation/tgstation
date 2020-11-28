@@ -14,6 +14,8 @@
 	//socks
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
 	//bodypart accessories (blizzard intensifies)
+		//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION
+	/*
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, GLOB.animated_tails_list_lizard)
@@ -33,6 +35,8 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
+		*/
+	//SKYRAT EDIT REMOVAL END
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
@@ -51,6 +55,7 @@
 	GLOB.emote_list = init_emote_list()
 
 	init_crafting_recipes(GLOB.crafting_recipes)
+	make_skyrat_datum_references() //SKYRAT EDIT ADDITION - CUSTOMIZATION
 
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)

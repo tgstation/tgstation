@@ -445,7 +445,13 @@ SUBSYSTEM_DEF(job)
 		living_mob.mind.assigned_role = rank
 
 	to_chat(M, "<b>You are the [rank].</b>")
+	var/list/packed_items //SKYRAT CHANGE ADDITION - CUSTOMIZATION
 	if(job)
+			//SKYRAT CHANGE ADDITION BEGIN - CUSTOMIZATION
+		if(job.no_dresscode)
+			if(M.client)
+				packed_items = M.client.prefs.equip_preference_loadout(M, FALSE, job)
+		//SKYRAT CHANGE ADDITION END
 		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
 		if(ismob(new_mob))
 			living_mob = new_mob
@@ -477,6 +483,12 @@ SUBSYSTEM_DEF(job)
 		living_mob.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && living_mob)
 		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+		//SKYRAT CHANGE ADDITION BEGIN - CUSTOMIZATION
+		if(!job.no_dresscode)
+			if(M.client)
+				packed_items = M.client.prefs.equip_preference_loadout(M, FALSE, job)
+		M.client.prefs.add_packed_items(M, packed_items)
+		//SKYRAT CHANGE ADDITION END
 
 	return living_mob
 
