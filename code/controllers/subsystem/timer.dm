@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(timer)
 	// Iterate through each bucket starting from the practical offset
 	while (practical_offset <= BUCKET_LEN && head_offset + ((practical_offset - 1) * world.tick_lag) <= world.time)
 		var/datum/timedevent/timer
-		while (timer = bucket_list[practical_offset])
+		while ((timer = bucket_list[practical_offset]))
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
 				bucket_resolution = null // force bucket recreation
