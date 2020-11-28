@@ -20,6 +20,7 @@
 	set category = "Preferences"
 	set desc = "Open Game Preferences Window"
 	usr.client.prefs.current_tab = 1
+	usr.client.prefs.needs_update = TRUE //SKYRAT EDIT ADDITION - CUSTOMIZATION
 	usr.client.prefs.ShowChoices(usr)
 
 /datum/verbs/menu/settings/ghost

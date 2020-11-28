@@ -104,6 +104,8 @@
 	apply_overlay(DAMAGE_LAYER)
 
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 
@@ -120,6 +122,8 @@
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
+*/
+//SKYRAT EDIT REMOVAL END
 
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
@@ -148,6 +152,8 @@
 
 	apply_overlay(BACK_LAYER)
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 
@@ -163,6 +169,8 @@
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /mob/living/carbon/update_inv_handcuffed()
@@ -215,6 +223,8 @@
 		var/obj/item/bodypart/BP = X
 		BP.original_owner = src
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
@@ -244,6 +254,8 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 	update_damage_overlays()
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 
@@ -263,6 +275,8 @@
 
 //produces a key based on the mob's limbs
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/proc/generate_icon_render_key()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
@@ -278,6 +292,8 @@
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 //change the mob's icon to the one matching its key
