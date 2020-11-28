@@ -183,7 +183,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "ahd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -843,7 +843,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "aEj" = (
 /obj/effect/landmark/start/prisoner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
@@ -1468,8 +1468,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "aWf" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
@@ -2542,9 +2543,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "bQD" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -3913,6 +3914,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"daT" = (
+/turf/closed/wall,
+/area/medical/cryo)
 "dba" = (
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
@@ -4468,7 +4472,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "dvI" = (
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -9028,15 +9032,17 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "gTf" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "gTB" = (
 /turf/closed/wall,
 /area/security/checkpoint/supply)
@@ -10770,7 +10776,7 @@
 "isS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/medical/storage)
+/area/medical/cryo)
 "itC" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable,
@@ -12738,6 +12744,16 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
+"jVg" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/cryo)
 "jVN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -12910,11 +12926,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 5
-	},
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "kcC" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Tech Storage";
@@ -13222,6 +13235,9 @@
 /obj/machinery/door/window,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"knE" = (
+/turf/open/floor/plasteel/white,
+/area/medical/cryo)
 "knO" = (
 /obj/machinery/nuclearbomb/selfdestruct,
 /obj/structure/cable,
@@ -13283,7 +13299,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "kqx" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
@@ -13912,7 +13928,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "kSN" = (
-/obj/structure/closet/secure_closet/medical3,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -13920,6 +13935,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "kTc" = (
@@ -15045,8 +15061,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "lJT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -15646,7 +15665,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "mpo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 8
@@ -15793,9 +15812,8 @@
 /area/bridge/meeting_room)
 "mvs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/machinery/atmospherics/pipe/manifold/general,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "mwy" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -16782,8 +16800,9 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "neg" = (
+/obj/machinery/atmospherics/pipe/manifold/general,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "neo" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
@@ -18540,7 +18559,6 @@
 /turf/closed/wall,
 /area/maintenance/fore)
 "ooo" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -18548,8 +18566,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "oop" = (
 /obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
@@ -18600,7 +18619,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "oqE" = (
 /obj/machinery/door/airlock/research{
 	name = "Research Access";
@@ -19486,6 +19505,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"oTT" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/closet/secure_closet/medical1,
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "oUo" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -19564,7 +19591,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "oWD" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/structure/window/reinforced/spawner/north,
@@ -19624,9 +19651,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/clonepod,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "oZr" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple{
@@ -21129,8 +21156,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/general{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "qfn" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
@@ -21217,7 +21247,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/mechbay)
 "qjN" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -21226,7 +21255,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "qjU" = (
 /obj/machinery/camera{
 	c_tag = "Research Division North";
@@ -21799,6 +21828,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"qGD" = (
+/turf/closed/wall/r_wall,
+/area/medical/cryo)
 "qGT" = (
 /obj/structure/sink{
 	dir = 4;
@@ -22181,17 +22213,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"qVS" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/cryo)
 "qWG" = (
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/holopad,
@@ -23296,15 +23317,15 @@
 /turf/open/floor/carpet/orange,
 /area/lawoffice)
 "rIL" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/wrench/medical,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "rJN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/plasteel/dark,
@@ -24156,7 +24177,6 @@
 "smL" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
-/obj/item/wrench/medical,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -24167,7 +24187,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "smR" = (
 /turf/open/floor/plating,
 /area/science)
@@ -24496,7 +24516,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "sxj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
@@ -24668,7 +24688,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "sFF" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -24679,8 +24698,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "sGf" = (
 /obj/machinery/camera/autoname{
 	dir = 8
@@ -25393,7 +25413,7 @@
 /area/quartermaster/storage)
 "thB" = (
 /turf/closed/wall,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "thF" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -25930,9 +25950,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "tCD" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
@@ -26823,7 +26843,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "umK" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -26986,11 +27006,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/general{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "uvY" = (
 /turf/closed/wall,
 /area/crew_quarters/toilet)
@@ -28424,15 +28441,15 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "vDt" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "vDC" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
@@ -28874,8 +28891,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "vRm" = (
-/obj/item/wrench/medical,
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -28885,8 +28900,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/white,
-/area/medical/storage)
+/area/medical/cryo)
 "vRr" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 8
@@ -29587,7 +29603,7 @@
 "wtE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/medical/cryo)
+/area/medical/genetics/cloning)
 "wtZ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -64660,7 +64676,7 @@ xUL
 thB
 oZm
 uvI
-qVS
+uvI
 qjN
 wtE
 mFw
@@ -65931,12 +65947,12 @@ fXn
 fXn
 fXn
 wnB
-fXn
+daT
 isS
 isS
 isS
 sxa
-fXn
+daT
 sgW
 oxc
 oxc
@@ -66193,7 +66209,7 @@ vRm
 gTf
 rIL
 ump
-fXn
+daT
 jQO
 oxc
 oEa
@@ -66448,9 +66464,9 @@ kUu
 isS
 vDt
 neg
-neg
+knE
 mow
-fXn
+daT
 jQO
 oxc
 tPN
@@ -66700,14 +66716,14 @@ fXn
 mXZ
 xDx
 xDx
-xDx
+oTT
 kSN
 isS
 ooo
 qeY
 lJL
 kqv
-fXn
+daT
 jQO
 oxc
 qah
@@ -66959,12 +66975,12 @@ olE
 olE
 olE
 olE
-olE
-olE
-olE
-ooo
+qGD
+qGD
+qGD
+jVg
 aVP
-fXn
+daT
 jQO
 oxc
 oxc
@@ -67218,10 +67234,10 @@ fUT
 imd
 xlk
 wVS
-olE
-olE
+qGD
+qGD
 sFF
-fXn
+daT
 jQO
 dba
 oxc
@@ -67476,9 +67492,9 @@ vJj
 vnP
 jsi
 hnK
-olE
-fXn
-fXn
+qGD
+daT
+daT
 xnx
 jQO
 jQO

@@ -15,7 +15,9 @@
 	var/default_mutation_genes[DNA_MUTATION_BLOCKS] //List of the default genes from this mutation to allow DNA Scanner highlighting
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
-
+	//SKYRAT EDIT BEGIN - ADDITION - CLONING
+	var/delete_species = TRUE
+	//SKYRAT EDIT END
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
 		holder = new_holder
@@ -27,7 +29,11 @@
 			cholder.dna = null
 	holder = null
 
-	QDEL_NULL(species)
+	//SKYRAT EDIT BEGIN - CHANGE - CLONING
+	//QDEL_NULL(species) - SKYRAT ORIGINAL
+	if(delete_species)
+		QDEL_NULL(species)
+	//SKYRAT EDIT END
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^
