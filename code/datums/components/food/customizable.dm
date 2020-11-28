@@ -160,10 +160,7 @@
 	var/atom/P = parent
 	LAZYADD(ingredients, I)
 	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
-	var/datum/component/edible/E = I.GetComponent(/datum/component/edible)
-	if (E)
-		SEND_SIGNAL(P, COMSIG_FOOD_TASTE_ADD, E.tastes)
-		SEND_SIGNAL(P, COMSIG_FOOD_TYPES_ADD, E.foodtypes)
+	SEND_SIGNAL(P, COMSIG_ATOM_CUSTOMIZED, I)
 
 
 ///Gives an adjective to describe the size of the custom food.

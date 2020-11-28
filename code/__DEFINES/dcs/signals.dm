@@ -694,11 +694,6 @@
 ///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
 #define COMSIG_FOOD_CONSUMED "food_consumed"
 
-///Called on edible to add more taste(s)
-#define COMSIG_FOOD_TASTE_ADD "food_taste_add"
-///Called on edible to add more foodtype(s)
-#define COMSIG_FOOD_TYPES_ADD "food_types_add"
-
 #define COMSIG_ITEM_FRIED "item_fried"
 	#define COMSIG_FRYING_HANDLED (1<<0)
 
@@ -708,6 +703,12 @@
 #define COMSIG_DRINK_DRANK "drink_drank"
 ///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
 #define COMSIG_GLASS_DRANK "glass_drank"
+
+//Customizable
+
+///called when an atom with /datum/component/customizable is customized
+#define COMSIG_ATOM_CUSTOMIZED "atom_customized"
+
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
