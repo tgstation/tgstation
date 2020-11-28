@@ -7,8 +7,6 @@
  * If the component is added to something that is processed, creating new objects (being cut, for example),
  * the replacement type needs to also have the component. The ingredients will be copied over. Reagents are not
  * copied over since edible components already take care of that.
- *
- *
  */
 /datum/component/customizable
 	can_transfer = TRUE
