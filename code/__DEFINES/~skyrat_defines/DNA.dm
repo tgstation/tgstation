@@ -56,7 +56,7 @@
 #define BODY_SIZE_MAX			1.5
 #define BODY_SIZE_MIN			0.8
 
-#define MANDATORY_FEATURE_LIST list("mcolor" = "FFB","mcolor2" = "FFB","mcolor3" = "FFB","ethcolor" = "FCC","skin_color" = "FED","flavor_text" = "","breasts_size" = 1, "body_size" = BODY_SIZE_NORMAL, "custom_species" = null, "uses_skintones" = FALSE)
+#define MANDATORY_FEATURE_LIST list("mcolor" = "FFB","mcolor2" = "FFB","mcolor3" = "FFB","ethcolor" = "FCC","skin_color" = "FED","flavor_text" = "", "body_size" = BODY_SIZE_NORMAL, "custom_species" = null, "uses_skintones" = FALSE)
 
 #define UNDERWEAR_HIDE_SOCKS		(1<<0)
 #define UNDERWEAR_HIDE_SHIRT		(1<<1)
