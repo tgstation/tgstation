@@ -1,9 +1,16 @@
-import { keyOfMatchingRange, scale } from 'common/math';
+/**
+ * @file
+ * @copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * @license MIT
+ */
+
+import { scale, clamp01 } from 'common/math';
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps, Box } from './Box';
 import { AnimatedNumber } from './AnimatedNumber';
 
 export const RoundGauge = props => {
+  // Support for IE8 is for losers sorry B)
   if (Byond.IS_LTE_IE8) {
     return (
       <AnimatedNumber {...props} />
@@ -13,16 +20,12 @@ export const RoundGauge = props => {
   const {
     maxValue,
     minValue,
-    unit,
     value,
     format,
     className,
     style,
-    fillValue,
-    color,
     ranges,
     size = 1,
-    bipolar,
     children,
     ...rest
   } = props;
@@ -31,7 +34,8 @@ export const RoundGauge = props => {
     value,
     minValue,
     maxValue);
-  let scaledRanges = ranges ? {} : { "good": [0, 1] };
+  const clampedValue = clamp01(scaledValue);
+  let scaledRanges = ranges ? {} : { "primary": [0, 1] };
   if (ranges)
     Object.keys(ranges).forEach(x => {
       const range = ranges[x];
@@ -42,7 +46,7 @@ export const RoundGauge = props => {
     });
 
   return (
-    <Box className="RoundGauge__Container">
+    <Box inline>
       <div
         className={classes([
           'RoundGauge',
@@ -89,7 +93,7 @@ export const RoundGauge = props => {
         <svg
           className="RoundGauge__needle"
           viewBox="0 0 100 50">
-          <g transform={`rotate(${scaledValue * 180 - 90} 50 50)`}>
+          <g transform={`rotate(${clampedValue * 180 - 90} 50 50)`}>
             <polygon
               className="RoundGauge__needleLine"
               points="46,50 50,0 54,50" />

@@ -5,6 +5,13 @@ import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, 
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
+const formatPressure = value => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+}
+
 export const Canister = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -63,12 +70,7 @@ export const Canister = (props, context) => {
                   "average": [pressureLimit * 0.70, pressureLimit * 0.85],
                   "bad": [pressureLimit * 0.85, pressureLimit],
                 }}
-                format={value => {
-                  if (value < 10000) {
-                    return toFixed(value) + ' kPa';
-                  }
-                  return formatSiUnit(value * 1000, 1, 'Pa');
-                }} />
+                format={formatPressure} />
             </LabeledControls.Item>
             <LabeledControls.Item label="Regulator">
               <Box
@@ -160,6 +162,7 @@ export const Canister = (props, context) => {
                     "good": [0, holdingTankLeakPressure],
                     "bad": [holdingTankLeakPressure, holdingTankFragPressure],
                   }}
+                  format={formatPressure}
                   size={1} />
               </LabeledList.Item>
             </LabeledList>
