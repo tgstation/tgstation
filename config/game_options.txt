@@ -458,6 +458,12 @@ ROUNDSTART_RACES jelly
 
 ## SKYRAT RACES DOWN THERE
 ROUNDSTART_RACES mammal
+ROUNDSTART_RACES vulpkanin
+ROUNDSTART_RACES tajaran
+ROUNDSTART_RACES akula
+ROUNDSTART_RACES unathi
+ROUNDSTART_RACES skrell
+ROUNDSTART_RACES humanoid
 ROUNDSTART_RACES xeno
 ROUNDSTART_RACES slimeperson
 ROUNDSTART_RACES podweak
@@ -465,6 +471,8 @@ ROUNDSTART_RACES dwarf
 ROUNDSTART_RACES ipc
 ROUNDSTART_RACES synthliz
 ROUNDSTART_RACES vox
+ROUNDSTART_RACES aquatic
+ROUNDSTART_RACES insect
 
 ##-------------------------------------------------------------------------------------------
 
