@@ -110,8 +110,8 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	var/gases = C.air_contents.gases
-	C.air_contents.assert_gases(/datum/gas/bz,
+	var/canister_mix = C.air_contents.gases
+	var/list/gases_to_check = list(/datum/gas/bz,
 								/datum/gas/stimulum,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
@@ -126,46 +126,28 @@
 								/datum/gas/antinoblium,
 								/datum/gas/halon
 								)
-	if(gases[/datum/gas/hypernoblium][MOLES] > 0)
-		worth += round((5/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/hypernoblium][MOLES])))
 
-	if(gases[/datum/gas/stimulum][MOLES] > 0)
-		worth += round((100/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/stimulum][MOLES])))
+	var/list/gas_prices = list(/datum/gas/bz = 4,
+								/datum/gas/stimulum = 100,
+								/datum/gas/hypernoblium = 5,
+								/datum/gas/miasma = 2,
+								/datum/gas/tritium = 5,
+								/datum/gas/pluoxium = 5,
+								/datum/gas/freon = 15,
+								/datum/gas/hydrogen = 1,
+								/datum/gas/healium = 19,
+								/datum/gas/proto_nitrate = 5,
+								/datum/gas/zauker = 1050,
+								/datum/gas/helium = 6,
+								/datum/gas/antinoblium = 10,
+								/datum/gas/halon = 9
+								)
 
-	if(gases[/datum/gas/freon][MOLES] > 0)
-		worth += round((15/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/freon][MOLES])))
+	for(var/gasID in gases_to_check)
+		C.air_contents.assert_gas(gasID)
 
-	if(gases[/datum/gas/tritium][MOLES] > 0)
-		worth += round((5/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/tritium][MOLES])))
-
-	if(gases[/datum/gas/pluoxium][MOLES] > 0)
-		worth += round((5/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/pluoxium][MOLES])))
-
-	if(gases[/datum/gas/bz][MOLES] > 0)
-		worth += round((4/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/bz][MOLES])))
-
-	if(gases[/datum/gas/miasma][MOLES] > 0)
-		worth += round((2/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/miasma][MOLES])))
-
-	if(gases[/datum/gas/hydrogen][MOLES] > 0)
-		worth += round((1/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/hydrogen][MOLES])))
-
-	if(gases[/datum/gas/healium][MOLES] > 0)
-		worth += round((19/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/healium][MOLES])))
-
-	if(gases[/datum/gas/proto_nitrate][MOLES] > 0)
-		worth += round((5/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/proto_nitrate][MOLES])))
-
-	if(gases[/datum/gas/zauker][MOLES] > 0)
-		worth += round((1050/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/zauker][MOLES])))
-
-	if(gases[/datum/gas/halon][MOLES] > 0)
-		worth += round((9/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/halon][MOLES])))
-
-	if(gases[/datum/gas/helium][MOLES] > 0)
-		worth += round((6/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/helium][MOLES])))
-
-	if(gases[/datum/gas/antinoblium][MOLES] > 0)
-		worth += round((10/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * gases[/datum/gas/antinoblium][MOLES])))
+	for(var/gasID in gases_to_check)
+		if(canister_mix[gasID][MOLES] > 0)
+			worth += round((gas_prices[gasID]/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * canister_mix[gasID][MOLES])))
 
 	return worth
