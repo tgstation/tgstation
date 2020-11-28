@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fixed pubby's incinerator pipe not connected and injector not in proper area (no power)"
+  - tweak: "moved meta's Atmospheric testing room space walls to allow smooth outside movements"
