@@ -1089,6 +1089,7 @@
 	if(CHAT_FILTER_CHECK(newname))
 		log_message("[src] failed name change from [oldname] to [newname] as new name contains a word prohibited in IC chat", LOG_OWNERSHIP)
 		to_chat(usr, "<span class='warning'>You cannot set a name that contains a word prohibited in IC chat!</span>")
+		return FALSE
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
