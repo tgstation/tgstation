@@ -45669,6 +45669,12 @@
 /obj/machinery/igniter/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"dyc" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "dye" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/structure/sign/departments/science{
@@ -48166,7 +48172,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal/incinerator)
 "gSH" = (
 /turf/closed/wall,
 /area/lawoffice)
@@ -51255,6 +51261,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"ltT" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
 "lxx" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze{
@@ -58190,6 +58202,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"vap" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "vbv" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -99836,7 +99854,7 @@ bVm
 bWd
 bWS
 bWd
-bYw
+dyc
 bYw
 bZh
 oMk
@@ -100093,7 +100111,7 @@ bLb
 bMi
 bLb
 bJP
-aaa
+vap
 bYw
 uPu
 hUX
@@ -100350,7 +100368,7 @@ bVn
 bWe
 bWT
 bJP
-aaa
+ltT
 qXu
 bZi
 bZR
