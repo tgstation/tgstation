@@ -2328,9 +2328,9 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
 "pd" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "pe" = (
@@ -2386,10 +2386,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
 "pr" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "pt" = (
@@ -2839,9 +2840,11 @@
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "rE" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/structure/reagent_dispensers/virusfood{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -3460,8 +3463,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "vl" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
+/obj/structure/table/glass,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "vq" = (
@@ -3951,10 +3957,15 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "ym" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "yn" = (
@@ -5078,8 +5089,8 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/turret_protected/aisat_interior)
 "Fu" = (
-/obj/structure/bed/maint,
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/obj/item/healthanalyzer,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "Fv" = (
@@ -5397,7 +5408,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "Hm" = (
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "Hn" = (
@@ -5462,13 +5472,14 @@
 /turf/open/floor/wood,
 /area/library)
 "HG" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/chair/office/light,
+/obj/effect/landmark/start/virologist,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "HH" = (
@@ -5668,6 +5679,10 @@
 "IS" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
+"IT" = (
+/obj/machinery/computer/pandemic,
+/turf/open/floor/plasteel,
+/area/medical/virology)
 "IU" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -7182,18 +7197,15 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/central)
 "RP" = (
-/obj/machinery/computer/pandemic,
+/obj/machinery/clonepod,
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "RU" = (
-/obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "RV" = (
 /obj/machinery/gravity_generator/main/station,
 /turf/open/floor/plasteel,
@@ -7269,8 +7281,6 @@
 /turf/open/floor/wood,
 /area/library)
 "Sj" = (
-/obj/structure/table/glass,
-/obj/item/healthanalyzer,
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
@@ -7280,8 +7290,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "Ss" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -7486,6 +7497,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "TB" = (
@@ -7531,16 +7545,19 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "TR" = (
-/obj/machinery/door/airlock/virology{
-	name = "Virology Access";
-	req_access_txt = "39"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cloning Lab";
+	req_access_txt = "68"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
@@ -7574,10 +7591,8 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "Uc" = (
-/obj/structure/chair/office/light,
-/obj/effect/landmark/start/virologist,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
@@ -7586,18 +7601,13 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "Ue" = (
-/obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "Uf" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -7827,19 +7837,17 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "Vu" = (
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_x = -32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "Vz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "VC" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -7868,7 +7876,7 @@
 /area/quartermaster/office)
 "VQ" = (
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "VR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -8225,7 +8233,7 @@
 /area/medical/medbay/central)
 "XK" = (
 /turf/closed/wall,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "XN" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Virology Containment Cell";
@@ -8233,8 +8241,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/virology)
+/area/medical/genetics/cloning)
 "XR" = (
 /turf/closed/wall/r_wall,
 /area/library)
@@ -8311,6 +8320,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"Yo" = (
+/turf/closed/wall/r_wall,
+/area/medical/genetics/cloning)
 "Yq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
@@ -45773,7 +45785,7 @@ Vu
 XK
 pr
 rE
-Hm
+IT
 St
 pj
 ng
@@ -46538,10 +46550,10 @@ LU
 LU
 LU
 LU
-St
-St
-St
-St
+Yo
+Yo
+Yo
+Yo
 St
 St
 St

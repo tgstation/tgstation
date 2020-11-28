@@ -94,6 +94,8 @@
 	var/obj/item/stack/current_gauze
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
 	var/obj/item/self_grasp/grasped_by
+	var/rendered_bp_icon //SKYRAT EDIT ADDITION - CUSTOMIZATION
+	var/organic_render = TRUE //SKYRAT EDIT ADDITION - CUSTOMIZATION
 
 
 /obj/item/bodypart/Initialize(mapload)
@@ -506,6 +508,12 @@
 			update_disabled()
 		if(updating_health)
 			owner.updatehealth()
+		//SKYRAT EDIT ADDITION BEGIN - CUSTOMIZATION
+		//Consider moving this to a new species proc "spec_heal" maybe?
+		if(owner.stat == DEAD && owner?.dna?.species && (REVIVES_BY_HEALING in owner.dna.species.species_traits))
+			if(owner.health > 50)
+				owner.revive(FALSE)
+		//SKYRAT EDIT ADDITION END
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
@@ -698,8 +706,10 @@
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
 			icon = DEFAULT_BODYPART_ICON_ORGANIC
+			organic_render = TRUE //SKYRAT EDIT ADDITION - CUSTOMIZATION
 		else if(status == BODYPART_ROBOTIC)
 			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			organic_render = FALSE //SKYRAT EDIT ADDITION - CUSTOMIZATION
 
 	if(owner)
 		owner.updatehealth()
@@ -739,7 +749,9 @@
 		should_draw_greyscale = FALSE
 
 		var/datum/species/S = H.dna.species
-		species_id = S.limbs_id
+		if(organic_render) //SKYRAT EDIT ADDITION - CUSTOMIZATION
+			species_id = S.limbs_id
+			rendered_bp_icon = S.limbs_icon //SKYRAT EDIT ADDITION - CUSTOMIZATION
 		species_flags_list = H.dna.species.species_traits
 
 		if(S.use_skintones)
@@ -789,6 +801,8 @@
 	add_overlay(standing)
 
 //Gives you a proper icon appearance for the dismembered limb
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 
@@ -861,6 +875,8 @@
 			limb.color = "#[draw_color]"
 			if(aux_zone)
 				aux.color = "#[draw_color]"
+*/
+//SKYRAT EDIT REMOVAL END
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

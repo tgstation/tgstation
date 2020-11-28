@@ -66,20 +66,24 @@
 	icon_state = "kitty"
 	damage_multiplier = 2
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION
+/*
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		color = H.hair_color
 		H.dna.features["ears"] = H.dna.species.mutant_bodyparts["ears"] = "Cat"
-		H.update_body()
+		H.update_body()*/
 
-/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
+/*/obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
 	if(istype(H))
 		color = H.hair_color
 		H.dna.features["ears"] = "None"
 		H.dna.species.mutant_bodyparts -= "ears"
 		H.update_body()
+		*/
+//SKYRAT EDIT REMOVAL END
 
 /obj/item/organ/ears/penguin
 	name = "penguin ears"

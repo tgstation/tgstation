@@ -42,8 +42,11 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_SPLITPERSONALITY = "Split Personality",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
-	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender"
-))
+	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
+	//SKYRAT EDIT BEGIN ADDITION - CLONING
+	POLL_IGNORE_DEFECTIVECLONE = "Defective clone"
+	//SKYRAT EDIT END
+	))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 
 

@@ -97,6 +97,8 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/human/update_inv_w_uniform()
 	remove_overlay(UNIFORM_LAYER)
 
@@ -139,6 +141,8 @@ There are several things that need to be remembered:
 
 	apply_overlay(UNIFORM_LAYER)
 	update_mutant_bodyparts()
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /mob/living/carbon/human/update_inv_wear_id()
@@ -199,6 +203,8 @@ There are several things that need to be remembered:
 	apply_overlay(GLOVES_LAYER)
 
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
 
@@ -225,6 +231,8 @@ There are several things that need to be remembered:
 				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
 			overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /mob/living/carbon/human/update_inv_ears()
@@ -252,6 +260,8 @@ There are several things that need to be remembered:
 	apply_overlay(EARS_LAYER)
 
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
@@ -276,6 +286,8 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /mob/living/carbon/human/update_inv_s_store()
@@ -334,6 +346,8 @@ There are several things that need to be remembered:
 
 
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_overlay(SUIT_LAYER)
 
@@ -357,6 +371,8 @@ There are several things that need to be remembered:
 	update_mutant_bodyparts()
 
 	apply_overlay(SUIT_LAYER)
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /mob/living/carbon/human/update_inv_pockets()
@@ -488,6 +504,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null)
 
 	//Find a valid icon_state from variables+arguments
@@ -529,6 +547,8 @@ generate/load female uniform sprites matching all previously decided variables
 	standing.color = color
 
 	return standing
+*/
+//SKYRAT EDIT REMOVAL END
 
 
 /obj/item/proc/get_held_offsets()
@@ -559,8 +579,10 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "-coloured-[skin_tone]"
 	else if(dna.species.fixed_mut_color)
 		. += "-coloured-[dna.species.fixed_mut_color]"
-	else if(dna.features["mcolor"])
-		. += "-coloured-[dna.features["mcolor"]]"
+	//else if(dna.features["mcolor"]) - ORIGINAL
+	//	. += "-coloured-[dna.features["mcolor"]]" - ORIGINAL
+	else if(MUTCOLORS in dna.species.species_traits) //SKYRAT EDIT CHANGE - CUSTOMIZATION
+		. += "-coloured-[dna.features["mcolor"]]" //SKYRAT EDIT CHANGE - CUSTOMIZATION
 	else
 		. += "-not_coloured"
 
@@ -569,14 +591,22 @@ generate/load female uniform sprites matching all previously decided variables
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
+		//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION
+		/*
 		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
 		else
 			. += "-robotic"
+		*/
+		//SKYRAT EDIT REMOVAL END
 		if(BP.use_digitigrade)
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
+		//SKYRAT EDIT ADDITION BEGIN - CUSTOMIZATION
+		if(BP.organic_render)
+			. += "-OR"
+		//SKYRAT EDIT ADDITION END
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
