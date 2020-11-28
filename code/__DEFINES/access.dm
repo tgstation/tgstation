@@ -79,6 +79,7 @@
 /// NTnet diagnostics/monitoring software
 #define ACCESS_NETWORK 67
 /// Pharmacy access (Chemistry room in Medbay)
+#define ACCESS_CLONING 68
 #define ACCESS_PHARMACY 69 ///Nice.
 #define ACCESS_PSYCHOLOGY 70
 /// Toxins tank storage room access
