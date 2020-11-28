@@ -1,0 +1,15 @@
+## Comment this out if you want to use the SQL based mentor system, the legacy system uses mentors.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
+## But currently the SQL system is not implemented and it'll read from mentors.txt nonetheless
+MENTOR_LEGACY_SYSTEM
+
+ALERT_AMBER_UPTO A major security emergency has developed. Security staff may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_AMBER_DOWNTO A major security emergency is still underway. Non-security personnel are required to obey all relevant instructions from security staff.
+ALERT_ORANGE_UPTO A major engineering emergency has developed. Non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff.
+ALERT_ORANGE_DOWNTO A major engineering emergency has developed. Non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff.
+ALERT_VIOLET_UPTO A major medical emergency has developed. Non-medical personnel are required to obey all relevant instructions from medical staff.
+ALERT_VIOLET_DOWNTO  A major medical emergency has developed. Non-medical personnel are required to obey all relevant instructions from medical staff.
+
+## How long until someone can be put in cryo if they are SSD
+CRYO_MIN_SSD_TIME 15
