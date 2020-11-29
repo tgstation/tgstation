@@ -156,7 +156,7 @@
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(oldname == input || input == "")
+			if(input == oldname || !input)
 				to_chat(user, "<span class='notice'>You changed [O] to... well... [O].</span>")
 			else
 				O.name = input
@@ -166,30 +166,43 @@
 					label.apply_label()
 				to_chat(user, "<span class='notice'>You have successfully renamed \the [oldname] to [O].</span>")
 				O.renamedByPlayer = TRUE
+				O.name_before_player_changed = oldname
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 140)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(olddesc == input || input == "")
+			if(input == olddesc || !input)
 				to_chat(user, "<span class='notice'>You decide against changing [O]'s description.</span>")
 			else
 				O.desc = input
 				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
 				O.renamedByPlayer = TRUE
+				O.desc_before_player_changed = olddesc
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			O.desc = initial(O.desc)
-			O.name = initial(O.name)
+			var/whatwereset
+			if(O.name_before_player_changed)
+				O.name = O.name_before_player_changed
+				whatwereset = "name"
+			if(O.desc_before_player_changed)
+				O.desc = O.desc_before_player_changed
+				if(whatwereset)
+					whatwereset += " and description"
+				else
+					whatwereset = "description"
 			var/datum/component/label/label = O.GetComponent(/datum/component/label)
 			if(label)
 				label.remove_label()
 				label.apply_label()
-			to_chat(user, "<span class='notice'>You have successfully reset [O]'s name and description.</span>")
+			to_chat(user, "<span class='notice'>You have successfully reset [O]'s [whatwereset].</span>")
 			O.renamedByPlayer = FALSE
+			O.name_before_player_changed = null
+			O.desc_before_player_changed = null
+
 
 /*
  * Sleepypens
