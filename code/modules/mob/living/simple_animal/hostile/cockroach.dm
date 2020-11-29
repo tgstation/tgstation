@@ -117,6 +117,8 @@
 			A.visible_message("<span class='danger'>[A] steps onto [src]'s spike!</span>", "<span class='userdanger'>You step onto [src]'s spike!</span>")
 		else if(HAS_TRAIT(A, TRAIT_PACIFISM))
 			A.visible_message("<span class='notice'>[A] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
+		else if(HAS_TRAIT(A, TRAIT_PIERCEIMMUNE))
+			A.visible_message("<span class='danger'>[A] steps onto [src]'s spike, but is unfazed!</span>", "<span class='userdanger'>You step onto [src]'s spike, but you're unaffected!</span>")
 		else
 			A.visible_message("<span class='notice'>[A] squashes [src], not even noticing its spike.</span>", "<span class='notice'>You squashed [src], not even noticing its spike.</span>")
 			adjustBruteLoss(1) //kills a normal cockroach

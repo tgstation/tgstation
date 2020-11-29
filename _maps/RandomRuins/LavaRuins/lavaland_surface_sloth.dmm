@@ -24,7 +24,7 @@
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/item/food/grown/citrus/orange,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},

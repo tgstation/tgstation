@@ -14,6 +14,7 @@
 	health = 250
 	gender = NEUTER
 	mob_biotypes = NONE
+	pass_flags = PASSFLAPS
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8

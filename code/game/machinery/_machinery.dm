@@ -170,7 +170,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	dump_contents()
+	dump_inventory_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -688,6 +688,7 @@ Class Procs:
 	if(AM == occupant)
 		set_occupant(null)
 	if(AM == circuit)
+		LAZYREMOVE(component_parts, AM)
 		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
@@ -735,7 +736,7 @@ Class Procs:
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
  * However, the proc may also be used elsewhere.
- */	
+ */
 /obj/machinery/proc/AI_notify_hack()
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)

@@ -38,7 +38,7 @@
 	ex_light = 4
 	ex_flame = 2
 
-/obj/item/grenade/gas_crystal/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
+/obj/item/grenade/gas_crystal/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/turf_loc = get_turf(src)
 	log_grenade(user, turf_loc) //Inbuilt admin procs already handle null users
 	if(user)
@@ -52,9 +52,9 @@
 	icon_state = initial(icon_state) + "_active"
 	playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', volume, TRUE)
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/gas_crystal/healium_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/healium_crystal/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -76,7 +76,7 @@
 			live_mob.adjust_bodytemperature(-150 / distance_from_center)
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/proto_nitrate_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/proto_nitrate_crystal/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -89,7 +89,7 @@
 		floor_loc.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/zauker_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/zauker_crystal/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)

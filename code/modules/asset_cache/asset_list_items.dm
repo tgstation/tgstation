@@ -511,3 +511,8 @@
 
 /datum/asset/simple/portraits/library_private
 	tab = "library_private"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)

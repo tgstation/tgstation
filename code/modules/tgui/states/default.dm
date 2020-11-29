@@ -18,15 +18,10 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 
 /mob/living/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE && loc)
-		. = min(., loc.contents_ui_distance(src_object, src)) // Check the distance...
-	if(. == UI_INTERACTIVE) // Non-human living mobs can only look, not touch.
-		return UI_UPDATE
-
-/mob/living/carbon/human/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE)
+	if(. > UI_CLOSE && loc) //must not be in nullspace.
 		. = min(., shared_living_ui_distance(src_object)) // Check the distance...
+	if(. == UI_INTERACTIVE && !ISADVANCEDTOOLUSER(src)) // unhandy living mobs can only look, not touch.
+		return UI_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
@@ -49,14 +44,9 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 		return UI_INTERACTIVE
 	return UI_CLOSE
 
-/mob/living/simple_animal/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE)
-		. = min(., shared_living_ui_distance(src_object)) //simple animals can only use things they're near.
-
 /mob/living/silicon/pai/default_can_use_topic(src_object)
 	// pAIs can only use themselves and the owner's radio.
 	if((src_object == src || src_object == radio) && !stat)
 		return UI_INTERACTIVE
 	else
-		return ..()
+		return min(..(), UI_UPDATE)

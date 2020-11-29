@@ -91,11 +91,16 @@
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
 	. = ..()
+	GLOB.poi_list |= src
+
+/obj/structure/spider/eggcluster/Destroy()
+	. = ..()
+	GLOB.poi_list.Remove(src)
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100 && !ghost_ready)
-		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER)
+		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
 		ghost_ready = TRUE
 
 /obj/structure/spider/eggcluster/attack_ghost(mob/user)
