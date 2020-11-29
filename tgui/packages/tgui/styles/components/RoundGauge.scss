@@ -46,8 +46,41 @@ $pi: 3.1416;
   fill: colors.$bad;
 }
 
+.RoundGauge__alert {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  stroke-linejoin: round;
+  stroke-miterlimit: 2;
+  fill: rgba(255, 255, 255, 0.1);
+}
+
+.RoundGauge__alert.max {
+  fill: colors.$bad;
+}
+
 @each $color-name, $color-value in $fg-map {
   .RoundGauge--color--#{$color-name}.RoundGauge__ringFill {
     stroke: $color-value;
+  }
+}
+
+@each $color-name, $color-value in $fg-map {
+  .RoundGauge__alert--#{$color-name} {
+    fill: $color-value;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: RoundGauge__alertAnim 1s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  }
+}
+
+@keyframes RoundGauge__alertAnim {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 5px 5px rgba(255, 255, 255, 1);
+  }
+  100% {
+    opacity: 0.1;
   }
 }

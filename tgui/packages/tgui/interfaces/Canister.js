@@ -60,11 +60,11 @@ export const Canister = (props, context) => {
               minWidth="66px"
               label="Pressure">
               <RoundGauge
-                size={1.25}
-                unit="kPa"
+                size={1.75}
                 value={tankPressure}
                 minValue={0}
                 maxValue={pressureLimit}
+                alertAfter={pressureLimit * 0.70}
                 ranges={{
                   "good": [0, pressureLimit * 0.70],
                   "average": [pressureLimit * 0.70, pressureLimit * 0.85],

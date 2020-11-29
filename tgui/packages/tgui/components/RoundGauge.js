@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { scale, clamp01 } from 'common/math';
+import { scale, clamp01, keyOfMatchingRange } from 'common/math';
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps, Box } from './Box';
 import { AnimatedNumber } from './AnimatedNumber';
@@ -25,6 +25,7 @@ export const RoundGauge = props => {
     className,
     style,
     ranges,
+    alertAfter,
     size = 1,
     children,
     ...rest
@@ -45,6 +46,11 @@ export const RoundGauge = props => {
       ];
     });
 
+  let alertColor = null;
+  if (alertAfter < value) {
+    alertColor = keyOfMatchingRange(clampedValue, scaledRanges);
+  }
+
   return (
     <Box inline>
       <div
@@ -62,10 +68,17 @@ export const RoundGauge = props => {
         })}>
         <svg
           viewBox="0 0 100 50">
+          {alertAfter && (
+            <g className={classes([
+              'RoundGauge__alert',
+              alertColor ? `active RoundGauge__alert--${alertColor}` : '',
+            ])}>
+              <path d="M48.211,14.578C48.55,13.9 49.242,13.472 50,13.472C50.758,13.472 51.45,13.9 51.789,14.578C54.793,20.587 60.795,32.589 63.553,38.106C63.863,38.726 63.83,39.462 63.465,40.051C63.101,40.641 62.457,41 61.764,41C55.996,41 44.004,41 38.236,41C37.543,41 36.899,40.641 36.535,40.051C36.17,39.462 36.137,38.726 36.447,38.106C39.205,32.589 45.207,20.587 48.211,14.578ZM50,34.417C51.426,34.417 52.583,35.574 52.583,37C52.583,38.426 51.426,39.583 50,39.583C48.574,39.583 47.417,38.426 47.417,37C47.417,35.574 48.574,34.417 50,34.417ZM50,32.75C50,32.75 53,31.805 53,22.25C53,20.594 51.656,19.25 50,19.25C48.344,19.25 47,20.594 47,22.25C47,31.805 50,32.75 50,32.75Z" />
+            </g>
+          )}
           <g>
             <circle
               className="RoundGauge__ringTrack"
-              // transform={`rotate(180 50 50)`}
               cx="50"
               cy="50"
               r="45" />
@@ -90,7 +103,9 @@ export const RoundGauge = props => {
               );
             })}
           </g>
-          <g transform={`rotate(${clampedValue * 180 - 90} 50 50)`}>
+          <g
+            className="RoundGauge__needle"
+            transform={`rotate(${clampedValue * 180 - 90} 50 50)`}>
             <polygon
               className="RoundGauge__needleLine"
               points="46,50 50,0 54,50" />
@@ -99,9 +114,6 @@ export const RoundGauge = props => {
               cx="50"
               cy="50"
               r="8" />
-          </g>
-          <g transform="matrix(1.92196,0,0,1.92196,-85.6242,-8.14155)">
-            <path d="M92.106,4.789C92.275,4.45 92.621,4.236 93,4.236C93.379,4.236 93.725,4.45 93.894,4.789C94.613,6.225 95.608,8.216 96.276,9.553C96.431,9.863 96.415,10.231 96.233,10.526C96.05,10.821 95.729,11 95.382,11C93.994,11 92.006,11 90.618,11C90.271,11 89.95,10.821 89.767,10.526C89.585,10.231 89.569,9.863 89.724,9.553L92.106,4.789ZM93.5,9.5C93.5,9.224 93.276,9 93,9C92.724,9 92.5,9.224 92.5,9.5C92.5,9.776 92.724,10 93,10C93.276,10 93.5,9.776 93.5,9.5ZM93.5,6C93.5,5.724 93.276,5.5 93,5.5C92.724,5.5 92.5,5.724 92.5,6L92.5,8C92.5,8.276 92.724,8.5 93,8.5C93.276,8.5 93.5,8.276 93.5,8L93.5,6Z" />
           </g>
         </svg>
       </div>
