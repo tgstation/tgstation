@@ -1,7 +1,7 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, Section, Tooltip, RoundGauge } from '../components';
+import { Box, Button, Icon, Knob, LabeledControls, LabeledList, RoundGauge, Section, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 

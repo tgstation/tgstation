@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { scale, clamp01, keyOfMatchingRange } from 'common/math';
+import { clamp01, keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps, Box } from './Box';
 import { AnimatedNumber } from './AnimatedNumber';
+import { Box, computeBoxClassName, computeBoxProps } from './Box';
 
 export const RoundGauge = props => {
   // Support for IE8 is for losers sorry B)
