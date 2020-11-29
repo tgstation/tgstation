@@ -4,9 +4,6 @@ have ways of interacting with a specific mob and control it.
 */
 ///OOK OOK OOK
 
-#define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
-#define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source, TRAIT_INCAPACITATED) || HAS_TRAIT(source, TRAIT_HANDS_BLOCKED) || IS_IN_STASIS(source))
-
 /datum/ai_controller/monkey
 	blackboard = list(BB_MONKEY_AGRESSIVE = FALSE,\
 	BB_MONKEY_BEST_FORCE_FOUND = 0,\
@@ -14,7 +11,11 @@ have ways of interacting with a specific mob and control it.
 	BB_MONKEY_BLACKLISTITEMS = list(),\
 	BB_MONKEY_PICKUPTARGET = null,\
 	BB_NEXT_SCREECH = 0,
-	BB_MONKEY_PICKPOCKETING = FALSE)
+	BB_MONKEY_PICKPOCKETING = FALSE,
+	BB_MONKEY_DISPOSING = FALSE,
+	BB_MONKEY_TARGET_DISPOSAL = null,
+	BB_MONKEY_FRUSTRATION = 0,
+	BB_MONKEY_CURRENT_ATTACK_TARGET = null)
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -51,28 +52,43 @@ have ways of interacting with a specific mob and control it.
 
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
 
-
-	/*
 	if(!HAS_TRAIT(pawn, TRAIT_PACIFISM)) //Not a pacifist? lets try some combat behavior.
 		if(length(enemies) || blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
+
+			var/mob/living/selected_enemy
+
 			for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-				if(!enemies[possible_enemy] && !blackboard[BB_MONKEY_AGRESSIVE]) //Are they an enemy? (And do we even care?)
+				if(possible_enemy == living_pawn || !enemies[possible_enemy] && !blackboard[BB_MONKEY_AGRESSIVE]) //Are they an enemy? (And do we even care?)
 					continue
 
-				if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
-					current_movement_target = possible_enemy
-					current_behaviors[GET_AI_BEHAVIOR(/datum/ai_behavior/flee)]
-					return //I'm running fuck you guys
+				selected_enemy = possible_enemy
+				break
+			if(selected_enemy)
+				if(!selected_enemy.stat) //He's up, get him!
+					if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
+						blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
+						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/flee)
+						return //I'm running fuck you guys
 
-				if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
-					return
+					if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
+						return
 
+					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
+					current_movement_target = selected_enemy
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
+					return //Focus on this
 
-				current_movement_target = possible_enemy
-				current_behaviors[GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)]
-				current_behaviors[GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)]
+				else //He's down, can we disposal him?
+					var/obj/machinery/disposal/bodyDisposal = locate(/obj/machinery/disposal/) in view(MONKEY_ENEMY_VISION, living_pawn)
+					if(bodyDisposal)
+						blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
+						blackboard[BB_MONKEY_TARGET_DISPOSAL] = bodyDisposal
+						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposal_mob)
+						return
+
 				return //Too busy fighting to steal atm.
-	*/
+
 	if(DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
 		if(TryFindWeapon()) //Found a better weapon, let's grab it first.
 			return
@@ -112,13 +128,8 @@ have ways of interacting with a specific mob and control it.
 
 ///Reactive event to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
-	var/mob/living/living_pawn = pawn
-
-	blackboard[BB_MONKEY_ENEMIES] = blackboard[BB_MONKEY_ENEMIES][L] += MONKEY_HATRED_AMOUNT
-
-	if(living_pawn.a_intent != INTENT_HARM)
-		//battle_screech() //REPLACE THIS WITH A QUEUED ACTIONS LIST THAT GETS ADDED AFTER A PLAN IS MADE
-		living_pawn.a_intent = INTENT_HARM
+	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
+	enemies[L] += MONKEY_HATRED_AMOUNT
 
 /datum/ai_controller/monkey/proc/on_attackby(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER

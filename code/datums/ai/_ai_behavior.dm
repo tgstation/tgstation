@@ -4,18 +4,18 @@
 	var/required_distance = 1
 	///Can we perform the action while moving?
 	var/move_while_performing = FALSE
+	///How many actions do we want to perform before giving up?
+	var/max_action_attempts = -1
+	///Flags for extra behavior
+	var/behavior_flags = NONE
 
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller)
-	if(perform_action(delta_time, controller))
-		finish_action(controller)
-	return
-
-///Called by perform() to actually run the action. Return TRUE to finish the action off, false to keep going.
-/datum/ai_behavior/proc/perform_action(delta_time, datum/ai_controller/controller)
 	return
 
 ///Called when the action is finished.
-/datum/ai_behavior/proc/finish_action(datum/ai_controller/controller)
+/datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
 	controller.current_behaviors.Remove(src)
+	if(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //If this was a movement task, reset our movement target.
+		controller.current_movement_target = null
 	return

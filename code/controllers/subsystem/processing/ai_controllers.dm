@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(ai_controllers)
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 10
+	wait = 5
 
 	///an assoc list of all ai_behaviors by type, to
 	var/list/ai_behaviors

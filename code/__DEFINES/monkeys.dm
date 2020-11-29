@@ -1,11 +1,5 @@
 //Monkey defines, placed here so they can be read by other things!
 
-//Mode defines
-#define MONKEY_IDLE 			0	// idle
-#define MONKEY_HUNT 			1	// found target, hunting
-#define MONKEY_FLEE 			2	// free from enemies
-#define MONKEY_DISPOSE 			3	// dump body in disposals
-
 #define MONKEY_FLEE_HEALTH 					50	// below this health value the monkey starts to flee from enemies
 #define MONKEY_ENEMY_VISION 				9	// how close an enemy must be to trigger aggression
 #define MONKEY_FLEE_VISION					4	// how close an enemy must be before it triggers flee
@@ -28,7 +22,7 @@
 #define MONKEY_RETALIATE_DISARM_PROB 		20 	// probability for the monkey to aggro when attacked with disarm intent
 
 #define MONKEY_HATRED_AMOUNT 				4	// amount of aggro to add to an enemy when they attack user
-#define MONKEY_HATRED_REDUCTION_PROB 		25	// probability of reducing aggro by one when the monkey attacks
+#define MONKEY_HATRED_REDUCTION_PROB 		5	// probability of reducing aggro by one when the monkey attacks
 
 // how many Life ticks the monkey will fail to:
 #define MONKEY_HUNT_FRUSTRATION_LIMIT 		8	// Chase after an enemy before giving up

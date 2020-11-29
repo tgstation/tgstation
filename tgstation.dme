@@ -395,7 +395,7 @@
 #include "code\datums\actions\beam_rifle.dm"
 #include "code\datums\ai\_ai_behavior.dm"
 #include "code\datums\ai\_ai_controller.dm"
-#include "code\datums\ai\monkey\actions.dm"
+#include "code\datums\ai\monkey\monkey_actions.dm"
 #include "code\datums\ai\monkey\monkey_controller.dm"
 #include "code\datums\atmosphere\_atmosphere.dm"
 #include "code\datums\atmosphere\planetary.dm"
