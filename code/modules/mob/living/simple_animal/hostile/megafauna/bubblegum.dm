@@ -89,7 +89,6 @@ Difficulty: Hard
 	if(!BUBBLEGUM_SMASH)
 		var/datum/action/cooldown/TC = locate(/datum/action/cooldown/charge/triple_charge) in actions
 		TC.Trigger(target)
-		try_bloodattack()
 	else
 		if(prob(50 + anger_modifier))
 			var/datum/action/cooldown/HC = locate(/datum/action/cooldown/charge/hallucination_charge) in actions

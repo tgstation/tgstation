@@ -7,13 +7,20 @@
 	text_cooldown = FALSE
 	click_to_activate = TRUE
 	shared_cooldown = MOB_SHARED_COOLDOWN
+	/// Delay before the charge actually occurs
 	var/charge_delay = 3
+	/// The amount of turfs we move past the target
 	var/charge_past = 2
-	var/charge_speed = 0.7
+	/// The sleep time before moving in deciseconds while charging
+	var/charge_speed = 0.5
+	/// The damage the charger does when bumping into something
 	var/charge_damage = 30
+	/// If we destroy objects while charging
 	var/destroy_objects = TRUE
-	var/list/revving_charge = list()
+	/// Associative boolean list of chargers that are currently charging
 	var/list/charging = list()
+	/// Associative direction list of chargers that lets our move signal know how we are supposed to move
+	var/list/next_move_allowed = list()
 
 /datum/action/cooldown/charge/New(Target, delay, past, speed, damage, destroy)
 	. = ..()
@@ -41,32 +48,47 @@
 	if(!chargeturf)
 		return
 	charger.setDir(get_dir(charger, target_atom))
-	var/distance = get_dist(charger, chargeturf) + past
 	var/turf/T = get_ranged_target_turf(chargeturf, charger.dir, past)
 	if(!T)
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
-	revving_charge[charger] = TRUE
-	charging[charger] = TRUE
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	charging[charger] = TRUE
 	DestroySurroundings(charger)
-	walk(charger, 0)
 	charger.setDir(get_dir(charger, target_atom))
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay, charger)
-	revving_charge[charger] = FALSE
-	walk_towards(charger, T, charge_speed)
-	SLEEP_CHECK_DEATH(distance * charge_speed, charger)
-	walk(charger, 0) // cancel the movement
-	charging[charger] = FALSE
-	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+	var/distance = get_dist(charger, T)
+	for(var/i in 1 to distance)
+		SLEEP_CHECK_DEATH(charge_speed, charger)
+		next_move_allowed[charger] = get_dir(charger, T)
+		step_towards(charger, T)
+		next_move_allowed.Remove(charger)
 	UnregisterSignal(charger, COMSIG_MOVABLE_BUMP)
 	UnregisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(charger, COMSIG_MOVABLE_MOVED)
+	charging.Remove(charger)
+	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	return TRUE
+
+/datum/action/cooldown/charge/proc/on_move(atom/source, atom/new_loc)
+	var/expected_dir = next_move_allowed[source]
+	if(!expected_dir)
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	var/real_dir = get_dir(source, new_loc)
+	if(!(expected_dir & real_dir))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	next_move_allowed[source] = expected_dir & ~real_dir
+	if(charging[source])
+		new /obj/effect/temp_visual/decoy/fading(source.loc, source)
+		DestroySurroundings(source)
+
+/datum/action/cooldown/charge/proc/on_moved(atom/source)
+	if(charging[source])
+		DestroySurroundings(source)
 
 /datum/action/cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -74,17 +96,17 @@
 	for(var/dir in GLOB.cardinals)
 		var/turf/T = get_step(charger, dir)
 		if(QDELETED(T))
-			return
+			continue
 		if(T.Adjacent(charger))
 			if(iswallturf(T) || ismineralturf(T))
 				T.attack_animal(charger)
-				return
+				continue
 		for(var/obj/O in T.contents)
 			if(!O.Adjacent(charger))
 				continue
 			if((ismachinery(O) || isstructure(O)) && O.density && !O.IsObscured())
 				O.attack_animal(charger)
-				return
+				break
 
 /datum/action/cooldown/charge/proc/on_bump(atom/movable/source, atom/A)
 	if(charging[source])
@@ -107,17 +129,6 @@
 	shake_camera(L, 4, 3)
 	shake_camera(source, 2, 3)
 
-/datum/action/cooldown/charge/proc/on_move(atom/source)
-	if(charging[source])
-		new /obj/effect/temp_visual/decoy/fading(source.loc, source)
-		DestroySurroundings(source)
-	if(revving_charge[source])
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-
-/datum/action/cooldown/charge/proc/on_moved(atom/source)
-	if(charging[source])
-		DestroySurroundings(source)
-
 /datum/action/cooldown/charge/triple_charge
 	name = "Triple Charge"
 	desc = "Allows you to charge three times at a chosen position."
@@ -136,7 +147,9 @@
 	desc = "Allows you to create hallucinations that charge around your target."
 	cooldown_time = 20
 	charge_delay = 6
+	/// The damage the hallucinations in our charge do
 	var/hallucination_damage = 15
+	/// Check to see if we are enraged, enraged ability does more
 	var/enraged = FALSE
 
 /datum/action/cooldown/charge/hallucination_charge/Activate(var/atom/target_atom)
@@ -146,7 +159,7 @@
 		StartCooldown(cooldown_time * 0.5)
 		return
 	for(var/i in 0 to 2)
-		hallucination_charge(target_atom, 4, 9 - i, 0, 4, TRUE)
+		hallucination_charge(target_atom, 4, 9 - 2 * i, 0, 4, TRUE)
 	for(var/i in 0 to 2)
 		do_charge(owner, target_atom, charge_delay - 2 * i, charge_past)
 	StartCooldown()
@@ -192,7 +205,7 @@
 
 /datum/action/cooldown/charge/hallucination_charge/hallucination_surround/Activate(var/atom/target_atom)
 	StartCooldown(100)
-	for(var/i in 1 to 5)
+	for(var/i in 0 to 4)
 		hallucination_charge(target_atom, 2, 8, 2, 2, FALSE)
 		do_charge(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()

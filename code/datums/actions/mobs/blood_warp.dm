@@ -7,6 +7,10 @@
 	text_cooldown = FALSE
 	click_to_activate = TRUE
 	shared_cooldown = MOB_SHARED_COOLDOWN
+	/// The range of turfs to try to jaunt to from around the target
+	var/pick_range = 5
+	/// Whether or not to remove the inside of our radius from the possible pools to jaunt to
+	var/remove_inner_pools = TRUE
 
 /datum/action/cooldown/blood_warp/Activate(var/atom/target_atom)
 	StartCooldown(100)
@@ -20,9 +24,10 @@
 	if(!can_jaunt.len)
 		return FALSE
 
-	var/list/pools = get_bloodcrawlable_pools(get_turf(target), 5)
-	var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), 4)
-	pools -= pools_to_remove
+	var/list/pools = get_bloodcrawlable_pools(get_turf(target), pick_range)
+	if(remove_inner_pools)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), pick_range - 1)
+		pools -= pools_to_remove
 	if(!pools.len)
 		return FALSE
 
@@ -35,9 +40,10 @@
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
-	pools = get_bloodcrawlable_pools(get_turf(target), 5)
-	pools_to_remove = get_bloodcrawlable_pools(get_turf(target), 4)
-	pools -= pools_to_remove
+	pools = get_bloodcrawlable_pools(get_turf(target), pick_range)
+	if(remove_inner_pools)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), pick_range - 1)
+		pools -= pools_to_remove
 	if(pools.len)
 		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
@@ -56,3 +62,8 @@
 	for(var/obj/effect/decal/cleanable/nearby in view(T, range))
 		if(nearby.can_bloodcrawl_in())
 			. += nearby
+
+/datum/action/cooldown/blood_warp/targeted
+	cooldown_time = 20
+	pick_range = 1
+	remove_inner_pools = FALSE
