@@ -13,7 +13,6 @@ $ring-color: #6a96c9 !default;
 $inner-padding: 0.1em;
 
 .RoundGauge {
-  position: relative;
   font-size: 1rem;
   width: 2.6em;
   height: 1.3em;
@@ -21,34 +20,14 @@ $inner-padding: 0.1em;
   margin-bottom: 0.2em;
 }
 
-.RoundGauge__ring {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: $inner-padding;
-}
-
 $pi: 3.1416;
-
-.RoundGauge__ringTrackPivot {
-  transform: rotateZ(180deg);
-}
-
-.RoundGauge__ringFillPivot {
-  transform: rotateZ(180deg);
-}
-
-.RoundGauge--bipolar .RoundGauge__ringFillPivot {
-  transform: rotateZ(270deg);
-}
 
 .RoundGauge__ringTrack {
     fill: transparent;
     stroke: rgba(255, 255, 255, 0.1);
     stroke-width: 10;
     stroke-dasharray: 50 * $pi;
+    stroke-dashoffset: 50 * $pi;
 }
 
 .RoundGauge__ringFill {
@@ -63,18 +42,12 @@ $pi: 3.1416;
   transition: transform 50ms ease-in-out;
 }
 
-.RoundGauge__needleLine {
-  fill: colors.$bad;
-}
-
-.RoundGauge__needleMiddle {
+.RoundGauge__needleLine, .RoundGauge__needleMiddle {
   fill: colors.$bad;
 }
 
 @each $color-name, $color-value in $fg-map {
-  .RoundGauge--color--#{$color-name} {
-    .RoundGauge__ringFill {
-      stroke: $color-value;
-    }
+  .RoundGauge--color--#{$color-name}.RoundGauge__ringFill {
+    stroke: $color-value;
   }
 }
