@@ -118,14 +118,12 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "empty gibber"
+	set name = "Empty gibber"
 	set src in oview(1)
 
-	if(usr.incapacitated())
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	src.go_out()
 	add_fingerprint(usr)

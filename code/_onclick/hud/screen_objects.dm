@@ -672,6 +672,9 @@
 	icon_state = "mood5"
 	screen_loc = ui_mood
 
+/atom/movable/screen/mood/attack_tk()
+	return
+
 /atom/movable/screen/splash
 	icon = 'icons/blank_title.png'
 	icon_state = ""

@@ -591,11 +591,11 @@
 				. += M.loc
 
 /mob/living/simple_animal/hostile/tamed(whomst)
+	. = ..()
 	if(isliving(whomst))
 		var/mob/living/fren = whomst
 		friends = fren
 		faction = fren.faction.Copy()
-	return ..()
 
 /**
   * Proc that handles a charge attack windup for a mob.

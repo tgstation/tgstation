@@ -170,7 +170,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	dump_contents()
+	dump_inventory_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -688,6 +688,7 @@ Class Procs:
 	if(AM == occupant)
 		set_occupant(null)
 	if(AM == circuit)
+		LAZYREMOVE(component_parts, AM)
 		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
