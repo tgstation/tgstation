@@ -216,6 +216,7 @@
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null //Reset attack target
 	controller.blackboard[BB_MONKEY_DISPOSING] = FALSE //No longer disposing
 	controller.blackboard[BB_MONKEY_TARGET_DISPOSAL] = null //No target disposal
+	controller.blackboard[BB_MONKEY_FRUSTRATION] = 0 //No longer frustrated
 
 /datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -235,7 +236,7 @@
 		else //This means we might be getting pissed!
 			var/turf/olddist = get_dist(living_pawn, target)
 			if((get_dist(living_pawn, target)) >= (olddist))
-				controller.blackboard[BB_MONKEY_FRUSTRATION]
+				controller.blackboard[BB_MONKEY_FRUSTRATION]++
 			else
 				controller.blackboard[BB_MONKEY_FRUSTRATION] = 0 //No longer pissed
 		return //Do the rest next turn

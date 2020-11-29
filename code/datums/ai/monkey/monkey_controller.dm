@@ -10,7 +10,6 @@ have ways of interacting with a specific mob and control it.
 	BB_MONKEY_ENEMIES = list(),\
 	BB_MONKEY_BLACKLISTITEMS = list(),\
 	BB_MONKEY_PICKUPTARGET = null,\
-	BB_NEXT_SCREECH = 0,
 	BB_MONKEY_PICKPOCKETING = FALSE,
 	BB_MONKEY_DISPOSING = FALSE,
 	BB_MONKEY_TARGET_DISPOSAL = null,
@@ -193,6 +192,7 @@ have ways of interacting with a specific mob and control it.
 	retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attempt_cuff(datum/source, mob/user)
+	SIGNAL_HANDLER
 	// chance of monkey retaliation
 	if(prob(MONKEY_CUFF_RETALIATION_PROB))
 		retaliate(user)

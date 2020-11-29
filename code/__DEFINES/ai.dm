@@ -14,14 +14,11 @@
 ///Flags for ai_behavior new()
 #define AI_BEHAVIOR_INCOMPATIBLE (1<<0)
 
-
-///Types of behavior, used for parallel behavior sets.
-
 ///Does this task require movement from the AI?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 
 
-#define BB_NEXT_SCREECH "BB_next_screech"
+
 
 ///Monkey AI controller blackboard keys
 
