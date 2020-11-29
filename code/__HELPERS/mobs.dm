@@ -342,6 +342,9 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/list/originalloc = list()
 
+	for(var/atom/target in targets)
+		originalloc[target] = target.loc
+
 	if(interaction_key)
 		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
 		if(current_interaction_count >= max_interact_count) //We are at our peak
