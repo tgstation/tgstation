@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - tweak: "Updated the discord verify verb text to tell you to use \"?verify\" instead of \".verify\", as that is the new command"
