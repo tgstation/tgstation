@@ -1,8 +1,8 @@
-import { useBackend } from '../backend';
-import { Button, LabeledControls, NumberInput, ProgressBar, RoundGauge, Section } from '../components';
-import { Window } from '../layouts';
 import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
 import { formatSiUnit } from '../format';
+import { Window } from '../layouts';
 
 const formatPressure = value => {
   if (value < 10000) {

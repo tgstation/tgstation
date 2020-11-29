@@ -18,15 +18,15 @@ export const RoundGauge = props => {
   }
 
   const {
-    maxValue,
-    minValue,
     value,
-    format,
-    className,
-    style,
+    minValue = 1,
+    maxValue = 1,
     ranges,
     alertAfter,
+    format,
     size = 1,
+    className,
+    style,
     ...rest
   } = props;
 
