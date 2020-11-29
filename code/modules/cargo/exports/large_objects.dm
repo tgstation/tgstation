@@ -145,8 +145,6 @@
 
 	for(var/gasID in gases_to_check)
 		C.air_contents.assert_gas(gasID)
-
-	for(var/gasID in gases_to_check)
 		if(canister_mix[gasID][MOLES] > 0)
 			worth += round((gas_prices[gasID]/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * canister_mix[gasID][MOLES])))
 
