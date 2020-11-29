@@ -39,9 +39,11 @@ export class Dropdown extends Component {
   }
 
   setSelected(selected) {
-    this.setState({
-      selected: selected,
-    });
+    if(this.props.doNotUpdate !== undefined) {
+      this.setState({
+        selected: selected,
+      });
+    }
     this.setOpen(false);
     this.props.onSelected(selected);
   }
@@ -64,6 +66,9 @@ export class Dropdown extends Component {
   render() {
     const { props } = this;
     const {
+      icon,
+      iconRotation,
+      iconSpin,
       color = 'default',
       over,
       noscroll,
@@ -114,6 +119,12 @@ export class Dropdown extends Component {
             }
             this.setOpen(!this.state.open);
           }}>
+          {icon && (
+            <Icon
+              name={icon}
+              rotation={iconRotation}
+              spin={iconSpin} />
+          )}
           <span className="Dropdown__selected-text">
             {this.state.selected}
           </span>

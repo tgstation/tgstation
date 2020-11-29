@@ -1,4 +1,141 @@
+#define ICON_NOT_SET "Not Set"
 
+//This is stored as a nested list instead of datums or whatever because it json encodes nicely for usage in tgui
+GLOBAL_LIST_INIT(master_filter_info, list(
+	"alpha" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"icon" = ICON_NOT_SET,
+			"render_source" = "",
+			"flags" = 0
+		),
+		"flags" = list(
+			"MASK_INVERSE" = MASK_INVERSE,
+			"MASK_SWAP" = MASK_SWAP
+		)
+	),
+	"angular_blur" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = 1
+		)
+	),
+	"color" = list(
+		"defaults" = list(
+			"color" = matrix(),
+			"space" = FILTER_COLOR_RGB
+		)
+	),
+	"displace" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = null,
+			"icon" = ICON_NOT_SET,
+			"render_source" = ""
+		)
+	),
+	"drop_shadow" = list(
+		"defaults" = list(
+			"x" = 1,
+			"y" = -1,
+			"size" = 1,
+			"offset" = 0,
+			"color" = "#0000007A"
+		)
+	),
+	"blur" = list(
+		"defaults" = list(
+			"size" = 1
+		)
+	),
+	"layer" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"icon" = ICON_NOT_SET,
+			"render_source" = "",
+			"flags" = FILTER_OVERLAY,
+			"color" = "",
+			"transform" = null,
+			"blend_mode" = BLEND_DEFAULT
+		)
+	),
+	"motion_blur" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0
+		)
+	),
+	"outline" = list(
+		"defaults" = list(
+			"size" = 0,
+			"color" = "#000000",
+			"flags" = NONE
+		),
+		"flags" = list(
+			"OUTLINE_SHARP" = OUTLINE_SHARP,
+			"OUTLINE_SQUARE" = OUTLINE_SQUARE
+		)
+	),
+	"radial_blur" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = 0.01
+		)
+	),
+	"rays" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = 16,
+			"color" = "#FFFFFF",
+			"offset" = 0,
+			"density" = 10,
+			"threshold" = 0.5,
+			"factor" = 0,
+			"flags" = FILTER_OVERLAY | FILTER_UNDERLAY
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY,
+			"FILTER_UNDERLAY" = FILTER_UNDERLAY
+		)
+	),
+	"ripple" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = 1,
+			"repeat" = 2,
+			"radius" = 0,
+			"falloff" = 1,
+			"flags" = NONE
+		),
+		"flags" = list(
+			"WAVE_BOUNDED" = WAVE_BOUNDED
+		)
+	),
+	"wave" = list(
+		"defaults" = list(
+			"x" = 0,
+			"y" = 0,
+			"size" = 1,
+			"offset" = 0,
+			"flags" = NONE
+		),
+		"flags" = list(
+			"WAVE_SIDEWAYS" = WAVE_SIDEWAYS,
+			"WAVE_BOUNDED" = WAVE_BOUNDED
+		)
+	)
+))
+
+#undef ICON_NOT_SET
+
+///Helper to generate lists for filter helpers
 /proc/alpha_mask_filter(x, y, icon/icon, render_source, flags)
 	. = list("type" = "alpha")
 	if(!isnull(x))
