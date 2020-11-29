@@ -1278,3 +1278,11 @@
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 2)
+
+/obj/item/circuitboard/machine/doppler_array
+	name = "Tachyon-Doppler Research Array (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/doppler_array/research
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 4)

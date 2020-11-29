@@ -320,6 +320,14 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/doppler_array
+	name = "Machine Design (Tachyon-Doppler Research Array Board)"
+	desc = "The circuit board for a tachyon-doppler research array"
+	id = "doppler_array"
+	build_path = /obj/item/circuitboard/machine/doppler_array
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	desc = "The circuit board for a microwave."

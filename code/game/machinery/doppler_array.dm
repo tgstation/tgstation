@@ -188,10 +188,12 @@
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"
 	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
+	circuit = /obj/item/circuitboard/machine/doppler_array
 	var/datum/techweb/linked_techweb
 
 /obj/machinery/doppler_array/research/Initialize()
 	..()
+	linked_techweb = SSresearch.science_tech
 	return INITIALIZE_HINT_LATELOAD
 
 // Late initialize to allow the server machinery to initialize first
@@ -201,6 +203,13 @@
 		allowed_experiments = list(/datum/experiment/explosion), \
 		config_mode = EXPERIMENT_CONFIG_UI, \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+
+/obj/machinery/doppler_array/research/attackby(obj/item/I, mob/user, params)
+	if (default_deconstruction_screwdriver(user, "tdoppler", "tdoppler", I) \
+		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 		took, orig_dev_range, orig_heavy_range, orig_light_range) //probably needs a way to ignore admin explosives later on
