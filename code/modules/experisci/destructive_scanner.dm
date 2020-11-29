@@ -28,7 +28,7 @@
 	var/atom/L = drop_location()
 	var/aggressive = FALSE
 	for(var/mob/living/living_mob in L)
-		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emaggedishuman(living_mob))
+		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 			say("Cannot scan with humans inside.")
 			return
