@@ -27,7 +27,6 @@ export const RoundGauge = props => {
     ranges,
     alertAfter,
     size = 1,
-    children,
     ...rest
   } = props;
 

@@ -21,11 +21,11 @@ export const Tank = (props, context) => {
     fragmentPressure,
     tankPressure,
     releasePressure,
-    connected
+    connected,
   } = data;
   return (
     <Window
-    resizable
+      resizable
       width={275}
       height={120}>
       <Window.Content>
