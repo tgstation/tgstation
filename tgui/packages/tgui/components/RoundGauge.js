@@ -38,13 +38,13 @@ export const RoundGauge = props => {
   const clampedValue = clamp01(scaledValue);
   let scaledRanges = ranges ? {} : { "primary": [0, 1] };
   if (ranges)
-    Object.keys(ranges).forEach(x => {
-      const range = ranges[x];
-      scaledRanges[x] = [
-        scale(range[0], minValue, maxValue),
-        scale(range[1], minValue, maxValue),
-      ];
-    });
+  { Object.keys(ranges).forEach(x => {
+    const range = ranges[x];
+    scaledRanges[x] = [
+      scale(range[0], minValue, maxValue),
+      scale(range[1], minValue, maxValue),
+    ];
+  }); }
 
   let alertColor = null;
   if (alertAfter < value) {
@@ -123,4 +123,4 @@ export const RoundGauge = props => {
         size={size} />
     </Box>
   );
-}
+};

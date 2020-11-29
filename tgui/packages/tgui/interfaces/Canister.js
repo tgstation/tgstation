@@ -10,7 +10,7 @@ const formatPressure = value => {
     return toFixed(value) + ' kPa';
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
-}
+};
 
 export const Canister = (props, context) => {
   const { act, data } = useBackend(context);

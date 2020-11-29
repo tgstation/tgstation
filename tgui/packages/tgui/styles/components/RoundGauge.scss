@@ -10,8 +10,6 @@
 $fg-map: colors.$fg-map !default;
 $ring-color: #6a96c9 !default;
 
-$inner-padding: 0.1em;
-
 .RoundGauge {
   font-size: 1rem;
   width: 2.6em;
@@ -78,7 +76,6 @@ $pi: 3.1416;
   }
   50% {
     opacity: 1;
-    box-shadow: 5px 5px rgba(255, 255, 255, 1);
   }
   100% {
     opacity: 0.1;
