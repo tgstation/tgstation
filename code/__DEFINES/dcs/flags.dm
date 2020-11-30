@@ -41,10 +41,10 @@
 #define CALTROP_IGNORE_WALKERS 2
 #define CALTROP_SILENT 3
 
-//Ingredient type in datum/component/customizableatom
+//Ingredient type in datum/component/customizable_reagent_holder
 #define CUSTOM_INGREDIENT_TYPE_EDIBLE	1
 
-//Icon overlay type in datum/component/customizableatom
+//Icon overlay type in datum/component/customizable_reagent_holder
 #define CUSTOM_INGREDIENT_ICON_NOCHANGE			0
 #define CUSTOM_INGREDIENT_ICON_FILL				1
 #define CUSTOM_INGREDIENT_ICON_SCATTER			2

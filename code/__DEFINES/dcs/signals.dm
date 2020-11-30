@@ -708,7 +708,7 @@
 
 //Customizable
 
-///called when an atom with /datum/component/customizableatom is customized (obj/item/I)
+///called when an atom with /datum/component/customizable_reagent_holder is customized (obj/item/I)
 #define COMSIG_ATOM_CUSTOMIZED "atom_customized"
 ///called when an item is used as an ingredient: (atom/customized)
 #define COMSIG_ITEM_USED_AS_INGREDIENT "item_used_as_ingredient"

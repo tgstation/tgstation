@@ -48,7 +48,7 @@
 
 /obj/item/food/pizzaslice/margherita/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
 
 /obj/item/food/pizza/meat
 	name = "meatpizza"
