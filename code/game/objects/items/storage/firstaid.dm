@@ -255,7 +255,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
 	inhand_icon_state = "firstaid-rad"
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_HARD * 6
 	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
@@ -538,7 +538,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_MEDIUM * 4
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 

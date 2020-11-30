@@ -40,7 +40,7 @@
 	deposit_sample(user, petri)
 
 ///Creates a clone of the supplied sample and puts it in the vat
-/obj/machinery/plumbing/growing_vat/proc/deposit_sample(mob/user, var/obj/item/petri_dish/petri)
+/obj/machinery/plumbing/growing_vat/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
 	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()

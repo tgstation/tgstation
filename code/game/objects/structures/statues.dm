@@ -19,7 +19,7 @@
 /obj/structure/statue/Initialize()
 	. = ..()
 	AddElement(art_type, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75))
+	AddComponent(/datum/component/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
 
 /obj/structure/statue/proc/can_be_rotated(mob/user)
@@ -28,7 +28,7 @@
 	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
 
 /obj/structure/statue/proc/can_user_rotate(mob/user)
-	return isliving(user) && user.canUseTopic(src, BE_CLOSE, no_dexterity = ismonkey(user))
+	return !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)

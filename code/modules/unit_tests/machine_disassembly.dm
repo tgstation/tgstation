@@ -3,7 +3,6 @@
 	var/obj/machinery/freezer = allocate(/obj/machinery/atmospherics/components/unary/thermomachine/freezer)
 
 	var/turf/freezer_location = freezer.loc
-	freezer_location.ChangeTurf(/turf/open/floor/plasteel)
 	freezer.deconstruct()
 
 	// Check that the components are created

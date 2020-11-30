@@ -211,6 +211,9 @@
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
 	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
+	if(ishuman(targets[1]))
+		var/mob/living/carbon/human/humi = targets[1]
+		humi.adjust_coretemperature(-200)
 	target.adjust_bodytemperature(-200)
 
 /**

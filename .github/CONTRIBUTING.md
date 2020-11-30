@@ -22,7 +22,7 @@ After setting it up, optionally navigate your git commandline to the project fol
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
 You can of course, as always, ask for help on the discord channels, or the forums, We're just here to have fun and help out, so please don't expect professional support.
 
@@ -98,6 +98,39 @@ The previous code made compliant:
 	. = ..()
 	code
 ```
+
+### All process procs need to make use of delta-time and be frame independent
+
+In a lot of our older code, process() is frame dependent. As an example, here's some example mob code.
+
+```DM
+/mob/testmob
+	var/health = 100
+	var/health_loss = 4 //We want to lose 2 health per second, so 4 per SSmobs process
+
+/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+	health -= health_loss
+
+```
+
+As the mobs subsystem runs once every 2 seconds, the mob now loses 4 health every process, or 2 health per second. This is called frame dependent programming.
+
+Why is this an issue? If someone decides to make it so the mobs subsystem processes once every second (2 times as fast), your effects in process() will also be two times as fast. Resulting in 4 health loss per second rather than 2.
+
+How do we solve this? By using delta-time. Delta-time is the amount of seconds you would theoretically have between 2 process() calls. In the case of the mobs subsystem, this would be 2 (As there is 2 seconds between every call in process()). Here is a new example using delta-time
+
+```DM
+/mob/testmob
+	var/health = 100
+	var/health_loss = 2 //Health loss every second
+
+/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+	health -= health_loss * delta_time
+
+```
+In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * delta_time, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
+
+For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
 ### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.

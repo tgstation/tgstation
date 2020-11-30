@@ -121,6 +121,8 @@
 								/datum/gas/healium,
 								/datum/gas/proto_nitrate,
 								/datum/gas/zauker,
+								/datum/gas/helium,
+								/datum/gas/antinoblium,
 								/datum/gas/halon
 								)
 
@@ -135,5 +137,7 @@
 	worth += gases[/datum/gas/healium][MOLES]*19
 	worth += gases[/datum/gas/proto_nitrate][MOLES]*5
 	worth += gases[/datum/gas/zauker][MOLES]*1050
+	worth += gases[/datum/gas/helium][MOLES]*6
+	worth += gases[/datum/gas/antinoblium][MOLES]*10
 	worth += gases[/datum/gas/halon][MOLES]*9
 	return worth

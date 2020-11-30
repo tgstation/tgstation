@@ -77,12 +77,9 @@
 /*
  * On accidental consumption, consume the pill
  */
-/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
-	to_chat(M, "<span class='warning'>You swallow something small. Was that in \the [source_item]?</span>")
-	if(reagents?.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INGEST)
-
-	source_item?.contents -= src
+/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
+	to_chat(victim, "<span class='warning'>You swallow something small. [source_item ? "Was that in [source_item]?" : ""]</span>")
+	reagents?.trans_to(victim, reagents.total_volume, transfered_by = user, methods = INGEST)
 	qdel(src)
 	return discover_after
 

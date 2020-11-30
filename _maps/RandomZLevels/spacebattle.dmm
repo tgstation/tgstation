@@ -613,7 +613,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cU" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/fries,
+/obj/item/food/fries,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cV" = (

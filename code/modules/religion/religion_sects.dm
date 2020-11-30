@@ -190,3 +190,30 @@
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
 	return TRUE
+
+/**** Ever-Burning Candle sect ****/
+
+/datum/religion_sect/candle_sect
+	name = "Ever-Burning Candle"
+	desc = "A sect dedicated to candles."
+	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
+	alignment = ALIGNMENT_NEUT
+	max_favor = 10000
+	desired_items = list(/obj/item/candle)
+	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
+	altar_icon_state = "convertaltar-red"
+
+//candle sect bibles don't heal or do anything special apart from the standard holy water blessings
+/datum/religion_sect/candle_sect/sect_bless(mob/living/blessed, mob/living/user)
+	return TRUE
+
+/datum/religion_sect/candle_sect/on_sacrifice(obj/item/candle/offering, mob/living/user)
+	if(!istype(offering))
+		return
+	if(!offering.lit)
+		to_chat(user, "<span class='notice'>The candle needs to be lit to be offered!</span>")
+		return
+	to_chat(user, "<span class='notice'>Another candle for [GLOB.deity]'s collection</span>")
+	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
+	qdel(offering)
+	return TRUE
