@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Nar'Sie summoning runes can be erased with a null rod, or by a cultist with a sacrificial dagger after a confirmation message."
