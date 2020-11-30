@@ -31928,6 +31928,9 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "blw" = (

@@ -20940,6 +20940,9 @@
 /obj/item/reagent_containers/food/condiment/enzyme{
 	pixel_y = 6
 	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bdv" = (

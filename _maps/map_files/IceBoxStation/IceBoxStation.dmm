@@ -21365,6 +21365,9 @@
 	departmentType = 2;
 	pixel_x = 30
 	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aXo" = (
