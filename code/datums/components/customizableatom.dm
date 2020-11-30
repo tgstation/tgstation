@@ -28,7 +28,8 @@
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
-		max_ingredients = INFINITY)
+		max_ingredients = INFINITY,
+		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -36,6 +37,12 @@
 	src.fill_type = fill_type
 	src.max_ingredients = max_ingredients
 	src.ingredient_type = ingredient_type
+
+	if (initial_ingredients)
+		for (var/ingr in initial_ingredients)
+			var/obj/item/I = ingr
+			handle_ingredients(I)
+			handle_fill(I)
 
 
 /datum/component/customizableatom/Destroy(force, silent)
@@ -47,7 +54,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/on_processed)
+	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, .proc/on_processed)
 
 
 /datum/component/customizableatom/UnregisterFromParent()
@@ -55,7 +62,7 @@
 	UnregisterSignal(parent, list(
 			COMSIG_PARENT_ATTACKBY,
 			COMSIG_PARENT_EXAMINE,
-			COMSIG_ATOM_CREATEDBY_PROCESSING
+			COMSIG_ATOM_PROCESSED
 		)
 	)
 
@@ -97,7 +104,7 @@
 			valid_ingredient = IS_EDIBLE(I)
 
 	// only accept valid ingredients
-	if (valid_ingredient)
+	if (!valid_ingredient)
 		to_chat(M, "<span class='warning'>[I] doesn't belong on [parent]!</span>")
 		return
 
@@ -122,6 +129,9 @@
 
 ///Handles the icon update for a new ingredient.
 /datum/component/customizableatom/proc/handle_fill(obj/item/I)
+	if (fill_type == CUSTOM_INGREDIENT_ICON_NOCHANGE)
+		//don't bother doing the icon procs
+		return
 	var/atom/P = parent
 	var/mutable_appearance/filling = mutable_appearance(P.icon, "[initial(P.icon_state)]_filling")
 	// get average color
@@ -160,7 +170,8 @@
 ///Takes the reagents from an ingredient.
 /datum/component/customizableatom/proc/handle_reagents(obj/item/I)
 	var/atom/P = parent
-	I.reagents.trans_to(P, I.reagents.total_volume)
+	if (P.reagents && I.reagents)
+		I.reagents.trans_to(P, I.reagents.total_volume)
 	return
 
 
@@ -218,16 +229,11 @@
 		return rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3], rgbcolor[4])
 
 
-///Copies over the parent's ingredients to the processing result (such as slices when the parent is cut).
-/datum/component/customizableatom/proc/on_processed(datum/source, atom/original_atom, list/chosen_processing_option)
+///Copies over the parent's ingredients to the processing results (such as slices when the parent is cut).
+/datum/component/customizableatom/proc/on_processed(datum/source, mob/living/user, obj/item/I, list/atom/results)
 	SIGNAL_HANDLER
 
-	var/datum/component/customizableatom/C = original_atom.GetComponent(/datum/component/customizableatom)
-	if (C)
-		replacement = null
-		max_ingredients = C.max_ingredients
-		top_overlay = null
-		for (var/ingr in C.ingredients)
-			var/obj/item/I = ingr
-			handle_ingredients(I)
-			handle_fill(I)
+	// Reagents are not transferred since that should be handled elsewhere.
+	for (var/r in results)
+		var/atom/result = r
+		result.AddComponent(/datum/component/customizableatom, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, initial_ingredients = ingredients)
