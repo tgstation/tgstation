@@ -345,7 +345,7 @@ This is good:
 
 ### Mapping Standards
 * TGM Format & Map Merge
-	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.
+	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format). This is done using the [Map Merge](https://tgstation13.org/wiki/Map_Merger) utility included in the repo to convert the file to TGM format.
 	* Likewise, you MUST run Map Merge prior to opening your PR when updating existing maps to minimize the change differences (even when using third party mapping programs such as FastDMM.)
 		* Failure to run Map Merge on a map after using third party mapping programs (such as FastDMM) greatly increases the risk of the map's key dictionary becoming corrupted by future edits after running map merge. Resolving the corruption issue involves rebuilding the map's key dictionary; id est rewriting all the keys contained within the map by reconverting it from BYOND to TGM format - which creates very large differences that ultimately delay the PR process and is extremely likely to cause merge conflicts with other pull requests.
 
@@ -371,7 +371,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code may not use this.
+There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
@@ -425,10 +425,10 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 
 #### Use
 * Bitwise AND - '&'
-	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
+	* Should be written as ```variable & CONSTANT``` NEVER ```CONSTANT & variable```. Both are valid, but the latter is confusing and nonstandard.
 * Associated lists declarations must have their key value quoted if it's a string
-	* WRONG: list(a = "b")
-	* RIGHT: list("a" = "b")
+	* WRONG: `list(a = "b")`
+	* RIGHT: `list("a" = "b")`
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
@@ -492,10 +492,8 @@ With ```.``` being everpresent in every proc, can we use it as a temporary varia
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
 ```DM
-mob
-	var
-		global
-			thing = TRUE
+/mob
+	var/global/thing = TRUE
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
