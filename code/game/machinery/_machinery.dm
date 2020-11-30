@@ -80,6 +80,7 @@ Class Procs:
 	Compiled by Aygar
 */
 
+/// Machines in the world, such as computers, pipes, and airlocks.
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'

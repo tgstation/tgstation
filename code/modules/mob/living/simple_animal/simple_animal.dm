@@ -1,3 +1,4 @@
+/// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/animal.dmi'

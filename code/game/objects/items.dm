@@ -7,6 +7,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
 GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
 
+/// Anything you can pick up and hold.
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
