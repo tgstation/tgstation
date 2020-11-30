@@ -56,16 +56,14 @@
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/bear/Life()
+/mob/living/simple_animal/hostile/bear/Login()
 	. = ..()
-	if(rideable || !mind)
-		return
+	if(!. || !client)
+		return FALSE
 
-	// i swear i'll actually rework this in a bit - ryll
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
-
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()

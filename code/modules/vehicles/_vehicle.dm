@@ -27,8 +27,6 @@
 	var/canmove = TRUE
 	///Whether the occupants will bump into a door when the car bumps it
 	var/emulate_door_bumps = TRUE
-	///Whether we handle driving normally or through other things like riding components
-	var/default_driver_move = TRUE
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
@@ -125,8 +123,6 @@
 	return FALSE
 
 /obj/vehicle/proc/driver_move(mob/living/user, direction)
-	if(!default_driver_move)
-		return
 	if(!canmove)
 		return
 	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)

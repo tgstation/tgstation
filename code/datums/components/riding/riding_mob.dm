@@ -154,7 +154,7 @@
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
-	RegisterSignal(parent, COMSIG_LIVING_UPDATE_BODY_POSITION, .proc/check_carrier_fall_over)
+	RegisterSignal(parent, COMSIG_LIVING_SET_BODY_POSITION, .proc/check_carrier_fall_over)
 
 /datum/component/riding/creature/human/log_riding(mob/living/living_parent, mob/living/rider)
 	if(!istype(living_parent) || !istype(rider))

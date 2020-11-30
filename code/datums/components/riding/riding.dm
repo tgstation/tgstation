@@ -35,7 +35,7 @@
 
 	/**
 	  * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
-	  * Takes additional flags from the ridable element and the buckle proc (addl_ride_flags) for riding cyborgs/humans in case we need to reserve arms
+	  * Takes additional flags from the ridable element and the buckle proc (buckle_mob_flags) for riding cyborgs/humans in case we need to reserve arms
 	  */
 	var/ride_check_flags = NONE
 	/// For telling someone they can't drive
@@ -44,13 +44,13 @@
 	COOLDOWN_DECLARE(vehicle_move_cooldown)
 
 
-/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, addl_ride_flags = NONE, potion_boost = FALSE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, buckle_mob_flags= NONE, potion_boost = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	handle_specials()
 	riding_mob.updating_glide_size = FALSE
-	ride_check_flags |= addl_ride_flags
+	ride_check_flags |= buckle_mob_flags
 
 	if(potion_boost)
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)

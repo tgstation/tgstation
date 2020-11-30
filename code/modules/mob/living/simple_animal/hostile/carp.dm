@@ -206,17 +206,19 @@
 	if(.)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
+/mob/living/simple_animal/hostile/carp/megacarp/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
+	can_buckle = TRUE
+	buckle_lying = 0
+
 /mob/living/simple_animal/hostile/carp/megacarp/Life()
 	. = ..()
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
-	if(rideable || !src.mind)
-		return
-
-	can_buckle = TRUE
-	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
-	rideable = TRUE
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

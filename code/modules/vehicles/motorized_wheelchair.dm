@@ -105,6 +105,7 @@
 					break
 		refresh_parts()
 		return
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")

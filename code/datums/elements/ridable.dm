@@ -27,12 +27,12 @@
 	riding_component_type = component_type
 	potion_boosted = potion_boost
 
-	RegisterSignal(target, COMSIG_MOVABLE_TRY_MOUNTING, .proc/check_mounting)
+	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
 	if(isvehicle(target))
 		RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/check_potion)
 
 /datum/element/ridable/Detach(datum/target, force)
-	UnregisterSignal(target, list(COMSIG_MOVABLE_TRY_MOUNTING, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_PARENT_ATTACKBY))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
@@ -50,12 +50,12 @@
 	if(arms_needed && !equip_buckle_inhands(potential_rider, arms_needed, target_movable)) // can be either 1 (cyborg riding) or 2 (human piggybacking) hands
 		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [target_movable] because your hands are full!</span>")
-		return MOUNTING_HALT_BUCKLE
+		return COMPONENT_BLOCK_BUCKLE
 
 	if((ride_check_flags & RIDER_NEEDS_LEGS) && HAS_TRAIT(potential_rider, TRAIT_FLOORED))
 		potential_rider.visible_message("<span class='warning'>[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!</span>",
 			"<span class='warning'>You can't get your footing on [target_movable]!</span>")
-		return MOUNTING_HALT_BUCKLE
+		return COMPONENT_BLOCK_BUCKLE
 
 	var/mob/living/target_living = target_movable
 
@@ -64,7 +64,7 @@
 	if((ride_check_flags & CARRIER_NEEDS_ARM) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
 		target_living.visible_message("<span class='warning'>[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!</span>",
 			"<span class='warning'>You can't get a grip on [potential_rider] because your hands are full!</span>")
-		return MOUNTING_HALT_BUCKLE
+		return COMPONENT_BLOCK_BUCKLE
 
 	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags, potion_boost = potion_boosted)
 

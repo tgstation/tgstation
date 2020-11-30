@@ -992,7 +992,7 @@
   *
   * You can buckle on mobs if you're next to them since most are dense
   */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, addl_ride_flags = NONE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE
 	var/turf/T = get_turf(src)
