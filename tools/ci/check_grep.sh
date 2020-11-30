@@ -49,6 +49,16 @@ if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
+echo "Checking for space indentation"
+if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
+    echo "space indentation detected"
+    st=1
+fi;
+echo "Checking for mixed indentation"
+if grep -P '^\t+ [^ *]' code/**/*.dm; then
+    echo "mixed <tab><space> indentation detected"
+    st=1
+fi;
 echo "Checking for 0 length timers"
 if grep -nP 'addtimer\(.+?, ?0\)($| |/)'code/**/*,dm; then
 	echo "Default timer type with no length detected. Please add the correct flags or use the async macro call"

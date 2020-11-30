@@ -21,8 +21,8 @@
 		           /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1,
 		           /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1)
 	refill_canister = /obj/item/vending_refill/cola
-	default_price = 45
-	extra_price = 200
+	default_price = PAYCHECK_ASSISTANT * 0.7
+	extra_price = PAYCHECK_MEDIUM
 	payment_department = ACCOUNT_SRV
 
 
@@ -34,6 +34,7 @@
 	name = "\improper Random Drinkies"
 	icon_state = "random_cola"
 	desc = "Uh oh!"
+	circuit = null
 
 /obj/machinery/vending/cola/random/Initialize()
 	// No need to call parent, we're not doing anything with this machine. Just picking a new type of machine to use, spawning it and deleting ourselves.

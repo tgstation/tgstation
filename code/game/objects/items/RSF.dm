@@ -149,7 +149,7 @@ RSF
 	icon_state = "rcd"
 	spent_icon_state = "rcd"
 	max_matter = 10
-	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100)
+	cost_by_item = list(/obj/item/food/cookie = 100)
 	dispense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
@@ -184,11 +184,11 @@ RSF
 		P = user
 	if(((obj_flags & EMAGGED) || (P?.emagged)) && !toxin)
 		toxin = TRUE
-		to_dispense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
+		to_dispense = /obj/item/food/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
 	else
 		toxin = FALSE
-		to_dispense = /obj/item/reagent_containers/food/snacks/cookie
+		to_dispense = /obj/item/food/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
 /obj/item/rsf/cookiesynth/process(delta_time)

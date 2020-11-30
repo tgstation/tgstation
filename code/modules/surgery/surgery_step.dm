@@ -152,12 +152,12 @@
 	if(require_all_chems)
 		. = TRUE
 		for(var/R in chems_needed)
-			if(!target.has_reagent(R))
+			if(!target.reagents.has_reagent(R))
 				return FALSE
 	else
 		. = FALSE
 		for(var/R in chems_needed)
-			if(target.has_reagent(R))
+			if(target.reagents.has_reagent(R))
 				return TRUE
 
 /datum/surgery_step/proc/get_chem_list()

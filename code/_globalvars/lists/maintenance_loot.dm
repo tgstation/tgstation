@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 8,
 
 	list(//food
-		/obj/item/reagent_containers/food/snacks/canned/peaches/maint = 1,
+		/obj/item/food/canned/peaches/maint = 1,
 		/obj/item/storage/box/gum/happiness = 1,
 		/obj/item/storage/box/donkpockets = 1,
 		list(//Donk Varieties

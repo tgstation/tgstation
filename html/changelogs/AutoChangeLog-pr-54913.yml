@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - bugfix: "fixed some intentional garbling in a hijacking message"

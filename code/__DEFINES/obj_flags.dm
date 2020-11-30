@@ -33,6 +33,7 @@
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define EYE_STAB				(1<<13) /// Item can be used to eyestab
 #define HAND_ITEM				(1<<14) /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
+#define EXAMINE_SKIP			(1<<15) /// Makes the Examine proc not read out this item.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -9,8 +9,8 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	custom_price = 1200
-	custom_premium_price = 1200
+	custom_price = PAYCHECK_MEDIUM * 10
+	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
 
 /obj/item/toy/sprayoncan
@@ -233,7 +233,7 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
-	custom_price = 200
+	custom_price = PAYCHECK_MINIMAL
 
 /obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"

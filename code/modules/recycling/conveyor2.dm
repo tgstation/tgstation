@@ -421,6 +421,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	max_amount = 30
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
+	merge_type = /obj/item/stack/conveyor
 	///id for linking
 	var/id = ""
 

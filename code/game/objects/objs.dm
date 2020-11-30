@@ -292,11 +292,11 @@
 		reskin_obj(user)
 
 /**
-  * Reskins object based on a user's choice
-  *
-  * Arguments:
-  * * M The mob choosing a reskin option
-  */
+ * Reskins object based on a user's choice
+ *
+ * Arguments:
+ * * M The mob choosing a reskin option
+ */
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
@@ -317,11 +317,11 @@
 	to_chat(M, "[src] is now skinned as '[pick].'")
 
 /**
-  * Checks if we are allowed to interact with a radial menu for reskins
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu for reskins
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
