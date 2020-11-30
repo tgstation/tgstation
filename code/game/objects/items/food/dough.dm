@@ -42,7 +42,7 @@
 
 /obj/item/food/pizzabread/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizable, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENTS_SCATTER, max_ingredients = 12)
+	AddComponent(/datum/component/customizableatom, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENTS_SCATTER, max_ingredients = 12)
 
 /obj/item/food/doughslice
 	name = "dough slice"
@@ -68,7 +68,7 @@
 
 /obj/item/food/bun/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizable, /obj/item/food/burger/empty, CUSTOM_INGREDIENTS_STACKPLUSTOP)
+	AddComponent(/datum/component/customizableatom, /obj/item/food/burger/empty, CUSTOM_INGREDIENTS_STACKPLUSTOP)
 
 /obj/item/food/cakebatter
 	name = "cake batter"

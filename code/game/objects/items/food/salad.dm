@@ -136,7 +136,7 @@
 
 /obj/item/reagent_containers/glass/bowl/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizable, /obj/item/food/salad/empty, CUSTOM_INGREDIENTS_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/customizableatom, /obj/item/food/salad/empty, CUSTOM_INGREDIENTS_FILL, max_ingredients = 6)
 
 // empty salad for custom salads
 /obj/item/food/salad/empty

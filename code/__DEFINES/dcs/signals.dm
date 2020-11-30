@@ -706,7 +706,7 @@
 
 //Customizable
 
-///called when an atom with /datum/component/customizable is customized
+///called when an atom with /datum/component/customizableatom is customized
 #define COMSIG_ATOM_CUSTOMIZED "atom_customized"
 
 //Gibs

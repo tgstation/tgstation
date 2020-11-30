@@ -460,10 +460,8 @@ Behavior that's still missing from this component that original food items had t
 
 	var/datum/component/edible/E = I.GetComponent(/datum/component/edible)
 	if (E)
-		/* tastes acting weird
 		if (LAZYLEN(E.tastes))
+			tastes = tastes.Copy()
 			for (var/t in E.tastes)
 				tastes[t] += E.tastes[t]
-		*/
 		foodtypes |= E.foodtypes
-

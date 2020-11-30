@@ -1,5 +1,5 @@
 /**
- * # Custom Food Component
+ * # Custom Atom Component
  *
  * When added to an atom, edible ingredients can be put into that.
  * The sprite is updated and reagents are transfered.
@@ -8,7 +8,7 @@
  * the replacement type needs to also have the component. The ingredients will be copied over. Reagents are not
  * copied over since edible components already take care of that.
  */
-/datum/component/customizable
+/datum/component/customizableatom
 	can_transfer = TRUE
 	///List of edible ingredients.
 	var/list/obj/item/ingredients
@@ -22,7 +22,7 @@
 	var/mutable_appearance/top_overlay
 
 
-/datum/component/customizable/Initialize(atom/replacement, fill_type, max_ingredients = INFINITY)
+/datum/component/customizableatom/Initialize(atom/replacement, fill_type, max_ingredients = INFINITY)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,19 +31,19 @@
 	src.max_ingredients = max_ingredients
 
 
-/datum/component/customizable/Destroy(force, silent)
+/datum/component/customizableatom/Destroy(force, silent)
 	QDEL_NULL(top_overlay)
 	return ..()
 
 
-/datum/component/customizable/RegisterWithParent()
+/datum/component/customizableatom/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/on_processed)
 
 
-/datum/component/customizable/UnregisterFromParent()
+/datum/component/customizableatom/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
 			COMSIG_PARENT_ATTACKBY,
@@ -53,13 +53,13 @@
 	)
 
 
-/datum/component/customizable/PostTransfer()
+/datum/component/customizableatom/PostTransfer()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 
 ///Handles when the customizable food is examined.
-/datum/component/customizable/proc/on_examine(atom/A, mob/user, list/examine_list)
+/datum/component/customizableatom/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/atom/P = parent
@@ -80,7 +80,7 @@
 
 
 ///Handles when the customizable food is attacked by something.
-/datum/component/customizable/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
+/datum/component/customizableatom/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
 	// only accept items with reagents
@@ -110,7 +110,7 @@
 
 
 ///Handles the icon update for a new ingredient.
-/datum/component/customizable/proc/handle_fill(obj/item/I)
+/datum/component/customizableatom/proc/handle_fill(obj/item/I)
 	var/atom/P = parent
 	var/mutable_appearance/filling = mutable_appearance(P.icon, "[initial(P.icon_state)]_filling")
 	// get average color
@@ -147,14 +147,14 @@
 
 
 ///Takes the reagents from an ingredient.
-/datum/component/customizable/proc/handle_reagents(obj/item/I)
+/datum/component/customizableatom/proc/handle_reagents(obj/item/I)
 	var/atom/P = parent
 	I.reagents.trans_to(P, I.reagents.total_volume)
 	return
 
 
 ///Adds a new ingredient and its tastes and food types.
-/datum/component/customizable/proc/handle_ingredients(obj/item/I)
+/datum/component/customizableatom/proc/handle_ingredients(obj/item/I)
 	var/atom/P = parent
 	LAZYADD(ingredients, I)
 	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
@@ -162,7 +162,7 @@
 
 
 ///Gives an adjective to describe the size of the custom food.
-/datum/component/customizable/proc/custom_adjective()
+/datum/component/customizableatom/proc/custom_adjective()
 	switch(LAZYLEN(ingredients))
 		if (0 to 2)
 			return "small"
@@ -177,7 +177,7 @@
 
 
 ///Gives the type of custom food (based on what the first ingredient was).
-/datum/component/customizable/proc/custom_type()
+/datum/component/customizableatom/proc/custom_type()
 	var/custom_type = "empty"
 	if (LAZYLEN(ingredients))
 		var/obj/item/I = ingredients[1]
@@ -193,7 +193,7 @@
 
 
 ///Returns the color of the input mixed with the top_overlay's color.
-/datum/component/customizable/proc/mix_color(color)
+/datum/component/customizableatom/proc/mix_color(color)
 	if(LAZYLEN(ingredients) == 1 || !top_overlay)
 		return color
 	else
@@ -208,10 +208,10 @@
 
 
 ///Copies over the parent's ingredients to the processing result (such as slices when the parent is cut).
-/datum/component/customizable/proc/on_processed(datum/source, atom/original_atom, list/chosen_processing_option)
+/datum/component/customizableatom/proc/on_processed(datum/source, atom/original_atom, list/chosen_processing_option)
 	SIGNAL_HANDLER
 
-	var/datum/component/customizable/C = original_atom.GetComponent(/datum/component/customizable)
+	var/datum/component/customizableatom/C = original_atom.GetComponent(/datum/component/customizableatom)
 	if (C)
 		replacement = null
 		max_ingredients = C.max_ingredients
