@@ -132,11 +132,11 @@
 	mix.react()		// build more pressure
 	var/pressure = mix.return_pressure()
 	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-	QDEL_NULL(inserted_bomb)	// bomb goes poof
 	if(range < required_radius)
 		inserted_bomb.forceMove(src)
 		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
 		return
+	QDEL_NULL(inserted_bomb)	// bomb goes poof
 	inserted_core.create_core(drop_location(), TRUE, TRUE)
 	inserted_core = null
 	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
