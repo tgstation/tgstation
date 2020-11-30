@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer attempt to hijack BYOS shuttles before they have \"docked\" with the station"
