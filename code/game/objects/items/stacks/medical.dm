@@ -417,7 +417,7 @@
 	if(iscarbon(M))
 		playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
 		return heal_carbon(M, user, heal_brute, heal_burn)
-	return .. ()
+	return ..()
 
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
