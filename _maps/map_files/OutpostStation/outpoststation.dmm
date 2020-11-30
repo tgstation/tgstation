@@ -8383,6 +8383,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"fsn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "fsp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
@@ -11034,6 +11039,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"hiw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/upper)
 "hiB" = (
 /obj/machinery/button/door{
 	id = "Dorm6";
@@ -11307,7 +11317,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/garbage,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/fore)
 "htF" = (
@@ -17135,6 +17145,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"lhg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "lht" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -20203,6 +20218,7 @@
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/clothing/gloves/color/black,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/maint_drugs,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "ngF" = (
@@ -21086,6 +21102,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/engine/supermatter)
+"nGQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "nGV" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -24414,6 +24435,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"pFO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/central)
 "pGk" = (
 /turf/closed/wall,
 /area/security/checkpoint/medical)
@@ -25695,6 +25721,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"qyn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "qyG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -27721,6 +27752,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_b)
+"rNu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/effect/spawner/lootdrop/grille_or_trash,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "rNw" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -34558,6 +34595,11 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"weE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "weM" = (
 /obj/structure/table,
 /obj/item/paper/guides/jobs/engi/solars,
@@ -36072,6 +36114,7 @@
 	name = "\improper Dusty CentCom intern's jumpsuit"
 	},
 /obj/item/toy/plush/moth,
+/obj/effect/spawner/lootdrop/maint_drugs,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "wWs" = (
@@ -37926,6 +37969,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
+"yhf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "yhq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
@@ -52853,7 +52901,7 @@ rVI
 rVI
 rVI
 suj
-joQ
+lhg
 joQ
 suj
 rVI
@@ -53890,7 +53938,7 @@ suj
 rVI
 suj
 joQ
-joQ
+lhg
 joQ
 joQ
 joQ
@@ -54664,7 +54712,7 @@ suj
 fVQ
 suj
 suj
-jZL
+rNu
 suj
 aJB
 aJB
@@ -59237,7 +59285,7 @@ lXF
 lXF
 xHQ
 tgp
-meo
+qyn
 cQX
 meo
 oxL
@@ -73104,7 +73152,7 @@ uqS
 vHj
 vHj
 hkM
-nJJ
+nGQ
 iNQ
 iNQ
 fJT
@@ -75686,7 +75734,7 @@ cuW
 kKZ
 kKZ
 cuW
-cuW
+weE
 cuW
 hMY
 hxX
@@ -75927,7 +75975,7 @@ nyx
 uLa
 sqX
 kKZ
-cuW
+weE
 kKZ
 cuW
 cuW
@@ -76152,7 +76200,7 @@ nDZ
 nDZ
 nDZ
 egp
-kjl
+fsn
 kjl
 cWH
 cWv
@@ -77988,7 +78036,7 @@ plE
 ehp
 hEb
 vJr
-vJr
+pFO
 jKA
 aPb
 bxj
@@ -79547,7 +79595,7 @@ tqZ
 dbD
 nrn
 hEb
-vJr
+pFO
 kET
 dNl
 kkP
@@ -81397,7 +81445,7 @@ dfg
 aGn
 aGn
 kiR
-aGn
+yhf
 kFX
 qib
 tVb
@@ -82604,7 +82652,7 @@ oJy
 sVa
 dGB
 dGB
-dGB
+hiw
 plE
 jYX
 ogj
