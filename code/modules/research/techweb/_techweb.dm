@@ -1,11 +1,11 @@
 /**
-  * # Techweb
-  *
-  * A datum representing a research techweb
-  *
-  * Techweb datums are meant to store unlocked research, being able to be stored
-  * on research consoles, servers, and disks. They are NOT global.
-  */
+ * # Techweb
+ *
+ * A datum representing a research techweb
+ *
+ * Techweb datums are meant to store unlocked research, being able to be stored
+ * on research consoles, servers, and disks. They are NOT global.
+ */
 /datum/techweb
 	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
 	var/list/researched_nodes = list()

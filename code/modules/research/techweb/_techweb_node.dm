@@ -1,12 +1,12 @@
 /**
-  * # Techweb Node
-  *
-  * A datum representing a researchable node in the techweb.
-  *
-  * Techweb nodes are GLOBAL, there should only be one instance of them in the game. Persistant
-  * changes should never be made to them in-game. USE SSRESEARCH PROCS TO OBTAIN REFERENCES.
-  * DO NOT REFERENCE OUTSIDE OF SSRESEARCH OR YOU WILL FUCK UP GC.
-  */
+ * # Techweb Node
+ *
+ * A datum representing a researchable node in the techweb.
+ *
+ * Techweb nodes are GLOBAL, there should only be one instance of them in the game. Persistant
+ * changes should never be made to them in-game. USE SSRESEARCH PROCS TO OBTAIN REFERENCES.
+ * DO NOT REFERENCE OUTSIDE OF SSRESEARCH OR YOU WILL FUCK UP GC.
+ */
 /datum/techweb_node
 	/// Internal ID of the node
 	var/id
