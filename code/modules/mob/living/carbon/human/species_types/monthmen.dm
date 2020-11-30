@@ -5,23 +5,22 @@
 	//visuals
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,NO_UNDERWEAR,NOBLOOD,ABSTRACT_HEAD)
-	default_features = list("mcolor" = "FFF")
-	skinned_type = /obj/item/paper
-	changesource_flags = EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
+	fixed_mut_color = "FFF"
 	damage_overlay_type = "" //no blood
 	missing_eye_state = "montheyes_missing"
 	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,-6), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 	//organs
-	mutant_brain = /obj/item/organ/brain/monthmen
+	mutantbrain = /obj/item/organ/brain/monthmen
 	mutanteyes = /obj/item/organ/eyes/monthmen
 	mutanttongue = /obj/item/organ/tongue/monthmen
 	mutantears = /obj/item/organ/ears/monthmen
 	//other traits
-	no_equip = list(SLOT_WEAR_MASK, SLOT_GLASSES)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_EYES)
 	siemens_coeff = 0 //not very good at conducting electricity
 	sexes = FALSE
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	meat = /obj/item/stack/sheet/cardboard
+	skinned_type = /obj/item/paper
 
 	var/chest_covered = FALSE
 
