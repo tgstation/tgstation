@@ -155,7 +155,7 @@
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
 		var/obj/item/storage/T = I
-		var/loaded = holdingitems.len
+		var/loaded = 0
 		for(var/obj/S in T.contents)
 			if(!is_type_in_typecache(S, allowed_grindables))
 				continue
