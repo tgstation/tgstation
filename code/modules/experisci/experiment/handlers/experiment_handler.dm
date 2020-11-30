@@ -49,6 +49,7 @@
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
 	if(istype(parent, /obj/machinery/doppler_array))
 		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
 	if(istype(parent, /obj/machinery/destructive_scanner))
@@ -85,8 +86,38 @@
   */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
+	if (!should_run_handheld_experiment(source, target, user, params))
+		return
 	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/*
+ * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
+ */
+/datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
+	SIGNAL_HANDLER
+	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
+		return
+	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
+	to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
+
+/*
+ * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
+ */
+/datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+	// Check that there is actually an experiment selected
+	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+		return
+
+	// Determine if this experiment is actionable with this target
+	var/list/arguments = list(src)
+	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
+	if (config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+		for (var/datum/experiment/e in linked_web.available_experiments)
+			if (e.actionable(arglist(arguments)))
+				return TRUE
+	else
+		. = selected_experiment.actionable(arglist(arguments))
 
 /**
   * This proc exists because Jared Fogle really likes async
@@ -101,7 +132,7 @@
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, "<span>You scan \the [target.name].</span>")
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
 
 
