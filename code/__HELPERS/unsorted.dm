@@ -141,7 +141,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+/// Get a list of turfs in a line from `M` to `N`.
+///
+/// Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
+/proc/getline(atom/M,atom/N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
