@@ -45,7 +45,7 @@
 
 		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
 
-		if(!(flags & CALTROP_BYPASS_SHOES) && (H.shoes || feetCover))
+		if(!(flags & CALTROP_BYPASS_SHOES) && ((H.shoes && H.shoes.body_parts_covered & FEET) || feetCover))
 			return
 
 		var/damage = rand(min_damage, max_damage)
