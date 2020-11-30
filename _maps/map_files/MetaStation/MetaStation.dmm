@@ -76129,7 +76129,9 @@
 /area/maintenance/starboard)
 "tgQ" = (
 /obj/structure/water_source/puddle,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+	pixel_y = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/medical/virology)
