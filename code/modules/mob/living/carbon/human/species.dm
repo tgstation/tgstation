@@ -1620,7 +1620,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 	//when dead the air still effects your skin temp
-	if(humi.stat == DEAD)
+	if(humi.stat == DEAD || IS_IN_STASIS(humi))
 		body_temperature_skin(humi)
 	else //when alive do all the things
 		body_temperature_core(humi)
@@ -1689,8 +1689,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.08 to reflect temp back in to the core at the same rate as core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.08)
+		// change rate of 0.09 to reflect temp back to the skin at the slight higher rate then core to skin
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.09)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)
@@ -1717,9 +1717,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
-			if(0 to 461)
+			if(0 to 460)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-			if(460 to 700)
+			if(461 to 700)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			else
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
