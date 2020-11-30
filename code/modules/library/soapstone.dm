@@ -35,7 +35,7 @@
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
+		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='hear'>You hear a chipping sound.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		if(do_after(user, tool_speed, target = existing_message))
 			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
@@ -55,10 +55,10 @@
 		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='italics'>You hear a chipping sound.</span>")
+	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='hear'>You hear a chipping sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
 		if(!locate(/obj/structure/chisel_message) in T)
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='italics'>You hear a chipping sound.</span>")
+			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='hear'>You hear a chipping sound.</span>")
 			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
@@ -112,11 +112,10 @@
 	desc = "A message from a past traveler."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "soapstone_message"
-	layer = HIGH_OBJ_LAYER
+	layer = LATTICE_LAYER
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 30
-	layer = LATTICE_LAYER
 
 	var/hidden_message
 	var/creator_key
@@ -150,9 +149,9 @@
 /obj/structure/chisel_message/update_icon()
 	..()
 	var/hash = md5(hidden_message)
-	var/newcolor = copytext(hash, 1, 7)
+	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
-	light_color = "#[newcolor]"
+	set_light_color("#[newcolor]")
 	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
@@ -205,10 +204,13 @@
 /obj/structure/chisel_message/interact()
 	return
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/chisel_message/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/structure/chisel_message/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "engraved_message", name, 600, 300, master_ui, state)
+		ui = new(user, src, "EngravedMessage", name)
 		ui.open()
 
 /obj/structure/chisel_message/ui_data(mob/user)
@@ -230,6 +232,10 @@
 	return data
 
 /obj/structure/chisel_message/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	var/mob/user = usr
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/is_creator = user.ckey == creator_key

@@ -20,8 +20,9 @@
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = TRUE
-	light_power = 1.3
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 0.5
 	light_color = LIGHT_COLOR_FIRE
 
 /obj/effect/particle_effect/sparks/Initialize()
@@ -29,13 +30,12 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/sparks/LateInitialize()
-	flick(icon_state, src) // replay the animation
-	playsound(src, "sparks", 100, TRUE)
+	flick(icon_state, src)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
-	sleep(20)
-	qdel(src)
+	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = loc

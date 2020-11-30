@@ -54,7 +54,7 @@
 
 /datum/fantasy_affix/pyromantic/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/igniter, CLAMP(comp.quality, 1, 10))
+	comp.appliedComponents += master.AddComponent(/datum/component/igniter, clamp(comp.quality, 1, 10))
 	return "pyromantic [newName]"
 
 /datum/fantasy_affix/vampiric
@@ -66,3 +66,29 @@
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
 	return "vampiric [newName]"
+
+/datum/fantasy_affix/beautiful
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_GOOD
+
+/datum/fantasy_affix/beautiful/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	master.AddComponent(/datum/component/beauty, max(comp.quality, 1) * 250)
+	return "[pick("aesthetic", "beautiful", "gorgeous", "pretty")] [newName]"
+
+/datum/fantasy_affix/beautiful/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.AddComponent(/datum/component/beauty, -max(comp.quality, 1) * 250)
+
+/datum/fantasy_affix/ugly
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_EVIL
+
+/datum/fantasy_affix/ugly/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+	master.AddComponent(/datum/component/beauty, min(comp.quality, -1) * 250)
+	return "[pick("fugly", "ugly", "grotesque", "hideous")] [newName]"
+
+/datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.AddComponent(/datum/component/beauty, -min(comp.quality, -1) * 250)

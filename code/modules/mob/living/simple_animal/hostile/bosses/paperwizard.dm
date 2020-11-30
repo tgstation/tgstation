@@ -18,12 +18,12 @@
 	health = 1000
 	maxHealth = 1000
 	loot = list(/obj/effect/temp_visual/paperwiz_dying)
-	projectiletype = /obj/item/projectile/temp
+	projectiletype = /obj/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/list/copies = list()
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 
 //Summon Ability

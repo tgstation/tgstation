@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - balance: "Stam crit made more reliable against stamina regen drugs. Upon first entering stam crit, some extra stamina damage will be applied."

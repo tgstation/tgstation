@@ -4,8 +4,9 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-	var/moving = 0
+	var/moving = FALSE
 	var/datum/gas_mixture/air_contents = new()
+	var/occupied_icon_state = "pod_occupied"
 
 
 /obj/structure/transit_tube_pod/Initialize()
@@ -20,11 +21,11 @@
 	empty_pod()
 	return ..()
 
-/obj/structure/transit_tube_pod/update_icon()
+/obj/structure/transit_tube_pod/update_icon_state()
 	if(contents.len)
-		icon_state = "pod_occupied"
+		icon_state = occupied_icon_state
 	else
-		icon_state = "pod"
+		icon_state = initial(icon_state)
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -57,15 +58,21 @@
 		empty_pod()
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
-	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+	for(var/thing in contents)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube_pod/container_resist(mob/living/user)
+/obj/structure/transit_tube_pod/container_resist_act(mob/living/user)
 	if(!user.incapacitated())
 		empty_pod()
 		return
@@ -73,7 +80,7 @@
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		to_chat(user, "<span class='notice'>You start trying to escape from the pod...</span>")
-		if(do_after(user, 600, target = src))
+		if(do_after(user, 1 MINUTES, target = src))
 			to_chat(user, "<span class='notice'>You manage to open the pod.</span>")
 			empty_pod()
 
@@ -86,16 +93,16 @@
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
-		return 1
+		return TRUE
 	else
 		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = 0
+	set waitfor = FALSE
 	if(moving)
 		return
 
-	moving = 1
+	moving = TRUE
 
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
@@ -129,25 +136,36 @@
 
 		if(current_tube == null)
 			setDir(next_dir)
-			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
+		set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
-		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
 
 	density = TRUE
-	moving = 0
+	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
-		deconstruct(FALSE)	//we automatically deconstruct the pod
+		outside_tube()
+
+/obj/structure/transit_tube_pod/proc/outside_tube()
+	var/list/savedcontents = contents.Copy()
+	var/saveddir = dir
+	var/turf/destination = get_edge_target_turf(src,saveddir)
+	visible_message("<span class='warning'>[src] ejects its insides out!</span>")
+	deconstruct(FALSE)//we automatically deconstruct the pod
+	for(var/i in savedcontents)
+		var/atom/movable/AM = i
+		AM.throw_at(destination,rand(1,3),5)
 
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
@@ -161,28 +179,44 @@
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
 
-/obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
-	if(istype(mob) && mob.client)
-		if(!moving)
-			for(var/obj/structure/transit_tube/station/station in loc)
-				if(!station.pod_moving)
-					if(direction == turn(station.boarding_dir,180))
-						if(station.open_status == STATION_TUBE_OPEN)
-							mob.forceMove(loc)
-							update_icon()
-						else
-							station.open_animation()
 
-					else if(direction in station.tube_dirs)
-						setDir(direction)
-						station.launch_pod()
-				return
+/obj/structure/transit_tube_pod/relaymove(mob/living/user, direction)
+	if(!user.client || moving)
+		return
 
-			for(var/obj/structure/transit_tube/TT in loc)
-				if(dir in TT.tube_dirs)
-					if(TT.has_exit(direction))
-						setDir(direction)
-						return
+	for(var/obj/structure/transit_tube/station/station in loc)
+		if(station.pod_moving)
+			return
+		if(direction == turn(station.boarding_dir,180))
+			if(station.open_status == STATION_TUBE_OPEN)
+				user.forceMove(loc)
+				update_icon()
+			else
+				station.open_animation()
+		else if(direction in station.tube_dirs)
+			setDir(direction)
+			station.launch_pod()
+		return
+
+	for(var/obj/structure/transit_tube/transit_tube in loc)
+		if(!(dir in transit_tube.tube_dirs))
+			continue
+		if(!transit_tube.has_exit(direction))
+			continue
+		setDir(direction)
+		return
+
 
 /obj/structure/transit_tube_pod/return_temperature()
 	return air_contents.temperature
+
+//special pod made by the dispenser, it fizzles away when reaching a station.
+
+/obj/structure/transit_tube_pod/dispensed
+	name = "temporary transit tube pod"
+	desc = "Hits the skrrrt (tube station), then hits the dirt (nonexistence). You know how it is."
+	icon_state = "temppod"
+	occupied_icon_state = "temppod_occupied"
+
+/obj/structure/transit_tube_pod/dispensed/outside_tube()
+	qdel(src)

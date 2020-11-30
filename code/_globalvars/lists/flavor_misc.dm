@@ -35,15 +35,64 @@ GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
 GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)
+GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
-GLOBAL_LIST_INIT(color_list_ethereal, list("F Class(Green)" = "97ee63", "F2 Class (Light Green)" = "00fa9a", "F3 Class (Dark Green)" = "37835b", "M Class (Red)" = "9c3030", "M1 Class (Purple)" = "ee82ee", "G Class (Yellow)" = "fbdf56", "O Class (Blue)" = "3399ff", "A Class (Cyan)" = "00ffff"))
+GLOBAL_LIST_INIT(color_list_ethereal, list(
+	"Red" = "ff4d4d",
+	"Faint Red" = "ffb3b3",
+	"Dark Red" = "9c3030",
+	"Orange" = "ffa64d",
+	"Burnt Orange" = "cc4400",
+	"Bright Yellow" = "ffff99",
+	"Dull Yellow" = "fbdf56",
+	"Faint Green" = "ddff99",
+	"Green" = "97ee63",
+	"Seafoam Green" = "00fa9a",
+	"Dark Green" = "37835b",
+	"Cyan Blue" = "00ffff",
+	"Faint Blue" = "b3d9ff",
+	"Blue" = "3399ff",
+	"Dark Blue" = "6666ff",
+	"Purple" = "ee82ee",
+	"Dark Fuschia" = "cc0066",
+	"Pink" = "ff99cc",
+	"White" = "f2f2f2",))
 
-GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
+GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
+	"ghost",
+	"ghostian",
+	"ghostian2",
+	"ghostking",
+	"ghost_red",
+	"ghost_black",
+	"ghost_blue",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
+	"ghost_cyan",
+	"ghost_dblue",
+	"ghost_dred",
+	"ghost_dgreen",
+	"ghost_dcyan",
+	"ghost_grey",
+	"ghost_dyellow",
+	"ghost_dpink",
+	"skeleghost",
+	"ghost_purpleswirl",
+	"ghost_rainbow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",
+	"catghost")) //stores the ghost forms that support directional sprites
+
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, list(
+GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	":thinking:",
 	"Alien",
 	"Angel",
@@ -60,6 +109,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Gondola",
 	"Goon",
 	"Hades",
+	"HAL 9000",
 	"Heartline",
 	"Helios",
 	"House",
@@ -69,6 +119,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Murica",
 	"Nanotrasen",
 	"Not Malf",
+	"Portrait",
 	"President",
 	"Random",
 	"Rainbow",
@@ -80,7 +131,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
-	"Weird"))
+	"Weird")))
 
 /proc/resolve_ai_icon(input)
 	if(!input || !(input in GLOB.ai_core_display_screens))
@@ -88,9 +139,13 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	else
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
+		if(input == "Portrait")
+			var/datum/portrait_picker/tgui  = new(usr)//create the datum
+			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+			return "ai-portrait" //just take this until they decide
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
+GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
@@ -115,9 +170,6 @@ GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PE
 
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)
-
-	//radical shit
-GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
 
 GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons/taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg','sound/items/welder.ogg','sound/items/welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg'))
 
@@ -151,7 +203,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 21 Hydroponics
 22 Janitor
 23 Genetics
-24 Testing Range
+24 Experimentor Lab
 25 Toxins
 26 Dormitories
 27 Virology
@@ -172,12 +224,12 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Testing Range", "Toxins", "Dormitories", "Virology",
+	"Experimentor Lab", "Toxins", "Dormitories", "Virology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
-GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
+GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))
 
-GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt" + ""))
+GLOBAL_LIST_INIT(station_names, world.file2list("strings/station_names.txt"))
 
 GLOBAL_LIST_INIT(station_suffixes, world.file2list("strings/station_suffixes.txt"))
 
@@ -186,6 +238,8 @@ GLOBAL_LIST_INIT(greek_letters, world.file2list("strings/greek_letters.txt"))
 GLOBAL_LIST_INIT(phonetic_alphabet, world.file2list("strings/phonetic_alphabet.txt"))
 
 GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt"))
+
+GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
 /proc/generate_number_strings()
 	var/list/L[198]

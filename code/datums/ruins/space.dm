@@ -209,7 +209,7 @@
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
 
-/datum/map_template/ruin/space/oldAIsat
+/datum/map_template/ruin/space/old_ai_sat
 	id = "oldAIsat"
 	suffix = "oldAIsat.dmm"
 	name = "Abandoned Telecommunications Satellite"
@@ -244,12 +244,6 @@
 	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
 	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
 
-/datum/map_template/ruin/space/miracle
-	id = "miracle"
-	suffix = "miracle.dmm"
-	name = "Ordinary Space Tile"
-	description = "Absolutely nothing strange going on here, please move along, plenty more space to see right this way!"
-
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"
 	suffix = "gondolaasteroid.dmm"
@@ -276,14 +270,32 @@
 	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
 	are morally sound or not is another issue entirely."
 
-/datum/map_template/ruin/space/cloning_facility
-	id = "cloning_facility"
-	suffix = "cloning_facility.dmm"
-	name = "Ancient Cloning Lab"
-	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
-
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
+/datum/map_template/ruin/space/clownplanet
+	id = "clownplanet"
+	suffix = "clownplanet.dmm"
+	name = "Clown Planet"
+	description = "Thought lost in 2552, this minor planet has recently been rediscovered."
+
+/datum/map_template/ruin/space/clericden
+	id = "clericden"
+	suffix = "clericden.dmm"
+	name = "Cleric's Den"
+	description = "Once part of a larger monastery, this holy order of long dead clerics practiced far less non-violence than they preached. Appears to have been untouched by looters, however. Odd."
+
+/datum/map_template/ruin/space/forgottenship
+	id = "forgottenship"
+	suffix = "forgottenship.dmm"
+	name = "Syndicate Forgotten Ship"
+	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
+
+/datum/map_template/ruin/space/hellfactory
+	id = "hellfactory"
+	suffix = "hellfactory.dmm"
+	name = "Heck Brewery"
+	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."

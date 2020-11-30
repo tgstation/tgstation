@@ -11,12 +11,17 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
 	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
+	processing_flags = NONE
 	var/recharge_speed
 	var/repairs
+
 
 /obj/machinery/recharge_station/Initialize()
 	. = ..()
 	update_icon()
+	if(is_operational)
+		begin_processing()
+
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -35,22 +40,27 @@
 		if(repairs)
 			. += "<span class='notice'>[src] has been upgraded to support automatic repairs.</span>"
 
-/obj/machinery/recharge_station/process()
-	if(!is_operational())
-		return
 
+/obj/machinery/recharge_station/on_set_is_operational(old_value)
+	if(old_value) //Turned off
+		end_processing()
+	else //Turned on
+		begin_processing()
+
+
+/obj/machinery/recharge_station/process(delta_time)
 	if(occupant)
-		process_occupant()
+		process_occupant(delta_time)
 	return 1
 
-/obj/machinery/recharge_station/relaymove(mob/user)
+/obj/machinery/recharge_station/relaymove(mob/living/user, direction)
 	if(user.stat)
 		return
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
 		if (!(. & EMP_PROTECT_SELF))
@@ -88,8 +98,8 @@
 		use_power = ACTIVE_POWER_USE //It always tries to charge, even if it can't.
 		add_fingerprint(occupant)
 
-/obj/machinery/recharge_station/update_icon()
-	if(is_operational())
+/obj/machinery/recharge_station/update_icon_state()
+	if(is_operational)
 		if(state_open)
 			icon_state = "borgcharger0"
 		else
@@ -97,11 +107,7 @@
 	else
 		icon_state = (state_open ? "borgcharger-u0" : "borgcharger-u1")
 
-/obj/machinery/recharge_station/power_change()
-	..()
-	update_icon()
-
-/obj/machinery/recharge_station/proc/process_occupant()
+/obj/machinery/recharge_station/proc/process_occupant(delta_time)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed, repairs)
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * delta_time / 2, repairs)

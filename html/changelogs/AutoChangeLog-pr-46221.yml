@@ -1,4 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - balance: "Flashbangs now stun for 1/10 of their former duration, with a knockdown as long as the old stun."

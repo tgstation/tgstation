@@ -14,12 +14,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	var/can_elimination_hijack = ELIMINATION_NEUTRAL //If these antags are alone when a shuttle elimination happens.
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
+	var/antag_hud_type
+	var/antag_hud_name
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
+	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -27,7 +32,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
-	if(owner)
+	if(!owner)
+		stack_trace("Destroy()ing antagonist datum when it has no owner.")
+	else
 		LAZYREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
@@ -47,9 +54,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
+///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
+	if(old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
+		old_body.remove_from_current_living_antags()
 	apply_innate_effects(new_body)
+	if(new_body.stat != DEAD)
+		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -59,21 +72,51 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, antag_hud_name)
+
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.leave_hud(mob_override)
+	set_antag_hud(mob_override, null)
+
+// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
+/datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
+	var/mob/living/carbon/human/H = mob_override
+	if(H && istype(H) && owner.assigned_role == "Clown")
+		if(removing) // They're a clown becoming an antag, remove clumsy
+			H.dna.remove_mutation(CLOWNMUT)
+			if(!silent && message)
+				to_chat(H, "<span class='boldnotice'>[message]</span>")
+		else
+			H.dna.add_mutation(CLOWNMUT) // We're removing their antag status, add back clumsy
+
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)
 	return
 
-//Proc called when the datum is given to a mind.
+///Called by the add_antag_datum() mind proc after the instanced datum is added to the mind's antag_datums list.
 /datum/antagonist/proc/on_gain()
-	if(owner && owner.current)
-		if(!silent)
-			greet()
-		apply_innate_effects()
-		give_antag_moodies()
-		if(is_banned(owner.current) && replace_banned)
-			replace_banned_player()
-		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
-			owner.current.client.holder.auto_deadmin()
+	SHOULD_CALL_PARENT(TRUE)
+	if(!owner)
+		CRASH("[src] ran on_gain() without a mind")
+	if(!owner.current)
+		CRASH("[src] ran on_gain() on a mind without a mob")
+	if(!silent)
+		greet()
+	apply_innate_effects()
+	give_antag_moodies()
+	if(is_banned(owner.current) && replace_banned)
+		replace_banned_player()
+	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
+		owner.current.client.holder.auto_deadmin()
+	if(owner.current.stat != DEAD)
+		owner.current.add_to_current_living_antags()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -91,13 +134,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.ghostize(0)
 		owner.current.key = C.key
 
+///Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/proc/on_removal()
+	SHOULD_CALL_PARENT(TRUE)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+
 	remove_innate_effects()
 	clear_antag_moodies()
-	if(owner)
-		LAZYREMOVE(owner.antag_datums, src)
-		if(!silent && owner.current)
-			farewell()
+	LAZYREMOVE(owner.antag_datums, src)
+	if(!LAZYLEN(owner.antag_datums))
+		owner.current.remove_from_current_living_antags()
+	if(!silent && owner.current)
+		farewell()
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -128,7 +177,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/report = list()
 
 	if(!owner)
-		CRASH("antagonist datum without owner")
+		CRASH("Antagonist datum without owner")
 
 	report += printplayer(owner)
 
@@ -212,10 +261,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = copytext(trim(input(user,"Write new memory", "Memory", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
+	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	return H?.hijack_speed_override || hijack_speed
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
@@ -223,7 +277,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	show_name_in_check_antagonists = TRUE //They're all different
 	var/datum/team/custom_team
 
-datum/antagonist/custom/create_team(datum/team/team)
+/datum/antagonist/custom/create_team(datum/team/team)
 	custom_team = team
 
 /datum/antagonist/custom/get_team()

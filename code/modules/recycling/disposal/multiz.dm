@@ -23,7 +23,7 @@
 		if(multiz_dir == MULTIZ_PIPE_DOWN)
 			T = SSmapping.get_turf_below(get_turf(src))
 		if(!T)
-			expel(H)
+			expel(H, get_turf(src), pick(GLOB.cardinals))
 			return //Nothing located.
 		var/obj/structure/disposalpipe/trunk/multiz/pipe = locate(/obj/structure/disposalpipe/trunk/multiz) in T
 		if(pipe)

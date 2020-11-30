@@ -10,11 +10,15 @@ SUBSYSTEM_DEF(stickyban)
 
 
 /datum/controller/subsystem/stickyban/Initialize(timeofday)
+	if (length(GLOB.stickybanadminexemptions))
+		restore_stickybans()
 	var/list/bannedkeys = sticky_banned_ckeys()
 	//sanitize the sticky ban list
 
 	//delete db bans that no longer exist in the database and add new legacy bans to the database
 	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
+		if (length(GLOB.stickybanadminexemptions))
+			restore_stickybans()
 		for (var/oldban in (world.GetConfig("ban") - bannedkeys))
 			var/ckey = ckey(oldban)
 			if (ckey != oldban && (ckey in bannedkeys))
@@ -29,6 +33,8 @@ SUBSYSTEM_DEF(stickyban)
 				bannedkeys += ckey
 			world.SetConfig("ban", oldban, null)
 
+	if (length(GLOB.stickybanadminexemptions)) //the previous loop can sleep
+		restore_stickybans()
 
 	for (var/bannedkey in bannedkeys)
 		var/ckey = ckey(bannedkey)
@@ -54,10 +60,10 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/proc/Populatedbcache()
 	var/newdbcache = list() //so if we runtime or the db connection dies we don't kill the existing cache
 
-	var/datum/DBQuery/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDER BY ckey")
-	var/datum/DBQuery/query_ckey_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, last_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
-	var/datum/DBQuery/query_cid_matches = SSdbcore.NewQuery("SELECT stickyban, matched_cid, first_matched, last_matched FROM [format_table_name("stickyban_matched_cid")] ORDER BY first_matched")
-	var/datum/DBQuery/query_ip_matches = SSdbcore.NewQuery("SELECT stickyban, INET_NTOA(matched_ip), first_matched, last_matched FROM [format_table_name("stickyban_matched_ip")] ORDER BY first_matched")
+	var/datum/db_query/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDER BY ckey")
+	var/datum/db_query/query_ckey_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, last_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
+	var/datum/db_query/query_cid_matches = SSdbcore.NewQuery("SELECT stickyban, matched_cid, first_matched, last_matched FROM [format_table_name("stickyban_matched_cid")] ORDER BY first_matched")
+	var/datum/db_query/query_ip_matches = SSdbcore.NewQuery("SELECT stickyban, INET_NTOA(matched_ip), first_matched, last_matched FROM [format_table_name("stickyban_matched_ip")] ORDER BY first_matched")
 
 	SSdbcore.QuerySelect(list(query_stickybans, query_ckey_matches, query_cid_matches, query_ip_matches))
 
@@ -150,7 +156,10 @@ SUBSYSTEM_DEF(stickyban)
 	if (!ban["message"])
 		ban["message"] = "Evasion"
 
-	var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(ban["admin"])]')")
+	var/datum/db_query/query_create_stickyban = SSdbcore.NewQuery(
+		"INSERT IGNORE INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES (:ckey, :message, :admin)",
+		list("ckey" = ckey, "message" = ban["message"], "admin" = ban["admin"])
+	)
 	if (!query_create_stickyban.warn_execute())
 		qdel(query_create_stickyban)
 		return
@@ -164,8 +173,8 @@ SUBSYSTEM_DEF(stickyban)
 		var/list/keys = splittext(ban["keys"], ",")
 		for (var/key in keys)
 			var/list/sqlckey = list()
-			sqlckey["stickyban"] = "'[sanitizeSQL(ckey)]'"
-			sqlckey["matched_ckey"] = "'[sanitizeSQL(ckey(key))]'"
+			sqlckey["stickyban"] = ckey
+			sqlckey["matched_ckey"] = ckey(key)
 			sqlckey["exempt"] = FALSE
 			sqlckeys[++sqlckeys.len] = sqlckey
 
@@ -173,8 +182,8 @@ SUBSYSTEM_DEF(stickyban)
 		var/list/keys = splittext(ban["whitelist"], ",")
 		for (var/key in keys)
 			var/list/sqlckey = list()
-			sqlckey["stickyban"] = "'[sanitizeSQL(ckey)]'"
-			sqlckey["matched_ckey"] = "'[sanitizeSQL(ckey(key))]'"
+			sqlckey["stickyban"] = ckey
+			sqlckey["matched_ckey"] = ckey(key)
 			sqlckey["exempt"] = TRUE
 			sqlckeys[++sqlckeys.len] = sqlckey
 
@@ -182,26 +191,26 @@ SUBSYSTEM_DEF(stickyban)
 		var/list/cids = splittext(ban["computer_id"], ",")
 		for (var/cid in cids)
 			var/list/sqlcid = list()
-			sqlcid["stickyban"] = "'[sanitizeSQL(ckey)]'"
-			sqlcid["matched_cid"] = "'[sanitizeSQL(cid)]'"
+			sqlcid["stickyban"] = ckey
+			sqlcid["matched_cid"] = cid
 			sqlcids[++sqlcids.len] = sqlcid
 
 	if (ban["IP"])
 		var/list/ips = splittext(ban["IP"], ",")
 		for (var/ip in ips)
 			var/list/sqlip = list()
-			sqlip["stickyban"] = "'[sanitizeSQL(ckey)]'"
-			sqlip["matched_ip"] = "'[sanitizeSQL(ip)]'"
+			sqlip["stickyban"] = ckey
+			sqlip["matched_ip"] = ip
 			sqlips[++sqlips.len] = sqlip
 
 	if (length(sqlckeys))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlckeys, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlckeys, ignore_errors = TRUE)
 
 	if (length(sqlcids))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_cid"), sqlcids, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_cid"), sqlcids, ignore_errors = TRUE)
 
 	if (length(sqlips))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_ip"), sqlips, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_ip"), sqlips, ignore_errors = TRUE)
 
 
 	return TRUE

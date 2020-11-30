@@ -24,16 +24,6 @@
 	return
 
 
-/client
-	var/list/atom/selected_target[2]
-	var/obj/item/active_mousedown_item = null
-	var/mouseParams = ""
-	var/mouseLocation = null
-	var/mouseObject = null
-	var/mouseControlObject = null
-	var/middragtime = 0
-	var/atom/middragatom
-
 /client/MouseDown(object, location, control, params)
 	if (mouse_down_icon)
 		mouse_pointer_icon = mouse_down_icon
@@ -84,23 +74,17 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item
-	var/canMouseDown = FALSE
-
-/obj/item/gun
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
-
 /obj/item/gun/CanItemAutoclick(object, location, params)
 	. = automatic
 
 /atom/proc/IsAutoclickable()
-	. = 1
+	return TRUE
 
-/obj/screen/IsAutoclickable()
-	. = 0
+/atom/movable/screen/IsAutoclickable()
+	return FALSE
 
-/obj/screen/click_catcher/IsAutoclickable()
-	. = 1
+/atom/movable/screen/click_catcher/IsAutoclickable()
+	return TRUE
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)
@@ -114,8 +98,7 @@
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)

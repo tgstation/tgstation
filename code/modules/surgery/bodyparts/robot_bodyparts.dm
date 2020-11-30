@@ -13,12 +13,14 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
-	item_state = "buildpipe"
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
+	disable_threshold = 1
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -34,12 +36,14 @@
 /obj/item/bodypart/r_arm/robot
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
-	item_state = "buildpipe"
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
+	disable_threshold = 1
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -55,12 +59,14 @@
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
-	item_state = "buildpipe"
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
+	disable_threshold = 1
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -76,12 +82,14 @@
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
-	item_state = "buildpipe"
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
+	disable_threshold = 1
 
 	brute_reduction = 5
 	burn_reduction = 4
@@ -97,7 +105,7 @@
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
-	item_state = "buildpipe"
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
@@ -117,6 +125,8 @@
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
 
+/obj/item/bodypart/chest/robot/get_cell()
+	return cell
 
 /obj/item/bodypart/chest/robot/handle_atom_del(atom/A)
 	if(A == cell)
@@ -198,7 +208,7 @@
 /obj/item/bodypart/head/robot
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
-	item_state = "buildpipe"
+	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"

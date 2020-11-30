@@ -2,7 +2,7 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/carrotshiv
+	r_pocket = /obj/item/kitchen/knife/shiv
 
 /datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -41,11 +41,11 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
-	no_drops += H.get_item_by_slot(SLOT_HEAD)
-	no_drops += H.get_item_by_slot(SLOT_GLASSES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HEAD)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EYES)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -59,7 +59,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/organ/eyes/robotic/glow/eyes = new()
-	eyes.Insert(src, drop_if_replaced = FALSE)
+	eyes.Insert(H, drop_if_replaced = FALSE)
 
 /datum/outfit/spacepol
 	name = "Spacepol Officer"
@@ -67,7 +67,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	head = /obj/item/clothing/head/helmet/police
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -95,16 +95,17 @@
 /datum/outfit/bountyarmor
 	name = "Bounty Hunter - Armored"
 	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/garb
 	ears = /obj/item/radio/headset
-	l_pocket = /obj/item/tank/internals/plasma/full
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id
+	l_hand = /obj/item/tank/internals/plasma/full
 	r_hand = /obj/item/flamethrower/full/tank
 
 /datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -132,7 +133,7 @@
 		/obj/item/ammo_casing/shotgun/incapacitate = 6
 		)
 
-/datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id

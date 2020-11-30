@@ -3,7 +3,8 @@
 	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
-	attack_verb = list("thumped", "whomped", "bumped")
+	attack_verb_continuous = list("thumps", "whomps", "bumps")
+	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
@@ -22,6 +23,7 @@
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
+///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -114,7 +116,7 @@
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
@@ -131,7 +133,7 @@
 						C.drunkenness = min(C.drunkenness + 20, 50)
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
-				if(current_location && current_area && current_area.noteleport)
+				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
 					to_chat(user, "<span class='notice'>There is no escape. No recall or intervention can work in this place.</span>")
 				else
 					to_chat(user, "<span class='notice'>There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile.</span>")
@@ -170,19 +172,19 @@
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", 1,
-			"<span class='notice'>They're happy.</span>", 0)
+		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
+			"<span class='notice'>They're happy.</span>", NONE)
 		Kisser.cheer_up()
 		cheer_up()
 
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 
 	//first comes love
 	else if(Kisser.lover != src && Kisser.partner != src)	//cannot be lovers or married
@@ -202,8 +204,8 @@
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", 1,
-								"<span class='notice'>That didn't feel like it worked, this time.</span>", 0)
+			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
+								"<span class='notice'>That didn't feel like it worked, this time.</span>", NONE)
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
@@ -216,6 +218,7 @@
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
+		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
 			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
@@ -227,7 +230,7 @@
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", 0)
+		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", NONE)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
@@ -379,18 +382,20 @@
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon_state = "carpplush"
-	item_state = "carp_plushie"
-	attack_verb = list("bitten", "eaten", "fin slapped")
+	inhand_icon_state = "carp_plushie"
+	attack_verb_continuous = list("bites", "eats", "fin slaps")
+	attack_verb_simple = list("bite", "eat", "fin slap")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rent")
+	attack_verb_continuous = list("rents")
+	attack_verb_simple = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
-/obj/item/toy/plush/plushvar
+/obj/item/toy/plush/ratplush
 	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
@@ -398,7 +403,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
 
-/obj/item/toy/plush/plushvar/Moved()
+/obj/item/toy/plush/ratplush/Moved()
 	. = ..()
 	if(clash_target)
 		return
@@ -406,7 +411,7 @@
 	if(P && istype(P.loc, /turf/open) && !P.clashing)
 		clash_of_the_plushies(P)
 
-/obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
+/obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
 	P.clashing = TRUE
 	say("YOU.")
@@ -487,7 +492,7 @@
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
-	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
+	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
@@ -495,41 +500,44 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
-	item_state = "plushie_lizard"
-	attack_verb = list("clawed", "hissed", "tail slapped")
+	inhand_icon_state = "plushie_lizard"
+	attack_verb_continuous = list("claws", "hisses", "tail slaps")
+	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
 	icon_state = "plushie_snake"
-	item_state = "plushie_snake"
-	attack_verb = list("bitten", "hissed", "tail slapped")
+	inhand_icon_state = "plushie_snake"
+	attack_verb_continuous = list("bites", "hisses", "tail slaps")
+	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
-	item_state = "plushie_nuke"
-	attack_verb = list("shot", "nuked", "detonated")
+	inhand_icon_state = "plushie_nuke"
+	attack_verb_continuous = list("shoots", "nukes", "detonates")
+	attack_verb_simple = list("shoot", "nuke", "detonate")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
-	item_state = "plushie_slime"
-	attack_verb = list("blorbled", "slimed", "absorbed")
+	inhand_icon_state = "plushie_slime"
+	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
+	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
-	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
-	item_state = "plushie_awake"
+	inhand_icon_state = "plushie_awake"
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
@@ -539,7 +547,51 @@
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
-	item_state = "plushie_h"
-	attack_verb = list("stung")
+	inhand_icon_state = "plushie_h"
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+
+/obj/item/toy/plush/goatplushie
+	name = "strange goat plushie"
+	icon_state = "goat"
+	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
+	squeak_override = list('sound/weapons/punch1.ogg'=1)
+
+/obj/item/toy/plush/moth
+	name = "moth plushie"
+	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
+	icon_state = "moffplush"
+	inhand_icon_state = "moffplush"
+	attack_verb_continuous = list("flutters", "flaps")
+	attack_verb_simple = list("flutter", "flap")
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+///Used to track how many people killed themselves with item/toy/plush/moth
+	var/suicide_count = 0
+
+/obj/item/toy/plush/moth/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	suicide_count++
+	if(suicide_count < 3)
+		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+	else
+		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		divine = TRUE
+		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
+	var/list/available_spots = get_adjacent_open_turfs(loc)
+	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
+		var/turf/open/random_open_spot = pick(available_spots)
+		forceMove(random_open_spot)
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/pkplush
+	name = "peacekeeper plushie"
+	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
+	icon_state = "pkplush"
+	inhand_icon_state = "pkplush"
+	attack_verb_continuous = list("hugs", "squeezes")
+	attack_verb_simple = list("hug", "squeeze")
+	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)

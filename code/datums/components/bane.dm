@@ -8,7 +8,7 @@
 /datum/component/bane/Initialize(mobtype, damage_multiplier=1)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	if(ispath(mobtype, /mob/living))
 		src.mobtype = mobtype
 	else if(ispath(mobtype, /datum/species))
@@ -28,12 +28,16 @@
 	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 
 /datum/component/bane/proc/speciesCheck(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(!is_species(target, speciestype))
+	SIGNAL_HANDLER
+
+	if(!proximity_flag || !is_species(target, speciestype))
 		return
 	activate(source, target, user)
 
 /datum/component/bane/proc/mobCheck(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(!istype(target, mobtype))
+	SIGNAL_HANDLER
+
+	if(!proximity_flag || !istype(target, mobtype))
 		return
 	activate(source, target, user)
 

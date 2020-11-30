@@ -6,7 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
@@ -33,7 +33,13 @@
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
 	if(stored_extinguisher)
-		stored_extinguisher.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += stored_extinguisher
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += stored_extinguisher
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += stored_extinguisher
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
@@ -87,22 +93,23 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(stored_extinguisher)
 		stored_extinguisher.forceMove(loc)
 		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
 		stored_extinguisher = null
-		opened = 1
+		opened = TRUE
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
-	else
-		toggle_cabinet(user)
+		return
+	toggle_cabinet(user)
 
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)
 	return attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	toggle_cabinet(user)
 
@@ -114,11 +121,10 @@
 		opened = !opened
 		update_icon()
 
-/obj/structure/extinguisher_cabinet/update_icon()
+/obj/structure/extinguisher_cabinet/update_icon_state()
 	if(!opened)
 		icon_state = "extinguisher_closed"
-		return
-	if(stored_extinguisher)
+	else if(stored_extinguisher)
 		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
 			icon_state = "extinguisher_mini"
 		else

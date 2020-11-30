@@ -4,6 +4,7 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
@@ -20,7 +21,7 @@
 	if(mybag)
 		qdel(mybag)
 		mybag = null
-	. = ..()
+	return ..()
 
 /obj/item/janiupgrade
 	name = "floor buffer upgrade"
@@ -29,7 +30,7 @@
 	icon_state = "upgrade"
 
 /obj/vehicle/ridden/janicart/examine(mob/user)
-	. += ..()
+	. = ..()
 	if(floorbuffer)
 		. += "It has been upgraded with a floor buffer."
 
@@ -52,15 +53,17 @@
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
 		update_icon()
+	else if(mybag)
+		mybag.attackby(I, user)
 	else
 		return ..()
 
-/obj/vehicle/ridden/janicart/update_icon()
-	cut_overlays()
+/obj/vehicle/ridden/janicart/update_overlays()
+	. = ..()
 	if(mybag)
-		add_overlay("cart_garbage")
+		. += "cart_garbage"
 	if(floorbuffer)
-		add_overlay("cart_buffer")
+		. += "cart_buffer"
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user)
 	. = ..()

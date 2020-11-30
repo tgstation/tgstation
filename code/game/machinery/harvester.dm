@@ -11,6 +11,7 @@
 	light_color = LIGHT_COLOR_BLUE
 	var/interval = 20
 	var/harvesting = FALSE
+	var/warming_up = FALSE
 	var/list/operation_order = list() //Order of wich we harvest limbs.
 	var/allow_clothing = FALSE
 	var/allow_living = FALSE
@@ -27,12 +28,11 @@
 		max_time -= L.rating
 	interval = max(max_time,1)
 
-/obj/machinery/harvester/update_icon(warming_up)
-	if(warming_up)
-		icon_state = initial(icon_state)+"-charging"
-		return
+/obj/machinery/harvester/update_icon_state()
 	if(state_open)
 		icon_state = initial(icon_state)+"-open"
+	else if(warming_up)
+		icon_state = initial(icon_state)+"-charging"
 	else if(harvesting)
 		icon_state = initial(icon_state)+"-active"
 	else
@@ -42,6 +42,7 @@
 	if(panel_open)
 		return
 	. = ..()
+	warming_up = FALSE
 	harvesting = FALSE
 
 /obj/machinery/harvester/attack_hand(mob/user)
@@ -57,7 +58,7 @@
 		start_harvest()
 
 /obj/machinery/harvester/proc/can_harvest()
-	if(!powered(EQUIP) || state_open || !occupant || !iscarbon(occupant))
+	if(!powered() || state_open || !occupant || !iscarbon(occupant))
 		return
 	var/mob/living/carbon/C = occupant
 	if(!allow_clothing)
@@ -84,15 +85,17 @@
 		return
 	var/mob/living/carbon/C = occupant
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+	warming_up = TRUE
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	say("Initializing harvest protocol.")
-	update_icon(TRUE)
+	update_icon()
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
 /obj/machinery/harvester/proc/harvest()
+	warming_up = FALSE
 	update_icon()
-	if(!harvesting || state_open || !powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
@@ -125,6 +128,7 @@
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
 /obj/machinery/harvester/proc/end_harvesting()
+	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
 	say("Subject has been successfully harvested.")
@@ -151,7 +155,7 @@
 		return TRUE
 
 /obj/machinery/harvester/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational() here
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
@@ -164,7 +168,7 @@
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
 
-/obj/machinery/harvester/container_resist(mob/living/user)
+/obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
 		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 			"<span class='notice'>You climb out of [src]!</span>")
@@ -174,15 +178,15 @@
 
 /obj/machinery/harvester/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
-		container_resist(user)
+		container_resist_act(user)
 
-/obj/machinery/harvester/relaymove(mob/user)
+/obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/harvester/examine(mob/user)
 	. = ..()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(state_open)
 		. += "<span class='notice'>[src] must be closed before harvesting.</span>"

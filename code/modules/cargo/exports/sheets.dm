@@ -53,6 +53,12 @@
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
+/datum/export/stack/licenseplate
+	cost = 25
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
+
+
 // Common materials.
 // For base materials, see materials.dm
 
@@ -67,15 +73,26 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-/datum/export/stack/bscrystal
-	cost = 300
-	message = "of bluespace crystals"
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+/datum/export/stack/plastitanium
+	cost = 325 // plasma + titanium costs
+	message = "of plastitanium"
+	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
 /datum/export/stack/wood
 	cost = 30
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
+
+/datum/export/stack/cloth
+	cost = 5
+	message = "rolls of cloth"
+	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/durathread
+	cost = 70
+	message = "rolls of durathread"
+	export_types = list(/obj/item/stack/sheet/durathread)
+
 
 /datum/export/stack/cardboard
 	cost = 2
@@ -93,16 +110,25 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
+/datum/export/stack/pizza
+	cost = 12
+	unit_name = "of sheetza"
+	export_types = list(/obj/item/stack/sheet/pizza)
+
+/datum/export/stack/meat
+	cost = 8
+	unit_name = "of meat"
+	export_types = list(/obj/item/stack/sheet/meat)
+
+
 // Weird Stuff
 
 /datum/export/stack/abductor
 	cost = 1000
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
-
-/datum/export/stack/adamantine
-	unit_name = "bar"
-	cost = 500
-	message = "of adamantine"
-	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
-

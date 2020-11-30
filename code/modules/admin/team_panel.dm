@@ -55,7 +55,7 @@
 	if(!message)
 		return
 	for(var/datum/mind/M in members)
-		to_chat(M.current,message)
+		to_chat(M.current,message, confidential = TRUE)
 
 	message_admins("[key_name_admin(usr)] messaged [name] team with : [message]")
 	log_admin("Team Message: [key_name(usr)] -> [name] team : [message]")
@@ -111,7 +111,7 @@
 	for(var/mob/M in GLOB.mob_list)
 		if(M.mind)
 			minds |= M.mind
-	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in minds
+	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in sortNames(minds)
 	if (!value)
 		return
 
@@ -128,7 +128,7 @@
 //After a bit of consideration i block team deletion if there's any members left until unified objective handling is in.
 /datum/team/proc/admin_delete(mob/user)
 	if(members.len > 0)
-		to_chat(user,"Team has members left, remove them first and make sure you know what you're doing.")
+		to_chat(user,"Team has members left, remove them first and make sure you know what you're doing.", confidential = TRUE)
 		return
 	qdel(src)
 
@@ -169,7 +169,7 @@
 //This is here if you want admin created teams to tell each other apart easily.
 /datum/team/custom/proc/admin_force_hud(mob/user)
 	var/list/possible_icons = icon_states('icons/mob/hud.dmi')
-	var/new_hud_state = input(user,"Choose hud icon state","Custom HUD","traitor") as null|anything in possible_icons
+	var/new_hud_state = input(user,"Choose hud icon state","Custom HUD","traitor") as null|anything in sortList(possible_icons)
 	if(!new_hud_state)
 		return
 	//suppose could ask for color too

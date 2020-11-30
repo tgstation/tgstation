@@ -53,6 +53,27 @@
 	for(var/I in adjacent_turfs)
 		. |= get_area(I)
 
+/**
+ * Get a bounding box of a list of atoms.
+ *
+ * Arguments:
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
+/proc/get_bbox_of_atoms(list/atoms)
+	var/list/list_x = list()
+	var/list/list_y = list()
+	for(var/_a in atoms)
+		var/atom/a = _a
+		list_x += a.x
+		list_y += a.y
+	return list(
+		min(list_x),
+		min(list_y),
+		max(list_x),
+		max(list_y))
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
@@ -73,8 +94,8 @@
 		if(C == must_be_alone)
 			continue
 		if(our_area == get_area(C))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
@@ -152,11 +173,11 @@
 /proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
 	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list))
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /** recursive_organ_check
@@ -196,56 +217,12 @@
 
 	return
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
-//No need for a recursive limit either
-/proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
-
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_mobs = list()
-
-	while(processing_list.len)
-
-		var/atom/A = processing_list[1]
-		var/passed = 0
-
-		if(ismob(A))
-			var/mob/A_tmp = A
-			passed=1
-
-			if(client_check && !A_tmp.client)
-				passed=0
-
-			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
-
-		else if(include_radio && istype(A, /obj/item/radio))
-			passed=1
-
-			if(sight_check && !isInSight(A, O))
-				passed=0
-
-		if(passed)
-			found_mobs |= A
-
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
-
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
-
-	return found_mobs
-
-
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
-
 	if(!T)
 		return
-
 	var/list/processing_list = list()
 	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
@@ -258,11 +235,12 @@
 			processing_list += O
 		T.luminosity = lum
 
-	while(processing_list.len) // recursive_hear_check inlined here
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list)) // recursive_hear_check inlined here
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
+			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
@@ -271,7 +249,6 @@
 	for(var/obj/item/radio/R in radios)
 		if(R)
 			. |= get_hearers_in_view(R.canhear_range, R)
-
 
 #define SIGNV(X) ((X<0)?-1:1)
 
@@ -285,8 +262,8 @@
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
-				if(T.opacity)
-					return 0
+				if(IS_OPAQUE_TURF(T))
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -301,9 +278,9 @@
 			else
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
-			if(T.opacity)
-				return 0
-	return 1
+			if(IS_OPAQUE_TURF(T))
+				return FALSE
+	return TRUE
 #undef SIGNV
 
 
@@ -312,36 +289,19 @@
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
-	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
+	return inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z)
 
-	else
-		return 0
-
-
-/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
-	var/dx = finish.x - start.x
-	var/dy = finish.y - start.y
-	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
-		if(dy > 0)
-			return get_step(start, SOUTH)
-		else
-			return get_step(start, NORTH)
-	else
-		if(dx > 0)
-			return get_step(start, WEST)
-		else
-			return get_step(start, EAST)
-
-
-/proc/try_move_adjacent(atom/movable/AM)
+/proc/try_move_adjacent(atom/movable/AM, trydir)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinals)
+	if(trydir)
+		if(AM.Move(get_step(T, trydir)))
+			return TRUE
+	for(var/direction in (GLOB.cardinals-trydir))
 		if(AM.Move(get_step(T, direction)))
-			break
+			return TRUE
+	return FALSE
 
 /proc/get_mob_by_key(key)
 	var/ckey = ckey(key)
@@ -352,7 +312,7 @@
 	return null
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
-	if(M && M.current)
+	if(M?.current)
 		if(enforce_human)
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
@@ -361,13 +321,13 @@
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
-	
+
 /**
   * Exiled check
-  * 
-  * Checks if the current body of the mind has an exile implant and is currently in 
+  *
+  * Checks if the current body of the mind has an exile implant and is currently in
   * an away mission. Returns FALSE if any of those conditions aren't met.
-  */ 
+  */
 /proc/considered_exiled(datum/mind/M)
 	if(!ishuman(M?.current))
 		return FALSE
@@ -380,7 +340,7 @@
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
 	if(!isobj(O))
-		O = new /obj/screen/text()
+		O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -404,12 +364,12 @@
 			viewing += M.client
 	flick_overlay(I, viewing, duration)
 
-/proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
+/proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
 	// Get active players who are playing in the round
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/M = GLOB.player_list[i]
-		if(M && M.client)
+		if(M?.client)
 			if(alive_check && M.stat)
 				continue
 			else if(afk_check && M.client.is_afk())
@@ -431,8 +391,9 @@
 	SEND_SOUND(M, 'sound/misc/notice2.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
-		if(1)
+	var/list/answers = ignore_category ? list("Yes", "No", "Never for this round") : list("Yes", "No")
+	switch(tgui_alert(M, Question, "A limited-time offer!", answers, timeout=poll_time))
+		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
 			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
@@ -440,10 +401,10 @@
 				candidates -= M
 			else
 				candidates += M
-		if(2)
+		if("No")
 			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
 			candidates -= M
-		if(3)
+		if("Never for this round")
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()
@@ -455,6 +416,8 @@
 
 /proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
 	var/list/candidates = list()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		return candidates
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
@@ -468,7 +431,7 @@
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
-		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && (M.ckey in GLOB.poll_ignore[ignore_category])))
 			continue
 		if(be_special_flag)
 			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
@@ -508,8 +471,6 @@
 		else
 			++i
 	return L
-
-/proc/poll_helper(var/mob/living/M)
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
@@ -552,11 +513,11 @@
 
 	return A.loc
 
-/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
-	deadchat_broadcast(" has arrived at the station at <span class='name'>[A.name]</span>.", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[A.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
@@ -564,15 +525,6 @@
 
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
-
-/proc/GetRedPart(const/hexa)
-	return hex2num(copytext(hexa, 2, 4))
-
-/proc/GetGreenPart(const/hexa)
-	return hex2num(copytext(hexa, 4, 6))
-
-/proc/GetBluePart(const/hexa)
-	return hex2num(copytext(hexa, 6, 8))
 
 /proc/lavaland_equipment_pressure_check(turf/T)
 	. = FALSE
@@ -593,22 +545,22 @@
 	)
 	return (is_type_in_list(item, pire_wire))
 
-// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
-/proc/find_obstruction_free_location(var/range, var/atom/center, var/area/specific_area)
+// Find an obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/turfs = RANGE_TURFS(range, center)
 	var/list/possible_loc = list()
 
 	for(var/turf/found_turf in turfs)
 		var/area/turf_area = get_area(found_turf)
 
-		// We check if both the turf is a floor, and that it's actually in the area. 
+		// We check if both the turf is a floor, and that it's actually in the area.
 		// We also want a location that's clear of any obstructions.
 		if (specific_area)
 			if (!istype(turf_area, specific_area))
 				continue
 
 		if (!isspaceturf(found_turf))
-			if (!is_blocked_turf(found_turf))
+			if (!found_turf.is_blocked_turf())
 				possible_loc.Add(found_turf)
 
 	// Need at least one free location.

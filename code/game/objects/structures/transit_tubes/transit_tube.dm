@@ -7,17 +7,16 @@
 	density = TRUE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
-	climbable = 1
+	climbable = TRUE
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
-	var/const/time_to_unwrench = 2 SECONDS
 
-/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+/obj/structure/transit_tube/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
-	return !density
+		return TRUE
 
 /obj/structure/transit_tube/New(loc, newdirection)
 	..(loc)
@@ -43,7 +42,7 @@
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] starts to detach \the [src].</span>", "<span class='notice'>You start to detach the [name]...</span>")
-			if(W.use_tool(src, user, time_to_unwrench, volume=50))
+			if(W.use_tool(src, user, 2 SECONDS, volume=50))
 				to_chat(user, "<span class='notice'>You detach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
@@ -58,7 +57,7 @@
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
-	return 0
+	return FALSE
 
 // Called when a pod stops in this tube section.
 /obj/structure/transit_tube/proc/pod_stopped(pod, from_dir)
@@ -70,18 +69,18 @@
 
 	for(var/direction in tube_dirs)
 		if(direction == from_dir)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 
 /obj/structure/transit_tube/proc/has_exit(in_dir)
 	for(var/direction in tube_dirs)
 		if(direction == in_dir)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 
 
@@ -131,7 +130,7 @@
 
 /obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
-		if(direction in GLOB.diagonals)
+		if(ISDIAGONALDIR(direction))
 			if(direction & NORTH)
 				create_tube_overlay(direction ^ 3, NORTH)
 

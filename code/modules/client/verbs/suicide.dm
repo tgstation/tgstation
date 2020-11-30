@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = FALSE
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
@@ -22,7 +22,7 @@
 			mmi.brainmob.suiciding = suicide_state
 
 /mob/living/carbon/human/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
@@ -75,21 +75,33 @@
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				death(FALSE)
+				ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 				return
 
 		var/suicide_message
 
 		if(a_intent == INTENT_DISARM)
+			if(prob(25))
+				disarm_suicide()	// Snowflake suicide for a tired joke.
+				return	//above proc handles logging and death
 			suicide_message = pick("[src] is attempting to push [p_their()] own head off [p_their()] shoulders! It looks like [p_theyre()] trying to commit suicide.", \
-								"[src] is pushing [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-								"[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide.")//heheh get it?
-		if(a_intent == INTENT_GRAB)
+								"[src] is pushing [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.")
+		else if(a_intent == INTENT_GRAB)
 			suicide_message = pick("[src] is attempting to pull [p_their()] own head off! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is pulling [p_their()] eyes out of their sockets! It looks like [p_theyre()] trying to commit suicide.")
-		if(a_intent == INTENT_HELP)
-			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
+		else if(a_intent == INTENT_HELP)
+			var/obj/item/organ/brain/userbrain = getorgan(/obj/item/organ/brain)
+			if(userbrain?.damage >= 75)
+				suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
+									 down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \
+									  in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting \
+									  [p_their()] fingers outward while crossing [p_their()] legs back and forth, repeats this motion again two times while keeping [p_their()] shoulders low\
+									   and hunching over, does finger guns with right hand and left hand bent on [p_their()] hip while looking directly forward and putting [p_their()] left leg forward then\
+									    crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."
+			else
+				suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
 		else
@@ -104,9 +116,10 @@
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/brain/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -120,9 +133,10 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/carbon/monkey/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -137,9 +151,10 @@
 
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/ai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -155,9 +170,10 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/robot/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -173,9 +189,10 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/pai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
@@ -185,11 +202,12 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -199,16 +217,17 @@
 		set_suicide(TRUE)
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='italics'>You hear thrashing.</span>")
+				"<span class='hear'>You hear thrashing.</span>")
 
 		suicide_log()
 
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/simple_animal/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -222,20 +241,25 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/proc/suicide_log()
-	log_message("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].", LOG_ATTACK)
+	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
 /mob/living/carbon/human/suicide_log()
-	log_message("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].", LOG_ATTACK)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
+	var/area/A = get_area(src)
+	if(A.area_flags & BLOCK_SUICIDE)
+		to_chat(src, "<span class='warning'>You can't commit suicide here! You can ghost if you'd like.</span>")
+		return
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
 			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
 			to_chat(src, "<span class='warning'>You're already dead!</span>")

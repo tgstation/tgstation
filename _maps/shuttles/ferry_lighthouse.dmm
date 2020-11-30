@@ -236,7 +236,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},

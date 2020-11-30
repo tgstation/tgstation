@@ -47,3 +47,15 @@
 			return TRUE
 
 	return FALSE
+
+/obj/item/ammo_box/magazine/internal/cylinder/top_off(load_type, starting=FALSE)
+	if(starting) // nulls don't exist when we're starting off
+		return ..()
+
+	if(!load_type)
+		load_type = ammo_type
+
+	for(var/i = 1, i <= max_ammo, i++)
+		if(!give_round(new load_type(src)))
+			break
+	update_icon()

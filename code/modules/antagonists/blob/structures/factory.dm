@@ -6,6 +6,7 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
+	resistance_flags = LAVA_PROOF
 	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 3
@@ -25,7 +26,7 @@
 	if(naut)
 		naut.factory = null
 		to_chat(naut, "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>")
-		naut.throw_alert("nofactory", /obj/screen/alert/nofactory)
+		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
 	spores = null
 	return ..()
 

@@ -9,7 +9,7 @@
 		MA.vars[v] = set_vars[v]
 	animate(A, appearance = MA, time, loop, easing, flags)
 
-/proc/_acrccos(A)
+/proc/_arccos(A)
 	return arccos(A)
 
 /proc/_arcsin(A)

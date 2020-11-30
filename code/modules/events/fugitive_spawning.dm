@@ -25,6 +25,8 @@
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
 			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
+		else //For accurate deadchat feedback
+			minimum_required = 4
 	if(candidates.len >= 4)//group refugees
 		possible_backstories.Add("prisoner", "cultist", "synth")
 	if(!possible_backstories.len)
@@ -59,7 +61,7 @@
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
-/datum/round_event/ghost_role/fugitives/proc/gear_fugitive(var/mob/dead/selected, var/turf/landing_turf, backstory) //spawns normal fugitive
+/datum/round_event/ghost_role/fugitives/proc/gear_fugitive(mob/dead/selected, turf/landing_turf, backstory) //spawns normal fugitive
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 	var/mob/living/carbon/human/S = new(landing_turf)
@@ -85,7 +87,7 @@
 	return S
 
  //special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
-/datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, var/turf/landing_turf, backstory)
+/datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(mob/dead/leader, turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE
 	//if you want to add a fugitive with a special leader in the future, make this switch with the backstory

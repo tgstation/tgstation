@@ -19,12 +19,16 @@
         speak_emote = list("hisses")
         health = 20
         maxHealth = 20
-        attacktext = "bites"
+        attack_verb_continuous = "bites"
+        attack_verb_simple = "bite"
         melee_damage_lower = 5
         melee_damage_upper = 6
-        response_help  = "pets"
-        response_disarm = "shoos"
-        response_harm   = "steps on"
+        response_help_continuous = "pets"
+        response_help_simple = "pet"
+        response_disarm_continuous = "shoos"
+        response_disarm_simple = "shoo"
+        response_harm_continuous = "steps on"
+        response_harm_simple = "step on"
         faction = list("hostile")
         ventcrawler = VENTCRAWLER_ALWAYS
         density = FALSE
@@ -35,6 +39,12 @@
         obj_damage = 0
         environment_smash = ENVIRONMENT_SMASH_NONE
 
+/mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/retaliate/poison/snake/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
 	. = oview(vision_range, targets_from) //get list of things in vision range

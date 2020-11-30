@@ -3,12 +3,12 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/revolver357shot.ogg'
-	load_sound = 'sound/weapons/revolverload.ogg'
-	eject_sound = 'sound/weapons/revolverempty.ogg'
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
+	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -16,7 +16,9 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 
-/obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE)
+/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
+	if(!magazine) //if it mag was qdel'd somehow.
+		CRASH("revolver tried to chamber a round without a magazine!")
 	if(spin_cylinder)
 		chambered = magazine.get_round(TRUE)
 	else
@@ -24,7 +26,7 @@
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
-	chamber_round(TRUE)
+	chamber_round()
 
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
 	..()
@@ -55,7 +57,7 @@
 	. = istype(C)
 	if(.)
 		C.spin()
-		chamber_round(FALSE)
+		chamber_round(spin_cylinder = FALSE)
 
 /obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //mature var names for mature people
@@ -74,8 +76,8 @@
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
-	desc = "A classic, if not outdated, law enforcement firearm. Uses .38-special rounds."
-	fire_sound = 'sound/weapons/revolver38shot.ogg'
+	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
+	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
@@ -90,48 +92,48 @@
 						"Black Panther" = "detective_panther"
 						)
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine.caliber != initial(magazine.caliber))
-		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-			playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
-			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
-			user.take_bodypart_damage(0,20)
-			user.dropItemToGround(src)
-			return 0
-	..()
+	/// Used to avoid some redundancy on a revolver loaded with 357 regarding misfiring while being wrenched.
+	var/skip_357_missfire_check = FALSE
 
-/obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(magazine && magazine.caliber != initial(magazine.caliber) && chambered.BB && !skip_357_missfire_check)
+		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+			to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
+			if(user.get_item_for_held_index(1) == src)
+				user.dropItemToGround(src)
+				return ..(user, user, FALSE, null, BODY_ZONE_L_ARM)
+			else if(user.get_item_for_held_index(2) == src)
+				user.dropItemToGround(src)
+				return ..(user, user, FALSE, null, BODY_ZONE_R_ARM)
+	return ..()
+
+/obj/item/gun/ballistic/revolver/detective/wrench_act(mob/living/user, obj/item/I)
+	if(!user.is_holding(src))
+		to_chat(user, "<span class='notice'>You need to hold [src] to modify its barrel.</span>")
+		return TRUE
+	to_chat(user, "<span class='notice'>You begin to loosen the barrel of [src]...</span>")
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	if(magazine.ammo_count()) //If it has any ammo inside....
+		user.visible_message("<span class='danger'>[src]'s hammer drops while you're handling it!</span>") //...you learn an important lesson about firearms safety.
+		var/drop_the_gun_it_actually_fired = chambered.BB ? TRUE : FALSE //Is a live round chambered?
+		skip_357_missfire_check = TRUE //We set this true, then back to false after process_fire, to reduce redundacy of a round "misfiring" when it's already misfiring from wrench_act
+		process_fire(user, user, FALSE)
+		skip_357_missfire_check = FALSE
+		if(drop_the_gun_it_actually_fired) //We do it like this instead of directly checking chambered.BB here because process_fire will cycle the chamber.
+			user.dropItemToGround(src)
 		return TRUE
 	if(magazine.caliber == "38")
-		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
-		if(magazine.ammo_count())
-			afterattack(user, user)	//you know the drill
-			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return TRUE
-			magazine.caliber = "357"
-			fire_sound = 'sound/weapons/revolver357shot.ogg'
-			desc = "The barrel and chamber assembly seems to have been modified."
-			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+		magazine.caliber = "357"
+		fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+		desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
+		to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
-		to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
-		if(magazine.ammo_count())
-			afterattack(user, user)	//and again
-			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return
-			magazine.caliber = "38"
-			fire_sound = 'sound/weapons/revolver38shot.ogg'
-			desc = initial(desc)
-			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
-	return TRUE
+		magazine.caliber = "38"
+		fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+		desc = initial(desc)
+		to_chat(user, "<span class='notice'>You tighten the barrel of [src]. Now it will fire .38 rounds.</span>")
 
 
 /obj/item/gun/ballistic/revolver/mateba
@@ -219,7 +221,7 @@
 				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
 					shoot_self(user, affecting)
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='hear'>You hear a gunshot!</span>")
 				chambered = null
 				return
 
@@ -233,7 +235,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
-	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"
@@ -241,14 +243,14 @@
 
 /obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
 	..()
-	var/obj/item/soulstone/anybody/SS = new /obj/item/soulstone/anybody(get_turf(src))
+	var/obj/item/soulstone/anybody/revolver/SS = new /obj/item/soulstone/anybody/revolver(get_turf(src))
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
 	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfeit!</span>")
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	clumsy_check = 0
+	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))

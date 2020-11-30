@@ -15,7 +15,7 @@
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
-	..()
+	. = ..()
 	radio.name = "internal antenna"
 
 /datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
@@ -27,8 +27,7 @@
 /datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	if(linked_radio)
-		linked_radio.Destroy()
+	QDEL_NULL(linked_radio)
 
 /datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -92,9 +91,8 @@
 			if(iscarbon(M))
 				var/mob/living/carbon/human/H = M
 				to_chat(user, "<span class='boldnotice'>You find that their intent is to [H.a_intent]...</span>")
-				var/datum/dna/the_dna = H.has_dna()
-				if(the_dna)
-					to_chat(user, "<span class='boldnotice'>You uncover that [H.p_their()] true identity is [the_dna.real_name].</span>")
+				if(H.mind)
+					to_chat(user, "<span class='boldnotice'>You uncover that [H.p_their()] true identity is [H.mind.name].</span>")
 		else
 			to_chat(user, "<span class='warning'>You can't find a mind to read inside of [M]!</span>")
 

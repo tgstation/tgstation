@@ -8,16 +8,41 @@
 #
 # Valid Prefixes: 
 #   bugfix
-#   wip (For works in progress)
+#     - (fixes bugs)
+#   wip
+#     - (work in progress)
 #   tweak
+#     - (tweaks something)
 #   soundadd
+#     - (adds a sound)
 #   sounddel
-#   rscadd (general adding of nice things)
-#   rscdel (general deleting of nice things)
+#     - (removes a sound)
+#   rscdel
+#     - (adds a feature)
+#   rscadd
+#     - (removes a feature)
 #   imageadd
+#     - (adds an image or sprite)
 #   imagedel
-#   spellcheck (typo fixes)
+#     - (removes an image or sprite)
+#   spellcheck
+#     - (fixes spelling or grammar)
 #   experiment
+#     - (experimental change)
+#   tgs
+#     - (TGS change)
+#   balance
+#     - (balance changes)
+#   code_imp
+#     - (misc internal code change)
+#   refactor
+#     - (refactors code)
+#   config
+#     - (makes a change to the config files)
+#   admin
+#     - (makes changes to administrator tools)
+#   server
+#     - (miscellaneous changes to server)
 #################################
 
 # Your name.  

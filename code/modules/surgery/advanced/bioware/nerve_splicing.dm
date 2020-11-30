@@ -21,12 +21,12 @@
 		"<span class='notice'>[user] starts splicing together [target]'s nerves.</span>",
 		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
 
-/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You successfully splice [target]'s nervous system!</span>",
 		"<span class='notice'>[user] successfully splices [target]'s nervous system!</span>",
 		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
 	new /datum/bioware/spliced_nerves(target)
-	return TRUE
+	return ..()
 
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"

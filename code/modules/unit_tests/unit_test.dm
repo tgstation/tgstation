@@ -24,10 +24,13 @@ GLOBAL_VAR(test_log)
 	var/turf/run_loc_top_right
 
 	//internal shit
+	var/focus = FALSE
 	var/succeeded = TRUE
+	var/list/allocated
 	var/list/fail_reasons
 
 /datum/unit_test/New()
+	allocated = new
 	run_loc_bottom_left = locate(1, 1, 1)
 	run_loc_top_right = locate(5, 5, 1)
 
@@ -35,6 +38,7 @@ GLOBAL_VAR(test_log)
 	//clear the test area
 	for(var/atom/movable/AM in block(run_loc_bottom_left, run_loc_top_right))
 		qdel(AM)
+	QDEL_LIST(allocated)
 	return ..()
 
 /datum/unit_test/proc/Run()
@@ -48,10 +52,29 @@ GLOBAL_VAR(test_log)
 
 	LAZYADD(fail_reasons, reason)
 
+/// Allocates an instance of the provided type, and places it somewhere in an available loc
+/// Instances allocated through this proc will be destroyed when the test is over
+/datum/unit_test/proc/allocate(type, ...)
+	var/list/arguments = args.Copy(2)
+	if (!arguments.len)
+		arguments = list(run_loc_bottom_left)
+	else if (arguments[1] == null)
+		arguments[1] = run_loc_bottom_left
+	var/instance = new type(arglist(arguments))
+	allocated += instance
+	return instance
+
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	for(var/I in subtypesof(/datum/unit_test))
+	var/tests_to_run = subtypesof(/datum/unit_test)
+	for (var/_test_to_run in tests_to_run)
+		var/datum/unit_test/test_to_run = _test_to_run
+		if (initial(test_to_run.focus))
+			tests_to_run = list(test_to_run)
+			break
+
+	for(var/I in tests_to_run)
 		var/datum/unit_test/test = new I
 
 		GLOB.current_test = test

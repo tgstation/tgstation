@@ -1,0 +1,63 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:meta';
+@use './base.scss';
+
+// Core styles
+@include meta.load-css('./reset.scss');
+
+// Atomic classes
+@include meta.load-css('./atomic/candystripe.scss');
+@include meta.load-css('./atomic/color.scss');
+@include meta.load-css('./atomic/debug-layout.scss');
+@include meta.load-css('./atomic/outline.scss');
+@include meta.load-css('./atomic/text.scss');
+
+// Components
+@include meta.load-css('./components/BlockQuote.scss');
+@include meta.load-css('./components/Button.scss');
+@include meta.load-css('./components/ColorBox.scss');
+@include meta.load-css('./components/Dimmer.scss');
+@include meta.load-css('./components/Divider.scss');
+@include meta.load-css('./components/Dropdown.scss');
+@include meta.load-css('./components/Flex.scss');
+@include meta.load-css('./components/Icon.scss');
+@include meta.load-css('./components/Input.scss');
+@include meta.load-css('./components/Knob.scss');
+@include meta.load-css('./components/LabeledList.scss');
+@include meta.load-css('./components/Modal.scss');
+@include meta.load-css('./components/NoticeBox.scss');
+@include meta.load-css('./components/NumberInput.scss');
+@include meta.load-css('./components/ProgressBar.scss');
+@include meta.load-css('./components/Section.scss');
+@include meta.load-css('./components/Slider.scss');
+@include meta.load-css('./components/Table.scss');
+@include meta.load-css('./components/Tabs.scss');
+@include meta.load-css('./components/TextArea.scss');
+@include meta.load-css('./components/Tooltip.scss');
+
+// Interfaces
+@include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/CameraConsole.scss');
+@include meta.load-css('./interfaces/NuclearBomb.scss');
+@include meta.load-css('./interfaces/Paper.scss');
+@include meta.load-css('./interfaces/Roulette.scss');
+@include meta.load-css('./interfaces/Safe.scss');
+
+// Layouts
+@include meta.load-css('./layouts/Layout.scss');
+@include meta.load-css('./layouts/NtosHeader.scss');
+@include meta.load-css('./layouts/NtosWindow.scss');
+@include meta.load-css('./layouts/TitleBar.scss');
+@include meta.load-css('./layouts/Window.scss');
+
+// NT Theme
+.Layout__content {
+  background-image: url('../assets/bg-nanotrasen.svg');
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

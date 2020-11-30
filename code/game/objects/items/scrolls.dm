@@ -3,9 +3,10 @@
 	desc = "A scroll for moving around."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
+	worn_icon_state = "scroll"
 	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
@@ -30,7 +31,7 @@
 
 /obj/item/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || src.loc != usr)
 		return
 	if (!ishuman(usr))
 		return 1
@@ -59,7 +60,7 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!is_blocked_turf(T))
+		if(!T.is_blocked_turf())
 			L += T
 
 	if(!L.len)

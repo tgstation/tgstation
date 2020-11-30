@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "Photos stored in photo albums will no longer occasionally be destroyed by explosions"

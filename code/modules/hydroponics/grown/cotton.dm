@@ -12,6 +12,7 @@
 	production = 1
 	yield = 2
 	potency = 50
+	instability = 15
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "cotton-dead"
@@ -27,12 +28,13 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3
-	attack_verb = list("pomfed")
+	attack_verb_continuous = list("pomfs")
+	attack_verb_simple = list("pomf")
 	var/cotton_type = /obj/item/stack/sheet/cotton
 	var/cotton_name = "raw cotton"
 
 /obj/item/grown/cotton/attack_self(mob/user)
-	user.show_message("<span class='notice'>You pull some [cotton_name] out of the [name]!</span>", 1)
+	user.show_message("<span class='notice'>You pull some [cotton_name] out of the [name]!</span>", MSG_VISUAL)
 	var/seed_modifier = 0
 	if(seed)
 		seed_modifier = round(seed.potency / 25)
@@ -74,6 +76,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	cotton_type = /obj/item/stack/sheet/cotton/durathread
 	cotton_name = "raw durathread"

@@ -10,7 +10,7 @@
   * you can also use the compiler define shorthand
   * var/timerid = addtimer(CALLBACK(object|null, /proc/type/path|procstring, arg1, arg2, ... argn), time, timertype)
   * ```
-  * 
+  *
   * Note: proc strings can only be given for datum proc calls, global procs must be proc paths
   *
   * Also proc strings are strongly advised against because they don't compile error if the proc stops existing
@@ -30,7 +30,7 @@
   * .procname
   *
   * `CALLBACK(GLOBAL_PROC, .some_proc_here)`
-  * 
+  *
   * ### proc defined on current(src) object (when in a /proc/ and not an override) OR overridden at src or any of it's parents:
   * .procname
   *
@@ -38,9 +38,9 @@
   *
   * ### when the above doesn't apply:
   *.proc/procname
-  * 
+  *
   * `CALLBACK(src, .proc/some_proc_here)`
-  * 
+  *
   *
   * proc defined on a parent of a some type
   *
@@ -50,7 +50,7 @@
   */
 /datum/callback
 
-	///The object we will be calling the proc on 
+	///The object we will be calling the proc on
 	var/datum/object = GLOBAL_PROC
 	///The proc we will be calling on the object
 	var/delegate
@@ -98,11 +98,11 @@
 
 /**
   * Invoke this callback
-  * 
+  *
   * Calls the registered proc on the registered object, if the user ref
   * can be resolved it also inclues that as an arg
   *
-  * If the datum being called on is varedited, the call is wrapped via WrapAdminProcCall
+  * If the datum being called on is varedited, the call is wrapped via [WrapAdminProcCall][/proc/WrapAdminProcCall]
   */
 /datum/callback/proc/Invoke(...)
 	if(!usr)
@@ -131,7 +131,7 @@
 
 /**
   * Invoke this callback async (waitfor=false)
-  * 
+  *
   * Calls the registered proc on the registered object, if the user ref
   * can be resolved it also inclues that as an arg
   *
@@ -195,7 +195,7 @@
   * Runs a list of callbacks asyncronously, returning only when all have finished
   *
   * Callbacks can be repeated, to call it multiple times
-  * 
+  *
   * Arguments:
   * * list/callbacks the list of callbacks to be called
   * * list/callback_args the list of lists of arguments to pass into each callback
@@ -221,3 +221,5 @@
 		sleep(resolution*world.tick_lag)
 	return CS.finished
 
+/proc/___callbacknew(typepath, arguments)
+	new typepath(arglist(arguments))

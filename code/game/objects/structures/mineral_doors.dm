@@ -11,9 +11,9 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/door_opened = FALSE //if it's open or not.
@@ -57,10 +57,10 @@
 		return
 	return TryToSwitchState(user)
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
+/obj/structure/mineral_door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates || !anchored)
@@ -119,7 +119,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 
-/obj/structure/mineral_door/update_icon()
+/obj/structure/mineral_door/update_icon_state()
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/user)
@@ -130,7 +130,7 @@
 	else
 		return ..()
 
-/obj/structure/mineral_door/setAnchored(anchorvalue) //called in default_unfasten_wrench() chain
+/obj/structure/mineral_door/set_anchored(anchorvalue) //called in default_unfasten_wrench() chain
 	. = ..()
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE)
@@ -164,7 +164,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to weld apart [src]!</span>", "<span class='notice'>You start welding apart [src].</span>")
 	if(!I.use_tool(src, user, 60, 5, 50))
-		to_chat(user, "<span class='warning'>You failed to weld apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to weld apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] welded [src] into pieces!</span>", "<span class='notice'>You welded apart [src]!</span>")
@@ -178,7 +178,7 @@
 
 	user.visible_message("<span class='notice'>[user] starts to pry apart [src]!</span>", "<span class='notice'>You start prying apart [src].</span>")
 	if(!I.use_tool(src, user, 60, volume = 50))
-		to_chat(user, "<span class='warning'>You failed to pry apart [src]!/span>")
+		to_chat(user, "<span class='warning'>You failed to pry apart [src]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] pried [src] into pieces!</span>", "<span class='notice'>You pried apart [src]!</span>")
@@ -250,7 +250,7 @@
 	return
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot())
+	if(W.get_temperature())
 		var/turf/T = get_turf(src)
 		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
@@ -293,8 +293,8 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
-	if(I.is_hot())
-		fire_act(I.is_hot())
+	if(I.get_temperature())
+		fire_act(I.get_temperature())
 		return
 
 	return ..()
@@ -311,7 +311,8 @@
 
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()
-	queue_smooth_neighbors(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
@@ -328,13 +329,13 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
-	if(I.is_hot()) //BURN IT ALL DOWN JIM
-		fire_act(I.is_hot())
+	if(I.get_temperature()) //BURN IT ALL DOWN JIM
+		fire_act(I.get_temperature())
 		return
 
 	if((user.a_intent != INTENT_HARM) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))
 		user.visible_message("<span class='notice'>[user] starts to patch the holes in [src].</span>", "<span class='notice'>You start patching some of the holes in [src]!</span>")
-		if(do_after(user, 20, TRUE, src))
+		if(do_after(user, 2 SECONDS, src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(I)
 			user.visible_message("<span class='notice'>[user] patches some of the holes in [src].</span>", "<span class='notice'>You patch some of the holes in [src]!</span>")
@@ -346,5 +347,6 @@
 	return
 
 /obj/structure/mineral_door/paperframe/Destroy()
-	queue_smooth_neighbors(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

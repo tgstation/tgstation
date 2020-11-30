@@ -17,12 +17,12 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH 
-	item_state = "welding"
-	materials = list(/datum/material/iron=1750, /datum/material/glass=400)
-	flash_protect = 2
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	inhand_icon_state = "welding"
+	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
+	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 60)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -33,7 +33,6 @@
 /obj/item/clothing/head/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
-
 /*
  * Cakehat
  */
@@ -41,14 +40,23 @@
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
 	icon_state = "hardhat0_cakehat"
-	item_state = "hardhat0_cakehat"
+	inhand_icon_state = "hardhat0_cakehat"
 	hat_type = "cakehat"
+	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	hitsound = 'sound/weapons/tap.ogg'
+	var/hitsound_on = 'sound/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
+	var/hitsound_off = 'sound/weapons/tap.ogg'
+	var/force_on = 15
+	var/throwforce_on = 15
+	var/damtype_on = BURN
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	brightness_on = 2 //luminosity when on
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	heat = 999
+
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -60,24 +68,49 @@
 	if(isturf(location))
 		location.hotspot_expose(700, 1)
 
-/obj/item/clothing/head/hardhat/cakehat/turn_on()
+/obj/item/clothing/head/hardhat/cakehat/turn_on(mob/living/user)
 	..()
-	force = 15
-	throwforce = 15
-	damtype = BURN
-	hitsound = 'sound/weapons/sear.ogg'
+	force = force_on
+	throwforce = throwforce_on
+	damtype = damtype_on
+	hitsound = hitsound_on
 	START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/turn_off()
+/obj/item/clothing/head/hardhat/cakehat/turn_off(mob/living/user)
 	..()
 	force = 0
 	throwforce = 0
 	damtype = BRUTE
-	hitsound = 'sound/weapons/tap.ogg'
+	hitsound = hitsound_off
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/is_hot()
+/obj/item/clothing/head/hardhat/cakehat/get_temperature()
 	return on * heat
+
+/obj/item/clothing/head/hardhat/cakehat/energycake
+	name = "energy cake"
+	desc = "You put the energy sword on your cake. Brilliant."
+	icon_state = "hardhat0_energycake"
+	inhand_icon_state = "hardhat0_energycake"
+	hat_type = "energycake"
+	hitsound = 'sound/weapons/tap.ogg'
+	hitsound_on = 'sound/weapons/blade1.ogg'
+	hitsound_off = 'sound/weapons/tap.ogg'
+	damtype_on = BRUTE
+	force_on = 18 //same as epen (but much more obvious)
+	light_range = 3 //ditto
+	heat = 0
+
+/obj/item/clothing/head/hardhat/cakehat/energycake/turn_on(mob/living/user)
+	playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
+	to_chat(user, "<span class='warning'>You turn on \the [src].</span>")
+	..()
+
+/obj/item/clothing/head/hardhat/cakehat/energycake/turn_off(mob/living/user)
+	playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	to_chat(user, "<span class='warning'>You turn off \the [src].</span>")
+	..()
+
 /*
  * Ushanka
  */
@@ -85,9 +118,9 @@
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
-	item_state = "ushankadown"
+	inhand_icon_state = "ushankadown"
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = 1
+	var/earflaps = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
@@ -95,15 +128,14 @@
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
-		earflaps = 0
+		icon_state = "ushankaup"
+		inhand_icon_state = "ushankaup"
 		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
-		earflaps = 1
+		icon_state = "ushankadown"
+		inhand_icon_state = "ushankadown"
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
+	earflaps = !earflaps
 
 /*
  * Pumpkin head
@@ -112,12 +144,12 @@
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"
-	item_state = "hardhat0_pumpkin"
+	inhand_icon_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	brightness_on = 2 //luminosity when on
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 
 /*
@@ -133,7 +165,7 @@
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		update_icon(user)
 		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
@@ -145,16 +177,15 @@
 /obj/item/clothing/head/kitty/genuine
 	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
 
-
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"
 	desc = "Some fake antlers and a very fake red nose."
 	icon_state = "hardhat0_reindeer"
-	item_state = "hardhat0_reindeer"
+	inhand_icon_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
 	flags_inv = 0
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	brightness_on = 1 //luminosity when on
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	light_range = 1 //luminosity when on
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
@@ -163,7 +194,7 @@
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
-	item_state = "cardborg_h"
+	inhand_icon_state = "cardborg_h"
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -172,7 +203,7 @@
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == SLOT_HEAD)
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
 			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
@@ -182,15 +213,14 @@
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
 
-
-
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 	icon_state = "hair_vlong"
-	item_state = "pwig"
-	flags_inv = HIDEHAIR
+	inhand_icon_state = "pwig"
+	worn_icon_state = "wig"
+	flags_inv = HIDEHAIR | HIDEHEADGEAR
 	color = "#000"
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
@@ -199,14 +229,13 @@
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/head/wig/update_icon()
+/obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 	if(!S)
-		icon = 'icons/obj/clothing/hats.dmi'
-		icon_state = "pwig"
+		return
 	else
-		icon = S.icon
 		icon_state = S.icon_state
+
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
@@ -221,18 +250,27 @@
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")
+	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(new_style && new_style != hairstyle)
 		hairstyle = new_style
 		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
-	if(adjustablecolor)
-		color = input(usr,"","Choose Color",color) as color|null
+	if(newcolor && newcolor != color) // only update if necessary
+		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_icon()
+
+/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
+	. = ..()
+	if (istype(target) && (HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+		to_chat(user, "<span class='notice'>You adjust the [src] to look just like [target.name]'s [target.hairstyle].</span>")
+		add_atom_colour("#[target.hair_color]", FIXED_COLOUR_PRIORITY)
+		hairstyle = target.hairstyle
+		update_icon()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
-	color = "#[random_short_color()]"
+	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 	. = ..()
 
 /obj/item/clothing/head/wig/natural
@@ -240,16 +278,18 @@
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	color = "#FFF"
 	adjustablecolor = FALSE
-	custom_price = 25
+	custom_price = PAYCHECK_HARD
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	. = ..()
 
 /obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == SLOT_HEAD)
-		color = "#[user.hair_color]"
-		update_icon()
+	. = ..()
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+		if (color != "#[user.hair_color]") // only update if necessary
+			add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+			update_icon()
 		user.update_inv_head()
 
 /obj/item/clothing/head/bronze
@@ -259,14 +299,14 @@
 	icon_state = "clockwork_helmet_old"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
-	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 
 /obj/item/clothing/head/foilhat
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
-	item_state = "foilhat"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
+	inhand_icon_state = "foilhat"
+	armor = list(MELEE = 0, BULLET = 0, LASER = -5,ENERGY = -15, BOMB = 0, BIO = 0, RAD = -5, FIRE = 0, ACID = 0)
 	equip_delay_other = 140
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
@@ -281,16 +321,14 @@
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != SLOT_HEAD || warped)
+	if(slot != ITEM_SLOT_HEAD || warped)
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	paranoia = new()
-	paranoia.clonable = FALSE
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
-
 
 /obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
 	//God Im sorry
@@ -314,10 +352,10 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	if(target.get_item_by_slot(SLOT_HEAD) != src)
+	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
-	if(!target.IsUnconscious())
+	if(target.stat < UNCONSCIOUS)
 		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
 /obj/item/clothing/head/foilhat/attack_hand(mob/user)

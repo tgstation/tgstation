@@ -1,9 +1,10 @@
 GLOBAL_LIST_EMPTY(clientmessages)
 
-/proc/addclientmessage(var/ckey, var/message)
+/proc/addclientmessage(ckey, message)
 	ckey = ckey(ckey)
 	if (!ckey || !message)
 		return
-	if (!(ckey in GLOB.clientmessages))
-		GLOB.clientmessages[ckey] = list()
-	GLOB.clientmessages[ckey] += message
+	var/list/L = GLOB.clientmessages[ckey]
+	if(!L)
+		GLOB.clientmessages[ckey] = L = list()
+	L += message

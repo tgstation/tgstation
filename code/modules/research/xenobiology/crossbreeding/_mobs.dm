@@ -21,7 +21,7 @@ Slimecrossing Mobs
 	if(remove_on_restore)
 		if(M.mind)
 			M.mind.RemoveSpell(src)
-	..()
+	return ..()
 
 //Transformed slime - Burning Black
 /mob/living/simple_animal/slime/transformedslime

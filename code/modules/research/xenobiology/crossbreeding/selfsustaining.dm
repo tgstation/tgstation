@@ -32,11 +32,11 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in extract.activate_reagents
+	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sortList(extract.activate_reagents, /proc/cmp_typepaths_asc)
 	var/amount = 5
 	var/secondary
 
-	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
+	if (user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!reagentselect)
 		return

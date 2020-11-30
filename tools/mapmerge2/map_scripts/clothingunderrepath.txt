@@ -44,7 +44,6 @@
 /obj/item/clothing/under/jabroni : /obj/item/clothing/under/costume/jabroni
 /obj/item/clothing/under/owl : /obj/item/clothing/under/costume/owl
 /obj/item/clothing/under/griffin : /obj/item/clothing/under/costume/griffin
-/obj/item/clothing/under/cloud : /obj/item/clothing/under/costume/cloud
 /obj/item/clothing/under/schoolgirl : /obj/item/clothing/under/costume/schoolgirl
 /obj/item/clothing/under/schoolgirl/red : /obj/item/clothing/under/costume/schoolgirl/red
 /obj/item/clothing/under/schoolgirl/green : /obj/item/clothing/under/costume/schoolgirl/green
@@ -151,8 +150,8 @@
 /obj/item/clothing/under/rank/medical/purple : /obj/item/clothing/under/rank/medical/doctor/purple
 /obj/item/clothing/under/rank/medical/skirt : /obj/item/clothing/under/rank/medical/doctor/skirt
 /obj/item/clothing/under/rank/nursesuit : /obj/item/clothing/under/rank/medical/doctor/nurse
-/obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/medical/geneticist
-/obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/medical/geneticist/skirt
+/obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/rnd/geneticist
+/obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/rnd/geneticist/skirt
 /obj/item/clothing/under/rank/virologist : /obj/item/clothing/under/rank/medical/virologist
 /obj/item/clothing/under/rank/virologist/skirt : /obj/item/clothing/under/rank/medical/virologist/skirt
 /obj/item/clothing/under/rank/chemist : /obj/item/clothing/under/rank/medical/chemist

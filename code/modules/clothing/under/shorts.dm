@@ -7,7 +7,8 @@
 	mutantrace_variation = MUTANTRACE_VARIATION
 	can_adjust = FALSE
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/under/shorts/red
 	name = "red athletic shorts"

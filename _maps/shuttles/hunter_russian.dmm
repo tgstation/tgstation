@@ -152,8 +152,6 @@
 "E" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
-	jumpto_ports = list("huntership_home" = 1);
-	view_range = 12;
 	x_offset = 0;
 	y_offset = 3
 	},

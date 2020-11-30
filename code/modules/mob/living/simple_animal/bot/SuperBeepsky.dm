@@ -19,7 +19,7 @@
 	baton_type = /obj/item/toy/sword
 	weapon_force = 0
 
-/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
 	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
 	return BULLET_ACT_BLOCK
@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
-	weapon.attack_self(src)
+	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)
@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, .proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 		back_to_idle()
 
 
@@ -77,7 +77,7 @@
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
 					target_lastloc = target.loc //stun_attack() can clear the target if they're dead, so this needs to be set first
 					stun_attack(target)
-					anchored = TRUE
+					set_anchored(TRUE)
 					return
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, target)

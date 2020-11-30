@@ -21,6 +21,8 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
+			if(M == src && check_self_for_injuries())
+				return
 			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
@@ -38,7 +40,8 @@ In all, this is a lot like the monkey code. /N
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE)
+								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
+				to_chat(M, "<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -51,8 +54,9 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
-	if(..())	//to allow surgery to return properly.
-		return 0
+	. = ..()
+	if(.)	//to allow surgery to return properly.
+		return FALSE
 
 	switch(M.a_intent)
 		if("help")
@@ -61,11 +65,11 @@ In all, this is a lot like the monkey code. /N
 			grabbedby(M)
 		if ("harm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			return 1
+			return TRUE
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
@@ -106,6 +110,9 @@ In all, this is a lot like the monkey code. /N
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	if(QDELETED(src))
+		return
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
@@ -113,16 +120,18 @@ In all, this is a lot like the monkey code. /N
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			adjustEarDamage(30,120)
+			if(ears)
+				ears.adjustEarDamage(30,120)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)
-			adjustEarDamage(15,60)
+			if(ears)
+				ears.adjustEarDamage(15,60)
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
-	return 0//aliens are immune to acid.
+	return FALSE//aliens are immune to acid.

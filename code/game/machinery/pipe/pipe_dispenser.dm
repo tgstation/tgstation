@@ -35,7 +35,7 @@
 	if(..())
 		return 1
 	var/mob/living/L = usr
-	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -55,9 +55,9 @@
 			new /obj/item/pipe_meter(loc)
 			wait = world.time + 15
 	if(href_list["layer_up"])
-		piping_layer = CLAMP(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])
-		piping_layer = CLAMP(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)

@@ -5,6 +5,8 @@
  *	For documentation on the changelog generator see https://tgstation13.org/phpBB/viewtopic.php?f=5&t=5157
  *	To hide prs from being announced in game, place a [s] in front of the title
  *	All runtime errors are echo'ed to the webhook's logs in github
+ *  Events to be sent via GitHub webhook: Pull Requests, Pushes
+ *  Any other Event will result in a 404 returned to the webhook.
  */
 
 /**CREDITS:
@@ -642,7 +644,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	//anything not in this list defaults to 0
 	$label_values = array(
 		'Fix' => 2,
-		'Refactor' => 2,
+		'Refactor' => 10,
 		'CI/Tests' => 3,
 		'Code Improvement' => 1,
 		'Grammar and Formatting' => 1,
@@ -651,8 +653,8 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
-		'Feature' => -1,
-		'Balance/Rebalance' => -1,
+		'Feature' => -10,
+		'Balance/Rebalance' => -8,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 

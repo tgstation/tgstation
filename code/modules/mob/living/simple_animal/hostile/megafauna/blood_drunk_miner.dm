@@ -28,24 +28,28 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	light_color = "#E4C7C5"
+	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
 	move_to_delay = 3
-	projectiletype = /obj/item/projectile/kinetic/miner
+	projectiletype = /obj/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = TRUE
 	ranged_cooldown_time = 16
 	pixel_x = -16
+	base_pixel_x = -16
 	crusher_loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
 	loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
-	medal_type = BOSS_MEDAL_MINER
+	achievement_type = /datum/award/achievement/boss/blood_miner_kill
+	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
+	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
@@ -54,10 +58,11 @@ Difficulty: Medium
 	var/transform_stop_attack = FALSE // stops the blood drunk miner from attacking after transforming his weapon until the next attack chain
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	deathsound = "bodyfall"
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/dash,
 							   /datum/action/innate/megafauna_attack/kinetic_accelerator,
 							   /datum/action/innate/megafauna_attack/transform_weapon)
+	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
@@ -111,7 +116,7 @@ Difficulty: Medium
 	..()
 	target.stun_absorption -= "miner"
 
-/obj/item/projectile/kinetic/miner
+/obj/projectile/kinetic/miner
 	damage = 20
 	speed = 0.9
 	icon_state = "ka_tracer"
@@ -205,7 +210,7 @@ Difficulty: Medium
 		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
-				if(is_blocked_turf(T, TRUE))
+				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
 			if(valid)
@@ -282,5 +287,13 @@ Difficulty: Medium
 	. = ..()
 	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+	name = "hostile-environment miner"
+	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
+	speed = 8
+	move_to_delay = 8
+	ranged_cooldown_time = 8
+	dash_cooldown = 8
 
 #undef MINER_DASH_RANGE

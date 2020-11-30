@@ -15,8 +15,8 @@
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
-	. += {"<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>\n
-	<span class='notice'>Alt-Click to split.</span>"}
+	. += "<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>\n"+\
+	"<span class='notice'>Alt-Click to split.</span>"
 
 /obj/item/holochip/get_item_credit_value()
 	return credits
@@ -82,10 +82,10 @@
 		qdel(H)
 
 /obj/item/holochip/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	var/split_amount = round(input(user,"How many credits do you want to extract from the holochip?") as null|num)
-	if(split_amount == null || split_amount <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(split_amount == null || split_amount <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	else
 		var/new_credits = spend(split_amount, TRUE)

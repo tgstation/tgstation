@@ -15,12 +15,14 @@
 					  /obj/item/stock_parts/cell/high = 1)
 	premium = list(/obj/item/price_tagger = 3,
 				   /obj/item/vending_refill/custom = 3,
-				   /obj/item/circuitboard/machine/vendor = 3)
+				   /obj/item/circuitboard/machine/vendor = 3,
+				   /obj/item/assembly/igniter/condenser = 2)
 	refill_canister = /obj/item/vending_refill/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-	default_price = 10
-	extra_price = 50
+	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of 35.
+	extra_price = PAYCHECK_EASY
 	payment_department = NO_FREEBIES
+	light_mask = "generic-light-mask"
 
 /obj/item/vending_refill/assist
 	machine_name = "Vendomat"

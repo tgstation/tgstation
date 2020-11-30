@@ -49,14 +49,16 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
 	mob_biotypes = MOB_ROBOTIC
 	gps_name = "Hungry Signal"
-	medal_type = BOSS_MEDAL_SWARMERS
-	score_type = SWARMER_BEACON_SCORE
+	achievement_type = /datum/award/achievement/boss/swarmer_beacon_kill
+	crusher_achievement_type = /datum/award/achievement/boss/swarmer_beacon_crusher
+	score_achievement_type = /datum/award/score/swarmer_beacon_score
 	faction = list("mining", "boss", "swarmer")
 	weather_immunities = list("lava","ash")
 	stop_automated_movement = TRUE
 	wander = FALSE
 	layer = BELOW_MOB_LAYER
 	AIStatus = AI_OFF
+	del_on_death = TRUE
 	var/swarmer_spawn_cooldown = 0
 	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
 	var/call_help_cooldown = 0
@@ -100,7 +102,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
 	. = ..()
-	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
+	toggle_light() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
 	LAZYINITLIST(GLOB.AISwarmersByType[type])
 	GLOB.AISwarmers += src
 	GLOB.AISwarmersByType[type] += src
@@ -112,7 +114,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	return ..()
 
 
-/mob/living/simple_animal/hostile/swarmer/ai/SwarmerTypeToCreate()
+/mob/living/simple_animal/hostile/swarmer/ai/swarmer_type_to_create()
 	return GetUncappedAISwarmerType()
 
 
@@ -122,7 +124,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		if(!stop_automated_movement)
 			if(health < maxHealth*0.25)
 				StartAction(100)
-				RepairSelf()
+				repair_self()
 				return
 
 
@@ -209,16 +211,16 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		if(!stop_automated_movement)
 			if(GLOB.AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
 				StartAction(100) //so they'll actually sit still and use the verbs
-				CreateSwarmer()
+				create_swarmer()
 				return
 
 			if(resources > 5)
 				if(prob(5)) //lower odds, as to prioritise reproduction
 					StartAction(10) //not a typo
-					CreateBarricade()
+					create_barricade()
 					return
 				if(prob(5))
-					CreateTrap()
+					create_trap()
 					return
 
 
@@ -237,7 +239,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat
 	icon_state = "swarmer_ranged"
 	icon_living = "swarmer_ranged"
-	projectiletype = /obj/item/projectile/beam/laser
+	projectiletype = /obj/projectile/beam/laser
 	projectilesound = 'sound/weapons/laser.ogg'
 	check_friendly_fire = TRUE //you're supposed to protect the resource swarmers, you poop
 	retreat_distance = 3
@@ -265,11 +267,11 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(isliving(target))
 		if(prob(35))
 			StartAction(30)
-			DisperseTarget(target)
+			prepare_target(target)
 		else
 			var/mob/living/L = target
 			L.attack_animal(src)
-			L.electrocute_act(10, src, safety = TRUE) //safety = TRUE means we don't check gloves... Ok?
+			L.electrocute_act(10, src, flags = SHOCK_NOGLOVES)
 		return TRUE
 	else
 		return ..()
@@ -283,4 +285,5 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	name = "swarmer catwalk"
 	desc = "A catwalk-like mesh, produced by swarmers to allow them to navigate hostile terrain."
 	icon = 'icons/obj/smooth_structures/swarmer_catwalk.dmi'
-	icon_state = "swarmer_catwalk"
+	icon_state = "swarmer_catwalk-0"
+	base_icon_state = "swarmer_catwalk"

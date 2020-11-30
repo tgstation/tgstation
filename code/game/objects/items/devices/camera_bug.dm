@@ -11,7 +11,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
 	w_class		= WEIGHT_CLASS_TINY
-	item_state	= "camera_bug"
+	inhand_icon_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
 	item_flags = NOBLUDGEON
@@ -39,7 +39,7 @@
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
-		if(camera.bug == src)
+		if(camera && camera.bug == src)
 			camera.bug = null
 	bugged_cameras = list()
 	if(tracking)
@@ -60,17 +60,17 @@
 	interact(user)
 
 /obj/item/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
+	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
-		return 0
+		return FALSE
 	var/turf/T_user = get_turf(user.loc)
 	var/turf/T_current = get_turf(current)
 	if(T_user.z != T_current.z || !current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /obj/item/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 
@@ -78,7 +78,7 @@
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
 		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
-			if(camera.stat || !camera.can_use())
+			if(camera.machine_stat || !camera.can_use())
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
@@ -95,6 +95,8 @@
 			html = "<h3>Select a camera:</h3> <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><hr><table>"
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
+				if(QDELETED(C))
+					continue
 				var/functions = ""
 				if(C.bug == src)
 					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a> <a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
@@ -140,7 +142,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current && current.can_use())
+	if(current?.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
@@ -161,7 +163,7 @@
 			dat += " (Stage [stage])"
 			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
-		for(var/obj/mecha/M in seen)
+		for(var/obj/vehicle/sealed/mecha/M in seen)
 			if(M.name in names)
 				names[M.name]++
 				dat += "[M.name] ([names[M.name]])"
@@ -178,7 +180,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(!(M.mobility_flags & MOBILITY_STAND))
+			if(M.body_position == LYING_DOWN)
 				if(M.buckled)
 					dat += " (Sitting)"
 				else
@@ -243,7 +245,7 @@
 			if(!same_z_level(C))
 				return
 			if(!C.can_use())
-				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
+				to_chat(usr, "<span class='warning'>Something's wrong with that camera! You can't get a feed.</span>")
 				return
 			current = C
 			spawn(6)
@@ -296,7 +298,7 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/camera_bug/proc/same_z_level(var/obj/machinery/camera/C)
+/obj/item/camera_bug/proc/same_z_level(obj/machinery/camera/C)
 	var/turf/T_cam = get_turf(C)
 	var/turf/T_bug = get_turf(loc)
 	if(!T_bug || T_cam.z != T_bug.z)

@@ -3,7 +3,8 @@
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "sprayer_large"
-	item_state = "cleaner"
+	inhand_icon_state = "cleaner"
+	worn_icon_state = "spraybottle"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -90,20 +91,22 @@
 			if(stream_mode)
 				if(isliving(T))
 					var/mob/living/M = T
-					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
-						D.reagents.reaction(M, VAPOR)
+					if(!M.can_inject())
+						continue
+					if((M.body_position == STANDING_UP) || !range_left)
+						D.reagents.expose(M, VAPOR)
 						puff_reagent_left -= 1
 						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
 						log_combat(user, M,  "sprayed with", src, addition="which had [contained]")
 				else if(!range_left)
-					D.reagents.reaction(T, VAPOR)
+					D.reagents.expose(T, VAPOR)
 			else
-				D.reagents.reaction(T, VAPOR)
+				D.reagents.expose(T, VAPOR)
 				if(ismob(T))
 					puff_reagent_left -= 1
 
 		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-			D.reagents.reaction(get_turf(D), VAPOR)
+			D.reagents.expose(get_turf(D), VAPOR)
 			puff_reagent_left -= 1
 
 		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
@@ -122,7 +125,7 @@
 	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
@@ -138,7 +141,7 @@
 		return
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
-		reagents.reaction(usr.loc)
+		reagents.expose(usr.loc)
 		src.reagents.clear_reagents()
 
 /obj/item/reagent_containers/spray/on_reagent_change(changetype)
@@ -150,7 +153,7 @@
 
 	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
 		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
-		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
 	else
 		spray_range = initial(spray_range)
 	if(stream_mode == 0)
@@ -167,7 +170,7 @@
 	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
@@ -178,7 +181,7 @@
 			return SHAME
 	else
 		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
-		return
+		return MANUAL_SUICIDE_NONLETHAL
 
 //spray tan
 /obj/item/reagent_containers/spray/spraytan
@@ -194,7 +197,7 @@
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "pepperspray"
-	item_state = "pepperspray"
+	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	volume = 50
@@ -221,7 +224,7 @@
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
@@ -284,7 +287,7 @@
 	desc = "A utility used to spray large amounts of reagents in a given area."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
+	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	throwforce = 0
@@ -322,7 +325,7 @@
 	name = "janitor chem sprayer"
 	desc = "A utility used to spray large amounts of cleaning reagents in a given area. It regenerates space cleaner by itself but it's unable to be fueled by normal means."
 	icon_state = "chemsprayer_janitor"
-	item_state = "chemsprayer_janitor"
+	inhand_icon_state = "chemsprayer_janitor"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	reagent_flags = NONE
@@ -354,7 +357,7 @@
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
-	item_state = "plantbgone"
+	inhand_icon_state = "plantbgone"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -365,13 +368,13 @@
 	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sprayer_sus_8"
-	item_state = "sprayer_sus"
+	inhand_icon_state = "sprayer_sus"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 200
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()
@@ -381,7 +384,7 @@
 	name = "medical spray bottle"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sprayer_med_red"
-	item_state = "sprayer_med_red"
+	inhand_icon_state = "sprayer_med_red"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
@@ -390,26 +393,22 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
 	..()
 	switch(icon_state)
 		if("sprayer_med_red")
-			item_state = "sprayer_med_red"
+			inhand_icon_state = "sprayer_med_red"
 		if("sprayer_med_yellow")
-			item_state = "sprayer_med_yellow"
+			inhand_icon_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
-			item_state = "sprayer_med_blue"
+			inhand_icon_state = "sprayer_med_blue"
 	M.update_inv_hands()
 
-/obj/item/reagent_containers/spray/rhigoxane
-	name = "medical spray (rhigoxane)"
-	desc = "A medical spray bottle.This one contains rhigoxane, it is used to treat burns and cool down temperature if applied with spray."
+/obj/item/reagent_containers/spray/hercuri
+	name = "medical spray (hercuri)"
+	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
 	icon_state = "sprayer_large"
-	list_reagents = list(/datum/reagent/medicine/rhigoxane = 100)
-
-
-
-
+	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)
