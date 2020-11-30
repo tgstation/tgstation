@@ -107,12 +107,12 @@
 	pixel_y = -32
 
 /**
-  * #Reality smash tracker
-  *
-  * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
-  *
-  * Tracks relevant data, generates relevant data, useful tool
-  */
+ * #Reality smash tracker
+ *
+ * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+ *
+ * Tracks relevant data, generates relevant data, useful tool
+ */
 /datum/reality_smash_tracker
 	///list of tracked reality smashes
 	var/smashes = 0
@@ -125,10 +125,10 @@
 	return ..()
 
 /**
-  * Generates a set amount of reality smashes based on the N value
-  *
-  * Automatically creates more reality smashes
-  */
+ * Generates a set amount of reality smashes based on the N value
+ *
+ * Automatically creates more reality smashes
+ */
 /datum/reality_smash_tracker/proc/Generate()
 	targets++
 	var/number = max(targets * (4-(targets-1)) - smashes,1)

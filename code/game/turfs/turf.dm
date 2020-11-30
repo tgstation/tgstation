@@ -64,10 +64,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 
 /**
-  * Turf Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Turf Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
@@ -598,8 +598,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		. |= R.expose_turf(src, reagents[R])
 
 /**
-  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
-  */
+ * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+ */
 /turf/wash(clean_types)
 	. = ..()
 

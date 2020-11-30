@@ -1,11 +1,11 @@
 /**
-  * # Spider Charge
-  *
-  * A unique version of c4 possessed only by the space ninja.  Has a stronger blast radius.
-  * Can only be detonated by space ninjas with the bombing objective.  Can only be set up where the objective says it can.
-  * When it primes, the space ninja responsible will have their objective set to complete.
-  *
-  */
+ * # Spider Charge
+ *
+ * A unique version of c4 possessed only by the space ninja.  Has a stronger blast radius.
+ * Can only be detonated by space ninjas with the bombing objective.  Can only be set up where the objective says it can.
+ * When it primes, the space ninja responsible will have their objective set to complete.
+ *
+ */
 /obj/item/grenade/c4/ninja
 	name = "spider charge"
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."

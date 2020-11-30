@@ -101,13 +101,13 @@
 	return FALSE
 
 /**
-  * Implement this when your hardware contains an object that the user can eject.
-  *
-  * Examples include ejecting cells from battery modules, ejecting an ID card from a card reader
-  * or ejecting an Intellicard from an AI card slot.
-  * Arguments:
-  * * user - The mob requesting the eject.
-  * * forced - Whether this action should be forced in some way.
-  */
+ * Implement this when your hardware contains an object that the user can eject.
+ *
+ * Examples include ejecting cells from battery modules, ejecting an ID card from a card reader
+ * or ejecting an Intellicard from an AI card slot.
+ * Arguments:
+ * * user - The mob requesting the eject.
+ * * forced - Whether this action should be forced in some way.
+ */
 /obj/item/computer_hardware/proc/try_eject(mob/living/user = null, forced = FALSE)
 	return FALSE

@@ -1,12 +1,12 @@
 /**
-  * This is the proc that handles the order of an item_attack.
-  *
-  * The order of procs called is:
-  * * [/atom/proc/tool_act] on the target. If it returns TRUE, the chain will be stopped.
-  * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
-  * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
-  * * [/obj/item/proc/afterattack]. The return value does not matter.
-  */
+ * This is the proc that handles the order of an item_attack.
+ *
+ * The order of procs called is:
+ * * [/atom/proc/tool_act] on the target. If it returns TRUE, the chain will be stopped.
+ * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
+ * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
+ * * [/obj/item/proc/afterattack]. The return value does not matter.
+ */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return TRUE
@@ -26,30 +26,30 @@
 	interact(user)
 
 /**
-  * Called on the item before it hits something
-  *
-  * Arguments:
-  * * atom/A - The atom about to be hit
-  * * mob/living/user - The mob doing the htting
-  * * params - click params such as alt/shift etc
-  *
-  * See: [/obj/item/proc/melee_attack_chain]
-  */
+ * Called on the item before it hits something
+ *
+ * Arguments:
+ * * atom/A - The atom about to be hit
+ * * mob/living/user - The mob doing the htting
+ * * params - click params such as alt/shift etc
+ *
+ * See: [/obj/item/proc/melee_attack_chain]
+ */
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
 /**
-  * Called on an object being hit by an item
-  *
-  * Arguments:
-  * * obj/item/W - The item hitting this atom
-  * * mob/user - The wielder of this item
-  * * params - click params such as alt/shift etc
-  *
-  * See: [/obj/item/proc/melee_attack_chain]
-  */
+ * Called on an object being hit by an item
+ *
+ * Arguments:
+ * * obj/item/W - The item hitting this atom
+ * * mob/user - The wielder of this item
+ * * params - click params such as alt/shift etc
+ *
+ * See: [/obj/item/proc/melee_attack_chain]
+ */
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
@@ -65,12 +65,12 @@
 	return I.attack(src, user)
 
 /**
-  * Called from [/mob/living/proc/attackby]
-  *
-  * Arguments:
-  * * mob/living/M - The mob being hit by this item
-  * * mob/living/user - The mob hitting with this item
-  */
+ * Called from [/mob/living/proc/attackby]
+ *
+ * Arguments:
+ * * mob/living/M - The mob being hit by this item
+ * * mob/living/user - The mob hitting with this item
+ */
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -152,14 +152,14 @@
 		return ..()
 
 /**
-  * Last proc in the [/obj/item/proc/melee_attack_chain]
-  *
-  * Arguments:
-  * * atom/target - The thing that was hit
-  * * mob/user - The mob doing the hitting
-  * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
-  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
-  */
+ * Last proc in the [/obj/item/proc/melee_attack_chain]
+ *
+ * Arguments:
+ * * atom/target - The thing that was hit
+ * * mob/user - The mob doing the hitting
+ * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
+ * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
+ */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
