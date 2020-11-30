@@ -3301,7 +3301,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jr" = (
 /obj/effect/spawner/randomsnackvend{
-	extended_inventory = 1
+	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3398,6 +3398,8 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jD" = (
 /obj/effect/spawner/randomcolavend{
+	hacked = 1
+	}
 	extended_inventory = 1
 	},
 /obj/effect/decal/cleanable/dirt,
