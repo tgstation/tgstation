@@ -36,12 +36,7 @@
 		thing.forceMove(T)
 	return ..()
 
-
-/obj/vehicle/ridden/wheelchair/motorized/driver_move(mob/living/user, direction)
-	if(!istype(user))
-		return ..()
-	if(!canmove)
-		return FALSE
+/obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
 	if(!power_cell)
 		to_chat(user, "<span class='warning'>There seems to be no cell installed in [src].</span>")
 		canmove = FALSE
@@ -63,13 +58,12 @@
 	density = FALSE
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user)
-	if(power_cell && panel_open)
-		power_cell.update_icon()
-		user.put_in_hands(power_cell)
-		power_cell = null
-		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")
-		return
-	return ..()
+	if(!power_cell || !panel_open)
+		return ..()
+	power_cell.update_icon()
+	to_chat(user, "<span class='notice'>You remove [power_cell] from [src].</span>")
+	user.put_in_hands(power_cell)
+	power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)

@@ -118,21 +118,11 @@
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
-	if(is_driver(user))
-		return driver_move(user, direction)
-	return FALSE
-
-/obj/vehicle/proc/driver_move(mob/living/user, direction)
 	if(!canmove)
-		return
-	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
-		return
-	vehicle_move(direction)
-	return TRUE
-
-/// This used to be what moved all vehicles, but the functionality for ridden vehicles was moved to the riding component. This now exists just for mechs
-/obj/vehicle/proc/vehicle_move(direction)
-	return
+		return FALSE
+	if(is_driver(user))
+		return relaydrive(user, direction)
+	return FALSE
 
 /obj/vehicle/proc/after_move(direction)
 	return

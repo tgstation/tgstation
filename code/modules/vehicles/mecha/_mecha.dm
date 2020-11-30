@@ -605,7 +605,7 @@
 		return TRUE
 	return FALSE
 
-/obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
+/obj/vehicle/sealed/mecha/proc/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
 	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)

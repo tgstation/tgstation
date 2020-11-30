@@ -102,38 +102,37 @@
 		rider.Paralyze(80)
 	else
 		var/backdir = turn(dir, 180)
-		vehicle_move(backdir)
+		step(src, backdir)
 		rider.spin(4, 1)
 	next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
-	vehicle_move(dir)
-	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
-		var/mob/living/L = buckled_mobs[1]
-		L.adjustStaminaLoss(instability*0.5)
-		if (L.getStaminaLoss() >= 100)
-			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-			unbuckle_mob(L)
-			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
-			L.throw_at(throw_target, 2, 2)
-			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
-			L.Paralyze(40)
-			grinding = FALSE
-			icon_state = "[initial(icon_state)]"
-			return
-		else
-			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
-			if(prob (25))
-				var/turf/location = get_turf(loc)
-				if(location)
-					location.hotspot_expose(1000,1000)
-				sparks.start() //the most radical way to start plasma fires
-			addtimer(CALLBACK(src, .proc/grind), 1)
-			return
-	else
+	step(src, dir)
+	if(!has_buckled_mobs() || !(locate(/obj/structure/table) in loc.contents))
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
+		return
+
+	var/mob/living/L = buckled_mobs[1]
+	L.adjustStaminaLoss(instability*0.5)
+	if (L.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		unbuckle_mob(L)
+		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
+		L.throw_at(throw_target, 2, 2)
+		visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
+		L.Paralyze(40)
+		grinding = FALSE
+		icon_state = "[initial(icon_state)]"
+	else
+		playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
+		if(prob (25))
+			var/turf/location = get_turf(loc)
+			if(location)
+				location.hotspot_expose(1000,1000)
+			sparks.start() //the most radical way to start plasma fires
+		addtimer(CALLBACK(src, .proc/grind), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()

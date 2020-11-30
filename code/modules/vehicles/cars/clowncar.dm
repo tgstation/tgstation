@@ -97,7 +97,7 @@
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
   return ..()
 
-/obj/vehicle/sealed/car/clowncar/after_move(direction)
+/obj/vehicle/sealed/car/clowncar/Move(newloc, dir)
 	. = ..()
 	if(droppingoil)
 		new /obj/effect/decal/cleanable/oil/slippery(loc)

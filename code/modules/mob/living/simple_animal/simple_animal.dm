@@ -700,6 +700,4 @@
 /mob/living/simple_animal/relaymove(mob/living/user, direction)
 	if(user.incapacitated())
 		return
-	if(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
-		return
-	return TRUE
+	return relaydrive(user, direction)
