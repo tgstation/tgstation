@@ -314,20 +314,22 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						continue
 					vars[variable] = configuration["dynamic"][variable]
 
+	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
 		if(ruleset.name == "")
 			continue
+		configure_ruleset(ruleset)
 		switch(ruleset.ruletype)
 			if("Roundstart")
 				roundstart_rules += ruleset
+				if(ruleset.weight)
+					valid_roundstart_ruleset++
 			if ("Latejoin")
 				latejoin_rules += ruleset
 			if ("Midround")
-				if (ruleset.weight)
-					midround_rules += ruleset
-		configure_ruleset(ruleset)
+				midround_rules += ruleset
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -337,12 +339,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (candidates.len <= 0)
 		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
-	if (roundstart_rules.len <= 0)
-		log_game("DYNAMIC: [roundstart_rules.len] rules.")
-		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
+	else if(valid_roundstart_ruleset < 1)
+		log_game("DYNAMIC: [valid_roundstart_ruleset] enabled roundstart rulesets.")
+		return TRUE
 	else
 		roundstart()
 
@@ -380,6 +382,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
+		if (!rule.weight)
+			continue
 		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
@@ -620,6 +624,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (get_injection_chance())
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
+				if (!rule.weight)
+					continue
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
@@ -698,6 +704,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
+			if (!rule.weight)
+				continue
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))

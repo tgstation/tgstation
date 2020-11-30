@@ -951,15 +951,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, swap = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-	var/obj/item/replaced_item = H.get_item_by_slot(slot)
-
-	// if there's an item in the slot we want, only allow past this if we're trying to swap and the item being replaced isn't NODROP or ABSTRACT
-	if(replaced_item && (!swap || (HAS_TRAIT(replaced_item, TRAIT_NODROP) || (replaced_item.item_flags & ABSTRACT))))
+	// if there's an item in the slot we want, fail
+	if(H.get_item_by_slot(slot))
 		return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
@@ -1622,7 +1620,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 	//when dead the air still effects your skin temp
-	if(humi.stat == DEAD)
+	if(humi.stat == DEAD || IS_IN_STASIS(humi))
 		body_temperature_skin(humi)
 	else //when alive do all the things
 		body_temperature_core(humi)
@@ -1691,8 +1689,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.08 to reflect temp back in to the core at the same rate as core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.08)
+		// change rate of 0.09 to reflect temp back to the skin at the slight higher rate then core to skin
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.09)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)
@@ -1719,9 +1717,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
-			if(0 to 461)
+			if(0 to 460)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-			if(460 to 700)
+			if(461 to 700)
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			else
 				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
