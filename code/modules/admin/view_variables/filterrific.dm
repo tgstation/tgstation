@@ -31,7 +31,10 @@
 
 	switch(action)
 		if("add_filter")
-			target.add_filter(params["name"], params["priority"], list("type" = params["type"]))
+			var/target_name = params["name"]
+			while(target.filter_data[target_name])
+				target_name = "[target_name]-dupe"
+			target.add_filter(target_name, params["priority"], list("type" = params["type"]))
 			. = TRUE
 		if("remove_filter")
 			target.remove_filter(params["name"])
