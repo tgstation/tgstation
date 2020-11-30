@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Regenerative black slime extracts won't duplicate megafauna any more."

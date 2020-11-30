@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "pAIs are now able to fully utilise installed encryption keys through their integrated transciever's menu when they have the encryption key software upgrade. The issue where pAIs are only able to change integrated radio settings when in holochassis form still persists and will be fixed in a later PR."

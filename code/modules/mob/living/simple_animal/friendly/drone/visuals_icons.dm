@@ -93,12 +93,12 @@
 	update_inv_internal_storage()
 
 /**
-  * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
-  *
-  * Does nothing if there is no usr
-  *
-  * Called on [/mob/proc/Login]
-  */
+ * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
+ *
+ * Does nothing if there is no usr
+ *
+ * Called on [/mob/proc/Login]
+ */
 /mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/list/drone_icons = list(
@@ -141,8 +141,8 @@
 	picked = TRUE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ */
 /mob/living/simple_animal/drone/proc/check_menu()
 	if(!istype(src))
 		return FALSE

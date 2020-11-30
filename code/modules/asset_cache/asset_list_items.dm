@@ -151,7 +151,6 @@
 
 
 /datum/asset/simple/jquery
-	legacy = TRUE
 	assets = list(
 		"jquery.min.js" = 'html/jquery.min.js',
 	)
@@ -511,3 +510,8 @@
 
 /datum/asset/simple/portraits/library_private
 	tab = "library_private"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)

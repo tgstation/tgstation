@@ -275,13 +275,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	SpawnFloor(src)
 
 /**
-  * Makes the tunnel and spawns things inside of it
-  *
-  * Picks a tunnel width for the tunnel and then starts spawning turfs in the direction it moves in
-  * Can randomly change directions of the tunnel, stops if it hits the edge of the map, or a no tunnel area
-  * Can randomly make new tunnels out of itself
-  *
-  */
+ * Makes the tunnel and spawns things inside of it
+ *
+ * Picks a tunnel width for the tunnel and then starts spawning turfs in the direction it moves in
+ * Can randomly change directions of the tunnel, stops if it hits the edge of the map, or a no tunnel area
+ * Can randomly make new tunnels out of itself
+ *
+ */
 /turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
