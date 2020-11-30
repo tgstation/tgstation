@@ -244,6 +244,8 @@ export const Filteriffic = (props, context) => {
   const filters = data.target_filter_data || {};
   const hasFilters = filters !== {};
   const filterDefaults = data["filter_info"];
+  const [massApplyPath, setMassApplyPath] = useLocalState(context, 'massApplyPath', '');
+  const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);
   return (
     <Window
       width={500}
@@ -255,13 +257,32 @@ export const Filteriffic = (props, context) => {
           YOU HAVE BEEN WARNED.
         </NoticeBox>
         <Section
-          title={name}
+          title={hiddenSecret ? (
+            <Fragment>
+              <Box mr={0.5} inline>
+                MASS EDIT:
+              </Box>
+              <Input
+                value={massApplyPath}
+                width="100px"
+                onInput={(e, value) => setMassApplyPath(value)} />
+              <Button.Confirm
+                content="Apply"
+                confirmContent="ARE YOU SURE?"
+                onClick={() => act('mass_apply', { path: massApplyPath })} />
+            </Fragment>
+          ) : (
+            <Box
+              inline
+              onDblClick={() => setHiddenSecret(true)}>
+              {name}
+            </Box>
+          )}
           buttons={(
             <Dropdown
               icon="plus"
               displayText="Add Filter"
               nochevron
-              doNotUpdate
               options={Object.keys(filterDefaults)}
               onSelected={value => act('add_filter', {
                 name: 'default',

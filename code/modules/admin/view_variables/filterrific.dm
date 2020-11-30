@@ -78,5 +78,23 @@
 				target.filter_data[params["name"]]["icon"] = new_icon
 				target.update_filters()
 				. = TRUE
+		if("mass_apply")
+			if(!check_rights_for(usr.client, R_FUN))
+				to_chat(usr, "<span class='userdanger>Stay in your lane, jannie.</span>'")
+				return
+			var/target_path = text2path(params["path"])
+			if(!target_path)
+				return
+			var/filters_to_copy = target.filters
+			var/filter_data_to_copy = target.filter_data
+			var/count = 0
+			for(var/thing in world.contents)
+				if(istype(thing, target_path))
+					var/atom/thing_at = thing
+					thing_at.filters = filters_to_copy
+					thing_at.filter_data = filter_data_to_copy
+					count += 1
+			to_chat(usr, "<span class='danger'>Applied to [count] things</span>")
+			log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [things]!")
 
 
