@@ -11,7 +11,7 @@
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
 	boom_sizes = list(4, 8, 12)
 	var/mob/detonator = null
-	
+
 /obj/item/grenade/c4/ninja/afterattack(atom/movable/AM, mob/user, flag)
 	var/datum/antagonist/ninja/ninja_antag = user.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
@@ -26,8 +26,8 @@
 		return
 	detonator = user
 	return ..()
-		
-/obj/item/grenade/c4/ninja/prime(mob/living/lanced_by)
+
+/obj/item/grenade/c4/ninja/detonate(mob/living/lanced_by)
 	. = ..()
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)

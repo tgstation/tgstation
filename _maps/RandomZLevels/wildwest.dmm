@@ -1016,7 +1016,7 @@
 /area/awaymission/wildwest/mines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dZ" = (
@@ -1026,12 +1026,12 @@
 /area/awaymission/wildwest/mines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/donut/jelly,
+/obj/item/food/donut/jelly,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ec" = (
@@ -1177,7 +1177,7 @@
 "eG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
-/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eH" = (

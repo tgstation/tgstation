@@ -78,6 +78,7 @@
 	mine_experience = 6
 	scan_state = "rock_Uranium"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/uranium
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
@@ -90,6 +91,7 @@
 	mine_experience = 1
 	scan_state = "rock_Iron"
 	spreadChance = 20
+	merge_type = /obj/item/stack/ore/iron
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -101,6 +103,7 @@
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
+	merge_type = /obj/item/stack/ore/glass
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
@@ -135,6 +138,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	inhand_icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/basalt
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
@@ -147,11 +151,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 5
 	scan_state = "rock_Plasma"
 	spreadChance = 8
+	merge_type = /obj/item/stack/ore/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	return TRUE
-
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
@@ -164,6 +168,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/silver
 	scan_state = "rock_Silver"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/silver
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
@@ -176,6 +181,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/gold
 	scan_state = "rock_Gold"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/gold
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
@@ -187,6 +193,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
 	scan_state = "rock_Diamond"
+	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -198,6 +205,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 	scan_state = "rock_Bananium"
+	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
@@ -210,6 +218,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	scan_state = "rock_Titanium"
 	spreadChance = 5
+	merge_type = /obj/item/stack/ore/titanium
 
 /obj/item/stack/ore/slag
 	name = "slag"
@@ -217,6 +226,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "slag"
 	inhand_icon_state = "slag"
 	singular_name = "slag chunk"
+	merge_type = /obj/item/stack/ore/slag
 
 /obj/item/gibtonite
 	name = "gibtonite ore"

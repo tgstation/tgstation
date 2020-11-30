@@ -214,18 +214,18 @@
 /obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
 	log_bomber(user, "primed a", src, "for detonation")
-	prime()
+	detonate()
 
 /obj/item/food/grown/cherry_bomb/deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		prime()
+		detonate()
 	if(!QDELETED(src))
 		qdel(src)
 
 /obj/item/food/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/food/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
+/obj/item/food/grown/cherry_bomb/proc/detonate(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
 	reagents.chem_temp = 1000 //Sets off the gunpowder

@@ -12,6 +12,9 @@
 	max_integrity = 40
 	novariants = FALSE
 	item_flags = NOBLUDGEON
+	cost = 250
+	source = /datum/robot_energy_storage/medical
+	merge_type = /obj/item/stack/medical
 	var/self_delay = 50
 	var/other_delay = 0
 	var/repeating = FALSE
@@ -88,6 +91,7 @@
 	self_delay = 40
 	other_delay = 20
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
+	merge_type = /obj/item/stack/medical/bruise_pack
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -127,6 +131,7 @@
 	absorption_rate = 0.25
 	absorption_capacity = 5
 	splint_factor = 0.35
+	merge_type = /obj/item/stack/medical/gauze
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
@@ -188,11 +193,7 @@
 	other_delay = 30
 	absorption_rate = 0.15
 	absorption_capacity = 4
-
-/obj/item/stack/medical/gauze/cyborg
-	custom_materials = null
-	is_cyborg = 1
-	cost = 250
+	merge_type = /obj/item/stack/medical/gauze/improvised
 
 /obj/item/stack/medical/suture
 	name = "suture"
@@ -208,6 +209,7 @@
 	heal_brute = 10
 	stop_bleeding = 0.6
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+	merge_type = /obj/item/stack/medical/suture
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"
@@ -215,6 +217,7 @@
 	heal_brute = 5
 	amount = 5
 	max_amount = 5
+	merge_type = /obj/item/stack/medical/suture/emergency
 
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
@@ -223,6 +226,7 @@
 	heal_brute = 15
 	stop_bleeding = 0.75
 	grind_results = list(/datum/reagent/medicine/polypyr = 1)
+	merge_type = /obj/item/stack/medical/suture/medicated
 
 /obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
 	. = ..()
@@ -262,6 +266,7 @@
 	flesh_regeneration = 2.5
 	sanitization = 0.25
 	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
+	merge_type = /obj/item/stack/medical/ointment
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -292,6 +297,7 @@
 
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+	merge_type = /obj/item/stack/medical/mesh
 
 /obj/item/stack/medical/mesh/Initialize()
 	. = ..()
@@ -352,6 +358,7 @@
 	sanitization = 1.25
 	flesh_regeneration = 3.5
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+	merge_type = /obj/item/stack/medical/mesh/advanced
 
 /obj/item/stack/medical/mesh/advanced/update_icon_state()
 	if(!is_open)
@@ -374,6 +381,7 @@
 	repeating = TRUE
 	var/heal = 3
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+	merge_type = /obj/item/stack/medical/aloe
 
 /obj/item/stack/medical/aloe/heal(mob/living/M, mob/user)
 	. = ..()
@@ -418,6 +426,7 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	novariants = TRUE
+	merge_type = /obj/item/stack/medical/bone_gel
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)
 	to_chat(user, "<span class='warning'>Bone gel can only be used on fractured limbs!</span>")
@@ -445,11 +454,6 @@
 			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
 			return (BRUTELOSS)
 
-/obj/item/stack/medical/bone_gel/cyborg
-	custom_materials = null
-	is_cyborg = 1
-	cost = 250
-
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"
 	singular_name = "mourning poultice"
@@ -465,6 +469,7 @@
 	drop_sound = 'sound/misc/moist_impact.ogg'
 	mob_throw_hit_sound = 'sound/misc/moist_impact.ogg'
 	hitsound = 'sound/misc/moist_impact.ogg'
+	merge_type = /obj/item/stack/medical/poultice
 
 /obj/item/stack/medical/poultice/heal(mob/living/M, mob/user)
 	. = .. ()

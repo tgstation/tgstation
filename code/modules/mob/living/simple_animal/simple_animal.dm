@@ -228,7 +228,7 @@
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
-	return
+	tame = TRUE
 
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
@@ -537,18 +537,6 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(incapacitated())
-		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-		return FALSE
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	if(!(no_dexterity || dextrous))
-		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return FALSE
-	return TRUE
-
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, BE_CLOSE))
 		return
@@ -609,7 +597,7 @@
 /mob/living/simple_animal/get_idcard(hand_first)
 	return (..() || access_card)
 
-/mob/living/simple_animal/can_hold_items()
+/mob/living/simple_animal/can_hold_items(obj/item/I)
 	return dextrous && ..()
 
 /mob/living/simple_animal/activate_hand(selhand)

@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
 	novariants = TRUE
+	cost = 1
+	source = /datum/robot_energy_storage/beacon
 	var/picked_color = "random"
 
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these
