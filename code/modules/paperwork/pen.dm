@@ -165,7 +165,7 @@
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, "<span class='notice'>You have successfully renamed \the [oldname] to [O].</span>")
-				O.renamedByPlayer = TRUE
+				O.obj_flags |= RENAMED_BY_PLAYER
 				O.name_before_player_changed = oldname
 
 		if(penchoice == "Change description")
@@ -178,7 +178,7 @@
 			else
 				O.desc = input
 				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
-				O.renamedByPlayer = TRUE
+				O.obj_flags |= RENAMED_BY_PLAYER
 				O.desc_before_player_changed = olddesc
 
 		if(penchoice == "Reset")
@@ -199,10 +199,9 @@
 				label.remove_label()
 				label.apply_label()
 			to_chat(user, "<span class='notice'>You have successfully reset [O]'s [whatwereset].</span>")
-			O.renamedByPlayer = FALSE
+			O.obj_flags &= ~RENAMED_BY_PLAYER
 			O.name_before_player_changed = null
 			O.desc_before_player_changed = null
-
 
 /*
  * Sleepypens

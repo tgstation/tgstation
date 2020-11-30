@@ -19,7 +19,7 @@
 	cut_overlays()
 	if(reagents.reagent_list.len)
 		var/datum/reagent/R = reagents.get_master_reagent()
-		if(!renamedByPlayer)
+		if(!(obj_flags & RENAMED_BY_PLAYER))
 			name = R.glass_name
 			desc = R.glass_desc
 		if(R.glass_icon_state)
@@ -31,7 +31,7 @@
 			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
-		renamedByPlayer = FALSE //so new drinks can rename the glass
+		obj_flags &= ~RENAMED_BY_PLAYER //remove flag so new drinks can rename the glass
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //

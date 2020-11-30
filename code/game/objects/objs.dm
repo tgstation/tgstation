@@ -33,8 +33,6 @@
 	/// Custom fire overlay icon
 	var/custom_fire_overlay
 
-	///set when a player changes the name or desc of a renamable object
-	var/renamedByPlayer = FALSE
 	///set when a player changes the name of a renamable object
 	var/name_before_player_changed
 	///set when a player changes the desc of a renamable object

@@ -402,7 +402,7 @@
 				P = new/obj/item/reagent_containers/food/condiment(drop_location())
 				if (style)
 					apply_condi_style(P, style)
-				P.renamedByPlayer = TRUE
+				P.obj_flags |= RENAMED_BY_PLAYER
 				P.name = name
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
