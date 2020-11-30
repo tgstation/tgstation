@@ -40,3 +40,6 @@
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2
 #define CALTROP_SILENT 3
+
+//Ingredient type in datum/component/customizableatom
+#define CUSTOMIZABLE_INGREDIENTS_EDIBLE 1

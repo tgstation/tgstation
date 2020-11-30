@@ -1,16 +1,16 @@
 /**
  * # Custom Atom Component
  *
- * When added to an atom, edible ingredients can be put into that.
+ * When added to an atom, item ingredients can be put into that.
  * The sprite is updated and reagents are transfered.
  *
  * If the component is added to something that is processed, creating new objects (being cut, for example),
  * the replacement type needs to also have the component. The ingredients will be copied over. Reagents are not
- * copied over since edible components already take care of that.
+ * copied over since other components already take care of that.
  */
 /datum/component/customizableatom
 	can_transfer = TRUE
-	///List of edible ingredients.
+	///List of item ingredients.
 	var/list/obj/item/ingredients
 	///Type path of replacement atom.
 	var/replacement
@@ -20,15 +20,22 @@
 	var/max_ingredients
 	///Overlay used for certain fill types, always shows up on top.
 	var/mutable_appearance/top_overlay
+	///Type of ingredients to accept, [CUSTOMIZABLE_INGREDIENTS_EDIBLE] for example.
+	var/ingredient_type
 
 
-/datum/component/customizableatom/Initialize(atom/replacement, fill_type, max_ingredients = INFINITY)
+/datum/component/customizableatom/Initialize(
+		atom/replacement,
+		fill_type,
+		ingredient_type = CUSTOMIZABLE_INGREDIENTS_EDIBLE,
+		max_ingredients = INFINITY)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacement = replacement
 	src.fill_type = fill_type
 	src.max_ingredients = max_ingredients
+	src.ingredient_type = ingredient_type
 
 
 /datum/component/customizableatom/Destroy(force, silent)
@@ -83,8 +90,14 @@
 /datum/component/customizableatom/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	// only accept items with reagents
-	if (!IS_EDIBLE(I))
+	var/valid_ingredient = TRUE
+
+	switch (ingredient_type)
+		if (CUSTOMIZABLE_INGREDIENTS_EDIBLE)
+			valid_ingredient = IS_EDIBLE(I)
+
+	// only accept valid ingredients
+	if (valid_ingredient)
 		to_chat(M, "<span class='warning'>[I] doesn't belong on [parent]!</span>")
 		return
 
@@ -105,8 +118,6 @@
 	handle_reagents(I)
 	handle_ingredients(I)
 	handle_fill(I)
-	// deal with food trash?
-	SEND_SIGNAL(I, COMSIG_FOOD_CONSUMED, null, null)
 
 
 ///Handles the icon update for a new ingredient.
