@@ -100,7 +100,7 @@
 			terminate() // Kills the suit and attached objects.
 		else if(cell.charge > 0)
 			if(s_coold > 0)
-				s_coold -= delta_time // Checks for ability s_cooldown first.
+				s_coold = max(s_coold - delta_time, 0) // Checks for ability s_cooldown first.
 			cell.charge -= s_cost * delta_time // s_cost is the default energy cost each ntick, usually 5.
 			if(stealth) // If stealth is active.
 				cell.charge -= s_acost * delta_time
@@ -205,7 +205,6 @@
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = ninja.shoes
 	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_shoes.slowdown--
 	n_gloves = ninja.gloves
 	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_mask = ninja.wear_mask
@@ -230,7 +229,6 @@
 		n_hood.icon_state = "s-ninja"
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "black"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)

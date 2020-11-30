@@ -4,7 +4,7 @@
   * Space ninja's shoes.  Gives him armor on his feet.
   *
   * Space ninja's ninja shoes.  How mousey.  Gives him slip protection and protection against attacks.
-  * Also are temperature resistant.
+  * Also are temperature resistant.  These shoes also grant a slight speed-up on their wearer.
   *
   */
 /obj/item/clothing/shoes/space_ninja
@@ -21,3 +21,4 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	slowdown = -1
