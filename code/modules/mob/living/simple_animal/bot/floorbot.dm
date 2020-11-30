@@ -398,8 +398,8 @@
 		..()
 
 /**
-  * Checks a given turf to see if another floorbot is there, working as well.
-  */
+ * Checks a given turf to see if another floorbot is there, working as well.
+ */
 /mob/living/simple_animal/bot/floorbot/proc/check_bot_working(turf/active_turf)
 	if(isturf(active_turf))
 		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf)

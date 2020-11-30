@@ -59,17 +59,17 @@ SUBSYSTEM_DEF(economy)
 		price_update()
 
 /**
-  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
-  */
+ * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
+ */
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D
 
 /**
-  * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
-  * Iterates over every department account for the same payment.
-  */
+ * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+ * Iterates over every department account for the same payment.
+ */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
 	for(var/iteration in department_accounts)
 		var/datum/bank_account/dept_account = get_dep_account(iteration)

@@ -110,10 +110,10 @@
 	return
 
 /**
-  * Sickly blade distant act
-  *
-  * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
-  */
+ * Sickly blade distant act
+ *
+ * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
+ */
 /datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 

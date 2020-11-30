@@ -75,17 +75,17 @@
 	update_icon()
 
 /** Sets the amount of materials per unit for this stack.
-  *
-  * Arguments:
-  * - [mats][/list]: The value to set the mats per unit to.
-  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
-  */
+ *
+ * Arguments:
+ * - [mats][/list]: The value to set the mats per unit to.
+ * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
+ */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
 	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.
-  */
+ */
 /obj/item/stack/proc/update_custom_materials()
 	set_custom_materials(mats_per_unit, amount)
 
@@ -381,10 +381,10 @@
 	return FALSE
 
 /** Adds some number of units to this stack.
-  *
-  * Arguments:
-  * - _amount: The number of units to add to this stack.
-  */
+ *
+ * Arguments:
+ * - _amount: The number of units to add to this stack.
+ */
 /obj/item/stack/proc/add(_amount)
 	if (is_cyborg)
 		source.add_charge(_amount * cost)
@@ -396,10 +396,10 @@
 	update_weight()
 
 /** Checks whether this stack can merge itself into another stack.
-  *
-  * Arguments:
-  * - [check][/obj/item/stack]: The stack to check for mergeability.
-  */
+ *
+ * Arguments:
+ * - [check][/obj/item/stack]: The stack to check for mergeability.
+ */
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
@@ -458,11 +458,11 @@
 	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
 
 /** Splits the stack into two stacks.
-  *
-  * Arguments:
-  * - [user][/mob]: The mob splitting the stack.
-  * - amount: The number of units to split from this stack.
-  */
+ *
+ * Arguments:
+ * - [user][/mob]: The mob splitting the stack.
+ * - amount: The number of units to split from this stack.
+ */
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
