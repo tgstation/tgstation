@@ -42,4 +42,12 @@
 #define CALTROP_SILENT 3
 
 //Ingredient type in datum/component/customizableatom
-#define CUSTOMIZABLE_INGREDIENTS_EDIBLE 1
+#define CUSTOM_INGREDIENT_TYPE_EDIBLE	1
+
+//Icon overlay type in datum/component/customizableatom
+#define CUSTOM_INGREDIENT_ICON_NOCHANGE			0
+#define CUSTOM_INGREDIENT_ICON_FILL				1
+#define CUSTOM_INGREDIENT_ICON_SCATTER			2
+#define CUSTOM_INGREDIENT_ICON_STACK			3
+#define CUSTOM_INGREDIENT_ICON_LINE				4
+#define CUSTOM_INGREDIENT_ICON_STACKPLUSTOP		5

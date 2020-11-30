@@ -27,7 +27,7 @@
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENTS_SCATTER, max_ingredients = 6)
+	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
 
 /obj/item/food/spaghetti/pastatomato
 	name = "spaghetti"

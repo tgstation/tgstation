@@ -33,7 +33,7 @@
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizableatom, /obj/item/food/bread/empty, CUSTOM_INGREDIENTS_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/customizableatom, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
@@ -47,7 +47,7 @@
 
 /obj/item/food/breadslice/plain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENTS_STACK)
+	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/moldy
 	name = "moldy bread slice"
@@ -204,7 +204,7 @@
 
 /obj/item/food/breadslice/empty/Initialize()
 	. = ..()
-	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENTS_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/customizableatom, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"

@@ -14,20 +14,20 @@
 	var/list/obj/item/ingredients
 	///Type path of replacement atom.
 	var/replacement
-	///Type of fill, can be [CUSTOM_INGREDIENTS_NOCHANGE] for example.
+	///Type of fill, can be [CUSTOM_INGREDIENT_ICON_NOCHANGE] for example.
 	var/fill_type
 	///Number of max ingredients.
 	var/max_ingredients
 	///Overlay used for certain fill types, always shows up on top.
 	var/mutable_appearance/top_overlay
-	///Type of ingredients to accept, [CUSTOMIZABLE_INGREDIENTS_EDIBLE] for example.
+	///Type of ingredients to accept, [CUSTOM_INGREDIENT_TYPE_EDIBLE] for example.
 	var/ingredient_type
 
 
 /datum/component/customizableatom/Initialize(
 		atom/replacement,
 		fill_type,
-		ingredient_type = CUSTOMIZABLE_INGREDIENTS_EDIBLE,
+		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
 		max_ingredients = INFINITY)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -93,7 +93,7 @@
 	var/valid_ingredient = TRUE
 
 	switch (ingredient_type)
-		if (CUSTOMIZABLE_INGREDIENTS_EDIBLE)
+		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
 			valid_ingredient = IS_EDIBLE(I)
 
 	// only accept valid ingredients
@@ -131,13 +131,13 @@
 	filling.color = fillcol
 
 	switch(fill_type)
-		if(CUSTOM_INGREDIENTS_SCATTER)
+		if(CUSTOM_INGREDIENT_ICON_SCATTER)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = rand(-1,1)
-		if(CUSTOM_INGREDIENTS_STACK)
+		if(CUSTOM_INGREDIENT_ICON_STACK)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
-		if(CUSTOM_INGREDIENTS_STACKPLUSTOP)
+		if(CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 *  LAZYLEN(ingredients) - 1
 			if (top_overlay) // delete old top if exists
@@ -147,12 +147,12 @@
 			P.add_overlay(filling)
 			P.add_overlay(top_overlay)
 			return
-		if(CUSTOM_INGREDIENTS_FILL)
+		if(CUSTOM_INGREDIENT_ICON_FILL)
 			if (top_overlay)
 				filling.color = mix_color(filling.color)
 				P.cut_overlay(top_overlay)
 			top_overlay = filling
-		if(CUSTOM_INGREDIENTS_LINE)
+		if(CUSTOM_INGREDIENT_ICON_LINE)
 			filling.pixel_x = filling.pixel_y = rand(-8,3)
 	P.add_overlay(filling)
 
