@@ -276,10 +276,10 @@
 //The following functions are the same save for one small difference
 
 /**
-  * Used to drop an item (if it exists) to the ground.
-  * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
-  * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
-  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
+ * Used to drop an item (if it exists) to the ground.
+ * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
+ * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
+ * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)

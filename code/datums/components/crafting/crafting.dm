@@ -60,12 +60,12 @@
 */
 
 /**
-  * Check that the contents of the recipe meet the requirements.
-  *
-  * user: The /mob that initated the crafting.
-  * R: The /datum/crafting_recipe being attempted.
-  * contents: List of items to search for R's reqs.
-  */
+ * Check that the contents of the recipe meet the requirements.
+ *
+ * user: The /mob that initated the crafting.
+ * R: The /datum/crafting_recipe being attempted.
+ * contents: List of items to search for R's reqs.
+ */
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
 	contents = contents["other"]

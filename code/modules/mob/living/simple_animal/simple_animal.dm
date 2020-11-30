@@ -254,11 +254,11 @@
 		stuttering = 0
 
 /**
-  * Updates the simple mob's stamina loss.
-  *
-  * Updates the speed and staminaloss of a given simplemob.
-  * Reduces the stamina loss by stamina_recovery
-  */
+ * Updates the simple mob's stamina loss.
+ *
+ * Updates the speed and staminaloss of a given simplemob.
+ * Reduces the stamina loss by stamina_recovery
+ */
 /mob/living/simple_animal/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 

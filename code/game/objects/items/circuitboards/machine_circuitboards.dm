@@ -358,7 +358,7 @@
 /obj/item/circuitboard/machine/HFR_core
 	name = "HFR core (Machine Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/atmospherics/components/binary/hypertorus/core
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
 	req_components = list(
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sheet/glass = 10,

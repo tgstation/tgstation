@@ -1,11 +1,13 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: default_state
  *
  * Checks a number of things -- mostly physical distance for humans
  * and view for robots.
- *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
