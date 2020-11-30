@@ -68,12 +68,13 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
-	RegisterSignal(parent, COMSIG_ATOM_CUSTOMIZED, .proc/on_customized)
+	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
+		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
 		var/obj/item/item = parent
 		if (!item.grind_results)
@@ -454,14 +455,19 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
 
-///Response to customization, inherit tastes and foodtypes if possible
-/datum/component/edible/proc/on_customized(datum/source, obj/item/I)
+///Response to being used to customize something
+/datum/component/edible/proc/used_to_customize(datum/source, atom/customized)
 	SIGNAL_HANDLER
 
-	var/datum/component/edible/E = I.GetComponent(/datum/component/edible)
-	if (E)
-		if (LAZYLEN(E.tastes))
-			tastes = tastes.Copy()
-			for (var/t in E.tastes)
-				tastes[t] += E.tastes[t]
-		foodtypes |= E.foodtypes
+	SEND_SIGNAL(customized, COMSIG_EDIBLE_INGREDIENT_ADDED, src)
+
+///Response to an edible ingredient being added to parent.
+/datum/component/edible/proc/edible_ingredient_added(datum/source, datum/component/edible/ingredient)
+	SIGNAL_HANDLER
+
+	var/datum/component/edible/E = ingredient
+	if (LAZYLEN(E.tastes))
+		tastes = tastes.Copy()
+		for (var/t in E.tastes)
+			tastes[t] += E.tastes[t]
+	foodtypes |= E.foodtypes

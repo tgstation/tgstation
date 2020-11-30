@@ -181,6 +181,7 @@
 	LAZYADD(ingredients, I)
 	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
 	SEND_SIGNAL(P, COMSIG_ATOM_CUSTOMIZED, I)
+	SEND_SIGNAL(I, COMSIG_ITEM_USED_AS_INGREDIENT, P)
 
 
 ///Gives an adjective to describe the size of the custom food.
