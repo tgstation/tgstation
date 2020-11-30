@@ -197,7 +197,8 @@
 
 	// if we are not angry at our target, go back to idle
 	if(controller.blackboard[BB_MONKEY_ENEMIES][target] <= 0)
-		controller.blackboard[BB_MONKEY_ENEMIES].Remove(target)
+		var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
+		enemies.Remove(target)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == target)
 			finish_action(controller, TRUE)
 
