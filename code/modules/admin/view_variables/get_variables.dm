@@ -37,9 +37,6 @@
 		else
 			. = VV_TYPE
 
-	else if(var_name == "filters")
-		. = VV_FILTERS
-
 	else if(islist(var_value))
 		. = VV_LIST
 
