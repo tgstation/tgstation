@@ -41,7 +41,7 @@
 	if (initial_ingredients)
 		for (var/ingr in initial_ingredients)
 			var/obj/item/I = ingr
-			handle_ingredients(I)
+			add_ingredient(I)
 			handle_fill(I)
 
 
@@ -123,7 +123,7 @@
 		R.TakeComponent(src)
 		qdel(P)
 	handle_reagents(I)
-	handle_ingredients(I)
+	add_ingredient(I)
 	handle_fill(I)
 
 
@@ -175,8 +175,8 @@
 	return
 
 
-///Adds a new ingredient and its tastes and food types.
-/datum/component/customizableatom/proc/handle_ingredients(obj/item/I)
+///Adds a new ingredient and updates the parent's name.
+/datum/component/customizableatom/proc/add_ingredient(obj/item/I)
 	var/atom/P = parent
 	LAZYADD(ingredients, I)
 	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
