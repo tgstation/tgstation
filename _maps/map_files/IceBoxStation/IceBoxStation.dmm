@@ -168,9 +168,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/computer/security/qm{
-	dir = 2
-	},
+/obj/machinery/computer/security/qm,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaw" = (
@@ -223,9 +221,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/cargo{
-	dir = 2
-	},
+/obj/machinery/computer/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaE" = (
@@ -34631,7 +34627,6 @@
 	areastring = "/area/crew_quarters/heads/hor";
 	dir = 1;
 	name = "RD Office APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable,
