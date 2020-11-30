@@ -34631,7 +34631,6 @@
 	areastring = "/area/crew_quarters/heads/hor";
 	dir = 1;
 	name = "RD Office APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable,

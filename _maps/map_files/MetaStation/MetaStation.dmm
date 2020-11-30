@@ -76130,7 +76130,7 @@
 "tgQ" = (
 /obj/structure/water_source/puddle,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
+	pixel_y = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/grass,

@@ -27612,7 +27612,9 @@
 "bwB" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bwC" = (
@@ -29620,8 +29622,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
 /area/medical/storage)
@@ -29651,8 +29653,8 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bCg" = (
@@ -45268,7 +45270,6 @@
 /area/maintenance/department/crew_quarters/dorms)
 "cPT" = (
 /obj/machinery/power/apc/auto_name/east{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -46258,7 +46259,9 @@
 "ezx" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/storage)
 "ezF" = (
