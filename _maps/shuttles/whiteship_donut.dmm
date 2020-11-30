@@ -42,8 +42,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/broken{
-	dir = 4;
-	icon_state = "tube-broken"
+	dir = 4
 	},
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/airless,
@@ -69,15 +68,13 @@
 /area/shuttle/abandoned)
 "am" = (
 /obj/structure/shuttle/engine/propulsion/right{
-	dir = 1;
-	icon_state = "propulsion_r"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	dir = 1;
-	icon_state = "propulsion_l"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -154,8 +151,7 @@
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil,
 /obj/machinery/light/broken{
-	dir = 4;
-	icon_state = "tube-broken"
+	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
@@ -224,7 +220,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/urinal{
 	dir = 8;
-	icon_state = "urinal";
 	pixel_x = 32
 	},
 /obj/structure/window/reinforced/tinted,
@@ -267,7 +262,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/urinal{
 	dir = 8;
-	icon_state = "urinal";
 	pixel_x = 32
 	},
 /obj/structure/window/reinforced/tinted{
@@ -332,8 +326,7 @@
 "ba" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	dir = 4;
-	icon_state = "paperstack"
+	dir = 4
 	},
 /obj/item/folder/yellow,
 /turf/open/floor/plasteel/airless,
@@ -412,8 +405,7 @@
 "bk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	dir = 1;
-	icon_state = "paperstack"
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -435,8 +427,7 @@
 "bm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	dir = 8;
-	icon_state = "paperstack"
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -479,8 +470,7 @@
 /area/shuttle/abandoned)
 "br" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1;
-	icon_state = "computer"
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/disk/holodisk/donutstation/whiteship,
