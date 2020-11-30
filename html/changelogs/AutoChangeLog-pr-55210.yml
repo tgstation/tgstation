@@ -1,0 +1,4 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - bugfix: "Food is now small, unless tagged to be bigger."
