@@ -148,4 +148,5 @@
 		if(canister_mix[gasID][MOLES] > 0)
 			worth += round((gas_prices[gasID]/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * canister_mix[gasID][MOLES])))
 
+	C.air_contents.garbage_collect()
 	return worth
