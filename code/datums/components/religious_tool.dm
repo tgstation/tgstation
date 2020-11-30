@@ -57,7 +57,7 @@
 	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
 			return
-		 //At this point you're intentionally trying to select a sect.
+		//At this point you're intentionally trying to select a sect.
 		INVOKE_ASYNC(src, .proc/select_sect, user)
 		return COMPONENT_NO_AFTERATTACK
 

@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/pie/plain = 1,
-		 /obj/item/food/grown/banana = 1
+		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/pie/cream
 	subcategory = CAT_PIE
@@ -46,7 +46,7 @@
 	name = "Cherry pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		 /obj/item/food/grown/cherries = 1
+		/obj/item/food/grown/cherries = 1
 	)
 	result = /obj/item/food/pie/cherrypie
 	subcategory = CAT_PIE
