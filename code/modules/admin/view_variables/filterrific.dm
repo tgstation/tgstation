@@ -94,7 +94,7 @@
 					thing_at.filters = filters_to_copy
 					thing_at.filter_data = filter_data_to_copy
 					count += 1
-			to_chat(usr, "<span class='danger'>Applied to [count] things</span>")
-			log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [things]!")
+			message_admins("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [things] WITH PATH OF [params["path"]]!")
+			log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [things] WITH PATH OF [params["path"]]!")
 
 
