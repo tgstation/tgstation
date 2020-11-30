@@ -1,16 +1,5 @@
-
-/datum/ai_behavior/resist/perform(delta_time, datum/ai_controller/controller)
-	. = ..()
-	var/mob/living/living_pawn = controller.pawn
-	living_pawn.resist()
-	finish_action(controller, TRUE)
-
-/datum/ai_behavior/battle_screech
-
-/datum/ai_behavior/battle_screech/perform(delta_time, datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-	living_pawn.emote(pick("roar","screech"))
-	finish_action(controller, TRUE)
+/datum/ai_behavior/battle_screech/monkey
+	screeches = list("roar","screech")
 
 /datum/ai_behavior/monkey_equip
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
@@ -26,7 +15,6 @@
 		item_blacklist[target] = TRUE
 
 /datum/ai_behavior/monkey_equip/proc/equip_item(datum/ai_controller/controller)
-	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
@@ -100,6 +88,7 @@
 					if(!QDELETED(target) && !equip_item(controller))
 						target.forceMove(living_pawn.drop_location())
 						success = TRUE
+						break
 				else
 					victim.visible_message("<span class='danger'>[living_pawn] tried to snatch [target] from [victim], but failed!</span>", "<span class='userdanger'>[living_pawn] tried to grab [target]!</span>")
 
@@ -110,9 +99,9 @@
 	controller.blackboard[BB_MONKEY_PICKPOCKETING] = FALSE
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
-/datum/ai_behavior/flee
+/datum/ai_behavior/monkey_flee
 
-/datum/ai_behavior/flee/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_flee/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 
 	var/mob/living/living_pawn = controller.pawn
@@ -133,8 +122,7 @@
 		finish_action(controller, TRUE)
 
 /datum/ai_behavior/monkey_attack_mob
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	move_while_performing = TRUE //this needs to be true so frustration is handled.
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
 /datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -144,6 +132,7 @@
 
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
+
 	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn))	// if right next to perp
 		// check if target has a weapon
 		var/obj/item/W
@@ -184,7 +173,14 @@
 
 	var/mob/living/living_pawn = controller.pawn
 
+	if(living_pawn.next_move > world.time)
+		return
+
+	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
+
 	var/obj/item/Weapon = locate(/obj/item) in living_pawn.held_items
+
+	living_pawn.face_atom(target)
 
 	// attack with weapon if we have one
 	if(Weapon)
@@ -208,8 +204,7 @@
 
 
 /datum/ai_behavior/disposal_mob
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
-	move_while_performing = TRUE //this needs to be true so frustration is handled.
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

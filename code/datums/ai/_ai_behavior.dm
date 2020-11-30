@@ -2,10 +2,6 @@
 /datum/ai_behavior
 	///What distance you need to be from the target to perform the action
 	var/required_distance = 1
-	///Can we perform the action while moving?
-	var/move_while_performing = FALSE
-	///How many actions do we want to perform before giving up?
-	var/max_action_attempts = -1
 	///Flags for extra behavior
 	var/behavior_flags = NONE
 

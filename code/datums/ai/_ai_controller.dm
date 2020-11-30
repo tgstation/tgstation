@@ -32,6 +32,10 @@ have ways of interacting with a specific mob and control it.
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
 
+/datum/ai_controller/Destroy(force, ...)
+	. = ..()
+	TryUnpossessPawn()
+
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
 	return
@@ -59,7 +63,7 @@ have ways of interacting with a specific mob and control it.
 		var/datum/ai_behavior/current_behavior = i
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT && current_movement_target && current_behavior.required_distance < get_dist(pawn, current_movement_target)) //Move closer
 			want_to_move = TRUE
-			if(current_behavior.move_while_performing) //Move and perform the action
+			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //Move and perform the action
 				current_behavior.perform(delta_time, src)
 		else //Perform the action
 			current_behavior.perform(delta_time, src)

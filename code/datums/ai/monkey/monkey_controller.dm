@@ -57,7 +57,7 @@ have ways of interacting with a specific mob and control it.
 			var/mob/living/selected_enemy
 
 			for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-				if(possible_enemy == living_pawn || !enemies[possible_enemy] && !blackboard[BB_MONKEY_AGRESSIVE]) //Are they an enemy? (And do we even care?)
+				if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!blackboard[BB_MONKEY_AGRESSIVE] || living_pawn.faction_check_mob(possible_enemy)))) //Are they an enemy? (And do we even care?)
 					continue
 
 				selected_enemy = possible_enemy
@@ -66,7 +66,7 @@ have ways of interacting with a specific mob and control it.
 				if(!selected_enemy.stat) //He's up, get him!
 					if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
 						blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/flee)
+						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_flee)
 						return //I'm running fuck you guys
 
 					if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.

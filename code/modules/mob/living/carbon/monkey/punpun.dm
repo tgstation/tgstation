@@ -19,6 +19,7 @@
 		name = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
 		if(name == "Furious George")
 			ai_controller.blackboard[BB_MONKEY_AGRESSIVE] = TRUE //hes always mad
+			faction -= "neutral"
 	. = ..()
 
 	//These have to be after the parent new to ensure that the monkey
