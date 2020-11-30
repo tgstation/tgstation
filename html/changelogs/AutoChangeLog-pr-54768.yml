@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes weird lighting issues when crafting items with component parts that have lighting components."

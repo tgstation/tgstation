@@ -22,6 +22,11 @@ if grep -P 'pixel_[^xy]' _maps/**/*.dmm;	then
     echo "ERROR: incorrect pixel offset variables detected in maps, please remove them."
     st=1
 fi;
+echo "Checking for cable varedits"
+if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
+    echo "ERROR: vareditted cables detected, please remove them."
+    st=1
+fi;
 if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
@@ -29,6 +34,11 @@ fi;
 echo "Checking for pixel_[xy]"
 if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
     echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
+fi;
+echo "Checking for stacked cables"
+if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
+    echo "found multiple cables on the same tile, please remove them."
+    st=1
 fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
@@ -52,12 +62,24 @@ while read f; do
         st=1
     fi;
 done < <(find . -type f -name '*.dm')
+if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
+    echo "changed files contains proc argument starting with 'var'"
+    st=1
+fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
     st=1
 fi;
 if grep -i 'centcomm' _maps/**/*.dmm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
+    st=1
+fi;
+if grep -ni 'nanotransen' code/**/*.dm; then
+    echo "Misspelling(s) of nanotrasen detected in code, please remove the extra N(s)."
+    st=1
+fi;
+if grep -ni 'nanotransen' _maps/**/*.dmm; then
+    echo "Misspelling(s) of nanotrasen detected in maps, please remove the extra N(s)."
     st=1
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then

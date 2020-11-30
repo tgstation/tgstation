@@ -10739,7 +10739,9 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
 "AD" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/awaymission/snowdin/outside)
 "AE" = (
 /obj/item/pen,

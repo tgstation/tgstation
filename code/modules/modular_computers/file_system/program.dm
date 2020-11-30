@@ -35,6 +35,12 @@
 	var/ui_header = null
 	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
 	var/program_icon = "window-maximize-o"
+	/// Whether this program can send alerts while minimized or closed. Used to show a mute button per program in the file manager
+	var/alert_able = FALSE
+	/// Whether the user has muted this program's ability to send alerts.
+	var/alert_silenced = FALSE
+	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
+	var/alert_pending = FALSE
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -93,7 +99,7 @@
   *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
   *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, var/list/access)
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)

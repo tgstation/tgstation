@@ -11,7 +11,7 @@
 
 
 	///This stores a banana that, when used on the secway, prevents the vehicle from moving until it is removed.
-	var/obj/item/reagent_containers/food/snacks/grown/banana/eddie_murphy
+	var/obj/item/food/grown/banana/eddie_murphy
 	///When jammed with a banana, the secway will make a stalling sound. This stores the last time it made a sound to prevent spam.
 	var/stall_cooldown
 
@@ -44,7 +44,7 @@
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
 
-	if(istype(W, /obj/item/reagent_containers/food/snacks/grown/banana))
+	if(istype(W, /obj/item/food/grown/banana))
 		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
 		if(do_after(user, 3 SECONDS, src))

@@ -31,7 +31,7 @@
 	return (BRUTELOSS)
 
 /obj/item/instrument/attack_self(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
 	interact(user)
@@ -83,7 +83,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 125
+	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
@@ -114,7 +114,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = 1800
+	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -319,5 +319,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = 237
-	custom_premium_price = 237
+	custom_price = PAYCHECK_HARD * 2.37
+	custom_premium_price = PAYCHECK_HARD * 2.37

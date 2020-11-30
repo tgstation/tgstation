@@ -403,7 +403,7 @@
 	resulting_atoms[random_result] = 1
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 

@@ -108,6 +108,10 @@
 		else //Otherwise randomize it to make the players guessing.
 			addtimer(cb,rand(1,SSnpcpool.wait))
 
+/mob/living/simple_animal/hostile/update_stamina()
+	. = ..()
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
+
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
@@ -587,11 +591,11 @@
 				. += M.loc
 
 /mob/living/simple_animal/hostile/tamed(whomst)
+	. = ..()
 	if(isliving(whomst))
 		var/mob/living/fren = whomst
 		friends = fren
 		faction = fren.faction.Copy()
-	return ..()
 
 /**
   * Proc that handles a charge attack windup for a mob.

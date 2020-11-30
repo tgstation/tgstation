@@ -253,7 +253,7 @@
 	pixel_y = -31
 	},
 /obj/item/restraints/handcuffs,
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/item/assembly/flash,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)

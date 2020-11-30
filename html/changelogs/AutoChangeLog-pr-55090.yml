@@ -1,0 +1,4 @@
+author: "WarlockD"
+delete-after: True
+changes: 
+  - tweak: "Security Terminal and Tooltips don't use jQuery anymore"

@@ -376,10 +376,13 @@
 	inhand_icon_state = "multiverse"
 	worn_icon_state = "multiverse"
 	slot_flags = ITEM_SLOT_BACK
+	force = 15
 
-/obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
-	force = rand(1, 30)
-	..()
+/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, params)
+	var/old_force = force
+	force += rand(-14, 15)
+	. = ..()
+	force = old_force
 
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
@@ -419,6 +422,11 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+
+/obj/item/nullrod/sord/suicide_act(mob/user) //a near-exact copy+paste of the actual sord suicide_act()
+	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY.</span>", \
+	"<span class='suicide'>You try to impale yourself with [src], but it's TOO HOLY...</span>")
+	return SHAME
 
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"

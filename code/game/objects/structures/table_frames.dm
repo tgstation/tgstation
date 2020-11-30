@@ -64,8 +64,8 @@
 	return ..()
 
 
-/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials) //makes sure the new table made retains what we had as a frame
-	var/obj/structure/table/T = new table_type(loc)
+/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials, _buildstack) //makes sure the new table made retains what we had as a frame
+	var/obj/structure/table/T = new table_type(loc, _buildstack)
 	T.frame = type
 	T.framestack = framestack
 	T.framestackamount = framestackamount
@@ -108,6 +108,6 @@
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
-				make_new_table(toConstruct)
+				make_new_table(toConstruct, null, type)
 	else
 		return ..()

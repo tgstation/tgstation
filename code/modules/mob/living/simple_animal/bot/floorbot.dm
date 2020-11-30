@@ -192,7 +192,6 @@
 				process_type = LINE_SPACE_MODE
 			if(isfloorturf(T)) //Check for floor
 				target = T
-
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
 			target = scan(/turf/open/space)
@@ -309,7 +308,11 @@
 	return result
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
-
+	if(check_bot_working(target_turf))
+		add_to_ignore(target_turf)
+		target = null
+		playsound(src, 'sound/effects/whistlereset.ogg', 50, TRUE)
+		return
 	if(isspaceturf(target_turf))
 		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
@@ -393,3 +396,13 @@
 		repair(A)
 	else
 		..()
+
+/**
+  * Checks a given turf to see if another floorbot is there, working as well.
+  */
+/mob/living/simple_animal/bot/floorbot/proc/check_bot_working(turf/active_turf)
+	if(isturf(active_turf))
+		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf)
+			if(robot.mode == BOT_REPAIRING)
+				return TRUE
+	return FALSE

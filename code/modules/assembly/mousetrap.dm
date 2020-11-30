@@ -118,7 +118,7 @@
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")
-				else if(ismouse(MM))
+				else if(ismouse(MM) || israt(MM) || isregalrat(MM))
 					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
