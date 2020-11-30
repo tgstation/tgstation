@@ -10516,6 +10516,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "wi" = (
@@ -19431,6 +19432,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
 "Vf" = (
