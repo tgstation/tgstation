@@ -3399,8 +3399,6 @@
 "jD" = (
 /obj/effect/spawner/randomcolavend{
 	hacked = 1
-	}
-	extended_inventory = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
