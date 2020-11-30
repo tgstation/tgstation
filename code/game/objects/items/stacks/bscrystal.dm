@@ -9,15 +9,18 @@
 	w_class = WEIGHT_CLASS_TINY
 	mats_per_unit = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
 	points = 50
-	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	grind_results = list(/datum/reagent/bluespace = 20)
 	scan_state = "rock_BScrystal"
+	merge_type = /obj/item/stack/ore/bluespace_crystal
+	/// The teleport range when crushed/thrown at someone.
+	var/blink_range = 8
 
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
 	points = 0
 	refined_type = null
+	merge_type = /obj/item/stack/ore/bluespace_crystal/refined
 
 /obj/item/stack/ore/bluespace_crystal/Initialize()
 	. = ..()
@@ -56,6 +59,7 @@
 	points = 0 //nice try
 	refined_type = null
 	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
+	merge_type = /obj/item/stack/ore/bluespace_crystal/artificial
 
 //Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
@@ -71,6 +75,7 @@
 	novariants = TRUE
 	grind_results = list(/datum/reagent/bluespace = 20)
 	point_value = 30
+	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening

@@ -122,6 +122,7 @@
 	if(beegent?.color)
 		col = beegent.color
 
+	icon_state = "[icon_base]_base"
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay

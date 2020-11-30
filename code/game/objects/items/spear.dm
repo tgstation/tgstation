@@ -107,7 +107,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
-	explosive.prime()
+	explosive.detonate()
 	user.gib()
 	qdel(src)
 	return BRUTELOSS
@@ -131,7 +131,7 @@
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
-		explosive.prime(lanced_by=user)
+		explosive.detonate(lanced_by=user)
 		qdel(src)
 
 //GREY TIDE
