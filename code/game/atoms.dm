@@ -1510,6 +1510,28 @@
 		filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
+/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+
+	var/list/old_filter_data = filter_data[name]
+
+	var/list/params = old_filter_data.Copy()
+	for(var/thing in new_params)
+		params[thing] = new_params[thing]
+
+	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	for(var/param in params)
+		filter_data[name][param] = params[param]
+
+/atom/proc/change_filter_priority(name, new_priority)
+	if(!filter_data || !filter_data[name])
+		return
+
+	filter_data[name]["priority"] = new_priority
+	update_filters()
+
 /obj/item/update_filters()
 	. = ..()
 	for(var/X in actions)
@@ -1534,54 +1556,6 @@
 /atom/proc/clear_filters()
 	filter_data = null
 	filters = null
-
-/atom/proc/animate_filter(name, time, loop, easing, flags, x, y, size, offset, radius, size, color, repeat, transform)
-	var/filter_type = filter_data[name]["type"]
-	if(isnull(filter_type))
-		CRASH("Failed to find filter with name \"[name]\"")
-	var/filter = get_filter(name)
-	/*
-		So this is going to need an explanation
-		"Why not just pass all parameters to animate?"
-		Because animate actually has inconsistent parameters!
-		Yes, you read that right.
-		What parameters animate actually has depends on what is being animated
-		Somehow because it's an internal proc it has overloads based on type in a dynamically typed language
-		If what is being animated doesn't have the correct values to be animated, you get a bad parameter runtime error.
-		This includes if the parameter is null!
-		And even better! filters have totally different parameters between the types!
-		This means that generically handling it is actually impossible without the below horror!
-		I'm so sorry
-	*/
-	switch(filter_type)
-		if("alpha")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y)
-		if("angular_blur")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
-		if("color")
-			animate(filter, time, loop, easing, flags = flags, color = color)
-		if("displace")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
-		if("drop_shadow")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, color = color)
-		if("blur")
-			animate(filter, time, loop, easing, flags = flags, size = size)
-		if("layer")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, color = color, transform = transform)
-		if("motion_blur")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y)
-		if("outline")
-			animate(filter, time, loop, easing, flags = flags, size = size, color = color)
-		if("radial_blur")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size)
-		if("rays")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset, size = size, color = color)
-		if("ripple")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, radius = radius, color = color, repeat = repeat)
-		if("wave")
-			animate(filter, time, loop, easing, flags = flags, x = x, y = y, size = size, offset = offset)
-		else
-			CRASH("animate_filter needs updating with new filter types! New needed filter: [filter_type]")
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

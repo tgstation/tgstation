@@ -88,3 +88,10 @@ export const keyOfMatchingRange = (value, ranges) => {
     }
   }
 };
+
+export const numberOfDecimalDigits = value => {
+  if (Math.floor(value) !== value) {
+    return value.toString().split('.')[1].length || 0;
+  }
+  return 0;
+};

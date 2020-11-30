@@ -32,19 +32,30 @@
 	switch(action)
 		if("add_filter")
 			target.add_filter(params["name"], params["priority"], list("type" = params["type"]))
+			. = TRUE
 		if("remove_filter")
 			target.remove_filter(params["name"])
+			. = TRUE
 		if("rename_filter")
 			var/list/filter_data = target.filter_data[params["name"]]
 			target.remove_filter(params["name"])
 			target.add_filter(params["new_name"], filter_data["priority"], filter_data)
+			. = TRUE
 		if("edit_filter")
 			target.remove_filter(params["name"])
 			target.add_filter(params["name"], params["priority"], params["new_filter"])
+			. = TRUE
 		if("increase_priority")
-
+			var/new_priority = target.filter_data[params["name"]]["priority"] + 1
+			target.change_filter_priority(params["name"], new_priority)
+			. = TRUE
 		if("decrease_priority")
-
+			var/new_priority = target.filter_data[params["name"]]["priority"] - 1
+			target.change_filter_priority(params["name"], new_priority)
+			. = TRUE
+		if("transition_filter_value")
+			target.transition_filter(params["name"], 4, params["new_data"])
+			. = TRUE
 		if("modify_filter_value")
 			var/list/old_filter_data = target.filter_data[params["name"]]
 			var/list/new_filter_data = old_filter_data.Copy()
@@ -55,4 +66,17 @@
 					new_filter_data.Remove(entry)
 			target.remove_filter(params["name"])
 			target.add_filter(params["name"], old_filter_data["priority"], new_filter_data)
+			. = TRUE
+		if("modify_color_value")
+			var/new_color = input(usr, "Pick new filter color", "Filteriffic Colors!") as color|null
+			if(new_color)
+				target.transition_filter(params["name"], 4, list("color" = new_color))
+				. = TRUE
+		if("modify_icon_value")
+			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
+			if(new_icon)
+				target.filter_data[params["name"]]["icon"] = new_icon
+				target.update_filters()
+				. = TRUE
+
 

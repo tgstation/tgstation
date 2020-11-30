@@ -22,12 +22,15 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"size" = 1
 		)
 	),
+	/* Not supported because making a proper matrix editor on the frontend would be a huge dick pain.
+		Uncomment if you ever implement it
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
 			"space" = FILTER_COLOR_RGB
 		)
 	),
+	*/
 	"displace" = list(
 		"defaults" = list(
 			"x" = 0,
@@ -308,6 +311,8 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom)
+	var/filter
 	for(var/i in 1 to 7)
-		in_atom.animate_filter("wibbly-[i]")
+		filter = in_atom.get_filter("wibbly-[i]")
+		animate(filter)
 		in_atom.remove_filter("wibbly-[i]")

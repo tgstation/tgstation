@@ -39,11 +39,9 @@ export class Dropdown extends Component {
   }
 
   setSelected(selected) {
-    if(this.props.doNotUpdate !== undefined) {
-      this.setState({
-        selected: selected,
-      });
-    }
+    this.setState({
+      selected: selected,
+    });
     this.setOpen(false);
     this.props.onSelected(selected);
   }
@@ -77,6 +75,7 @@ export class Dropdown extends Component {
       onClick,
       selected,
       disabled,
+      displayText,
       ...boxProps
     } = props;
     const {
@@ -123,10 +122,11 @@ export class Dropdown extends Component {
             <Icon
               name={icon}
               rotation={iconRotation}
-              spin={iconSpin} />
+              spin={iconSpin}
+              mr={1} />
           )}
           <span className="Dropdown__selected-text">
-            {this.state.selected}
+            {displayText ? displayText : this.state.selected}
           </span>
           {!!nochevron || (
             <span className="Dropdown__arrow-button">

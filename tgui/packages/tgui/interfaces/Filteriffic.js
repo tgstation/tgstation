@@ -1,9 +1,10 @@
-import { useBackend } from "../backend";
+import { useBackend, useLocalState } from "../backend";
 import { Fragment } from 'inferno';
-import { Box, Button, Collapsible, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
+import { numberOfDecimalDigits } from "../../common/math";
 
 const FilterIntegerEntry = (props, context) => {
   const { value, name, filterName } = props;
@@ -27,21 +28,36 @@ const FilterIntegerEntry = (props, context) => {
 const FilterFloatEntry = (props, context) => {
   const { value, name, filterName } = props;
   const { act } = useBackend(context);
+  const [step, setStep] = useLocalState(context, `${filterName}-${name}`, 0.01);
   return (
-    <NumberInput
-      value={value}
-      minValue={-500}
-      maxValue={500}
-      stepPixelSize={4}
-      step={0.01}
-      format={value => toFixed(value, 2)}
-      width="39px"
-      onDrag={(e, value) => act('modify_filter_value', {
-        name: filterName,
-        new_data: {
-          [name]: value,
-        },
+    <Fragment>
+      <NumberInput
+        value={value}
+        minValue={-500}
+        maxValue={500}
+        stepPixelSize={4}
+        step={step}
+        format={value => toFixed(value, numberOfDecimalDigits(step))}
+        width="80px"
+        onDrag={(e, value) => act('transition_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: value,
+          },
         })} />
+      <Box
+        inline
+        ml={2}
+        mr={1}>
+        Step:
+      </Box>
+      <NumberInput
+        value={step}
+        step={0.001}
+        format={value => toFixed(value, 4)}
+        width="70px"
+        onChange={(e, value) => setStep(value)} />
+    </Fragment>
   );
 };
 
@@ -58,20 +74,46 @@ const FilterTextEntry = (props, context) => {
         new_data: {
           [name]: value,
         },
-      })}
-    />
+      })} />
   );
 };
 
-const FilterIconEntry = (props, context) => {
-  const { value } = props;
+const FilterColorEntry = (props, context) => {
+  const { value, filterName, name } = props;
   const { act } = useBackend(context);
   return (
     <Fragment>
       <Button
         icon="pencil-alt"
-        onClick={() => act('modify_icon_value', {})}
-      />
+        onClick={() => act('modify_color_value', {
+          name: filterName,
+        })} />
+      <ColorBox
+        color={value}
+        mr={0.5} />
+      <Input
+        value={value}
+        width="90px"
+        onInput={(e, value) => act('transition_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: value,
+          },
+        })} />
+    </Fragment>
+  );
+};
+
+const FilterIconEntry = (props, context) => {
+  const { value, filterName } = props;
+  const { act } = useBackend(context);
+  return (
+    <Fragment>
+      <Button
+        icon="pencil-alt"
+        onClick={() => act('modify_icon_value', {
+          name: filterName,
+        })} />
       <Box inline ml={1}>
         {value}
       </Box>
@@ -95,8 +137,7 @@ const FilterFlagsEntry = (props, context) => {
           new_data: {
             [name]: value ^ bitField,
           },
-        })}
-      />
+        })} />
     ))(flags)
   );
 };
@@ -108,18 +149,18 @@ const FilterDataEntry = (props, context) => {
     int: <FilterIntegerEntry {...props} />,
     float: <FilterFloatEntry {...props} />,
     string: <FilterTextEntry {...props} />,
-    color: <FilterTextEntry {...props} />,
+    color: <FilterColorEntry {...props} />,
     icon: <FilterIconEntry {...props} />,
     flags: <FilterFlagsEntry {...props} />,
   };
 
   const filterEntryMap = {
-    x: 'int',
-    y: 'int',
+    x: 'float',
+    y: 'float',
     icon: 'icon',
     render_source: 'string',
     flags: 'flags',
-    size: 'int',
+    size: 'float',
     color: 'color',
     offset: 'float',
     radius: 'float',
@@ -127,7 +168,7 @@ const FilterDataEntry = (props, context) => {
     density: 'int',
     threshold: 'float',
     factor: 'float',
-    repeat: 'int'
+    repeat: 'int',
   };
 
   return (
@@ -155,15 +196,13 @@ const FilterEntry = (props, context) => {
         <Fragment>
           <Button
             icon="chevron-up"
-            onClick={() => act('increase_priority', { name: name })}
-          />
+            onClick={() => act('increase_priority', { name: name })} />
           <Box inline mr={1}>
             {priority}
           </Box>
           <Button
             icon="chevron-down"
-            onClick={() => act('decrease_priority', { name: name })}
-          />
+            onClick={() => act('decrease_priority', { name: name })} />
           <Button.Input
             content="Rename"
             placeholder={name}
@@ -171,12 +210,10 @@ const FilterEntry = (props, context) => {
               name: name,
               new_name: new_name,
             })}
-            width="90px"
-          />
+            width="90px" />
           <Button.Confirm
             icon="minus"
-            onClick={() => act("remove_filter", { name: name })}
-          />
+            onClick={() => act("remove_filter", { name: name })} />
         </Fragment>
       )}>
       <Section level={2}>
@@ -192,8 +229,7 @@ const FilterEntry = (props, context) => {
                 filterType={type}
                 name={entryName}
                 value={value}
-                hasValue={hasValue}
-              />
+                hasValue={hasValue} />
             );
           })}
         </LabeledList>
@@ -215,14 +251,15 @@ export const Filteriffic = (props, context) => {
       resizable>
       <Window.Content scrollable>
         <NoticeBox danger>
-          DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES. YOU HAVE BEEN WARNED.
+          DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.
+          YOU HAVE BEEN WARNED.
         </NoticeBox>
         <Section
           title={name}
           buttons={(
             <Dropdown
               icon="plus"
-              selected="Add Filter"
+              displayText="Add Filter"
               nochevron
               doNotUpdate
               options={Object.keys(filterDefaults)}
@@ -230,9 +267,8 @@ export const Filteriffic = (props, context) => {
                 name: 'default',
                 priority: 10,
                 type: value,
-              })}
-            />
-          )}>
+              })} />
+          )} >
           {!hasFilters ? (
             <Box>
               No filters
