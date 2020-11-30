@@ -1160,7 +1160,7 @@
 		moderator_internal.remove(moderator_internal.total_moles() * 0.0005 * power_level)
 	if(power_level > 4 && prob(17 * power_level))//at power level 6 is 100%
 		iron_content += 0.005 * delta_time
-	if(iron_content > 0 && power_level <= 4 && prob(20 / power_level))
+	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 
 	//Gases can be removed from the moderator internal by using the interface. Helium and antinoblium inside the fusion mix will get always removed at a fixed rate

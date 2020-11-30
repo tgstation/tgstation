@@ -23,7 +23,7 @@
 	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, swap = FALSE)
+/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
 	if(!slot)
 		return
 	if(!istype(I))
@@ -50,36 +50,26 @@
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 
-	var/obj/item/current_equip
-
 	switch(slot)
 		if(ITEM_SLOT_BACK)
-			if (back && swap)
-				current_equip = back
-				if (!dropItemToGround(back))
-					return
+			if(back)
+				return
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
-			if (wear_mask && swap)
-				current_equip = wear_mask
-				if (!dropItemToGround(wear_mask))
-					return
+			if(wear_mask)
+				return
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
-			if (head && swap)
-				current_equip = head
-				if (!dropItemToGround(head))
-					return
+			if(head)
+				return
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
-			if (wear_neck && swap)
-				current_equip = wear_neck
-				if (!dropItemToGround(wear_neck))
-					return
+			if(wear_neck)
+				return
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)
@@ -96,9 +86,6 @@
 				not_handled = TRUE
 		else
 			not_handled = TRUE
-
-	if (current_equip)
-		put_in_hands(current_equip)
 
 	//Item has been handled at this point and equipped callback can be safely called
 	//We cannot call it for items that have not been handled as they are not yet correctly
