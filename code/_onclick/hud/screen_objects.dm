@@ -122,7 +122,7 @@
 	var/slot_id
 	/// Icon when empty. For now used only by humans.
 	var/icon_empty
-	 /// Icon when contains an item. For now used only by humans.
+	/// Icon when contains an item. For now used only by humans.
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
