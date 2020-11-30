@@ -1,0 +1,5 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Body temperature stabilizes to the room temp in statis beds"
+  - bugfix: "Body warms up a bit faster on the cold moon of ice"
