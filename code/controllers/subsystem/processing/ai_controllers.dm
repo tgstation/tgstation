@@ -4,14 +4,13 @@ PROCESSING_SUBSYSTEM_DEF(ai_controllers)
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 5
+	wait = 8 //The melee cooldown. My favorite arbitrary number.
 
 	///an assoc list of all ai_behaviors by type, to
 	var/list/ai_behaviors
 
 /datum/controller/subsystem/processing/ai_controllers/Initialize(timeofday)
 	SetupAIBehaviors()
-
 
 /datum/controller/subsystem/processing/ai_controllers/proc/SetupAIBehaviors()
 	ai_behaviors = list()

@@ -142,12 +142,12 @@
 				break
 
 		// if the target has a weapon, chance to disarm them
-		if(W && prob(MONKEY_ATTACK_DISARM_PROB))
+		if(W && DT_PROB(MONKEY_ATTACK_DISARM_PROB, delta_time))
 			living_pawn.a_intent = INTENT_DISARM
-			monkey_attack(controller, target)
+			monkey_attack(controller, target, delta_time)
 		else
 			living_pawn.a_intent = INTENT_HARM
-			monkey_attack(controller, target)
+			monkey_attack(controller, target, delta_time)
 
 		return
 
@@ -169,7 +169,7 @@
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target)
+/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, delta_time)
 
 	var/mob/living/living_pawn = controller.pawn
 
@@ -192,7 +192,7 @@
 	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
 		return
 
-	if(prob(MONKEY_HATRED_REDUCTION_PROB))
+	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))
 		controller.blackboard[BB_MONKEY_ENEMIES][target]--
 
 	// if we are not angry at our target, go back to idle
@@ -224,7 +224,7 @@
 
 	controller.current_movement_target = target
 
-	if(target.pulledby != living_pawn && !istype(target.pulledby, /mob/living/carbon/monkey/)) //Dont steal from my fellow monkeys.
+	if(target.pulledby != living_pawn && !istype(target.pulledby.ai_controller, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			living_pawn.a_intent = INTENT_GRAB
 			target.grabbedby(living_pawn)
@@ -263,3 +263,23 @@
 	finish_action(controller, TRUE)
 
 
+/datum/ai_behavior/recruit_monkeys/perform(delta_time, datum/ai_controller/controller)
+	. = ..()
+
+	var/mob/living/living_pawn = controller.pawn
+
+	for(var/mob/living/L in view(living_pawn, MONKEY_ENEMY_VISION))
+		if(istype(L.ai_controller, /datum/ai_controller/monkey))
+			if(!DT_PROB(MONKEY_RECRUIT_PROB, delta_time))
+				continue
+			var/datum/ai_controller/monkey/monkey_ai = L.ai_controller
+
+			var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+
+			///Fill in a plan override!
+			monkey_ai.CancelActions()
+
+			monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
+			monkey_ai.current_movement_target = your_enemy
+			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)
+			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)

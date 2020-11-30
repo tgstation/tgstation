@@ -74,6 +74,7 @@ have ways of interacting with a specific mob and control it.
 
 					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
 					current_movement_target = selected_enemy
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
 					return //Focus on this
@@ -96,7 +97,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/TryFindWeapon()
 	var/mob/living/living_pawn = pawn
 
-	if(!locate(/obj/item) in living_pawn.held_items) //REPLACE WIT BLACKBOARD VAR FOR CARRIEDITEM
+	if(!locate(/obj/item) in living_pawn.held_items)
 		blackboard[BB_MONKEY_BEST_FORCE_FOUND] = 0
 
 	var/obj/item/W = locate(/obj/item) in oview(2, living_pawn)
@@ -116,7 +117,7 @@ have ways of interacting with a specific mob and control it.
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
 				return TRUE
 
-
+//When idle just kinda fuck around.
 /datum/ai_controller/monkey/PerformIdleBehavior(delta_time)
 	var/mob/living/living_pawn = pawn
 
@@ -125,7 +126,7 @@ have ways of interacting with a specific mob and control it.
 	else if(DT_PROB(1, delta_time))
 		living_pawn.emote(pick("scratch","jump","roll","tail"))
 
-///Reactive event to being hit
+///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
 	enemies[L] += MONKEY_HATRED_AMOUNT
@@ -196,4 +197,3 @@ have ways of interacting with a specific mob and control it.
 	// chance of monkey retaliation
 	if(prob(MONKEY_CUFF_RETALIATION_PROB))
 		retaliate(user)
-

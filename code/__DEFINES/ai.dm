@@ -17,7 +17,7 @@
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<0)
+#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
 
 

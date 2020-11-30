@@ -21,13 +21,12 @@ have ways of interacting with a specific mob and control it.
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/pathing_attempts
 
-/datum/ai_controller/New(atom/assigned_atom)
-	if(TryPossessPawn(assigned_atom) & AI_BEHAVIOR_INCOMPATIBLE)
-		if(!pawn) //If we're not attached to something destroy us.
-			qdel(src)
-		CRASH("[src] attached to [assigned_atom] but these are not compatible!")
+/datum/ai_controller/New(atom/new_pawn)
+	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
+		qdel(src)
+		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 
-	src.pawn = assigned_atom
+	src.pawn = new_pawn
 	set_ai_status(AI_STATUS_ON)
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
@@ -36,11 +35,28 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	TryUnpossessPawn()
 
+///Proc to move from one pawn to another, this will destroy the target's existing controller.
+/datum/ai_controller/proc/PossessPawn(atom/new_pawn)
+	if(pawn)
+		TryUnpossessPawn()
+
+	if(new_pawn.ai_controller) //Existing AI, kill it.
+		new_pawn.ai_controller.TryUnpossessPawn()
+		QDEL_NULL(new_pawn.ai_controller)
+
+	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
+		qdel(src)
+		CRASH("[src] attached to [new_pawn] but these are not compatible!")
+
+	src.pawn = new_pawn
+	set_ai_status(AI_STATUS_ON)
+
+
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
 	return
 
-///Abstract proc for deinitializing the pawn to the old controller
+///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/TryUnpossessPawn()
 	return
 
