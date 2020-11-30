@@ -14,9 +14,7 @@
 #define MONKEY_SHENANIGAN_PROB 				20		// chance of getting into mischief, i.e. finding/stealing items
 												// when the monkey is hunting
 #define MONKEY_ATTACK_DISARM_PROB 			50		// disarm an armed attacker
-#define MONKEY_WEAPON_PROB 					20		// if not currently getting an item, search for a weapon around it
 #define MONKEY_RECRUIT_PROB 				25		// recruit a monkey near it
-#define MONKEY_SWITCH_TARGET_PROB 			25		// switch targets if it sees another enemy
 
 #define MONKEY_RETALIATE_HARM_PROB 			95	// probability for the monkey to aggro when attacked with harm intent
 #define MONKEY_RETALIATE_DISARM_PROB 		20 	// probability for the monkey to aggro when attacked with disarm intent

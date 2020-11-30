@@ -6,13 +6,14 @@
 
 /datum/ai_behavior/monkey_equip/finish_action(datum/ai_controller/controller, success)
 	. = ..()
-	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
 	if(!success) //Don't try again on this item if we failed
 		var/list/item_blacklist = controller.blackboard[BB_MONKEY_BLACKLISTITEMS]
 		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 
 		item_blacklist[target] = TRUE
+
+	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
 /datum/ai_behavior/monkey_equip/proc/equip_item(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
@@ -282,5 +283,5 @@
 
 			monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
 			monkey_ai.current_movement_target = your_enemy
-			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)
+			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)

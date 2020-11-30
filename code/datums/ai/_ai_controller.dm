@@ -22,14 +22,7 @@ have ways of interacting with a specific mob and control it.
 	var/pathing_attempts
 
 /datum/ai_controller/New(atom/new_pawn)
-	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
-		qdel(src)
-		CRASH("[src] attached to [new_pawn] but these are not compatible!")
-
-	src.pawn = new_pawn
-	set_ai_status(AI_STATUS_ON)
-
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
 	. = ..()
@@ -37,20 +30,21 @@ have ways of interacting with a specific mob and control it.
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
-	if(pawn)
+	if(pawn) //Reset any old signals
 		TryUnpossessPawn()
 
-	if(new_pawn.ai_controller) //Existing AI, kill it.
+	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
 		new_pawn.ai_controller.TryUnpossessPawn()
 		QDEL_NULL(new_pawn.ai_controller)
 
 	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
-		qdel(src)
 		CRASH("[src] attached to [new_pawn] but these are not compatible!")
+		qdel(src)
 
-	src.pawn = new_pawn
+	pawn = new_pawn
 	set_ai_status(AI_STATUS_ON)
 
+	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -58,6 +52,8 @@ have ways of interacting with a specific mob and control it.
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/TryUnpossessPawn()
+	UnregisterSignal(pawn, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
+	pawn = null
 	return
 
 ///Returns TRUE if the ai controller can actually run at the moment.

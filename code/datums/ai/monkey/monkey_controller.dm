@@ -75,7 +75,7 @@ have ways of interacting with a specific mob and control it.
 					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
 					current_movement_target = selected_enemy
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech)
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
 					return //Focus on this
 
