@@ -44,7 +44,8 @@
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='hear'>You hear drilling.</span>")
 
-	if(do_after_cooldown(target, source))
+	// You can't drill harder by clicking more.
+	if(!(target in source.do_afters) && do_after_cooldown(target, source))
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
@@ -124,7 +125,7 @@
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
 						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
 	log_combat(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	if(target.stat == DEAD && target.getBruteLoss() >= 200)
+	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)

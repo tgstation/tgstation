@@ -11,6 +11,7 @@
 	icon_state = "banana"
 	range = 200
 	embedding = null
+	shrapnel_type = null
 
 /obj/projectile/bullet/honker/Initialize()
 	. = ..()

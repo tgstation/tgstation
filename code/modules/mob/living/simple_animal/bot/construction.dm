@@ -470,26 +470,37 @@
 
 /obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
 	. = ..()
+	var/atom/Tsec = drop_location()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(I.tool_behaviour == TOOL_WELDER)
+			if(I.tool_behaviour == TOOL_WELDER) //Construct
 				if(I.use_tool(src, user, 0, volume=40))
 					to_chat(user, "<span class='notice'>You weld a water hole in [src]!</span>")
 					build_step++
 					return
+			if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=40))
+					new /obj/item/stack/sheet/metal(Tsec, 2)
+					to_chat(user, "<span class='notice'>You disconnect the hygienebot assembly.</span>")
+					qdel(src)
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(isprox(I))
+			if(isprox(I)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				build_step++
 				to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 				qdel(I)
+			if(I.tool_behaviour == TOOL_WELDER) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=30))
+					to_chat(user, "<span class='notice'>You weld close the water hole in [src]!</span>")
+					build_step--
+					return
 
 		if(ASSEMBLY_THIRD_STEP)
 			if(!can_finish_build(I, user, 0))
 				return
-			if(istype(I, /obj/item/stack/ducts))
+			if(istype(I, /obj/item/stack/ducts)) //Construct
 				var/obj/item/stack/ducts/D = I
 				if(D.get_amount() < 1)
 					to_chat(user, "<span class='warning'>You need one fluid duct to finish [src]</span>")
@@ -500,3 +511,7 @@
 					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
 					H.name = created_name
 					qdel(src)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
+				new /obj/item/assembly/prox_sensor(Tsec)
+				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
+				build_step--

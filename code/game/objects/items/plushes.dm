@@ -111,7 +111,7 @@
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
-			grenade.preprime(user, msg = FALSE, volume = 10)
+			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
