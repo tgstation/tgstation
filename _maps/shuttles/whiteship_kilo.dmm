@@ -74,7 +74,8 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = 26
+	pixel_x = 26;
+	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
