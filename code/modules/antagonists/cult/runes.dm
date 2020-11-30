@@ -29,6 +29,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
+	var/log_when_erased = FALSE //Used when you want to keep track of who erased the rune
+	var/erase_time = 1.5 SECONDS //How the rune takes to erase
 
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
@@ -57,11 +59,23 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
+		if(log_when_erased)
+			var/confirm = alert(user, "Erasing this [cultist_name] rune might be against your goal to summon Nar'Sie.", "Begin to erase the [cultist_name] rune?", "Proceed", "Abort")
+			if(confirm != "Proceed")
+				return
+		if(!user.is_holding_item_of_type(/obj/item/melee/cultblade/dagger) || !Adjacent(user) || user.incapacitated() || user.stat == DEAD) //Gee, good thing we made sure cultists can't input stall to grief their team and get banned anyway
+			return
 		SEND_SOUND(user,'sound/items/sheath.ogg')
-		if(do_after(user, 15, target = src))
+		if(do_after(user, erase_time, target = src))
+			if(log_when_erased)
+				log_game("[cultist_name] rune erased by [key_name(user)] with [I.name]")
+				message_admins("[ADMIN_LOOKUPFLW(user)] erased a [cultist_name] rune with [I.name]")
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
+		if(log_when_erased)
+			log_game("[cultist_name] rune erased by [key_name(user)] using a null rod")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a [cultist_name] rune with a null rod")
 		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
@@ -462,6 +476,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
+	log_when_erased = TRUE
+	erase_time = 5 SECONDS
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
@@ -501,18 +517,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(src)
 		color = RUNE_COLOR_RED
 	new /obj/singularity/narsie/large/cult(T) //Causes Nar'Sie to spawn even if the rune has been removed
-
-/obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
-	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
-		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
-		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
-			log_game("Summon Narsie rune erased by [key_name(user)] with [I.name]")
-			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with [I.name]")
-	else if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
-		log_game("Summon Narsie rune erased by [key_name(user)] using a null rod")
-		message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
-	else
-		..()
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
