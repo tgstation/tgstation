@@ -258,14 +258,17 @@
 	if(!can_adjust)
 		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
 		return
-	if(toggle_jumpsuit_adjust())
+	var/jumpsuit_up = toggle_jumpsuit_adjust()
+	if(jumpsuit_up)
 		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
+		var/datum/species/userspecies = H.dna?.species
 		H.update_inv_w_uniform()
 		H.update_body()
+		userspecies.body_coverage_changed(src, H)
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	if(adjusted == DIGITIGRADE_STYLE)

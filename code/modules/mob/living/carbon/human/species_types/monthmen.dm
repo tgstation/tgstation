@@ -23,6 +23,8 @@
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	meat = /obj/item/stack/sheet/cardboard
 
+	var/chest_covered = FALSE
+
 /datum/species/monthmen/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		return TRUE
@@ -46,9 +48,12 @@
 		head.drop_limb()
 		qdel(head)
 	H.regenerate_limbs()
+	if(!get_location_accessible(H, BODY_ZONE_CHEST))
+		H.become_blind("blocked vision")
 
 /datum/species/monthmen/on_species_loss(mob/living/carbon/human/H)
 	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
+	H.cure_blind("blocked vision")
 	..()
 
 /datum/species/monthmen/spec_life(mob/living/carbon/human/H)
@@ -56,26 +61,27 @@
 		H.adjust_fire_stacks(1) //always prone to burning
 	..()
 
-/datum/species/monthmen/equipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
+/datum/species/monthmen/body_coverage_changed(obj/item/I, mob/living/carbon/human/H)
 	if(!get_location_accessible(H, BODY_ZONE_CHEST))
-		to_chat(H, "<span class='warning'>The [I] is blocking you from seeing anything!</span>")
+		if(!chest_covered)//already covered, don't send this
+			to_chat(H, "<span class='warning'>The [I] is blocking you from seeing anything!</span>")
+			chest_covered = TRUE
 		H.become_blind("blocked vision") //not eyes covered because that is for tints and other things, which are for GLASSES level blinding
-
-/datum/species/monthmen/unequipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
-	if(get_location_accessible(H, BODY_ZONE_CHEST))
-		to_chat(H, "<span class='notice'>You can see again!</span>")
+	else
+		if(chest_covered)//already uncovered, don't send this
+			to_chat(H, "<span class='notice'>You can see again!</span>")
+			chest_covered = FALSE
 		H.cure_blind("blocked vision")
 
-//all the organs, just abstract copies (may change?)
+//all the organs, now in the chest.
 /obj/item/organ/brain/monthmen
-	decoy_override = TRUE
-	organ_flags = 0
+	zone = BODY_ZONE_CHEST
 
 /obj/item/organ/tongue/monthmen
-	zone = "abstract"
+	zone = BODY_ZONE_CHEST
 
 /obj/item/organ/ears/monthmen
-	zone = "abstract"
+	zone = BODY_ZONE_CHEST
 
 /obj/item/organ/eyes/monthmen
 	name = "monthmen eyes"
