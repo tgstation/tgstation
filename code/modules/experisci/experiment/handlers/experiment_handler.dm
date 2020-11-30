@@ -61,7 +61,7 @@
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_CLICK)
-			RegisterSignal(parent, COMSIG_CLICK, .proc/configure_experiment_click)
+			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, .proc/configure_experiment_click)
 		if(EXPERIMENT_CONFIG_UI)
 			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
 
@@ -202,7 +202,7 @@
   * Arguments:
   * * user - The user to show the experiment configuration panel to
   */
-/datum/component/experiment_handler/proc/configure_experiment_click(datum/source, location, control, params, mob/user)
+/datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
 	ui_interact(user)
 
 /**

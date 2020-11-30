@@ -195,6 +195,8 @@
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 ///called on /living when someone starts pulling it (atom/movable/puller, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
+///from base of [/atom/proc/interact]: (mob/user)
+#define COMSIG_ATOM_UI_INTERACT "atom_ui_interact"
 
 /////////////////
 
