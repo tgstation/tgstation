@@ -46,7 +46,6 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 	var/armored = FALSE
-	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
@@ -69,8 +68,6 @@
 	..()
 	if(armored)
 		add_overlay("armor_bear")
-
-
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/hudson

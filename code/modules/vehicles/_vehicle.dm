@@ -25,8 +25,6 @@
 	var/obj/item/key/inserted_key
 	/// Whether the vehicle os currently able to move
 	var/canmove = TRUE
-	///Whether the occupants will bump into a door when the car bumps it
-	var/emulate_door_bumps = TRUE
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
@@ -144,14 +142,6 @@
 		if(flags & i)
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
-
-/obj/vehicle/Bump(atom/A)
-	. = ..()
-	if(emulate_door_bumps)
-		if(istype(A, /obj/machinery/door))
-			var/obj/machinery/door/conditionalwall = A
-			for(var/m in occupants)
-				conditionalwall.bumpopen(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

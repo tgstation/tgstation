@@ -61,6 +61,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
 
 /**
   * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
@@ -210,20 +211,20 @@
 	SIGNAL_HANDLER
 	return
 
+/// So we can check all occupants when we bump a door to see if anyone has access
+/datum/component/riding/proc/vehicle_bump(atom/movable/movable_parent, obj/machinery/door/possible_bumped_door)
+	SIGNAL_HANDLER
+	if(!istype(possible_bumped_door))
+		return
+	for(var/occupant in movable_parent.buckled_mobs)
+		possible_bumped_door.bumpopen(occupant)
+
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
 
 /datum/component/riding/proc/Process_Spacemove(direction)
 	var/atom/movable/AM = parent
 	return override_allow_spacemove || AM.has_gravity()
-
-
-
-
-
-
-
-
 
 /// currently replicated from ridable because we need this behavior here too, see if we can deal with that
 /datum/component/riding/proc/unequip_buckle_inhands(mob/living/carbon/user)

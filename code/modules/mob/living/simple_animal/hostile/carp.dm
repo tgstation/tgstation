@@ -187,7 +187,6 @@
 	melee_damage_upper = 20
 
 	var/regen_cooldown = 0
-	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
