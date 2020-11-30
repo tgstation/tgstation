@@ -7358,7 +7358,7 @@
 /area/crew_quarters/fitness/recreation)
 "aql" = (
 /obj/machinery/light,
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -20344,7 +20344,7 @@
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aWp" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -26409,7 +26409,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bkh" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -28275,7 +28275,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boN" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/camera{
 	c_tag = "Bar - Fore"
 	},
@@ -28777,7 +28777,7 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/office)
 "bqe" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bqf" = (
@@ -29676,7 +29676,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bsl" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -29922,7 +29922,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bsW" = (
@@ -29981,7 +29981,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "btb" = (
@@ -32214,7 +32214,7 @@
 /turf/closed/wall,
 /area/hallway/secondary/command)
 "bzK" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/command)
 "bzL" = (
@@ -34786,7 +34786,7 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "bGQ" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -39534,7 +39534,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bTD" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
@@ -45996,7 +45996,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -53381,7 +53381,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cCZ" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "cDa" = (
@@ -55553,7 +55553,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "cJD" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security in red at the top, you see engineering in yellow, science in purple, escape in checkered red-and-white, medbay in green, arrivals in checkered red-and-blue, and then cargo in brown.";
 	icon_state = "map-right-MS";
@@ -71744,7 +71744,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -75207,7 +75207,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "rSL" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
 "rSR" = (
