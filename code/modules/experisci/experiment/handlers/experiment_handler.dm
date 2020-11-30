@@ -1,10 +1,10 @@
 /**
-  * # Experiment Handler
-  *
-  * This is the component for interacting with experiments from a connected techweb. It is generic
-  * and should be set-up to automatically work on any class it is attached to without outside code
-  * (Excluding potential callbacks)
-  */
+ * # Experiment Handler
+ *
+ * This is the component for interacting with experiments from a connected techweb. It is generic
+ * and should be set-up to automatically work on any class it is attached to without outside code
+ * (Excluding potential callbacks)
+ */
 /datum/component/experiment_handler
 	/// Holds the currently linked techweb to get experiments from
 	var/datum/techweb/linked_web
@@ -22,16 +22,16 @@
 	var/datum/callback/start_experiment_callback
 
 /**
-  * Initializes a new instance of the experiment_handler component
-  *
-  * Arguments:
-  * * allowed_experiments - The list of /datum/experiment types that can be performed with this component
-  * * blacklisted_experiments - The list of /datum/experiment types that explicitly cannot be performed with this component
-  * * config_mode - The define that determines how the experiment_handler should display the configuration UI
-  * * disallowed_traits - Flags that control what experiment traits are blacklisted by this experiment handler
-  * * config_flags - Flags that control the operational behaviour of the experiment handler, see experiment defines
-  * * start_experiment_callback - When provided adds a UI button to use this callback to the start the experiment
-  */
+ * Initializes a new instance of the experiment_handler component
+ *
+ * Arguments:
+ * * allowed_experiments - The list of /datum/experiment types that can be performed with this component
+ * * blacklisted_experiments - The list of /datum/experiment types that explicitly cannot be performed with this component
+ * * config_mode - The define that determines how the experiment_handler should display the configuration UI
+ * * disallowed_traits - Flags that control what experiment traits are blacklisted by this experiment handler
+ * * config_flags - Flags that control the operational behaviour of the experiment handler, see experiment defines
+ * * start_experiment_callback - When provided adds a UI button to use this callback to the start the experiment
+ */
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
 												blacklisted_experiments = list(),
 												config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
@@ -82,8 +82,8 @@
 	GLOB.experiment_handlers -= src
 
 /**
-  * Hooks on attack to try and run an experiment (When using a handheld handler)
-  */
+ * Hooks on attack to try and run an experiment (When using a handheld handler)
+ */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
 	if (!should_run_handheld_experiment(source, target, user, params))
@@ -91,7 +91,7 @@
 	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/*
+/**
  * Provides feedback when an item isn't related to an experiment, and has fully passed the attack chain
  */
 /datum/component/experiment_handler/proc/ignored_handheld_experiment_attempt(datum/source, atom/target, mob/user, proximity_flag, params)
@@ -101,7 +101,7 @@
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
 	to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
 
-/*
+/**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
  */
 /datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user, params)
@@ -120,8 +120,8 @@
 		. = selected_experiment.actionable(arglist(arguments))
 
 /**
-  * This proc exists because Jared Fogle really likes async
-  */
+ * This proc exists because Jared Fogle really likes async
+ */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
 		to_chat(user, "<span>You do not have an experiment selected!.</span>")
@@ -137,8 +137,8 @@
 
 
 /**
-  * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
-  */
+ * Hooks on destructive scans to try and run an experiment (When using a handheld handler)
+ */
 /datum/component/experiment_handler/proc/try_run_destructive_experiment(datum/source, list/scanned_atoms)
 	SIGNAL_HANDLER
 	var/atom/movable/our_scanner = parent
@@ -157,8 +157,8 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
 /**
-  * Hooks on successful explosions on the doppler array this is attached to
-  */
+ * Hooks on successful explosions on the doppler array this is attached to
+ */
 /datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range,
 	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 	SIGNAL_HANDLER
@@ -170,11 +170,11 @@
 		our_array.say("Insufficient explosion to contribute to current experiment.")
 
 /**
-  * Announces a message to all experiment handlers
-  *
-  * Arguments:
-  * * message - The message to announce
-  */
+ * Announces a message to all experiment handlers
+ *
+ * Arguments:
+ * * message - The message to announce
+ */
 /datum/component/experiment_handler/proc/announce_message_to_all(message)
 	for(var/i in GLOB.experiment_handlers)
 		var/datum/component/experiment_handler/experi_handler = i
@@ -182,18 +182,18 @@
 		experi_parent.say(message)
 
 /**
-  * Announces a message to this experiment handler
-  *
-  * Arguments:
-  * * message - The message to announce
-  */
+ * Announces a message to this experiment handler
+ *
+ * Arguments:
+ * * message - The message to announce
+ */
 /datum/component/experiment_handler/proc/announce_message(message)
 	var/atom/movable/experi_parent = parent
 	experi_parent.say(message)
 
 /**
-  * Attempts to perform the selected experiment given some arguments
-  */
+ * Attempts to perform the selected experiment given some arguments
+ */
 /datum/component/experiment_handler/proc/action_experiment(datum/source, ...)
 	// Check if an experiment is selected
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
@@ -210,8 +210,8 @@
 		. = selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
-  * Hook for handling UI interaction via signals
-  */
+ * Hook for handling UI interaction via signals
+ */
 /datum/component/experiment_handler/proc/ui_handle_experiment(datum/source, mob/user, action)
 	SIGNAL_HANDLER
 	switch(action)
@@ -219,31 +219,31 @@
 			INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
 
 /**
-  * Attempts to show the user the experiment configuration panel
-  *
-  * Arguments:
-  * * user - The user to show the experiment configuration panel to
-  */
+ * Attempts to show the user the experiment configuration panel
+ *
+ * Arguments:
+ * * user - The user to show the experiment configuration panel to
+ */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	ui_interact(user)
 
 /**
-  * Attempts to show the user the experiment configuration panel
-  *
-  * Arguments:
-  * * user - The user to show the experiment configuration panel to
-  */
+ * Attempts to show the user the experiment configuration panel
+ *
+ * Arguments:
+ * * user - The user to show the experiment configuration panel to
+ */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
 	ui_interact(user)
 
 /**
-  * Attempts to link this experiment_handler to a provided techweb
-  *
-  * This proc attempts to link the handler to a provided techweb, overriding the existing techweb if relevant
-  *
-  * Arguments:
-  * * new_web - The new techweb to link to
-  */
+ * Attempts to link this experiment_handler to a provided techweb
+ *
+ * This proc attempts to link the handler to a provided techweb, overriding the existing techweb if relevant
+ *
+ * Arguments:
+ * * new_web - The new techweb to link to
+ */
 /datum/component/experiment_handler/proc/link_techweb(datum/techweb/new_web)
 	if (new_web == linked_web)
 		return
@@ -251,34 +251,34 @@
 	linked_web = new_web
 
 /**
-  * Unlinks this handler from the selected techweb
-  */
+ * Unlinks this handler from the selected techweb
+ */
 /datum/component/experiment_handler/proc/unlink_techweb()
 	selected_experiment = null
 	linked_web = null
 
 /**
-  * Attempts to link this experiment_handler to a provided experiment
-  *
-  * Arguments:
-  * * e - The experiment to attempt to link to
-  */
+ * Attempts to link this experiment_handler to a provided experiment
+ *
+ * Arguments:
+ * * e - The experiment to attempt to link to
+ */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/e)
 	if (e && can_select_experiment(e))
 		selected_experiment = e
 
 /**
-  * Unlinks this handler from the selected experiment
-  */
+ * Unlinks this handler from the selected experiment
+ */
 /datum/component/experiment_handler/proc/unlink_experiment()
 	selected_experiment = null
 
 /**
-  * Attempts to get rnd servers on the same z-level as a provided turf
-  *
-  * Arguments:
-  * * pos - The turf to get servers on the same z-level of
-  */
+ * Attempts to get rnd servers on the same z-level as a provided turf
+ *
+ * Arguments:
+ * * pos - The turf to get servers on the same z-level of
+ */
 /datum/component/experiment_handler/proc/get_available_servers(turf/pos = null)
 	if (!pos)
 		pos = get_turf(parent)
@@ -290,11 +290,11 @@
 	return local_servers
 
 /**
-  * Checks if an experiment is valid to be selected by this handler
-  *
-  * Arguments:
-  * * e - The experiment to check
-  */
+ * Checks if an experiment is valid to be selected by this handler
+ *
+ * Arguments:
+ * * e - The experiment to check
+ */
 /datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/e)
 	// Check that this experiments has no disallowed traits
 	if (e.traits & disallowed_traits)

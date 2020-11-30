@@ -23,13 +23,13 @@
 	return FALSE
 
 /**
-  * Handles registering to events relevant to the experiment
-  */
+ * Handles registering to events relevant to the experiment
+ */
 /datum/experiment/physical/proc/register_events()
 	return FALSE
 
 /**
-  * Handles unregistering to events relevant to the experiment
-  */
+ * Handles unregistering to events relevant to the experiment
+ */
 /datum/experiment/physical/proc/unregister_events()
 	return

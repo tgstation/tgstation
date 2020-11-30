@@ -1,8 +1,8 @@
 /**
-  * # Destructive scanner
-  *
-  * Placed machine that handles destructive experiments (but can also do the normal ones)
-  */
+ * # Destructive scanner
+ *
+ * Placed machine that handles destructive experiments (but can also do the normal ones)
+ */
 /obj/machinery/destructive_scanner
 	name = "Experimental Destructive Scanner"
 	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
