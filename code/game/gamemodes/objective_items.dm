@@ -62,8 +62,8 @@
 	excludefromjob = list("Captain")
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray."
-	targetitem = /obj/item/reagent_containers/hypospray/cmo
+	name = "the CMO's MK II hypospray."
+	targetitem = /obj/item/hypospray/mkii/CMO // Skyrat Change
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
