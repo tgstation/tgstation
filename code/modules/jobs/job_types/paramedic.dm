@@ -33,7 +33,7 @@
 	id = /obj/item/card/id
 	l_pocket = /obj/item/pda/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
-	backpack_contents = list(/obj/item/roller=1)
+	backpack_contents = list(/obj/item/roller=1,/obj/item/storage/hypospraykit/regular=1) //SKYRAT EDIT - Hypospray Kit addition
 	pda_slot = ITEM_SLOT_LPOCKET
 
 	backpack = /obj/item/storage/backpack/medic
