@@ -1,4 +1,4 @@
-/**
+/*!
  * Base state and helpers for states. Just does some sanity checks,
  * implement a proper state for in-depth checks.
  *
@@ -88,22 +88,6 @@
 	if((istype(device) && device.loc != src) && (!cell || cell.charge <= 0 || lockcharge))
 		return UI_DISABLED
 	return ..()
-
-/**
- * public
- *
- * Check the distance for a living mob.
- * Really only used for checks outside the context of a mob.
- * Otherwise, use shared_living_ui_distance().
- *
- * required src_object The object which owns the UI.
- * required user mob The mob who opened/is using the UI.
- *
- * return UI_state The state of the UI.
- */
-/atom/proc/contents_ui_distance(src_object, mob/living/user)
-	// Just call this mob's check.
-	return user.shared_living_ui_distance(src_object)
 
 /**
  * public

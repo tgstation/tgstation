@@ -8,7 +8,7 @@
 	message = "of food"
 	export_types = list(/obj/item/reagent_containers/food/snacks)
 	include_subtypes = TRUE
-	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown)
+	exclude_types = list(/obj/item/food/grown)
 
 /datum/export/food/get_cost(obj/O, allowed_categories, apply_elastic)
 	. = ..()

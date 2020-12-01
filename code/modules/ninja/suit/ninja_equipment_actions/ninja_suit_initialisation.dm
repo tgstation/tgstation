@@ -28,10 +28,10 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 	name = "Toggle Ninja Suit"
 
 /**
-  * Toggles the ninja suit on/off
-  *
-  * Attempts to initialize or deinitialize the ninja suit
-  */
+ * Toggles the ninja suit on/off
+ *
+ * Attempts to initialize or deinitialize the ninja suit
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_on_off()
 	. = TRUE
 	if(s_busy)
@@ -44,14 +44,14 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 		ninitialize()
 
 /**
-  * Initializes the ninja suit
-  *
-  * Initializes the ninja suit through seven phases, each of which calls this proc with an incremented phase
-  * Arguments:
-  * * delay - The delay between each phase of initialization
-  * * ninja - The human who is being affected by the suit
-  * * phase - The phase of initialization
-  */
+ * Initializes the ninja suit
+ *
+ * Initializes the ninja suit through seven phases, each of which calls this proc with an incremented phase
+ * Arguments:
+ * * delay - The delay between each phase of initialization
+ * * ninja - The human who is being affected by the suit
+ * * phase - The phase of initialization
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/ninja = loc, phase = 0)
 	if(!ninja || !ninja.mind)
 		s_busy = FALSE
@@ -85,14 +85,14 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 		addtimer(CALLBACK(src, .proc/ninitialize, delay, ninja, phase + 1), delay)
 
 /**
-  * Deinitializes the ninja suit
-  *
-  * Deinitializes the ninja suit through eight phases, each of which calls this proc with an incremented phase
-  * Arguments:
-  * * delay - The delay between each phase of deinitialization
-  * * ninja - The human who is being affected by the suit
-  * * phase - The phase of deinitialization
-  */
+ * Deinitializes the ninja suit
+ *
+ * Deinitializes the ninja suit through eight phases, each of which calls this proc with an incremented phase
+ * Arguments:
+ * * delay - The delay between each phase of deinitialization
+ * * ninja - The human who is being affected by the suit
+ * * phase - The phase of deinitialization
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/deinitialize(delay = s_delay, mob/living/carbon/human/ninja = affecting == loc ? affecting : null, phase = 0)
 	if (!ninja || !ninja.mind)
 		s_busy = FALSE

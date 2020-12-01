@@ -116,6 +116,9 @@
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	M.adjustPlasma(20)
 	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		humi.adjust_coretemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	return ..()
 
 /datum/reagent/toxin/lexorin
@@ -736,7 +739,7 @@
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
-		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
 				C.reagents.remove_reagent(R.type,1)
