@@ -64634,6 +64634,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cxD" = (
@@ -106019,6 +106020,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "eKq" = (
@@ -106164,6 +106166,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "fdc" = (
@@ -106452,6 +106455,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"fPR" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "fQi" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -106689,6 +106700,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "gCK" = (
@@ -106999,6 +107011,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "hgM" = (
@@ -108084,6 +108097,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "jAK" = (
@@ -109692,6 +109706,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"mXF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "mYr" = (
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -110707,6 +110729,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pmJ" = (
@@ -110993,6 +111016,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pWW" = (
@@ -111374,10 +111398,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"qJa" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "qJK" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Treatment Center";
@@ -112163,6 +112183,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "sus" = (
@@ -112186,6 +112207,10 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/space,
 /area/engine/atmos)
+"swe" = (
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "sxA" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
@@ -112232,6 +112257,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "sDg" = (
@@ -112608,6 +112634,11 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"ttv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "ttx" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 1
@@ -112860,6 +112891,7 @@
 /area/security/prison/safe)
 "tYH" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "uap" = (
@@ -113158,6 +113190,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "uFG" = (
@@ -114072,6 +114105,7 @@
 	name = "Radiation Chamber Shutters"
 	},
 /obj/item/wrench,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "wyY" = (
@@ -114315,6 +114349,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xdD" = (
@@ -134764,8 +134799,8 @@ jUp
 oOw
 ucT
 mUb
-mUY
-mUb
+crP
+mXF
 eJu
 wZC
 tYH
@@ -135026,7 +135061,7 @@ crI
 awi
 hOu
 ukr
-oQV
+ttv
 sXG
 ryC
 car
@@ -135278,7 +135313,7 @@ cnB
 oOw
 awg
 axz
-axz
+swe
 axz
 awg
 cxA
@@ -135537,7 +135572,7 @@ awg
 ujG
 ujG
 ujG
-qJa
+awg
 awg
 awi
 pmj
@@ -136052,8 +136087,8 @@ clR
 ayK
 piQ
 fzu
-axz
-crI
+swe
+fPR
 sCe
 iFi
 ryC
@@ -136565,7 +136600,7 @@ awg
 crK
 cto
 crK
-qJa
+awg
 awg
 awi
 gAB
@@ -136822,7 +136857,7 @@ awg
 vam
 axz
 hNU
-qJa
+awg
 mtp
 mtp
 pWp
@@ -137079,7 +137114,7 @@ awi
 iiU
 uGH
 rdm
-qJa
+awg
 nDz
 nDz
 hgs
