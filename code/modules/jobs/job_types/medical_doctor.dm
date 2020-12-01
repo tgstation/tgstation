@@ -28,6 +28,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen
+	backpack_contents = list(/obj/item/storage/hypospraykit/regular=1) //SKYRAT ADDITION - Hypospray Kit addition
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
