@@ -10175,6 +10175,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "gDI" = (
@@ -25298,6 +25302,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "qbx" = (
@@ -30864,6 +30872,10 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "txH" = (
@@ -36582,6 +36594,10 @@
 "xci" = (
 /obj/machinery/mineral/ore_redemption,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "xcm" = (
