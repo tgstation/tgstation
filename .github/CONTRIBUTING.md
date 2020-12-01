@@ -31,13 +31,13 @@ First things first, we want to make it clear how you can contribute (if you've n
 /tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
-After setting it up, optionally navigate your git commandline to the project folder and run the command: 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
+After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
 There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
-You can of course, as always, ask for help on the discord channels, or the forums, We're just here to have fun and help out, so please don't expect professional support.
+You can of course, as always, ask for help on the Discord channels or the forums. We're just here to have fun and help out, so please don't expect professional support.
 
 ## Meet the Team
 
@@ -101,6 +101,7 @@ As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code mu
 DM will allow you nest almost any type keyword into a block, such as:
 
 ```DM
+// Not our style!
 datum
 	datum1
 		var
@@ -130,6 +131,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 The previous code made compliant:
 
 ```DM
+// Matches /tg/station style.
 /datum/datum1
 	var/varname1
 	var/varname2
@@ -149,9 +151,9 @@ The previous code made compliant:
 	code
 ```
 
-### All process procs need to make use of delta-time and be frame independent
+### All `process` procs need to make use of delta-time and be frame independent
 
-In a lot of our older code, process() is frame dependent. As an example, here's some example mob code.
+In a lot of our older code, `process()` is frame dependent. Here's some example mob code:
 
 ```DM
 /mob/testmob
@@ -160,14 +162,13 @@ In a lot of our older code, process() is frame dependent. As an example, here's 
 
 /mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
 	health -= health_loss
-
 ```
 
 As the mobs subsystem runs once every 2 seconds, the mob now loses 4 health every process, or 2 health per second. This is called frame dependent programming.
 
 Why is this an issue? If someone decides to make it so the mobs subsystem processes once every second (2 times as fast), your effects in process() will also be two times as fast. Resulting in 4 health loss per second rather than 2.
 
-How do we solve this? By using delta-time. Delta-time is the amount of seconds you would theoretically have between 2 process() calls. In the case of the mobs subsystem, this would be 2 (As there is 2 seconds between every call in process()). Here is a new example using delta-time
+How do we solve this? By using delta-time. Delta-time is the amount of seconds you would theoretically have between 2 process() calls. In the case of the mobs subsystem, this would be 2 (As there is 2 seconds between every call in `process()`). Here is a new example using delta-time:
 
 ```DM
 /mob/testmob
@@ -176,8 +177,8 @@ How do we solve this? By using delta-time. Delta-time is the amount of seconds y
 
 /mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
 	health -= health_loss * delta_time
-
 ```
+
 In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * delta_time, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
@@ -185,11 +186,11 @@ For example, if SSmobs is set to run once every 4 seconds, it would call process
 ### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-### Type paths must begin with a /
+### Type paths must begin with a `/`
 eg: `/datum/thing`, not `datum/thing`
 
 ### Type paths must be snake case
-eg: `/datum/thing/blue_bird`, not `datum/thing/BLUEBIRD` or `datum/thing/BlueBird` or `datum/thing/Bluebird` or `datum/thing/blueBird`
+eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
@@ -205,16 +206,16 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
-### Use var/name format when declaring variables
+### Use `var/name` format when declaring variables
 While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-(You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
+You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
 
 ### No hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: 'I couldn't immediately think of a proper way so thus there must be no other option' is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
@@ -353,7 +354,6 @@ This is good:
 /datum/datum1/child_datum/on_condition_change()
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
-
 
 ### Develop Secure Code
 
