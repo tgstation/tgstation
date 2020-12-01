@@ -3339,6 +3339,7 @@
 #include "modular_skyrat\modules\aesthetics\walls\code\walls.dm"
 #include "modular_skyrat\modules\aesthetics\washing_machine\code\washing_machine.dm"
 #include "modular_skyrat\modules\aesthetics\windows\code\windows.dm"
+#include "modular_skyrat\modules\BSRPD\code\game\objects\items\BSRPD.dm"
 #include "modular_skyrat\modules\cloning\code\_DEFINES\DNA.dm"
 #include "modular_skyrat\modules\cloning\code\_DEFINES\machines.dm"
 #include "modular_skyrat\modules\cloning\code\_DEFINES\poll_ignore.dm"

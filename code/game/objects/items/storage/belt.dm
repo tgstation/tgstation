@@ -69,7 +69,8 @@
 		/obj/item/inducer,
 		/obj/item/plunger,
 		/obj/item/airlock_painter,
-		/obj/item/pipe_painter
+		/obj/item/pipe_painter,
+		/obj/item/pipe_dispenser/bluespace //Skyrat edit
 		))
 
 /obj/item/storage/belt/utility/chief
