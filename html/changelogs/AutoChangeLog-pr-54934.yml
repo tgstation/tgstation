@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Butchering mobs with embedded objects inside of them will now drop the embedded objects as well."

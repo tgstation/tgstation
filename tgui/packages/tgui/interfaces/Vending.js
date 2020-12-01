@@ -25,7 +25,7 @@ const VendingRow = (props, context) => {
       && user
     )
   );
-  const discount = department === user.department;
+  const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   return (
     <Table.Row>
@@ -105,7 +105,7 @@ export const Vending = (props, context) => {
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
-    inventory = data.vending_machine_input || [];
+    inventory = data.vending_machine_input;
     custom = true;
   }
   else {

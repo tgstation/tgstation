@@ -105,7 +105,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aam" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "aan" = (
@@ -1320,10 +1320,10 @@
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/grown/onion,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/onion,
+/obj/item/food/grown/onion,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
@@ -6813,7 +6813,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aoF" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -8405,7 +8405,7 @@
 /area/maintenance/starboard/fore)
 "asz" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asA" = (
@@ -13736,13 +13736,13 @@
 /area/security/checkpoint/auxiliary)
 "aEF" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
-/obj/item/reagent_containers/food/snacks/grown/cocoapod,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/watermelon,
+/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/grapes,
+/obj/item/food/grown/cocoapod,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -15015,8 +15015,8 @@
 /area/hallway/primary/central)
 "aHo" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/snacks/grown/poppy,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/harebell,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -15992,7 +15992,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJv" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "aJw" = (
@@ -16443,7 +16443,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aKG" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "aKH" = (
@@ -17131,7 +17131,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMC" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMD" = (
@@ -17756,7 +17756,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aOf" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -17795,7 +17795,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aOk" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "aOl" = (
@@ -18244,7 +18244,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aPy" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "aPz" = (
@@ -18706,7 +18706,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQR" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQS" = (
@@ -19591,7 +19591,7 @@
 	},
 /area/hallway/secondary/exit)
 "aTl" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/status_display/evac{
 	layer = 4;
 	pixel_y = 32
@@ -19840,7 +19840,7 @@
 /area/storage/tools)
 "aTM" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTN" = (
@@ -21815,15 +21815,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/bridge)
-"aYt" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aYu" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -21844,12 +21835,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
-"aYv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aYw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
@@ -23313,7 +23298,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bcc" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bcd" = (
@@ -23673,7 +23658,7 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/primary/starboard)
 "bdd" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bde" = (
@@ -24947,7 +24932,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgj" = (
@@ -32329,6 +32314,8 @@
 	req_access_txt = "30"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "byi" = (
@@ -32648,10 +32635,15 @@
 /area/maintenance/aft)
 "bzu" = (
 /obj/machinery/rnd/server,
-/turf/open/floor/circuit/telecomms/server,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/science/server)
 "bzv" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bzw" = (
@@ -32665,7 +32657,12 @@
 /area/science/server)
 "bzx" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bzy" = (
@@ -32681,6 +32678,9 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bzz" = (
@@ -33125,27 +33125,19 @@
 /area/maintenance/aft)
 "bAy" = (
 /obj/effect/landmark/blobstart,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/telecomms,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/science/server)
 "bAz" = (
-/obj/machinery/airalarm/server{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/telecomms,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/science/server)
 "bAA" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
@@ -33155,25 +33147,19 @@
 	name = "Server Room";
 	req_access_txt = "30"
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bAC" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bAD" = (
 /obj/structure/chair/office/light,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "bAE" = (
@@ -33665,7 +33651,8 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bBS" = (
-/turf/open/floor/circuit/telecomms/server,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/science/server)
 "bBT" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -34487,7 +34474,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/medical/chems,
+/obj/machinery/vending/drugs,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "bDX" = (
@@ -34644,7 +34631,6 @@
 	areastring = "/area/crew_quarters/heads/hor";
 	dir = 1;
 	name = "RD Office APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable,
@@ -38109,15 +38095,6 @@
 /area/engine/atmos)
 "bOU" = (
 /obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bOV" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOW" = (
@@ -46749,7 +46726,7 @@
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 2
 	},
-/obj/item/reagent_containers/food/snacks/mint{
+/obj/item/food/mint{
 	pixel_y = 9
 	},
 /turf/open/floor/plating,
@@ -53526,6 +53503,17 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
+"psm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "psy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
@@ -53700,6 +53688,12 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel,
 /area/medical/medbay/lobby)
+"pEY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "pFO" = (
 /obj/machinery/camera{
 	c_tag = "Holodeck - Fore";
@@ -54194,6 +54188,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"rid" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "rjh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55222,6 +55225,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"uco" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "udp" = (
 /obj/item/crowbar/large,
 /obj/structure/rack,
@@ -55386,6 +55398,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"uzn" = (
+/obj/machinery/camera{
+	c_tag = "Science - Server Room";
+	dir = 8;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
+/area/science/server)
 "uzB" = (
 /obj/structure/displaycase/labcage,
 /obj/effect/turf_decal/stripes/end{
@@ -55536,7 +55558,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -56374,7 +56396,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "xfd" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "xfl" = (
@@ -88468,7 +88490,7 @@ bZN
 bLK
 bML
 bNT
-bOV
+uco
 bQj
 bRw
 bSF
@@ -88725,7 +88747,7 @@ bBR
 bLK
 bMN
 bNV
-aYt
+rid
 bQo
 bRz
 bSH
@@ -88982,7 +89004,7 @@ bAw
 bLK
 bMM
 bOd
-aYv
+pEY
 bOd
 bRy
 bSG
@@ -88991,7 +89013,7 @@ bUK
 bVT
 bWR
 bXQ
-bQj
+psm
 bZF
 bPc
 bVQ
@@ -99765,7 +99787,7 @@ buT
 byf
 bBS
 bAy
-bBS
+uzn
 vwd
 soJ
 qWJ
@@ -100275,7 +100297,7 @@ bqa
 cIe
 box
 bWr
-aRU
+bve
 byh
 bzv
 bAA

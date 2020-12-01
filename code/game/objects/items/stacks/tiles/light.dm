@@ -7,6 +7,7 @@
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	turf_type = /turf/open/floor/light
+	merge_type = /obj/item/stack/tile/light
 	var/state = 0
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)

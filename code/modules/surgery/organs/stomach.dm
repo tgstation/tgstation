@@ -29,6 +29,12 @@
 	var/metabolism_efficiency = 0.1 // the lowest we should go is 0.05
 
 
+/obj/item/organ/stomach/Initialize()
+	. = ..()
+	//None edible organs do not get a reagent holder by default
+	if(!reagents)
+		create_reagents(reagent_vol)
+
 /obj/item/organ/stomach/on_life()
 	. = ..()
 
@@ -85,14 +91,24 @@
 	if(!nutri)
 		return
 
+	// remove the food reagent amount
+	var/nutri_vol = nutri.volume
+	var/amount_food = food_reagents[nutri.type]
+	if(amount_food)
+		nutri_vol = max(nutri_vol - amount_food, 0)
+
+	// found nutriment was stomach food reagent
+	if(!(nutri_vol > 0))
+		return
+
 	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
-	if(prob(damage * 0.025 * nutri.volume * nutri.volume))
+	if(prob(damage * 0.025 * nutri_vol * nutri_vol))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 		return
 
 	// the change of vomit is now high
-	if(damage > high_threshold && prob(damage * 0.1 * nutri.volume * nutri.volume))
+	if(damage > high_threshold && prob(damage * 0.1 * nutri_vol * nutri_vol))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 

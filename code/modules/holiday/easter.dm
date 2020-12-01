@@ -43,7 +43,7 @@
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	egg_type = /obj/item/food/egg/loaded
-	food_type = /obj/item/reagent_containers/food/snacks/grown/carrot
+	food_type = /obj/item/food/grown/carrot
 	eggsleft = 10
 	eggsFertile = FALSE
 	icon_prefix = "rabbit"
@@ -125,7 +125,7 @@
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/storage/backpack/satchel/bunnysatchel,
-	/obj/item/reagent_containers/food/snacks/grown/carrot,
+	/obj/item/food/grown/carrot,
 	/obj/item/toy/balloon,
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
@@ -213,7 +213,7 @@
 	name = "Mammi"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/soup/mammi
@@ -231,7 +231,7 @@
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
 	subcategory = CAT_MISCFOOD

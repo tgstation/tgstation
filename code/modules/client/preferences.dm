@@ -1523,7 +1523,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						playtime_reward_cloak = !playtime_reward_cloak
 
 				if("ai_core_icon")
-					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
+					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens - "Portrait"
 					if(ai_core_icon)
 						preferred_ai_core_display = ai_core_icon
 
@@ -1668,7 +1668,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
+					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"))
 					if(choice == "Cancel")
 						ShowChoices(user)
 						return

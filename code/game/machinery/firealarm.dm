@@ -252,7 +252,7 @@
 
 				else if(W.tool_behaviour == TOOL_WRENCH)
 					user.visible_message("<span class='notice'>[user] removes the fire alarm assembly from the wall.</span>", \
-										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
+						"<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.forceMove(user.drop_location())
 					W.play_tool_sound(src)

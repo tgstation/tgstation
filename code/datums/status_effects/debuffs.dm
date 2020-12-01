@@ -400,10 +400,10 @@
 	return ..()
 
 /**
-  * What happens when this mark gets poppedd
-  *
-  * Adds actual functionality to each mark
-  */
+ * What happens when this mark gets poppedd
+ *
+ * Adds actual functionality to each mark
+ */
 /datum/status_effect/eldritch/proc/on_effect()
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
@@ -456,6 +456,16 @@
 		//Affects roughly 75% of items
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
+	return ..()
+
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
 	return ..()
 
 /// A status effect used for specifying confusion on a living mob.

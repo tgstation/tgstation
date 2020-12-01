@@ -109,12 +109,12 @@
 	},
 /obj/item/storage/box/donkpockets,
 /obj/item/storage/fancy/donut_box,
-/obj/item/reagent_containers/food/snacks/cookie,
-/obj/item/reagent_containers/food/snacks/cookie{
+/obj/item/food/cookie,
+/obj/item/food/cookie{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{

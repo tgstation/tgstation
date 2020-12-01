@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Stomachs no longer metabolize reagents, they process them to the body"

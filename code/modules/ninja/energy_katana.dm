@@ -1,14 +1,14 @@
 /**
-  * # Energy Katana
-  *
-  * The space ninja's katana.
-  *
-  * The katana that only space ninja spawns with.  Comes with 30 force and throwforce, along with a signature special jaunting system.
-  * Upon clicking on a tile with the dash on, the user will teleport to that tile, assuming their target was not dense.
-  * The katana has 3 dashes stored at maximum, and upon using the dash, it will return 20 seconds after it was used.
-  * It also has a special feature where if it is tossed at a space ninja who owns it (determined by the ninja suit), the ninja will catch the katana instead of being hit by it.
-  *
-  */
+ * # Energy Katana
+ *
+ * The space ninja's katana.
+ *
+ * The katana that only space ninja spawns with.  Comes with 30 force and throwforce, along with a signature special jaunting system.
+ * Upon clicking on a tile with the dash on, the user will teleport to that tile, assuming their target was not dense.
+ * The katana has 3 dashes stored at maximum, and upon using the dash, it will return 20 seconds after it was used.
+ * It also has a special feature where if it is tossed at a space ninja who owns it (determined by the ninja suit), the ninja will catch the katana instead of being hit by it.
+ *
+ */
 /obj/item/energy_katana
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
@@ -43,7 +43,7 @@
 /obj/item/energy_katana/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
-	
+
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(dash_toggled && !Adjacent(target) && !target.density)
@@ -80,14 +80,14 @@
 	return ..()
 
 /**
-  * Proc called when the katana is recalled to its space ninja.
-  *
-  * Proc called when space ninja is hit with its suit's katana or the recall ability is used.
-  * Arguments:
-  * * user - To whom the katana is returning to.
-  * * doSpark - whether or not the katana will spark when it returns.
-  * * caught - boolean for whether or not the katana was caught or was teleported back.
-  */
+ * Proc called when the katana is recalled to its space ninja.
+ *
+ * Proc called when space ninja is hit with its suit's katana or the recall ability is used.
+ * Arguments:
+ * * user - To whom the katana is returning to.
+ * * doSpark - whether or not the katana will spark when it returns.
+ * * caught - boolean for whether or not the katana was caught or was teleported back.
+ */
 /obj/item/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = TRUE, caught = FALSE)
 	if(!istype(user))
 		return

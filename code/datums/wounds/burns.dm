@@ -125,13 +125,13 @@
 		var/bandage_condition
 		switch(limb.current_gauze.absorption_capacity)
 			if(0 to 1.25)
-				bandage_condition = "nearly ruined "
+				bandage_condition = "nearly ruined"
 			if(1.25 to 2.75)
-				bandage_condition = "badly worn "
+				bandage_condition = "badly worn"
 			if(2.75 to 4)
-				bandage_condition = "slightly pus-stained "
+				bandage_condition = "slightly pus-stained"
 			if(4 to INFINITY)
-				bandage_condition = "clean "
+				bandage_condition = "clean"
 
 		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]"
 	else
