@@ -234,8 +234,12 @@ RLD
 	mode = RCD_FLOORWALL
 	var/turf/T = get_turf(user)
 
-	if(isopenturf(T) && checkResource(16, user)) // It takes 16 resources to construct a wall
-		user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(!isopenturf(T)) // Oh fuck
+		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return BRUTELOSS
+
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(checkResource(16, user)) // It takes 16 resources to construct a wall
 		var/success = T.rcd_act(user, src, RCD_FLOORWALL)
 		T = get_turf(user)
 		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
@@ -248,8 +252,8 @@ RLD
 		user.gib()
 		return MANUAL_SUICIDE
 
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return BRUTELOSS
+	user.visible_message("<span class='suicide'>[user] pulls the trigger... But there is not enough ammo!</span>")
+	return SHAME
 
 /obj/item/construction/rcd/verb/toggle_window_glass_verb()
 	set name = "RCD : Toggle Window Glass"
