@@ -383,6 +383,11 @@
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
+/obj/item/clothing/gloves/mod/dropped(mob/user)
+	. = ..()
+	user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+	overslot = null
+
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
 	icon = 'icons/obj/mod.dmi'
@@ -399,3 +404,8 @@
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
+
+/obj/item/clothing/shoes/mod/dropped(mob/user)
+	. = ..()
+	user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+	overslot = null

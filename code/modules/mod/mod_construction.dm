@@ -33,8 +33,12 @@
 	inhand_icon_state = "armor"
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	var/theme = "engineering"
+	var/theme = "standard"
 
 /obj/item/mod/armor/Initialize()
 	. = ..()
+	name = "[theme] [name]"
 	icon_state  = "[theme]-armor"
+
+/obj/item/mod/armor/engineering
+	theme = "engineering"
