@@ -246,10 +246,10 @@ RLD
 		activate()
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.gib()
-	else
-		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return MANUAL_SUICIDE
 
-	return (BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/construction/rcd/verb/toggle_window_glass_verb()
 	set name = "RCD : Toggle Window Glass"
