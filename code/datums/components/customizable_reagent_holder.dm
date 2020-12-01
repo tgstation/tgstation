@@ -43,7 +43,7 @@
 
 	if (initial_ingredients)
 		for (var/_ingredient in initial_ingredients)
-			var/obj/item/I = ingredient
+			var/obj/item/ingredient = _ingredient
 			add_ingredient(ingredient)
 			handle_fill(ingredient)
 
@@ -80,11 +80,11 @@
 /datum/component/customizable_reagent_holder/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/atom/P = parent
+	var/atom/atom_parent = parent
 	var/ingredients_listed = ""
 	if (LAZYLEN(ingredients))
 		for (var/i in 1 to ingredients.len)
-			var/obj/item/I = ingredients[i]
+			var/obj/item/ingredient = ingredients[i]
 			var/ending = ", "
 			switch(length(ingredients))
 				if (2)
@@ -93,55 +93,55 @@
 				if (3 to INFINITY)
 					if (i == ingredients.len - 1)
 						ending = ", and "
-			ingredients_listed += "\a [I.name][ending]"
-	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(P.name)]."
+			ingredients_listed += "\a [ingredient.name][ending]"
+	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(atom_parent.name)]."
 
 
 ///Handles when the customizable food is attacked by something.
-/datum/component/customizable_reagent_holder/proc/customizable_attack(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
+/datum/component/customizable_reagent_holder/proc/customizable_attack(datum/source, obj/ingredient, mob/attacker, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
 	var/valid_ingredient = TRUE
 
 	switch (ingredient_type)
 		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
-			valid_ingredient = IS_EDIBLE(I)
+			valid_ingredient = IS_EDIBLE(ingredient)
 
 	// only accept valid ingredients
 	if (!valid_ingredient)
-		to_chat(M, "<span class='warning'>[I] doesn't belong on [parent]!</span>")
+		to_chat(attacker, "<span class='warning'>[ingredient] doesn't belong on [parent]!</span>")
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(M, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
+		to_chat(attacker, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
 		return
 
-	var/atom/P = parent
-	if(!M.transferItemToLoc(I, P))
+	var/atom/atom_parent = parent
+	if(!attacker.transferItemToLoc(ingredient, atom_parent))
 		return
 	if (replacement)
-		var/atom/R = new replacement(P.loc)
-		I.forceMove(R)
+		var/atom/replacement_parent = new replacement(atom_parent.loc)
+		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()
-		R.TakeComponent(src)
-		qdel(P)
-	handle_reagents(I)
-	add_ingredient(I)
-	handle_fill(I)
+		replacement_parent.TakeComponent(src)
+		qdel(atom_parent)
+	handle_reagents(ingredient)
+	add_ingredient(ingredient)
+	handle_fill(ingredient)
 
 
 ///Handles the icon update for a new ingredient.
-/datum/component/customizable_reagent_holder/proc/handle_fill(obj/item/I)
+/datum/component/customizable_reagent_holder/proc/handle_fill(obj/item/ingredient)
 	if (fill_type == CUSTOM_INGREDIENT_ICON_NOCHANGE)
 		//don't bother doing the icon procs
 		return
-	var/atom/P = parent
-	var/mutable_appearance/filling = mutable_appearance(P.icon, "[initial(P.icon_state)]_filling")
+	var/atom/atom_parent = parent
+	var/mutable_appearance/filling = mutable_appearance(atom_parent.icon, "[initial(atom_parent.icon_state)]_filling")
 	// get average color
-	var/icon/ico = new(I.icon, I.icon_state)
-	ico.Scale(1, 1)
-	var/fillcol = copytext(ico.GetPixel(1, 1), 1, 8) // remove opacity
+	var/icon/icon = new(ingredient.icon, ingredient.icon_state)
+	icon.Scale(1, 1)
+	var/fillcol = copytext(icon.GetPixel(1, 1), 1, 8) // remove opacity
 	filling.color = fillcol
 
 	switch(fill_type)
@@ -155,37 +155,37 @@
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
 			if (top_overlay) // delete old top if exists
-				P.cut_overlay(top_overlay)
-			top_overlay = mutable_appearance(P.icon, "[P.icon_state]_top")
+				atom_parent.cut_overlay(top_overlay)
+			top_overlay = mutable_appearance(atom_parent.icon, "[atom_parent.icon_state]_top")
 			top_overlay.pixel_y = 2 * LAZYLEN(ingredients) + 3
-			P.add_overlay(filling)
-			P.add_overlay(top_overlay)
+			atom_parent.add_overlay(filling)
+			atom_parent.add_overlay(top_overlay)
 			return
 		if(CUSTOM_INGREDIENT_ICON_FILL)
 			if (top_overlay)
 				filling.color = mix_color(filling.color)
-				P.cut_overlay(top_overlay)
+				atom_parent.cut_overlay(top_overlay)
 			top_overlay = filling
 		if(CUSTOM_INGREDIENT_ICON_LINE)
 			filling.pixel_x = filling.pixel_y = rand(-8,3)
-	P.add_overlay(filling)
+	atom_parent.add_overlay(filling)
 
 
 ///Takes the reagents from an ingredient.
-/datum/component/customizable_reagent_holder/proc/handle_reagents(obj/item/I)
-	var/atom/P = parent
-	if (P.reagents && I.reagents)
-		I.reagents.trans_to(P, I.reagents.total_volume)
+/datum/component/customizable_reagent_holder/proc/handle_reagents(obj/item/ingredient)
+	var/atom/atom_parent = parent
+	if (atom_parent.reagents && ingredient.reagents)
+		ingredient.reagents.trans_to(atom_parent, ingredient.reagents.total_volume)
 	return
 
 
 ///Adds a new ingredient and updates the parent's name.
-/datum/component/customizable_reagent_holder/proc/add_ingredient(obj/item/I)
-	var/atom/P = parent
-	LAZYADD(ingredients, I)
-	P.name = "[custom_adjective()] [custom_type()] [initial(P.name)]"
-	SEND_SIGNAL(P, COMSIG_ATOM_CUSTOMIZED, I)
-	SEND_SIGNAL(I, COMSIG_ITEM_USED_AS_INGREDIENT, P)
+/datum/component/customizable_reagent_holder/proc/add_ingredient(obj/item/ingredient)
+	var/atom/atom_parent = parent
+	LAZYADD(ingredients, ingredient)
+	atom_parent.name = "[custom_adjective()] [custom_type()] [initial(atom_parent.name)]"
+	SEND_SIGNAL(atom_parent, COMSIG_ATOM_CUSTOMIZED, ingredient)
+	SEND_SIGNAL(ingredient, COMSIG_ITEM_USED_AS_INGREDIENT, atom_parent)
 
 
 ///Gives an adjective to describe the size of the custom food.
@@ -207,15 +207,15 @@
 /datum/component/customizable_reagent_holder/proc/custom_type()
 	var/custom_type = "empty"
 	if (LAZYLEN(ingredients))
-		var/obj/item/I = ingredients[1]
-		if (istype(I, /obj/item/food/meat))
-			var/obj/item/food/meat/M = I
-			if (M.subjectname)
-				custom_type = M.subjectname
-			else if (M.subjectjob)
-				custom_type = M.subjectjob
-		if (custom_type == "empty" && I.name)
-			custom_type = I.name
+		var/obj/item/first_ingredient = ingredients[1]
+		if (istype(first_ingredient, /obj/item/food/meat))
+			var/obj/item/food/meat/meat = first_ingredient
+			if (meat.subjectname)
+				custom_type = meat.subjectname
+			else if (meat.subjectjob)
+				custom_type = meat.subjectjob
+		if (custom_type == "empty" && first_ingredient.name)
+			custom_type = first_ingredient.name
 	return custom_type
 
 
@@ -235,7 +235,7 @@
 
 
 ///Copies over the parent's ingredients to the processing results (such as slices when the parent is cut).
-/datum/component/customizable_reagent_holder/proc/on_processed(datum/source, mob/living/user, obj/item/I, list/atom/results)
+/datum/component/customizable_reagent_holder/proc/on_processed(datum/source, mob/living/user, obj/item/ingredient, list/atom/results)
 	SIGNAL_HANDLER
 
 	// Reagents are not transferred since that should be handled elsewhere.
