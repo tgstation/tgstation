@@ -222,14 +222,13 @@
 		if(tame)
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			tame = TRUE
 			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
-	return
+	tame = TRUE
 
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
@@ -255,11 +254,11 @@
 		stuttering = 0
 
 /**
-  * Updates the simple mob's stamina loss.
-  *
-  * Updates the speed and staminaloss of a given simplemob.
-  * Reduces the stamina loss by stamina_recovery
-  */
+ * Updates the simple mob's stamina loss.
+ *
+ * Updates the speed and staminaloss of a given simplemob.
+ * Reduces the stamina loss by stamina_recovery
+ */
 /mob/living/simple_animal/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 

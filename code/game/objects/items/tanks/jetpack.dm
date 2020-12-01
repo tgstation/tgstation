@@ -131,8 +131,7 @@
 		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
 		turn_off(user)
 		return
-	else ..()
-	return TRUE
+	return ..()
 
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"

@@ -59,17 +59,17 @@ SUBSYSTEM_DEF(economy)
 		price_update()
 
 /**
-  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
-  */
+ * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
+ */
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D
 
 /**
-  * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
-  * Iterates over every department account for the same payment.
-  */
+ * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+ * Iterates over every department account for the same payment.
+ */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
 	for(var/iteration in department_accounts)
 		var/datum/bank_account/dept_account = get_dep_account(iteration)
@@ -78,10 +78,10 @@ SUBSYSTEM_DEF(economy)
 		dept_account.adjust_money(MAX_GRANT_DPT)
 
 /**
-  * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
-  *
-  * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
-  **/
+ * Updates the prices of all station vendors with the inflation_value, increasing/decreasing costs across the station, and alerts the crew.
+ *
+ * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+ **/
 /datum/controller/subsystem/economy/proc/price_update()
 	for(var/obj/machinery/vending/V in GLOB.machines)
 		if(istype(V, /obj/machinery/vending/custom))
@@ -93,12 +93,12 @@ SUBSYSTEM_DEF(economy)
 	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 
 /**
-  * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
-  *
-  * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
-  * Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
-  * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
-  **/
+ * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
+ *
+ * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
+ * Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
+ * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
+ **/
 /datum/controller/subsystem/economy/proc/inflation_value()
 	if(!bank_accounts_by_id.len)
 		return 1
