@@ -47727,10 +47727,6 @@
 /area/engine/break_room)
 "bPZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering Access";
-	req_access_txt = "10"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
@@ -47740,6 +47736,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bQa" = (
@@ -53713,8 +53713,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/engineering{
-	name = "Engineering Access";
-	req_access_txt = "10"
+	name = "Engine Room";
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -55311,10 +55311,6 @@
 /area/engine/engineering)
 "cdU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Power Monitoring";
-	req_access_txt = "32;10"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -55326,6 +55322,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -62535,9 +62535,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -65409,7 +65410,7 @@
 "czo" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -67817,7 +67818,7 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -106666,7 +106667,7 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -109065,6 +109066,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"lFl" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "lGy" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -113235,9 +113247,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -114438,6 +114451,17 @@
 "xvf" = (
 /turf/closed/wall/r_wall,
 /area/medical/chemistry)
+"xvI" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "xvZ" = (
 /obj/structure/table,
 /obj/item/storage/photo_album/prison,
@@ -114533,17 +114557,6 @@
 /obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"xBR" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "xDZ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
@@ -138642,7 +138655,7 @@ bTU
 bSc
 bHV
 car
-xBR
+wsJ
 cph
 ppO
 cdC
@@ -138652,7 +138665,7 @@ car
 car
 cnC
 cdC
-wnf
+lFl
 cdC
 cnC
 car
@@ -139680,7 +139693,7 @@ clZ
 car
 cph
 cdC
-wsJ
+xvI
 cdC
 cph
 car
