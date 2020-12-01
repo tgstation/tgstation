@@ -5273,10 +5273,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
-"duS" = (
-/obj/machinery/vending/snack/random,
-/turf/open/floor/wood,
-/area/hallway/primary/port)
 "duT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -6340,7 +6336,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/vending/snack/random,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -20297,7 +20292,6 @@
 /turf/open/floor/wood,
 /area/hallway/primary/port)
 "nji" = (
-/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
@@ -33019,10 +33013,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
-"vhM" = (
-/obj/machinery/vending/snack/random,
-/turf/open/floor/wood,
-/area/crew_quarters/fitness/recreation)
 "vhQ" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/command/glass{
@@ -34790,10 +34780,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"wkN" = (
-/obj/machinery/vending/cola/random,
-/turf/open/floor/wood,
-/area/crew_quarters/fitness/recreation)
 "wkY" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -35183,13 +35169,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
-"wvz" = (
-/obj/machinery/vending/cola/random,
-/obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "wvA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -60345,7 +60324,7 @@ tEg
 tEg
 ntg
 cwD
-wvz
+dlJ
 oIe
 hlw
 wDb
@@ -65704,7 +65683,7 @@ iGR
 nxB
 csY
 cwD
-duS
+jRF
 ewE
 qrX
 oIe
@@ -78795,7 +78774,7 @@ jMM
 lHb
 hOe
 plE
-wkN
+neY
 neY
 akE
 dLB
@@ -79052,7 +79031,7 @@ lrB
 lHb
 oJy
 plE
-vhM
+neY
 neY
 akE
 nqL
@@ -79309,7 +79288,7 @@ jMM
 lHb
 hOe
 plE
-wkN
+neY
 gzt
 akE
 dLB

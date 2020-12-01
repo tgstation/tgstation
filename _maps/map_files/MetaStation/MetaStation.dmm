@@ -7453,7 +7453,6 @@
 /area/crew_quarters/fitness/recreation)
 "aql" = (
 /obj/machinery/light,
-/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8294,10 +8293,6 @@
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
 /obj/item/food/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/grown/onion,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
 /obj/item/food/meat/rawcutlet/plain,
@@ -12765,7 +12760,6 @@
 "aDm" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/safe/floor,
-/obj/item/reagent_containers/food/snacks/fortunecookie,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aDn" = (
@@ -18725,16 +18719,6 @@
 /area/hydroponics/garden)
 "aSl" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
-/obj/item/reagent_containers/food/snacks/grown/cocoapod,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/cherries,
-/obj/item/reagent_containers/food/snacks/grown/soybeans,
-/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -20520,7 +20504,6 @@
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aWp" = (
-/obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -26610,7 +26593,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bkh" = (
-/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -28471,7 +28453,6 @@
 "boI" = (
 /obj/structure/rack,
 /obj/item/cane,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "boJ" = (
@@ -28494,7 +28475,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boN" = (
-/obj/machinery/vending/cola/random,
 /obj/machinery/camera{
 	c_tag = "Bar - Fore"
 	},
@@ -29000,10 +28980,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/vacant_room/office)
-"bqe" = (
-/obj/machinery/vending/cola/random,
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "bqf" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/reagent_dispensers/fueltank,
@@ -29918,7 +29894,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bsl" = (
-/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -30164,7 +30139,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bsW" = (
@@ -30223,7 +30197,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "btb" = (
@@ -32483,7 +32456,6 @@
 /turf/closed/wall,
 /area/hallway/secondary/command)
 "bzK" = (
-/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/command)
 "bzL" = (
@@ -35069,7 +35041,6 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "bGQ" = (
-/obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -36316,7 +36287,6 @@
 /area/engine/atmos)
 "bKl" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -39865,7 +39835,6 @@
 /turf/open/floor/wood,
 /area/library)
 "bTD" = (
-/obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
@@ -41848,11 +41817,6 @@
 /obj/item/seeds/potato,
 /obj/item/seeds/apple,
 /obj/item/grown/corncob,
-/obj/item/reagent_containers/food/snacks/grown/carrot,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/pumpkin{
-	pixel_y = 5
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -42326,10 +42290,6 @@
 /turf/closed/wall,
 /area/security/checkpoint/science/research)
 "bZq" = (
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -42764,14 +42724,6 @@
 	},
 /obj/structure/table/reinforced{
 	name = "Jim Norton's Quebecois Coffee table"
-	},
-/obj/item/reagent_containers/food/snacks/poppypretzel{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/muffin/berry{
-	pixel_x = -4;
-	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/snacks/hotcrossbun{
 	pixel_x = 3;
@@ -46376,7 +46328,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -51331,7 +51282,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/grown/banana,
 /turf/open/floor/grass,
 /area/science/genetics)
 "cuA" = (
@@ -53824,7 +53774,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cCZ" = (
-/obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "cDa" = (
@@ -56026,7 +55975,6 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "cJD" = (
-/obj/machinery/vending/snack/random,
 /obj/structure/sign/map/right{
 	desc = "A framed picture of the station. Clockwise from security in red at the top, you see engineering in yellow, science in purple, escape in checkered red-and-white, medbay in green, arrivals in checkered red-and-blue, and then cargo in brown.";
 	icon_state = "map-right-MS";
@@ -57256,35 +57204,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
-"cML" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/main)
 "cMM" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -57302,11 +57221,6 @@
 /area/chapel/main)
 "cMN" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -57576,7 +57490,6 @@
 /obj/item/seeds/cabbage,
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -58466,21 +58379,6 @@
 /obj/structure/sign/plaques/kiddie/badger{
 	pixel_y = 32
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
-	pixel_y = 2
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -59304,10 +59202,6 @@
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -59374,11 +59268,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -68585,7 +68474,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/medical/chems,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "iND" = (
@@ -71902,7 +71790,6 @@
 "ngK" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -72195,7 +72082,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
-/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -74855,7 +74741,6 @@
 /area/medical/virology)
 "qTL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/obj/item/reagent_containers/food/snacks/grown/banana,
 /turf/open/floor/grass,
 /area/medical/virology)
 "qUk" = (
@@ -75641,7 +75526,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "rSL" = (
-/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
 "rSR" = (
@@ -77031,7 +76915,6 @@
 /area/crew_quarters/locker)
 "tPD" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -96204,7 +96087,7 @@ rJv
 kqz
 djW
 aIj
-bqe
+lDf
 bzx
 iiB
 bJw
@@ -103713,7 +103596,7 @@ xrj
 xrj
 cgJ
 cLa
-cML
+cMN
 cND
 cOk
 cOR

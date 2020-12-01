@@ -1335,9 +1335,6 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/listeningstation)
 "nd" = (
-/obj/machinery/vending/snack/random{
-	extended_inventory = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
@@ -1570,9 +1567,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "vt" = (
-/obj/machinery/vending/cola/random{
-	extended_inventory = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/corner{
@@ -2747,7 +2741,6 @@
 /obj/item/storage/box/donkpockets{
 	pixel_x = 2
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
