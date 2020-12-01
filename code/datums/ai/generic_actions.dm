@@ -11,7 +11,7 @@
 
 /datum/ai_behavior/battle_screech/perform(delta_time, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.emote(pick(screeches))
+	INVOKE_ASYNC(living_pawn, .proc/emote, pick(screeches))
 	finish_action(controller, TRUE)
 
 

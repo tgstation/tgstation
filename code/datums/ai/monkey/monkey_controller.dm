@@ -14,7 +14,8 @@ have ways of interacting with a specific mob and control it.
 	BB_MONKEY_DISPOSING = FALSE,
 	BB_MONKEY_TARGET_DISPOSAL = null,
 	BB_MONKEY_FRUSTRATION = 0,
-	BB_MONKEY_CURRENT_ATTACK_TARGET = null)
+	BB_MONKEY_CURRENT_ATTACK_TARGET = null,
+	BB_MONKEY_CURRENT_ATTACK_TARGET)
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -45,7 +46,7 @@ have ways of interacting with a specific mob and control it.
 	current_behaviors = list()
 	var/mob/living/living_pawn = pawn
 
-	if(SHOULD_RESIST(living_pawn))
+	if(SHOULD_RESIST(living_pawn) && DT_PROB(MONKEY_RESIST_PROB, delta_time))
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
 		return //IM NOT DOING ANYTHING ELSE BUT EXTUINGISH MYSELF, GOOD GOD HAVE MERCY.
 
@@ -74,7 +75,8 @@ have ways of interacting with a specific mob and control it.
 
 					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
 					current_movement_target = selected_enemy
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
+					if(blackboard[BB_MONKEY_RECRUIT_COOLDOWN] < world.time)
+						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
 					return //Focus on this
@@ -124,9 +126,10 @@ have ways of interacting with a specific mob and control it.
 	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		step(living_pawn, pick(GLOB.cardinals))
 	else if(DT_PROB(5, delta_time))
-		living_pawn.emote(pick("screech"))
+		INVOKE_ASYNC(living_pawn, .proc/emote, pick("screech")
+		living_pawn.emote())
 	else if(DT_PROB(1, delta_time))
-		living_pawn.emote(pick("scratch","jump","roll","tail"))
+		INVOKE_ASYNC(living_pawn, .proc/emote, pick("scratch","jump","roll","tail"))
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)

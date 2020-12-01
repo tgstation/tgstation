@@ -269,6 +269,7 @@
 /datum/ai_behavior/recruit_monkeys/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 
+	controller.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/L in view(living_pawn, MONKEY_ENEMY_VISION))
@@ -282,6 +283,7 @@
 			///Fill in a plan override!
 			if(!monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET])
 				monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
+				monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 				monkey_ai.current_movement_target = your_enemy
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)

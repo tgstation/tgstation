@@ -62,6 +62,8 @@ have ways of interacting with a specific mob and control it.
 
 /// Generates a plan and see if our existing one is still valid.
 /datum/ai_controller/process(delta_time)
+	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
+
 	if(!able_to_run())
 		return //this should remove them from processing in the future through event-based stuff.
 	if(!current_behaviors?.len)

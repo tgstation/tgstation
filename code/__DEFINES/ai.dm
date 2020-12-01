@@ -33,3 +33,4 @@
 #define BB_MONKEY_FRUSTRATION "BB_monkey_frustration"
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
+#define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
