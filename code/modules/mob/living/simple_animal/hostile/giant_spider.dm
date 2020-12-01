@@ -1,8 +1,8 @@
 /**
-  * # Poison Hostile Simplemob
-  *
-  * A subtype of the hostile simplemob which injects reagents into its target on attack, assuming the target accepts reagents.
-  */
+ * # Poison Hostile Simplemob
+ *
+ * A subtype of the hostile simplemob which injects reagents into its target on attack, assuming the target accepts reagents.
+ */
 /mob/living/simple_animal/hostile/poison
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 5
@@ -15,24 +15,24 @@
 		inject_poison(target)
 
 /**
-  * Injects poison into a given target.
-  *
-  * Checks if a given target accepts reagents, and then injects a given reagent into them if so.
-  * Arguments:
-  * * living_target - The targeted mob
-  */
+ * Injects poison into a given target.
+ *
+ * Checks if a given target accepts reagents, and then injects a given reagent into them if so.
+ * Arguments:
+ * * living_target - The targeted mob
+ */
 /mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/living_target)
 	if(poison_per_bite != 0 && living_target?.reagents)
 		living_target.reagents.add_reagent(poison_type, poison_per_bite)
 
 /**
-  * # Giant Spider
-  *
-  * A versatile mob which can occur from a variety of sources.
-  *
-  * A mob which can be created by botany or xenobiology.  The basic type is the guard, which is slower but sturdy and outputs good damage.
-  * All spiders can produce webbing.  Currently does not inject toxin into its target.
-  */
+ * # Giant Spider
+ *
+ * A versatile mob which can occur from a variety of sources.
+ *
+ * A mob which can be created by botany or xenobiology.  The basic type is the guard, which is slower but sturdy and outputs good damage.
+ * All spiders can produce webbing.  Currently does not inject toxin into its target.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
@@ -109,12 +109,12 @@
 		clear_alert("temp")
 
 /**
-  * # Spider Hunter
-  *
-  * A subtype of the giant spider with purple eyes and toxin injection.
-  *
-  * A subtype of the giant spider which is faster, has toxin injection, but less health.  This spider is only slightly slower than a human.
-  */
+ * # Spider Hunter
+ *
+ * A subtype of the giant spider with purple eyes and toxin injection.
+ *
+ * A subtype of the giant spider which is faster, has toxin injection, but less health.  This spider is only slightly slower than a human.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	name = "hunter spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
@@ -130,13 +130,13 @@
 	speed = -0.1
 
 /**
-  * # Spider Nurse
-  *
-  * A subtype of the giant spider with green eyes that specializes in support.
-  *
-  * A subtype of the giant spider which specializes in support skills.  Nurses can place down webbing in a quarter of the time
-  * that other species can and can wrap other spiders' wounds, healing them.  Note that it cannot heal itself.
-  */
+ * # Spider Nurse
+ *
+ * A subtype of the giant spider with green eyes that specializes in support.
+ *
+ * A subtype of the giant spider which specializes in support skills.  Nurses can place down webbing in a quarter of the time
+ * that other species can and can wrap other spiders' wounds, healing them.  Note that it cannot heal itself.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
 	name = "nurse spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
@@ -180,13 +180,13 @@
 	is_busy = FALSE
 
 /**
-  * # Tarantula
-  *
-  * The tank of spider subtypes.  Is incredibly slow when not on webbing, but has a lunge and the highest health and damage of any spider type.
-  *
-  * A subtype of the giant spider which specializes in pure strength and staying power.  Is slowed down greatly when not on webbing, but can lunge
-  * to throw off attackers and possibly to stun them, allowing the tarantula to net an easy kill.
-  */
+ * # Tarantula
+ *
+ * The tank of spider subtypes.  Is incredibly slow when not on webbing, but has a lunge and the highest health and damage of any spider type.
+ *
+ * A subtype of the giant spider which specializes in pure strength and staying power.  Is slowed down greatly when not on webbing, but can lunge
+ * to throw off attackers and possibly to stun them, allowing the tarantula to net an easy kill.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
@@ -228,13 +228,13 @@
 		silk_walking = FALSE
 
 /**
-  * # Spider Viper
-  *
-  * The assassin of spider subtypes.  Essentially a juiced up version of the hunter.
-  *
-  * A subtype of the giant spider which specializes in speed and poison.  Injects a deadlier toxin than other spiders, moves extremely fast,
-  * but like the hunter has a limited amount of health.
-  */
+ * # Spider Viper
+ *
+ * The assassin of spider subtypes.  Essentially a juiced up version of the hunter.
+ *
+ * A subtype of the giant spider which specializes in speed and poison.  Injects a deadlier toxin than other spiders, moves extremely fast,
+ * but like the hunter has a limited amount of health.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/viper
 	name = "viper spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
@@ -252,15 +252,15 @@
 	gold_core_spawnable = NO_SPAWN
 
 /**
-  * # Spider Broodmother
-  *
-  * The reproductive line of spider subtypes.  Is the only subtype to lay eggs, which is the only way for spiders to reproduce.
-  *
-  * A subtype of the giant spider which is the crux of a spider horde.  Can lay normal eggs at any time which become normal spider types,
-  * but by consuming human bodies can lay special eggs which can become one of the more specialized subtypes, including possibly another broodmother.
-  * However, this spider subtype has no offensive capability and can be quickly dispatched without assistance from other spiders.  They are also capable
-  * of sending messages to all living spiders, being a communication line for the rest of the horde.
-  */
+ * # Spider Broodmother
+ *
+ * The reproductive line of spider subtypes.  Is the only subtype to lay eggs, which is the only way for spiders to reproduce.
+ *
+ * A subtype of the giant spider which is the crux of a spider horde.  Can lay normal eggs at any time which become normal spider types,
+ * but by consuming human bodies can lay special eggs which can become one of the more specialized subtypes, including possibly another broodmother.
+ * However, this spider subtype has no offensive capability and can be quickly dispatched without assistance from other spiders.  They are also capable
+ * of sending messages to all living spiders, being a communication line for the rest of the horde.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/midwife
 	name = "broodmother spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
@@ -305,11 +305,11 @@
 	letmetalkpls.Grant(src)
 
 /**
-  * Attempts to cocoon the spider's current cocoon_target.
-  *
-  * Attempts to coccon the spider's cocoon_target after a do_after.
-  * If the target is a human who hasn't been drained before, ups the spider's fed counter so it can lay enriched eggs.
-  */
+ * Attempts to cocoon the spider's current cocoon_target.
+ *
+ * Attempts to coccon the spider's cocoon_target after a do_after.
+ * If the target is a human who hasn't been drained before, ups the spider's fed counter so it can lay enriched eggs.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/midwife/proc/cocoon()
 	if(stat == DEAD || !cocoon_target || cocoon_target.anchored)
 		return
@@ -587,13 +587,13 @@
 	return TRUE
 
 /**
-  * Sends a message to all spiders from the target.
-  *
-  * Allows the user to send a message to all spiders that exist.  Ghosts will also see the message.
-  * Arguments:
-  * * user - The spider sending the message
-  * * message - The message to be sent
-  */
+ * Sends a message to all spiders from the target.
+ *
+ * Allows the user to send a message to all spiders that exist.  Ghosts will also see the message.
+ * Arguments:
+ * * user - The spider sending the message
+ * * message - The message to be sent
+ */
 /datum/action/innate/spider/comm/proc/spider_command(mob/living/user, message)
 	if(!message)
 		return
@@ -607,13 +607,13 @@
 	usr.log_talk(message, LOG_SAY, tag="spider command")
 
 /**
-  * # Giant Ice Spider
-  *
-  * A giant spider immune to temperature damage.  Injects frost oil.
-  *
-  * A subtype of the giant spider which is immune to temperature damage, unlike its normal counterpart.
-  * Currently unused in the game unless spawned by admins.
-  */
+ * # Giant Ice Spider
+ *
+ * A giant spider immune to temperature damage.  Injects frost oil.
+ *
+ * A subtype of the giant spider which is immune to temperature damage, unlike its normal counterpart.
+ * Currently unused in the game unless spawned by admins.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -624,12 +624,12 @@
 	gold_core_spawnable = NO_SPAWN
 
 /**
-  * # Ice Nurse Spider
-  *
-  * A nurse spider immune to temperature damage.  Injects frost oil.
-  *
-  * Same thing as the giant ice spider but mirrors the nurse subtype.  Also unused.
-  */
+ * # Ice Nurse Spider
+ *
+ * A nurse spider immune to temperature damage.  Injects frost oil.
+ *
+ * Same thing as the giant ice spider but mirrors the nurse subtype.  Also unused.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -639,12 +639,12 @@
 	color = rgb(114,228,250)
 
 /**
-  * # Ice Hunter Spider
-  *
-  * A hunter spider immune to temperature damage.  Injects frost oil.
-  *
-  * Same thing as the giant ice spider but mirrors the hunter subtype.  Also unused.
-  */
+ * # Ice Hunter Spider
+ *
+ * A hunter spider immune to temperature damage.  Injects frost oil.
+ *
+ * Same thing as the giant ice spider but mirrors the hunter subtype.  Also unused.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -655,13 +655,13 @@
 	gold_core_spawnable = NO_SPAWN
 
 /**
-  * # Flesh Spider
-  *
-  * A giant spider subtype specifically created by changelings.  Built to be self-sufficient, unlike other spider types.
-  *
-  * A subtype of giant spider which only occurs from changelings.  Has the base stats of a hunter, but they can heal themselves.
-  * They also produce web in 70% of the time of the base spider.  They also occasionally leave puddles of blood when they walk around.  Flavorful!
-  */
+ * # Flesh Spider
+ *
+ * A giant spider subtype specifically created by changelings.  Built to be self-sufficient, unlike other spider types.
+ *
+ * A subtype of giant spider which only occurs from changelings.  Has the base stats of a hunter, but they can heal themselves.
+ * They also produce web in 70% of the time of the base spider.  They also occasionally leave puddles of blood when they walk around.  Flavorful!
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/flesh
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
 	icon_state = "flesh_spider"
@@ -692,12 +692,12 @@
 	return ..()
 
 /**
-  * # Viper Spider (Wizard)
-  *
-  * A viper spider buffed slightly so I don't need to hear anyone complain about me nerfing an already useless wizard ability.
-  *
-  * A viper spider with buffed attributes.  All I changed was its health value and gave it the ability to ventcrawl.  The crux of the wizard meta.
-  */
+ * # Viper Spider (Wizard)
+ *
+ * A viper spider buffed slightly so I don't need to hear anyone complain about me nerfing an already useless wizard ability.
+ *
+ * A viper spider with buffed attributes.  All I changed was its health value and gave it the ability to ventcrawl.  The crux of the wizard meta.
+ */
 /mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80

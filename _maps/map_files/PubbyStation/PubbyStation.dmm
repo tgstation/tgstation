@@ -11079,7 +11079,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aCd" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aCe" = (
@@ -27612,7 +27612,9 @@
 "bwB" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bwC" = (
@@ -29620,8 +29622,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
 /area/medical/storage)
@@ -29651,8 +29653,8 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bCg" = (
@@ -33115,14 +33117,14 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
 "bLT" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
 "bLU" = (
@@ -45268,7 +45270,6 @@
 /area/maintenance/department/crew_quarters/dorms)
 "cPT" = (
 /obj/machinery/power/apc/auto_name/east{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -46258,7 +46259,9 @@
 "ezx" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/storage)
 "ezF" = (
@@ -48092,7 +48095,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gLF" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

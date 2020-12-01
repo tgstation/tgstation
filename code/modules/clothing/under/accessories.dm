@@ -129,7 +129,7 @@
 				delay = 0
 			else
 				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
-									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
+					"<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			var/input
 			if(!commended && user != M)
 				input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
@@ -139,7 +139,7 @@
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
 						user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
-											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+							"<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
