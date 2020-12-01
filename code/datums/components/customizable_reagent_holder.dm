@@ -32,8 +32,8 @@
 		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/atom/P = parent
-	if (!P.reagents)
+	var/atom/atom_parent = parent
+	if (!atom_parent.reagents)
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacement = replacement
@@ -42,10 +42,10 @@
 	src.ingredient_type = ingredient_type
 
 	if (initial_ingredients)
-		for (var/ingr in initial_ingredients)
-			var/obj/item/I = ingr
-			add_ingredient(I)
-			handle_fill(I)
+		for (var/_ingredient in initial_ingredients)
+			var/obj/item/I = ingredient
+			add_ingredient(ingredient)
+			handle_fill(ingredient)
 
 
 /datum/component/customizable_reagent_holder/Destroy(force, silent)
@@ -63,18 +63,17 @@
 /datum/component/customizable_reagent_holder/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(
-			COMSIG_PARENT_ATTACKBY,
-			COMSIG_PARENT_EXAMINE,
-			COMSIG_ATOM_PROCESSED
-		)
-	)
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_PROCESSED,
+	))
 
 
 /datum/component/customizable_reagent_holder/PostTransfer()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/atom/P = parent
-	if (!P.reagents)
+	var/atom/atom_parent = parent
+	if (!atom_parent.reagents)
 		return COMPONENT_INCOMPATIBLE
 
 ///Handles when the customizable food is examined.
@@ -154,7 +153,7 @@
 			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
 		if(CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
-			filling.pixel_y = 2 *  LAZYLEN(ingredients) - 1
+			filling.pixel_y = 2 * LAZYLEN(ingredients) - 1
 			if (top_overlay) // delete old top if exists
 				P.cut_overlay(top_overlay)
 			top_overlay = mutable_appearance(P.icon, "[P.icon_state]_top")
