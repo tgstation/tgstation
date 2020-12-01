@@ -17,6 +17,14 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/board/suit_storage_unit
+	name = "Machine Design (Suit Storage Unit Board)"
+	desc = "The circuit board for a Suit Storage Unit."
+	id = "smes"
+	build_path = /obj/item/circuitboard/machine/suit_storage_unit
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	desc = "The circuit board for an automated announcement system."
