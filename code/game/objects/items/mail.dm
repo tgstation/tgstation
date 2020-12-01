@@ -36,6 +36,9 @@
 	var/stamp_offset_x = 0
 	var/stamp_offset_y = 2
 
+	///mail will have the color of the department the recipient is in.
+	var/static/list/department_colors
+
 /obj/item/mail/envelope
 	name = "envelope"
 	icon_state = "mail_large"
@@ -45,6 +48,16 @@
 
 /obj/item/mail/Initialize()
 	. = ..()
+
+	department_colors = list(
+	ACCOUNT_CIV = COLOR_WHITE,
+	ACCOUNT_ENG = COLOR_PALE_ORANGE,
+	ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
+	ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
+	ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
+	ACCOUNT_CAR = COLOR_BEIGE,
+	ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+	)
 
 	// Icons
 	// Add some random stamps.
@@ -121,8 +134,8 @@
 
 	var/datum/job/this_job = SSjob.name_occupations[recipient.job]
 	if(this_job)
-		if(this_job.paycheck_department && GLOB.department_colors[this_job.paycheck_department])
-			color = GLOB.department_colors[this_job.paycheck_department]
+		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
+			color = department_colors[this_job.paycheck_department]
 		var/list/job_goodies = this_job.get_mail_goodies()
 		if(LAZYLEN(job_goodies))
 			// certain roles and jobs (prisoner) do not receive generic gifts.
@@ -169,16 +182,13 @@
 
 /obj/structure/closet/crate/mail/full/Initialize()
 	. = ..()
-	// Generate some mail.
-	var/mail_recipients = list()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-		if(!H.client || H.stat == DEAD)
-			continue
-		mail_recipients += list(H)
-
-	for(var/i = 0, i < 21, i++)
+	var/list/mail_recipients = list()
+	for(var/mob/living/carbon/human/alive in GLOB.player_list)
+		if(alive.stat != DEAD)
+			mail_recipients += alive
+	for(var/i in 1 to 22)
 		var/obj/item/mail/NM
-		if(rand(0, 10) < 7)
+		if(prob(70))
 			NM = new /obj/item/mail(src)
 		else
 			NM = new /obj/item/mail/envelope(src)

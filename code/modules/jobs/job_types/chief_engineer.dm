@@ -35,12 +35,7 @@
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/gold{amount = 15} = 15,
-		/obj/item/wrench/abductor = 5,
-		/obj/item/wirecutters/abductor = 5,
-		/obj/item/screwdriver/abductor = 5,
-		/obj/item/crowbar/abductor = 5,
-		/obj/item/weldingtool/abductor = 5,
-		/obj/item/multitool/abductor = 5,
+		/obj/item/food/cracker = 15 //you know. for poly
 		/obj/item/wrench/caravan = 3,
 		/obj/item/wirecutters/caravan = 3,
 		/obj/item/screwdriver/caravan = 3,

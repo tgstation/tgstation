@@ -121,14 +121,9 @@ SUBSYSTEM_DEF(economy)
  **/
 /datum/controller/subsystem/economy/proc/generate_mail()
 	var/mail_recipients = list()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-		if(!H.client || H.stat == DEAD)
-			continue
-		var/datum/job/this_job = SSjob.name_occupations[H.job]
-		// I would like for antags and other things to get meme mail,
-		// but for now, we just ignore them.
-		if(this_job)
-			mail_recipients += list(H)
-	if(LAZYLEN(mail_recipients) == 0)
+	for(var/mob/living/carbon/human/alive in GLOB.player_list)
+		if(alive.stat != DEAD && SSjob.name_occupations[H.job])
+			mail_recipients += alive
+	if(mail_recipients.len)
 		return FALSE
 	mail_waiting += 1
