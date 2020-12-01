@@ -12,7 +12,6 @@ RPD
 #define DESTROY_MODE (1<<2)
 #define PAINT_MODE (1<<3)
 
-
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple, TRUE),
@@ -215,6 +214,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/has_bluespace_pipe // Skyrat
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
@@ -310,7 +310,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/list/recipes
 	switch(category)
 		if(ATMOS_CATEGORY)
-			recipes = GLOB.atmos_pipe_recipes
+			if(has_bluespace_pipe) // stupid skyrat edit
+				recipes = GLOB.bsatmos_pipe_recipes
+			else
+				recipes = GLOB.atmos_pipe_recipes
 		if(DISPOSALS_CATEGORY)
 			recipes = GLOB.disposal_pipe_recipes
 		if(TRANSIT_CATEGORY)
@@ -356,7 +359,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
-				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
+				if(has_bluespace_pipe) // skyrat hack
+					recipes = GLOB.disposal_pipe_recipes + GLOB.bsatmos_pipe_recipes + GLOB.transit_tube_recipes
+				else
+					recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
 		if("setdir")
@@ -374,7 +380,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user) // Skyrat: All functionality moved to proc/dispense
+	dispense(A, user)
+
+/obj/item/pipe_dispenser/proc/dispense(atom/A, mob/user)
 	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
 
@@ -431,7 +440,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
-					return ..()
+					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
 					to_chat(user, "<span class='notice'>You start building a meter...</span>")
@@ -469,7 +478,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
-					return ..()
+					return
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
@@ -494,7 +503,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
-					return ..()
+					return
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
@@ -522,7 +531,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							tube.wrench_act(user, src)
 					return
 			else
-				return ..()
+				return
+// End skyrat edit
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)

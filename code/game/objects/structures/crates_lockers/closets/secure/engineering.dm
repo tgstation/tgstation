@@ -5,6 +5,7 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
+	new /obj/item/pipe_dispenser/bluespace(src) // SKYRAT: CE gets BPRPD instead of RPD, since they start with all other power tools too
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
 	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
@@ -21,7 +22,6 @@
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)
-	new /obj/item/pipe_dispenser(src)
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/ce(src)
