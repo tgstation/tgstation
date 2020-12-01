@@ -38,10 +38,25 @@
 		if("April", "June", "September", "November")
 			days_in_that_month = 30
 
-	return "[capitalize(thtotext(rand(1, days_in_that_month)))] of [month]"
+	var/day_chosen = rand(1, days_in_that_month)
+	var/append
+	switch(day_chosen)
+		if(1)
+			append = "st"
+		if(2)
+			append = "nd"
+		if(3)
+			append = "rd"
+
+	return "[day_chosen][append] of [month]"
 
 /datum/species/monthmen/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
+	H.gib_butchering = TRUE
+	//get rid of anything that may delete with the head
+	H.dropItemToGround(H.head, TRUE)
+	H.dropItemToGround(H.wear_mask, TRUE)
+	H.dropItemToGround(H.ears, TRUE)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
@@ -51,8 +66,10 @@
 		H.become_blind("blocked vision")
 
 /datum/species/monthmen/on_species_loss(mob/living/carbon/human/H)
+	H.gib_butchering = FALSE
 	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
 	H.cure_blind("blocked vision")
+	H.remove_client_colour(/datum/client_colour/monochrome/blind)
 	..()
 
 /datum/species/monthmen/spec_life(mob/living/carbon/human/H)
@@ -61,6 +78,12 @@
 	..()
 
 /datum/species/monthmen/body_coverage_changed(obj/item/I, mob/living/carbon/human/H)
+	if(istype(I, /obj/item/clothing/head))
+		var/obj/item/clothing/head/hat = I
+		if(hat.flags_cover) //needs to block nothing to be allowed, doesn't take into account hair so stuff like beanies is okay
+			to_chat(H, "<span class='warning'>The [I] is too shapely to wear on your flat head! It simply tumbles to the ground.</span>")
+			H.dropItemToGround(H.head, TRUE)
+			return
 	if(!get_location_accessible(H, BODY_ZONE_CHEST))
 		if(!chest_covered)//already covered, don't send this
 			to_chat(H, "<span class='warning'>The [I] is blocking you from seeing anything!</span>")
@@ -71,6 +94,7 @@
 			to_chat(H, "<span class='notice'>You can see again!</span>")
 			chest_covered = FALSE
 		H.cure_blind("blocked vision")
+		H.remove_client_colour(/datum/client_colour/monochrome/blind) //i fucking hate blindcode so i'm adding this to make ABSOLUTELY sure it's gone.
 
 //all the organs, now in the chest.
 /obj/item/organ/brain/monthmen

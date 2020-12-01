@@ -76,3 +76,4 @@
 	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
 	var/heat_exposure_stacks = 0
 
+	var/gib_butchering = FALSE //if their gibbing should drop their meat and skin instead of gibs.
