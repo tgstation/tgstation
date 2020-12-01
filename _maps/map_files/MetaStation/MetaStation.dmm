@@ -10723,8 +10723,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/machinery/power/apc/auto_name/north,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "ayB" = (
@@ -18382,13 +18382,13 @@
 	freq = 1400;
 	location = "QM #3"
 	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #3";
-	suffix = "#3"
-	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/mob/living/simple_animal/bot/mulebot{
+	home_destination = "QM #3";
+	suffix = "#3"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -21946,6 +21946,22 @@
 	},
 /turf/open/floor/wood,
 /area/library)
+"aZP" = (
+/obj/structure/table/wood,
+/obj/structure/sign/picture_frame/showroom/three{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/four{
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/item/paicard{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit"
+	},
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
 "aZQ" = (
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom{
@@ -28816,14 +28832,14 @@
 	freq = 1400;
 	location = "QM #1"
 	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /mob/living/simple_animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -37157,11 +37173,6 @@
 /area/bridge/showroom/corporate)
 "bNe" = (
 /obj/structure/table/wood,
-/obj/item/phone{
-	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/cigbutt/cigarbutt{
 	pixel_x = 5;
 	pixel_y = -1
@@ -37171,6 +37182,10 @@
 	},
 /obj/item/radio/intercom{
 	pixel_y = 21
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
@@ -39761,7 +39776,20 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTZ" = (
-/obj/structure/bookcase,
+/obj/structure/table/wood,
+/obj/structure/sign/picture_frame/showroom/one{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/two{
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/item/phone{
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bUa" = (
@@ -62598,10 +62626,6 @@
 /obj/item/poster/random_official,
 /obj/item/poster/random_official,
 /obj/item/poster/random_official,
-/obj/item/paicard{
-	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "\improper Nanotrasen-brand personal AI device exhibit"
-	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -65163,10 +65187,10 @@
 	dir = 8;
 	pixel_x = 14
 	},
+/obj/machinery/power/apc/auto_name/north,
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
-/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "eII" = (
@@ -107911,7 +107935,7 @@ bGH
 bGH
 bJP
 bLw
-bTZ
+aZP
 dDg
 bQg
 bRD
