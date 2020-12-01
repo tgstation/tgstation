@@ -13,9 +13,15 @@ have ways of interacting with a specific mob and control it.
 	BB_MONKEY_PICKPOCKETING = FALSE,
 	BB_MONKEY_DISPOSING = FALSE,
 	BB_MONKEY_TARGET_DISPOSAL = null,
-	BB_MONKEY_FRUSTRATION = 0,
 	BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 	BB_MONKEY_CURRENT_ATTACK_TARGET)
+
+/datum/ai_controller/monkey/angry
+
+/datum/ai_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	blackboard[BB_MONKEY_AGRESSIVE] = TRUE //Angry cunt
+
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))

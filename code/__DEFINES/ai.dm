@@ -9,7 +9,7 @@
 #define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source, TRAIT_INCAPACITATED) || HAS_TRAIT(source, TRAIT_HANDS_BLOCKED) || IS_IN_STASIS(source))
 
 ///Max pathing attempts before auto-fail
-#define MAX_PATHING_ATTEMPTS 10
+#define MAX_PATHING_ATTEMPTS 30
 
 ///Flags for ai_behavior new()
 #define AI_BEHAVIOR_INCOMPATIBLE (1<<0)
@@ -30,7 +30,6 @@
 #define BB_MONKEY_PICKUPTARGET "BB_monkey_pickuptarget"
 #define BB_MONKEY_PICKPOCKETING "BB_monkey_pickpocketing"
 #define BB_MONKEY_CURRENT_ATTACK_TARGET "BB_monkey_current_attack_target"
-#define BB_MONKEY_FRUSTRATION "BB_monkey_frustration"
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"

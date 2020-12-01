@@ -18,7 +18,7 @@
 	else if(prob(10))
 		name = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
 		if(name == "Furious George")
-			ai_controller.blackboard[BB_MONKEY_AGRESSIVE] = TRUE //hes always mad
+			ai_controller = /datum/ai_controller/monkey/angry //hes always mad
 			faction -= "neutral"
 	. = ..()
 

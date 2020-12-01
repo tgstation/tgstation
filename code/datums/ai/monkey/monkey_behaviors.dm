@@ -152,21 +152,8 @@
 
 		return
 
-	else								// not next to perp
-		var/turf/olddist = get_dist(living_pawn, target)
-		if((get_dist(living_pawn, target)) >= (olddist))
-			controller.blackboard[BB_MONKEY_FRUSTRATION]++
-		else
-			controller.blackboard[BB_MONKEY_FRUSTRATION] = 0
-
-		if(controller.blackboard[BB_MONKEY_FRUSTRATION] >= MONKEY_HUNT_FRUSTRATION_LIMIT)
-			finish_action(controller, FALSE)
-			return
-
-
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	controller.blackboard[BB_MONKEY_FRUSTRATION] = 0
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
@@ -213,7 +200,6 @@
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null //Reset attack target
 	controller.blackboard[BB_MONKEY_DISPOSING] = FALSE //No longer disposing
 	controller.blackboard[BB_MONKEY_TARGET_DISPOSAL] = null //No target disposal
-	controller.blackboard[BB_MONKEY_FRUSTRATION] = 0 //No longer frustrated
 
 /datum/ai_behavior/disposal_mob/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
@@ -230,12 +216,6 @@
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			living_pawn.a_intent = INTENT_GRAB
 			target.grabbedby(living_pawn)
-		else //This means we might be getting pissed!
-			var/turf/olddist = get_dist(living_pawn, target)
-			if((get_dist(living_pawn, target)) >= (olddist))
-				controller.blackboard[BB_MONKEY_FRUSTRATION]++
-			else
-				controller.blackboard[BB_MONKEY_FRUSTRATION] = 0 //No longer pissed
 		return //Do the rest next turn
 
 	var/obj/machinery/disposal/disposal = controller.blackboard[BB_MONKEY_TARGET_DISPOSAL]
@@ -244,14 +224,7 @@
 	if(living_pawn.Adjacent(disposal))
 		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller) //put him in!
 	else //This means we might be getting pissed!
-		var/turf/olddist = get_dist(living_pawn, target)
-		if((get_dist(living_pawn, target)) >= (olddist))
-			controller.blackboard[BB_MONKEY_FRUSTRATION]++
-		else
-			controller.blackboard[BB_MONKEY_FRUSTRATION] = 0 //No longer pissed
-
-	if(controller.blackboard[BB_MONKEY_FRUSTRATION] >= MONKEY_DISPOSE_FRUSTRATION_LIMIT)
-		finish_action(controller, FALSE)
+		return
 
 /datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
@@ -287,3 +260,4 @@
 				monkey_ai.current_movement_target = your_enemy
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
+	finish_action(controller, TRUE)
