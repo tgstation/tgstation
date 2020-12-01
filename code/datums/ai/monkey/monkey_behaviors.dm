@@ -190,8 +190,6 @@
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == target)
 			finish_action(controller, TRUE)
 
-
-
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 

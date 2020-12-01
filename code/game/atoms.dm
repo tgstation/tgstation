@@ -288,6 +288,7 @@
 
 	targeted_by = null
 	QDEL_NULL(light)
+	QDEL_NULL(ai_controller)
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)

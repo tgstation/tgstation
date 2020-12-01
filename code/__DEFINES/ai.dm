@@ -20,7 +20,6 @@
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
 
-
 ///Monkey AI controller blackboard keys
 
 #define BB_MONKEY_AGRESSIVE "BB_monkey_agressive"

@@ -42,6 +42,8 @@ have ways of interacting with a specific mob and control it.
 		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 
 	pawn = new_pawn
+	pawn.ai_controller = src
+
 	set_ai_status(AI_STATUS_ON)
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
@@ -53,6 +55,7 @@ have ways of interacting with a specific mob and control it.
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/TryUnpossessPawn()
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
+	pawn.ai_controller = null
 	pawn = null
 	return
 
@@ -122,8 +125,6 @@ have ways of interacting with a specific mob and control it.
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
 		current_behavior.finish_action(src, FALSE)
-
-
 
 /datum/ai_controller/proc/on_sentience_gained()
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
