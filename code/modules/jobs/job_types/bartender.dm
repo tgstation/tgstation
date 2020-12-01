@@ -16,6 +16,14 @@
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	bounty_types = CIV_JOB_DRINK
 
+	mail_goodies = list(
+		/obj/item/storage/box/rubbershot = 30,
+		/datum/reagent/consumable/clownstears = 10,
+		/obj/item/stack/sheet/mineral/plasma{amount = 5} = 10,
+		/obj/item/stack/sheet/mineral/uranium{amount = 5} = 10,
+		/obj/item/storage/box/lethalshot = 5
+	)
+
 /datum/outfit/job/bartender
 	name = "Bartender"
 	jobtype = /datum/job/bartender

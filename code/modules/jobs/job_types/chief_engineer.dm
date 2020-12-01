@@ -30,6 +30,23 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
+	mail_goodies = list(
+		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,
+		/obj/item/stack/sheet/mineral/gold{amount = 15} = 15,
+		/obj/item/wrench/abductor = 5,
+		/obj/item/wirecutters/abductor = 5,
+		/obj/item/screwdriver/abductor = 5,
+		/obj/item/crowbar/abductor = 5,
+		/obj/item/weldingtool/abductor = 5,
+		/obj/item/multitool/abductor = 5,
+		/obj/item/wrench/caravan = 3,
+		/obj/item/wirecutters/caravan = 3,
+		/obj/item/screwdriver/caravan = 3,
+		/obj/item/crowbar/red/caravan = 3
+	)
+
 /datum/outfit/job/ce
 	name = "Chief Engineer"
 	jobtype = /datum/job/chief_engineer

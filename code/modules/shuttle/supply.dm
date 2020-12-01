@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/launchpad,
 		/obj/machinery/disposal,
 		/obj/structure/disposalpipe,
+		/obj/item/mail,
 		/obj/item/hilbertshotel,
 		/obj/machinery/camera,
 		/obj/item/gps,
@@ -82,6 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
+		mail()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
@@ -184,6 +186,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SO.generateCombo(miscboxes[I], I, misc_contents[I])
 		qdel(SO)
 
+	SSeconomy.import_total += value
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
@@ -223,8 +226,44 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		D.adjust_money(ex.total_value[E])
 
+	SSeconomy.export_total += (D.account_balance - presale_points)
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+
+/// Generates a box of mail depending on our exports and imports.
+/obj/docking_port/mobile/supply/proc/mail()
+	if(SSeconomy.mail_waiting <= 0)
+		return FALSE
+
+	var/mail_recipients = list()
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
+		if(!H.client || H.stat == DEAD)
+			continue
+		mail_recipients += list(H)
+
+	if(LAZYLEN(mail_recipients) <= 0)
+		return FALSE
+
+	var/list/mail = list()
+	var/obj/structure/closet/crate/mail/mailcrate = new /obj/structure/closet/crate/mail
+	for(var/MI = 0, MI < SSeconomy.mail_waiting, MI++)
+		var/obj/item/mail/NM = new /obj/item/mail(mailcrate)
+		NM.initialize_for_recipient(pick(mail_recipients))
+		mail += list(NM)
+
+	mailcrate.update_icon()
+	SSeconomy.mail_waiting = 0
+
+	var/list/empty_turfs = list()
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/T in shuttle_area)
+			if(T.is_blocked_turf())
+				continue
+			empty_turfs += T
+
+	mailcrate.forceMove(pick_n_take(empty_turfs))
+	return mailcrate
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

@@ -21,6 +21,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
+	mail_goodies = list(
+		/obj/item/assembly/flash/handheld = 30,
+		/obj/item/storage/box/flashes = 5
+	)
+
 /datum/outfit/job/roboticist
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist

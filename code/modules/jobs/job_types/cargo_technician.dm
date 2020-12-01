@@ -16,6 +16,14 @@
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
 
+	mail_goodies = list(
+		/obj/item/pizzabox/infinite = 10,
+		/obj/item/stack/sheet/mineral/gold{amount = 15} = 5,
+		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 4,
+		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 3,
+		/obj/item/gun/ballistic/rifle/boltaction = 1
+	)
+
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech

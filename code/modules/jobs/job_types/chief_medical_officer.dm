@@ -28,6 +28,17 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	bounty_types = CIV_JOB_MED
 
+	mail_goodies = list(
+		/obj/item/scalpel/alien = 5,
+		/obj/item/hemostat/alien = 5,
+		/obj/item/retractor/alien = 5,
+		/obj/item/circular_saw/alien = 5,
+		/obj/item/surgicaldrill/alien = 5,
+		/obj/item/cautery/alien = 5,
+		/obj/effect/spawner/lootdrop/organ_spawner = 3,
+		/obj/effect/spawner/lootdrop/memeorgans = 3
+	)
+
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
 	jobtype = /datum/job/cmo

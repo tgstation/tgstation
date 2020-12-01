@@ -16,6 +16,14 @@
 
 	display_order = JOB_DISPLAY_ORDER_MIME
 
+	mail_goodies = list(
+		/obj/item/food/baguette = 15,
+		/obj/item/food/cheesewheel = 10,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
+		/obj/item/paper = 5,
+		/obj/item/book/mimery = 1,
+	)
+
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.apply_pref_name("mime", M.client)
 

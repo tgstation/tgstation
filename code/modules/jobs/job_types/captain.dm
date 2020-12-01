@@ -24,6 +24,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
+	mail_goodies = list(
+		/obj/item/clothing/mask/cigarette/cigar/havana = 40,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 10
+	)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
@@ -61,3 +66,5 @@
 	mask = /obj/item/clothing/mask/gas/atmos/captain
 	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
+
+//originally here would be where we would give the captain strange reagent to revive renault, but holy fuck renault is insanely forgettable and not worth reviving

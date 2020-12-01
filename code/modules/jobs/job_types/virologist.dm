@@ -19,6 +19,15 @@
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 	bounty_types = CIV_JOB_VIRO
 
+	mail_goodies = list(
+		/obj/item/reagent_containers/glass/bottle/random_virus = 15,
+		/obj/item/reagent_containers/glass/bottle/formaldehyde = 10,
+		/obj/item/reagent_containers/glass/bottle/synaptizine = 10,
+		/obj/item/stack/sheet/mineral/plasma{amount = 5} = 10,
+		/obj/item/stack/sheet/mineral/uranium{amount = 2} = 5
+	)
+
+
 /datum/outfit/job/virologist
 	name = "Virologist"
 	jobtype = /datum/job/virologist

@@ -17,6 +17,15 @@
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
 	bounty_types = CIV_JOB_MED
 
+	mail_goodies = list(
+		/obj/item/healthanalyzer/advanced = 30,
+		/obj/item/scalpel/advanced = 15,
+		/obj/item/retractor/advanced = 15,
+		/obj/item/cautery/advanced = 15,
+		/datum/reagent/toxin/formaldehyde = 10,
+		/obj/item/storage/belt/medical/cmo/full = 1
+	)
+
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
 	jobtype = /datum/job/doctor

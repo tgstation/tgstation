@@ -52,6 +52,9 @@
 		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
 			var/obj/item/small_delivery/T = AM
 			src.destinationTag = T.sortTag
+		else if(istype(AM, /obj/item/mail))
+			var/obj/item/mail/T = AM
+			src.destinationTag = T.sortTag
 		else if(istype(AM, /mob/living/silicon/robot))
 			var/obj/item/dest_tagger/borg/tagger = locate() in AM
 			if (tagger)

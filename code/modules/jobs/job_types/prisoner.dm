@@ -11,6 +11,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
+	exclusive_mail_goodies = TRUE
+	mail_goodies = list (
+		/obj/effect/spawner/lootdrop/prison_contraband = 1
+	)
+
 /datum/outfit/job/prisoner
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner

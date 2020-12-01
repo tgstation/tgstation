@@ -19,6 +19,10 @@
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
 	bounty_types = CIV_JOB_SCI
 
+	mail_goodies = list(
+		/obj/item/storage/box/monkeycubes = 10
+	)
+
 /datum/outfit/job/geneticist
 	name = "Geneticist"
 	jobtype = /datum/job/geneticist

@@ -16,6 +16,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_JANITOR
 
+	mail_goodies = list(
+		/obj/item/grenade/chem_grenade/cleaner = 30,
+		/obj/item/storage/box/lights/mixed = 20,
+		/obj/item/lightreplacer = 10
+	)
+
 /datum/outfit/job/janitor
 	name = "Janitor"
 	jobtype = /datum/job/janitor

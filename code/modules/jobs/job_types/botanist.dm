@@ -16,6 +16,15 @@
 	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
 
+	mail_goodies = list(
+		/datum/reagent/toxin/mutagen = 20,
+		/datum/reagent/saltpetre = 20,
+		/datum/reagent/diethylamine = 20,
+		/obj/item/gun/energy/floragun = 15,
+		// These are 5 rare seeds, so use sparingly.
+		/obj/effect/spawner/lootdrop/space/rareseed = 15
+	)
+
 /datum/outfit/job/botanist
 	name = "Botanist"
 	jobtype = /datum/job/hydro
