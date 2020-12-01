@@ -68826,6 +68826,7 @@
 	name = "Emergency Access";
 	req_one_access_txt = "24;10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cFL" = (
@@ -107804,6 +107805,9 @@
 	req_one_access_txt = "10;24"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "iZy" = (
@@ -113630,6 +113634,9 @@
 	name = "Emergency Access";
 	req_one_access_txt = "24;10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "vVy" = (
@@ -113796,6 +113803,9 @@
 	name = "Supermatter Engine Room";
 	req_one_access_txt = "10;24"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "wqd" = (
@@ -113816,6 +113826,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"wsJ" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "wtm" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
@@ -114267,6 +114288,17 @@
 /obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"xBR" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "xDZ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
@@ -138348,7 +138380,7 @@ bTU
 bSc
 bHV
 car
-wnf
+xBR
 cph
 ppO
 cdC
@@ -139386,7 +139418,7 @@ clZ
 car
 cph
 cdC
-iXO
+wsJ
 cdC
 cph
 car
