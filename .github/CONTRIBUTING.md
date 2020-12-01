@@ -6,6 +6,7 @@
 4. [Meet the Team](#meet-the-team)
 	1. [Headcoder](#headcoder)
 	2. [Maintainers](#maintainers)
+	3. [Issue Managers](#issue-managers)
 5. [Specifications](#specifications)
 6. [Pull Request Process](#pull-request-process)
 7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
@@ -49,6 +50,43 @@ The Headcoder is responsible for controlling, adding, and removing maintainers f
 Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
 
 Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+
+<details>
+<summary>Maintainer Guidelines</summary>
+
+These are the few directives we have for project maintainers.
+
+- Do not merge PRs you create.
+- Do not merge PRs until 24 hours have passed since it was opened. Exceptions include:
+  - Emergency fixes.
+    - Try to get secondary maintainer approval before merging if you are able to.
+  - PRs with empty commits intended to generate a changelog.
+- Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+
+These are not steadfast rules as maintainers are expected to use their best judgement when operating.
+
+Our team is entirely voluntary, as such we extend our thanks to maintainers, issue managers, and contributors alike for helping keep the project alive.
+
+</details>
+
+### Issue Managers
+
+Issue Managers help out the project by labelling bug reports and PRs and closing bug reports which are duplicates or are no longer applicable.
+
+<details>
+<summary>What You Can and Can't Do as an Issue Manager</summary>
+
+This should help you understand what you can and can't do with your newfound github permissions.
+
+Things you **CAN** do:
+* Label issues appropriately
+* Close issues when appropriate
+* Label PRs when appropriate
+
+Things you **CAN'T** do:
+* [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+
+</details>
 
 ## Specifications
 
