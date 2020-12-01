@@ -11432,7 +11432,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "aFf" = (
 /obj/structure/cable,
@@ -11627,14 +11627,10 @@
 	c_tag = "Dormitory Toilets";
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/item/radio/intercom{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/closed/wall,
 /area/crew_quarters/toilet/restrooms)
 "aFM" = (
 /obj/effect/turf_decal/tile/blue{
@@ -11642,14 +11638,14 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/airalarm/directional/south,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "aFQ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "aFU" = (
 /obj/structure/disposalpipe/sorting/mail{
@@ -11937,7 +11933,7 @@
 /area/crew_quarters/dorms)
 "aGI" = (
 /obj/machinery/door/airlock{
-	name = "Unit 2"
+	name = "Unit 1"
 	},
 /turf/open/floor/plastic,
 /area/crew_quarters/toilet/restrooms)
@@ -11966,7 +11962,7 @@
 /area/crew_quarters/theatre)
 "aGL" = (
 /obj/machinery/door/airlock{
-	name = "Unit 4"
+	name = "Unit 3"
 	},
 /turf/open/floor/plastic,
 /area/crew_quarters/toilet/restrooms)
@@ -13720,17 +13716,15 @@
 /turf/open/floor/wood,
 /area/crew_quarters/lounge)
 "aMF" = (
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Warehouse Expansion";
-	req_access_txt = "31"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/turf/open/floor/plasteel/white,
+/area/crew_quarters/toilet/restrooms)
 "aMH" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
@@ -14113,11 +14107,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNY" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Comissary";
-	req_access_txt = "12"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Comissary Back Room";
+	req_access_txt = "31"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aOf" = (
@@ -43758,7 +43752,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "cBr" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -43807,7 +43801,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "cBB" = (
 /obj/machinery/power/apc/auto_name/north,
@@ -43816,7 +43810,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "cBK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -45134,11 +45128,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/airless/white,
+/turf/closed/wall,
 /area/crew_quarters/toilet/restrooms)
 "eqe" = (
 /obj/structure/rack,
@@ -46960,10 +46950,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "gna" = (
-/obj/machinery/door/airlock{
-	name = "Unit 1"
-	},
-/turf/open/floor/plastic,
+/turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "gnq" = (
 /obj/item/radio/intercom{
@@ -47116,7 +47103,7 @@
 /area/medical/psychology)
 "guS" = (
 /obj/machinery/door/airlock{
-	name = "Unit 3"
+	name = "Unit 2"
 	},
 /turf/open/floor/plastic,
 /area/crew_quarters/toilet/restrooms)
@@ -51306,7 +51293,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "lrI" = (
 /obj/structure/rack,
@@ -51696,7 +51683,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "lOK" = (
 /obj/machinery/light{
@@ -52312,6 +52299,15 @@
 /obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
+"mAV" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Warehouse Expansion";
+	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/quartermaster/warehouse)
 "mBD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -52881,7 +52877,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "nge" = (
 /obj/structure/grille/broken,
@@ -53309,7 +53305,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "nIm" = (
 /obj/machinery/computer/security/telescreen{
@@ -54492,7 +54488,7 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "oMv" = (
 /obj/machinery/button/door{
@@ -55760,8 +55756,11 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "qik" = (
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/toilet/restrooms)
 "qjx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/yellow,
@@ -56059,7 +56058,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "qBv" = (
 /obj/item/clothing/head/ushanka,
@@ -56588,7 +56587,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "rng" = (
 /obj/structure/window/reinforced,
@@ -60437,7 +60436,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "vpv" = (
 /turf/open/floor/plasteel/dark,
@@ -62962,7 +62961,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/crew_quarters/toilet/restrooms)
 "yat" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -102295,7 +102294,7 @@ pCO
 qbf
 jyn
 due
-qik
+bhH
 aNY
 bcI
 wDZ
@@ -104090,7 +104089,7 @@ itC
 aFd
 rmc
 itC
-itC
+qik
 bjK
 bjK
 gma
@@ -104348,11 +104347,11 @@ aFQ
 lOv
 epJ
 gna
-aHt
-itC
+gna
+gna
 hxo
 aKk
-aMv
+mAV
 aMv
 aNQ
 cDa
@@ -104860,7 +104859,7 @@ aBX
 coy
 aFQ
 qAj
-aFQ
+aMF
 aGI
 aHt
 itC
@@ -105121,7 +105120,7 @@ aFM
 itC
 itC
 itC
-aMF
+hxo
 cDa
 cDa
 aMx
