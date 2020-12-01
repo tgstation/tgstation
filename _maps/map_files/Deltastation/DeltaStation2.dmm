@@ -59029,7 +59029,10 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "clR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible/layer2{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -61596,13 +61599,13 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "crJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible/layer2{
-	dir = 6
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible/layer4{
+/obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -62524,12 +62527,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
-"ctn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "cto" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -106175,6 +106172,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"ffn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "ffO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -106676,11 +106679,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "gEg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible/layer4{
-	dir = 5
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -108126,10 +108126,6 @@
 	heat_capacity = 1e+006
 	},
 /area/maintenance/starboard/aft)
-"jKL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "jMX" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -110563,13 +110559,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "piQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -112779,13 +112772,13 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ueJ" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible/layer2{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -135538,8 +135531,8 @@ mUY
 lll
 olO
 awg
+ffn
 axz
-jKL
 gEg
 fzu
 axz
@@ -136053,7 +136046,7 @@ pjq
 fOu
 awg
 crJ
-ctn
+axz
 ueJ
 fzu
 oFc
