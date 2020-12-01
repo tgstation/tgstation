@@ -35,10 +35,6 @@
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ag" = (
-/obj/effect/mob_spawn/human/syndicatespace/captain,
-/turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
@@ -554,10 +550,6 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bE" = (
-/obj/effect/mob_spawn/human/syndicatespace,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
@@ -1096,11 +1088,6 @@
 	network = list("fsc");
 	screen_loc = ""
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"cY" = (
-/obj/effect/mob_spawn/human/syndicatespace,
-/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cZ" = (
@@ -1902,7 +1889,7 @@ bZ
 bZ
 bV
 bZ
-ag
+ao
 bw
 bZ
 av
@@ -1957,10 +1944,10 @@ cC
 bc
 bZ
 bY
-bE
 al
 al
-cY
+al
+aC
 bZ
 aa
 aa
@@ -2098,10 +2085,10 @@ cE
 cV
 bZ
 bY
-bE
 al
 al
-cY
+al
+aC
 bZ
 aa
 aa
