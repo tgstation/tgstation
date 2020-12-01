@@ -231,13 +231,13 @@ RLD
 	var/obj/item/electronics/airlock/airlock_electronics
 
 /obj/item/construction/rcd/suicide_act(mob/living/user)
-	mode = RCD_FLOORWALL
 	var/turf/T = get_turf(user)
 
 	if(!isopenturf(T)) // Oh fuck
 		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
+	mode = RCD_FLOORWALL
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(checkResource(16, user)) // It takes 16 resources to construct a wall
 		var/success = T.rcd_act(user, src, RCD_FLOORWALL)
