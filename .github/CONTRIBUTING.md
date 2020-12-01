@@ -1,5 +1,17 @@
 # CONTRIBUTING
 
+1. [Reporting Issues](#reporting-issues)
+2. [Introduction](#introduction)
+3. [Getting Started](#getting-started)
+4. [Meet the Team](#meet-the-team)
+	1. [Headcoder](#headcoder)
+	2. [Maintainers](#maintainers)
+5. [Specifications](#specifications)
+6. [Pull Request Process](#pull-request-process)
+7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+8. [Banned content](#banned-content)
+9. [A word on Git](#a-word-on-git)
+
 ## Reporting Issues
 If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
 
@@ -20,7 +32,7 @@ First things first, we want to make it clear how you can contribute (if you've n
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
 After setting it up, optionally navigate your git commandline to the project folder and run the command: 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
 There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
@@ -28,11 +40,11 @@ You can of course, as always, ask for help on the discord channels, or the forum
 
 ## Meet the Team
 
-**Headcoder**
+### Headcoder
 
 The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
 
-**Maintainers**
+### Maintainers
 
 Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
 
@@ -438,14 +450,14 @@ Like all languages, Dream Maker has its quirks, some of them are beneficial to u
 
 HOWEVER, if either `some_value` or `i` changes within the body of the for (underneath the `for(...)` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
 
-### for(var/A in list) VS for(var/i in 1 to list.len)
+#### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
 The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
 
-#### Istypeless for loops
+#### For loops without `istype`
 A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
 ```DM
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
@@ -487,7 +499,7 @@ However, DM also has a dot variable, accessed just as `.` on its own, defaulting
 
 With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
 
-## Globals versus static
+### Globals versus static
 
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
