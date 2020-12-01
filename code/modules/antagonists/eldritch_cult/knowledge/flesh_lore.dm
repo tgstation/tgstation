@@ -24,13 +24,13 @@
 /datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user,list/atoms,loc)
 	var/mob/living/carbon/human/humie = locate() in atoms
 	if(QDELETED(humie) || humie.stat != DEAD)
-		return
+		return FALSE
 
 	if(length(ghouls) >= max_amt)
-		return
+		return FALSE
 
 	if(HAS_TRAIT(humie,TRAIT_HUSK))
-		return
+		return FALSE
 
 	humie.grab_ghost()
 
@@ -57,6 +57,7 @@
 	atoms -= humie
 	RegisterSignal(humie,COMSIG_LIVING_DEATH,.proc/remove_ghoul)
 	ghouls += humie
+	return TRUE
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
