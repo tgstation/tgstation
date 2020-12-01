@@ -35,7 +35,7 @@
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/gold{amount = 15} = 15,
-		/obj/item/food/cracker = 15 //you know. for poly
+		/obj/item/food/cracker = 15, //you know. for poly
 		/obj/item/wrench/caravan = 3,
 		/obj/item/wirecutters/caravan = 3,
 		/obj/item/screwdriver/caravan = 3,

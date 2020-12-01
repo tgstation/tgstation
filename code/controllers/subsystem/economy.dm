@@ -120,9 +120,9 @@ SUBSYSTEM_DEF(economy)
  * Called by economy fired, though you could call this manually on the SS to add incoming mail with sanity.
  **/
 /datum/controller/subsystem/economy/proc/generate_mail()
-	var/mail_recipients = list()
+	var/list/mail_recipients = list()
 	for(var/mob/living/carbon/human/alive in GLOB.player_list)
-		if(alive.stat != DEAD && SSjob.name_occupations[H.job])
+		if(alive.stat != DEAD && SSjob.name_occupations[alive.job])
 			mail_recipients += alive
 	if(mail_recipients.len)
 		return FALSE
