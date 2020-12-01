@@ -226,7 +226,7 @@
 
 	controller.current_movement_target = target
 
-	if(target.pulledby != living_pawn && !istype(target.pulledby.ai_controller, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
+	if(target.pulledby != living_pawn && !istype(target.pulledby?.ai_controller, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			living_pawn.a_intent = INTENT_GRAB
 			target.grabbedby(living_pawn)
@@ -261,7 +261,8 @@
 	controller.blackboard[BB_MONKEY_DISPOSING] = TRUE
 
 	if(disposal && target)
-		disposal.stuff_mob_in(target, living_pawn)
+		if(disposal.stuff_mob_in(target, living_pawn))
+			disposal.flush() //So long meatball bowser
 	finish_action(controller, TRUE)
 
 

@@ -7,6 +7,7 @@
 
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller)
+	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	return
 
 ///Called when the action is finished.
