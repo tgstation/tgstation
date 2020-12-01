@@ -479,15 +479,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return
 
 /**
-  * Called after an item is placed in an equipment slot.
-  *
-  * Note that hands count as slots.
-  *
-  * Arguments:
-  * * user is mob that equipped it
-  * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
-  * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-  */
+ * Called after an item is placed in an equipment slot.
+ *
+ * Note that hands count as slots.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
