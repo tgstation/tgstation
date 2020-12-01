@@ -69,7 +69,7 @@
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
 
-/obj/effect/dummy/phased_mob/shadow/proc/shadow_heal(delta_time)
+/obj/effect/dummy/phased_mob/shadow/proc/shadow_heal()
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
