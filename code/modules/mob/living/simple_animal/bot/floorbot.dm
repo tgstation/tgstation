@@ -133,7 +133,7 @@
 			if(tiles.amount > maxtiles)
 				tilestack = tilestack.split_stack(null, maxtiles)
 			else
-				tilestack = src
+				tilestack = W
 			tilestack.forceMove(src)
 		to_chat(user, "<span class='notice'>You load [tilestack.amount - old_amount] tiles into the floorbot. It now contains [tilestack.amount] tiles.</span>")
 		return
@@ -146,7 +146,7 @@
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
-///mobs should use move_resistance instead of anchored.
+///mobs should use move_resist instead of anchored.
 /mob/living/simple_animal/bot/floorbot/proc/toggle_anchor(engage = TRUE, change_icon = TRUE)
 	if(engage)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
@@ -367,7 +367,7 @@
 		if(F.broken || F.burnt || isplatingturf(F))
 			toggle_anchor()
 			mode = BOT_REPAIRING
-			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
+			visible_message("<span class='notice'>[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"].</span>")
 			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
