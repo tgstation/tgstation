@@ -597,11 +597,11 @@ nobiliumsuppression = INFINITY
 	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 	ASSERT_GAS(/datum/gas/stimulum, air)
-	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale * 0.5 < 0 ) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 ) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	cached_gases[/datum/gas/stimulum][MOLES] += heat_scale * 4
-	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale * 0.5
-	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale * 0.5
+	cached_gases[/datum/gas/stimulum][MOLES] += heat_scale * 8
+	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale 
+	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
 	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT * max(stim_energy_change, 0))
 	if(stim_energy_change)
 		air.temperature += stim_energy_change / heat_capacity
