@@ -108615,6 +108615,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"kXg" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "kXq" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -111942,6 +111946,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"sbW" = (
+/obj/effect/landmark/start/atmospheric_technician,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "scS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -112355,6 +112363,10 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"teq" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "ter" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -138821,7 +138833,7 @@ mYr
 pop
 mYr
 mYr
-mYr
+sbW
 mYr
 mYr
 mYr
@@ -139326,7 +139338,7 @@ aMB
 amI
 mYr
 mYr
-mYr
+sbW
 mYr
 vbY
 aso
@@ -139582,7 +139594,7 @@ aaa
 aMB
 ryf
 twC
-mYr
+teq
 mYr
 aqK
 aWH
@@ -140878,7 +140890,7 @@ mYr
 mYr
 mYr
 mYr
-mYr
+kXg
 mYr
 hQT
 mYr
@@ -141135,7 +141147,7 @@ mYr
 mYr
 mYr
 mYr
-mYr
+teq
 mYr
 hQT
 mYr
