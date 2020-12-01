@@ -123,6 +123,8 @@ have ways of interacting with a specific mob and control it.
 
 	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		step(living_pawn, pick(GLOB.cardinals))
+	else if(DT_PROB(5, delta_time))
+		living_pawn.emote(pick("screech"))
 	else if(DT_PROB(1, delta_time))
 		living_pawn.emote(pick("scratch","jump","roll","tail"))
 

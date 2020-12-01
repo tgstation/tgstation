@@ -280,9 +280,8 @@
 			var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 
 			///Fill in a plan override!
-			monkey_ai.CancelActions()
-
-			monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
-			monkey_ai.current_movement_target = your_enemy
-			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
-			monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
+			if(!monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET])
+				blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
+				monkey_ai.current_movement_target = your_enemy
+				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
+				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
