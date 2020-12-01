@@ -38,8 +38,8 @@ have ways of interacting with a specific mob and control it.
 		QDEL_NULL(new_pawn.ai_controller)
 
 	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
-		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 		qdel(src)
+		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 
 	pawn = new_pawn
 	set_ai_status(AI_STATUS_ON)
