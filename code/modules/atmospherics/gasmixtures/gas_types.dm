@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/healium
 	id = "healium"
-	specific_heat = 60
+	specific_heat = 50
 	name = "Healium"
 	dangerous = TRUE
 	gas_overlay = "healium"
