@@ -370,9 +370,9 @@
 	///don't process if it's somehow on the floor
 	if(!iscarbon(src.loc))
 		return
-	var/mob/living/carbon/user = src.loc§
+	var/mob/living/carbon/user = src.loc
 	///check hp
-	if(hp =< 0)
+	if(hp < 0)
 		user.dropItemToGround(src, TRUE)
 		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
 		ST.do_quick_empty()
@@ -382,17 +382,17 @@
 		qdel(src)
 	hunger++
 	///check hunger
-	if((hunger > 50)  && prob(20))
-		for(var/i  in contents)
-			if(istype(i, /obj/item/food))
-				var/obj/item/food/F = i
+	if((hunger > 50) && prob(20))
+		for(var/I in contents)
+			if(istype(I, /obj/item/food))
+				var/obj/item/food/F = I
 				F.forceMove(user.loc)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 				///poisoned food damages it
 				if(F.reagents.has_reagent(/datum/reagent/toxin))
 					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
 					hp -= 20
-					else
+				else
 					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
 				qdel(F)
 				hunger = 0
