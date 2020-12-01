@@ -468,6 +468,13 @@
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/duffel_bag
+	name = "Duffelbag Curse"
+	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
+	spell_type = /obj/effect/proc_holder/spell/pointed/duffelbagcurse
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"

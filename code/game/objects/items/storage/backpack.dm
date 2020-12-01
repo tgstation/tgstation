@@ -341,14 +341,82 @@
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
 	desc = "A large duffel bag for holding extra things."
-	icon_state = "duffel"
-	inhand_icon_state = "duffel"
+	icon_state = "duffel-curse"
+	inhand_icon_state = "duffel-curse"
 	slowdown = 1
 
 /obj/item/storage/backpack/duffelbag/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 30
+
+/obj/item/storage/backpack/duffelbag/cursed
+	name = "living duffelbag"
+	desc = "A cursed clown duffelbag which hungers, maybe putting some food in it will stop it from eating you! Or maybe you can poison it this way..."
+	slowdown = 1.3
+	var/hunger = 0
+	var/hp = 100
+
+/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj,src)
+	ADD_TRAIT(src, TRAIT_NODROP, "duffelbag")
+
+/obj/item/storage/backpack/duffelbag/cursed/process()
+	if(!iscarbon(src.loc))
+		return
+	var/mob/living/carbon/user = src.loc
+	if(hp < 0)
+		message_admins("    dead        ")
+		user.dropItemToGround(src, TRUE)
+		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
+		ST.do_quick_empty()
+		var/turf/T = get_turf(user)
+		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/vomit(T)
+		qdel(src)
+	hunger++
+	if((hunger > 50)  && prob(20))
+		for(var/i  in contents)
+			if(istype(i, /obj/item/food))
+				message_admins("    FOUND FOOD        ")
+				var/obj/item/food/F = i
+				F.forceMove(user.loc)
+				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+				if(F.reagents.has_reagent(/datum/reagent/toxin))
+					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
+					hp -= 20
+					else
+					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
+				qdel(F)
+				hunger = 0
+				return
+
+		var/affecting = user.get_bodypart(BODY_ZONE_CHEST)
+		user.apply_damage(40, BRUTE, affecting)
+		hunger = 5
+		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+		to_chat(user, "<span class='warning'>The [name] eats your ass!</span>")
+		hp -= 15
+
+
+/obj/item/storage/backpack/duffelbag/cursed/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj,src)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
