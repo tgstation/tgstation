@@ -23,9 +23,9 @@
 #define MONKEY_HATRED_REDUCTION_PROB 		5	// probability of reducing aggro by one when the monkey attacks
 
 // how many Life ticks the monkey will fail to:
-#define MONKEY_HUNT_FRUSTRATION_LIMIT 		8	// Chase after an enemy before giving up
-#define MONKEY_DISPOSE_FRUSTRATION_LIMIT 	16 	// Dispose of a body before giving up
+#define MONKEY_HUNT_FRUSTRATION_LIMIT 		30	// Chase after an enemy before giving up
+#define MONKEY_DISPOSE_FRUSTRATION_LIMIT 	40 	// Dispose of a body before giving up
 
 
 ///Monkey recruit cooldown
-#define MONKEY_RECRUIT_COOLDOWN 20 SECONDS
+#define MONKEY_RECRUIT_COOLDOWN 1 MINUTES
