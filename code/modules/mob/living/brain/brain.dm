@@ -86,7 +86,7 @@
 		var/obj/vehicle/sealed/mecha/M = container.mecha
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+	if (client && ranged_ability?.ranged_mousepointer)
 		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/brain/proc/get_traumas()

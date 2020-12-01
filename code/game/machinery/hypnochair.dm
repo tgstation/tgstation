@@ -40,13 +40,14 @@
 
 /obj/machinery/hypnochair/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	var/mob/living/mob_occupant = occupant
+
+	data["occupied"] = mob_occupant ? 1 : 0
 	data["open"] = state_open
 	data["interrogating"] = interrogating
 
 	data["occupant"] = list()
-	if(occupant)
-		var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
 		data["occupant"]["stat"] = mob_occupant.stat
 
@@ -197,7 +198,7 @@
 
 
 /obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	close_machine(target)

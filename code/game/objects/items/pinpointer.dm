@@ -89,8 +89,8 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
-	custom_price = 900
-	custom_premium_price = 900
+	custom_price = PAYCHECK_MEDIUM * 4
+	custom_premium_price = PAYCHECK_MEDIUM * 6
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
@@ -133,7 +133,7 @@
 		var/crewmember_name = "Unknown"
 		if(H.wear_id)
 			var/obj/item/card/id/I = H.wear_id.GetID()
-			if(I && I.registered_name)
+			if(I?.registered_name)
 				crewmember_name = I.registered_name
 
 		while(crewmember_name in name_counts)
@@ -167,7 +167,7 @@
 	name = "proximity crew pinpointer"
 	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
 	icon_state = "pinpointer_crewprox"
-	custom_price = 300
+	custom_price = PAYCHECK_MEDIUM * 3
 
 /obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
 	var/size = ""

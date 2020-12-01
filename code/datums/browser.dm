@@ -153,31 +153,41 @@
 	opentime = 0
 	close()
 
-//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/**
+ * **DEPRECATED: USE tgui_alert(...) INSTEAD**
+ *
+ * Designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+ * Arguments:
+ * * User - The user to show the alert to.
+ * * Message - The textual body of the alert.
+ * * Title - The title of the alert's window.
+ * * Button1 - The first button option.
+ * * Button2 - The second button option.
+ * * Button3 - The third button option.
+ * * StealFocus - Boolean operator controlling if the alert will steal the user's window focus.
+ * * Timeout - The timeout of the window, after which no responses will be valid.
+ */
+/proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = TRUE, Timeout = 6000)
 	if (!User)
 		User = usr
-	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+	if (!istype(User))
+		if (istype(User, /client))
+			var/client/client = User
+			User = client.mob
+		else
+			return
+
+	// Get user's response using a modal
+	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	A.open()
+	A.wait()
+	switch(A.selectedbutton)
 		if (1)
 			return Button1
 		if (2)
 			return Button2
 		if (3)
 			return Button3
-
-//Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-	if (!istype(User))
-		if (istype(User, /client/))
-			var/client/C = User
-			User = C.mob
-		else
-			return
-	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
-	A.open()
-	A.wait()
-	if (A.selectedbutton)
-		return A.selectedbutton
 
 /datum/browser/modal
 	var/opentime = 0
@@ -458,5 +468,5 @@
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
-	if(src && src.mob)
+	if(src?.mob)
 		src.mob.unset_machine()

@@ -3,13 +3,13 @@
 
 /*
 field_generator power level display
-   The icon used for the field_generator need to have 6 icon states
-   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
+The icon used for the field_generator need to have 6 icon states
+named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
 
-   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
-   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
-   no power level overlay is currently in the overlays list.
-   -Aygar
+The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+no power level overlay is currently in the overlays list.
+-Aygar
 */
 
 #define field_generator_max_power 250
@@ -65,7 +65,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -173,12 +173,11 @@ field_generator power level display
 	cleanup()
 	return ..()
 
-/*
-   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
-   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
-   no power level overlay is currently in the overlays list.
-   */
-
+/**
+ *The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+ *The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+ *no power level overlay is currently in the overlays list.
+ */
 /obj/machinery/field/generator/proc/check_power_level()
 	var/new_level = round(6 * power / field_generator_max_power)
 	if(new_level != power_level)

@@ -6,7 +6,7 @@
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN, TRAIT_HARDLIMBWOUND)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN, TRAIT_HARDLY_WOUNDED)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -33,6 +33,8 @@
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
 	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
+
+	ass_image = 'icons/ass/assplasma.png'
 
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -86,7 +88,7 @@
 
 		if("Bartender", "Lawyer")
 			O = new /datum/outfit/plasmaman/bar
-		
+
 		if("Psychologist")
 			O = new /datum/outfit/plasmaman/psychologist
 

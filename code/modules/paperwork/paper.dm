@@ -11,7 +11,6 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
  * so we do loose a bit of functionality but we gain in easy of use of
@@ -101,8 +100,8 @@
 
 /obj/item/paper/Initialize()
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_x = base_pixel_x + rand(-9, 9)
+	pixel_y = base_pixel_y + rand(-8, 8)
 	update_icon()
 
 /obj/item/paper/update_icon_state()
@@ -312,7 +311,8 @@
 					LAZYADD(stamped, stamp_icon_state)
 
 				update_static_data(usr,ui)
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
+				var/obj/O = ui.user.get_active_held_item()
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with \the [O.name]!</span>", "<span class='notice'>You stamp [src] with \the [O.name]!</span>")
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 			. = TRUE

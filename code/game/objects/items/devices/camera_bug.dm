@@ -142,7 +142,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current && current.can_use())
+	if(current?.can_use())
 		var/list/seen = current.can_see()
 		return seen
 

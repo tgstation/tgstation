@@ -98,7 +98,7 @@
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
-				occupant = C
+				set_occupant(C)
 				update_icon()
 	else
 		startgibbing(user)
@@ -118,14 +118,12 @@
 	else
 		return ..()
 
-
-
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
-	set name = "empty gibber"
+	set name = "Empty gibber"
 	set src in oview(1)
 
-	if(usr.incapacitated())
+	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -136,14 +134,14 @@
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
-	if(src.operating)
+	if(operating)
 		return
-	if(!src.occupant)
+	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
 
@@ -199,7 +197,8 @@
 	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
-	qdel(src.occupant)
+	set_occupant(null)
+	qdel(mob_occupant)
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
@@ -219,7 +218,7 @@
 			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
-	pixel_x = initial(pixel_x) //return to its spot after shaking
+	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
 	update_icon()
 
@@ -229,9 +228,9 @@
 
 /obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/victim = AM
 
-		if(M.loc == input)
-			M.forceMove(src)
-			M.gib()
+		if(victim.loc == input)
+			victim.forceMove(src)
+			victim.gib()

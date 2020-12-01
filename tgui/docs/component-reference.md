@@ -40,6 +40,7 @@ Make sure to add new items to this list if you document new components.
   - [`NoticeBox`](#noticebox)
   - [`NumberInput`](#numberinput)
   - [`ProgressBar`](#progressbar)
+  - [`RoundGauge`](#roundgauge)
   - [`Section`](#section)
   - [`Slider`](#slider)
   - [`Table`](#table)
@@ -771,6 +772,38 @@ based on whether the value lands in the range between `from` and `to`.
 - `color: string` - Color of the progress bar.
 - `children: any` - Content to render inside the progress bar.
 
+### `RoundGauge`
+
+The RoundGauge component provides a visual representation of a single metric, as well as being capable of showing informational or cautionary boundaries related to that metric.
+
+```jsx
+<RoundGauge
+  size={1.75}
+  value={tankPressure}
+  minValue={0}
+  maxValue={pressureLimit}
+  alertAfter={pressureLimit * 0.70}
+  ranges={{
+    "good": [0, pressureLimit * 0.70],
+    "average": [pressureLimit * 0.70, pressureLimit * 0.85],
+    "bad": [pressureLimit * 0.85, pressureLimit],
+  }}
+  format={formatPressure} />
+```
+
+The alert on the gauge is optional, and will only be shown if the `alertAfter` prop is defined. When defined, the alert will begin to flash the respective color upon which the needle currently rests, as defined in the `ranges` prop.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `value: number` - The current value of the metric.
+- `minValue: number` (default: 0) - The lower bound of the guage.
+- `maxValue: number` (default: 1) - The upper bound of the guage.
+- `ranges: { color: [from, to] }` (default: `{ "good": [0, 1] }`) - Provide regions of the guage to color between two specified values of the metric.
+- `alertAfter: number` (optional) - When provided, will cause an alert symbol on the gauge to begin flashing in the color upon which the needle currently rest, as defined in `ranges`.
+- `format: function(value) => string` (optional) - When provided, will be used to format the value of the metric for display.
+- `size: number` (default: 1) - When provided scales the gauge.
+
 ### `Section`
 
 Section is a surface that displays content and actions on a single topic.
@@ -1010,6 +1043,7 @@ Example:
   - For a list of themes, see `packages/tgui/styles/themes`.
 - `title: string` - Window title.
 - `resizable: boolean` - Controls resizability of the window.
+- `noClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be

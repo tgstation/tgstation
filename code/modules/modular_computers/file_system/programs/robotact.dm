@@ -52,7 +52,7 @@
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
 	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
 	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
-	data["printerPictures"] = borgo.aicamera.stored.len //Number of pictures taken
+	data["printerPictures"] =  borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = borgo.toner //amount of toner
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
@@ -118,7 +118,10 @@
 			borgo.toggle_sensors()
 
 		if("viewImage")
-			borgo.aicamera?.viewpictures(usr)
+			if(borgo.connected_ai)
+				borgo.connected_ai.aicamera?.viewpictures(usr)
+			else
+				borgo.aicamera?.viewpictures(usr)
 
 		if("printImage")
 			var/obj/item/camera/siliconcam/robot_camera/borgcam = borgo.aicamera
@@ -132,11 +135,11 @@
 			borgo.toggle_headlamp(FALSE, TRUE)
 
 /**
-  * Forces a full update of the UI, if currently open.
-  *
-  * Forces an update that includes refreshing ui_static_data. Called by
-  * law changes and borg log additions.
-  */
+ * Forces a full update of the UI, if currently open.
+ *
+ * Forces an update that includes refreshing ui_static_data. Called by
+ * law changes and borg log additions.
+ */
 /datum/computer_file/program/robotact/proc/force_full_update()
 	if(tablet)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)

@@ -39,8 +39,8 @@
 		bulb = new(src)
 
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -123,6 +123,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
+			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 

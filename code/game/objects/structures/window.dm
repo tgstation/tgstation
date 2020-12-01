@@ -130,11 +130,14 @@
 		return FALSE
 	return TRUE
 
+
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, knocksound, 50, TRUE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))

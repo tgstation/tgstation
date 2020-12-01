@@ -21,6 +21,7 @@
 	held_rh = 'icons/mob/pai_item_rh.dmi'
 	head_icon = 'icons/mob/pai_item_head.dmi'
 	radio = /obj/item/radio/headset/silicon/pai
+	can_buckle_to = FALSE
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -74,7 +75,7 @@
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
-	var/emitterregen = 0.125
+	var/emitter_regen_per_second = 1.25
 	var/emittercd = 50
 	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
@@ -84,12 +85,6 @@
 	var/overload_maxhealth = 0
 	var/silent = FALSE
 	var/brightness_power = 5
-
-/mob/living/silicon/pai/can_unbuckle()
-	return FALSE
-
-/mob/living/silicon/pai/can_buckle()
-	return FALSE
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
@@ -208,11 +203,8 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return TRUE
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE) //Resting is just an aesthetic feature for them.
 
 /mob/proc/makePAI(delold)
 	var/obj/item/paicard/card = new /obj/item/paicard(get_turf(src))
@@ -316,7 +308,7 @@
 	update_stat()
 
 /mob/living/silicon/pai/process(delta_time)
-	emitterhealth = clamp((emitterhealth + emitterregen * delta_time), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth + (emitter_regen_per_second * delta_time)), -50, emittermaxhealth)
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	if(pai && (istype(W, /obj/item/encryptionkey) || W.tool_behaviour == TOOL_SCREWDRIVER))

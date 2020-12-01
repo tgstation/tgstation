@@ -191,7 +191,7 @@
 
 
 
-	if(overmind && overmind.blobstrain)
+	if(overmind?.blobstrain)
 		overmind.blobstrain.on_sporedeath(src)
 	else
 		reagents.add_reagent(/datum/reagent/toxin/spore, 10)

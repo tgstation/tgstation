@@ -245,10 +245,12 @@
 
 				for(var/obj/item/part in added_components)
 					if(istype(part,/obj/item/stack))
-						var/obj/item/stack/S = part
-						var/obj/item/stack/NS = locate(S.merge_type) in components //find a stack to merge with
-						if(NS)
-							S.merge(NS)
+						var/obj/item/stack/incoming_stack = part
+						for(var/obj/item/stack/merge_stack in components)
+							if(incoming_stack.can_merge(merge_stack))
+								incoming_stack.merge(merge_stack)
+								if(QDELETED(incoming_stack))
+									break
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
 						part.forceMove(src)

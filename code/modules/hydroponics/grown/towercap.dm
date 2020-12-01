@@ -47,11 +47,11 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/static/list/accepted = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/reagent_containers/food/snacks/grown/tea,
-	/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-	/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-	/obj/item/reagent_containers/food/snacks/grown/wheat))
+	var/static/list/accepted = typecacheof(list(/obj/item/food/grown/tobacco,
+	/obj/item/food/grown/tea,
+	/obj/item/food/grown/ambrosia/vulgaris,
+	/obj/item/food/grown/ambrosia/deus,
+	/obj/item/food/grown/wheat))
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
@@ -69,8 +69,8 @@
 		qdel(src)
 
 	if(CheckAccepted(W))
-		var/obj/item/reagent_containers/food/snacks/grown/leaf = W
-		if(leaf.dry)
+		var/obj/item/food/grown/leaf = W
+		if(HAS_TRAIT(leaf, TRAIT_DRIED))
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
 			usr.dropItemToGround(W)
@@ -206,8 +206,8 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = W.base_pixel_x + clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = W.base_pixel_y + clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
 			return ..()
 

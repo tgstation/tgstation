@@ -58,7 +58,7 @@
 	icon_state = icon_state_powered
 
 	if(!cpu || !cpu.enabled)
-		if (!(machine_stat & NOPOWER) && (cpu && cpu.use_power()))
+		if (!(machine_stat & NOPOWER) && (cpu?.use_power()))
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
@@ -96,7 +96,7 @@
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
 	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
-	if(cpu && cpu.enabled) // Shut down the computer
+	if(cpu?.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
@@ -105,7 +105,7 @@
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
+	if(cpu?.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_icon()
 		return

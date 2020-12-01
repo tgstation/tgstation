@@ -165,7 +165,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
@@ -258,6 +258,7 @@
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, params, shot_leg)
+				SEND_SIGNAL(user, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
 				user.dropItemToGround(src, TRUE)
 				return TRUE
 
@@ -288,7 +289,7 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
 				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
@@ -514,12 +515,12 @@
 
 
 /**
-  * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
-  *
-  * Returns the former gun_light that has now been replaced by this proc.
-  * Arguments:
-  * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
-  */
+ * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
+ *
+ * Returns the former gun_light that has now been replaced by this proc.
+ * Arguments:
+ * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
+ */
 /obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
 	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
 	if(gun_light == new_light)
@@ -620,7 +621,7 @@
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
-			else if(target && target.Adjacent(user))
+			else if(target?.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
 		semicd = FALSE
 		return
@@ -629,7 +630,7 @@
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
 
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		chambered.BB.damage *= 5
 		if(chambered.BB.wound_bonus != CANT_WOUND)
 			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really

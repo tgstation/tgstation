@@ -249,7 +249,7 @@
 		L.on_hit(src)
 
 	var/reagent_note
-	if(reagents && reagents.reagent_list)
+	if(reagents?.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
 			reagent_note += "[R.name] ([num2text(R.volume)])"
@@ -443,7 +443,7 @@
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
-	if(shrapnel_type)
+	if(shrapnel_type && LAZYLEN(embedding))
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")

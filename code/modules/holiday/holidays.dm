@@ -234,7 +234,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
-	drone_hat = /obj/item/clothing/mask/rat/bee
+	drone_hat = /obj/item/clothing/mask/animal/rat/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -398,7 +398,7 @@
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
-	drone_hat = /obj/item/reagent_containers/food/snacks/grown/moonflower
+	drone_hat = /obj/item/food/grown/moonflower
 
 /datum/holiday/hello
 	name = "Saying-'Hello' Day"
@@ -504,7 +504,7 @@
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
-	drone_hat = /obj/item/clothing/mask/rat/tribal
+	drone_hat = /obj/item/clothing/mask/animal/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS

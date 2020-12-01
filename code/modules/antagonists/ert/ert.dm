@@ -14,10 +14,10 @@
 	var/rip_and_tear = FALSE
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
+	can_elimination_hijack = ELIMINATION_PREVENT
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -208,7 +208,7 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
 		H.wanted_lvl = giving_wanted_lvl
 		giving_wanted_lvl.hud = H
 		H.infodisplay += giving_wanted_lvl

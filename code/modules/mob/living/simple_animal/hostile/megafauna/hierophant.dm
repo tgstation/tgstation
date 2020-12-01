@@ -678,7 +678,7 @@ Difficulty: Hard
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster?.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -703,7 +703,7 @@ Difficulty: Hard
 		hit_things += M
 		for(var/O in M.occupants)
 			var/mob/living/occupant = O
-			if(friendly_fire_check && caster && caster.faction_check_mob(occupant))
+			if(friendly_fire_check && caster?.faction_check_mob(occupant))
 				continue
 			to_chat(occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
@@ -730,9 +730,6 @@ Difficulty: Hard
 	light_range = 2
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
-
-/obj/effect/hierophant/ex_act()
-	return
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/hierophant_club))

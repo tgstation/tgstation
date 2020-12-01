@@ -44,7 +44,7 @@
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	if(user && user.has_dna())
+	if(user?.has_dna())
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>You lack the grace to wield this!</span>")
 			return COMPONENT_TWOHANDED_BLOCK_WIELD

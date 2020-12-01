@@ -1,11 +1,11 @@
 /**
-  * Internal atom that copies an appearance on to the blocker plane
-  *
-  * Copies an appearance vis render_target and render_source on to the emissive blocking plane.
-  * This means that the atom in question will block any emissive sprites.
-  * This should only be used internally. If you are directly creating more of these, you're
-  * almost guaranteed to be doing something wrong.
-  */
+ * Internal atom that copies an appearance on to the blocker plane
+ *
+ * Copies an appearance vis render_target and render_source on to the emissive blocking plane.
+ * This means that the atom in question will block any emissive sprites.
+ * This should only be used internally. If you are directly creating more of these, you're
+ * almost guaranteed to be doing something wrong.
+ */
 /atom/movable/emissive_blocker
 	name = ""
 	plane = EMISSIVE_BLOCKER_PLANE

@@ -51,7 +51,7 @@
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
 			var/obj/item/fireaxe/F = I
-			if(F && F.wielded)
+			if(F?.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
@@ -131,14 +131,15 @@
 	toggle_lock(user)
 	return
 
+
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
-	else
-		open = !open
-		update_icon()
-		return
+	open = !open
+	update_icon()
+
 
 /obj/structure/fireaxecabinet/update_overlays()
 	. = ..()

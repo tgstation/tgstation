@@ -30,7 +30,7 @@
 	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
 			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
-			return COMPONENT_ITEM_NO_ATTACK
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
@@ -38,9 +38,9 @@
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
 				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
-				return COMPONENT_ITEM_NO_ATTACK
+				return COMPONENT_CANCEL_ATTACK_CHAIN
 			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
-			return COMPONENT_ITEM_NO_ATTACK
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
 	to_chat(user, "<span class='notice'>You begin to butcher [M]...</span>")

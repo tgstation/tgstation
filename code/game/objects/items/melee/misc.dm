@@ -328,7 +328,7 @@
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
-	custom_price = 450
+	custom_price = PAYCHECK_HARD * 4.5
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -634,7 +634,7 @@
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))
-		if (held_sausage && held_sausage.roasted)
+		if (held_sausage?.roasted)
 			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
@@ -685,5 +685,5 @@
 /obj/item/melee/cleric_mace/Initialize()
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR
+	overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | KEEP_APART
 	add_overlay(overlay)

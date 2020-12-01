@@ -154,3 +154,11 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	/// Is this mob allowed to be buckled/unbuckled to/from things?
+	var/can_buckle_to = TRUE
+
+	///The y amount a mob's sprite should be offset due to the current position they're in (e.g. lying down moves your sprite down)
+	var/body_position_pixel_x_offset = 0
+	///The x amount a mob's sprite should be offset due to the current position they're in
+	var/body_position_pixel_y_offset = 0

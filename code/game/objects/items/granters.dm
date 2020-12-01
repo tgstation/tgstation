@@ -12,7 +12,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, TRUE)
-	if(do_after(user, 50, TRUE, src))
+	if(do_after(user, 5 SECONDS, src))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -57,7 +57,7 @@
 			on_reading_stopped()
 			reading = FALSE
 			return
-	if(do_after(user, 50, TRUE, src))
+	if(do_after(user, 5 SECONDS, src))
 		on_reading_finished(user)
 	reading = FALSE
 	return TRUE
@@ -269,7 +269,7 @@
 /obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HORSIE HAS RISEN</b></font>")
-		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
+		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/animal/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
 		user.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, TRUE, TRUE)

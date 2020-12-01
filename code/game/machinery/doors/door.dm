@@ -99,13 +99,13 @@
 	return FALSE
 
 /**
-  * Called when attempting to remove the seal from an airlock
-  *
-  * Here because we need to call it and return if there was a seal so we don't try to open the door
-  * or try its safety lock while it's sealed
-  * Arguments:
-  * * user - the mob attempting to remove the seal
-  */
+ * Called when attempting to remove the seal from an airlock
+ *
+ * Here because we need to call it and return if there was a seal so we don't try to open the door
+ * or try its safety lock while it's sealed
+ * Arguments:
+ * * user - the mob attempting to remove the seal
+ */
 /obj/machinery/door/proc/try_remove_seal(mob/user)
 	return
 
@@ -177,10 +177,12 @@
 		return
 	return try_to_activate_door(user)
 
+
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
-	..()
+	return ..()
+
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)

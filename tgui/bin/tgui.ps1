@@ -15,7 +15,7 @@ Set-Location $basedir
 ## --------------------------------------------------------
 
 function yarn {
-  node.exe ".yarn\releases\yarn-berry.js" @Args
+  node.exe ".yarn\releases\yarn-2.3.3.cjs" @Args
 }
 
 function Remove-Quiet {

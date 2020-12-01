@@ -255,9 +255,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		var/scan_name = inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------"
 		var/target_name = inserted_modify_id ? html_encode(inserted_modify_id.name) : "--------"
-		var/target_owner = (inserted_modify_id && inserted_modify_id.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
-		var/target_rank = (inserted_modify_id && inserted_modify_id.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
-		var/target_age = (inserted_modify_id && inserted_modify_id.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
+		var/target_owner = (inserted_modify_id?.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
+		var/target_rank = (inserted_modify_id?.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
+		var/target_age = (inserted_modify_id?.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
 
 		if(!authenticated)
 			header += {"<br><i>Please insert the cards into the slots</i><br>
@@ -369,27 +369,33 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if(inserted_modify_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_modify_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_modify_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_modify_id))
 					inserted_modify_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_modify_id))
+				if(id_insert(L, held_item, inserted_modify_id))
 					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
-			if(inserted_scan_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_scan_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_scan_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_scan_id))
 					inserted_scan_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_scan_id))
+				if(id_insert(L, held_item, inserted_scan_id))
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")

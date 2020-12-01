@@ -98,8 +98,8 @@
 	if(new_description)
 		vote_description = new_description
 
-/obj/structure/votebox/proc/is_operator(mob/user)
-	return user?.get_idcard() == owner
+/obj/structure/votebox/proc/is_operator(mob/living/user)
+	return (istype(user) && user?.get_idcard() == owner)
 
 /obj/structure/votebox/proc/apply_vote(obj/item/paper/I,mob/living/user)
 	var/obj/item/card/id/voter_card = user.get_idcard()

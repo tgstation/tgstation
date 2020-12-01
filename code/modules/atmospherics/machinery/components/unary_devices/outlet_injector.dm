@@ -250,9 +250,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/healium_input
 	name = "healium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_HEALIUM
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hexane_input
-	name = "hexane tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_HEXANE
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hydrogen_input
 	name = "hydrogen tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_H2
@@ -283,6 +280,12 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/zauker_input
 	name = "zauker tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_ZAUKER
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/helium_input
+	name = "helium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HELIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/antinoblium_input
+	name = "antinoblium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ANTINOBLIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
 	name = "incinerator chamber input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR

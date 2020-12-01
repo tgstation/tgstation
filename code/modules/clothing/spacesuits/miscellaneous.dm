@@ -1,19 +1,19 @@
 //miscellaneous spacesuits
 /*
 Contains:
- - Captain's spacesuit
- - Death squad's hardsuit
- - SWAT suit
- - Officer's beret/spacesuit
- - NASA Voidsuit
- - Father Christmas' magical clothes
- - Pirate's spacesuit
- - ERT hardsuit: command, sec, engi, med, janitor
- - EVA spacesuit
- - Freedom's spacesuit (freedom from vacuum's oppression)
- - Carp hardsuit
- - Bounty hunter hardsuit
- - Blackmarket combat medic hardsuit
+	Captain's spacesuit
+	Death squad's hardsuit
+	SWAT suit
+	Officer's beret/spacesuit
+	NASA Voidsuit
+	Father Christmas' magical clothes
+	Pirate's spacesuit
+	ERT hardsuit: command, sec, engi, med, janitor
+	EVA spacesuit
+	Freedom's spacesuit (freedom from vacuum's oppression)
+	Carp hardsuit
+	Bounty hunter hardsuit
+	Blackmarket combat medic hardsuit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -193,7 +193,7 @@ Contains:
 // ERT suit's gets EMP Protection
 /obj/item/clothing/suit/space/hardsuit/ert/Initialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -270,7 +270,7 @@ Contains:
 	icon_state = "ert_clown"
 	inhand_icon_state = "ert_clown"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
-	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/grown/banana, /obj/item/grown/bananapeel)
+	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/food/grown/banana, /obj/item/grown/bananapeel)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -332,7 +332,7 @@ Contains:
 	inhand_icon_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/tank/internals, /obj/item/pneumatic_cannon/speargun)	//I'm giving you a hint here
+	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)

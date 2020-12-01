@@ -1,10 +1,10 @@
 /**
-  * Determines what happens to an atom when a swarmer interacts with it
-  *
-  * Determines behavior upon being interacted on by a swarmer.
-  * Arguments:
-  * * S - A reference to the swarmer doing the interaction
-  */
+ * Determines what happens to an atom when a swarmer interacts with it
+ *
+ * Determines behavior upon being interacted on by a swarmer.
+ * Arguments:
+ * * S - A reference to the swarmer doing the interaction
+ */
 #define DANGEROUS_DELTA_P 250	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
 ///Finds the greatest difference in pressure across a turf, only considers open turfs.
@@ -48,8 +48,8 @@
 	return actor.Integrate(src)
 
 /**
-  * Return used to determine how many resources a swarmer gains when consuming an object
-  */
+ * Return used to determine how many resources a swarmer gains when consuming an object
+ */
 /obj/proc/integrate_amount()
 	return 0
 

@@ -43,8 +43,6 @@ All foods are distributed among various categories. Use common sense.
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
 	var/slices_num
 	var/eatverb
-	var/dried_type = null
-	var/dry = 0
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
@@ -68,7 +66,7 @@ All foods are distributed among various categories. Use common sense.
 	return COMSIG_FRYING_HANDLED
 
 /obj/item/reagent_containers/food/snacks/add_initial_reagents()
-	if(tastes && tastes.len)
+	if(tastes?.len)
 		if(list_reagents)
 			for(var/rid in list_reagents)
 				var/amount = list_reagents[rid]
@@ -216,7 +214,7 @@ All foods are distributed among various categories. Use common sense.
 				qdel(A)
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
-	if(bonus_reagents && bonus_reagents.len)
+	if(bonus_reagents?.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
@@ -310,7 +308,7 @@ All foods are distributed among various categories. Use common sense.
 			initialize_cooked_food(result, 1)
 		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
 	else
-		result = new /obj/item/reagent_containers/food/snacks/badrecipe(T)
+		result = new /obj/item/food/badrecipe(T)
 		if(istype(M) && M.dirty < 100)
 			M.dirty++
 	qdel(src)

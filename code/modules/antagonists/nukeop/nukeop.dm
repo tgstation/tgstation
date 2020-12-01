@@ -7,11 +7,11 @@
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
+	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
 	var/nukeop_outfit = /datum/outfit/syndicate
-	can_hijack = HIJACK_HIJACKER //Alternative way to wipe out the station.
 
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
@@ -75,7 +75,7 @@
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/proc/give_alias()
-	if(nuke_team && nuke_team.syndicate_name)
+	if(nuke_team?.syndicate_name)
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H)) // Reinforcements get a real name
 			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
@@ -160,7 +160,7 @@
 
 /datum/antagonist/nukeop/leader/memorize_code()
 	..()
-	if(nuke_team && nuke_team.memorized_code)
+	if(nuke_team?.memorized_code)
 		var/obj/item/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>"
 		P.name = "nuclear bomb code"
@@ -173,7 +173,7 @@
 
 /datum/antagonist/nukeop/leader/give_alias()
 	title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	if(nuke_team && nuke_team.syndicate_name)
+	if(nuke_team?.syndicate_name)
 		owner.current.real_name = "[nuke_team.syndicate_name] [title]"
 	else
 		owner.current.real_name = "Syndicate [title]"

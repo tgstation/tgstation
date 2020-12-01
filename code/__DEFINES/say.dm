@@ -42,10 +42,6 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 
-#define MODE_CHANGELING "changeling"
-#define MODE_KEY_CHANGELING "g"
-#define MODE_TOKEN_CHANGELING ":g"
-
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
@@ -79,11 +75,6 @@
 #define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
 #define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
-
-#define LINGHIVE_NONE 0
-#define LINGHIVE_OUTSIDER 1
-#define LINGHIVE_LING 2
-#define LINGHIVE_LINK 3
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			1024

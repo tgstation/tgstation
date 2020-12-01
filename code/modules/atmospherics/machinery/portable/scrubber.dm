@@ -28,7 +28,6 @@
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
 		/datum/gas/halon,
-		/datum/gas/hexane,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()

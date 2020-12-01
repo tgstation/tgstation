@@ -286,7 +286,7 @@ Difficulty: Extremely Hard
 		return
 	forceMove(user)
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
-	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
+	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
@@ -367,11 +367,11 @@ Difficulty: Extremely Hard
 	id = "ice_block_talisman"
 	duration = 40
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
-/obj/screen/alert/status_effect/ice_block_talisman
+/atom/movable/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move!"
 	icon_state = "frozen"

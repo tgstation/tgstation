@@ -20,8 +20,9 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -81,34 +82,6 @@
 			. += ""
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbedcount]"
-	//NINJACODE
-	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
-		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
-		. += "SpiderOS Status: [SN.s_initialized ? "Initialized" : "Disabled"]"
-		. += "Current Time: [station_time_timestamp()]"
-		if(SN.s_initialized)
-			//Suit gear
-			. += "Energy Charge: [round(SN.cell.charge/100)]%"
-			. += "Smoke Bombs: \Roman [SN.s_bombs]"
-			//Ninja status
-			. += "Fingerprints: [md5(dna.uni_identity)]"
-			. += "Unique Identity: [dna.unique_enzymes]"
-			. += "Overall Status: [stat > 1 ? "dead" : "[health]% healthy"]"
-			. += "Nutrition Status: [nutrition]"
-			. += "Oxygen Loss: [getOxyLoss()]"
-			. += "Toxin Levels: [getToxLoss()]"
-			. += "Burn Severity: [getFireLoss()]"
-			. += "Brute Trauma: [getBruteLoss()]"
-			. += "Radiation Levels: [radiation] rad"
-			. += "Body Temperature: [bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)"
-
-			//Diseases
-			if(length(diseases))
-				. += "Viruses:"
-				for(var/thing in diseases)
-					var/datum/disease/D = thing
-					. += "* [D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]"
-
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -188,7 +161,7 @@
 		dat += "</td></tr>"
 
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
+	if((w_uniform == null && !(dna?.species.nojumpsuit) && (!O || O.status != BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -204,7 +177,7 @@
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
-		dat += "<tr><td><A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Legcuffed</A></td></tr>"
+		dat += "<tr><td><B>Legcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
@@ -252,8 +225,12 @@
 			if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
 				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
 			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			delay_denominator = 4
 		else
 			return
@@ -262,11 +239,15 @@
 			if(pocket_item)
 				if(pocket_item == (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)) //item still in the pocket we search
 					dropItemToGround(pocket_item)
+					log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+					usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			else
 				if(place_item)
 					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
 						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 						equip_to_slot(place_item, pocket_id, TRUE)
+						log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+						usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 					//do nothing otherwise
 				//updating inv screen after handled by living/Topic()
 		else
@@ -604,7 +585,7 @@
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(R && R.fields["criminal"])
+		if(R?.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
 					threatcount += 5
@@ -656,6 +637,9 @@
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	if(target == src)
+		return
+
 	var/panicking = FALSE
 
 	do
@@ -717,7 +701,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna?.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -726,10 +710,10 @@
 			dropItemToGround(I)
 
 /**
-  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
-  *
-  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
-  */
+ * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
+ *
+ * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
+ */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
 	var/obscured = check_obscured_slots()
 	if(obscured & ITEM_SLOT_GLOVES)
@@ -745,8 +729,8 @@
 	return TRUE
 
 /**
-  * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
-  */
+ * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+ */
 /mob/living/carbon/human/proc/clean_lips()
 	if(isnull(lip_style) && lip_color == initial(lip_color))
 		return FALSE
@@ -756,8 +740,8 @@
 	return TRUE
 
 /**
-  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
-  */
+ * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
+ */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
@@ -772,8 +756,8 @@
 		. = TRUE
 
 /**
-  * Called when this human should be washed
-  */
+ * Called when this human should be washed
+ */
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
 
@@ -806,7 +790,7 @@
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
-	if(dna && dna.species)
+	if(dna?.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
 		var/static/mutable_appearance/electrocution_skeleton_anim
 		if(!electrocution_skeleton_anim)
@@ -822,19 +806,8 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, floor_okay=FALSE)
-	if(!(mobility_flags & MOBILITY_UI) && !floor_okay)
-		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-		return FALSE
-	if(!Adjacent(M) && (M.loc != src))
-		if((be_close == FALSE) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
-			return TRUE
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return TRUE
-
 /mob/living/carbon/human/resist_restraints()
-	if(wear_suit && wear_suit.breakouttime)
+	if(wear_suit?.breakouttime)
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		cuff_resist(wear_suit)
@@ -901,11 +874,11 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
 				for(var/t in get_disabled_limbs()) //Disabled limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -920,20 +893,19 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	coretemperature = get_body_temp_normal(apply_change=FALSE)
+	heat_exposure_stacks = 0
 	return ..()
 
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
-/mob/living/carbon/human/can_hold_items()
-	return TRUE
-
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+	if(dna?.species) //prevents a runtime while a human is being monkeyfied
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE, purge = FALSE)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -1069,6 +1041,12 @@
 	else if(can_be_firemanned(target))
 		fireman_carry(target)
 
+/mob/living/carbon/human/limb_attack_self()
+	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
+	if(arm)
+		arm.attack_self(src)
+	return ..()
+
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
@@ -1091,7 +1069,7 @@
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
 		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, TRUE, target))
+		if(do_after(src, carrydelay, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
 				if(target.loc != loc)
@@ -1289,12 +1267,6 @@
 
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
-
-/mob/living/carbon/human/species/golem/capitalist
-	race = /datum/species/golem/capitalist
-
-/mob/living/carbon/human/species/golem/soviet
-	race = /datum/species/golem/soviet
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

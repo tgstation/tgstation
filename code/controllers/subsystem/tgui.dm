@@ -1,10 +1,13 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui subsystem
  *
  * Contains all tgui state and subsystem code.
  *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 SUBSYSTEM_DEF(tgui)
@@ -42,7 +45,7 @@ SUBSYSTEM_DEF(tgui)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
-		if(ui && ui.user && ui.src_object)
+		if(ui?.user && ui.src_object)
 			ui.process(wait * 0.1)
 		else
 			open_uis.Remove(ui)
@@ -191,7 +194,7 @@ SUBSYSTEM_DEF(tgui)
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.process(wait * 0.1, force = 1)
 			count++
 	return count
@@ -213,7 +216,7 @@ SUBSYSTEM_DEF(tgui)
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
 			count++
 	return count
@@ -230,7 +233,7 @@ SUBSYSTEM_DEF(tgui)
 	for(var/key in open_uis_by_src)
 		for(var/datum/tgui/ui in open_uis_by_src[key])
 			// Check if UI is valid.
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 				ui.close()
 				count++
 	return count

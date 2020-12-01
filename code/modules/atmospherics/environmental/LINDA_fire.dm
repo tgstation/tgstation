@@ -139,7 +139,7 @@
 		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
-		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "druggy")
+		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "druggy")
 		rainbow_overlay.blend_mode = BLEND_ADD
 		rainbow_overlay.alpha = fusion_amt * 255
 		rainbow_overlay.appearance_flags = RESET_COLOR

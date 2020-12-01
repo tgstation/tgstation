@@ -150,8 +150,8 @@
 			new /obj/item/book/granter/spell/summonitem(src)
 
 		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
-			new /obj/item/pneumatic_cannon/speargun(src)
-			new /obj/item/storage/backpack/magspear_quiver(src)
+			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
+			new /obj/item/storage/bag/harpoon_quiver(src)
 			new /obj/item/clothing/suit/space/hardsuit/carp(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
@@ -175,7 +175,7 @@
 		if("bee")
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
-			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
+			new /obj/item/clothing/mask/animal/rat/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)

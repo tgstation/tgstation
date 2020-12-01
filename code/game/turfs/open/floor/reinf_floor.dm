@@ -134,10 +134,6 @@
 	name = "\improper Healium floor"
 	initial_gas_mix = ATMOS_TANK_HEALIUM
 
-/turf/open/floor/engine/hexane
-	name = "\improper Hexane floor"
-	initial_gas_mix = ATMOS_TANK_HEXANE
-
 /turf/open/floor/engine/h2
 	article = "an"
 	name = "\improper H2 floor"
@@ -180,6 +176,14 @@
 /turf/open/floor/engine/zauker
 	name = "\improper Zauker floor"
 	initial_gas_mix = ATMOS_TANK_ZAUKER
+
+/turf/open/floor/engine/helium
+	name = "\improper Helium floor"
+	initial_gas_mix = ATMOS_TANK_HELIUM
+
+/turf/open/floor/engine/antinoblium
+	name = "\improper Antinoblium floor"
+	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
 
 /turf/open/floor/engine/air
 	name = "air floor"

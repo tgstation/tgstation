@@ -18,7 +18,7 @@
 	var/initialized = FALSE
 
 /datum/tgs_api/v5/ApiVersion()
-	return new /datum/tgs_version("5.2.4")
+	return new /datum/tgs_version(TGS_DMAPI_VERSION)
 
 /datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]

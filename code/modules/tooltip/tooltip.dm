@@ -13,7 +13,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltip.show(params, title = src.name, content = src.desc)
 
@@ -42,8 +42,6 @@ Notes:
 /datum/tooltip/New(client/C)
 	if (C)
 		owner = C
-		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
-		stuff.send(owner)
 		owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[control]")
 
 	..()

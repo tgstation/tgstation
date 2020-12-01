@@ -83,7 +83,7 @@
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "[enter_message]")
+			to_chat(mob_occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
 	. = ..()
@@ -94,7 +94,7 @@
 
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	close_machine(target)

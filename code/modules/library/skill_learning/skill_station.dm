@@ -124,9 +124,9 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
 	else
-		to_chat(occupant,"<span class='notice'>Operation complete!</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
 	update_icon()

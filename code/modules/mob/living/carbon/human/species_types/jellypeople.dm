@@ -19,6 +19,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list("slime")
 	species_language_holder = /datum/language_holder/jelly
+	ass_image = 'icons/ass/assslime.png'
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -203,7 +204,7 @@
 
 	H.notransform = TRUE
 
-	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
+	if(do_after(owner, delay = 6 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
@@ -492,9 +493,9 @@
 		button_icon_state = "slimeeject"
 	..()
 
-/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/integrate_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
-	if(species && species.current_extract)
+	if(species?.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/integrate_extract/Activate()
@@ -546,9 +547,9 @@
 			return TRUE
 		return FALSE
 
-/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/innate/use_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
-	if(species && species.current_extract)
+	if(species?.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/use_extract/Activate()
@@ -619,7 +620,7 @@
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
-	RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
+	RegisterSignal(M, COMSIG_LIVING_DEATH , .proc/unlink_mob)
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
 	return TRUE
 
@@ -627,7 +628,7 @@
 	var/link_id = linked_mobs.Find(M)
 	if(!(link_id))
 		return
-	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(M, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
 	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")

@@ -98,6 +98,7 @@
 	var/obj/vehicle/vehicle_target
 
 /datum/action/vehicle/sealed
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/vehicle/sealed/vehicle_entered_target
 
 /datum/action/vehicle/sealed/climb_out
@@ -152,7 +153,7 @@
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs/Trigger()
 	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
-	vehicle_entered_target.DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
+	vehicle_entered_target.dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
 /datum/action/vehicle/sealed/roll_the_dice

@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
-	baseturfs = /turf/open/transparent/openspace/icemoon
+	baseturfs = /turf/open/openspace/icemoon
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -275,13 +275,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	SpawnFloor(src)
 
 /**
-  * Makes the tunnel and spawns things inside of it
-  *
-  * Picks a tunnel width for the tunnel and then starts spawning turfs in the direction it moves in
-  * Can randomly change directions of the tunnel, stops if it hits the edge of the map, or a no tunnel area
-  * Can randomly make new tunnels out of itself
-  *
-  */
+ * Makes the tunnel and spawns things inside of it
+ *
+ * Picks a tunnel width for the tunnel and then starts spawning turfs in the direction it moves in
+ * Can randomly change directions of the tunnel, stops if it hits the edge of the map, or a no tunnel area
+ * Can randomly make new tunnels out of itself
+ *
+ */
 /turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(!randumb)
 			return
 		while(randumb == SPAWN_MEGAFAUNA)
-			if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list && megafauna_spawn_list.len) //this is danger. it's boss time.
+			if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list?.len) //this is danger. it's boss time.
 				var/maybe_boss = pickweight(megafauna_spawn_list)
 				if(megafauna_spawn_list[maybe_boss])
 					randumb = maybe_boss
@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/icemoon
-	baseturfs = /turf/open/transparent/openspace/icemoon
+	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 

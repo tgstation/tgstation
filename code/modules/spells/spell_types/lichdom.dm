@@ -46,7 +46,7 @@
 
 		playsound(user, 'sound/effects/pope_entry.ogg', 100)
 
-		if(!do_after(M, 50, needhand=FALSE, target=marked_item))
+		if(!do_after(M, 5 SECONDS, target = marked_item, timed_action_flags = IGNORE_HELD_ITEM))
 			to_chat(M, "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item]!</span>")
 			return
 
@@ -121,7 +121,7 @@
 	if(!item_turf)
 		return "[src] is not at a turf? NULLSPACE!?"
 
-	var/mob/old_body = mind.current
+	var/mob/living/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
 	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), ITEM_SLOT_FEET)
@@ -137,7 +137,7 @@
 	var/turf/body_turf = get_turf(old_body)
 	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
-	if(old_body && old_body.loc)
+	if(old_body?.loc)
 		if(iscarbon(old_body))
 			var/mob/living/carbon/C = old_body
 			for(var/obj/item/W in C)

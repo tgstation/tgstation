@@ -197,7 +197,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
 
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety && !banned)
+		if(C?.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -332,7 +332,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
+	while(loc?.loc && !isturf(loc.loc))
 		loc = loc.loc
 		if(stop_type && istype(loc, stop_type))
 			break
@@ -382,16 +382,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return locate(x,y,A.z)
 
 /**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
+ * Get ranged target turf, but with direct targets as opposed to directions
+ *
+ * Starts at atom A and gets the exact angle between A and target
+ * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+ * Arguments:
+ * * A - Initial Firer / Position
+ * * target - Target to aim towards
+ * * range - Distance of returned target turf from A
+ * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+ */
 /proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
 	var/angle = ATAN2(target.x - A.x, target.y - A.y)
 	if(offset)
@@ -574,16 +574,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /*
 
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
+Lets the turf this atom's *ICON* appears to inhabit
+it takes into account:
+* Pixel_x/y
+* Matrix x/y
 
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
+NOTE: if your atom has non-standard bounds then this proc
+will handle it, but:
+* if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+* if the bounds are odd, the true middle turf of the atom is returned
 
 */
 
@@ -788,21 +788,21 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /*
 rough example of the "cone" made by the 3 dirs checked
 
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
+
+* \
+*  \
+*   >
+*     <
+*      \
+*       \
+*B --><-- A
+*       /
+*      /
+*     <
+*    >
+*   /
+*  /
+
 
 */
 
@@ -1251,7 +1251,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return temp
 
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+/proc/do_atom(atom/movable/user, atom/movable/target, time = 3 SECONDS, timed_action_flags = NONE, datum/callback/extra_checks)
 	if(!user || !target)
 		return TRUE
 	var/user_loc = user.loc
@@ -1270,11 +1270,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
+
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = FALSE
 			break
-		if(uninterruptible)
-			continue
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
@@ -1284,7 +1283,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			target_drifting = FALSE
 			target_loc = target.loc
 
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+		if(
+			(!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags& IGNORE_TARGET_LOC_CHANGE) && !target_drifting && target.loc != target_loc) \
+			|| (extra_checks && !extra_checks.Invoke()) \
+			)
 			. = FALSE
 			break
 
@@ -1384,8 +1387,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
-		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/food/pie,
+		/obj/item/food/pieslice,
 		/obj/item/food/kebab,
 		/obj/item/food/pizza,
 		/obj/item/food/pizzaslice,
@@ -1393,13 +1396,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/meat,
 		/obj/item/food/meat/slab,
 		/obj/item/food/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
 		/obj/item/reagent_containers/food/snacks/clothing,
-		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
+		/obj/item/food/grown/shell, //base types
 		/obj/item/food/bread,
-		/obj/item/reagent_containers/food/snacks/grown/nettle
+		/obj/item/food/grown/nettle
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 

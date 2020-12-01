@@ -207,7 +207,7 @@
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 5)
-		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
+		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
@@ -277,7 +277,7 @@
 
 /obj/item/fakeartefact
 	name = "expensive forgery"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,

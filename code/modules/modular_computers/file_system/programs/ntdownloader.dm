@@ -185,7 +185,7 @@
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
 	var/hardflag = computer.hardware_flag
 
-	if(P && P.is_supported_by_hardware(hardflag,0))
+	if(P?.is_supported_by_hardware(hardflag,0))
 		return "Compatible"
 	return "Incompatible!"
 

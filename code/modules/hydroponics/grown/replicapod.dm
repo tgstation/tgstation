@@ -111,8 +111,8 @@
 			return result
 
 		// Make sure they can still interact with the parent hydroponics tray.
-		if(!parent.can_interact(user))
-			to_chat(user, text = "You are no longer able to harvets the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
+		if(!user.canUseTopic(parent, BE_CLOSE))
+			to_chat(user, text = "You are no longer able to harvest the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
 			return result
 
 		var/seed_count = 1
