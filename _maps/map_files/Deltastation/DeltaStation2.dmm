@@ -1820,7 +1820,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "afb" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -1911,7 +1911,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "afz" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -2588,7 +2588,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aim" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2603,7 +2603,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/fore)
 "ain" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7202,7 +7202,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "arO" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Arrivals - Aft";
@@ -7212,7 +7212,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "arP" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -10335,7 +10335,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axx" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
@@ -10361,7 +10361,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axB" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -11591,7 +11591,7 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "azT" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/plasma/reinforced{
 	dir = 4
 	},
@@ -11602,7 +11602,7 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "azU" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -12754,12 +12754,14 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aCp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aCr" = (
@@ -39407,7 +39409,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bzp" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
@@ -40437,7 +40439,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bAW" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -40835,7 +40837,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bBA" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -40845,7 +40847,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bBB" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -56500,7 +56502,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ccU" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -59566,7 +59568,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cje" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -59729,7 +59731,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cjy" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/structure/sign/poster/official/ian{
 	pixel_y = -32
 	},
@@ -65445,7 +65447,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "cvE" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -68148,7 +68150,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cAK" = (
-/obj/machinery/power/rad_collector/anchored/delta,
+/obj/machinery/power/rad_collector/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -74699,13 +74701,13 @@
 /turf/closed/wall,
 /area/medical/medbay/central)
 "cNE" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cNF" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -75840,7 +75842,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cPX" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -76622,7 +76624,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cRw" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
@@ -82056,7 +82058,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "dbz" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
@@ -86776,7 +86778,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dln" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -100290,7 +100292,7 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "dPQ" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/light,
 /obj/machinery/status_display/evac{
 	pixel_y = -32
@@ -105008,7 +105010,7 @@
 	},
 /area/chapel/main)
 "eaE" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -105263,7 +105265,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -108270,7 +108272,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "fxd" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "fxp" = (
@@ -110859,7 +110861,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "mMY" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)

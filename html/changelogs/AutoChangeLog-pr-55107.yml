@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Luxury shuttle's scanner gates now accept vehicles and simple animals."
+  - bugfix: "Luxury shuttle's scanner gates are now unbreakable, and consistency charge the correct amount."

@@ -14,6 +14,7 @@
 	tastes = list("donut" = 1)
 	foodtypes = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null
@@ -338,6 +339,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("muffin" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/muffin/berry
 	name = "berry muffin"
@@ -372,6 +374,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("waffles" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soylentgreen
 	name = "\improper Soylent Green"
@@ -381,6 +384,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("waffles" = 7, "people" = 1)
 	foodtypes = GRAIN | MEAT
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -390,6 +394,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("waffles" = 7, "the colour green" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rofflewaffles
 	name = "roffle waffles"
@@ -400,6 +405,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/drug/mushroomhallucinogen = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("waffle" = 1, "mushrooms" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 ////////////////////////////////////////////DONK POCKETS////////////////////////////////////////////
 
@@ -411,6 +417,7 @@
 	microwaved_type = /obj/item/food/donkpocket/warm
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -540,6 +547,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cookie/Initialize()
 	. = ..()
@@ -555,6 +563,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
@@ -563,6 +572,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pretzel" = 1)
 	foodtypes = GRAIN | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -571,6 +581,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("mushroom" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/plumphelmetbiscuit/Initialize()
 	var/fey = prob(10)
@@ -590,6 +601,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("cracker" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/hotdog
 	name = "hotdog"
@@ -599,6 +611,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hotdog/debug
 	eat_time = 0
@@ -610,6 +623,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
@@ -618,6 +632,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bread" = 1, "egg" = 1, "cheese" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 
 /obj/item/food/cookie/sugar
@@ -635,6 +650,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("biscuit" = 3, "chocolate" = 1)
 	foodtypes = GRAIN | JUNKFOOD
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cookie/oatmeal
 	name = "oatmeal cookie"
@@ -659,6 +675,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("cake" = 3, "cherry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cherrycupcake/blue
 	name = "blue cherry cupcake"
@@ -674,6 +691,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/honey = 6)
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtypes = GRAIN | SUGAR
+	w_class = WEIGHT_CLASS_SMALL
 
 #define PANCAKE_MAX_STACK 10
 
@@ -685,6 +703,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pancakes" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"
@@ -783,6 +802,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	w_class = WEIGHT_CLASS_TINY
 
 
 #undef DONUT_SPRINKLE_CHANCE

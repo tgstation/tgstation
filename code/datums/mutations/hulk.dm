@@ -47,14 +47,14 @@
 	source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
 
 /**
-  *Checks damage of a hulk's arm and applies bone wounds as necessary.
-  *
-  *Called by specific atoms being attacked, such as walls. If an atom
-  *does not call this proc, than punching that atom will not cause
-  *arm breaking (even if the atom deals recoil damage to hulks).
-  *Arguments:
-  *arg1 is the arm to evaluate damage of and possibly break.
-  */
+ *Checks damage of a hulk's arm and applies bone wounds as necessary.
+ *
+ *Called by specific atoms being attacked, such as walls. If an atom
+ *does not call this proc, than punching that atom will not cause
+ *arm breaking (even if the atom deals recoil damage to hulks).
+ *Arguments:
+ *arg1 is the arm to evaluate damage of and possibly break.
+ */
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
 	switch(arm.brute_dam)
 		if(45 to 50)

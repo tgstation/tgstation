@@ -466,10 +466,10 @@ There are several things that need to be remembered:
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
 covers:
- inhands and any other form of worn item
- centering large appearances
- layering appearances on custom layers
- building appearances from custom icon files
+Inhands and any other form of worn item
+Rentering large appearances
+Layering appearances on custom layers
+Building appearances from custom icon files
 
 By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
 

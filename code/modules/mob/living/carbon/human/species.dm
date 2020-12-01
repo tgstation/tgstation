@@ -1,14 +1,14 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
 /**
-  * # species datum
-  *
-  * Datum that handles different species in the game.
-  *
-  * This datum handles species in the game, such as lizardpeople, mothmen, zombies, skeletons, etc.
-  * It is used in [carbon humans][mob/living/carbon/human] to determine various things about them, like their food preferences, if they have biological genders, their damage resistances, and more.
-  *
-  */
+ * # species datum
+ *
+ * Datum that handles different species in the game.
+ *
+ * This datum handles species in the game, such as lizardpeople, mothmen, zombies, skeletons, etc.
+ * It is used in [carbon humans][mob/living/carbon/human] to determine various things about them, like their food preferences, if they have biological genders, their damage resistances, and more.
+ *
+ */
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
@@ -188,11 +188,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	..()
 
 /**
-  * Generates species available to choose in character setup at roundstart
-  *
-  * This proc generates which species are available to pick from in character setup.
-  * If there are no available roundstart species, defaults to human.
-  */
+ * Generates species available to choose in character setup at roundstart
+ *
+ * This proc generates which species are available to pick from in character setup.
+ * If there are no available roundstart species, defaults to human.
+ */
 /proc/generate_selectable_species()
 	for(var/I in subtypesof(/datum/species))
 		var/datum/species/S = new I
@@ -203,25 +203,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		GLOB.roundstart_races += "human"
 
 /**
-  * Checks if a species is eligible to be picked at roundstart.
-  *
-  * Checks the config to see if this species is allowed to be picked in the character setup menu.
-  * Used by [/proc/generate_selectable_species].
-  */
+ * Checks if a species is eligible to be picked at roundstart.
+ *
+ * Checks the config to see if this species is allowed to be picked in the character setup menu.
+ * Used by [/proc/generate_selectable_species].
+ */
 /datum/species/proc/check_roundstart_eligible()
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
 		return TRUE
 	return FALSE
 
 /**
-  * Generates a random name for a carbon.
-  *
-  * This generates a random unique name based on a human's species and gender.
-  * Arguments:
-  * * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
-  * * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
-  * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
-  */
+ * Generates a random name for a carbon.
+ *
+ * This generates a random unique name based on a human's species and gender.
+ * Arguments:
+ * * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
+ * * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
+ * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
+ */
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
@@ -240,27 +240,27 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return randname
 
 /**
-  * Copies some vars and properties over that should be kept when creating a copy of this species.
-  *
-  * Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
-  * Arguments:
-  * * old_species - The species that the carbon used to be before copying
-  */
+ * Copies some vars and properties over that should be kept when creating a copy of this species.
+ *
+ * Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
+ * Arguments:
+ * * old_species - The species that the carbon used to be before copying
+ */
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
 
 /**
-  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
-  *
-  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
-  * can use replace_current to refresh all organs, creating an entirely new set.
-  *
-  * Arguments:
-  * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
-  * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
-  * * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
-  * * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
-  */
+ * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
+ *
+ * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
+ * can use replace_current to refresh all organs, creating an entirely new set.
+ *
+ * Arguments:
+ * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
+ * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
+ * * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
+ * * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
+ */
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	//what should be put in if there is no mutantorgan (brains handled seperately)
 	var/list/slot_mutantorgans = list(ORGAN_SLOT_BRAIN = mutantbrain, ORGAN_SLOT_HEART = mutantheart, ORGAN_SLOT_LUNGS = mutantlungs, ORGAN_SLOT_APPENDIX = mutantappendix, \
@@ -322,15 +322,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			replacement.Insert(C, TRUE, FALSE)
 
 /**
-  * Proc called when a carbon becomes this species.
-  *
-  * This sets up and adds/changes/removes things, qualities, abilities, and traits so that the transformation is as smooth and bugfree as possible.
-  * Produces a [COMSIG_SPECIES_GAIN] signal.
-  * Arguments:
-  * * C - Carbon, this is whoever became the new species.
-  * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
-  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
-  */
+ * Proc called when a carbon becomes this species.
+ *
+ * This sets up and adds/changes/removes things, qualities, abilities, and traits so that the transformation is as smooth and bugfree as possible.
+ * Produces a [COMSIG_SPECIES_GAIN] signal.
+ * Arguments:
+ * * C - Carbon, this is whoever became the new species.
+ * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
+ * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
+ */
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
@@ -399,15 +399,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 /**
-  * Proc called when a carbon is no longer this species.
-  *
-  * This sets up and adds/changes/removes things, qualities, abilities, and traits so that the transformation is as smooth and bugfree as possible.
-  * Produces a [COMSIG_SPECIES_LOSS] signal.
-  * Arguments:
-  * * C - Carbon, this is whoever lost this species.
-  * * new_species - The new species that the carbon became, used for genetics mutations.
-  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
-  */
+ * Proc called when a carbon is no longer this species.
+ *
+ * This sets up and adds/changes/removes things, qualities, abilities, and traits so that the transformation is as smooth and bugfree as possible.
+ * Produces a [COMSIG_SPECIES_LOSS] signal.
+ * Arguments:
+ * * C - Carbon, this is whoever lost this species.
+ * * new_species - The new species that the carbon became, used for genetics mutations.
+ * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
+ */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
@@ -445,13 +445,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /**
-  * Handles hair icons and dynamic hair.
-  *
-  * Handles hiding hair with clothing, hair layers, losing hair due to husking or augmented heads, facial hair, head hair, and hair styles.
-  * Arguments:
-  * * H - Human, whoever we're handling the hair for
-  * * forced_colour - The colour of hair we're forcing on this human. Leave null to not change. Mind the british spelling!
-  */
+ * Handles hair icons and dynamic hair.
+ *
+ * Handles hiding hair with clothing, hair layers, losing hair due to husking or augmented heads, facial hair, head hair, and hair styles.
+ * Arguments:
+ * * H - Human, whoever we're handling the hair for
+ * * forced_colour - The colour of hair we're forcing on this human. Leave null to not change. Mind the british spelling!
+ */
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
@@ -600,13 +600,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.apply_overlay(HAIR_LAYER)
 
 /**
-  * Handles the body of a human
-  *
-  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
-  * Calls [handle_mutant_bodyparts][/datum/species/proc/handle_mutant_bodyparts]
-  * Arguments:
-  * * H - Human, whoever we're handling the body for
-  */
+ * Handles the body of a human
+ *
+ * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
+ * Calls [handle_mutant_bodyparts][/datum/species/proc/handle_mutant_bodyparts]
+ * Arguments:
+ * * H - Human, whoever we're handling the body for
+ */
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
 
@@ -679,7 +679,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+				if(H.dna.species.sexes && H.body_type == FEMALE && (underwear.gender == MALE))
+					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+				else
+					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
 					underwear_overlay.color = "#" + H.underwear_color
 				standing += underwear_overlay
@@ -687,7 +690,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 			if(undershirt)
-				if(H.dna.species.sexes && H.gender == FEMALE)
+				if(H.dna.species.sexes && H.body_type == FEMALE)
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
@@ -704,14 +707,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	handle_mutant_bodyparts(H)
 
 /**
-  * Handles the mutant bodyparts of a human
-  *
-  * Handles the adding and displaying of, layers, colors, and overlays of mutant bodyparts and accessories.
-  * Handles digitigrade leg displaying and squishing.
-  * Arguments:
-  * * H - Human, whoever we're handling the body for
-  * * forced_colour - The forced color of an accessory. Leave null to use mutant color.
-  */
+ * Handles the mutant bodyparts of a human
+ *
+ * Handles the adding and displaying of, layers, colors, and overlays of mutant bodyparts and accessories.
+ * Handles digitigrade leg displaying and squishing.
+ * Arguments:
+ * * H - Human, whoever we're handling the body for
+ * * forced_colour - The forced color of an accessory. Leave null to use mutant color.
+ */
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
@@ -948,15 +951,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, swap = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-	var/obj/item/replaced_item = H.get_item_by_slot(slot)
-
-	// if there's an item in the slot we want, only allow past this if we're trying to swap and the item being replaced isn't NODROP or ABSTRACT
-	if(replaced_item && (!swap || (HAS_TRAIT(replaced_item, TRAIT_NODROP) || (replaced_item.item_flags & ABSTRACT))))
+	// if there's an item in the slot we want, fail
+	if(H.get_item_by_slot(slot))
 		return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
@@ -1597,87 +1598,244 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * environment handler for species
+ * Environment handler for species
  *
  * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
+ * * environment (required) The environment gas mix
+ * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
-/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
-	var/areatemp = H.get_temperature(environment)
+/datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/humi)
+	handle_environment_pressure(environment, humi)
 
-	if(H.stat != DEAD) // If you are dead your body does not stabilize naturally
-		natural_bodytemperature_stabilization(environment, H)
+/**
+ * Body temperature handler for species
+ *
+ * These procs manage body temp, bamage, and alerts
+ * Some of these will still fire when not alive to balance body temp to the room temp.
+ * vars:
+ * * humi (required)(type: /mob/living/carbon/human) The mob we will target
+ */
+/datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi)
+	//when in a cryo unit we suspend all natural body regulation
+	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
+	//when dead the air still effects your skin temp
+	if(humi.stat == DEAD || IS_IN_STASIS(humi))
+		body_temperature_skin(humi)
+	else //when alive do all the things
+		body_temperature_core(humi)
+		body_temperature_skin(humi)
+		body_temperature_alerts(humi)
+		body_temperature_damage(humi)
 
-	if(!H.on_fire || areatemp > H.bodytemperature) // If we are not on fire or the area is hotter
-		H.adjust_bodytemperature((areatemp - H.bodytemperature), use_insulation=TRUE, use_steps=TRUE)
+/**
+ * Used to stabilize the core temperature back to normal on living mobs
+ *
+ * The metabolisim heats up the core of the mob trying to keep it at the normal body temp
+ * vars:
+ * * humi (required) The mob we will stabilize
+ */
+/datum/species/proc/body_temperature_core(mob/living/carbon/human/humi)
+	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.12)
+	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
-/// Handle the body temperature status effects for the species
-/// Traits for resitance to heat or cold are handled here.
-/datum/species/proc/handle_body_temperature(mob/living/carbon/human/H)
+/**
+ * Used to normalize the skin temperature on living mobs
+ *
+ * The core temp effects the skin, then the enviroment effects the skin, then we refect that back to the core.
+ * This happens even when dead so bodies revert to room temp over time.
+ * vars:
+ * * humi (required) The mob we will targeting
+ */
+/datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi)
+
+	// change the core based on the skin temp
+	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
+	// change rate of 0.08 to be slightly below area to skin change rate and still have a solid curve
+	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.08)
+
+	humi.adjust_coretemperature(skin_core_change)
+
+	// get the enviroment details of where the mob is standing
+	var/datum/gas_mixture/environment = humi.loc.return_air()
+	if(!environment) // if there is no environment (nullspace) drop out here.
+		return
+
+	// Get the temperature of the environment for area
+	var/area_temp = humi.get_temperature(environment)
+
+	// Get the insulation value based on the area's temp
+	var/thermal_protection = humi.get_insulation_protection(area_temp)
+
+	// Changes to the skin temperature based on the area
+	var/area_skin_diff = area_temp - humi.bodytemperature
+	if(!humi.on_fire || area_skin_diff > 0)
+		// change rate of 0.1 as area temp has large impact on the surface
+		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.1)
+
+		// We need to apply the thermal protection of the clothing when applying area to surface change
+		// If the core bodytemp goes over the normal body temp you are overheating and becom sweaty
+		// This will cause the insulation value of any clothing to reduced in effect (70% normal rating)
+		// we add 10 degree over normal body temp before triggering as thick insulation raises body temp
+		if(humi.get_body_temp_normal(apply_change=FALSE) + 10 < humi.coretemperature)
+			// we are overheating and sweaty insulation is not as good reducing thermal protection
+			area_skin_change = (1 - (thermal_protection * 0.7)) * area_skin_change
+		else
+			area_skin_change = (1 - thermal_protection) * area_skin_change
+
+		humi.adjust_bodytemperature(area_skin_change)
+
+	// Core to skin temp transfer, when not on fire
+	if(!humi.on_fire)
+		// Get the changes to the skin from the core temp
+		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
+		// change rate of 0.09 to reflect temp back to the skin at the slight higher rate then core to skin
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.09)
+
+		// We do not want to over shoot after using protection
+		if(core_skin_diff > 0)
+			core_skin_change = min(core_skin_change, core_skin_diff)
+		else
+			core_skin_change = max(core_skin_change, core_skin_diff)
+
+		humi.adjust_bodytemperature(core_skin_change)
+
+
+/**
+ * Used to set alerts and debuffs based on body temperature
+ * vars:
+ * * humi (required) The mob we will targeting
+ */
+/datum/species/proc/body_temperature_alerts(mob/living/carbon/human/humi)
 	// Body temperature is too hot, and we do not have resist traits
-	if(H.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
+	if(humi.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		//Remove any slowdown from the cold.
-		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-
-		var/burn_damage = 0
-		var/firemodifier = H.fire_stacks / 50
-		if (!H.on_fire) // We are not on fire, reduce the modifier
-			firemodifier = min(firemodifier, 0)
-
-		// this can go below 5 at log 2.5
-		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - H.get_body_temp_normal(apply_change=FALSE))) - 5,0)
-
-		// Display alerts based on the amount of fire damage being taken
-		if (burn_damage)
-			switch(burn_damage)
-				if(0 to 2)
-					H.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-				if(2 to 4)
-					H.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-				else
-					H.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-
-		// Apply species and physiology modifiers to heat damage
-		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
-
-		// 40% for level 3 damage on humans to scream in pain
-		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
-			H.emote("scream")
-
-		// Apply the damage to all body parts
-		H.apply_damage(burn_damage, BURN, spread_damage = TRUE)
+		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
+		// display alerts based on how hot it is
+		switch(humi.bodytemperature)
+			if(0 to 460)
+				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
+			if(461 to 700)
+				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+			else
+				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
-	else if(H.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
+	else if(humi.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		// clear any hot moods and apply cold mood
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		// Apply cold slow down
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
-		// Display alerts based on the amount of cold damage being taken
-		// Apply more damage based on how cold you are
-		switch(H.bodytemperature)
-			if(200 to bodytemp_cold_damage_limit)
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * H.physiology.cold_mod, BURN)
+		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
+		// Display alerts based how cold it is
+		switch(humi.bodytemperature)
+			if(201 to bodytemp_cold_damage_limit)
+				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 			if(120 to 200)
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * H.physiology.cold_mod, BURN)
+				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 			else
-				H.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * H.physiology.cold_mod, BURN)
+				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
 	else
-		H.clear_alert("temp")
-		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		humi.clear_alert("temp")
+		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
+		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
+/**
+ * Used to apply wounds and damage based on core/body temp
+ * vars:
+ * * humi (required) The mob we will targeting
+ */
+/datum/species/proc/body_temperature_damage(mob/living/carbon/human/humi)
+
+	//If the body temp is above the wound limit start adding exposure stacks
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT)
+		humi.heat_exposure_stacks = min(humi.heat_exposure_stacks + 1, 40)
+	else //When below the wound limit, reduce the exposure stacks fast.
+		humi.heat_exposure_stacks = max(humi.heat_exposure_stacks - 4, 0)
+
+	//when exposure stacks are greater then 10 + rand20 try to apply wounds and reset stacks
+	if(humi.heat_exposure_stacks > (10 + rand(0, 20)))
+		apply_burn_wounds(humi)
+		humi.heat_exposure_stacks = 0
+
+	// Body temperature is too hot, and we do not have resist traits
+	// Apply some burn damage to the body
+	if(humi.coretemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
+		var/firemodifier = humi.fire_stacks / 50
+		if (!humi.on_fire) // We are not on fire, reduce the modifier
+			firemodifier = min(firemodifier, 0)
+
+		// this can go below 5 at log 2.5
+		var/burn_damage = max(log(2 - firemodifier, (humi.coretemperature - humi.get_body_temp_normal(apply_change=FALSE))) - 5,0)
+
+		// Apply species and physiology modifiers to heat damage
+		burn_damage = burn_damage * heatmod * humi.physiology.heat_mod
+
+		// 40% for level 3 damage on humans to scream in pain
+		if (humi.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
+			humi.emote("scream")
+
+		// Apply the damage to all body parts
+		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE)
+
+	// Apply some burn damage to the body
+	if(humi.coretemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+		switch(humi.coretemperature)
+			if(201 to bodytemp_cold_damage_limit)
+				humi.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * humi.physiology.cold_mod, BURN)
+			if(120 to 200)
+				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * humi.physiology.cold_mod, BURN)
+			else
+				humi.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * humi.physiology.cold_mod, BURN)
+
+/**
+ * Used to apply burn wounds on random limbs
+ *
+ * This is called from body_temperature_damage when exposure to extream heat adds up and causes a wound.
+ * The wounds will increase in severity as the temperature increases.
+ * vars:
+ * * humi (required) The mob we will targeting
+ */
+/datum/species/proc/apply_burn_wounds(mob/living/carbon/human/humi)
+	// If we are resistant to heat exit
+	if(HAS_TRAIT(humi, TRAIT_RESISTHEAT))
+		return
+
+	// If our body temp is to low for a wound exit
+	if(humi.bodytemperature < BODYTEMP_HEAT_WOUND_LIMIT)
+		return
+
+	// Lets pick a random body part and check for an existing burn
+	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
+	var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
+
+	// If we have an existing burn try to upgrade it
+	if(existing_burn)
+		switch(existing_burn.severity)
+			if(WOUND_SEVERITY_MODERATE)
+				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400) // 800k
+					bodypart.force_wound_upwards(/datum/wound/burn/severe)
+			if(WOUND_SEVERITY_SEVERE)
+				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800) // 3200k
+					bodypart.force_wound_upwards(/datum/wound/burn/critical)
+	else // If we have no burn apply the lowest level burn
+		bodypart.force_wound_upwards(/datum/wound/burn/moderate)
+
+	// always take some burn damage
+	var/burn_damage = HEAT_DAMAGE_LEVEL_1
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400)
+		burn_damage = HEAT_DAMAGE_LEVEL_2
+	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800)
+		burn_damage = HEAT_DAMAGE_LEVEL_3
+
+	humi.apply_damage(burn_damage, BURN, bodypart)
 
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(datum/gas_mixture/environment, mob/living/carbon/human/H)
@@ -1721,61 +1879,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
 				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 
-/**
- * Used to stabilize the body temperature back to normal on living mobs
- *
- * vars:
- * * environment The environment gas mix
- * * H The mob we will stabilize
- */
-/datum/species/proc/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
-	var/areatemp = H.get_temperature(environment)
-	var/body_temp = H.bodytemperature // Get current body temperature
-	var/body_temperature_difference = H.get_body_temp_normal() - body_temp
-	var/natural_change = 0
-
-	// We are very cold, increate body temperature
-	if(body_temp <= bodytemp_cold_damage_limit)
-		natural_change = max((body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-			bodytemp_autorecovery_min)
-
-	// we are cold, reduce the minimum increment and do not jump over the difference
-	else if(body_temp > bodytemp_cold_damage_limit && body_temp < H.get_body_temp_normal())
-		natural_change = max(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			min(body_temperature_difference, bodytemp_autorecovery_min / 4))
-
-	// We are hot, reduce the minimum increment and do not jump below the difference
-	else if(body_temp > H.get_body_temp_normal() && body_temp <= bodytemp_heat_damage_limit)
-		natural_change = min(body_temperature_difference * H.metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			max(body_temperature_difference, -(bodytemp_autorecovery_min / 4)))
-
-	// We are very hot, reduce the body temperature
-	else if(body_temp >= bodytemp_heat_damage_limit)
-		natural_change = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -bodytemp_autorecovery_min)
-
-	var/thermal_protection = H.get_insulation_protection(body_temp + natural_change)
-	if(areatemp > body_temp) // It is hot here
-		if(body_temp < H.get_body_temp_normal())
-			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
-			// and will reduce the heat we lose to the environment
-			natural_change = (thermal_protection + 1) * natural_change
-		else
-			// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-			// but will reduce the amount of heat we get from the environment
-			natural_change = (1 / (thermal_protection + 1)) * natural_change
-	else // It is cold here
-		if(!H.on_fire) // If on fire ignore ignore local temperature in cold areas
-			if(body_temp < H.get_body_temp_normal())
-				// Our bodytemp is below normal, insulation helps us retain body heat
-				// and will reduce the heat we lose to the environment
-				natural_change = (thermal_protection + 1) * natural_change
-			else
-				// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
-				// but will reduce the amount of heat we get from the environment
-				natural_change = (1 / (thermal_protection + 1)) * natural_change
-
-	// Apply the natural stabilization changes
-	H.adjust_bodytemperature(natural_change)
 
 //////////
 // FIRE //
@@ -1989,8 +2092,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.set_resting(FALSE, TRUE)
 
 /**
-  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
-  */
+ * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
+ */
 /datum/species/proc/get_biological_state(mob/living/carbon/human/H)
 	. = BIO_INORGANIC
 	if(HAS_FLESH in species_traits)

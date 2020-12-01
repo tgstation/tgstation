@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Simplemobs should be able to be properly melee attacked again. Sorry for borking it in the first place!"

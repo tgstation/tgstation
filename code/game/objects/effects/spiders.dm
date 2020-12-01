@@ -91,11 +91,16 @@
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
 	. = ..()
+	GLOB.poi_list |= src
+
+/obj/structure/spider/eggcluster/Destroy()
+	. = ..()
+	GLOB.poi_list.Remove(src)
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100 && !ghost_ready)
-		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER)
+		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
 		ghost_ready = TRUE
 
 /obj/structure/spider/eggcluster/attack_ghost(mob/user)
@@ -104,12 +109,12 @@
 		make_spider(user)
 
 /**
-  * Makes a ghost into a spider based on the type of egg cluster.
-  *
-  * Allows a ghost to get a prompt to use the egg cluster to become a spider.
-  * Arguments:
-  * * user - The ghost attempting to become a spider.
-  */
+ * Makes a ghost into a spider based on the type of egg cluster.
+ *
+ * Allows a ghost to get a prompt to use the egg cluster to become a spider.
+ * Arguments:
+ * * user - The ghost attempting to become a spider.
+ */
 /obj/structure/spider/eggcluster/proc/make_spider(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()

@@ -264,16 +264,16 @@
 	//check_update_ui_need()
 
 /**
-  * Displays notification text alongside a soundbeep when requested to by a program.
-  *
-  * After checking tha the requesting program is allowed to send an alert, creates
-  * a visible message of the requested text alongside a soundbeep. This proc adds
-  * text to indicate that the message is coming from this device and the program
-  * on it, so the supplied text should be the exact message and ending punctuation.
-  *
-  * Arguments:
-  * The program calling this proc.
-  * The message that the program wishes to display.
+ * Displays notification text alongside a soundbeep when requested to by a program.
+ *
+ * After checking tha the requesting program is allowed to send an alert, creates
+ * a visible message of the requested text alongside a soundbeep. This proc adds
+ * text to indicate that the message is coming from this device and the program
+ * on it, so the supplied text should be the exact message and ending punctuation.
+ *
+ * Arguments:
+ * The program calling this proc.
+ * The message that the program wishes to display.
  */
 
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
@@ -382,10 +382,10 @@
 	update_icon()
 
 /**
-  * Toggles the computer's flashlight, if it has one.
-  *
-  * Called from ui_act(), does as the name implies.
-  * It is seperated from ui_act() to be overwritten as needed.
+ * Toggles the computer's flashlight, if it has one.
+ *
+ * Called from ui_act(), does as the name implies.
+ * It is seperated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
@@ -398,12 +398,12 @@
 	return TRUE
 
 /**
-  * Sets the computer's light color, if it has a light.
-  *
-  * Called from ui_act(), this proc takes a color string and applies it.
-  * It is seperated from ui_act() to be overwritten as needed.
-  * Arguments:
-  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
+ * Sets the computer's light color, if it has a light.
+ *
+ * Called from ui_act(), this proc takes a color string and applies it.
+ * It is seperated from ui_act() to be overwritten as needed.
+ * Arguments:
+ ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
 /obj/item/modular_computer/proc/set_flashlight_color(color)
 	if(!has_light || !color)
