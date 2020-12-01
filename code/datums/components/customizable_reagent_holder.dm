@@ -58,6 +58,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, .proc/on_processed)
+	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
 
 /datum/component/customizable_reagent_holder/UnregisterFromParent()
@@ -67,6 +68,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_PROCESSED,
 	))
+	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
 
 /datum/component/customizable_reagent_holder/PostTransfer()
@@ -108,13 +110,13 @@
 			valid_ingredient = IS_EDIBLE(ingredient)
 
 	// only accept valid ingredients
-	if (!valid_ingredient)
+	if (!valid_ingredient || HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
 		to_chat(attacker, "<span class='warning'>[ingredient] doesn't belong on [parent]!</span>")
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
 		to_chat(attacker, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
-		return
+		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
 	if(!attacker.transferItemToLoc(ingredient, atom_parent))
