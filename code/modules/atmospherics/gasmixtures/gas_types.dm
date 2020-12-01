@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/bz
 	id = "bz"
-	specific_heat = 55
+	specific_heat = 60
 	name = "BZ"
 	dangerous = TRUE
 	fusion_power = 8
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 269
+	specific_heat = 230
 	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/halon
 	id = "halon"
-	specific_heat = 215
+	specific_heat = 200
 	name = "Halon"
 	dangerous = TRUE
 	gas_overlay = "halon"
