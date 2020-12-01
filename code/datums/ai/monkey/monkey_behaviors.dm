@@ -133,7 +133,7 @@
 
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
-
+sds
 	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn))	// if right next to perp
 		// check if target has a weapon
 		var/obj/item/W
