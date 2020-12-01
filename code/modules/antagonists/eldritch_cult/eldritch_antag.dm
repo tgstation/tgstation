@@ -41,7 +41,7 @@
 	for(var/AA in GLOB.active_alternate_appearances)
 		if(!AA || !istype(AA,/datum/atom_hud/alternate_appearance/basic/heretics))
 			continue
-		var/datum/atom_hud/alternate_appearance/appearance = v
+		var/datum/atom_hud/alternate_appearance/appearance = AA
 		appearance.onNewMob(src)
 
 	START_PROCESSING(SSprocessing,src)

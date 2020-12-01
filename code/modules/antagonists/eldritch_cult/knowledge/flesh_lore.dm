@@ -43,7 +43,7 @@
 		humie.ghostize(0)
 		humie.key = C.key
 
-	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
+	ADD_TRAIT(humie,TRAIT_MUTE,type)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
 	humie.setMaxHealth(50)
@@ -62,6 +62,7 @@
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
 	var/mob/living/carbon/human/humie = source
 	ghouls -= humie
+	REMOVE_TRAIT(humie,TRAIT_MUTE,type)
 	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 	UnregisterSignal(source,COMSIG_LIVING_DEATH)
 
