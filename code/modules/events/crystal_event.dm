@@ -477,6 +477,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 	singular_name = "otherworld crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	material_type = /datum/material/otherworld_crystal
+	merge_type = /obj/item/stack/sheet/otherworld_crystal
 
 /*
 This section is for the signaler part of the crystal portals

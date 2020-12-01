@@ -153,12 +153,12 @@
 	human_user.AdjustAllImmobility(-10)
 
 /**
-  * #Rust spread datum
-  *
-  * Simple datum that automatically spreads rust around it
-  *
-  * Simple implementation of automatically growing entity
-  */
+ * #Rust spread datum
+ *
+ * Simple datum that automatically spreads rust around it
+ *
+ * Simple implementation of automatically growing entity
+ */
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
@@ -196,10 +196,10 @@
 
 
 /**
-  * Compile turfs
-  *
-  * Recreates all edge_turfs as well as normal turfs.
-  */
+ * Compile turfs
+ *
+ * Recreates all edge_turfs as well as normal turfs.
+ */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
 	var/list/removal_list = list()

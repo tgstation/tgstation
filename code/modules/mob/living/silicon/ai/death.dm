@@ -4,6 +4,7 @@
 
 	. = ..()
 
+	cut_overlays() //remove portraits
 	var/old_icon = icon_state
 	if("[icon_state]_dead" in icon_states(icon))
 		icon_state = "[icon_state]_dead"

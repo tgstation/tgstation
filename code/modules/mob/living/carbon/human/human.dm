@@ -177,7 +177,7 @@
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
-		dat += "<tr><td><A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Legcuffed</A></td></tr>"
+		dat += "<tr><td><B>Legcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
 	dat += {"</table>
 	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
@@ -225,8 +225,12 @@
 			if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
 				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
 			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			delay_denominator = 4
 		else
 			return
@@ -235,11 +239,15 @@
 			if(pocket_item)
 				if(pocket_item == (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)) //item still in the pocket we search
 					dropItemToGround(pocket_item)
+					log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+					usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 			else
 				if(place_item)
 					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
 						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 						equip_to_slot(place_item, pocket_id, TRUE)
+						log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
+						usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
 					//do nothing otherwise
 				//updating inv screen after handled by living/Topic()
 		else
@@ -702,10 +710,10 @@
 			dropItemToGround(I)
 
 /**
-  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
-  *
-  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
-  */
+ * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
+ *
+ * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
+ */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
 	var/obscured = check_obscured_slots()
 	if(obscured & ITEM_SLOT_GLOVES)
@@ -721,8 +729,8 @@
 	return TRUE
 
 /**
-  * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
-  */
+ * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+ */
 /mob/living/carbon/human/proc/clean_lips()
 	if(isnull(lip_style) && lip_color == initial(lip_color))
 		return FALSE
@@ -732,8 +740,8 @@
 	return TRUE
 
 /**
-  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
-  */
+ * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
+ */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
@@ -748,8 +756,8 @@
 		. = TRUE
 
 /**
-  * Called when this human should be washed
-  */
+ * Called when this human should be washed
+ */
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
 
@@ -797,17 +805,6 @@
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
-
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, floor_okay=FALSE)
-	if(!(mobility_flags & MOBILITY_UI) && !floor_okay)
-		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-		return FALSE
-	if(!Adjacent(M) && (M.loc != src))
-		if((be_close == FALSE) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
-			return TRUE
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit?.breakouttime)
@@ -896,6 +893,8 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	coretemperature = get_body_temp_normal(apply_change=FALSE)
+	heat_exposure_stacks = 0
 	return ..()
 
 /mob/living/carbon/human/is_literate()
@@ -906,7 +905,7 @@
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE, purge = FALSE)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \

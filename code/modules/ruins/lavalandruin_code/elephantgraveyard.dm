@@ -119,6 +119,8 @@
 	anchored = TRUE
 	locked = TRUE
 	breakout_time = 900
+	open_sound = 'sound/effects/shovel_dig.ogg'
+	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE

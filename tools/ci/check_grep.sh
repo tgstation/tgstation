@@ -31,6 +31,10 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
+echo "Checking for pixel_[xy]"
+if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
+    echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
+fi;
 echo "Checking for stacked cables"
 if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
     echo "found multiple cables on the same tile, please remove them."
@@ -46,6 +50,16 @@ if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
 fi;
 if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
+    st=1
+fi;
+echo "Checking for space indentation"
+if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
+    echo "space indentation detected"
+    st=1
+fi;
+echo "Checking for mixed indentation"
+if grep -P '^\t+ [^ *]' code/**/*.dm; then
+    echo "mixed <tab><space> indentation detected"
     st=1
 fi;
 nl='
