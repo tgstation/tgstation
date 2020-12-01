@@ -109,12 +109,12 @@
 		make_spider(user)
 
 /**
-  * Makes a ghost into a spider based on the type of egg cluster.
-  *
-  * Allows a ghost to get a prompt to use the egg cluster to become a spider.
-  * Arguments:
-  * * user - The ghost attempting to become a spider.
-  */
+ * Makes a ghost into a spider based on the type of egg cluster.
+ *
+ * Allows a ghost to get a prompt to use the egg cluster to become a spider.
+ * Arguments:
+ * * user - The ghost attempting to become a spider.
+ */
 /obj/structure/spider/eggcluster/proc/make_spider(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()

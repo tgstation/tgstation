@@ -441,8 +441,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
- 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-							 "<span class='hear'>You hear the clattering of loose change.</span>")
+				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+				"<span class='hear'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
 /obj/item/coin/gold
@@ -510,8 +510,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
- 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-							 "<span class='hear'>You hear the clattering of loose change.</span>")
+				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+				"<span class='hear'>You hear the clattering of loose change.</span>")
 		SSeconomy.fire()
 		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
