@@ -23,8 +23,7 @@
 	bounty_types = CIV_JOB_SEC
 
 	mail_goodies = list(
-		/obj/item/clothing/mask/whistle = 5,
-		/obj/item/gun/energy/taser = 1
+		/obj/item/clothing/mask/whistle = 5
 	)
 
 /datum/job/officer/get_access()

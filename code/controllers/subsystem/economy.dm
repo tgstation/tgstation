@@ -37,11 +37,11 @@ SUBSYSTEM_DEF(economy)
 	var/earning_report
 	var/market_crashing = FALSE
 
-	/// KF: Total value of exported materials.
+	/// Total value of exported materials.
 	var/export_total = 0
-	/// KF: Total value of imported goods.
+	/// Total value of imported goods.
 	var/import_total = 0
-	/// KF: Number of mail items generated.
+	/// Number of mail items generated.
 	var/mail_waiting = 0
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
