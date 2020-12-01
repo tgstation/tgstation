@@ -133,7 +133,7 @@
 
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
-sds
+
 	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn))	// if right next to perp
 		// check if target has a weapon
 		var/obj/item/W
@@ -253,11 +253,7 @@ sds
 
 			var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 
-			///Fill in a plan override!
-			if(!monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET])
-				monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
-				monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
-				monkey_ai.current_movement_target = your_enemy
-				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
-				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
+			var/list/enemies = L.ai_controller.blackboard[BB_MONKEY_ENEMIES]
+			enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
+			monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	finish_action(controller, TRUE)

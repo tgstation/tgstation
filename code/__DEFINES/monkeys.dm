@@ -20,7 +20,8 @@
 #define MONKEY_RETALIATE_DISARM_PROB 		20 	// probability for the monkey to aggro when attacked with disarm intent
 
 #define MONKEY_HATRED_AMOUNT 				4	// amount of aggro to add to an enemy when they attack user
-#define MONKEY_HATRED_REDUCTION_PROB 		5	// probability of reducing aggro by one when the monkey attacks
+#define MONKEY_RECRUIT_HATED_AMOUNT 		2	// amount of aggro to add to an enemy when a monkey is recruited
+#define MONKEY_HATRED_REDUCTION_PROB 		20	// probability of reducing aggro by one when the monkey attacks
 
 // how many Life ticks the monkey will fail to:
 #define MONKEY_HUNT_FRUSTRATION_LIMIT 		30	// Chase after an enemy before giving up
