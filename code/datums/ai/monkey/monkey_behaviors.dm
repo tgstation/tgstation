@@ -281,7 +281,7 @@
 
 			///Fill in a plan override!
 			if(!monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET])
-				blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
+				monkey_ai.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = your_enemy
 				monkey_ai.current_movement_target = your_enemy
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
 				monkey_ai.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
