@@ -470,7 +470,7 @@
 
 /datum/spellbook_entry/duffel_bag
 	name = "Duffelbag Curse"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
+	desc = "A curse that slows the target and makes him take periodical damage if not countered."
 	spell_type = /obj/effect/proc_holder/spell/pointed/duffelbagcurse
 	category = "Assistance"
 	cost = 1
