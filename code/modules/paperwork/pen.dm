@@ -159,14 +159,13 @@
 			if(input == oldname || !input)
 				to_chat(user, "<span class='notice'>You changed [O] to... well... [O].</span>")
 			else
-				O.name = input
+				O.AddComponent(/datum/component/rename, input, O.desc)
 				var/datum/component/label/label = O.GetComponent(/datum/component/label)
 				if(label)
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, "<span class='notice'>You have successfully renamed \the [oldname] to [O].</span>")
 				O.obj_flags |= RENAMED_BY_PLAYER
-				O.name_before_player_changed = oldname
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 140)
@@ -176,32 +175,23 @@
 			if(input == olddesc || !input)
 				to_chat(user, "<span class='notice'>You decide against changing [O]'s description.</span>")
 			else
-				O.desc = input
+				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
 				O.obj_flags |= RENAMED_BY_PLAYER
-				O.desc_before_player_changed = olddesc
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			var/whatwereset
-			if(O.name_before_player_changed)
-				O.name = O.name_before_player_changed
-				whatwereset = "name"
-			if(O.desc_before_player_changed)
-				O.desc = O.desc_before_player_changed
-				if(whatwereset)
-					whatwereset += " and description"
-				else
-					whatwereset = "description"
+
+			SEND_SIGNAL(src, COMSIG_ATOM_RESET_PLAYER_RENAME)
+
 			var/datum/component/label/label = O.GetComponent(/datum/component/label)
 			if(label)
 				label.remove_label()
 				label.apply_label()
-			to_chat(user, "<span class='notice'>You have successfully reset [O]'s [whatwereset].</span>")
+
+			to_chat(user, "<span class='notice'>You have successfully reset [O]'s name and/or description.</span>")
 			O.obj_flags &= ~RENAMED_BY_PLAYER
-			O.name_before_player_changed = null
-			O.desc_before_player_changed = null
 
 /*
  * Sleepypens

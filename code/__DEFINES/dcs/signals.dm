@@ -71,6 +71,10 @@
 	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED (1<<0)
+///from base of atom/player_rename(): ()
+#define COMSIG_ATOM_PLAYER_RENAME "atom_player_rename"
+///from base of atom/reset_player_rename(): ()
+#define COMSIG_ATOM_RESET_PLAYER_RENAME "atom_reset_player_rename"
 ///from base of atom/update_icon(): ()
 #define COMSIG_ATOM_UPDATE_ICON "atom_update_icon"
 	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE	(1<<0)

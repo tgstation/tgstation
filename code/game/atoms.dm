@@ -625,6 +625,12 @@
 	if(!LAZYLEN(.)) // lol ..length
 		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
+/atom/proc/player_rename()
+	SEND_SIGNAL(src, COMSIG_ATOM_PLAYER_RENAME)
+
+/atom/proc/reset_player_rename()
+	SEND_SIGNAL(src, COMSIG_ATOM_RESET_PLAYER_RENAME)
+
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	SIGNAL_HANDLER
