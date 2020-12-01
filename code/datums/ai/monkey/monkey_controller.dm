@@ -126,8 +126,7 @@ have ways of interacting with a specific mob and control it.
 	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		step(living_pawn, pick(GLOB.cardinals))
 	else if(DT_PROB(5, delta_time))
-		INVOKE_ASYNC(living_pawn, .proc/emote, pick("screech")
-		living_pawn.emote())
+		INVOKE_ASYNC(living_pawn, .proc/emote, pick("screech"))
 	else if(DT_PROB(1, delta_time))
 		INVOKE_ASYNC(living_pawn, .proc/emote, pick("scratch","jump","roll","tail"))
 
