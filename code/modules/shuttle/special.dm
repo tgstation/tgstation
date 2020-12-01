@@ -235,7 +235,7 @@
 			var/obj/vehicle/vehicle = mover
 			for(var/mob/living/rat in vehicle.occupants)
 				if(!(rat in approved_passengers))
-					say("<span class='robot'>Stowaway detected. Please exit the structure first.</span>")
+					say("<span class='robot'>Stowaway detected. Please exit the vehicle first.</span>")
 					return FALSE
 		return TRUE
 	if(isitem(mover))
