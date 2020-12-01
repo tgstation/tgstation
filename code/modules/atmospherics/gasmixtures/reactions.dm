@@ -493,7 +493,7 @@ nobiliumsuppression = INFINITY
 	var/atmospheric_efficiency = (0.1 * ONE_ATMOSPHERE) / pressure
 	var/reaction_efficency = min(atmospheric_efficiency * max((cached_gases[/datum/gas/nitrous_oxide][MOLES] / cached_gases[/datum/gas/plasma][MOLES]), 1), cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * 0.5)
 	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
-	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 ) || (cached_gases[/datum/gas/plasma][MOLES] - reaction_efficency < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 ) || (cached_gases[/datum/gas/plasma][MOLES] - reaction_efficency * 0.75 < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/bz, air)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency * 3
@@ -683,7 +683,7 @@ nobiliumsuppression = INFINITY
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.16, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/bz][MOLES])
+	var/heat_efficency = min(temperature * 0.34, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/bz][MOLES])
 	var/energy_released = heat_efficency * 300
 	ASSERT_GAS(/datum/gas/halon, air)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
