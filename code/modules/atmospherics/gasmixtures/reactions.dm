@@ -920,7 +920,7 @@ nobiliumsuppression = INFINITY
 		return NO_REACTION
 	location.rad_act(produced_amount * 2.4)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
-	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.68
+	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.72
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	energy_released += 50
 	if(energy_released > 0)
