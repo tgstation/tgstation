@@ -417,8 +417,8 @@
 	if(myhead)
 		user.visible_message("<span class='suicide'>[user] is amputating their own head with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		myhead.dismember()
+		playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		return BRUTELOSS
-			playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
 	user.visible_message("<span class='suicide'>[user] pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 100, TRUE)
 	playsound(get_turf(user), 'sound/items/ratchet.ogg', 75, TRUE)
