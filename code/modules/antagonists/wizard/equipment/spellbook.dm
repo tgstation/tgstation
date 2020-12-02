@@ -469,8 +469,8 @@
 	cost = 1
 
 /datum/spellbook_entry/duffel_bag
-	name = "Duffelbag Curse"
-	desc = "A curse that slows the target and makes him take periodical damage if not countered."
+	name = "Duffel Bag Curse"
+	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. The duffel bag will make the person it's attached to take periodical damage if it is not fed regularly, and regardless of whether or not it's been fed, it will slow the person wearing it down significantly."
 	spell_type = /obj/effect/proc_holder/spell/pointed/duffelbagcurse
 	category = "Assistance"
 	cost = 1

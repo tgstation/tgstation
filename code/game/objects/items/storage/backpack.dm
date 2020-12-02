@@ -351,15 +351,14 @@
 	STR.max_combined_w_class = 30
 
 /obj/item/storage/backpack/duffelbag/cursed
-	name = "living duffelbag"
-	desc = "A cursed clown duffelbag which hungers, maybe putting some food in it will stop it from eating you! Or maybe you can poison it this way..."
+	name = "living duffel bag"
+	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" anything poisonous..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 1.3
+	max_integrity = 100
 	///counts time passed since it ate food
 	var/hunger = 0
-	///life left before it dies
-	var/hp = 100
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize()
 	. = ..()
@@ -372,7 +371,7 @@
 		return
 	var/mob/living/carbon/user = src.loc
 	///check hp
-	if(hp < 0)
+	if(obj_integrity < 0)
 		user.dropItemToGround(src, TRUE)
 		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
 		ST.do_quick_empty()
@@ -391,7 +390,7 @@
 				///poisoned food damages it
 				if(F.reagents.has_reagent(/datum/reagent/toxin))
 					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
-					hp -= 20
+					obj_integrity -= 20
 				else
 					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
 				qdel(F)
@@ -403,7 +402,7 @@
 		hunger = 5
 		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
-		hp -= 15
+		obj_integrity -= 15
 
 /obj/item/storage/backpack/duffelbag/cursed/Destroy()
 	. = ..()

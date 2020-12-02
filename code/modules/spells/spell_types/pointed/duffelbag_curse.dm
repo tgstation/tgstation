@@ -1,16 +1,16 @@
 /obj/effect/proc_holder/spell/pointed/duffelbagcurse
-	name = "Duffelbag Curse"
-	desc = "A spell that summons a duffelbag demon in the target's back, slowing him down and slowly eating him."
+	name = "Duffel Bag Curse"
+	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 80
+	charge_max	= 150
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE
 	invocation = "BA'R A'RP!"
 	invocation_type = INVOCATION_SHOUT
 	range = 7
-	cooldown_min = 20
+	cooldown_min = 50
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	action_icon_state = "duffelbag_curse"
 	active_msg = "You prepare to curse a target..."
@@ -29,18 +29,22 @@
 	if(target.anti_magic_check())
 		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
 		target.visible_message("<span class='danger'>[target] was unaffected by the curse!</span>", \
-						"<span class='danger'>Your feel something whispering in your back but it's sent to the shadow realm!</span>")
+						"<span class='danger'>You feel something whispering behind your back, but it's sent to the shadow realm before it can do anything to you!</span>")
 		return FALSE
 
 	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
 
-	target.visible_message("<span class='danger'>A stinky duffelbag appears in [target]'s back!</span>", \
-						   "<span class='danger'>You feel something attaching itself to your back!</span>")
-	if(!target.dropItemToGround(target.back))
-		qdel(target.back)
-	target.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, 1, 1)
+	target.visible_message("<span class='danger'>A stinky duffel bag appears on you!</span>", \
+						   "<span class='danger'>You feel something attaching itself to you!</span>")
 	target.flash_act()
-
+	if(target.dropItemToGround(target.back))
+		target.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, 1, 1)
+	else
+		if(!target.put_in_hands(C))
+			target.dropItemToGround(target.get_inactive_held_item())
+			if(!target.put_in_hands(C))
+				target.dropItemToGround(target.get_active_held_item())
+				target.put_in_hands(C)
 /obj/effect/proc_holder/spell/pointed/duffelbagcurse/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
