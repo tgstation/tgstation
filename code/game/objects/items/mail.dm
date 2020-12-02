@@ -193,7 +193,7 @@
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
 
-/// Crate for mail that automatically generates a lot of mail.
+/// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
 /obj/structure/closet/crate/mail/full
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
@@ -221,6 +221,8 @@
 		else
 			NM = new /obj/item/mail/envelope(src)
 		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
+		if(prob(50)) //so after 21 passes if everyone's at least gotten something we'll junkmail it up
+			mail_recipients -= mail_to
 		if(mail_to)
 			NM.initialize_for_recipient(mail_to)
 		else

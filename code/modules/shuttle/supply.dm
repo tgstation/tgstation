@@ -232,25 +232,24 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /// Generates a box of mail depending on our exports and imports.
 /obj/docking_port/mobile/supply/proc/mail()
-	if(SSeconomy.mail_waiting <= 0)
-		return FALSE
-
-	var/mail_recipients = list()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-		if(!H.client || H.stat == DEAD)
-			continue
-		mail_recipients += list(H)
-
-	if(LAZYLEN(mail_recipients) <= 0)
-		return FALSE
-
-	var/list/mail = list()
 	var/obj/structure/closet/crate/mail/mailcrate = new /obj/structure/closet/crate/mail
-	for(var/MI = 0, MI < SSeconomy.mail_waiting, MI++)
-		var/obj/item/mail/NM = new /obj/item/mail(mailcrate)
-		NM.initialize_for_recipient(pick(mail_recipients))
-		mail += list(NM)
-
+	//everyone who can get mail (alive client humans)
+	var/list/mail_recipients = list()
+	for(var/mob/living/carbon/human/alive in GLOB.player_list)
+		if(alive.stat != DEAD)
+			mail_recipients += alive
+	//creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
+	for(var/i in SSeconomy.mail_waiting)
+		var/obj/item/mail/NM
+		if(prob(70))
+			NM = new /obj/item/mail(mailcrate)
+		else
+			NM = new /obj/item/mail/envelope(mailcrate)
+		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
+		if(mail_to)
+			NM.initialize_for_recipient(mail_to)
+		else
+			NM.junk_mail()
 	mailcrate.update_icon()
 	SSeconomy.mail_waiting = 0
 
