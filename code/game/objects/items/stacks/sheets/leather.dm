@@ -210,9 +210,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	. = ..()
 	. += GLOB.sinew_recipes
 
-/*
- * Plates
- */
+
+/*Plates*/
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."

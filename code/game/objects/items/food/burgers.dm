@@ -395,3 +395,11 @@
 		var/datum/effect_system/smoke_spread/bad/green/smoke = new
 		smoke.set_up(0, src)
 		smoke.start()
+
+// empty burger you can customize
+/obj/item/food/burger/empty
+	name = "burger"
+	icon_state = "custburg"
+	tastes = list("bun")
+	foodtypes = GRAIN
+	desc = "A crazy, custom burger made by a mad cook."

@@ -1487,13 +1487,13 @@
 		CRASH(ERROR_ERROR_LANDMARK_ERROR)
 
 /**
-  * Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.
-  *
-  * In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
-  * This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
-  * Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
-  * The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.
-  */
+ * Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.
+ *
+ * In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
+ * This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
+ * Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
+ * The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.
+ */
 /mob/living/proc/set_lying_angle(new_lying)
 	if(new_lying == lying_angle)
 		return

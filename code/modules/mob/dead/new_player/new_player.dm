@@ -41,8 +41,8 @@
 	return
 
 /**
-  * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
-  */
+ * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
+ */
 /mob/dead/new_player/proc/new_player_panel()
 	if (client?.interviewee)
 		return
@@ -529,11 +529,11 @@
 	return TRUE
 
 /**
-  * Prepares a client for the interview system, and provides them with a new interview
-  *
-  * This proc will both prepare the user by removing all verbs from them, as well as
-  * giving them the interview form and forcing it to appear.
-  */
+ * Prepares a client for the interview system, and provides them with a new interview
+ *
+ * This proc will both prepare the user by removing all verbs from them, as well as
+ * giving them the interview form and forcing it to appear.
+ */
 /mob/dead/new_player/proc/register_for_interview()
 	// First we detain them by removing all the verbs they have on client
 	for (var/v in client.verbs)
