@@ -1143,7 +1143,7 @@
 
 
 	if(href_list[VV_HK_ADD_AI])
-		if(!check_rights(NONE))
+		if(!check_rights(R_VAREDIT))
 			return
 		var/result = input(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller") as null|anything in subtypesof(/datum/ai_controller)
 		if(!result)
