@@ -28,6 +28,10 @@
 	/// Keeps track of wielded status on the shotgun
 	var/wielded = FALSE
 
+/obj/item/gun/ballistic/shotgun/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Use Ctrl-click to wield the gun.</span>"
+
 /obj/item/gun/ballistic/shotgun/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)

@@ -345,6 +345,10 @@
 	/// Keeps track of wielded status on the sniper
 	var/wielded = FALSE
 
+/obj/item/gun/ballistic/automatic/sniper_rifle/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Use Ctrl-click to wield the gun.</span>"
+
 /obj/item/gun/ballistic/automatic/sniper_rifle/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
