@@ -371,7 +371,7 @@
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
 
-///Hidden verb to target the eyes, bound to 9
+///Hidden verb to target the eyes, bound to 7
 /client/verb/body_eyes()
 	set name = "body-eyes"
 	set hidden = TRUE
@@ -382,7 +382,7 @@
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
-///Hidden verb to target the mouth, bound to 7
+///Hidden verb to target the mouth, bound to 9
 /client/verb/body_mouth()
 	set name = "body-mouth"
 	set hidden = TRUE
