@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"y" = -1,
 			"size" = 1,
 			"offset" = 0,
-			"color" = "#0000007A"
+			"color" = COLOR_HALF_TRANSPARENT_BLACK
 		)
 	),
 	"blur" = list(
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	"outline" = list(
 		"defaults" = list(
 			"size" = 0,
-			"color" = "#000000",
+			"color" = COLOR_BLACK,
 			"flags" = NONE
 		),
 		"flags" = list(
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"x" = 0,
 			"y" = 0,
 			"size" = 16,
-			"color" = "#FFFFFF",
+			"color" = COLOR_WHITE,
 			"offset" = 0,
 			"density" = 10,
 			"threshold" = 0.5,
