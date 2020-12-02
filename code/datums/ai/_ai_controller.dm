@@ -25,8 +25,8 @@ have ways of interacting with a specific mob and control it.
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
-	. = ..()
 	TryUnpossessPawn()
+	return ..()
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
@@ -135,4 +135,3 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
-
