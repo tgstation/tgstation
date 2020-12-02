@@ -702,3 +702,13 @@
 	if(user.incapacitated())
 		return
 	return relaydrive(user, direction)
+
+/mob/living/simple_animal/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = ..()
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/stop_deadchat_plays(var/deadchat_plays_comp)
+	SIGNAL_HANDLER
+
+	. = ..()
+	stop_automated_movement = FALSE

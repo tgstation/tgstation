@@ -23,7 +23,6 @@
 		timerid = addtimer(CALLBACK(src, .proc/democracy_loop), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
 	notify_ghosts("[parent] is now deadchat controllable!", source = parent, action = NOTIFY_ORBIT, header="Something Interesting!")
 
-
 /datum/component/deadchat_control/Destroy(force, silent)
 	inputs = null
 	orbiters = null
@@ -35,7 +34,7 @@
 
 	message = lowertext(message)
 	if(!inputs[message])
-		return 
+		return
 	if(deadchat_mode == ANARCHY_MODE)
 		var/cooldown = ckey_to_cooldown[source.ckey]
 		if(cooldown)
@@ -49,7 +48,7 @@
 
 /datum/component/deadchat_control/proc/remove_cooldown(ckey)
 	ckey_to_cooldown.Remove(ckey)
-	
+
 /datum/component/deadchat_control/proc/democracy_loop()
 	if(QDELETED(parent) || deadchat_mode != DEMOCRACY_MODE)
 		deltimer(timerid)
@@ -64,7 +63,7 @@
 		var/message = "<span class='deadsay italics bold'>No votes were cast this cycle.</span>"
 		for(var/M in orbiters)
 			to_chat(M, message)
-			
+
 /datum/component/deadchat_control/proc/count_democracy_votes()
 	if(!length(ckey_to_cooldown))
 		return
@@ -74,7 +73,7 @@
 	for(var/vote in ckey_to_cooldown)
 		votes[ckey_to_cooldown[vote]]++
 		ckey_to_cooldown.Remove(vote)
-	
+
 	// Solve which had most votes.
 	var/prev_value = 0
 	var/result
@@ -82,7 +81,7 @@
 		if(votes[vote] > prev_value)
 			prev_value = votes[vote]
 			result = vote
-	
+
 	if(result in inputs)
 		return result
 
@@ -110,3 +109,17 @@
 	if(orbiter in orbiters)
 		UnregisterSignal(orbiter, COMSIG_MOB_DEADSAY)
 		orbiters -= orbiter
+
+/**
+ * Simple helper proc to add additional inputs to the deadchat_control component.
+ *
+ * Useful for snowflake mobs - For example, could add a new input to allow players to make Birdboat vomit.
+ * Arguments:
+ * * input_text - User input string to assign the callback to in the input list.
+ * * callback - Proc callback for the input.
+ */
+/datum/component/deadchat_control/proc/add_input(input_text, callback)
+	if(!input_text || !callback)
+		return
+
+	inputs[input_text] = callback

@@ -103,7 +103,7 @@
 	// 5% chance every round to have anarchy mode deadchat control on birdboat.
 	if(prob(5))
 		desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
-		deadchat_plays_goose()
+		deadchat_plays()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
@@ -233,14 +233,15 @@
 		vomitTimeBonus = 0
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
-	stop_automated_movement = TRUE
-	AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
-		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
-		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = ..()
+
+	var/datum/component/deadchat_control/deadchat_plays_comp = .
+
+	if(!istype(deadchat_plays_comp))
+		CRASH("deadchat_plays proc called but parent parent returned invalid component: [deadchat_plays_comp.type]")
+
+	deadchat_plays_comp.add_input("vomit", CALLBACK(src, .proc/vomit_prestart, 25))
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

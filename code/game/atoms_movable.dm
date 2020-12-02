@@ -1042,7 +1042,38 @@
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
+/**
+ * Adds the deadchat_plays component to this atom with simple movement commands.
+ *
+ * Subtypes can override this to add additional functionality beyond basic movement controls.
+ * Registers the COMSIG_COMPONENT_REMOVING signal to call the stop_deadchat_plays proc when the component is removed.
+ *
+ * Returns the component added.
+ * Arguments:
+ * * mode - Either ANARCHY_MODE or DEMOCRACY_MODE passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ * * per_player_cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ */
+/atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	var/component = AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
+		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)), cooldown)
 
+	if(!component)
+		CRASH("Failed to create deadchat_control component.")
+
+	RegisterSignal(component, COMSIG_COMPONENT_REMOVING, .proc/stop_deadchat_plays)
+	return component
+
+/**
+ * Allows for simple cleanup when the deadchat_control component is removed to restore default mob control states.
+ *
+ * Arguments:
+ * * deadchat_plays_comp - The deadchat_control component that is being removed.
+ */
+/atom/movable/proc/stop_deadchat_plays(var/deadchat_plays_comp)
+	SIGNAL_HANDLER
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

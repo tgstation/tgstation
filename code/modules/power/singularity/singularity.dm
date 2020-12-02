@@ -413,13 +413,17 @@
 	qdel(src)
 	return gain
 
-/obj/singularity/deadchat_controlled
+/obj/singularity/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 12 SECONDS)
+	. = ..()
 	move_self = FALSE
+
+/obj/singularity/stop_deadchat_plays(var/deadchat_plays_comp)
+	SIGNAL_HANDLER
+
+	. = ..()
+	move_self = TRUE
 
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
-	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
-		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)))
+	deadchat_plays(mode = DEMOCRACY_MODE)
+
