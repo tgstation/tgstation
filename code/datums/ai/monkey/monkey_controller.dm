@@ -25,7 +25,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
-		return AI_BEHAVIOR_INCOMPATIBLE
+		return AI_CONTROLLER_INCOMPATIBLE
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -38,7 +38,7 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	return ..() //Run parent at end
 
-/datum/ai_controller/monkey/TryUnpossessPawn()
+/datum/ai_controller/monkey/UnpossessPawn()
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOVABLE_CROSSED, COMSIG_LIVING_START_PULL,\
 	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
 	return ..() //Run parent at end

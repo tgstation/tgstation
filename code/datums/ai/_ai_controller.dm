@@ -1,10 +1,10 @@
 /*
-AI controllers are a datumized form of AI that simulates the input a player would otherwise give to a mob. What this means is that these datums
-have ways of interacting with a specific mob and control it.
+AI controllers are a datumized form of AI that simulates the input a player would otherwise give to a atom. What this means is that these datums
+have ways of interacting with a specific atom and control it. They posses a blackboard with the information the AI knows and has, and will plan behaviors it will try to execute.
 */
 
 /datum/ai_controller
-	///The mob this controller is controlling
+	///The atom this controller is controlling
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits
@@ -14,7 +14,7 @@ have ways of interacting with a specific mob and control it.
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
-	///Delay between mob movements, if this is not a multiplication of the delay in
+	///Delay between atom movements, if this is not a multiplication of the delay in
 	var/move_delay
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
@@ -25,19 +25,19 @@ have ways of interacting with a specific mob and control it.
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
-	TryUnpossessPawn()
+	UnpossessPawn()
 	return ..()
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
 	if(pawn) //Reset any old signals
-		TryUnpossessPawn()
+		UnpossessPawn()
 
 	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
-		new_pawn.ai_controller.TryUnpossessPawn()
+		new_pawn.ai_controller.UnpossessPawn()
 		QDEL_NULL(new_pawn.ai_controller)
 
-	if(TryPossessPawn(new_pawn) & AI_BEHAVIOR_INCOMPATIBLE)
+	if(TryPossessPawn(new_pawn) & AI_CONTROLLER_INCOMPATIBLE)
 		qdel(src)
 		CRASH("[src] attached to [new_pawn] but these are not compatible!")
 
@@ -53,7 +53,7 @@ have ways of interacting with a specific mob and control it.
 	return
 
 ///Proc for deinitializing the pawn to the old controller
-/datum/ai_controller/proc/TryUnpossessPawn()
+/datum/ai_controller/proc/UnpossessPawn()
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
 	pawn.ai_controller = null
 	pawn = null

@@ -12,7 +12,7 @@
 #define MAX_PATHING_ATTEMPTS 30
 
 ///Flags for ai_behavior new()
-#define AI_BEHAVIOR_INCOMPATIBLE (1<<0)
+#define AI_CONTROLLER_INCOMPATIBLE (1<<0)
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
