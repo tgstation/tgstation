@@ -332,7 +332,6 @@
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
-	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	burst_size = 1
@@ -343,6 +342,42 @@
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
+	/// Keeps track of wielded status on the sniper
+	var/wielded = FALSE
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed)
+
+///Triggered on wield of two handed item
+/obj/item/gun/ballistic/automatic/sniper_rifle/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+///Triggered on unwield of two handed item
+/obj/item/gun/ballistic/automatic/sniper_rifle/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+	zoom(user, user.dir, FALSE)
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/zoom(mob/living/user, direc, forced_zoom)
+	if(!wielded && !zoomed)
+		to_chat(user, "<span class='warning'>You need to hold [src] with two hands to zoom in!</span>")
+		return
+	return ..()
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	if(!wielded)
+		to_chat(user, "<span class='warning'>You need to hold [src] with two hands to shoot it!</span>")
+		return
+	return ..()
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

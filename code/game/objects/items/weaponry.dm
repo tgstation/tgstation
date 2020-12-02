@@ -892,7 +892,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 //HF blade
 /obj/item/vibro_weapon
-	icon_state = "hfrequency0"
+	icon_state = "hfrequency"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
@@ -918,7 +918,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
+	AddComponent(/datum/component/two_handed, force_multiplier=2, inhand_icon_wielded="hfrequency_wielded")
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
@@ -931,9 +931,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-
-/obj/item/vibro_weapon/update_icon_state()
-	icon_state = "hfrequency0"
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

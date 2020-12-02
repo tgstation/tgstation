@@ -1,7 +1,7 @@
 /obj/item/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
-	icon_state = "singularity_hammer0"
+	icon_state = "singularity_hammer"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -26,7 +26,7 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="singularity_hammer1")
+	AddComponent(/datum/component/two_handed, force_multiplier=4, inhand_icon_wielded="singularity_hammer_wielded")
 
 ///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
@@ -39,10 +39,6 @@
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-
-/obj/item/singularityhammer/update_icon_state()
-	. = ..()
-	icon_state = "singularity_hammer0"
 
 /obj/item/singularityhammer/proc/recharge()
 	charged = TRUE
@@ -86,7 +82,7 @@
 /obj/item/mjollnir
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
-	icon_state = "mjollnir0"
+	icon_state = "mjollnir"
 	worn_icon_state = "mjolnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
@@ -105,7 +101,7 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="mjollnir1", attacksound="sparks")
+	AddComponent(/datum/component/two_handed, force_multiplier=5, attacksound="sparks", inhand_icon_wielded="mjollnir_wielded")
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
@@ -114,9 +110,6 @@
 /// triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
-
-/obj/item/mjollnir/update_icon_state()
-	icon_state = "mjollnir0"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)

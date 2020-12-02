@@ -15,6 +15,7 @@
 	var/attacksound = FALSE							/// Play sound on attack when wielded
 	var/require_twohands = FALSE					/// Does it have to be held in both hands
 	var/icon_wielded = FALSE						/// The icon that will be used when wielded
+	var/inhand_icon_wielded = FALSE					/// The icon that will be used for inhands when wielded
 	var/obj/item/offhand/offhand_item = null		/// Reference to the offhand created for the item
 	var/sharpened_increase = 0						/// The amount of increase recived from sharpening the item
 
@@ -30,9 +31,10 @@
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
  * * icon_wielded (optional) The icon to be used when wielded
+ * * inhand_icon_wielded (optional) The icon to be used on the mob when wielded
  */
 /datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, attacksound=FALSE, \
-										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_wielded=FALSE)
+										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_wielded=FALSE, inhand_icon_wielded=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -44,10 +46,11 @@
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
 	src.icon_wielded = icon_wielded
+	src.inhand_icon_wielded = inhand_icon_wielded
 
 // Inherit the new values passed to the component
 /datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
-											force_multiplier, force_wielded, force_unwielded, icon_wielded)
+											force_multiplier, force_wielded, force_unwielded, icon_wielded, inhand_icon_wielded)
 	if(!original)
 		return
 	if(require_twohands)
@@ -66,16 +69,21 @@
 		src.force_unwielded = force_unwielded
 	if(icon_wielded)
 		src.icon_wielded = icon_wielded
+	if(inhand_icon_wielded)
+		src.inhand_icon_wielded = inhand_icon_wielded
 
 // register signals withthe parent item
 /datum/component/two_handed/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
+	if(isgun(parent))
+		RegisterSignal(parent, COMSIG_CLICK_CTRL, .proc/on_ctrl_click)
+	else
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
@@ -110,7 +118,17 @@
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
+	toggle_wield(user)
 
+/// Triggered on ctrl clicking the item containing the component
+/datum/component/two_handed/proc/on_ctrl_click(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(user.is_holding(parent))
+		toggle_wield(user)
+
+
+/// Wields the item if its being held and unwielded, unwields if its already wielded
+/datum/component/two_handed/proc/toggle_wield(mob/living/carbon/user)
 	if(wielded)
 		unwield(user)
 	else if(user.is_holding(parent))
@@ -256,11 +274,14 @@
 /datum/component/two_handed/proc/on_update_icon(datum/source)
 	SIGNAL_HANDLER
 
-	if(icon_wielded && wielded)
-		var/obj/item/parent_item = parent
-		if(parent_item)
-			parent_item.icon_state = icon_wielded
+	var/obj/item/parent_item = parent
+	if(parent_item)
+		if(inhand_icon_wielded)
+			parent_item.inhand_icon_state = wielded ? inhand_icon_wielded : initial(parent_item.inhand_icon_state)
+		if(icon_wielded)
+			parent_item.icon_state = wielded ? icon_wielded : initial(parent_item.icon_state)
 			return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+
 
 /**
  * on_moved Triggers on item moved

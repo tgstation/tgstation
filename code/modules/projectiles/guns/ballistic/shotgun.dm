@@ -24,14 +24,42 @@
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
-	weapon_weight = WEAPON_HEAVY
-
 	pb_knockback = 2
+	/// Keeps track of wielded status on the shotgun
+	var/wielded = FALSE
+
+/obj/item/gun/ballistic/shotgun/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/gun/ballistic/shotgun/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed)
+
+///Triggered on wield of two handed item
+/obj/item/gun/ballistic/shotgun/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+///Triggered on unwield of two handed item
+/obj/item/gun/ballistic/shotgun/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+
+/obj/item/gun/ballistic/shotgun/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread, forced)
+	if(!wielded && !forced)
+		to_chat(user, "<span class='warning'>You need to hold [src] with two hands to shoot it!</span>")
+		return
+	return ..()
+
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
 	if(chambered?.BB)
-		process_fire(user, user, FALSE)
+		process_fire(user, user, FALSE, forced = TRUE)
 		. = 1
 
 /obj/item/gun/ballistic/shotgun/lethal
@@ -152,7 +180,6 @@
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
 	force = 10
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -176,11 +203,6 @@
 	. = ..()
 	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
-	. = ..()
-	if(.)
-		weapon_weight = WEAPON_MEDIUM
 
 // IMPROVISED SHOTGUN //
 
@@ -251,7 +273,6 @@
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
 	force = 16 //it has a hook on it
 	attack_verb_continuous = list("slashes", "hooks", "stabs")

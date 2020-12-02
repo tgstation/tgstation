@@ -2,7 +2,7 @@
  * Fireaxe
  */
 /obj/item/fireaxe  // DEM AXES MAN, marker -Agouri
-	icon_state = "fireaxe0"
+	icon_state = "fireaxe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
 	name = "fire axe"
@@ -30,7 +30,7 @@
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_wielded="fireaxe1")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, inhand_icon_wielded="fireaxe_wielded")
 
 /// triggered on wield of two handed item
 /obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
@@ -43,9 +43,6 @@
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-
-/obj/item/fireaxe/update_icon_state()
-	icon_state = "fireaxe0"
 
 /obj/item/fireaxe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -64,28 +61,22 @@
  * Bone Axe
  */
 /obj/item/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
-	icon_state = "bone_axe0"
+	icon_state = "bone_axe"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="bone_axe1")
-
-/obj/item/fireaxe/boneaxe/update_icon_state()
-	icon_state = "bone_axe0"
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, inhand_icon_wielded="bone_axe_wielded")
 
 /*
  * Metal Hydrogen Axe
  */
 /obj/item/fireaxe/metal_h2_axe  // Blatant imitation of the fireaxe, but made out of metallic hydrogen
-	icon_state = "metalh2_axe0"
+	icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
 	desc = "A large, menacing axe made of an unknown substance that the eldest atmosians call Metallic Hydrogen. Truly an otherworldly weapon."
 
 /obj/item/fireaxe/metal_h2_axe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="metalh2_axe1")
-
-/obj/item/fireaxe/metal_h2_axe/update_icon_state()
-	icon_state = "metalh2_axe0"
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, inhand_icon_wielded="metalh2_axe_wielded")

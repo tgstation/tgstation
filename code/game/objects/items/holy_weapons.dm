@@ -447,9 +447,9 @@
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
 /obj/item/nullrod/scythe/vibro
-	icon_state = "hfrequency0"
-	inhand_icon_state = "hfrequency1"
-	worn_icon_state = "hfrequency0"
+	icon_state = "hfrequency"
+	inhand_icon_state = "hfrequency_wielded"
+	worn_icon_state = "hfrequency"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "high frequency blade"
@@ -696,9 +696,9 @@
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "bostaff0"
-	inhand_icon_state = "bostaff0"
-	worn_icon_state = "bostaff0"
+	icon_state = "bostaff"
+	inhand_icon_state = "bostaff"
+	worn_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
@@ -736,11 +736,11 @@
 /obj/item/nullrod/pitchfork
 	name = "unholy pitchfork"
 	desc = "Holding this makes you look absolutely devilish."
-	icon_state = "pitchfork0"
-	worn_icon_state = "pitchfork0"
+	icon_state = "pitchfork"
+	inhand_icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	worn_icon_state = "pitchfork0"
+	worn_icon_state = "pitchfork"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
