@@ -345,16 +345,31 @@
 /client/proc/check_has_body_select()
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
+/**
+ * Hidden verb to set the target zone of a mob to the head
+ *
+ * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ */
+
 ///Hidden verb to target the head, bound to 8
-/client/verb/body_head()
-	set name = "body-head"
+/client/verb/body_toggle_head()
+	set name = "body-toggle-head"
 	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
 
+	var/next_in_line
+	switch(mob.zone_selected)
+		if(BODY_ZONE_HEAD)
+			next_in_line = BODY_ZONE_PRECISE_EYES
+		if(BODY_ZONE_PRECISE_EYES)
+			next_in_line = BODY_ZONE_PRECISE_MOUTH
+		else
+			next_in_line = BODY_ZONE_HEAD
+
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
+	selector.set_selected_zone(next_in_line, mob)
 
 ///Hidden verb to target the eyes, bound to 9
 /client/verb/body_eyes()

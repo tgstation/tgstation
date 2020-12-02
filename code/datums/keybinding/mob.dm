@@ -143,18 +143,18 @@
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
-/datum/keybinding/mob/target_head/down(client/user)
+/datum/keybinding/mob/target_head_cycle/down(client/user)
 	. = ..()
 	if(.)
 		return
-	user.body_head()
+	user.body_toggle_head()
 	return TRUE
 
 /datum/keybinding/mob/target_head/down(client/user)
 	. = ..()
 	if(.)
 		return
-	user.body_head()
+	user.body_toggle_head()
 	return TRUE
 
 /datum/keybinding/mob/target_eyes
