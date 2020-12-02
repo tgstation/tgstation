@@ -46,7 +46,7 @@
 		return
 
 	// EVERYTHING ELSE
-	else if(!living_pawn.get_item_for_held_index(1) || !living_pawn.get_item_for_held_index(2))
+	else if(living_pawn.get_empty_held_index_for_side(LEFT_HANDS) || living_pawn.get_empty_held_index_for_side(RIGHT_HANDS))
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return
