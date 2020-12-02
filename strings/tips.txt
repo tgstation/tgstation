@@ -1,4 +1,4 @@
-Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+Where the space map levels connect is randomized every round. Remember that they are not necessarily bidirectional!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
 You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table. Clicking on a table that someone else is climbing onto will knock them down.
@@ -7,26 +7,26 @@ Clicking on a windoor rather then bumping into it will keep it open, you can cli
 You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
-Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel.
-If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
+Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel. Alternatively, a bonfire or lava can do in a pinch.
+If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off. Remember the three person per locker maximum!
 You can grab someone by clicking on them with the grab intent, then upgrade the grab by clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
-You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
+You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon. Insulated gloves keep their properties when washed like this!
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
-You can use a machine in the vault to deposit cash or rob Cargo's department funds.
+You can use a machine in the vault to deposit cash or rob Cargo's department funds. Nosy crew will come rushing to the vault when this happens, so it's a great distraction!
 When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 Most things have special interactions with your middle mouse button, alt, shift, and control click. Experiment!
-You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
+You can screwdriver / multitool any grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
 If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
 When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
-Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
+You can experiment with different setups of the supermatter engine to maximize output, but in most situations a standard Nitrogen setup is more than enough.
 We were all new once, be patient and guide new players in the right direction.
 On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's hardsuit/winter coat holding an RPD, or labcoats holding most medicine.
@@ -39,8 +39,8 @@ Don't be afraid to ask for help, whether from your peers or from admins.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
-As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew.
-As the Chief Medical Officer, your hypospray is like a refillable instant injection syringe that can hold 30 units as opposed to the standard 15.
+As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew - and completely justified mutiny.
+As the Chief Medical Officer, your hypospray is better than every other one on the station - use it liberally!
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
 As the Chief Medical Officer, your hardsuit can hold an entire medkit in its suit storage!
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
@@ -54,6 +54,7 @@ As a Medical Doctor, you can deal with patients who have absurd amounts of wound
 As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
 As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds regeneration! Perfect for drained patients!
 As a Paramedic, your UV penlight can be used to stem infections in burn wounds! Just target the infected limb and use it on the patient.
+As a Paramedic, flipping off someone's hardsuit while they're in space is considered bad practice.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, unstable mutagen and saltpetre for botany as well as healing pills and patches for the front desk.
@@ -258,3 +259,7 @@ Wearing riot armor makes you significantly more effective at performing tackle t
 Epipens contain a powerful coagulant that drastically reduces bleeding on all bleeding wounds. If you don't have time to properly treat someone with lots of slashes or piercings, stick them with a pen to buy some time!
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
 If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
+As the Mining Foreman, it's your job to rescue dead miners. Or force them to get a clone scan instead.
+As the Mining Technician, it's your job to cater to the miner's every technical need on base. Usually this means a planetside ORM and a quantum pad to replace the shuttle, but it can also mean anti-ashwalker turrets! Experiment!
+As the Mining Technician, you do NOT have access to the engineering skillchip, and are not expected to be able to hack open doors. Your priorities are off-station, and anyone who acts or orders otherwise is acting in bad faith.
+As the Blueshield, remember to be glued to the captain unless another head needs help! They are the biggest target, after all.
