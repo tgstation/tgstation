@@ -117,7 +117,7 @@
 		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
 			target = L
 
-	if(target != null)
+	if(target)
 		walk_away(living_pawn, target, MONKEY_ENEMY_VISION, 5)
 	else
 		finish_action(controller, TRUE)
