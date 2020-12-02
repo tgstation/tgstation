@@ -1087,13 +1087,17 @@
 			if(alert(usr, "Remove deadchat control from [src]?", "Deadchat Plays [src]", "Remove", "Cancel") == "Remove")
 				qdel(component)
 				to_chat(usr, "<span class='notice'>Deadchat can no longer control [src].</span>")
+				log_admin("[key_name(usr)] has removed deadchat control from [src]")
+				message_admins("<span class='notice'>[key_name(usr)] has removed deadchat control from [src]</span>")
 		else
 			if(alert(usr, "Allow deadchat to move [src]?", "Deadchat Plays [src]", "Allow", "Cancel") == "Allow")
 				var/deadchat_plays_comp = deadchat_plays()
 				if(deadchat_plays_comp)
 					to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
+					log_admin("[key_name(usr)] has added deadchat control to [src]")
+					message_admins("<span class='notice'>[key_name(usr)] has added deadchat control to [src]</span>")
 				else
-					to_chat(usr, "<span class='notice'>Error adding component. Deadchat can not control [src].</span>")
+					to_chat(usr, "<span class='notice'>Error adding deadchat control component to [src]. Deadchat are currently not controlling it.</span>")
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
