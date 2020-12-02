@@ -1,4 +1,4 @@
-datum/component/grillable
+/datum/component/grillable
 	///Result atom type of grilling this object
 	var/atom/cook_result
 	///Amount of time required to cook the food
