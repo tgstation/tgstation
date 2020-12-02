@@ -1192,6 +1192,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
+/obj/item/storage/firstaid,
 /turf/open/floor/plasteel/white,
 /area/medical/office)
 "aHH" = (
@@ -3055,6 +3056,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/table/glass,
+/obj/item/storage/hypospraykit/regular{
+	pixel_y = 10
+	},
+/obj/item/storage/hypospraykit/regular{
+	pixel_y = 5
+	},
+/obj/item/storage/hypospraykit/regular,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "bRc" = (
@@ -4365,6 +4374,9 @@
 "cQf" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 6
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "cQo" = (
@@ -4875,6 +4887,9 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/item/storage/box/firingpins,
+/obj/structure/rack,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "dir" = (
@@ -5883,6 +5898,11 @@
 	},
 /turf/open/floor/plasteel/airless/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"dOS" = (
+/obj/structure/table,
+/obj/item/storage/box/handcuffs,
+/turf/open/floor/plasteel,
+/area/security/main)
 "dOU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -6868,6 +6888,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"euz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "euI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -7651,6 +7676,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat)
+"eTb" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/ids,
+/turf/open/floor/carpet/blue,
+/area/crew_quarters/heads/hop)
 "eTN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer4{
@@ -15306,6 +15336,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "jVN" = (
@@ -15528,6 +15562,14 @@
 "kaE" = (
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
+"kaG" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/item/storage/box/ids,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "kaT" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -19046,6 +19088,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
+"mtv" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/storage/firstaid{
+	pixel_y = 12
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/o2,
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "mtF" = (
 /obj/machinery/light{
 	dir = 8
@@ -19074,7 +19137,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "muS" = (
-/obj/effect/landmark/start/medical_doctor,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -19082,6 +19144,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/storage/firstaid/toxin,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "mvk" = (
@@ -19893,6 +19957,14 @@
 /obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
+"mUc" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/item/storage/box/pdas,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "mUf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
@@ -21311,6 +21383,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -66237,7 +66312,7 @@ euI
 cys
 gtZ
 iSR
-xxQ
+kaG
 rZa
 xxQ
 ehz
@@ -67518,7 +67593,7 @@ lXF
 lXF
 lXF
 euI
-hNn
+mUc
 xjw
 etx
 etx
@@ -67792,7 +67867,7 @@ cys
 hBM
 mqb
 dxb
-fsN
+eTb
 fsN
 hnu
 exb
@@ -69660,7 +69735,7 @@ qXO
 bok
 mys
 txI
-iNZ
+dOS
 wIJ
 dCg
 aOb
@@ -72445,7 +72520,7 @@ fXn
 nGV
 muS
 bRa
-bRa
+mtv
 nHV
 isS
 vRm
@@ -72701,7 +72776,7 @@ dHe
 fXn
 wDs
 nmI
-nmI
+euz
 nmI
 kUu
 isS
