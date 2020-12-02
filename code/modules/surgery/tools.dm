@@ -412,13 +412,17 @@
 			limb_snip_candidate.dismember()
 		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
 
-var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
-/obj/item/shears/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is amputating their own head with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
-	user.emote("scream")
-	head.drop_limb()
-	return(BRUTELOSS)
+/obj/item/shears/suicide_act(mob/living/carbon/user)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(myhead)
+		user.visible_message("<span class='suicide'>[user] is amputating their own head with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		myhead.dismember()
+		return (BRUTELOSS)
+			playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
+	user.visible_message("<span class='suicide'>[user] pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(get_turf(user), 'sound/items/change_drill.ogg', 100, TRUE)
+	playsound(get_turf(user), 'sound/items/ratchet.ogg', 75, TRUE)
+	return BRUTELOSS
 
 /obj/item/bonesetter
 	name = "bonesetter"
