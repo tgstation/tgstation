@@ -907,9 +907,8 @@
 	if(throwing)
 		return
 	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
+		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = base_pixel_y, time = 10)

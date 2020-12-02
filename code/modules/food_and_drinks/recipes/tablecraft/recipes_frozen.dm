@@ -18,7 +18,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 2,
+		/obj/item/food/grown/berries = 2,
 	)
 	result = /obj/item/food/strawberryicecreamsandwich
 	subcategory = CAT_ICE
@@ -37,8 +37,8 @@
 	name ="Sundae"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/food/grown/cherries = 1,
+		/obj/item/food/grown/banana = 1,
 		/obj/item/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/food/sundae
@@ -49,8 +49,8 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
+		/obj/item/food/grown/cherries = 1,
+		/obj/item/food/grown/banana = 2,
 		/obj/item/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/food/honkdae

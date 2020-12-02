@@ -1668,7 +1668,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
+					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"))
 					if(choice == "Cancel")
 						ShowChoices(user)
 						return
