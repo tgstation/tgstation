@@ -29,19 +29,19 @@
 		finish_action(controller, FALSE)
 		return
 
-	if(target.slot_flags) //Clothing == top priority
+	// Strong weapon
+	else if(target.force > best_force)
+		living_pawn.put_in_hands(target)
+		controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND] = target.force
+		finish_action(controller, TRUE)
+		return
+
+	else if(target.slot_flags) //Clothing == top priority
 		living_pawn.dropItemToGround(target, TRUE)
 		living_pawn.update_icons()
 		if(!living_pawn.equip_to_appropriate_slot(target))
 			finish_action(controller, FALSE)
 			return //Already wearing something, in the future this should probably replace the current item but the code didn't actually do that, and I dont want to support it right now.
-		finish_action(controller, FALSE)
-		return
-
-	// Strong weapon
-	else if(target.force > best_force)
-		living_pawn.put_in_hands(target)
-		controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND] = target.force
 		finish_action(controller, TRUE)
 		return
 
@@ -50,6 +50,8 @@
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return
+
+
 
 	finish_action(controller, FALSE)
 
