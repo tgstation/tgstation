@@ -1075,6 +1075,26 @@
 /atom/movable/proc/stop_deadchat_plays(var/deadchat_plays_comp)
 	SIGNAL_HANDLER
 
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
+
+/atom/movable/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
+		var/component = GetComponent(/datum/component/deadchat_control)
+		if(component)
+			if(alert(usr, "Remove deadchat control from [src]?", "Deadchat Plays [src]", "Remove", "Cancel") == "Remove")
+				qdel(component)
+				to_chat(usr, "<span class='notice'>Deadchat can no longer control [src].</span>")
+		else
+			if(alert(usr, "Allow deadchat to move [src]?", "Deadchat Plays [src]", "Allow", "Cancel") == "Allow")
+				var/deadchat_plays_comp = deadchat_plays()
+				if(deadchat_plays_comp)
+					to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
+				else
+					to_chat(usr, "<span class='notice'>Error adding component. Deadchat can not control [src].</span>")
+
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
 	if(!istype(loc, /turf))
