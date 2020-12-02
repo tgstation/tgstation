@@ -87,7 +87,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src)
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/analyzer(src)
+	new /obj/item/analyzer/ranged(src)//CE Gets powertools.
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/full/PopulateContents()
