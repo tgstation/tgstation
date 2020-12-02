@@ -145,7 +145,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/proc/on_attackby(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
-	if((I.force) && (I.damtype != STAMINA) )
+	if(I.force && I.damtype != STAMINA)
 		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
@@ -175,7 +175,7 @@ have ways of interacting with a specific mob and control it.
 	if(istype(AM, /obj/item))
 		var/mob/living/living_pawn = pawn
 		var/obj/item/I = AM
-		if(I.throwforce < living_pawn.health && I.thrownby && ishuman(I.thrownby))
+		if(I.throwforce < living_pawn.health && ishuman(I.thrownby))
 			var/mob/living/carbon/human/H = I.thrownby
 			retaliate(H)
 

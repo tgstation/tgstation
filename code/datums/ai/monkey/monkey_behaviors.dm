@@ -116,6 +116,7 @@
 	for(var/mob/living/L in view(living_pawn, MONKEY_FLEE_VISION))
 		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
 			target = L
+			break
 
 	if(target)
 		walk_away(living_pawn, target, MONKEY_ENEMY_VISION, 5)
@@ -150,7 +151,6 @@
 			living_pawn.a_intent = INTENT_HARM
 			monkey_attack(controller, target, delta_time)
 
-		return
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
@@ -231,9 +231,8 @@
 
 	controller.blackboard[BB_MONKEY_DISPOSING] = TRUE
 
-	if(disposal && target)
-		if(disposal.stuff_mob_in(target, living_pawn))
-			disposal.flush() //So long meatball bowser
+	if(target && disposal?.stuff_mob_in(target, living_pawn))
+		disposal.flush()
 	finish_action(controller, TRUE)
 
 
@@ -244,14 +243,14 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/L in view(living_pawn, MONKEY_ENEMY_VISION))
-		if(istype(L.ai_controller, /datum/ai_controller/monkey))
-			if(!DT_PROB(MONKEY_RECRUIT_PROB, delta_time))
-				continue
-			var/datum/ai_controller/monkey/monkey_ai = L.ai_controller
-
-			var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
-
-			var/list/enemies = L.ai_controller.blackboard[BB_MONKEY_ENEMIES]
-			enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
-			monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
+		if(!istype(L.ai_controller, /datum/ai_controller/monkey))
+			continue
+			
+		if(!DT_PROB(MONKEY_RECRUIT_PROB, delta_time))
+			continue
+		var/datum/ai_controller/monkey/monkey_ai = L.ai_controller
+		var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+		var/list/enemies = L.ai_controller.blackboard[BB_MONKEY_ENEMIES]
+		enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
+		monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	finish_action(controller, TRUE)
