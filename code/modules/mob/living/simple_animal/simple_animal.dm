@@ -707,6 +707,6 @@
 	. = ..()
 	stop_automated_movement = TRUE
 
-/mob/living/simple_animal/stop_deadchat_plays(var/deadchat_plays_comp)
+/mob/living/simple_animal/stop_deadchat_plays(deadchat_plays_comp)
 	. = ..()
 	stop_automated_movement = FALSE
