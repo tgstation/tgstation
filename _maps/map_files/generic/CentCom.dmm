@@ -384,17 +384,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"bp" = (
-/obj/structure/chair/stool/bar,
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "bq" = (
 /obj/structure/table/glass,
 /obj/item/scalpel{
@@ -13091,13 +13080,6 @@
 	},
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
-"Bl" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Bm" = (
 /obj/machinery/door/airlock/grunge,
 /obj/effect/turf_decal/tile/red{
@@ -13380,13 +13362,6 @@
 	icon_state = "right";
 	layer = 3
 	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
-"BU" = (
-/obj/structure/table/wood/bar,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -15738,17 +15713,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
-"GB" = (
-/obj/structure/table/wood/bar,
-/obj/item/reagent_containers/glass/rag{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "GC" = (
 /obj/item/storage/briefcase{
 	pixel_x = -3;
@@ -16645,16 +16609,6 @@
 /obj/structure/flora/junglebush/b,
 /turf/open/floor/plating/grass,
 /area/syndicate_mothership/control)
-"Kd" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Ke" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -16669,8 +16623,7 @@
 /turf/closed/indestructible/opsglass,
 /area/syndicate_mothership/control)
 "Ki" = (
-/obj/structure/table/wood/bar,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -17737,17 +17690,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
-"Oc" = (
-/obj/structure/table/wood/bar,
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Of" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -18427,8 +18369,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/wood/bar,
-/obj/item/storage/box/cups,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -20381,14 +20322,6 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
-"Zo" = (
-/obj/structure/table/wood/bar,
-/obj/item/book/manual/wiki/barman_recipes,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/holodeck/rec_center/lounge)
 "Zs" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
@@ -65549,10 +65482,10 @@ an
 an
 an
 an
-Bl
-Zo
-Kd
-GB
+an
+an
+an
+Ki
 bj
 Mj
 Mj
@@ -65806,8 +65739,8 @@ an
 an
 an
 an
-Bl
-BU
+an
+an
 an
 Ki
 bj
@@ -66063,8 +65996,8 @@ aI
 an
 an
 eG
-bp
-Oc
+eG
+eG
 BT
 QQ
 bj
