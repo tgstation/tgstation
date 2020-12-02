@@ -331,9 +331,28 @@
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, "<span class='notice'>You unscrew \the [S] from \the [src].</span>")
+			if(HAS_TRAIT(user, TRAIT_GUNFLIP)&&(flip_cooldown <= world.time))
+				user.visible_message(user, "<span class='notice'>Woah! [user] spins the [src] around their finger flinging off the [S].</span>")
+				gun_spin(user)
+			else
+				to_chat(user, "<span class='notice'>You unscrew \the [S] from \the [src].</span>")
 			user.put_in_hands(S)
 			clear_suppressor()
+			return
+	gun_spin(user)
+
+/obj/item/gun/ballistic/proc/gun_spin(mob/user)
+	if(HAS_TRAIT(user, TRAIT_GUNFLIP) && (flip_cooldown <= world.time))
+		src.SpinAnimation(7,1)
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+			to_chat(user, "<span class='userdanger'>While trying to flip the [src] you pull the trigger and accidently shoot yourself!</span>")
+			var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
+			process_fire(user, user, FALSE, flip_mistake)
+			user.dropItemToGround(src, TRUE)
+			return
+		flip_cooldown = (world.time + 30)
+		user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 
 ///Prefire empty checks for the bolt drop
 /obj/item/gun/ballistic/proc/prefire_empty_checks()
@@ -366,17 +385,6 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
-		if(flip_cooldown <= world.time)
-			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, "<span class='userdanger'>While trying to flip the [src] you pull the trigger and accidently shoot yourself!</span>")
-				var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
-				process_fire(user, user, FALSE, flip_mistake)
-				user.dropItemToGround(src, TRUE)
-				return
-			flip_cooldown = (world.time + 30)
-			user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
-			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
