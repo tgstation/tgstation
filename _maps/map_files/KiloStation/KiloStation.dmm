@@ -54325,7 +54325,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/navbeacon/wayfinding,
-/turf/open/space/basic,
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "bHH" = (
 /obj/effect/turf_decal/tile/neutral{
