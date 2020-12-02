@@ -150,13 +150,6 @@
 	user.body_toggle_head()
 	return TRUE
 
-/datum/keybinding/mob/target_head/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_toggle_head()
-	return TRUE
-
 /datum/keybinding/mob/target_eyes
 	hotkey_keys = list("Numpad7")
 	name = "target_eyes"
