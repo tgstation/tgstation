@@ -192,7 +192,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/this_food = parent
 
-	this_food.reagents.clear_reagents()
+	this_food.reagents.multiply_reagents(CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 
 	for(var/obj/item/crafted_part in this_food.contents)
 		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
@@ -207,13 +207,6 @@ Behavior that's still missing from this component that original food items had t
 		objects_to_delete += content_object
 
 	QDEL_LIST(objects_to_delete)
-
-	for(var/r_id in initial_reagents)
-		var/amount = initial_reagents[r_id] * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
-		if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
-			this_food.reagents.add_reagent(r_id, amount, tastes)
-		else
-			this_food.reagents.add_reagent(r_id, amount)
 
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
@@ -245,16 +238,9 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/this_food = parent
 
-	this_food.reagents.clear_reagents()
+	this_food.reagents.multiply_reagents(cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 
 	source_item.reagents?.trans_to(this_food, source_item.reagents.total_volume)
-
-	for(var/r_id in initial_reagents)
-		var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
-		if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
-			this_food.reagents.add_reagent(r_id, amount, tastes)
-		else
-			this_food.reagents.add_reagent(r_id, amount)
 
 ///Makes sure the thing hasn't been destroyed or fully eaten to prevent eating phantom edibles
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
