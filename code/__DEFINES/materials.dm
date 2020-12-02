@@ -9,6 +9,8 @@
 
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD	(1<<0)
+/// Used to make a material init bespoke.
+#define MATERIAL_INIT_BESPOKE	(1<<1)
 
 //Material Container Flags.
 ///If the container shows the amount of contained materials on examine.
@@ -40,6 +42,9 @@
 #define MATERIAL_ADD_PREFIX (1<<1)
 #define MATERIAL_NO_EFFECTS (1<<2)
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
+
+/// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
+#define GetMaterialRef(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
 
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
 

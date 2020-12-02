@@ -1497,7 +1497,7 @@
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
+			var/datum/material/custom_material = GetMaterialRef(i)
 			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
@@ -1506,7 +1506,7 @@
 
 	if(!(material_flags & MATERIAL_NO_EFFECTS))
 		for(var/x in materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			var/datum/material/custom_material = GetMaterialRef(x)
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
@@ -1546,8 +1546,8 @@
 	. = list()
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
-		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
-		var/list/material_comp = material.return_composition(cached_materials[material], breakdown_flags)
+		var/datum/material/material = GetMaterialRef(mat)
+		var/list/material_comp = material.return_composition(cached_materials[mat], breakdown_flags)
 		for(var/comp_mat in material_comp)
 			.[comp_mat] += material_comp[comp_mat]
 

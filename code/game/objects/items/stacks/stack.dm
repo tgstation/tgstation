@@ -62,7 +62,7 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
+		var/datum/material/M = GetMaterialRef(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_BASE_RECIPES)

@@ -146,7 +146,7 @@
 									)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, /obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-	selected_material = SSmaterials.GetMaterialRef(/datum/material/iron)
+	selected_material = GetMaterialRef(/datum/material/iron)
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null

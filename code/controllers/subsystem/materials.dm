@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(materials)
 	///Dictionary of category || list of material refs
 	var/list/materials_by_category
 	///Dictionary of category || list of material types, mostly used by rnd machines like autolathes.
-	var/list/materialtypes_by_category
+	var/list/materialids_by_category
 	///A cache of all material combinations that have been used
 	var/list/list/material_combos
 	///List of stackcrafting recipes for materials using base recipes
@@ -32,23 +32,108 @@ SUBSYSTEM_DEF(materials)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
 	materials_by_category = list()
-	materialtypes_by_category = list()
+	materialids_by_category = list()
 	material_combos = list()
 	for(var/type in subtypesof(/datum/material))
-		var/datum/material/ref = type
-		if(!(initial(ref.init_flags) & MATERIAL_INIT_MAPLOAD))
-			continue // Do not initialize
+		var/datum/material/mat_type = type
+		if(!(initial(mat_type.init_flags) & MATERIAL_INIT_MAPLOAD))
+			continue // Do not initialize at mapload
+		InitializeMaterial(list(mat_type))
 
-		ref = new ref
-		materials[type] = ref
-		for(var/c in ref.categories)
-			materials_by_category[c] += list(ref)
-			materialtypes_by_category[c] += list(type)
+/** Creates and caches a material datum.
+  *
+  * Arugments:
+  * - [arguments][/list]: The arguments to use to create the material datum
+  *   - The first element is the type of material to initialize.
+  */
+/datum/controller/subsystem/materials/proc/InitializeMaterial(list/arguments)
+	var/datum/material/mat_type = arguments[1]
+	if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
+		arguments[1] = GetIdFromArguments(arguments)
 
-/datum/controller/subsystem/materials/proc/GetMaterialRef(datum/material/fakemat)
+	var/datum/material/mat_ref = new mat_type
+	if(!mat_ref.Initialize(arglist(arguments)))
+		return null
+
+	var/mat_id = mat_ref.id
+	materials[mat_id] = mat_ref
+	for(var/category in mat_ref.categories)
+		materials_by_category[category] += list(mat_ref)
+		materialids_by_category[category] += list(mat_id)
+
+	SEND_SIGNAL(src, COMSIG_MATERIALS_INIT_MAT, mat_ref)
+	return mat_ref
+
+/** Fetches a cached material singleton when passed sufficient arguments.
+  *
+  * Arguments:
+  * - [arguments][/list]: The list of arguments used to fetch the material ref.
+  *   - The first element is a material datum, text string, or material type.
+  *     - [Material datums][/datum/material] are assumed to be references to the cached datum and returned
+  *     - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
+  *     - A material type is checked for bespokeness:
+  *       - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
+  *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
+  *   - The following elements are used to generate bespoke IDs and
+  */
+/datum/controller/subsystem/materials/proc/_GetMaterialRef(list/arguments)
 	if(!materials)
 		InitializeMaterials()
-	return materials[fakemat] || fakemat
+
+	var/datum/material/key = arguments[1]
+	if(istype(key))
+		return key // We are assuming here that the only thing allowed to create material datums is [/datum/controller/subsystem/materials/proc/InitializeMaterial]
+
+	if(istext(key)) // Handle text id
+		. = materials[key]
+		if(!.)
+			WARNING("Attempted to fetch material ref with invalid text id '[key]'")
+		return
+
+	if(!ispath(key, /datum/material))
+		CRASH("Attempted to fetch material ref with invalid key [key]")
+
+	if(!(initial(key.init_flags) & MATERIAL_INIT_BESPOKE))
+		. = materials[key]
+		if(!.)
+			WARNING("Attempted to fetch reference to an abstract material with key [key]")
+		return
+
+	key = GetIdFromArguments(arguments)
+	return materials[key] || InitializeMaterial(arguments)
+
+/** I'm not going to lie, this was swiped from SSdcs.
+  * Credit does to ninjanomnom
+  *
+  * Generates an id for bespoke ~~elements~~ materials when given the argument list
+  * Generating the id here is a bit complex because we need to support named arguments
+  * Named arguments can appear in any order and we need them to appear after ordered arguments
+  * We assume that no one will pass in a named argument with a value of null
+  **/
+/datum/controller/subsystem/materials/proc/GetIdFromArguments(list/arguments)
+	var/datum/material/mattype = arguments[1]
+	var/list/fullid = list("[initial(mattype.id) || mattype]")
+	var/list/named_arguments = list()
+	for(var/i in 2 to length(arguments))
+		var/key = arguments[i]
+		var/value
+		if(istext(key))
+			value = arguments[key]
+		if(!(istext(key) || isnum(key)))
+			key = REF(key)
+		key = "[key]" // Key is stringified so numbers dont break things
+		if(!isnull(value))
+			if(!(istext(value) || isnum(value)))
+				value = REF(value)
+			named_arguments["[key]"] = value
+		else
+			fullid += "[key]"
+
+	if(length(named_arguments))
+		named_arguments = sortList(named_arguments)
+		fullid += named_arguments
+	return list2params(fullid)
+
 
 ///Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
 /datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
