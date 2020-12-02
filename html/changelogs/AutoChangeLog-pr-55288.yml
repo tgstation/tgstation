@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Revival surgery will fail to revive patients that are husked after the surgery is started until the patient is unhusked."

@@ -1,5 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Newfood now properly transfer reagents on crafting and microwaving, which is useful for things like mystery soup."
-  - bugfix: "opening a fruit no longer tells you about the element you stepped on but the actual fruit instead."
