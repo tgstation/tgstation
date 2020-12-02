@@ -382,8 +382,8 @@
 	hunger++
 	///check hunger
 	if((hunger > 50) && prob(20))
-		for(var/I in contents)
-			if(istype(I, /obj/item/food))
+		for(var/obj/item/I in contents)
+			if(IS_EDIBLE(I))
 				var/obj/item/food/F = I
 				F.forceMove(user.loc)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
