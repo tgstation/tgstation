@@ -336,6 +336,7 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 
 //bodypart selection verbs - Cyberboss
+//8: repeated presses toggles through head - eyes - mouth
 //9: eyes 8: head 7: mouth
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
