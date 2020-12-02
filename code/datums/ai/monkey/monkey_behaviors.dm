@@ -166,13 +166,13 @@
 
 	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
 
-	var/obj/item/Weapon = locate(/obj/item) in living_pawn.held_items
+	var/obj/item/weapon = locate(/obj/item) in living_pawn.held_items
 
 	living_pawn.face_atom(target)
 
 	// attack with weapon if we have one
-	if(Weapon)
-		Weapon.melee_attack_chain(living_pawn, target)
+	if(weapon)
+		weapon.melee_attack_chain(living_pawn, target)
 	else
 		target.attack_paw(living_pawn)
 
@@ -210,7 +210,7 @@
 
 	controller.current_movement_target = target
 
-	if(target.pulledby != living_pawn && !istype(target.pulledby?.ai_controller, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
+	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			living_pawn.a_intent = INTENT_GRAB
 			target.grabbedby(living_pawn)
@@ -243,9 +243,9 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/L in view(living_pawn, MONKEY_ENEMY_VISION))
-		if(!istype(L.ai_controller, /datum/ai_controller/monkey))
+		if(!HAS_AI_CONTROLLER_TYPE(L, /datum/ai_controller/monkey))
 			continue
-			
+
 		if(!DT_PROB(MONKEY_RECRUIT_PROB, delta_time))
 			continue
 		var/datum/ai_controller/monkey/monkey_ai = L.ai_controller

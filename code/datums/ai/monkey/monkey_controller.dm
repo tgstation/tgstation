@@ -20,8 +20,10 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
 	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	var/mob/living/living_pawn = pawn
 	blackboard[BB_MONKEY_AGRESSIVE] = TRUE //Angry cunt
-
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -60,46 +62,47 @@ have ways of interacting with a specific mob and control it.
 
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
 
-	if(!HAS_TRAIT(pawn, TRAIT_PACIFISM)) //Not a pacifist? lets try some combat behavior.
-		if(length(enemies) || blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
+	if(HAS_TRAIT(pawn, TRAIT_PACIFISM)) //Not a pacifist? lets try some combat behavior.
+		return
+	if(length(enemies) || blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
 
-			var/mob/living/selected_enemy
+		var/mob/living/selected_enemy
 
-			for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-				if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!blackboard[BB_MONKEY_AGRESSIVE] || living_pawn.faction_check_mob(possible_enemy)))) //Are they an enemy? (And do we even care?)
-					continue
+		for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
+			if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!blackboard[BB_MONKEY_AGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
+				continue
 
-				selected_enemy = possible_enemy
-				break
-			if(selected_enemy)
-				if(!selected_enemy.stat) //He's up, get him!
-					if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
-						blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_flee)
-						return //I'm running fuck you guys
-
-					if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
-						return
-
+			selected_enemy = possible_enemy
+			break
+		if(selected_enemy)
+			if(!selected_enemy.stat) //He's up, get him!
+				if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
 					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-					current_movement_target = selected_enemy
-					if(blackboard[BB_MONKEY_RECRUIT_COOLDOWN] < world.time)
-						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
-					return //Focus on this
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_flee)
+					return //I'm running fuck you guys
 
-				else //He's down, can we disposal him?
-					var/obj/machinery/disposal/bodyDisposal = locate(/obj/machinery/disposal/) in view(MONKEY_ENEMY_VISION, living_pawn)
-					if(bodyDisposal)
-						blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-						blackboard[BB_MONKEY_TARGET_DISPOSAL] = bodyDisposal
-						current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposal_mob)
-						return
+				if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
+					return
 
-				return //Too busy fighting to steal atm.
+				blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
+				current_movement_target = selected_enemy
+				if(blackboard[BB_MONKEY_RECRUIT_COOLDOWN] < world.time)
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
+				return //Focus on this
 
-	if(DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
+			else //He's down, can we disposal him?
+				var/obj/machinery/disposal/bodyDisposal = locate(/obj/machinery/disposal/) in view(MONKEY_ENEMY_VISION, living_pawn)
+				if(bodyDisposal)
+					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
+					blackboard[BB_MONKEY_TARGET_DISPOSAL] = bodyDisposal
+					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposal_mob)
+					return
+
+			return //Too busy fighting to steal atm.
+
+	else if(DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
 		if(TryFindWeapon()) //Found a better weapon, let's grab it first.
 			return
 
