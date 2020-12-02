@@ -8,6 +8,11 @@
 /datum/food_processor_process/meat
 	input = /obj/item/food/meat/slab
 	output = /obj/item/food/meatball
+	multiplier = 3
+
+/datum/food_processor_process/cutlet
+	input = /obj/item/food/meat/cutlet
+	output = /obj/item/food/meatball
 
 /datum/food_processor_process/bacon
 	input = /obj/item/food/meat/rawcutlet

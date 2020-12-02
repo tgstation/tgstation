@@ -112,16 +112,26 @@
 	name = "meatball"
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "meatball"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/raw_sausage
+	name = "raw sausage"
+	desc = "A piece of mixed, long meat, but then raw"
+	icon_state = "sausage"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("meat" = 1)
+	foodtypes = MEAT | BREAKFAST
+	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sausage
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
 	icon_state = "sausage"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | BREAKFAST
 	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
@@ -814,7 +824,7 @@
 	icon_state = "rawcutlet"
 	microwaved_type = /obj/item/food/meat/cutlet/plain
 	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	var/meat_type = "meat"

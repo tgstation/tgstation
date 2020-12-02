@@ -17,23 +17,20 @@
 	fry_loop = new(list(src), FALSE)
 
 
-/obj/machinery/deepfryer/examine(mob/user)
-	. = ..()
-	if(frying)
-		. += "You can make out \a [frying] in the oil."
-
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(I.resistance_flags & INDESTRUCTIBLE)
-		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
-		return
-	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
-			return ..()
-		else if(!frying && user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = new/obj/item/food/deepfryholder(src, I)
-			icon_state = "fryer_on"
-			fry_loop.start()
+	if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+		var/list/click_params = params2list(params)
+		//Center the icon where the user clicked.
+		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			return
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		vis_contents += I
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
+
+/obj/machinery/deepfryer/proc/ItemMoved(obj/item/I, mob/user)
+
 
 /obj/machinery/deepfryer/process(delta_time)
 	..()
