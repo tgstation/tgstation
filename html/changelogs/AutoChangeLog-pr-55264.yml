@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "DetDrobes can be restocked again, and no longer produce a custom vendor card when disassembled."
