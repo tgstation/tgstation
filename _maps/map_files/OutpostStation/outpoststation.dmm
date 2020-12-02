@@ -4736,6 +4736,13 @@
 /obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
 	dir = 1
 	},
+/obj/structure/sign/directions/command{
+	dir = 8;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/engineering{
+	pixel_y = 29
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cWs" = (
@@ -12853,6 +12860,22 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/structure/sign/directions/supply{
+	dir = 8;
+	pixel_y = 24
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_y = 30
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 42
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "ifS" = (
@@ -13386,6 +13409,20 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/arrow_ccw,
+/obj/structure/sign/directions/vault{
+	pixel_y = -22
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4;
+	pixel_y = -28
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = -34
+	},
+/obj/structure/sign/directions/evac{
+	pixel_y = -40
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "iwE" = (
@@ -13998,9 +14035,24 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/exam_room)
 "iPE" = (
-/obj/structure/sign/departments/evac,
-/turf/closed/wall,
-/area/chapel/main)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/sign/directions/upload{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "iPW" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -17260,6 +17312,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"kNm" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/sign/directions/vault{
+	dir = 4;
+	pixel_y = -27
+	},
+/obj/structure/sign/directions/evac{
+	pixel_y = -33
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "kNn" = (
 /obj/machinery/telecomms/processor/preset_two,
 /turf/open/floor/plasteel/dark/telecomms,
@@ -17308,6 +17378,20 @@
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
+"kPB" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/sign/departments/evac{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "kPZ" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
@@ -22046,6 +22130,22 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/structure/sign/directions/medical{
+	dir = 8;
+	pixel_y = 42
+	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_y = 30
+	},
+/obj/structure/sign/directions/supply{
+	dir = 8;
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "nHO" = (
@@ -22811,6 +22911,17 @@
 	},
 /turf/open/floor/wood,
 /area/library)
+"ofi" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/sign/directions/vault{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "ofj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -27690,6 +27801,19 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = -34
+	},
+/obj/structure/sign/directions/engineering{
+	pixel_y = -28
+	},
+/obj/structure/sign/directions/vault{
+	pixel_y = -22
+	},
+/obj/structure/sign/directions/evac{
+	pixel_y = -40
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "rcb" = (
@@ -28063,12 +28187,12 @@
 "rnM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -28
-	},
-/obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -28765,6 +28889,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"rKm" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/sign/directions/vault{
+	dir = 8;
+	pixel_y = -27
+	},
+/obj/structure/sign/directions/evac{
+	pixel_y = -33
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "rKx" = (
 /obj/machinery/door/window/northright,
 /turf/open/floor/plating,
@@ -30298,6 +30440,9 @@
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -36080,14 +36225,27 @@
 /turf/open/floor/carpet/blue,
 /area/bridge/meeting_room)
 "wiH" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/filled/arrow_ccw{
 	dir = 1
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 42
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_y = 36
+	},
+/obj/structure/sign/directions/science{
+	dir = 4;
+	pixel_y = 30
+	},
+/obj/structure/sign/directions/supply{
+	dir = 8;
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -69232,9 +69390,9 @@ ppq
 eti
 vjC
 eqr
-vjC
-eqr
 rnM
+eqr
+vjC
 xME
 spW
 iwz
@@ -70043,7 +70201,7 @@ qAz
 vNZ
 fDO
 tdK
-bnw
+kNm
 dxI
 dxI
 dxI
@@ -72790,7 +72948,7 @@ sUc
 bgh
 kPy
 sUc
-jdq
+iPE
 jrR
 gWc
 agb
@@ -76466,9 +76624,9 @@ smj
 smj
 smj
 smj
-cVz
+ofi
 tdK
-bnw
+kPB
 bRC
 bRC
 bRC
@@ -77496,8 +77654,8 @@ gFD
 kJg
 cVz
 tdK
-bnw
-iPE
+rKm
+xuP
 xuP
 xuP
 xuP
