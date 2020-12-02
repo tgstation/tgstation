@@ -1,11 +1,11 @@
 GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 
 /**
-  * # Interview Manager
-  *
-  * Handles all interviews in the duration of a round, includes the primary functionality for
-  * handling the interview queue.
-  */
+ * # Interview Manager
+ *
+ * Handles all interviews in the duration of a round, includes the primary functionality for
+ * handling the interview queue.
+ */
 /datum/interview_manager
 	/// The interviews that are currently "open", those that are not submitted as well as those that are waiting review
 	var/list/open_interviews = list()
@@ -27,12 +27,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	return ..()
 
 /**
-  * Used in the new client pipeline to catch when clients are reconnecting and need to have their
-  * reference re-assigned to the 'owner' variable of an interview
-  *
-  * Arguments:
-  * * C - The client who is logging in
-  */
+ * Used in the new client pipeline to catch when clients are reconnecting and need to have their
+ * reference re-assigned to the 'owner' variable of an interview
+ *
+ * Arguments:
+ * * C - The client who is logging in
+ */
 /datum/interview_manager/proc/client_login(client/C)
 	for(var/ckey in open_interviews)
 		var/datum/interview/I = open_interviews[ckey]
@@ -40,12 +40,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 			I.owner = C
 
 /**
-  * Used in the destroy client pipeline to catch when clients are disconnecting and need to have their
-  * reference nulled on the 'owner' variable of an interview
-  *
-  * Arguments:
-  * * C - The client who is logging out
-  */
+ * Used in the destroy client pipeline to catch when clients are disconnecting and need to have their
+ * reference nulled on the 'owner' variable of an interview
+ *
+ * Arguments:
+ * * C - The client who is logging out
+ */
 /datum/interview_manager/proc/client_logout(client/C)
 	for(var/ckey in open_interviews)
 		var/datum/interview/I = open_interviews[ckey]
@@ -53,12 +53,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 			I.owner = null
 
 /**
-  * Attempts to return an interview for a given client, using an existing interview if found, otherwise
-  * a new interview is created; if the user is on cooldown then it will return null.
-  *
-  * Arguments:
-  * * C - The client to get the interview for
-  */
+ * Attempts to return an interview for a given client, using an existing interview if found, otherwise
+ * a new interview is created; if the user is on cooldown then it will return null.
+ *
+ * Arguments:
+ * * C - The client to get the interview for
+ */
 /datum/interview_manager/proc/interview_for_client(client/C)
 	if (!C)
 		return
@@ -70,11 +70,11 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		return open_interviews[C.ckey]
 
 /**
-  * Attempts to return an interview for a provided ID, will return null if no matching interview is found
-  *
-  * Arguments:
-  * * id - The ID of the interview to find
-  */
+ * Attempts to return an interview for a provided ID, will return null if no matching interview is found
+ *
+ * Arguments:
+ * * id - The ID of the interview to find
+ */
 /datum/interview_manager/proc/interview_by_id(id)
 	if (!id)
 		return
@@ -87,12 +87,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 			return I
 
 /**
-  * Enqueues an interview in the interview queue, and notifies admins of the new interview to be
-  * reviewed.
-  *
-  * Arguments:
-  * * to_queue - The interview to enqueue
-  */
+ * Enqueues an interview in the interview queue, and notifies admins of the new interview to be
+ * reviewed.
+ *
+ * Arguments:
+ * * to_queue - The interview to enqueue
+ */
 /datum/interview_manager/proc/enqueue(datum/interview/to_queue)
 	if (!to_queue || (to_queue in interview_queue))
 		return
@@ -112,18 +112,18 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 		to_chat(X, "<span class='adminhelp'>Interview for [ckey] enqueued for review. Current position in queue: [to_queue.pos_in_queue]</span>", confidential = TRUE)
 
 /**
-  * Removes a ckey from the cooldown list, used for enforcing cooldown after an interview is denied.
-  *
-  * Arguments:
-  * * ckey - The ckey to remove from the cooldown list
-  */
+ * Removes a ckey from the cooldown list, used for enforcing cooldown after an interview is denied.
+ *
+ * Arguments:
+ * * ckey - The ckey to remove from the cooldown list
+ */
 /datum/interview_manager/proc/release_from_cooldown(ckey)
 	cooldown_ckeys -= ckey
 
 /**
-  * Dequeues the first interview from the interview queue, and updates the queue positions of any relevant
-  * interviews that follow it.
-  */
+ * Dequeues the first interview from the interview queue, and updates the queue positions of any relevant
+ * interviews that follow it.
+ */
 /datum/interview_manager/proc/dequeue()
 	if (interview_queue.len == 0)
 		return
@@ -139,12 +139,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	return to_return
 
 /**
-  * Dequeues an interview from the interview queue if present, and updates the queue positions of
-  * any relevant interviews that follow it.
-  *
-  * Arguments:
-  * * to_dequeue - The interview to dequeue
-  */
+ * Dequeues an interview from the interview queue if present, and updates the queue positions of
+ * any relevant interviews that follow it.
+ *
+ * Arguments:
+ * * to_dequeue - The interview to dequeue
+ */
 /datum/interview_manager/proc/dequeue_specific(datum/interview/to_dequeue)
 	if (!to_dequeue)
 		return
@@ -160,12 +160,12 @@ GLOBAL_DATUM_INIT(interviews, /datum/interview_manager, new)
 	interview_queue -= to_dequeue
 
 /**
-  * Closes an interview, removing it from the queued interviews as well as adding it to the closed
-  * interviews list.
-  *
-  * Arguments:
-  * * to_close - The interview to dequeue
-  */
+ * Closes an interview, removing it from the queued interviews as well as adding it to the closed
+ * interviews list.
+ *
+ * Arguments:
+ * * to_close - The interview to dequeue
+ */
 /datum/interview_manager/proc/close_interview(datum/interview/to_close)
 	if (!to_close)
 		return

@@ -6,7 +6,6 @@ These items take a specific time to eat, and can do most of the things our origi
 Behavior that's still missing from this component that original food items had that should either be put into seperate components or somewhere else:
 	Components:
 	Drying component (jerky etc)
-	Customizable component (custom pizzas etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
 
 	Misc:
@@ -69,11 +68,13 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
+	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
+		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
 		var/obj/item/item = parent
 		if (!item.grind_results)
@@ -453,3 +454,20 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/onCrossed(datum/source, mob/user)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, user, bitecount)
+
+///Response to being used to customize something
+/datum/component/edible/proc/used_to_customize(datum/source, atom/customized)
+	SIGNAL_HANDLER
+
+	SEND_SIGNAL(customized, COMSIG_EDIBLE_INGREDIENT_ADDED, src)
+
+///Response to an edible ingredient being added to parent.
+/datum/component/edible/proc/edible_ingredient_added(datum/source, datum/component/edible/ingredient)
+	SIGNAL_HANDLER
+
+	var/datum/component/edible/E = ingredient
+	if (LAZYLEN(E.tastes))
+		tastes = tastes.Copy()
+		for (var/t in E.tastes)
+			tastes[t] += E.tastes[t]
+	foodtypes |= E.foodtypes

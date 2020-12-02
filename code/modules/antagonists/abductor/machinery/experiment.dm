@@ -103,13 +103,13 @@
 			return TRUE
 
 /**
-  * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
-  *
-  * Arguments:
-  * * occupant The mob inside the machine
-  * * type The type of experiment to be performed
-  * * user The mob starting the experiment
-  */
+ * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
+ *
+ * Arguments:
+ * * occupant The mob inside the machine
+ * * type The type of experiment to be performed
+ * * user The mob starting the experiment
+ */
 /obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
@@ -167,11 +167,11 @@
 		return "Specimen braindead - disposed."
 
 /**
-  * send_back: Sends a mob back to a selected teleport location if safe
-  *
-  * Arguments:
-  * * H The human mob to be sent back
-  */
+ * send_back: Sends a mob back to a selected teleport location if safe
+ *
+ * Arguments:
+ * * H The human mob to be sent back
+ */
 /obj/machinery/abductor/experiment/proc/send_back(mob/living/carbon/human/H)
 	H.Sleeping(160)
 	H.uncuff()

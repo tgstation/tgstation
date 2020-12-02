@@ -67,8 +67,8 @@
 	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /**
-  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
-  */
+ * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+ */
 /obj/machinery/computer/piratepad_control/civilian/send()
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
