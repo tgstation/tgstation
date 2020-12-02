@@ -250,6 +250,7 @@ export const Filteriffic = (props, context) => {
     <Window
       width={500}
       height={500}
+      title="Filteriffic"
       resizable>
       <Window.Content scrollable>
         <NoticeBox danger>
