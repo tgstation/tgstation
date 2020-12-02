@@ -417,7 +417,7 @@
 	. = ..()
 	move_self = FALSE
 
-/obj/singularity/stop_deadchat_plays(var/deadchat_plays_comp)
+/obj/singularity/stop_deadchat_plays(deadchat_plays_comp)
 	. = ..()
 	move_self = TRUE
 
