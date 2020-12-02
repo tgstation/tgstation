@@ -6,6 +6,7 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/t_es = p_es()
 	var/obscure_name
 
 	if(isliving(user))
