@@ -232,12 +232,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /// Generates a box of mail depending on our exports and imports.
 /obj/docking_port/mobile/supply/proc/mail()
-	var/obj/structure/closet/crate/mail/mailcrate = new /obj/structure/closet/crate/mail
-	//everyone who can get mail (alive client humans)
+
+	//spawn crate
+	var/list/empty_turfs = list()
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/T in shuttle_area)
+			if(T.is_blocked_turf())
+				continue
+			empty_turfs += T
+	var/obj/structure/closet/crate/mail/mailcrate = new(pick(empty_turfs))
+
+	//collect recipients
 	var/list/mail_recipients = list()
 	for(var/mob/living/carbon/human/alive in GLOB.player_list)
 		if(alive.stat != DEAD)
 			mail_recipients += alive
+
 	//creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
 	for(var/i in SSeconomy.mail_waiting)
 		var/obj/item/mail/NM
@@ -252,16 +263,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			NM.junk_mail()
 	mailcrate.update_icon()
 	SSeconomy.mail_waiting = 0
-
-	var/list/empty_turfs = list()
-	for(var/place in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/T in shuttle_area)
-			if(T.is_blocked_turf())
-				continue
-			empty_turfs += T
-
-	mailcrate.forceMove(pick_n_take(empty_turfs))
 	return mailcrate
 
 #undef GOODY_FREE_SHIPPING_MAX

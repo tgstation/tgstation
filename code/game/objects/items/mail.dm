@@ -179,7 +179,7 @@
 	color = pick(department_colors) //eh, who gives a shit.
 	name = special_name ? junk_names[junk] : "important [initial(name)]"
 
-	junk = new(src)
+	junk = new junk(src)
 	return TRUE
 
 /// Subtype that's always junkmail
@@ -220,7 +220,9 @@
 			NM = new /obj/item/mail(src)
 		else
 			NM = new /obj/item/mail/envelope(src)
-		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
+		var/mob/living/carbon/human/mail_to
+		if(mail_recipients.len)
+			mail_to = pick(mail_recipients)
 		if(prob(50)) //so after 21 passes if everyone's at least gotten something we'll junkmail it up
 			mail_recipients -= mail_to
 		if(mail_to)
@@ -250,7 +252,7 @@
 
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
-	icon_state = "crumpled"
+	icon_state = "scrap"
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize()
 	. = ..()
@@ -258,6 +260,7 @@
 
 /obj/item/paper/fluff/junkmail_generic
 	name = "important document"
+	icon_state = "paper_words"
 
 /obj/item/paper/fluff/junkmail_generic/Initialize()
 	. = ..()
