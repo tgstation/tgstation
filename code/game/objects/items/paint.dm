@@ -88,11 +88,11 @@
 	add_fingerprint(user)
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/item/paint/anycolor/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
