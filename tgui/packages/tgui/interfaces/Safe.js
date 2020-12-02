@@ -13,7 +13,7 @@ export const Safe = (properties, context) => {
   return (
     <Window
       width={625}
-      height={760}
+      height={800}
       theme="ntos">
       <Window.Content>
         <Box className="Safe__engraving">
@@ -29,7 +29,7 @@ export const Safe = (properties, context) => {
           <Icon
             className="Safe__engraving-arrow"
             name="long-arrow-alt-down"
-            size="3"
+            size="5"
           /><br />
           {open ? (
             <Contents />

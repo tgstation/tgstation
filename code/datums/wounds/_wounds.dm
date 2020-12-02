@@ -100,15 +100,15 @@
 	return ..()
 
 /**
-  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
-  *
-  *
-  * Arguments:
-  * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
-  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
-  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
-  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
-  */
+ * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
+ *
+ *
+ * Arguments:
+ * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
+ * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
+ * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
+ * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !L.is_organic_limb())
 		qdel(src)
@@ -180,14 +180,14 @@
 		limb.update_wounds(replaced)
 
 /**
-  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
-  *
-  * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
-  *
-  * Arguments:
-  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
-  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
-  */
+ * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
+ *
+ * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
+ *
+ * Arguments:
+ * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
+ * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ */
 /datum/wound/proc/replace_wound(new_type, smited = FALSE)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
@@ -247,15 +247,15 @@
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
 
 /**
-  * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
-  *
-  * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
-  * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
-  *
-  * Arguments:
-  * * I: The item we're trying to use
-  * * user: The mob trying to use it on us
-  */
+ * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
+ *
+ * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
+ * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
+ *
+ * Arguments:
+ * * I: The item we're trying to use
+ * * user: The mob trying to use it on us
+ */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
 	if(QDELETED(I) || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
@@ -341,13 +341,13 @@
 	return
 
 /**
-  * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
-  *
-  * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
-  *
-  * Arguments:
-  * * mob/user: The user examining the wound's owner, if that matters
-  */
+ * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
+ *
+ * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
+ *
+ * Arguments:
+ * * mob/user: The user examining the wound's owner, if that matters
+ */
 /datum/wound/proc/get_examine_description(mob/user)
 	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"

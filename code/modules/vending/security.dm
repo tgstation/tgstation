@@ -30,7 +30,7 @@
 /obj/machinery/vending/security/pre_throw(obj/item/I)
 	if(istype(I, /obj/item/grenade))
 		var/obj/item/grenade/G = I
-		G.preprime()
+		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))
 		var/obj/item/flashlight/F = I
 		F.on = TRUE

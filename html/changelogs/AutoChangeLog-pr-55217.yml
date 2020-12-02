@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Names that don't pass the IC chat filter are now more prohibited from being set in various locations including pet name tags and the character preferences menu."
+  - admin: "You will now be warned when using VV auto-renaming features if the name you've chosen is blocked by the IC chat filter for any reason and will be allowed to confirm or cancel it."

@@ -28,6 +28,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embedding = list()
 	novariants = TRUE
 	matter_amount = 2
+	cost = 250
+	source = /datum/robot_energy_storage/metal
+	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
@@ -57,8 +60,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
-						 "<span class='notice'>You shape [src] into metal with [W].</span>", \
-						 "<span class='hear'>You hear welding.</span>")
+				"<span class='notice'>You shape [src] into metal with [W].</span>", \
+				"<span class='hear'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==R)
@@ -67,11 +70,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 				user.put_in_hands(new_item)
 	else
 		return ..()
-
-/obj/item/stack/rods/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 250
 
 /obj/item/stack/rods/cyborg/ComponentInitialize()
 	. = ..()
@@ -98,6 +96,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	merge_type = /obj/item/stack/rods/lava
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30

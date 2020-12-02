@@ -29,11 +29,11 @@
 	return zone
 
 /**
-  * Return the zone or randomly, another valid zone
-  *
-  * probability controls the chance it chooses the passed in zone, or another random zone
-  * defaults to 80
-  */
+ * Return the zone or randomly, another valid zone
+ *
+ * probability controls the chance it chooses the passed in zone, or another random zone
+ * defaults to 80
+ */
 /proc/ran_zone(zone, probability = 80)
 	if(prob(probability))
 		zone = check_zone(zone)
@@ -50,13 +50,13 @@
 		return FALSE
 
 /**
-  * Convert random parts of a passed in message to stars
-  *
-  * * phrase - the string to convert
-  * * probability - probability any character gets changed
-  *
-  * This proc is dangerously laggy, avoid it or die
-  */
+ * Convert random parts of a passed in message to stars
+ *
+ * * phrase - the string to convert
+ * * probability - probability any character gets changed
+ *
+ * This proc is dangerously laggy, avoid it or die
+ */
 /proc/stars(phrase, probability = 25)
 	if(probability <= 0)
 		return phrase
@@ -73,8 +73,8 @@
 	return sanitize(.)
 
 /**
-  * Makes you speak like you're drunk
-  */
+ * Makes you speak like you're drunk
+ */
 /proc/slur(phrase)
 	phrase = html_decode(phrase)
 	var/leng = length(phrase)
@@ -194,10 +194,10 @@
 	return message
 
 /**
-  * Turn text into complete gibberish!
-  *
-  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
-  */
+ * Turn text into complete gibberish!
+ *
+ * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
+ */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	text = html_decode(text)
 	. = ""
@@ -250,10 +250,10 @@
 
 
 /**
-  * change a mob's act-intent.
-  *
-  * Input the intent as a string such as "help" or use "right"/"left
-  */
+ * change a mob's act-intent.
+ *
+ * Input the intent as a string such as "help" or use "right"/"left
+ */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = TRUE
@@ -318,23 +318,23 @@
 
 
 /**
-  * Fancy notifications for ghosts
-  *
-  * The kitchen sink of notification procs
-  *
-  * Arguments:
-  * * message
-  * * ghost_sound sound to play
-  * * enter_link Href link to enter the ghost role being notified for
-  * * source The source of the notification
-  * * alert_overlay The alert overlay to show in the alert message
-  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
-  * * flashwindow Flash the byond client window
-  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
-  * * header The header of the notifiaction
-  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
-  * * notify_volume How loud the sound should be to spook the user
-  */
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * flashwindow Flash the byond client window
+ * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
+ * * header The header of the notifiaction
+ * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
+ * * notify_volume How loud the sound should be to spook the user
+ */
 /proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
@@ -368,8 +368,8 @@
 				A.add_overlay(alert_overlay)
 
 /**
-  * Heal a robotic body part on a mob
-  */
+ * Heal a robotic body part on a mob
+ */
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
@@ -408,10 +408,10 @@
 	return TRUE
 
 /**
-  * Offer control of the passed in mob to dead player
-  *
-  * Automatic logging and uses pollCandidatesForMob, how convenient
-  */
+ * Offer control of the passed in mob to dead player
+ *
+ * Automatic logging and uses pollCandidatesForMob, how convenient
+ */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
@@ -507,10 +507,10 @@
 	. = TRUE
 
 /**
-  * Examine text for traits shared by multiple types.
-  *
-  * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
-  */
+ * Examine text for traits shared by multiple types.
+ *
+ * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
+ */
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		var/dissectionmsg = ""
@@ -525,11 +525,11 @@
 		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
 
 /**
-  * Get the list of keywords for policy config
-  *
-  * This gets the type, mind assigned roles and antag datums as a list, these are later used
-  * to send the user relevant headadmin policy config
-  */
+ * Get the list of keywords for policy config
+ *
+ * This gets the type, mind assigned roles and antag datums as a list, these are later used
+ * to send the user relevant headadmin policy config
+ */
 /mob/proc/get_policy_keywords()
 	. = list()
 	. += "[type]"
