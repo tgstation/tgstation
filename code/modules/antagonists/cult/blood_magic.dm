@@ -777,8 +777,8 @@
 					M.visible_message("<span class='warning'>[M] is partially healed by [user]'s blood magic!</span>")
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
-					var/datum/beam/fwoosh = user.Beam(M, icon_state="sendbeam")
-					QDEL_IN(fwoosh, 10)
+				var/datum/beam/fwoosh = user.Beam(M, icon_state="sendbeam")
+				QDEL_IN(fwoosh, 10)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
 		..()

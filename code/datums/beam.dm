@@ -1,7 +1,6 @@
 
-/** Beam Datum and Effect
+/** # Beam Datum and Effect
  * IF YOU ARE LAZY AND DO NOT WANT TO READ, GO TO THE BOTTOM OF THE FILE AND USE THAT PROC!
- * IF YOU ONLY CARE ABOUT HOW WE'RE DOING THIS, GO TO Draw() AND READ THAT DOC!
  *
  * This is the beam datum! It's a really neat effect for the game in drawing a line from one atom to another.
  * It has two parts:
@@ -13,15 +12,22 @@
  * include a crossed proc that damages the crosser. Examples in venus_human_trap.dm
 */
 /datum/beam
-	var/atom/origin = null ///where the beam goes from
-	var/atom/target = null ///where the beam goes to
-	var/list/elements = list() ///list of beam objects. These have their visuals set by the visuals var which is created on starting
+	///where the beam goes from
+	var/atom/origin = null
+	///where the beam goes to
+	var/atom/target = null
+	///list of beam objects. These have their visuals set by the visuals var which is created on starting
+	var/list/elements = list()
+	///icon used by the beam.
 	var/icon
-	var/icon_state = "" //icon state of the main segments of the beam
+	///icon state of the main segments of the beam
+	var/icon_state = ""
+	///The beam will qdel if it's longer than this many tiles.
 	var/max_distance = 0
-	var/beam_type = /obj/effect/ebeam //must be subtype
-
-	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
+	///the objects placed in the elements list
+	var/beam_type = /obj/effect/ebeam
+	///This is used as the visual_contents of beams, so you can apply one effect to this and the whole beam will look like that. never gets deleted on redrawing.
+	var/obj/effect/ebeam/visuals
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",maxdistance=INFINITY,btype = /obj/effect/ebeam)
 	origin = beam_origin
@@ -33,9 +39,6 @@
 
 /**
  * Proc called by the atom Beam() proc. Sets up signals, and draws the beam for the first time.
- *
- * Arguments:
- * None!
  */
 /datum/beam/proc/Start()
 	visuals = new beam_type()
@@ -46,7 +49,7 @@
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
 
 /**
- * Triggered by signals set up when the beam is drawn. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
+ * Triggered by signals set up when the beam is set up. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
  *
  * Arguments:
  * mover: either the origin of the beam or the target of the beam that moved.
@@ -55,26 +58,13 @@
  */
 /datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
 	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
-		Reset()
+		QDEL_LIST(elements)
 		Draw()
 	else
 		qdel(src)
 
-/**
- * Deletes the old beam objects from origin to target.
- *
- * You must clean up the old beams before creating new ones! Every draw is a new set of objects, it doesn't touch the old ones. They will sit around pointing from where
- * where one atom WAS to where another atom WAS without knowing if they are still there.
- * Arguments:
- * None!
- */
-/datum/beam/proc/Reset()
-	for(var/obj/effect/ebeam/B in elements)
-		qdel(B)
-	elements.Cut()
-
 /datum/beam/Destroy()
-	Reset()
+	QDEL_LIST(elements)
 	qdel(visuals)
 	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
@@ -84,20 +74,6 @@
 
 /**
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
- *
- * A very long explanation of each step in the draw proc:
- * To start out, we get a few things that we need to calculate where to place and set up the beam effects.
- * The rotation to the target stored in a matrix, translation vector ((hypotenuse from point Y to Z)) (destination X and Y to target and the length in pixels to get there)
- * And N being the amount we've travelled along the hypotenuse. This goes up one tile length towards the target every beam placed
- * If the placement goes beyond the beam's destination, it cuts the icon at the end with a drawbox and given the normal icon. OTHERWISE, it's given the ebeam visuals.
- * -in the future remind me to refactor this part to not use drawbox but instead use a 513 filter to cut off the end, so i can make the entire part use the visuals- armhulen
- * Then we calculate where it's pixel position should be in relation to the origin turf. when it goes over 32, it wraps back to 1 and the object is moved into the new tile.
- * So this part both positions the pixel_x/y AND moves it to the tile it should be in for the beam to be interactable
- * ...aka outside the bounds of the tile, the actual position is changed so cross code still makes sense.
- * And repeat for each ebeam! Sorry if the explanation is bad, but honestly it's all just trigonometry so I hope you hit the books in high school buddy (if you're even out of it)
- *
- * Arguments:
- * None!
  */
 /datum/beam/proc/Draw()
 	var/Angle = round(Get_Angle(origin,target))
@@ -170,7 +146,7 @@
 	return
 
 /**
- * This is what you use to start a beam. Example: origin.Beam(target, args). Store the return of this proc, you need it to delete the beam.
+ * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc, you need it to delete the beam.**
  *
  * Unless you're making a custom beam effect (see the beam_type argument), you won't actually have to mess with any other procs. Make sure you store the return of this Proc, you'll need it
  * to kill the beam.

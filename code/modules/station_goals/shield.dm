@@ -158,7 +158,8 @@
 		if(get_dist(M,src) > kill_range)
 			continue
 		if(!(obj_flags & EMAGGED) && space_los(M))
-			Beam(get_turf(M),icon_state="sat_beam",time=5)
+			var/datum/beam/shwing = Beam(get_turf(M),icon_state="sat_beam")
+			QDEL_IN(shwing, 5)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)

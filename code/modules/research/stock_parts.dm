@@ -20,7 +20,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return ..()
 	if(user.Adjacent(T)) // no TK upgrading.
 		if(works_from_distance)
-			user.Beam(T, icon_state = "rped_upgrade", time = 5)
+			var/datum/beam/pshoom = Beam(T, icon_state = "rped_upgrade")
+			QDEL_IN(pshoom, 5)
 		T.exchange_parts(user, src)
 		return TRUE
 	return ..()
@@ -29,7 +30,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(adjacent || !istype(T) || !T.component_parts)
 		return ..()
 	if(works_from_distance)
-		user.Beam(T, icon_state = "rped_upgrade", time = 5)
+		var/datum/beam/pshoom = Beam(T, icon_state = "rped_upgrade")
+		QDEL_IN(pshoom, 5)
 		T.exchange_parts(user, src)
 		return
 	return ..()

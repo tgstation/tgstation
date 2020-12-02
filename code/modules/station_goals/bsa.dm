@@ -199,7 +199,8 @@
 			break
 		else
 			SSexplosions.highturf += tile //also fucks everything else on the turf
-	point.Beam(target, icon_state = "bsa_beam", time = 50, maxdistance = world.maxx) //ZZZAP
+	var/datum/beam/ZZZAP = point.Beam(target, icon_state = "bsa_beam", maxdistance = world.maxx) //ZZZAP
+	QDEL_IN(ZZZAP, 5 SECONDS)
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	if(!blocker)

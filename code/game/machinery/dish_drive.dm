@@ -131,7 +131,8 @@
 		visible_message("<span class='notice'>[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name].</span>")
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
-		Beam(bin, icon_state = "rped_upgrade", time = 5)
+		var/datum/beam/pshoom = Beam(bin, icon_state = "rped_upgrade")
+		QDEL_IN(pshoom, 5)
 		bin.update_icon()
 		flick("synthesizer_beam", src)
 	else
