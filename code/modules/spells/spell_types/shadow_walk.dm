@@ -45,11 +45,14 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+#define SHADOW_REGEN_RATE 2
+
 /obj/effect/dummy/phased_mob/shadow/process()
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
-	check_light_level()
 	shadow_heal()
+	check_light_level()
+
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/oldloc = loc
@@ -69,11 +72,11 @@
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
 
-/obj/effect/dummy/phased_mob/shadow/proc/shadow_heal()
+/obj/effect/dummy/phased_mob/shadow/proc/shadow_heal(delta_time)
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(2,2, 0, BODYPART_ORGANIC)
+		jaunter.heal_overall_damage(SHADOW_REGEN_RATE * delta_time,SHADOW_REGEN_RATE * delta_time, 0, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)
@@ -85,3 +88,4 @@
 	qdel(src)
 
 
+#undef SHADOW_REGEN_RATE
