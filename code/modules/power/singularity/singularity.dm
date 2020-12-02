@@ -418,8 +418,6 @@
 	move_self = FALSE
 
 /obj/singularity/stop_deadchat_plays(var/deadchat_plays_comp)
-	SIGNAL_HANDLER
-
 	. = ..()
 	move_self = TRUE
 
