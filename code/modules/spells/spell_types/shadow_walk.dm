@@ -1,3 +1,5 @@
+#define SHADOW_REGEN_RATE 3
+
 /obj/effect/proc_holder/spell/targeted/shadowwalk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
@@ -46,12 +48,13 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-#define SHADOW_REGEN_RATE 2
-
-/obj/effect/dummy/phased_mob/shadow/process()
+/obj/effect/dummy/phased_mob/shadow/process(delta_time)
+	var/turf/T = get_turf(src)
+	var/light_amount = T.get_lumcount()
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
-	shadow_heal()
+	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
+		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
 	check_light_level()
 
 
@@ -77,7 +80,7 @@
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(SHADOW_REGEN_RATE * delta_time,SHADOW_REGEN_RATE * delta_time, 0, BODYPART_ORGANIC)
+		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)
