@@ -336,7 +336,7 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 
 //bodypart selection verbs - Cyberboss
-//8:repeated presses toggles through head - eyes - mouth
+//9: eyes 8: head 7: mouth
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
@@ -344,29 +344,38 @@
 /client/proc/check_has_body_select()
 	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
-/**
- * Hidden verb to set the target zone of a mob to the head
- *
- * (bound to 8) - repeated presses toggles through head - eyes - mouth
- */
-/client/verb/body_toggle_head()
-	set name = "body-toggle-head"
+///Hidden verb to target the head, bound to 8
+/client/verb/body_head()
+	set name = "body-head"
 	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
 
-	var/next_in_line
-	switch(mob.zone_selected)
-		if(BODY_ZONE_HEAD)
-			next_in_line = BODY_ZONE_PRECISE_EYES
-		if(BODY_ZONE_PRECISE_EYES)
-			next_in_line = BODY_ZONE_PRECISE_MOUTH
-		else
-			next_in_line = BODY_ZONE_HEAD
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
+
+///Hidden verb to target the eyes, bound to 9
+/client/verb/body_eyes()
+	set name = "body-eyes"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone(next_in_line, mob)
+	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
+
+///Hidden verb to target the mouth, bound to 7
+/client/verb/body_mouth()
+	set name = "body-mouth"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
 /client/verb/body_r_arm()
