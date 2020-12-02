@@ -13,7 +13,8 @@
 	var/turf/location = get_turf(target)
 	scan_turf(user, location)
 
-// Skyrat change
+/* Analyzer scan turf proc, moved back to main scanners.dm so as to avoid shitcode
+
 /obj/item/analyzer/proc/scan_turf(mob/user, turf/location)
 	var/render_list = list()
 	var/datum/gas_mixture/environment = location.return_air()
@@ -45,3 +46,4 @@
 			render_list += "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id][MOLES], 0.01)] mol)</span>\n"
 		render_list += "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>\n"
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
+	*/
