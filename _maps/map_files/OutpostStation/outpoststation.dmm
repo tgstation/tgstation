@@ -14132,6 +14132,7 @@
 	dir = 1
 	},
 /obj/machinery/navbeacon/wayfinding/hop,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "jax" = (
