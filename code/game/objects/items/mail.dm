@@ -159,6 +159,34 @@
 
 	return TRUE
 
+/// Alternate setup, just complete garbage inside and anyone can open
+/obj/item/mail/proc/junk_mail()
+
+	var/obj/junk = /obj/item/paper/fluff/junkmail_generic
+	var/special_name = FALSE
+
+	if(prob(25))
+		special_name = TRUE
+		junk = pick(list(/obj/item/paper/pamphlet/gateway, /obj/item/paper/pamphlet/violent_video_games, /obj/item/paper/fluff/junkmail_redpill, /obj/effect/decal/cleanable/ash))
+
+	var/list/junk_names = list(
+		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
+		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
+		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at nanotrasen",
+		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTEFACT- DELIVER TO SCIENCE DIVISION",
+	)
+
+	color = pick(department_colors) //eh, who gives a shit.
+	name = special_name ? junk_names[junk] : "important [initial(name)]"
+
+	junk = new(src)
+	return TRUE
+
+/// Subtype that's always junkmail
+/obj/item/mail/junkmail/Initialize()
+	..()
+	junk_mail()
+
 /// Crate for mail from CentCom.
 /obj/structure/closet/crate/mail
 	name = "mail crate"
@@ -192,7 +220,11 @@
 			NM = new /obj/item/mail(src)
 		else
 			NM = new /obj/item/mail/envelope(src)
-		NM.initialize_for_recipient(pick(mail_recipients))
+		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
+		if(mail_to)
+			NM.initialize_for_recipient(mail_to)
+		else
+			NM.junk_mail()
 
 /// Mailbag.
 /obj/item/storage/bag/mail
@@ -213,3 +245,18 @@
 	STR.set_holdable(list(
 		/obj/item/mail
 	))
+
+/obj/item/paper/fluff/junkmail_redpill
+	name = "smudged paper"
+	icon_state = "crumpled"
+
+/obj/item/paper/fluff/junkmail_redpill/Initialize()
+	. = ..()
+	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]'"
+
+/obj/item/paper/fluff/junkmail_generic
+	name = "important document"
+
+/obj/item/paper/fluff/junkmail_generic/Initialize()
+	. = ..()
+	info = pick(GLOB.junkmail_messages)

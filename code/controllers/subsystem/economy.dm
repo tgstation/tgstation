@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(economy)
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 	if(!market_crashing)
 		price_update()
-	generate_mail()
+	mail_waiting += 1
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
@@ -112,18 +112,3 @@ SUBSYSTEM_DEF(economy)
 		return 1
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
-
-///
-/**
- * Proc for adding mail depending on living humans.
- *
- * Called by economy fired, though you could call this manually on the SS to add incoming mail with sanity.
- **/
-/datum/controller/subsystem/economy/proc/generate_mail()
-	var/list/mail_recipients = list()
-	for(var/mob/living/carbon/human/alive in GLOB.player_list)
-		if(alive.stat != DEAD && SSjob.name_occupations[alive.job])
-			mail_recipients += alive
-	if(mail_recipients.len)
-		return FALSE
-	mail_waiting += 1
