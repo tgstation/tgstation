@@ -219,13 +219,14 @@
  *
  * Arguments:
  * * user The cyborg mob interacting with the menu
+ * * old_module The old cyborg's module
  */
-/obj/item/robot_module/proc/check_menu(mob/living/silicon/robot/user)
+/obj/item/robot_module/proc/check_menu(mob/living/silicon/robot/user, obj/item/robot_module/old_module)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
-	if(user.has_module())
+	if(user.module != old_module)
 		return FALSE
 	return TRUE
 
@@ -464,7 +465,7 @@
 		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
 		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f")
 		)
-	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg), radius = 38, require_near = TRUE)
+	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_module), radius = 38, require_near = TRUE)
 	switch(service_robot_icon)
 		if("Bro")
 			cyborg_base_icon = "brobot"
@@ -513,7 +514,7 @@
 		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin"),
 		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner")
 		)
-	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg), radius = 38, require_near = TRUE)
+	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_module), radius = 38, require_near = TRUE)
 	switch(miner_robot_icon)
 		if("Asteroid Miner")
 			cyborg_base_icon = "minerOLD"
