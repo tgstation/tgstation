@@ -1,7 +1,26 @@
 
 ///Default override for echo
 /sound
-	echo = list(0, 0, -10000, 0, 0, 0, 0, 0.25, 1.5, 1, 0, 1, 0, 0, 0, 0, 1, 0)
+	echo = list(
+    0, // Direct
+    0, // DirectHF
+    -10000, // Room, -10000 means no low frequency sound reverb
+    -10000, // RoomHF, -10000 means no high frequency sound reverb
+    0, // Obstruction
+    0, // ObstructionLFRatio
+    0, // Occlusion
+    0.25, // OcclusionLFRatio
+    1.5, // OcclusionRoomRatio
+    1.0, // OcclusionDirectRatio
+    0, // Exclusion
+    1.0, // ExclusionLFRatio
+    0, // OutsideVolumeHF
+    0, // DopplerFactor
+    0, // RolloffFactor
+    0, // RoomRolloffFactor
+    1.0, // AirAbsorptionFactor
+    0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
+)
 
 /*! playsound
 
@@ -21,7 +40,7 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 
 */
 
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
@@ -86,7 +105,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 */
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
 	if(!client || !can_hear())
 		return
 
@@ -150,13 +169,16 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		S.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
 		if(S.environment == SOUND_ENVIRONMENT_NONE)
-			var/area/A = get_area(src)
-			if(A.sound_environment > -1)
-				S.environment = A.sound_environment
+			if(sound_environment_override)
+				S.environment = sound_environment_override
+			else
+				var/area/A = get_area(src)
+				if(A.sound_environment > -1)
+					S.environment = A.sound_environment
 
-		if(S.environment > SOUND_ENVIRONMENT_NONE) //We have ambience, reset our echo setting
-			S.echo = list(0, 0, 0, 0, 0, 0, 0, 0.25, 1.5, 1, 0, 1, 0, 0, 0, 0, 1, 0)
-
+		if(use_reverb && S.environment > SOUND_ENVIRONMENT_NONE) //We have reverbhttps://www.youtube.com/watch?v=Ur2MLyOtVqI, reset our echo setting
+			S.echo[3] = 0 //Room setting, 0 means normal reverb
+			S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
 	SEND_SOUND(src, S)
 

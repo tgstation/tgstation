@@ -96,6 +96,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/crew_quarters/bar
 	name = "Bar Maintenance"
 	icon_state = "maint_bar"
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/maintenance/department/crew_quarters/dorms
 	name = "Dormitory Maintenance"
@@ -329,12 +330,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/heads/captain
 	name = "Captain's Office"
 	icon_state = "captain"
-	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/crew_quarters/heads/captain/private
 	name = "Captain's Quarters"
 	icon_state = "captain_private"
-	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/crew_quarters/heads/chief
 	name = "Chief Engineer's Office"
@@ -454,11 +455,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mood_bonus = 5
 	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
 	airlock_wires = /datum/wires/airlock/service
-	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
 	icon_state = "bar"
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/crew_quarters/electronic_marketing_den
 	name = "Electronic Marketing Den"
@@ -474,6 +476,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "theatre"
+	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/crew_quarters/theatre/abandoned
 	name = "Abandoned Theatre"
