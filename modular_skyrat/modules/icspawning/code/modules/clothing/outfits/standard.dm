@@ -41,7 +41,7 @@
 
 /datum/outfit/debug/bst //Debug objs
 	name = "Bluespace Tech"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/misc/adminsuit
 	suit = /obj/item/clothing/suit/armor/vest/debug
 	glasses = /obj/item/clothing/glasses/debug
 	ears = /obj/item/radio/headset/headset_cent
@@ -65,7 +65,7 @@
 
 /datum/outfit/debug/bsthardsuit //Debug objs plus hardsuit
 	name = "Bluespace Tech (Hardsuit)"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/misc/adminsuit
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/debug
 	glasses = /obj/item/clothing/glasses/debug
 	ears = /obj/item/radio/headset/headset_cent
