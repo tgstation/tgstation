@@ -810,7 +810,7 @@
 						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, TRUE, src))
+					if(do_after(user, 2 SECONDS, src))
 						if(!panel_open || !S.use(2))
 							return
 						user.visible_message("<span class='notice'>[user] reinforces \the [src] with metal.</span>",
@@ -824,7 +824,7 @@
 						to_chat(user, "<span class='warning'>You need at least 2 plasteel sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, TRUE, src))
+					if(do_after(user, 2 SECONDS, src))
 						if(!panel_open || !S.use(2))
 							return
 						user.visible_message("<span class='notice'>[user] reinforces \the [src] with plasteel.</span>",
@@ -995,6 +995,7 @@
 				welded = !welded
 				user.visible_message("<span class='notice'>[user] [welded? "welds shut":"unwelds"] [src].</span>", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+				log_game("[key_name(user)] [welded ? "welded":"unwelded"] airlock [src] with [W] at [AREACOORD(src)]")
 				update_icon()
 		else
 			if(obj_integrity < max_integrity)
@@ -1076,7 +1077,7 @@
 				var/time_to_open = 50
 				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
-				if(do_after(user, time_to_open, TRUE, src))
+				if(do_after(user, time_to_open, src))
 					if(check_electrified && shock(user,100))
 						prying_so_hard = FALSE
 						return
@@ -1269,7 +1270,7 @@
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 
 
-	if(do_after(user, time_to_open, TRUE, src))
+	if(do_after(user, time_to_open, src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
 

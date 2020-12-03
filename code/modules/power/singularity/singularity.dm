@@ -95,19 +95,61 @@
 /obj/singularity/blob_act(obj/structure/blob/B)
 	return
 
+
 /obj/singularity/attack_tk(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='hear'>You hear something crack and explode in gore.</span>")
-		var/turf/T = get_turf(C)
-		for(var/i in 1 to 3)
-			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-			new /obj/effect/gibspawner/generic(T, C)
-			sleep(1)
-		C.ghostize()
-		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+	var/mob/living/carbon/jedi = user
+	jedi.visible_message(
+		"<span class='danger'>[jedi]'s head begins to collapse in on itself!</span>",
+		"<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>",
+		"<span class='hear'>You hear something crack and explode in gore.</span>"
+		)
+	jedi.Stun(3 SECONDS)
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_two, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_two(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	if(jedi.stat == DEAD)
+		jedi.ghostize()
+		var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+		if(rip_u)
+			rip_u.dismember(BURN)
+			qdel(rip_u)
+		return
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_three, jedi), 0.1 SECONDS)
+
+
+/obj/singularity/proc/carbon_tk_part_three(mob/living/carbon/jedi)
+	if(QDELETED(jedi))
+		return
+	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
+	jedi.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+	if(QDELETED(jedi))
+		return // damage was too much
+	jedi.ghostize()
+	var/obj/item/bodypart/head/rip_u = jedi.get_bodypart(BODY_ZONE_HEAD)
+	if(rip_u)
+		rip_u.dismember(BURN)
+		qdel(rip_u)
+
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)

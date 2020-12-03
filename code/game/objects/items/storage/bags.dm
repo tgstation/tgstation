@@ -120,7 +120,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
+	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))

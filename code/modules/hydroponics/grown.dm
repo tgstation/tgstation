@@ -35,8 +35,8 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 	if(dried_type == -1)
 		dried_type = src.type

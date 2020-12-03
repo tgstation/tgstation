@@ -233,8 +233,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(pipe_cleaner_colors[pipe_cleaner_color])
 		pipe_cleaner_color = pipe_cleaner_colors[pipe_cleaner_color]
 
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 ///////////////////////////////////
@@ -460,8 +460,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	if(!amount)
 		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red

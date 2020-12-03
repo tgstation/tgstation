@@ -82,7 +82,7 @@
 		visible_message("<span class='warning'>[src] rams into [A] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
-		DumpMobs(TRUE)
+		dump_mobs(TRUE)
 		log_combat(src, A, "crashed into", null, "dumping all passengers")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)

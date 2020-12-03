@@ -202,14 +202,17 @@
 					infest(victim)
 					return //This will qdelete the legion.
 
+///Create a legion at the location of a corpse. Exists so that legion subtypes can override it with their own type of legion.
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/make_legion(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+	else
+		return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion(H.loc)
 
+///Create a new legion using the supplied human H
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
-	else
-		L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
@@ -402,6 +405,9 @@
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
+	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
 
 // Snow Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow

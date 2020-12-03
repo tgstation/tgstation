@@ -210,7 +210,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"

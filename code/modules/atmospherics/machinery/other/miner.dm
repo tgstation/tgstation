@@ -193,11 +193,6 @@
 	overlay_color = "#da4646"
 	spawn_id = /datum/gas/healium
 
-/obj/machinery/atmospherics/miner/hexane
-	name = "\improper Hexane Gas Miner"
-	overlay_color = "#d113e2"
-	spawn_id = /datum/gas/hexane
-
 /obj/machinery/atmospherics/miner/hydrogen
 	name = "\improper Hydrogen Gas Miner"
 	overlay_color = "#ffffff"

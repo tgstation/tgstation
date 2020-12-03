@@ -5,6 +5,9 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
+	if(tgalert(src, "Are you sure you'd like to mass-modify every instance of the [var_name] variable?", "This can break everything if you do not know what you are doing.", "Yes", "No") != "Yes")
+		return
+
 	if(!check_rights(R_VAREDIT))
 		return
 

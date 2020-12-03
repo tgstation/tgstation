@@ -391,9 +391,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/healium_output
 	name = "healium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HEALIUM
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hexane_output
-	name = "hexane tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HEXANE
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hydrogen_output
 	name = "hydrogen tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_H2

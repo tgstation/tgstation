@@ -212,7 +212,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

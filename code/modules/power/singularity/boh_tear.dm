@@ -39,10 +39,13 @@
 	message_admins("A BoH tear has been created at [ADMIN_VERBOSEJMP(T)].")
 	investigate_log("was created at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 
-/obj/singularity/boh_tear/attack_tk(mob/living/user)
-	if(!istype(user))
+
+/obj/singularity/boh_tear/attack_tk(mob/user)
+	if(!isliving(user))
 		return
-	to_chat(user, "<span class='userdanger'>You don't feel like you are real anymore.</span>")
-	user.dust_animation()
-	user.spawn_dust()
-	addtimer(CALLBACK(src, .proc/consume, user), 5)
+	var/mob/living/jedi = user
+	to_chat(jedi, "<span class='userdanger'>You don't feel like you are real anymore.</span>")
+	jedi.dust_animation()
+	jedi.spawn_dust()
+	addtimer(CALLBACK(src, .proc/consume, jedi), 0.5 SECONDS)
+	return COMPONENT_CANCEL_ATTACK_CHAIN

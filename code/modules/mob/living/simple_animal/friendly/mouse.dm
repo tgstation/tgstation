@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100)
+	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg'=1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"

@@ -112,7 +112,7 @@
 				to_chat(user, "<span class='warning'>You require 3 [cloth_repair.name] to repair [src].</span>")
 				return TRUE
 			to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [cloth_repair]...</span>")
-			if(!do_after(user, 6 SECONDS, TRUE, src) || !cloth_repair.use(3))
+			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
 				return TRUE
 			repair(user, params)
 			return TRUE

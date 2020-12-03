@@ -16,8 +16,8 @@
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/ash, 30)
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/effect/decal/cleanable/ash/crematorium
 //crematoriums need their own ash cause default ash deletes itself if created in an obj

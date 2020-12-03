@@ -12,7 +12,7 @@
 		#include "map_files\PubbyStation\PubbyStation.dmm"
 		#include "map_files\IceBoxStation\IceBoxStation.dmm"
 
-		#ifdef TRAVISBUILDING
+		#ifdef CIBUILDING
 			#include "templates.dm"
 		#endif
 	#endif

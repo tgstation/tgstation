@@ -180,8 +180,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/Initialize()
 	. = ..()
-	pixel_x = rand(-4, 4)
-	pixel_y = rand(-4, 4)
+	pixel_x = base_pixel_x + rand(-4, 4)
+	pixel_y = base_pixel_y + rand(-4, 4)
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings //So we can't craft bowls from everything.
 

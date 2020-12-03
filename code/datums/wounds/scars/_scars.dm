@@ -158,5 +158,5 @@
 
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone)
-	description = pick_list(FLESH_SCAR_FILE, "dismemberment")
+	description = pick_list(FLESH_SCAR_FILE, "dismember")
 	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_FLESH_BONE]|[persistent_character_slot]"

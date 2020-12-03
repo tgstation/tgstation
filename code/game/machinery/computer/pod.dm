@@ -143,6 +143,19 @@
 	icon_keyboard = "no_keyboard"
 	density = FALSE
 
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
+	id = MASSDRIVER_TOXINS
+
+//for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
+/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
+	range = 6
+
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun
+	id = MASSDRIVER_CHAPEL
+
+/obj/machinery/computer/pod/old/mass_driver_controller/trash
+	id = MASSDRIVER_DISPOSALS
+
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."

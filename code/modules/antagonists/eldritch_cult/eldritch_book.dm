@@ -41,7 +41,7 @@
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
 	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
-	if(do_after(user,10 SECONDS,TRUE,RS))
+	if(do_after(user, 10 SECONDS, RS))
 		qdel(RS)
 		charge += 1
 

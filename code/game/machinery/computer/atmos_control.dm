@@ -50,9 +50,6 @@
 /obj/machinery/air_sensor/atmos/healium_tank
 	name = "healium tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEALIUM
-/obj/machinery/air_sensor/atmos/hexane_tank
-	name = "hexane tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEXANE
 /obj/machinery/air_sensor/atmos/hydrogen_tank
 	name = "hydrogen tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2
@@ -152,7 +149,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_FREON = "Freon Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HALON = "Halon Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank",
-		ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank",
 		ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank",
 		ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank",
 		ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank",
@@ -321,13 +317,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HEALIUM
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/healium_tank
-
-/obj/machinery/computer/atmos_control/tank/hexane_tank
-	name = "Hexane Supply Control"
-	input_tag = ATMOS_GAS_MONITOR_INPUT_HEXANE
-	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HEXANE
-	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank")
-	circuit = /obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
 
 /obj/machinery/computer/atmos_control/tank/hydrogen_tank
 	name = "Hydrogen Supply Control"

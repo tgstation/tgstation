@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -350,8 +350,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/Initialize()
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])

@@ -248,9 +248,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/healium
 	name = "healium filter"
 	filter_type = "healium"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/hexane
-	name = "hexane filter"
-	filter_type = "hexane"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/h2
 	name = "hydrogen filter"
 	filter_type = "hydrogen"
@@ -312,9 +309,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/healium
 	name = "healium filter"
 	filter_type = "healium"
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hexane
-	name = "hexane filter"
-	filter_type = "hexane"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/h2
 	name = "hydrogen filter"
 	filter_type = "hydrogen"

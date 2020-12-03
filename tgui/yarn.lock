@@ -3,7 +3,7 @@
 
 __metadata:
   version: 4
-  cacheKey: 5
+  cacheKey: 7
 
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4":
   version: 7.10.4
@@ -1239,7 +1239,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.11.0":
+"@babel/types@npm:^7.11.0, @babel/types@npm:^7.8.3":
   version: 7.11.0
   resolution: "@babel/types@npm:7.11.0"
   dependencies:
@@ -4105,20 +4105,20 @@ fsevents@^1.2.7:
 
 "fsevents@patch:fsevents@^1.2.7#builtin<compat/fsevents>":
   version: 1.2.13
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#builtin<compat/fsevents>::version=1.2.13&hash=495457"
+  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#builtin<compat/fsevents>::version=1.2.13&hash=127e8e"
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
-  checksum: 508a7e7e1e365236a7a0478392827145ba05c0181b1928b73b20c1a5212d15f6529735db897d617d7b0b051248c5720160f74c113bd727fc02de4f6cf885e1ff
+  checksum: 7bc048c164eb72f91b18ba7cd2ba30679a0afe57e9cd6352eac4bdbc4ddd4ca2ea98674d0bd3a80e96427469adc433c13532494b36aea40fceab36e198982182
   languageName: node
   linkType: hard
 
 "fsevents@patch:fsevents@~2.1.2#builtin<compat/fsevents>":
   version: 2.1.3
-  resolution: "fsevents@patch:fsevents@npm%3A2.1.3#builtin<compat/fsevents>::version=2.1.3&hash=495457"
+  resolution: "fsevents@patch:fsevents@npm%3A2.1.3#builtin<compat/fsevents>::version=2.1.3&hash=127e8e"
   dependencies:
     node-gyp: latest
-  checksum: 0005677b72f38a129a3cbe8c3794bdc83081a2bec53dfc03b085c2e5e4ca7a33a861a779d623313652df89746d97f79d24e4fef3b101c11c39ce1ea8a9690e18
+  checksum: e2b8c379340e21a786d32c653854c8876f94eb1202dd5be378fd42c062bc123aab5051c32bf0011865257c85982c41ded203f9fe8c9f9c8f8c84dc4672abc0e0
   languageName: node
   linkType: hard
 
@@ -4288,13 +4288,6 @@ fsevents@~2.1.2:
   version: 4.2.4
   resolution: "graceful-fs@npm:4.2.4"
   checksum: d095ee4dc6eacc76814cd52d5d185b860119378a6fd4888e7d4e94983095c54d4f6369942a5e3d759cdbdd4e3ee7eaeb27a39ff938c6ee4610894fd9de46b6cb
-  languageName: node
-  linkType: hard
-
-"growly@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "growly@npm:1.3.0"
-  checksum: c87f7e8c785cac6ee60719c9d62f7d790a85dafa13d62c4667664e3a21ee771f5fd19df3f374d2f7bdf297b8f687cf70e19bb066aba4832e6f6caa5190812578
   languageName: node
   linkType: hard
 
@@ -4863,13 +4856,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"is-docker@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "is-docker@npm:2.0.0"
-  checksum: 9972935f7d02de00658a0cd604e1dea41c337ec1d207afd7e1fac482fc8490cd84eee0f626f21f4b4d91f299f24a6074b367822a41ff2379412b3cc890481063
-  languageName: node
-  linkType: hard
-
 "is-extendable@npm:^0.1.0, is-extendable@npm:^0.1.1":
   version: 0.1.1
   resolution: "is-extendable@npm:0.1.1"
@@ -5053,15 +5039,6 @@ fsevents@~2.1.2:
   version: 1.1.0
   resolution: "is-wsl@npm:1.1.0"
   checksum: 0f15cf5d5ff025afb0ba9cb49fd425b5d533b2af700533d343b7fa9aaca2f6c8242ba1c1a4e30c925522816bf0172fec2ae7cacaae682c91ffa0cd3f88ff1e8e
-  languageName: node
-  linkType: hard
-
-"is-wsl@npm:^2.1.1":
-  version: 2.2.0
-  resolution: "is-wsl@npm:2.2.0"
-  dependencies:
-    is-docker: ^2.0.0
-  checksum: 3dcc4073d4682b9f9a4c59411bb73716cfff88eae58a6bd0af302b8ee016263a5150302bb296bc81a4cb0d3b66c86d82b3ee0146ed15f6558022bc847a2549a2
   languageName: node
   linkType: hard
 
@@ -5892,20 +5869,6 @@ fsevents@~2.1.2:
     util: ^0.11.0
     vm-browserify: ^1.0.1
   checksum: 8da918a5ef93c0bfed8df90bb9d6b12ae08836963aa0b22927eedf6d3eab6e60feb9eae2d394f1eb6d5f0fdd985fb2858b698a3347606b90dfdd5047b5ea6042
-  languageName: node
-  linkType: hard
-
-"node-notifier@npm:7.0.1":
-  version: 7.0.1
-  resolution: "node-notifier@npm:7.0.1"
-  dependencies:
-    growly: ^1.3.0
-    is-wsl: ^2.1.1
-    semver: ^7.2.1
-    shellwords: ^0.1.1
-    uuid: ^7.0.3
-    which: ^2.0.2
-  checksum: d851b89ba6e6cbab7803370516ff25424b95d2fa0d0a15c01c199447502cd959f2153d2976674eb297a01faff64a85598297e54da362c933c3fb199ecfc39118
   languageName: node
   linkType: hard
 
@@ -7705,13 +7668,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"shellwords@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "shellwords@npm:0.1.1"
-  checksum: 3559ff550917ece921d252edf42eb54827540e9676e537137ace236df8f9b78e48c542ae0b3f8876fea0faf5826c97629d5b8cb9ac7dee287260e9804fb8132c
-  languageName: node
-  linkType: hard
-
 "side-channel@npm:^1.0.2":
   version: 1.0.2
   resolution: "side-channel@npm:1.0.2"
@@ -8335,7 +8291,6 @@ fsevents@~2.1.2:
     terser-webpack-plugin: ^4.1.0
     url-loader: ^4.1.0
     webpack: ^4.44.1
-    webpack-build-notifier: ^2.1.0
     webpack-bundle-analyzer: ^3.8.0
     webpack-cli: ^3.3.12
   languageName: unknown
@@ -8772,15 +8727,6 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"uuid@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "uuid@npm:7.0.3"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: a56be8a5bbf2bae755d749d0693637274935b5ae250dfaaaf79241391cf1a7c142a202492196363ec62ec51a476e5e3fc4de2944d854abf2e9b35a33e0e31d4c
-  languageName: node
-  linkType: hard
-
 "v8-compile-cache@npm:^2.0.3, v8-compile-cache@npm:^2.1.1":
   version: 2.1.1
   resolution: "v8-compile-cache@npm:2.1.1"
@@ -8843,16 +8789,6 @@ fsevents@~2.1.2:
     watchpack-chokidar2:
       optional: true
   checksum: 61876d6e60ddb1e9b0a6143c65a4453543bb1a27638254635d179d4681f15af200de9a61c1a3faec220a29e41ca37381e604345ffa9d48c064a29cff4cb25732
-  languageName: node
-  linkType: hard
-
-"webpack-build-notifier@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "webpack-build-notifier@npm:2.1.0"
-  dependencies:
-    node-notifier: 7.0.1
-    strip-ansi: ^6.0.0
-  checksum: c24be65518df4def6f535fe2ed7b57cc54e8d3231af0b23ceb4d5ca17c51ef1461da68e0ef5d13ac3e7f171dceb7d78da7b4079bc1d75f91d53fd77c02b87e74
   languageName: node
   linkType: hard
 

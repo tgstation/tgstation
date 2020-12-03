@@ -44,7 +44,6 @@
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
-	var/linglink
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
 	var/miming = FALSE // Mime's vow of silence

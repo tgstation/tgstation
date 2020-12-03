@@ -561,7 +561,7 @@
 		uses--
 		if(uses <= 0)
 			icon_state ="shifter_drained"
-		playsound(mobloc, "sparks", 50, TRUE)
+		playsound(mobloc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
@@ -569,8 +569,8 @@
 			if(pulled)
 				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE)
-			playsound(destination, "sparks", 50, TRUE)
+			playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(destination, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	else
 		to_chat(C, "<span class='warning'>The veil cannot be torn here!</span>")
@@ -760,6 +760,18 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
+	. = ..()
+	if(!iscultist(user))
+		to_chat(user, "<span class='cultlarge'>\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\"</span>")
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.active_hand_index == 1)
+				C.apply_damage(20, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 20, sharpness = SHARP_EDGED) //oof ouch
+			else
+				C.apply_damage(20, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 20, sharpness = SHARP_EDGED)
+		qdel(src)
+		return FALSE
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood

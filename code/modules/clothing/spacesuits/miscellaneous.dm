@@ -193,7 +193,7 @@ Contains:
 // ERT suit's gets EMP Protection
 /obj/item/clothing/suit/space/hardsuit/ert/Initialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec

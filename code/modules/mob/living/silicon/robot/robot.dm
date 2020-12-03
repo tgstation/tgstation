@@ -13,7 +13,7 @@
 	radio = /obj/item/radio/borg
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	light_system = MOVABLE_LIGHT
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 	var/custom_name = ""
@@ -115,7 +115,7 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -193,8 +193,6 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.set_stat(CONSCIOUS)
-				mmi.brainmob.remove_from_dead_mob_list()
-				mmi.brainmob.add_to_alive_mob_list()
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else

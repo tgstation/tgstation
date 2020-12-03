@@ -643,7 +643,7 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster
 	name = "crystal monster"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/crystal_mobs.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -680,7 +680,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/minion
 	name = "crystal minion"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
@@ -708,7 +707,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/thug
 	name = "crystal thug"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_thug"
 	icon_living = "crystal_thug"
 	icon_dead = "crystal_thug"
@@ -740,7 +738,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/recruit
 	name = "crystal recruit"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_recruit"
 	icon_living = "crystal_recruit"
 	icon_dead = "crystal_recruit"
@@ -766,7 +763,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_killer"
 	icon_living = "crystal_killer"
 	icon_dead = "crystal_killer"
@@ -808,7 +804,6 @@ This section is for the crystal monsters variations
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
 	desc = "A monster made of crystals similar to the Supermatter ones."
-	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "crystal_boss"
 	icon_living = "crystal_boss"
 	icon_dead = "crystal_boss"

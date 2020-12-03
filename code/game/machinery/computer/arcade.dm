@@ -536,7 +536,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameover = TRUE
 			blocked = FALSE
 			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
-			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
@@ -557,7 +557,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			timer_id = null
 		gameover = TRUE
 		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			user.gib()
@@ -1548,7 +1548,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
-		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")

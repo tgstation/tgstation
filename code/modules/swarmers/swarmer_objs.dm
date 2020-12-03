@@ -141,7 +141,7 @@
 
 /obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
-	playsound(loc, "sparks", 100, TRUE)
+	playsound(loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"

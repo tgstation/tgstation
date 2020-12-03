@@ -38,7 +38,6 @@
 
 	// Upgrades bitflag
 	var/upgrades = 0
-	var/datum/component/empprotection/emp_component
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 

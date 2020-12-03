@@ -26,7 +26,7 @@
 
 /obj/item/grenade/c4/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)

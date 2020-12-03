@@ -147,7 +147,7 @@
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 2,
 					/obj/item/clothing/under/rank/rnd/roboticist = 2,
 					/obj/item/clothing/under/rank/rnd/roboticist/skirt = 2,
-					/obj/item/clothing/suit/toggle/labcoat = 2,
+					/obj/item/clothing/suit/toggle/labcoat/roboticist = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,

@@ -757,7 +757,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, TRUE)
+		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /datum/reagent/consumable/astrotame
@@ -850,3 +850,11 @@
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
+
+/datum/reagent/consumable/laughsyrup
+	name = "Laughin' Syrup"
+	description = "The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
+	color = "#803280"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_mult = 2
+	taste_description = "fizzy sweetness"

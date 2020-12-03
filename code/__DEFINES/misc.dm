@@ -518,3 +518,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+
+
+// timed_action_flags parameter for `/proc/do_atom`, `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+#define IGNORE_TARGET_IN_DOAFTERS (1<<0)
+#define IGNORE_USER_LOC_CHANGE (1<<1)
+#define IGNORE_TARGET_LOC_CHANGE (1<<2)
+#define IGNORE_HELD_ITEM (1<<3)
+#define IGNORE_INCAPACITATED (1<<4)

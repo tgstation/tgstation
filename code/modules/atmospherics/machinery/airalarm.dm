@@ -105,8 +105,7 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -131,8 +130,7 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -14°C or 259.15°K.
@@ -157,8 +155,7 @@
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
 		/datum/gas/zauker			= new/datum/tlv/dangerous,
-		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/hexane			= new/datum/tlv/dangerous
+		/datum/gas/halon			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -553,7 +550,6 @@
 						/datum/gas/proto_nitrate,
 						/datum/gas/zauker,
 						/datum/gas/halon,
-						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
@@ -854,7 +850,7 @@
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

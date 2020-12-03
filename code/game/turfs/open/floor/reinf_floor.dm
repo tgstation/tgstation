@@ -134,10 +134,6 @@
 	name = "\improper Healium floor"
 	initial_gas_mix = ATMOS_TANK_HEALIUM
 
-/turf/open/floor/engine/hexane
-	name = "\improper Hexane floor"
-	initial_gas_mix = ATMOS_TANK_HEXANE
-
 /turf/open/floor/engine/h2
 	article = "an"
 	name = "\improper H2 floor"

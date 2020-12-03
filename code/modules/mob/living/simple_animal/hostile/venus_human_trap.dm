@@ -129,7 +129,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/OldLoc, Dir)
 	. = ..()
-	pixel_x = dir & (NORTH|WEST) ? 2 : -2
+	pixel_x = base_pixel_x + (dir & (NORTH|WEST) ? 2 : -2)
 
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()

@@ -25,7 +25,7 @@
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 	//This signal is needed to prevent gloves of the north star + hulk.
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	A.attack_hand(src)
@@ -35,7 +35,7 @@
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
@@ -82,14 +82,16 @@
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
 	. = ..()
+	if(.)
+		return
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
-			return
+			return TRUE
 
 	if(isturf(A) && get_dist(src,A) <= 1)
-		src.Move_Pulled(A)
-		return
+		Move_Pulled(A)
+		return TRUE
 
 /*
 	Animals & All Unspecified
@@ -135,7 +137,7 @@
 
 
 /atom/proc/attack_paw(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE
 

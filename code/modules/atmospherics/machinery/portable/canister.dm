@@ -68,8 +68,7 @@
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
 		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
 		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
-		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
-		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
+		"halon" = /obj/machinery/portable_atmospherics/canister/halon
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -82,7 +81,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit(pressure_limit, "Pa", 0)]</b>.</span>"
+		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
@@ -229,14 +228,6 @@
 	icon_state = "halon"
 	base_icon_state = "halon"
 	gas_type = /datum/gas/halon
-	filled = 1
-
-/obj/machinery/portable_atmospherics/canister/hexane
-	name = "Hexane canister"
-	desc = "Hexane, useful for removing contaminants."
-	icon_state = "hexane"
-	base_icon_state = "hexane"
-	gas_type = /datum/gas/hexane
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/fusion_test

@@ -37,7 +37,7 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))

@@ -31,7 +31,7 @@
 	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
-	if(do_after(src, rand(10, 20), 0, target)) //did they get deleted in that second?
+	if(do_after(src, rand(10, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
 		if(target.ckey)
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>")
 			essence_drained += rand(20, 30)
@@ -40,7 +40,7 @@
 			essence_drained += rand(40, 50)
 		else
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and faltering.</span>")
-		if(do_after(src, rand(15, 20), 0, target)) //did they get deleted NOW?
+		if(do_after(src, rand(15, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)
 					to_chat(src, "<span class='revennotice'>[target] will not yield much essence. Still, every bit counts.</span>")
@@ -50,7 +50,7 @@
 					to_chat(src, "<span class='revenboldnotice'>Such a feast! [target] will yield much essence to you.</span>")
 				if(90 to INFINITY)
 					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
-			if(do_after(src, rand(15, 25), 0, target)) //how about now
+			if(do_after(src, rand(15, 25), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
 				if(!target.stat)
 					to_chat(src, "<span class='revenwarning'>[target.p_theyre(TRUE)] now powerful enough to fight off your draining.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>")
@@ -72,7 +72,7 @@
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
-				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+				if(do_after(src, 46, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
 						essence_regen_cap += 5

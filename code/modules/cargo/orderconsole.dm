@@ -22,6 +22,8 @@
 	/// var that tracks message cooldown
 	var/message_cooldown
 	var/list/loaded_coupons
+	/// var that makes express console use rockets
+	var/is_express = FALSE
 
 
 /obj/machinery/computer/cargo/request
@@ -176,6 +178,8 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
+			if(is_express)
+				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))

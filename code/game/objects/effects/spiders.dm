@@ -84,8 +84,8 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/eggcluster/Initialize()
-	pixel_x = rand(3,-3)
-	pixel_y = rand(3,-3)
+	pixel_x = base_pixel_x + rand(3,-3)
+	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
 	. = ..()
 

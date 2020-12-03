@@ -2,7 +2,7 @@
 	name = "bicycle"
 	desc = "Keep away from electricity."
 	icon_state = "bicycle"
-	fall_off_if_missing_arms = TRUE
+	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 
 /obj/vehicle/ridden/bicycle/Initialize()
 	. = ..()

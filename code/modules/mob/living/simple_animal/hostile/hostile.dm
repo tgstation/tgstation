@@ -504,12 +504,12 @@
 			A.attack_animal(src)
 		return 1
 
+
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
+	return ..()
 
 
 ////// AI Status ///////

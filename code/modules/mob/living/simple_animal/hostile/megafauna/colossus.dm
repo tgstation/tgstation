@@ -44,6 +44,7 @@ Difficulty: Very Hard
 	move_to_delay = 10
 	ranged = TRUE
 	pixel_x = -32
+	base_pixel_x = -32
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
 	achievement_type = /datum/award/achievement/boss/colossus_kill

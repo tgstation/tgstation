@@ -128,3 +128,8 @@
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)
 #define PLANT_GENE_EXTRACTABLE	(1<<1)
+
+//mass drivers and related machinery
+#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_CHAPEL "chapelgun"
+#define MASSDRIVER_DISPOSALS "trash"

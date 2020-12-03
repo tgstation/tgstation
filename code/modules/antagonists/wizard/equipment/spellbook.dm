@@ -229,11 +229,23 @@
 	cost = 3
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 
+/datum/spellbook_entry/infinite_guns/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	for (var/obj/item/currentItem in user.get_all_gear())
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted)
+			qdel(currentItem)
+	return ..()
+
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 	cost = 3
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
+
+/datum/spellbook_entry/arcane_barrage/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	for (var/obj/item/currentItem in user.get_all_gear())
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage)
+			qdel(currentItem)
+	return ..()
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"

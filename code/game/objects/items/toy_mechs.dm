@@ -193,6 +193,8 @@
 		timer = world.time + cooldown
 		if(!quiet)
 			playsound(user, 'sound/mecha/mechstep.ogg', 20, TRUE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /**
   * Resets the request for battle.

@@ -218,7 +218,7 @@
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			oldpatient = user
 

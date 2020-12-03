@@ -170,11 +170,19 @@
 	if(!receiving)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
+
+	if(istype(receiving, /obj/item/slapper))
+		offer_high_five(receiving)
+		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	for(var/mob/living/carbon/C in orange(1, src))
+	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue
+
+		if(!C.can_hold_items())
+			continue
+
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
 			continue
@@ -206,3 +214,15 @@
 	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
 					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)
+
+/// Spin-off of [/mob/living/carbon/proc/give] exclusively for high-fiving
+/mob/living/carbon/proc/offer_high_five(obj/item/slap)
+	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
+		return
+	if(!(locate(/mob/living/carbon) in orange(1, src)))
+		visible_message("<span class='danger'>[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing...</span>", \
+			"<span class='warning'>You post up, looking for a high-five, but finding no one within range! How embarassing...</span>", null, 2)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+		return
+
+	apply_status_effect(STATUS_EFFECT_HIGHFIVE, slap)

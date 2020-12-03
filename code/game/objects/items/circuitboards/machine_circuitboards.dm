@@ -733,7 +733,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/stasis
-	name = "Lifeform Stasis Unit (Machine Board)"
+	name = "\improper Lifeform Stasis Unit (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/stasis
 	req_components = list(

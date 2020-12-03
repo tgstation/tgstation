@@ -25,6 +25,9 @@
 	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
+	/// Custom Ripley step and turning sounds (from TGMC)
+	stepsound = 'sound/mecha/powerloader_step.ogg'
+	turnsound = 'sound/mecha/powerloader_turn2.ogg'
 
 /obj/vehicle/sealed/mecha/working/ripley/Move()
 	. = ..()
@@ -44,8 +47,6 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize()
 	. = ..()
-	//Add ore box to cargo, here because the clarke has a unremovable box
-	LAZYADD(cargo, box)
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 

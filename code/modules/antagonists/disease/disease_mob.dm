@@ -88,7 +88,7 @@ the new instance inside the host to be updated to the template's stats.
 
 
 /mob/camera/disease/get_status_tab_items()
-	..()
+	. = ..()
 	if(freemove)
 		. += "Host Selection Time: [round((freemove_end - world.time)/10)]s"
 	else

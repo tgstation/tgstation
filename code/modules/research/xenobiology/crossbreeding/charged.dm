@@ -203,7 +203,7 @@ Charged extracts:
 /obj/item/slimecross/charged/gold/process()
 	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(src))
-	playsound(get_turf(src), "sparks", 50, TRUE)
+	playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)

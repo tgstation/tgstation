@@ -29,6 +29,7 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
+	base_pixel_x = -16
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)

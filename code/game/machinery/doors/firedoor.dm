@@ -125,6 +125,7 @@
 	if(W.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 		welded = !welded
 		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
+		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_icon()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)

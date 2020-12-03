@@ -100,7 +100,8 @@
 			INVOKE_ASYNC(victim, /mob.proc/emote, "scream")
 			victim.Stun(0.5 SECONDS)
 			limb.receive_damage(brute=rand(3,7))
-			return COMPONENT_NO_ATTACK_HAND
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /datum/wound/blunt/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)

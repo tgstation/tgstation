@@ -41,7 +41,7 @@
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
 
-		return COMPONENT_NO_ATTACK_HAND
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 /**

@@ -71,7 +71,7 @@
 					"<span class='notice'>You start to insert the [inserted_item.name] into \the [parent].</span>")
 
 	INVOKE_ASYNC(src, .proc/insert_item, inserted_item, user)
-	return COMPONENT_ITEM_NO_ATTACK
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Begins the process of attempting to remove the stored item.
   *
@@ -93,7 +93,7 @@
 					"<span class='notice'>You start to rip into \the [parent].</span>")
 
 	INVOKE_ASYNC(src, .proc/begin_remove_item, user)
-	return COMPONENT_ITEM_NO_ATTACK
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Inserts the item into the food, after a do_after.
   *

@@ -93,6 +93,7 @@
 
 	removecell()
 
+
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
@@ -101,6 +102,8 @@
 	to_chat(user, "<span class='notice'>You telekinetically remove [charging] from [src].</span>")
 
 	removecell()
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	return

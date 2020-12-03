@@ -194,7 +194,7 @@
 			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 			SSshuttle.unload_preview()
 			SSshuttle.existing_shuttle = SSshuttle.emergency
-			SSshuttle.action_load(shuttle)
+			SSshuttle.action_load(shuttle, replace = TRUE)
 			bank_account.adjust_money(-shuttle.credit_cost)
 			minor_announce("[usr.real_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")

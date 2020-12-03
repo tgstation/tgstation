@@ -111,9 +111,9 @@
 		kill_objective.find_target()
 		add_objective(kill_objective)
 
-	var/datum/objective/survive/exist/exist_objective = new
-	exist_objective.owner = owner
-	add_objective(exist_objective)
+	var/datum/objective/survive/malf/dont_die_objective = new
+	dont_die_objective.owner = owner
+	add_objective(dont_die_objective)
 
 
 /datum/antagonist/traitor/proc/forge_single_objective()

@@ -39,7 +39,7 @@
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
 		spark_system.start()
-		playsound(user, "sparks", 50, TRUE)
+		playsound(user, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(user, 'sound/weapons/blade1.ogg', 50, TRUE)
 		target.emag_act(user)
 
@@ -75,7 +75,7 @@
 
 	if(doSpark)
 		spark_system.start()
-		playsound(get_turf(src), "sparks", 50, TRUE)
+		playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	var/msg = ""
 

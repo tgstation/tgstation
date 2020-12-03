@@ -142,20 +142,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		update_movespeed(TRUE)
 	return final
 
-/// Handles the special case of editing the movement var
-/mob/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, control_object))
-		var/obj/O = var_value
-		if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-			return FALSE
-	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
-	var/diff
-	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
-		remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
-		diff = var_value - cached_multiplicative_slowdown
-	. = ..()
-	if(. && slowdown_edit && isnum(diff))
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
 ///Is there a movespeed modifier for this mob
 /mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)

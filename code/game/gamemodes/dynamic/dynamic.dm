@@ -115,6 +115,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
 	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
+	dat += "<A href='?src=\ref[src];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
+	if (forced_latejoin_rule)
+		dat += {"<A href='?src=\ref[src];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
+	dat += "<A href='?src=\ref[src];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
+	dat += "<br />"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
 		dat += "<br/>"
@@ -153,15 +158,33 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
-		message_admins("[key_name(usr)] forced a latejoin injection.", 1)
+		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
 		midround_injection_cooldown = 0
 		forced_injection = TRUE
-		message_admins("[key_name(usr)] forced a midround injection.", 1)
+		message_admins("[key_name(usr)] forced a midround injection.")
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
+	else if(href_list["force_latejoin_rule"])
+		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortList(latejoin_rules)
+		if (!added_rule)
+			return
+		forced_latejoin_rule = added_rule
+		log_admin("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
+		message_admins("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
+	else if(href_list["clear_forced_latejoin"])
+		forced_latejoin_rule = null
+		log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
+		message_admins("[key_name(usr)] cleared the forced latejoin ruleset.")
+	else if(href_list["force_midround_rule"])
+		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortList(midround_rules)
+		if (!added_rule)
+			return
+		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
+		message_admins("[key_name(usr)] executed the [added_rule] ruleset.")
+		picking_specific_rule(added_rule, TRUE)
 
 	admin_panel() // Refreshes the window
 
@@ -304,20 +327,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
-		// Wouldn't it be funny if you wanted to make a multiline if to make it more readable you needed to escape the newlines?
-		if( configuration \
-		 && configuration[ruleset.ruletype] \
-		 && configuration[ruleset.ruletype][ruleset.name])
-			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
-			for(var/variable in rule_conf)
-				if(!(variable in ruleset.vars))
-					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
-					continue
-				ruleset.vars[variable] = rule_conf[variable]
-		if(CONFIG_GET(flag/protect_roles_from_antagonist))
-			ruleset.restricted_roles |= ruleset.protected_roles
-		if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-			ruleset.restricted_roles |= "Assistant"
+		configure_ruleset(ruleset)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -354,6 +364,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	for (var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
+		configure_ruleset(rule)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
@@ -519,6 +530,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
+		configure_ruleset(new_rule) // This makes sure the rule is set up properly.
 	else if(istype(ruletype, /datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
@@ -703,6 +715,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+
+/// Apply configurations to rule.
+/datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
+	var/rule_conf = LAZYACCESSASSOC(configuration, ruleset.ruletype, ruleset.name)
+	for(var/variable in rule_conf)
+		if(!(variable in ruleset.vars))
+			stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+			continue
+		ruleset.vars[variable] = rule_conf[variable]
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+		ruleset.restricted_roles |= ruleset.protected_roles
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		ruleset.restricted_roles |= "Assistant"
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
