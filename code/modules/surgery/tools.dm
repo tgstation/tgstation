@@ -420,8 +420,14 @@
 		playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 100, TRUE)
-	playsound(get_turf(user), 'sound/items/ratchet.ogg', 75, TRUE)
+	var/timer = 2 SECONDS
+	for(var/obj/item/bodypart/thing in user.bodyparts)
+		if(thing.body_part == HEAD || thing.body_part == CHEST)
+			continue
+		addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, user, 'sound/weapons/bladeslice.ogg', 70), timer)
+		timer += 2 SECONDS
+	sleep(timer)
 	return BRUTELOSS
 
 /obj/item/bonesetter
