@@ -257,9 +257,9 @@
 	icon_state = "snowman"
 
 /obj/structure/statue/snow/snowlegion
-    name = "snowlegion"
-    desc = "Looks like that weird kid with the tiger plushie has been round here again."
-    icon_state = "snowlegion"
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon_state = "snowlegion"
 
 ///////////////////////////////bronze///////////////////////////////////
 
@@ -322,10 +322,10 @@
 	return ..()
 
 /*
- Hit the block to start
- Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
- Hit block again to start sculpting.
- Moving interrupts
+Hit the block to start
+Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+Hit block again to start sculpting.
+Moving interrupts
 */
 /obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
 	. = ..()

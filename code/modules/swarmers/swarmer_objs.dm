@@ -30,14 +30,14 @@
 	qdel(src)
 
 /**
-  * # Swarmer Beacon
-  *
-  * Beacon which creates sentient player swarmers.
-  *
-  * The beacon which creates sentient player swarmers during the swarmer event.  Spawns in maint on xeno locations, and can create a player swarmer once every 30 seconds.
-  * The beacon cannot be damaged by swarmers, and must be destroyed to prevent the spawning of further player-controlled swarmers.
-  * Holds a swarmer within itself during the 30 seconds before releasing it and allowing for another swarmer to be spawned in.
-  */
+ * # Swarmer Beacon
+ *
+ * Beacon which creates sentient player swarmers.
+ *
+ * The beacon which creates sentient player swarmers during the swarmer event.  Spawns in maint on xeno locations, and can create a player swarmer once every 30 seconds.
+ * The beacon cannot be damaged by swarmers, and must be destroyed to prevent the spawning of further player-controlled swarmers.
+ * Holds a swarmer within itself during the 30 seconds before releasing it and allowing for another swarmer to be spawned in.
+ */
 
 /obj/structure/swarmer_beacon
 	name = "swarmer beacon"
@@ -70,12 +70,12 @@
 	que_swarmer(user)
 
 /**
-  * Interaction when a ghost interacts with a swarmer beacon
-  *
-  * Called when a ghost interacts with a swarmer beacon, allowing them to become a swarmer
-  * Arguments:
-  * * user - A reference to the ghost interacting with the beacon
-  */
+ * Interaction when a ghost interacts with a swarmer beacon
+ *
+ * Called when a ghost interacts with a swarmer beacon, allowing them to become a swarmer
+ * Arguments:
+ * * user - A reference to the ghost interacting with the beacon
+ */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/user)
 	var/swarm_ask = alert("Become a swarmer?", "Do you wish to consume the station?", "Yes", "No")
 	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
@@ -88,23 +88,23 @@
 	return TRUE
 
 /**
-  * Releases a swarmer from the beacon and tells it what to do
-  *
-  * Occcurs 30 seconds after a ghost becomes a swarmer.  The beacon releases it, tells it what to do, and opens itself up to spawn in a new swarmer.
-  * Arguments:
-  * * swarmer - The swarmer being released and told what to do
-  */
+ * Releases a swarmer from the beacon and tells it what to do
+ *
+ * Occcurs 30 seconds after a ghost becomes a swarmer.  The beacon releases it, tells it what to do, and opens itself up to spawn in a new swarmer.
+ * Arguments:
+ * * swarmer - The swarmer being released and told what to do
+ */
 /obj/structure/swarmer_beacon/proc/release_swarmer(mob/swarmer)
 	to_chat(swarmer, "<span class='bold'>SWARMER CONSTRUCTION COMPLETED.  OBJECTIVES:\n\
-	                     1. CONSUME RESOURCES AND REPLICATE UNTIL THERE ARE NO MORE RESOURCES LEFT\n\
-						 2. ENSURE PROTECTION OF THE BEACON SO THIS LOCATION CAN BE INVADED AT A LATER DATE; DO NOT PERFORM ACTIONS THAT WOULD RENDER THIS LOCATION DANGEROUS OR INHOSPITABLE\n\
-						 3. BIOLOGICAL RESOURCES WILL BE HARVESTED AT A LATER DATE: DO NOT HARM THEM\n\
-						 OPERATOR NOTES:\n\
-						 - CONSUME RESOURCES TO CONSTRUCT TRAPS, BARRIERS, AND FOLLOWER DRONES\n\
-						 - FOLLOWER DRONES WILL FOLLOW YOU AUTOMATCIALLY UNLESS THEY POSSESS A TARGET.  WHILE DRONES CANNOT ASSIST IN RESOURCE HARVESTING, THEY CAN PROTECT YOU FROM THREATS\n\
-						 - LCTRL + ATTACKING AN ORGANIC WILL ALOW YOU TO REMOVE SAID ORGANIC FROM THE AREA\n\
-						 - YOU AND YOUR DRONES HAVE A STUN EFFECT ON MELEE.  YOU ARE ALSO ARMED WITH A DISABLER PROJECTILE, USE THESE TO PREVENT ORGANICS FROM HALTING YOUR PROGRESS\n\
-						 GLORY TO !*# $*#^</span>")
+		1. CONSUME RESOURCES AND REPLICATE UNTIL THERE ARE NO MORE RESOURCES LEFT\n\
+		2. ENSURE PROTECTION OF THE BEACON SO THIS LOCATION CAN BE INVADED AT A LATER DATE; DO NOT PERFORM ACTIONS THAT WOULD RENDER THIS LOCATION DANGEROUS OR INHOSPITABLE\n\
+		3. BIOLOGICAL RESOURCES WILL BE HARVESTED AT A LATER DATE: DO NOT HARM THEM\n\
+		OPERATOR NOTES:\n\
+		- CONSUME RESOURCES TO CONSTRUCT TRAPS, BARRIERS, AND FOLLOWER DRONES\n\
+		- FOLLOWER DRONES WILL FOLLOW YOU AUTOMATCIALLY UNLESS THEY POSSESS A TARGET.  WHILE DRONES CANNOT ASSIST IN RESOURCE HARVESTING, THEY CAN PROTECT YOU FROM THREATS\n\
+		- LCTRL + ATTACKING AN ORGANIC WILL ALOW YOU TO REMOVE SAID ORGANIC FROM THE AREA\n\
+		- YOU AND YOUR DRONES HAVE A STUN EFFECT ON MELEE.  YOU ARE ALSO ARMED WITH A DISABLER PROJECTILE, USE THESE TO PREVENT ORGANICS FROM HALTING YOUR PROGRESS\n\
+		GLORY TO !*# $*#^</span>")
 	swarmer.forceMove(get_turf(src))
 	processing_swarmer = FALSE
 

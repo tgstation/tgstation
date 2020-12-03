@@ -358,7 +358,7 @@
 /obj/item/circuitboard/machine/HFR_core
 	name = "HFR core (Machine Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/atmospherics/components/binary/hypertorus/core
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
 	req_components = list(
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sheet/glass = 10,
@@ -548,6 +548,7 @@
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
+		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
 		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",

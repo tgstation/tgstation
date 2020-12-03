@@ -337,11 +337,11 @@
 	ensnare(hit_atom)
 
 /**
-  * Attempts to legcuff someone with the bola
-  *
-  * Arguments:
-  * * C - the carbon that we will try to ensnare
-  */
+ * Attempts to legcuff someone with the bola
+ *
+ * Arguments:
+ * * C - the carbon that we will try to ensnare
+ */
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
