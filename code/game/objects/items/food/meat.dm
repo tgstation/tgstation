@@ -273,9 +273,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
-
 /obj/item/food/sausage/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/american_sausage, 1, 30)
+
+/obj/item/food/american_sausage
+	name = "american sausage"
+	desc = "Snip."
+	icon_state = "american_sausage"
 
 /obj/item/food/salami
 	name = "salami"
