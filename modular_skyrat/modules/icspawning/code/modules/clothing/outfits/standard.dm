@@ -18,6 +18,7 @@
 	icon_state = "flightsuit"
 	inhand_icon_state = "flightsuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/debug
+	cell = /obj/item/stock_parts/cell/high/slime/hypercharged
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	armor = list("melee" = 98, "bullet" = 98, "laser" = 98, "energy" = 98, "bomb" = 98, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	w_class = WEIGHT_CLASS_TINY
@@ -28,6 +29,7 @@
 	icon_state = "hardsuit0-flight"
 	inhand_icon_state = "hardsuit0-flight"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	flash_protect = FLASH_PROTECTION_WELDER
 	hardsuit_type = "flight"
 	armor = list("melee" = 98, "bullet" = 98, "laser" = 98, "energy" = 98, "bomb" = 98, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 
@@ -69,7 +71,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/debug
 	glasses = /obj/item/clothing/glasses/debug
 	ears = /obj/item/radio/headset/headset_cent
-	mask = /obj/item/clothing/mask/gas/welding/up
+	mask = /obj/item/clothing/mask/nobreath
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	belt = /obj/item/storage/belt/utility/chief/full/debug
 	shoes = /obj/item/clothing/shoes/combat/debug
