@@ -1,3 +1,8 @@
+
+///Default override for echo
+/sound
+	echo = list(0, 0, -10000, 0, 0, 0, 0, 0.25, 1.5, 1, 0, 1, 0, 0, 0, 0, 1, 0)
+
 /*! playsound
 
 playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
@@ -126,6 +131,9 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
+			if(pressure_factor < 0.5)
+				S.environment = SOUND_AREA_SPACE
+
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
@@ -140,6 +148,15 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		S.y = dy
 
 		S.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
+
+		if(S.environment == SOUND_ENVIRONMENT_NONE)
+			var/area/A = get_area(src)
+			if(A.sound_environment > -1)
+				S.environment = A.sound_environment
+
+		if(S.environment > SOUND_ENVIRONMENT_NONE) //We have ambience, reset our echo setting
+			S.echo = list(0, 0, 0, 0, 0, 0, 0, 0.25, 1.5, 1, 0, 1, 0, 0, 0, 0, 1, 0)
+
 
 	SEND_SOUND(src, S)
 
