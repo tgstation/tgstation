@@ -416,6 +416,7 @@ Contains:
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
 	/// Current charge or berserk, goes from 0 to 100
 	var/berserk_charge = 0
 	/// Status of berserk
