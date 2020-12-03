@@ -181,6 +181,12 @@
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
 
+/datum/map_template/ruin/space/thederelict2
+	id = "thederelict2"
+	suffix = "thederelict2.dmm"
+	name = "Space Station 12"
+	description = "Space Station 12 is... an interesting question. A half finished wreck sits on the horizon of Space Station 13, a small beacon still eminating from the structure."
+
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
 	suffix = "abandonedteleporter.dmm"

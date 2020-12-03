@@ -362,6 +362,71 @@
 	name = "Derelict Atmospherics"
 	icon_state = "red"
 
+//DERELICT 2
+
+/area/ruin/space/derelict2
+	name = "Derelict Station"
+	icon_state = "storage"
+
+/area/ruin/space/derelict2/hallway/primary
+	name = "Derelict Primary Hallway"
+	icon_state = "hallP"
+
+/area/ruin/space/derelict2/hallway/secondary
+	name = "Derelict Secondary Hallway"
+	icon_state = "hallS"
+
+/area/ruin/space/derelict2/hallway/primary/port
+	name = "Derelict Port Hallway"
+	icon_state = "hallFP"
+
+/area/ruin/space/derelict2/arrival
+	name = "Derelict Arrival Centre"
+	icon_state = "yellow"
+
+/area/ruin/space/derelict2/storage/equipment
+	name = "Derelict Equipment Storage"
+
+/area/ruin/space/derelict2/bridge
+	name = "Derelict Bridge"
+	icon_state = "bridge"
+
+/area/ruin/space/derelict2/bridge/access
+	name = "Derelict Bridge Access"
+	icon_state = "auxstorage"
+
+/area/ruin/space/derelict2/bridge/ai_upload
+	name = "Derelict AI Upload"
+	icon_state = "ai"
+
+/area/ruin/space/derelict2/solar_control
+	name = "Derelict Solar Control"
+	icon_state = "engine"
+
+/area/ruin/space/derelict2/se_solar
+	name = "South East Solars"
+	icon_state = "engine"
+
+/area/ruin/space/derelict2/medical
+	name = "Derelict Medbay"
+	icon_state = "medbay"
+
+/area/ruin/space/derelict2/medical/chapel
+	name = "Derelict Chapel"
+	icon_state = "chapel"
+
+/area/ruin/space/derelict2/supermatter_engine
+	name = "Derelict Supermatter Engine"
+	icon_state = "engine"
+
+/area/ruin/space/derelict2/gravity_generator
+	name = "Derelict Gravity Generator Room"
+	icon_state = "red"
+
+/area/ruin/space/derelict2/atmospherics
+	name = "Derelict Atmospherics"
+	icon_state = "red"
+
 //DJSTATION
 
 /area/ruin/space/djstation
