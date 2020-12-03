@@ -306,7 +306,7 @@
 /datum/action/item_action/vortex_recall/IsAvailable()
 	var/area/current_area = get_area(target)
 	if(current_area.area_flags & NOTELEPORT)
-		to_chat(owner, "[target] fizzles uselessly.")
+		to_chat(owner, "<span class='notice'>[target] fizzles uselessly.</span>")
 		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target

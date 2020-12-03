@@ -432,7 +432,7 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/process(delta_time)
 	. = ..()
 	if(berserk_active)
-		berserk_charge = clamp(berserk_charge -= 5*delta_time, 0, 100)
+		berserk_charge = clamp(berserk_charge -= 10*delta_time, 0, 100)
 	if(!berserk_charge)
 		if(ishuman(loc))
 			end_berserk(loc)
@@ -442,6 +442,8 @@ Contains:
 	end_berserk(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(berserk_active)
+		return
 	berserk_charge = clamp(berserk_charge += 5, 0, 100)
 	if(berserk_charge >= 100)
 		to_chat(owner, "<span class='notice'>Berserk mode is fully charged.</span>")

@@ -12,4 +12,4 @@
 	multiplicative_slowdown = 1
 
 /datum/movespeed_modifier/berserk
-	multiplicative_slowdown = -0.3
+	multiplicative_slowdown = -0.2
