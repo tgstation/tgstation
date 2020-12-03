@@ -390,8 +390,9 @@
 
 /obj/item/clothing/gloves/mod/dropped(mob/user)
 	. = ..()
-	user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
-	overslot = null
+	if(overslot)
+		user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+		overslot = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -412,5 +413,6 @@
 
 /obj/item/clothing/shoes/mod/dropped(mob/user)
 	. = ..()
-	user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
-	overslot = null
+	if(overslot)
+		user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+		overslot = null

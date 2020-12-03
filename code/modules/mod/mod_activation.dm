@@ -51,13 +51,6 @@
 /obj/item/mod/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
-	if(wearer.transferItemToLoc(piece, src, TRUE))
-		if(piece == gauntlets && gauntlets.overslot)
-			wearer.equip_to_slot_if_possible(gauntlets.overslot,gauntlets.overslot.slot_flags,0,0,1)
-			gauntlets.overslot = null
-		if(piece == boots && boots.overslot)
-			wearer.equip_to_slot_if_possible(boots.overslot,boots.overslot.slot_flags,0,0,1)
-			boots.overslot = null
 	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
 					"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
 					"<span class='hear'>You hear a mechanical hiss.</span>")
