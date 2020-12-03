@@ -262,6 +262,11 @@
 			return FALSE
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
+	else if(istype(I, /obj/item/modpaint))
+		var/obj/item/modpaint/paint = I
+		theme = paint.style
+		update_icon_state()
+		user.update_icons()
 	..()
 
 /obj/item/mod/control/proc/shock(mob/living/user)
