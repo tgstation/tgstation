@@ -254,9 +254,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		// Check if both we and the player are ghosts and they're not using a fakekey
 		if(isobserver(mob) && isobserver(C.mob) && !C.holder?.fakekey)
-			// Show us the player's mob name in the list in front of their displayed key
-			// Add the player's displayed key to the list
-			players["[C.mob]([displayed_key])"] = displayed_key
+			// We used to look for the player's mob name and display it alongisde their ckey using the line below.
+			//players["[C.mob]([displayed_key])"] = displayed_key
+			// This gives non-admins the ability to find out who plays who. This could be used to metagrudge, players don't need this information. We're here to ignore someone's OOC messages, nothing else.
+			players[displayed_key] = displayed_key
 
 		// Add the player's displayed key to the list if we or the player aren't a ghost or they're using a fakekey
 		else
