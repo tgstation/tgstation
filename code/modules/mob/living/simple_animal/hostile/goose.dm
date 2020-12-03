@@ -234,14 +234,15 @@
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	. = ..()
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
+		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25),
+		"honk" = CALLBACK(src, /atom/movable.proc/say, "HONK!!!"),
+		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
 
-	var/datum/component/deadchat_control/deadchat_plays_comp = .
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
 
-	if(!istype(deadchat_plays_comp))
-		CRASH("deadchat_plays proc called but parent parent returned invalid component: [deadchat_plays_comp.type]")
-
-	deadchat_plays_comp.add_input("vomit", CALLBACK(src, .proc/vomit_prestart, 25))
+	stop_automated_movement = TRUE
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

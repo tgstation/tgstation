@@ -1045,35 +1045,13 @@
 /**
  * Adds the deadchat_plays component to this atom with simple movement commands.
  *
- * Subtypes can override this to add additional functionality beyond basic movement controls.
- * Registers the COMSIG_COMPONENT_REMOVING signal to call the stop_deadchat_plays proc when the component is removed.
- *
  * Returns the component added.
  * Arguments:
  * * mode - Either ANARCHY_MODE or DEMOCRACY_MODE passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
- * * per_player_cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ * * cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
  */
 /atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	var/component = AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
-		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)), cooldown)
-
-	if(!component)
-		CRASH("Failed to create deadchat_control component.")
-
-	RegisterSignal(component, COMSIG_COMPONENT_REMOVING, .proc/stop_deadchat_plays)
-	return component
-
-/**
- * Allows for simple cleanup when the deadchat_control component is removed to restore default mob control states.
- *
- * Arguments:
- * * deadchat_plays_comp - The deadchat_control component that is being removed.
- */
-/atom/movable/proc/stop_deadchat_plays(deadchat_plays_comp)
-	SIGNAL_HANDLER
+	return AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -1081,23 +1059,26 @@
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
-		var/component = GetComponent(/datum/component/deadchat_control)
-		if(component)
-			if(alert(usr, "Remove deadchat control from [src]?", "Deadchat Plays [src]", "Remove", "Cancel") == "Remove")
-				qdel(component)
-				to_chat(usr, "<span class='notice'>Deadchat can no longer control [src].</span>")
-				log_admin("[key_name(usr)] has removed deadchat control from [src]")
-				message_admins("<span class='notice'>[key_name(usr)] has removed deadchat control from [src]</span>")
-		else
-			if(alert(usr, "Allow deadchat to move [src]?", "Deadchat Plays [src]", "Allow", "Cancel") == "Allow")
-				var/deadchat_plays_comp = deadchat_plays()
-				if(deadchat_plays_comp)
-					to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
-					log_admin("[key_name(usr)] has added deadchat control to [src]")
-					message_admins("<span class='notice'>[key_name(usr)] has added deadchat control to [src]</span>")
-				else
-					to_chat(usr, "<span class='notice'>Error adding deadchat control component to [src]. Deadchat are currently not controlling it.</span>")
+		if(alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", "Allow", "Cancel") == "Cancel")
+			return
+
+		// Alert is async, so quick sanity check to make sure we should still be doing this.
+		if(QDELETED(src))
+			return
+
+		// This should never happen, but if it does it should not be silent.
+		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Deadchat control not compatible with [src].</span>")
+			CRASH("deadchat_control component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
+		log_admin("[key_name(usr)] has added deadchat control to [src]")
+		message_admins("<span class='notice'>[key_name(usr)] has added deadchat control to [src]</span>")
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
