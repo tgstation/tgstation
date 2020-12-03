@@ -413,20 +413,14 @@
 		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
-	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(myhead)
-		user.visible_message("<span class='suicide'>[user] is amputating their own head with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		myhead.dismember()
-		playsound(src, 'sound/weapons/bladeslice.ogg', 250, TRUE)
-		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/timer = 2 SECONDS
+	user.visible_message("<span class='suicide'>[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.bodyparts)
-		if(thing.body_part == HEAD || thing.body_part == CHEST)
+		if(thing.body_part == CHEST)
 			continue
 		addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, user, 'sound/weapons/bladeslice.ogg', 70), timer)
-		timer += 2 SECONDS
+		timer += 1 SECONDS
 	sleep(timer)
 	return BRUTELOSS
 
