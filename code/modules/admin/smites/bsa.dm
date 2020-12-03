@@ -20,7 +20,10 @@
 			target_turf.break_tile()
 
 	if (target.health <= 1)
-		target.gib(no_brain = TRUE, no_organs = TRUE)
+		target.gib(
+			/* no_brain = */ TRUE,
+			/* no_organs = */ TRUE,
+		)
 	else
 		target.adjustBruteLoss(min(BSA_MAX_DAMAGE, target.health - 1))
 		target.Paralyze(BSA_PARALYZE_TIME)
