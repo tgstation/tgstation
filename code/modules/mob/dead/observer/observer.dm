@@ -21,7 +21,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_range = 1
 	light_power = 2
 	light_on = FALSE
-	sound_environment_override = SOUND_ENVIRONMENT_DIZZY
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
