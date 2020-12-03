@@ -360,10 +360,6 @@ Contains:
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
-	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_OCLOTHING)
-
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team hardsuit"
 	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
@@ -389,19 +385,88 @@ Contains:
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker
-	name = "champion's hardsuit"
+/obj/item/clothing/suit/space/hardsuit/berserker
+	name = "berserker hardsuit"
 	desc = "Voices echo from the hardsuit, driving the user insane."
 	icon_state = "hardsuit-berserker"
 	inhand_icon_state = "hardsuit-berserker"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
+	slowdown = 0
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/berserker
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
-	name = "champion's helmet"
+/obj/item/clothing/suit/space/hardsuit/berserker/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
+
+/obj/item/clothing/suit/space/hardsuit/berserker/RemoveHelmet()
+	var/obj/item/clothing/head/helmet/space/hardsuit/berserker/helm = helmet
+	if(helm?.berserk_active)
+		return
+	return ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker
+	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-berserker"
 	inhand_icon_state = "hardsuit0-berserker"
 	hardsuit_type = "berserker"
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	actions_types = list(/datum/action/item_action/berserk_mode)
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+	/// Current charge or berserk, goes from 0 to 100
+	var/berserk_charge = 0
+	/// Status of berserk
+	var/berserk_active = FALSE
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/examine()
+	. = ..()
+	. += "<span class='notice'>Berserk mode is [berserk_charge]% charged.</span>"
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/process(delta_time)
+	. = ..()
+	if(berserk_active)
+		berserk_charge = clamp(berserk_charge -= 5*delta_time, 0, 100)
+	if(!berserk_charge)
+		if(ishuman(loc))
+			end_berserk(loc)
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/dropped(mob/user)
+	. = ..()
+	end_berserk(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	berserk_charge = clamp(berserk_charge += 5, 0, 100)
+	if(berserk_charge >= 100)
+		to_chat(owner, "<span class='notice'>Berserk mode is fully charged.</span>")
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/berserk_mode(mob/living/carbon/human/user)
+	to_chat(user, "<span class='warning'>You enter berserk mode.</span>")
+	playsound(user, 'sound/magic/staff_healing.ogg', 50)
+	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
+	user.physiology.armor.melee += 50
+	user.next_move_modifier *= 0.5
+	user.add_atom_colour("#950a0a", TEMPORARY_COLOUR_PRIORITY)
+	ADD_TRAIT(user, TRAIT_CHUNKYFINGERS, BERSERK_TRAIT)
+	berserk_active = TRUE
+
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/end_berserk(mob/living/carbon/human/user)
+	if(!berserk_active)
+		return
+	to_chat(user, "<span class='warning'>You exit berserk mode.</span>")
+	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
+	user.physiology.armor.melee -= 50
+	user.next_move_modifier *= 2
+	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#950a0a")
+	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, BERSERK_TRAIT)
+	berserk_active = FALSE
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
