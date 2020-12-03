@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Borg upgrades with action buttons will no longer have broken action buttons."
