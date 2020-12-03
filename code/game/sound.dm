@@ -150,9 +150,6 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-			if(pressure_factor < 0.5)
-				S.environment = SOUND_AREA_SPACE
-
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
