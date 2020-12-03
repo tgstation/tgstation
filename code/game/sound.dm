@@ -2,25 +2,25 @@
 ///Default override for echo
 /sound
 	echo = list(
-	0, // Direct
-	0, // DirectHF
-	-10000, // Room, -10000 means no low frequency sound reverb
-	-10000, // RoomHF, -10000 means no high frequency sound reverb
-	0, // Obstruction
-	0, // ObstructionLFRatio
-	0, // Occlusion
-	0.25, // OcclusionLFRatio
-	1.5, // OcclusionRoomRatio
-	1.0, // OcclusionDirectRatio
-	0, // Exclusion
-	1.0, // ExclusionLFRatio
-	0, // OutsideVolumeHF
-	0, // DopplerFactor
-	0, // RolloffFactor
-	0, // RoomRolloffFactor
-	1.0, // AirAbsorptionFactor
-	0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
-)
+		0, // Direct
+		0, // DirectHF
+		-10000, // Room, -10000 means no low frequency sound reverb
+		-10000, // RoomHF, -10000 means no high frequency sound reverb
+		0, // Obstruction
+		0, // ObstructionLFRatio
+		0, // Occlusion
+		0.25, // OcclusionLFRatio
+		1.5, // OcclusionRoomRatio
+		1.0, // OcclusionDirectRatio
+		0, // Exclusion
+		1.0, // ExclusionLFRatio
+		0, // OutsideVolumeHF
+		0, // DopplerFactor
+		0, // RolloffFactor
+		0, // RoomRolloffFactor
+		1.0, // AirAbsorptionFactor
+		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
+	)
 
 /*! playsound
 
