@@ -111678,6 +111678,7 @@
 /obj/item/wrench,
 /obj/item/weldingtool,
 /obj/item/clothing/head/welding,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "rmX" = (
