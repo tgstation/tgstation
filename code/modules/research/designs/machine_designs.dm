@@ -497,7 +497,7 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/board/deepfryer
+/datum/design/board/griddle
 	name = "Machine Design (Griddle)"
 	desc = "The circuit board for a Griddle."
 	id = "griddle"
