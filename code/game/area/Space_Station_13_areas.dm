@@ -550,7 +550,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine
 	ambientsounds = ENGINEERING
 	airlock_wires = /datum/wires/airlock/engineering
-	sound_environment = SOUND_AREA_STANDARD_STATION
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -564,7 +564,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Atmospherics"
 	icon_state = "atmos"
 	flags_1 = CULT_PERMITTED_1
-	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/engine/atmos/upper
 	name = "Upper Atmospherics"
@@ -578,7 +577,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
 	icon_state = "atmos_engine"
-	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/engine/lobby
 	name = "Engineering Lobby"
