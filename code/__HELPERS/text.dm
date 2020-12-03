@@ -236,6 +236,10 @@
 		if(cmptext(t_out,bad_name))
 			return	//(not case sensitive)
 
+	// Protects against names containing IC chat prohibited words.
+	if(CHAT_FILTER_CHECK(t_out))
+		return
+
 	return t_out
 
 #undef NO_CHARS_DETECTED
