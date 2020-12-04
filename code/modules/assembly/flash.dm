@@ -205,6 +205,10 @@
 	if(victim.loc == attacker.loc)
 		return DEVIATION_PARTIAL
 
+	// Ensures that when a moth is flashed, it will always be at no deviation. This is to make directionality irrelevant to moths.
+	if(ismoth(victim))
+		return DEVIATION_NONE
+
 	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
 	var/victim_to_attacker = get_dir(victim, attacker)
 	// The victim's dir is necessarily a cardinal value.
