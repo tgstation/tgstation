@@ -1,4 +1,0 @@
-author: "Urumasi"
-delete-after: True
-changes: 
-  - tweak: "RCD suicide now tries to place a wall and gib you"
