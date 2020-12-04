@@ -565,7 +565,7 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "aba" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -1471,7 +1471,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
@@ -5136,7 +5136,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/brig)
 "aiS" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -7738,7 +7738,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -11009,7 +11009,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "asq" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -24744,7 +24744,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 "aON" = (
@@ -27428,7 +27428,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -28769,7 +28769,7 @@
 /area/medical/surgery)
 "aUw" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -44018,7 +44018,7 @@
 /area/bridge)
 "brt" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -50254,7 +50254,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
@@ -52777,7 +52777,7 @@
 	},
 /area/maintenance/starboard/aft)
 "bFl" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -54261,7 +54261,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bHA" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -54884,7 +54884,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
@@ -55582,7 +55582,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
@@ -60081,7 +60081,7 @@
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/starboard)
 "bQH" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -62153,7 +62153,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "bUi" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
@@ -74570,7 +74570,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "cpC" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -90932,6 +90932,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
