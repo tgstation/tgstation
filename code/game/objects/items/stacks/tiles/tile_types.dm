@@ -298,7 +298,7 @@
 /obj/item/stack/tile/fakeopenspace
 	name = "open space"
 	singular_name = "open space tile"
-	desc = "A transparent piece of flooring, looks just real!"
+	desc = "A transparent piece of flooring, it's almost like there's nothing there!"
 	icon_state = "tile_space"
 	inhand_icon_state = "tile-space"
 	turf_type = /turf/open/floor/fakeopenspace
