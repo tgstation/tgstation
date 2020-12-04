@@ -25,6 +25,7 @@
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_EMOTE, .proc/handle_emote)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
 	SIGNAL_HANDLER
@@ -81,6 +82,7 @@
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	UnregisterSignal(owner, COMSIG_MOB_EMOTE)
 
 /datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
 	SIGNAL_HANDLER
@@ -90,3 +92,120 @@
 		message = "[replacetext(message, ".", "!")]!!"
 	wrapped_message[1] = message
 	return COMPONENT_UPPERCASE_SPEECH
+
+/// How many steps it takes to throw the mob. Should be divisible by 4 so we throw in the direction we started
+#define HULK_TAILTHROW_STEPS 28
+
+/// If we have a tail'd mob in a neckgrab and we spin, kick off the spinfest
+/datum/mutation/human/hulk/proc/handle_emote(mob/living/carbon/user, datum/emote/emote)
+	if(user.incapacitated() || emote.key != "spin" || !user.pulling || !user.grab_state >= GRAB_NECK)
+		return
+
+	if(!iscarbon(user.pulling))
+		return
+
+	var/mob/living/carbon/possible_throwable = user.pulling
+	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL) && !ismonkey(possible_throwable))
+		return
+
+	INVOKE_ASYNC(src, .proc/setup_swing, user, possible_throwable)
+
+/datum/mutation/human/hulk/proc/setup_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
+	yeeted_person.forceMove(the_hulk.loc)
+	yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
+
+	yeeted_person.Stun(2 SECONDS)
+	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts grasping [yeeted_person] by the tail...</span>", \
+					"<span class='userdanger'>[the_hulk] begins grasping your tail!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, the_hulk)
+	to_chat(the_hulk, "<span class='danger'>You start grasping [yeeted_person] by the tail...</span>")
+
+	if(!do_after(the_hulk, 2 SECONDS, yeeted_person))
+		yeeted_person.visible_message("<span class='danger'>[yeeted_person] breaks free of [the_hulk]'s grasp!</span>", \
+					"<span class='userdanger'>You break free from [the_hulk]'s grasp!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, the_hulk)
+		to_chat(the_hulk, "<span class='danger'>You lose your grasp on [yeeted_person]'s tail!</span>")
+		return
+
+	var/soundslike = "yelping"
+	if(ismonkey(yeeted_person))
+		soundslike = "monkey"
+	else if(isfelinid(yeeted_person))
+		soundslike = "cat"
+	else if(islizard(yeeted_person))
+		soundslike = "lizard"
+
+	yeeted_person.Stun(8 SECONDS)
+	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>", \
+					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear distressed [soundslike] sounds!</span>", null, the_hulk)
+	to_chat(the_hulk, "<span class='danger'>You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>")
+	the_hulk.emote("scream")
+	yeeted_person.emote("scream")
+	swing_loop(the_hulk, yeeted_person, 1)
+
+
+/datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step)
+	if(!is_swing_viable(the_hulk, yeeted_person))
+		return
+
+	var/delay = 6
+	switch (step)
+		if (25 to INFINITY)
+			delay = 0.1
+		if (21 to 24)
+			delay = 0.5
+		if (17 to 20)
+			delay = 1
+		if (14 to 16)
+			delay = 2
+		if (9 to 13)
+			delay = 3
+		if (5 to 8)
+			delay = 4
+		if (0 to 4)
+			delay = 5
+
+	the_hulk.setDir(turn(the_hulk.dir, 90))
+	var/turf/T = get_step(the_hulk, the_hulk.dir)
+	var/turf/S = yeeted_person.loc
+	if ((isturf(S) && S.Exit(yeeted_person)) && (isturf(T) && T.Enter(the_hulk)))
+		yeeted_person.forceMove(T)
+		yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
+
+	step++
+	if(step == HULK_TAILTHROW_STEPS)
+		finish_swing(the_hulk, yeeted_person)
+	else
+		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step), delay)
+
+
+/datum/mutation/human/hulk/proc/finish_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
+	if(!is_swing_viable(the_hulk, yeeted_person))
+		return
+
+	yeeted_person.forceMove(the_hulk.loc) // Maybe this will help with the wallthrowing bug.
+	yeeted_person.visible_message("<span class='danger'>[the_hulk] throws [yeeted_person]!</span>", \
+					"<span class='userdanger'>You're thrown by [the_hulk]!</span>", "<span class='hear'>You hear aggressive shuffling and a loud thud!</span>", null, the_hulk)
+	to_chat(the_hulk, "<span class='danger'>You throw [yeeted_person]!</span>")
+	playsound(the_hulk.loc, "swing_hit", 50, TRUE)
+	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
+	if(!isturf(T))
+		return
+	if(!yeeted_person.stat)
+		yeeted_person.emote("scream")
+	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE, callback = CALLBACK(yeeted_person, /mob/living/carbon.proc/Paralyze, 20))
+	log_combat(the_hulk, yeeted_person, "has thrown by tail")
+
+/// Helper to reduce copypasta, this proc returns FALSE if either the hulk or thrown person are deleted or separated, TRUE otherwise
+/datum/mutation/human/hulk/proc/is_swing_viable(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
+	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
+		return FALSE
+
+	if (get_dist(the_hulk, yeeted_person) > 1)
+		to_chat(the_hulk, "<span class='warning'>[yeeted_person] is too far away!</span>")
+		return FALSE
+
+	if (!isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
+		to_chat(the_hulk, "<span class='warning'>You can't throw [yeeted_person] from here!</span>")
+		return FALSE
+	return TRUE
+
+#undef HULK_TAILTHROW_STEPS
