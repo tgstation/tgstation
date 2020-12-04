@@ -177,6 +177,20 @@
 	zone_select.update_icon()
 	static_inventory += zone_select
 
+// SKYRAT EDIT ADDITION BEGIN: Cyborg PDA
+//PDA message
+	using = new /atom/movable/screen/robot/pda_msg_send
+	using.screen_loc = ui_borg_pda_send
+	using.hud = src
+	static_inventory += using
+
+//PDA log
+	using = new /atom/movable/screen/robot/pda_msg_show
+	using.screen_loc = ui_borg_pda_log
+	using.hud = src
+	static_inventory += using
+// SKYRAT EDIT ADDITION END
+
 
 /datum/hud/proc/toggle_show_robot_modules()
 	if(!iscyborg(mymob))

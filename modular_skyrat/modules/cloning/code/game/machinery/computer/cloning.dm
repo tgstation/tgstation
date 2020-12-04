@@ -558,6 +558,10 @@
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		return
+	if(HAS_TRAIT(mob_occupant, TRAIT_DNC) || HAS_TRAIT(mob_occupant, TRAIT_DNR) || mob_occupant.mob_biotypes & MOB_ROBOTIC)
+		scantemp = "<font class='bad'>Subject [HAS_TRAIT(mob_occupant, TRAIT_DNC) ? "is a DNC, and cannot be cloned. If possible, try other methods of revival." : HAS_TRAIT(mob_occupant, TRAIT_DNR) ? "is a DNR, and cannot be revived in any way." : "could not be revived due to biological reasons."]</font>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+		return
 	if(!body_only && SSeconomy.full_ancap)
 		if(!has_bank_account)
 			scantemp = "<font class='average'>Subject is either missing an ID card with a bank account on it, or does not have an account to begin with. Please ensure the ID card is on the body before attempting to scan.</font>"

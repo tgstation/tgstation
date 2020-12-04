@@ -115,6 +115,10 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
+// SKYRAT EDIT ADDITION BEGIN - Cyborg PDA
+#define ui_borg_pda_send "CENTER+5:21,SOUTH:5" // To the right of the alert panel
+#define ui_borg_pda_log "CENTER+6:21,SOUTH:5"
+// SKYRAT EDIT ADDITION END
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"

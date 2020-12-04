@@ -180,6 +180,14 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
+	// SKYRAT EDIT ADDITION BEGIN - Cyborg PDA
+	if(!shell)
+		aiPDA = new/obj/item/pda/ai(src)
+		aiPDA.owner = real_name
+		aiPDA.ownjob = "Cyborg"
+		aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+	//SKYRAT EDIT ADDITION END
+
 /mob/living/silicon/robot/proc/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
@@ -1157,3 +1165,10 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+// SKYRAT EDIT ADDITION BEGIN - Cyborg PDA
+/mob/living/silicon/robot/replace_identification_name(oldname,newname)
+	if(aiPDA && !shell)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
+// SKYRAT EDIT ADDITION END
