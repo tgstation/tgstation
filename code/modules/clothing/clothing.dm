@@ -76,21 +76,21 @@
 		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
-
-/obj/item/reagent_containers/food/snacks/clothing
+//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
+/obj/item/food/clothing
 	name = "temporary moth clothing snack item"
-	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
-	foodtype = CLOTH
+	foodtypes = CLOTH
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))
-		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
+		var/obj/item/food/clothing/clothing_as_food = new //collective bruh moment
 		clothing_as_food.name = name
-		if(clothing_as_food.attack(M, user, def_zone))
+		if(clothing_as_food.attack(M, user, def_zone)) //BRUUUUUUUUUUUUUUUUUUUUUUUUUUUUUH
 			take_damage(15, sound_effect=FALSE)
-		qdel(clothing_as_food)
+		qdel(clothing_as_food) ///WHAT ARE THOOSEEE
 	else
 		return ..()
 

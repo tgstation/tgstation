@@ -17192,7 +17192,7 @@
 "aTX" = (
 /obj/structure/kitchenspike,
 /obj/item/assembly/mousetrap,
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aTY" = (
@@ -31527,7 +31527,7 @@
 /area/maintenance/department/engine)
 "bGL" = (
 /obj/structure/closet/masks,
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bGM" = (
