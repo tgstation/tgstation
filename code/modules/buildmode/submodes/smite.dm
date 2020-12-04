@@ -19,6 +19,9 @@
 /datum/buildmode_mode/smite/handle_click(client/user, params_string, object)
 	var/list/params = params2list(params_string)
 
+	if (!check_rights(R_ADMIN | R_FUN))
+		return
+
 	if (!params.Find("left"))
 		return
 
