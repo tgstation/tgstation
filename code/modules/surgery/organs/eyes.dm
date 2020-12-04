@@ -400,8 +400,8 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/moth/Insert(mob/living/carbon/M, special = 0)
-	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
 	..()
+	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
 
 /obj/item/organ/eyes/moth/Remove(mob/living/carbon/M, special = 0)
 	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
@@ -412,4 +412,3 @@
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
-
