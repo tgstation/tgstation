@@ -917,10 +917,9 @@ nobiliumsuppression = INFINITY
 	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
-	location.rad_act(produced_amount * 2.4)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
-	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.72
+	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.68
 	energy_released += 50
 	if(energy_released > 0)
 		air.temperature += energy_released / heat_capacity
