@@ -376,10 +376,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
 "aVF" = (
@@ -610,10 +606,6 @@
 "cbK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
@@ -1210,12 +1202,6 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering Supermatter Fore";
-	dir = 1;
-	network = list("ss13","engine");
-	pixel_x = 23
-	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 1
 	},
@@ -1431,11 +1417,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering Supermatter Aft";
-	network = list("ss13","engine");
-	pixel_x = 23
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -1452,9 +1433,6 @@
 /area/ruin/space/derelict2/arrival)
 "fvg" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
@@ -1785,10 +1763,6 @@
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel/checker,
 /area/ruin/space/derelict2/gravity_generator)
-"hcE" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict2/supermatter_engine)
 "hdJ" = (
 /obj/machinery/door/airlock/medical,
 /turf/open/floor/plasteel/white,
@@ -1907,7 +1881,6 @@
 /area/ruin/space/derelict2/medical)
 "hvy" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -1962,19 +1935,6 @@
 /obj/machinery/pipedispenser,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
-"hLx" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/button/door{
-	id = "engsm";
-	name = "Radiation Shutters Control";
-	pixel_y = -24;
-	req_access_txt = "10"
-	},
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/gravity_generator)
 "hOl" = (
 /obj/machinery/smartfridge/chemistry,
 /turf/closed/wall,
@@ -2821,10 +2781,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
@@ -3694,14 +3650,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
-"qxv" = (
-/obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
-	network = list("engine");
-	pixel_x = 23
-	},
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/supermatter_engine)
 "qzB" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -3841,7 +3789,6 @@
 /area/ruin/space/derelict2/medical)
 "riE" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light,
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -4515,17 +4462,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/gravity_generator)
-"ugU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/green/visible,
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/gravity_generator)
 "uhr" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -4546,10 +4482,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
-"ujN" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict2/supermatter_engine)
 "ujX" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/structure/disposalpipe/segment,
@@ -4642,10 +4574,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
-"uzp" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/derelict2/gravity_generator)
 "uzR" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -4737,17 +4665,6 @@
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
-"uWJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/gravity_generator)
 "uXK" = (
 /obj/machinery/door/airlock/command,
 /turf/open/floor/carpet,
@@ -4866,10 +4783,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
 "vLb" = (
@@ -4978,10 +4891,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
 "wsn" = (
@@ -5066,17 +4975,10 @@
 	},
 /obj/item/tank/internals/plasma,
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/supermatter_engine)
 "wKn" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/meter,
@@ -5140,18 +5042,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
-"wYw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/gravity_generator)
 "xby" = (
 /obj/structure/frame/computer{
 	dir = 8
@@ -16802,7 +16692,7 @@ tMv
 iAW
 pjW
 pjW
-ugU
+pjW
 kPS
 pjW
 yfI
@@ -16954,11 +16844,11 @@ tMv
 jQK
 iya
 rIv
-hcE
+iSp
 mey
 wJV
 cbK
-ujN
+iSp
 kOm
 xfM
 eJO
@@ -17107,7 +16997,7 @@ bnY
 nYV
 rIv
 iSp
-qxv
+xIR
 fBt
 xIR
 iSp
@@ -17263,7 +17153,7 @@ jKz
 jKz
 eqR
 iSp
-wYw
+htV
 ekE
 kod
 wdi
@@ -17711,7 +17601,7 @@ pRY
 uIL
 kOm
 tMv
-hLx
+pDv
 izT
 iiF
 iao
@@ -17871,7 +17761,7 @@ weN
 weN
 cnw
 iSp
-wYw
+htV
 ekE
 kod
 wdi
@@ -18170,11 +18060,11 @@ tMv
 pDv
 nZH
 bme
-ujN
+iSp
 wqE
 aVg
 vKd
-hcE
+iSp
 htV
 ekE
 eJO
@@ -18322,7 +18212,7 @@ tMv
 cEh
 mZh
 mZh
-uWJ
+mZh
 oWb
 mZh
 gUH
@@ -18936,7 +18826,7 @@ kvg
 kvg
 uwy
 mvZ
-uzp
+mvZ
 wdi
 yll
 yll
