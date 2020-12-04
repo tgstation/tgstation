@@ -940,16 +940,14 @@ nobiliumsuppression = INFINITY
 	var/energy_used = 0
 	var/heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var produced_amount = min(5, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES]) / 3
-	if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0)
+	var produced_amount = min(1.75, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0 || (heat_capacity * air.temperature) - energy_used < 0) //No negative energy allowed.
 		return NO_REACTION
+		energy_used = produced_amount * 2500
 	cached_gases[/datum/gas/hydrogen][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += produced_amount * 0.75
-	energy_used = produced_amount * 2500
 	if(energy_used > 0)
 		air.temperature -= energy_used / heat_capacity
-		if (air.temperature < TCMB)
-			air.temperature = TCMB
 		return REACTING
 
 /datum/gas_reaction/pluox_formation
