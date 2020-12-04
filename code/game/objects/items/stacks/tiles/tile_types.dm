@@ -291,8 +291,23 @@
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fakespace
 
+
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
+
+/obj/item/stack/tile/fakeopenspace
+	name = "open space"
+	singular_name = "open space tile"
+	desc = "A transparent piece of flooring, looks just real!"
+	icon_state = "tile_space"
+	inhand_icon_state = "tile-space"
+	turf_type = /turf/open/floor/fakeopenspace
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakeopenspace
+
+/obj/item/stack/tile/fakeopenspace/loaded
+	amount = 30
+
 
 /obj/item/stack/tile/fakepit
 	name = "fake pits"
