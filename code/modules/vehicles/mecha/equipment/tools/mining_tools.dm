@@ -80,7 +80,7 @@
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	if(drill.drill_level >= DRILL_HARDENED)
-		if(drill.do_after_mecha(src, user, 120 / drill.drill_level,))
+		if(drill.do_after_mecha(src, user, 120 / drill.drill_level))
 			drill.log_message("Drilled through [src]", LOG_MECHA)
 			dismantle_wall(TRUE, FALSE)
 	else
