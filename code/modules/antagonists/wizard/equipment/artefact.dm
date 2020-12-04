@@ -99,7 +99,6 @@
 	icon_state = "clownrender"
 
 #define TEAR_IN_REALITY_CONSUME_RANGE 3
-#define TEAR_IN_REALITY_GRAV_PULL 4
 #define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
 
 /// Tear in reality, spawned by the veil render
@@ -125,7 +124,6 @@
 	AddComponent(
 		/datum/component/singularity, \
 		consume_range = TEAR_IN_REALITY_CONSUME_RANGE, \
-		grav_pull = TEAR_IN_REALITY_GRAV_PULL, \
 		notify_admins = !mapload, \
 		roaming = FALSE, \
 		singularity_size = TEAR_IN_REALITY_SINGULARITY_SIZE, \
@@ -153,7 +151,6 @@
 	C.death()
 
 #undef TEAR_IN_REALITY_CONSUME_RANGE
-#undef TEAR_IN_REALITY_GRAV_PULL
 #undef TEAR_IN_REALITY_SINGULARITY_SIZE
 
 /////////////////////////////////////////Scrying///////////////////
