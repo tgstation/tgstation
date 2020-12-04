@@ -332,10 +332,10 @@
 			if(!user.is_holding(src))
 				return ..()
 			if(HAS_TRAIT(user, TRAIT_GUNFLIP)&&(flip_cooldown <= world.time))
-				user.visible_message(user, "<span class='notice'>Woah! [user] spins the [src] around their finger flinging off the [S].</span>")
+				user.visible_message(user, "<span class='notice'>Woah! [user] spins [src] around their finger flinging off the [S].</span>")
 				gun_spin(user)
 			else
-				to_chat(user, "<span class='notice'>You unscrew \the [S] from \the [src].</span>")
+				to_chat(user, "<span class='notice'>You unscrew [S] from [src].</span>")
 			user.put_in_hands(S)
 			clear_suppressor()
 			return
@@ -348,13 +348,13 @@
 		return
 	src.SpinAnimation(7,1)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-		to_chat(user, "<span class='userdanger'>While trying to flip the [src] you pull the trigger and accidently shoot yourself!</span>")
+		to_chat(user, "<span class='userdanger'>While trying to flip [src] you pull the trigger and accidently shoot yourself!</span>")
 		var/flip_mistake = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
 		process_fire(user, user, FALSE, flip_mistake)
 		user.dropItemToGround(src, TRUE)
 		return
 	flip_cooldown = (world.time + GUN_SPIN_COOLDOWN SECONDS)
-	user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
+	user.visible_message("<span class='notice'>[user] spins [src] around their finger by the trigger. That’s pretty badass.</span>")
 	playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 
 #undef GUN_SPIN_COOLDOWN
