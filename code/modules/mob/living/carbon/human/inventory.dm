@@ -1,5 +1,5 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, swap = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, swap)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -79,40 +79,31 @@
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, swap = FALSE)
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
 	if(!..()) //a check failed or the item has already found its slot
 		return
 
-	var/obj/item/current_equip
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
 		if(ITEM_SLOT_BELT)
-			if (belt && swap)
-				current_equip = belt
-				if (!dropItemToGround(belt))
-					return
+			if(belt)
+				return
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
-			if (wear_id && swap)
-				current_equip = wear_id
-				if (!dropItemToGround(wear_id))
-					return
+			if(wear_id)
+				return
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
-			if (ears && swap)
-				current_equip = ears
-				if (!dropItemToGround(ears))
-					return
+			if(ears)
+				return
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
-			if (glasses && swap)
-				current_equip = glasses
-				if (!dropItemToGround(glasses))
-					return
+			if(glasses)
+				return
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -125,33 +116,20 @@
 				update_sight()
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
-			if (gloves && swap)
-				current_equip = gloves
-				if (!dropItemToGround(gloves))
-					return
+			if(gloves)
+				return
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
-			if (shoes && swap)
-				current_equip = shoes
-				if (!dropItemToGround(shoes))
-					return
+			if(shoes)
+				return
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
-			var/obj/item/s_store_backup = s_store
-
-			if (swap && wear_suit)
-				current_equip = wear_suit
-				if (!dropItemToGround(wear_suit, invdrop = FALSE))
-					return
+			if(wear_suit)
+				return
 
 			wear_suit = I
-
-			if (swap && s_store_backup)
-				dropItemToGround(s_store_backup)
-				put_in_inactive_hand(s_store_backup, forced = TRUE)
-				equip_to_slot_if_possible(s_store_backup, ITEM_SLOT_SUITSTORE)
 
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
@@ -161,10 +139,8 @@
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
-			if (w_uniform && swap)
-				current_equip = w_uniform
-				if (!dropItemToGround(w_uniform, invdrop = FALSE))
-					return
+			if(w_uniform)
+				return
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -175,17 +151,12 @@
 			r_store = I
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
-			if (s_store && swap)
-				current_equip = s_store
-				if (!dropItemToGround(s_store))
-					return
+			if(s_store)
+				return
 			s_store = I
 			update_inv_s_store()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
-
-	if (current_equip)
-		put_in_hands(current_equip)
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
@@ -193,7 +164,7 @@
 
 		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
 		if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
-			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_SHOECOVER, I, slot, initial, redraw_mob, swap)
+			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_SHOECOVER, I, slot, initial, redraw_mob)
 
 	return not_handled //For future deeper overrides
 

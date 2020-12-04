@@ -56,3 +56,4 @@
 
 /datum/unit_test/reagent_mob_expose/Destroy()
 	SSmobs.ignite()
+	return ..()

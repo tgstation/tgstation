@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "Uses unused NanoDrug Plus sprite"

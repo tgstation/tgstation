@@ -1,9 +1,9 @@
 /** Component representing acid applied to an object.
-  *
-  * Must be attached to an atom.
-  * Processes, repeatedly damaging whatever it is attached to.
-  * If the parent atom is a turf it applies acid to the contents of the turf.
-  */
+ *
+ * Must be attached to an atom.
+ * Processes, repeatedly damaging whatever it is attached to.
+ * If the parent atom is a turf it applies acid to the contents of the turf.
+ */
 /datum/component/acid
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The strength of the acid on the parent [/atom].
