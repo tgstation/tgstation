@@ -75,10 +75,9 @@
 	},
 /area/ruin/space/derelict2/atmospherics)
 "aaN" = (
-/obj/item/beacon,
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict2/bridge)
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/arrival)
 "aaO" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
@@ -116,29 +115,29 @@
 "abf" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/arrival)
 "abg" = (
 /turf/open/floor/carpet/blue,
 /area/ruin/space/derelict2/medical)
 "abi" = (
 /turf/open/floor/plasteel/checker,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abj" = (
 /turf/open/floor/engine/vacuum,
 /area/ruin/space/derelict2/atmospherics)
 "abk" = (
 /turf/open/floor/plasteel/dark/corner,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abl" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abm" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abn" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -148,15 +147,16 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict2/atmospherics)
 "abp" = (
+/obj/structure/table/wood,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abq" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abr" = (
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
@@ -169,11 +169,11 @@
 /area/ruin/space/derelict2/atmospherics)
 "abv" = (
 /turf/open/floor/circuit,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "abz" = (
 /obj/structure/foamedmetal/resin,
 /turf/open/floor/engine,
@@ -235,6 +235,20 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/medical/chapel)
+"anQ" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"aoZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "apS" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -247,10 +261,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
 "ass" = (
-/obj/structure/cable,
-/obj/item/wallframe/apc,
-/turf/open/floor/plating,
-/area/ruin/space/derelict2/gravity_generator)
+/obj/structure/bed,
+/turf/open/floor/carpet,
+/area/ruin/space/derelict2/medical/chapel)
 "atF" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/dark,
@@ -258,7 +271,7 @@
 "aum" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "auy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -271,6 +284,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/atmospherics)
+"aAP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "aBS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window{
@@ -278,10 +301,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"aBW" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "aDM" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "aEq" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -297,7 +324,20 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"aIb" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/corner,
+/area/ruin/space/derelict2/atmospherics)
+"aKw" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Gas to Mix"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "aOS" = (
 /obj/machinery/door/airlock/medical,
 /turf/open/floor/plasteel,
@@ -311,6 +351,12 @@
 	dir = 8
 	},
 /area/ruin/space/derelict2/atmospherics)
+"aRx" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/dark/corner{
+	dir = 1
+	},
+/area/ruin/space/derelict2/gravity_generator)
 "aSu" = (
 /obj/structure/foamedmetal/resin,
 /turf/open/floor/plasteel/chapel{
@@ -323,6 +369,19 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"aVg" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
 "aVF" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/grimy,
@@ -337,6 +396,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/bridge)
+"bax" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "baF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -349,7 +412,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "bcZ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -361,6 +424,12 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/bridge)
+"biA" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "biT" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/arrival)
@@ -375,12 +444,32 @@
 /obj/machinery/door/airlock/atmos,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"blt" = (
+/obj/machinery/door/airlock/engineering,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
+"bme" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "bnM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"bnY" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "bpk" = (
 /obj/machinery/door/window/eastright,
 /turf/open/floor/wood,
@@ -396,15 +485,23 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"bwM" = (
+/obj/structure/frame/machine,
+/turf/open/floor/circuit,
+/area/ruin/space/derelict2/gravity_generator)
 "bBc" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/atmospherics)
+"bDx" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "bER" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "bFU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -422,15 +519,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
+"bMC" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "bNg" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
 /area/ruin/space/derelict2/medical/chapel)
+"bNM" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "bRR" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"bTm" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/chem_heater,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "bTO" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -442,11 +564,28 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
+"bYm" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/supermatter_engine)
+"bYs" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "caf" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"cax" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/geiger_counter,
+/obj/item/clothing/head/radiation,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "cbk" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
@@ -464,9 +603,27 @@
 	dir = 1
 	},
 /area/ruin/space/derelict2/hallway/primary)
+"cbC" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
+"cbK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
 "ccD" = (
 /turf/open/floor/engine/cult,
 /area/ruin/space/derelict2/medical/chapel)
+"cdE" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "cdZ" = (
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
@@ -485,6 +642,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"cjY" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
+"cka" = (
+/obj/structure/musician/piano{
+	icon_state = "piano"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "ckO" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
@@ -495,7 +662,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "clV" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plating,
@@ -503,6 +670,17 @@
 "cmr" = (
 /turf/open/floor/plasteel/chapel,
 /area/ruin/space/derelict2/medical/chapel)
+"cnw" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "cny" = (
 /turf/open/floor/plasteel/white/corner,
 /area/ruin/space/derelict2/arrival)
@@ -539,7 +717,13 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/arrival)
 "cxZ" = (
-/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/supermatter_engine)
 "cyh" = (
@@ -588,6 +772,20 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/medical/chapel)
+"cEh" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"cEN" = (
+/obj/machinery/space_heater,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "cFm" = (
 /obj/machinery/computer/monitor/secret,
 /turf/open/floor/plasteel/dark,
@@ -644,6 +842,15 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"cZg" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "dal" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
@@ -658,6 +865,16 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"ddy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital/on{
+	dir = 4;
+	name = "Output Release"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "den" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -676,14 +893,12 @@
 	sortType = 5
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "dfv" = (
-/obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "dfP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -717,6 +932,12 @@
 "djs" = (
 /turf/template_noop,
 /area/ruin/space/derelict2/arrival)
+"dld" = (
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "dmD" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/white/side{
@@ -735,13 +956,45 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"dop" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/gravity_generator)
 "dph" = (
+/obj/structure/table,
+/obj/item/circuitboard/machine/chem_dispenser/drinks,
 /turf/open/floor/wood,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"drK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"dtO" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "dvR" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"dBc" = (
+/obj/structure/table/reinforced,
+/obj/item/tank/internals/emergency_oxygen/engi{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "dCn" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
@@ -759,6 +1012,17 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"dGM" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
+"dGO" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/space/derelict2/gravity_generator)
 "dIJ" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
@@ -768,9 +1032,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
 "dJc" = (
-/obj/structure/frame/computer,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/medical/chapel)
 "dJY" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
@@ -788,14 +1052,30 @@
 "dVV" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"dWH" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"ebQ" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "ecd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"edy" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "edE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -843,6 +1123,28 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"ekf" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"ekE" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"elx" = (
+/obj/machinery/vending/medical{
+	pixel_x = -2
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "ems" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel,
@@ -865,12 +1167,30 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/medical/chapel)
+"eqR" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "erw" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"esa" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "esQ" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -883,6 +1203,23 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"ewv" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -26
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Fore";
+	dir = 1;
+	network = list("ss13","engine");
+	pixel_x = 23
+	},
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "exG" = (
 /obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel,
@@ -917,10 +1254,41 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"eET" = (
+/obj/machinery/power/emitter/welded{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "eIE" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/gravity_generator)
+"eJy" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Atmos to Loop"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"eJB" = (
+/obj/machinery/door/window/eastright{
+	name = "Bar Access"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
+"eJO" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"eKH" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "eLg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -939,6 +1307,21 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"eNA" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"eNL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "eNQ" = (
 /obj/machinery/door/window{
 	dir = 1
@@ -948,7 +1331,7 @@
 "eOd" = (
 /obj/machinery/door/airlock/command/glass,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "ePA" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -963,6 +1346,12 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/medical/chapel)
+"eRd" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "eSy" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
@@ -984,6 +1373,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"eXC" = (
+/obj/structure/girder,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "eZc" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass,
@@ -1001,7 +1394,7 @@
 /area/ruin/space/derelict2/medical/chapel)
 "fhf" = (
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "fjs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -1018,6 +1411,10 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"fmT" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "fpH" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -1026,8 +1423,24 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/arrival)
+"fqw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Supermatter Aft";
+	network = list("ss13","engine");
+	pixel_x = 23
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "frC" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel,
@@ -1036,6 +1449,18 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"fvg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "fwV" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -1054,9 +1479,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
-"fHw" = (
-/turf/open/floor/plasteel/dark,
+"fBt" = (
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/ruin/space/derelict2/supermatter_engine)
+"fHw" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "fJi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -1073,16 +1503,39 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"fLG" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "fMW" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/hallway/primary)
+"fNJ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "fPA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"fPK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8;
+	filter_type = "n2"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"fPW" = (
+/obj/structure/reflector/box/anchored{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "fRE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1093,6 +1546,17 @@
 /obj/machinery/door/airlock/atmos,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"fTV" = (
+/obj/structure/closet/radiation,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
+"fUC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "fUM" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 2
@@ -1126,6 +1590,20 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/storage/equipment)
+"fXo" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8;
+	name = "Engine Coolant Bypass"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"fXT" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "fZY" = (
 /obj/machinery/disposal/delivery_chute{
 	dir = 8
@@ -1153,11 +1631,46 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"gkL" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"gmx" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
+"gou" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8;
+	name = "Gas to Cooling Loop"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"goO" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"gpG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "grE" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"grM" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict2/gravity_generator)
 "gsY" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -1168,7 +1681,7 @@
 "gwJ" = (
 /obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "gBA" = (
 /obj/machinery/door/airlock/command,
 /turf/open/floor/plasteel,
@@ -1185,17 +1698,39 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
+"gDj" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/chem_heater,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"gHN" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/supermatter_engine)
 "gLf" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
+"gMY" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "gNz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "gNN" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1216,6 +1751,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"gUH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Mix Bypass"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "gVg" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/public/glass,
@@ -1228,13 +1773,57 @@
 "gXU" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/storage/equipment)
+"gYZ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"hbx" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/checker,
+/area/ruin/space/derelict2/gravity_generator)
+"hcE" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "hdJ" = (
 /obj/machinery/door/airlock/medical,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"hfG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"hgt" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"hip" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "hir" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"hji" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "hku" = (
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel,
@@ -1267,6 +1856,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"hoO" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "hoV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1293,21 +1886,56 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"htV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "huE" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"hvb" = (
+/obj/machinery/medical_kiosk,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
+"hvy" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "hxF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"hyS" = (
+/obj/structure/sign/warning/fire,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "hAr" = (
 /obj/machinery/door/airlock/command,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"hBi" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"hEU" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "hIy" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
@@ -1323,17 +1951,48 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"hKN" = (
+/obj/structure/table/glass,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "hLr" = (
 /obj/machinery/pipedispenser,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"hLx" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/button/door{
+	id = "engsm";
+	name = "Radiation Shutters Control";
+	pixel_y = -24;
+	req_access_txt = "10"
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"hOl" = (
+/obj/machinery/smartfridge/chemistry,
+/turf/closed/wall,
+/area/ruin/space/derelict2/medical)
 "hQR" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"hSD" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
+"hSF" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "hUa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -1344,7 +2003,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "hVL" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
@@ -1367,16 +2026,37 @@
 /obj/item/dest_tagger,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"hWB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "hXo" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"hZq" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "hZC" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"iao" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "idL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -1390,10 +2070,33 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/medical/chapel)
+"igj" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "ihP" = (
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/derelict2/hallway/primary)
+"iiF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Gas to Chamber"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
+"iiT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "ikf" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -1406,6 +2109,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"iop" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "ioT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -1416,6 +2125,10 @@
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"iqP" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "iqV" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance,
@@ -1426,7 +2139,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "irK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -1439,7 +2152,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "ivt" = (
 /obj/machinery/power/smes{
 	capacity = 9e+006;
@@ -1448,6 +2161,37 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"iya" = (
+/obj/item/wrench,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"izT" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
+"iAv" = (
+/obj/structure/table/glass,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
+"iAw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"iAW" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "iBQ" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
@@ -1504,6 +2248,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
+"jdK" = (
+/obj/structure/bed/dogbed,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "jea" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/medical)
@@ -1514,15 +2262,29 @@
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/arrival)
+"jjm" = (
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "jjv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"jkm" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "jlo" = (
 /obj/machinery/door/morgue,
 /turf/open/floor/engine/cult,
 /area/ruin/space/derelict2/medical/chapel)
+"jlU" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "jmb" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
@@ -1534,19 +2296,23 @@
 "jqb" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel/dark,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "jrM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"jrQ" = (
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "jth" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "jvi" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -1557,7 +2323,7 @@
 "jzG" = (
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "jzW" = (
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/atmospherics)
@@ -1565,12 +2331,29 @@
 /obj/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"jGI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "jGM" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
+"jKz" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/ruin/space/derelict2/supermatter_engine)
 "jLI" = (
 /obj/machinery/disposal/bin,
@@ -1582,13 +2365,17 @@
 "jMa" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"jMt" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "jMI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "jNl" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -1608,6 +2395,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"jQK" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "jTo" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -1632,6 +2427,12 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"kfL" = (
+/obj/structure/reflector/single/anchored{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "kgy" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -1645,9 +2446,14 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical)
 "kky" = (
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/engine,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "kmk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1655,6 +2461,10 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"kod" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "koI" = (
 /obj/machinery/door/airlock/virology/glass,
 /turf/open/floor/plasteel,
@@ -1678,6 +2488,12 @@
 /obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"kvg" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "kvH" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -1685,6 +2501,9 @@
 "kwT" = (
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/arrival)
+"kzc" = (
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "kDk" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
@@ -1698,6 +2517,15 @@
 	},
 /turf/closed/wall,
 /area/ruin/space/derelict2/atmospherics)
+"kDX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "kEs" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/wood,
@@ -1706,6 +2534,16 @@
 /obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"kHX" = (
+/obj/structure/mineral_door/wood{
+	name = "Maintenance Bar"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
+"kIa" = (
+/obj/machinery/door/airlock/engineering,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "kIl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/arrival)
@@ -1713,16 +2551,41 @@
 /obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"kNs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "kNQ" = (
 /obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/hallway/primary)
+"kOm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "kPM" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/derelict2/atmospherics)
+"kPS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "kUR" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/plasteel,
@@ -1756,13 +2619,30 @@
 /area/ruin/space/derelict2/arrival)
 "liM" = (
 /obj/structure/table,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "liW" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/command,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/storage/equipment)
+"llm" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
+"loD" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "loW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1773,6 +2653,10 @@
 /obj/machinery/door/airlock/mining/glass,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"lpp" = (
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "lpM" = (
 /turf/closed/wall,
 /area/ruin/space/derelict2/arrival)
@@ -1782,6 +2666,16 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/medical/chapel)
+"lsY" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/space/derelict2/gravity_generator)
+"ltn" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "lvp" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -1812,20 +2706,32 @@
 "lBZ" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/medical/chapel)
+"lCA" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "lCP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "lCZ" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/atmospherics)
+"lDH" = (
+/obj/machinery/power/supermatter_crystal/engine,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "lFp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "lFZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1835,6 +2741,12 @@
 "lHj" = (
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"lKm" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "lOo" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -1858,13 +2770,25 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"lSk" = (
+/obj/machinery/airalarm/engine{
+	dir = 4;
+	pixel_x = -23
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Gas to Filter"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "lUm" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "lVl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1874,6 +2798,10 @@
 "lWA" = (
 /turf/open/floor/circuit,
 /area/ruin/space/derelict2/medical/chapel)
+"lZn" = (
+/obj/structure/bed/pod,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "mbH" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
@@ -1885,6 +2813,17 @@
 /obj/machinery/door/airlock/virology,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
+"mey" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
 "mfw" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -1898,13 +2837,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
-"mfS" = (
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
 "mgj" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -1920,7 +2852,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"mjJ" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "mjN" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
@@ -1932,7 +2868,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "mke" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/wood,
@@ -1945,11 +2881,37 @@
 "mlL" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/medical/chapel)
+"mmO" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"mnb" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "mnF" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"mnN" = (
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"mrG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "msy" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel,
@@ -1975,7 +2937,7 @@
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "mBR" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2;
@@ -1987,12 +2949,24 @@
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"mGM" = (
+/obj/structure/window/reinforced,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "mGY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/wall,
 /area/ruin/space/derelict2/arrival)
+"mIh" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "mND" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -2007,6 +2981,14 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"mRP" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/chem_dispenser,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "mTs" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
@@ -2034,6 +3016,14 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"mZh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "ncJ" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plasteel,
@@ -2057,6 +3047,10 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"nmQ" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "npd" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
@@ -2079,7 +3073,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "nxD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -2090,6 +3084,11 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/storage/equipment)
+"nEb" = (
+/obj/structure/table,
+/obj/item/construction/plumbing,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "nEg" = (
 /obj/machinery/door/airlock/command,
 /obj/structure/disposalpipe/segment{
@@ -2104,7 +3103,7 @@
 "nFL" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "nFV" = (
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/bridge)
@@ -2119,6 +3118,14 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"nIu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "nMy" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -2140,10 +3147,26 @@
 "nQi" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"nQL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "External Gas to Loop"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "nSX" = (
 /obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/arrival)
+"nTB" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "nUw" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -2159,6 +3182,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"nYV" = (
+/obj/machinery/meter,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"nZH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "External Gas to Loop"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "obV" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria,
@@ -2170,11 +3211,27 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"ofc" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "ogx" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"ojB" = (
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
+"ojZ" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "ops" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -2185,6 +3242,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"oqg" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "orl" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -2201,14 +3262,24 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "ozp" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"oAB" = (
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "oAK" = (
 /obj/machinery/door/airlock/virology,
 /turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
+"oDj" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
 "oHi" = (
 /obj/structure/disposalpipe/segment{
@@ -2252,6 +3323,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"oOT" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "oPo" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment,
@@ -2270,6 +3347,12 @@
 "oQh" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/arrival)
+"oRr" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "oTB" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -2280,13 +3363,38 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"oWb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"oWj" = (
+/obj/machinery/chem_dispenser,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"oZb" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "pcb" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "pcU" = (
 /obj/structure/cable,
 /obj/structure/chair{
@@ -2295,6 +3403,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"pgk" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/wall,
+/area/ruin/space/derelict2/gravity_generator)
 "phy" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
@@ -2302,6 +3414,23 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"pjW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"pks" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "poD" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -2309,10 +3438,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"poT" = (
+/obj/structure/girder,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "psy" = (
 /obj/structure/table,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "psK" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -2325,15 +3459,49 @@
 /obj/machinery/door/airlock/engineering,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"puv" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/radiation,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"pwE" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "pBX" = (
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/atmospherics)
+"pBY" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"pDv" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "pFT" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/dark,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"pJa" = (
+/obj/machinery/chem_heater,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "pJB" = (
 /obj/structure/foamedmetal/resin,
 /turf/open/floor/plasteel/chapel{
@@ -2347,7 +3515,7 @@
 "pLK" = (
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/plasteel/white,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "pMC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -2355,6 +3523,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/hallway/primary)
+"pML" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "pMS" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2363,6 +3537,12 @@
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"pQT" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/template_noop,
+/area/template_noop)
 "pRL" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2371,7 +3551,7 @@
 /area/ruin/space/derelict2/medical/chapel)
 "pRY" = (
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "pSB" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
@@ -2379,6 +3559,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"pTf" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "pUo" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -2414,7 +3601,7 @@
 "qcE" = (
 /obj/machinery/door/airlock/command,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "qcP" = (
 /obj/structure/toilet{
 	dir = 4
@@ -2422,9 +3609,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/bridge)
 "qcZ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "qhq" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -2442,6 +3629,10 @@
 /obj/machinery/door/airlock/command,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"qkR" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "qms" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
@@ -2464,16 +3655,49 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"qpj" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
+"qqk" = (
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"qrT" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "qsA" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"qwf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "qwu" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"qxv" = (
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	network = list("engine");
+	pixel_x = 23
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "qzB" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -2485,7 +3709,7 @@
 "qCW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "qDO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -2493,6 +3717,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"qFT" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/template_noop,
+/area/template_noop)
 "qHl" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
@@ -2524,6 +3754,12 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/bridge)
+"qNX" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "qQq" = (
 /obj/machinery/door/airlock/mining,
 /turf/open/floor/plasteel,
@@ -2543,6 +3779,12 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"qUI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "qWM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -2556,6 +3798,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"qYb" = (
+/obj/structure/table/glass,
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "qYQ" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel,
@@ -2571,7 +3818,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "rdP" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -2580,6 +3827,30 @@
 "rgJ" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict2/medical/chapel)
+"riw" = (
+/obj/structure/table,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/obj/item/stack/ducts/fifty,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"riE" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light,
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"rjr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "rml" = (
 /turf/closed/wall,
 /area/ruin/space/derelict2/medical/chapel)
@@ -2588,6 +3859,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"rpN" = (
+/obj/machinery/smartfridge/organ,
+/turf/closed/wall,
+/area/ruin/space/derelict2/medical)
 "rqi" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -2606,6 +3881,12 @@
 	},
 /turf/template_noop,
 /area/template_noop)
+"rsv" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "rtJ" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -2620,6 +3901,14 @@
 "rvh" = (
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"rxE" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "ryf" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -2640,7 +3929,7 @@
 	sortType = 15
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "rzU" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -2659,16 +3948,22 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "rDp" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "rDI" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/arrival)
+"rDL" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 "rGL" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -2679,12 +3974,24 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"rIv" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "rIO" = (
-/obj/machinery/door/airlock/medical,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
+"rLP" = (
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
 "rOn" = (
 /obj/structure/disposalpipe/segment{
@@ -2693,9 +4000,12 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
 "rOo" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/chem_dispenser,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "rPs" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -2716,6 +4026,13 @@
 "rVk" = (
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"rVH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "rWr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -2726,13 +4043,19 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"rXW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "sch" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
 	sortType = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "sdI" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -2767,6 +4090,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"snY" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "spv" = (
 /obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
@@ -2775,6 +4104,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/derelict2/arrival)
+"ssU" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "std" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
@@ -2795,6 +4128,12 @@
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/derelict2/arrival)
+"sxN" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "syx" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
@@ -2808,6 +4147,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"sBf" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
+"sCE" = (
+/obj/machinery/power/emitter/welded{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "sDn" = (
 /obj/structure/sink{
 	dir = 8;
@@ -2827,10 +4179,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "sIh" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/atmospherics)
+"sIF" = (
+/obj/machinery/stasis,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "sJI" = (
 /obj/machinery/door/airlock/command,
 /turf/open/floor/plasteel/dark,
@@ -2846,9 +4202,23 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"sMy" = (
+/obj/machinery/medical_kiosk,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"sNc" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "sNt" = (
 /turf/open/floor/plasteel/white/corner,
 /area/ruin/space/derelict2/hallway/primary)
+"sOg" = (
+/obj/structure/sign/warning/radiation,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "sOL" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
@@ -2868,10 +4238,33 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
+"sRa" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
+"sRj" = (
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"sRN" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "sSh" = (
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "sWQ" = (
 /obj/structure/displaycase_chassis,
 /turf/open/floor/wood,
@@ -2887,11 +4280,27 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"tae" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
+"tai" = (
+/obj/structure/cable,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
+"tav" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
 "taB" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "tdr" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
@@ -2913,6 +4322,16 @@
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"tiH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
+"tjt" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/atmospherics)
 "tjE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window{
@@ -2920,6 +4339,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical)
+"tlB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"tmL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "tmR" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/structure/disposalpipe/segment{
@@ -2931,6 +4363,12 @@
 /obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/storage/equipment)
+"tpb" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "tpj" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
@@ -2944,6 +4382,16 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"tyr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "tyx" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen,
@@ -2954,6 +4402,13 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/storage/equipment)
+"tzO" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "tBs" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -2970,6 +4425,10 @@
 	dir = 8
 	},
 /area/ruin/space/derelict2/medical/chapel)
+"tGd" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "tHC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window{
@@ -2983,6 +4442,15 @@
 "tLN" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/atmospherics)
+"tMv" = (
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"tNn" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "tSN" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
@@ -2993,7 +4461,7 @@
 "tUp" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "tVC" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3010,6 +4478,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"ucz" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "ucB" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/plasteel/white,
@@ -3030,6 +4504,23 @@
 "ufY" = (
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/derelict2/arrival)
+"ufZ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/gravity_generator)
+"ugU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "uhr" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -3050,6 +4541,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"ujN" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict2/supermatter_engine)
 "ujX" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/structure/disposalpipe/segment,
@@ -3061,14 +4556,31 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"uoW" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "upE" = (
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"urY" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Mix to Gas"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "uun" = (
 /obj/machinery/pipedispenser/disposal/transit_tube,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"uuy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "uva" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -3093,6 +4605,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/hallway/primary)
+"uwy" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "uwA" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2;
@@ -3100,10 +4616,20 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
+"uwT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict2/gravity_generator)
 "uwU" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/hallway/primary)
+"uwX" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "uyY" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -3111,6 +4637,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical/chapel)
+"uzp" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "uzR" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -3132,7 +4662,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "uDu" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/derelict2/hallway/primary)
@@ -3147,7 +4677,19 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"uIi" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/medical)
+"uIL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "uLT" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -3180,15 +4722,27 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "uTy" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/smartfridge/chemistry,
 /turf/closed/wall,
 /area/ruin/space/derelict2/medical)
 "uWw" = (
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"uWJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "uXK" = (
 /obj/machinery/door/airlock/command,
 /turf/open/floor/carpet,
@@ -3223,6 +4777,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"vfn" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "vfL" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/highsecurity,
@@ -3248,6 +4806,12 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/hallway/primary)
+"voJ" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/gravity_generator)
 "vsi" = (
 /obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide,
@@ -3262,11 +4826,17 @@
 "vvC" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "vvP" = (
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical)
+"vvZ" = (
+/obj/structure/reflector/single/anchored{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "vBe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -3287,6 +4857,16 @@
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
+"vKd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
 "vLb" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
@@ -3297,6 +4877,12 @@
 "vLN" = (
 /turf/open/floor/plasteel/white/corner,
 /area/ruin/space/derelict2/atmospherics)
+"vPe" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "vRP" = (
 /obj/structure/foamedmetal/resin,
 /turf/open/floor/plating,
@@ -3311,7 +4897,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "vWl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -3324,7 +4910,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"vYD" = (
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "wdi" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/gravity_generator)
@@ -3334,6 +4923,17 @@
 "wew" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/medical)
+"weN" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/supermatter_engine)
 "wfv" = (
 /obj/structure/disposalpipe/sorting/wrap{
 	dir = 1
@@ -3368,16 +4968,38 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical/chapel)
+"wqE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
 "wsn" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/atmospherics)
+"wsR" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "wtD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/medical/chapel)
+"wuJ" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Cooling Loop to Gas"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "wvo" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/wood,
@@ -3432,6 +5054,32 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"wJV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/tank/internals/plasma,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/supermatter_engine)
+"wKn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "wKq" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
@@ -3439,24 +5087,43 @@
 /area/ruin/space/derelict2/hallway/primary)
 "wKy" = (
 /turf/closed/wall,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "wOw" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "wPk" = (
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
 "wPH" = (
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/derelict2/medical/chapel)
+"wPW" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/flashlight,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/pipe_dispenser,
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "wQN" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"wTE" = (
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
+"wUS" = (
+/obj/machinery/processor,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "wUU" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/arrival)
 "wVV" = (
@@ -3468,6 +5135,24 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"wYw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"xby" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/medical)
 "xcX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3479,6 +5164,13 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"xfM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
 "xmP" = (
 /obj/machinery/lapvend,
 /turf/open/floor/plasteel,
@@ -3509,6 +5201,10 @@
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/derelict2/arrival)
+"xxf" = (
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "xxg" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -3523,6 +5219,13 @@
 "xyY" = (
 /turf/open/floor/circuit,
 /area/ruin/space/derelict2/atmospherics)
+"xzn" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "xzp" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
@@ -3572,12 +5275,22 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ruin/space/derelict2/supermatter_engine)
+/area/ruin/space/derelict2/gravity_generator)
+"xMi" = (
+/obj/structure/reflector/double/anchored{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "xNt" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
 /area/ruin/space/derelict2/hallway/primary)
+"xPl" = (
+/obj/machinery/computer/station_alert,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/gravity_generator)
 "xPN" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -3630,6 +5343,10 @@
 "ybs" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/hallway/primary)
+"ybR" = (
+/obj/effect/spawner/randomsnackvend,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/gravity_generator)
 "yck" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -3640,9 +5357,27 @@
 "ydU" = (
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/hallway/primary)
+"yei" = (
+/obj/item/wallframe/apc,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "yeI" = (
 /turf/closed/wall,
 /area/ruin/space/derelict2/hallway/primary)
+"yfI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Cooling Loop Bypass"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/derelict2/gravity_generator)
+"yhF" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/template_noop,
+/area/template_noop)
 "yid" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -3663,6 +5398,13 @@
 "yjy" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/hallway/primary)
+"ykU" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/gravity_generator)
 "yll" = (
 /turf/template_noop,
 /area/template_noop)
@@ -9858,7 +11600,7 @@ yll
 wKy
 wKy
 wKy
-qcZ
+uva
 wKy
 wKy
 rCo
@@ -10010,25 +11752,25 @@ yll
 wKy
 dph
 wKy
-dph
-dph
+cEN
+cka
 wKy
 rCo
-qcZ
+uva
 vvC
-qcZ
+uva
 yll
 wKy
 fhf
+psy
+psy
+psy
+wUS
+wdi
 fhf
 fhf
 fhf
-fhf
-iSp
-fhf
-fhf
-fhf
-iSp
+wdi
 yll
 yll
 yll
@@ -10160,27 +11902,27 @@ yll
 yll
 yll
 wKy
-dph
-dph
+kzc
+igj
 abq
-dph
+snY
 wKy
 rCo
-qcZ
+uva
 fhf
-qcZ
+uva
 yll
 wKy
 fhf
 fhf
 fhf
+bax
 fhf
-fhf
-iSp
+wdi
 fhf
 fhf
 nwq
-iSp
+wdi
 yll
 yll
 yll
@@ -10311,28 +12053,28 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 fhf
 abp
-dph
+kzc
 abm
 wKy
 ecd
-qcZ
+uva
 vvC
-qcZ
-qcZ
+uva
+uva
 wKy
 fhf
 fhf
-fhf
-fhf
-fhf
-iSp
+bax
+hKN
+oAB
+wdi
 fhf
 ozp
 oeW
-iSp
+wdi
 yll
 yll
 yll
@@ -10463,10 +12205,10 @@ yll
 yll
 yll
 yll
-qcZ
-dph
-abm
-dph
+uva
+kzc
+lsY
+kzc
 fhf
 wKy
 gCl
@@ -10480,11 +12222,11 @@ wKy
 wKy
 wKy
 wKy
-iSp
-iSp
+wdi
+wdi
 ptn
-iSp
-iSp
+wdi
+wdi
 wKy
 yll
 yll
@@ -10615,10 +12357,10 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 abl
-dph
-dph
+fLG
+kzc
 abq
 wKy
 gCl
@@ -10637,7 +12379,7 @@ fhf
 ozp
 fhf
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -10767,11 +12509,11 @@ yll
 yll
 yll
 yll
-qcZ
-dph
-dph
-dph
-dph
+uva
+kzc
+fLG
+kzc
+kzc
 wKy
 jGM
 pRY
@@ -10789,7 +12531,7 @@ fhf
 ozp
 fhf
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -10912,18 +12654,18 @@ rVk
 psX
 yll
 yll
-qcZ
-qcZ
-vvC
-qcZ
-qcZ
+psX
+psX
+lOo
+psX
+psX
 yll
 yll
 wKy
-dph
-wKy
-dph
-dph
+eJB
+pgk
+kzc
+voJ
 wKy
 fhf
 fhf
@@ -11064,18 +12806,18 @@ rVk
 psX
 yll
 yll
-qcZ
-pRY
-pRY
-pRY
-qcZ
+psX
+rVk
+rVk
+rVk
+psX
 yll
 yll
 wKy
-dph
-dph
-abp
-dph
+kzc
+kzc
+dGO
+gmx
 wKy
 fhf
 fhf
@@ -11216,18 +12958,18 @@ rVk
 psX
 yll
 yll
-qcZ
-rOo
-pRY
-pRY
-qcZ
+psX
+uQE
+rVk
+rVk
+psX
 yll
 yll
 wKy
 abm
-dph
+kzc
 fhf
-dph
+bDx
 wKy
 fhf
 fhf
@@ -11367,16 +13109,16 @@ eVi
 rVk
 lpM
 yll
-wKy
-wKy
-wKy
+lpM
+lpM
+lpM
 abf
-wKy
-wKy
+lpM
+lpM
 yll
 yll
 wKy
-dph
+kHX
 qcZ
 wKy
 wKy
@@ -11387,7 +13129,7 @@ wKy
 aDM
 wKy
 wKy
-qcZ
+uva
 wKy
 wKy
 wKy
@@ -11518,18 +13260,18 @@ psX
 tmR
 psX
 lpM
-wKy
-wKy
-liM
-liM
-pRY
-jMa
-wKy
+lpM
+lpM
+hIy
+hIy
+rVk
+msy
+lpM
 wPk
 wPk
 wKy
 fhf
-fhf
+sSh
 fhf
 wKy
 fhf
@@ -11537,14 +13279,14 @@ fhf
 fhf
 fhf
 fhf
-qcZ
+uva
 yll
 yll
 yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
@@ -11555,10 +13297,10 @@ wdi
 wdi
 wdi
 wdi
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
 yll
 yll
 yll
@@ -11670,33 +13412,33 @@ rVk
 hoV
 rVk
 hIy
-liM
-dJc
-pRY
-pRY
-pRY
-jMa
-qcZ
+hIy
+fmx
+rVk
+rVk
+rVk
+msy
+psX
 yll
 yll
-qcZ
+uva
 fhf
 fhf
 fhf
 wKy
 fhf
-qcZ
-qcZ
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
+uva
+uva
 yll
 yll
 yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
@@ -11710,8 +13452,8 @@ wdi
 pRY
 pRY
 pRY
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -11822,22 +13564,22 @@ rVk
 hoV
 rVk
 rVk
-pRY
-pRY
-pRY
-pRY
-pRY
-jMa
-qcZ
+rVk
+rVk
+rVk
+rVk
+rVk
+msy
+psX
 yll
 yll
-qcZ
-fhf
+uva
+lKm
 fhf
 fhf
 aDM
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -11848,7 +13590,7 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
@@ -11863,7 +13605,7 @@ pRY
 pRY
 pRY
 pRY
-iSp
+wdi
 yll
 yll
 yll
@@ -11974,22 +13716,22 @@ oPv
 mjN
 oPv
 oPv
-aGI
-pRY
-pRY
-pRY
-pRY
-rOo
-qcZ
+eVi
+rVk
+rVk
+rVk
+rVk
+uQE
+psX
 yll
 yll
-qcZ
+uva
 fhf
 fhf
 fhf
 wKy
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12000,7 +13742,7 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
@@ -12015,7 +13757,7 @@ aum
 aum
 pRY
 pRY
-iSp
+wdi
 yll
 yll
 yll
@@ -12126,13 +13868,13 @@ rVk
 rVk
 rVk
 rVk
-sHp
-pRY
-pRY
-pRY
-pRY
-pRY
-wKy
+hoV
+rVk
+rVk
+rVk
+rVk
+rVk
+lpM
 wPk
 wPk
 wKy
@@ -12141,7 +13883,7 @@ fhf
 fhf
 wKy
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12152,14 +13894,14 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
 wdi
 mvZ
 mvZ
-eIE
+mvZ
 mvZ
 mvZ
 uva
@@ -12167,7 +13909,7 @@ pRY
 aum
 pRY
 pRY
-iSp
+wdi
 yll
 yll
 yll
@@ -12278,22 +14020,22 @@ psX
 wGI
 psX
 lpM
-sHp
-pRY
-pRY
-pRY
-pRY
-pRY
+hoV
+rVk
+rVk
+rVk
+rVk
+rVk
+lpM
+yll
+yll
 wKy
-yll
-yll
+poT
+wKy
+wKy
 wKy
 fhf
-wKy
-wKy
-wKy
-fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12304,22 +14046,22 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
 wdi
 mvZ
 mvZ
-ass
+mvZ
 mvZ
 mvZ
 wdi
-pRY
+yei
 aum
 pRY
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -12437,15 +14179,15 @@ wKy
 wKy
 wKy
 wKy
-qcZ
-qcZ
+uva
+uva
 wKy
 fhf
-qcZ
+uva
 yll
-qcZ
+uva
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12456,7 +14198,7 @@ yll
 yll
 yll
 yll
-qcZ
+uva
 ozp
 wKy
 yll
@@ -12467,10 +14209,10 @@ wdi
 wdi
 wdi
 wdi
-iSp
+wdi
 rbs
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -12593,11 +14335,11 @@ fhf
 fhf
 fhf
 fhf
-qcZ
+uva
 yll
-qcZ
+uva
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12618,11 +14360,11 @@ yll
 yll
 yll
 yll
-iSp
+wdi
 pRY
 aum
-fHw
-iSp
+mvZ
+wdi
 yll
 yll
 yll
@@ -12741,15 +14483,15 @@ fhf
 fhf
 wKy
 wKy
-qcZ
-qcZ
+uva
+uva
 fhf
-qcZ
+uva
 wKy
 yll
-qcZ
+uva
 fhf
-qcZ
+uva
 yll
 yll
 yll
@@ -12770,11 +14512,11 @@ yll
 yll
 yll
 yll
-iSp
+wdi
 pRY
 aum
-fHw
-iSp
+mvZ
+wdi
 yll
 yll
 yll
@@ -12894,9 +14636,9 @@ fhf
 wKy
 yll
 yll
-qcZ
+uva
 fhf
-qcZ
+uva
 yll
 yll
 wKy
@@ -12905,10 +14647,10 @@ wKy
 wKy
 wKy
 wKy
-qcZ
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
+uva
 wKy
 wKy
 wKy
@@ -12922,11 +14664,11 @@ yll
 yll
 yll
 yll
-iSp
+wdi
 pRY
 aum
-fHw
-iSp
+mvZ
+wdi
 yll
 yll
 yll
@@ -13044,13 +14786,13 @@ wKy
 wKy
 wKy
 wKy
-qcZ
-qcZ
-qcZ
-fhf
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
+poT
+uva
+uva
+uva
 wKy
 lFp
 qCW
@@ -13071,14 +14813,14 @@ wKy
 wKy
 wKy
 wKy
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
 rbs
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -13205,17 +14947,17 @@ qCW
 qCW
 qCW
 cla
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 wKy
 bXp
 ouy
@@ -13223,15 +14965,15 @@ wKy
 fhf
 fhf
 fhf
-pRY
+ojB
 pRY
 pRY
 pRY
 pRY
 aum
 pRY
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -13344,30 +15086,30 @@ ydA
 wKy
 wKy
 wKy
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
 wKy
-qcZ
-qcZ
-qcZ
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
+uva
+uva
+uva
 wKy
 wKy
 gCl
-iSp
+wdi
 abv
 abv
-fHw
-fHw
+mvZ
+mvZ
+bwM
+mvZ
+mvZ
 abv
-fHw
-fHw
 abv
-abv
-iSp
+wdi
 fhf
 ozp
 sch
@@ -13375,24 +15117,24 @@ ouy
 fhf
 fhf
 fhf
-iSp
-iSp
+wdi
+wdi
 pRY
 pRY
 pRY
 aum
 pRY
 pRY
-abC
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+qkR
+eNA
+oOT
+eNA
+vfn
+vfn
+vfn
+vfn
+vfn
+oOT
 yll
 yll
 yll
@@ -13509,17 +15251,17 @@ yll
 wKy
 fhf
 gCl
-iSp
+wdi
 fHw
 fHw
+mvZ
+mvZ
+bwM
+mvZ
+mvZ
 fHw
 fHw
-abv
-fHw
-fHw
-fHw
-fHw
-iSp
+wdi
 ukg
 rDp
 uSm
@@ -13535,16 +15277,16 @@ mjU
 mjU
 aGI
 pRY
-abC
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+qkR
+hBi
+hBi
+hBi
+pQT
+yhF
+yhF
+yhF
+yhF
+eRd
 yll
 yll
 yll
@@ -13647,11 +15389,11 @@ tVC
 ydA
 wKy
 yll
-qcZ
-qcZ
-qcZ
-qcZ
-qcZ
+uva
+uva
+uva
+uva
+uva
 yll
 yll
 yll
@@ -13661,7 +15403,7 @@ yll
 wKy
 fhf
 gCl
-iSp
+wdi
 fHw
 fHw
 fHw
@@ -13671,32 +15413,32 @@ abv
 fHw
 fHw
 fHw
-iSp
+wdi
 vTz
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 pRY
 pRY
 pRY
 pRY
 sHp
 pRY
-abC
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+qkR
+oRr
+oRr
+oRr
+pBY
+vfn
+vfn
+vfn
+vfn
+oOT
 yll
 yll
 yll
@@ -13799,21 +15541,21 @@ tVC
 ydA
 wKy
 yll
-qcZ
+uva
 jMa
 jMa
 jMa
-qcZ
+uva
 yll
 yll
 yll
 yll
-qcZ
-qcZ
+uva
+uva
 wKy
 wKy
 gCl
-iSp
+wdi
 abv
 abv
 abv
@@ -13823,32 +15565,32 @@ abv
 abv
 abv
 abv
-iSp
+wdi
 vTz
-iSp
+wdi
 fhf
 fhf
 fhf
 fhf
 fhf
 fhf
-iSp
+wdi
 pRY
 pRY
 pRY
 pRY
 sHp
 pRY
-iSp
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+wdi
+hBi
+hBi
+hBi
+pQT
+yhF
+yhF
+yhF
+yhF
+eRd
 yll
 yll
 yll
@@ -13903,7 +15645,7 @@ xUe
 xUe
 xUe
 xUe
-xUe
+aaN
 lpM
 ksy
 gXU
@@ -13951,21 +15693,21 @@ tVC
 ydA
 wKy
 yll
-qcZ
+uva
 pRY
 pRY
 pRY
-qcZ
+uva
 yll
 yll
 yll
 yll
-qcZ
+uva
 lFp
 qCW
 qCW
 jMI
-iSp
+wdi
 fHw
 fHw
 fHw
@@ -13975,32 +15717,32 @@ abv
 fHw
 fHw
 fHw
-iSp
+wdi
 vTz
-iSp
+wdi
 fhf
 fhf
 fhf
 fhf
 fhf
 fhf
-iSp
+wdi
 pRY
 pRY
 pRY
 pRY
 irV
 pRY
-iSp
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+wdi
+oRr
+oRr
+oRr
+pBY
+vfn
+vfn
+vfn
+vfn
+oOT
 yll
 yll
 yll
@@ -14051,11 +15793,11 @@ yjy
 ydA
 ydA
 psX
+aaN
 xUe
 xUe
 xUe
-xUe
-xUe
+aaN
 lpM
 ksy
 gXU
@@ -14103,11 +15845,11 @@ tVC
 ydA
 wKy
 wKy
-qcZ
-iSp
+uva
+wdi
 gwJ
-iSp
-qcZ
+wdi
+uva
 wKy
 wKy
 wKy
@@ -14117,42 +15859,42 @@ baW
 wKy
 wKy
 fhf
-iSp
+wdi
 fHw
 fHw
-fHw
-fHw
+mvZ
+mvZ
 abv
+mvZ
+mvZ
 fHw
 fHw
-fHw
-fHw
-iSp
+wdi
 vTz
-iSp
+wdi
 fhf
 fhf
 fhf
 fhf
 fhf
 fhf
-iSp
+wdi
 pRY
 pRY
-qcZ
-qcZ
+uva
+uva
 wKy
 wKy
-iSp
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+wdi
+hBi
+hBi
+hBi
+pQT
+yhF
+yhF
+yhF
+yhF
+eRd
 yll
 yll
 yll
@@ -14203,8 +15945,8 @@ ydA
 ydA
 ydA
 psX
-xUe
-xUe
+aaN
+aaN
 xUe
 xUe
 xUe
@@ -14269,42 +16011,42 @@ irb
 lUm
 wKy
 fhf
-iSp
+wdi
 abv
 abv
-fHw
-qcZ
+mvZ
+uva
 jqb
-qcZ
-fHw
+uva
+mvZ
 abv
 abv
-iSp
+wdi
 vTz
-iSp
-iSp
+wdi
+wdi
 fhf
 fhf
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
 pRY
 pRY
 pRY
 pRY
 wKy
 fhf
-iSp
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+wdi
+oRr
+oRr
+oRr
+pBY
+vfn
+vfn
+vfn
+vfn
+oOT
 yll
 yll
 yll
@@ -14421,23 +16163,23 @@ fhf
 fhf
 wKy
 fhf
-iSp
-qcZ
-qcZ
-qcZ
-qcZ
-fHw
-qcZ
-qcZ
-qcZ
-qcZ
-iSp
+wdi
+uva
+uva
+uva
+uva
+mvZ
+uva
+uva
+uva
+uva
+wdi
 vTz
-iSp
-fHw
+wdi
+hoO
 pRY
 pRY
-fHw
+jlU
 wKy
 pRY
 pRY
@@ -14448,15 +16190,15 @@ pRY
 vvC
 fhf
 vvC
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
-yll
+hBi
+qFT
+rDL
+pQT
+yhF
+yhF
+yhF
+yhF
+eRd
 yll
 yll
 yll
@@ -14507,8 +16249,8 @@ ydA
 ydA
 ydA
 lpM
-ufY
-ufY
+aVF
+aVF
 ufY
 lpM
 cBp
@@ -14573,42 +16315,42 @@ fhf
 fhf
 wKy
 fhf
-iSp
-pRY
-pRY
-pRY
+wdi
+aBW
+ofc
+ofc
 wKy
 jqb
 wKy
-pRY
-pRY
-pRY
-iSp
+aBW
+ofc
+aBW
+wdi
 vTz
-bER
-hJl
-mfS
-pRY
-fHw
-qcZ
+wdi
+mvZ
 pRY
 pRY
+jlU
+uva
 pRY
-abC
-kky
-abC
-iSp
-iSp
-iSp
-iSp
-iSp
-abC
-iSp
-abC
-abC
-iSp
+pRY
+pRY
+qkR
+uIL
+qkR
+wdi
+wdi
+wdi
+ufZ
+wdi
+qkR
+ufZ
+qkR
+qkR
+wdi
 yll
-yll
+sRj
 yll
 yll
 yll
@@ -14725,47 +16467,47 @@ fhf
 fhf
 wKy
 fhf
-iSp
+wdi
+pRY
+ucz
+pRY
+uva
 pRY
 pRY
 pRY
-qcZ
+ucz
 pRY
-pRY
-pRY
-pRY
-pRY
-iSp
+wdi
 vTz
 bER
 hJl
-mfS
+nTB
 pRY
-fHw
-qcZ
+xxf
+uva
 fhf
 fhf
-abC
-abC
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+qkR
+qkR
+rXW
+mrG
+mrG
+mrG
+mrG
+pks
+drK
+vYD
+hji
+mrG
+oZb
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 "}
 (74,1,1) = {"
 yll
@@ -14877,8 +16619,8 @@ fhf
 fhf
 wKy
 fhf
-iSp
-pRY
+wdi
+edy
 pRY
 pRY
 eOd
@@ -14886,38 +16628,38 @@ pRY
 pRY
 pRY
 pRY
-pRY
-iSp
+fmT
+wdi
 vTz
 bER
 hJl
-mfS
+nTB
 aum
 aum
 rbs
 ozp
 ozp
-iSp
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-iSp
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+wdi
+rXW
+vPe
+vYD
+vYD
+vYD
+vYD
+gou
+vYD
+vYD
+wuJ
+vYD
+rsv
+uuy
+wdi
+jlU
+mvZ
+mvZ
+mvZ
+mnb
+wdi
 "}
 (75,1,1) = {"
 yll
@@ -14966,7 +16708,7 @@ psX
 ufY
 ufY
 ufY
-kwT
+lAM
 wfF
 lpM
 ksy
@@ -15029,47 +16771,47 @@ fhf
 sSh
 wKy
 fhf
-iSp
-iSp
+wdi
+wdi
+aBW
+aBW
+uva
+jjm
 pRY
 pRY
-qcZ
 pRY
-pRY
-pRY
-pRY
-pRY
-iSp
+jMa
+wdi
 vTz
 bER
 hJl
-mfS
+nTB
 pRY
-fHw
-qcZ
+mvZ
+uva
 pRY
-fhf
-abC
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+ozp
+qkR
+kOm
+tMv
+iAW
+pjW
+pjW
+ugU
+kPS
+pjW
+yfI
+fvg
+esa
+qrT
+kod
+qkR
+mvZ
+mvZ
+mvZ
+mvZ
+mvZ
+wdi
 "}
 (76,1,1) = {"
 yll
@@ -15118,7 +16860,7 @@ xws
 ufY
 ufY
 ufY
-kwT
+lAM
 wfF
 lpM
 ksy
@@ -15182,46 +16924,46 @@ psy
 wKy
 fhf
 fhf
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 dvR
-iSp
-iSp
+wdi
+wdi
 vTz
-iSp
-fHw
+wdi
+mvZ
 pRY
 pRY
-fHw
-qcZ
+jlU
+uva
 pRY
-pRY
-abC
-xIR
-xIR
-xIR
-fHw
-fHw
-iSp
+aum
+qkR
+kOm
+tMv
+jQK
+iya
+rIv
+hcE
+mey
+wJV
+cbK
+ujN
+kOm
+xfM
+eJO
+kIa
+ozp
+ozp
 fhf
 fhf
 fhf
-iSp
-xIR
-xIR
-xIR
-kky
-fhf
-fhf
-fhf
-fhf
-fhf
-iSp
+wdi
 "}
 (77,1,1) = {"
 yll
@@ -15345,35 +17087,35 @@ pRY
 pRY
 wKy
 vTz
-iSp
+wdi
 wKy
 pRY
 pRY
 wKy
 wKy
 pRY
-pRY
+aum
+wdi
+wPW
+tMv
+bnY
+nYV
+rIv
 iSp
-xIR
-xIR
-xIR
-fHw
-fHw
-iSp
-xIR
-xIR
+qxv
+fBt
 xIR
 iSp
-xIR
-xIR
-xIR
-abC
+kDX
+fPK
+kod
+qkR
 fhf
+ozp
+sCE
+sCE
 fhf
-fhf
-fhf
-fhf
-iSp
+wdi
 "}
 (78,1,1) = {"
 yll
@@ -15497,35 +17239,35 @@ mjU
 mjU
 jth
 uSm
-iSp
-fHw
+wdi
+xPl
 pRY
 pRY
-fHw
-qcZ
+qqk
+uva
 pRY
-pRY
+aum
+wdi
+dBc
+tMv
+hvy
+sOg
 iSp
-xIR
-xIR
-xIR
+eKH
+jKz
+jKz
+eqR
 iSp
-iSp
-iSp
-xIR
-xIR
-xIR
-iSp
-xIR
-xIR
-xIR
-iSp
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+wYw
+ekE
+kod
+wdi
+mvZ
+mvZ
+mvZ
+mvZ
+mvZ
+wdi
 "}
 (79,1,1) = {"
 yll
@@ -15649,35 +17391,35 @@ aum
 pRY
 wKy
 fhf
-iSp
-fHw
+wdi
+tGd
 pRY
 pRY
-fHw
-qcZ
+oqg
+uva
 pRY
-pRY
+aum
 kky
-xIR
-xIR
-xIR
-iSp
-xIR
-iSp
-xIR
-xIR
-xIR
-iSp
-xIR
-xIR
-xIR
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+tlB
+tMv
+ewv
+cbC
+lSk
+qpj
+tmL
+tmL
+tmL
+bYm
+iiT
+hfG
+jGI
+qkR
+xMi
+mvZ
+mvZ
+vvZ
+mvZ
+wdi
 "}
 (80,1,1) = {"
 yll
@@ -15800,36 +17542,36 @@ aum
 aum
 pRY
 wKy
-fhf
-iSp
-fHw
+dtO
+wdi
+wTE
 pRY
 pRY
-fHw
-qcZ
+qqk
+uva
 pRY
 pRY
-abC
-xIR
-xIR
-xIR
+qkR
+kOm
+tMv
+fXo
 cxZ
+tae
+bMC
 xIR
-cxZ
-xIR
-xIR
+lDH
 xIR
 abC
-fHw
-fHw
-fHw
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+fqw
+lCA
+nmQ
+qkR
+fPW
+mvZ
+fPW
+eXC
+mvZ
+wdi
 "}
 (81,1,1) = {"
 yll
@@ -15951,37 +17693,37 @@ xJz
 wOw
 mjU
 aGI
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 pRY
 pRY
-kky
-xIR
-xIR
-xIR
-iSp
-xIR
-iSp
-xIR
-xIR
-xIR
-iSp
-xIR
-xIR
-xIR
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+uIL
+kOm
+tMv
+hLx
+izT
+iiF
+iao
+tiH
+tiH
+tiH
+hyS
+eNL
+aAP
+uuy
+qkR
+mvZ
+mvZ
+mvZ
+kfL
+mvZ
+wdi
 "}
 (82,1,1) = {"
 yll
@@ -16103,37 +17845,37 @@ wKy
 pRY
 aum
 sHp
-iSp
+wdi
 pLK
-iSp
-fHw
-fHw
-fHw
-iSp
+wdi
+tpb
+tpb
+mnN
+wdi
 pRY
 pRY
 pRY
+wdi
+puv
+tMv
+riE
 iSp
-xIR
-xIR
-xIR
+hyS
+gHN
+weN
+weN
+cnw
 iSp
-iSp
-iSp
-xIR
-xIR
-xIR
-iSp
-xIR
-xIR
-xIR
-iSp
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+wYw
+ekE
+kod
+wdi
+mvZ
+mvZ
+mvZ
+mvZ
+mvZ
+wdi
 "}
 (83,1,1) = {"
 yll
@@ -16249,43 +17991,43 @@ lCZ
 lCZ
 lCZ
 mnF
-mnF
-abi
+aRx
+hbx
 wKy
-qcZ
+uva
 rbs
 ecd
-iSp
-fHw
-fHw
+wdi
+mvZ
+mvZ
 pRY
 pRY
 pRY
-iSp
+wdi
 pRY
 pRY
 pRY
-iSp
-xIR
-xIR
-xIR
-fHw
-fHw
-iSp
-xIR
-xIR
-xIR
+wdi
+cax
+tMv
+pDv
+nQL
+bme
 iSp
 xIR
+fBt
 xIR
-xIR
-abC
+iSp
+kNs
+rjr
+kod
+qkR
 fhf
+ozp
+eET
+ozp
 fhf
-fhf
-fhf
-fhf
-iSp
+wdi
 "}
 (84,1,1) = {"
 yll
@@ -16394,7 +18136,7 @@ fPA
 hxF
 crl
 crl
-crl
+rRP
 rug
 abr
 abr
@@ -16407,37 +18149,37 @@ pRY
 pRY
 aum
 sHp
-qcZ
-fHw
-fHw
-pRY
-pRY
+uva
+mnb
+mvZ
+hip
+jkm
 vWn
-qcZ
+uva
 pRY
 pRY
 pRY
-abC
-xIR
-xIR
-xIR
-fHw
-fHw
-iSp
+qkR
+kOm
+tMv
+pDv
+nZH
+bme
+ujN
+wqE
+aVg
+vKd
+hcE
+htV
+ekE
+eJO
+kIa
+ozp
+ozp
 fhf
 fhf
 fhf
-iSp
-xIR
-xIR
-xIR
-kky
-fhf
-fhf
-fhf
-fhf
-fhf
-iSp
+wdi
 "}
 (85,1,1) = {"
 yll
@@ -16546,7 +18288,7 @@ kqd
 crl
 crl
 crl
-crl
+rRP
 rug
 rqT
 ewt
@@ -16561,35 +18303,35 @@ aum
 xJz
 lCP
 pFT
-pFT
-wOw
-wOw
-gNz
-qcZ
+uoW
+fNJ
+fNJ
+rVH
+uva
 pRY
 pRY
 pRY
-abC
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+qkR
+kOm
+tMv
+cEh
+mZh
+mZh
+uWJ
+oWb
+mZh
+gUH
+wKn
+ekf
+fUC
+rxE
+qkR
+mvZ
+mvZ
+mvZ
+mvZ
+mvZ
+wdi
 "}
 (86,1,1) = {"
 yll
@@ -16709,39 +18451,39 @@ pRY
 pRY
 pRY
 pRY
+aum
 pRY
-pRY
-qcZ
-fHw
-fHw
-fHw
-fHw
-fHw
+uva
+mvZ
+mvZ
+mvZ
+mvZ
+mvZ
 qcE
 pRY
 pRY
 pRY
-iSp
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-iSp
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+wdi
+qUI
+dWH
+eJy
+vYD
+vYD
+vYD
+urY
+vYD
+vYD
+aKw
+vYD
+gkL
+ddy
+wdi
+jlU
+mvZ
+mvZ
+mvZ
+mnb
+wdi
 "}
 (87,1,1) = {"
 yll
@@ -16789,16 +18531,16 @@ ydA
 rml
 lhZ
 rml
-smS
-smS
-rml
-fkq
-fkq
-rml
-smS
+ass
 smS
 rml
+dJc
 fkq
+rml
+ass
+smS
+rml
+dJc
 fkq
 rml
 hir
@@ -16829,7 +18571,7 @@ qMX
 wFy
 nFV
 xQp
-aaN
+aaO
 lHj
 lHj
 aaV
@@ -16858,42 +18600,42 @@ lCZ
 lCZ
 wKy
 jzG
-qcZ
-qcZ
+uva
+uva
+pRY
+aum
+pRY
+wdi
+wdi
+uva
+uva
+wdi
+wdi
+wdi
 pRY
 pRY
 pRY
-iSp
-iSp
-qcZ
-qcZ
-iSp
-iSp
-iSp
-pRY
-pRY
-pRY
-abC
-abC
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-xIR
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+qkR
+qkR
+iAw
+tyr
+qwf
+qwf
+qwf
+hWB
+qwf
+qwf
+hWB
+qwf
+gpG
+dop
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 "}
 (88,1,1) = {"
 yll
@@ -16999,10 +18741,10 @@ lCZ
 lCZ
 rug
 jTo
-mcX
-mcX
-mcX
-mcX
+aIb
+aIb
+aIb
+aIb
 abn
 mcX
 mcX
@@ -17010,10 +18752,10 @@ lCZ
 pRY
 pRY
 pRY
+pTf
+uva
 pRY
-qcZ
-pRY
-pRY
+aum
 pRY
 pRY
 wKy
@@ -17021,26 +18763,26 @@ pRY
 pRY
 pRY
 pRY
-iSp
+wdi
 pRY
 pRY
 pRY
-pRY
-abC
+fTV
+qkR
 kky
-abC
+ykU
 wKy
-iSp
-iSp
-fHw
-fHw
-fHw
-fHw
-fHw
-fHw
-abC
-wPk
-wPk
+wdi
+wdi
+tzO
+mvZ
+mvZ
+bNM
+mvZ
+jlU
+mIh
+uwT
+grM
 yll
 yll
 yll
@@ -17162,35 +18904,35 @@ lCZ
 pRY
 pRY
 pRY
+aBW
+uva
 pRY
-qcZ
-pRY
-pRY
-pRY
-pRY
-dvR
-pRY
-pRY
-pRY
-pRY
-dvR
-pRY
-pRY
-pRY
-pRY
-pRY
-pRY
-pRY
-pRY
-abC
-fHw
-fHw
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+aum
+aum
+aum
+blt
+aum
+aum
+aum
+aum
+blt
+aum
+aum
+aum
+aum
+aum
+aum
+ojZ
+sRa
+qkR
+mvZ
+goO
+kvg
+kvg
+uwy
+mvZ
+uzp
+wdi
 yll
 yll
 yll
@@ -17306,43 +19048,43 @@ crl
 crl
 crl
 crl
-crl
+rRP
 crl
 crl
 crl
 lCZ
+ltn
 pRY
-pRY
-pRY
-pRY
-qcZ
-pRY
-pRY
-pRY
-pRY
+iop
+aBW
+uva
+ybR
+cdE
+jMt
+tNn
 wKy
 pRY
 pRY
 pRY
 pRY
-iSp
+wdi
 pRY
 pRY
 pRY
 pRY
 pRY
 pRY
+sRN
 pRY
-pRY
-jqb
-fHw
-fHw
-fHw
-fHw
-fHw
-fHw
-fHw
-iSp
+nIu
+mvZ
+pML
+pML
+anQ
+anQ
+mvZ
+mvZ
+wdi
 yll
 yll
 yll
@@ -17458,10 +19200,10 @@ crl
 crl
 crl
 crl
+rRP
 crl
 crl
 crl
-crl
 lCZ
 lCZ
 lCZ
@@ -17475,26 +19217,26 @@ lCZ
 lCZ
 lCZ
 lCZ
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
+wdi
 pRY
 pRY
-pRY
-pRY
-iSp
-iSp
-iSp
-iSp
-iSp
-abC
-abC
-abC
-iSp
+llm
+fXT
+wdi
+wdi
+wdi
+wdi
+wdi
+qkR
+qkR
+qkR
+wdi
 yll
 yll
 yll
@@ -17610,7 +19352,7 @@ crl
 crl
 crl
 crl
-crl
+rRP
 crl
 crl
 crl
@@ -17633,14 +19375,14 @@ lCZ
 lCZ
 lCZ
 lCZ
-iSp
+wdi
 pRY
 pRY
 pRY
+hSD
 pRY
 pRY
-pRY
-abf
+bYs
 fhf
 vvC
 yll
@@ -17785,14 +19527,14 @@ abj
 abj
 abj
 lCZ
-iSp
+wdi
 pRY
 pRY
 pRY
 pRY
 pRY
 pRY
-iSp
+wdi
 fhf
 wKy
 yll
@@ -17854,7 +19596,7 @@ rml
 lhZ
 rml
 fkq
-fkq
+dJc
 rml
 cdZ
 cdZ
@@ -17937,15 +19679,15 @@ abj
 abj
 abj
 lCZ
-iSp
+wdi
 pRY
 pRY
 pRY
-iSp
-iSp
-iSp
-iSp
-iSp
+wdi
+wdi
+wdi
+wdi
+wdi
 wKy
 yll
 yll
@@ -18089,11 +19831,11 @@ abj
 abj
 abj
 lCZ
-iSp
-iSp
+wdi
+wdi
 vvC
-iSp
-iSp
+wdi
+wdi
 yll
 yll
 yll
@@ -18221,7 +19963,7 @@ crl
 iVG
 crl
 crl
-crl
+tjt
 rug
 crl
 crl
@@ -18462,7 +20204,7 @@ lhZ
 hir
 rml
 smS
-smS
+ass
 rml
 cdZ
 cdZ
@@ -18646,11 +20388,11 @@ tVC
 ydA
 aqS
 upE
-upE
-upE
-upE
-upE
-upE
+rLP
+rLP
+rLP
+rLP
+rLP
 aqS
 wJU
 iLG
@@ -18849,11 +20591,11 @@ lCZ
 lCZ
 lCZ
 lCZ
-iSp
+wdi
 yll
 yll
 yll
-iSp
+wdi
 yll
 yll
 yll
@@ -18949,12 +20691,12 @@ ydA
 tVC
 ydA
 aqS
-upE
+liM
 upE
 wJU
 sXY
-sXY
-sXY
+gDj
+aoZ
 uTy
 sXY
 deV
@@ -19101,9 +20843,9 @@ ydA
 tVC
 ydA
 aqS
+rOo
 upE
-upE
-upE
+bTm
 upE
 upE
 upE
@@ -19111,7 +20853,7 @@ tHC
 upE
 upE
 eLy
-upE
+riw
 upE
 upE
 upE
@@ -19253,17 +20995,17 @@ ydA
 tVC
 ydA
 aqS
+gMY
 upE
-upE
-upE
-upE
-upE
-upE
+mGM
+liM
+mRP
+gMY
 eLy
 upE
 upE
 eLy
-upE
+cZg
 upE
 upE
 upE
@@ -19407,7 +21149,7 @@ ydA
 aqS
 eLy
 tjE
-aqS
+hOl
 eLy
 aqS
 aqS
@@ -19415,7 +21157,7 @@ aqS
 mTs
 mTs
 wew
-upE
+nEb
 upE
 upE
 upE
@@ -19560,14 +21302,14 @@ eLy
 upE
 upE
 upE
-upE
+liM
 eLy
 upE
 upE
 upE
 upE
 eLy
-upE
+liM
 upE
 upE
 upE
@@ -19709,7 +21451,7 @@ ydA
 tVC
 ydA
 aqS
-upE
+hEU
 upE
 upE
 upE
@@ -19719,7 +21461,7 @@ upE
 upE
 upE
 eLy
-upE
+pwE
 upE
 upE
 upE
@@ -19864,7 +21606,7 @@ mTs
 upE
 upE
 upE
-upE
+hgt
 eLy
 upE
 upE
@@ -20016,22 +21758,22 @@ mTs
 upE
 upE
 upE
-upE
+hgt
 aqS
 upE
 upE
 upE
 aqS
-uHn
-uHn
+iAv
+iAv
 mTs
 mTs
-uHn
-uHn
+iAv
+iAv
 wew
+oWj
 upE
-upE
-upE
+pJa
 upE
 upE
 wew
@@ -20168,22 +21910,22 @@ kvH
 psK
 psK
 psK
-psK
+tai
 eLy
 upE
 upE
 upE
 aqS
-uHn
+sIF
 upE
 upE
 upE
 upE
-uHn
+lZn
 wew
+gMY
 upE
-upE
-upE
+qYb
 upE
 upE
 wew
@@ -20317,7 +22059,7 @@ ydA
 tVC
 ydA
 aqS
-upE
+sMy
 upE
 upE
 psK
@@ -20469,9 +22211,9 @@ ydA
 tVC
 ydA
 eLy
-upE
-upE
-upE
+liM
+qNX
+qNX
 acm
 eLy
 upE
@@ -20485,7 +22227,7 @@ upE
 upE
 upE
 eLy
-upE
+rLP
 upE
 wew
 upE
@@ -20632,8 +22374,8 @@ upE
 mTs
 upE
 upE
-uHn
-uHn
+hvb
+hZq
 upE
 upE
 mTs
@@ -20773,9 +22515,9 @@ ydA
 tVC
 ydA
 aqS
-uHn
-uHn
-uHn
+hSF
+hSF
+hSF
 uHn
 std
 upE
@@ -20925,7 +22667,7 @@ ydA
 tVC
 ydA
 aqS
-uHn
+hSF
 uHn
 uHn
 uHn
@@ -20941,11 +22683,11 @@ upE
 upE
 upE
 aqS
-mTs
+uIi
+oDj
 upE
-upE
-upE
-upE
+loD
+xzn
 aqS
 aqS
 aqS
@@ -21077,27 +22819,27 @@ ydA
 tVC
 ydA
 aqS
-uHn
-uHn
-uHn
+hSF
+xby
+iqP
 uHn
 std
 upE
 upE
 upE
 aqS
-uHn
+sIF
 upE
 upE
 upE
 upE
-uHn
+lZn
 aqS
-mTs
-upE
-upE
-upE
-upE
+dld
+ebQ
+biA
+biA
+oDj
 aqS
 abg
 abg
@@ -21238,18 +22980,18 @@ upE
 upE
 upE
 aqS
-uHn
-uHn
+iAv
+iAv
 upE
 upE
-uHn
-uHn
+iAv
+iAv
 aqS
-mTs
-upE
-upE
-upE
-upE
+uIi
+gYZ
+uwX
+mmO
+mmO
 aqS
 abg
 abg
@@ -21382,9 +23124,9 @@ tVC
 ydA
 aqS
 mTs
-mTs
-mTs
-mTs
+sNc
+sNc
+lpp
 eLy
 hrK
 upE
@@ -21534,7 +23276,7 @@ tVC
 ydA
 aqS
 mTs
-mTs
+sxN
 mTs
 mTs
 sJI
@@ -21685,9 +23427,9 @@ ydA
 tVC
 sNt
 aqS
-mTs
-mTs
-mTs
+jrQ
+jrQ
+jdK
 mTs
 eLy
 svd
@@ -21837,8 +23579,8 @@ ydA
 tVC
 aaz
 aqS
-mTs
-mTs
+mjJ
+sBf
 mTs
 mTs
 eLy
@@ -22141,21 +23883,21 @@ ydA
 tVC
 ydA
 aqS
+tav
 mTs
-mTs
-mTs
-mTs
-mTs
+cjY
+cjY
+cjY
 jaP
 aqS
-upE
-upE
+wsR
+rLP
 upE
 aqS
 svd
 upE
 eLy
-mTs
+elx
 mTs
 mTs
 mTs
@@ -22293,14 +24035,14 @@ ydA
 tVC
 ydA
 aqS
-mTs
+tav
 mTs
 mTs
 mTs
 mTs
 jaP
 aqS
-upE
+ssU
 upE
 upE
 aOS
@@ -22599,14 +24341,14 @@ ydA
 ydA
 aqS
 mTs
-mTs
-mTs
-mTs
+dGM
+dGM
+dGM
 jaP
 aqS
 eLy
 eLy
-aqS
+rpN
 aqS
 svd
 upE
@@ -22751,9 +24493,9 @@ ydA
 ydA
 cKZ
 mTs
-mTs
-mTs
-mTs
+cjY
+cjY
+cjY
 jaP
 aqS
 upE
@@ -22908,7 +24650,7 @@ mTs
 mTs
 jaP
 aqS
-upE
+ssU
 upE
 upE
 aOS
@@ -23060,8 +24802,8 @@ aqS
 aqS
 cAl
 aqS
-upE
-upE
+wsR
+rLP
 upE
 aqS
 svd
