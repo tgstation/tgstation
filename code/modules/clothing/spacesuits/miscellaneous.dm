@@ -418,7 +418,7 @@ Contains:
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	/// Current charge or berserk, goes from 0 to 100
+	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
 	/// Status of berserk
 	var/berserk_active = FALSE
@@ -450,6 +450,7 @@ Contains:
 	if(berserk_charge >= 100)
 		to_chat(owner, "<span class='notice'>Berserk mode is fully charged.</span>")
 
+/// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	to_chat(user, "<span class='warning'>You enter berserk mode.</span>")
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
@@ -460,6 +461,7 @@ Contains:
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	berserk_active = TRUE
 
+/// Ends berserk, reverting the changes from the proc [berserk_mode]
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/end_berserk(mob/living/carbon/human/user)
 	if(!berserk_active)
 		return
