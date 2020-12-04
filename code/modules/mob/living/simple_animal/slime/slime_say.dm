@@ -1,6 +1,6 @@
 /mob/living/simple_animal/slime/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
 	. = ..()
-	if(speaker == src || !radio_freq || stat || !(speaker in Friends))
+	if(speaker == src || radio_freq || stat || !(speaker in Friends))
 		return
 
 	speech_buffer = list()
