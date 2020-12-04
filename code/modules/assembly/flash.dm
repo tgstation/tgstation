@@ -205,8 +205,7 @@
 	if(victim.loc == attacker.loc)
 		return DEVIATION_PARTIAL
 
-	// Ensures that when a moth is flashed, it will always be at no deviation. This is to make directionality irrelevant to moths.
-	if(ismoth(victim))
+	if(HAS_TRAIT(victim, TRAIT_LIGHT_SENSITIVE))
 		return DEVIATION_NONE
 
 	// If the victim was looking at the attacker, this is the direction they'd have to be facing.

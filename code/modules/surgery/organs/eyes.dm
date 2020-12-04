@@ -399,6 +399,14 @@
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
+/obj/item/organ/eyes/moth/Insert(mob/living/carbon/M, special = 0)
+	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
+	..()
+
+/obj/item/organ/eyes/moth/Remove(mob/living/carbon/M, special = 0)
+	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
+	..()
+
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
