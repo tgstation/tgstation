@@ -11,23 +11,17 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	. = subtypesof(/datum/gas_recipe)
 	for(var/recipe_path in .)
 		var/list/recipe_info = new(7)
-		var/datum/gas_recipe/recipe = recipe_path
+		var/datum/gas_recipe/recipe = new recipe_path()
 
 		recipe_info[META_RECIPE_ID] = initial(recipe.id)
 		recipe_info[META_RECIPE_NAME] = initial(recipe.name)
 		recipe_info[META_RECIPE_MIN_TEMP] = initial(recipe.min_temp)
 		recipe_info[META_RECIPE_MAX_TEMP] = initial(recipe.max_temp)
 
-		recipe_info[META_RECIPE_REQUIREMENTS] = list()
-		recipe_info[META_RECIPE_CATALYSTS] = list()
-		recipe_info[META_RECIPE_PRODUCTS] = list()
+		recipe_info[META_RECIPE_REQUIREMENTS] = recipe.requirements
+		recipe_info[META_RECIPE_CATALYSTS] = recipe.catalysts
+		recipe_info[META_RECIPE_PRODUCTS] = recipe.products
 
-		for(var/datum/gas/gas in initial(recipe.requirements))
-			recipe_info[META_RECIPE_REQUIREMENTS] += gas
-		for(var/datum/gas/gas in initial(recipe.catalysts))
-			recipe_info[META_RECIPE_CATALYSTS] += gas
-		for(var/obj/item/item in initial(recipe.products))
-			recipe_info[META_RECIPE_PRODUCTS] += item
 		.[recipe_path] = recipe_info
 
 
