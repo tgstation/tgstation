@@ -5836,6 +5836,7 @@
 /area/security/prison)
 "dCg" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "dCh" = (
@@ -12263,6 +12264,7 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/armory3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "hFH" = (
@@ -18205,6 +18207,7 @@
 	dir = 4
 	},
 /obj/structure/closet/bombcloset/security,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "lpg" = (
