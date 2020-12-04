@@ -21,6 +21,7 @@
 		1.0, // AirAbsorptionFactor
 		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
 	)
+	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
 
 /*! playsound
 
@@ -170,10 +171,10 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 				S.environment = sound_environment_override
 			else
 				var/area/A = get_area(src)
-				if(A.sound_environment > -1)
+				if(A.sound_environment != SOUND_ENVIRONMENT_NONE)
 					S.environment = A.sound_environment
 
-		if(use_reverb && S.environment > SOUND_ENVIRONMENT_NONE) //We have reverbhttps://www.youtube.com/watch?v=Ur2MLyOtVqI, reset our echo setting
+		if(use_reverb && S.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
 			S.echo[3] = 0 //Room setting, 0 means normal reverb
 			S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
