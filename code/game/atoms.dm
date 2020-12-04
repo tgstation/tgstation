@@ -684,17 +684,10 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
-<<<<<<< HEAD
-  * React to a hit by a blob object. Returns whether or not to cancel further action
-  *
-  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
-  */
-=======
  * React to a hit by a blob objecd
  *
  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
  */
->>>>>>> upstream/master
 /atom/proc/blob_act(obj/structure/blob/B)
 	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
