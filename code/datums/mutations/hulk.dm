@@ -110,7 +110,10 @@
 
 	INVOKE_ASYNC(src, .proc/setup_swing, user, possible_throwable)
 
+/// Do a short 2 second do_after before starting the actual swing
 /datum/mutation/human/hulk/proc/setup_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
+	var/original_dir = the_hulk.dir // so no matter if the hulk tries to mess up their direction, they always face where they started when they throw
+
 	yeeted_person.forceMove(the_hulk.loc)
 	yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
 
@@ -125,24 +128,16 @@
 		to_chat(the_hulk, "<span class='danger'>You lose your grasp on [yeeted_person]'s tail!</span>")
 		return
 
-	var/soundslike = "yelping"
-	if(ismonkey(yeeted_person))
-		soundslike = "monkey"
-	else if(isfelinid(yeeted_person))
-		soundslike = "cat"
-	else if(islizard(yeeted_person))
-		soundslike = "lizard"
-
 	yeeted_person.Stun(8 SECONDS)
 	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>", \
-					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear distressed [soundslike] sounds!</span>", null, the_hulk)
+					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear wooshing sounds!</span>", null, the_hulk)
 	to_chat(the_hulk, "<span class='danger'>You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>")
 	the_hulk.emote("scream")
 	yeeted_person.emote("scream")
-	swing_loop(the_hulk, yeeted_person, 1)
+	swing_loop(the_hulk, yeeted_person, 0, original_dir)
 
-
-/datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step)
+/// For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
+/datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step, original_dir)
 	if(!is_swing_viable(the_hulk, yeeted_person))
 		return
 
@@ -171,16 +166,17 @@
 		yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
 
 	step++
-	if(step == HULK_TAILTHROW_STEPS)
-		finish_swing(the_hulk, yeeted_person)
+	if(step >= HULK_TAILTHROW_STEPS)
+		finish_swing(the_hulk, yeeted_person, original_dir)
 	else
-		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step), delay)
+		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step, original_dir), delay)
 
-
-/datum/mutation/human/hulk/proc/finish_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
+/// Time to toss the victim at high speed
+/datum/mutation/human/hulk/proc/finish_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, original_dir)
 	if(!is_swing_viable(the_hulk, yeeted_person))
 		return
 
+	the_hulk.setDir(original_dir)
 	yeeted_person.forceMove(the_hulk.loc) // Maybe this will help with the wallthrowing bug.
 	yeeted_person.visible_message("<span class='danger'>[the_hulk] throws [yeeted_person]!</span>", \
 					"<span class='userdanger'>You're thrown by [the_hulk]!</span>", "<span class='hear'>You hear aggressive shuffling and a loud thud!</span>", null, the_hulk)
