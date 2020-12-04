@@ -457,7 +457,7 @@ Contains:
 	user.physiology.armor.melee += 50
 	user.next_move_modifier *= 0.5
 	user.add_atom_colour("#950a0a", TEMPORARY_COLOUR_PRIORITY)
-	ADD_TRAIT(user, TRAIT_CHUNKYFINGERS, BERSERK_TRAIT)
+	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	berserk_active = TRUE
 
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/end_berserk(mob/living/carbon/human/user)
