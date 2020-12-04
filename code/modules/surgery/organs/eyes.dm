@@ -401,10 +401,10 @@
 
 /obj/item/organ/eyes/moth/Insert(mob/living/carbon/M, special = 0)
 	..()
-	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
+	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "moth eyes")
 
 /obj/item/organ/eyes/moth/Remove(mob/living/carbon/M, special = 0)
-	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "light_sensitive")
+	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "moth eyes")
 	..()
 
 /obj/item/organ/eyes/snail
