@@ -1,4 +1,6 @@
 /**
+ * Machines in the world, such as computers, pipes, and airlocks.
+ *
  *Overview:
  *  Used to create objects that need a per step proc call.  Default definition of 'Initialize()'
  *  stores a reference to src machine in global 'machines list'.  Default definition

@@ -250,7 +250,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	return ..()
 
 
-///Timed action involving one mob user. Target is optional.
+/**
+ * Timed action involving one mob user. Target is optional.
+ *
+ * Checks that `user` does not move, change hands, get stunned, etc. for the
+ * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
+ */
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
 	if(!user)
 		return FALSE

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Spessmen can't whisper into comms in crit anymore (excluding handheld radios and intercomms)."
-  - bugfix: "Humans with binary encrypted headsets shouldn't be able to speak into the binary channel when unconscious/critted anymore."

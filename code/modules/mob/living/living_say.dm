@@ -58,9 +58,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 ))
 
 /**
-  * Whitelist of saymodes or radio extensions that can be spoken through even if not fully conscious.
-  * Associated values are their maximum allowed mob stats.
-  */
+ * Whitelist of saymodes or radio extensions that can be spoken through even if not fully conscious.
+ * Associated values are their maximum allowed mob stats.
+ */
 GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	MODE_INTERCOM = HARD_CRIT,
 	MODE_ALIEN = HARD_CRIT,
