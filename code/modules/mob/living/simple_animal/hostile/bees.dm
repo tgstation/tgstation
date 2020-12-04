@@ -157,7 +157,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/AttackingTarget()
- 	//Pollinate
+	//Pollinate
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
 		pollinate(Hydro)

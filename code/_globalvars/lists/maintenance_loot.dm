@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/camera_film = 1,
 		/obj/item/light/bulb = 1,
 		/obj/item/light/tube = 1,
-		/obj/item/reagent_containers/food/snacks/urinalcake = 1,
+		/obj/item/food/urinalcake = 1,
 
 		/obj/item/airlock_painter = 1,
 		/obj/item/airlock_painter/decal = 1,

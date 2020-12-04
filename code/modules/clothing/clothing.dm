@@ -76,21 +76,21 @@
 		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
-
-/obj/item/reagent_containers/food/snacks/clothing
+//This code is cursed, moths are cursed, and someday I will destroy it. but today is not that day.
+/obj/item/food/clothing
 	name = "temporary moth clothing snack item"
-	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("dust" = 1, "lint" = 1)
-	foodtype = CLOTH
+	foodtypes = CLOTH
 
 /obj/item/clothing/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent != INTENT_HARM && ismoth(M))
-		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
+		var/obj/item/food/clothing/clothing_as_food = new //collective bruh moment
 		clothing_as_food.name = name
-		if(clothing_as_food.attack(M, user, def_zone))
+		if(clothing_as_food.attack(M, user, def_zone)) //BRUUUUUUUUUUUUUUUUUUUUUUUUUUUUUH
 			take_damage(15, sound_effect=FALSE)
-		qdel(clothing_as_food)
+		qdel(clothing_as_food) ///WHAT ARE THOOSEEE
 	else
 		return ..()
 
@@ -132,18 +132,18 @@
 		to_chat(user, "<span class='notice'>You fix the damage on [src].</span>")
 
 /**
-  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
-  *
-  *	This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
-  * more than one bodypart to begin with. No point in tracking damage by zone for a hat, and I'm not cruel enough to let you fully break them in a few shots.
-  * Also if limb_integrity is 0, then this clothing doesn't have bodypart damage enabled so skip it.
-  *
-  * Arguments:
-  * * def_zone: The bodypart zone in question
-  * * damage_amount: Incoming damage
-  * * damage_type: BRUTE or BURN
-  * * armour_penetration: If the attack had armour_penetration
-  */
+ * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
+ *
+ *	This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
+ * more than one bodypart to begin with. No point in tracking damage by zone for a hat, and I'm not cruel enough to let you fully break them in a few shots.
+ * Also if limb_integrity is 0, then this clothing doesn't have bodypart damage enabled so skip it.
+ *
+ * Arguments:
+ * * def_zone: The bodypart zone in question
+ * * damage_amount: Incoming damage
+ * * damage_type: BRUTE or BURN
+ * * armour_penetration: If the attack had armour_penetration
+ */
 /obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
 	if(!def_zone || !limb_integrity || (initial(body_parts_covered) in GLOB.bitflags)) // the second check sees if we only cover one bodypart anyway and don't need to bother with this
 		return
@@ -158,16 +158,16 @@
 		disable_zone(def_zone, damage_type)
 
 /**
-  * disable_zone() is used to disable a given bodypart's protection on our clothing item, mainly from [/obj/item/clothing/proc/take_damage_zone]
-  *
-  * This proc disables all protection on the specified bodypart for this piece of clothing: it'll be as if it doesn't cover it at all anymore (because it won't!)
-  * If every possible bodypart has been disabled on the clothing, we put it out of commission entirely and mark it as shredded, whereby it will have to be repaired in
-  * order to equip it again. Also note we only consider it damaged if there's more than one bodypart disabled.
-  *
-  * Arguments:
-  * * def_zone: The bodypart zone we're disabling
-  * * damage_type: Only really relevant for the verb for describing the breaking, and maybe obj_destruction()
-  */
+ * disable_zone() is used to disable a given bodypart's protection on our clothing item, mainly from [/obj/item/clothing/proc/take_damage_zone]
+ *
+ * This proc disables all protection on the specified bodypart for this piece of clothing: it'll be as if it doesn't cover it at all anymore (because it won't!)
+ * If every possible bodypart has been disabled on the clothing, we put it out of commission entirely and mark it as shredded, whereby it will have to be repaired in
+ * order to equip it again. Also note we only consider it damaged if there's more than one bodypart disabled.
+ *
+ * Arguments:
+ * * def_zone: The bodypart zone we're disabling
+ * * damage_type: Only really relevant for the verb for describing the breaking, and maybe obj_destruction()
+ */
 /obj/item/clothing/proc/disable_zone(def_zone, damage_type)
 	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
 	if(!(def_zone in covered_limbs))
@@ -320,13 +320,13 @@
 		to_chat(usr, "[readout.Join()]")
 
 /**
-  * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
-  *
-  * Rounds armor_value to nearest 10, divides it by 10
-  * and then expresses it in roman numerals up to 10
-  * Arguments:
-  * * armor_value - Number we're converting
-  */
+ * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
+ *
+ * Rounds armor_value to nearest 10, divides it by 10
+ * and then expresses it in roman numerals up to 10
+ * Arguments:
+ * * armor_value - Number we're converting
+ */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
 	armor_value = round(armor_value,10) / 10
 	switch (armor_value)
@@ -386,7 +386,7 @@ SEE_MOBS  // can see all mobs, no matter what
 SEE_OBJS  // can see all objs, no matter what
 SEE_TURFS // can see all turfs (and areas), no matter what
 SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
+		// in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
 
