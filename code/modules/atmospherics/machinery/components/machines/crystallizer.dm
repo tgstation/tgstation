@@ -71,19 +71,12 @@
 		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 /obj/machinery/atmospherics/components/unary/crystallizer/proc/check_gas_requirements()
-	. = FALSE
-	var/gas_check = 0
-	var/datum/gas_mixture/air_contents = airs[1]
-	if(!air_contents.total_moles())
-		return FALSE
+	var/datum/gas_mixture/contents = airs[1]
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
-	message_admins("[recipe]")
-	for(var/datum/gas/gas in air_contents.gases)
-		if(gas in (recipe[META_RECIPE_REQUIREMENTS]))
-			gas_check++
-	message_admins("[gas_check]")
-	if(gas_check == (recipe[META_RECIPE_REQUIREMENTS].len))
-		. = TRUE
+	for(var/gastype in recipe[META_RECIPE_REQUIREMENTS])
+		if(!contents.gases[gastype] || !contents.gases[gastype][MOLES])
+			return FALSE
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/crystallizer/process_atmos()
 	if(!on || !nodes[1] || !is_operational || recipe_type == null)
