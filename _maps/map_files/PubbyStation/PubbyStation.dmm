@@ -47489,6 +47489,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"gGO" = (
+/obj/machinery/camera/motion{
+	c_tag = "Vault Exterior";
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space)
 "gHZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -98279,7 +98286,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gGO
 aIO
 aIO
 avj
