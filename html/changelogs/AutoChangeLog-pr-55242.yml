@@ -1,5 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue where Herald's mirror would look like a normal herald on being shot"
-  - bugfix: "Fixed an issue where Herald's mirror would gain the second set of projectiles at 50% health."
