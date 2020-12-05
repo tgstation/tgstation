@@ -112,7 +112,7 @@
 		after_eat = CALLBACK(src, .proc/after_eat))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
-	var/obj/resolved_clothing = clothing.resolve()
+	var/obj/item/clothing/resolved_clothing = clothing.resolve()
 	if (resolved_clothing)
 		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
 	else
