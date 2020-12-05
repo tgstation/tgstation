@@ -26,6 +26,8 @@
 	///do we need to call update_solar_exposure() next tick?
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
+	var/powermulti = 1 //power multiplier
+	var/pinkpanel = FALSE //controls if it shows a blue or a pink panel sprite
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -68,6 +70,11 @@
 		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		obj_integrity = max_integrity
+	if(S.glass_type == /obj/item/stack/sheet/plasmaglass) //if the panel is made with plasma glass
+		powermulti *= 2 //multiplies power by two
+		pinkpanel = TRUE //makes the solar panel sprite pink
+		max_integrity *= 2
 		obj_integrity = max_integrity
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
@@ -114,8 +121,12 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(machine_stat & BROKEN)
+	if(machine_stat & BROKEN & !pinkpanel)
 		panel.icon_state = "solar_panel-b"
+	if(machine_stat & BROKEN & pinkpanel)
+		panel.icon_state = "psolar_panel-b"
+	else if (pinkpanel)
+		panel.icon_state = "psolar_panel"
 	else
 		panel.icon_state = "solar_panel"
 
@@ -185,7 +196,7 @@
 	if(sunfrac <= 0)
 		return
 
-	var/sgen = SOLAR_GEN_RATE * sunfrac
+	var/sgen = SOLAR_GEN_RATE * sunfrac * powermulti
 	add_avail(sgen)
 	if(control)
 		control.gen += sgen
@@ -251,7 +262,7 @@
 		W.play_tool_sound(src, 75)
 		return TRUE
 
-	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/plasmaglass))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
