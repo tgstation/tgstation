@@ -44105,9 +44105,6 @@
 "cPf" = (
 /obj/structure/table/wood,
 /obj/item/trash/plate,
-/obj/item/reagent_containers/food/snacks/scotchegg{
-	pixel_y = 5
-	},
 /turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/dorms)
 "cPy" = (
