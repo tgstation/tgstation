@@ -1,4 +1,4 @@
-#define SOLAR_GEN_RATE 1500
+#define SOLAR_GEN_RATE 750
 #define OCCLUSION_DISTANCE 20
 
 /obj/machinery/power/solar
@@ -27,7 +27,14 @@
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 	var/powermulti = 1 //power multiplier
-	var/pinkpanel = FALSE //controls if it shows a blue or a pink panel sprite
+	var/solar_panel_sprite = "solar_panel" //used to determine which panel sprite to use
+
+/obj/machinery/power/solar/plasma
+	name = "plasma solar panel"
+	desc = "An upgraded solar panel. Generates double the electricity of a regular panel when in contact with sunlight."
+	max_integrity = 300
+	powermulti = 2
+	solar_panel_sprite = "psolar_panel"
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
@@ -35,7 +42,7 @@
 	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
 	vis_contents += panel
 	panel.icon = icon
-	panel.icon_state = "solar_panel"
+	panel.icon_state = solar_panel_sprite
 	panel.layer = FLY_LAYER
 	Make(S)
 	connect_to_network()
@@ -70,11 +77,6 @@
 		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
-		obj_integrity = max_integrity
-	if(S.glass_type == /obj/item/stack/sheet/plasmaglass) //if the panel is made with plasma glass
-		powermulti *= 2 //multiplies power by two
-		pinkpanel = TRUE //makes the solar panel sprite pink
-		max_integrity *= 2
 		obj_integrity = max_integrity
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
@@ -121,14 +123,10 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(machine_stat & BROKEN & !pinkpanel)
-		panel.icon_state = "solar_panel-b"
-	if(machine_stat & BROKEN & pinkpanel)
-		panel.icon_state = "psolar_panel-b"
-	else if (pinkpanel)
-		panel.icon_state = "psolar_panel"
+	if(machine_stat & BROKEN)
+		panel.icon_state = "[solar_panel_sprite]-b"
 	else
-		panel.icon_state = "solar_panel"
+		panel.icon_state = "[solar_panel_sprite]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -273,6 +271,8 @@
 			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
+			if (istype(W, /obj/item/stack/sheet/plasmaglass))
+				new /obj/machinery/power/solar/plasma(get_turf(src), src)
 			else
 				new /obj/machinery/power/solar(get_turf(src), src)
 		else
