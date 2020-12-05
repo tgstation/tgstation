@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/water_vapor
 	id = "water_vapor"
-	specific_heat = 40
+	specific_heat = 25
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
-	specific_heat = 40
+	specific_heat = 30
 	name = "Nitrous Oxide"
 	gas_overlay = "nitrous_oxide"
 	moles_visible = MOLES_GAS_VISIBLE * 2
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/nitryl
 	id = "no2"
-	specific_heat = 20
+	specific_heat = 30
 	name = "Nitryl"
 	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/bz
 	id = "bz"
-	specific_heat = 20
+	specific_heat = 60
 	name = "BZ"
 	dangerous = TRUE
 	fusion_power = 8
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 600
+	specific_heat = 230
 	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/healium
 	id = "healium"
-	specific_heat = 10
+	specific_heat = 50
 	name = "Healium"
 	dangerous = TRUE
 	gas_overlay = "healium"
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/proto_nitrate
 	id = "proto_nitrate"
-	specific_heat = 30
+	specific_heat = 20
 	name = "Proto Nitrate"
 	dangerous = TRUE
 	gas_overlay = "proto_nitrate"
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/zauker
 	id = "zauker"
-	specific_heat = 350
+	specific_heat = 40
 	name = "Zauker"
 	dangerous = TRUE
 	gas_overlay = "zauker"
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/halon
 	id = "halon"
-	specific_heat = 175
+	specific_heat = 200
 	name = "Halon"
 	dangerous = TRUE
 	gas_overlay = "halon"
