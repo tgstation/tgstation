@@ -408,6 +408,11 @@ Contains:
 		return
 	return ..()
 
+#define MAX_BERSERK_CHARGE 100
+#define PROJECTILE_HIT_MULTIPLIER 1.5
+#define DAMAGE_TO_CHARGE_SCALE 0.25
+#define CHARGE_DRAINED_PER_SECOND 5
+
 /obj/item/clothing/head/helmet/space/hardsuit/berserker
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
@@ -434,7 +439,7 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/process(delta_time)
 	. = ..()
 	if(berserk_active)
-		berserk_charge = clamp(berserk_charge -= 10*delta_time, 0, 100)
+		berserk_charge = clamp(berserk_charge -= CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
 	if(!berserk_charge)
 		if(ishuman(loc))
 			end_berserk(loc)
@@ -446,8 +451,11 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(berserk_active)
 		return
-	berserk_charge = clamp(berserk_charge += 5, 0, 100)
-	if(berserk_charge >= 100)
+	var/berserk_value = damage * DAMAGE_TO_CHARGE_SCALE
+	if(attack_type == PROJECTILE_ATTACK)
+		berserk_value *= PROJECTILE_HIT_MULTIPLIER
+	berserk_charge = clamp(round(berserk_charge += berserk_value, 1), 0, MAX_BERSERK_CHARGE)
+	if(berserk_charge >= MAX_BERSERK_CHARGE)
 		to_chat(owner, "<span class='notice'>Berserk mode is fully charged.</span>")
 
 /// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
@@ -456,9 +464,10 @@ Contains:
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.armor.melee += 50
-	user.next_move_modifier *= 0.5
+	user.next_move_modifier *= 0.25
 	user.add_atom_colour("#950a0a", TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
 
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
@@ -469,9 +478,10 @@ Contains:
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.armor.melee -= 50
-	user.next_move_modifier *= 2
+	user.next_move_modifier *= 4
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#950a0a")
 	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, BERSERK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = FALSE
 
 /obj/item/clothing/head/helmet/space/fragile

@@ -324,6 +324,9 @@
 /datum/action/item_action/berserk_mode/Trigger()
 	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
 		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
+		if(berzerk.berserk_active)
+			to_chat(owner, "<span class='warning'>You are already berserk!</span>")
+			return
 		if(berzerk.berserk_charge < 100)
 			to_chat(owner, "<span class='warning'>You don't have a full charge.</span>")
 			return
