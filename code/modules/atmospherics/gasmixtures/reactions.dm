@@ -943,7 +943,7 @@ nobiliumsuppression = INFINITY
 	var produced_amount = min(1.75, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0 || (heat_capacity * air.temperature) - energy_used < 0) //No negative energy allowed.
 		return NO_REACTION
-		energy_used = produced_amount * 2500
+	energy_used = produced_amount * 2500
 	cached_gases[/datum/gas/hydrogen][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += produced_amount * 0.75
 	if(energy_used > 0)
