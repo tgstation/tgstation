@@ -252,6 +252,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		else
 			displayed_key = C.key
 
+		// Check if both we and the player are ghosts and they're not using a fakekey
+		if(isobserver(mob) && isobserver(C.mob) && !C.holder?.fakekey)
+			// Show us if the player is a ghost or not after their displayed key
+			// Add the player's displayed key to the list
+			players["[displayed_key](ghost)"] = displayed_key
+
+		// Add the player's displayed key to the list if we or the player aren't a ghost or they're using a fakekey
+		else
+			players[displayed_key] = displayed_key
+
 	// Check if the list is empty
 	if(!players.len)
 		// Express that there are no players we can ignore in chat
