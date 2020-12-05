@@ -3616,9 +3616,7 @@ const Task = (name, effects) => {
       // Consider dependencies first, and skip the task if it
       // doesn't need a rebuild.
       if (deps.length > 0) {
-        console.log(deps);
         const needsRebuild = (0, _fs.fileCompare)(deps);
-        console.log(needsRebuild);
 
         if (!needsRebuild) {
           console.warn(` => Skipping '${name}'`);
