@@ -4175,24 +4175,6 @@
 /obj/structure/closet,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
-"jQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Charlie Main Corridor APC";
-	pixel_x = 24;
-	start_charge = 0
-	},
-/obj/structure/cable,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 25
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation)
 "jS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
@@ -6889,6 +6871,22 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
+"An" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Charlie Main Corridor APC";
+	pixel_x = 24;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/obj/item/stack/sheet/glass{
+	amount = 25
+	},
+/obj/item/stack/sheet/plasmaglass/fifty,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation)
 "Ax" = (
 /turf/closed/mineral/plasma,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
@@ -9422,7 +9420,7 @@ Af
 aU
 aU
 aU
-jQ
+An
 aT
 aa
 aa

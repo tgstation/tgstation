@@ -25,14 +25,6 @@
 "ai" = (
 /turf/template_noop,
 /area/ruin/space/derelict/singularity_engine)
-"ap" = (
-/obj/machinery/power/solar{
-	id = "derelictsolar";
-	name = "Derelict Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
 "aq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -3586,6 +3578,12 @@
 "tS" = (
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
+"uK" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/solar/derelict_aft)
 "vf" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -3645,6 +3643,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+"DO" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "DX" = (
 /obj/machinery/light,
 /obj/structure/closet/crate,
@@ -3683,6 +3686,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
+"HO" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
 "Ih" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
@@ -3836,6 +3844,14 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/gravity_generator)
+"Sb" = (
+/obj/structure/cable,
+/obj/machinery/power/solar/plasma{
+	id = "derelictsolar";
+	name = "Derelict Plasma Solar Array"
+	},
+/turf/open/floor/plasteel/airless,
+/area/solar/derelict_starboard)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -8766,8 +8782,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ZB
+ZB
 aa
 aa
 "}
@@ -8879,10 +8895,10 @@ aa
 aa
 aa
 aa
+ZB
 aa
-aa
-aa
-aa
+ZB
+ZB
 "}
 (45,1,1) = {"
 aa
@@ -8984,18 +9000,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vf
+vf
+vf
+vf
+vf
+vf
+vf
+ZB
+vf
+vf
+vf
+vf
 "}
 (46,1,1) = {"
 aa
@@ -9098,15 +9114,15 @@ aa
 aa
 aa
 aa
+ZB
 aa
 aa
-aa
-aa
+ZB
 aa
 aa
 aa
 ZB
-ZB
+aa
 aa
 aa
 "}
@@ -9211,17 +9227,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ZB
 aa
-ZB
-ZB
+on
+ol
+on
+aa
+on
+ol
+on
+aa
+aa
 "}
 (48,1,1) = {"
 aa
@@ -9324,17 +9340,17 @@ aa
 aa
 aa
 nB
-vf
-vf
-vf
-vf
-vf
-vf
 ZB
-vf
-vf
-vf
-vf
+aa
+on
+ol
+on
+aa
+on
+ol
+on
+aa
+aa
 "}
 (49,1,1) = {"
 aa
@@ -9439,13 +9455,13 @@ ZB
 nB
 aa
 aa
+on
+ol
+on
 aa
-aa
-aa
-aa
-aa
-ZB
-aa
+on
+uK
+on
 aa
 vf
 "}
@@ -10343,9 +10359,9 @@ nR
 nB
 aa
 aa
-op
+on
 ol
-oy
+on
 aa
 on
 ol
@@ -10456,9 +10472,9 @@ nV
 nB
 aa
 aa
-oq
-dk
-aa
+on
+ol
+on
 dk
 on
 ol
@@ -10569,13 +10585,13 @@ nR
 nB
 aa
 aa
+on
+ol
+on
 aa
-aa
-aa
-aa
-aa
-ZB
-aa
+on
+uK
+on
 aa
 ZB
 "}
@@ -10680,17 +10696,17 @@ mf
 mf
 mf
 mf
-vf
-vf
-vf
-vf
-ZB
-vf
-vf
-ZB
-ZB
-vf
-ZB
+aa
+aa
+op
+ol
+oy
+aa
+on
+ol
+on
+aa
+aa
 "}
 (61,1,1) = {"
 aa
@@ -10795,14 +10811,14 @@ nN
 nN
 ZB
 aa
+oq
+dk
 aa
 aa
+on
+ol
+on
 aa
-aa
-aa
-ZB
-ZB
-ZB
 aa
 "}
 (62,1,1) = {"
@@ -10913,7 +10929,7 @@ aa
 aa
 aa
 aa
-aa
+ZB
 aa
 aa
 aa
@@ -10923,7 +10939,7 @@ ZB
 aa
 af
 aq
-ap
+Sb
 ZB
 ZB
 vf
@@ -11019,24 +11035,24 @@ nN
 nN
 oc
 oc
+DO
+vf
+vf
+vf
 ZB
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vf
+vf
+ZB
+ZB
+vf
+ZB
 "}
 (64,1,1) = {"
 vf
 aa
 ag
 aq
-ap
+Sb
 aa
 aa
 vf
@@ -11132,24 +11148,24 @@ mf
 mf
 mf
 mf
+HO
+ZB
+aa
+aa
+aa
+aa
+aa
 ZB
 ZB
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ZB
 aa
 "}
 (65,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 vf
@@ -11245,7 +11261,7 @@ ZB
 aa
 ZB
 ZB
-aa
+ZB
 ZB
 aa
 aa
@@ -11373,9 +11389,9 @@ aa
 (67,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 as
@@ -11486,9 +11502,9 @@ aa
 (68,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 at
@@ -11599,9 +11615,9 @@ aa
 (69,1,1) = {"
 aa
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 at
@@ -11825,9 +11841,9 @@ aa
 (71,1,1) = {"
 aa
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 at
@@ -11938,9 +11954,9 @@ aa
 (72,1,1) = {"
 ZB
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 at
@@ -12051,9 +12067,9 @@ aa
 (73,1,1) = {"
 ZB
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 as
@@ -12277,9 +12293,9 @@ aa
 (75,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 vf
@@ -12390,9 +12406,9 @@ aa
 (76,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 aa
 aa
 vf
@@ -12503,9 +12519,9 @@ aa
 (77,1,1) = {"
 vf
 aa
-ap
+Sb
 aq
-ap
+Sb
 ZB
 ZB
 vf
