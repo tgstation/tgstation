@@ -437,8 +437,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
-	name = "jannie hardsuit helmet"
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize()
 	. = ..()
@@ -462,11 +460,7 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
-	name = "jannie hardsuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
-	slowdown = 0
-	cell = /obj/item/stock_parts/cell/infinite
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin //the hardsuit to end all other hardsuits
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
