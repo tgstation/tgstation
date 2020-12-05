@@ -28856,9 +28856,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Port Mix to Engine"
-	},
+/obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bje" = (
@@ -29957,8 +29955,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "SM Coolant Loop"
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -106604,8 +106601,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ggv" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "gjj" = (
@@ -107186,10 +107183,12 @@
 /area/science/xenobiology)
 "hCb" = (
 /obj/machinery/atmospherics/components/binary/pump/layer2{
-	dir = 8
+	dir = 8;
+	name = "Gas to Chamber"
 	},
 /obj/machinery/atmospherics/components/binary/pump/layer4{
-	dir = 4
+	dir = 4;
+	name = "Chamber to Cooling"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -107290,6 +107289,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/meter,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "hQD" = (
@@ -107330,7 +107330,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "hTK" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/space/basic,
 /area/space)
 "hTO" = (
@@ -107685,7 +107685,7 @@
 "iLa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/space,
 /area/space/nearstation)
 "iLj" = (
@@ -107794,6 +107794,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "iTj" = (
@@ -107828,7 +107829,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Cooling Bypass"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "iZy" = (
@@ -108410,7 +108413,8 @@
 /area/crew_quarters/heads/hos)
 "kra" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4
+	dir = 4;
+	name = "Cooling to Filters"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -108692,6 +108696,7 @@
 /area/medical/medbay/central)
 "lap" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "lce" = (
@@ -109103,7 +109108,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Atmos to Loop"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "lOY" = (
@@ -109469,7 +109476,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 8
+	dir = 8;
+	name = "Port Mix to Engine"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -109704,7 +109712,8 @@
 /area/science/mixing/chamber)
 "mXx" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 8
+	dir = 8;
+	name = "Gas to Cooling"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -109772,7 +109781,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/space,
 /area/space/nearstation)
 "neh" = (
@@ -110639,6 +110648,7 @@
 /area/security/prison)
 "pfk" = (
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pfl" = (
@@ -111487,11 +111497,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
-"qSC" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
-/turf/open/space,
-/area/space/nearstation)
 "qSG" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -112645,7 +112650,8 @@
 /area/security/prison)
 "trD" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1
+	dir = 1;
+	name = "Engine Cooling Bypass"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -113230,6 +113236,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "uFG" = (
@@ -114671,10 +114678,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"xHi" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
 "xHZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -114920,6 +114923,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 
@@ -134576,20 +134580,20 @@ bEx
 bGb
 bHS
 vHV
-qSC
-qSC
+aEA
+aEA
 hTK
 iLa
 hTK
 ncQ
 hTK
-xHi
-xHi
+wPX
+wPX
 ggv
-xHi
+wPX
 ggv
-xHi
-xHi
+wPX
+wPX
 wPX
 lOS
 lAd
