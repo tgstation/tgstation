@@ -66,10 +66,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 
 ///Returns the first day of the current month in number format, from 1 (monday) - 7 (sunday).
-/proc/first_day_of_month()
-	var/year = text2num(time2text(world.timeofday, "YY"))
-	var/month = text2num(time2text(world.timeofday, "MM"))
-
+/proc/first_day_of_month(year, month)
 	var/day = (1 + (((13 * month) + (13 * 1)) / 5) + (year) + (year/4) + (20/4) + (5 * 20)) % 7 //Zeller's congruence
 
 	switch(day) //convert to 1-7 monday first format

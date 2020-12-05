@@ -1985,6 +1985,7 @@
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\foreign_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
+#include "code\modules\holiday\nth_week.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
 #include "code\modules\holodeck\holo_effect.dm"
