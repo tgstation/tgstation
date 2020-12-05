@@ -1122,7 +1122,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(QDELETED(target) || !punishment)
 		return
 
-	var/datum/smite/smite = GLOB.smites[punishment]
+	var/smite_path = GLOB.smites[punishment]
+	var/datum/smite/smite = new smite_path
+	var/configuration_success = smite.configure(usr)
+	if (configuration_success == FALSE)
+		return
 	smite.effect(src, target)
 
 /proc/breadify(atom/movable/target)
