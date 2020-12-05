@@ -196,13 +196,13 @@
 		return BODY_ZONE_CHEST
 
 /**
-  * Called when the projectile hits something
-  *
-  * @params
-  * target - thing hit
-  * blocked - percentage of hit blocked
-  * pierce_hit - are we piercing through or regular hitting
-  */
+ * Called when the projectile hits something
+ *
+ * @params
+ * target - thing hit
+ * blocked - percentage of hit blocked
+ * pierce_hit - are we piercing through or regular hitting
+ */
 /obj/projectile/proc/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
@@ -329,16 +329,16 @@
 	Impact(A)
 
 /**
-  * Called when the projectile hits something
-  * This can either be from it bumping something,
-  * or it passing over a turf/being crossed and scanning that there is infact
-  * a valid target it needs to hit.
-  * This target isn't however necessarily WHAT it hits
-  * that is determined by process_hit and select_target.
-  *
-  * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
-  * Also, we select_target to find what to process_hit first.
-  */
+ * Called when the projectile hits something
+ * This can either be from it bumping something,
+ * or it passing over a turf/being crossed and scanning that there is infact
+ * a valid target it needs to hit.
+ * This target isn't however necessarily WHAT it hits
+ * that is determined by process_hit and select_target.
+ *
+ * Furthermore, this proc shouldn't check can_hit_target - this should only be called if can hit target is already checked.
+ * Also, we select_target to find what to process_hit first.
+ */
 /obj/projectile/proc/Impact(atom/A)
 	if(!trajectory)
 		qdel(src)
@@ -367,26 +367,26 @@
 	return process_hit(T, select_target(T, A))		// SELECT TARGET FIRST!
 
 /**
-  * The primary workhorse proc of projectile impacts.
-  * This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.
-  *
-  * Order of operations:
-  * 1. Checks if we are deleted, or if we're somehow trying to hit a null, in which case, bail out
-  * 2. Adds the thing we're hitting to impacted so we can make sure we don't doublehit
-  * 3. Checks piercing - stores this.
-  * Afterwards:
-  * Hit and delete, hit without deleting and pass through, pass through without hitting, or delete without hitting depending on result
-  * If we're going through without hitting, find something else to hit if possible and recurse, set unstoppable movement to true
-  * If we're deleting without hitting, delete and return
-  * Otherwise, send signal of COMSIG_PROJECTILE_PREHIT to target
-  * Then, hit, deleting ourselves if necessary.
-  * @params
-  * T - Turf we're on/supposedly hitting
-  * target - target we're hitting
-  * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
-  *
-  * Returns if we hit something.
-  */
+ * The primary workhorse proc of projectile impacts.
+ * This is a RECURSIVE call - process_hit is called on the first selected target, and then repeatedly called if the projectile still hasn't been deleted.
+ *
+ * Order of operations:
+ * 1. Checks if we are deleted, or if we're somehow trying to hit a null, in which case, bail out
+ * 2. Adds the thing we're hitting to impacted so we can make sure we don't doublehit
+ * 3. Checks piercing - stores this.
+ * Afterwards:
+ * Hit and delete, hit without deleting and pass through, pass through without hitting, or delete without hitting depending on result
+ * If we're going through without hitting, find something else to hit if possible and recurse, set unstoppable movement to true
+ * If we're deleting without hitting, delete and return
+ * Otherwise, send signal of COMSIG_PROJECTILE_PREHIT to target
+ * Then, hit, deleting ourselves if necessary.
+ * @params
+ * T - Turf we're on/supposedly hitting
+ * target - target we're hitting
+ * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
+ *
+ * Returns if we hit something.
+ */
 /obj/projectile/proc/process_hit(turf/T, atom/target, hit_something = FALSE)
 	// 1.
 	if(QDELETED(src) || !T || !target)
@@ -419,22 +419,22 @@
 	return hit_something
 
 /**
-  * Selects a target to hit from a turf
-  *
-  * @params
-  * T - The turf
-  * target - The "preferred" atom to hit, usually what we Bumped() first.
-  *
-  * Priority:
-  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
-  * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
-  *		FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
-  * 1. The thing originally aimed at/clicked on
-  * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
-  * 3. Objs
-  * 4. Turf
-  * 5. Nothing
-  */
+ * Selects a target to hit from a turf
+ *
+ * @params
+ * T - The turf
+ * target - The "preferred" atom to hit, usually what we Bumped() first.
+ *
+ * Priority:
+ * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
+ * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
+ *		FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
+ * 1. The thing originally aimed at/clicked on
+ * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
+ * 3. Objs
+ * 4. Turf
+ * 5. Nothing
+ */
 /obj/projectile/proc/select_target(turf/T, atom/target)
 	// 1. original
 	if(can_hit_target(original, TRUE, FALSE))
@@ -498,23 +498,23 @@
 	return TRUE
 
 /**
-  * Scan if we should hit something and hit it if we need to
-  * The difference between this and handling in Impact is
-  * In this we strictly check if we need to Impact() something in specific
-  * If we do, we do
-  * We don't even check if it got hit already - Impact() does that
-  * In impact there's more code for selecting WHAT to hit
-  * So this proc is more of checking if we should hit something at all BY having an atom cross us.
-  */
+ * Scan if we should hit something and hit it if we need to
+ * The difference between this and handling in Impact is
+ * In this we strictly check if we need to Impact() something in specific
+ * If we do, we do
+ * We don't even check if it got hit already - Impact() does that
+ * In impact there's more code for selecting WHAT to hit
+ * So this proc is more of checking if we should hit something at all BY having an atom cross us.
+ */
 /obj/projectile/proc/scan_crossed_hit(atom/movable/A)
 	if(can_hit_target(A, direct_target = (A == original)))
 		Impact(A)
 
 /**
-  * Scans if we should hit something on the turf we just moved to if we haven't already
-  *
-  * This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.
-  */
+ * Scans if we should hit something on the turf we just moved to if we haven't already
+ *
+ * This proc is a little high in overhead but allows us to not snowflake CanPass in living and other things.
+ */
 /obj/projectile/proc/scan_moved_turf()
 	// Optimally, we scan: mobs --> objs --> turf for impact
 	// but, overhead is a thing and 2 for loops every time it moves is a no-go.
@@ -532,28 +532,28 @@
 				break
 
 /**
-  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
-  */
+ * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
+ */
 /obj/projectile/Crossed(atom/movable/AM)
 	. = ..()
 	scan_crossed_hit(AM)
 
 /**
-  * Projectile can pass through
-  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
-  */
+ * Projectile can pass through
+ * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
+ */
 /obj/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	return impacted[blocker]? TRUE : ..()
 
 /**
-  * Projectile moved:
-  *
-  * If not fired yet, do not do anything. Else,
-  *
-  * If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
-  * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
-  * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
-  */
+ * Projectile moved:
+ *
+ * If not fired yet, do not do anything. Else,
+ *
+ * If temporary unstoppable movement used for piercing through things we already hit (impacted list) is set, unset it.
+ * Scan turf we're now in for anything we can/should hit. This is useful for hitting non dense objects the user
+ * directly clicks on, as well as for PHASING projectiles to be able to hit things at all as they don't ever Bump().
+ */
 /obj/projectile/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(!fired)
@@ -564,11 +564,11 @@
 	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
 
 /**
-  * Checks if we should pierce something.
-  *
-  * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
-  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
-  */
+ * Checks if we should pierce something.
+ *
+ * NOT meant to be a pure proc, since this replaces prehit() which was used to do things.
+ * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
+ */
 /obj/projectile/proc/prehit_pierce(atom/A)
 	if(projectile_phasing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_PHASE

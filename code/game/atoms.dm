@@ -541,15 +541,15 @@
 	return protection // Pass the protection value collected here upwards
 
 /**
-  * React to a hit by a projectile object
-  *
-  * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
-  *
-  * @params
-  * P - projectile
-  * def_zone - zone hit
-  * piercing_hit - is this hit piercing or normal?
-  */
+ * React to a hit by a projectile object
+ *
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+ *
+ * @params
+ * P - projectile
+ * def_zone - zone hit
+ * piercing_hit - is this hit piercing or normal?
+ */
 /atom/proc/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone, piercing_hit)
