@@ -53,6 +53,8 @@
 	density = FALSE
 	///Whether or not a swarmer is currently being created by this beacon
 	var/processing_swarmer = FALSE
+	///Reference to all the swarmers currently alive this beacon has created
+	var/list/mob/living/simple_animal/hostile/swarmer/swarmerlist
 
 /obj/structure/swarmer_beacon/Initialize()
 	. = ..()
@@ -82,15 +84,15 @@
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
-	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), 10 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.  TIME TO COMPLETION: 10 SECONDS</span>")
+	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), (LAZYLEN(swarmerlist) * 2 SECONDS) + 5 SECONDS)
+	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.</span>")
 	processing_swarmer = TRUE
 	return TRUE
 
 /**
  * Releases a swarmer from the beacon and tells it what to do
  *
- * Occcurs 10 seconds after a ghost becomes a swarmer.  The beacon releases it, tells it what to do, and opens itself up to spawn in a new swarmer.
+ * Occcurs 5 + (alive swarmers made from beacon * 2) seconds after a ghost becomes a swarmer.  The beacon releases it, tells it what to do, and opens itself up to spawn in a new swarmer.
  * Arguments:
  * * swarmer - The swarmer being released and told what to do
  */
@@ -106,7 +108,23 @@
 		- YOU AND YOUR DRONES HAVE A STUN EFFECT ON MELEE.  YOU ARE ALSO ARMED WITH A DISABLER PROJECTILE, USE THESE TO PREVENT ORGANICS FROM HALTING YOUR PROGRESS\n\
 		GLORY TO !*# $*#^</span>")
 	swarmer.forceMove(get_turf(src))
+	LAZYADD(swarmerlist, swarmer)
+	RegisterSignal(swarmer, COMSIG_PARENT_QDELETING, .proc/remove_swarmer, swarmer)
 	processing_swarmer = FALSE
+
+/**
+ * Removes a swarmer from the beacon's list.
+ *
+ * Removes the swarmer from our list.
+ * Called specifically when a swarmer is about to be destroyed, so we don't have any null references.
+ * Arguments:
+ * * mob/swarmer - The swarmer to be removed from the list.
+ */
+/obj/structure/swarmer_beacon/proc/remove_swarmer(mob/swarmer, force)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(swarmer, COMSIG_PARENT_QDELETING)
+	swarmerlist -= swarmer
 
 /obj/structure/swarmer/trap
 	name = "swarmer trap"
@@ -120,7 +138,7 @@
 		var/mob/living/living_crosser = AM
 		if(!istype(living_crosser, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
-			living_crosser.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
+			living_crosser.electrocute_act(100, src, TRUE, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(living_crosser))
 				living_crosser.Paralyze(100)
 			qdel(src)
