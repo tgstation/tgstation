@@ -345,15 +345,14 @@ Difficulty: Hard
 	enrage_till = world.time + enrage_time
 	update_approach()
 	change_move_delay(3.75)
-	var/newcolor = rgb(149, 10, 10)
-	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
+	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
 	addtimer(cb, enrage_time)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(newcolor = rgb(149, 10, 10))
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end()
 	update_approach()
 	change_move_delay()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(newmove = initial(move_to_delay))
 	move_to_delay = newmove

@@ -412,6 +412,8 @@ Contains:
 #define PROJECTILE_HIT_MULTIPLIER 1.5
 #define DAMAGE_TO_CHARGE_SCALE 0.25
 #define CHARGE_DRAINED_PER_SECOND 5
+#define BERSERK_MELEE_ARMOR_ADDED 50
+#define BERSERK_ATTACK_SPEED_MODIFIER 0.25
 
 /obj/item/clothing/head/helmet/space/hardsuit/berserker
 	name = "berserker helmet"
@@ -439,7 +441,7 @@ Contains:
 /obj/item/clothing/head/helmet/space/hardsuit/berserker/process(delta_time)
 	. = ..()
 	if(berserk_active)
-		berserk_charge = clamp(berserk_charge -= CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
+		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
 	if(!berserk_charge)
 		if(ishuman(loc))
 			end_berserk(loc)
@@ -454,7 +456,7 @@ Contains:
 	var/berserk_value = damage * DAMAGE_TO_CHARGE_SCALE
 	if(attack_type == PROJECTILE_ATTACK)
 		berserk_value *= PROJECTILE_HIT_MULTIPLIER
-	berserk_charge = clamp(round(berserk_charge += berserk_value, 1), 0, MAX_BERSERK_CHARGE)
+	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
 		to_chat(owner, "<span class='notice'>Berserk mode is fully charged.</span>")
 
@@ -463,9 +465,9 @@ Contains:
 	to_chat(user, "<span class='warning'>You enter berserk mode.</span>")
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee += 50
-	user.next_move_modifier *= 0.25
-	user.add_atom_colour("#950a0a", TEMPORARY_COLOUR_PRIORITY)
+	user.physiology.armor.melee += BERSERK_MELEE_ARMOR_ADDED
+	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
+	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
@@ -477,12 +479,19 @@ Contains:
 	to_chat(user, "<span class='warning'>You exit berserk mode.</span>")
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
-	user.physiology.armor.melee -= 50
-	user.next_move_modifier *= 4
-	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#950a0a")
+	user.physiology.armor.melee -= BERSERK_MELEE_ARMOR_ADDED
+	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
+	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, BERSERK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = FALSE
+
+#undef MAX_BERSERK_CHARGE
+#undef PROJECTILE_HIT_MULTIPLIER
+#undef DAMAGE_TO_CHARGE_SCALE
+#undef CHARGE_DRAINED_PER_SECOND
+#undef BERSERK_MELEE_ARMOR_ADDED
+#undef BERSERK_ATTACK_SPEED_MODIFIER
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
