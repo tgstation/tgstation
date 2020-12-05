@@ -24708,22 +24708,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"aYc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aYd" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -25593,23 +25577,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"aZW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "aZX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -25625,8 +25592,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aZY" = (
-/obj/machinery/meter,
-/obj/item/wrench,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -25637,9 +25602,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aZZ" = (
@@ -26394,27 +26360,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"bbC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "bbD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/atmospheric_technician,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -26425,23 +26372,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bbE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1
-	},
+/obj/machinery/portable_atmospherics/canister/hydrogen,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbF" = (
@@ -27223,23 +27157,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bdf" = (
-/obj/machinery/meter,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -111287,6 +111204,23 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
+"nMb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "nMu" = (
 /obj/structure/table/glass,
 /obj/item/stack/medical/suture,
@@ -111505,6 +111439,20 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"owP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/crystallizer,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "oxa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -138794,10 +138742,10 @@ aRu
 aSX
 aUP
 aWD
-aYc
-aZW
-bbC
-aYc
+bde
+aZX
+aZX
+bde
 bez
 bfW
 aWD
@@ -139051,8 +138999,8 @@ aRx
 aSZ
 aUO
 aWE
-bde
-aZX
+owP
+nMb
 bbD
 bde
 bde
@@ -139308,10 +139256,10 @@ aRw
 aSY
 aUP
 aWF
-bez
+bde
 aZY
-bbE
-bdf
+aZX
+bde
 bez
 bfY
 bhh

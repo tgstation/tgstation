@@ -24,6 +24,14 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 		.[recipe_path] = recipe_info
 
+/proc/recipe_id2path(id)
+	var/list/meta_recipe = GLOB.gas_recipe_meta
+	if(id in meta_recipe)
+		return id
+	for(var/path in meta_recipe)
+		if(meta_recipe[path][META_RECIPE_ID] == id)
+			return path
+	return ""
 
 /datum/gas_recipe
 	var/id = ""
