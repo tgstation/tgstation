@@ -31,6 +31,10 @@
 	. = ..()
 	packin_up()
 
+/obj/machinery/computer/cargo/express/on_construction()
+	. = ..()
+	packin_up()
+
 /obj/machinery/computer/cargo/express/Destroy()
 	if(beacon)
 		beacon.unlink_console()
@@ -124,7 +128,7 @@
 	data["message"] = message
 	if(!meme_pack_data)
 		packin_up()
-		stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
+		stack_trace("There was no pack data for [src]")
 	data["supplies"] = meme_pack_data
 	if (cooldown > 0)//cooldown used for printing beacons
 		cooldown--
@@ -178,9 +182,6 @@
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			var/cooldown_time = 5 SECONDS
-			if (!pack.crate_type) //We reload empty supplypods faster!
-				cooldown_time = 2 SECONDS
 			if(D)
 				points_to_check = D.account_balance
 			if(!(obj_flags & EMAGGED))
@@ -202,7 +203,7 @@
 						if(empty_turfs?.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, cooldown_time)
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						D.adjust_money(-SO.pack.cost)
 						if(pack.special_pod)
 							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
@@ -219,7 +220,7 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs?.len)
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, cooldown_time * 2)
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 
 						SO.generateRequisition(get_turf(src))
