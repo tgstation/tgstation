@@ -93,7 +93,7 @@
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)
-		anchored = !anchored
+		set_anchored(FALSE)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
