@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "you can now shoot a guns with modified trigger guards as a snow golem"
