@@ -171,7 +171,7 @@
 
 //The specific version of hiero's squares pandora uses
 /obj/effect/temp_visual/hierophant/blast/damaging/pandora
-	damage = 20
+	damage = 30
 	monster_damage_boost = FALSE
 
 //Pandora's loot: Hope
