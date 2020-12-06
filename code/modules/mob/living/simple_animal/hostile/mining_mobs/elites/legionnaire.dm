@@ -27,8 +27,8 @@
 	health_doll_icon = "legionnaire"
 	maxHealth = 1000
 	health = 1000
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	melee_damage_lower = 35
+	melee_damage_upper = 35
 	attack_verb_continuous = "slashes its arms at"
 	attack_verb_simple = "slash your arms at"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -113,7 +113,7 @@
 		myhead.Goto(T, myhead.move_to_delay)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
-	ranged_cooldown = world.time + 2.0 SECONDS
+	ranged_cooldown = world.time + 4.0 SECONDS
 	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
@@ -154,7 +154,7 @@
 		to_chat(L, "<span class='userdanger'>[src] tramples you and kicks you away!</span>")
 		L.safe_throw_at(throwtarget, 10, 1, src)
 		L.Paralyze(20)
-		L.adjustBruteLoss(50)
+		L.adjustBruteLoss(melee_damage_upper)
 	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
@@ -278,12 +278,15 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 
 
-/obj/structure/legionnaire_bonfire/Entered(atom/movable/mover, atom/target)
-	if(isliving(mover))
-		var/mob/living/L = mover
-		L.adjust_fire_stacks(3)
-		L.IgniteMob()
+/obj/structure/legionnaire_bonfire/Crossed(atom/movable/mover)
 	. = ..()
+	if(isobj(mover))
+		var/obj/object = mover
+		object.fire_act(1000, 500)
+	if(isliving(mover))
+		var/mob/living/fire_walker = mover
+		fire_walker.adjust_fire_stacks(5)
+		fire_walker.IgniteMob()
 
 /obj/structure/legionnaire_bonfire/Destroy()
 	if(myowner != null)
