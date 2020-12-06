@@ -440,10 +440,14 @@
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
+		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
 		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-					"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+					null, "<span class='hear'>You hear a soft patter.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+		to_chat(src, "<span class='notice'>[M] gives you a pat on the head to make you feel better! </span>")
 
 	else
+		SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
 		SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
@@ -453,14 +457,8 @@
 		// Warm them up with hugs
 		share_bodytemperature(M)
 
-		//No positive moodlets for people who don't like hugs
-		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
-			var/datum/component/mood/hugged_mood = GetComponent(/datum/component/mood)
-			if (hugged_mood.sanity <= SANITY_NEUTRAL)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
-			else
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/bad_touch)
-		else
+		// No moodlets for people who hate touches
+		if(!HAS_TRAIT(src, TRAIT_BADTOUCH))
 			if(bodytemperature > M.bodytemperature)
 				if(!HAS_TRAIT(M, TRAIT_BADTOUCH))
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)

@@ -742,6 +742,21 @@
 	mood_quirk = TRUE
 	hardcore_value = 1
 
+/datum/quirk/bad_touch/add()
+	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT), .proc/uncomfortable_touch)
+
+/datum/quirk/bad_touch/remove()
+	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT))
+
+/datum/quirk/bad_touch/proc/uncomfortable_touch()
+	SIGNAL_HANDLER
+
+	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	if(mood.sanity <= SANITY_NEUTRAL)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/bad_touch)
+
 #undef LOCATION_LPOCKET
 #undef LOCATION_RPOCKET
 #undef LOCATION_BACKPACK

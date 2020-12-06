@@ -286,6 +286,7 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
+			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
 			for(var/thing in diseases)
 				var/datum/disease/D = thing
