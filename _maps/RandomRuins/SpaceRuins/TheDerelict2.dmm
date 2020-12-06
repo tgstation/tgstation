@@ -2052,6 +2052,10 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/supermatter_engine)
+"iiO" = (
+/obj/machinery/computer/prototype_cloning,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "iiT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -2715,6 +2719,10 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
+"lPb" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "lQj" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -3683,6 +3691,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"qJM" = (
+/obj/machinery/clonepod/experimental,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/derelict2/medical)
 "qJT" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -23633,9 +23645,9 @@ aqS
 aqS
 rIO
 aqS
-aqS
-aqS
-aqS
+eLy
+eLy
+eLy
 aqS
 jaP
 mTs
@@ -23785,8 +23797,8 @@ cjY
 cjY
 jaP
 aqS
-wsR
-rLP
+lPb
+upE
 upE
 aqS
 svd
@@ -23937,7 +23949,7 @@ mTs
 mTs
 jaP
 aqS
-ssU
+iiO
 upE
 upE
 aOS
@@ -24089,7 +24101,7 @@ mTs
 mTs
 jaP
 aqS
-upE
+qJM
 upE
 upE
 aqS
