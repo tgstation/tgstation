@@ -147,7 +147,7 @@
 	shoot_projectile(target_turf, angle_to_target, FALSE, TRUE)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 2)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 4)
-	if(health < maxHealth * 0.5 && !is_mirror)
+	if(health < maxHealth * 0.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 10)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 12)
@@ -169,7 +169,7 @@
 		icon_state = "herald_enraged"
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, .proc/herald_circleshot, 0), 5)
-	if(health < maxHealth * 0.5 && !is_mirror)
+	if(health < maxHealth * 0.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, .proc/herald_circleshot, 22.5), 15)
 	addtimer(CALLBACK(src, .proc/unenrage), 20)

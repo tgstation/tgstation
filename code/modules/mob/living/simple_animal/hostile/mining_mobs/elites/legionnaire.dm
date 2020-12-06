@@ -12,7 +12,7 @@
  * - Charges at the target after a telegraph, throwing them across the arena should it connect.
  * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
  * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
- * - Spews a cloud of smoke from it's maw, wherever said maw is.  This attack will also spawn legion turrets.
+ * - Spews a cloud of smoke from it's maw, wherever said maw is.
  * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
  */
 
