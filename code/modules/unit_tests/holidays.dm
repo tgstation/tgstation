@@ -1,21 +1,21 @@
 // test Jewish holiday
 /datum/unit_test/hanukkah_2123/Run()
 	var/datum/holiday/hebrew/hanukkah/hanukkah = new
-	TEST_ASSERT(hanukkah.shouldCelebrate(13, DECEMBER, 2123, 2, MONDAY), "December 13, 2123 was not Hannukkah.")
+	TEST_ASSERT(hanukkah.shouldCelebrate(14, DECEMBER, 2123, 2, TUESDAY), "December 14, 2123 was not Hanukkah.")
 
 // test Islamic holiday
-/datum/unit_test/ramadan_4208/Run()
+/datum/unit_test/ramadan_2165/Run()
 	var/datum/holiday/islamic/ramadan/ramadan = new
-	TEST_ASSERT(ramadan.shouldCelebrate(1, MARCH, 4208, 1, TUESDAY), "March 1, 4208 was not the start of Ramadan.")
+	TEST_ASSERT(ramadan.shouldCelebrate(6, NOVEMBER, 2165, 1, WEDNESDAY), "November 6, 2165 was not Ramadan.")
 
 // nth day of week
 /datum/unit_test/thanksgiving_2020/Run()
-	var/datum/holiday/nth_week/thanksgiving = new
+	var/datum/holiday/nth_week/thanksgiving/thanksgiving = new
 	TEST_ASSERT(thanksgiving.shouldCelebrate(26, NOVEMBER, 2020, 4, THURSDAY), "November 26, 2020 was not Thanksgiving.")
 
 // another nth day of week
 /datum/unit_test/indigenous_3683/Run()
-	var/datum/holiday/nth_week/indigenous = new
+	var/datum/holiday/nth_week/indigenous/indigenous = new
 	TEST_ASSERT(indigenous.shouldCelebrate(9, OCTOBER, 3683, 2, MONDAY), "October 9, 3683 was not Indigenous Peoples' Day.")
 
 // plain old simple holiday

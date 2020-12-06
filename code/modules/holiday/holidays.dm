@@ -435,7 +435,7 @@
 	name = "Islamic calendar code broken"
 
 /datum/holiday/islamic/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/islamic/cal = new
+	var/datum/foreign_calendar/islamic/cal = new(yy, mm, dd)
 	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
 
 /datum/holiday/islamic/ramadan
@@ -590,7 +590,7 @@
 	name = "If you see this the Hebrew holiday calendar code is broken"
 
 /datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/hebrew/cal = new
+	var/datum/foreign_calendar/hebrew/cal = new(yy, mm, dd)
 	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
 
 /datum/holiday/hebrew/hanukkah

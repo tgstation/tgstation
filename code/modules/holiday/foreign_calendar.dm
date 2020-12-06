@@ -1,6 +1,7 @@
 #define BYOND_EPOCH 2451544.5
 #define HEBREW_EPOCH 347995.5
 #define ISLAMIC_EPOCH 1948439.5
+#define GREGORIAN_EPOCH 1721424.5
 
 /*
 Source for the method of calcuation
@@ -8,21 +9,38 @@ https://www.fourmilab.ch/documents/calendar/
 by John Walker 2015, released under public domain
 */
 /datum/foreign_calendar
-	var/static/jd
+	var/jd
 	var/yy
 	var/mm
 	var/dd
 
-/datum/foreign_calendar/New()
+/datum/foreign_calendar/New(yy, mm, dd)
 	if (!jd)
-		jd = realtime_to_jd()
+		jd = gregorian_to_jd(yy, mm, dd)
 	set_date(jd)
 
 /datum/foreign_calendar/proc/set_date()
 	return
 
-/datum/foreign_calendar/proc/realtime_to_jd()
-	return round(world.realtime / 864000) + BYOND_EPOCH
+/datum/foreign_calendar/proc/gregorian_to_jd(year, month, day)
+	. = day // days this month
+	. += (GREGORIAN_EPOCH - 1) // start at gregorian epoch
+	. += (365 * (year - 1)) // add number of days
+	. += round(((367 * month) - 362) / 12) // days from previous months this year
+	. += round((year - 1) / 4) // figuring out leap years
+	. -= round((year - 1) / 100)
+	. += round((year - 1) / 400)
+	if (month > 2)
+		if (leap_gregorian(year))
+			. -= 1
+		else
+			. -= 2
+
+/datum/foreign_calendar/proc/leap_gregorian(year)
+	return (year % 4 == 0) && ((year % 400 == 0) || (year % 100 != 0))
+
+/datum/foreign_calendar/proc/realtime_to_jd(realtime)
+	return round(realtime / 864000) + BYOND_EPOCH
 
 //////////////////////////////
 //     Islamic Calendar     //
