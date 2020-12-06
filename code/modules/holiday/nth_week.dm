@@ -29,7 +29,8 @@
 			day_number = 6
 		if (SUNDAY)
 			day_number = 7
-	var/weekday_diff = day_number - first_day_of_month(yy, mm)
+	var/fd = first_day_of_month(yy, mm)
+	var/weekday_diff = day_number - fd
 	if (weekday_diff < 0)
 		weekday_diff += 7
 	var/correct_day = (begin_week - 1) * 7 + weekday_diff + 1

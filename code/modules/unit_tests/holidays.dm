@@ -16,7 +16,7 @@
 // another nth day of week
 /datum/unit_test/indigenous_3683/Run()
 	var/datum/holiday/nth_week/indigenous/indigenous = new
-	TEST_ASSERT(indigenous.shouldCelebrate(9, OCTOBER, 3683, 2, MONDAY), "October 9, 3683 was not Indigenous Peoples' Day.")
+	TEST_ASSERT(indigenous.shouldCelebrate(11, OCTOBER, 3683, 2, MONDAY), "October 11, 3683 was not Indigenous Peoples' Day.")
 
 // plain old simple holiday
 /datum/unit_test/hello_2020/Run()
@@ -27,3 +27,7 @@
 /datum/unit_test/new_year_1983/Run()
 	var/datum/holiday/new_year/new_year = new
 	TEST_ASSERT(new_year.shouldCelebrate(2, JANUARY, 1983, 1, SUNDAY), "January 2, 1983 was not New Year.")
+
+/datum/unit_test/moth_week_2020/Run()
+	var/datum/holiday/moth/moth = new
+	TEST_ASSERT(moth.shouldCelebrate(19, JULY, 2020, 3, SATURDAY), "July 19, 2020 was not Moth Week.")
