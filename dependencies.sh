@@ -14,7 +14,7 @@ unset LIST
 export RUST_G_VERSION=0.4.5
 
 #node version
-export NODE_VERSION=14
+export NODE_VERSION=12
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.6
