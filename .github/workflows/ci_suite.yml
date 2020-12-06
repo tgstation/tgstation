@@ -29,7 +29,7 @@ jobs:
           bash tools/ci/check_changelogs.sh
           find . -name "*.php" -print0 | xargs -0 -n1 php -l
           find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
-          bash tools/ci/build_tgui.sh
+          tgui/bin/tgui --lint
           bash tools/ci/check_grep.sh
           python3 tools/mapmerge2/dmi.py --test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
@@ -54,7 +54,9 @@ jobs:
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
           python3 tools/ci/template_dm_generator.py
+          tgui/bin/tgui --build
           bash tools/ci/dm.sh -DCIBUILDING -DCITESTING -DALL_MAPS tgstation.dme
+
   run_all_tests:
     name: Integration Tests
     runs-on: ubuntu-latest
@@ -90,8 +92,10 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
+          tgui/bin/tgui --build
           bash tools/ci/dm.sh -DCIBUILDING tgstation.dme
           bash tools/ci/run_server.sh
+
   test_windows:
     name: Windows Build
     runs-on: windows-latest

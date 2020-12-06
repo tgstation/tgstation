@@ -6,8 +6,7 @@
  */
 
 const { resolve: resolvePath } = require('path');
-const { Task, exec } = require('./cbt');
-const { regQuery } = require('./cbt/winreg');
+const { Task, runTasks, exec, regQuery } = require('./cbt');
 
 // Change working directory to project root
 process.chdir(resolvePath(__dirname, '../../'));
@@ -61,11 +60,7 @@ const taskDm = new Task('dm')
     await exec(compiler, 'tgstation.dme');
   });
 
-const runTasks = async () => {
-  await taskTgui.run();
-  await taskDm.run();
-  console.log(' => Done');
-  process.exit();
-};
-
-runTasks();
+runTasks([
+  taskTgui,
+  taskDm,
+]);

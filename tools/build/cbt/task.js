@@ -52,6 +52,19 @@ class Task {
   }
 }
 
+const runTasks = async tasks => {
+  // Run all if at least one of the tasks was specified.
+  const runAll = tasks.some(task => process.argv.includes(task));
+  for (const task of tasks) {
+    if (!runAll && process.argv.includes(task.name)) {
+      await task.run();
+    }
+  }
+  console.log(' => Done');
+  process.exit();
+};
+
 module.exports = {
   Task,
+  runTasks,
 };

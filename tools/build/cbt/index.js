@@ -4,12 +4,15 @@
  * @license MIT
  */
 
-const { Task } = require('./task');
+const { Task, runTasks } = require('./task');
 const { stat } = require('./fs');
 const { exec } = require('./process');
+const { regQuery } = require('./winreg');
 
 module.exports = {
   Task,
+  runTasks,
   stat,
   exec,
+  regQuery,
 };

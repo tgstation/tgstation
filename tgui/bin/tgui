@@ -26,6 +26,11 @@ fi
 base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
 base_dir="$(tgui-realpath "${base_dir}")"
 
+## Make use of nvm if it exists
+if [[ -e "${HOME}/.nvm/nvm.sh" ]]; then
+  source "${HOME}/.nvm/nvm.sh"
+fi
+
 ## Fall back to running Yarn from the repo
 if ! hash yarn 2>/dev/null; then
   alias yarn="node '${base_dir}/.yarn/releases/yarn-2.3.3.cjs'"
@@ -122,15 +127,6 @@ if [[ ${1} == "--install-git-hooks" ]]; then
   exit 0
 fi
 
-## Continuous integration scenario
-if [[ ${1} == "--ci" ]]; then
-  task-clean
-  task-install
-  task-eslint
-  task-webpack --mode=production
-  exit 0
-fi
-
 if [[ ${1} == "--clean" ]]; then
   task-clean
   exit 0
@@ -172,6 +168,13 @@ if [[ ${1} == '--analyze' ]]; then
 fi
 
 ## Make a production webpack build
+if [[ ${1} == '--build' ]]; then
+  task-install
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
   task-eslint
