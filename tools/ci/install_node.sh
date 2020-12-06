@@ -3,6 +3,8 @@ set -euo pipefail
 
 source dependencies.sh
 
-source ~/.nvm/nvm.sh
-nvm install $NODE_VERSION
-nvm use $NODE_VERSION
+if [[ -e ~/.nvm/nvm.sh ]]; then
+	source ~/.nvm/nvm.sh
+	nvm install $NODE_VERSION
+	nvm use $NODE_VERSION
+fi
