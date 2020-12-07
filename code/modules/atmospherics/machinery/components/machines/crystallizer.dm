@@ -4,16 +4,15 @@
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
-	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	icon = 'icons/obj/atmospherics/components/machines.dmi'
 	icon_state = "crystallizer-off"
 
 	name = "crystallizer"
-	desc = "Heats or cools gas in connected pipes."
-
+	desc = "Used to crystallize or solidify gases."
+	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
-	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/crystallizer
 
 	var/recipe_type = null
@@ -86,8 +85,8 @@
 	else
 		icon_state = icon_state_off
 
-	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
-	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), , piping_layer))
+	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
+	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
 
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = airs[2]
@@ -135,9 +134,9 @@
 		quality_loss += 1.5
 
 	if(recipe[META_RECIPE_REACTION_TYPE] == "endothermic")
-		internal.temperature = max(((internal.temperature * internal.heat_capacity() - recipe[META_RECIPE_ENERGY_RELEASE]) / internal.heat_capacity()), TCMB)
+		internal.temperature = max(internal.temperature - (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
 	else if(recipe[META_RECIPE_REACTION_TYPE] == "exothermic")
-		internal.temperature = max(((internal.temperature * internal.heat_capacity() + recipe[META_RECIPE_ENERGY_RELEASE]) / internal.heat_capacity()), TCMB)
+		internal.temperature = max(internal.temperature + (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/dump_gases()
 	var/datum/gas_mixture/remove = internal.remove(internal.total_moles())
@@ -157,7 +156,7 @@
 		return
 	internal_check()
 
-	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	var/list/list/recipe = GLOB.gas_recipe_meta[recipe_type]
 	if(gas_check == recipe[META_RECIPE_REQUIREMENTS].len)
 
 		if(check_temp_requirements())
@@ -179,7 +178,7 @@
 	var/quality_control
 	switch(total_quality)
 		if(100)
-			quality_control = "Artifact"
+			quality_control = "Masterwork"
 		if(95 to 99)
 			quality_control = "Supreme"
 		if(75 to 94)
@@ -187,9 +186,9 @@
 		if(65 to 74)
 			quality_control = "Decent"
 		if(55 to 64)
-			quality_control = ""
-		if(35 to 54)
 			quality_control = "Average"
+		if(35 to 54)
+			quality_control = "Ok"
 		if(15 to 34)
 			quality_control = "Poor"
 		if(5 to 14)
