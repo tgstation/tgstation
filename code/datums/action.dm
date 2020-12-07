@@ -304,16 +304,35 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
-	var/turf/current_location = get_turf(target)
-	var/area/current_area = current_location.loc
+	var/area/current_area = get_area(target)
 	if(current_area.area_flags & NOTELEPORT)
-		to_chat(target, "[src] fizzles uselessly.")
+		to_chat(owner, "<span class='notice'>[target] fizzles uselessly.</span>")
 		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
 			return FALSE
 	return ..()
+
+/datum/action/item_action/berserk_mode
+	name = "Berserk"
+	desc = "Increase your movement and melee speed while also increasing your melee armor for a short amount of time."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "berserk_mode"
+	background_icon_state = "bg_demon"
+
+/datum/action/item_action/berserk_mode/Trigger()
+	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
+		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
+		if(berzerk.berserk_active)
+			to_chat(owner, "<span class='warning'>You are already berserk!</span>")
+			return
+		if(berzerk.berserk_charge < 100)
+			to_chat(owner, "<span class='warning'>You don't have a full charge.</span>")
+			return
+		berzerk.berserk_mode(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

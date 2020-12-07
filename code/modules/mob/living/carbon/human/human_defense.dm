@@ -132,6 +132,10 @@
 		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
+	if(head)
+		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/check_block()
