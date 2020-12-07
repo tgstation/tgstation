@@ -195,7 +195,7 @@
 		return
 	if(!yeeted_person.stat)
 		yeeted_person.emote("scream")
-	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE, callback = CALLBACK(yeeted_person, /mob/living/carbon.proc/Paralyze, 20))
+	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
 
 /// Helper to reduce copypasta, this proc returns FALSE if either the hulk or thrown person are deleted or separated, TRUE otherwise
