@@ -516,9 +516,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			throw_alert("drunk", /obj/screen/alert/drunk)
+			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
+			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
