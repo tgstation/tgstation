@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - bugfix: "Jaunting nightmares should heal at a consistent rate weather they are moving or not"
