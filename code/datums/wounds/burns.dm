@@ -41,11 +41,11 @@
 		return
 
 	if(victim.reagents)
-		if(victim.has_reagent(/datum/reagent/medicine/spaceacillin))
+		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
 			sanitization += 0.9
-		if(victim.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
+		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
 			sanitization += 0.9
-		if(victim.has_reagent(/datum/reagent/medicine/mine_salve))
+		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
 			sanitization += 0.3
 			flesh_healing += 0.5
 
@@ -125,13 +125,13 @@
 		var/bandage_condition
 		switch(limb.current_gauze.absorption_capacity)
 			if(0 to 1.25)
-				bandage_condition = "nearly ruined "
+				bandage_condition = "nearly ruined"
 			if(1.25 to 2.75)
-				bandage_condition = "badly worn "
+				bandage_condition = "badly worn"
 			if(2.75 to 4)
-				bandage_condition = "slightly pus-stained "
+				bandage_condition = "slightly pus-stained"
 			if(4 to INFINITY)
-				bandage_condition = "clean "
+				bandage_condition = "clean"
 
 		condition += " underneath a dressing of [bandage_condition] [limb.current_gauze.name]"
 	else

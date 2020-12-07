@@ -122,7 +122,7 @@
 	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [buyer] for [price] credits.")
 	amount_deposited = amount_deposited + price
 	if(signaler && amount_deposited >= signaler_threshold)
-		signaler.activate()
+		signaler.signal()
 		amount_deposited = 0
 
 /obj/machinery/paystand/default_unfasten_wrench(mob/user, obj/item/I, time = 20)

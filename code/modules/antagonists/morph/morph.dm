@@ -36,7 +36,7 @@
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/static/list/blacklist_typecache = typecacheof(list(
-	/obj/screen,
+	/atom/movable/screen,
 	/obj/singularity,
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))

@@ -10,20 +10,20 @@
 #define SHORT_CAST 2
 
 /**
-  * Movable atom overlay-based lighting component.
-  *
-  * * Component works by applying a visual object to the parent target.
-  *
-  * * The component tracks the parent's loc to determine the current_holder.
-  * * The current_holder is either the parent or its loc, whichever is on a turf. If none, then the current_holder is null and the light is not visible.
-  *
-  * * Lighting works at its base by applying a dark overlay and "cutting" said darkness with light, adding (possibly colored) transparency.
-  * * This component uses the visible_mask visual object to apply said light mask on the darkness.
-  *
-  * * The main limitation of this system is that it uses a limited number of pre-baked geometrical shapes, but for most uses it does the job.
-  *
-  * * Another limitation is for big lights: you only see the light if you see the object emiting it.
-  * * For small objects this is good (you can't see them behind a wall), but for big ones this quickly becomes prety clumsy.
+ * Movable atom overlay-based lighting component.
+ *
+ * * Component works by applying a visual object to the parent target.
+ *
+ * * The component tracks the parent's loc to determine the current_holder.
+ * * The current_holder is either the parent or its loc, whichever is on a turf. If none, then the current_holder is null and the light is not visible.
+ *
+ * * Lighting works at its base by applying a dark overlay and "cutting" said darkness with light, adding (possibly colored) transparency.
+ * * This component uses the visible_mask visual object to apply said light mask on the darkness.
+ *
+ * * The main limitation of this system is that it uses a limited number of pre-baked geometrical shapes, but for most uses it does the job.
+ *
+ * * Another limitation is for big lights: you only see the light if you see the object emiting it.
+ * * For small objects this is good (you can't see them behind a wall), but for big ones this quickly becomes prety clumsy.
 */
 /datum/component/overlay_lighting
 	///How far the light reaches, float.
@@ -112,6 +112,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_COLOR, .proc/set_color)
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_ON, .proc/on_toggle)
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_FLAGS, .proc/on_light_flags_change)
+	RegisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
 	var/atom/movable/movable_parent = parent
 	if(movable_parent.light_flags & LIGHT_ATTACHED)
 		overlay_lighting_flags |= LIGHTING_ATTACHED
@@ -133,6 +134,7 @@
 		COMSIG_ATOM_SET_LIGHT_COLOR,
 		COMSIG_ATOM_SET_LIGHT_ON,
 		COMSIG_ATOM_SET_LIGHT_FLAGS,
+		COMSIG_ATOM_USED_IN_CRAFT,
 		))
 	if(directional)
 		UnregisterSignal(parent, COMSIG_ATOM_DIR_CHANGE)
@@ -203,6 +205,7 @@
 /datum/component/overlay_lighting/proc/set_parent_attached_to(atom/movable/new_parent_attached_to)
 	if(new_parent_attached_to == parent_attached_to)
 		return
+
 	. = parent_attached_to
 	parent_attached_to = new_parent_attached_to
 	if(.)
@@ -441,6 +444,16 @@
 	cone.setDir(newdir)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
+
+/datum/component/overlay_lighting/proc/on_parent_crafted(datum/source, atom/movable/new_craft)
+	SIGNAL_HANDLER
+
+	if(!istype(new_craft))
+		return
+
+	UnregisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT)
+	RegisterSignal(new_craft, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
+	set_parent_attached_to(new_craft)
 
 #undef LIGHTING_ON
 #undef LIGHTING_ATTACHED

@@ -87,6 +87,7 @@
 
 /datum/saymode/mafia
 	key = "j"
+	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game

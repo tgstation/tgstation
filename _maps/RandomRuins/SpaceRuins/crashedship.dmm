@@ -391,7 +391,7 @@
 /area/awaymission/bmpship/aft)
 "bR" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
+/obj/item/food/hugemushroomslice,
 /obj/item/organ/appendix,
 /obj/item/food/meat/slab,
 /obj/item/food/meat/slab/human/mutant/golem/adamantine,
@@ -585,7 +585,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "cp" = (
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
+/obj/item/food/hugemushroomslice,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -663,7 +663,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/bmpship/fore)
 "cJ" = (
-/obj/item/reagent_containers/food/snacks/hugemushroomslice,
+/obj/item/food/hugemushroomslice,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "cK" = (

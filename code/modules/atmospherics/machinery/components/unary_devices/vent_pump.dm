@@ -421,6 +421,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/zauker_output
 	name = "zauker tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ZAUKER
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/helium_output
+	name = "helium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HELIUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/antinoblium_output
+	name = "antinoblium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ANTINOBLIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR

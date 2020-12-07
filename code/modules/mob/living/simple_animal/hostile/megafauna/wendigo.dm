@@ -183,7 +183,7 @@ Difficulty: Hard
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		L.Dizzy(6)
-		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
+		to_chat(L, "<span class='danger'>[capitalize(src)] screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)
 	can_move = TRUE

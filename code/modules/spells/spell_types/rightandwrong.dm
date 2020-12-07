@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/ar,
 	/obj/item/gun/ballistic/revolver/mateba,
 	/obj/item/gun/ballistic/rifle/boltaction,
-	/obj/item/pneumatic_cannon/speargun,
+	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
-	if (istype(G)) // The list contains some non-gun type guns like the speargun which do not have this proc
+	if (istype(G)) // The list may contain some non-gun type guns which do not have this proc
 		G.unlock()
 	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
 
