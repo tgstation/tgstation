@@ -48,8 +48,8 @@
 	alpha = 255
 
 /atom/movable/screen/plane_master/openspace_blur/Initialize()
-    . = ..()
-    filters += filter(type = "blur", size = 0.75)
+	. = ..()
+	filters += filter(type = "blur", size = 0.75)
 
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
