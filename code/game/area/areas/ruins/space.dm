@@ -240,6 +240,17 @@
 	icon_state = "engine"
 	ambientsounds = ENGINEERING
 
+/area/ruin/space/has_grav/ancientstation/solarsaccess
+	name = "Charlie Station Solar Access"
+	icon_state = "engine"
+	ambientsounds = ENGINEERING
+
+/area/ruin/space/has_grav/ancientstation/supermatter
+	name = "Charlie Station Supermatter Engine"
+	icon_state = "engine"
+	requires_power = FALSE
+	ambientsounds = ENGINEERING
+
 /area/ruin/space/has_grav/ancientstation/comm
 	name = "Charlie Station Command"
 	icon_state = "captain"
