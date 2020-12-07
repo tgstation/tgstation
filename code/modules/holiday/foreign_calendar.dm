@@ -22,6 +22,7 @@ by John Walker 2015, released under public domain
 /datum/foreign_calendar/proc/set_date()
 	return
 
+///Converts Gregorian date to Julian Day
 /datum/foreign_calendar/proc/gregorian_to_jd(year, month, day)
 	. = day // days this month
 	. += (GREGORIAN_EPOCH - 1) // start at gregorian epoch
@@ -36,9 +37,11 @@ by John Walker 2015, released under public domain
 		else
 			. -= 2
 
+///Returns whether a year is a leap year in the Gregorian calendar
 /datum/foreign_calendar/proc/leap_gregorian(year)
 	return (year % 4 == 0) && ((year % 400 == 0) || (year % 100 != 0))
 
+///Converts BYOND realtime to Julian Day
 /datum/foreign_calendar/proc/realtime_to_jd(realtime)
 	return round(realtime / 864000) + BYOND_EPOCH
 
@@ -152,3 +155,4 @@ by John Walker 2015, released under public domain
 #undef ISLAMIC_EPOCH
 #undef BYOND_EPOCH
 #undef HEBREW_EPOCH
+#undef GREGORIAN_EPOCH
