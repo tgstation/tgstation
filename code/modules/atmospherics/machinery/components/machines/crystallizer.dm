@@ -32,6 +32,9 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
 	internal = new
+	internal.volume = 3000
+	nodes[1].volume = 1000
+	nodes[2].volume = 2000
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
