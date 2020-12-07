@@ -1,5 +1,0 @@
-author: "That REALLY Good Soda Flavor"
-delete-after: True
-changes: 
-  - bugfix: "Holidays appearing on the nth day of the month like Thanksgiving will work now."
-  - tweak: "Columbus day is now called Indigenous Peoples' Day."
