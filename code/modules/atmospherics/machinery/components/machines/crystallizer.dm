@@ -201,7 +201,7 @@
 	for(var/path in recipe[META_RECIPE_PRODUCTS])
 		var/amount_produced = recipe[META_RECIPE_PRODUCTS][path]
 		for(var/i in 1 to amount_produced)
-			var/obj/creation = new path(loc)
+			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] " + creation.name
 
 	quality_loss = 0

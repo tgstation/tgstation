@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/metallic_hydrogen
 	id = "metal_h"
 	name = "Metallic Hydrogen"
-	min_temp = 10000
+	min_temp = 50000
 	max_temp = INFINITY
 	reaction_type = "endothermic"
 	energy_release = 250000
@@ -121,3 +121,22 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	requirements = list(/datum/gas/hypernoblium = 15000, /datum/gas/antinoblium = 1500, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)
 
+/datum/gas_recipe/crystallizer/n2o_crystal
+	id = "n2o_crystal"
+	name = "Nitrous Oxide Crystal"
+	min_temp = 50
+	max_temp = 350
+	reaction_type = "exothermic"
+	energy_release = 350000
+	requirements = list(/datum/gas/nitrous_oxide = 800, /datum/gas/bz = 50)
+	products = list(/obj/item/grenade/gas_crystal/nitrous_oxide_crystal = 1)
+
+/datum/gas_recipe/crystallizer/diamond
+	id = "diamond"
+	name = "Diamond"
+	min_temp = 10000
+	max_temp = INFINITY
+	reaction_type = "endothermic"
+	energy_release = 650000
+	requirements = list(/datum/gas/carbon_dioxide = 10000)
+	products = list(/obj/item/stack/sheet/mineral/diamond = 1)
