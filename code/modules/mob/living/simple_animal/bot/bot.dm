@@ -14,6 +14,7 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
+	pass_flags = PASSFLAPS
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -113,8 +114,8 @@
 		return "<span class='average'>[mode_name[mode]]</span>"
 
 /**
-  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
-  */
+ * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
+ */
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "pAI Controlled" : "Autonomous"

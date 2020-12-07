@@ -4,17 +4,17 @@
 #define HERALD_MIRROR 4
 
 /**
-  * # Herald
-  *
-  * A slow-moving projectile user with a few tricks up it's sleeve.  Less unga-bunga than Colossus, with more cleverness in it's fighting style.
-  * As it's health gets lower, the amount of projectiles fired per-attack increases.
-  * It's attacks are as follows:
-  * - Fires three projectiles in a given direction.
-  * - Fires a spread in every cardinal and diagonal direction at once, then does it again after a bit.
-  * - Shoots a single, golden bolt.  Wherever it lands, the herald will be teleported to the location.
-  * - Spawns a mirror which reflects projectiles directly at the target.
-  * Herald is a more concentrated variation of the Colossus fight, having less projectiles overall, but more focused attacks.
-  */
+ * # Herald
+ *
+ * A slow-moving projectile user with a few tricks up it's sleeve.  Less unga-bunga than Colossus, with more cleverness in it's fighting style.
+ * As it's health gets lower, the amount of projectiles fired per-attack increases.
+ * It's attacks are as follows:
+ * - Fires three projectiles in a given direction.
+ * - Fires a spread in every cardinal and diagonal direction at once, then does it again after a bit.
+ * - Shoots a single, golden bolt.  Wherever it lands, the herald will be teleported to the location.
+ * - Spawns a mirror which reflects projectiles directly at the target.
+ * Herald is a more concentrated variation of the Colossus fight, having less projectiles overall, but more focused attacks.
+ */
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald
 	name = "herald"
@@ -147,7 +147,7 @@
 	shoot_projectile(target_turf, angle_to_target, FALSE, TRUE)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 2)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 4)
-	if(health < maxHealth * 0.5)
+	if(health < maxHealth * 0.5 && !is_mirror)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 10)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 12)
@@ -169,7 +169,7 @@
 		icon_state = "herald_enraged"
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, .proc/herald_circleshot, 0), 5)
-	if(health < maxHealth * 0.5)
+	if(health < maxHealth * 0.5 && !is_mirror)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, .proc/herald_circleshot, 22.5), 15)
 	addtimer(CALLBACK(src, .proc/unenrage), 20)
@@ -198,6 +198,7 @@
 	health = 60
 	maxHealth = 60
 	icon_state = "herald_mirror"
+	icon_aggro = "herald_mirror"
 	deathmessage = "shatters violently!"
 	deathsound = 'sound/effects/glassbr1.ogg'
 	movement_type = FLYING

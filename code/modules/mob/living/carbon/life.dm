@@ -513,9 +513,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			throw_alert("drunk", /atom/movable/screen/alert/drunk)
+			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
+			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -700,7 +702,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			amount = (amount > 0) ? min(amount, BODYTEMP_HEATING_MAX) : max(amount, BODYTEMP_COOLING_MAX)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
-		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+		bodytemperature = clamp(bodytemperature + amount, min_temp, max_temp)
 
 
 ///////////

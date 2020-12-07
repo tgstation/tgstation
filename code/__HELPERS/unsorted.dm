@@ -141,7 +141,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+/**
+ * Get a list of turfs in a line from `M` to `N`.
+ *
+ * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
+ */
+/proc/getline(atom/M,atom/N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
@@ -382,16 +387,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return locate(x,y,A.z)
 
 /**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
+ * Get ranged target turf, but with direct targets as opposed to directions
+ *
+ * Starts at atom A and gets the exact angle between A and target
+ * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+ * Arguments:
+ * * A - Initial Firer / Position
+ * * target - Target to aim towards
+ * * range - Distance of returned target turf from A
+ * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+ */
 /proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
 	var/angle = ATAN2(target.x - A.x, target.y - A.y)
 	if(offset)
@@ -574,16 +579,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /*
 
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
+Lets the turf this atom's *ICON* appears to inhabit
+it takes into account:
+* Pixel_x/y
+* Matrix x/y
 
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
+NOTE: if your atom has non-standard bounds then this proc
+will handle it, but:
+* if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+* if the bounds are odd, the true middle turf of the atom is returned
 
 */
 
@@ -788,21 +793,21 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /*
 rough example of the "cone" made by the 3 dirs checked
 
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
+
+* \
+*  \
+*   >
+*     <
+*      \
+*       \
+*B --><-- A
+*       /
+*      /
+*     <
+*    >
+*   /
+*  /
+
 
 */
 
@@ -1387,7 +1392,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
 		/obj/item/food/pie,
 		/obj/item/food/pieslice,
 		/obj/item/food/kebab,
@@ -1397,17 +1401,17 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/meat,
 		/obj/item/food/meat/slab,
 		/obj/item/food/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing,
-		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/food/bread,
-		/obj/item/reagent_containers/food/snacks/grown/nettle
+		/obj/item/food/clothing,
+		/obj/item/food/meat/slab/human/mutant,
+		/obj/item/food/grown/ash_flora,
+		/obj/item/food/grown/nettle,
+		/obj/item/food/grown/shell
 		)
-	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
+	return pick(subtypesof(/obj/item/food) - blocked)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,

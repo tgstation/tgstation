@@ -156,12 +156,12 @@
 	can_modify_colour = FALSE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  * * multitool The multitool used to interact with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ * * multitool The multitool used to interact with a menu
+ */
 /turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE

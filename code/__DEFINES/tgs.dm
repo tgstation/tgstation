@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "5.2.8"
+#define TGS_DMAPI_VERSION "5.2.9"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -117,22 +117,22 @@
 //REQUIRED HOOKS
 
 /**
-  * Call this somewhere in [/world/proc/New] that is always run. This function may sleep!
-  *
-  * * event_handler - Optional user defined [/datum/tgs_event_handler].
-  * * minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated. Can be one of [TGS_SECURITY_ULTRASAFE], [TGS_SECURITY_SAFE], or [TGS_SECURITY_TRUSTED].
-  */
+ * Call this somewhere in [/world/proc/New] that is always run. This function may sleep!
+ *
+ * * event_handler - Optional user defined [/datum/tgs_event_handler].
+ * * minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated. Can be one of [TGS_SECURITY_ULTRASAFE], [TGS_SECURITY_SAFE], or [TGS_SECURITY_TRUSTED].
+ */
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	return
 
 /**
-  * Call this when your initializations are complete and your game is ready to play before any player interactions happen.
-  *
-  * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
-  * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
-  * Before this point, note that any static files or directories may be in use by another server. Your code should account for this.
-  * This function should not be called before ..() in [/world/proc/New].
-  */
+ * Call this when your initializations are complete and your game is ready to play before any player interactions happen.
+ *
+ * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
+ * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
+ * Before this point, note that any static files or directories may be in use by another server. Your code should account for this.
+ * This function should not be called before ..() in [/world/proc/New].
+ */
 /world/proc/TgsInitializationComplete()
 	return
 
@@ -140,8 +140,8 @@
 #define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 /**
-  * Call this at the beginning of [world/proc/Reboot].
-  */
+ * Call this at the beginning of [world/proc/Reboot].
+ */
 /world/proc/TgsReboot()
 	return
 
@@ -175,16 +175,16 @@
 	var/deprefixed_parameter
 
 /**
-  * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] contains wildcards.
-  */
+ * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] contains wildcards.
+ */
 /datum/tgs_version/proc/Wildcard()
 	return
 
 /**
-  * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] equals some other version.
-  *
-  * other_version - The [/datum/tgs_version] to compare against.
-  */
+ * Returns [TRUE]/[FALSE] based on if the [/datum/tgs_version] equals some other version.
+ *
+ * other_version - The [/datum/tgs_version] to compare against.
+ */
 /datum/tgs_version/proc/Equals(datum/tgs_version/other_version)
 	return
 
@@ -234,10 +234,10 @@
 	var/datum/tgs_chat_channel/channel
 
 /**
-  * User definable callback for handling TGS events.
-  *
-  * event_code - One of the TGS_EVENT_ defines. Extra parameters will be documented in each
-  */
+ * User definable callback for handling TGS events.
+ *
+ * event_code - One of the TGS_EVENT_ defines. Extra parameters will be documented in each
+ */
 /datum/tgs_event_handler/proc/HandleEvent(event_code, ...)
 	set waitfor = FALSE
 	return
@@ -252,11 +252,11 @@
 	var/admin_only = FALSE
 
 /**
-  * Process command activation. Should return a string to respond to the issuer with.
-  *
-  * sender - The [/datum/tgs_chat_user] who issued the command.
-  * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
-  */
+ * Process command activation. Should return a string to respond to the issuer with.
+ *
+ * sender - The [/datum/tgs_chat_user] who issued the command.
+ * params - The trimmed string following the command `/datum/tgs_chat_command/var/name].
+ */
 /datum/tgs_chat_command/proc/Run(datum/tgs_chat_user/sender, params)
 	CRASH("[type] has no implementation for Run()")
 
@@ -271,48 +271,48 @@
 	return
 
 /**
-  * Returns [TRUE] if DreamDaemon was launched under TGS, the API matches, and was properly initialized. [FALSE] will be returned otherwise.
-  */
+ * Returns [TRUE] if DreamDaemon was launched under TGS, the API matches, and was properly initialized. [FALSE] will be returned otherwise.
+ */
 /world/proc/TgsAvailable()
 	return
 
 // No function below this succeeds if it TgsAvailable() returns FALSE or if TgsNew() has yet to be called.
 
 /**
-  * Forces a hard reboot of DreamDaemon by ending the process.
-  *
-  * Unlike del(world) clients will try to reconnect.
-  * If TGS has not requested a [TGS_REBOOT_MODE_SHUTDOWN] DreamDaemon will be launched again
-  */
+ * Forces a hard reboot of DreamDaemon by ending the process.
+ *
+ * Unlike del(world) clients will try to reconnect.
+ * If TGS has not requested a [TGS_REBOOT_MODE_SHUTDOWN] DreamDaemon will be launched again
+ */
 /world/proc/TgsEndProcess()
 	return
 
 /**
-  * Send a message to connected chats.
-  *
-  * message - The string to send.
-  * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
-  */
+ * Send a message to connected chats.
+ *
+ * message - The string to send.
+ * admin_only: If [TRUE], message will be sent to admin connected chats. Vice-versa applies.
+ */
 /world/proc/TgsTargetedChatBroadcast(message, admin_only = FALSE)
 	return
 
 /**
-  * Send a private message to a specific user.
-  *
-  * message - The string to send.
-  * user: The [/datum/tgs_chat_user] to PM.
-  */
+ * Send a private message to a specific user.
+ *
+ * message - The string to send.
+ * user: The [/datum/tgs_chat_user] to PM.
+ */
 /world/proc/TgsChatPrivateMessage(message, datum/tgs_chat_user/user)
 	return
 
 // The following functions will sleep if a call to TgsNew() is sleeping
 
 /**
-  * Send a message to connected chats that are flagged as game-related in TGS.
-  *
-  * message - The string to send.
-  * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
-  */
+ * Send a message to connected chats that are flagged as game-related in TGS.
+ *
+ * message - The string to send.
+ * channels - Optional list of [/datum/tgs_chat_channel]s to restrict the message to.
+ */
 /world/proc/TgsChatBroadcast(message, list/channels = null)
 	return
 

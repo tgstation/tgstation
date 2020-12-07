@@ -137,7 +137,7 @@ Chilling extracts:
 	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
-		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
+		new /obj/item/food/rationpack(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/bluespace

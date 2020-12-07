@@ -462,27 +462,27 @@ GLOBAL_LIST_EMPTY(colored_images)
 	return mix.gas_string
 
 /**
-  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
-  *
-  * This should be fast, so no error checking is done.
-  * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
-  * object you added. Do not use irresponsibly.
-  * Arguments:
-  * * machine - The machine to start processing. Can be any /obj/machinery.
-  */
+ * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+ *
+ * This should be fast, so no error checking is done.
+ * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
+ * object you added. Do not use irresponsibly.
+ * Arguments:
+ * * machine - The machine to start processing. Can be any /obj/machinery.
+ */
 /datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
 	atmos_machinery += machine
 
 /**
-  * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
-  *
-  * This should be fast, so no error checking is done.
-  * If you call this proc when your machine isn't processing, you're likely attempting to
-  * remove something that isn't in a list with over 1000 objects, twice. Do not use
-  * irresponsibly.
-  * Arguments:
-  * * machine - The machine to stop processing.
-  */
+ * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+ *
+ * This should be fast, so no error checking is done.
+ * If you call this proc when your machine isn't processing, you're likely attempting to
+ * remove something that isn't in a list with over 1000 objects, twice. Do not use
+ * irresponsibly.
+ * Arguments:
+ * * machine - The machine to stop processing.
+ */
 /datum/controller/subsystem/air/proc/stop_processing_machine(obj/machinery/machine)
 	atmos_machinery -= machine
 

@@ -77,7 +77,8 @@
 	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
 /mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
- 	return
+	return
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
@@ -310,7 +311,7 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()
 
