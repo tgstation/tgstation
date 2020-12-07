@@ -464,8 +464,8 @@ GLOBAL_LIST_EMPTY(species_list)
 
 // Displays a message in deadchat, sent by interaction_key. interaction_key is not linkified, message is, to avoid stuff like character names to be linkified.
 // Automatically gives the class deadsay to the whole message (message + interaction_key)
-/proc/deadchat_broadcast(message, interaction_key=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='deadsay'>[interaction_key]<span class='linkify'>[message]</span></span>"
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
@@ -542,16 +542,16 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
 
-/proc/passtable_on(target, interaction_key)
+/proc/passtable_on(target, source)
 	var/mob/living/L = target
 	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
 		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
-	ADD_TRAIT(L, TRAIT_PASSTABLE, interaction_key)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
 	L.pass_flags |= PASSTABLE
 
-/proc/passtable_off(target, interaction_key)
+/proc/passtable_off(target, source)
 	var/mob/living/L = target
-	REMOVE_TRAIT(L, TRAIT_PASSTABLE, interaction_key)
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
 
