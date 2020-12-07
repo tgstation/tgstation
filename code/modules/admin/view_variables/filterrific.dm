@@ -32,7 +32,7 @@
 	switch(action)
 		if("add_filter")
 			var/target_name = params["name"]
-			while(target.filter_data[target_name])
+			while(target.filter_data && target.filter_data[target_name])
 				target_name = "[target_name]-dupe"
 			target.add_filter(target_name, params["priority"], list("type" = params["type"]))
 			. = TRUE
@@ -48,12 +48,8 @@
 			target.remove_filter(params["name"])
 			target.add_filter(params["name"], params["priority"], params["new_filter"])
 			. = TRUE
-		if("increase_priority")
-			var/new_priority = target.filter_data[params["name"]]["priority"] + 1
-			target.change_filter_priority(params["name"], new_priority)
-			. = TRUE
-		if("decrease_priority")
-			var/new_priority = target.filter_data[params["name"]]["priority"] - 1
+		if("change_priority")
+			var/new_priority = params["new_priority"]
 			target.change_filter_priority(params["name"], new_priority)
 			. = TRUE
 		if("transition_filter_value")

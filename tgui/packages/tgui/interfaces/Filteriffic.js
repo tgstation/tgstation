@@ -194,15 +194,15 @@ const FilterEntry = (props, context) => {
       title={name + " (" + type + ")"}
       buttons={(
         <Fragment>
-          <Button
-            icon="chevron-up"
-            onClick={() => act('increase_priority', { name: name })} />
-          <Box inline mr={1}>
-            {priority}
-          </Box>
-          <Button
-            icon="chevron-down"
-            onClick={() => act('decrease_priority', { name: name })} />
+          <NumberInput
+            value={priority}
+            stepPixelSize={10}
+            width="60px"
+            onChange={(e, value) => act('change_priority', {
+              name: name,
+              new_priority: value,
+            })}
+          />
           <Button.Input
             content="Rename"
             placeholder={name}
