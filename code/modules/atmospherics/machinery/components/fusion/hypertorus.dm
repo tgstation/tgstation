@@ -92,9 +92,6 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/getNodeConnects()
-	return list(dir)
-
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
 	if(.)
@@ -147,37 +144,29 @@
 	icon_state_active = "moderator_input_active"
 	circuit = /obj/item/circuitboard/machine/HFR_moderator_input
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core
+/obj/machinery/atmospherics/components/unary/hypertorus/core
 	name = "HFR core"
 	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
-	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
-	layer = OBJ_LAYER
-	density = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	///Vars for the state of the icon of the object (open, off, active)
-	var/icon_state_open = "core_open"
-	var/icon_state_off = "core_off"
-	var/icon_state_active = "core_active"
+	icon_state_open = "core_open"
+	icon_state_off = "core_off"
+	icon_state_active = "core_active"
 
 	/**
 	 * Processing checks
 	 */
 
-	///Checks if the machine state is active (all parts are connected)
-	var/active = FALSE
 	///Checks if the user has started the machine
 	var/start_power = FALSE
 	///Checks for the cooling to start
 	var/start_cooling = FALSE
 	///Checks for the fuel to be injected
 	var/start_fuel = FALSE
-	///Checks for fusion to have gone past the power level 0
-	var/fusion_started = FALSE
 
 	/**
 	 * Hypertorus internal objects and gasmixes
@@ -317,7 +306,7 @@
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/Initialize()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
 	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
@@ -330,14 +319,7 @@
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/SetInitDirections()
-	switch(dir)
-		if(NORTH, SOUTH)
-			initialize_directions = EAST|WEST
-		if(EAST, WEST)
-			initialize_directions = NORTH|SOUTH
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/Destroy()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
 	if(internal_fusion)
 		internal_fusion = null
@@ -359,68 +341,7 @@
 	QDEL_NULL(soundloop)
 	return..()
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/update_icon()
-	. = ..()
-	if(panel_open)
-		icon_state = icon_state_open
-	else if(active)
-		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/getNodeConnects()
-	return list(turn(dir, 270), turn(dir, 90))
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/can_be_node(obj/machinery/atmospherics/target)
-	if(anchored)
-		return ..()
-	return FALSE
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/attackby(obj/item/I, mob/user, params)
-	if(!fusion_started)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return
-	if(!anchored)
-		return FALSE
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	var/obj/machinery/atmospherics/node2 = nodes[2]
-	if(node1)
-		node1.disconnect(src)
-		nodes[1] = null
-		nullifyPipenet(parents[1])
-	if(node2)
-		node2.disconnect(src)
-		nodes[2] = null
-		nullifyPipenet(parents[1])
-
-	SetInitDirections()
-	atmosinit()
-	node1 = nodes[1]
-	if(node1)
-		node1.atmosinit()
-		node1.addMember(src)
-	node2 = nodes[2]
-	if(node2)
-		node2.atmosinit()
-		node2.addMember(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
-
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_part_connectivity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_part_connectivity()
 	. = TRUE
 	if(!anchored || panel_open)
 		return FALSE
@@ -489,7 +410,7 @@
 		. = FALSE
 
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/activate(mob/living/user)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
 		to_chat(user, "<span class='notice'>You already activated the machine.</span>")
 		return
@@ -515,7 +436,7 @@
 	soundloop = new(list(src), TRUE)
 	soundloop.volume = 5
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
@@ -525,7 +446,7 @@
 	if(!only_signals)
 		deactivate()
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/deactivate()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/deactivate()
 	if(!active)
 		return
 	active = FALSE
@@ -553,17 +474,17 @@
 		corners = null
 	QDEL_NULL(soundloop)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_fuel()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_fuel()
 	return (internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_power_use()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_power_use()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
 		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_status()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_status()
 	var/integrity = get_integrity()
 	if(integrity < HYPERTORUS_MELTING_PERCENT)
 		return HYPERTORUS_MELTING
@@ -581,7 +502,7 @@
 		return HYPERTORUS_NOMINAL
 	return HYPERTORUS_INACTIVE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/alarm()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/alarm()
 	switch(get_status())
 		if(HYPERTORUS_MELTING)
 			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
@@ -592,13 +513,13 @@
 		if(HYPERTORUS_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/get_integrity()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_integrity()
 	var/integrity = critical_threshold_proximity / melting_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/check_alert()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_alert()
 	if(critical_threshold_proximity < warning_point)
 		return
 	if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_TIME_DELAY)
@@ -623,7 +544,7 @@
 	if(critical_threshold_proximity > melting_point)
 		countdown()
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/countdown()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/countdown()
 	set waitfor = FALSE
 
 	if(final_countdown) // We're already doing it go away
@@ -649,7 +570,7 @@
 
 	meltdown()
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/meltdown()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
 	explosion(loc, 0, 0, power_level * 5, power_level * 6, 1, 1)
 	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
 	empulse(loc, power_level * 5, power_level * 7)
@@ -666,7 +587,7 @@
 	air_update_turf()
 	qdel(src)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/process_atmos()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/process_atmos()
 	/*
 	 *Pre-checks
 	 */
@@ -731,9 +652,8 @@
 		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_in = airs[1]
-		var/datum/gas_mixture/cooling_out = airs[2]
-		var/datum/gas_mixture/cooling_remove = cooling_in.remove(0.05 * cooling_in.total_moles())
+		var/datum/gas_mixture/cooling_port = airs[1]
+		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
 		//Cooling of the moderator gases with the cooling loop in and out the core
 		if(moderator_internal.total_moles() > 0)
 			var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
@@ -746,11 +666,11 @@
 			var/cooling_heat_amount = METALLIC_VOID_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
 			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 			internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		cooling_out.merge(cooling_remove)
+		cooling_port.merge(cooling_remove)
 
 	fusion_temperature = internal_fusion.temperature
 	moderator_temperature = moderator_internal.temperature
-	coolant_temperature = airs[2].temperature
+	coolant_temperature = airs[1].temperature
 	output_temperature = linked_output.airs[1].temperature
 
 	//Set the power level of the fusion process
@@ -792,7 +712,7 @@
 	buffer = linked_moderator.airs[1].remove(moderator_injection_rate * 0.1)
 	moderator_internal.merge(buffer)
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/process(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
 	fusion_process(delta_time)
 	if(!active)
 		return
@@ -813,7 +733,7 @@
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.fusion_started = FALSE
 
-/obj/machinery/atmospherics/components/binary/hypertorus/core/proc/fusion_process(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(delta_time)
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
@@ -1248,7 +1168,7 @@
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
-	var/obj/machinery/atmospherics/components/binary/hypertorus/core/connected_core
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 	icon_state_off = "interface_off"
 	icon_state_open = "interface_open"
 	icon_state_active = "interface_active"
@@ -1261,7 +1181,7 @@
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	var/turf/T = get_step(src,turn(dir,180))
-	var/obj/machinery/atmospherics/components/binary/hypertorus/core/centre = locate() in T
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, "<span class='notice'>Check all parts and then try again.</span>")
@@ -1336,8 +1256,8 @@
 
 	data["internal_fusion_temperature"] = connected_core.fusion_temperature
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
-	data["internal_output_temperature"] = connected_core.coolant_temperature
-	data["internal_coolant_temperature"] = connected_core.output_temperature
+	data["internal_output_temperature"] = connected_core.output_temperature
+	data["internal_coolant_temperature"] = connected_core.coolant_temperature
 
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()

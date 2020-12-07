@@ -598,8 +598,8 @@
 		faction = fren.faction.Copy()
 
 /**
-  * Proc that handles a charge attack windup for a mob.
-  */
+ * Proc that handles a charge attack windup for a mob.
+ */
 /mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
 	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return FALSE
@@ -610,8 +610,8 @@
 	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
 
 /**
-  * Proc that throws the mob at the target after the windup.
-  */
+ * Proc that throws the mob at the target after the windup.
+ */
 /mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
@@ -619,14 +619,14 @@
 	return TRUE
 
 /**
-  * Proc that handles a charge attack after it's concluded.
-  */
+ * Proc that handles a charge attack after it's concluded.
+ */
 /mob/living/simple_animal/hostile/proc/charge_end()
 	charge_state = FALSE
 
 /**
-  * Proc that handles the charge impact of the charging mob.
-  */
+ * Proc that handles the charge impact of the charging mob.
+ */
 /mob/living/simple_animal/hostile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charge_state)
 		return ..()

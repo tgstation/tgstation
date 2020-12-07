@@ -842,8 +842,8 @@
 	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
 
 /**
-  * Clears the currently mimic'd skillchip, if any exists.
-  */
+ * Clears the currently mimic'd skillchip, if any exists.
+ */
 /datum/action/item_action/chameleon/change/skillchip/proc/clear_mimic_chip()
 	if(skillchip_mimic)
 		skillchip_mimic.on_removal(FALSE)

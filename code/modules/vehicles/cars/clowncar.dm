@@ -94,8 +94,8 @@
 	AddElement(/datum/element/waddling)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
-  playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
-  return ..()
+	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	return ..()
 
 /obj/vehicle/sealed/car/clowncar/Move(newloc, dir)
 	. = ..()

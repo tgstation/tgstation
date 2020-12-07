@@ -603,16 +603,16 @@
 
 
 /**
-  * Called whenever an object moves and by mobs when they attempt to move themselves through space
-  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
-  *
-  * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-  *
-  * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
-  *
-  * Arguments:
-  * * movement_dir - 0 when stopping or any dir when trying to move
-  */
+ * Called whenever an object moves and by mobs when they attempt to move themselves through space
+ * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+ *
+ * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+ *
+ * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
+ *
+ * Arguments:
+ * * movement_dir - 0 when stopping or any dir when trying to move
+ */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return TRUE
@@ -1015,10 +1015,10 @@
 	return TRUE
 
 /**
-  * Updates the grab state of the movable
-  *
-  * This exists to act as a hook for behaviour
-  */
+ * Updates the grab state of the movable
+ *
+ * This exists to act as a hook for behaviour
+ */
 /atom/movable/proc/setGrabState(newstate)
 	if(newstate == grab_state)
 		return

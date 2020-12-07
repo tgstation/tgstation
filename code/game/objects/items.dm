@@ -7,6 +7,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
 GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
 
+/// Anything you can pick up and hold.
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -251,11 +252,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
-  *
-  *Outputs a creative message and then return the damagetype done
-  * Arguments:
-  * * user: The mob that is suiciding
-  */
+ *
+ *Outputs a creative message and then return the damagetype done
+ * Arguments:
+ * * user: The mob that is suiciding
+ */
 /obj/item/proc/suicide_act(mob/user)
 	return
 
@@ -453,6 +454,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
 	return ITALICS | REDUCE_RANGE
 
+/// Called when a mob drops an item.
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/X in actions)
@@ -477,13 +479,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return
 
 /**
-  *called after an item is placed in an equipment slot
-
-  * Arguments:
-  * * user is mob that equipped it
-  * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
-  * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-  */
+ * Called after an item is placed in an equipment slot.
+ *
+ * Note that hands count as slots.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
@@ -506,15 +510,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return TRUE
 
 /**
-  *the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
-  *if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
-  *If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-  * Arguments:
-  * * disable_warning to TRUE if you wish it to not give you text outputs.
-  * * slot is the slot we are trying to equip to
-  * * equipper is the mob trying to equip the item
-  * * bypass_equip_delay_self for whether we want to bypass the equip delay
-  */
+ *the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+ *if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
+ *If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
+ * Arguments:
+ * * disable_warning to TRUE if you wish it to not give you text outputs.
+ * * slot is the slot we are trying to equip to
+ * * equipper is the mob trying to equip the item
+ * * bypass_equip_delay_self for whether we want to bypass the equip delay
+ */
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
 		return FALSE
@@ -538,10 +542,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		usr.UnarmedAttack(src)
 
 /**
-  *This proc is executed when someone clicks the on-screen UI button.
-  *The default action is attack_self().
-  *Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
-  */
+ *This proc is executed when someone clicks the on-screen UI button.
+ *The default action is attack_self().
+ *Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
+ */
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 
@@ -773,7 +777,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M) & COMPONENT_SUCCESFUL_MICROWAVE)
-		return
+		return TRUE
 	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
@@ -784,8 +788,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Use "return -1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
+	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
 /obj/item/proc/on_juice()
+	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
 /obj/item/proc/set_force_string()
 	switch(force)
@@ -959,16 +965,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return src
 
 /**
-  * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
-  *
-  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
-  *
-  * Returns TRUE if it embedded successfully, nothing otherwise
-  *
-  * Arguments:
-  * * target- Either a body part or a carbon. What are we hitting?
-  * * forced- Do we want this to go through 100%?
-  */
+ * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+ *
+ * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
+ *
+ * Returns TRUE if it embedded successfully, nothing otherwise
+ *
+ * Arguments:
+ * * target- Either a body part or a carbon. What are we hitting?
+ * * forced- Do we want this to go through 100%?
+ */
 /obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
 	if(!isbodypart(target) && !iscarbon(target))
 		return NONE

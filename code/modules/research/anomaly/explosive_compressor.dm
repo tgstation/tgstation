@@ -1,12 +1,12 @@
 #define MAX_RADIUS_REQUIRED 20		//maxcap
 #define MIN_RADIUS_REQUIRED 4		//1, 2, 4
 /**
-  * # Explosive compressor machines
-  *
-  * The explosive compressor machine used in anomaly core production.
-  *
-  * Uses the standard toxins/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
-  */
+ * # Explosive compressor machines
+ *
+ * The explosive compressor machine used in anomaly core production.
+ *
+ * Uses the standard toxins/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
+ */
 /obj/machinery/research/explosive_compressor
 	name = "implosion compressor"
 	desc = "An advanced machine capable of implosion-compressing raw anomaly cores into finished artifacts."
@@ -51,8 +51,8 @@
 	inserted_core = null
 
 /**
-  * Says (no, literally) the data of required explosive power for a certain anomaly type.
-  */
+ * Says (no, literally) the data of required explosive power for a certain anomaly type.
+ */
 /obj/machinery/research/explosive_compressor/proc/say_requirements(obj/item/raw_anomaly_core/C)
 	var/required = get_required_radius(C.anomaly_type)
 	if(isnull(required))
@@ -61,13 +61,13 @@
 		say("[C] requires a minimum of a theoretical radius of [required] to successfully implode into a charged anomaly core.")
 
 /**
-  * Determines how much explosive power (last value, so light impact theoretical radius) is required to make a certain anomaly type.
-  *
-  * Returns null if the max amount has already been reached.
-  *
-  * Arguments:
-  * * anomaly_type - anomaly type define
-  */
+ * Determines how much explosive power (last value, so light impact theoretical radius) is required to make a certain anomaly type.
+ *
+ * Returns null if the max amount has already been reached.
+ *
+ * Arguments:
+ * * anomaly_type - anomaly type define
+ */
 /obj/machinery/research/explosive_compressor/proc/get_required_radius(anomaly_type)
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
@@ -109,8 +109,8 @@
 		do_implosion()
 
 /**
-  * The ""explosion"" proc.
-  */
+ * The ""explosion"" proc.
+ */
 /obj/machinery/research/explosive_compressor/proc/do_implosion()
 	var/required_radius = get_required_radius(inserted_core.anomaly_type)
 	// By now, we should be sure that we have a core, a TTV, and that the TTV has both tanks in place.
@@ -132,11 +132,11 @@
 	mix.react()		// build more pressure
 	var/pressure = mix.return_pressure()
 	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-	QDEL_NULL(inserted_bomb)	// bomb goes poof
 	if(range < required_radius)
 		inserted_bomb.forceMove(src)
 		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
 		return
+	QDEL_NULL(inserted_bomb)	// bomb goes poof
 	inserted_core.create_core(drop_location(), TRUE, TRUE)
 	inserted_core = null
 	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")

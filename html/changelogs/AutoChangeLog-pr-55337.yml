@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "Fixes hiero staff recall message not working"
+  - balance: "Champion's hardsuit has been reworked.
+spriteadd: fixes spears on suit storages not having icons"

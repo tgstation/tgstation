@@ -196,14 +196,14 @@
 		qdel(src)
 
 /**
-  *	Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
-  *
-  * IC explanation:
-  * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
-  * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
-  * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
-  * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
-  */
+ *	Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+ *
+ * IC explanation:
+ * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+ * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+ * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+ * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+ */
 /datum/component/nanites/proc/reject_excess_nanites()
 	var/excess = nanite_volume - max_nanites
 	nanite_volume = max_nanites
