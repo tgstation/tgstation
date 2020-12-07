@@ -45,6 +45,7 @@
 #include "code\__DEFINES\cult.dm"
 #include "code\__DEFINES\diseases.dm"
 #include "code\__DEFINES\DNA.dm"
+#include "code\__DEFINES\do_afters.dm"
 #include "code\__DEFINES\dye_keys.dm"
 #include "code\__DEFINES\economy.dm"
 #include "code\__DEFINES\events.dm"

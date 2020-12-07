@@ -450,7 +450,7 @@
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
-	if(INTERACTING_WITH(H, src))
+	if(DOING_INTERACTION_WITH_TARGET(H, src))
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
