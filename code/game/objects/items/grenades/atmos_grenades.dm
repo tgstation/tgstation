@@ -79,28 +79,14 @@
 		floor_loc.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/zauker_crystal
-	name = "Zauker crystal"
-	desc = "A crystal made from the Zauker Gas, you can see the liquid plasma inside."
-	icon_state = "zauker_crystal"
-	ex_dev = 1
-	ex_heavy = 2
-	ex_light = 4
-	ex_flame = 2
-
-/obj/item/grenade/gas_crystal/zauker_crystal/detonate(mob/living/lanced_by)
-	. = ..()
-	update_mob()
-	qdel(src)
-
 /obj/item/grenade/gas_crystal/nitrous_oxide_crystal
 	name = "N2O crystal"
 	desc = "A crystal made from the N2O gas, you can see the liquid gases inside."
 	icon_state = "proto_nitrate_crystal"
 	///Range of the grenade air refilling
-	var/fill_range = 2
+	var/fill_range = 1
 	///Amount of n2o gas released (close to the grenade)
-	var/n2o_gas_amount = 400
+	var/n2o_gas_amount = 250
 
 /obj/item/grenade/gas_crystal/nitrous_oxide_crystal/detonate(mob/living/lanced_by)
 	. = ..()

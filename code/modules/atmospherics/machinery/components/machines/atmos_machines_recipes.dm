@@ -80,16 +80,6 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	requirements = list(/datum/gas/proto_nitrate = 400, /datum/gas/nitrogen = 800, /datum/gas/oxygen = 800)
 	products = list(/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1)
 
-/datum/gas_recipe/crystallizer/zauker_grenade
-	id = "zauker_g"
-	name = "Zauker Grenade"
-	min_temp = 500
-	max_temp = 600
-	reaction_type = "exothermic"
-	energy_release = 254000
-	requirements = list(/datum/gas/zauker = 600, /datum/gas/hypernoblium = 1000, /datum/gas/plasma = 800)
-	products = list(/obj/item/grenade/gas_crystal/zauker_crystal = 1)
-
 /datum/gas_recipe/crystallizer/hot_ice
 	id = "hot_ice"
 	name = "Hot ice"
