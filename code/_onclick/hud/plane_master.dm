@@ -41,11 +41,11 @@
 
 ///Blur rendered on z-levels below.
 /atom/movable/screen/plane_master/openspace_blur
-    name = "open space blur plane master"
-    plane = OPENSPACE_PLANE
-    appearance_flags = PLANE_MASTER
-    blend_mode = BLEND_OVERLAY
-    alpha = 255
+	name = "open space blur plane master"
+	plane = OPENSPACE_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	alpha = 255
 
 /atom/movable/screen/plane_master/openspace_blur/Initialize()
     . = ..()
