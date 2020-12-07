@@ -44,7 +44,7 @@
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_open_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx-1]", "[world.maxy-1]") //Generate the raw CA data
+	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx-1]", "[world.maxy-1]") //Generate the raw CA data
 
 	for(var/i in turfs) //Go through all the turfs and generate them
 		var/turf/gen_turf = i
@@ -53,7 +53,7 @@
 		if(!(A.area_flags & CAVES_ALLOWED))
 			continue
 
-		var/closed = text2num(string_gen[height * (gen_turf.y - 1) + gen_turf.x-1])
+		var/closed = text2num(string_gen[world.maxy * (gen_turf.y - 1) + gen_turf.x])
 
 		var/stored_flags
 		if(gen_turf.flags_1 & NO_RUINS_1)
