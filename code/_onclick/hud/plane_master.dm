@@ -39,6 +39,18 @@
 /atom/movable/screen/plane_master/proc/clear_filters()
 	filters = list()
 
+///Blur rendered on z-levels below.
+/atom/movable/screen/plane_master/openspace_blur
+    name = "open space blur plane master"
+    plane = OPENSPACE_PLANE
+    appearance_flags = PLANE_MASTER
+    blend_mode = BLEND_OVERLAY
+    alpha = 255
+
+/atom/movable/screen/plane_master/openspace_blur/Initialize()
+    . = ..()
+    filters += filter(type = "blur", size = 0.75)
+
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "floor plane master"
