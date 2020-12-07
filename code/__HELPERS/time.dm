@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	return CEILING(date / 7, 1) + 1
 
 
-///Returns the first day of the current month in number format, from 1 (monday) - 7 (sunday).
+///Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).
 /proc/first_day_of_month(year, month)
 	// https://en.wikipedia.org/wiki/Zeller%27s_congruence
 	var/m = month < 3 ? month + 12 : month // month (march = 3, april = 4...february = 14)
