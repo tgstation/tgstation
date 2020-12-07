@@ -204,6 +204,10 @@
 		for(var/i in 1 to amount_produced)
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] " + creation.name
+			if(istype(creation, /obj/machinery/power/supermatter_crystal/shard))
+				investigate_log("has been created in the crystallizer.", INVESTIGATE_SUPERMATTER)
+				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
+
 
 	quality_loss = 0
 	update_parents()
