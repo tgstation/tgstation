@@ -1,6 +1,11 @@
-/obj/machinery/atmospherics/components/unary/crystallizer
+#define MIN_PROGRESS_AMOUNT 3
+#define MIN_DEVIATION_RATE 0.90
+#define MAX_DEVIATION_RATE 1.1
+#define HIGH_EFFICIENCY_CONDUCTIVITY 		0.95
+
+/obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
-	icon_state = "freezer"
+	icon_state = "crystallizer-off"
 
 	name = "crystallizer"
 	desc = "Heats or cools gas in connected pipes."
@@ -9,21 +14,27 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
-	circuit = /obj/item/circuitboard/machine/thermomachine
+	circuit = /obj/item/circuitboard/machine/crystallizer
 
 	var/recipe_type = null
 
 	pipe_flags = PIPING_ONE_PER_TURF
 
-	var/icon_state_off = "freezer"
-	var/icon_state_on = "freezer_1"
-	var/icon_state_open = "freezer-o"
+	var/icon_state_off = "crystallizer-off"
+	var/icon_state_on = "crystallizer-on"
+	var/icon_state_open = "crystallizer-open"
 
-/obj/machinery/atmospherics/components/unary/crystallizer/Initialize()
+	var/datum/gas_mixture/internal
+	var/gas_input = 0
+	var/gas_check = 0
+	var/progress_bar = 0
+	var/quality_loss = 0
+
+/obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
-	initialize_directions = dir
+	internal = new
 
-/obj/machinery/atmospherics/components/unary/crystallizer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
 			return
@@ -33,27 +44,39 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
+/obj/machinery/atmospherics/components/binary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())
 		return FALSE
 	SetInitDirections()
-	var/obj/machinery/atmospherics/node = nodes[1]
-	if(node)
-		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node.disconnect(src)
+	var/obj/machinery/atmospherics/node1 = nodes[1]
+	var/obj/machinery/atmospherics/node2 = nodes[2]
+	if(node1)
+		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node1.disconnect(src)
 		nodes[1] = null
+	if(node2)
+		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node2.disconnect(src)
+		nodes[2] = null
+
 	if(parents[1])
 		nullifyPipenet(parents[1])
+	if(parents[2])
+		nullifyPipenet(parents[2])
 
 	atmosinit()
-	node = nodes[1]
-	if(node)
-		node.atmosinit()
-		node.addMember(src)
+	node1 = nodes[1]
+	if(node1)
+		node1.atmosinit()
+		node1.addMember(src)
+	node2 = nodes[2]
+	if(node2)
+		node2.atmosinit()
+		node2.addMember(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/crystallizer/update_icon()
+/obj/machinery/atmospherics/components/binary/crystallizer/update_icon()
 	cut_overlays()
 
 	if(panel_open)
@@ -64,35 +87,134 @@
 		icon_state = icon_state_off
 
 	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
+	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), , piping_layer))
 
-/obj/machinery/atmospherics/components/unary/crystallizer/update_icon_nopipes()
-	cut_overlays()
-	if(showpipe)
-		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
-
-/obj/machinery/atmospherics/components/unary/crystallizer/proc/check_gas_requirements()
-	var/datum/gas_mixture/contents = airs[1]
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
+	var/datum/gas_mixture/contents = airs[2]
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
-	for(var/gastype in recipe[META_RECIPE_REQUIREMENTS])
-		if(!contents.gases[gastype] || !contents.gases[gastype][MOLES])
+	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
 			return FALSE
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/crystallizer/process_atmos()
-	if(!on || !nodes[1] || !is_operational || recipe_type == null)
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
+	var/datum/gas_mixture/contents = airs[2]
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	if(contents.temperature >= (recipe[META_RECIPE_MIN_TEMP] * MIN_DEVIATION_RATE) && contents.temperature <= (recipe[META_RECIPE_MAX_TEMP] * MAX_DEVIATION_RATE))
+		return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
+	var/datum/gas_mixture/contents = airs[2]
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * (gas_input * 0.1)))
+
+	update_parents()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
+	gas_check = 0
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+		if(internal.gases[gas_type][MOLES] >= recipe[META_RECIPE_REQUIREMENTS][gas_type])
+			gas_check++
+
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
+	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
+		var/datum/gas_mixture/cooling_port = airs[1]
+		var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
+		if(internal.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_remove.temperature - internal.temperature
+			var/cooling_heat_amount = HIGH_EFFICIENCY_CONDUCTIVITY * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal.heat_capacity() / (cooling_remove.heat_capacity() + internal.heat_capacity()))
+			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
+			internal.temperature = max(internal.temperature + cooling_heat_amount / internal.heat_capacity(), TCMB)
+		cooling_port.merge(cooling_remove)
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	if(	(internal.temperature >= (recipe[META_RECIPE_MIN_TEMP] * MIN_DEVIATION_RATE) && internal.temperature <= recipe[META_RECIPE_MIN_TEMP]) || \
+		(internal.temperature >= recipe[META_RECIPE_MAX_TEMP] && internal.temperature <= (recipe[META_RECIPE_MAX_TEMP] * MAX_DEVIATION_RATE)))
+		quality_loss += 1.5
+
+	if(recipe[META_RECIPE_REACTION_TYPE] == "endothermic")
+		internal.temperature = max(((internal.temperature * internal.heat_capacity() - recipe[META_RECIPE_ENERGY_RELEASE]) / internal.heat_capacity()), TCMB)
+	else if(recipe[META_RECIPE_REACTION_TYPE] == "exothermic")
+		internal.temperature = max(((internal.temperature * internal.heat_capacity() + recipe[META_RECIPE_ENERGY_RELEASE]) / internal.heat_capacity()), TCMB)
+
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/dump_gases()
+	var/datum/gas_mixture/remove = internal.remove(internal.total_moles())
+	airs[2].merge(remove)
+	internal.garbage_collect()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/process_atmos()
+	if(!on || !is_operational || recipe_type == null)
 		return
 
 	if(!check_gas_requirements())
 		return
-	message_admins("AHHHHHHHHHHHHH IT WOOOOOORKKKKKKKKKKKSSSSSSS")
 
-/obj/machinery/atmospherics/components/unary/crystallizer/ui_interact(mob/user, datum/tgui/ui)
+	inject_gases()
+
+	if(!internal.total_moles())
+		return
+	internal_check()
+
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	if(gas_check == recipe[META_RECIPE_REQUIREMENTS].len)
+
+		if(check_temp_requirements())
+			heat_calculations()
+			progress_bar = min(progress_bar + MIN_PROGRESS_AMOUNT, 100)
+		else
+			quality_loss += 0.5
+	if(progress_bar != 100)
+		return
+	progress_bar = 0
+
+	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+		var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type] + quality_loss * 5
+		if(internal.gases[gas_type][MOLES] < amount_consumed)
+			quality_loss += 10
+		internal.remove_specific(gas_type, amount_consumed)
+
+	var/total_quality = max(100 - quality_loss, 0)
+	var/quality_control
+	switch(total_quality)
+		if(100)
+			quality_control = "Artifact"
+		if(95 to 99)
+			quality_control = "Supreme"
+		if(75 to 94)
+			quality_control = "Good"
+		if(65 to 74)
+			quality_control = "Decent"
+		if(55 to 64)
+			quality_control = ""
+		if(35 to 54)
+			quality_control = "Average"
+		if(15 to 34)
+			quality_control = "Poor"
+		if(5 to 14)
+			quality_control = "Ugly"
+		if(1 to 4)
+			quality_control = "Broken"
+		if(0)
+			quality_control = "Oh God why"
+
+	for(var/path in recipe[META_RECIPE_PRODUCTS])
+		var/amount_produced = recipe[META_RECIPE_PRODUCTS][path]
+		for(var/i in 1 to amount_produced)
+			var/obj/creation = new path(loc)
+			creation.name = "[quality_control] " + creation.name
+
+	quality_loss = 0
+	update_parents()
+
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Crystallizer", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/unary/crystallizer/ui_data()
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_data()
 	var/data = list()
 	data["on"] = on
 
@@ -100,11 +222,50 @@
 	data["recipe_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !recipe_type))
 	for(var/path in GLOB.gas_recipe_meta)
 		var/list/recipe = GLOB.gas_recipe_meta[path]
-		data["recipe_types"] += list(list("name" = recipe[META_RECIPE_NAME], "id" = recipe[META_RECIPE_ID], "requirements" = recipe[META_RECIPE_REQUIREMENTS], "selected" = (path == gas_id2path(recipe_type))))
+		if(recipe[META_RECIPE_MACHINE_TYPE] != "Crystallizer")
+			continue
+		data["recipe_types"] += list(list("name" = recipe[META_RECIPE_NAME], "id" = recipe[META_RECIPE_ID], "selected" = (path == recipe_id2path(recipe_type))))
 
+	var/list/internal_gas_data = list()
+	if(internal.total_moles())
+		for(var/gasid in internal.gases)
+			internal_gas_data.Add(list(list(
+			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+			"amount" = round(internal.gases[gasid][MOLES], 0.01),
+			)))
+	else
+		for(var/gasid in internal.gases)
+			internal_gas_data.Add(list(list(
+				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"amount" = 0,
+				)))
+	data["internal_gas_data"] = internal_gas_data
+
+	var/list/requirements = list("To create ")
+	if(!recipe_type)
+		requirements = list("Select a recipe to see the requirements")
+	else
+		var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+		requirements += list("[recipe[META_RECIPE_NAME]] you need:")
+		for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+			var/datum/gas/gas_required = gas_type
+			var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type]
+			requirements += "[initial(gas_required.name)]" + " [amount_consumed] moles"
+		requirements += "in a temperature range between [recipe[META_RECIPE_MIN_TEMP]] and [recipe[META_RECIPE_MAX_TEMP]]"
+		requirements += "the crystallization reaction is going to be [recipe[META_RECIPE_REACTION_TYPE]]"
+	data["requirements"] = requirements.Join("\n")
+
+	var/temperature
+	if(internal.total_moles())
+		temperature = internal.temperature
+	else
+		temperature = 0
+	data["internal_temperature"] = temperature
+	data["progress_bar"] = progress_bar
+	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/unary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -117,9 +278,16 @@
 			recipe_type = null
 			var/recipe_name = "nothing"
 			var/recipe = recipe_id2path(params["mode"])
+			if(internal.total_moles())
+				dump_gases()
+			quality_loss = 0
 			if(recipe in GLOB.gas_recipe_meta)
 				recipe_type = recipe
 				recipe_name	= GLOB.gas_recipe_meta[recipe][META_RECIPE_NAME]
+				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
 			investigate_log("was set to recipe [recipe_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
+		if("gas_input")
+			var/_gas_input = params["gas_input"]
+			gas_input = clamp(_gas_input, 0, 500)
 	update_icon()

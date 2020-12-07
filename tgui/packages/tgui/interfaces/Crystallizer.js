@@ -1,14 +1,23 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
+import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput, Box } from '../components';
+import { getGasColor, getGasLabel } from '../constants';
+import { toFixed } from 'common/math';
 import { Window } from '../layouts';
 
 export const Crystallizer = (props, context) => {
   const { act, data } = useBackend(context);
   const recipeTypes = data.recipe_types || [];
+  const gasTypes = data.internal_gas_data || [];
+  const {
+    requirements,
+    internal_temperature,
+    progress_bar,
+    gas_input,
+  } = data;
   return (
     <Window
-      width={390}
-      height={221}>
+      width={500}
+      height={600}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -29,6 +38,45 @@ export const Crystallizer = (props, context) => {
                     mode: recipe.id,
                   })} />
               ))}
+            </LabeledList.Item>
+            <LabeledList.Item>
+              <Box>
+                {requirements}
+              </Box>
+            </LabeledList.Item>
+            {gasTypes.map(gas => (
+              <LabeledList.Item
+                key={gas.name}
+                label={getGasLabel(gas.name)}>
+                <ProgressBar
+                  color={getGasColor(gas.name)}
+                  value={gas.amount}
+                  minValue={0}
+                  maxValue={1000}>
+                  {toFixed(gas.amount, 2) + ' moles'}
+                </ProgressBar>
+              </LabeledList.Item>
+            ))}
+            <LabeledList.Item label="Progress">
+              <ProgressBar
+                value={progress_bar / 100}
+                ranges={{
+                  good: [0.67, 1],
+                  average: [0.34, 0.66],
+                  bad: [0, 0.33],
+                }} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Gas Input">
+              <NumberInput
+                animated
+                value={parseFloat(data.gas_input)}
+                width="63px"
+                unit="J/cm"
+                minValue={0}
+                maxValue={500}
+                onDrag={(e, value) => act('gas_input', {
+                  gas_input: value,
+                })} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
