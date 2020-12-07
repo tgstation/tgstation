@@ -254,7 +254,13 @@ GLOBAL_LIST_EMPTY(species_list)
 	return ..()
 
 
-///Timed action involving one mob user. Target is optional. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/**
+ * Timed action involving one mob user. Target is optional.
+ *
+ * Checks that `user` does not move, change hands, get stunned, etc. for the
+ * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
+ * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ */
 /proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
@@ -620,5 +626,19 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			. = pick(ais)
 	return .
+
+/**
+ * Used to get the amount of change between two body temperatures
+ *
+ * When passed the difference between two temperatures returns the amount of change to temperature to apply.
+ * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
+ * vars:
+ * * temp_diff (required) The differance between two temperatures
+ * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
+ */
+/proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
+	if(temp_diff < 0)
+		return (log((temp_diff * -1) * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR) * -1
+	return log(temp_diff * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_MONKEYLIKE))

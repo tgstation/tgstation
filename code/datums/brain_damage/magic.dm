@@ -100,7 +100,7 @@
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
 			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT)
+			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			close_stalker = TRUE
 	else
 		if(close_stalker)

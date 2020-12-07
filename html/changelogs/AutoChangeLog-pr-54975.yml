@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes: 
-  - bugfix: "Examinining head without body shows proper message if client has reentered corpse."

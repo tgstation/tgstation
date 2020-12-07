@@ -210,6 +210,9 @@
 		owner.adjustFireLoss(1)
 		owner.Jitter(3)
 		owner.adjust_bodytemperature(-10)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/humi = owner
+			humi.adjust_coretemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
@@ -469,7 +472,10 @@
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = owner.get_body_temp_normal(apply_change=FALSE) - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	owner.adjust_bodytemperature(min(5, body_temperature_difference))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/humi = owner
+		humi.adjust_coretemperature(min(5, humi.get_body_temp_normal(apply_change=FALSE) - humi.coretemperature))
 	return ..()
 
 /datum/status_effect/stabilized/purple
@@ -569,16 +575,12 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/I = owner.get_active_held_item()
-	var/obj/item/reagent_containers/food/snacks/F = I
-	if(istype(F))
-		if(F.cooked_type)
-			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
-			var/obj/item/result = F.microwave_act()
-			if(istype(result))
-				owner.put_in_hands(result)
+	var/obj/item/item = owner.get_active_held_item()
+	if(IS_EDIBLE(item))
+		if(item.microwave_act())
+			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [item]!</span>")
 	else
-		I.attackby(fire, owner)
+		item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()

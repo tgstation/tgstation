@@ -1,12 +1,12 @@
 /**
-  * # Energy Net
-  *
-  * Energy net which ensnares prey until it is destroyed.  Used by space ninjas.
-  *
-  * Energy net which keeps its target from moving until it is destroyed.  Used to send
-  * players to a holding area in which they could never leave, but such feature has since
-  * been removed.
-  */
+ * # Energy Net
+ *
+ * Energy net which ensnares prey until it is destroyed.  Used by space ninjas.
+ *
+ * Energy net which keeps its target from moving until it is destroyed.  Used to send
+ * players to a holding area in which they could never leave, but such feature has since
+ * been removed.
+ */
 /obj/structure/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."

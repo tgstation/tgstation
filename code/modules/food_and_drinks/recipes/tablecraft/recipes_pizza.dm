@@ -61,7 +61,7 @@
 	name = "Donkpocket pizza"
 	reqs = list(
 		/obj/item/food/pizzabread = 1,
-		/obj/item/reagent_containers/food/snacks/donkpocket/warm = 3,
+		/obj/item/food/donkpocket/warm = 3,
 		/obj/item/food/cheesewedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)

@@ -274,7 +274,7 @@
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
 	reqs = list(
-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/food/deadmouse = 1,
 			/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/burger/rat
@@ -332,7 +332,7 @@
 /datum/crafting_recipe/food/soylentburger
 	name = "Soylent Burger"
 	reqs = list(
-			/obj/item/reagent_containers/food/snacks/soylentgreen = 1, //two full meats worth.
+			/obj/item/food/soylentgreen = 1, //two full meats worth.
 			/obj/item/food/bun = 1,
 			/obj/item/food/cheesewedge = 2,
 	)

@@ -10,20 +10,20 @@
 #define SHORT_CAST 2
 
 /**
-  * Movable atom overlay-based lighting component.
-  *
-  * * Component works by applying a visual object to the parent target.
-  *
-  * * The component tracks the parent's loc to determine the current_holder.
-  * * The current_holder is either the parent or its loc, whichever is on a turf. If none, then the current_holder is null and the light is not visible.
-  *
-  * * Lighting works at its base by applying a dark overlay and "cutting" said darkness with light, adding (possibly colored) transparency.
-  * * This component uses the visible_mask visual object to apply said light mask on the darkness.
-  *
-  * * The main limitation of this system is that it uses a limited number of pre-baked geometrical shapes, but for most uses it does the job.
-  *
-  * * Another limitation is for big lights: you only see the light if you see the object emiting it.
-  * * For small objects this is good (you can't see them behind a wall), but for big ones this quickly becomes prety clumsy.
+ * Movable atom overlay-based lighting component.
+ *
+ * * Component works by applying a visual object to the parent target.
+ *
+ * * The component tracks the parent's loc to determine the current_holder.
+ * * The current_holder is either the parent or its loc, whichever is on a turf. If none, then the current_holder is null and the light is not visible.
+ *
+ * * Lighting works at its base by applying a dark overlay and "cutting" said darkness with light, adding (possibly colored) transparency.
+ * * This component uses the visible_mask visual object to apply said light mask on the darkness.
+ *
+ * * The main limitation of this system is that it uses a limited number of pre-baked geometrical shapes, but for most uses it does the job.
+ *
+ * * Another limitation is for big lights: you only see the light if you see the object emiting it.
+ * * For small objects this is good (you can't see them behind a wall), but for big ones this quickly becomes prety clumsy.
 */
 /datum/component/overlay_lighting
 	///How far the light reaches, float.

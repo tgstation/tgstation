@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Most objects renamable with a pen can no longer have their labels erased or duplicated or names and descriptions blanked"
-  - tweak: "Most objects renamable with a pen can now have their names and descriptions reset to default"

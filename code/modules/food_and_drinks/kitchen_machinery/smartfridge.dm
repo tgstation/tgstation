@@ -112,10 +112,10 @@
 			if(loaded)
 				if(contents.len >= max_n_of_items)
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+						"<span class='notice'>You fill \the [src] with \the [O].</span>")
 				else
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+						"<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				if (visible_contents)
@@ -375,7 +375,7 @@
 	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/))
+	if(IS_EDIBLE(O))
 		return TRUE
 	return FALSE
 
