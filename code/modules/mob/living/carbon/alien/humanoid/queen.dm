@@ -22,6 +22,8 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()

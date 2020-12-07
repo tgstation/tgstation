@@ -4,6 +4,8 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	var/atom/movable/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
