@@ -9,12 +9,19 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view)
+		var/atom/movable/screen/parallax_layer/planet/planet_or_korol = new(null, C.view)
+		if(GLOB.korolized)
+			planet_or_korol.icon_state = "korol"
+		C.parallax_layers_cached += planet_or_korol
 		if(SSparallax.random_layer)
 			C.parallax_layers_cached += new SSparallax.random_layer
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
+
+	if(GLOB.korolized)
+		var/atom/movable/screen/parallax_layer/planet/korol = locate(/atom/movable/screen/parallax_layer/planet) in C.parallax_layers
+		korol.icon_state = "korol"
 
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
@@ -91,7 +98,8 @@
 		var/animate_time = 0
 		for(var/thing in C.parallax_layers)
 			var/atom/movable/screen/parallax_layer/L = thing
-			L.icon_state = initial(L.icon_state)
+			if(!L.fixed_icon_state)
+				L.icon_state = initial(L.icon_state)
 			L.update_o(C.view)
 			var/T = PARALLAX_LOOP_TIME / L.speed
 			if (T > animate_time)
@@ -146,6 +154,8 @@
 			animate(L)
 			continue
 
+		if(!L.fixed_icon_state)
+			continue
 		var/newstate = initial(L.icon_state)
 		var/T = PARALLAX_LOOP_TIME / L.speed
 
@@ -240,6 +250,7 @@
 	var/offset_y = 0
 	var/view_sized
 	var/absolute = FALSE
+	var/fixed_icon_state = FALSE
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
@@ -308,6 +319,7 @@
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
 	absolute = TRUE //Status of seperation
+	fixed_icon_state = TRUE
 	speed = 3
 	layer = 30
 

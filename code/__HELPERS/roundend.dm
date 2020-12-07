@@ -296,6 +296,11 @@
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
 
+	//everything sacrificed to the korol head (if enabled)
+	parts += korol_report()
+
+	CHECK_TICK
+
 	//Gamemode specific things. Should be empty most of the time.
 	parts += mode.special_report()
 
@@ -413,6 +418,29 @@
 		show_roundend_report(C, FALSE)
 		give_show_report_button(C)
 		CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/korol_report()
+	var/list/parts = list()
+
+	if(!GLOB.korolized)
+		return ""
+
+
+	parts += "<span class='header'>Sacrifices to the Korol Head:</span>"
+
+	for(var/i in GLOB.korol_sacrifices)
+		var/obj/item/sac = i
+		var/num = GLOB.korol_sacrifices[i]
+		parts += "[num] [initial(sac.name)][num > 1 ? "s" : ""]" //1 Insulated Gloves, for example
+
+	var/sum = counterlist_sum(GLOB.korol_sacrifices)
+	parts += "<span class='header'>In total, you sacrificed [sum] things to the Head.</span>"
+
+	if(parts.len)
+		return "<div class='panel greenborder'>[parts.Join("<br>")]</div>"
+	else
+		return ""
+
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()

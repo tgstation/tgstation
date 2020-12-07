@@ -34,6 +34,11 @@
 	mood_change = 3
 	timeout = 8 MINUTES
 
+/datum/mood_event/blessing_korol
+	description = "<span class='nicegreen'>I've made the Korol Head happy!</span>\n"
+	mood_change = 6
+	timeout = 3 MINUTES
+
 /datum/mood_event/book_nerd
 	description = "<span class='nicegreen'>I have recently read a book.</span>\n"
 	mood_change = 1
