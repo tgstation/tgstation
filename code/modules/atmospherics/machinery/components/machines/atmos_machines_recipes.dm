@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Zauker Grenade"
 	min_temp = 500
 	max_temp = 600
-	reaction_type = "exoothermic"
+	reaction_type = "exothermic"
 	energy_release = 254000
 	requirements = list(/datum/gas/zauker = 600, /datum/gas/hypernoblium = 1000, /datum/gas/plasma = 800)
 	products = list(/obj/item/grenade/gas_crystal/zauker_crystal = 1)
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Ammonia Crystal"
 	min_temp = 200
 	max_temp = 240
-	reaction_type = "exoothermic"
+	reaction_type = "exothermic"
 	energy_release = 15000
 	requirements = list(/datum/gas/hydrogen = 500, /datum/gas/nitrogen = 400)
 	products = list(/obj/item/stack/ammonia_crystals = 4)
