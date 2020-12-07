@@ -25,6 +25,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
+	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn()
 	return ..()
 
