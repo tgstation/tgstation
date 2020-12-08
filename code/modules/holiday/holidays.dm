@@ -591,10 +591,15 @@
 	begin_month = OCTOBER
 	begin_day = 12
 	
-/datum/holiday/indigenous 	//Indigenous People's Day from Brazil!
+/datum/holiday/indigenous 	//Indigenous Peoples' Day from Brazil!
 	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
 	begin_day = 19
+	
+/datum/holiday/indigenousUN //Indigenous Peoples' Day from Earth!
+	name = "International Day of the World's Indigenous Peoples"
+	begin_month = AUGUST
+	begin_day = 9
 
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
