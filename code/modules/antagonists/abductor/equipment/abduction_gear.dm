@@ -462,7 +462,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/mode = BATON_STUN
 
-	var/sleep_time = 1 MINUTE
+	var/sleep_time = 1 MINUTES
 	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/ComponentInitialize()
