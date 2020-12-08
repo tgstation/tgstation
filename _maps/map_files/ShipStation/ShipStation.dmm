@@ -1015,7 +1015,6 @@
 /area/gateway)
 "hr" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/vending/snack/random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -1524,10 +1523,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/gateway)
-"kt" = (
-/obj/effect/decal/cleanable/robot_debris/gib,
-/turf/open/floor/plasteel/dark/airless,
-/area/ruin/unpowered)
 "kE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/plaque,
@@ -6266,14 +6261,6 @@
 	},
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
-"Pc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/puddle{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/turf/open/floor/plating/asteroid/lowpressure,
-/area/maintenance/central)
 "Pe" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -24764,7 +24751,7 @@ aX
 aX
 wM
 wU
-Pc
+aX
 aX
 OO
 bJ
@@ -59850,7 +59837,7 @@ bJ
 bJ
 ba
 bo
-kt
+iY
 lH
 kV
 ba
