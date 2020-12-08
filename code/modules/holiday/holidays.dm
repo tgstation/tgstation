@@ -591,6 +591,9 @@
 	begin_month = OCTOBER
 	begin_day = 12
 
+/datum/holiday/spain/greet()
+	return "Happy Fiesta Nacional de España!"
+
 /datum/holiday/spain/getStationPrefix()
 	return pick("Hispanic", "Pillar", "Spain")
 
