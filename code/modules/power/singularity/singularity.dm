@@ -44,6 +44,8 @@
 		consume_callback = CALLBACK(src, .proc/consume), \
 	)
 
+	singularity_component = WEAKREF(new_component)
+
 	expand(current_size)
 
 	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
@@ -53,8 +55,6 @@
 
 	if (!mapload)
 		notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
-
-	singularity_component = WEAKREF(new_component)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
