@@ -550,7 +550,7 @@
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
-		/obj/item/reagent_containers/food/snacks/icecream
+		/obj/item/food/icecream
 		))
 
 /obj/item/storage/organbox/Initialize()

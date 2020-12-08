@@ -48,6 +48,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1 << 20)
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1 << 21)
+/// Does the supermatter skip over this atom?
+#define SUPERMATTER_IGNORES_1 (1 << 22)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
@@ -185,7 +187,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	if(HAS_TRAIT_FROM_ONLY(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL))\
 		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
 	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
-	 	x.appearance_flags &= ~KEEP_TOGETHER
+		x.appearance_flags &= ~KEEP_TOGETHER
 
 //religious_tool flags
 #define RELIGION_TOOL_INVOKE (1<<0)

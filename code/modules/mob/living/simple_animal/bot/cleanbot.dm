@@ -237,7 +237,7 @@
 		target = scan(/obj/item/trash)
 
 	if(!target && trash) //Search for dead mices.
-		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
@@ -307,7 +307,7 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
+		target_types += /obj/item/food/deadmouse
 
 	target_types = typecacheof(target_types)
 

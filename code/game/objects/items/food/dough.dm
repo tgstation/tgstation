@@ -40,6 +40,10 @@
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
 
+/obj/item/food/pizzabread/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 12)
+
 /obj/item/food/doughslice
 	name = "dough slice"
 	desc = "A slice of dough. Can be cooked into a bun."
@@ -61,6 +65,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
+
+/obj/item/food/bun/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/burger/empty, CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 
 /obj/item/food/cakebatter
 	name = "cake batter"

@@ -7,11 +7,11 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /**
-  * Proc called to allow the ninja to EMP the nearby area.
-  *
-  * Proc called to allow the ninja to EMP the nearby area.  By default, costs 500E, which is half of the default battery's max charge.
-  * Also affects the ninja as well.
-  */
+ * Proc called to allow the ninja to EMP the nearby area.
+ *
+ * Proc called to allow the ninja to EMP the nearby area.  By default, costs 500E, which is half of the default battery's max charge.
+ * Also affects the ninja as well.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
 	if(ninjacost(500,N_STEALTH_CANCEL))
 		return

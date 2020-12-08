@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Nightmares and some other critters no longer delete themselves once they stop phasing."

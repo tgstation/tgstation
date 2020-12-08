@@ -5,11 +5,11 @@
 	icon_icon = 'icons/effects/effects.dmi'
 
 /**
-  * Proc called to ensnare a person in a energy net.
-  *
-  * Used to ensnare a target in an energy net, preventing them from moving until the net is broken.
-  * Costs 40E, which is 40% of the default battery's max charge.  Intended as a means of reliably locking down an opponent when ninja stars won't suffice.
-  */
+ * Proc called to ensnare a person in a energy net.
+ *
+ * Used to ensnare a target in an energy net, preventing them from moving until the net is broken.
+ * Costs 40E, which is 40% of the default battery's max charge.  Intended as a means of reliably locking down an opponent when ninja stars won't suffice.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet()
 	var/mob/living/carbon/human/ninja = affecting
 	var/mob/living/net_target = input("Select who to capture:","Capture who?",null) as null|mob in sortNames(oview(ninja))

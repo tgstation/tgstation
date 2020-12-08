@@ -9,6 +9,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	icon_state = "away"
 	has_gravity = STANDARD_GRAVITY
 	ambientsounds = AWAY_MISSION
+	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 /area/awaymission/beach
 	name = "Beach"

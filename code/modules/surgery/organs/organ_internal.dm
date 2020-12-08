@@ -156,11 +156,11 @@
 	applyOrganDamage(d - damage)
 
 /** check_damage_thresholds
-  * input: M (a mob, the owner of the organ we call the proc on)
-  * output: returns a message should get displayed.
-  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
-  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
-  */
+ * input: M (a mob, the owner of the organ we call the proc on)
+ * output: returns a message should get displayed.
+ * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+ *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+ */
 /obj/item/organ/proc/check_damage_thresholds(M)
 	if(damage == prev_damage)
 		return
@@ -226,13 +226,13 @@
 
 
 /** get_availability
-  * returns whether the species should innately have this organ.
-  *
-  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
-  * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
-  * Arguments:
-  * S - species, needed to return whether the species has an organ specific trait
-  */
+ * returns whether the species should innately have this organ.
+ *
+ * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
+ * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
+ * Arguments:
+ * S - species, needed to return whether the species has an organ specific trait
+ */
 /obj/item/organ/proc/get_availability(datum/species/S)
 	return TRUE
 

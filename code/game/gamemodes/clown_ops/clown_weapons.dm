@@ -185,7 +185,7 @@
 		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
-	bomb.preprime(loc, null, FALSE)
+	bomb.arm_grenade(loc, null, FALSE)
 
 /obj/item/grown/bananapeel/bombanana/ComponentInitialize()
 	. = ..()
@@ -198,7 +198,7 @@
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	bomb.preprime(user, 0, FALSE)
+	bomb.arm_grenade(user, 0, FALSE)
 	return (BRUTELOSS)
 
 //TEARSTACHE GRENADE
@@ -209,7 +209,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
 	for(var/mob/living/carbon/M in view(6, myloc))

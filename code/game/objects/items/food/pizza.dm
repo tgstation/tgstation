@@ -46,6 +46,9 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 
+/obj/item/food/pizzaslice/margherita/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
 
 /obj/item/food/pizza/meat
 	name = "meatpizza"
