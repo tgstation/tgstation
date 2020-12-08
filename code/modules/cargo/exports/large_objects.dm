@@ -1,5 +1,5 @@
 /datum/export/large/crate
-	cost = 500
+	cost = CARGO_CRATE_VALUE
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
@@ -11,7 +11,7 @@
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/large/crate/wooden
-	cost = 100
+	cost = CARGO_CRATE_VALUE/5
 	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
@@ -21,13 +21,13 @@
 	export_types = list(/obj/structure/ore_box)
 
 /datum/export/large/crate/wood
-	cost = 240
+	cost = CARGO_CRATE_VALUE * 0.48
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
 /datum/export/large/crate/coffin
-	cost = 250//50 wooden crates cost 2000 points, and you can make 10 coffins in seconds with those planks. Each coffin selling for 250 means you can make a net gain of 500 points for wasting your time making coffins.
+	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 2000 points, and you can make 10 coffins in seconds with those planks. Each coffin selling for 250 means you can make a net gain of 500 points for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 

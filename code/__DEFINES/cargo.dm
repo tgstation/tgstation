@@ -37,6 +37,8 @@
 
 #define SUPPLYPOD_X_OFFSET -16
 
+#define CARGO_CRATE_VALUE 200
+
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 
 GLOBAL_LIST_INIT(podstyles, list(\
