@@ -123,8 +123,9 @@
 			if(suiciding)
 				. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life</span>"
-			if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE))
-				if(pushed_do_not_resuscitate)
+			var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
+			if(getorgan(/obj/item/organ/brain) && !key && !(ghost?.can_reenter_corpse))
+				if(ghost.pushed_do_not_resuscitate)
 					. += "<span class='deadsay'> and [t_his] soul has lost the will to live...</span>"
 				else
 					. += "<span class='deadsay'> and [t_his] soul has departed...</span>"
