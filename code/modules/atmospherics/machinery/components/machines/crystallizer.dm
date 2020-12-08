@@ -204,7 +204,7 @@
 		if(5 to 14)
 			quality_control = "Ugly"
 		if(1 to 4)
-			quality_control = "Broken"
+			quality_control = "Cracked"
 		if(0)
 			quality_control = "Oh God why"
 

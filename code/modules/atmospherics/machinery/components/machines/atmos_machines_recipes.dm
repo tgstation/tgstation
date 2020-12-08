@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 4
 	reaction_type = "exothermic"
 	energy_release = 1500000
-	requirements = list(/datum/gas/hypernoblium = 15000, /datum/gas/antinoblium = 1500, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
+	requirements = list(/datum/gas/hypernoblium = 1500, /datum/gas/antinoblium = 1500, /datum/gas/bz = 2000, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)
 
 /datum/gas_recipe/crystallizer/n2o_crystal
