@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - tweak: "Acclimator will now idle when emptying, to prevent overcooking in laggy and sensitive situations"
