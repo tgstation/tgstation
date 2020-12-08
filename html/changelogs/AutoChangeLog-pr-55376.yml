@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "The roulette wheel now actually works and no longer just crashes every time you try to place a bet on a single."
