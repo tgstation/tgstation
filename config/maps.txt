@@ -35,6 +35,12 @@ map outpoststation
 	votable
 endmap
 
+map shipstation
+	minplayers 0
+	maxplayers 19
+	votable
+endmap
+
 map kilostation
 	votable
 endmap

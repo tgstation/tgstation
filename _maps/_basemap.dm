@@ -13,6 +13,7 @@
 		#include "map_files\PubbyStation\PubbyStation.dmm"
 		#include "map_files\IceBoxStation\IceBoxStation.dmm"
 		#include "map_files\OutpostStation\OutpostStation.dmm"
+		#include "map_files\ShipStation\ShipStation.dmm"
 
 		#ifdef CIBUILDING
 			#include "templates.dm"
