@@ -970,7 +970,6 @@
 /obj/structure/closet/crate/secure/engineering,
 /obj/item/organ/cyberimp/arm/toolset,
 /obj/item/organ/cyberimp/eyes/hud/medical,
-/obj/item/organ/cyberimp/brain/anti_stun,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "jb" = (
