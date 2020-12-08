@@ -462,7 +462,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/mode = BATON_STUN
 
-	var/sleep_time = 2 MINUTES
+	var/sleep_time = 1 MINUTE
 	var/time_to_cuff = 3 SECONDS
 
 /obj/item/melee/baton/abductor/ComponentInitialize()
@@ -559,6 +559,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
 	playsound(src, stun_sound, 50, TRUE, -1)
+	if(L.IsSleeping())
+		L.visible_message("<span class='danger'>[user] tries to induce sleep in [L] with [src], but [L.p_they()] is already asleep!</span>")
+		return
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
