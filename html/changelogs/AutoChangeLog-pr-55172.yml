@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - refactor: "Refactors now keep an assoc list to keep track of how much specific do afters are running at once"
