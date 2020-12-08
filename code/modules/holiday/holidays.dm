@@ -592,7 +592,7 @@
 	begin_day = 12
 	
 /datum/holiday/indigenous
-	name = "Indigenous Peoples' Day
+	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
 	begin_day = 19
 
