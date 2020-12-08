@@ -19,7 +19,7 @@ export const Crystallizer = (props, context) => {
       width={500}
       height={600}>
       <Window.Content>
-        <Section>
+        <Section title="Controls">
           <LabeledList>
             <LabeledList.Item label="Power">
               <Button
@@ -39,11 +39,42 @@ export const Crystallizer = (props, context) => {
                   })} />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item>
-              <Box>
+            <LabeledList.Item label="Gas Input">
+              <NumberInput
+                animated
+                value={parseFloat(data.gas_input)}
+                width="63px"
+                unit="moles/s"
+                minValue={0}
+                maxValue={500}
+                onDrag={(e, value) => act('gas_input', {
+                  gas_input: value,
+                })} />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section title="Requirements and progress">
+          <LabeledList>
+            <LabeledList.Item label="Progress">
+              <ProgressBar
+                value={progress_bar / 100}
+                ranges={{
+                  good: [0.67, 1],
+                  average: [0.34, 0.66],
+                  bad: [0, 0.33],
+                }} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Recipe">
+              <Box m={1} style={{
+                'white-space': 'pre-wrap',
+              }}>
                 {requirements}
               </Box>
             </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section title="Gases">
+          <LabeledList>
             {gasTypes.map(gas => (
               <LabeledList.Item
                 key={gas.name}
@@ -57,27 +88,6 @@ export const Crystallizer = (props, context) => {
                 </ProgressBar>
               </LabeledList.Item>
             ))}
-            <LabeledList.Item label="Progress">
-              <ProgressBar
-                value={progress_bar / 100}
-                ranges={{
-                  good: [0.67, 1],
-                  average: [0.34, 0.66],
-                  bad: [0, 0.33],
-                }} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Gas Input">
-              <NumberInput
-                animated
-                value={parseFloat(data.gas_input)}
-                width="63px"
-                unit="J/cm"
-                minValue={0}
-                maxValue={500}
-                onDrag={(e, value) => act('gas_input', {
-                  gas_input: value,
-                })} />
-            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>

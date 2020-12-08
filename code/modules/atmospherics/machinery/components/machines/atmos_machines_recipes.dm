@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
 	id = "proto_nitrate_g"
-	name = "Proto N Grenade"
+	name = "Proto Nitrate Grenade"
 	min_temp = 200
 	max_temp = 400
 	reaction_type = "endothermic"
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
-	name = "Crystal Shard"
+	name = "Supermatter Crystal Shard"
 	min_temp = 2
 	max_temp = 4
 	reaction_type = "exothermic"

@@ -6,7 +6,6 @@
 /obj/machinery/atmospherics/components/binary/crystallizer
 	icon = 'icons/obj/atmospherics/components/machines.dmi'
 	icon_state = "crystallizer-off"
-
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
@@ -14,20 +13,24 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
-
-	var/recipe_type = null
-
 	pipe_flags = PIPING_ONE_PER_TURF
 
+	///Save the icon state for the machine to be used in update_icon()
 	var/icon_state_off = "crystallizer-off"
 	var/icon_state_on = "crystallizer-on"
 	var/icon_state_open = "crystallizer-open"
-
+	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
+	///Var that controls how much gas gets injected
 	var/gas_input = 0
+	///Var that checks if the gases put in are the same numbers as the requirements
 	var/gas_check = 0
+	///Saves the progress during the processing of the items
 	var/progress_bar = 0
+	///Stores the amount of lost quality
 	var/quality_loss = 0
+	///Stores the recipe selected by the user in the GUI
+	var/recipe_type = null
 
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
@@ -89,6 +92,7 @@
 	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
 	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
 
+///Checks if the gases in the input are the ones needed by the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = airs[2]
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
@@ -97,6 +101,7 @@
 			return FALSE
 	return TRUE
 
+///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
 	var/datum/gas_mixture/contents = airs[2]
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
@@ -104,6 +109,7 @@
 		return TRUE
 	return FALSE
 
+///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
@@ -112,6 +118,7 @@
 
 	update_parents()
 
+///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	gas_check = 0
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
@@ -119,6 +126,7 @@
 		if(internal.gases[gas_type][MOLES] >= recipe[META_RECIPE_REQUIREMENTS][gas_type])
 			gas_check++
 
+///Calculation for the heat of the various gas mixes and controls the quality of the item
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
 	if(airs[1].total_moles() * 0.05 > MINIMUM_MOLE_COUNT)
 		var/datum/gas_mixture/cooling_port = airs[1]
@@ -139,6 +147,7 @@
 	else if(recipe[META_RECIPE_REACTION_TYPE] == "exothermic")
 		internal.temperature = max(internal.temperature + (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
 
+///Removes the gases from the internal gasmix when the recipe is changed
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/dump_gases()
 	var/datum/gas_mixture/remove = internal.remove(internal.total_moles())
 	airs[2].merge(remove)
@@ -245,18 +254,18 @@
 				)))
 	data["internal_gas_data"] = internal_gas_data
 
-	var/list/requirements = list("To create ")
+	var/list/requirements
 	if(!recipe_type)
 		requirements = list("Select a recipe to see the requirements")
 	else
 		var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
-		requirements += list("[recipe[META_RECIPE_NAME]] you need:")
+		requirements += list("To create [recipe[META_RECIPE_NAME]] you will need:")
 		for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
 			var/datum/gas/gas_required = gas_type
 			var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type]
-			requirements += "[initial(gas_required.name)]" + " [amount_consumed] moles"
-		requirements += "in a temperature range between [recipe[META_RECIPE_MIN_TEMP]] and [recipe[META_RECIPE_MAX_TEMP]]"
-		requirements += "the crystallization reaction is going to be [recipe[META_RECIPE_REACTION_TYPE]]"
+			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
+		requirements += "In a temperature range between [recipe[META_RECIPE_MIN_TEMP]] K and [recipe[META_RECIPE_MAX_TEMP]] K"
+		requirements += "The crystallization reaction is going to be [recipe[META_RECIPE_REACTION_TYPE]]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature
@@ -285,6 +294,7 @@
 			if(internal.total_moles())
 				dump_gases()
 			quality_loss = 0
+			progress_bar = 0
 			if(recipe in GLOB.gas_recipe_meta)
 				recipe_type = recipe
 				recipe_name	= GLOB.gas_recipe_meta[recipe][META_RECIPE_NAME]
