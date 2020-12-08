@@ -290,6 +290,33 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_ROYAL_BLUE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_ROYAL_BLUE)
 
+/turf/open/floor/carpet/executive
+	name = "executive carpet"
+	icon = 'icons/turf/floors/carpet_executive.dmi'
+	icon_state = "executive_carpet-255"
+	base_icon_state = "executive_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/executive
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_EXECUTIVE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_EXECUTIVE)
+
+/turf/open/floor/carpet/stellar
+	name = "stellar carpet"
+	icon = 'icons/turf/floors/carpet_stellar.dmi'
+	icon_state = "stellar_carpet-255"
+	base_icon_state = "stellar_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/stellar
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_STELLAR)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_STELLAR)
+
+/turf/open/floor/carpet/donk
+	name = "Donk Co. carpet"
+	icon = 'icons/turf/floors/carpet_donk.dmi'
+	icon_state = "donk_carpet-255"
+	base_icon_state = "donk_carpet"
+	floor_tile = /obj/item/stack/tile/carpet/donk
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_DONK)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_DONK)
+
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
 	initial_gas_mix = AIRLESS_ATMOS

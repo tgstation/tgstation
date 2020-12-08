@@ -154,7 +154,7 @@
 	pixel_y = 3
 	},
 /obj/item/food/pizzaslice/margherita,
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

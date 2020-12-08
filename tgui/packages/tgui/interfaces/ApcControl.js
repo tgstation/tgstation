@@ -1,9 +1,10 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { pureComponentHooks } from 'common/react';
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Flex, Icon, Table, Tabs } from '../components';
-import { Fragment, Window } from '../layouts';
+import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
 
 export const ApcControl = (props, context) => {

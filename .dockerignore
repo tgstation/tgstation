@@ -1,6 +1,5 @@
 .dockerignore
 .editorconfig
-.travis.yml
 GPLv3.txt
 LICENSE
 README.md
@@ -26,5 +25,4 @@ tgstation.dyn.rsc
 libmariadb.dll
 rust_g.dll
 BSQL.dll
-appveyor.yml
 Dockerfile

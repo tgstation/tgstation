@@ -5,7 +5,7 @@
 	icon_state = "seed-cocoapod"
 	species = "cocoapod"
 	plantname = "Cocao Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/cocoapod
+	product = /obj/item/food/grown/cocoapod
 	lifespan = 20
 	maturation = 5
 	production = 5
@@ -19,14 +19,13 @@
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod, /obj/item/seeds/cocoapod/bungotree)
 	reagents_add = list(/datum/reagent/consumable/coco = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/cocoapod
+/obj/item/food/grown/cocoapod
 	seed = /obj/item/seeds/cocoapod
 	name = "cocoa pod"
 	desc = "Fattening... Mmmmm... chucklate."
 	icon_state = "cocoapod"
-	filling_color = "#FFD700"
-	bitesize_mod = 2
-	foodtype = FRUIT
+	bite_consumption_mod = 2
+	foodtypes = FRUIT
 	tastes = list("cocoa" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
 
@@ -37,18 +36,17 @@
 	icon_state = "seed-vanillapod"
 	species = "vanillapod"
 	plantname = "Vanilla Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/vanillapod
+	product = /obj/item/food/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/reagent_containers/food/snacks/grown/vanillapod
+/obj/item/food/grown/vanillapod
 	seed = /obj/item/seeds/cocoapod/vanillapod
 	name = "vanilla pod"
 	desc = "Fattening... Mmmmm... vanilla."
 	icon_state = "vanillapod"
-	filling_color = "#FFD700"
-	foodtype = FRUIT
+	foodtypes = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
 
@@ -58,7 +56,7 @@
 	icon_state = "seed-bungotree"
 	species = "bungotree"
 	plantname = "Bungo Tree"
-	product = /obj/item/reagent_containers/food/snacks/grown/bungofruit
+	product = /obj/item/food/grown/bungofruit
 	lifespan = 30
 	maturation = 4
 	yield = 3
@@ -72,19 +70,18 @@
 	icon_dead = "bungotree-dead"
 	rarity = 15
 
-/obj/item/reagent_containers/food/snacks/grown/bungofruit
+/obj/item/food/grown/bungofruit
 	seed = /obj/item/seeds/cocoapod/bungotree
 	name = "bungo fruit"
 	desc = "A strange fruit, tough leathery skin protects its juicy flesh and large poisonous seed."
 	icon_state = "bungo"
-	trash = /obj/item/reagent_containers/food/snacks/grown/bungopit
-	filling_color = "#E8C22F"
-	foodtype = FRUIT
+	trash_type = /obj/item/food/grown/bungopit
+	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
 	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
 	distill_reagent = null
 
-/obj/item/reagent_containers/food/snacks/grown/bungopit
+/obj/item/food/grown/bungopit
 	seed = /obj/item/seeds/cocoapod/bungotree
 	name = "bungo pit"
 	icon_state = "bungopit"
@@ -93,10 +90,10 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	foodtype = TOXIC
+	foodtypes = TOXIC
 	tastes = list("acrid bitterness" = 1)
 
-/obj/item/reagent_containers/food/snacks/grown/bungopit/Initialize()
+/obj/item/food/grown/bungopit/Initialize()
 	. =..()
 	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.10) //More than this will kill at too low potency

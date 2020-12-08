@@ -113,11 +113,15 @@
 		user.put_in_hands(charging)
 		setCharging(null)
 
+
 /obj/machinery/recharger/attack_tk(mob/user)
-	if(charging)
-		charging.update_icon()
-		charging.forceMove(drop_location())
-		setCharging(null)
+	if(!charging)
+		return
+	charging.update_icon()
+	charging.forceMove(drop_location())
+	setCharging(null)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/machinery/recharger/process(delta_time)
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)

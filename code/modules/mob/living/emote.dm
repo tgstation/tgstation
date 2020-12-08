@@ -125,7 +125,7 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		if(H.dna.features["wings"] != "None")
-			if("wingsopen" in H.dna.species.mutant_bodyparts)
+			if(H.dna.species.mutant_bodyparts["wingsopen"])
 				open = TRUE
 				H.CloseWings()
 			else
@@ -253,7 +253,7 @@
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-	..()
+	return ..()
 
 /datum/emote/living/pout
 	key = "pout"

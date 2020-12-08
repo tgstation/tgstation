@@ -282,7 +282,7 @@
 	crosslink()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
-    firing_core = TRUE
+	firing_core = TRUE
 
 /* 3d printer 'pseudo guns' for borgs */
 

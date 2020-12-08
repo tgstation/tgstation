@@ -206,8 +206,8 @@
  * * copied_item - The paper, document, or photo that was just spawned on top of the printer.
  */
 /obj/machinery/photocopier/proc/give_pixel_offset(obj/item/copied_item)
-	copied_item.pixel_x = rand(-10, 10)
-	copied_item.pixel_y = rand(-10, 10)
+	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
+	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
 /**
  * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -475,6 +475,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
+	desc = "A small, lightweight cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
@@ -483,9 +484,10 @@
 
 /obj/item/toner/large
 	name = "large toner cartridge"
+	desc = "A hefty cartridge of NanoTrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	grind_results = list(/datum/reagent/iodine = 90, /datum/reagent/iron = 10)
-	charges = 15
-	max_charges = 15
+	charges = 25
+	max_charges = 25
 
 /obj/item/toner/extreme
 	name = "extremely large toner cartridge"

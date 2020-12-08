@@ -52,12 +52,14 @@
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
-	if(user.usable_hands < arms_required)
-		to_chat(user, "<span class='warning'>You don't have enough arms to operate the motor controller!</span>")
+	if(rider_check_flags & REQUIRES_ARMS && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		to_chat(user, "<span class='warning'>You can't operate the motor controller!</span>")
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
 	power_cell.use(power_usage / max(power_efficiency, 1) * 0.05)
+
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/set_move_delay(mob/living/user)
 	return

@@ -54,18 +54,18 @@
 	if(!limb.current_gauze)
 		return ..()
 
-	var/list/msg = list("The cuts on [victim.p_their()] [limb.name] are wrapped with")
+	var/list/msg = list("The cuts on [victim.p_their()] [limb.name] are wrapped with ")
 	// how much life we have left in these bandages
 	switch(limb.current_gauze.absorption_capacity)
 		if(0 to 1.25)
-			msg += "nearly ruined "
+			msg += "nearly ruined"
 		if(1.25 to 2.75)
-			msg += "badly worn "
+			msg += "badly worn"
 		if(2.75 to 4)
-			msg += "slightly bloodied "
+			msg += "slightly bloodied"
 		if(4 to INFINITY)
-			msg += "clean "
-	msg += "[limb.current_gauze.name]!"
+			msg += "clean"
+	msg += " [limb.current_gauze.name]!"
 
 	return "<B>[msg.Join()]</B>"
 
@@ -96,7 +96,7 @@
 
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
-	if(victim.has_reagent(/datum/reagent/toxin/heparin))
+	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
@@ -145,7 +145,7 @@
 /datum/wound/slash/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB || !isfelinid(user) || !victim.can_inject(user, TRUE))
 		return FALSE
-	if(INTERACTING_WITH(user, victim))
+	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return
 	if(user.is_mouth_covered())
@@ -161,8 +161,11 @@
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/proc/lick_wounds(mob/living/carbon/human/user)
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
-	for(var/datum/disease/D in victim.diseases)
-		user.ForceContractDisease(D)
+	for(var/i in victim.diseases)
+		var/datum/disease/iter_disease = i
+		if(iter_disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue
+		user.ForceContractDisease(iter_disease)
 
 	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
 	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
