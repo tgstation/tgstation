@@ -15,8 +15,7 @@
 					playsound(src, alt_sound, 40, TRUE)
 				else
 					playsound(src, dumping_sound, 40, TRUE)
-				var/datum/beam/peeeew = M.Beam(dumping_location, icon_state="rped_upgrade")
-				QDEL_IN(peeeew, 5)
+				M.Beam(dumping_location, icon_state="rped_upgrade", time=5)
 				return TRUE
 		to_chat(M, "<span class='hear'>The [A.name] buzzes.</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)

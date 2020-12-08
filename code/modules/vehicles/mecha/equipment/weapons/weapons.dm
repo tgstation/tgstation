@@ -489,8 +489,7 @@
 	else
 		PG.throwforce = 0
 
-	var/datum/beam/bwoingoingoing = chassis.Beam(PG, icon_state = "chain", maxdistance = missile_range + 2)
-	QDEL_IN(bwoingoingoing, missile_range * 20)
+	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2)
 
 /obj/item/punching_glove
 	name = "punching glove"

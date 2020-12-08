@@ -149,8 +149,7 @@
 		var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 		if(wheres_wizdo)
 			old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-			var/datum/beam/resurrect_beam = body_turf.Beam(item_turf,icon_state="lichbeam")
-			QDEL_IN(resurrect_beam, 10 + 10 * resurrections)
+			body_turf.Beam(item_turf,icon_state="lichbeam", time = 10 + 10 * resurrections)
 		old_body.dust()
 
 

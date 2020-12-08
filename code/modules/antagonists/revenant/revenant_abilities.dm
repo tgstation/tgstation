@@ -214,8 +214,7 @@
 	for(var/mob/living/carbon/human/M in view(shock_range, L))
 		if(M == user)
 			continue
-		var/datum/beam/bzzzt = L.Beam(M,icon_state="purple_lightning")
-		QDEL_IN(bzzzt, 5)
+		L.Beam(M,icon_state="purple_lightning", time = 5)
 		if(!M.anti_magic_check(FALSE, TRUE))
 			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)

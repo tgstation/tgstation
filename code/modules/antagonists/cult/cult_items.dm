@@ -912,8 +912,7 @@
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
-		var/datum/beam/current_beam = user.Beam(temp_target, icon_state="blood_beam", beam_type = /obj/effect/ebeam/blood)
-		QDEL_IN(current_beam, 7)
+		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
 
 /obj/effect/ebeam/blood

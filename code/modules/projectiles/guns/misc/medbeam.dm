@@ -33,8 +33,9 @@
 	..()
 	LoseTarget()
 
-//this is an embarassing excuse for documentation, but this is just so people in the future don't fuck it all up with this shitcode
-//this is the proc that always happens for beams and makes sure things are cleaned up
+/**
+ * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
+ */
 /obj/item/gun/medbeam/proc/LoseTarget()
 	if(active)
 		qdel(current_beam)
@@ -43,9 +44,11 @@
 		on_beam_release(current_target)
 	current_target = null
 
-//and this is the proc that is called when the beam fails due to something, this proc triggers when the beam qdels and calls losetarget so don't losetarget BEFORE this
-//manual disconnection = losetarget
-//automatic disconnection = beam_died, so we can give a warning message
+/**
+ * Proc that is only called when the beam fails due to something, so not when manually ended.
+ * manual disconnection = LoseTarget, so it can silently end
+ * automatic disconnection = beam_died, so we can give a warning message first
+ */
 /obj/item/gun/medbeam/proc/beam_died()
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	if(isliving(loc))
@@ -64,7 +67,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="medbeam", maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
-	RegisterSignal(current_beam, list(COMSIG_PARENT_QDELETING), .proc/beam_died)//this is a WAY better rangecheck than what was done before (process check)
+	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, .proc/beam_died)//this is a WAY better rangecheck than what was done before (process check)
 	QDEL_IN(current_beam, 10 MINUTES)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)

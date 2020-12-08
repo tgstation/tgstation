@@ -1147,8 +1147,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(punishment)
 		if(ADMIN_PUNISHMENT_LIGHTNING)
 			var/turf/T = get_step(get_step(target, NORTH), NORTH)
-			var/datum/beam/zappies = T.Beam(target, icon_state="lightning[rand(1,12)]")
-			QDEL_IN(zappies, 5)
+			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
 			target.adjustFireLoss(75)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target

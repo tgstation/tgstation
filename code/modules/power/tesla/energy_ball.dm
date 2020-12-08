@@ -311,8 +311,7 @@
 	if(!closest_atom)
 		return
 	//common stuff
-	var/datum/beam/zappies = source.Beam(closest_atom, icon_state="lightning[rand(1,12)]")
-	QDEL_IN(zappies, 5)
+	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time = 5)
 	var/zapdir = get_dir(source, closest_atom)
 	if(zapdir)
 		. = zapdir
