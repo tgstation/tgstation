@@ -1,0 +1,5 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - refactor: "The singularity, tesla, Nar'Sie, and similar have been refactored to separate behavior."
+  - tweak: "The alerts for singularities being loose are now handled by the singularity itself, meaning the icon will no longer be the containment field."
