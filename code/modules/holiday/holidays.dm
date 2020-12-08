@@ -591,7 +591,7 @@
 	begin_month = OCTOBER
 	begin_day = 12
 	
-/datum/holiday/indigenous
+/datum/holiday/indigenous 	//Indigenous People's Day from Brazil!
 	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
 	begin_day = 19
