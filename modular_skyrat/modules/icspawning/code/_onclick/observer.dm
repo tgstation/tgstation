@@ -36,26 +36,26 @@
 				return
 
 
-		var/turf/current_turf = get_turf(src)
-		var/mob/living/carbon/human/spawned_player = new(src)
+		var/turf/current_turf = get_turf(user)
+		var/mob/living/carbon/human/spawned_player = new(user)
 
 		if (character_option == "Selected Character")
-			spawned_player.name = src.name
-			spawned_player.real_name = src.real_name
+			spawned_player.name = user.name
+			spawned_player.real_name = user.real_name
 
 			var/mob/living/carbon/human/H = spawned_player
-			client?.prefs.copy_to(H)
+			user.client?.prefs.copy_to(H)
 			H.dna.update_dna_identity()
 
-		QDEL_IN(src, 1)
+		QDEL_IN(user, 1)
 
 		if (teleport_option == "Bluespace")
 			playsound(spawned_player, 'sound/magic/Disable_Tech.ogg', 100, 1)
 
-		if(mind && isliving(spawned_player))
-			mind.transfer_to(spawned_player, 1) // second argument to force key move to new mob
+		if(user.mind && isliving(spawned_player))
+			user.mind.transfer_to(spawned_player, 1) // second argument to force key move to new mob
 		else
-			spawned_player.ckey = key
+			spawned_player.ckey = user.key
 
 		if(give_return != "No")
 			spawned_player.mind.AddSpell(new /obj/effect/proc_holder/spell/self/return_back, FALSE)
