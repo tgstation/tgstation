@@ -8,10 +8,6 @@
         "beautifulsoup4"
       ]
     },
-    "synchronize_paths": [
-      "html/changelog.html",
-      "html/changelogs/*"
-    ],
     "static_directories": [
       "config",
       "data"
