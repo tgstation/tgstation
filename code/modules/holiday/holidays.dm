@@ -590,6 +590,11 @@
 	name = "National Day of Spain"
 	begin_month = OCTOBER
 	begin_day = 12
+	
+/datum/holiday/indigenous
+	name = "Indigenous Peoples' Day
+	begin_month = APRIL
+	begin_day = 19
 
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
