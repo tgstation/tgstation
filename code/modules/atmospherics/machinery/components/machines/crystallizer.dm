@@ -140,7 +140,11 @@
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
 	if(	(internal.temperature >= (recipe[META_RECIPE_MIN_TEMP] * MIN_DEVIATION_RATE) && internal.temperature <= recipe[META_RECIPE_MIN_TEMP]) || \
 		(internal.temperature >= recipe[META_RECIPE_MAX_TEMP] && internal.temperature <= (recipe[META_RECIPE_MAX_TEMP] * MAX_DEVIATION_RATE)))
-		quality_loss += 1.5
+		quality_loss = min(quality_loss + 1.5, 100)
+
+	var/median_temperature = (recipe[META_RECIPE_MAX_TEMP] - recipe[META_RECIPE_MIN_TEMP]) * 0.5
+	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
+		quality_loss = max(quality_loss - 2.5, 100)
 
 	if(recipe[META_RECIPE_REACTION_TYPE] == "endothermic")
 		internal.temperature = max(internal.temperature - (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
@@ -173,7 +177,7 @@
 			heat_calculations()
 			progress_bar = min(progress_bar + MIN_PROGRESS_AMOUNT, 100)
 		else
-			quality_loss += 0.5
+			quality_loss = min(quality_loss + 0.5, 100)
 	if(progress_bar != 100)
 		return
 	progress_bar = 0
@@ -181,10 +185,10 @@
 	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
 		var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type] + quality_loss * 5
 		if(internal.gases[gas_type][MOLES] < amount_consumed)
-			quality_loss += 10
+			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
 
-	var/total_quality = max(100 - quality_loss, 0)
+	var/total_quality = clamp(50 - quality_loss, 0, 100)
 	var/quality_control
 	switch(total_quality)
 		if(100)

@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	id = "metal_h"
 	name = "Metallic Hydrogen"
 	min_temp = 50000
-	max_temp = INFINITY
+	max_temp = 150000
 	reaction_type = "endothermic"
 	energy_release = 250000
 	requirements = list(/datum/gas/hydrogen = 600, /datum/gas/bz = 200)
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 200
 	max_temp = 400
 	reaction_type = "endothermic"
-	energy_release = 150000
+	energy_release = 100000
 	requirements = list(/datum/gas/healium = 400, /datum/gas/freon = 800, /datum/gas/plasma = 50)
 	products = list(/obj/item/grenade/gas_crystal/healium_crystal = 1)
 
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "Proto Nitrate Grenade"
 	min_temp = 200
 	max_temp = 400
-	reaction_type = "endothermic"
+	reaction_type = "exothermic"
 	energy_release = 150000
 	requirements = list(/datum/gas/proto_nitrate = 400, /datum/gas/nitrogen = 800, /datum/gas/oxygen = 800)
 	products = list(/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1)
@@ -104,8 +104,8 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
 	name = "Supermatter Crystal Shard"
-	min_temp = 2
-	max_temp = 4
+	min_temp = TCMB
+	max_temp = 5
 	reaction_type = "exothermic"
 	energy_release = 1500000
 	requirements = list(/datum/gas/hypernoblium = 1500, /datum/gas/antinoblium = 1500, /datum/gas/bz = 2000, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	id = "diamond"
 	name = "Diamond"
 	min_temp = 10000
-	max_temp = INFINITY
+	max_temp = 30000
 	reaction_type = "endothermic"
 	energy_release = 650000
 	requirements = list(/datum/gas/carbon_dioxide = 10000)
