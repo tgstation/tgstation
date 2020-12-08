@@ -1,3 +1,5 @@
+#define FEVER_CHANGE "fever"
+
 /*
 //////////////////////////////////////
 
@@ -61,10 +63,11 @@ Bonus
  * * datum/disease/advance/A The disease applying the symptom
  */
 /datum/symptom/fever/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
-	if(!unsafe)
-		M.add_body_temperature_change("fever", max((6 * power) * A.stage, (BODYTEMP_HEAT_DAMAGE_LIMIT - 1)))
-	else
-		M.add_body_temperature_change("fever", max((6 * power) * A.stage, (BODYTEMP_HEAT_DAMAGE_LIMIT + 20)))
+	// Get the max amount of change allowed before going over heat damage limit, 5 under the heat damage limit
+	var/change_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 5) - M.get_body_temp_normal(apply_change=FALSE)
+	if(unsafe) // when unsafe the fever can cause burn damage (not wounds)
+		change_limit += 20
+	M.add_body_temperature_change(FEVER_CHANGE, min((6 * power) * A.stage, change_limit))
 
 /// Update the body temp change based on the new stage
 /datum/symptom/fever/on_stage_change(datum/disease/advance/A)
@@ -76,4 +79,6 @@ Bonus
 /datum/symptom/fever/End(datum/disease/advance/A)
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
-		M.remove_body_temperature_change("fever")
+		M.remove_body_temperature_change(FEVER_CHANGE)
+
+#undef FEVER_CHANGE
