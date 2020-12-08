@@ -21,7 +21,7 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
+		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
 		/mob/living/simple_animal/hostile/construct/juggernaut)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
@@ -77,11 +77,11 @@
 				return
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -149,8 +149,8 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
-	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/caster_death)
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
 	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
@@ -194,8 +194,8 @@
 /obj/shapeshift_holder/proc/restore(death=FALSE)
 	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
 	// when caster and shape both die at the same time.
-	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
-	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH))
+	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE

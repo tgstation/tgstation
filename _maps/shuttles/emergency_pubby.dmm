@@ -483,7 +483,7 @@
 	layer = 2.9
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/canned/beans{
+/obj/item/food/canned/beans{
 	pixel_x = 3;
 	pixel_y = 4
 	},

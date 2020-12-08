@@ -49,7 +49,7 @@
 		Butcher(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
-	if(INTERACTING_WITH(user, H))
+	if(DOING_INTERACTION_WITH_TARGET(user, H))
 		to_chat(user, "<span class='warning'>You're already interacting with [H]!</span>")
 		return
 

@@ -1,7 +1,8 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
 	wait = 100
-	flags = SS_NO_INIT|SS_NO_TICK_CHECK
+	flags = SS_NO_TICK_CHECK
+	init_order = INIT_ORDER_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/time_dilation_current = 0
@@ -15,6 +16,35 @@ SUBSYSTEM_DEF(time_track)
 	var/last_tick_realtime = 0
 	var/last_tick_byond_time = 0
 	var/last_tick_tickcount = 0
+
+/datum/controller/subsystem/time_track/Initialize(start_timeofday)
+	. = ..()
+	GLOB.perf_log = "[GLOB.log_directory]/perf-[GLOB.round_id ? GLOB.round_id : "NULL"]-[SSmapping.config?.map_name].csv"
+	log_perf(
+		list(
+			"time",
+			"players",
+			"tidi",
+			"tidi_fastavg",
+			"tidi_avg",
+			"tidi_slowavg",
+			"maptick",
+			"num_timers",
+			"air_turf_cost",
+			"air_eg_cost",
+			"air_highpressure_cost",
+			"air_hotspots_cost",
+			"air_superconductivity_cost",
+			"air_pipenets_cost",
+			"air_rebuilds_cost",
+			"air_turf_count",
+			"air_eg_count",
+			"air_hotspot_count",
+			"air_network_count",
+			"air_delta_count",
+			"air_superconductive_count"
+		)
+	)
 
 /datum/controller/subsystem/time_track/fire()
 

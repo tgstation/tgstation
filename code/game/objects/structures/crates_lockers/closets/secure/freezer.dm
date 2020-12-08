@@ -113,4 +113,4 @@
 
 /obj/structure/closet/secure_closet/freezer/cream_pie/PopulateContents()
 	..()
-	new /obj/item/reagent_containers/food/snacks/pie/cream(src)
+	new /obj/item/food/pie/cream(src)

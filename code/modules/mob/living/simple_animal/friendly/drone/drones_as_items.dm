@@ -6,10 +6,10 @@
 //Drone shells
 
 /** Drone Shell: Ghost role item for drones
-  *
-  * A simple mob spawner item that transforms into a maintenance drone
-  * Resepcts drone minimum age
-  */
+ *
+ * A simple mob spawner item that transforms into a maintenance drone
+ * Resepcts drone minimum age
+ */
 
 /obj/effect/mob_spawn/drone
 	name = "drone shell"

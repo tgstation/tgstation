@@ -18,26 +18,13 @@
 					/obj/item/food/candy/bronx = 1)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = 60
-	extra_price = 160
+	default_price = PAYCHECK_ASSISTANT * 0.6
+	extra_price = PAYCHECK_EASY
 	payment_department = ACCOUNT_SRV
 	input_display_header = "Chef's Food Selection"
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-
-/obj/machinery/vending/snack/random
-	name = "\improper Random Snackies"
-	icon_state = "random_snack"
-	desc = "Uh oh!"
-
-/obj/machinery/vending/snack/random/Initialize()
-	// No need to call parent, we're not doing anything with this machine. Just picking a new type of machine to use, spawning it and deleting ourselves.
-	SHOULD_CALL_PARENT(FALSE)
-
-	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
-	new T(loc)
-	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"

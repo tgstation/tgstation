@@ -288,7 +288,7 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
-	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
+	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
 /obj/item/pneumatic_cannon/pie/Initialize()
 	. = ..()
@@ -297,12 +297,12 @@
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
 	selfcharge = TRUE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
+	charge_type = /obj/item/food/pie/cream
 	maxWeightClass = 60	//20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	charge_type = /obj/item/food/pie/cream/nostun
 	maxWeightClass = 6		//2 pies
 	charge_ticks = 2		//4 second/pie

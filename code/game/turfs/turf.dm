@@ -1,4 +1,6 @@
 GLOBAL_LIST_EMPTY(station_turfs)
+
+/// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
 	flags_1 = CAN_BE_DIRTY_1
@@ -64,10 +66,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 
 /**
-  * Turf Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Turf Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
@@ -341,7 +343,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = baseturfs_string_list(premade_baseturfs, src)
+			baseturfs = baseturfs_string_list(premade_baseturfs.Copy(), src)
 		else
 			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs
@@ -540,7 +542,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge = FALSE)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 
@@ -549,26 +551,33 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V = locate() in src
 	if(!V)
 		return
-	// Make toxins and blazaam vomit look different
+	// Apply the proper icon set based on vomit type
 	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if (iscarbon(M))
-		clear_reagents_to_vomit_pool(M, V, purge)
+	else if (toxvomit == VOMIT_NANITE)
+		V.name = "metallic slurry"
+		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+		V.icon_state = "vomitnanite_[pick(1,4)]"
+	if (purge_ratio && iscarbon(M))
+		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge = FALSE)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
-	var/chemicals_lost = belly.reagents.total_volume * 0.1
-	if(purge)
-		chemicals_lost = belly.reagents.total_volume * 0.67 //For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
+	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
 	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
 	//clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
-		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		if(!belly.food_reagents[reagent.type])
+			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		else
+			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+			if(bit_vol > 0)
+				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
@@ -591,8 +600,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		. |= R.expose_turf(src, reagents[R])
 
 /**
-  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
-  */
+ * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+ */
 /turf/wash(clean_types)
 	. = ..()
 

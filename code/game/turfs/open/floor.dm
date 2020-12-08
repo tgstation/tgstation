@@ -194,8 +194,8 @@
 
 /turf/open/floor/proc/spawn_tile()
 	if(!has_tile())
-		return
-	new floor_tile(src)
+		return null
+	return new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
@@ -324,11 +324,13 @@
 	name = "floor"
 	icon_state = "materialfloor"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()
-	return custom_materials.len
+	return LAZYLEN(custom_materials)
 
 /turf/open/floor/material/spawn_tile()
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	. = ..()
+	if(.)
+		var/obj/item/stack/tile = .
+		tile.set_mats_per_unit(custom_materials, 1)

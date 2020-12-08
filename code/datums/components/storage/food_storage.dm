@@ -37,13 +37,13 @@
 	. = ..()
 
 /** Begins the process of inserted an item.
-  *
-  * Clicking on the food storage with an item will begin a do_after, which if successful inserts the item.
-  *
-  * Arguments
-  *	inserted_item - the item being placed into the food
-  *	user - the person inserting the item
-  */
+ *
+ * Clicking on the food storage with an item will begin a do_after, which if successful inserts the item.
+ *
+ * Arguments
+ *	inserted_item - the item being placed into the food
+ *	user - the person inserting the item
+ */
 /datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
 	SIGNAL_HANDLER
 
@@ -74,12 +74,12 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Begins the process of attempting to remove the stored item.
-  *
-  * Clicking on food storage on grab intent will begin a do_after, which if successful removes the stored_item.
-  *
-  * Arguments
-  *	user - the person removing the item.
-  */
+ *
+ * Clicking on food storage on grab intent will begin a do_after, which if successful removes the stored_item.
+ *
+ * Arguments
+ *	user - the person removing the item.
+ */
 /datum/component/food_storage/proc/try_removing_item(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -96,11 +96,11 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Inserts the item into the food, after a do_after.
-  *
-  * Arguments
-  * inserted_item - The item being inserted.
-  *	user - the person inserting the item.
-  */
+ *
+ * Arguments
+ * inserted_item - The item being inserted.
+ *	user - the person inserting the item.
+ */
 /datum/component/food_storage/proc/insert_item(obj/item/inserted_item, mob/user)
 	if(do_after(user, 1.5 SECONDS, target = parent))
 		var/atom/food = parent
@@ -113,17 +113,17 @@
 		stored_item = inserted_item
 
 /** Removes the item from the food, after a do_after.
-  *
-  * Arguments
-  * user - person removing the item.
-  */
+ *
+ * Arguments
+ * user - person removing the item.
+ */
 /datum/component/food_storage/proc/begin_remove_item(mob/user)
 	if(do_after(user, 10 SECONDS, target = parent))
 		remove_item(user)
 
 /**
-  * Removes the stored item, putting it in user's hands or on the ground, then updates the reference.
-  */
+ * Removes the stored item, putting it in user's hands or on the ground, then updates the reference.
+ */
 /datum/component/food_storage/proc/remove_item(mob/user)
 	if(user.put_in_hands(stored_item))
 		user.visible_message("<span class='warning'>[user.name] slowly pulls [stored_item.name] out of \the [parent].</span>", \
@@ -135,18 +135,18 @@
 	update_stored_item()
 
 /** Checks for stored items when the food is eaten.
-  *
-  * If the food is eaten while an item is stored in it, calculates the odds that the item will be found.
-  * Then, if the item is found before being bitten, the item is removed.
-  * If the item is found by biting into it, calls on_accidental_consumption on the stored item.
-  * Afterwards, removes the item from the food if it was discovered.
-  *
-  * Arguments
-  * target - person doing the eating (can be the same as user)
-  * user - person causing the eating to happen
-  * bitecount - how many times the current food has been bitten
-  * bitesize - how large bties are for this food
-  */
+ *
+ * If the food is eaten while an item is stored in it, calculates the odds that the item will be found.
+ * Then, if the item is found before being bitten, the item is removed.
+ * If the item is found by biting into it, calls on_accidental_consumption on the stored item.
+ * Afterwards, removes the item from the food if it was discovered.
+ *
+ * Arguments
+ * target - person doing the eating (can be the same as user)
+ * user - person causing the eating to happen
+ * bitecount - how many times the current food has been bitten
+ * bitesize - how large bties are for this food
+ */
 /datum/component/food_storage/proc/consume_food_storage(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
 	SIGNAL_HANDLER
 
@@ -172,13 +172,13 @@
 		INVOKE_ASYNC(src, .proc/remove_item, user)
 
 /** Updates the reference of the stored item.
-  *
-  * Checks the food's contents for if an alternate item was placed into the food.
-  * If there is an alternate item, updates the reference to the new item.
-  * If there isn't, updates the reference to null.
-  *
-  * Returns FALSE if the ref is nulled, or TRUE is another item replaced it.
-  */
+ *
+ * Checks the food's contents for if an alternate item was placed into the food.
+ * If there is an alternate item, updates the reference to the new item.
+ * If there isn't, updates the reference to null.
+ *
+ * Returns FALSE if the ref is nulled, or TRUE is another item replaced it.
+ */
 /datum/component/food_storage/proc/update_stored_item()
 	var/atom/food = parent
 	if(!food?.contents.len) //if there's no items in the food or food is deleted somehow

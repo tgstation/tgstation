@@ -26,7 +26,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
-	///How beautiful is this material per unit
+	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
 	var/item_sound_override
@@ -64,7 +64,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
+		source.AddComponent(/datum/component/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -132,6 +132,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
 
+	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
+		source.AddComponent(/datum/component/beauty, -beauty_modifier * amount)
+
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
 
@@ -151,21 +154,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 		RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
-  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
-  * Arguments
-  * * M - person consuming the mat
-  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
-  */
+ *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+ * Arguments
+ * * M - person consuming the mat
+ * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+ */
 /datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
 	return FALSE
 
 /** Returns the composition of this material.
-  *
-  * Mostly used for alloys when breaking down materials.
-  *
-  * Arguments:
-  * - amount: The amount of the material to break down.
-  * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
-  */
+ *
+ * Mostly used for alloys when breaking down materials.
+ *
+ * Arguments:
+ * - amount: The amount of the material to break down.
+ * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
+ */
 /datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
 	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.

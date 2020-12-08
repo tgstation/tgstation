@@ -198,7 +198,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
 	baseturfs = baseturfs_string_list(new_baseturfs + baseturfs, src)
-	baseturfs.Insert(1, new_baseturfs)
 
 // Make a new turf and put it on top
 // The args behave identical to PlaceOnBottom except they go on top

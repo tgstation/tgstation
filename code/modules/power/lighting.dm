@@ -15,6 +15,9 @@
 #define LIGHT_DRAIN_TIME 25
 #define LIGHT_POWER_GAIN 35
 
+//How many reagents the lights can hold
+#define LIGHT_REAGENT_CAPACITY 5
+
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
@@ -824,6 +827,7 @@
 	base_state = "ltube"
 	inhand_icon_state = "c_tube"
 	brightness = 8
+	custom_price = PAYCHECK_EASY * 0.5
 
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
@@ -837,6 +841,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4
+	custom_price = PAYCHECK_EASY * 0.4
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
@@ -861,6 +866,7 @@
 
 /obj/item/light/Initialize()
 	. = ..()
+	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
 	update()
 
 /obj/item/light/ComponentInitialize()
@@ -879,21 +885,11 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
-/obj/item/light/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/reagent_containers/syringe))
-		var/obj/item/reagent_containers/syringe/S = I
-
-		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
-
-		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
-
-			rigged = TRUE
-
-		S.reagents.clear_reagents()
-	else
-		..()
-	return
+/obj/item/light/on_reagent_change(changetype)
+	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
+	return ..()
+	
+#undef LIGHT_REAGENT_CAPACITY
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
 	..()

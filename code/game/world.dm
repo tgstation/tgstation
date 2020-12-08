@@ -3,31 +3,31 @@
 GLOBAL_VAR(restart_counter)
 
 /**
-  * World creation
-  *
-  * Here is where a round itself is actually begun and setup.
-  * * db connection setup
-  * * config loaded from files
-  * * loads admins
-  * * Sets up the dynamic menu system
-  * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
-  *
-  *
-  * Nothing happens until something moves. ~Albert Einstein
-  *
-  * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
-  *
-  * Initialization Pipeline:
-  *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
-  *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
-  *		world/New() (You are here)
-  *		Once world/New() returns, client's can connect.
-  *		1 second sleep
-  *		Master Controller initialization.
-  *		Subsystem initialization.
-  *			Non-compiled-in maps are maploaded, all atoms are new()ed
-  *			All atoms in both compiled and uncompiled maps are initialized()
-  */
+ * World creation
+ *
+ * Here is where a round itself is actually begun and setup.
+ * * db connection setup
+ * * config loaded from files
+ * * loads admins
+ * * Sets up the dynamic menu system
+ * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
+ *
+ *
+ * Nothing happens until something moves. ~Albert Einstein
+ *
+ * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
+ *
+ * Initialization Pipeline:
+ *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+ *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+ *		world/New() (You are here)
+ *		Once world/New() returns, client's can connect.
+ *		1 second sleep
+ *		Master Controller initialization.
+ *		Subsystem initialization.
+ *			Non-compiled-in maps are maploaded, all atoms are new()ed
+ *			All atoms in both compiled and uncompiled maps are initialized()
+ */
 /world/New()
 	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
 	if (fexists(extools))
@@ -144,7 +144,6 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
-	GLOB.perf_log = "[GLOB.log_directory]/perf.csv"
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
@@ -164,31 +163,6 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
-	log_perf(
-		list(
-			"time",
-			"players",
-			"tidi",
-			"tidi_fastavg",
-			"tidi_avg",
-			"tidi_slowavg",
-			"maptick",
-			"num_timers",
-			"air_turf_cost",
-			"air_eg_cost",
-			"air_highpressure_cost",
-			"air_hotspots_cost",
-			"air_superconductivity_cost",
-			"air_pipenets_cost",
-			"air_rebuilds_cost",
-			"air_turf_count",
-			"air_eg_count",
-			"air_hotspot_count",
-			"air_network_count",
-			"air_delta_count",
-			"air_superconductive_count"
-		)
-	)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
