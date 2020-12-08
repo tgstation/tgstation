@@ -591,6 +591,9 @@
 	begin_month = OCTOBER
 	begin_day = 12
 
+/datum/holiday/spain/getStationPrefix()
+	return pick("Hispanic", "Pillar", "Spain")
+
 /datum/holiday/indigenousBrazil //Indigenous Peoples' Day from Brazil!
 	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
@@ -600,6 +603,9 @@
 	name = "International Day of the World's Indigenous Peoples"
 	begin_month = AUGUST
 	begin_day = 9
+
+/datum/holiday/indigenousUN/getStationPrefix()
+	return pick("Endangered language", "Word", "Language", "Language revitalization")
 
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
