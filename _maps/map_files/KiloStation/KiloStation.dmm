@@ -90663,6 +90663,10 @@
 	icon_state = "panelscorched"
 	},
 /area/security/prison)
+"stL" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/wall/r_wall,
+/area/hallway/secondary/entry)
 "stX" = (
 /obj/structure/toilet,
 /obj/machinery/light/small{
@@ -131411,7 +131415,7 @@ bUN
 bUN
 bUt
 bUo
-bPJ
+bSr
 bzG
 cjC
 clg
@@ -132439,7 +132443,7 @@ bUN
 bUN
 bks
 bUo
-aeu
+bSr
 bzG
 bzG
 bzG
@@ -132697,7 +132701,7 @@ bUN
 bUy
 bPJ
 bPJ
-aeu
+bSr
 aeu
 aeu
 aeu
@@ -132954,7 +132958,7 @@ bUN
 bUA
 bUF
 bPJ
-aeu
+bSr
 aeu
 aeu
 aeu
@@ -133211,7 +133215,7 @@ bUN
 bUk
 ctu
 bPJ
-aeu
+bSr
 aeu
 aeU
 cmU
@@ -133468,7 +133472,7 @@ bUN
 bUC
 ctT
 bPJ
-aeu
+bSr
 aeu
 aUz
 cmU
@@ -133725,7 +133729,7 @@ crK
 bUD
 bPJ
 bPJ
-aeu
+bSr
 aeU
 aeU
 cmU
@@ -133969,7 +133973,7 @@ bXP
 bYS
 bXf
 bOc
-aeu
+bPJ
 bPJ
 bSd
 cic
@@ -133981,8 +133985,8 @@ cic
 cic
 bUJ
 bPJ
-aeu
-aeu
+bPJ
+bSr
 aeU
 aeU
 cmU
@@ -134226,8 +134230,8 @@ bYA
 bpN
 bTU
 bRF
-aeu
-bPJ
+bSr
+bSr
 bUj
 bRv
 bRv
@@ -134237,9 +134241,9 @@ bRv
 bRv
 bRv
 bWT
-bPJ
-aeu
-aeU
+bSr
+bSr
+stL
 aeU
 cmU
 cmU
