@@ -11,8 +11,9 @@
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 
-	/// The singularity component itself
-	var/datum/component/singularity/singularity_component
+	/// The singularity component itself.
+	/// A weak ref in case an admin removes the component to preserve the functionality.
+	var/datum/weakref/singularity_component
 
 	var/current_size = 1
 	var/allowed_size = 1
@@ -38,7 +39,7 @@
 	GLOB.poi_list |= src
 	GLOB.singularities |= src
 
-	singularity_component = AddComponent(
+	var/datum/component/singularity/new_component = AddComponent(
 		/datum/component/singularity, \
 		consume_callback = CALLBACK(src, .proc/consume), \
 	)
@@ -47,11 +48,13 @@
 
 	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
 		if (singubeacon.active)
-			singularity_component.target = singubeacon
+			new_component.target = singubeacon
 			break
 
 	if (!mapload)
 		notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
+
+	singularity_component = WEAKREF(new_component)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -152,6 +155,9 @@
 	if(temp_allowed_size >= STAGE_SIX && !consumed_supermatter)
 		temp_allowed_size = STAGE_FIVE
 
+	var/new_grav_pull
+	var/new_consume_range
+
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
@@ -159,8 +165,8 @@
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			singularity_component.grav_pull = 4
-			singularity_component.consume_range = 0
+			new_grav_pull = 4
+			new_consume_range = 0
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
@@ -171,8 +177,8 @@
 				icon_state = "singularity_s3"
 				pixel_x = -32
 				pixel_y = -32
-				singularity_component.grav_pull = 6
-				singularity_component.consume_range = 1
+				new_grav_pull = 6
+				new_consume_range = 1
 				dissipate_delay = 5
 				dissipate_track = 0
 				dissipate_strength = 5
@@ -183,8 +189,8 @@
 				icon_state = "singularity_s5"
 				pixel_x = -64
 				pixel_y = -64
-				singularity_component.grav_pull = 8
-				singularity_component.consume_range = 2
+				new_grav_pull = 8
+				new_consume_range = 2
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
@@ -195,8 +201,8 @@
 				icon_state = "singularity_s7"
 				pixel_x = -96
 				pixel_y = -96
-				singularity_component.grav_pull = 10
-				singularity_component.consume_range = 3
+				new_grav_pull = 10
+				new_consume_range = 3
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
@@ -206,8 +212,8 @@
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			singularity_component.grav_pull = 10
-			singularity_component.consume_range = 4
+			new_grav_pull = 10
+			new_consume_range = 4
 			dissipate = FALSE //It cant go smaller due to e loss
 		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
 			current_size = STAGE_SIX
@@ -215,13 +221,17 @@
 			icon_state = "singularity_s11"
 			pixel_x = -160
 			pixel_y = -160
-			singularity_component.grav_pull = 15
-			singularity_component.consume_range = 5
+			new_grav_pull = 15
+			new_consume_range = 5
 			dissipate = FALSE
 
-	singularity_component.disregard_failed_movements = current_size >= STAGE_FIVE
-	singularity_component.roaming = move_self && current_size >= STAGE_TWO
-	singularity_component.singularity_size = current_size
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	if (!isnull(resolved_singularity))
+		resolved_singularity.consume_range = new_consume_range
+		resolved_singularity.grav_pull = new_grav_pull
+		resolved_singularity.disregard_failed_movements = current_size >= STAGE_FIVE
+		resolved_singularity.roaming = move_self && current_size >= STAGE_TWO
+		resolved_singularity.singularity_size = current_size
 
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)

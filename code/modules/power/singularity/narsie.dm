@@ -27,8 +27,9 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	flags_1 = SUPERMATTER_IGNORES_1
 
-	/// The singularity component to move around Nar'Sie
-	var/datum/component/singularity/singularity
+	/// The singularity component to move around Nar'Sie.
+	/// A weak ref in case an admin removes the component to preserve the functionality.
+	var/datum/weakref/singularity
 
 	var/list/souls_needed = list()
 	var/soul_goal = 0
@@ -38,7 +39,7 @@
 /obj/narsie/Initialize()
 	. = ..()
 
-	singularity = AddComponent(
+	singularity = WEAKREF(AddComponent(
 		/datum/component/singularity, \
 		bsa_targetable = FALSE, \
 		consume_callback = CALLBACK(src, .proc/consume), \
@@ -47,7 +48,7 @@
 		grav_pull = NARSIE_GRAV_PULL, \
 		roaming = FALSE, /* This is set once the animation finishes */ \
 		singularity_size = NARSIE_SINGULARITY_SIZE, \
-	)
+	))
 
 	send_to_playing_players("<span class='narsie'>NAR'SIE HAS RISEN</span>")
 	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
@@ -111,7 +112,9 @@
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 /obj/narsie/process()
-	if (!singularity.target || prob(NARSIE_CHANCE_TO_PICK_NEW_TARGET))
+	var/datum/component/singularity/singularity_component = singularity.resolve()
+
+	if (!isnull(singularity_component) && (!singularity_component?.target || prob(NARSIE_CHANCE_TO_PICK_NEW_TARGET)))
 		pickcultist()
 
 	if (prob(NARSIE_MESMERIZE_CHANCE))
@@ -166,10 +169,17 @@
 
 /// Nar'Sie gets a taste of something, and will start to gravitate towards it
 /obj/narsie/proc/acquire(atom/food)
-	if (food == singularity.target)
+	var/datum/component/singularity/singularity_component = singularity.resolve()
+
+	if (isnull(singularity_component))
 		return
-	to_chat(singularity.target, "<span class='cultsmall'>NAR'SIE HAS LOST INTEREST IN YOU.</span>")
-	singularity.target = food
+
+	var/old_target = singularity_component.target
+	if (food == old_target)
+		return
+
+	to_chat(old_target, "<span class='cultsmall'>NAR'SIE HAS LOST INTEREST IN YOU.</span>")
+	singularity_component.target = food
 	if(ishuman(food))
 		to_chat(food, "<span class='cult'>NAR'SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
@@ -186,7 +196,8 @@
 	addtimer(CALLBACK(src, .proc/narsie_spawn_animation_end), 3.5 SECONDS)
 
 /obj/narsie/proc/narsie_spawn_animation_end()
-	singularity.roaming = TRUE
+	var/datum/component/singularity/singularity_component = singularity.resolve()
+	singularity_component?.roaming = TRUE
 
 /proc/begin_the_end()
 	sleep(50)
