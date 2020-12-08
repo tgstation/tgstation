@@ -122,11 +122,14 @@
 		if(!just_sleeping)
 			if(suiciding)
 				. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
-			. += ""
+			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life</span>"
 			if(getorgan(/obj/item/organ/brain) && !key && !get_ghost(FALSE, TRUE))
-				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
+				if(pushed_do_not_resuscitate)
+					. += "<span class='deadsay'> and [t_his] soul has lost the will to live...</span>"
+				else
+					. += "<span class='deadsay'> and [t_his] soul has departed...</span>"
 			else
-				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+				. += "<span class='deadsay'>...</span>"
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
