@@ -497,3 +497,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
+
+/datum/material/zaukerite
+	name = "zaukerite"
+	desc = "A light absorbing material"
+	color = COLOR_BLACK
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
+	value_per_unit = 0.45
+	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, RAD = 1.75, FIRE = 0.1, ACID = 1)
+	beauty_modifier = 0.001

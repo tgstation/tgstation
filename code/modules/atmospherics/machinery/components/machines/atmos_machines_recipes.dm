@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/metallic_hydrogen
 	id = "metal_h"
-	name = "Metallic Hydrogen"
+	name = "Metallic hydrogen"
 	min_temp = 50000
 	max_temp = 150000
 	reaction_type = "endothermic"
@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/healium_grenade
 	id = "healium_g"
-	name = "Healium Grenade"
+	name = "Healium crystal"
 	min_temp = 200
 	max_temp = 400
 	reaction_type = "endothermic"
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
 	id = "proto_nitrate_g"
-	name = "Proto Nitrate Grenade"
+	name = "Proto nitrate crystal"
 	min_temp = 200
 	max_temp = 400
 	reaction_type = "exothermic"
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/ammonia_crystal
 	id = "ammonia_crystal"
-	name = "Ammonia Crystal"
+	name = "Ammonia crystal"
 	min_temp = 200
 	max_temp = 240
 	reaction_type = "exothermic"
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
-	name = "Supermatter Crystal Shard"
+	name = "Supermatter crystal shard"
 	min_temp = TCMB
 	max_temp = 5
 	reaction_type = "exothermic"
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/n2o_crystal
 	id = "n2o_crystal"
-	name = "Nitrous Oxide Crystal"
+	name = "Nitrous oxide crystal"
 	min_temp = 50
 	max_temp = 350
 	reaction_type = "exothermic"
@@ -133,10 +133,30 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/plasma_sheet
 	id = "plasma_sheet"
-	name = "Plasma Sheet"
+	name = "Plasma sheet"
 	min_temp = 100
 	max_temp = 140
 	reaction_type = "endothermic"
 	energy_release = 15000
 	requirements = list(/datum/gas/plasma = 25)
 	products = list(/obj/item/stack/sheet/mineral/plasma = 1)
+
+/datum/gas_recipe/crystallizer/crystal_cell
+	id = "crystal_cell"
+	name = "Crystal Cell"
+	min_temp = 50
+	max_temp = 90
+	reaction_type = "endothermic"
+	energy_release = 80000
+	requirements = list(/datum/gas/plasma = 4000, /datum/gas/helium = 1000, /datum/gas/bz = 50)
+	products = list(/obj/item/stock_parts/cell/crystal_cell = 1)
+
+/datum/gas_recipe/crystallizer/zaukerite
+	id = "zaukerite"
+	name = "Zaukerite sheet"
+	min_temp = 5
+	max_temp = 20
+	reaction_type = "exothermic"
+	energy_release = 29000
+	requirements = list(/datum/gas/antinoblium = 100, /datum/gas/zauker = 500, /datum/gas/bz = 75)
+	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)

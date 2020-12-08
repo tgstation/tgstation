@@ -487,3 +487,14 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
+
+/obj/item/stack/sheet/mineral/zaukerite
+	name = "zaukerite"
+	icon_state = "sheet-zaukerite"
+	inhand_icon_state = "sheet-zaukerite"
+	singular_name = "zaukerite sheet"
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FIRE_PROOF
+	point_value = 120
+	mats_per_unit = list(/datum/material/zaukerite = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/zaukerite
