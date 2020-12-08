@@ -130,3 +130,13 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 650000
 	requirements = list(/datum/gas/carbon_dioxide = 10000)
 	products = list(/obj/item/stack/sheet/mineral/diamond = 1)
+
+/datum/gas_recipe/crystallizer/plasma_sheet
+	id = "plasma_sheet"
+	name = "Plasma Sheet"
+	min_temp = 100
+	max_temp = 140
+	reaction_type = "endothermic"
+	energy_release = 15000
+	requirements = list(/datum/gas/plasma = 25)
+	products = list(/obj/item/stack/sheet/mineral/plasma = 1)

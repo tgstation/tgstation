@@ -31,6 +31,8 @@
 	var/quality_loss = 0
 	///Stores the recipe selected by the user in the GUI
 	var/recipe_type = null
+	///Stores the total amount of moles needed for the current recipe
+	var/total_recipe_moles = 0
 
 /obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
 	. = ..()
@@ -151,6 +153,14 @@
 	else if(recipe[META_RECIPE_REACTION_TYPE] == "exothermic")
 		internal.temperature = max(internal.temperature + (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
 
+///Calculate the total moles needed for the recipe
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/moles_calculations()
+	var/amounts = 0
+	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
+	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
+		amounts += recipe[META_RECIPE_REQUIREMENTS][gas_type]
+	total_recipe_moles = amounts
+
 ///Removes the gases from the internal gasmix when the recipe is changed
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/dump_gases()
 	var/datum/gas_mixture/remove = internal.remove(internal.total_moles())
@@ -172,12 +182,12 @@
 
 	var/list/list/recipe = GLOB.gas_recipe_meta[recipe_type]
 	if(gas_check == recipe[META_RECIPE_REQUIREMENTS].len)
-
 		if(check_temp_requirements())
 			heat_calculations()
-			progress_bar = min(progress_bar + MIN_PROGRESS_AMOUNT, 100)
+			progress_bar = min(progress_bar + (MIN_PROGRESS_AMOUNT * 5 / (round(log(10, total_recipe_moles * 0.1), 0.01))), 100)
 		else
 			quality_loss = min(quality_loss + 0.5, 100)
+			progress_bar = max(progress_bar - 1, 0)
 	if(progress_bar != 100)
 		return
 	progress_bar = 0
@@ -303,6 +313,7 @@
 				recipe_type = recipe
 				recipe_name	= GLOB.gas_recipe_meta[recipe][META_RECIPE_NAME]
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
+				moles_calculations()
 			investigate_log("was set to recipe [recipe_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("gas_input")
