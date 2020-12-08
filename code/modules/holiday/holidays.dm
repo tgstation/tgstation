@@ -585,17 +585,17 @@
 
 /datum/holiday/hotdogday/greet()
 	return "Happy National Hot Dog Day!"
-	
+
 /datum/holiday/spain
 	name = "National Day of Spain"
 	begin_month = OCTOBER
 	begin_day = 12
-	
-/datum/holiday/indigenous //Indigenous Peoples' Day from Brazil!
+
+/datum/holiday/indigenousBrazil //Indigenous Peoples' Day from Brazil!
 	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
 	begin_day = 19
-	
+
 /datum/holiday/indigenousUN //Indigenous Peoples' Day from Earth!
 	name = "International Day of the World's Indigenous Peoples"
 	begin_month = AUGUST
