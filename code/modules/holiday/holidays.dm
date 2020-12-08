@@ -601,6 +601,9 @@
 	name = "Indigenous Peoples' Day"
 	begin_month = APRIL
 	begin_day = 19
+	
+/datum/holiday/indigenousBrazil/getStationPrefix()
+	return pick("Potato", "Bison", "Llama", "Bolivia", "Maize")
 
 /datum/holiday/indigenousUN //Indigenous Peoples' Day from Earth!
 	name = "International Day of the World's Indigenous Peoples"
