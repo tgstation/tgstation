@@ -269,7 +269,7 @@
 			var/amount_consumed = recipe[META_RECIPE_REQUIREMENTS][gas_type]
 			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
 		requirements += "In a temperature range between [recipe[META_RECIPE_MIN_TEMP]] K and [recipe[META_RECIPE_MAX_TEMP]] K"
-		requirements += "The crystallization reaction is going to be [recipe[META_RECIPE_REACTION_TYPE]]"
+		requirements += "The crystallization reaction will be [recipe[META_RECIPE_REACTION_TYPE]]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature
