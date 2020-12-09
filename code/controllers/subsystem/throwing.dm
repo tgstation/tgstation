@@ -85,6 +85,7 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
+	thrownthing.floating_anim_check()
 	thrownthing.throwing = null
 	thrownthing = null
 	target = null
