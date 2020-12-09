@@ -45,6 +45,7 @@
 	suit = /obj/item/clothing/suit/armor/riot/knight/red
 	gloves = /obj/item/clothing/gloves/plate/red
 	head = /obj/item/clothing/head/helmet/knight/red
+	r_hand = /obj/item/claymore
 
 /datum/outfit/medisimblue
 	name = "Bluesworth Hold Knight"
@@ -54,6 +55,7 @@
 	suit = /obj/item/clothing/suit/armor/riot/knight/blue
 	gloves = /obj/item/clothing/gloves/plate/blue
 	head = /obj/item/clothing/head/helmet/knight/blue
+	r_hand = /obj/item/claymore
 
 /turf/closed/indestructible/binary
 	name = "tear in the fabric of reality"

@@ -9,13 +9,13 @@
 "gT" = (/obj/structure/table,/obj/item/storage/toolbox/electrical,/obj/machinery/light,/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "ht" = (/obj/machinery/capture_the_flag/medisim/red,/turf/open/indestructible/binary,/area/shuttle/escape)
 "hw" = (/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/escape)
-"hI" = (/obj/machinery/computer{dir = 8},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
 "hV" = (/obj/machinery/computer/station_alert{desc = "Used to access the shuttle's automated alert system."; dir = 4; name = "ship alert console"},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "iQ" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "jn" = (/obj/structure/bed,/obj/structure/curtain,/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "jT" = (/obj/machinery/flasher{id = "cockpit_flasher"; pixel_x = 6; pixel_y = 24},/obj/machinery/light{dir = 1},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "jV" = (/obj/machinery/door/airlock/public/glass{name = "Emergency Shuttle Kitchen"; req_access_txt = "28"},/turf/open/floor/plasteel/cafeteria,/area/shuttle/escape)
 "ls" = (/turf/open/floor/plating/grass,/area/shuttle/escape)
+"lF" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "lX" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Airlock"},/turf/open/floor/plating,/area/shuttle/escape)
 "mz" = (/obj/machinery/door/airlock/security/glass{name = "Holding Area"; req_access_txt = "2"},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
 "np" = (/obj/structure/table,/obj/item/clothing/accessory/pocketprotector,/obj/machinery/light,/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
@@ -25,7 +25,7 @@
 "qp" = (/obj/machinery/computer/atmos_alert{dir = 4},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "qC" = (/obj/structure/table,/obj/item/storage/pill_bottle/mannitol/braintumor,/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "qS" = (/obj/structure/table,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
-"qY" = (/obj/machinery/teambuilder/red,/turf/open/indestructible/binary,/area/shuttle/escape)
+"qY" = (/obj/machinery/teambuilder/red,/obj/effect/oneway,/turf/open/indestructible/binary,/area/shuttle/escape)
 "rQ" = (/obj/structure/window/reinforced{dir = 8},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "su" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
 "sH" = (/obj/structure/table/reinforced,/obj/item/storage/box/zipties,/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
@@ -58,7 +58,7 @@
 "EN" = (/turf/template_noop,/area/template_noop)
 "EX" = (/obj/machinery/computer/aifixer{dir = 8},/turf/open/floor/mineral/titanium/purple,/area/shuttle/escape)
 "EZ" = (/turf/open/floor/mineral/titanium,/area/shuttle/escape)
-"Fd" = (/obj/machinery/computer{desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages."; dir = 8; name = "Broken Computer"},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
+"Fd" = (/obj/machinery/computer{desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?"; dir = 8; name = "Reality Simulation Computer"},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
 "Fn" = (/turf/open/floor/plating/beach/sand,/area/shuttle/escape)
 "Fs" = (/obj/structure/table/reinforced,/obj/machinery/recharger,/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
 "FT" = (/turf/closed/indestructible/riveted,/area/shuttle/escape)
@@ -71,6 +71,7 @@
 "Ki" = (/obj/machinery/status_display/evac,/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
 "LA" = (/obj/structure/table,/obj/item/storage/firstaid/fire,/obj/item/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/crowbar,/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/machinery/light/small{dir = 4},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "LH" = (/obj/structure/table,/obj/machinery/microwave{name = "team Bluesworth Hold microwave oven"; pixel_y = 5},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"Mb" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "Mt" = (/turf/open/indestructible/binary,/area/shuttle/escape)
 "MP" = (/obj/machinery/capture_the_flag/medisim/blue,/turf/open/indestructible/binary,/area/shuttle/escape)
 "Nm" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
@@ -89,16 +90,16 @@
 "SV" = (/obj/item/ctf/red/medisim,/turf/open/floor/mineral/gold,/area/shuttle/escape)
 "To" = (/obj/structure/table,/obj/item/food/popcorn,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "TI" = (/obj/machinery/computer/security{dir = 8},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
-"TJ" = (/obj/machinery/computer{dir = 4},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
+"TJ" = (/obj/machinery/computer{desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?"; dir = 4; name = "Reality Simulation Computer"},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
 "Uw" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/table,/obj/item/flashlight/lamp,/turf/open/floor/mineral/titanium/yellow,/area/shuttle/escape)
 "VG" = (/obj/machinery/flasher{id = "shuttle_flasher"; pixel_x = 24; pixel_y = 6},/obj/machinery/button/flasher{id = "shuttle_flasher"; pixel_x = 24; pixel_y = -6},/obj/machinery/light/small{dir = 4},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
 "WL" = (/obj/machinery/door/airlock/titanium{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "Box emergency shuttle"},/turf/open/floor/plating,/area/shuttle/escape)
 "WN" = (/turf/open/floor/wood,/area/shuttle/escape)
 "Xk" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
 "Xv" = (/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
-"Yj" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/computer{dir = 4},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
+"Yj" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/computer{desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?"; dir = 4; name = "Reality Simulation Computer"},/turf/open/floor/circuit/green/anim,/area/shuttle/escape)
 "YB" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
-"YC" = (/obj/machinery/teambuilder/blue,/turf/open/indestructible/binary,/area/shuttle/escape)
+"YC" = (/obj/machinery/teambuilder/blue,/obj/effect/oneway{dir = 4},/turf/open/indestructible/binary,/area/shuttle/escape)
 "YM" = (/obj/structure/chair/comfy/shuttle{dir = 4},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/escape)
 "YU" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "Zq" = (/turf/open/chasm,/area/shuttle/escape)
@@ -110,13 +111,13 @@
 ENENXvXkXkXkXvENENENENENENENENENENENENENXvXkXkXkXvENEN
 ENXvgzPYvNJUgzXvXvXvXvXkXkXkXkXkXvXvXvXvgzsuvNwygzXvEN
 ENXkqpEZEZEZEZagEZtUZBEZEZEZEZEZZBtUEZagEZEZEZEZTIXkEN
-ENXkhVtPEZuoEXXvEZEZToHEHEHEHEHEToEZXvXvRjNKEZGEBpXkEN
+ENXkhVtPEZuoEXXvEZEZToHEHEHEHEHEToEZEZXvRjNKEZGEBpXkEN
 XvXvXvXvOAKiXvXvEZEZFTaGaGaGaGaGFTEZwcXvXvXvagXvXvXvXv
 XvyhyhaSPqCTfUXkEZToFTaRaRhtaRaRFTToEZUwuEiQuEjTuEpFXk
-XvykPqPqPqPqyAXvxzYMaGFnaRqYaRFnaGhwEZYjuEuEFduEuEhIXv
-twPqPqPqpLLHPqXkEZYMaGFnFnFnFnMtaGhwEZYjuEuEFduEuEhIXk
-XvqSqSqSXvXvjVXvpuYMaGMtFnFnFnSVaGhwEZYjuEuETJuEuEhIXv
-WLEZEZEZEZZBEZEZEZYMaGRlvLFnvLRlaGhwEZYjuEuETJuEuEhIXk
+XvykPqPqPqPqyAXvxzYMaGFnaRqYaRFnaGhwEZYjlFuEFduEMbFdXv
+twPqPqPqpLLHPqXkEZYMaGFnFnFnFnMtaGhwEZYjlFuEFduEMbFdXk
+XvqSqSqSXvXvjVXvpuYMaGMtFnFnFnSVaGhwEZYjlFuETJuEMbFdXv
+WLEZEZEZEZZBEZEZEZYMaGRlvLFnvLRlaGhwEZYjlFuETJuEMbFdXk
 XvpuEZYBEZNFNFNFNFToFTZqZqWNZqZqFTToEZuEuEuEuEuEuEEhXv
 XkEZToFTFTaGaGaGaGFTFTRKRKWNRKRKFTToEZuEuEnpyugTwMwMXk
 XkEZwXaGaRFnFnMtRlZqRKlslslslslsaGhwwcXvXvXvXvXvXvXvXv
