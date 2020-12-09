@@ -1,3 +1,4 @@
+#define MSGSPAM_CD_DURATION 60
 /obj/machinery/transformer
 	name = "\improper Automatic Robotic Factory 5000"
 	desc = "A large metallic machine with an entrance and an exit. A sign on \
@@ -42,8 +43,8 @@
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(!COOLDOWN_FINISHED(src, transform_cooldown) && COOLDOWN_FINISHED(src, messagespam_cooldown))
-		say("WARNING: Equipment reconfiguration in progess. Please wait \[[DisplayTimeText(cooldown_timer - world.time)]\].")
-		COOLDOWN_START(src, messagespam_cooldown, 60) //Message every 6 seconds
+		say("ERROR: Equipment recalibration in progess. Please wait \[[DisplayTimeText(cooldown_timer - world.time)]\].")
+		COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION) //Message every 6 seconds
 		return
 
 	// Crossed didn't like people lying down.
@@ -51,10 +52,13 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || H.body_position == LYING_DOWN) && move_dir == EAST)// || move_dir == WEST)
-			AM.forceMove(drop_location())
-			do_transform(AM)
-
+		if(move_dir == EAST)// || move_dir == WEST)
+			if((transform_standing || H.body_position == LYING_DOWN))
+				AM.forceMove(drop_location())
+				do_transform(AM)
+			else if (COOLDOWN_FINISHED(src, messagespam_cooldown))
+				say("ERROR: Target lifeform must be lying down for successful transformation protocol operation.")
+				COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION) //Message every 6 seconds
 
 /obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -76,6 +80,7 @@
 
 	if(!transform_dead && H.stat == DEAD)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		say("ERROR: Target lifeform must be alive for successful transformation protocol operation.")
 		return
 
 	// Activate the cooldown
