@@ -139,7 +139,7 @@
 				/obj/effect/spawner/lootdrop/botanical_waste = 8,
 				/obj/effect/spawner/lootdrop/cigbutt = 8,
 				/obj/item/reagent_containers/syringe = 5,
-				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
+				/obj/item/food/deadmouse = 2,
 				/obj/item/light/tube/broken = 3,
 				/obj/item/light/tube/broken = 1,
 				/obj/item/trash/candle = 1)
@@ -202,7 +202,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
+			/obj/item/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,

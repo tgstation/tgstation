@@ -54,7 +54,7 @@
 	if(!ckey)
 		..(1)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			var/obj/item/food/deadmouse/M = new(loc)
 			M.icon_state = icon_dead
 			M.name = name
 			if(toast)
@@ -179,27 +179,27 @@
 	pet_bonus = TRUE
 	pet_bonus_emote = "squeaks happily!"
 
-/obj/item/reagent_containers/food/snacks/deadmouse
+/obj/item/food/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
-	bitesize = 3
-	eatverb = "devour"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtype = GROSS | MEAT | RAW
+	bite_consumption = 3
+	eatverbs = list("devour")
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
-/obj/item/reagent_containers/food/snacks/deadmouse/Initialize()
+/obj/item/food/deadmouse/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
-/obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
+/obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
 		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
 
-/obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
+/obj/item/food/deadmouse/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/food/meat/slab/mouse(loc)
@@ -210,7 +210,7 @@
 	else
 		return ..()
 
-/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
+/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
 	if(proximity_flag && reagents && target.is_open_container())
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
@@ -223,5 +223,6 @@
 	else
 		return ..()
 
-/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+/obj/item/food/deadmouse/on_grind()
+	. = ..()
 	reagents.clear_reagents()

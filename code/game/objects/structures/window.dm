@@ -92,6 +92,8 @@
 
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
+	if(anchored && current_size >= STAGE_TWO)
+		set_anchored(FALSE)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
@@ -310,7 +312,8 @@
 	var/turf/T = loc
 	. = ..()
 	setDir(ini_dir)
-	move_update_air(T)
+	if(anchored)
+		move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(!anchored || !density)

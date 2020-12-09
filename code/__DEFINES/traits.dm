@@ -381,3 +381,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BRAIN_UNAIDED "brain-unaided"
 /// Trait applied by element
 #define ELEMENT_TRAIT "element_trait"
+/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+#define BERSERK_TRAIT "berserk_trait"
