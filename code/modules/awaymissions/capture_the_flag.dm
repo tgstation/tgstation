@@ -7,8 +7,6 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-
-
 /obj/item/ctf
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
@@ -30,6 +28,7 @@
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
+	var/game_area = /area/ctf
 
 /obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
@@ -51,7 +50,7 @@
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)
 			var/area/mob_area = get_area(M)
-			if(istype(mob_area, /area/ctf))
+			if(istype(mob_area, game_area))
 				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
 		STOP_PROCESSING(SSobj, src)
 
@@ -75,7 +74,7 @@
 	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
-		if(istype(mob_area, /area/ctf))
+		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
 	..()
@@ -88,7 +87,7 @@
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
-		if(istype(mob_area, /area/ctf))
+		if(istype(mob_area, game_area))
 			to_chat(M, "<span class='userdanger'>\The [src] has been dropped!</span>")
 	anchored = TRUE
 
@@ -166,6 +165,7 @@
 
 	var/static/arena_reset = FALSE
 	var/static/list/people_who_want_to_play = list()
+	var/game_area = /area/ctf
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
@@ -276,6 +276,7 @@
 	M.faction += team
 	M.equipOutfit(ctf_gear)
 	spawned_mobs += M
+	return M //used in medisim.dm
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
 	if(href_list["join"])
@@ -291,7 +292,7 @@
 			points++
 			for(var/mob/M in GLOB.player_list)
 				var/area/mob_area = get_area(M)
-				if(istype(mob_area, /area/ctf))
+				if(istype(mob_area, game_area))
 					to_chat(M, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 		if(points >= points_to_win)
 			victory()
@@ -300,7 +301,7 @@
 	for(var/mob/_competitor in GLOB.mob_living_list)
 		var/mob/living/competitor = _competitor
 		var/area/mob_area = get_area(competitor)
-		if(istype(mob_area, /area/ctf))
+		if(istype(mob_area, game_area))
 			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
 			to_chat(competitor, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
 			for(var/obj/item/ctf/W in competitor)
@@ -673,6 +674,7 @@
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 0.5
+	var/game_area = /area/ctf
 
 /obj/machinery/control_point/process(delta_time)
 	if(controlling)
@@ -697,7 +699,7 @@
 				icon_state = "dominator-[CTF.team]"
 				for(var/mob/M in GLOB.player_list)
 					var/area/mob_area = get_area(M)
-					if(istype(mob_area, /area/ctf))
+					if(istype(mob_area, game_area))
 						to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>")
 				break
 

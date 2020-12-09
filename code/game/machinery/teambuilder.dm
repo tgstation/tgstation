@@ -20,10 +20,10 @@
 
 /obj/machinery/teambuilder/Crossed(atom/movable/AM, oldloc)
 	. = ..()
-	if(AM.color)
+	if(AM.get_filter("teambuilder"))
 		return
 	if(isliving(AM) && team_color)
-		AM.color = team_color
+		AM.add_filter("teambuilder", 2, list("type" = "outline", "color" = team_color, "size" = 2))
 	if(ishuman(AM) && team_radio)
 		var/mob/living/carbon/human/human = AM
 		var/obj/item/radio/Radio = human.ears
