@@ -2266,7 +2266,7 @@
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	var/minumum_material_amount = 100
+	var/minimum_material_amount = 0
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, volume)
 	. = ..()
@@ -2282,7 +2282,7 @@
 	if(!metal_ref)
 		return
 	var/list/metal_dat = list()
-	metal_dat[metal_ref] = minumum_material_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
+	metal_dat[metal_ref] = minimum_material_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
 
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
