@@ -149,7 +149,7 @@
 	. = ..()
 	if(.)
 		return
-
+	// Snowflake handling for PASSGLASS.
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
