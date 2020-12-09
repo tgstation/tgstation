@@ -1,0 +1,47 @@
+#!/bin/sh
+# bootstrap/node
+#
+# Node-finding script for all `sh` environments, including Linux, MSYS2,
+# Git for Windows, and GitHub Desktop. Invokable from CLI or automation.
+#
+# If a node.exe installed by `node_.ps1` is present, it will be used.
+# Otherwise, this script requires a system `node` to be provided,
+# and will create a standard virtualenv in which to install `requirements.txt`.
+set -e
+
+# Convenience variables
+Bootstrap="$(dirname "$0")"
+Cache="$Bootstrap/.cache"
+. "$Bootstrap/../../dependencies.sh"  # sets NODE_VERSION_PRECISE
+NodeVersion="$NODE_VERSION_PRECISE"
+NodeDir="$Cache/node-$NodeVersion"
+NodeExe="$NodeDir/python.exe"
+Log="$Cache/last-command.log"
+
+# If a bootstrapped Node is not present, search on $PATH.
+if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
+    if command -v node >/dev/null 2>&1; then
+        NodeExe="node"
+    else
+		echo "Please install Node from https://www.python.org/downloads/"
+		# TODO: show package manager advice for Ubuntu, Arch, MSYS2
+		# TODO: show Windows bootstrap advice for Git for Windows
+		exit 1
+    fi
+fi
+
+# Use an Awk script if tee.exe is not available, e.g. inside GitHub Desktop
+if ! command -v tee >/dev/null 2>&1; then
+	tee() {
+		awk -f "$Bootstrap/tee.awk" -- "$@"
+	}
+fi
+
+# Invoke Node with all command-line arguments
+mkdir -p "$Cache"
+printf '%s\n' "$NodeExe" "$@" > "$Log"
+printf -- '---\n' >> "$Log"
+exec 4>&1
+exitstatus=$({ { set +e; "$NodeExe" "$@" 3>&-; printf %s $? >&3; } 4>&- | tee -a "$Log" 1>&4; } 3>&1)
+exec 4>&-
+exit "$exitstatus"
