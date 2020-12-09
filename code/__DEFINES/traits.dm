@@ -222,10 +222,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Movement type traits for movables.
 
 /**
-  * Registers movement trait signals on the movable the first time the macro is used on it
-  * Which are needed for adding and removing bit flags and the floating animation.
-  * Overall a smarter alternative to registering the signals for every movable on init.
-  */
+ * Registers movement trait signals on the movable the first time the macro is used on it,
+ * These are necessary to add and remove bit flags, as well as the floating animation.
+ * Overall it's a better alternative than doing so on init for every movable.
+ */
 #define ADD_MOVE_TRAIT(AM, trait, source)\
 	if(!AM.has_movement_type_signals){\
 		if(!GLOB.movement_type_trait_add_signals){\
