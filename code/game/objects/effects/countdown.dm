@@ -107,7 +107,7 @@
 	if(!istype(T))
 		return
 	if(!COOLDOWN_FINISHED(T, transform_cooldown))
-		var/seconds_left = COOLDOWN_TIMELEFT(T, transform_cooldown)
+		var/seconds_left = COOLDOWN_TIMELEFT(T, transform_cooldown) / 10
 		return "[round(seconds_left)]"
 
 /obj/effect/countdown/doomsday

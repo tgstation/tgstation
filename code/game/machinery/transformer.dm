@@ -1,4 +1,4 @@
-#define MSGSPAM_CD_DURATION 60
+#define MSGSPAM_CD_DURATION 200
 /obj/machinery/transformer
 	name = "\improper Automatic Robotic Factory 5000"
 	desc = "A large metallic machine with an entrance and an exit. A sign on \
@@ -29,7 +29,8 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, transform_cooldown))
-		. += "<b>It will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, transform_cooldown))].</b>"
+		var/timeleft = DisplayTimeText(round(COOLDOWN_TIMELEFT(src, transform_cooldown)))
+		. += "It will be ready in <b>[timeleft]</b>."
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
@@ -43,8 +44,9 @@
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(!COOLDOWN_FINISHED(src, transform_cooldown) && COOLDOWN_FINISHED(src, messagespam_cooldown))
-		say("ERROR: Equipment recalibration in progess. Please wait \[[DisplayTimeText(COOLDOWN_TIMELEFT(src, transform_cooldown))]\].")
-		COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION) //Message every 6 seconds
+		var/timeleft = DisplayTimeText(round(COOLDOWN_TIMELEFT(src, transform_cooldown)))
+		say("ERROR: Equipment recalibration in progess. Please wait [timeleft].")
+		COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION)
 		return
 
 	// Crossed didn't like people lying down.
@@ -58,7 +60,7 @@
 				do_transform(AM)
 			else if (COOLDOWN_FINISHED(src, messagespam_cooldown))
 				say("ERROR: Target lifeform must be lying down for successful transformation protocol operation.")
-				COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION) //Message every 6 seconds
+				COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION)
 
 /obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
