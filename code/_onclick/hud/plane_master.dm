@@ -16,15 +16,15 @@
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /atom/movable/screen/plane_master/proc/backdrop(mob/mymob)
 
-///Things rendered on "openspace"; holes in multi-z
-/atom/movable/screen/plane_master/openspace
-	name = "open space plane master"
+///Drop shadows rendered on backdrop for openspace.
+/atom/movable/screen/plane_master/openspace_backdrop
+	name = "open space backdrop plane master"
 	plane = OPENSPACE_BACKDROP_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
-/atom/movable/screen/plane_master/openspace/Initialize()
+/atom/movable/screen/plane_master/openspace_backdrop/Initialize()
 	. = ..()
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
@@ -39,15 +39,15 @@
 /atom/movable/screen/plane_master/proc/clear_filters()
 	filters = list()
 
-///Blur rendered on z-levels below.
-/atom/movable/screen/plane_master/openspace_blur
-	name = "open space blur plane master"
+///Things rendered on "openspace"; holes in multi-z
+/atom/movable/screen/plane_master/openspace
+	name = "open space plane master"
 	plane = OPENSPACE_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	alpha = 255
 
-/atom/movable/screen/plane_master/openspace_blur/Initialize()
+/atom/movable/screen/plane_master/openspace/Initialize()
 	. = ..()
 	add_filter("z_level_blur", 1, list(type = "blur", size = 0.75))
 
