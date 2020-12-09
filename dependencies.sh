@@ -5,9 +5,9 @@
 
 # byond version
 # Extracted from the Dockerfile. Change by editing Dockerfile's FROM command.
-LIST=($(sed -n 's/.*byond:\([0-9]\+\)\.\([0-9]\+\).*/\1 \2/p' Dockerfile))
-export BYOND_MAJOR=${LIST[0]}
-export BYOND_MINOR=${LIST[1]}
+LIST="$(sed -n 's/.*byond:\([0-9]\+\)\.\([0-9]\+\).*/\1 \2/p' Dockerfile)"
+export BYOND_MAJOR=${LIST% *}
+export BYOND_MINOR=${LIST#* }
 unset LIST
 
 #rust_g git tag
