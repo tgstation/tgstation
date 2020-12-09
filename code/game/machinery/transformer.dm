@@ -29,7 +29,7 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, transform_cooldown))
-		. += "<b>It will be ready in [DisplayTimeText(cooldown_timer - world.time)].</b>"
+		. += "<b>It will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, transform_cooldown))].</b>"
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
@@ -43,7 +43,7 @@
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(!COOLDOWN_FINISHED(src, transform_cooldown) && COOLDOWN_FINISHED(src, messagespam_cooldown))
-		say("ERROR: Equipment recalibration in progess. Please wait \[[DisplayTimeText(cooldown_timer - world.time)]\].")
+		say("ERROR: Equipment recalibration in progess. Please wait \[[DisplayTimeText(COOLDOWN_TIMELEFT(src, transform_cooldown))]\].")
 		COOLDOWN_START(src, messagespam_cooldown, MSGSPAM_CD_DURATION) //Message every 6 seconds
 		return
 

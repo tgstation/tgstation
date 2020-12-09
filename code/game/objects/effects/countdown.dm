@@ -106,8 +106,8 @@
 	var/obj/machinery/transformer/T = attached_to
 	if(!istype(T))
 		return
-	else if(T.cooldown)
-		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
+	if(!COOLDOWN_FINISHED(T, transform_cooldown))
+		var/seconds_left = COOLDOWN_TIMELEFT(T, transform_cooldown)
 		return "[round(seconds_left)]"
 
 /obj/effect/countdown/doomsday
