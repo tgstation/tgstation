@@ -326,8 +326,8 @@ Possible to do for anyone motivated enough:
 				return TRUE
 
 /**
-  * hangup_all_calls: Disconnects all current holocalls from the holopad
-  */
+ * hangup_all_calls: Disconnects all current holocalls from the holopad
+ */
 /obj/machinery/holopad/proc/hangup_all_calls()
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I

@@ -109,8 +109,8 @@
 	},
 /obj/item/storage/box/donkpockets,
 /obj/item/storage/fancy/donut_box,
-/obj/item/reagent_containers/food/snacks/cookie,
-/obj/item/reagent_containers/food/snacks/cookie{
+/obj/item/food/cookie,
+/obj/item/food/cookie{
 	pixel_x = -6;
 	pixel_y = -6
 	},

@@ -1,3 +1,4 @@
+/// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8

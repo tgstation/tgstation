@@ -3544,7 +3544,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ajr" = (
-/obj/item/reagent_containers/food/snacks/donut/chaos,
+/obj/item/food/donut/chaos,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "ajs" = (
@@ -9164,7 +9164,7 @@
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /obj/machinery/door/poddoor/preopen{
 	id = "Secure Gate";
 	name = "brig shutters"
@@ -11079,7 +11079,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aCd" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aCe" = (
@@ -13061,7 +13061,7 @@
 /area/crew_quarters/toilet/restrooms)
 "aGK" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/cookie{
+/obj/item/food/cookie{
 	desc = "It has a distinctly eldritch taste to it.";
 	name = "grandma's cookie"
 	},
@@ -17192,7 +17192,7 @@
 "aTX" = (
 /obj/structure/kitchenspike,
 /obj/item/assembly/mousetrap,
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aTY" = (
@@ -17981,8 +17981,8 @@
 /area/chapel/main/monastery)
 "aVZ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aWa" = (
@@ -20932,7 +20932,7 @@
 /area/crew_quarters/kitchen)
 "bdq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/grown/tomato,
+/obj/item/food/grown/tomato,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bdr" = (
@@ -21978,7 +21978,7 @@
 /area/hallway/primary/central)
 "bgs" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -27612,7 +27612,9 @@
 "bwB" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bwC" = (
@@ -29620,8 +29622,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
 /area/medical/storage)
@@ -29651,8 +29653,8 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 0
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bCg" = (
@@ -31525,7 +31527,7 @@
 /area/maintenance/department/engine)
 "bGL" = (
 /obj/structure/closet/masks,
-/obj/item/reagent_containers/food/snacks/deadmouse,
+/obj/item/food/deadmouse,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bGM" = (
@@ -33115,14 +33117,14 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
 "bLT" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plasteel,
 /area/engine/lobby)
 "bLU" = (
@@ -42847,7 +42849,7 @@
 /area/chapel/office)
 "crx" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/food/grown/harebell,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cry" = (
@@ -42919,7 +42921,7 @@
 /area/chapel/office)
 "crH" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/poppy,
+/obj/item/food/grown/poppy,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "crK" = (
@@ -44071,8 +44073,8 @@
 /area/library/lounge)
 "cww" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/poppy,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/harebell,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cwx" = (
@@ -45268,7 +45270,6 @@
 /area/maintenance/department/crew_quarters/dorms)
 "cPT" = (
 /obj/machinery/power/apc/auto_name/east{
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -45669,6 +45670,12 @@
 /obj/machinery/igniter/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"dyc" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "dye" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/structure/sign/departments/science{
@@ -46252,7 +46259,9 @@
 "ezx" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/junglebush/large{
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/storage)
 "ezF" = (
@@ -47245,6 +47254,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
+"fJw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "fKj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mineral Room"
@@ -48079,7 +48095,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gLF" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -48159,7 +48175,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/disposal/incinerator)
 "gSH" = (
 /turf/closed/wall,
 /area/lawoffice)
@@ -51248,6 +51264,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"ltT" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
 "lxx" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze{
@@ -51795,7 +51817,7 @@
 "mtu" = (
 /obj/structure/table,
 /obj/item/folder/yellow,
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -52307,7 +52329,7 @@
 /area/maintenance/department/security/brig)
 "niy" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/food/cookie,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -53931,6 +53953,12 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"pln" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "plA" = (
 /obj/structure/musician/piano,
 /turf/open/floor/plasteel/dark,
@@ -56810,7 +56838,7 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "tpb" = (
-/obj/item/reagent_containers/food/snacks/donut,
+/obj/item/food/donut,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -58177,6 +58205,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"vap" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "vbv" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -96728,11 +96762,11 @@ bMa
 bMf
 bOk
 bOU
-bPS
+fJw
 bPS
 bRw
 bMf
-bMf
+pln
 bTN
 bUt
 bMf
@@ -99823,7 +99857,7 @@ bVm
 bWd
 bWS
 bWd
-bYw
+dyc
 bYw
 bZh
 oMk
@@ -100080,7 +100114,7 @@ bLb
 bMi
 bLb
 bJP
-aaa
+vap
 bYw
 uPu
 hUX
@@ -100337,7 +100371,7 @@ bVn
 bWe
 bWT
 bJP
-aaa
+ltT
 qXu
 bZi
 bZR

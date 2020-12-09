@@ -11,8 +11,10 @@
 		target.health = 80
 
 /datum/unit_test/reagent_mob_expose/Run()
-	// Spawn the human somewhere outside of nullspace, so the fire doesn't get extinguished by lack of air and fail the test in the process
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human, pick(GLOB.prisonwarp))
+	// Life() is handled just by tests
+	SSmobs.pause()
+
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/food/drinks/drink = allocate(/obj/item/reagent_containers/food/drinks/bottle)
 	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
@@ -23,8 +25,8 @@
 	drink.reagents.add_reagent(/datum/reagent/phlogiston, 10)
 	drink.attack(human, human)
 	TEST_ASSERT_EQUAL(human.fire_stacks, 1, "Human does not have fire stacks after taking phlogiston")
-	human.Life() //plus 1 from [phlogiston/on_mob_life()] minus 0.1 [from living/handle_fire()]
-	TEST_ASSERT_EQUAL(human.fire_stacks, 1.9, "Human fire stacks did not increase after life tick")
+	human.Life()
+	TEST_ASSERT(human.fire_stacks > 1, "Human fire stacks did not increase after life tick")
 
 	// TOUCH
 	dropper.reagents.add_reagent(/datum/reagent/water, 1)
@@ -51,3 +53,7 @@
 	syringe.mode = SYRINGE_INJECT
 	syringe.afterattack(human, human, TRUE)
 	TEST_ASSERT_EQUAL(human.health, 80, "Human health did not update after injection from syringe")
+
+/datum/unit_test/reagent_mob_expose/Destroy()
+	SSmobs.ignite()
+	return ..()

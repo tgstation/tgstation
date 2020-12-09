@@ -403,13 +403,13 @@
 	..()
 
 /**
-  * Does a slap animation on an atom
-  *
-  * Uses do_attack_animation to animate the attacker attacking
-  * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
-  * Arguments:
-  * * atom/A - atom being slapped
-  */
+ * Does a slap animation on an atom
+ *
+ * Uses do_attack_animation to animate the attacker attacking
+ * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+ * Arguments:
+ * * atom/A - atom being slapped
+ */
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
@@ -423,10 +423,10 @@
 	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /** Handles exposing a mob to reagents.
-  *
-  * If the methods include INGEST the mob tastes the reagents.
-  * If the methods include VAPOR it incorporates permiability protection.
-  */
+ *
+ * If the methods include INGEST the mob tastes the reagents.
+ * If the methods include VAPOR it incorporates permiability protection.
+ */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)

@@ -160,11 +160,14 @@
 /*
  * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
  */
-/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
-	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
-	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	if(reagents?.total_volume)
-		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
+/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(source_item)
+		to_chat(victim, "<span class='boldwarning'>There's a [src] in [source_item]!!</span>")
+	else
+		to_chat(victim, "<span class='boldwarning'>[src] injects you!</span>")
+
+	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
 
 	return discover_after
 
