@@ -169,6 +169,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(17)
 			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
 		if(18)
+			//Here we spawn 23 empty bags of cheese honkers
 			new /obj/item/trash/cheesie(loc)
 			new /obj/item/trash/cheesie(loc)
 			new /obj/item/trash/cheesie(loc)
