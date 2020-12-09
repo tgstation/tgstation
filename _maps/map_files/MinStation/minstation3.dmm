@@ -62,6 +62,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/upper)
+"ds" = (
+/turf/open/openspace,
+/area/maintenance/fore/upper)
 "dv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -81,6 +84,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"eD" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "fi" = (
 /obj/structure/chair{
 	dir = 4
@@ -109,6 +116,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"iA" = (
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
+/area/science/xenobiology)
 "iT" = (
 /obj/structure/chair{
 	dir = 1
@@ -130,6 +141,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"jf" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "jy" = (
 /obj/machinery/atmospherics/pipe/multiz{
 	color = "#0000ff";
@@ -152,6 +168,10 @@
 /obj/structure/ore_box,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"lV" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "nE" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light{
@@ -193,6 +213,9 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/maintenance/starboard/upper)
+"qZ" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "rJ" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -254,9 +277,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"uI" = (
+/turf/open/openspace,
+/area/space/nearstation)
+"vz" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/glass,
+/area/science/xenobiology)
+"vA" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/aft/upper)
 "vY" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"wi" = (
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "wm" = (
 /obj/structure/lattice,
 /turf/open/openspace,
@@ -318,6 +358,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"yb" = (
+/obj/machinery/door/window{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft/upper)
 "yg" = (
 /obj/structure/closet/secure_closet/miner,
 /turf/open/floor/plasteel,
@@ -366,6 +412,11 @@
 "AC" = (
 /turf/closed/wall,
 /area/quartermaster/miningoffice)
+"BL" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "Cm" = (
 /obj/machinery/telecomms/relay/preset/mining,
 /turf/open/floor/plating,
@@ -401,6 +452,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
+"FB" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced,
+/turf/open/openspace,
+/area/space/nearstation)
 "FQ" = (
 /obj/structure/railing{
 	dir = 8
@@ -436,6 +494,11 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
+"Hm" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "Hp" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -484,6 +547,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"Li" = (
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/glass,
+/area/science/xenobiology)
+"Ll" = (
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "Ls" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -543,17 +613,36 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"OV" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "PS" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /turf/open/openspace,
 /area/quartermaster/miningoffice)
+"PV" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/space/nearstation)
 "QA" = (
 /turf/open/openspace,
 /area/maintenance/aft/upper)
 "Rm" = (
 /turf/closed/wall/r_wall,
 /area/quartermaster/miningoffice)
+"Rw" = (
+/obj/effect/turf_decal/box,
+/obj/item/target,
+/turf/open/floor/plating,
+/area/maintenance/aft/upper)
 "RZ" = (
 /obj/structure/chair{
 	dir = 4
@@ -563,6 +652,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"Si" = (
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/glass,
+/area/science/xenobiology)
 "So" = (
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
@@ -611,6 +706,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/upper)
+"Vj" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12;55"
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "Vo" = (
 /turf/closed/wall,
 /area/maintenance/starboard/upper)
@@ -668,10 +770,23 @@
 "Xd" = (
 /turf/open/openspace,
 /area/maintenance/starboard/upper)
+"Xk" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/turf/open/openspace,
+/area/space/nearstation)
 "Yd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"Yf" = (
+/turf/closed/wall/r_wall,
+/area/science/xenobiology)
 "Yg" = (
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -29314,14 +29429,14 @@ Zz
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
 ZY
 ZY
 ZY
@@ -29365,14 +29480,14 @@ Rm
 GD
 Rm
 Rm
-wr
-wr
-wr
-wr
-wr
-wr
-wr
-wr
+qZ
+qZ
+qZ
+qZ
+qZ
+qZ
+qZ
+qZ
 Zz
 Zz
 Zz
@@ -29571,14 +29686,14 @@ Zz
 Zz
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -29622,14 +29737,14 @@ vY
 vY
 bR
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+uI
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -29828,14 +29943,14 @@ Zz
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -29879,14 +29994,14 @@ vY
 vY
 kh
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+qZ
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -30085,14 +30200,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -30136,14 +30251,14 @@ vY
 vY
 vY
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+Xk
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -30342,14 +30457,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -30393,14 +30508,14 @@ AC
 ad
 AC
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+FB
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -30599,14 +30714,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -30650,14 +30765,14 @@ yg
 vY
 vY
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+PV
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -30856,14 +30971,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -30907,14 +31022,14 @@ yg
 vY
 kh
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+qZ
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -31113,14 +31228,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -31164,14 +31279,14 @@ Ij
 vY
 lu
 Rm
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-Ws
-wr
+uI
+uI
+uI
+uI
+uI
+uI
+uI
+qZ
 Zz
 Zz
 Zz
@@ -31370,14 +31485,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -31424,11 +31539,11 @@ Rm
 GJ
 GJ
 GJ
-wr
-wr
-wr
-wr
-wr
+qZ
+qZ
+qZ
+qZ
+qZ
 Zz
 Zz
 Zz
@@ -31627,14 +31742,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -31676,7 +31791,7 @@ QA
 JA
 So
 So
-So
+vA
 So
 So
 So
@@ -31884,14 +31999,14 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -31933,9 +32048,9 @@ QA
 JA
 So
 So
+vA
 So
-So
-So
+Rw
 So
 GJ
 Zz
@@ -32141,14 +32256,14 @@ Zz
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+Zb
 ZY
 ZY
 ZY
@@ -32190,7 +32305,7 @@ QA
 JA
 So
 So
-So
+yb
 So
 So
 So
@@ -32445,12 +32560,12 @@ QA
 xe
 QA
 JA
-So
-So
-So
-So
-So
-So
+Fj
+JA
+JA
+JA
+JA
+JA
 GJ
 GJ
 GJ
@@ -32703,7 +32818,7 @@ xe
 wm
 JA
 So
-So
+JA
 So
 So
 So
@@ -32960,7 +33075,7 @@ xe
 QA
 JA
 So
-So
+JA
 So
 So
 So
@@ -33203,21 +33318,21 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+Yf
+Yf
+Yf
+Vj
+Yf
+Yf
+Yf
+Yf
 QA
 xe
 QA
 JA
 So
-So
+Fj
 So
 So
 So
@@ -33460,21 +33575,21 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+eD
+Ll
+Li
+iA
+lV
+Ll
+Ll
+Yf
 wm
 xe
 wm
 JA
 So
-So
+JA
 So
 So
 So
@@ -33717,21 +33832,21 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+Ll
+Ll
+Li
+iA
+lV
+Ll
+Ll
+Yf
 QA
 xe
 QA
 JA
 So
-So
+JA
 So
 So
 So
@@ -33974,29 +34089,29 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+OV
+OV
+Hm
+iA
+jf
+OV
+OV
+Yf
 QA
 xe
 QA
 JA
 So
-So
-So
-So
-So
-So
-So
-So
-So
-So
+JA
+JA
+JA
+JA
+JA
+JA
+JA
+JA
+JA
 GJ
 ZV
 ZV
@@ -34231,23 +34346,23 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+iA
+iA
+iA
+iA
+iA
+iA
+iA
+Yf
 QA
 xe
 QA
 JA
 So
+JA
 So
-So
-So
+JA
 So
 So
 So
@@ -34488,23 +34603,23 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+wi
+wi
+vz
+iA
+BL
+wi
+wi
+Yf
 QA
 xe
 QA
 JA
 So
+Fj
 So
-So
-So
+JA
 So
 So
 So
@@ -34745,23 +34860,23 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+Ll
+Ll
+Li
+iA
+lV
+Ll
+Ll
+Yf
 wm
 xe
 xe
 Fj
 So
+JA
 So
-So
-So
+JA
 So
 So
 So
@@ -35002,23 +35117,23 @@ ZY
 fW
 So
 So
-So
-So
-So
-So
-So
-So
-So
-So
-JA
+Yf
+Ll
+Ll
+Li
+iA
+lV
+Ll
+Si
+Yf
 QA
 xe
 QA
 JA
 So
+JA
 So
-So
-So
+Fj
 So
 So
 So
@@ -35259,15 +35374,15 @@ Vo
 Vo
 Vo
 Vo
-Vo
-Vo
-Vo
-Vo
-Vo
-Vo
-Vo
-Vo
-Vo
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
+Yf
 Xd
 rJ
 Xd

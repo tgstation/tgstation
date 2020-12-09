@@ -24,14 +24,17 @@ map deltastation
 endmap
 
 map pubbystation
+	minplayers 25
 	votable
 endmap
 
 map minstation
-	votable
+	minplayers 0
+	maxplayers 19
 endmap
 
 map outpoststation
+	minplayers 25
 	votable
 endmap
 
@@ -49,6 +52,7 @@ endmap
 
 map kilostation
 	votable
+	minplayers 50
 endmap
 
 map icebox
