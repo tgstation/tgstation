@@ -2281,16 +2281,8 @@
 	var/metal_ref = data["material"]
 	if(!metal_ref)
 		return
-	var/metal_amount = 0
-
-	for(var/B in A.custom_materials) //list with what they're made of
-		metal_amount += A.custom_materials[B]
-
-	if(!metal_amount)
-		metal_amount = minumum_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
-
 	var/list/metal_dat = list()
-	metal_dat[metal_ref] = metal_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
+	metal_dat[metal_ref] = minumum_material_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
 
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
