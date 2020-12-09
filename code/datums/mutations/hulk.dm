@@ -136,7 +136,7 @@
 		to_chat(the_hulk, "<span class='danger'>You lose your grasp on [yeeted_person]'s tail!</span>")
 		return
 
-	yeeted_person.Stun(8 SECONDS)
+	yeeted_person.Paralyze(8 SECONDS)
 	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>", \
 					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear wooshing sounds!</span>", null, the_hulk)
 	to_chat(the_hulk, "<span class='danger'>You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>")
@@ -146,42 +146,80 @@
 
 /// For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
 /datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step, original_dir)
-	if(!is_swing_viable(the_hulk, yeeted_person))
+	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
+		return
+	if(get_dist(the_hulk, yeeted_person) > 1 || !isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
+		to_chat(the_hulk, "<span class='warning'>You lose your grasp on [yeeted_person]!</span>")
 		return
 
-	var/delay = 6
+	var/delay = 5
 	switch (step)
-		if (24 to INFINITY)
+		if(24 to INFINITY)
 			delay = 0.1
-		if (20 to 23)
+		if(20 to 23)
 			delay = 0.5
-		if (16 to 19)
+		if(16 to 19)
 			delay = 1
-		if (13 to 15)
+		if(13 to 15)
 			delay = 2
-		if (8 to 12)
+		if(8 to 12)
 			delay = 3
-		if (4 to 7)
-			delay = 3.75
-		if (0 to 3)
-			delay = 4.5
+		if(4 to 7)
+			delay = 3.5
+		if(0 to 3)
+			delay = 4
 
 	the_hulk.setDir(turn(the_hulk.dir, 90))
-	var/turf/T = get_step(the_hulk, the_hulk.dir)
-	var/turf/S = yeeted_person.loc
-	if ((isturf(S) && S.Exit(yeeted_person)) && (isturf(T) && T.Enter(the_hulk)))
-		yeeted_person.forceMove(T)
-		yeeted_person.setDir(get_dir(yeeted_person, the_hulk))
+	var/turf/current_spin_turf = yeeted_person.loc
+	var/turf/intermediate_spin_turf = get_step(yeeted_person, the_hulk.dir) // the diagonal
+	var/turf/next_spin_turf = get_step(the_hulk, the_hulk.dir)
+
+	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
+		yeeted_person.forceMove(next_spin_turf)
+		yeeted_person.face_atom(the_hulk)
+
+	var/list/collateral_check = intermediate_spin_turf.contents + next_spin_turf.contents // check the cardinal and the diagonal tiles we swung past
+	var/turf/collat_throw_target = get_edge_target_turf(yeeted_person, get_dir(current_spin_turf, next_spin_turf)) // what direction we're swinging
+
+	for(var/mob/living/collateral_mob in collateral_check)
+		if(!collateral_mob.density || collateral_mob == yeeted_person)
+			continue
+
+		yeeted_person.adjustBruteLoss(step*0.5)
+		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE)
+		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
+		log_combat(the_hulk, yeeted_person, "has smacked > into someone while tail swinging") // i have no idea how to better word this
+
+		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
+			the_hulk.visible_message("<span class='warning'>[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!</span>", "<span class='userdanger'>You end up smacking [yeeted_person] into yourself!</span>", ignored_mobs = yeeted_person)
+			to_chat(yeeted_person, "<span class='userdanger'>[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!</span>")
+			the_hulk.adjustBruteLoss(step)
+			return
+
+		yeeted_person.visible_message("<span class='warning'>[the_hulk] swings [yeeted_person] directly into [collateral_mob], sending [collateral_mob.p_them()] flying!</span>", \
+			"<span class='userdanger'>You're smacked into [collateral_mob]!</span>", ignored_mobs = collateral_mob)
+		to_chat(collateral_mob, "<span class='userdanger'>[the_hulk] swings [yeeted_person] directly into you, sending you flying!</span>")
+
+		collateral_mob.adjustBruteLoss(step*0.5)
+		collateral_mob.throw_at(collat_throw_target, round(step * 0.25) + 1, round(step * 0.25) + 1)
+		step -= 5
+		delay += 5
 
 	step++
 	if(step >= HULK_TAILTHROW_STEPS)
 		finish_swing(the_hulk, yeeted_person, original_dir)
+	else if(step < 0)
+		the_hulk.visible_message("<span class='danger'>[the_hulk] loses [the_hulk.p_their()] momentum on [yeeted_person]!</span>", "<span class='warning'>You lose your momentum on swinging [yeeted_person]!</span>", ignored_mobs = yeeted_person)
+		to_chat(yeeted_person, "<span class='userdanger'>[the_hulk] loses [the_hulk.p_their()] momentum and lets go of you!</span>")
 	else
 		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step, original_dir), delay)
 
 /// Time to toss the victim at high speed
 /datum/mutation/human/hulk/proc/finish_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, original_dir)
-	if(!is_swing_viable(the_hulk, yeeted_person))
+	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
+		return
+	if(get_dist(the_hulk, yeeted_person) > 1 || !isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
+		to_chat(the_hulk, "<span class='warning'>You lose your grasp on [yeeted_person]!</span>")
 		return
 
 	the_hulk.setDir(original_dir)
@@ -197,19 +235,5 @@
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
-
-/// Helper to reduce copypasta, this proc returns FALSE if either the hulk or thrown person are deleted or separated, TRUE otherwise
-/datum/mutation/human/hulk/proc/is_swing_viable(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person)
-	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
-		return FALSE
-
-	if (get_dist(the_hulk, yeeted_person) > 1)
-		to_chat(the_hulk, "<span class='warning'>[yeeted_person] is too far away!</span>")
-		return FALSE
-
-	if (!isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
-		to_chat(the_hulk, "<span class='warning'>You can't throw [yeeted_person] from here!</span>")
-		return FALSE
-	return TRUE
 
 #undef HULK_TAILTHROW_STEPS
