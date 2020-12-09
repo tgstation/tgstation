@@ -988,10 +988,10 @@
 		return src
 
 /**
-  * Buckle a living mob to this mob. Also turns you to face the other mob
-  *
-  * You can buckle on mobs if you're next to them since most are dense
-  */
+ * Buckle a living mob to this mob. Also turns you to face the other mob
+ *
+ * You can buckle on mobs if you're next to them since most are dense
+ */
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE

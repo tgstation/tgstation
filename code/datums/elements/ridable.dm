@@ -1,11 +1,11 @@
 /**
-  * This element is used to indicate that a movable atom can be mounted by mobs in order to ride it. The movable is considered mounted when a mob is buckled to it,
-  * at which point a [riding component][/datum/component/riding] is created on the movable, and that component handles the actual riding behavior.
-  *
-  * Besides the target, the ridable element has one argument: the component subtype. This is not really ideal since there's ~20-30 component subtypes rather than
-  * having the behavior defined on the ridable atoms themselves or some such, but because the old riding behavior was so horrifyingly spread out and redundant,
-  * just having the variables, behavior, and procs be standardized is still a big improvement.
-  */
+ * This element is used to indicate that a movable atom can be mounted by mobs in order to ride it. The movable is considered mounted when a mob is buckled to it,
+ * at which point a [riding component][/datum/component/riding] is created on the movable, and that component handles the actual riding behavior.
+ *
+ * Besides the target, the ridable element has one argument: the component subtype. This is not really ideal since there's ~20-30 component subtypes rather than
+ * having the behavior defined on the ridable atoms themselves or some such, but because the old riding behavior was so horrifyingly spread out and redundant,
+ * just having the variables, behavior, and procs be standardized is still a big improvement.
+ */
 /datum/element/ridable
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
