@@ -50,5 +50,7 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 Write-Output $NodeExe | Out-File -Encoding utf8 $Log
 [System.String]::Join("`n", $args) | Out-File -Encoding utf8 -Append $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
+$Env:PATH = "$NodeDir;$ENV:Path"  # Set PATH so that recursive calls find it
+$ErrorActionPreference = "SilentlyContinue"
 & $NodeExe $args 2>&1 | Tee-Object -Append $Log
 exit $LASTEXITCODE

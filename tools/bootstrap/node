@@ -42,6 +42,7 @@ mkdir -p "$Cache"
 printf '%s\n' "$NodeExe" "$@" > "$Log"
 printf -- '---\n' >> "$Log"
 exec 4>&1
+PATH="$NodeDir:$PATH"  # Set PATH so that recursive calls find it
 exitstatus=$({ { set +e; "$NodeExe" "$@" 3>&-; printf %s $? >&3; } 4>&- | tee -a "$Log" 1>&4; } 3>&1)
 exec 4>&-
 exit "$exitstatus"
