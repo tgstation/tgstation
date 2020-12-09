@@ -5,6 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
+	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
@@ -118,9 +119,7 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(mover.pass_flags & PASSGRILLE)
-		return TRUE
-	else if(!. && istype(mover, /obj/projectile))
+	if(!. && istype(mover, /obj/projectile))
 		return prob(30)
 
 /obj/structure/grille/CanAStarPass(ID, dir, caller)

@@ -388,7 +388,7 @@
 	muzzle_type = /obj/effect/projectile/tracer/legion
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
-	movement_type = UNSTOPPABLE
+	projectile_piercing = ALL
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer

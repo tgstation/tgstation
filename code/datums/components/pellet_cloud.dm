@@ -266,7 +266,7 @@
 	P.original = target
 	P.fired_from = parent
 	P.firer = parent // don't hit ourself that would be really annoying
-	P.permutated += parent // don't hit the target we hit already with the flak
+	P.impacted = list(parent = TRUE) // don't hit the target we hit already with the flak
 	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 	P.preparePixelProjectile(target, parent)
 	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)

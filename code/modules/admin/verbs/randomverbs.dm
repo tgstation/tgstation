@@ -1474,7 +1474,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/source = "adminabuse"
 	switch(add_or_remove)
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
-			ADD_TRAIT(D,chosen_trait,source)
+			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //big damn exception.
+				var/atom/movable/AM = D
+				ADD_MOVE_TRAIT(AM, chosen_trait,source)
+			else
+				ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")
 			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
 			if(!specific)
