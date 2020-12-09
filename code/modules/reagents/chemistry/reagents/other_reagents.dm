@@ -2287,8 +2287,8 @@
 
 	var/metal_amount = 0
 	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
-	for(var/B in materials_to_transmute) //list with what they're made of
-		metal_amount += materials_to_transmute[B]
+	for(var/metal_key in materials_to_transmute) //list with what they're made of
+		metal_amount += materials_to_transmute[metal_key]
 
 	if(!metal_amount)
 		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
