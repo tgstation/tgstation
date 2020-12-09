@@ -10,11 +10,11 @@
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute
-	var/cooldown = 0
-	var/cooldown_timer
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
+	COOLDOWN_DECLARE(transform_cooldown)
+	COOLDOWN_DECLARE(messagespam_cooldown)
 
 /obj/machinery/transformer/Initialize()
 	// On us
@@ -27,21 +27,23 @@
 
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
-	if(cooldown && (issilicon(user) || isobserver(user)))
-		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
+	if(!COOLDOWN_FINISHED(src, transform_cooldown))
+		. += "<b>It will be ready in [DisplayTimeText(cooldown_timer - world.time)].</b>"
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
 	. = ..()
 
 /obj/machinery/transformer/update_icon_state()
-	if(machine_stat & (BROKEN|NOPOWER) || cooldown == 1)
+	if(machine_stat & (BROKEN|NOPOWER) || COOLDOWN_FINISHED(src, transform_cooldown))
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
-	if(cooldown == 1)
+	if(!COOLDOWN_FINISHED(src, transform_cooldown) && COOLDOWN_FINISHED(src, messagespam_cooldown))
+		say("WARNING: Equipment reconfiguration in progess. Please wait \[[DisplayTimeText(cooldown_timer - world.time)]\].")
+		COOLDOWN_START(src, messagespam_cooldown, 60) //Message every 6 seconds
 		return
 
 	// Crossed didn't like people lying down.
@@ -64,14 +66,12 @@
 	return FALSE
 
 /obj/machinery/transformer/process()
-	if(cooldown && (cooldown_timer <= world.time))
-		cooldown = FALSE
-		update_icon()
+	update_icon()
 
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
-	if(cooldown == 1)
+	if(!COOLDOWN_FINISHED(src, transform_cooldown))
 		return
 
 	if(!transform_dead && H.stat == DEAD)
@@ -79,8 +79,7 @@
 		return
 
 	// Activate the cooldown
-	cooldown = 1
-	cooldown_timer = world.time + cooldown_duration
+	COOLDOWN_START(src, transform_cooldown, cooldown_duration)
 	update_icon()
 
 	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
