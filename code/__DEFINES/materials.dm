@@ -37,6 +37,8 @@
 #define BREAKDOWN_FLAGS_ORE_PROCESSOR	(BREAKDOWN_ALLOYS)
 /// Breakdown flags used by the drone dispenser.
 #define BREAKDOWN_FLAGS_DRONE_DISPENSER	(BREAKDOWN_ALLOYS)
+/// Breakdown flags used when exporting materials.
+#define BREAKDOWN_FLAGS_EXPORT			(NONE)
 
 /// Flag for atoms, this flag ensures it isn't re-colored by materials. Useful for snowflake icons such as default toolboxes.
 #define MATERIAL_COLOR (1<<0)
