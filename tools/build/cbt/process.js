@@ -42,7 +42,7 @@ const trap = (signals, handler) => {
   }
 };
 
-trap(['EXIT', 'BREAK', 'HUP', 'INT', 'TERM', 'KILL'], signal => {
+trap(['EXIT', 'BREAK', 'HUP', 'INT', 'TERM'], signal => {
   if (signal !== 'EXIT') {
     console.log('Received', signal);
   }
