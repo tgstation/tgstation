@@ -36,10 +36,10 @@
 	var/explosion_block = 0
 
 	/**
-	  * used to store the different colors on an atom
-	  *
-	  * its inherent color, the colored paint applied on it, special color effect etc...
-	  */
+	 * used to store the different colors on an atom
+	 *
+	 * its inherent color, the colored paint applied on it, special color effect etc...
+	 */
 	var/list/atom_colours
 
 
@@ -670,12 +670,12 @@
 	return
 
 /**
-  * A special case of relaymove() in which the person relaying the move may be "driving" this atom
-  *
-  * This is a special case for vehicles and ridden animals where the relayed movement may be handled
-  * by the riding component attached to this atom. Returns TRUE as long as there's nothing blocking
-  * the movement, or FALSE if the signal gets a reply that specifically blocks the movement
-  */
+ * A special case of relaymove() in which the person relaying the move may be "driving" this atom
+ *
+ * This is a special case for vehicles and ridden animals where the relayed movement may be handled
+ * by the riding component attached to this atom. Returns TRUE as long as there's nothing blocking
+ * the movement, or FALSE if the signal gets a reply that specifically blocks the movement
+ */
 /atom/proc/relaydrive(mob/living/user, direction)
 	return !(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
 
