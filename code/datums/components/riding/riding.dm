@@ -1,9 +1,9 @@
 /**
-  * This is the riding component, which is applied to a movable atom by the [ridable element][/datum/element/ridable] when a mob is successfully buckled to said movable.
-  *
-  * This component lives for as long as at least one mob is buckled to the parent. Once all mobs are unbuckled, the component is deleted, until another mob is buckled in
-  * and we make a new riding component, so on and so forth until the sun explodes.
-  */
+ * This is the riding component, which is applied to a movable atom by the [ridable element][/datum/element/ridable] when a mob is successfully buckled to said movable.
+ *
+ * This component lives for as long as at least one mob is buckled to the parent. Once all mobs are unbuckled, the component is deleted, until another mob is buckled in
+ * and we make a new riding component, so on and so forth until the sun explodes.
+ */
 
 
 /datum/component/riding
@@ -14,10 +14,10 @@
 	var/vehicle_move_delay = 2
 
 	/**
-	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on the actual vehicle object in their
-	  * [/obj/vehicle/var/key_type] variable because the vehicle objects still have a few special checks/functions of their own I'm not porting over to the riding component
-	  * quite yet. Make sure if you define it on the vehicle, you define it here too.
-	  */
+	 * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on the actual vehicle object in their
+	 * [/obj/vehicle/var/key_type] variable because the vehicle objects still have a few special checks/functions of their own I'm not porting over to the riding component
+	 * quite yet. Make sure if you define it on the vehicle, you define it here too.
+	 */
 	var/keytype
 
 	/// position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
@@ -34,9 +34,9 @@
 	var/override_allow_spacemove = FALSE
 
 	/**
-	  * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
-	  * Takes additional flags from the ridable element and the buckle proc (buckle_mob_flags) for riding cyborgs/humans in case we need to reserve arms
-	  */
+	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
+	 * Takes additional flags from the ridable element and the buckle proc (buckle_mob_flags) for riding cyborgs/humans in case we need to reserve arms
+	 */
 	var/ride_check_flags = NONE
 	/// For telling someone they can't drive
 	COOLDOWN_DECLARE(message_cooldown)
@@ -64,12 +64,12 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
 
 /**
-  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
-  *
-  * The original riding component had these procs all called from the ridden object itself through the use of GetComponent() and LoadComponent()
-  * This was obviously problematic for componentization, but while lots of the variables being set were able to be moved to component variables,
-  * the proc calls couldn't be. Thus, anything that has to do an initial proc call should be handled here.
-  */
+ * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
+ *
+ * The original riding component had these procs all called from the ridden object itself through the use of GetComponent() and LoadComponent()
+ * This was obviously problematic for componentization, but while lots of the variables being set were able to be moved to component variables,
+ * the proc calls couldn't be. Thus, anything that has to do an initial proc call should be handled here.
+ */
 /datum/component/riding/proc/handle_specials()
 	return
 
@@ -176,10 +176,10 @@
 	riding_offsets["[index]"] = offsets
 
 /**
-  * This proc is used to see if we have the appropriate key to drive this atom, if such a key is needed. Returns FALSE if we don't have what we need to drive.
-  *
-  * Still needs to be neatened up and spruced up with proper OOP, as a result of vehicles having their own key handling from other ridable atoms
-  */
+ * This proc is used to see if we have the appropriate key to drive this atom, if such a key is needed. Returns FALSE if we don't have what we need to drive.
+ *
+ * Still needs to be neatened up and spruced up with proper OOP, as a result of vehicles having their own key handling from other ridable atoms
+ */
 /datum/component/riding/proc/keycheck(mob/user)
 	if(!keytype)
 		return TRUE
