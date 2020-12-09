@@ -3682,8 +3682,7 @@
 /area/maintenance/starboard/fore)
 "akB" = (
 /obj/machinery/door/airlock{
-	name = "Auxiliary Office";
-	req_access_txt = "32"
+	name = "Auxiliary Office"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/landmark/event_spawn,
