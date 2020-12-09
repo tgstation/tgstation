@@ -300,7 +300,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range)
 
 /atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
 	SIGNAL_HANDLER

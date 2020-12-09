@@ -334,16 +334,6 @@
 	result = /obj/item/food/crab_rangoon
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/poutine
-	name = "Poutine"
-	reqs = list(
-		/obj/item/food/fries = 1,
-		/obj/item/food/cheesewedge = 1,
-		/datum/reagent/consumable/gravy = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/customizable/poutine
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
 	reqs = list(

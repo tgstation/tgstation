@@ -55,6 +55,7 @@
 					dat += {"
 
 		<head>
+			<script src="[SSassets.transport.get_asset_url("jquery.min.js")]"></script>
 			<script type='text/javascript'>
 
 				function updateSearch(){
@@ -69,16 +70,10 @@
 					if(filter.value == ""){
 						return;
 					}else{
-						var body_data = document.querySelector("#maintable_data");
-						var found_data = body_data.querySelectorAll("table input");
-						if(found_data.length >0){
-							for(var i=0;  i < found_data.length; i++){
-								var elm = found_data\[i\];
-								if(elm.value.toLowerCase().indexOf(filter) == -1)
-									elm.parentElement.parentElement.parentElement.removeChild(elm.parentElement.parentElement)
-								//	elm.parentElement.parentElement.parentElement.style.visibility = "hidden";
-							}
-						}
+						$("#maintable_data").children("tbody").children("tr").children("td").children("input").filter(function(index)
+						{
+							return $(this)\[0\].value.toLowerCase().indexOf(filter) == -1
+						}).parent("td").parent("tr").hide()
 					}
 				}
 
@@ -91,8 +86,10 @@
 			</script>
 		</head>
 
+
 	"}
-					dat += {"<p style='text-align:center;'>"}
+					dat += {"
+<p style='text-align:center;'>"}
 					dat += "<A href='?src=[REF(src)];choice=New Record (General)'>New Record</A><BR>"
 					//search bar
 					dat += {"

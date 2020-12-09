@@ -96,12 +96,12 @@
 	chassis.use_power(energy_drain)
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
 	if(!chassis)
 		return
 	var/C = chassis.loc
 	chassis.use_power(energy_drain)
-	. = do_after(user, equip_cooldown, target=target)
+	. = do_after(user, equip_cooldown, target=target, interaction_key = interaction_key)
 	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
 

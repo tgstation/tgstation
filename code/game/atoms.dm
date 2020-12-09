@@ -90,8 +90,6 @@
 
 	var/list/alternate_appearances
 
-	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
-	var/list/targeted_by
 
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
@@ -279,11 +277,6 @@
 
 	LAZYCLEARLIST(overlays)
 
-	for(var/i in targeted_by)
-		var/mob/M = i
-		LAZYREMOVE(M.do_afters, src)
-
-	targeted_by = null
 	QDEL_NULL(light)
 
 	if(smoothing_flags & SMOOTH_QUEUED)
@@ -689,8 +682,10 @@
  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
  */
 /atom/proc/blob_act(obj/structure/blob/B)
-	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
-	return
+	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
+	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
+		return FALSE
+	return TRUE
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
@@ -1154,7 +1149,8 @@
 					transform = M.Turn(angle)
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
-		if(newname)
+		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
+		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
 			vv_auto_rename(newname)
 
 /atom/vv_get_header()
@@ -1268,11 +1264,14 @@
 	to_chat(user, "<span class='notice'>You start working on [src].</span>")
 	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
+		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
+			created_atoms.Add(created_atom)
+		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, I, created_atoms)
 		UsedforProcessing(user, I, chosen_option)
 		return
 
