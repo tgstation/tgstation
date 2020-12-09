@@ -246,7 +246,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOVE_FLYING		"move_flying"
 #define TRAIT_MOVE_VENTCRAWLING	"move_ventcrawling"
 #define TRAIT_MOVE_FLOATING		"move_floating"
-#define TRAIT_MOVE_UNSTOPPABLE	"move_unstoppable"
+#define TRAIT_MOVE_PHASING		"move_phasing"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
