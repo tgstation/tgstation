@@ -547,6 +547,10 @@
 	suffix = "box"
 	name = "arrival shuttle (Box)"
 
+/datum/map_template/shuttle/arrival/min
+	suffix = "min"
+	name = "arrival shuttle (Min)"
+
 /datum/map_template/shuttle/arrival/outpost
 	suffix = "outpost"
 	name = "arrival shuttle (Outpost)"

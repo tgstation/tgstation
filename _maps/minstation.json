@@ -1,13 +1,31 @@
 {
-    "version": 1,
-    "map_name": "Min Station",
-    "map_path": "map_files/MinStation",
-    "map_file": "minstation.dmm",
+	"version": 1,
+	"map_name": "MinStation",
+	"map_path": "map_files/MinStation",
+	"map_file": [
+		"minstation.dmm",
+		"minstation2.dmm",
+		"minstation3.dmm"
+	],
 	"shuttles": {
-	    "emergency": "emergency_box",
-	    "whiteship": "whiteship_pubby",
-	    "ferry": "ferry_fancy",
-	    "cargo": "cargo_min"
-		
-	}
+		"cargo": "cargo_m",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_box",
+		"emergency": "emergency_box"
+	},
+	"traits": [
+		{
+			"Up": 1,
+			"Baseturf": "/turf/open/space/basic"
+		},
+		{
+			"Down": -1,
+			"Up": 1,
+			"Baseturf": "/turf/open/openspace/airless"
+		},
+		{
+			"Down": -1,
+			"Baseturf": "/turf/open/openspace/airless"
+		}
+	]
 }
