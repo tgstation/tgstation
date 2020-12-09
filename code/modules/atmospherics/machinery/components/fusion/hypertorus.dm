@@ -618,15 +618,23 @@
 	critical_threshold_proximity_archived = critical_threshold_proximity
 
 	if(internal_fusion.total_moles() > MINIMUM_MOLE_COUNT)
+		//Damage calculations
 		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e6 + internal_fusion.temperature) / 1e6, 1) - 2500) / 200, 0), 0)
 		critical_threshold_proximity = max(critical_threshold_proximity + max(log(10, internal_fusion.temperature) - 7.2, 0), 0)
-		critical_threshold_proximity += max(round(iron_content, 1) - 1, 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max(round(iron_content, 1) - 1, 0))
 
+		//Healing done by moles
 		if(internal_fusion.total_moles() < 1500)
 			critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1500) / 150, 0), 0)
+			if(internal_fusion.total_moles() < 500)
+				critical_threshold_proximity = max(critical_threshold_proximity - round(log(10, internal_fusion.total_moles()), 0.1), 0)
+			iron_content = max(iron_content - round(log(10, internal_fusion.total_moles()), 0.1), 0)
 
+		//Healing done by temperature
 		if(internal_fusion.temperature < 5e6)
 			critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 6.5, 0), 0)
+			if(internal_fusion.temperature < 5e4)
+				critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 4.5, 0), 0)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
@@ -970,6 +978,10 @@
 						heat_output *= 1.055
 						moderator_internal.gases[/datum/gas/halon] += scaled_production * 0.35
 						moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES] -= min(moderator_internal.gases[/datum/gas/nitrous_oxide][MOLES], scaled_production * 1.5)
+					if(m_healium > 100)
+						if(critical_threshold_proximity > 400)
+							critical_threshold_proximity = max(critical_threshold_proximity - (m_healium / 100), 0)
+							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20) * delta_time
 				if(3, 4)
 					var/scaled_production = clamp(heat_output * 5e-4, 0, fuel_consumption)
 					if(power_level == 3)
@@ -1003,6 +1015,13 @@
 								var/D = sqrt(1 / max(1, get_dist(l, src)))
 								l.hallucination += power_level * 50 * D * delta_time
 								l.hallucination = clamp(l.hallucination, 0, 200)
+					if(m_healium > 100)
+						if(critical_threshold_proximity > 400)
+							critical_threshold_proximity = max(critical_threshold_proximity - (m_healium / 100), 0)
+							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20) * delta_time
+					if(moderator_internal.temperature < 1e6 || (m_plasma > 500 && m_bz > 300))
+						internal_output.assert_gases(/datum/gas/antinoblium)
+						internal_output.gases[/datum/gas/antinoblium][MOLES] += scaled_production * scaled_helium * 0.1
 				if(5)
 					var/scaled_production = clamp(heat_output * 1e-6, 0, fuel_consumption)
 					moderator_internal.gases[/datum/gas/nitryl][MOLES] += scaled_production * 0.65
@@ -1038,7 +1057,7 @@
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
 					if(moderator_internal.temperature < 1e7 || (m_plasma > 100 && m_bz > 50))
 						internal_output.assert_gases(/datum/gas/antinoblium)
-						internal_output.gases[/datum/gas/antinoblium][MOLES] += 0.1 * (scaled_helium / (fuel_injection_rate * 0.0065))
+						internal_output.gases[/datum/gas/antinoblium][MOLES] += scaled_production * scaled_helium * 0.5
 				if(6)
 					var/scaled_production = clamp(heat_output * 1e-7, 0, fuel_consumption)
 					if(m_plasma > 30)
@@ -1062,7 +1081,7 @@
 						if(critical_threshold_proximity > 400)
 							critical_threshold_proximity = max(critical_threshold_proximity - (m_healium / 100), 0)
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20) * delta_time
-					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0095)) * delta_time
+					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += scaled_production * scaled_helium
 
 	//heat up and output what's in the internal_output into the linked_output port
 	if(internal_output.total_moles() > 0)
