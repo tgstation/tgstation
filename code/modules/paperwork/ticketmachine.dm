@@ -177,7 +177,7 @@
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
 	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = MAPTEXT(ticket_number)
-	theirticket.saved_maptext = MAPTEXT(ticket_number])
+	theirticket.saved_maptext = MAPTEXT(ticket_number)
 	theirticket.ticket_number = ticket_number
 	theirticket.source = src
 	theirticket.owner = user
