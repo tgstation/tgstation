@@ -1543,6 +1543,9 @@
  */
 /atom/proc/get_material_composition(breakdown_flags=NONE)
 	. = list()
+	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_MAT_COMP, breakdown_flags, .) & COMPONENT_OVERRIDE_MAT_COMP)
+		return
+
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
 		var/datum/material/material = SSmaterials.GetMaterialRef(mat)

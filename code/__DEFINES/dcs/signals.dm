@@ -201,6 +201,11 @@
 	/// When returned from `COMSIG_ATOM_SINGULARITY_TRY_MOVE`, the singularity will move to that turf
 	#define SINGULARITY_TRY_MOVE_BLOCK (1 << 0)
 
+/// from base of [/atom/proc/get_material_composition]: (breakdown_flags, /list)
+#define COMSIG_ATOM_GET_MAT_COMP	"atom_get_material_composition"
+	/// When returned from the above it prevents the custom materials list from being added to the material composition
+	#define COMPONENT_OVERRIDE_MAT_COMP	(1<<0)
+
 /////////////////
 
 ///from base of area/Entered(): (/area)
