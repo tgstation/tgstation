@@ -482,11 +482,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
-	GLOB.poi_list |= src
-
-/obj/effect/rune/narsie/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
+	AddElement(/datum/element/point_of_interest)
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
