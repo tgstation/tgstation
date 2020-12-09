@@ -6,6 +6,10 @@
 "kM" = (
 /turf/open/space/basic,
 /area/space)
+"qn" = (
+/obj/structure/ladder,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
 "GZ" = (
 /turf/closed/wall,
 /area/maintenance/department/electrical)
@@ -33540,9 +33544,9 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
+GZ
+GZ
+GZ
 ZY
 ZY
 ZY
@@ -33795,11 +33799,11 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+GZ
+GZ
+GZ
+qn
+GZ
 ZY
 ZY
 ZY
@@ -34052,11 +34056,11 @@ ZY
 ZY
 ZY
 ZY
+GZ
 ZY
 ZY
 ZY
-ZY
-ZY
+GZ
 ZY
 ZY
 ZY
@@ -34309,11 +34313,11 @@ ZY
 ZY
 ZY
 ZY
+GZ
 ZY
 ZY
 ZY
-ZY
-ZY
+GZ
 ZY
 ZY
 ZY
@@ -34570,7 +34574,7 @@ ZY
 ZY
 ZY
 ZY
-ZY
+GZ
 ZY
 ZY
 ZY
@@ -34823,11 +34827,11 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+GZ
+GZ
+GZ
+GZ
+GZ
 ZY
 ZY
 ZY

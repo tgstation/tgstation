@@ -7,8 +7,8 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
 "ac" = (
-/turf/open/openspace,
-/area/maintenance/department/science)
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "ad" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
@@ -67,8 +67,8 @@
 /turf/closed/wall,
 /area/security/prison)
 "at" = (
-/obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/obj/structure/ladder,
+/turf/open/floor/plating,
 /area/maintenance/department/science)
 "aw" = (
 /obj/machinery/camera/autoname,
@@ -278,6 +278,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bE" = (
@@ -1765,10 +1766,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"kx" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "kA" = (
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -3099,6 +3096,7 @@
 "sN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "sR" = (
@@ -3255,6 +3253,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "tW" = (
@@ -3329,11 +3328,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
-"uu" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "uv" = (
 /turf/closed/wall/r_wall,
 /area/teleporter)
@@ -3455,6 +3449,10 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"uV" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "uZ" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plasteel,
@@ -3942,10 +3940,10 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "xZ" = (
-/obj/machinery/hydroponics/constructable,
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
+/obj/structure/stairs/north,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ye" = (
@@ -4242,6 +4240,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "zI" = (
@@ -4261,9 +4260,10 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/nuke_storage)
 "zP" = (
-/obj/machinery/biogenerator,
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "zQ" = (
@@ -4276,6 +4276,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
+"zS" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "zV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -4552,7 +4559,6 @@
 /area/security/brig)
 "BJ" = (
 /obj/structure/window/reinforced/spawner,
-/obj/machinery/hydroponics/constructable,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "BK" = (
@@ -5003,6 +5009,10 @@
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"EG" = (
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/plating,
+/area/space/nearstation)
 "EJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -5336,7 +5346,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "GQ" = (
-/obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "GS" = (
@@ -6228,7 +6237,7 @@
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "LH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -6236,7 +6245,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "LI" = (
 /obj/machinery/chem_master,
 /obj/machinery/camera/autoname{
@@ -6249,7 +6258,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "LJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -6279,7 +6288,7 @@
 /area/quartermaster/miningoffice)
 "LU" = (
 /turf/closed/wall/r_wall,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "LV" = (
 /mob/living/simple_animal/pet/dog/corgi/ian,
 /obj/machinery/light{
@@ -6446,7 +6455,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "Na" = (
 /turf/closed/wall/r_wall,
 /area/science/robotics/lab)
@@ -6462,7 +6471,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "Nc" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
@@ -6471,7 +6480,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "Nd" = (
-/obj/machinery/vending/hydronutrients,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/cable,
@@ -6483,7 +6491,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "Nj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -6774,7 +6782,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "OV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -6786,11 +6794,11 @@
 /area/chapel/main)
 "Pa" = (
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "Pc" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
+/area/medical/pharmacy)
 "Pd" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	dir = 1
@@ -6956,6 +6964,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "Qs" = (
@@ -7125,6 +7134,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "Rs" = (
@@ -7179,12 +7191,6 @@
 /area/science/xenobiology)
 "RK" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "RM" = (
@@ -7195,15 +7201,16 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/central)
 "RP" = (
-/obj/machinery/clonepod,
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "RU" = (
-/obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
-/obj/machinery/computer/cloning,
+/obj/structure/stairs/north,
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "RV" = (
 /obj/machinery/gravity_generator/main/station,
 /turf/open/floor/plasteel,
@@ -7282,15 +7289,9 @@
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/dna_scannernew,
+/obj/structure/stairs/north,
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "Ss" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -7552,13 +7553,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Cloning Lab";
-	req_access_txt = "68"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "TS" = (
@@ -7583,15 +7577,12 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "Ua" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/structure/stairs/north,
+/obj/structure/railing{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/hydroponics)
 "Uc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -7601,13 +7592,16 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "Ue" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "Uf" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -7831,7 +7825,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "Vw" = (
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
@@ -7840,7 +7834,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "VC" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -7868,8 +7862,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "VQ" = (
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "VR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -8210,8 +8207,12 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "XK" = (
-/turf/closed/wall,
-/area/medical/genetics/cloning)
+/obj/structure/window/reinforced/spawner,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "XN" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Virology Containment Cell";
@@ -8221,7 +8222,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/medical/genetics/cloning)
+/area/medical/medbay/central)
 "XR" = (
 /turf/closed/wall/r_wall,
 /area/library)
@@ -8258,7 +8259,6 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
 "Yf" = (
-/obj/machinery/vending/hydroseeds,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plasteel,
@@ -8289,8 +8289,10 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "Yo" = (
-/turf/closed/wall/r_wall,
-/area/medical/genetics/cloning)
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "Yq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
@@ -42146,8 +42148,8 @@ KZ
 KV
 KV
 KV
-KV
-KV
+JT
+JT
 Va
 Xr
 ZA
@@ -42404,7 +42406,7 @@ JT
 JT
 JT
 JT
-JT
+at
 Va
 Va
 Va
@@ -42659,9 +42661,9 @@ JT
 KZ
 KV
 JT
-ac
-ac
-at
+KV
+KV
+KV
 Vc
 Xs
 ZN
@@ -42916,9 +42918,9 @@ JY
 KZ
 KV
 JT
-ac
-ac
-at
+KV
+KV
+KV
 Vc
 Xw
 ZS
@@ -43173,9 +43175,9 @@ JT
 KV
 KV
 KV
-at
-at
-at
+KV
+KV
+KV
 Vc
 XE
 ZW
@@ -45242,7 +45244,7 @@ Dm
 hb
 Ul
 sr
-uu
+GQ
 xo
 Yf
 Dy
@@ -45487,9 +45489,9 @@ Ly
 MP
 OK
 PI
-RO
+ac
 TR
-RO
+ac
 RO
 St
 St
@@ -45499,7 +45501,7 @@ Ul
 ng
 Ul
 sr
-kx
+GQ
 xo
 BJ
 Dy
@@ -45745,9 +45747,9 @@ MS
 OU
 LU
 RP
-Ua
+TI
 Vu
-XK
+Rq
 pr
 rE
 IT
@@ -45756,9 +45758,9 @@ pj
 ng
 sm
 sr
-kx
+GQ
 xo
-BJ
+XK
 Dy
 CK
 bj
@@ -46013,9 +46015,9 @@ ZB
 Dc
 et
 sr
-kx
+Ua
 xo
-BJ
+Yo
 Dy
 ot
 Ec
@@ -46261,7 +46263,7 @@ LU
 Sj
 Ue
 VQ
-XK
+Rq
 Hm
 ym
 Fu
@@ -46272,7 +46274,7 @@ et
 sr
 xZ
 rc
-BJ
+zS
 Dy
 CK
 bj
@@ -46515,10 +46517,10 @@ LU
 LU
 LU
 LU
-Yo
-Yo
-Yo
-Yo
+RO
+RO
+RO
+RO
 St
 St
 St
@@ -49106,8 +49108,8 @@ bj
 dE
 qC
 qC
-qC
-qC
+uV
+EG
 tO
 ZG
 ZG
