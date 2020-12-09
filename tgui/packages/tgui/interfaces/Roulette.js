@@ -42,7 +42,7 @@ export const RouletteNumberButton = (props, context) => {
       textAlign="center"
       mb={0}
       className="Roulette__board-extrabutton"
-      onClick={() => act('ChangeBetType', { type: number })}
+      onClick={() => act('ChangeBetType', { type: number.toString() })}
     />
   );
 };
@@ -70,7 +70,7 @@ export const RouletteBoard = (props, context) => {
             color="transparent"
             height="88px"
             className="Roulette__board-extrabutton"
-            onClick={() => act('ChangeBetType', { type: 0 })}
+            onClick={() => act('ChangeBetType', { type: "0" })}
           />
         </td>
         {firstRow.map(number => (

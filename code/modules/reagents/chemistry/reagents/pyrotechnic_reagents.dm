@@ -67,10 +67,6 @@
 			for(var/turf/nearby_turf in range(1, target_floor))
 				if(!locate(/obj/effect/hotspot) in nearby_turf)
 					new /obj/effect/hotspot(nearby_turf)
-	if(iswallturf(exposed_turf))
-		var/turf/closed/wall/target_wall = exposed_turf
-		if(prob(reac_volume))
-			target_wall.ScrapeAway()
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

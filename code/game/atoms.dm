@@ -90,8 +90,6 @@
 
 	var/list/alternate_appearances
 
-	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
-	var/list/targeted_by
 
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
@@ -279,11 +277,6 @@
 
 	LAZYCLEARLIST(overlays)
 
-	for(var/i in targeted_by)
-		var/mob/M = i
-		LAZYREMOVE(M.do_afters, src)
-
-	targeted_by = null
 	QDEL_NULL(light)
 
 	if(smoothing_flags & SMOOTH_QUEUED)
@@ -689,8 +682,10 @@
  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
  */
 /atom/proc/blob_act(obj/structure/blob/B)
-	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
-	return
+	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
+	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
+		return FALSE
+	return TRUE
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)

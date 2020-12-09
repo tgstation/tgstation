@@ -531,9 +531,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define NO_BUCKLE_LYING -1
 
 
-// timed_action_flags parameter for `/proc/do_atom`, `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
-#define IGNORE_TARGET_IN_DOAFTERS (1<<0)
-#define IGNORE_USER_LOC_CHANGE (1<<1)
-#define IGNORE_TARGET_LOC_CHANGE (1<<2)
-#define IGNORE_HELD_ITEM (1<<3)
-#define IGNORE_INCAPACITATED (1<<4)
+// timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+#define IGNORE_USER_LOC_CHANGE (1<<0)
+#define IGNORE_TARGET_LOC_CHANGE (1<<1)
+#define IGNORE_HELD_ITEM (1<<2)
+#define IGNORE_INCAPACITATED (1<<3)
