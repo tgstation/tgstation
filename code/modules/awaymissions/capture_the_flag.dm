@@ -38,6 +38,7 @@
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
+	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/ComponentInitialize()
 	. = ..()
@@ -47,12 +48,16 @@
 	if(is_ctf_target(loc)) //don't reset from someone's hands.
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
-		forceMove(get_turf(src.reset))
-		for(var/mob/M in GLOB.player_list)
-			var/area/mob_area = get_area(M)
-			if(istype(mob_area, game_area))
-				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
-		STOP_PROCESSING(SSobj, src)
+		reset_flag()
+
+/obj/item/ctf/proc/reset_flag()
+	forceMove(get_turf(src.reset))
+	for(var/mob/M in GLOB.player_list)
+		var/area/mob_area = get_area(M)
+		if(istype(mob_area, game_area))
+			to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
+	STOP_PROCESSING(SSobj, src)
+	return TRUE //so if called by a signal, it doesn't delete
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/ctf/attack_hand(mob/living/user)

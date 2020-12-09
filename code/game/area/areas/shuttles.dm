@@ -144,6 +144,10 @@
 	name = "Luxurious Emergency Shuttle"
 	area_flags = NOTELEPORT
 
+/area/shuttle/escape/simulation
+	name = "Medieval Reality Simulation Dome"
+	area_flags = NOTELEPORT
+
 /area/shuttle/escape/arena
 	name = "The Arena"
 	area_flags = NOTELEPORT

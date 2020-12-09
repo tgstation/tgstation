@@ -1,19 +1,15 @@
 ///These are for the medisim shuttle
 
 /obj/machinery/capture_the_flag/medisim
-	game_area = /area/shuttle/escape
+	game_area = /area/shuttle/escape/simulation
 
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
 	var/mob/living/carbon/human/M = ..()
 	M.remove_all_languages(LANGUAGE_CTF)
 	M.grant_language(/datum/language/monkey, TRUE, TRUE, LANGUAGE_CTF)
-
-//maybe add something here about ending the other CTF game/not preventing that from happening
-
-//late initialize for hooking up the computers on the shuttle
-
-/obj/machinery/capture_the_flag/medisim/reset_the_arena()
-	return //so we don't delete every object on the shuttle. downsides = that simulation room is gonna get gross pretty quick
+	randomize_human(M)
+	var/oldname = name
+	M.name = "[M.gender == MALE ? "Sir" : "Lady"] [oldname]"
 
 /obj/machinery/capture_the_flag/medisim/red
 	ctf_gear = /datum/outfit/medisimred
@@ -57,8 +53,3 @@
 	head = /obj/item/clothing/head/helmet/knight/blue
 	r_hand = /obj/item/claymore
 
-/turf/closed/indestructible/binary
-	name = "tear in the fabric of reality"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "binary"
-	opacity = FALSE
