@@ -94,6 +94,13 @@
 	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
 	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
 
+/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
+	if(!can_interact(user))
+		return
+	on = !on
+	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+	update_icon()
+
 ///Checks if the gases in the input are the ones needed by the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_gas_requirements()
 	var/datum/gas_mixture/contents = airs[2]
@@ -117,8 +124,6 @@
 	var/list/recipe = GLOB.gas_recipe_meta[recipe_type]
 	for(var/gas_type in recipe[META_RECIPE_REQUIREMENTS])
 		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * (gas_input * 0.1)))
-
-	update_parents()
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
@@ -146,7 +151,7 @@
 
 	var/median_temperature = (recipe[META_RECIPE_MAX_TEMP] - recipe[META_RECIPE_MIN_TEMP]) * 0.5
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 2.5, 100)
+		quality_loss = max(quality_loss - 5.5, 100)
 
 	if(recipe[META_RECIPE_REACTION_TYPE] == "endothermic")
 		internal.temperature = max(internal.temperature - (recipe[META_RECIPE_ENERGY_RELEASE] / internal.heat_capacity()), TCMB)
@@ -177,6 +182,7 @@
 	inject_gases()
 
 	if(!internal.total_moles())
+		update_parents()
 		return
 	internal_check()
 
@@ -189,6 +195,7 @@
 			quality_loss = min(quality_loss + 0.5, 100)
 			progress_bar = max(progress_bar - 1, 0)
 	if(progress_bar != 100)
+		update_parents()
 		return
 	progress_bar = 0
 

@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 350
 	reaction_type = "exothermic"
 	energy_release = 350000
-	requirements = list(/datum/gas/nitrous_oxide = 800, /datum/gas/bz = 50)
+	requirements = list(/datum/gas/nitrous_oxide = 1000, /datum/gas/bz = 50)
 	products = list(/obj/item/grenade/gas_crystal/nitrous_oxide_crystal = 1)
 
 /datum/gas_recipe/crystallizer/diamond

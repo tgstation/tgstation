@@ -82,11 +82,11 @@
 /obj/item/grenade/gas_crystal/nitrous_oxide_crystal
 	name = "N2O crystal"
 	desc = "A crystal made from the N2O gas, you can see the liquid gases inside."
-	icon_state = "proto_nitrate_crystal"
+	icon_state = "n2o_crystal"
 	///Range of the grenade air refilling
 	var/fill_range = 1
 	///Amount of n2o gas released (close to the grenade)
-	var/n2o_gas_amount = 250
+	var/n2o_gas_amount = 100
 
 /obj/item/grenade/gas_crystal/nitrous_oxide_crystal/detonate(mob/living/lanced_by)
 	. = ..()
