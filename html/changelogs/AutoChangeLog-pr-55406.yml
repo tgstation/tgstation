@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "The NanoDrug vendor in Medbay is now property of the medical department and will handle payments correctly."
