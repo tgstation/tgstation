@@ -2296,7 +2296,7 @@
 	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
-	A.AddElement(/datum/element/transmuted)
+	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"

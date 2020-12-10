@@ -1543,7 +1543,7 @@
  */
 /atom/proc/get_material_composition(breakdown_flags=NONE)
 	. = list()
-	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_MAT_COMP, breakdown_flags, .) & COMPONENT_OVERRIDE_MAT_COMP)
+	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
 		return
 
 	var/list/cached_materials = custom_materials

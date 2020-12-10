@@ -591,7 +591,6 @@
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\swabbable.dm"
 #include "code\datums\elements\tool_flash.dm"
-#include "code\datums\elements\transmuted.dm"
 #include "code\datums\elements\turf_transparency.dm"
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\elements\update_icon_blocker.dm"
