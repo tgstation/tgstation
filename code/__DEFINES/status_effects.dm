@@ -9,6 +9,8 @@
 
 #define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
 
+#define STATUS_EFFECT_PASS_ARGS 4 //if it allows only one, and the args of new instances are handled by the original.
+
 ///////////
 // BUFFS //
 ///////////
@@ -110,6 +112,8 @@
 #define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
 
 #define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
+
+#define STATUS_EFFECT_TRIPPING /datum/status_effect/tripping //if you're high.
 /////////////
 //  SLIME  //
 /////////////

@@ -499,9 +499,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(silent)
 		silent = max(silent-1, 0)
 
-	if(druggy)
-		adjust_drugginess(-1)
-
 	if(hallucination)
 		handle_hallucinations()
 

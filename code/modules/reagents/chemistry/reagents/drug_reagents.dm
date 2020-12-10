@@ -15,7 +15,7 @@
 	overdose_threshold = 30
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(15)
+	M.set_drugginess(30 SECONDS)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED))
 			if(prob(10))

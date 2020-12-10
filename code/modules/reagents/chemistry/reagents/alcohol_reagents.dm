@@ -318,7 +318,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of this is sure to prevent a meltdown."
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(50)
+	M.set_drugginess(100 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/gin
@@ -865,7 +865,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(30)
+	M.set_drugginess(60 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/whiskeysoda
@@ -1327,7 +1327,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Nanotrasen cannot take legal responsibility for your actions after imbibing."
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(50)
+	M.set_drugginess(100 SECONDS)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.set_confusion(max(M.get_confusion()+2,0))
 		M.Dizzy(10)
@@ -1366,7 +1366,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(50))
 				M.set_confusion(max(M.get_confusion()+3,0))
 		if(55 to 200)
-			M.set_drugginess(55)
+			M.set_drugginess(110 SECONDS)
 		if(200 to INFINITY)
 			M.adjustToxLoss(2, 0)
 			. = 1
@@ -1388,7 +1388,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(50)
+	M.set_drugginess(100 SECONDS)
 	M.dizziness +=2
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
 	if(prob(20))
@@ -1437,25 +1437,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	switch(current_cycle)
 		if(1 to 5)
 			M.Dizzy(10)
-			M.set_drugginess(30)
+			M.set_drugginess(60 SECONDS)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			M.Jitter(20)
 			M.Dizzy(20)
-			M.set_drugginess(45)
+			M.set_drugginess(90 SECONDS)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if (10 to 200)
 			M.Jitter(40)
 			M.Dizzy(40)
-			M.set_drugginess(60)
+			M.set_drugginess(120 SECONDS)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
 			M.Jitter(60)
 			M.Dizzy(60)
-			M.set_drugginess(75)
+			M.set_drugginess(150 SECONDS)
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))

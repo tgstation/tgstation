@@ -292,3 +292,57 @@
 /// Something fishy is going on here...
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
 	slap_item = null
+
+//Rotates the client screen hues over time, alters sounds, gives a moodlet and grants the beachbum language.
+/datum/status_effect/tripping
+	id = "tripping"
+	duration = 10 SECONDS
+	tick_interval = 2 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/high
+	var/datum/client_colour/hue_rotation/tripping/colour //See client_colour.dm
+	var/clockwise = TRUE //will the color matrix hue rotate clockwise or counterclockwise? Randomised on creation.
+
+/datum/status_effect/tripping/on_creation(mob/living/new_owner, set_duration)
+	if(set_duration)
+		duration = set_duration
+	. = ..()
+	SEND_SIGNAL(new_owner, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
+	new_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
+	new_owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
+	colour = new_owner.add_client_colour(/datum/client_colour/hue_rotation/tripping)
+	RegisterSignal(colour, COMSIG_PARENT_PREQDELETED, .proc/prevent_qdel)
+	clockwise = pick(TRUE, FALSE)
+
+//Better safe than sorry. Also generally better than checking the instance every tick.
+/datum/status_effect/tripping/proc/prevent_qdel(datum/source, force)
+	return !force
+
+/datum/status_effect/tripping/on_remove()
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "high")
+	owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
+	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
+	UnregisterSignal(colour, COMSIG_PARENT_PREQDELETED)
+	QDEL_NULL(colour)
+	. = ..()
+
+//oscillates the hues based on the duration left.
+/datum/status_effect/tripping/tick()
+	var/clock_max_dist = min((duration - world.time)/4, 37.5) //the maximum closest angle difference from 0° allowed.
+	var/counterclock_max_dist = 360 - clock_max_dist
+	var/rotation = min(clock_max_dist/7.5, 24) // about 30 seconds to oscillate from an extremity to another. (or complete a spin at 144"+ duration)
+	if(!clockwise)
+		rotation = -rotation
+	//it's not doing 360° rotations and is exceeding the maximum distance. So let's change direction.
+	if(rotation < 24 && ISINRANGE(colour.hue_angle, clock_max_dist, counterclock_max_dist))
+		var/min_rotation = clockwise ? colour.hue_angle - clock_max_dist : counterclock_max_dist - colour.hue_angle
+		rotation = clockwise ? min(-rotation, min_rotation) : max(-rotation, min_rotation)
+		clockwise = !clockwise
+	else if(rotation == 24 && prob(1)) //spins the other way around next tick.
+		clockwise = !clockwise
+	colour.rotate_hue(rotation)
+
+/atom/movable/screen/alert/status_effect/high
+	name = "High"
+	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
+	icon_state = "high"

@@ -53,4 +53,4 @@ Bonus
 			if(M.dizziness <= 70)
 				M.dizziness += 30
 			if(power >= 2)
-				M.set_drugginess(40)
+				M.set_drugginess(80 SECONDS)

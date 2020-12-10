@@ -102,7 +102,7 @@
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_drugginess(15)
+	M.set_drugginess(30 SECONDS)
 	if(M.hallucination < volume)
 		M.hallucination += 5
 

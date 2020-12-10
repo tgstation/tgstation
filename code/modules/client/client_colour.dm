@@ -38,6 +38,8 @@
 /datum/client_colour/Destroy()
 	if(!QDELETED(owner))
 		owner.client_colours -= src
+		if(!colour)
+			return
 		if(fade_out)
 			owner.animate_client_colour(fade_out)
 		else
@@ -61,13 +63,15 @@
 	if(!ispath(colour_type, /datum/client_colour) || QDELING(src))
 		return
 
-	var/datum/client_colour/colour = new colour_type(src)
-	BINARY_INSERT(colour, client_colours, /datum/client_colour, colour, priority, COMPARE_KEY)
-	if(colour.fade_in)
-		animate_client_colour(colour.fade_in)
+	var/datum/client_colour/new_colour = new colour_type(src)
+	BINARY_INSERT(new_colour, client_colours, /datum/client_colour, new_colour, priority, COMPARE_KEY)
+	if(!new_colour.colour) //No color, don't update yet.
+		return
+	if(new_colour.fade_in)
+		animate_client_colour(new_colour.fade_in)
 	else
 		update_client_colour()
-	return colour
+	return new_colour
 
 /**
  * Removes an instance of colour_type from the mob's client_colours list
@@ -97,6 +101,9 @@
 		var/datum/client_colour/_colour = _c;\
 		if(_pool_closed < _colour.priority){\
 			break\
+		};\
+		if(!_colour.colour){\
+			continue\
 		};\
 		_number_colours++;\
 		if(_colour.override){\
@@ -150,7 +157,7 @@
 
 /datum/client_colour/glass_colour
 	priority = PRIORITY_LOW
-	colour = "red"
+	colour = "#ff0000"
 
 /datum/client_colour/glass_colour/green
 	colour = "#aaffaa"
@@ -205,7 +212,30 @@
 
 /datum/client_colour/bloodlust/New(mob/_owner)
 	..()
-	addtimer(CALLBACK(src, .proc/update_colour, list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
+	update_colour(list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT)
+
+/datum/client_colour/cursed_heart_blood
+	priority = PRIORITY_ABSOLUTE //it's an indicator you're dying, so it's very high priority
+	colour = "#ff0000" //pure, bloody red
+	override = TRUE
+	fade_in = 5
+	fade_out = 5
+
+//Exactly what it says on the tin.
+/datum/client_colour/hue_rotation
+	colour = null //calculated on rotate_hue()
+	var/hue_angle = 0 //Keeps track of the current angle.
+
+/datum/client_colour/hue_rotation/proc/rotate_hue(rotation, duration = 2 SECONDS)
+	hue_angle = SIMPLIFY_DEGREES(hue_angle + rotation)
+	update_colour(color_matrix_rotate_hue(hue_angle), duration)
+
+/datum/client_colour/hue_rotation/tripping
+	priority = PRIORITY_HIGH //It shouldn't mess up with monochromia that much.
+
+/datum/client_colour/hue_rotation/tripping/rotate_hue(rotation, duration = 2 SECONDS)
+	. = ..()
+	fade_out = ((hue_angle > 180) ? 360 - hue_angle : hue_angle)/9 //1 decimal every 9° of closer angle diff, for a max of 2" at 180°
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH

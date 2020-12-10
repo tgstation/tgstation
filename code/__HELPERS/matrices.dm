@@ -111,10 +111,6 @@ list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
 list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0,0,0)
 */
 
-//Does nothing
-/proc/color_matrix_identity()
-	return list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
-
 //Adds/subtracts overall lightness
 //0 is identity, 1 makes everything white, -1 makes everything black
 /proc/color_matrix_lightness(power)
@@ -168,9 +164,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 //Returns a matrix addition of A with B
 /proc/color_matrix_add(list/A, list/B)
 	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	var/list/output = list()
 	output.len = 20
 	for(var/value in 1 to 20)
@@ -180,9 +176,9 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 //Returns a matrix multiplication of A with B
 /proc/color_matrix_multiply(list/A, list/B)
 	if(!istype(A) || !istype(B))
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	if(A.len != 20 || B.len != 20)
-		return color_matrix_identity()
+		return COLOR_MATRIX_IDENTITY
 	var/list/output = list()
 	output.len = 20
 	var/x = 1
@@ -202,7 +198,7 @@ round(cos_inv_third+sqrt3_sin, 0.001), round(cos_inv_third-sqrt3_sin, 0.001), ro
 			CRASH("Invalid/unsupported color format argument in color_to_full_rgba_matrix()")
 		return list(L[1]/255,0,0,0, 0,L[2]/255,0,0, 0,0,L[3]/255,0, 0,0,0,L.len>3?L[4]/255:1, 0,0,0,0)
 	else if(!islist(color)) //invalid format
-		return color_matrix_identity()
+		CRASH("Invalid/unsupported color format argument in color_to_full_rgba_matrix()")
 	var/list/L = color
 	switch(L.len)
 		if(3 to 5) // row-by-row hexadecimals
