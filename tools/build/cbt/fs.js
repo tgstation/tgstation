@@ -50,8 +50,13 @@ const compareFiles = nodes => {
         continue;
       }
       else if (node.flags & Flags.TARGET) {
-        if (!bestTarget || file.mtime < bestTarget.mtime) {
-          bestTarget = file;
+        try {
+          if (!bestTarget || file.mtime < bestTarget.mtime) {
+            bestTarget = file;
+          }
+        } catch {
+          // Always needs a rebuild if any target doesn't exist.
+          return true;
         }
         continue;
       }
@@ -80,7 +85,7 @@ const compareFiles = nodes => {
   if (!bestSource) {
     return !bestTarget;
   }
-  // Always needs a rebuild if target doesn't exist.
+  // Always needs a rebuild if no targets were specified (e.g. due to GLOB).
   if (!bestTarget) {
     return true;
   }
