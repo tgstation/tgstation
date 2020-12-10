@@ -47,7 +47,7 @@
 
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Makes you immune to cold temperatures, you can still take damage from lack of pressure."
+	desc = "Makes you immune to cold temperatures, and you no longer need to breathe, you can still take damage from lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. Translucent and white, a depiction of a nobleman stood before me."
 	cost = 1
 	route = PATH_VOID
