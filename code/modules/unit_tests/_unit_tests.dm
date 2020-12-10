@@ -1,7 +1,7 @@
 //include unit test files in this module in this ifdef
 //Keep this sorted alphabetically
 
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 
 /// Asserts that a condition is true
 /// If the condition is not true, fails the test
@@ -42,6 +42,8 @@
 #include "confusion.dm"
 #include "emoting.dm"
 #include "heretic_knowledge.dm"
+#include "holidays.dm"
+#include "initialize_sanity.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
@@ -50,6 +52,7 @@
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "projectiles.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"

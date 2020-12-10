@@ -13,16 +13,17 @@
 		return 0
 	if(!isitem(O))
 		return 0
+
 	var/obj/item/I = O
-	if(!(SSmaterials.GetMaterialRef(material_id) in I.custom_materials))
+	var/list/mat_comp = I.get_material_composition(BREAKDOWN_FLAGS_EXPORT)
+	if(isnull(mat_comp[SSmaterials.GetMaterialRef(material_id)]))
 		return 0
 
-	var/amount = I.custom_materials[SSmaterials.GetMaterialRef(material_id)]
-
+	var/amount = mat_comp[SSmaterials.GetMaterialRef(material_id)]
 	if(istype(I, /obj/item/stack/ore))
 		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
-	return round(amount/MINERAL_MATERIAL_AMOUNT)
+	return round(amount / MINERAL_MATERIAL_AMOUNT)
 
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 

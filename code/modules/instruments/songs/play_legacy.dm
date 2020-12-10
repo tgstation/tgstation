@@ -1,6 +1,6 @@
 /**
-  * Compiles our lines into "chords" with filenames for legacy playback. This makes there have to be a bit of lag at the beginning of the song, but repeats will not have to parse it again, and overall playback won't be impacted by as much lag.
-  */
+ * Compiles our lines into "chords" with filenames for legacy playback. This makes there have to be a bit of lag at the beginning of the song, but repeats will not have to parse it again, and overall playback won't be impacted by as much lag.
+ */
 /datum/song/proc/compile_legacy()
 	if(!length(src.lines))
 		return
@@ -39,13 +39,13 @@
 				compiled_chords[++compiled_chords.len] = compiled_chord
 
 /**
-  * Proc to play a legacy note. Just plays the sound to hearing mobs (and does hearcheck if necessary), no fancy channel/sustain/management.
-  *
-  * Arguments:
-  * * note is a number from 1-7 for A-G
-  * * acc is either "b", "n", or "#"
-  * * oct is 1-8 (or 9 for C)
-  */
+ * Proc to play a legacy note. Just plays the sound to hearing mobs (and does hearcheck if necessary), no fancy channel/sustain/management.
+ *
+ * Arguments:
+ * * note is a number from 1-7 for A-G
+ * * acc is either "b", "n", or "#"
+ * * oct is 1-8 (or 9 for C)
+ */
 /datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F

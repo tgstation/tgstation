@@ -363,14 +363,14 @@
 	SSticker.emergency_reason = null
 
 /**
-  * Proc that handles checking if the emergency shuttle was successfully hijacked via being the only people present on the shuttle for the elimination hijack or highlander objective
-  *
-  * Checks for all mobs on the shuttle, checks their status, and checks if they're
-  * borgs or simple animals. Depending on the args, certain mobs may be ignored,
-  * and the presence of other antags may or may not invalidate a hijack.
-  * Args:
-  * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
-  * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
+ * Proc that handles checking if the emergency shuttle was successfully hijacked via being the only people present on the shuttle for the elimination hijack or highlander objective
+ *
+ * Checks for all mobs on the shuttle, checks their status, and checks if they're
+ * borgs or simple animals. Depending on the args, certain mobs may be ignored,
+ * and the presence of other antags may or may not invalidate a hijack.
+ * Args:
+ * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
+ * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
  */
 /obj/docking_port/mobile/emergency/proc/elimination_hijack(filter_by_human = TRUE, solo_hijack = FALSE)
 	var/has_people = FALSE

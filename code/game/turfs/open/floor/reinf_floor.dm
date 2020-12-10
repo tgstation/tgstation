@@ -223,3 +223,6 @@
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/engine/telecomms
+	initial_gas_mix = TCOMMS_ATMOS

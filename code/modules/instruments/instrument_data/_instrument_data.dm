@@ -1,6 +1,6 @@
 /**
-  * Get all non admin_only instruments as a list of text ids.
-  */
+ * Get all non admin_only instruments as a list of text ids.
+ */
 /proc/get_allowed_instrument_ids()
 	. = list()
 	for(var/id in SSinstruments.instrument_data)
@@ -9,13 +9,13 @@
 			. += I.id
 
 /**
-  * # Instrument Datums
-  *
-  * Instrument datums hold the data for any given instrument, as well as data on how to play it and what bounds there are to playing it.
-  *
-  * The datums themselves are kept in SSinstruments in a list by their unique ID. The reason it uses ID instead of typepath is to support the runtime creation of instruments.
-  * Since songs cache them while playing, there isn't realistic issues regarding performance from accessing.
-  */
+ * # Instrument Datums
+ *
+ * Instrument datums hold the data for any given instrument, as well as data on how to play it and what bounds there are to playing it.
+ *
+ * The datums themselves are kept in SSinstruments in a list by their unique ID. The reason it uses ID instead of typepath is to support the runtime creation of instruments.
+ * Since songs cache them while playing, there isn't realistic issues regarding performance from accessing.
+ */
 /datum/instrument
 	/// Name of the instrument
 	var/name = "Generic instrument"
@@ -51,16 +51,16 @@
 		id = "[type]"
 
 /**
-  * Initializes the instrument, calculating its samples if necessary.
-  */
+ * Initializes the instrument, calculating its samples if necessary.
+ */
 /datum/instrument/proc/Initialize()
 	if(instrument_flags & (INSTRUMENT_LEGACY | INSTRUMENT_DO_NOT_AUTOSAMPLE))
 		return
 	calculate_samples()
 
 /**
-  * Checks if this instrument is ready to play.
-  */
+ * Checks if this instrument is ready to play.
+ */
 /datum/instrument/proc/ready()
 	if(instrument_flags & INSTRUMENT_LEGACY)
 		return legacy_instrument_path && legacy_instrument_ext
@@ -79,9 +79,9 @@
 	return ..()
 
 /**
-  * For synthesized instruments, this is how the instrument generates the "keys" that a [/datum/song] uses to play notes.
-  * Calculating them on the fly would be unperformant, so we do it during init and keep it all cached in a list.
-  */
+ * For synthesized instruments, this is how the instrument generates the "keys" that a [/datum/song] uses to play notes.
+ * Calculating them on the fly would be unperformant, so we do it during init and keep it all cached in a list.
+ */
 /datum/instrument/proc/calculate_samples()
 	if(!length(real_samples))
 		CRASH("No real samples defined for [id] [type] on calculate_samples() call.")

@@ -1,12 +1,12 @@
 /**
-  * # Ninja Shoes
-  *
-  * Space ninja's shoes.  Gives him armor on his feet.
-  *
-  * Space ninja's ninja shoes.  How mousey.  Gives him slip protection and protection against attacks.
-  * Also are temperature resistant.
-  *
-  */
+ * # Ninja Shoes
+ *
+ * Space ninja's shoes.  Gives him armor on his feet.
+ *
+ * Space ninja's ninja shoes.  How mousey.  Gives him slip protection and protection against attacks.
+ * Also are temperature resistant.
+ *
+ */
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."

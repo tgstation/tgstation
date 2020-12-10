@@ -30,14 +30,14 @@
 	next_move = world.time + ((num + adj)*mod)
 
 /**
-  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
-  * remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
-  *
-  * Alternately, you could hardcode every mob's variation in a flat [/mob/proc/ClickOn] proc; however,
-  * that's a lot of code duplication and is hard to maintain.
-  *
-  * Note that this proc can be overridden, and is in the case of screen objects.
-  */
+ * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
+ * remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
+ *
+ * Alternately, you could hardcode every mob's variation in a flat [/mob/proc/ClickOn] proc; however,
+ * that's a lot of code duplication and is hard to maintain.
+ *
+ * Note that this proc can be overridden, and is in the case of screen objects.
+ */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
@@ -52,18 +52,18 @@
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /**
-  * Standard mob ClickOn()
-  * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
-  *
-  * After that, mostly just check your state, check whether you're holding an item,
-  * check whether you're adjacent to the target, then pass off the click to whoever
-  * is receiving it.
-  * The most common are:
-  * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
-  * * [atom/proc/attackby] (item,user) - used only when adjacent
-  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
-  * * [mob/proc/RangedAttack] (atom,params) - used only ranged, only used for tk and laser eyes but could be changed
-  */
+ * Standard mob ClickOn()
+ * Handles exceptions: Buildmode, middle click, modified clicks, mech actions
+ *
+ * After that, mostly just check your state, check whether you're holding an item,
+ * check whether you're adjacent to the target, then pass off the click to whoever
+ * is receiving it.
+ * The most common are:
+ * * [mob/proc/UnarmedAttack] (atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
+ * * [atom/proc/attackby] (item,user) - used only when adjacent
+ * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
+ * * [mob/proc/RangedAttack] (atom,params) - used only ranged, only used for tk and laser eyes but could be changed
+ */
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
@@ -176,9 +176,9 @@
 	return FALSE
 
 /**
-  * A backwards depth-limited breadth-first-search to see if the target is
-  * logically "in" anything adjacent to us.
-  */
+ * A backwards depth-limited breadth-first-search to see if the target is
+ * logically "in" anything adjacent to us.
+ */
 /atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	var/list/direct_access = DirectAccess()
 	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
@@ -250,37 +250,37 @@
 
 
 /**
-  * Translates into [atom/proc/attack_hand], etc.
-  *
-  * Note: proximity_flag here is used to distinguish between normal usage (flag=1),
-  * and usage when clicking on things telekinetically (flag=0).  This proc will
-  * not be called at ranged except with telekinesis.
-  *
-  * proximity_flag is not currently passed to attack_hand, and is instead used
-  * in human click code to allow glove touches only at melee range.
-  */
+ * Translates into [atom/proc/attack_hand], etc.
+ *
+ * Note: proximity_flag here is used to distinguish between normal usage (flag=1),
+ * and usage when clicking on things telekinetically (flag=0).  This proc will
+ * not be called at ranged except with telekinesis.
+ *
+ * proximity_flag is not currently passed to attack_hand, and is instead used
+ * in human click code to allow glove touches only at melee range.
+ */
 /mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return
 
 /**
-  * Ranged unarmed attack:
-  *
-  * This currently is just a default for all mobs, involving
-  * laser eyes and telekinesis.  You could easily add exceptions
-  * for things like ranged glove touches, spitting alien acid/neurotoxin,
-  * animals lunging, etc.
-  */
+ * Ranged unarmed attack:
+ *
+ * This currently is just a default for all mobs, involving
+ * laser eyes and telekinesis.  You could easily add exceptions
+ * for things like ranged glove touches, spitting alien acid/neurotoxin,
+ * animals lunging, etc.
+ */
 /mob/proc/RangedAttack(atom/A, params)
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
 
 /**
-  * Middle click
-  * Mainly used for swapping hands
-  */
+ * Middle click
+ * Mainly used for swapping hands
+ */
 /mob/proc/MiddleClickOn(atom/A)
 	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
@@ -288,10 +288,10 @@
 	swap_hand()
 
 /**
-  * Shift click
-  * For most mobs, examine.
-  * This is overridden in ai.dm
-  */
+ * Shift click
+ * For most mobs, examine.
+ * This is overridden in ai.dm
+ */
 /mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
@@ -303,9 +303,9 @@
 	return
 
 /**
-  * Ctrl click
-  * For most objects, pull
-  */
+ * Ctrl click
+ * For most objects, pull
+ */
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
@@ -326,9 +326,9 @@
 	else
 		..()
 /**
-  * Alt click
-  * Unused except for AI
-  */
+ * Alt click
+ * Unused except for AI
+ */
 /mob/proc/AltClickOn(atom/A)
 	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
@@ -353,9 +353,9 @@
 	return T.Adjacent(src)
 
 /**
-  * Control+Shift click
-  * Unused except for AI
-  */
+ * Control+Shift click
+ * Unused except for AI
+ */
 /mob/proc/CtrlShiftClickOn(atom/A)
 	A.CtrlShiftClick(src)
 	return
