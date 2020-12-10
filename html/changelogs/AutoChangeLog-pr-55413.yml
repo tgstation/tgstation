@@ -1,0 +1,7 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - balance: "Civilian Bounty Cubes now pay out 30% of the value of the cube, up from 10%."
+  - balance: "Cargo Crates are now worth 200 credits each. Cargo crate prices have seen some tweaks as well for more uncommonly ordered crates as well."
+  - bugfix: "You can no longer cheat the bounty system by slapping a new price tag over a bounty cube."
+  - refactor: "The values of cargo crates you can order are now scaled in terms of the value of cargo crates."
