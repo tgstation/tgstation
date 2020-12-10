@@ -135,6 +135,7 @@
 		"nayeth"
 	  ],
 	  "hello": [
+		"hail",
 		"good day",
 		"well met",
 		"well meteth",
@@ -142,6 +143,7 @@
 		"ave"
 	  ],
 	  "hi": [
+		"hail",
 		"good day",
 		"well met",
 		"well meteth",
@@ -158,6 +160,13 @@
 	  "nuke disk": "plate of holy fire",
 	  "captain": "king",
 	  "cap": "king",
+	  "food": [
+		"bellytimber",
+		"game",
+		"cake",
+		"ese",
+
+	  ],
 	  "going": "a-walkin'",
 	  "go": "a-walk",
 	  "bet": "warrant",
@@ -296,11 +305,15 @@
 	  ],
 	  "those": "yon",
 	  "here": "hither",
-	  "enough": "enow",
+	  "enough": "ynogh",
 	  "why": "wherefore",
 	  "away": "aroint",
 	  "being": "bein",
 	  "of": "o'",
-	  "shit": "nightsoil"
+	  "shit": "nightsoil",
+	  "based": [
+		"joly",
+		"jolyf"
+	  ]
 	}
   }

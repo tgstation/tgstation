@@ -238,7 +238,7 @@
 				value = pick(value)
 			message = replacetextEx(message, " [uppertext(key)] ", " [uppertext(value)] ")
 			message = replacetextEx(message, " [capitalize(key)] ", " [capitalize(value)] ")
-			message = replacetextEx(message, " [key]", " [value]")
+			message = replacetextEx(message, " [key] ", " [value] ")
 		message = trim(message)
 		var/chosen_starting = pick(startings)
 		if(copytext(chosen_starting, -1) != "!") //if the starter isn't a sentence of it's own, lowercase the message afterwards

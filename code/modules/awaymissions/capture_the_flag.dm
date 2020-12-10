@@ -150,7 +150,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
-	var/game_id = "centcomm"
+	var/game_id = "centcom"
 
 	var/team = WHITE_TEAM
 	var/team_span = ""
@@ -650,8 +650,6 @@
 	if(!ishuman(M))
 		return
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-		if(CTF.game_id != game_id)
-			continue
 		if(M in CTF.spawned_mobs)
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
@@ -668,6 +666,7 @@
 	desc = "It provided cover in fire fights. And now it's gone."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
+	var/game_id = "centcom"
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
@@ -680,7 +679,6 @@
 	if(!QDELETED(src))
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
-
 
 //Control Point
 
