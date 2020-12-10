@@ -1,0 +1,5 @@
+author: "Paxilmaniac, Maurukas and Cartographer-D"
+delete-after: True
+changes: 
+  - rscadd: "Adds Kilostation"
+  - rscdel: "Removes Pubbystation"
