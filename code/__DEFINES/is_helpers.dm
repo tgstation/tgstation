@@ -141,6 +141,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iseldritch(A) (istype(A, /mob/living/simple_animal/hostile/eldritch))
 
+#define isarmsy(A) (istype(A, /mob/living/simple_animal/hostile/eldritch/armsy))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))

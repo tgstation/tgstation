@@ -70,7 +70,7 @@
 	if(isliving(A))
 		if(ismegafauna(A))
 			return
-		if(iseldritch(A))
+		if(isarmsy(A))
 			return
 		var/mob/living/L = A
 		if(iscarbon(L))
