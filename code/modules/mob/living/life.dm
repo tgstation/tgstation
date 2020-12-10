@@ -4,6 +4,9 @@
 /mob/living/proc/Life(times_fired)
 	set waitfor = FALSE
 
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
+		float(on = TRUE)
+
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)

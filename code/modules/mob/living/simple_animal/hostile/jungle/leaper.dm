@@ -81,8 +81,8 @@
 
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
+	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 	QDEL_IN(src, 100)
-	ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPER_BUBBLE_TRAIT)
 
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))

@@ -35,25 +35,8 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-
-	/**
-	  * In case you have multiple types, you automatically use the most useful one.
-	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
-	  */
+	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
 	var/movement_type = GROUND
-	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
-	var/has_movement_type_signals = FALSE
-	/// Whether the movable is floating, not floating or is queued for update.
-	var/floating_anim_status = NO_FLOATING_ANIM
-	/**
-	  * Stores the timer id for the floating anim update.
-	  * Used to avoid the timed event from being overridden by others that would run sooner.
-	  */
-	var/floating_halt_timerid
-	/// Stores the timer id for the next half of the floating anim loop
-	var/floating_anim_timerid
-
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -227,15 +210,6 @@
 			. = TRUE
 		if(NAMEOF(src, glide_size))
 			set_glide_size(var_value)
-			. = TRUE
-		if(NAMEOF(src, floating_anim_status))
-			if(var_value != floating_anim_status)
-				switch(var_value)
-					if(HAS_FLOATING_ANIM)
-						floating_anim_status = HAS_FLOATING_ANIM
-						do_floating_anim()
-					else
-						halt_floating_anim(var_value)
 			. = TRUE
 
 	if(!isnull(.))
@@ -620,22 +594,14 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
-/// Called when movement_type trait is added to the mob.
-/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	var/old_movement_type = movement_type
-	movement_type |= GLOB.movement_type_trait_to_flag[trait]
-	if(!(old_movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING))
-		floating_anim_check()
 
-/// Called when a movement_type trait is removed from the mob.
-/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	var/flag = GLOB.movement_type_trait_to_flag[trait]
-	if(!(initial(movement_type) & flag))
-		movement_type &= ~(GLOB.movement_type_trait_to_flag[trait])
-		if(trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING && !(movement_type & (FLOATING|FLYING)))
-			halt_floating_anim(NO_FLOATING_ANIM)
+///Proc to modify the movement_type and hook behavior associated with it changing.
+/atom/movable/proc/setMovetype(newval)
+	if(movement_type == newval)
+		return
+	. = movement_type
+	movement_type = newval
+
 
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -775,7 +741,6 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
-	halt_floating_anim(NO_FLOATING_ANIM, animate = !spin)
 	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
@@ -863,7 +828,6 @@
 
 	if(A == src)
 		return //don't do an animation if attacking self
-	halt_floating_anim(animate = FALSE)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/turn_dir = 1
@@ -939,40 +903,18 @@
 	acted_explosions += ex_id
 	return TRUE
 
-///The bouncing animation loop that stops once halt_floating_anim is called.
-/atom/movable/proc/do_floating_anim(shift = 2)
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		animate(src, pixel_y = pixel_y + shift, time = 1 SECONDS)
-		floating_anim_timerid = addtimer(CALLBACK(src, .proc/do_floating_anim, -shift), 1.1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
-
-///Restarts the floating animation if conditions are met.
-/atom/movable/proc/floating_anim_check(timed = FALSE)
-	if(timed)
-		floating_halt_timerid = null
-	if(floating_anim_status == HAS_FLOATING_ANIM || floating_anim_status == NEVER_FLOATING_ANIM || floating_halt_timerid)
+//TODO: Better floating
+/atom/movable/proc/float(on)
+	if(throwing)
 		return
-	if(throwing || !(movement_type & (FLOATING|FLYING)))
-		floating_anim_status = NO_FLOATING_ANIM
-	else
-		floating_anim_status = HAS_FLOATING_ANIM
-		do_floating_anim()
+	if(on && !(movement_type & FLOATING))
+		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		setMovetype(movement_type | FLOATING)
+	else if (!on && (movement_type & FLOATING))
+		animate(src, pixel_y = base_pixel_y, time = 10)
+		setMovetype(movement_type & ~FLOATING)
 
-/// Stops the floating anim. If the update arg is TRUE, floating_anim_check(TRUE) will be a invoked after a set time indicated by the timer arg.
-/atom/movable/proc/halt_floating_anim(new_status = UPDATE_FLOATING_ANIM, timer = 1 SECONDS, animate = TRUE)
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		if(animate)
-			animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
-		else
-			pixel_y = base_pixel_y
-	if(new_status == UPDATE_FLOATING_ANIM)
-		if(!floating_halt_timerid || timeleft(floating_halt_timerid) < timer)
-			floating_halt_timerid = addtimer(CALLBACK(src, .proc/floating_anim_check, TRUE), timer, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_NO_HASH_WAIT)
-	else if(floating_anim_timerid)
-		deltimer(floating_anim_timerid)
-		floating_anim_timerid = null
-
-	if(floating_anim_status != NEVER_FLOATING_ANIM)
-		floating_anim_status = new_status
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.

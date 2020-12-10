@@ -1,7 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - refactor: "projectiles now use a new hit detection system that doesn't rely on quirks in movement code to work, and is easier(?) to work with"
-  - refactor: "pass_flags_self now handles determining if something with specific pass_flags can cross something, by default."
-  - bugfix: "piercing projectiles (see: penetrating snipers) work again"
-  - tweak: "projectile permutated/impacted list is reset on ricochets, meaning reflected projectiles can potentially hit something again if it pierced it the first time."
