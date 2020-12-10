@@ -1555,6 +1555,9 @@
  */
 /atom/proc/get_material_composition(breakdown_flags=NONE)
 	. = list()
+	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
+		return
+
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
 		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
