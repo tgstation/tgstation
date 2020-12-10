@@ -56,6 +56,8 @@ const taskDm = new Task('dm')
       if (installPath) {
         compiler = resolvePath(installPath, 'bin/dm.exe');
       }
+    } else {
+      compiler = 'DreamMaker';
     }
     await exec(compiler, 'tgstation.dme');
   });
