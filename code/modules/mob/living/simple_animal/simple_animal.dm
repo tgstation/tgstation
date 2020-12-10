@@ -449,9 +449,7 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //Has no extrinsic source of flight
-		movement_type &= ~FLYING
-		halt_floating_anim(NO_FLOATING_ANIM)
+	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -509,9 +507,7 @@
 	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	if(initial(movement_type) & (FLYING)) //regain its intrisic flight
-		movement_type |= FLYING
-		floating_anim_check()
+	setMovetype(initial(movement_type))
 
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3

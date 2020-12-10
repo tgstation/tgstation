@@ -256,7 +256,7 @@ Difficulty: Extremely Hard
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
+	setMovetype(movement_type | FLYING)
 	enraging = FALSE
 	adjustHealth(-maxHealth)
 
