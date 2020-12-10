@@ -7,7 +7,7 @@
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent
-		var/damage = 20
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if (prob(90))
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
