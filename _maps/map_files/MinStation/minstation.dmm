@@ -1,7 +1,35 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "aS" = (
 /obj/machinery/telecomms/relay/preset/mining,
 /turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
+"bm" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"bs" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm4";
+	name = "Dorm 4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"bP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cb" = (
 /obj/structure/window/plasma/reinforced{
@@ -16,6 +44,66 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"ch" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"cw" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"cD" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Aft";
+	dir = 1;
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
+"cU" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"cV" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"dt" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"dx" = (
+/obj/machinery/button/door{
+	id = "Dorm1";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "dL" = (
 /obj/machinery/light{
 	dir = 8
@@ -48,6 +136,133 @@
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"fd" = (
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"fo" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"fx" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"fI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"fK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"fX" = (
+/obj/structure/closet/lasertag/red,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"gr" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"gA" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"gV" = (
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"hj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"hn" = (
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"hC" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"hR" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/kotahi,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"hU" = (
+/obj/machinery/vending/clothing,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"iq" = (
+/obj/machinery/door/airlock{
+	name = "Unit B"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"iB" = (
+/obj/machinery/cryopod,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"iX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"jD" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "jP" = (
 /obj/machinery/door/airlock/command{
 	name = "Telecomms Server Room";
@@ -55,21 +270,120 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
+"jX" = (
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"ki" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"ks" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"kA" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"kK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "kM" = (
 /turf/open/space/basic,
 /area/space)
+"kU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "lf" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"mm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"mF" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"mI" = (
+/obj/machinery/door/airlock{
+	name = "Unit S"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"mZ" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "nb" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"ne" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms)
+"nv" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"nx" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"ok" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "oq" = (
 /obj/structure/window/plasma/reinforced,
 /obj/structure/window/plasma/reinforced{
@@ -77,6 +391,63 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"or" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"oB" = (
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"oG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/cafeteria)
+"oN" = (
+/obj/structure/training_machine,
+/obj/item/target,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"oV" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"pc" = (
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"pr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"pz" = (
+/obj/machinery/button/door{
+	id = "Dorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"pR" = (
+/turf/closed/wall/r_wall,
+/area/crew_quarters/cafeteria)
 "qa" = (
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
@@ -85,24 +456,141 @@
 /obj/structure/ladder,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"qE" = (
+/obj/structure/cable,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "qK" = (
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "qQ" = (
 /turf/open/floor/plating,
 /area/engine/engineering)
-"rb" = (
+"qU" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"rm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"rA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"rB" = (
+/obj/machinery/camera/autoname,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"rH" = (
+/turf/closed/wall,
+/area/crew_quarters/fitness/locker_room)
+"rV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"sf" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"si" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"st" = (
+/obj/structure/table,
+/obj/item/training_toolbox{
+	pixel_y = 5
+	},
+/obj/item/training_toolbox{
+	pixel_y = -2
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"sA" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"sD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"sP" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"tn" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/electrical)
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"uf" = (
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"uu" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/grass,
+/area/crew_quarters/cryopod)
+"uL" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"vp" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
 "vL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden,
 /turf/closed/wall/r_wall,
@@ -116,44 +604,391 @@
 "wO" = (
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
+"xf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"xr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/dorms)
 "xw" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
+"xF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"xI" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"yC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"zl" = (
+/obj/structure/closet/lasertag/blue,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"zp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"zL" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"zT" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Ac" = (
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Ae" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Ak" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
 "Aq" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"AR" = (
+/obj/structure/closet/wardrobe/pjs,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"AW" = (
+/turf/closed/wall,
+/area/crew_quarters/toilet)
+"Bi" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Bx" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"BB" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"BJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Cn" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "CM" = (
 /obj/machinery/atmospherics/pipe/multiz{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"CZ" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -11
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"DD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"DH" = (
+/obj/structure/closet/masks,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
 "Ez" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"GI" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Empty Hull / Lower Deck";
-	req_access_txt = "12"
+"Fm" = (
+/turf/closed/wall,
+/area/crew_quarters/cafeteria)
+"FJ" = (
+/obj/structure/stairs/north,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"FW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"GB" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -11
 	},
-/turf/open/floor/plating,
-/area/maintenance/department/electrical)
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"GD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"GE" = (
+/obj/machinery/button/door{
+	id = "Dorm3";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"GK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "GZ" = (
 /turf/closed/wall,
 /area/maintenance/department/electrical)
-"HG" = (
-/obj/machinery/atmospherics/pipe/multiz{
-	color = "#0000ff";
-	dir = 4;
-	name = "Supply multi deck pipe adapter"
+"Hc" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"Hj" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm3";
+	name = "Dorm 3"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"Ih" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Iu" = (
+/obj/structure/cable,
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"IM" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"Ja" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm1";
+	name = "Dorm 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"Jk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"Ka" = (
+/turf/closed/wall/r_wall,
+/area/crew_quarters/dorms)
+"Ko" = (
+/obj/machinery/computer/holodeck,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Kq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
+"Kw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"KS" = (
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Lr" = (
+/obj/machinery/door/airlock{
+	id_tag = "Dorm2";
+	name = "Dorm 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"LI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"LR" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"LW" = (
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"Mo" = (
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Ms" = (
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"MO" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
+"MY" = (
+/obj/machinery/door/airlock{
+	name = "Unit 2"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Ng" = (
+/turf/open/space/basic,
+/area/space/nearstation)
+"Nj" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Nk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
-"Md" = (
+"Nl" = (
+/turf/closed/wall/r_wall,
+/area/crew_quarters/toilet)
+"Od" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Ok" = (
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"OX" = (
+/obj/structure/cable,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"OY" = (
 /obj/machinery/atmospherics/pipe/multiz/layer2{
 	color = "#ff0000";
 	dir = 4;
@@ -161,19 +996,112 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
-"Ng" = (
-/turf/open/space/basic,
-/area/space/nearstation)
+"Pb" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
+"Pj" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Pm" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Pw" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"Qp" = (
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"Qq" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
 "QV" = (
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"Tj" = (
+"Rd" = (
+/obj/structure/closet/boxinggloves,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"Rr" = (
+/obj/structure/stairs/south,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"Rs" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"Sd" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Sx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"SW" = (
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"Tc" = (
+/obj/machinery/door/airlock{
+	name = "Unit 1"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Tx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
+"TB" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"TE" = (
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
+"TI" = (
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "TK" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -184,12 +1112,135 @@
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"Uo" = (
+/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Uq" = (
+/turf/closed/wall/r_wall,
+/area/crew_quarters/fitness/locker_room)
+"Vd" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/grass,
+/area/crew_quarters/cryopod)
+"VB" = (
+/obj/machinery/atmospherics/pipe/multiz{
+	color = "#0000ff";
+	dir = 4;
+	name = "Supply multi deck pipe adapter"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"VO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"We" = (
+/obj/machinery/button/door{
+	id = "Dorm4";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "Wr" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"WD" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"WK" = (
+/obj/structure/closet/athletic_mixed,
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/locker_room)
+"WQ" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"WY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Xb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"Xl" = (
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"XY" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"Yc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"Ys" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Fore";
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
+"Yv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet)
+"Yz" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"YW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "Zb" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/electrical)
+"Zg" = (
+/obj/machinery/camera/autoname{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/cafeteria)
 "ZV" = (
 /turf/closed/mineral,
 /area/space/nearstation)
@@ -22390,9 +23441,9 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -22663,11 +23714,11 @@ kM
 kM
 kM
 kM
-Zb
-Zb
-Zb
-Zb
-Zb
+kM
+kM
+kM
+kM
+kM
 kM
 kM
 kM
@@ -22910,21 +23961,21 @@ ZY
 ZY
 Zb
 Zb
-Zb
+pR
+oG
+oG
+oG
+oG
+oG
+oG
+oG
+pR
+ZV
+ZV
 kM
 kM
 kM
 kM
-kM
-kM
-kM
-Zb
-Zb
-Zb
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -23167,21 +24218,21 @@ ZY
 ZY
 ZY
 ZY
-Zb
+Fm
+rB
+SW
+SW
+SW
+SW
+SW
+SW
+pR
+ZV
+ZV
+ZV
 kM
 kM
 kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -23422,23 +24473,23 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
+Fm
+Fm
+Fm
+ki
+SW
+SW
+SW
+SW
+SW
+Hc
+pR
+pR
+pR
+ZV
+ZV
 kM
 kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -23679,23 +24730,23 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
+Fm
+FJ
+SW
+SW
+SW
+SW
+SW
+SW
+SW
+SW
+SW
+Rr
+pR
+ZV
+ZV
 kM
 kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -23936,23 +24987,23 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
+Fm
+FJ
+SW
+SW
+SW
+SW
+kU
+Tx
+SW
+SW
+SW
+Rr
+pR
+ZV
+ZV
+ZV
 kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -24193,23 +25244,23 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
+Fm
+FJ
+SW
+SW
+SW
+GK
+kK
+SW
+SW
+SW
+SW
+Rr
+pR
+ZV
+ZV
+ZV
 kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
 kM
 kM
 kM
@@ -24450,23 +25501,23 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
+Fm
+FJ
+SW
+SW
+SW
+SW
+fK
+SW
+SW
+SW
+SW
+Rr
+pR
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -24707,24 +25758,24 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
+Fm
+Fm
+Fm
+ki
+SW
+SW
+fK
+SW
+SW
+Hc
+pR
+pR
+pR
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -24966,23 +26017,23 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
+Fm
+SW
+SW
+SW
+fK
+SW
+SW
+SW
+pR
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -25222,26 +26273,26 @@ ZY
 ZY
 ZY
 ZY
-Zb
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
-Zb
 ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
+Fm
+zL
+mZ
+mZ
+iX
+SW
+SW
+SW
+pR
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -25479,28 +26530,28 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-Zb
 ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
+Fm
+SW
+SW
+SW
+iX
+SW
+SW
+Zg
+pR
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -25735,31 +26786,31 @@ ZY
 ZY
 ZY
 ZY
-ZY
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-Zb
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Pb
+Pb
+Fm
+Fm
+Fm
+ok
+tn
+ok
+Fm
+Fm
+pR
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -25992,36 +27043,36 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Pb
+uu
+gr
+mF
+Kq
+pc
+VO
+pc
+AW
+uf
+Mo
+CZ
+GB
+GB
+CZ
+KS
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -26249,42 +27300,42 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Pb
+iB
+LW
+or
+sA
+GD
+LI
+GD
+Ak
+FW
+BJ
+WY
+WY
+WY
+Yv
+Mo
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -26506,45 +27557,45 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Pb
+Vd
+MO
+cw
+Kq
+pc
+VO
+pc
+AW
+sf
+hn
+Mo
+Mo
+Mo
+hn
+Mo
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -26759,50 +27810,50 @@ ZY
 ZY
 Zb
 Zb
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Ka
+Qp
+Qp
+Qp
+Pb
+Pb
+Pb
+Pb
+Pb
+pc
+VO
+pc
+AW
+Tc
+AW
+MY
+AW
+mI
+AW
+iq
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -27016,52 +28067,52 @@ ZY
 ZY
 Zb
 Ng
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Ka
+Yz
+Xl
+Xl
+Qp
+Yz
+Xl
+Xl
+Qp
+pc
+VO
+pc
+AW
+WQ
+AW
+WQ
+AW
+Ms
+AW
+Ih
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -27273,53 +28324,53 @@ ZY
 ZY
 Zb
 Ng
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Ka
+BB
+ch
+IM
+Qp
+BB
+ch
+IM
+Qp
+Pm
+pr
+bm
+AW
+AW
+AW
+AW
+AW
+AW
+AW
+AW
+Nl
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -27530,54 +28581,54 @@ ZY
 ZY
 Zb
 Ng
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Ka
+pz
+Yc
+cU
+Qp
+dx
+Yc
+cU
+Qp
+pc
+VO
+pc
+rH
+jX
+Ok
+Ok
+vp
+Ok
+Ok
+WK
+Uq
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+xw
+xw
 kM
 kM
 kM
@@ -27787,55 +28838,55 @@ ZY
 ZY
 Zb
 Zb
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Ka
+Qp
+Lr
+Qp
+Qp
+Qp
+Ja
+Qp
+Qp
+pc
+VO
+pc
+rH
+si
+Ok
+gA
+nx
+TB
+Ok
+Rd
+Uq
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+xw
+xw
+xw
+xw
 kM
 kM
 kM
@@ -28044,55 +29095,55 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Pw
+pc
+Od
+YW
+rV
+YW
+Cn
+Kw
+dt
+pc
+rm
+GD
+WD
+mm
+mm
+Iu
+Qq
+TB
+Ok
+DH
+Uq
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+xw
+xw
+xw
+xw
 kM
 kM
 kM
@@ -28297,60 +29348,60 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Qp
+Qp
+Qp
+Qp
+Qp
+pc
+pc
+pc
+pc
+pc
+pc
+cV
+zT
+YW
+fo
+pc
+rH
+Ok
+Ok
+gA
+qU
+TB
+Ok
+zl
+Uq
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+xw
+xw
+xw
+xw
 kM
 kM
 kM
@@ -28554,61 +29605,61 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Qp
+Xl
+aw
+cU
+Qp
+pc
+pc
+Pj
+Pj
+pc
+pc
+VO
+Bi
+jD
+Ac
+pc
+rH
+hU
+Ok
+Ok
+oB
+Ok
+Ok
+fX
+Uq
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+xw
+xw
+xw
+xw
 kM
 kM
 kM
@@ -28811,31 +29862,31 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
+Qp
+Xl
+rA
+hj
+Hj
+YW
+YW
+uL
+uL
+YW
+YW
+qE
+Qp
+Qp
+Qp
+Qp
+rH
+rH
+rH
+rH
+rH
+rH
+rH
+rH
+Uq
 Zb
 Zb
 Zb
@@ -28863,10 +29914,10 @@ Wr
 Wr
 Wr
 Wr
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
 xw
 ZV
 ZV
@@ -29068,19 +30119,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+xI
+gV
+GE
+Qp
+pc
+pc
+sP
+sP
+Pj
+pc
+VO
+Qp
 ZY
 ZY
 ZY
@@ -29120,9 +30171,9 @@ qQ
 qQ
 qa
 Wr
-kM
-kM
-kM
+xw
+xw
+xw
 xw
 xw
 ZV
@@ -29325,19 +30376,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Qp
+Qp
+Qp
+Qp
+sD
+pc
+sP
+sP
+Pj
+pc
+OX
+Qp
 ZY
 ZY
 ZY
@@ -29377,7 +30428,7 @@ CM
 qQ
 qK
 Wr
-kM
+xw
 xw
 xw
 xw
@@ -29582,19 +30633,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Xl
+aw
+cU
+Qp
+pc
+pc
+Pj
+Pj
+pc
+pc
+VO
+Qp
 ZY
 ZY
 ZY
@@ -29839,19 +30890,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Xl
+rA
+hj
+bs
+YW
+YW
+YW
+YW
+YW
+YW
+ks
+Qp
 ZY
 ZY
 ZY
@@ -30096,19 +31147,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+xI
+gV
+We
+Qp
+pc
+pc
+oV
+oV
+oV
+pc
+VO
+Qp
 ZY
 ZY
 ZY
@@ -30353,22 +31404,22 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Qp
+Qp
+Qp
+Qp
+pc
+pc
+sP
+hR
+sP
+pc
+VO
+Qp
+Qp
+Qp
+Qp
 ZY
 ZY
 ZY
@@ -30614,18 +31665,18 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+pc
+pc
+kA
+kA
+kA
+pc
+VO
+pc
+pc
+Uo
+Qp
 ZY
 ZY
 ZY
@@ -30871,18 +31922,18 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+pc
+pc
+pc
+pc
+pc
+pc
+VO
+pc
+pc
+AR
+Qp
 ZY
 ZY
 ZY
@@ -31128,18 +32179,18 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+sD
+pc
+pc
+pc
+pc
+pc
+VO
+pc
+pc
+bm
+Qp
 ZY
 ZY
 ZY
@@ -31171,16 +32222,16 @@ ZY
 ZY
 ZY
 Zb
+ZV
+ZV
+ZV
+ZV
+ZV
 xw
 xw
 xw
 xw
-xw
-xw
-xw
-xw
-xw
-xw
+ZV
 ZV
 ZV
 ZV
@@ -31385,18 +32436,18 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+pc
+pc
+pc
+pc
+pc
+pc
+VO
+pc
+pc
+pc
+Qp
 ZY
 ZY
 ZY
@@ -31428,10 +32479,10 @@ ZY
 ZY
 ZY
 Zb
-xw
-xw
-xw
-xw
+ZV
+ZV
+ZV
+ZV
 xw
 xw
 xw
@@ -31642,19 +32693,19 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TI
+pc
+pc
+pc
+Pm
+yC
+Nj
+GD
+GD
+GD
+hC
+Rs
 ZY
 ZY
 ZY
@@ -31685,11 +32736,11 @@ ZY
 ZY
 ZY
 Zb
-xw
-xw
-xw
-xw
-xw
+ZV
+ZV
+ZV
+ZV
+ZV
 xw
 xw
 xw
@@ -31899,7 +32950,19 @@ Zb
 Zb
 Zb
 Zb
-Zb
+Qp
+Qp
+xr
+xr
+XY
+xr
+xr
+XY
+xr
+xr
+Qp
+Qp
+zp
 ZY
 ZY
 ZY
@@ -31929,29 +32992,17 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
-Zb
 Zb
 Zb
 Zb
+Zb
+Zb
+ZV
 xw
 xw
 xw
 xw
-xw
-xw
+ZV
 ZV
 ZV
 ZV
@@ -32156,58 +33207,58 @@ ZV
 ZV
 ZV
 ZV
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
+ZY
 Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-Zb
+ZV
+ZV
 xw
 xw
-xw
-xw
-xw
+ZV
 ZV
 ZV
 ZV
@@ -32413,19 +33464,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 ZY
@@ -32670,19 +33721,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 ZY
@@ -32927,19 +33978,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 ZY
@@ -33184,19 +34235,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Ys
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+cD
+Qp
+zp
 ZY
 ZY
 ZY
@@ -33441,19 +34492,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 ZY
@@ -33698,19 +34749,19 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 GZ
@@ -33955,24 +35006,24 @@ ZV
 ZV
 ZV
 ZV
-Zb
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
 ZY
 ZY
 GZ
-Md
-HG
+OY
+VB
 qn
 GZ
 ZY
@@ -34212,24 +35263,24 @@ ZV
 ZV
 ZV
 ZV
+Qp
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+TE
+Qp
+zp
+ZY
+ZY
 GZ
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-GZ
-Tj
-rb
+Xb
+bP
 ZY
 GZ
 ZY
@@ -34469,25 +35520,25 @@ ZV
 ZV
 ZV
 ZV
-GZ
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-GI
-ZY
-ZY
-ZY
+Qp
+Qp
+Qp
+Qp
+XY
+xr
+xr
+XY
+Qp
+Qp
+Qp
+Qp
+fI
+xf
+xf
+LR
+fx
+DD
+Bx
 GZ
 ZY
 ZY
@@ -34729,22 +35780,22 @@ GZ
 GZ
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+pc
+pc
+pc
+pc
+Qp
+Nk
+Jk
+Jk
+xF
 ZY
 ZY
 GZ
 ZY
 ZY
-ZY
+fd
 GZ
 ZY
 ZY
@@ -34986,13 +36037,13 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Ko
+Pm
+Sd
+oN
+Qp
+nv
 ZY
 ZY
 ZY
@@ -35243,13 +36294,13 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+TI
+pc
+Ae
+st
+Qp
+nv
 ZY
 ZY
 ZY
@@ -35500,13 +36551,13 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
-ZY
+Qp
+Qp
+Qp
+ne
+Qp
+Qp
+nv
 ZY
 ZY
 ZY
@@ -35760,10 +36811,10 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
-ZY
-ZY
+Sx
+Jk
+Jk
+xF
 ZY
 ZY
 ZY
