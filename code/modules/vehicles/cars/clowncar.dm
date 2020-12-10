@@ -70,6 +70,8 @@
 	if(isliving(A))
 		if(ismegafauna(A))
 			return
+		if(iseldritch(A))
+			return
 		var/mob/living/L = A
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
