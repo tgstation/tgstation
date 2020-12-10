@@ -10,12 +10,12 @@
 $ErrorActionPreference = "Stop"
 
 function ExtractVersion {
-    param([string] $Path, [string] $Key)
-    foreach ($Line in Get-Content $Path) {
-        if ($Line.StartsWith("export $Key=")) {
-            return $Line.Substring("export $Key=".Length)
-        }
-    }
+	param([string] $Path, [string] $Key)
+	foreach ($Line in Get-Content $Path) {
+		if ($Line.StartsWith("export $Key=")) {
+			return $Line.Substring("export $Key=".Length)
+		}
+	}
 }
 
 # Convenience variables
@@ -29,21 +29,21 @@ $Log = "$Cache/last-command.log"
 
 # Download and unzip Node
 if (!(Test-Path $NodeExe -PathType Leaf)) {
-    Write-Output "Downloading Node $NodeVersion..."
-    New-Item $Cache -ItemType Directory -ErrorAction silentlyContinue | Out-Null
+	Write-Output "Downloading Node $NodeVersion..."
+	New-Item $Cache -ItemType Directory -ErrorAction silentlyContinue | Out-Null
 
-    $Archive = "$Cache/node-v$NodeVersion.zip"
-    Invoke-WebRequest `
-        "https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.zip" `
-        -OutFile $Archive `
-        -ErrorAction Stop
+	$Archive = "$Cache/node-v$NodeVersion.zip"
+	Invoke-WebRequest `
+		"https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.zip" `
+		-OutFile $Archive `
+		-ErrorAction Stop
 
-    Expand-Archive $Archive `
-        -DestinationPath $Cache `
-        -ErrorAction Stop
+	Expand-Archive $Archive `
+		-DestinationPath $Cache `
+		-ErrorAction Stop
 
-    Remove-Item $Archive
-    Clear-Host
+	Remove-Item $Archive
+	Clear-Host
 }
 
 # Invoke Node with all command-line arguments

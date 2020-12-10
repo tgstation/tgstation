@@ -21,8 +21,8 @@ Log="$Cache/last-command.log"
 
 # If a bootstrapped Node is not present, search on $PATH.
 if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
-    if command -v node >/dev/null 2>&1; then
-        NodeExe="node"
+	if command -v node >/dev/null 2>&1; then
+		NodeExe="node"
 	else
 		echo
 		if command -v apt-get >/dev/null 2>&1; then
