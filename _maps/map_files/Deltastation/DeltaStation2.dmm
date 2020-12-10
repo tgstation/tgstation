@@ -66344,9 +66344,6 @@
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "cBs" = (
-/obj/machinery/status_display/ai{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Bridge - Corporate Lounge";
 	name = "command camera"
@@ -66360,6 +66357,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/sign/picture_frame/showroom/one{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/two{
+	pixel_x = 8;
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge/showroom/corporate)
@@ -66378,9 +66383,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge/showroom/corporate)
 "cBu" = (
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -66390,6 +66392,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/sign/picture_frame/showroom/three{
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/structure/sign/picture_frame/showroom/four{
+	pixel_x = 8;
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge/showroom/corporate)
