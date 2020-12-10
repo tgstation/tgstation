@@ -60,7 +60,14 @@ const taskDm = new Task('dm')
     await exec(compiler, 'tgstation.dme');
   });
 
-runTasks([
+// Frontend
+let tasksToRun = [
   taskTgui,
   taskDm,
-]);
+];
+
+if (process.env['TG_BUILD_TGS_MODE']) {
+  tasksToRun.pop();
+}
+
+runTasks(tasksToRun);

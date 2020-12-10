@@ -21,7 +21,17 @@ Log="$Cache/last-command.log"
 
 # If a bootstrapped Node is not present, search on $PATH.
 if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
-	if command -v node >/dev/null 2>&1; then
+	if [ "$TG_BOOTSTRAP_NODE_LINUX" ]; then
+		NodeFullVersion="node-v$NodeVersion-linux-x64"
+		NodeDir="$Cache/$NodeFullVersion"
+		NodeExe="$NodeDir/bin/node"
+
+		if [ ! -f "$NodeExe" ]; then
+			Archive="$(realpath "$Cache/node-v$NodeVersion.tar.gz")"
+			curl "https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.tar.gz" -o "$Archive"
+			(cd "$Cache" && tar xf "$Archive")
+		fi
+	elif command -v node >/dev/null 2>&1; then
 		NodeExe="node"
 	else
 		echo
