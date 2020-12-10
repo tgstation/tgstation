@@ -1,4 +1,4 @@
-# bootstrap/python_.ps1
+# bootstrap/node_.ps1
 #
 # Node bootstrapping script for Windows.
 #
@@ -52,5 +52,5 @@ Write-Output $NodeExe | Out-File -Encoding utf8 $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
 $Env:PATH = "$NodeDir;$ENV:Path"  # Set PATH so that recursive calls find it
 $ErrorActionPreference = "Continue"
-& $NodeExe $args 2>&1 | Tee-Object -Append $Log
-exit $LASTEXITCODE
+& $NodeExe $args 2>&1 | ForEach-Object { "$_" } | Tee-Object -Append $Log
+exit $LastExitCode
