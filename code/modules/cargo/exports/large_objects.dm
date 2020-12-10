@@ -87,7 +87,7 @@
 	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
 
 /datum/export/large/grounding_rod
-	cost = CARGO_CRATE_VALUE * 1.75
+	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "grounding rod"
 	export_types = list(/obj/machinery/power/grounding_rod)
 
