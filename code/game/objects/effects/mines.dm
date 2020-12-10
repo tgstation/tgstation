@@ -156,18 +156,17 @@
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
 	color = "#FF0000"
+	var/mob/living/doomslayer
+	var/obj/item/chainsaw/doomslayer/chainsaw
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-	var/old_color = victim.client.color
-	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
 
-	var/obj/item/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	chainsaw = new(victim.loc)
 	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
 	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
@@ -177,15 +176,18 @@
 	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
 	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
-	victim.client.color = pure_red
-	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)
-	sleep(10)
-	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
-	sleep(duration)
-	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
-	qdel(chainsaw)
-	victim.log_message("exited a blood frenzy", LOG_ATTACK)
-	qdel(src)
+	var/datum/client_colour/colour = victim.add_client_colour(/datum/client_colour/bloodlust)
+	QDEL_IN(colour, 11)
+	doomslayer = victim
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/end_blood_frenzy)
+	QDEL_IN(src, duration)
+
+/obj/effect/mine/pickup/bloodbath/proc/end_blood_frenzy()
+	if(doomslayer)
+		to_chat(doomslayer, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
+		doomslayer.log_message("exited a blood frenzy", LOG_ATTACK)
+	if(chainsaw)
+		qdel(chainsaw)
 
 /obj/effect/mine/pickup/bloodbath/proc/blood_delusion(mob/living/carbon/victim)
 	new /datum/hallucination/delusion(victim, TRUE, "demon", duration, 0)

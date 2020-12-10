@@ -3,13 +3,13 @@
 
 /*
 field_generator power level display
-   The icon used for the field_generator need to have 6 icon states
-   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
+The icon used for the field_generator need to have 6 icon states
+named 'Field_Gen +p[num]' where 'num' ranges from 1 to 6
 
-   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
-   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
-   no power level overlay is currently in the overlays list.
-   -Aygar
+The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+no power level overlay is currently in the overlays list.
+-Aygar
 */
 
 #define field_generator_max_power 250
@@ -58,6 +58,7 @@ field_generator power level display
 	. = ..()
 	fields = list()
 	connected_gens = list()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/field/generator/anchored/Initialize()
 	. = ..()
@@ -65,7 +66,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -173,12 +174,11 @@ field_generator power level display
 	cleanup()
 	return ..()
 
-/*
-   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
-   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
-   no power level overlay is currently in the overlays list.
-   */
-
+/**
+ *The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+ *The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+ *no power level overlay is currently in the overlays list.
+ */
 /obj/machinery/field/generator/proc/check_power_level()
 	var/new_level = round(6 * power / field_generator_max_power)
 	if(new_level != power_level)
@@ -341,11 +341,6 @@ field_generator power level display
 	clean_up = 0
 	update_icon()
 
-	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
-	//singulo eats the evidence". It's not fool-proof but better than nothing.
-	//I want to avoid using global variables.
-	INVOKE_ASYNC(src, .proc/notify_admins)
-
 	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/proc/shield_floor(create)
@@ -387,17 +382,11 @@ field_generator power level display
 		if(S)
 			qdel(S)
 
-/obj/machinery/field/generator/proc/notify_admins()
-	var/temp = TRUE //stops spam
-	for(var/obj/singularity/O in GLOB.singularities)
-		if(O.last_warning && temp)
-			if((world.time - O.last_warning) > 50) //to stop message-spam
-				temp = FALSE
-				var/turf/T = get_turf(src)
-				message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
-				investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
-				notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
-		O.last_warning = world.time
+/obj/machinery/field/generator/proc/block_singularity_if_active()
+	SIGNAL_HANDLER
+
+	if (active)
+		return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

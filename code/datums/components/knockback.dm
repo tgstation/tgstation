@@ -47,13 +47,13 @@
 
 
 /**
-  * Throw a target in a direction
-  *
-  * Arguments:
-  * * target - Target atom to throw
-  * * thrower - Thing that caused this atom to be thrown
-  * * throw_dir - Direction to throw the atom
-  */
+ * Throw a target in a direction
+ *
+ * Arguments:
+ * * target - Target atom to throw
+ * * thrower - Thing that caused this atom to be thrown
+ * * throw_dir - Direction to throw the atom
+ */
 /datum/component/knockback/proc/do_knockback(atom/target, mob/thrower, throw_dir)
 	if(!ismovable(target) || throw_dir == null)
 		return

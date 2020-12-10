@@ -80,7 +80,7 @@
 		if(P in idle_threads)
 			running = TRUE
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running, "icon" = P.program_icon))
+		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running, "icon" = P.program_icon, "alert" = P.alert_pending))
 
 	data["has_light"] = has_light
 	data["light_on"] = light_on
@@ -148,6 +148,7 @@
 			if(P in idle_threads)
 				P.program_state = PROGRAM_STATE_ACTIVE
 				active_program = P
+				P.alert_pending = FALSE
 				idle_threads.Remove(P)
 				update_icon()
 				return
@@ -163,6 +164,7 @@
 				return
 			if(P.run_program(user))
 				active_program = P
+				P.alert_pending = FALSE
 				update_icon()
 			return 1
 

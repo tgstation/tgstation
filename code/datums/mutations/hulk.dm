@@ -27,7 +27,7 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!proximity)
 		return
@@ -36,23 +36,25 @@
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
 			last_scream = world.time
-			source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
+			INVOKE_ASYNC(src, .proc/scream_attack, source)
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
 
-		return COMPONENT_NO_ATTACK_HAND
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/datum/mutation/human/hulk/proc/scream_attack(mob/living/carbon/human/source)
+	source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
 
 /**
-  *Checks damage of a hulk's arm and applies bone wounds as necessary.
-  *
-  *Called by specific atoms being attacked, such as walls. If an atom
-  *does not call this proc, than punching that atom will not cause
-  *arm breaking (even if the atom deals recoil damage to hulks).
-  *Arguments:
-  *arg1 is the arm to evaluate damage of and possibly break.
-  */
+ *Checks damage of a hulk's arm and applies bone wounds as necessary.
+ *
+ *Called by specific atoms being attacked, such as walls. If an atom
+ *does not call this proc, than punching that atom will not cause
+ *arm breaking (even if the atom deals recoil damage to hulks).
+ *Arguments:
+ *arg1 is the arm to evaluate damage of and possibly break.
+ */
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
 	switch(arm.brute_dam)
 		if(45 to 50)

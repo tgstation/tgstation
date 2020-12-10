@@ -8,6 +8,8 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
+	var/crafted = FALSE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	/// Optional travel time for ladder in deciseconds
 	var/travel_time = 0
 
@@ -37,15 +39,17 @@
 	if (!down)
 		L = locate() in SSmapping.get_turf_below(T)
 		if (L)
-			down = L
-			L.up = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				down = L
+				L.up = src  // Don't waste effort looping the other way
+				L.update_icon()
 	if (!up)
 		L = locate() in SSmapping.get_turf_above(T)
 		if (L)
-			up = L
-			L.down = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				up = L
+				L.down = src  // Don't waste effort looping the other way
+				L.update_icon()
 
 	update_icon()
 
@@ -200,3 +204,6 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+/obj/structure/ladder/crafted
+	crafted = TRUE

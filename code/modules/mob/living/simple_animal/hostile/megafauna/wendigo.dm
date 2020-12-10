@@ -31,6 +31,7 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
+	base_pixel_x = -16
 	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
