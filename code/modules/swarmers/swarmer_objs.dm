@@ -56,11 +56,7 @@
 
 /obj/structure/swarmer_beacon/Initialize()
 	. = ..()
-	GLOB.poi_list |= src
-
-/obj/structure/swarmer_beacon/Destroy()
-	. = ..()
-	GLOB.poi_list.Remove(src)
+	AddElement(/datum/element/point_of_interest)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
