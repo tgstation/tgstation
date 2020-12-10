@@ -10,8 +10,8 @@
 /turf/closed/indestructible/fakeglass,
 /area/shuttle/escape/simulation)
 "aR" = (
-/turf/closed/indestructible/binary,
-/area/shuttle/escape/simulation)
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "aS" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
@@ -35,6 +35,12 @@
 /obj/item/toy/balloon,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
+"bN" = (
+/obj/structure/trap/ctf/blue{
+	name = "historically accurate magical runes"
+	},
+/turf/open/floor/plating/beach/sand,
+/area/shuttle/escape/simulation)
 "fU" = (
 /obj/item/food/butter/on_a_stick,
 /obj/item/food/butter/on_a_stick,
@@ -190,7 +196,6 @@
 /area/shuttle/escape)
 "qY" = (
 /obj/machinery/teambuilder/red,
-/obj/effect/oneway,
 /turf/open/indestructible/binary,
 /area/shuttle/escape/simulation)
 "rQ" = (
@@ -214,7 +219,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "tP" = (
 /obj/machinery/light,
@@ -352,6 +357,12 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Cq" = (
+/obj/structure/trap/ctf/red{
+	name = "historically accurate magical runes"
+	},
+/turf/open/floor/plating/beach/sand,
+/area/shuttle/escape/simulation)
 "CC" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
@@ -638,9 +649,6 @@
 /area/shuttle/escape)
 "YC" = (
 /obj/machinery/teambuilder/blue,
-/obj/effect/oneway{
-	dir = 4
-	},
 /turf/open/indestructible/binary,
 /area/shuttle/escape/simulation)
 "YM" = (
@@ -726,7 +734,7 @@ Xv
 "}
 (3,1,1) = {"
 Xv
-gz
+aR
 qp
 hV
 Xv
@@ -785,11 +793,11 @@ Xv
 EZ
 EZ
 FT
-aR
-aR
+Mt
+Mt
 MP
-aR
-aR
+Mt
+Mt
 FT
 vN
 EZ
@@ -809,11 +817,11 @@ Xv
 ZB
 NF
 aG
-Fn
-aR
+bN
+Mt
 YC
-aR
-Fn
+Mt
+bN
 aG
 vN
 EZ
@@ -834,9 +842,9 @@ EZ
 NF
 aG
 Fn
-Fn
-Fn
-Fn
+bN
+bN
+bN
 Mt
 aG
 vN
@@ -853,7 +861,7 @@ Xv
 Xk
 Xv
 Xk
-Xv
+aR
 EZ
 NF
 aG
@@ -946,8 +954,8 @@ Xk
 EZ
 HE
 aG
-aR
-Fn
+Mt
+Cq
 Fn
 Mt
 Rl
@@ -970,9 +978,9 @@ Xk
 EZ
 HE
 aG
-aR
-aR
-Fn
+Mt
+Mt
+Cq
 Fn
 vL
 Zq
@@ -996,7 +1004,7 @@ HE
 aG
 ht
 qY
-Fn
+Cq
 Fn
 Fn
 WN
@@ -1018,9 +1026,9 @@ Xk
 EZ
 HE
 aG
-aR
-aR
-Fn
+Mt
+Mt
+Cq
 Fn
 vL
 Zq
@@ -1042,8 +1050,8 @@ Xk
 EZ
 HE
 aG
-aR
-Fn
+Mt
+Cq
 Mt
 SV
 Rl
@@ -1149,7 +1157,7 @@ Xv
 QH
 yZ
 QH
-Xv
+aR
 Ez
 mz
 Ez
@@ -1254,7 +1262,7 @@ QS
 "}
 (25,1,1) = {"
 Xv
-gz
+aR
 TI
 Bp
 Xv

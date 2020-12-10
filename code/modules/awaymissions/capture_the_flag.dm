@@ -150,6 +150,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
+	var/game_id = "centcomm"
+
 	var/team = WHITE_TEAM
 	var/team_span = ""
 	//Capture the Flag scoring
@@ -165,6 +167,7 @@
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 	var/instagib_gear = /datum/outfit/ctf/instagib
+	var/ammo_type = /obj/effect/ctf/ammo
 
 	var/list/dead_barricades = list()
 
@@ -248,7 +251,7 @@
 		return
 
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
-		if(CTF == src || CTF.ctf_enabled == FALSE)
+		if(CTF.game_id != game_id || CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
 			to_chat(user, "<span class='warning'>No switching teams while the round is going!</span>")
@@ -265,7 +268,8 @@
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
 	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
-		new /obj/effect/ctf/ammo(T)
+		if(ammo_type)
+			new ammo_type(T)
 		recently_dead_ckeys += body.ckey
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
@@ -316,6 +320,8 @@
 		control.icon_state = "dominator"
 		control.controlling = null
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
 		if(CTF.ctf_enabled == TRUE)
 			CTF.points = 0
 			CTF.control_points = 0
@@ -376,12 +382,16 @@
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = CTF.instagib_gear
 			CTF.respawn_cooldown = INSTAGIB_RESPAWN
 
 /obj/machinery/capture_the_flag/proc/normal_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
 		if(CTF.ctf_enabled == TRUE)
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
@@ -640,6 +650,8 @@
 	if(!ishuman(M))
 		return
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
 		if(M in CTF.spawned_mobs)
 			var/outfit = CTF.ctf_gear
 			var/datum/outfit/O = new outfit
@@ -660,6 +672,8 @@
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(CTF.game_id != game_id)
+			continue
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/proc/respawn()

@@ -147,6 +147,7 @@
 /area/shuttle/escape/simulation
 	name = "Medieval Reality Simulation Dome"
 	area_flags = NOTELEPORT
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/escape/arena
 	name = "The Arena"

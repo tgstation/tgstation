@@ -232,15 +232,17 @@
 		message = " [message] "
 		var/list/medieval_words = strings("medieval_replacement.json", "medieval")
 		var/list/startings = strings("medieval_replacement.json", "startings")
-		var/list/endings = strings("medieval_replacement.json", "endings")
 		for(var/key in medieval_words)
 			var/value = medieval_words[key]
 			if(islist(value))
 				value = pick(value)
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [uppertext(key)] ", " [uppertext(value)] ")
+			message = replacetextEx(message, " [capitalize(key)] ", " [capitalize(value)] ")
 			message = replacetextEx(message, " [key]", " [value]")
 		message = trim(message)
-		message = "[pick(startings)] [message] [pick(endings)]"
+		var/chosen_starting = pick(startings)
+		if(copytext(chosen_starting, -1) != "!") //if the starter isn't a sentence of it's own, lowercase the message afterwards
+			message = lowertext(message)
+		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
