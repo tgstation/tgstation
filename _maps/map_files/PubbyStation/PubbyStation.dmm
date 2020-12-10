@@ -27613,8 +27613,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bwC" = (
@@ -28268,6 +28268,32 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"byu" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/northleft{
+	dir = 2;
+	name = "Chemistry Desk";
+	req_access_txt = "5; 69"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_shutters";
+	name = "chemistry shutters"
+	},
+/obj/item/folder/white,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/medical/chemistry)
 "byv" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
@@ -29596,8 +29622,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
-	},
+    pixel_y = 1
+    },
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
 /area/medical/storage)
@@ -29627,8 +29653,8 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "bCg" = (
@@ -42590,6 +42616,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -46231,8 +46260,8 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
-	},
+    pixel_y = 1
+    },
 /turf/open/floor/grass,
 /area/medical/storage)
 "ezF" = (
@@ -90550,7 +90579,7 @@ bsH
 blo
 crd
 cqs
-bpW
+byu
 brk
 bsK
 bsK
