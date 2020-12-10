@@ -35,7 +35,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		UnpossessPawn()
 
 	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
-		new_pawn.ai_controller.UnpossessPawn()
 		QDEL_NULL(new_pawn.ai_controller)
 
 	if(TryPossessPawn(new_pawn) & AI_CONTROLLER_INCOMPATIBLE)
