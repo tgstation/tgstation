@@ -240,7 +240,6 @@
 	description = "A state of the art simulation dome, loaded onto your shuttle! Watch and laugh at how petty humanity used to be before it reached the stars. Guaranteed to be at least 40% historically accurate."
 	admin_notes = "Ghosts can spawn in and fight as knights. They cannot speak about the round, instead speaking in chimpanzee."
 	credit_cost = 20000
-	can_be_bought = FALSE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM]

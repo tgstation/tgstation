@@ -4,12 +4,21 @@
 	game_area = /area/shuttle/escape/simulation
 
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
-	var/mob/living/carbon/human/M = ..()
-	M.remove_all_languages(LANGUAGE_CTF)
-	M.grant_language(/datum/language/monkey, TRUE, TRUE, LANGUAGE_CTF)
-	randomize_human(M)
+	var/mob/living/carbon/human/human_knight = ..()
+	human_knight.remove_all_languages(LANGUAGE_CTF)
+	human_knight.grant_language(language = /datum/language/oldworld, understood = TRUE, spoken = TRUE, source = LANGUAGE_CTF)
+	randomize_human(human_knight)
+	human_knight.dna.add_mutation(MEDIEVAL, MUT_OTHER)
 	var/oldname = name
-	M.name = "[M.gender == MALE ? "Sir" : "Lady"] [oldname]"
+	var/title
+	switch (human_knight.gender)
+		if (MALE)
+			title = pick(list("Sir", "Lord"))
+		if (FEMALE)
+			title = pick(list("Dame", "Lady"))
+		else
+			title = "Noble"
+	human_knight.name = "[title] [oldname]"
 
 /obj/machinery/capture_the_flag/medisim/red
 	ctf_gear = /datum/outfit/medisimred
@@ -23,7 +32,7 @@
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "plushie_nuke"
 	game_area = /area/shuttle/escape
-	movement_type = FLYING //there are chasms!
+	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
 /obj/item/ctf/blue/medisim
 	name = "Bluesworth Hold Fair Maiden"
@@ -31,7 +40,7 @@
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "plushie_slime"
 	game_area = /area/shuttle/escape
-	movement_type = FLYING //there are chasms!
+	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
 /datum/outfit/medisimred
 	name = "Redfield Castle Knight"

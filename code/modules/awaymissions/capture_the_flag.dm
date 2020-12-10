@@ -55,7 +55,7 @@
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
+			to_chat(M, "<span class='userdanger'>[src] has been returned to the base!</span>")
 	STOP_PROCESSING(SSobj, src)
 	return TRUE //so if called by a signal, it doesn't delete
 

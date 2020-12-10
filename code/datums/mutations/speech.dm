@@ -208,3 +208,39 @@
 	..()
 	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+
+/datum/mutation/human/medieval
+	name = "Medieval"
+	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
+
+/datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/medieval/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = " [message] "
+		var/list/medieval_words = strings("medieval_replacement.json", "medieval")
+		var/list/startings = strings("medieval_replacement.json", "startings")
+		var/list/endings = strings("medieval_replacement.json", "endings")
+		for(var/key in medieval_words)
+			var/value = medieval_words[key]
+			if(islist(value))
+				value = pick(value)
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+		message = trim(message)
+		message = "[pick(startings)] [message] [pick(endings)]"
+
+		speech_args[SPEECH_MESSAGE] = message
