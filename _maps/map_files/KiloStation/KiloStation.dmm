@@ -15542,6 +15542,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "azI" = (
