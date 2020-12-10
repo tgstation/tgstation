@@ -14,14 +14,15 @@ class Task {
   }
 
   depends(path) {
-    // Hardcoded GLOB here for simplicity, auto-detection would be nice.
-    const flags = Flags.SOURCE | Flags.GLOB;
+    const glob = path.includes('*');
+    const flags = Flags.SOURCE | (glob ? Flags.GLOB : Flags.FILE);
     this.deps.push({ path, flags });
     return this;
   }
 
   provides(path) {
-    const flags = Flags.TARGET | Flags.GLOB;
+    const glob = path.includes('*');
+    const flags = Flags.TARGET | (glob ? Flags.GLOB : Flags.FILE);
     this.deps.push({ path, flags });
     return this;
   }
