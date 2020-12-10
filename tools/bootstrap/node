@@ -46,10 +46,14 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
 	fi
 fi
 
-# Use an Awk script if tee.exe is not available, e.g. inside GitHub Desktop
+# Cheap shell function if tee.exe is not available
 if ! command -v tee >/dev/null 2>&1; then
 	tee() {
-		awk -f "$Bootstrap/tee.awk" -- "$@"
+		# Fudge: assume $1 is always "-a"
+		while read line; do
+			echo "$line" >> "$2"
+			echo "$line"
+		done
 	}
 fi
 
