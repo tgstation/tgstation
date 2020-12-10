@@ -9,14 +9,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
-			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
+			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
-				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
+				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
 			} \
 		} \
 	} while (0)
@@ -37,7 +37,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
-				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait)); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -53,7 +53,7 @@
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
 					}; \
 				};\
 			if (!length(_L)) { \
@@ -219,35 +219,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 
-///Movement type traits for movables.
-
-/**
- * Registers movement trait signals on the movable the first time the macro is used on it,
- * These are necessary to add and remove bit flags, as well as the floating animation.
- * Overall it's a better alternative than doing so on init for every movable.
- */
-#define ADD_MOVE_TRAIT(AM, trait, source)\
-	if(!AM.has_movement_type_signals){\
-		if(!GLOB.movement_type_trait_add_signals){\
-			GLOB.movement_type_trait_add_signals = list();\
-			GLOB.movement_type_trait_remove_signals = list();\
-			for(var/_trait in GLOB.movement_type_trait_to_flag){\
-				GLOB.movement_type_trait_add_signals += SIGNAL_ADDTRAIT(_trait);\
-				GLOB.movement_type_trait_remove_signals += SIGNAL_REMOVETRAIT(_trait)\
-			};\
-		};\
-		AM.RegisterSignal(AM, GLOB.movement_type_trait_add_signals, /atom/movable/.proc/on_movement_type_trait_gain);\
-		AM.RegisterSignal(AM, GLOB.movement_type_trait_remove_signals, /atom/movable/.proc/on_movement_type_trait_loss);\
-		AM.has_movement_type_signals = TRUE\
-	};\
-	ADD_TRAIT(AM, trait, source)
-
-#define TRAIT_MOVE_GROUND		"move_ground"
-#define TRAIT_MOVE_FLYING		"move_flying"
-#define TRAIT_MOVE_VENTCRAWLING	"move_ventcrawling"
-#define TRAIT_MOVE_FLOATING		"move_floating"
-#define TRAIT_MOVE_PHASING		"move_phasing"
-
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
 #define TRAIT_PARALYSIS				"paralysis"
@@ -386,12 +357,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
-#define LIFECANDLE_TRAIT "lifecandle"
-#define VENTCRAWLING_TRAIT "ventcrawling"
-#define SPECIES_FLIGHT_TRAIT "species-flight"
-#define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
-#define NO_GRAVITY_TRAIT "no-gravity"
-#define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define SKILLCHIP_TRAIT "skillchip"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"

@@ -30,19 +30,15 @@
 		return
 	if(!user.mind)
 		return
-	var/old_len = linked_minds.len
 	if(user.mind in linked_minds)
 		user.visible_message("<span class='notice'>[user] reaches out and pinches the flame of [src].</span>", "<span class='warning'>You sever the connection between yourself and [src].</span>")
 		linked_minds -= user.mind
-		if(old_len)
-			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 	else
 		user.visible_message("<span class='notice'>[user] touches [src]. It seems to respond to [user.p_their()] presence!</span>", "<span class='warning'>You create a connection between you and [src].</span>")
 		linked_minds |= user.mind
-		if(!old_len)
-			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 
 	update_icon()
+	float(linked_minds.len)
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
 		set_light(lit_luminosity)

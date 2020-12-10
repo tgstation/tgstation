@@ -168,13 +168,6 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		),
 	/atom = list(
 		"TRAIT_KEEP_TOGETHER" = TRAIT_KEEP_TOGETHER
-		),
-	/atom/movable = list(
-		"TRAIT_MOVE_GROUND" = TRAIT_MOVE_GROUND,
-		"TRAIT_MOVE_FLYING" = TRAIT_MOVE_FLYING,
-		"TRAIT_MOVE_VENTCRAWLING" = TRAIT_MOVE_VENTCRAWLING,
-		"TRAIT_MOVE_FLOATING" = TRAIT_MOVE_FLOATING,
-		"TRAIT_MOVE_PHASING" = TRAIT_MOVE_PHASING
 		)
 	))
 
@@ -187,13 +180,3 @@ GLOBAL_LIST(trait_name_map)
 		for(var/tname in GLOB.traits_by_type[key])
 			var/val = GLOB.traits_by_type[key][tname]
 			.[val] = tname
-
-GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
-	TRAIT_MOVE_GROUND = GROUND,
-	TRAIT_MOVE_FLYING = FLYING,
-	TRAIT_MOVE_VENTCRAWLING = VENTCRAWLING,
-	TRAIT_MOVE_FLOATING = FLOATING,
-	TRAIT_MOVE_PHASING = PHASING
-	))
-GLOBAL_LIST(movement_type_trait_add_signals)
-GLOBAL_LIST(movement_type_trait_remove_signals)
