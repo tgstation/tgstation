@@ -127,7 +127,7 @@
 								/datum/gas/halon
 								)
 
-	var/list/gas_prices = list(/datum/gas/bz = 4,
+	var/list/gas_prices = list(/datum/gas/bz = 2,
 								/datum/gas/stimulum = 100,
 								/datum/gas/hypernoblium = 5,
 								/datum/gas/miasma = 2,

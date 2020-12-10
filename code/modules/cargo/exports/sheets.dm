@@ -79,7 +79,7 @@
 	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
 /datum/export/stack/wood
-	cost = CARGO_CRATE_VALUE * 0.15
+	cost = CARGO_CRATE_VALUE * 0.05
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
