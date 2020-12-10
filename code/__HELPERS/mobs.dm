@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/endtime = world.time + delay
 	var/starttime = world.time
 	. = TRUE
-	while (world.time < endtime)
+	while (world.time + progbar?.bonus_progress < endtime)
 		stoplag(1)
 
 		if(!QDELETED(progbar))
