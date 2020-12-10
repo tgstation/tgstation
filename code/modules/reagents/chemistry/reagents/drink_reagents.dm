@@ -517,15 +517,33 @@
 
 /datum/reagent/consumable/pwr_game/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(exposed_mob?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && (methods & INGEST) && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD))
+	if(exposed_mob?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD))
+		if(iscyborg(exposed_mob))
+			var/mob/living/silicon/robot/R = exposed_mob
+			if(R.opened) //I'm intentionally not using wiresexposed here, because wiresexposed just determines if someone's hand/arm can reach a cyborg's wiring (while having enough room to maneuver in to actually repair/interact with it), not whether or not a liquid can reach it
+				to_chat(exposed_mob, "<span class='nicegreen'>As the Pwr Game seeps into your circuits, your gaming third sensor opens...</span>")
+			else
+				to_chat(exposed_mob, "<span class='warning'>The Pwr Game fails to penetrate your hardened, metallic exterior!</span>")
+				return //yeah, metallic simplemobs can ascend using Pwr Game just fine, but damnit, I just love the image of a roboticist popping open a cyborg's cover and dumping a soft drink onto their motherboard
+		else if(methods & INGEST)
+			to_chat(exposed_mob, "<span class='nicegreen'>As you imbibe the Pwr Game, your gaming third eye opens...</span>")
+		else if(methods & INJECT)
+			to_chat(exposed_mob, "<span class='nicegreen'>As the Pwr Game is directly injected into your bloodstream, your gaming third eye opens...</span>")
+		else
+			to_chat(exposed_mob, "<span class='nicegreen'>As the Pwr Game makes contact with your body, your gaming third eye opens...</span>")
+
+		to_chat(exposed_mob, "<span class='nicegreen'>You feel as though great secrets of the universe have been made known to you.</span>")
 		ADD_TRAIT(exposed_mob, TRAIT_GAMERGOD, "pwr_game")
-		to_chat(exposed_mob, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
-		You feel as though a great secret of the universe has been made known to you...</span>")
+		
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	if(prob(10))
 		M.mind?.adjust_experience(/datum/skill/gaming, 5)
+	if(M.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD)) //they crossed the legendary gaming skill threshold after the Pwr Game entered their system but before the Pwr Game left their system
+		to_chat(exposed_mob, "<span class='nicegreen'>You suddenly become acutely aware of the Pwr Game flowing through your veins, and your gaming third eye opens...</span>")
+		to_chat(exposed_mob, "<span class='nicegreen'>You feel as though great secrets of the universe have been made known to you.</span>")
+		ADD_TRAIT(exposed_mob, TRAIT_GAMERGOD, "pwr_game")
 	..()
 
 /datum/reagent/consumable/shamblers

@@ -219,13 +219,13 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer, TRUE)
-		if(iscarbon(firer))
-			var/mob/living/carbon/carbon_firer = firer
+		if(isliving(firer))
+			var/mob/living/living_firer = firer
 			var/skill_modifier = 1
 			// If there is a mind, check for skill modifier to allow them to reload faster.
-			if(carbon_firer.mind)
-				skill_modifier = carbon_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
-			kinetic_gun.attempt_reload(kinetic_gun.overheat_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
+			if(living_firer.mind)
+				skill_modifier = living_firer.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+			kinetic_gun.attempt_reload(kinetic_gun.overheat_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style. //I'm not sure if this actually works (don't other things call attempt_reload() before we get to this proc?), but that's something for another PR to check/fix.
 	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 

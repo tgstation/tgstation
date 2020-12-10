@@ -651,9 +651,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("SkillReward")
 				var/type = text2path(href_list["skill"])
 				var/datum/skill/S = GetSkillRef(type)
-				var/datum/mind/mind = U.mind
-				var/new_level = mind.get_skill_level(type)
-				S.try_skill_reward(mind, new_level)
+				if(U.mind)
+					S.try_skill_reward(U.mind, U.mind.get_skill_level(type))
 
 //LINK FUNCTIONS===================================
 

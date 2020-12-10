@@ -84,13 +84,13 @@
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(give_exp)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(give_exp && L.mind)
 			if (mineralType && (mineralAmt > 0))
-				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)
+				L.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)
 			else
-				H.mind.adjust_experience(/datum/skill/mining, 4)
+				L.mind.adjust_experience(/datum/skill/mining, 4)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
@@ -768,8 +768,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
-	if(!ishuman(user))
-		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
+	if(!isliving(user))
 		return FALSE
 	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
@@ -778,26 +777,22 @@
 
 
 /turf/closed/mineral/strong/gets_drilled(mob/user)
-	if(!ishuman(user))
+	if(!isliving(user))
 		return // see attackby
-	var/mob/living/carbon/human/H = user
-	if(!(H.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+	if(!(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
 		return
 	drop_ores()
-	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
+	user.client.give_award(/datum/award/achievement/skill/legendary_miner, user)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
+	user.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
-	if(prob(10))
-		new /obj/item/stack/sheet/mineral/mythril(src, 5)
-	else
-		new /obj/item/stack/sheet/mineral/adamantine(src, 5)
+	new /obj/item/stack/sheet/mineral/mythril(src, 5)
 
 /turf/closed/mineral/strong/acid_melt()
 	return
