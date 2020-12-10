@@ -540,10 +540,10 @@
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	if(prob(10))
 		M.mind?.adjust_experience(/datum/skill/gaming, 5)
-	if(M.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD)) //they crossed the legendary gaming skill threshold after the Pwr Game entered their system but before the Pwr Game left their system
-		to_chat(exposed_mob, "<span class='nicegreen'>You suddenly become acutely aware of the Pwr Game flowing through your veins, and your gaming third eye opens...</span>")
-		to_chat(exposed_mob, "<span class='nicegreen'>You feel as though great secrets of the universe have been made known to you.</span>")
-		ADD_TRAIT(exposed_mob, TRAIT_GAMERGOD, "pwr_game")
+	if(M.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && !HAS_TRAIT(M, TRAIT_GAMERGOD)) //they crossed the legendary gaming skill threshold after the Pwr Game entered their system but before the Pwr Game left their system
+		to_chat(M, "<span class='nicegreen'>You suddenly become acutely aware of the Pwr Game flowing through your veins, and your gaming third eye opens...</span>")
+		to_chat(M, "<span class='nicegreen'>You feel as though great secrets of the universe have been made known to you.</span>")
+		ADD_TRAIT(M, TRAIT_GAMERGOD, "pwr_game")
 	..()
 
 /datum/reagent/consumable/shamblers
