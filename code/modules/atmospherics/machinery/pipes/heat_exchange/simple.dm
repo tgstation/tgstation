@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple
 	icon = 'icons/obj/atmospherics/pipes/he-simple.dmi'
-	icon_state = "pipe11-3"
+	icon_state = "pipe11"
 
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe."
@@ -14,6 +14,14 @@
 	construction_type = /obj/item/pipe/binary/bendable
 	pipe_state = "he"
 
+	var/mutable_appearance/center
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/Initialize()
+	. = ..()
+	icon_state = ""
+	center = mutable_appearance(icon, "pipe11")
+	update_icon()
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
 	if(ISDIAGONALDIR(dir))
 		initialize_directions = dir
@@ -25,7 +33,18 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon()
-	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
+	cut_overlays()
+	if(!center)
+		if(nodes[1] && nodes[2])
+			center = mutable_appearance(icon, "pipe11")
+		else if(nodes[1] && !nodes[2])
+			center = mutable_appearance(icon, "pipe10")
+		else if(!nodes[1] && nodes[2])
+			center = mutable_appearance(icon, "pipe01")
+		else
+			center = mutable_appearance(icon, "pipe00")
+	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
+	add_overlay(center)
 	update_layer()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2

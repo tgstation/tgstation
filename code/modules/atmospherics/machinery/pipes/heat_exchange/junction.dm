@@ -14,6 +14,13 @@
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
+	var/mutable_appearance/center
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/Initialize()
+	. = ..()
+	icon_state = ""
+	center = mutable_appearance(icon, "pipe11")
+	update_icon()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
@@ -31,7 +38,22 @@
 	return ..(target, given_layer, TRUE)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/update_icon()
-	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
+	cut_overlays()
+	if(!center)
+		if(nodes[1] && nodes[2])
+			center = mutable_appearance(icon, "pipe11")
+		else if(nodes[1] && !nodes[2])
+			center = mutable_appearance(icon, "pipe10")
+		else if(!nodes[1] && nodes[2])
+			center = mutable_appearance(icon, "pipe01")
+		else
+			center = mutable_appearance(icon, "pipe00")
+	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
+	add_overlay(center)
+	if(nodes[1])
+		var/obj/machinery/atmospherics/overlay = getpipeimage(icon, "pipe", get_dir(src, nodes[1]))
+		PIPING_LAYER_DOUBLE_SHIFT(overlay, piping_layer)
+		add_overlay(overlay)
 	update_layer()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer2

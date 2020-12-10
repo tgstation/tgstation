@@ -33,7 +33,9 @@
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
+			var/obj/machinery/atmospherics/overlay = getpipeimage(icon, "pipe-3", get_dir(src, nodes[i]))
+			PIPING_LAYER_DOUBLE_SHIFT(overlay, piping_layer)
+			add_overlay(overlay)
 
 	update_layer()
 
