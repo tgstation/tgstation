@@ -1,21 +1,157 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aS" = (
 /obj/machinery/telecomms/relay/preset/mining,
+/turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
+"cb" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"dL" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
+/area/engine/engineering)
+"em" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"eq" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"eM" = (
+/obj/machinery/atmospherics/pipe/multiz,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"jP" = (
+/obj/machinery/door/airlock/command{
+	name = "Telecomms Server Room";
+	req_access_txt = "61"
+	},
+/turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "kM" = (
 /turf/open/space/basic,
 /area/space)
+"lf" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"nb" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"oq" = (
+/obj/structure/window/plasma/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"qa" = (
+/obj/structure/ladder,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "qn" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"qK" = (
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"qQ" = (
+/turf/open/floor/plating,
+/area/engine/engineering)
+"uU" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"vL" = (
+/obj/machinery/atmospherics/pipe/manifold4w/general/hidden,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"vN" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"wO" = (
+/turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
+"xw" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/space/nearstation)
+"Aq" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"CM" = (
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"Ez" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "GZ" = (
 /turf/closed/wall,
 /area/maintenance/department/electrical)
 "Ng" = (
 /turf/open/space/basic,
 /area/space/nearstation)
+"QV" = (
+/obj/machinery/atmospherics/components/binary/pump,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"TK" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
+"TO" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"Wr" = (
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "Zb" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/electrical)
@@ -22729,9 +22865,9 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
+wO
+wO
+wO
 Zb
 ZY
 ZY
@@ -22986,10 +23122,10 @@ ZV
 ZV
 ZV
 Zb
-ZY
+wO
 aS
-ZY
-ZY
+wO
+jP
 ZY
 ZY
 ZY
@@ -23243,9 +23379,9 @@ ZV
 ZV
 ZV
 Zb
-ZY
-ZY
-ZY
+wO
+wO
+wO
 Zb
 ZY
 ZY
@@ -28683,20 +28819,20 @@ Zb
 Zb
 Zb
 Zb
-Zb
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
 kM
 kM
 kM
 kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
 ZV
 ZV
 ZV
@@ -28940,20 +29076,20 @@ ZY
 ZY
 ZY
 ZY
-Zb
+Wr
+qQ
+qQ
+qQ
+Aq
+qQ
+qQ
+qa
+Wr
 kM
 kM
 kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
 ZV
 ZV
 ZV
@@ -29197,20 +29333,20 @@ ZY
 ZY
 ZY
 ZY
-Zb
+Wr
+qQ
+qQ
+qQ
+vN
+CM
+qQ
+qK
+Wr
 kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -29218,9 +29354,9 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -29454,19 +29590,19 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+qQ
+qQ
+qQ
+eq
+qQ
+qQ
+qK
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -29475,11 +29611,11 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -29711,19 +29847,19 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+qQ
+qQ
+qQ
+oq
+qQ
+qQ
+qK
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -29731,14 +29867,14 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -29968,19 +30104,19 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+qQ
+qQ
+qQ
+cb
+em
+TK
+qK
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -29988,16 +30124,16 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -30225,37 +30361,37 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+Ez
+uU
+eM
+vL
+TO
+qQ
+qK
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 kM
 kM
 kM
@@ -30482,19 +30618,19 @@ ZY
 ZY
 ZY
 ZY
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+Ez
+nb
+QV
+dL
+lf
+TK
+qK
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -30502,18 +30638,18 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -30739,19 +30875,19 @@ ZY
 ZY
 ZY
 ZY
-Zb
-Zb
-Zb
-Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -30760,15 +30896,15 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -31000,16 +31136,16 @@ ZY
 ZY
 ZY
 Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -31017,15 +31153,15 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -31257,16 +31393,16 @@ ZY
 ZY
 ZY
 Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -31275,13 +31411,13 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -31514,16 +31650,16 @@ ZY
 ZY
 ZY
 Zb
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -31533,12 +31669,12 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
-kM
-kM
-kM
-kM
+ZV
+ZV
+ZV
+ZV
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -31775,12 +31911,12 @@ Zb
 Zb
 Zb
 Zb
-kM
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
@@ -31792,8 +31928,8 @@ ZV
 ZV
 ZV
 ZV
-kM
-kM
+ZV
+ZV
 ZV
 ZV
 ZV
@@ -32032,11 +32168,11 @@ ZY
 ZY
 ZY
 Zb
-kM
-kM
-kM
-kM
-kM
+xw
+xw
+xw
+xw
+xw
 ZV
 ZV
 ZV
