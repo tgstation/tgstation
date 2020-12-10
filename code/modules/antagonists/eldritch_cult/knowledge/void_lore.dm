@@ -56,10 +56,12 @@
 /datum/eldritch_knowledge/cold_snap/on_gain(mob/user)
 	. = ..()
 	ADD_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
+	ADD_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/cold_snap/on_lose(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/void_cloak
 	name = "Void Cloak"
@@ -163,7 +165,6 @@
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
 	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
-	ADD_TRAIT(H, TRAIT_NOBREATH, MAGIC_TRAIT)
 	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 
