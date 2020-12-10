@@ -55,6 +55,10 @@ map kilostation
 	minplayers 50
 endmap
 
+map donutstation
+	minplayers 45
+endmap
+
 map icebox
 	minplayers 25
 	votable
