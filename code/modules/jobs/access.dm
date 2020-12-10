@@ -90,15 +90,15 @@
 		return FALSE
 	return TRUE
 
-/**
-  * Checks if this packet can access this device
-  *
-  * Normally just checks the access list however you can override it for
-  * hacking proposes or if wires are cut
-  *
-  * Arguments:
-  * * passkey - passkey from the datum/netdata packet
-  */
+/*
+ * Checks if this packet can access this device
+ *
+ * Normally just checks the access list however you can override it for
+ * hacking proposes or if wires are cut
+ *
+ * Arguments:
+ * * passkey - passkey from the datum/netdata packet
+ */
 /obj/proc/check_access_ntnet(list/passkey)
 	return check_access_list(passkey)
 

@@ -1,18 +1,18 @@
-/**
-  * # /datum/ntnet
-  *
-  * This class defines each network of the world.  Each root network is accessible by any device
-  * on the same network but NOT accessible to any other "root" networks.  All normal devices only have
-  * one network and one network_id.
-  *
-  * This thing replaces radio.  Think of wifi but better, bigger and bolder!  The idea is that any device
-  * on a network can reach any other device on that same network if it knows the hardware_id.  You can also
-  * search or broadcast to devices if you know what branch you wish.  That is to say you can broadcast to all
-  * devices on "SS13.ATMOS.SCRUBBERS" to change the settings of all the scrubbers on the station or to
-  * "SS13.AREA.FRED_HOME.SCRUBBERS" to all the scrubbers at one area.  However devices CANNOT communicate cross
-  * networks normality.
-  *
-  */
+/*
+ * # /datum/ntnet
+ *
+ * This class defines each network of the world.  Each root network is accessible by any device
+ * on the same network but NOT accessible to any other "root" networks.  All normal devices only have
+ * one network and one network_id.
+ *
+ * This thing replaces radio.  Think of wifi but better, bigger and bolder!  The idea is that any device
+ * on a network can reach any other device on that same network if it knows the hardware_id.  You can also
+ * search or broadcast to devices if you know what branch you wish.  That is to say you can broadcast to all
+ * devices on "SS13.ATMOS.SCRUBBERS" to change the settings of all the scrubbers on the station or to
+ * "SS13.AREA.FRED_HOME.SCRUBBERS" to all the scrubbers at one area.  However devices CANNOT communicate cross
+ * networks normality.
+ *
+ */
 
 /datum/ntnet
 	/// The full network name for this network ex. SS13.ATMOS.SCRUBBERS
@@ -34,17 +34,17 @@
 	var/datum/ntnet/parent
 
 
-/**
-  * Creates a new network
-  *
-  * Used for /datum/controller/subsystem/networks/proc/create_network so do not
-  * call yourself as new doesn't do any checking itself
-  *
-  * Arguments:
-  * * net_id - Fully qualified network id for this network
-  * * net_part_id - sub part of a network if this is a child of P
-  * * P - Parent network, this will be attached to that network.
-  */
+/*
+ * Creates a new network
+ *
+ * Used for /datum/controller/subsystem/networks/proc/create_network so do not
+ * call yourself as new doesn't do any checking itself
+ *
+ * Arguments:
+ * * net_id - Fully qualified network id for this network
+ * * net_part_id - sub part of a network if this is a child of P
+ * * P - Parent network, this will be attached to that network.
+ */
 /datum/ntnet/New(net_id, net_part_id, datum/ntnet/P = null)
 	linked_devices = list()
 	children = list()
@@ -95,17 +95,17 @@
 
 	return ..()
 
-/**
-  * Collects all the devices on this branch of the network and maybe its
-  * children
-  *
-  * Used for broadcasting, this will collect all the interfaces on this
-  * network and by default everything below this branch.  Will return an
-  * empty list if no devices were found
-  *
-  * Arguments:
-  * * include_children - Include the children of all branches below this
-  */
+/*
+ * Collects all the devices on this branch of the network and maybe its
+ * children
+ *
+ * Used for broadcasting, this will collect all the interfaces on this
+ * network and by default everything below this branch.  Will return an
+ * empty list if no devices were found
+ *
+ * Arguments:
+ * * include_children - Include the children of all branches below this
+ */
 /datum/ntnet/proc/collect_interfaces(include_children=TRUE)
 	if(!include_children || children.len == 0)
 		return linked_devices.Copy()
@@ -122,28 +122,28 @@
 		return devices
 
 
-/**
-  * Find if an interface exists on this network
-  *
-  * Used to look up a device on the network.
-  *
-  * Arguments:
-  * * tag_or_hid - Ither the hardware id or the id_tag
-  */
+/*
+ * Find if an interface exists on this network
+ *
+ * Used to look up a device on the network.
+ *
+ * Arguments:
+ * * tag_or_hid - Ither the hardware id or the id_tag
+ */
 /datum/ntnet/proc/find_interface(tag_or_hid)
 	return root_devices[tag_or_hid]
 
 /**
-  * Add this interface to this branch of the network.
-  *
-  * This will add a network interface to this branch of the network.
-  * If the interface already exists on the network it will add it and
-  * give the alias list in the interface this branch name.  If the interface
-  * has an id_tag it will add that name to the root_devices for map lookup
-  *
-  * Arguments:
-  * * interface - ntnet component of the device to add to the network
-  */
+ * Add this interface to this branch of the network.
+ *
+ * This will add a network interface to this branch of the network.
+ * If the interface already exists on the network it will add it and
+ * give the alias list in the interface this branch name.  If the interface
+ * has an id_tag it will add that name to the root_devices for map lookup
+ *
+ * Arguments:
+ * * interface - ntnet component of the device to add to the network
+ */
 /datum/ntnet/proc/add_interface(datum/component/ntnet_interface/interface)
 	if(interface.network)
 		if(!networks[interface.network.network_id])
@@ -165,17 +165,17 @@
 	if(interface.id_tag != null) // could be a type, never know
 		root_devices[interface.id_tag] = interface
 
-/**
-  * Remove this interface from the network
-  *
-  * This will remove an interface from this network and null the network field on the
-  * interface.  Be sure that add_interface is run as soon as posable as an interface MUST
-  * have a network
-  *
-  * Arguments:
-  * * interface - ntnet component of the device to remove to the network
-  * * remove_all_alias - remove ALL references to this device on this network
-  */
+/*
+ * Remove this interface from the network
+ *
+ * This will remove an interface from this network and null the network field on the
+ * interface.  Be sure that add_interface is run as soon as posable as an interface MUST
+ * have a network
+ *
+ * Arguments:
+ * * interface - ntnet component of the device to remove to the network
+ * * remove_all_alias - remove ALL references to this device on this network
+ */
 /datum/ntnet/proc/remove_interface(datum/component/ntnet_interface/interface, remove_all_alias=FALSE)
 	if(!interface.alias[network_id])
 		log_telecomms("The device {[interface.hardware_id]} is trying to leave a '[network_id]'' when its on '[interface.network.network_id]'")
@@ -205,17 +205,17 @@
 				root_devices.Remove(interface.id_tag)
 			interface.network = null
 
-/**
-  * Move interface to another branch of the network
-  *
-  * This function is a lightweight way of moving an interface from one branch to another like a gps
-  * device going from one area to another.  Target network MUST be this network or it will fail
-  *
-  * Arguments:
-  * * interface - ntnet component of the device to move
-  * * target_network - qualified network id to move to
-  * * original_network - qualified network id from the original network if not this one
-  */
+/*
+ * Move interface to another branch of the network
+ *
+ * This function is a lightweight way of moving an interface from one branch to another like a gps
+ * device going from one area to another.  Target network MUST be this network or it will fail
+ *
+ * Arguments:
+ * * interface - ntnet component of the device to move
+ * * target_network - qualified network id to move to
+ * * original_network - qualified network id from the original network if not this one
+ */
 /datum/ntnet/proc/move_interface(datum/component/ntnet_interface/interface, target_network, original_network = null)
 	var/datum/ntnet/net = original_network == null ? src : networks[original_network]
 	var/datum/ntnet/target = networks[target_network]

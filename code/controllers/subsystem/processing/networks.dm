@@ -74,16 +74,17 @@ SUBSYSTEM_DEF(networks)
 	// Now when the objects Initialize they will join the right network
 	return ..()
 
-/**
-  * Process incoming queued packet and return NAK/ACK signals
-  *
-  * This should only be called when you want the target object to process the NAK/ACK signal, usually
-  * during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
-  * is undefined in this function.
-  * Arguments:
-  * * receiver_id - text hardware id for the target device
-  * * data - packet to be sent
-  */
+/*
+ * Process incoming queued packet and return NAK/ACK signals
+ *
+ * This should only be called when you want the target object to process the NAK/ACK signal, usually
+ * during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
+ * is undefined in this function.
+ * Arguments:
+ * * receiver_id - text hardware id for the target device
+ * * data - packet to be sent
+ */
+
 /datum/controller/subsystem/networks/proc/_process_packet(receiver_id, datum/netdata/data)
 	/// Used only for sending NAK/ACK and error reply's
 	var/datum/component/ntnet_interface/sending_interface = interfaces_by_hardware_id[data.sender_id]
@@ -165,14 +166,14 @@ SUBSYSTEM_DEF(networks)
 
 #undef POP_PACKET
 
-/**
-  * Main function to queue a packet.  As long as we have valid receiver_id and network_id we will take it
-  *
-  * Main queuing function for any message sent.  if the data.receiver_id is null, then it will be broadcasted
-  * error checking is only done during the process this just throws it on the queue.
-  * Arguments:
-  * * data - packet to be sent
-  */
+/*
+ * Main function to queue a packet.  As long as we have valid receiver_id and network_id we will take it
+ *
+ * Main queuing function for any message sent.  if the data.receiver_id is null, then it will be broadcasted
+ * error checking is only done during the process this just throws it on the queue.
+ * Arguments:
+ * * data - packet to be sent
+ */
 /datum/controller/subsystem/networks/proc/transmit(datum/netdata/data)
 	data.next = null // sanity check
 
@@ -201,17 +202,17 @@ SUBSYSTEM_DEF(networks)
 		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
 
 /**
-  * Records a message into the station logging system for the network
-  *
-  * This CAN be read in station by personal so do not use it for game debugging
-  * during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
-  * is undefined in this function.  It is also dumped to normal logs but remember players can read/intercept
-  * these messages
-  * Arguments:
-  * * log_string - message to log
-  * * network - optional, It can be a ntnet or just the text equivalent
-  * * hardware_id = optional, text, will look it up and return with the parent.name as well
-  */
+ * Records a message into the station logging system for the network
+ *
+ * This CAN be read in station by personal so do not use it for game debugging
+ * during fire.  At this point data.receiver_id has already been converted if it was a broadcast but
+ * is undefined in this function.  It is also dumped to normal logs but remember players can read/intercept
+ * these messages
+ * Arguments:
+ * * log_string - message to log
+ * * network - optional, It can be a ntnet or just the text equivalent
+ * * hardware_id = optional, text, will look it up and return with the parent.name as well
+ */
 /datum/controller/subsystem/networks/proc/add_log(log_string, network = null , hardware_id = null)
 	set waitfor = FALSE // so process keeps running
 	var/list/log_text = list()
@@ -246,8 +247,8 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Removes all station logs for the current game
-  */
+ * Removes all station logs for the current game
+ */
 /datum/controller/subsystem/networks/proc/purge_logs()
 	logs = list()
 	add_log("-!- LOGS DELETED BY SYSTEM OPERATOR -!-")
@@ -255,12 +256,12 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Updates the maximum amount of logs and purges those that go beyond that number
-  *
-  * Shouldn't been needed to be run by players but maybe admins need it?
-  * Arguments:
-  * * lognumber - new setting_maxlogcount count
-  */
+ * Updates the maximum amount of logs and purges those that go beyond that number
+ *
+ * Shouldn't been needed to be run by players but maybe admins need it?
+ * Arguments:
+ * * lognumber - new setting_maxlogcount count
+ */
 /datum/controller/subsystem/networks/proc/update_max_log_count(lognumber)
 	if(!lognumber)
 		return FALSE
@@ -272,23 +273,23 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Gives an area a root and a network_area_id
-  *
-  * When a device is added to the network on map load, it needs to know where it is.
-  * So that it is added to that ruins/base's network instead of the general station network
-  * This way people on the station cannot just hack Charlie's doors and visa versa.  All area's
-  * "should" have this information and if not one is created from existing map tags or
-  * ruin template id's.  This SHOULD run before the Initialize of a atom, or the root will not
-  * be put in the object.area
-  *
-  * An example on what the area.network_root_id does/
-  * Before Init: 	obj.network_id = "ATMOS.SCRUBBER"  area.network_root_id="SS13_STATION" area.network_area_id = "BRIDGE"
-  * After Init:		obj.network_id = "SS13_STATION.ATMOS.SCRUBBER" also obj.network_id = "SS13_STATION.AREA.BRIDGE"
-  *
-  * Arguments:
-  * * area - Area to modify the root id.
-  * * template - optional, map_template of that area
-  */
+ * Gives an area a root and a network_area_id
+ *
+ * When a device is added to the network on map load, it needs to know where it is.
+ * So that it is added to that ruins/base's network instead of the general station network
+ * This way people on the station cannot just hack Charlie's doors and visa versa.  All area's
+ * "should" have this information and if not one is created from existing map tags or
+ * ruin template id's.  This SHOULD run before the Initialize of a atom, or the root will not
+ * be put in the object.area
+ *
+ * An example on what the area.network_root_id does/
+ * Before Init: 	obj.network_id = "ATMOS.SCRUBBER"  area.network_root_id="SS13_STATION" area.network_area_id = "BRIDGE"
+ * After Init:		obj.network_id = "SS13_STATION.ATMOS.SCRUBBER" also obj.network_id = "SS13_STATION.AREA.BRIDGE"
+ *
+ * Arguments:
+ * * area - Area to modify the root id.
+ * * template - optional, map_template of that area
+ */
 /datum/controller/subsystem/networks/proc/lookup_area_root_id(area/A, datum/map_template/M=null)
 	/// Check if the area is valid and if it doesn't have a network root id.  If it has a root assume it has
 	/// network_area_id as well
@@ -333,16 +334,16 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Converts a list of string's into a full network_id
-  *
-  * Converts a list of individual branches into a proper network id.  Validates
-  * individual parts to make sure they are clean.
-  *
-  * ex. list("A","B","C") -> A.B.C
-  *
-  * Arguments:
-  * * tree - List of strings
-  */
+ * Converts a list of string's into a full network_id
+ *
+ * Converts a list of individual branches into a proper network id.  Validates
+ * individual parts to make sure they are clean.
+ *
+ * ex. list("A","B","C") -> A.B.C
+ *
+ * Arguments:
+ * * tree - List of strings
+ */
 /datum/controller/subsystem/networks/proc/network_list_to_string(list/tree)
 #ifdef DEBUG_NETWORKS
 	ASSERT(tree && tree.len > 0) // this should be obvious but JUST in case.
@@ -354,15 +355,15 @@ SUBSYSTEM_DEF(networks)
 	return tree.Join(".")
 
 /**
-  * Converts string into a list of network branches
-  *
-  * Converts a a proper network id into a list of the individual branches
-  *
-  * ex.  A.B.C -> list("A","B","C")
-  *
-  * Arguments:
-  * * tree - List of strings
-  */
+ * Converts string into a list of network branches
+ *
+ * Converts a a proper network id into a list of the individual branches
+ *
+ * ex.  A.B.C -> list("A","B","C")
+ *
+ * Arguments:
+ * * tree - List of strings
+ */
 /datum/controller/subsystem/networks/proc/network_string_to_list(name)
 #ifdef DEBUG_NETWORKS
 	if(!verify_network_name(name))
@@ -372,14 +373,14 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Hard creates a network. Helper function for create_network_simple and create_network
-  *
-  * Hard creates a using a list of branches and returns.  No error checking as it should
-  * of been done before this call
-  *
-  * Arguments:
-  * * network_tree - list,text List of branches of network
-  */
+ * Hard creates a network. Helper function for create_network_simple and create_network
+ *
+ * Hard creates a using a list of branches and returns.  No error checking as it should
+ * of been done before this call
+ *
+ * Arguments:
+ * * network_tree - list,text List of branches of network
+ */
 /datum/controller/subsystem/networks/proc/_hard_create_network(list/network_tree)
 	var/network_name_part = network_tree[1]
 	var/network_id = network_name_part
@@ -401,18 +402,18 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Creates or finds a network anywhere in the world using a fully qualified name
-  *
-  * This is the simple case finding of a network in the world.  It must take a full
-  * qualified network name and it will either return an existing network or build
-  * a new one from scratch.  We must be able to create names on the fly as there is
-  * no way for the map loader to tell us ahead of time what networks to create or
-  * use for any maps or templates.  So this thing will throw silent mapping errors
-  * and log them, but will always return a network for something.
-  *
-  * Arguments:
-  * * network_id - text, Fully qualified network name
-  */
+ * Creates or finds a network anywhere in the world using a fully qualified name
+ *
+ * This is the simple case finding of a network in the world.  It must take a full
+ * qualified network name and it will either return an existing network or build
+ * a new one from scratch.  We must be able to create names on the fly as there is
+ * no way for the map loader to tell us ahead of time what networks to create or
+ * use for any maps or templates.  So this thing will throw silent mapping errors
+ * and log them, but will always return a network for something.
+ *
+ * Arguments:
+ * * network_id - text, Fully qualified network name
+ */
 /datum/controller/subsystem/networks/proc/create_network_simple(network_id)
 
 	var/datum/ntnet/network = networks[network_id]
@@ -442,18 +443,18 @@ SUBSYSTEM_DEF(networks)
 
 
 /**
-  * Creates or finds a network anywhere in the world using bits of text
-  *
-  * This works the same as create_network_simple however it allows the addition
-  * of qualified network names.  So you can call it with a root_id and a sub
-  * network.  However this function WILL return null if it cannot be created
-  * so it should be used with error checking is involved.
-  *
-  * ex. create_network("ROOT_NETWORK", "ATMOS.SCRUBBERS") -> ROOT_NETWORK.ATMOS.SCRUBBERS
-  *
-  * Arguments:
-  * * tree - List of string
-  */
+ * Creates or finds a network anywhere in the world using bits of text
+ *
+ * This works the same as create_network_simple however it allows the addition
+ * of qualified network names.  So you can call it with a root_id and a sub
+ * network.  However this function WILL return null if it cannot be created
+ * so it should be used with error checking is involved.
+ *
+ * ex. create_network("ROOT_NETWORK", "ATMOS.SCRUBBERS") -> ROOT_NETWORK.ATMOS.SCRUBBERS
+ *
+ * Arguments:
+ * * tree - List of string
+ */
 /datum/controller/subsystem/networks/proc/create_network(...)
 	var/list/network_tree = list()
 

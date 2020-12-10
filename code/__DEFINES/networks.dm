@@ -58,15 +58,15 @@
 	// can't make this as a define, some reason findtext(name,@"^[^\. ]+[A-Z0-9_\.]+[^\. ]+$") dosn't work
 	var/static/regex/check_regex = new(@"[ \-]{1}","g")
 	return check_regex.Replace(uppertext(name),"_")
-/**
-  * Helper that verifies a network name is valid.
-  *
-  * A valid network name (ie, SS13.ATMOS.SCRUBBERS) is all caps, no spaces with periods between
-  * branches.  Returns false if it doesn't meat this requirement
-  *
-  * Arguments:
-  * * name - network text name to check
-  */
+/*
+ * Helper that verifies a network name is valid.
+ *
+ * A valid network name (ie, SS13.ATMOS.SCRUBBERS) is all caps, no spaces with periods between
+ * branches.  Returns false if it doesn't meat this requirement
+ *
+ * Arguments:
+ * * name - network text name to check
+*/
 /proc/verify_network_name(name)
 	// can't make this as a define, some reason findtext(name,@"^[^\. ]+[A-Z0-9_\.]+[^\. ]+$") dosn't work
 	var/static/regex/check_regex = new(@"^(?=[^\. ]+)[A-Z0-9_\.]+[^\. ]+$")
