@@ -27,7 +27,7 @@
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 	var/powermulti = 1 //power multiplier
-	var/solar_panel_sprite = "solar_panel" //used to determine which panel sprite to use
+	var/solar_panel_sprite = "solar_panel" //used to determine which panel sprite to use, sprite is whatever you need it to be, and (sprite)_b for the broken sprite
 
 /obj/machinery/power/solar/plasma
 	name = "plasma solar panel"
