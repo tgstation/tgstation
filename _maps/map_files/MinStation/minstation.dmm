@@ -91,6 +91,12 @@
 "qQ" = (
 /turf/open/floor/plating,
 /area/engine/engineering)
+"rb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
@@ -129,8 +135,31 @@
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"GI" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Empty Hull / Lower Deck";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
 "GZ" = (
 /turf/closed/wall,
+/area/maintenance/department/electrical)
+"HG" = (
+/obj/machinery/atmospherics/pipe/multiz{
+	color = "#0000ff";
+	dir = 4;
+	name = "Supply multi deck pipe adapter"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
+"Md" = (
+/obj/machinery/atmospherics/pipe/multiz/layer2{
+	color = "#ff0000";
+	dir = 4;
+	name = "Scrubbers multi deck pipe adapter"
+	},
+/turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "Ng" = (
 /turf/open/space/basic,
@@ -139,6 +168,12 @@
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"Tj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/electrical)
 "TK" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -33678,8 +33713,8 @@ ZY
 ZY
 ZY
 ZY
-ZY
-ZY
+GZ
+GZ
 GZ
 GZ
 GZ
@@ -33936,8 +33971,8 @@ ZY
 ZY
 ZY
 GZ
-GZ
-GZ
+Md
+HG
 qn
 GZ
 ZY
@@ -34193,8 +34228,8 @@ ZY
 ZY
 ZY
 GZ
-ZY
-ZY
+Tj
+rb
 ZY
 GZ
 ZY
@@ -34449,7 +34484,7 @@ ZY
 ZY
 ZY
 ZY
-GZ
+GI
 ZY
 ZY
 ZY
@@ -34706,7 +34741,7 @@ ZY
 ZY
 ZY
 ZY
-ZY
+GZ
 ZY
 ZY
 ZY
