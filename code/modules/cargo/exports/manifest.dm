@@ -60,7 +60,7 @@
 // Erroneously denied manifest.
 // Substracts the package cost minus the cost of crate.
 /datum/export/manifest_correct_denied
-	cost = 500
+	cost = CARGO_CRATE_VALUE
 	unit_name = "erroneously denied manifest"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 
