@@ -45,10 +45,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/obj/item/shard_type
 
 /** Handles initializing the material.
-  *
-  * Arugments:
-  * - _id: The ID the material should use. Overrides the existing ID.
-  */
+ *
+ * Arugments:
+ * - _id: The ID the material should use. Overrides the existing ID.
+ */
 /datum/material/proc/Initialize(_id, ...)
 	if(_id)
 		id = _id

@@ -41,11 +41,11 @@ SUBSYSTEM_DEF(materials)
 		InitializeMaterial(list(mat_type))
 
 /** Creates and caches a material datum.
-  *
-  * Arugments:
-  * - [arguments][/list]: The arguments to use to create the material datum
-  *   - The first element is the type of material to initialize.
-  */
+ *
+ * Arugments:
+ * - [arguments][/list]: The arguments to use to create the material datum
+ *   - The first element is the type of material to initialize.
+ */
 /datum/controller/subsystem/materials/proc/InitializeMaterial(list/arguments)
 	var/datum/material/mat_type = arguments[1]
 	if(initial(mat_type.init_flags) & MATERIAL_INIT_BESPOKE)
@@ -65,17 +65,17 @@ SUBSYSTEM_DEF(materials)
 	return mat_ref
 
 /** Fetches a cached material singleton when passed sufficient arguments.
-  *
-  * Arguments:
-  * - [arguments][/list]: The list of arguments used to fetch the material ref.
-  *   - The first element is a material datum, text string, or material type.
-  *     - [Material datums][/datum/material] are assumed to be references to the cached datum and returned
-  *     - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
-  *     - A material type is checked for bespokeness:
-  *       - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
-  *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
-  *   - The following elements are used to generate bespoke IDs and
-  */
+ *
+ * Arguments:
+ * - [arguments][/list]: The list of arguments used to fetch the material ref.
+ *   - The first element is a material datum, text string, or material type.
+ *     - [Material datums][/datum/material] are assumed to be references to the cached datum and returned
+ *     - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
+ *     - A material type is checked for bespokeness:
+ *       - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
+ *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
+ *   - The following elements are used to generate bespoke IDs and
+ */
 /datum/controller/subsystem/materials/proc/_GetMaterialRef(list/arguments)
 	if(!materials)
 		InitializeMaterials()
@@ -103,13 +103,13 @@ SUBSYSTEM_DEF(materials)
 	return materials[key] || InitializeMaterial(arguments)
 
 /** I'm not going to lie, this was swiped from SSdcs.
-  * Credit does to ninjanomnom
-  *
-  * Generates an id for bespoke ~~elements~~ materials when given the argument list
-  * Generating the id here is a bit complex because we need to support named arguments
-  * Named arguments can appear in any order and we need them to appear after ordered arguments
-  * We assume that no one will pass in a named argument with a value of null
-  **/
+ * Credit does to ninjanomnom
+ *
+ * Generates an id for bespoke ~~elements~~ materials when given the argument list
+ * Generating the id here is a bit complex because we need to support named arguments
+ * Named arguments can appear in any order and we need them to appear after ordered arguments
+ * We assume that no one will pass in a named argument with a value of null
+ **/
 /datum/controller/subsystem/materials/proc/GetIdFromArguments(list/arguments)
 	var/datum/material/mattype = arguments[1]
 	var/list/fullid = list("[initial(mattype.id) || mattype]")
