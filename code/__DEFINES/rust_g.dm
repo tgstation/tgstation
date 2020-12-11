@@ -52,7 +52,7 @@
  * * height: The height of the grid.
  */
 #define rustg_cnoise_generate(percentage, smoothing_iterations, birth_limit, death_limit, width, height) \
-    call(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height)
+	call(RUST_G, "cnoise_generate")(percentage, smoothing_iterations, birth_limit, death_limit, width, height)
 
 #define rustg_dmi_strip_metadata(fname) call(RUST_G, "dmi_strip_metadata")(fname)
 #define rustg_dmi_create_png(path, width, height, data) call(RUST_G, "dmi_create_png")(path, width, height, data)
@@ -64,8 +64,8 @@
 #define rustg_file_append(text, fname) call(RUST_G, "file_append")(text, fname)
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
-    #define file2text(fname) rustg_file_read("[fname]")
-    #define text2file(text, fname) rustg_file_append(text, "[fname]")
+	#define file2text(fname) rustg_file_read("[fname]")
+	#define text2file(text, fname) rustg_file_append(text, "[fname]")
 #endif
 
 #define rustg_git_revparse(rev) call(RUST_G, "rg_git_revparse")(rev)
@@ -98,12 +98,4 @@
 #define rustg_sql_connected(handle) call(RUST_G, "sql_connected")(handle)
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
-
-#define rustg_url_encode(text) call(RUST_G, "url_encode")(text)
-#define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
-
-#ifdef RUSTG_OVERRIDE_BUILTINS
-    #define url_encode(text) rustg_url_encode(text)
-    #define url_decode(text) rustg_url_decode(text)
-#endif
 
