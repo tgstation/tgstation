@@ -19,7 +19,7 @@
 			speak("heal", TRUE)
 		else if(prob(30) && owner.a_intent == INTENT_HARM)
 			speak("aggressive")
-		else
+		else if(prob(33))
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
