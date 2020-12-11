@@ -458,7 +458,7 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
 		name = "small carton"
