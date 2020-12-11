@@ -74,7 +74,8 @@
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
 	// Every node has a parent pipeline and an air associated with it.
-	nullifyPipenet(parents[i])
+	if(parents[i])
+		nullifyPipenet(parents[i])
 	QDEL_NULL(airs[i])
 	return ..()
 
