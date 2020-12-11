@@ -100,9 +100,9 @@
 	if(!T)
 		return
 	var/mob/living/carbon/human/H = parent
-	var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
 
-	if(H.shoes || feetCover) //are we wearing shoes
+	if ((H.wear_suit?.body_parts_covered | H.w_uniform?.body_parts_covered | H.shoes?.body_parts_covered) & FEET)
+		// we are wearing shoes
 		playsound(T, pick(GLOB.footstep[T.footstep][1]),
 			GLOB.footstep[T.footstep][2] * volume,
 			TRUE,
