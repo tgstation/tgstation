@@ -17,13 +17,14 @@
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
+	///Area that the eyeobj will be constrained to. If null, eyeobj will be able to build and move anywhere.
 	var/area/allowed_area
-	///Actions given to the console user to help with base building. Actions are generally carried out at the location of the eyeobj
-	var/list/datum/action/innate/construction_actions
 	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
 	var/list/structures = list()
 	///Internal RCD. Some construction actions rely on having this.
 	var/obj/item/construction/rcd/internal/internal_rcd 
+	///Actions given to the console user to help with base building. Actions are generally carried out at the location of the eyeobj
+	var/list/datum/action/innate/construction_actions
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
@@ -36,8 +37,8 @@
 /**
  * Fill the construction_actios list with actions
  *
- * Instantiate each action object that we'll be giving to users of this console, and put it in the 
- * [construction actions list][/obj/machinery/computer/camera_advanced/base_construction/var/construction_actions].
+ * Instantiate each action object that we'll be giving to users of 
+ * this console, and put it in the construction actions list.
  */
 /obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
 	construction_actions = list()
@@ -47,7 +48,7 @@
  *
  * Restocks any materials used by the base construction console. 
  * This might mean refilling the internal RCD (should it be initialized), or 
- * setting the [structures list][/obj/machinery/computer/camera_advanced/base_construction/var/structures] to default values.
+ * giving the structures list default values.
  */
 /obj/machinery/computer/camera_advanced/base_construction/proc/restock_materials()
 	return
@@ -103,14 +104,16 @@
  */
 /mob/camera/ai_eye/remote/base_construction
 	name = "construction holo-drone"
-	move_on_shuttle = TRUE //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
+	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
+	move_on_shuttle = TRUE 
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "construction_drone"
+	///Reference to the camera console controlling this drone
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
-/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, console_to_link)
-	. = ..()
-	linked_console = console_to_link
+/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
+	linked_console = console_link
+	return ..()
 
 /mob/camera/ai_eye/remote/base_construction/setLoc(t)
 	var/area/curr_area = get_area(t)
