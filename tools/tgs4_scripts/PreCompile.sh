@@ -62,7 +62,7 @@ fi
 echo "Deploying rust-g..."
 git checkout "$RUST_G_VERSION"
 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
-mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/rust_g"
+mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
 # compile tgui
