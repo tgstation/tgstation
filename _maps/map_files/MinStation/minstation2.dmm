@@ -4029,6 +4029,9 @@
 /obj/structure/stairs/north,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"yb" = (
+/turf/open/floor/engine/hull/reinforced,
+/area/space/nearstation)
 "ye" = (
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -7628,6 +7631,9 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
+"TD" = (
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "TH" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/firedoor,
@@ -32036,7 +32042,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -32293,9 +32299,9 @@ nM
 nM
 Uf
 lD
-Ta
-Ta
-Ta
+yb
+yb
+yb
 Ta
 Ta
 Ta
@@ -32550,9 +32556,9 @@ nM
 nM
 tW
 lD
-Ta
-Ta
-Ta
+TD
+TD
+yb
 Ta
 Ta
 Ta
@@ -32807,9 +32813,9 @@ nM
 nM
 nM
 lD
-Ta
-Ta
-Ta
+yb
+yb
+yb
 Ta
 Ta
 Ta
@@ -33064,7 +33070,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -33321,7 +33327,7 @@ Sy
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -33578,7 +33584,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -33835,7 +33841,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -34092,7 +34098,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
@@ -34349,7 +34355,7 @@ nM
 nM
 nM
 lD
-Ta
+yb
 Ta
 Ta
 Ta
