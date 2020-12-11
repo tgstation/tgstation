@@ -9,7 +9,7 @@
 	///Value of the amount of rate of heat exchange
 	var/heat_transfer_rate = 0
 	///Maximum allowed amount for the heat exchange
-	var/max_heat_transfer_rate = 4500
+	var/max_heat_transfer_rate = 100
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tpump"
@@ -39,11 +39,18 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
-	if((air_output.temperature + heat_transfer_rate) >= air_input.temperature || (air_input.temperature - heat_transfer_rate) <= TCRYO)
+	if(!air_input.total_moles() && !air_output.total_moles())
 		return
+	var/datum/gas_mixture/remove_input = air_input.remove(air_input.total_moles() * 0.9)
+	var/datum/gas_mixture/remove_output = air_output.remove(air_output.total_moles() * 0.9)
+	var/coolant_temperature_delta = remove_input.temperature - remove_output.temperature
+	if(coolant_temperature_delta >= 0)
+		var/cooling_heat_amount = (heat_transfer_rate *0.01) * coolant_temperature_delta * (remove_input.heat_capacity() * remove_output.heat_capacity() / (remove_input.heat_capacity() + remove_output.heat_capacity()))
+		remove_input.temperature = max(remove_input.temperature - cooling_heat_amount / remove_input.heat_capacity(), TCMB)
+		remove_output.temperature = max(remove_output.temperature + cooling_heat_amount / remove_output.heat_capacity(), TCMB)
+	air_input.merge(remove_input)
+	air_output.merge(remove_output)
 
-	air_input.temperature -= heat_transfer_rate
-	air_output.temperature += heat_transfer_rate
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
