@@ -5,8 +5,6 @@
 	var/begin_month = 0
 	var/end_day = 0 // Default of 0 means the holiday lasts a single day
 	var/end_month = 0
-	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
-	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
 	var/current_year = 0
 	var/year_offset = 0
@@ -35,9 +33,6 @@
 		end_day = begin_day
 	if(!end_month)
 		end_month = begin_month
-	if(begin_week && begin_weekday)
-		if(begin_week == ww && begin_weekday == ddd && begin_month == mm)
-			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
 			if(dd <= end_day)
@@ -419,47 +414,13 @@
 	begin_month = DECEMBER
 	drone_hat = /obj/item/clothing/mask/gas/monkeymask
 
-/datum/holiday/thanksgiving
-	name = "Thanksgiving in the United States"
-	begin_week = 4
-	begin_month = NOVEMBER
-	begin_weekday = THURSDAY
-	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
-
-/datum/holiday/thanksgiving/canada
-	name = "Thanksgiving in Canada"
-	begin_week = 2
-	begin_month = OCTOBER
-	begin_weekday = MONDAY
-
-/datum/holiday/columbus
-	name = "Columbus Day"
-	begin_week = 2
-	begin_month = OCTOBER
-	begin_weekday = MONDAY
-
-/datum/holiday/mother
-	name = "Mother's Day"
-	begin_week = 2
-	begin_month = MAY
-	begin_weekday = SUNDAY
-
-/datum/holiday/mother/greet()
-	return "Happy Mother's Day in most of the Americas, Asia, and Oceania!"
-
-/datum/holiday/father
-	name = "Father's Day"
-	begin_week = 3
-	begin_month = JUNE
-	begin_weekday = SUNDAY
-
 /datum/holiday/moth
 	name = "Moth Week"
 
 /datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
 	if(mm == JULY)
 		var/week
-		if(first_day_of_month() >= 5)	//Friday or later start of the month means week 5 is a full week.
+		if(first_day_of_month(yy, mm) >= 5)	//Friday or later start of the month means week 5 is a full week.
 			week = 5
 		else
 			week = 4
@@ -474,7 +435,7 @@
 	name = "Islamic calendar code broken"
 
 /datum/holiday/islamic/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/islamic/cal = new
+	var/datum/foreign_calendar/islamic/cal = new(yy, mm, dd)
 	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
 
 /datum/holiday/islamic/ramadan
@@ -629,7 +590,7 @@
 	name = "If you see this the Hebrew holiday calendar code is broken"
 
 /datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/hebrew/cal = new
+	var/datum/foreign_calendar/hebrew/cal = new(yy, mm, dd)
 	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
 
 /datum/holiday/hebrew/hanukkah
