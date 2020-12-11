@@ -1,83 +1,83 @@
-//Aux base construction console
-/mob/camera/ai_eye/remote/base_construction
-	name = "construction holo-drone"
-	move_on_shuttle = 1 //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "construction_drone"
-	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
-
-/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, linked_cam_console)
-	. = ..()
-	linked_console = linked_cam_console
-
-/mob/camera/ai_eye/remote/base_construction/setLoc(t)
-	var/area/curr_area = get_area(t)
-	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
-		return ..()
-
-/mob/camera/ai_eye/remote/base_construction/relaymove(mob/living/user, direction)
-	dir = direction //This camera eye is visible as a drone, and needs to keep the dir updated
-	return ..()
-
-/obj/item/construction/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
-	name = "internal RCD"
-	max_matter = 600
-	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
-	delay_mod = 0.5 //Bigger container and faster speeds due to being specialized and stationary.
-
+/**
+ * Camera console used to control a base building drone
+ *
+ * Using this console will put the user in control of a [base building drone][/mob/camera/ai_eye/remote/base_construction].
+ * The drone will appear somewhere within the allowed_area var, or if no area is specified, at the location of the console.area
+ * Upon interacting, the user will be granted a set of base building actions that will generally be carried out at the drone's location.
+ * To create a new base builder system, this class should be the only thing that needs to be subtyped.
+ *
+ */
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "generic base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("ss13")
-	var/obj/item/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
 	jump_action = null
-	var/list/datum/action/innate/construction_actions
-	//Number of different special structures that are in stock
-	var/list/structures = list()
-	var/obj/machinery/computer/auxiliary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
 	var/area/allowed_area
-
-/obj/machinery/computer/camera_advanced/base_construction/Initialize()
-	. = ..()
-	populate_actions_list()
-	RCD = new(src)
-
-/obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
-	construction_actions = list()
-
-/obj/machinery/computer/camera_advanced/base_construction/proc/refill_special_structures()
-	return
+	///Actions given to the console user to help with base building. Actions are generally carried out at the location of the eyeobj
+	var/list/datum/action/innate/construction_actions
+	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
+	var/list/structures = list()
+	///Internal RCD. Some construction actions rely on having this.
+	var/obj/item/construction/rcd/internal/internal_rcd 
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
-	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
-		refill_special_structures()
+	//Populate the actions list with the different action objects that will be granted to console users
+	populate_actions_list()
+	//Map spawned consoles will automatically restock their materials
+	if(mapload)
+		restock_materials()
 
+/**
+ * Fill the construction_actios list with actions
+ *
+ * Instantiate each action object that we'll be giving to users of this console, and put it in the 
+ * [construction actions list][/obj/machinery/computer/camera_advanced/base_construction/var/construction_actions].
+ */
+/obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
+	construction_actions = list()
+
+/**
+ * Reload materials used by the console
+ *
+ * Restocks any materials used by the base construction console. 
+ * This might mean refilling the internal RCD (should it be initialized), or 
+ * setting the [structures list][/obj/machinery/computer/camera_advanced/base_construction/var/structures] to default values.
+ */
+/obj/machinery/computer/camera_advanced/base_construction/proc/restock_materials()
+	return
+
+///Find a spawn location for the eyeobj. If no allowed_area is defined, spawn ontop of the console.
 /obj/machinery/computer/camera_advanced/base_construction/proc/find_spawn_spot()
+	if (allowed_area)
+		return pick(get_area_turfs(allowed_area))
 	return get_turf(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 	var/turf/spawn_spot = find_spawn_spot()
 	if (!spawn_spot)
-		return
+		return FALSE
 	eyeobj = new /mob/camera/ai_eye/remote/base_construction(spawn_spot, src)
 	eyeobj.origin = src
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet))
-		RCD.attackby(W, user, params) //If trying to feed the console more materials, pass it along to the RCD.
+	//If we have an internal RCD, we can refill it by slapping the console with some materials
+	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
+		internal_rcd.attackby(W, user, params) 
 	else
 		return ..()
 
 /obj/machinery/computer/camera_advanced/base_construction/Destroy()
-	qdel(RCD)
+	qdel(internal_rcd)
 	return ..()
 
+///Go through every action object in the construction_action list (which should be fully initialized by now) and grant it to the user.
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
 	..()
 	for (var/datum/action/innate/construction_action in construction_actions)
@@ -85,42 +85,47 @@
 			construction_action.target = src
 			construction_action.Grant(user)
 			actions += construction_action
-	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
+	//When the eye is in use, make it visible to players so they know when someone is building.
+	eyeobj.invisibility = 0
 
 /obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
 	..()
-	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
+	//Hide the eye when not in use.
+	eyeobj.invisibility = INVISIBILITY_MAXIMUM
 
-/datum/action/innate/construction //Parent aux base action
-	icon_icon = 'icons/mob/actions/actions_construction.dmi'
-	var/mob/living/C //Mob using the action
-	var/mob/camera/ai_eye/remote/base_construction/remote_eye //Console's eye mob
-	var/obj/machinery/computer/camera_advanced/base_construction/B //Console itself
-	var/shuttlebuilder = TRUE //Is this used to build shuttles only on the station z level?
+/**
+ * A mob used by [/obj/machinery/computer/camera_advanced/base_construction] for building in specific areas.
+ *
+ * Controlled by a user who is using a base construction console.
+ * The user will be granted a set of building actions by the console, and the actions will be carried out by this mob. 
+ * The mob is constrained to a given area defined by the base construction console.
+ *
+ */
+/mob/camera/ai_eye/remote/base_construction
+	name = "construction holo-drone"
+	move_on_shuttle = TRUE //Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "construction_drone"
+	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
-/datum/action/innate/construction/Activate()
-	if(!target)
-		return TRUE
-	C = owner
-	remote_eye = C.remote_control
-	B = target
-	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, console_to_link)
+	. = ..()
+	linked_console = console_to_link
 
-/datum/action/innate/construction/proc/check_spot()
-//Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.
-	var/turf/build_target = get_turf(remote_eye)
-	var/area/build_area = get_area(build_target)
-	var/area/area_constraint = B.allowed_area
-	if (!area_constraint)
-		return TRUE
-	if(!istype(build_area, area_constraint))
-		to_chat(owner, "<span class='warning'>You can only build within [area_constraint]!</span>")
-		return FALSE
-	if(shuttlebuilder && !is_station_level(build_target.z))
-		to_chat(owner, "<span class='warning'>[area_constraint] has launched and can no longer be modified.</span>")
-		return FALSE
-	return TRUE
+/mob/camera/ai_eye/remote/base_construction/setLoc(t)
+	var/area/curr_area = get_area(t)
+	//Only move if we're in the allowed area. If no allowed area is defined, then we're free to move wherever.
+	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
+		return ..()
 
-/datum/action/innate/camera_off/base_construction
-	name = "Log out"
+/mob/camera/ai_eye/remote/base_construction/relaymove(mob/living/user, direction)
+	//This camera eye is visible, and as such needs to keep it's dir updated
+	dir = direction
+	return ..()
+
+///[Base console's][/obj/machinery/computer/camera_advanced/base_construction] internal RCD. Has a large material capacity and a fast buildspeed.
+/obj/item/construction/rcd/internal 
+	name = "internal RCD"
+	max_matter = 600
+	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
+	delay_mod = 0.5
