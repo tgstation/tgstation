@@ -336,7 +336,7 @@ update_label()
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
-/obj/item/card/id/silver/reaper
+/obj/item/card/id/silver/reaper //What the fuck even IS this? Some removed antag gimmick? Admin gimmick? Why is this defined in the code?
 	name = "Thirteen's ID Card (Reaper)"
 	access = list(ACCESS_MAINT_TUNNELS)
 	assignment = "Reaper"
@@ -452,7 +452,6 @@ update_label()
 	assignment = "Syndicate Overlord"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
-	uses_overlays = FALSE
 	registered_age = null
 
 /obj/item/card/id/syndicate_command/crew_id
@@ -463,7 +462,6 @@ update_label()
 	assignment = "Syndicate Operative"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/captain_id
 	name = "syndicate captain ID card"
@@ -473,7 +471,6 @@ update_label()
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
@@ -507,7 +504,6 @@ update_label()
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "Central Command"
-	uses_overlays = FALSE
 	registered_age = null
 
 /obj/item/card/id/centcom/Initialize()
@@ -518,10 +514,9 @@ update_label()
 	name = "\improper CentCom ID"
 	id_type_name = "\improper CentCom ID"
 	desc = "An ERT ID card."
-	icon_state = "ert_commander"
+	icon_state = "gold"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
-	uses_overlays = FALSE
 	registered_age = null
 
 /obj/item/card/id/ert/Initialize()
@@ -531,7 +526,7 @@ update_label()
 /obj/item/card/id/ert/security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
-	icon_state = "ert_security"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/security/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
@@ -540,7 +535,7 @@ update_label()
 /obj/item/card/id/ert/engineer
 	registered_name = "Engineering Response Officer"
 	assignment = "Engineering Response Officer"
-	icon_state = "ert_engineer"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/engineer/Initialize()
 	access = get_all_accesses()+get_ert_access("eng")-ACCESS_CHANGE_IDS
@@ -549,7 +544,7 @@ update_label()
 /obj/item/card/id/ert/medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
-	icon_state = "ert_medic"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
@@ -558,7 +553,7 @@ update_label()
 /obj/item/card/id/ert/chaplain
 	registered_name = "Religious Response Officer"
 	assignment = "Religious Response Officer"
-	icon_state = "ert_chaplain"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/chaplain/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
@@ -567,7 +562,7 @@ update_label()
 /obj/item/card/id/ert/janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
-	icon_state = "ert_janitor"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/janitor/Initialize()
 	access = get_all_accesses()
@@ -576,7 +571,7 @@ update_label()
 /obj/item/card/id/ert/clown
 	registered_name = "Entertainment Response Officer"
 	assignment = "Entertainment Response Officer"
-	icon_state = "ert_clown"
+	icon_state = "centcom"
 
 /obj/item/card/id/ert/clown/Initialize()
 	access = get_all_accesses()
@@ -586,17 +581,15 @@ update_label()
 	name = "\improper Death Squad ID"
 	id_type_name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
-	icon_state = "deathsquad" //NO NO SIR DEATH SQUADS ARENT A PART OF NANOTRASEN AT ALL
+	icon_state = "syndie" //NO NO SIR DEATH SQUADS ARENT A PART OF NANOTRASEN AT ALL
 	registered_name = "Death Commando"
 	assignment = "Death Commando"
-	uses_overlays = FALSE
 
 /obj/item/card/id/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
-	icon_state = "ert_janitor"
-	assignment = "Jannie"
-	uses_overlays = FALSE
+	icon_state = "bluespacetech"
+	assignment = "Coder" //debug ID card isn't IC like the BS tech ID but functions the same
 
 /obj/item/card/id/debug/Initialize()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
@@ -613,7 +606,6 @@ update_label()
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
 	registered_name = "Scum"
-	uses_overlays = FALSE
 	var/goal = 0 //How far from freedom?
 	var/points = 0
 	registered_age = null
@@ -624,36 +616,43 @@ update_label()
 /obj/item/card/id/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
+	uses_overlays = FALSE
 	icon_state = "prisoner_001"
 
 /obj/item/card/id/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
+	uses_overlays = FALSE
 	icon_state = "prisoner_002"
 
 /obj/item/card/id/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
+	uses_overlays = FALSE
 	icon_state = "prisoner_003"
 
 /obj/item/card/id/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
+	uses_overlays = FALSE
 	icon_state = "prisoner_004"
 
 /obj/item/card/id/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
+	uses_overlays = FALSE
 	icon_state = "prisoner_005"
 
 /obj/item/card/id/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
+	uses_overlays = FALSE
 	icon_state = "prisoner_006"
 
 /obj/item/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+	uses_overlays = FALSE
 	icon_state = "prisoner_007"
 
 /obj/item/card/id/mining
@@ -665,7 +664,6 @@ update_label()
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 	access = list(ACCESS_AWAY_GENERAL)
 	icon_state = "retro"
-	uses_overlays = FALSE
 	registered_age = null
 
 /obj/item/card/id/away/hotel

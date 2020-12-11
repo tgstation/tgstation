@@ -3,4 +3,5 @@
 	name = "\improper Bluespace Tech"
 	desc = "A modified ERT Engineer ID Card meant for Central Command's highest field operatives, tasked with protecting the fabric of reality itself."
 	icon_state = "bluespacetech"
+	uses_overlays = FALSE
 	assignment = "Bluespace Tech"
