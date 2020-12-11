@@ -883,12 +883,33 @@
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 
-// attack bulb/tube with object
-// if a syringe, can inject plasma to make it explode
-/obj/item/light/on_reagent_change(changetype)
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
-	return ..()
-	
+/obj/item/light/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/**
+ * Handles rigging the cell if it contains enough plasma.
+ */
+/obj/item/light/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum
+	return NONE
+
+/**
+ * Handles the reagent holder datum being deleted for some reason. Probably someone making pizza lights.
+ */
+/obj/item/light/proc/on_reagents_del(datum/reagents/holder)
+	SIGNAL_HANDLER
+	UnregisterSignal(holder, list(
+		COMSIG_PARENT_QDELETING,
+		COMSIG_REAGENTS_NEW_REAGENT,
+		COMSIG_REAGENTS_ADD_REAGENT,
+		COMSIG_REAGENTS_REM_REAGENT,
+		COMSIG_REAGENTS_DEL_REAGENT,
+	))
+	return NONE
+
 #undef LIGHT_REAGENT_CAPACITY
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)

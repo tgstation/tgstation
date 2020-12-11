@@ -148,7 +148,8 @@
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
 
-/obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/reagents)
+/// Updates the icon of the container when the reagents change. Eats signal args
+/obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_icon()
 	return NONE

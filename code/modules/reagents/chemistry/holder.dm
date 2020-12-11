@@ -108,8 +108,8 @@
 	if(amount <= 0)
 		return FALSE
 
-	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
-	if(!D)
+	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
+	if(!glob_reagent)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
@@ -120,7 +120,6 @@
 		if(amount <= 0)
 			return FALSE
 
-	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
 
@@ -128,42 +127,42 @@
 	var/old_heat_capacity = 0
 	if(reagtemp != cached_temp)
 		for(var/r in cached_reagents)
-			var/datum/reagent/reagent = r
-			old_heat_capacity += reagent.specific_heat * reagent.volume
+			var/datum/reagent/iter_reagent = r
+			old_heat_capacity += iter_reagent.specific_heat * iter_reagent.volume
 
 	//add the reagent to the existing if it exists
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
-		if (R.type == reagent)
-			R.volume += amount
+	for(var/r in cached_reagents)
+		var/datum/reagent/iter_reagent = r
+		if (iter_reagent.type == reagent)
+			iter_reagent.volume += amount
 			update_total()
 
-			R.on_merge(data, amount)
+			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
-				set_temperature(((old_heat_capacity * cached_temp) + (R.specific_heat * amount * reagtemp)) / heat_capacity())
+				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
-			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react)
 				handle_reactions()
 			return TRUE
 
 	//otherwise make a new one
-	var/datum/reagent/R = new D.type(data)
-	cached_reagents += R
-	R.holder = src
-	R.volume = amount
+	var/datum/reagent/new_reagent = new reagent(data)
+	cached_reagents += new_reagent
+	new_reagent.holder = src
+	new_reagent.volume = amount
 	if(data)
-		R.data = data
-		R.on_new(data)
+		new_reagent.data = data
+		new_reagent.on_new(data)
 
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
+		new_reagent.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
 
 	update_total()
 	if(reagtemp != cached_temp)
-		set_temperature(((old_heat_capacity * cached_temp) + (R.specific_heat * amount * reagtemp)) / heat_capacity())
+		set_temperature(((old_heat_capacity * cached_temp) + (new_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
-	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT)
+	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
 		handle_reactions()
 	return TRUE
@@ -196,10 +195,10 @@
 			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
+			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 
-			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT)
 			return TRUE
 
 	return FALSE
@@ -288,7 +287,7 @@
 			reagent_list -= R
 			qdel(R)
 			update_total()
-			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
 /// Remove every reagent except this one
@@ -680,16 +679,17 @@
 /// Handle any reactions possible in this holder
 /datum/reagents/proc/handle_reactions()
 	if(flags & NO_REACT)
-		return //Yup, no reactions here. No siree.
+		return 0 //Yup, no reactions here. No siree.
 
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 
-	var/reaction_occurred = 0
+	. = 0
+	var/reaction_occurred
 	do
 		var/list/possible_reactions = list()
-		reaction_occurred = 0
+		reaction_occurred = FALSE
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -790,10 +790,13 @@
 							ME2.desc = "This extract has been used up."
 
 			selected_reaction.on_reaction(src, multiplier)
-			reaction_occurred = 1
+			reaction_occurred = TRUE
+			.++
 
 	while(reaction_occurred)
 	update_total()
+	if(.)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
 
 /// Updates [/datum/reagents/var/total_volume]
@@ -1000,9 +1003,10 @@
 /datum/reagents/proc/set_temperature(_temperature)
 	if(_temperature == chem_temp)
 		return
+
 	. = chem_temp
 	chem_temp = _temperature
-	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, .)
+	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
 
 
 /**

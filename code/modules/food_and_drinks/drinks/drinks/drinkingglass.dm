@@ -15,24 +15,30 @@
 	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
 	custom_price = PAYCHECK_PRISONER
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(datum/reagents/reagents)
-	cut_overlays()
-	if(reagents.reagent_list.len)
-		var/datum/reagent/R = reagents.get_master_reagent()
-		if(!renamedByPlayer)
-			name = R.glass_name
-			desc = R.glass_desc
-		if(R.glass_icon_state)
-			icon_state = R.glass_icon_state
-		else
-			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
-			icon_state = "glass_empty"
-			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(reagent_overlay)
-	else
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
+	. = ..()
+	if(!length(reagents.reagent_list))
 		icon_state = "glass_empty"
 		renamedByPlayer = FALSE //so new drinks can rename the glass
+		return
+
+	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
+	if(!renamedByPlayer)
+		name = largest_reagent.glass_name
+		desc = largest_reagent.glass_desc
+
+	if(largest_reagent.glass_icon_state)
+		icon_state = largest_reagent.glass_icon_state
 	return NONE
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_overlays()
+	. = ..()
+	if(icon_state != initial(icon_state))
+		return
+
+	var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
+	reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+	. += reagent_overlay
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -52,29 +58,27 @@
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
-	cut_overlays()
-
-	gulp_size = max(round(reagents.total_volume / 15), 15)
-
-	if (reagents.reagent_list.len > 0)
-		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-		name = "filled shot glass"
-		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
-
-		if(largest_reagent.shot_glass_icon_state)
-			icon_state = largest_reagent.shot_glass_icon_state
-		else
-			icon_state = "shotglassclear"
-			var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")
-			shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(shot_overlay)
-
-	else
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_icon_state()
+	. = ..()
+	if(!length(reagents.reagent_list))
 		icon_state = "shotglass"
 		name = "shot glass"
 		desc = "A shot glass - the universal symbol for bad decisions."
-	return NONE
+		return
+
+	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
+	name = "filled shot glass"
+	desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+	icon_state = largest_reagent.shot_glass_icon_state || "shotglassclear"
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_overlays()
+	. = ..()
+	if(icon_state != "shotglassclear")
+		return
+
+	var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")
+	shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+	. += shot_overlay
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"

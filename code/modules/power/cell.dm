@@ -97,9 +97,9 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/proc/on_reagent_change(changetype)
+/obj/item/stock_parts/cell/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	rigged = (corrupted || reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
+	rigged = (corrupted || holder.has_reagent(/datum/reagent/toxin/plasma, 5)) ? TRUE : FALSE //has_reagent returns the reagent datum
 	return NONE
 
 

@@ -489,7 +489,7 @@
 		send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
 
 /// Updates the equipment info list when the reagents change. Eats signal args.
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagent_change(datum/reagents/reagents)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_equip_info()
 	return NONE

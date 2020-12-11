@@ -76,7 +76,12 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/proc/on_reagent_change()
+/**
+ * Snowflake handling for morphine and nuka cola speed mods.
+ *
+ * Should be moved to the reagents at some future point. As it is I'm in a hurry.
+ */
+/mob/living/carbon/monkey/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	var/amount
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine))

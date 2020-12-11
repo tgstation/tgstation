@@ -75,8 +75,8 @@
 	. = ..()
 	QDEL_NULL(biological_sample)
 
-///Call update icon when reagents change to update the reagent content icons. Eats signal args.
-/obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/reagents)
+/// Call update icon when reagents change to update the reagent content icons. Eats signal args.
+/obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_icon()
 	return NONE
