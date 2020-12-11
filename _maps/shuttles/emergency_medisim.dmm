@@ -1,617 +1,122 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ag" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Cockpit";
-	req_access_txt = "19"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"aG" = (
-/turf/closed/indestructible/fakeglass,
-/area/shuttle/escape/simulation)
-"aR" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"aS" = (
-/obj/machinery/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/machinery/light{
+/turf/open/floor/wood,
+/area/space)
+"bN" = (
+/obj/machinery/stasis{
 	dir = 1
 	},
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/obj/item/toy/balloon,
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"bN" = (
-/obj/structure/trap/ctf/blue{
-	name = "historically accurate magical runes"
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"cl" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/turf/open/floor/plasteel/white,
+/area/space)
+"cF" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
 	},
-/turf/open/floor/plating/beach/sand,
-/area/shuttle/escape/simulation)
-"fU" = (
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/item/food/butter/on_a_stick,
-/obj/structure/closet,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/obj/item/food/hotdog,
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/space)
+"eb" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"eg" = (
+/obj/machinery/computer/reality_simulation{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"fH" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
 "gj" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"gz" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/escape)
-"gP" = (
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law,
+/area/space)
+"gt" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"gT" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical,
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
+/area/space)
+"gQ" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"hg" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/space)
 "ht" = (
-/obj/machinery/capture_the_flag/medisim/red,
-/turf/open/indestructible/binary,
-/area/shuttle/escape/simulation)
-"hw" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"hV" = (
-/obj/machinery/computer/station_alert{
-	desc = "Used to access the shuttle's automated alert system.";
-	dir = 4;
-	name = "ship alert console"
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"iQ" = (
-/obj/machinery/light{
+/obj/structure/statue/gold/rd,
+/turf/open/floor/plasteel/white,
+/area/space)
+"hY" = (
+/obj/machinery/computer/reality_simulation,
+/turf/open/floor/circuit/green,
+/area/space)
+"ic" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/space)
+"iK" = (
+/obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
+/area/space)
 "jn" = (
-/obj/structure/bed,
-/obj/structure/curtain,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"jx" = (
-/obj/structure/chair/office{
-	dir = 8
+/obj/structure/chair/office/light{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"jT" = (
-/obj/machinery/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = 24
+/area/space)
+"kc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/obj/machinery/light{
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/space)
+"lN" = (
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"jV" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Kitchen";
-	req_access_txt = "28"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"ls" = (
-/turf/open/floor/plating/grass,
-/area/shuttle/escape/simulation)
-"lX" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"mz" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Holding Area";
-	req_access_txt = "2"
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"np" = (
-/obj/structure/table,
-/obj/item/clothing/accessory/pocketprotector,
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"pu" = (
-/obj/machinery/light/small{
-	brightness = 3;
+/area/space)
+"nu" = (
+/obj/machinery/computer/reality_simulation{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"pF" = (
-/obj/structure/closet,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"pL" = (
-/obj/machinery/gibber{
-	name = "team Redfield Castle gibber"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"qp" = (
-/obj/machinery/computer/atmos_alert{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"qC" = (
-/obj/structure/table,
-/obj/item/storage/pill_bottle/mannitol/braintumor,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"qS" = (
-/obj/structure/table,
-/obj/structure/curtain/cloth,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"qY" = (
-/obj/machinery/teambuilder/red,
-/turf/open/indestructible/binary,
-/area/shuttle/escape/simulation)
-"rQ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"su" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"sH" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/box/zipties,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"tw" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"tP" = (
-/obj/machinery/light,
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	name = "lazy worker encouragement button";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"tU" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"tZ" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"uo" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
-"uE" = (
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"uF" = (
-/obj/item/banner/blue{
-	anchored = 1
-	},
-/turf/closed/wall/mineral/iron,
-/area/shuttle/escape/simulation)
-"vL" = (
-/obj/item/banner/red{
-	anchored = 1
-	},
-/turf/closed/wall/mineral/iron,
-/area/shuttle/escape/simulation)
-"vN" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"wc" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"wy" = (
-/obj/machinery/computer/communications,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"wM" = (
-/obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"wX" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"xz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"xP" = (
-/obj/structure/table/reinforced,
-/obj/item/poster/random_official,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"yh" = (
-/obj/machinery/deepfryer,
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"yk" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"yu" = (
-/obj/structure/table,
-/obj/item/modular_computer/tablet,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"yA" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"yZ" = (
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"Aq" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"Bp" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"Ck" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -26
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Cq" = (
-/obj/structure/trap/ctf/red{
-	name = "historically accurate magical runes"
-	},
-/turf/open/floor/plating/beach/sand,
-/area/shuttle/escape/simulation)
-"CC" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"CT" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"Eh" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Ez" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"EN" = (
+/turf/open/floor/circuit/green,
+/area/space)
+"nB" = (
 /turf/template_noop,
-/area/template_noop)
-"EX" = (
-/obj/machinery/computer/aifixer{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
-"EZ" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Fd" = (
-/obj/machinery/computer{
-	desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?";
-	dir = 8;
-	name = "Reality Simulation Computer"
-	},
-/turf/open/floor/circuit/green/anim,
-/area/shuttle/escape)
-"Fn" = (
-/turf/open/floor/plating/beach/sand,
-/area/shuttle/escape/simulation)
-"Fs" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"FT" = (
-/turf/closed/indestructible/riveted,
-/area/shuttle/escape/simulation)
-"GE" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/obj/machinery/light,
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	name = "lazy worker encouragement button";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Ho" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"HE" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"HR" = (
-/obj/machinery/flasher{
-	id = "shuttle_flasher";
-	pixel_y = 24
-	},
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"JU" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/crowbar,
-/obj/item/storage/firstaid/fire,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"Kb" = (
-/obj/machinery/stasis,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"Ki" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"LA" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/crowbar,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"LH" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	name = "team Bluesworth Hold microwave oven";
-	pixel_y = 5
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"Mt" = (
-/turf/open/indestructible/binary,
-/area/shuttle/escape/simulation)
-"MP" = (
-/obj/machinery/capture_the_flag/medisim/blue,
-/turf/open/indestructible/binary,
-/area/shuttle/escape/simulation)
-"Nm" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"NF" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"NK" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8;
-	name = "Shuttle RD seat"
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"NN" = (
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"OA" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Cockpit";
-	req_access_txt = "19"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"Pq" = (
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/escape)
-"PY" = (
-/obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"QH" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/closet/emcloset,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"QS" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"Rj" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"Rl" = (
-/turf/closed/wall/mineral/iron,
-/area/shuttle/escape/simulation)
-"Rn" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"RK" = (
-/turf/open/floor/plating/dirt/dark,
-/area/shuttle/escape/simulation)
-"SV" = (
-/obj/item/ctf/red/medisim,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/simulation)
-"To" = (
-/obj/structure/table,
-/obj/item/food/popcorn,
-/obj/item/toy/katana{
-	desc = "Complementary from NT for all those medieval simulation watchers.";
-	icon_state = "claymore";
-	inhand_icon_state = "claymore";
-	name = "replica claymore";
-	worn_icon_state = "claymore"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"TI" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"TJ" = (
-/obj/machinery/computer{
-	desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?";
-	dir = 4;
-	name = "Reality Simulation Computer"
-	},
-/turf/open/floor/circuit/green/anim,
-/area/shuttle/escape)
-"Uw" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/flashlight/lamp,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"VG" = (
-/obj/machinery/flasher{
-	id = "shuttle_flasher";
-	pixel_x = 24;
-	pixel_y = 6
-	},
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = 24;
-	pixel_y = -6
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
-"WL" = (
+/area/space)
+"ou" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/space)
+"ql" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
@@ -619,716 +124,1090 @@
 	name = "Box emergency shuttle"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"WN" = (
-/turf/open/floor/wood,
-/area/shuttle/escape/simulation)
-"Xk" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"Xv" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"Yj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/computer{
-	desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?";
-	dir = 4;
-	name = "Reality Simulation Computer"
-	},
-/turf/open/floor/circuit/green/anim,
-/area/shuttle/escape)
-"YB" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"YC" = (
-/obj/machinery/teambuilder/blue,
-/turf/open/indestructible/binary,
-/area/shuttle/escape/simulation)
-"YM" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape)
-"YU" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/area/space)
+"qu" = (
+/obj/structure/railing{
+	dir = 5
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"Zq" = (
-/turf/open/chasm,
-/area/shuttle/escape/simulation)
-"Zv" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+/area/space)
+"qC" = (
+/obj/machinery/computer/reality_simulation{
+	dir = 8
 	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Zx" = (
-/obj/item/ctf/blue/medisim,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/simulation)
-"ZB" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"qS" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/white,
+/area/space)
+"rb" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/space)
+"ri" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Maintenance Airlock"
+	},
+/turf/open/floor/plating,
+/area/space)
+"sb" = (
+/obj/machinery/computer/reality_simulation{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"sk" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"sr" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"sv" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
+"tw" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/space)
+"uT" = (
+/obj/machinery/computer/reality_simulation{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"vo" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/plasteel/white,
+/area/space)
+"wL" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"yW" = (
+/obj/structure/railing,
+/turf/open/floor/circuit/green,
+/area/space)
+"zO" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"zT" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating,
+/area/space)
+"Aq" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
+"EQ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"Fb" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/circuit/green,
+/area/space)
+"Fn" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/clipboard,
+/obj/item/clipboard,
+/turf/open/floor/plasteel/white,
+/area/space)
+"HE" = (
+/turf/open/water,
+/area/space)
+"HL" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/plating,
+/area/space)
+"Ia" = (
+/turf/open/floor/circuit/green,
+/area/space)
+"Jk" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space)
+"Nm" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
+"NQ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/turf/open/floor/plating,
+/area/space)
+"Oj" = (
+/obj/item/kirbyplants/random,
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
+"Pj" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"Po" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/space)
+"Ps" = (
+/obj/machinery/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/space)
+"QH" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"QS" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/space)
+"Tm" = (
+/obj/machinery/computer/reality_simulation{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"To" = (
+/turf/closed/wall/mineral/iron/see_through,
+/area/space)
+"TJ" = (
+/turf/closed/indestructible/riveted,
+/area/space)
+"TS" = (
+/turf/open/floor/plating/dirt,
+/area/space)
+"VG" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"WL" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/space)
+"Yj" = (
+/turf/open/floor/plating/asteroid,
+/area/space)
+"YB" = (
+/turf/open/floor/glass,
+/area/space)
+"YM" = (
+/turf/closed/indestructible/fakeglass,
+/area/space)
+"YU" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/space)
+"Zf" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plasteel/white,
+/area/space)
+"Zq" = (
+/turf/open/floor/plasteel/white,
+/area/space)
+"Zv" = (
+/turf/open/floor/plating,
+/area/space)
+"Zx" = (
+/turf/open/floor/mineral/titanium/white,
+/area/space)
+"ZB" = (
+/turf/open/floor/grass,
+/area/space)
+"ZL" = (
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/mineral/titanium/white,
+/area/space)
 
 (1,1,1) = {"
-EN
-EN
-EN
-EN
-Xv
-Xv
-Xv
+nB
+nB
+nB
+nB
+nB
+nB
+VG
+wL
+VG
+ql
+VG
 tw
-Xv
+tw
+tw
+VG
 WL
-Xv
-Xk
-Xk
-Xk
-Xv
-lX
-Xv
-lX
-Xv
-Xv
-Xv
-EN
+VG
+WL
+VG
+VG
+VG
+tw
+VG
+tw
+VG
+tw
+VG
+nB
 "}
 (2,1,1) = {"
-EN
-Xv
-Xk
-Xk
-Xv
-yh
-yk
-Pq
+nB
+VG
+tw
+tw
+VG
+tw
+VG
+Zq
+YB
+Zq
+Po
+YB
+YB
+YB
 qS
-EZ
-pu
-EZ
-EZ
-EZ
-Ck
-EZ
-EZ
-EZ
-pu
-EZ
-Xv
-Xv
+Zq
+YB
+Zq
+Pj
+Zx
+Zx
+Zx
+Zx
+EQ
+VG
+Zv
+VG
+VG
 "}
 (3,1,1) = {"
-Xv
-aR
-qp
-hV
-Xv
-yh
-Pq
-Pq
-qS
-EZ
-EZ
-To
-wX
-wX
-wX
-wX
-wX
-To
-EZ
-EZ
+VG
+rb
+Zv
+Zv
+VG
+YB
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+YB
+Zx
+Zx
+Zx
+Zx
+Zx
+Jk
+VG
+Zv
 gj
 QS
 "}
 (4,1,1) = {"
-Xk
-PY
-EZ
-tP
-Xv
-aS
-Pq
-Pq
-qS
-EZ
+tw
+Zv
+Zv
+Zv
+ri
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
 YB
-FT
-aG
-aG
-aG
-aG
-aG
-FT
-To
-EZ
+Zq
+Zx
+Zx
+Zx
+Zx
+Zx
+qu
+VG
+Zv
 gj
 QS
 "}
 (5,1,1) = {"
-Xk
-vN
-EZ
-EZ
-OA
-Pq
-Pq
-pL
-Xv
-EZ
-EZ
-FT
-Mt
-Mt
-MP
-Mt
-Mt
-FT
-vN
-EZ
+tw
+Zv
+Zv
+TJ
+TJ
+YM
+YM
+YM
+YM
+TJ
+YM
+YM
+YM
+TJ
+TJ
+Zq
+YB
+VG
+VG
+VG
+VG
+Zx
+Zx
+Zx
+VG
+Zv
 gj
 QS
 "}
 (6,1,1) = {"
-Xk
-JU
-EZ
-uo
-Ki
-CT
-Pq
-LH
-Xv
+tw
+Zv
+Zv
+TJ
+HE
 ZB
-NF
-aG
+ZB
+ZB
+ZB
+To
+Yj
+Yj
+Yj
+Yj
+TJ
+Zq
+Zq
+VG
 bN
-Mt
-YC
-Mt
-bN
-aG
-vN
-EZ
+Zx
+Zx
+Zx
+Zx
+Zx
+VG
+Zv
 gj
 QS
 "}
 (7,1,1) = {"
-Xv
-gz
-EZ
-EX
-Xv
-fU
-yA
-Pq
-jV
-EZ
-NF
-aG
-Fn
-bN
-bN
-bN
-Mt
-aG
-vN
-EZ
+VG
+ou
+Zv
+YM
+ZB
+ZB
+ZB
+ZB
+ZB
+To
+Yj
+Yj
+Yj
+Yj
+YM
+Zq
+Zq
+VG
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+VG
+Zv
 gj
 QS
 "}
 (8,1,1) = {"
-EN
-Xv
-ag
-Xv
-Xv
-Xk
-Xv
-Xk
-aR
-EZ
-NF
-aG
-Mt
-Fn
-Fn
-Fn
-Zx
-aG
-vN
+nB
+VG
 Zv
-Xv
-Xv
+YM
+ZB
+ZB
+TS
+ag
+ag
+ag
+Yj
+Yj
+Yj
+Yj
+YM
+Zq
+YB
+VG
+Zx
+Zx
+ZL
+Zx
+Zx
+Zx
+VG
+Zv
+VG
+VG
 "}
 (9,1,1) = {"
-EN
-Xv
-EZ
-EZ
-EZ
-EZ
-xz
-EZ
-pu
-EZ
-NF
-aG
-Rl
-uF
-Fn
-uF
-Rl
-aG
-vN
-EZ
-Xv
-EN
+nB
+VG
+Zv
+YM
+ZB
+TS
+TS
+ag
+ag
+ag
+Yj
+Yj
+Yj
+Yj
+YM
+Zq
+Zq
+VG
+Zx
+Zx
+ZL
+Zx
+Zx
+sk
+VG
+Zv
+VG
+nB
 "}
 (10,1,1) = {"
-EN
-Xv
-tU
-EZ
-EZ
-To
+nB
+VG
+HL
 YM
-YM
-YM
-YM
-To
-FT
-Zq
-Zq
-WN
-Zq
-Zq
-FT
-To
-EZ
-Xv
-EN
-"}
-(11,1,1) = {"
-EN
-Xv
+ZB
+TS
+TS
+TS
 ZB
 To
-FT
-FT
-aG
-aG
-aG
-aG
-FT
-FT
-RK
-RK
-WN
-RK
-RK
-FT
+TJ
+YM
+YM
+YM
+TJ
+Zq
+YB
+VG
+zO
+Zx
+Zx
+Zx
+Zx
+Jk
+VG
+Zv
+VG
+nB
+"}
+(11,1,1) = {"
+nB
+VG
+NQ
+YM
+ZB
+TS
+TS
+ZB
+ZB
 To
-NN
-Xv
-Xv
+YM
+Ia
+eg
+eg
+VG
+Zq
+YB
+VG
+sr
+hg
+Zx
+Zx
+Zx
+EQ
+VG
+Zv
+VG
+VG
 "}
 (12,1,1) = {"
-EN
-Xk
-EZ
+nB
+tw
+Zv
+TJ
+TJ
+TS
+TS
+ZB
+ZB
 HE
-aG
-Mt
-Cq
+YM
 Fn
-Mt
-Rl
 Zq
-RK
-ls
-ls
-ls
-ls
-ls
-aG
-vN
-EZ
+Zq
+VG
+Zq
+Zq
+VG
+VG
+VG
+VG
+Zq
+Zq
+VG
+VG
+Zv
 gj
 QS
 "}
 (13,1,1) = {"
-EN
-Xk
-EZ
+nB
+tw
+Zv
+Zv
+YM
+TS
+TS
+ZB
 HE
-aG
-Mt
-Mt
-Cq
-Fn
-vL
+HE
+YM
+Zf
+YB
+YB
+VG
 Zq
-RK
-ls
-ls
-ls
-ls
-ls
-aG
-vN
-EZ
+YB
+VG
+gt
+Ps
+VG
+YB
+Zq
+VG
+Zv
+Zv
 gj
 QS
 "}
 (14,1,1) = {"
-EN
-Xk
-EZ
+nB
+tw
+Zv
+Zv
+YM
+TS
+TS
+ZB
 HE
-aG
+HE
+YM
 ht
-qY
-Cq
-Fn
-Fn
-WN
-WN
-ls
-ls
-ls
-ls
-ls
-aG
-vN
-EZ
+YB
+YB
+Zq
+Zq
+YB
+cF
+ic
+ic
+cF
+YB
+Zq
+ri
+Zv
+Zv
 gj
 QS
 "}
 (15,1,1) = {"
-EN
-Xk
-EZ
+nB
+tw
+Zv
+Zv
+YM
+TS
+TS
+ZB
 HE
-aG
-Mt
-Mt
-Cq
-Fn
-vL
+HE
+YM
+vo
+YB
+YB
+VG
 Zq
-RK
-ls
-ls
-ls
-ls
-ls
-aG
-vN
-EZ
+YB
+VG
+kc
+kc
+VG
+YB
+Zq
+VG
+Zv
+Zv
 gj
 QS
 "}
 (16,1,1) = {"
-EN
-Xk
-EZ
+nB
+tw
+Zv
+TJ
+TJ
+TS
+TS
+ZB
+ZB
 HE
-aG
-Mt
-Cq
-Mt
-SV
-Rl
+YM
+cl
 Zq
-RK
-ls
-ls
-ls
-ls
-ls
-aG
-vN
-EZ
+Zq
+VG
+Zq
+Zq
+VG
+VG
+VG
+VG
+Zq
+Zq
+VG
+VG
+Zv
 gj
 QS
 "}
 (17,1,1) = {"
-EN
-Xv
+nB
+VG
+NQ
+YM
+ZB
+TS
+TS
+ZB
 ZB
 To
-FT
-FT
-aG
-aG
-aG
-aG
-FT
-FT
-aG
-aG
-aG
-aG
-aG
-FT
-To
+YM
+Ia
+nu
+nu
+VG
+Zq
+YB
+VG
+Oj
+eg
+eg
+Nm
+Nm
+iK
+VG
 Zv
-Xv
-Xv
+VG
+VG
 "}
 (18,1,1) = {"
-EN
-Xv
-tU
-EZ
-EZ
+nB
+VG
+HL
+YM
+ZB
+TS
+TS
+TS
+ZB
 To
-hw
-hw
-hw
-hw
-To
-To
-hw
-hw
-hw
-hw
-hw
-To
-EZ
-EZ
-Xv
-EN
+TJ
+YM
+YM
+YM
+TJ
+Zq
+YB
+VG
+hY
+lN
+fH
+Nm
+Nm
+Jk
+VG
+Zv
+VG
+nB
 "}
 (19,1,1) = {"
-EN
-Xv
-EZ
-EZ
-wc
-EZ
-EZ
-EZ
-EZ
-EZ
-EZ
-EZ
-wc
-EZ
-EZ
-EZ
-EZ
-EZ
-EZ
-EZ
-Xv
-EN
+nB
+VG
+Zv
+YM
+ZB
+TS
+TS
+ag
+ag
+ag
+Yj
+Yj
+Yj
+Yj
+YM
+Zq
+Zq
+VG
+hY
+lN
+Nm
+Nm
+Nm
+sv
+VG
+Zv
+VG
+nB
 "}
 (20,1,1) = {"
-EN
-Xv
+nB
+VG
+Zv
+YM
+ZB
+ZB
+TS
 ag
-Xv
-Xv
-Uw
+ag
+ag
 Yj
 Yj
 Yj
 Yj
-uE
-uE
-Xv
+TJ
+Zq
+YB
+VG
+Fb
 QH
-yZ
-QH
-aR
-Ez
-mz
-Ez
-Xv
-Xv
+sb
+uT
+Nm
+Nm
+VG
+Zv
+VG
+VG
 "}
 (21,1,1) = {"
-Xv
-gz
-EZ
-Rj
-Xv
-uE
-jx
-jx
-jx
-jx
-uE
-uE
-Xv
-yZ
-yZ
+VG
+ou
+Zv
+YM
+HE
+ZB
+ZB
+ZB
+ZB
+To
+Yj
+Yj
+Yj
+Yj
+TJ
+Ia
+Ia
+VG
+yW
+Nm
 YU
-Xv
-CC
-Ho
-Fs
+YU
+Nm
+Nm
+VG
+Zv
 gj
 QS
 "}
 (22,1,1) = {"
-Xk
-su
-EZ
-NK
-Xv
-iQ
-uE
-uE
-uE
-uE
-uE
-np
-Xv
+tw
+Zv
+Zv
+TJ
+HE
+HE
+HE
+ZB
+ZB
+To
+Yj
+Yj
+Yj
+Yj
+TJ
+Ia
+Ia
+VG
+yW
 Nm
-yZ
 jn
-Xv
-CC
-Ho
-Rn
+jn
+Nm
+Nm
+VG
+Zv
 gj
 QS
 "}
 (23,1,1) = {"
-Xk
-vN
-EZ
-EZ
-ag
-uE
-Fd
-Fd
+tw
+Zv
+Zv
 TJ
 TJ
-uE
-yu
-Xv
-yZ
-yZ
+YM
+YM
+YM
+YM
+TJ
+YM
+YM
+YM
+TJ
+TJ
+Zq
+YB
+VG
+gQ
+eb
+Tm
 qC
-Xv
-HR
-Ho
-gP
+Nm
+Nm
+VG
+Zv
 gj
 QS
 "}
 (24,1,1) = {"
-Xk
-wy
-EZ
-GE
-Xv
-jT
-uE
-uE
-uE
-uE
-uE
-gT
-Xv
+tw
+Zv
+Zv
+Zv
+ri
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+YB
+Zq
 Nm
-yZ
-jn
-Xv
+Nm
+Nm
+Nm
+Nm
 Aq
-Ho
-sH
+VG
+Zv
 gj
 QS
 "}
 (25,1,1) = {"
-Xv
-aR
-TI
-Bp
-Xv
-uE
-tZ
-tZ
-tZ
-tZ
-uE
-wM
-Xv
-yZ
-yZ
-rQ
-Xv
-CC
-Ho
-xP
+VG
+rb
+Zv
+Zv
+VG
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+YB
+Nm
+Nm
+Nm
+Nm
+Nm
+Jk
+VG
+Zv
 gj
 QS
 "}
 (26,1,1) = {"
-EN
-Xv
-Xk
-Xk
-Xv
-pF
-Fd
-Fd
-Fd
-Fd
-Eh
-wM
-Xv
-Kb
-LA
-Kb
-Xv
-CC
+nB
 VG
-xP
-Xv
-Xv
+tw
+tw
+VG
+tw
+VG
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+Zq
+YB
+Zq
+Nm
+Nm
+Nm
+Nm
+Nm
+iK
+VG
+Zv
+VG
+VG
 "}
 (27,1,1) = {"
-EN
-EN
-EN
-EN
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-Xk
-Xv
-EN
+nB
+nB
+nB
+nB
+nB
+nB
+VG
+zT
+VG
+WL
+VG
+tw
+tw
+tw
+VG
+WL
+VG
+tw
+VG
+tw
+VG
+tw
+VG
+tw
+VG
+tw
+VG
+nB
 "}

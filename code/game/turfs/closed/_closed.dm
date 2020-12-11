@@ -272,9 +272,3 @@
 	smoothing_flags = SMOOTH_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
-
-/turf/closed/indestructible/binary
-	name = "tear in the fabric of reality"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "binary"
-	opacity = FALSE

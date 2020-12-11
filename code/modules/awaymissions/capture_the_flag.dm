@@ -86,6 +86,7 @@
 
 /obj/item/ctf/dropped(mob/user)
 	..()
+	CRASH("CTF flag dropped test, lets stack trace this bad boy")
 	user.set_anchored(FALSE)
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
