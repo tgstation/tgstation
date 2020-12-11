@@ -22,7 +22,7 @@
 
 /obj/item/mecha_ammo/update_icon_state()
 	. = ..()
-	icon_state = rounds ? initial(icon_state) ? "empty"
+	icon_state = rounds ? initial(icon_state) : "empty"
 
 /obj/item/mecha_ammo/attack_self(mob/user)
 	..()
