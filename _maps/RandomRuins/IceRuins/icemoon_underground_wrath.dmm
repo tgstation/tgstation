@@ -3,7 +3,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "b" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/explored)
 "e" = (
 /obj/structure/spawner/nether,

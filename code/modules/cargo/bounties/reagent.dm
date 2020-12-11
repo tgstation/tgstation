@@ -33,7 +33,7 @@
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
-	reward = 1500
+	reward = CARGO_CRATE_VALUE * 3
 
 /datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
@@ -89,7 +89,7 @@
 
 /datum/bounty/reagent/complex_drink
 	name = "Complex Drink"
-	reward = 4000
+	reward = CARGO_CRATE_VALUE * 8
 
 /datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
@@ -122,7 +122,7 @@
 
 /datum/bounty/reagent/chemical_simple
 	name = "Simple Chemical"
-	reward = 4000
+	reward = CARGO_CRATE_VALUE * 8
 	required_volume = 30
 
 /datum/bounty/reagent/chemical_simple/New()
@@ -160,7 +160,7 @@
 
 /datum/bounty/reagent/chemical_complex
 	name = "Rare Chemical"
-	reward = 6000
+	reward = CARGO_CRATE_VALUE * 12
 	required_volume = 20
 
 /datum/bounty/reagent/chemical_complex/New()
@@ -227,7 +227,7 @@
 
 /datum/bounty/pill/simple_pill
 	name = "Simple Pill"
-	reward = 10000
+	reward = CARGO_CRATE_VALUE * 20
 
 /datum/bounty/pill/simple_pill/New()
 	//reagent that are possible to be chem factory'd
@@ -255,4 +255,4 @@
 	required_ammount += rand(1,60)
 	wanted_vol += rand(1,20)
 	description = "CentCom requires [required_ammount] of [name] containing at least [wanted_vol] each. Ship a container of it to be rewarded."
-	reward += rand(1, 5) * 3000
+	reward += rand(1, 5) * (CARGO_CRATE_VALUE * 6)

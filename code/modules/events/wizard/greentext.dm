@@ -34,7 +34,7 @@
 
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
@@ -84,7 +84,6 @@
 		return QDEL_HINT_LETMELIVE
 
 	SSticker.round_end_events -= roundend_callback
-	GLOB.poi_list.Remove(src)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		var/message = "<span class='warning'>A dark temptation has passed from this world"

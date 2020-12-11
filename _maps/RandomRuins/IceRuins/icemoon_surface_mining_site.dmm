@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors)
 "b" = (
 /turf/closed/wall/mineral/wood/nonmetal,
@@ -38,7 +38,7 @@
 /area/ruin/unpowered)
 "h" = (
 /obj/structure/flora/rock/icy,
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors)
 "i" = (
 /turf/template_noop,
