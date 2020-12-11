@@ -638,7 +638,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
-	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE)
+	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
 	if(updates & UPDATE_NAME)
 		. |= update_name(updates)
 	if(updates & UPDATE_DESC)
@@ -659,7 +659,7 @@
 	SIGNAL_HANDLER
 
 	. = NONE
-	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
 	if(updates & COMSIG_ATOM_NO_UPDATE_ICON_STATE)
 		update_icon_state()
 		. |= UPDATE_ICON_STATE

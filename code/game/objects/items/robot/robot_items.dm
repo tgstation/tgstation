@@ -841,13 +841,18 @@
 			var/obj/item/O = A
 			O.forceMove(src)
 			stored = O
-			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 			update_appearance()
 			return
 	else
 		stored.melee_attack_chain(user, A, params)
 		return
 	. = ..()
+
+/// Exists to eat signal args
+/obj/item/borg/apparatus/proc/on_update_icon(datum/source, updates)
+	SIGNAL_HANDLER
+	return on_update_icon(updates)
 
 /obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
 	if(stored)
@@ -869,7 +874,7 @@
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	update_appearance()
 
 /obj/item/borg/apparatus/beaker/Destroy()
@@ -929,7 +934,7 @@
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
 	update_appearance()
 
 ////////////////////
