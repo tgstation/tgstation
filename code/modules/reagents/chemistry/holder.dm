@@ -92,15 +92,15 @@
 
 
 /**
-  * Adds a reagent to this holder
-  *
-  * Arguments:
-  * * reagent - The reagent id to add
-  * * amount - Amount to add
-  * * list/data - Any reagent data for this reagent, used for transferring data with reagents
-  * * reagtemp - Temperature of this reagent, will be equalized
-  * * no_react - prevents reactions being triggered by this addition
-  */
+ * Adds a reagent to this holder
+ *
+ * Arguments:
+ * * reagent - The reagent id to add
+ * * amount - Amount to add
+ * * list/data - Any reagent data for this reagent, used for transferring data with reagents
+ * * reagtemp - Temperature of this reagent, will be equalized
+ * * no_react - prevents reactions being triggered by this addition
+ */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -309,11 +309,11 @@
 
 
 /**
-  * Check if this holder contains this reagent.
-  * Reagent takes a PATH to a reagent.
-  * Amount checks for having a specific amount of that chemical.
-  * Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.
-  */
+ * Check if this holder contains this reagent.
+ * Reagent takes a PATH to a reagent.
+ * Amount checks for having a specific amount of that chemical.
+ * Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.
+ */
 /datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
@@ -969,12 +969,12 @@
 		. += R.specific_heat * R.volume
 
 /** Adjusts the thermal energy of the reagents in this holder by an amount.
-  *
-  * Arguments:
-  * - delta_energy: The amount to change the thermal energy by.
-  * - min_temp: The minimum temperature that can be reached.
-  * - max_temp: The maximum temperature that can be reached.
-  */
+ *
+ * Arguments:
+ * - delta_energy: The amount to change the thermal energy by.
+ * - min_temp: The minimum temperature that can be reached.
+ * - max_temp: The maximum temperature that can be reached.
+ */
 /datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
 	var/heat_capacity = heat_capacity()
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
@@ -994,12 +994,12 @@
 	handle_reactions()
 
 /** Sets the temperature of this reagent container to a new value.
-  *
-  * Handles setter signals.
-  *
-  * Arguments:
-  * - _temperature: The new temperature value.
-  */
+ *
+ * Handles setter signals.
+ *
+ * Arguments:
+ * - _temperature: The new temperature value.
+ */
 /datum/reagents/proc/set_temperature(_temperature)
 	if(_temperature == chem_temp)
 		return
@@ -1010,11 +1010,11 @@
 
 
 /**
-  * Used in attack logs for reagents in pills and such
-  *
-  * Arguments:
-  * * external_list - list of reagent types = amounts
-  */
+ * Used in attack logs for reagents in pills and such
+ *
+ * Arguments:
+ * * external_list - list of reagent types = amounts
+ */
 /datum/reagents/proc/log_list(external_list)
 	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
