@@ -156,9 +156,9 @@
 	SIGNAL_HANDLER
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
-	if(has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
+	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)

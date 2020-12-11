@@ -379,7 +379,7 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
@@ -404,13 +404,13 @@
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
 /**
-  * Does a slap animation on an atom
-  *
-  * Uses do_attack_animation to animate the attacker attacking
-  * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
-  * Arguments:
-  * * atom/A - atom being slapped
-  */
+ * Does a slap animation on an atom
+ *
+ * Uses do_attack_animation to animate the attacker attacking
+ * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+ * Arguments:
+ * * atom/A - atom being slapped
+ */
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
@@ -424,10 +424,10 @@
 	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /** Handles exposing a mob to reagents.
-  *
-  * If the methods include INGEST the mob tastes the reagents.
-  * If the methods include VAPOR it incorporates permiability protection.
-  */
+ *
+ * If the methods include INGEST the mob tastes the reagents.
+ * If the methods include VAPOR it incorporates permiability protection.
+ */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)

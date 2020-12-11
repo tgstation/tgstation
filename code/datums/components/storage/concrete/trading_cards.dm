@@ -1,6 +1,6 @@
 /**
-  *A storage component to be used on card piles, for use as hands/decks/discard piles. Don't use on something that's not a card pile!
-  */
+ *A storage component to be used on card piles, for use as hands/decks/discard piles. Don't use on something that's not a card pile!
+ */
 /datum/component/storage/concrete/tcg
 	display_numerical_stacking = FALSE
 	max_w_class = WEIGHT_CLASS_TINY

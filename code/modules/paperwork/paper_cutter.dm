@@ -100,8 +100,8 @@
 	if(over_object == M)
 		M.put_in_hands(src)
 
-	else if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	else if(istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 

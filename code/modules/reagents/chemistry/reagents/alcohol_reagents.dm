@@ -2220,7 +2220,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(prob(10))
 			stored_teleports += rand(2,6)
 			if(prob(70))
-				M.vomit()
+				M.vomit(vomit_type = VOMIT_PURPLE)
 	return ..()
 
 

@@ -37,6 +37,11 @@
 	smoothing_groups = list(SMOOTH_GROUP_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_TABLES)
 
+/obj/structure/table/Initialize(mapload, _buildstack)
+	. = ..()
+	if(_buildstack)
+		buildstack = _buildstack
+
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)

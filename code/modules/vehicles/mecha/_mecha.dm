@@ -1,22 +1,22 @@
 /***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
-  * Mechs are now (finally) vehicles, this means you can make them multicrew
-  * They can also grant select ability buttons based on occupant bitflags
-  *
-  * Movement is handled through vehicle_move() which is called by relaymove
-  * Clicking is done by way of signals registering to the entering mob
-  * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
-  * AI also has special checks becaus it gets in and out of the mech differently
-  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
-  *
-  * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
-  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
-  *
-  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
-  * Or are used to call action() on equipped gear
-  * Cooldown for gear is on the mech because exploits
-  */
+ * Mechs are now (finally) vehicles, this means you can make them multicrew
+ * They can also grant select ability buttons based on occupant bitflags
+ *
+ * Movement is handled through vehicle_move() which is called by relaymove
+ * Clicking is done by way of signals registering to the entering mob
+ * NOTE: MMIS are NOT mobs but instead contain a brain that is, so you need special checks
+ * AI also has special checks becaus it gets in and out of the mech differently
+ * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
+ *
+ * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
+ *
+ * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
+ * Or are used to call action() on equipped gear
+ * Cooldown for gear is on the mech because exploits
+ */
 /obj/vehicle/sealed/mecha
 	name = "mecha"
 	desc = "Exosuit"
@@ -26,7 +26,8 @@
 	max_integrity = 300
 	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	movedelay = 1 SECONDS
-	anchored = TRUE
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	emulate_door_bumps = TRUE
 	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = MOVABLE_LIGHT
@@ -445,22 +446,22 @@
 					if(0.75 to INFINITY)
 						occupant.clear_alert("charge")
 					if(0.5 to 0.75)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 1)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 1)
 					if(0.25 to 0.5)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 2)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 2)
 					if(0.01 to 0.25)
-						occupant.throw_alert("charge", /obj/screen/alert/lowcell, 3)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/lowcell, 3)
 					else
-						occupant.throw_alert("charge", /obj/screen/alert/emptycell)
+						occupant.throw_alert("charge", /atom/movable/screen/alert/emptycell)
 
 			var/integrity = obj_integrity/max_integrity*100
 			switch(integrity)
 				if(30 to 45)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 1)
 				if(15 to 35)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 2)
 				if(-INFINITY to 15)
-					occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
+					occupant.throw_alert("mech damage", /atom/movable/screen/alert/low_mech_integrity, 3)
 				else
 					occupant.clear_alert("mech damage")
 			var/atom/checking = occupant.loc
@@ -1080,14 +1081,14 @@
 
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/mob_exit)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
 	update_icon()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_DEATH)
+	UnregisterSignal(M, COMSIG_LIVING_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 	M.clear_alert("charge")
@@ -1170,6 +1171,9 @@
 					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
+					if(A.custom_materials)
+						for(var/i in A.custom_materials)
+							A.custom_materials[i] = A.custom_materials[i] * (A.rounds/initial(A.rounds))
 					A.update_name()
 					return TRUE
 
@@ -1181,6 +1185,7 @@
 					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
+					A.set_custom_materials(list(/datum/material/iron=2000))
 					A.update_name()
 					return TRUE
 	if(!fail_chat_override)

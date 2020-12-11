@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
@@ -296,7 +296,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
 	for(var/i_scream in GetAllContents(/mob/living))
-		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
+		var/obj/item/food/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
 		icecreams += IC
