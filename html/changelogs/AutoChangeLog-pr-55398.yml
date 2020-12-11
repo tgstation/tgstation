@@ -1,0 +1,4 @@
+author: "Joe Berry"
+delete-after: True
+changes: 
+  - tweak: "Planetary turfs now act more like they are on a planet and return to a normal level much faster."
