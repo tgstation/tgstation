@@ -10,8 +10,8 @@
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	if(movement_type & (FLYING|FLOATING) && floating_anim_status != NEVER_FLOATING_ANIM)
-		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_gain);\
-		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_loss);\
+		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_gain)
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_loss)
 		float()
 
 /mob/living/prepare_huds()

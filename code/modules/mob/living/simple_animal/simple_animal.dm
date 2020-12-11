@@ -465,9 +465,9 @@
 		del_on_death = FALSE
 		qdel(src)
 	else
-		if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //Has no extrinsic source of flight and isn't floating.
+		if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //stops flying if it has no extrinsic source of flight.
 			movement_type &= ~FLYING
-			if(floating_anim_status == HAS_FLOATING_ANIM && !(movement_type & FLOATING))
+			if(floating_anim_status == HAS_FLOATING_ANIM && !(movement_type & FLOATING)) //stops bobbing up and down.
 				stop_floating(NO_FLOATING_ANIM)
 		health = 0
 		icon_state = icon_dead
@@ -509,7 +509,7 @@
 	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	if(initial(movement_type) & (FLYING)) //regain its intrisic flight
+	if(initial(movement_type) & FLYING) //regains any intrisic flight.
 		movement_type |= FLYING
 		if(floating_anim_status == NO_FLOATING_ANIM)
 			float()

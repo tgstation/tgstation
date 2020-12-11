@@ -2067,7 +2067,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		stunmod *= 0.5
 		speedmod += 0.35
-		H.floating_anim_status = initial(H.floating_anim_status)
 		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(H, SPECIES_TRAIT)

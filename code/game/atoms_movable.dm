@@ -39,7 +39,7 @@
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
+	  * You should never be modifying this directly instead of the traits unless you know what you are doing.
 	  */
 	var/movement_type = GROUND
 	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
@@ -612,14 +612,14 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
-/// Called when movement_type trait is added to the mob.
+/// Called when a movement type trait is added to the mob.
 /atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
 	SIGNAL_HANDLER
 	if(!(movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && floating_anim_status == NO_FLOATING_ANIM)
 		float()
 	movement_type |= GLOB.movement_type_trait_to_flag[trait]
 
-/// Called when a movement_type trait is removed from the mob.
+/// Called when a movement type trait is removed from the mob.
 /atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
 	SIGNAL_HANDLER
 	var/flag = GLOB.movement_type_trait_to_flag[trait]
