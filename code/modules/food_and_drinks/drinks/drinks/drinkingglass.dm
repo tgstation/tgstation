@@ -73,7 +73,6 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	name = "filled shot glass"
 	desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
