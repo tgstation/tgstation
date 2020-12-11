@@ -241,6 +241,8 @@
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
+	// burning tanks should probably break
+	var/on_fire = air_contents.reaction_results["fire"]
 
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/transfer_valve))
@@ -258,7 +260,7 @@
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
+	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE || on_fire)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)
