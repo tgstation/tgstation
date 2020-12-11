@@ -478,11 +478,11 @@
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
-		update_icon()
+		update_appearance()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	on = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/item/flashlight/glowstick/update_icon()
 	inhand_icon_state = "glowstick"

@@ -135,7 +135,7 @@
 	master = bomb
 
 	forceMove(bomb)
-	bomb.update_icon()
+	bomb.update_appearance()
 
 	user.put_in_hands(bomb)		//Equips the bomb if possible, or puts it on the floor.
 	to_chat(user, "<span class='notice'>You attach [assembly] to [src].</span>")

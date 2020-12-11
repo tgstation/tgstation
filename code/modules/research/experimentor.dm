@@ -527,7 +527,7 @@
 	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
-	update_icon()
+	update_appearance()
 	recentlyExperimented = FALSE
 
 /obj/machinery/rnd/experimentor/update_icon_state()

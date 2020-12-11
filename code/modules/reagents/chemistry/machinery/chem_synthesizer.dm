@@ -55,7 +55,7 @@
 			var/input = text2num(params["amount"])
 			if(input)
 				amount = input
-	update_icon()
+	update_appearance()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE

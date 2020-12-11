@@ -57,7 +57,7 @@
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		if(power_station?.engaged)
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
-			update_icon()
+			update_appearance()
 		return
 	if(default_deconstruction_crowbar(W))
 		return
@@ -154,7 +154,7 @@
 /obj/machinery/teleport/station/Destroy()
 	if(teleporter_hub)
 		teleporter_hub.power_station = null
-		teleporter_hub.update_icon()
+		teleporter_hub.update_appearance()
 		teleporter_hub = null
 	if (teleporter_console)
 		teleporter_console.power_station = null
@@ -179,7 +179,7 @@
 					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
-		update_icon()
+		update_appearance()
 		return
 
 	else if(default_deconstruction_crowbar(W))
@@ -203,13 +203,13 @@
 	else
 		to_chat(user, "<span class='alert'>No target detected.</span>")
 		engaged = FALSE
-	teleporter_hub.update_icon()
+	teleporter_hub.update_appearance()
 	add_fingerprint(user)
 
 /obj/machinery/teleport/station/power_change()
 	. = ..()
 	if(teleporter_hub)
-		teleporter_hub.update_icon()
+		teleporter_hub.update_appearance()
 
 /obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)

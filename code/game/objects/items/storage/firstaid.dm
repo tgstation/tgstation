@@ -574,17 +574,17 @@
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			freeze(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			unfreeze(C)
 
-/obj/item/storage/organbox/update_icon()
+/obj/item/storage/organbox/update_icon_state()
 	. = ..()
 	if(cooling)
 		icon_state = "organbox-working"

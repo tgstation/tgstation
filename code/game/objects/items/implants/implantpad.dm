@@ -27,7 +27,7 @@
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)
 		case = null
-	update_icon()
+	update_appearance()
 	updateSelfDialog()
 	. = ..()
 
@@ -46,7 +46,7 @@
 	case = null
 
 	updateSelfDialog()
-	update_icon()
+	update_appearance()
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/implantcase) && !case)
@@ -54,7 +54,7 @@
 			return
 		case = C
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 

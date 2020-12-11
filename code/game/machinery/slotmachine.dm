@@ -206,7 +206,7 @@
 	working = TRUE
 
 	toggle_reel_spin(1)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
@@ -223,7 +223,7 @@
 	working = FALSE
 	deltimer(spin_loop)
 	give_prizes(the_name, user)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)

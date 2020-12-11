@@ -147,7 +147,7 @@ FLOOR SAFES
 				return
 			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 			open = !open
-			update_icon()
+			update_appearance()
 			return TRUE
 		if("turnright")
 			if(open)

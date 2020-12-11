@@ -140,7 +140,7 @@
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/glass/beaker/get_part_rating()
 	return reagents.maximum_volume

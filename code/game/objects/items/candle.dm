@@ -45,13 +45,13 @@
 			usr.visible_message(show_message)
 		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
-		update_icon()
+		update_appearance()
 
 /obj/item/candle/proc/put_out_candle()
 	if(!lit)
 		return
 	lit = FALSE
-	update_icon()
+	update_appearance()
 	set_light(0)
 	return TRUE
 
@@ -67,7 +67,7 @@
 	if(wax <= 0)
 		new /obj/item/trash/candle(loc)
 		qdel(src)
-	update_icon()
+	update_appearance()
 	open_flame()
 
 /obj/item/candle/attack_self(mob/user)

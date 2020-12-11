@@ -323,7 +323,7 @@
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
-	update_icon()
+	update_appearance()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
@@ -777,7 +777,7 @@
 
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
@@ -796,7 +796,7 @@
 	if(user.a_intent == INTENT_HARM)
 		take_damage(4,BRUTE,MELEE, 0)
 		if(!QDELETED(src))
-			update_icon()
+			update_appearance()
 
 /obj/structure/window/paperframe/update_icon()
 	if(obj_integrity < max_integrity)
@@ -824,10 +824,10 @@
 			qdel(W)
 			user.visible_message("<span class='notice'>[user] patches some of the holes in \the [src].</span>")
 			if(obj_integrity == max_integrity)
-				update_icon()
+				update_appearance()
 			return
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/structure/window/bronze
 	name = "brass window"

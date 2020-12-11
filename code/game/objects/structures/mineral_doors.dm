@@ -95,7 +95,7 @@
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
 	air_update_turf(1)
-	update_icon()
+	update_appearance()
 	isSwitchingStates = FALSE
 
 	if(close_delay != -1)
@@ -116,7 +116,7 @@
 	door_opened = FALSE
 	layer = initial(layer)
 	air_update_turf(1)
-	update_icon()
+	update_appearance()
 	isSwitchingStates = FALSE
 
 /obj/structure/mineral_door/update_icon_state()

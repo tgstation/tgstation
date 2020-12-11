@@ -95,7 +95,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	pipe_cleaner_color = param_color || pipe_cleaner_color || pick(pipe_cleaner_colors)
 	if(pipe_cleaner_colors[pipe_cleaner_color])
 		pipe_cleaner_color = pipe_cleaner_colors[pipe_cleaner_color]
-	update_icon()
+	update_appearance()
 
 /obj/structure/pipe_cleaner/Destroy()					// called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be
@@ -159,7 +159,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/pipe_cleaner/proc/update_stored(length = 1, colorC = "red")
 	stored.amount = length
 	stored.pipe_cleaner_color = colorC
-	stored.update_icon()
+	stored.update_appearance()
 
 /obj/structure/pipe_cleaner/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -211,7 +211,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!selected_color)
 		return
 	pipe_cleaner_color = GLOB.pipe_cleaner_colors[selected_color]
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/pipe_cleaner_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
@@ -230,16 +230,22 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
 
+/obj/item/stack/pipe_cleaner_coil/update_name()
+	. = ..()
+	name = "pipe cleaner [amount < 3 ? "piece" : "coil"]"
+
+/obj/item/stack/pipe_cleaner_coil/update_icon_state()
+	. = ..()
+	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
-	name = "pipe cleaner [amount < 3 ? "piece" : "coil"]"
+	. = ..()
 	color = null
 	add_atom_colour(pipe_cleaner_color, FIXED_COLOUR_PRIORITY)
 
@@ -250,7 +256,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
 	if(istype(new_pipe_cleaner))
 		new_pipe_cleaner.pipe_cleaner_color = pipe_cleaner_color
-		new_pipe_cleaner.update_icon()
+		new_pipe_cleaner.update_appearance()
 
 //add pipe_cleaners to the stack
 /obj/item/stack/pipe_cleaner_coil/proc/give(extra)
@@ -258,7 +264,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		amount = max_amount
 	else
 		amount += extra
-	update_icon()
+	update_appearance()
 
 
 
@@ -307,7 +313,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	C.d1 = 0 //it's a O-X node pipe_cleaner
 	C.d2 = dirn
 	C.add_fingerprint(user)
-	C.update_icon()
+	C.update_appearance()
 
 	use(1)
 
@@ -361,7 +367,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint(user)
-			NC.update_icon()
+			NC.update_appearance()
 
 			use(1)
 
@@ -389,7 +395,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				return
 
 
-		C.update_icon()
+		C.update_appearance()
 
 		C.d1 = nd1
 		C.d2 = nd2
@@ -398,7 +404,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.update_stored(2, pipe_cleaner_color)
 
 		C.add_fingerprint(user)
-		C.update_icon()
+		C.update_appearance()
 
 		use(1)
 
@@ -457,7 +463,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		amount = rand(1,2)
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red
 	pipe_cleaner_color = "red"

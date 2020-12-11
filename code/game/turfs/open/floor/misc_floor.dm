@@ -20,7 +20,7 @@
 
 /turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
-	update_icon()
+	update_appearance()
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()

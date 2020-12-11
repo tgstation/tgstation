@@ -102,7 +102,7 @@
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
-	update_icon()
+	update_appearance()
 
 /obj/item/paper/update_icon_state()
 	if(info && show_written_words)
@@ -338,7 +338,7 @@
 					update_static_data(usr,ui)
 
 
-			update_icon()
+			update_appearance()
 			. = TRUE
 
 /**

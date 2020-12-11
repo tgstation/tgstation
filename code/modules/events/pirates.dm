@@ -104,7 +104,7 @@
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
@@ -135,7 +135,7 @@
 		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
 		toggle_on(user)
-		update_icon()
+		update_appearance()
 		send_notification()
 	else
 		dump_loot(user)

@@ -52,7 +52,7 @@
 		working = FALSE
 	else
 		working = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()

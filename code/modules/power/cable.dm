@@ -87,9 +87,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
-				C.update_icon()
+				C.update_appearance()
 
-	update_icon()
+	update_appearance()
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			for(var/obj/structure/cable/C in TB)
 				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
-					C.update_icon()
+					C.update_appearance()
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	Disconnect_cable()
@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
@@ -506,7 +506,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				var/obj/item/restraints/handcuffs/cable/restraints = new
 				restraints.color = color
 				user.put_in_hands(restraints)
-	update_icon()
+	update_appearance()
 
 
 ///////////////////////////////////
@@ -535,7 +535,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		amount = max_amount
 	else
 		amount += extra
-	update_icon()
+	update_appearance()
 
 
 ///////////////////////////////////////////////
@@ -597,7 +597,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		amount = rand(1,2)
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 #undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
@@ -672,7 +672,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_contents += cable_node_2
 	cable_node_3 = new /obj/effect/node/layer3()
 	vis_contents += cable_node_3
-	update_icon()
+	update_appearance()
 
 /obj/structure/cable/multilayer/Destroy()					// called when a cable is deleted
 	QDEL_NULL(machinery_node)

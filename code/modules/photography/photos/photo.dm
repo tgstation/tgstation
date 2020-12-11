@@ -21,7 +21,7 @@
 	if(!istype(P))
 		return
 	picture = P
-	update_icon()
+	update_appearance()
 	if(P.caption)
 		scribble = P.caption
 	if(setname && P.picture_name)

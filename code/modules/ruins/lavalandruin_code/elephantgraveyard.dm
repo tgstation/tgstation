@@ -166,7 +166,7 @@
 					opened = TRUE
 					locked = TRUE
 					dump_contents()
-					update_icon()
+					update_appearance()
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -194,7 +194,7 @@
 /obj/structure/closet/crate/grave/bust_open()
 	..()
 	opened = TRUE
-	update_icon()
+	update_appearance()
 	dump_contents()
 	return
 

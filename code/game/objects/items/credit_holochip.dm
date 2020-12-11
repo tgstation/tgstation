@@ -11,7 +11,7 @@
 /obj/item/holochip/Initialize(mapload, amount)
 	. = ..()
 	credits = amount
-	update_icon()
+	update_appearance()
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
@@ -23,19 +23,19 @@
 
 /obj/item/holochip/update_icon()
 	name = "\improper [credits] credit holochip"
-	var/rounded_credits = credits
+	var/rounded_credits = round(credits)
 	switch(credits)
-		if(1 to 999)
+		if(1 to (1e3 - 1))
 			icon_state = "holochip"
-		if(1000 to 999999)
+		if(1e3 to (1e6 - 1))
 			icon_state = "holochip_kilo"
-			rounded_credits = round(rounded_credits * 0.001)
-		if(1000000 to 999999999)
+			rounded_credits = round(rounded_credits * 1e-3)
+		if(1e6 to (1e9 - 1))
 			icon_state = "holochip_mega"
-			rounded_credits = round(rounded_credits * 0.000001)
-		if(1000000000 to INFINITY)
+			rounded_credits = round(rounded_credits * 1e-6)
+		if(1e9 to INFINITY)
 			icon_state = "holochip_giga"
-			rounded_credits = round(rounded_credits * 0.000000001)
+			rounded_credits = round(rounded_credits * 1e-9)
 	var/overlay_color = "#914792"
 	switch(rounded_credits)
 		if(0 to 4)
@@ -64,7 +64,7 @@
 		credits -= amount
 		if(credits == 0)
 			qdel(src)
-		update_icon()
+		update_appearance()
 		return amount
 	else if(pay_anyway)
 		qdel(src)
@@ -78,7 +78,7 @@
 		var/obj/item/holochip/H = I
 		credits += H.credits
 		to_chat(user, "<span class='notice'>You insert the credits into [src].</span>")
-		update_icon()
+		update_appearance()
 		qdel(H)
 
 /obj/item/holochip/AltClick(mob/user)

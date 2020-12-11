@@ -174,7 +174,7 @@
 	icon_state = "" //All of the footprint visuals come from overlays
 	if(mapload)
 		entered_dirs |= dir //Keep the same appearance as in the map editor
-		update_icon()
+		update_appearance()
 
 //Rotate all of the footprint directions too
 /obj/effect/decal/cleanable/blood/footprints/setDir(newdir)
@@ -193,7 +193,7 @@
 		if(old_exited_dirs & Ddir)
 			exited_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
 
-	update_icon()
+	update_appearance()
 	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()

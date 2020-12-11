@@ -57,7 +57,7 @@
 	if(program)
 		program.process(delta_time)
 
-	update_icon()
+	update_appearance()
 	src.updateDialog()
 
 /obj/machinery/embedded_controller/radio

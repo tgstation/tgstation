@@ -17,11 +17,11 @@
 /obj/machinery/hypnochair/Initialize()
 	. = ..()
 	open_machine()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_icon()
+		update_appearance()
 		return
 	if(default_pry_open(I))
 		return
@@ -97,7 +97,7 @@
 	interrogating = TRUE
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
-	update_icon()
+	update_appearance()
 	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
 
 /obj/machinery/hypnochair/process(delta_time)
@@ -117,7 +117,7 @@
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	var/temp_trigger = trigger_phrase
 	trigger_phrase = "" //Erase evidence, in case the subject is able to look at the panel afterwards
 	audible_message("<span class='notice'>[src] pings!</span>")
@@ -140,7 +140,7 @@
 	deltimer(timerid)
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 
 	if(QDELETED(victim))
 		victim = null

@@ -23,7 +23,7 @@
 
 /obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/structure/grille/update_icon()
 	if(QDELETED(src) || broken)

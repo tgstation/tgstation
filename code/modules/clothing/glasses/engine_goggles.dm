@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/meson/engine/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/glasses/meson/engine/ComponentInitialize()
 	. = ..()
@@ -66,7 +66,7 @@
 		if(H.glasses == src)
 			H.update_sight()
 
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

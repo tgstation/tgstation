@@ -27,7 +27,7 @@
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		geyser = null
-		update_icon()
+		update_appearance()
 		geyserless = FALSE //we switched state, so lets just set this back aswell
 
 /obj/machinery/plumbing/liquid_pump/process(delta_time)
@@ -37,7 +37,7 @@
 	if(!geyser)
 		for(var/obj/structure/geyser/G in loc.contents)
 			geyser = G
-			update_icon()
+			update_appearance()
 		if(!geyser) //we didnt find one, abort
 			geyserless = TRUE
 			visible_message("<span class='warning'>The [name] makes a sad beep!</span>")

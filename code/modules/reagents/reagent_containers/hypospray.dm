@@ -124,7 +124,7 @@
 	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagents.flags = NONE
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE, FLOOR_OKAY))

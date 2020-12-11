@@ -156,7 +156,7 @@
 	if(sharpened_increase)
 		parent_item.force += sharpened_increase
 	parent_item.name = "[parent_item.name] (Wielded)"
-	parent_item.update_icon()
+	parent_item.update_appearance()
 
 	if(iscyborg(user))
 		to_chat(user, "<span class='notice'>You dedicate your module to [parent].</span>")
@@ -208,7 +208,7 @@
 		parent_item.name = "[initial(parent_item.name)]"
 
 	// Update icons
-	parent_item.update_icon()
+	parent_item.update_appearance()
 
 	if(istype(user)) // tk showed that we might not have a mob here
 		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)

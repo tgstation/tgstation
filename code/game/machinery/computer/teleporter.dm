@@ -69,13 +69,13 @@
 	switch(action)
 		if("regimeset")
 			power_station.engaged = FALSE
-			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.update_appearance()
 			power_station.teleporter_hub.calibrated = FALSE
 			reset_regime()
 			. = TRUE
 		if("settarget")
 			power_station.engaged = FALSE
-			power_station.teleporter_hub.update_icon()
+			power_station.teleporter_hub.update_appearance()
 			power_station.teleporter_hub.calibrated = FALSE
 			set_target(usr)
 			. = TRUE
@@ -89,7 +89,7 @@
 
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
-			power_station.update_icon()
+			power_station.update_appearance()
 			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			. = TRUE
 
@@ -100,7 +100,7 @@
 		say("Calibration complete.")
 	else
 		say("Error: Unable to detect hub.")
-	power_station.update_icon()
+	power_station.update_appearance()
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
 	if(!power_station)
@@ -164,10 +164,10 @@
 		target_station.set_machine_stat(target_station.machine_stat & ~NOPOWER)
 		if(target_station.teleporter_hub)
 			target_station.teleporter_hub.set_machine_stat(target_station.teleporter_hub.machine_stat & ~NOPOWER)
-			target_station.teleporter_hub.update_icon()
+			target_station.teleporter_hub.update_appearance()
 		if(target_station.teleporter_console)
 			target_station.teleporter_console.set_machine_stat(target_station.teleporter_console.machine_stat & ~NOPOWER)
-			target_station.teleporter_console.update_icon()
+			target_station.teleporter_console.update_appearance()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
 	var/turf/T = get_turf(AM)

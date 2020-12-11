@@ -13,7 +13,7 @@
 	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
@@ -23,7 +23,7 @@
 		else
 			blood_type = null
 	update_pack_name()
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/blood/proc/update_pack_name()
 	if(!labelled)

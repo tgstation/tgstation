@@ -24,7 +24,7 @@
 		bd.toggle_modeswitch()
 	else if(pa.Find("right"))
 		bd.mode.change_settings(usr.client)
-	update_icon()
+	update_appearance()
 	return 1
 
 /atom/movable/screen/buildmode/mode/update_icon_state()
@@ -49,7 +49,7 @@
 
 /atom/movable/screen/buildmode/bdir/Click()
 	bd.toggle_dirswitch()
-	update_icon()
+	update_appearance()
 	return 1
 
 // used to switch between modes

@@ -165,7 +165,7 @@
 	else
 		mode = "draw"
 	to_chat(user, "<span class='notice'>You toggle [src] to \"[mode]\" mode.</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
 	. = ..()
@@ -228,7 +228,7 @@
 					break
 				if(!user.cell.give(draw))
 					break
-				target.update_icon()
+				target.update_appearance()
 
 			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
@@ -266,7 +266,7 @@
 				break
 			if(!cell.give(draw))
 				break
-			target.update_icon()
+			target.update_appearance()
 
 		to_chat(user, "<span class='notice'>You stop charging [target].</span>")
 
@@ -627,7 +627,7 @@
 			to_chat(user, "<span class='warning'>[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!</span>")
 	else
 		deactivate_field()
-	update_icon()
+	update_appearance()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] [src].</span>")
 
 /obj/item/borg/projectile_dampen/update_icon_state()
@@ -809,7 +809,7 @@
 	if(A == stored) //sanity check
 		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
 		stored = null
-	update_icon()
+	update_appearance()
 	. = ..()
 
 ///A right-click verb, for those not using hotkey mode.
@@ -842,7 +842,7 @@
 			O.forceMove(src)
 			stored = O
 			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-			update_icon()
+			update_appearance()
 			return
 	else
 		stored.melee_attack_chain(user, A, params)
@@ -870,7 +870,7 @@
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-	update_icon()
+	update_appearance()
 
 /obj/item/borg/apparatus/beaker/Destroy()
 	if(stored)
@@ -930,7 +930,7 @@
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
-	update_icon()
+	update_appearance()
 
 ////////////////////
 //engi part holder//
@@ -945,7 +945,7 @@
 
 /obj/item/borg/apparatus/circuit/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/borg/apparatus/circuit/update_overlays()
 	. = ..()

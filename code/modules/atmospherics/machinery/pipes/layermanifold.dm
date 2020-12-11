@@ -93,7 +93,7 @@
 			new_nodes += foundfront
 		if(foundback && !QDELETED(foundback))
 			new_nodes += foundback
-	update_icon()
+	update_appearance()
 	return new_nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
@@ -120,7 +120,7 @@
 		if(reference in back_nodes)
 			var/i = back_nodes.Find(reference)
 			back_nodes[i] = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, direction)
 	if(initialize_directions & direction)

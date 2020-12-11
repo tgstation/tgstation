@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()

@@ -46,7 +46,7 @@
 	name = "worn out [name]"
 	desc = "[desc] At least, it used to."
 	used = 1
-	update_icon()
+	update_appearance()
 
 /obj/item/sharpener/super
 	name = "super whetstone"

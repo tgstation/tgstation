@@ -20,7 +20,7 @@
 	find_circs()
 	connect_to_network()
 	SSair.start_processing_machine(src)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
@@ -83,12 +83,12 @@
 			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
 			cold_circ_air1.merge(cold_air)
 
-		update_icon()
+		update_appearance()
 
 	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
-		update_icon()
+		update_appearance()
 
 	src.updateDialog()
 

@@ -25,7 +25,7 @@
 
 /mob/living/simple_animal/bot/vibebot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/get_controls(mob/user)
 	var/list/dat = list()
@@ -44,13 +44,13 @@
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	. = ..()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/proc/Vibe()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
 	set_light_color(color)
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/vibebot/proc/retaliate(mob/living/carbon/human/H)
 

@@ -67,9 +67,9 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
 	..()
-	update_icon()
+	update_appearance()
 
-/obj/machinery/atmospherics/components/binary/circulator/update_icon()
+/obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
 	if(!is_operational)
 		icon_state = "circ-p-[flipped]"
 	else if(last_pressure_delta > 0)
@@ -162,7 +162,7 @@
 		generator.cold_circ = null
 	else
 		generator.hot_circ = null
-	generator.update_icon()
+	generator.update_appearance()
 	generator = null
 
 /obj/machinery/atmospherics/components/binary/circulator/setPipingLayer(new_layer)
@@ -184,4 +184,4 @@
 
 	flipped = !flipped
 	to_chat(usr, "<span class='notice'>You flip [src].</span>")
-	update_icon()
+	update_appearance()

@@ -116,8 +116,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
 		zoom_in()
-		old_deck.update_icon()
-		update_icon()
+		old_deck.update_appearance()
+		update_appearance()
 	return ..()
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)

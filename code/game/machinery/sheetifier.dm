@@ -30,7 +30,7 @@
 
 /obj/machinery/sheetifier/proc/AfterInsertMaterials(item_inserted, id_inserted, amount_inserted)
 	busy_processing = TRUE
-	update_icon()
+	update_appearance()
 	var/datum/material/last_inserted_material = id_inserted
 	var/mutable_appearance/processing_overlay = mutable_appearance(icon, "processing")
 	processing_overlay.color = last_inserted_material.color
@@ -39,7 +39,7 @@
 
 /obj/machinery/sheetifier/proc/finish_processing()
 	busy_processing = FALSE
-	update_icon()
+	update_appearance()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all() //Returns all as sheets
 
@@ -47,7 +47,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
-		update_icon()
+		update_appearance()
 		return
 	if(default_deconstruction_crowbar(I))
 		return

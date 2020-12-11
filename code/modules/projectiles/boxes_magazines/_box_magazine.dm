@@ -45,7 +45,7 @@
 			LAZYSET(bullet_cost, material, material_amount)
 	if(!start_empty)
 		top_off(starting=TRUE)
-	update_icon()
+	update_appearance()
 
 /**
  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
@@ -65,7 +65,7 @@
 
 	for(var/i = max(1, stored_ammo.len), i <= max_ammo, i++)
 		stored_ammo += new round_check(src)
-	update_icon()
+	update_appearance()
 
 ///gets a round from the magazine, if keep is TRUE the round will stay in the gun
 /obj/item/ammo_box/proc/get_round(keep = FALSE)
@@ -128,8 +128,8 @@
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-		A.update_icon()
-		update_icon()
+		A.update_appearance()
+		update_appearance()
 	return num_loaded
 
 /obj/item/ammo_box/attack_self(mob/user)
@@ -140,7 +140,7 @@
 			A.bounce_away(FALSE, NONE)
 		playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
-		update_icon()
+		update_appearance()
 
 /obj/item/ammo_box/update_icon()
 	var/shells_left = stored_ammo.len
@@ -182,4 +182,4 @@
 
 /obj/item/ammo_box/magazine/handle_atom_del(atom/A)
 	stored_ammo -= A
-	update_icon()
+	update_appearance()

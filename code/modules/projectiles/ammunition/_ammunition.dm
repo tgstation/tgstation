@@ -33,7 +33,7 @@
 	pixel_x = base_pixel_x + rand(-10, 10)
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
-	update_icon()
+	update_appearance()
 
 /obj/item/ammo_casing/Destroy()
 	. = ..()
@@ -42,9 +42,12 @@
 	if(T && !BB && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
-/obj/item/ammo_casing/update_icon()
+/obj/item/ammo_casing/update_icon_state()
 	. = ..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+
+/obj/item/ammo_casing/update_desc()
+	. = ..()
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 /*
@@ -53,7 +56,7 @@
 /obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(BB)
 		BB = null
-		update_icon()
+		update_appearance()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
 
@@ -78,7 +81,7 @@
 				else
 					continue
 			if (boolets > 0)
-				box.update_icon()
+				box.update_appearance()
 				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
 			else
 				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
@@ -92,7 +95,7 @@
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
 	if(!heavy_metal)
 		return
-	update_icon()
+	update_appearance()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)

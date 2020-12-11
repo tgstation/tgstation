@@ -133,7 +133,7 @@
 		visible_message("<span class='warning'>[name]'s auto-grow functionality shuts off!</span>")
 		idle_power_usage = 0
 		self_sustaining = FALSE
-		update_icon()
+		update_appearance()
 
 	else if(self_sustaining)
 		adjustWater(rand(1,2) * delta_time * 0.5)
@@ -285,7 +285,7 @@
 				weedinvasion()
 			needs_update = 1
 		if (needs_update)
-			update_icon()
+			update_appearance()
 
 		if(myseed && prob(5 * (11-myseed.production)))
 			for(var/g in myseed.genes)
@@ -405,7 +405,7 @@
 	harvest = FALSE
 	weedlevel = 0 // Reset
 	pestlevel = 0 // Reset
-	update_icon()
+	update_appearance()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 	TRAY_NAME_UPDATE
 
@@ -439,7 +439,7 @@
 	weedlevel = 0 // Reset
 
 	sleep(5) // Wait a while
-	update_icon()
+	update_appearance()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
 	TRAY_NAME_UPDATE
 
@@ -459,7 +459,7 @@
 		weedlevel = 0 // Reset
 
 		sleep(5) // Wait a while
-		update_icon()
+		update_appearance()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawn some [myseed.plantname]!</span>")
 		TRAY_NAME_UPDATE
 	else
@@ -475,7 +475,7 @@
 	pestlevel = 0 // Pests die
 	lastproduce = 0
 	if(!dead)
-		update_icon()
+		update_appearance()
 		dead = TRUE
 
 /**
@@ -571,11 +571,11 @@
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
-				H.update_icon()
+				H.update_appearance()
 				return 1
-			H.update_icon()
+			H.update_appearance()
 		if(reagent_source) // If the source wasn't composted and destroyed
-			reagent_source.update_icon()
+			reagent_source.update_appearance()
 		return 1
 
 	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
@@ -591,7 +591,7 @@
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
@@ -627,7 +627,7 @@
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
@@ -682,7 +682,7 @@
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
 		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker.</span>")
-		update_icon()
+		update_appearance()
 		return
 
 	else if(istype(O, /obj/item/graft))
@@ -725,7 +725,7 @@
 				name = initial(name)
 				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-			update_icon()
+			update_appearance()
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
@@ -755,7 +755,7 @@
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.endurance = (myseed.endurance/2)
 			flowergun.cell.use(flowergun.cell.charge)
-			flowergun.update_icon()
+			flowergun.update_appearance()
 			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
 			return
 	else
@@ -781,7 +781,7 @@
 		to_chat(user, "<span class='notice'>You remove the dead plant from [src].</span>")
 		qdel(myseed)
 		myseed = null
-		update_icon()
+		update_appearance()
 		TRAY_NAME_UPDATE
 	else
 		if(user)
@@ -799,12 +799,12 @@
 	self_sustaining = !self_sustaining
 	idle_power_usage = self_sustaining ? 5000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
-	update_icon()
+	update_appearance()
 
 /obj/machinery/hydroponics/AltClick(mob/user)
 	. = ..()
 	if(!anchored)
-		update_icon()
+		update_appearance()
 		return FALSE
 	var/warning = alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", "Yes", "No")
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -837,7 +837,7 @@
 		if(self_sustaining) //No reason to pay for an empty tray.
 			idle_power_usage = 0
 			self_sustaining = FALSE
-	update_icon()
+	update_appearance()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.
 /**

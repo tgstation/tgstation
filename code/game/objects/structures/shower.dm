@@ -46,7 +46,7 @@
 		to_chat(M,"<span class='notice'>\The [src] is dry.</span>")
 		return FALSE
 	on = !on
-	update_icon()
+	update_appearance()
 	handle_mist()
 	add_fingerprint(M)
 	if(on)
@@ -139,7 +139,7 @@
 		on = FALSE
 		soundloop.stop()
 		handle_mist()
-		update_icon()
+		update_appearance()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
 

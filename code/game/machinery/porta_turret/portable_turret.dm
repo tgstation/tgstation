@@ -106,7 +106,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	. = ..()
 	if(!base)
 		base = src
-	update_icon()
+	update_appearance()
 	//Sets up a spark system
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
@@ -185,7 +185,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(gun_properties["reqpower"])
 		reqpower = gun_properties["reqpower"]
 
-	update_icon()
+	update_appearance()
 	return gun_properties
 
 /obj/machinery/porta_turret/Destroy()
@@ -279,7 +279,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/power_change()
 	. = ..()
 	if(!anchored || (machine_stat & BROKEN) || !powered())
-		update_icon()
+		update_appearance()
 		remove_control()
 	check_should_process()
 
@@ -311,7 +311,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(!anchored && !isinspace())
 			set_anchored(TRUE)
 			invisibility = INVISIBILITY_MAXIMUM
-			update_icon()
+			update_appearance()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
@@ -347,7 +347,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	toggle_on(FALSE) //turns off the turret temporarily
-	update_icon()
+	update_appearance()
 	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
@@ -515,7 +515,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		cover.icon_state = "turretCover"
 	raised = 0
 	invisibility = 2
-	update_icon()
+	update_appearance()
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
@@ -596,7 +596,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					T = closer
 					break
 
-	update_icon()
+	update_appearance()
 	var/obj/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
@@ -994,7 +994,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
 		aTurret.setState(enabled, lethal, shoot_cyborgs)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/turretid/update_icon_state()
 	if(machine_stat & NOPOWER)

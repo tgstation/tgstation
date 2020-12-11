@@ -17,7 +17,7 @@
 	if(ispath(active_item))
 		active_item = new active_item(src)
 
-	update_icon()
+	update_appearance()
 	SetSlotFromZone()
 	items_list = contents.Copy()
 
@@ -51,7 +51,7 @@
 		zone = BODY_ZONE_R_ARM
 	SetSlotFromZone()
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()

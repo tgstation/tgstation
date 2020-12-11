@@ -93,7 +93,7 @@
 	if(beegent)
 		bee_to_eat.beegent = beegent
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
-	bee_to_eat.update_icon()
+	bee_to_eat.update_appearance()
 	beegent = null
 	..()
 

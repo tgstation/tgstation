@@ -78,7 +78,7 @@
 	if(active && ((detonation_timer <= world.time) || explode_now))
 		active = FALSE
 		timer_set = initial(timer_set)
-		update_icon()
+		update_appearance()
 		try_detonate(TRUE)
 
 /obj/machinery/syndicatebomb/Initialize()
@@ -86,7 +86,7 @@
 	wires = new /datum/wires/syndicatebomb(src)
 	if(payload)
 		payload = new payload(src)
-	update_icon()
+	update_appearance()
 	countdown = new(src)
 	end_processing()
 
@@ -130,7 +130,7 @@
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open_panel = !open_panel
-		update_icon()
+		update_appearance()
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 
 	else if(is_wire_tool(I) && open_panel)
@@ -204,7 +204,7 @@
 		if(!active)
 			visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
-			update_icon()
+			update_appearance()
 			add_fingerprint(user)
 
 			if(payload && !istype(payload, /obj/item/bombcore/training))
@@ -309,7 +309,7 @@
 		holder.delayedbig = FALSE
 		holder.delayedlittle = FALSE
 		holder.explode_now = FALSE
-		holder.update_icon()
+		holder.update_appearance()
 		holder.updateDialog()
 		STOP_PROCESSING(SSfastprocess, holder)
 

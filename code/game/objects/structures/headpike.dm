@@ -25,7 +25,7 @@
 		victim = new(src)
 		victim.real_name = random_unique_name(prob(50))
 	name = "[victim.real_name] on a spear"
-	update_icon()
+	update_appearance()
 	spear = locate(bonespear ? /obj/item/spear/bonespear : /obj/item/spear) in parts_list
 	if(!spear)
 		spear = bonespear ? new/obj/item/spear/bonespear(src) : new/obj/item/spear(src)

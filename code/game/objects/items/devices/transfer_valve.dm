@@ -35,7 +35,7 @@
 			tank_two = item
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
-		update_icon()
+		update_appearance()
 //TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/assembly/A = item
@@ -187,7 +187,7 @@
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
 		valve_open = FALSE
-		update_icon()
+		update_appearance()
 /*
 	This doesn't do anything but the timer etc. expects it to be here
 	eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
@@ -245,7 +245,7 @@
 				attached_device = null
 				. = TRUE
 
-	update_icon()
+	update_appearance()
 
 /**
  * Returns if this is ready to be detonated. Checks if both tanks are in place.

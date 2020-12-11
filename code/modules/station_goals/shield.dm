@@ -115,7 +115,7 @@
 	else
 		end_processing()
 		animate(src, pixel_y = 0, time = 10)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())

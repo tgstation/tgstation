@@ -128,7 +128,7 @@
 		welded = !welded
 		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
-		update_icon()
+		update_appearance()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
@@ -199,7 +199,7 @@
 			else
 				F.constructionStep = CONSTRUCTION_NO_CIRCUIT
 				F.obj_integrity = F.max_integrity * 0.5
-			F.update_icon()
+			F.update_appearance()
 		else
 			new /obj/item/electronics/firelock (T)
 	qdel(src)
@@ -297,7 +297,7 @@
 					"<span class='notice'>You remove the circuit board from [src].</span>")
 				new /obj/item/electronics/firelock(drop_location())
 				constructionStep = CONSTRUCTION_NO_CIRCUIT
-				update_icon()
+				update_appearance()
 				return
 			if(C.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
@@ -378,7 +378,7 @@
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 				"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 				constructionStep = CONSTRUCTION_PANEL_OPEN
-				update_icon()
+				update_appearance()
 				return
 	return ..()
 
@@ -395,7 +395,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 			constructionStep = CONSTRUCTION_PANEL_OPEN
-			update_icon()
+			update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")

@@ -62,7 +62,7 @@
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == storedpda)
 		storedpda = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
 	if(machine_stat & BROKEN)
@@ -78,7 +78,7 @@
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				set_machine_stat(machine_stat & ~BROKEN)
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance()
 
 		else
 			return ..()
@@ -95,7 +95,7 @@
 			return
 		storedpda = O
 		O.add_fingerprint(user)
-		update_icon()
+		update_appearance()
 
 	else
 		return ..()
@@ -140,6 +140,6 @@
 	if(storedpda)
 		storedpda.forceMove(drop_location())
 		storedpda = null
-		update_icon()
+		update_appearance()
 	else
 		to_chat(usr, "<span class='warning'>[src] is empty!</span>")

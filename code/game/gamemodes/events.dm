@@ -6,7 +6,7 @@
 		S.charge = 0
 		S.output_level = 0
 		S.output_attempt = FALSE
-		S.update_icon()
+		S.update_appearance()
 		S.power_change()
 
 	for(var/area/A in GLOB.the_station_areas)
@@ -41,7 +41,7 @@
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
-		S.update_icon()
+		S.update_appearance()
 		S.power_change()
 	for(var/area/A in GLOB.the_station_areas)
 		if(!A.requires_power || A.always_unpowered)
@@ -61,6 +61,6 @@
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
-		S.update_icon()
+		S.update_appearance()
 		S.power_change()
 

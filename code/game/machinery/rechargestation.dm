@@ -18,7 +18,7 @@
 
 /obj/machinery/recharge_station/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	if(is_operational)
 		begin_processing()
 

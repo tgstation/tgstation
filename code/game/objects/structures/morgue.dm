@@ -43,10 +43,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/on_log(login)
 	..()
-	update_icon()
-
-/obj/structure/bodycontainer/update_icon()
-	return
+	update_appearance()
 
 /obj/structure/bodycontainer/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
@@ -129,7 +126,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	connected.setDir(dir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
-	update_icon()
+	update_appearance()
 
 /obj/structure/bodycontainer/proc/close()
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
@@ -140,7 +137,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 				continue
 			AM.forceMove(src)
 	recursive_organ_check(src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
@@ -173,28 +170,30 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
-/obj/structure/bodycontainer/morgue/update_icon()
+/obj/structure/bodycontainer/morgue/update_icon_state()
+	. = ..()
 	if (!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
-	else
-		if(contents.len == 1)  // Empty
-			icon_state = "morgue1"
-		else
-			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
-			if(!length(compiled)) // No mobs?
-				icon_state = "morgue3"
-				return
+		return
 
-			for(var/mob/living/M in compiled)
-				var/mob/living/mob_occupant = get_mob_or_brainmob(M)
-				if(mob_occupant.client && !mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
-					icon_state = "morgue4" // Revivable
-					if(mob_occupant.stat == DEAD && beeper)
-						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
-							next_beep = world.time + beep_cooldown
-					break
+	if(contents.len == 1)  // Empty
+		icon_state = "morgue1"
+		return
+
+	icon_state = "morgue2" // Dead, brainded mob.
+	var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
+	if(!length(compiled)) // No mobs?
+		icon_state = "morgue3"
+		return
+
+	for(var/mob/living/M in compiled)
+		var/mob/living/mob_occupant = get_mob_or_brainmob(M)
+		if(mob_occupant.client && !mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
+			icon_state = "morgue4" // Revivable
+			if(mob_occupant.stat == DEAD && beeper && (world.time > next_beep))
+				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+				next_beep = world.time + beep_cooldown
+			break
 
 
 /obj/item/paper/guides/jobs/medical/morgue
@@ -232,18 +231,19 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
 
-/obj/structure/bodycontainer/crematorium/update_icon()
+/obj/structure/bodycontainer/crematorium/update_icon_state()
+	. = ..()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
 	else
 
-		if(src.contents.len > 1)
-			src.icon_state = "crema2"
+		if(contents.len > 1)
+			icon_state = "crema2"
 		else
-			src.icon_state = "crema1"
+			icon_state = "crema1"
 
 		if(locked)
-			src.icon_state = "crema_active"
+			icon_state = "crema_active"
 
 	return
 
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		audible_message("<span class='hear'>You hear a roar as the crematorium activates.</span>")
 
 		locked = TRUE
-		update_icon()
+		update_appearance()
 
 		for(var/mob/living/M in conts)
 			if (M.stat != DEAD)
@@ -286,7 +286,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 		if(!QDELETED(src))
 			locked = FALSE
-			update_icon()
+			update_appearance()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE) //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
@@ -320,7 +320,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray/Destroy()
 	if(connected)
 		connected.connected = null
-		connected.update_icon()
+		connected.update_appearance()
 		connected = null
 	return ..()
 

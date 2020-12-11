@@ -35,7 +35,7 @@
 
 /obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
 	showpipe = !covered
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()

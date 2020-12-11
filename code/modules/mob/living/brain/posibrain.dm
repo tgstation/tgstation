@@ -59,7 +59,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/mmi/posibrain/AltClick(mob/living/user)
@@ -71,11 +71,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(input_seed)
 		to_chat(user, "<span class='notice'>You set the personality seed to \"[input_seed]\".</span>")
 		ask_role = input_seed
-		update_icon()
+		update_appearance()
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE
-	update_icon()
+	update_appearance()
 	if(QDELETED(brainmob))
 		return
 	if(brainmob.client)
@@ -130,7 +130,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	brainmob.mind.remove_all_antag()
 	brainmob.mind.wipe_memory()
-	update_icon()
+	update_appearance()
 
 ///Moves the candidate from the ghost to the posibrain
 /obj/item/mmi/posibrain/proc/transfer_personality(mob/candidate)

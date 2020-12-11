@@ -44,7 +44,7 @@
 		zap_self(user)
 	else
 		. = ..()
-	update_icon()
+	update_appearance()
 
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)

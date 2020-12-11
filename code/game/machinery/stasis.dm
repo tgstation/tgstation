@@ -56,7 +56,7 @@
 					"<span class='notice'>You [stasis_enabled ? "power on" : "shut down"] \the [src].</span>", \
 					"<span class='hear'>You hear a nearby machine [stasis_enabled ? "power on" : "shut down"].</span>")
 		play_power_sound()
-		update_icon()
+		update_appearance()
 
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
 	if(AM == occupant)
@@ -126,13 +126,13 @@
 	set_occupant(L)
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		set_occupant(null)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/process()
 	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
@@ -148,7 +148,7 @@
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()

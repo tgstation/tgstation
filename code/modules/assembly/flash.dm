@@ -42,7 +42,7 @@
 	attack(user,user)
 	return FIRELOSS
 
-/obj/item/assembly/flash/update_icon(flash = FALSE)
+/obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
 	if(burnt_out)
@@ -53,7 +53,7 @@
 		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
-		holder.update_icon()
+		holder.update_appearance()
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -64,7 +64,7 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		update_icon()
+		update_appearance()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")

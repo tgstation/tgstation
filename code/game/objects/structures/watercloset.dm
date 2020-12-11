@@ -15,7 +15,7 @@
 /obj/structure/toilet/Initialize()
 	. = ..()
 	open = round(rand(0, 1))
-	update_icon()
+	update_appearance()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -75,7 +75,7 @@
 			w_items -= I.w_class
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 
 
 /obj/structure/toilet/update_icon_state()
@@ -99,7 +99,7 @@
 		if(I.use_tool(src, user, 30))
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='hear'>You hear grinding porcelain.</span>")
 			cistern = !cistern
-			update_icon()
+			update_appearance()
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
@@ -623,7 +623,7 @@
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
-	update_icon()
+	update_appearance()
 
 /obj/structure/curtain/update_icon()
 	if(!open)

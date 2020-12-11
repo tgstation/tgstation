@@ -27,7 +27,7 @@
 		newdart.pen = pen
 		pen.forceMove(newdart)
 		pen = null
-	newdart.update_icon()
+	newdart.update_appearance()
 
 
 /obj/projectile/bullet/reusable/foam_dart/Destroy()

@@ -111,7 +111,7 @@
 
 	screen_on = !screen_on
 	display_overlays = screen_on
-	update_icon()
+	update_appearance()
 
 
 

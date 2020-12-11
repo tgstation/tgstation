@@ -40,7 +40,7 @@
 	if(!..())
 		return FALSE//Cooldown check
 	timing = !timing
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/assembly/timer/toggle_secure()
@@ -50,7 +50,7 @@
 	else
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/timer/proc/timer_end()
@@ -64,7 +64,7 @@
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/assembly/timer/process(delta_time)
 	if(!timing)
@@ -113,7 +113,7 @@
 			timing = !timing
 			if(timing && istype(holder, /obj/item/transfer_valve))
 				log_bomber(usr, "activated a", src, "attachment on [holder]")
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("repeat")
 			loop = !loop

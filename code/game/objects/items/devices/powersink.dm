@@ -57,7 +57,7 @@
 			set_anchored(TRUE)
 
 	mode = value
-	update_icon()
+	update_appearance()
 	set_light(0)
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)

@@ -48,7 +48,7 @@
 	biological_sample.sample_color = petri.sample.sample_color
 	to_chat(user, "<span class='warning'>You put some of the sample in the vat!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-	update_icon()
+	update_appearance()
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine(mob/user)
@@ -66,7 +66,7 @@
 
 ///Call update icon when reagents change to update the reagent content icons
 /obj/machinery/plumbing/growing_vat/on_reagent_change(changetype)
-	update_icon()
+	update_appearance()
 	return ..()
 
 ///Adds overlays to show the reagent contents

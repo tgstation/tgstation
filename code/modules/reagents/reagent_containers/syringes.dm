@@ -22,31 +22,31 @@
 	. = ..()
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/syringe/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/reagent_containers/syringe/on_reagent_change(changetype)
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/syringe/pickup(mob/user)
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/syringe/dropped(mob/user)
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/syringe/attack_self(mob/user)
 	mode = !mode
-	update_icon()
+	update_appearance()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/reagent_containers/syringe/attack_hand()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/syringe/attack_paw(mob/user)
 	return attack_hand(user)
@@ -113,7 +113,7 @@
 				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
-				update_icon()
+				update_appearance()
 
 		if(SYRINGE_INJECT)
 			// Always log attemped injections for admins
@@ -155,7 +155,7 @@
 			to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
-				update_icon()
+				update_appearance()
 
 /*
  * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
@@ -192,7 +192,7 @@
 				injoverlay = "inject"
 		. += injoverlay
 
-///Used by update_icon() and update_overlays()
+///Used by update_appearance() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
 	if(reagents?.total_volume)
 		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)

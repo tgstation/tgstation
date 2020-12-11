@@ -15,7 +15,7 @@
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
 	fireaxe = new
-	update_icon()
+	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
@@ -33,7 +33,7 @@
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
 			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				update_icon()
+				update_appearance()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -47,7 +47,7 @@
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_icon()
+			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
 			var/obj/item/fireaxe/F = I
@@ -58,7 +58,7 @@
 				return
 			fireaxe = F
 			to_chat(user, "<span class='notice'>You place the [F.name] back in the [name].</span>")
-			update_icon()
+			update_appearance()
 			return
 		else if(!broken)
 			toggle_open()
@@ -80,11 +80,11 @@
 		return
 	. = ..()
 	if(.)
-		update_icon()
+		update_appearance()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		update_icon()
+		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
@@ -114,14 +114,14 @@
 			fireaxe = null
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
-			update_icon()
+			update_appearance()
 			return
 	if(locked)
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
@@ -138,7 +138,7 @@
 		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	open = !open
-	update_icon()
+	update_appearance()
 
 
 /obj/structure/fireaxecabinet/update_overlays()
@@ -172,7 +172,7 @@
 	if(do_after(user, 20, target = src))
 		to_chat(user, "<span class='notice'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
-		update_icon()
+		update_appearance()
 
 /obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
@@ -184,5 +184,5 @@
 		return
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 		return

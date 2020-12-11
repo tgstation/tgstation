@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 
 /obj/item/stack/marker_beacon/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/marker_beacon/examine(mob/user)
 	. = ..()
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 		return
 	if(input_color)
 		picked_color = input_color
-		update_icon()
+		update_appearance()
 
 /obj/structure/marker_beacon
 	name = "marker beacon"
@@ -85,13 +85,13 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 /obj/structure/marker_beacon/Initialize(mapload, set_color)
 	. = ..()
 	picked_color = set_color
-	update_icon()
+	update_appearance()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
-		M.update_icon()
+		M.update_appearance()
 	qdel(src)
 
 /obj/structure/marker_beacon/examine(mob/user)
@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	if(do_after(user, remove_speed, target = src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
-		M.update_icon()
+		M.update_appearance()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -145,4 +145,4 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 		return
 	if(input_color)
 		picked_color = input_color
-		update_icon()
+		update_appearance()

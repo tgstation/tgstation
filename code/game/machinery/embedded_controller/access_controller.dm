@@ -67,7 +67,7 @@
 		if(controller.machine_stat & NOPOWER)
 			return
 		busy = TRUE
-		update_icon()
+		update_appearance()
 		if(door.density)
 			if(!controller.exteriorAirlock || !controller.interiorAirlock)
 				controller.onlyOpen(door)
@@ -82,7 +82,7 @@
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()
 	busy = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/door_buttons/access_button/update_icon_state()
 	if(machine_stat & NOPOWER)
@@ -148,7 +148,7 @@
 /obj/machinery/door_buttons/airlock_controller/proc/onlyOpen(obj/machinery/door/airlock/A)
 	if(A)
 		busy = CLOSING
-		update_icon()
+		update_appearance()
 		openDoor(A)
 
 /obj/machinery/door_buttons/airlock_controller/proc/onlyClose(obj/machinery/door/airlock/A)
@@ -160,7 +160,7 @@
 	if(A.density)
 		goIdle()
 		return FALSE
-	update_icon()
+	update_appearance()
 	A.safe = FALSE //Door crushies, manual door after all. Set every time in case someone changed it, safe doors can end up waiting forever.
 	A.unbolt()
 	if(A.close())
@@ -179,7 +179,7 @@
 	if(exteriorAirlock.density == interiorAirlock.density || !A.density)
 		return
 	busy = CYCLE
-	update_icon()
+	update_appearance()
 	if(A == interiorAirlock)
 		if(closeDoor(exteriorAirlock))
 			busy = CYCLE_INTERIOR
@@ -219,7 +219,7 @@
 	lostPower = FALSE
 	busy = FALSE
 	if(update)
-		update_icon()
+		update_appearance()
 	updateUsrDialog()
 
 /obj/machinery/door_buttons/airlock_controller/process()

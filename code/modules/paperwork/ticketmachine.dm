@@ -41,11 +41,11 @@
 			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 			qdel(ticket)
 		tickets.Cut()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ticket_machine/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ticket_machine/proc/increment()
 	if(current_number > ticket_number)
@@ -59,7 +59,7 @@
 		say("Now serving ticket #[current_number]!")
 		if(!(obj_flags & EMAGGED) && tickets[current_number])
 			tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
-		update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
+		update_appearance() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
 	name = "increment ticket counter"
@@ -117,6 +117,11 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
+	. = ..()
+	handle_maptext()
+
+/obj/machinery/ticket_machine/update_icon_state()
+	. = ..()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
 		if(0 to 49)
 			icon_state = "ticketmachine_100"
@@ -124,7 +129,6 @@
 			icon_state = "ticketmachine_50"
 		if(100)
 			icon_state = "ticketmachine_0"
-	handle_maptext()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
@@ -154,7 +158,7 @@
 					qdel(ticket)
 				tickets.Cut()
 			max_number = initial(max_number)
-			update_icon()
+			update_appearance()
 			return
 
 /obj/machinery/ticket_machine/proc/reset_cooldown()
@@ -220,7 +224,7 @@
 
 /obj/item/paper/extinguish()
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/item/ticket_machine_ticket/Destroy()
 	if(owner && source)

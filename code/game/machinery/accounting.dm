@@ -30,7 +30,7 @@
 		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name)
 		inserted_id.registered_account = bank_account
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 
@@ -51,7 +51,7 @@
 /obj/machinery/accounting/proc/remove_card()
 	UnregisterSignal(inserted_id, COMSIG_PARENT_QDELETING)
 	inserted_id = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/accounting/update_overlays()
 	. = ..()

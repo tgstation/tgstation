@@ -44,7 +44,7 @@
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
-	update_icon()
+	update_appearance()
 	. = ..()
 	if(!contents.len)
 		new fold_result(user.drop_location())
@@ -55,12 +55,12 @@
 /obj/item/storage/fancy/Exited()
 	. = ..()
 	fancy_open = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/fancy/Entered()
 	. = ..()
 	fancy_open = TRUE
-	update_icon()
+	update_appearance()
 
 #define DONUT_INBOX_SPRITE_WIDTH 3
 
@@ -87,7 +87,7 @@
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/fancy/donut_box/update_icon_state()
 	if(fancy_open)

@@ -74,7 +74,7 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user)
 	if(power_cell && panel_open)
-		power_cell.update_icon()
+		power_cell.update_appearance()
 		user.put_in_hands(power_cell)
 		power_cell = null
 		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")

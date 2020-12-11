@@ -144,7 +144,7 @@ but only permamently removed with the curator's soapstone.
 	creator_key = user.ckey
 	realdate = world.realtime
 	map = SSmapping.config.map_name
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/update_icon()
 	..()
@@ -189,7 +189,7 @@ but only permamently removed with the curator's soapstone.
 	var/turf/newloc = locate(x, y, z)
 	if(isturf(newloc))
 		forceMove(newloc)
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/examine(mob/user)
 	. = ..()

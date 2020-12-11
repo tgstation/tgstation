@@ -299,7 +299,7 @@
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	if(cap_on)
 		spillable = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/update_overlays()
 	. = ..()
@@ -335,7 +335,7 @@
 		cap_on = TRUE
 		spillable = FALSE
 		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/is_refillable()
 	if(cap_on)
@@ -417,7 +417,7 @@
 	list_reagents = list(random_reagent.type = 50)
 	. = ..()
 	desc +=  "<span class='notice'>The writing reads '[random_reagent.name]'.</span>"
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/food/drinks/beer
 	name = "space beer"

@@ -63,7 +63,7 @@
 	. = ..()
 	if(isnull(.))
 		return
-	update_icon()
+	update_appearance()
 
 /obj/structure/destructible/cult/update_icon_state()
 	icon_state = "[initial(icon_state)][anchored ? null : "_off"]"

@@ -57,7 +57,7 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	update_icon()
+	update_appearance()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
 
 
@@ -84,7 +84,7 @@
 	if(A == cell)
 		cell = null
 		turned_on = FALSE
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -104,7 +104,7 @@
 		if(turned_on && cell.charge < cell_hit_cost)
 			//we're below minimum, turn off
 			turned_on = FALSE
-			update_icon()
+			update_appearance()
 			playsound(src, activate_sound, 75, TRUE, -1)
 
 
@@ -136,7 +136,7 @@
 				return
 			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
-			update_icon()
+			update_appearance()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		tryremovecell(user)
@@ -145,12 +145,12 @@
 
 /obj/item/melee/baton/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
-		cell.update_icon()
+		cell.update_appearance()
 		cell.forceMove(get_turf(src))
 		cell = null
 		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 		turned_on = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	toggle_on(user)
@@ -166,7 +166,7 @@
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
-	update_icon()
+	update_appearance()
 	add_fingerprint(user)
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)

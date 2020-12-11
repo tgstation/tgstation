@@ -14,11 +14,11 @@
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	AddElement(/datum/element/point_of_interest)
-	update_icon() //so it atleast appears
+	update_appearance() //so it atleast appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
-		update_icon()
+		update_appearance()
 	. = ..()
 
 /obj/structure/blob/core/scannerreport()

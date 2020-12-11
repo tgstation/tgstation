@@ -185,7 +185,7 @@
 
 	ready = !ready
 
-	update_icon()
+	update_appearance()
 
 	var/numbuttons = 0
 	var/numready = 0

@@ -101,13 +101,13 @@
 		if(cpu)
 			cpu.shutdown_computer(0)
 	set_machine_stat(machine_stat | NOPOWER)
-	update_icon()
+	update_appearance()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu?.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
-		update_icon()
+		update_appearance()
 		return
 	. = ..()
 

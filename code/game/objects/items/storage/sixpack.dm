@@ -18,7 +18,7 @@
 
 /obj/item/storage/cans/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/cans/ComponentInitialize()
 	. = ..()

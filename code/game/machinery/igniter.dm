@@ -34,7 +34,7 @@
 
 	use_power(50)
 	on = !( on )
-	update_icon()
+	update_appearance()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (on && !(machine_stat & NOPOWER) )
@@ -103,7 +103,7 @@
 			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
 		if (!disable)
 			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 

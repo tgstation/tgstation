@@ -70,7 +70,7 @@
 	else
 		use_power = IDLE_POWER_USE
 
-	update_icon()
+	update_appearance()
 
 	if(dos_overload > 0)
 		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
@@ -78,12 +78,12 @@
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)
 		set_dos_failure(TRUE)
-		update_icon()
+		update_appearance()
 		SSnetworks.station_network.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		set_dos_failure(FALSE)
-		update_icon()
+		update_appearance()
 		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
@@ -109,13 +109,13 @@
 		if("restart")
 			dos_overload = 0
 			set_dos_failure(FALSE)
-			update_icon()
+			update_appearance()
 			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_relay_enabled(!relay_enabled)
 			SSnetworks.station_network.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
-			update_icon()
+			update_appearance()
 			return TRUE
 
 /obj/machinery/ntnet_relay/Initialize()

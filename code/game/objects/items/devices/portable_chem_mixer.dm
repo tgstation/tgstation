@@ -41,7 +41,7 @@
 			update_contents()
 		if (locked)
 			replace_beaker(user)
-		update_icon()
+		update_appearance()
 		I.play_tool_sound(src, 50)
 		return
 
@@ -51,7 +51,7 @@
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		update_icon()
+		update_appearance()
 		updateUsrDialog()
 		return
 
@@ -91,7 +91,7 @@
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	update_icon()
+	update_appearance()
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -206,5 +206,5 @@
 			. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			update_icon()
+			update_appearance()
 			. = TRUE

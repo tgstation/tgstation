@@ -158,7 +158,7 @@
 			log_game("Emitter turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
 			investigate_log("turned [active ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 
-			update_icon()
+			update_appearance()
 
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -180,19 +180,19 @@
 		return
 	if(!welded || (!powernet && active_power_usage))
 		active = FALSE
-		update_icon()
+		update_appearance()
 		return
 	if(active == TRUE)
 		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
-				update_icon()
+				update_appearance()
 				investigate_log("regained power and turned <font color='green'>ON</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = FALSE
-				update_icon()
+				update_appearance()
 				investigate_log("lost power and turned <font color='red'>OFF</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in [AREACOORD(src)]")
 			return

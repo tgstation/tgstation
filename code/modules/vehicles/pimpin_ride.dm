@@ -10,7 +10,7 @@
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
@@ -43,7 +43,7 @@
 			return
 		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
 		mybag = I
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/janiupgrade))
 		if(floorbuffer)
 			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
@@ -52,7 +52,7 @@
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
-		update_icon()
+		update_appearance()
 	else if(mybag)
 		mybag.attackby(I, user)
 	else
@@ -73,7 +73,7 @@
 		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null
-		update_icon()
+		update_appearance()
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE
