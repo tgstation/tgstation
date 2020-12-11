@@ -12,6 +12,9 @@ set -e
 # Convenience variables
 Bootstrap="$(dirname "$0")"
 Cache="$Bootstrap/.cache"
+if [ "$TG_BOOTSTRAP_CACHE" ]; then
+	Cache="$TG_BOOTSTRAP_CACHE"
+fi
 . "$Bootstrap/../../dependencies.sh"  # sets NODE_VERSION_PRECISE
 NodeVersion="$NODE_VERSION_PRECISE"
 NodeFullVersion="node-v$NodeVersion-win-x64"

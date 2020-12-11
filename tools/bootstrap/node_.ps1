@@ -21,6 +21,9 @@ function ExtractVersion {
 # Convenience variables
 $Bootstrap = Split-Path $script:MyInvocation.MyCommand.Path
 $Cache = "$Bootstrap/.cache"
+if ($Env:TG_BOOTSTRAP_CACHE) {
+	$Cache = $Env:TG_BOOTSTRAP_CACHE
+}
 $NodeVersion = ExtractVersion -Path "$Bootstrap/../../dependencies.sh" -Key "NODE_VERSION_PRECISE"
 $NodeFullVersion = "node-v$NodeVersion-win-x64"
 $NodeDir = "$Cache/$NodeFullVersion"
