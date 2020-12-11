@@ -975,9 +975,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dq" = (
-/obj/machinery/portable_atmospherics/scrubber{
-	anchored = 1
-	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dr" = (
