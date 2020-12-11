@@ -35,8 +35,18 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+
+	/**
+	  * In case you have multiple types, you automatically use the most useful one.
+	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	  * Should be added/removed through the ADD_MOVE_TRAIT and REMOVE_TRAIT (and variant) macros.
+	  */
 	var/movement_type = GROUND
+	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
+	var/has_movement_type_signals = FALSE
+	/// Whether the movable should be bobbing up and down or not.
+	var/floating_anim_status = NO_FLOATING_ANIM
+
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -210,6 +220,14 @@
 			. = TRUE
 		if(NAMEOF(src, glide_size))
 			set_glide_size(var_value)
+			. = TRUE
+		if(NAMEOF(src, floating_anim_status))
+			if(var_value != floating_anim_status)
+				switch(var_value)
+					if(HAS_FLOATING_ANIM)
+						float()
+					else
+						stop_floating(var_value)
 			. = TRUE
 
 	if(!isnull(.))
@@ -594,14 +612,37 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+/// Called when movement_type trait is added to the mob.
+/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
+	SIGNAL_HANDLER
+	if(!(movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && floating_anim_status == NO_FLOATING_ANIM)
+		float()
+	movement_type |= GLOB.movement_type_trait_to_flag[trait]
 
-///Proc to modify the movement_type and hook behavior associated with it changing.
-/atom/movable/proc/setMovetype(newval)
-	if(movement_type == newval)
+/// Called when a movement_type trait is removed from the mob.
+/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
+	SIGNAL_HANDLER
+	var/flag = GLOB.movement_type_trait_to_flag[trait]
+	if(initial(movement_type) & flag)
 		return
-	. = movement_type
-	movement_type = newval
+	movement_type &= ~flag
+	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)) && floating_anim_status == HAS_FLOATING_ANIM)
+		stop_floating(NO_FLOATING_ANIM)
 
+/// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the mob.
+/atom/movable/proc/on_no_floating_anim_trait_gain(datum/source, trait)
+	SIGNAL_HANDLER
+	stop_floating(NEVER_FLOATING_ANIM)
+
+/// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob.
+/atom/movable/proc/on_no_floating_anim_trait_loss(datum/source, trait)
+	SIGNAL_HANDLER
+	if(initial(floating_anim_status) == NEVER_FLOATING_ANIM)
+		return
+	if(movement_type & (FLOATING|FLYING))
+		float()
+	else
+		floating_anim_status = NO_FLOATING_ANIM
 
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -848,8 +889,8 @@
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -903,18 +944,21 @@
 	acted_explosions += ex_id
 	return TRUE
 
-//TODO: Better floating
-/atom/movable/proc/float(on)
-	if(throwing)
+///Floats the movable up and down if the conditions are met.
+/atom/movable/proc/float()
+	if(floating_anim_status == HAS_FLOATING_ANIM)
 		return
-	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		setMovetype(movement_type | FLOATING)
-	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = base_pixel_y, time = 10)
-		setMovetype(movement_type & ~FLOATING)
+	floating_anim_status = HAS_FLOATING_ANIM
+	animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
+/// Stops the above.
+/atom/movable/proc/stop_floating(new_status = NO_FLOATING_ANIM)
+	if(floating_anim_status == HAS_FLOATING_ANIM)
+		animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
+	else if(floating_anim_status == NEVER_FLOATING_ANIM)
+		return
+	floating_anim_status = new_status
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.

@@ -449,7 +449,6 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -466,6 +465,10 @@
 		del_on_death = FALSE
 		qdel(src)
 	else
+		if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //Has no extrinsic source of flight and isn't floating.
+			movement_type &= ~FLYING
+			if(floating_anim_status == HAS_FLOATING_ANIM && !(movement_type & FLOATING))
+				stop_floating(NO_FLOATING_ANIM)
 		health = 0
 		icon_state = icon_dead
 		if(flip_on_death)
@@ -499,7 +502,6 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
-
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(!.)
@@ -507,8 +509,17 @@
 	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	setMovetype(initial(movement_type))
+	if(initial(movement_type) & (FLYING)) //regain its intrisic flight
+		movement_type |= FLYING
+		if(floating_anim_status == NO_FLOATING_ANIM)
+			float()
 
+///Handles removing intrisic FLYING movement_type when dead.
+/mob/living/simple_animal/on_movement_type_trait_loss(datum/source, trait)
+	..()
+	if(stat == DEAD && trait == TRAIT_MOVE_FLYING && !(movement_type & FLOATING) && floating_anim_status == HAS_FLOATING_ANIM)
+		movement_type &= ~FLYING
+		stop_floating(NO_FLOATING_ANIM)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())

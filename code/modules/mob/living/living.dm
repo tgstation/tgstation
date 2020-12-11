@@ -9,6 +9,10 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(movement_type & (FLYING|FLOATING) && floating_anim_status != NEVER_FLOATING_ANIM)
+		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_gain);\
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_loss);\
+		float()
 
 /mob/living/prepare_huds()
 	..()
@@ -920,10 +924,11 @@
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(has_gravity, override)
+/mob/living/update_gravity(has_gravity)
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
+	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/weightless)
 	if(has_gravity)
 		if(has_gravity == 1)
 			clear_alert("gravity")
@@ -932,24 +937,18 @@
 				throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
 			else
 				throw_alert("gravity", /atom/movable/screen/alert/highgravity)
+		if(was_weightless)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	else
 		throw_alert("gravity", /atom/movable/screen/alert/weightless)
-	if(!override && !is_flying())
-		float(!has_gravity)
+		if(!was_weightless)
+			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 
-/mob/living/float(on)
-	if(throwing)
-		return
-	var/fixed = 0
-	if(anchored || (buckled?.anchored))
-		fixed = 1
-	if(on && !(movement_type & FLOATING) && !fixed)
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		setMovetype(movement_type | FLOATING)
-	else if(((!on || fixed) && (movement_type & FLOATING)))
+/mob/living/stop_floating(new_status = NO_FLOATING_ANIM)
+	if(floating_anim_status == HAS_FLOATING_ANIM)
 		animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
-		setMovetype(movement_type & ~FLOATING)
+		floating_anim_status = NO_FLOATING_ANIM //stops the parent call from nullifying the body position offset.
+	..()
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -1045,9 +1044,8 @@
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
 	var/final_pixel_x = base_pixel_x + body_position_pixel_x_offset
 	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
-	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2, flags = ANIMATION_PARALLEL)
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C

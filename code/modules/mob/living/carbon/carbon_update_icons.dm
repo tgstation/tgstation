@@ -21,8 +21,7 @@
 		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
-		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
-		setMovetype(movement_type & ~FLOATING)  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
+		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
