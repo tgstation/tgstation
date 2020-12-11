@@ -123,14 +123,13 @@
 	return ..()
 
 
-/obj/machinery/autolathe/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
+/obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
-	else if(custom_materials && custom_materials.len && custom_materials[GetMaterialRef(/datum/material/glass)])
-		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
+	else if(item_inserted.has_material_type(/datum/material/glass))
+		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
 	else
-		flick("autolathe_o",src)//plays metal insertion animation
-
+		flick("autolathe_o", src)//plays metal insertion animation
 
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
