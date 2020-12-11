@@ -66,31 +66,9 @@
 	name = "Burrow"
 	desc = "Burrow under soft ground, evading predators and increasing your speed."
 
-/obj/effect/dummy/phased_mob/goldgrub
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/canmove = TRUE
-
-/obj/effect/dummy/phased_mob/goldgrub/relaymove(mob/living/user, direction)
-	forceMove(get_step(src,direction))
-
-/obj/effect/dummy/phased_mob/goldgrub/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/goldgrub/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/goldgrub/singularity_act()
-	return
-
 /datum/action/innate/goldgrub/burrow/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/goldgrub/G = owner
-	var/obj/effect/dummy/phased_mob/goldgrub/holder = null
+	var/obj/effect/dummy/phased_mob/holder = null
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
@@ -110,7 +88,7 @@
 	else
 		G.visible_message("<span class='danger'>[G] buries into the ground, vanishing from sight!</span>")
 		playsound(get_turf(G), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob/goldgrub(T)
+		holder = new /obj/effect/dummy/phased_mob(T)
 		G.forceMove(holder)
 		G.is_burrowed = TRUE
 

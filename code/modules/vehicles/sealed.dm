@@ -1,4 +1,5 @@
 /obj/vehicle/sealed
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 
@@ -104,11 +105,6 @@
 	else
 		inserted_key.equip_to_best_slot(user, check_hand = FALSE)
 	inserted_key = null
-
-
-/obj/vehicle/sealed/obj_destruction(damage_flag)
-	explosion(loc, 0, 1, 2, 3, 0)
-	return ..()
 
 /obj/vehicle/sealed/Destroy()
 	dump_mobs()

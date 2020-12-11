@@ -92,7 +92,7 @@
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	START_PROCESSING(SSobj, src)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
@@ -100,7 +100,6 @@
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	GLOB.poi_list -= src
 	if(!active_phylacteries)
 		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()
@@ -121,7 +120,7 @@
 	if(!item_turf)
 		return "[src] is not at a turf? NULLSPACE!?"
 
-	var/mob/old_body = mind.current
+	var/mob/living/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
 	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), ITEM_SLOT_FEET)

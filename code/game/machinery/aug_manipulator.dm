@@ -16,8 +16,8 @@
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-    initial_icon_state = initial(icon_state)
-    return ..()
+	initial_icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -114,12 +114,12 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  * * part The body part that is being customized
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ * * part The body part that is being customized
+ */
 /obj/machinery/aug_manipulator/proc/check_menu(mob/living/user, obj/item/bodypart/part)
 	if(!istype(user))
 		return FALSE

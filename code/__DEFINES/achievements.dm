@@ -29,6 +29,7 @@
 #define MEDAL_ASH_ASCENSION		"Ash"
 #define MEDAL_FLESH_ASCENSION	"Flesh"
 #define MEDAL_RUST_ASCENSION	"Rust"
+#define MEDAL_VOID_ASCENSION	"Void"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"

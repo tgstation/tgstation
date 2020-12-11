@@ -42,7 +42,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
-		/obj/item/reagent_containers/food/snacks/deadmouse
+		/obj/item/food/deadmouse
 	))
 
 /datum/component/storage/concrete/pockets/chefhat/can_be_inserted(obj/item/I, stop_messages, mob/M)
@@ -111,3 +111,13 @@
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
 					  /obj/item/reagent_containers/food/drinks/drinkingglass,
 					  /obj/item/ammo_box/a762))
+
+
+/datum/component/storage/concrete/pockets/void_cloak
+	quickdraw = TRUE
+	max_items = 3
+
+/datum/component/storage/concrete/pockets/void_cloak/Initialize()
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
+	exception_hold = exception_cache

@@ -1,6 +1,7 @@
 /obj/item/melee/transforming
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 20
+	stealthy_audio = TRUE //Most of these are antag weps so we dont want them to be /too/ overt.
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions

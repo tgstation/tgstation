@@ -15,10 +15,16 @@
 	var/active = FALSE
 	///if TRUE connects will spin with the parent object visually and codually, so you can have it work in any direction. FALSE if you want it to be static
 	var/turn_connects = TRUE
+	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
+	var/ducting_layer = DUCT_LAYER_DEFAULT
 
-/datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE) //turn_connects for wheter or not we spin with the object to change our pipes
+///turn_connects is for wheter or not we spin with the object to change our pipes
+/datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(_ducting_layer)
+		ducting_layer = ducting_layer
 
 	var/atom/movable/AM = parent
 	if(!AM.reagents)
@@ -30,6 +36,7 @@
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
 	if(start)
 		//timer 0 so it can finish returning initialize, after which we're added to the parent.
@@ -109,6 +116,25 @@
 	if(tile_covered || !use_overlays)
 		return
 
+	//Copied from ducts handle_layer()
+	var/offset
+
+	switch(ducting_layer)
+		if(FIRST_DUCT_LAYER)
+			offset = -10
+		if(SECOND_DUCT_LAYER)
+			offset = -5
+		if(THIRD_DUCT_LAYER)
+			offset = 0
+		if(FOURTH_DUCT_LAYER)
+			offset = 5
+		if(FIFTH_DUCT_LAYER)
+			offset = 10
+
+	var/duct_x = offset
+	var/duct_y = offset
+
+
 	for(var/D in GLOB.cardinals)
 		var/color
 		var/direction
@@ -138,6 +164,9 @@
 			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]-s", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
 			I.dir = D
 
+		I.pixel_x = duct_x
+		I.pixel_y = duct_y
+
 		overlays += I
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
@@ -158,8 +187,9 @@
 	for(var/D in GLOB.cardinals)
 		if(D & (demand_connects | supply_connects))
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				duct.remove_connects(turn(D, 180))
-				duct.update_icon()
+				if(duct.duct_layer == ducting_layer)
+					duct.remove_connects(turn(D, 180))
+					duct.update_icon()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable()
@@ -187,7 +217,7 @@
 					duct.attempt_connect()
 				else
 					var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
-					if(P)
+					if(P && P.ducting_layer == ducting_layer)
 						direct_connect(P, D)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
@@ -244,6 +274,21 @@
 
 	tile_covered = intact
 	AM.update_icon()
+
+/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
+	ducting_layer = new_layer
+
+	if(ismovable(parent))
+		var/atom/movable/AM = parent
+		AM.update_icon()
+
+	if(O)
+		playsound(O, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+
+	//quickly disconnect and reconnect the network.
+	if(active)
+		disable()
+		enable()
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

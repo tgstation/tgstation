@@ -22,13 +22,11 @@ GLOBAL_LIST_INIT(pipe_cleaner_colors, list(
 ////////////////////////////////
 
 /* Cable directions (d1 and d2)
-
-
-  9   1   5
-	\ | /
-  8 - 0 - 4
-	/ | \
-  10  2   6
+ * 9   1   5
+ *	\ | /
+ * 8 - 0 - 4
+ *	/ | \
+ * 10  2   6
 
 If d1 = 0 and d2 = 0, there's no pipe_cleaner
 If d1 = 0 and d2 = dir, it's a O-X pipe_cleaner, getting from the center of the tile to dir (knot pipe_cleaner)
@@ -179,7 +177,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil
 	name = "pipe cleaner coil"
 	desc = "A coil of pipe cleaners. Good for arts and crafts, not to build with."
-	custom_price = 25
+	custom_price = PAYCHECK_ASSISTANT * 0.5
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "pipecleaner"
@@ -194,7 +192,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
@@ -203,13 +201,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	cost = 1
+	source = /datum/robot_energy_storage/pipe_cleaner
 	/// Currently set cable color
 	var/pipe_cleaner_color = COLOR_RED
-
-/obj/item/stack/pipe_cleaner_coil/cyborg
-	is_cyborg = 1
-	custom_materials = null
-	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
 	var/selected_color = input(user, "Pick a pipe cleaner color.", "Cable Color") as null|anything in list("blue", "cyan", "green", "orange", "pink", "red", "white", "yellow")
@@ -233,8 +228,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(pipe_cleaner_colors[pipe_cleaner_color])
 		pipe_cleaner_color = pipe_cleaner_colors[pipe_cleaner_color]
 
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 ///////////////////////////////////
@@ -460,8 +455,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	if(!amount)
 		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red

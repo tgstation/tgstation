@@ -101,6 +101,13 @@
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
 
+#define HYPERTORUS_INACTIVE 0		// No or minimal energy
+#define HYPERTORUS_NOMINAL 1		// Normal operation
+#define HYPERTORUS_WARNING 2		// Integrity damaged
+#define HYPERTORUS_DANGER 3			// Integrity < 50%
+#define HYPERTORUS_EMERGENCY 4		// Integrity < 25%
+#define HYPERTORUS_MELTING 5		// Pretty obvious.
+
 //Nuclear bomb stuff
 #define NUKESTATE_INTACT		5
 #define NUKESTATE_UNSCREWED		4
@@ -128,3 +135,8 @@
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)
 #define PLANT_GENE_EXTRACTABLE	(1<<1)
+
+//mass drivers and related machinery
+#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_CHAPEL "chapelgun"
+#define MASSDRIVER_DISPOSALS "trash"

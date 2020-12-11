@@ -249,3 +249,11 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/decorations
+	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/decorations/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/effect/spawner/lootdrop/decorations_spawner(src)

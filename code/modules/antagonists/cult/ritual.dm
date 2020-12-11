@@ -26,8 +26,15 @@ This file contains the cult dagger and rune list code
 	if(iscultist(M))
 		if(M.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
-			var/holy2unholy = M.get_reagent_amount(/datum/reagent/water/holywater)
-			M.remove_reagent(/datum/reagent/water/holywater, holy2unholy)
+			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
+			M.reagents.del_reagent(/datum/reagent/water/holywater)
+			//For carbons we also want to clear out the stomach of any holywater
+			if(iscarbon(M))
+				var/mob/living/carbon/carboy = M
+				var/obj/item/organ/stomach/belly = carboy.getorganslot(ORGAN_SLOT_STOMACH)
+				if(belly)
+					holy2unholy += belly.reagents.get_reagent_amount(/datum/reagent/water/holywater)
+					belly.reagents.del_reagent(/datum/reagent/water/holywater)
 			M.reagents.add_reagent(/datum/reagent/fuel/unholywater,holy2unholy)
 			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
@@ -118,7 +125,7 @@ This file contains the cult dagger and rune list code
 			var/obj/structure/emergency_shield/cult/narsie/N = new(B)
 			shields += N
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open [user.p_their()] arm and begins writing in [user.p_their()] own blood":"begins sketching out a strange design"]!</span>", \
-						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
+						"<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), wound_bonus = CANT_WOUND) // *cuts arm* *bone explodes* ever have one of those days?
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
@@ -133,7 +140,7 @@ This file contains the cult dagger and rune list code
 	if(!check_rune_turf(Turf, user))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in [user.p_their()] own blood":""].</span>", \
-						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
+						"<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
 		var/obj/structure/emergency_shield/S = V
 		if(S && !QDELETED(S))

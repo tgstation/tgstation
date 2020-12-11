@@ -16,8 +16,8 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, TRUE, /obj/item/stack)
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, MATCONTAINER_EXAMINE|MATCONTAINER_ANY_INTENT|MATCONTAINER_SILENT, /obj/item/stack)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
