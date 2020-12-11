@@ -26,11 +26,10 @@
 	return ..()
 
 /obj/item/reagent_containers/blood/proc/update_pack_name()
-	if(!labelled)
-		if(blood_type)
-			name = "blood pack - [blood_type]"
-		else
-			name = "blood pack"
+	if(labelled)
+		return
+
+	name = "blood_pack[blood_type ? " - [blood_type]" : ""]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
