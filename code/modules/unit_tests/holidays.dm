@@ -16,7 +16,7 @@
 // another nth day of week
 /datum/unit_test/mother_3683/Run()
 	var/datum/holiday/nth_week/mother/mother = new
-	TEST_ASSERT(mother.shouldCelebrate(2, MAY, 3683, 1, SUNDAY), "May 2, 3683 was not Mother's Day.")
+	TEST_ASSERT(mother.shouldCelebrate(9, MAY, 3683, 2, SUNDAY), "May 9, 3683 was not Mother's Day.")
 
 // plain old simple holiday
 /datum/unit_test/hello_2020/Run()
