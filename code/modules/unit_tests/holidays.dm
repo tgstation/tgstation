@@ -14,9 +14,9 @@
 	TEST_ASSERT(thanksgiving.shouldCelebrate(26, NOVEMBER, 2020, 4, THURSDAY), "November 26, 2020 was not Thanksgiving.")
 
 // another nth day of week
-/datum/unit_test/indigenous_3683/Run()
-	var/datum/holiday/nth_week/indigenous/indigenous = new
-	TEST_ASSERT(indigenous.shouldCelebrate(11, OCTOBER, 3683, 2, MONDAY), "October 11, 3683 was not Indigenous Peoples' Day.")
+/datum/unit_test/mother_3683/Run()
+	var/datum/holiday/nth_week/mother/mother = new
+	TEST_ASSERT(mother.shouldCelebrate(2, MAY, 3683, 1, SUNDAY), "May 2, 3683 was not Mother's Day.")
 
 // plain old simple holiday
 /datum/unit_test/hello_2020/Run()
