@@ -71,6 +71,7 @@
 					/obj/item/plunger/reinforced = 2)
 	default_price = 50
 	extra_price = 100
+	payment_department = ACCOUNT_MED
 	refill_canister = /obj/item/vending_refill/drugs
 
 /obj/item/vending_refill/drugs

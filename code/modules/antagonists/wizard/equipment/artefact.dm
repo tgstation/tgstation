@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
-	var/spawn_type = /obj/singularity/wizard
+	var/spawn_type = /obj/tear_in_reality
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
@@ -98,29 +98,38 @@
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
 	icon_state = "clownrender"
 
-////TEAR IN REALITY
+#define TEAR_IN_REALITY_CONSUME_RANGE 3
+#define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
 
-/obj/singularity/wizard
+/// Tear in reality, spawned by the veil render
+/obj/tear_in_reality
 	name = "tear in the fabric of reality"
 	desc = "This isn't right."
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	dissipate = 0
-	move_self = 0
-	consume_range = 3
-	grav_pull = 4
-	current_size = STAGE_FOUR
-	allowed_size = STAGE_FOUR
+	anchored = TRUE
+	density = TRUE
+	move_resist = INFINITY
+	layer = MASSIVE_OBJ_LAYER
+	light_range = 6
+	appearance_flags = LONG_GLIDE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/singularity/wizard/process()
-	move()
-	eat()
-	return
+/obj/tear_in_reality/Initialize(mapload)
+	. = ..()
 
+	AddComponent(
+		/datum/component/singularity, \
+		consume_range = TEAR_IN_REALITY_CONSUME_RANGE, \
+		notify_admins = !mapload, \
+		roaming = FALSE, \
+		singularity_size = TEAR_IN_REALITY_SINGULARITY_SIZE, \
+	)
 
-/obj/singularity/wizard/attack_tk(mob/user)
+/obj/tear_in_reality/attack_tk(mob/user)
 	if(!iscarbon(user))
 		return
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
@@ -132,18 +141,17 @@
 	insaneinthemembrane.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
-	addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, jedi), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/deranged, jedi), 10 SECONDS)
 
-
-/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+/obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
 	C.vomit(0, TRUE, TRUE, 3, TRUE)
 	C.spew_organ(3, 2)
 	C.death()
 
-/obj/singularity/wizard/mapped/admin_investigate_setup()
-	return
+#undef TEAR_IN_REALITY_CONSUME_RANGE
+#undef TEAR_IN_REALITY_SINGULARITY_SIZE
 
 /////////////////////////////////////////Scrying///////////////////
 

@@ -988,7 +988,7 @@ world
 			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = "<font size = 4>[letter]</font>"
+	text_image.maptext = MAPTEXT("<font size = 4>[letter]</font>")
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)

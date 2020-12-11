@@ -136,11 +136,7 @@
 	. = ..()
 	for (var/answer in haunted_answers)
 		votes[answer] = 0
-	GLOB.poi_list |= src
-
-/obj/item/toy/eightball/haunted/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
+	AddElement(/datum/element/point_of_interest)
 
 /obj/item/toy/eightball/haunted/MakeHaunted()
 	return FALSE
