@@ -942,9 +942,7 @@
 /datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M)
 	if(M.slurring < 3)
 		M.slurring+= 2
-	var/datum/status_effect/tripping/trip = M.has_status_effect(STATUS_EFFECT_TRIPPING)
-	if(trip.duration - world.time > 6 SECONDS)
-		M.adjust_drugginess(2 SECONDS)
+	M.set_drugginess(6 SECONDS)
 	if(M.drowsyness < 3)
 		M.drowsyness++
 	return ..()

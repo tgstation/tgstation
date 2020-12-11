@@ -326,19 +326,19 @@
 	QDEL_NULL(colour)
 	. = ..()
 
-//oscillates the hues based on the duration left.
+//oscillates the client screen hues based on the duration left.
 /datum/status_effect/tripping/tick()
-	var/clock_max_dist = min((duration - world.time)/4, 37.5) //the maximum closest angle difference from 0° allowed.
+	var/clock_max_dist = max((duration - world.time)/4, 37.5) //the maximum closest angle difference from 0° allowed.
 	var/counterclock_max_dist = 360 - clock_max_dist
 	var/rotation = min(clock_max_dist/7.5, 24) // about 30 seconds to oscillate from an extremity to another. (or complete a spin at 144"+ duration)
 	if(!clockwise)
 		rotation = -rotation
-	//it's not doing 360° rotations and is exceeding the maximum distance. So let's change direction.
+	//changes direction if it's not doing 360° and exceeding the maximum closest angle diff allowed.
 	if(rotation < 24 && ISINRANGE(colour.hue_angle, clock_max_dist, counterclock_max_dist))
 		var/min_rotation = clockwise ? colour.hue_angle - clock_max_dist : counterclock_max_dist - colour.hue_angle
 		rotation = clockwise ? min(-rotation, min_rotation) : max(-rotation, min_rotation)
 		clockwise = !clockwise
-	else if(rotation == 24 && prob(1)) //spins the other way around next tick.
+	else if(rotation == 24 && prob(1)) //will be spinning the other way next tick.
 		clockwise = !clockwise
 	colour.rotate_hue(rotation)
 

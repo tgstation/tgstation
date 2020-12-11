@@ -9,8 +9,6 @@
 
 #define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
 
-#define STATUS_EFFECT_PASS_ARGS 4 //if it allows only one, and the args of new instances are handled by the original.
-
 ///////////
 // BUFFS //
 ///////////
