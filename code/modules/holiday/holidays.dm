@@ -586,6 +586,14 @@
 /datum/holiday/hotdogday/greet()
 	return "Happy National Hot Dog Day!"
 
+/datum/holiday/indigenousUN //Indigenous Peoples' Day from Earth!
+	name = "International Day of the World's Indigenous Peoples"
+	begin_month = AUGUST
+	begin_day = 9
+
+/datum/holiday/indigenousUN/getStationPrefix()
+	return pick("Endangered language", "Word", "Language", "Language revitalization")
+
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
 
