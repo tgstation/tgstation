@@ -729,9 +729,11 @@
 	name = contents.len ? "stack of pancakes" : initial(name)
 	return ..()
 
-/obj/item/food/pancakes/update_icon()
+/obj/item/food/pancakes/update_icon(updates=ALL)
+	. = ..(updates & ~UPDATE_OVERLAYS) // Don't update overlays. We're doing that here
 	if(contents.len < LAZYLEN(overlays))
 		overlays -= overlays[overlays.len]
+	. |= UPDATE_OVERLAYS
 
 /obj/item/food/pancakes/examine(mob/user)
 	var/ingredients_listed = ""

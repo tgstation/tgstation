@@ -62,6 +62,7 @@
 	return TRUE
 
 /obj/item/assembly/signaler/update_icon()
+	. = ..()
 	holder?.update_icon()
 
 /obj/item/assembly/signaler/ui_status(mob/user)

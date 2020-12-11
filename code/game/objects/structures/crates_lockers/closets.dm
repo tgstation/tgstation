@@ -56,8 +56,9 @@
 
 /obj/structure/closet/update_icon()
 	. = ..()
-	if (istype(src, /obj/structure/closet/supplypod))
+	if(istype(src, /obj/structure/closet/supplypod))
 		return
+
 	if(!opened)
 		layer = OBJ_LAYER
 	else

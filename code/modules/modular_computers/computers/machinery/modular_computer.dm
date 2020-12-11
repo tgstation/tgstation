@@ -53,26 +53,25 @@
 		return FALSE
 	return (cpu.emag_act(user))
 
-/obj/machinery/modular_computer/update_icon()
-	cut_overlays()
-	icon_state = icon_state_powered
+/obj/machinery/modular_computer/update_appearance(updates)
+	. = ..()
+	set_light(cpu?.enabled ? light_strength : 0)
 
+/obj/machinery/modular_computer/update_icon_state()
+	. = ..()
+	icon_state = (cpu?.enabled || (!(machine_stat & NOPOWER) && cpu?.use_power())) ? icon_state_powered : icon_state_unpowered
+
+/obj/machinery/modular_computer/update_overlays()
+	. = ..()
 	if(!cpu || !cpu.enabled)
 		if (!(machine_stat & NOPOWER) && (cpu?.use_power()))
-			add_overlay(screen_icon_screensaver)
-		else
-			icon_state = icon_state_unpowered
-		set_light(0)
+			. += screen_icon_screensaver
 	else
-		set_light(light_strength)
-		if(cpu.active_program)
-			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
-		else
-			add_overlay(screen_icon_state_menu)
+		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
 
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure * cpu.max_integrity)
-		add_overlay("bsod")
-		add_overlay("broken")
+		. += "bsod"
+		. += "broken"
 
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)

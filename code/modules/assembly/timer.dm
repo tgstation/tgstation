@@ -76,13 +76,15 @@
 		time = saved_time
 
 /obj/item/assembly/timer/update_icon()
-	cut_overlays()
+	. = ..()
+	holder?.update_icon()
+
+/obj/item/assembly/timer/update_overlays()
+	. = ..()
 	attached_overlays = list()
 	if(timing)
-		add_overlay("timer_timing")
+		. += "timer_timing"
 		attached_overlays += "timer_timing"
-	if(holder)
-		holder.update_icon()
 
 /obj/item/assembly/timer/ui_status(mob/user)
 	if(is_secured(user))

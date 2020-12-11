@@ -31,10 +31,8 @@
 			CRASH("Invalid zone for [type]")
 
 /obj/item/organ/cyberimp/arm/update_icon()
-	if(zone == BODY_ZONE_R_ARM)
-		transform = null
-	else // Mirroring the icon
-		transform = matrix(-1, 0, 0, 0, 1, 0)
+	. = ..()
+	transform = (zone == BODY_ZONE_R_ARM) ? null : matrix(-1, 0, 0, 0, 1, 0)
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()

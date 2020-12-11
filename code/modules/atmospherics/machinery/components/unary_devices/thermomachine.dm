@@ -40,9 +40,8 @@
 		B += M.rating
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
-/obj/machinery/atmospherics/components/unary/thermomachine/update_icon()
-	cut_overlays()
-
+/obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
+	. = ..()
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(on && is_operational)
@@ -50,7 +49,9 @@
 	else
 		icon_state = icon_state_off
 
-	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
+/obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
+	. = ..()
+	. += getpipeimage(icon, "pipe", dir, , piping_layer)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()

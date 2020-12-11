@@ -643,15 +643,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
-
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
-
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
-
 	return ..()
 
 /obj/structure/cable/multilayer/Initialize(mapload)

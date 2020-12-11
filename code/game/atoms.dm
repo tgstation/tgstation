@@ -657,6 +657,7 @@
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
 	SIGNAL_HANDLER
+	// SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)

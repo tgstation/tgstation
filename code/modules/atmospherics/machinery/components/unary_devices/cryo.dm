@@ -185,10 +185,13 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_icon_state()
+	. = ..()
+	icon_state = (state_open) ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	. = ..()
 	plane = initial(plane)
-	icon_state = (state_open) ? "pod-open" : (on && is_operational) ? "pod-on" : "pod-off"
 
 GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_WINDOW_LAYER + 0.02))
 GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_WINDOW_LAYER + 0.02))

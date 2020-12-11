@@ -118,8 +118,12 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
-/obj/structure/pipe_cleaner/update_icon()
+/obj/structure/pipe_cleaner/update_icon_state()
+	. = ..()
 	icon_state = "[d1]-[d2]"
+
+/obj/structure/pipe_cleaner/update_icon()
+	. = ..()
 	color = null
 	add_atom_colour(pipe_cleaner_color, FIXED_COLOUR_PRIORITY)
 

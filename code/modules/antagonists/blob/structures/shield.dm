@@ -19,19 +19,23 @@
 /obj/structure/blob/shield/core
 	point_return = 0
 
-/obj/structure/blob/shield/update_icon()
-	..()
-	if(obj_integrity < max_integrity * 0.5)
-		icon_state = "[initial(icon_state)]_damaged"
-		name = "weakened [initial(name)]"
-		desc = "[damaged_desc]"
-		atmosblock = FALSE
-	else
-		icon_state = initial(icon_state)
-		name = initial(name)
-		desc = initial(desc)
-		atmosblock = TRUE
-	air_update_turf(1)
+/obj/structure/blob/shield/update_name(updates)
+	. = ..()
+	name = "[(obj_integrity < (max_integrity * 0.5)) ? "weakened " : null][initial(name)]"
+
+/obj/structure/blob/shield/update_desc(updates)
+	. = ..()
+	desc = (obj_integrity < (max_integrity * 0.5)) ? "[damaged_desc]" : initial(desc)
+
+/obj/structure/blob/shield/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(. && obj_integrity > 0)
+		atmosblock = obj_integrity < (max_integrity * 0.5)
+		air_update_turf(1)
+
+/obj/strcture/blob/shield/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][(obj_integrity < (max_integrity * 0.5)) ? "_damaged" : null]"
 
 /obj/structure/blob/shield/reflective
 	name = "reflective blob"

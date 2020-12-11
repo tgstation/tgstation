@@ -3,6 +3,7 @@
 	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "holochip"
+	base_icon_state = "holochip"
 	throwforce = 0
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -21,21 +22,36 @@
 /obj/item/holochip/get_item_credit_value()
 	return credits
 
-/obj/item/holochip/update_icon()
+/obj/item/holochip/update_name()
 	name = "\improper [credits] credit holochip"
-	var/rounded_credits = round(credits)
+	return ..()
+
+/obj/item/holochip/update_icon_state()
+	. = ..()
+	var/icon_suffix = ""
 	switch(credits)
-		if(1 to (1e3 - 1))
-			icon_state = "holochip"
 		if(1e3 to (1e6 - 1))
-			icon_state = "holochip_kilo"
-			rounded_credits = round(rounded_credits * 1e-3)
+			icon_suffix = "_kilo"
 		if(1e6 to (1e9 - 1))
-			icon_state = "holochip_mega"
-			rounded_credits = round(rounded_credits * 1e-6)
+			icon_suffix = "_mega"
 		if(1e9 to INFINITY)
-			icon_state = "holochip_giga"
-			rounded_credits = round(rounded_credits * 1e-9)
+			icon_suffix = "_giga"
+
+	icon_state = "[base_icon_state][icon_suffix]"
+
+/obj/item/holochip/update_overlays()
+	. = ..()
+	var/rounded_credits
+	switch(credits)
+		if(0 to (1e3 - 1))
+			rounded_credits = round(credits)
+		if(1e3 to (1e6 - 1))
+			rounded_credits = round(credits * 1e-3)
+		if(1e6 to (1e9 - 1))
+			rounded_credits = round(credits * 1e-6)
+		if(1e9 to INFINITY)
+			rounded_credits = round(credits * 1e-9)
+
 	var/overlay_color = "#914792"
 	switch(rounded_credits)
 		if(0 to 4)
@@ -54,10 +70,10 @@
 			overlay_color = "#0153C1"
 		if(500 to INFINITY)
 			overlay_color = "#2C2C2C"
-	cut_overlays()
+
 	var/mutable_appearance/holochip_overlay = mutable_appearance('icons/obj/economy.dmi', "[icon_state]-color")
 	holochip_overlay.color = overlay_color
-	add_overlay(holochip_overlay)
+	. += holochip_overlay
 
 /obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
 	if(credits >= amount)

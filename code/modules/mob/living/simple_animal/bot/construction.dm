@@ -193,8 +193,8 @@
 		else
 			desc = initial(desc)
 
-/obj/item/bot_assembly/floorbot/update_icon()
-	..()
+/obj/item/bot_assembly/floorbot/update_icon_state()
+	. = ..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			icon_state = "[toolbox_color]toolbox_tiles"

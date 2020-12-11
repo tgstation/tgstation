@@ -142,21 +142,30 @@
 		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
 		update_appearance()
 
-/obj/item/ammo_box/update_icon()
-	var/shells_left = stored_ammo.len
+/obj/item/ammo_box/update_desc(updates)
+	. = ..()
+	var/shells_left = LAZYLEN(stored_ammo)
+	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
+
+/obj/item/ammo_box/update_icon_state()
+	. = ..()
+	var/shells_left = LAZYLEN(stored_ammo)
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
 			icon_state = "[initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
-	if(length(bullet_cost))
-		var/temp_materials = custom_materials.Copy()
-		for (var/material in bullet_cost)
-			var/material_amount = bullet_cost[material]
-			material_amount = (material_amount*stored_ammo.len) + base_cost[material]
-			temp_materials[material] = material_amount
-		set_custom_materials(temp_materials)
+
+/obj/item/ammo_box/update_appearance(updates=ALL)
+	. = ..()
+	if(!length(bullet_cost))
+		return
+
+	// - [] TODO: Move this out of update_appearance
+	var/temp_materials = custom_materials.Copy()
+	for(var/material in bullet_cost)
+		temp_materials[material] = (bullet_cost[material] * stored_ammo.len) + base_cost[material]
+	set_custom_materials(temp_materials)
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)

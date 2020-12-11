@@ -623,22 +623,21 @@
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
-	update_appearance()
-
-/obj/structure/curtain/update_icon()
-	if(!open)
-		icon_state = "[icon_type]-closed"
-		layer = WALL_OBJ_LAYER
-		density = TRUE
-		open = FALSE
-		if(opaque_closed)
-			set_opacity(TRUE)
-	else
-		icon_state = "[icon_type]-open"
+	if(open)
 		layer = SIGN_LAYER
 		density = FALSE
-		open = TRUE
 		set_opacity(FALSE)
+	else
+		layer = WALL_OBJ_LAYER
+		density = TRUE
+		if(opaque_closed)
+			set_opacity(TRUE)
+
+	update_appearance()
+
+/obj/structure/curtain/update_icon_state()
+	. = ..()
+	icon_state = "[icon_type]-[open ? "open" : "closed"]"
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))

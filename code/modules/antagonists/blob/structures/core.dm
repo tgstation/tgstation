@@ -24,14 +24,18 @@
 /obj/structure/blob/core/scannerreport()
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
 
-/obj/structure/blob/core/update_icon()
-	cut_overlays()
-	color = null
+/obj/structure/blob/core/update_overlays()
+	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
-	add_overlay(blob_overlay)
+	. += blob_overlay
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
+
+
+/obj/structure/blob/core/update_icon()
+	color = null
+	. = ..()
 
 /obj/structure/blob/core/Destroy()
 	GLOB.blob_cores -= src
