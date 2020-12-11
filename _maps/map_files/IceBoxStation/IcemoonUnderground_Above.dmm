@@ -460,9 +460,6 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bs" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
