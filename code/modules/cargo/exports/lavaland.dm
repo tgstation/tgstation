@@ -2,7 +2,7 @@
 //Consumable or one-use items like the magic D20 and gluttony's blessing are omitted
 
 /datum/export/lavaland/minor
-	cost = 10000
+	cost = CARGO_CRATE_VALUE * 20
 	unit_name = "minor lava planet artifact"
 	export_types = list(/obj/item/immortality_talisman,
 						/obj/item/book_of_babel,
@@ -28,7 +28,7 @@
 						/obj/item/veilrender/vealrender)
 
 /datum/export/lavaland/major //valuable chest/ruin loot and staff of storms
-	cost = 20000
+	cost = CARGO_CRATE_VALUE * 40
 	unit_name = "lava planet artifact"
 	export_types = list(/obj/item/guardiancreator,
 						/obj/item/rod_of_asclepius,
@@ -39,7 +39,7 @@
 //Megafauna loot, except for ash drakes and legion
 
 /datum/export/lavaland/megafauna
-	cost = 40000
+	cost = CARGO_CRATE_VALUE * 80
 	unit_name = "major lava planet artifact"
 	export_types = list(/obj/item/hierophant_club,
 						/obj/item/melee/transforming/cleaving_saw,
@@ -54,11 +54,11 @@
 		. += " On behalf of the Nanotrasen RnD division: Thank you for your hard work."
 
 /datum/export/lavaland/megafauna/hev/suit
-	cost = 30000
+	cost = CARGO_CRATE_VALUE * 60
 	unit_name = "H.E.C.K. suit"
 	export_types = list(/obj/item/clothing/suit/space/hostile_environment)
 
 /datum/export/lavaland/megafauna/hev/helmet
-	cost = 10000
+	cost = CARGO_CRATE_VALUE * 20
 	unit_name = "H.E.C.K. helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space/hostile_environment)

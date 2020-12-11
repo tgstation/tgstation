@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED				(1<<1)
 /// If mining tunnel generation is allowed in this area
-#define TUNNELS_ALLOWED				(1<<2)
+#define CAVES_ALLOWED				(1<<2)
 /// If flora are allowed to spawn in this area randomly through tunnel generation
 #define FLORA_ALLOWED				(1<<3)
 /// If mobs can be spawned by natural random generation
@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSBLOB		(1<<3)
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW	(1<<6)
 #define	PASSMACHINE		(1<<7)
 #define PASSSTRUCTURE	(1<<8)
@@ -117,8 +118,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLYING			(1<<1)
 #define VENTCRAWLING	(1<<2)
 #define FLOATING		(1<<3)
-/// When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
-#define UNSTOPPABLE		(1<<4)
+/// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
+#define PHASING			(1<<4)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)

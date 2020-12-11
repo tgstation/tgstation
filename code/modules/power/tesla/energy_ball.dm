@@ -169,7 +169,6 @@
 /obj/energy_ball/orbit(obj/energy_ball/target)
 	if (istype(target))
 		target.orbiting_balls += src
-		GLOB.poi_list -= src
 	. = ..()
 
 /obj/energy_ball/stop_orbit()
