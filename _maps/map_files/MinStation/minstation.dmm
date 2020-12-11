@@ -33,18 +33,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "cb" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
+/obj/machinery/camera/autoname,
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "ch" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
@@ -109,40 +101,20 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "dL" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 9
-	},
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "ek" = (
 /obj/structure/chair/sofa/bench/left,
 /turf/open/floor/wood,
 /area/lawoffice)
 "em" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 6
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"eq" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "eM" = (
-/obj/machinery/atmospherics/pipe/multiz,
-/turf/open/floor/plating,
+/obj/structure/ladder,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "fd" = (
 /obj/structure/cable/multilayer/multiz,
@@ -371,10 +343,10 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/cafeteria)
 "lf" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
+/obj/machinery/camera/autoname{
 	dir = 10
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "mj" = (
 /obj/machinery/door/firedoor,
@@ -409,12 +381,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/cafeteria)
-"nb" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "ne" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -467,13 +433,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"oq" = (
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "or" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -553,10 +512,6 @@
 "pR" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/cafeteria)
-"qa" = (
-/obj/structure/ladder,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "qn" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
@@ -709,28 +664,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"uU" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "vp" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/locker_room)
-"vL" = (
-/obj/machinery/atmospherics/pipe/manifold4w/general/hidden,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "vN" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 6
-	},
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/obj/machinery/power/rtg,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "wu" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -859,9 +803,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "Aq" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/cable,
+/obj/machinery/power/rtg,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "AR" = (
@@ -904,12 +847,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"CM" = (
-/obj/machinery/atmospherics/pipe/multiz{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "CS" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -951,10 +888,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/locker_room)
-"Ez" = (
-/obj/machinery/atmospherics/components/unary/portables_connector,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "Fb" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -1279,10 +1212,6 @@
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
-"QV" = (
-/obj/machinery/atmospherics/components/binary/pump,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "Rd" = (
 /obj/structure/closet/boxinggloves,
 /turf/open/floor/plasteel,
@@ -1379,16 +1308,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"TK" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"TO" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "Uf" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plasteel/freezer,
@@ -29443,15 +29362,15 @@ ZV
 ZV
 ZV
 ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-xw
-xw
-xw
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
+Wr
 xw
 kM
 kM
@@ -29700,15 +29619,15 @@ ZV
 ZV
 ZV
 ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-xw
-xw
+Wr
+cb
+dL
+dL
+dL
+qK
+qK
+eM
+Wr
 xw
 xw
 kM
@@ -29957,15 +29876,15 @@ ZV
 ZV
 ZV
 ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-ZV
-xw
+Wr
+qK
+qK
+qK
+dL
+qK
+qK
+qK
+Wr
 xw
 xw
 xw
@@ -30215,13 +30134,13 @@ Zb
 Zb
 Zb
 Wr
-Wr
-Wr
-Wr
-Wr
-Wr
-Wr
-Wr
+qK
+qK
+qQ
+em
+qQ
+qK
+qK
 Wr
 xw
 xw
@@ -30472,13 +30391,13 @@ ZV
 ZV
 ZV
 Wr
-qQ
-qQ
+qK
+qK
 qQ
 Aq
 qQ
-qQ
-qa
+qK
+qK
 Wr
 xw
 xw
@@ -30729,12 +30648,12 @@ ZV
 ZV
 ZV
 Wr
-qQ
-qQ
+qK
+qK
 qQ
 vN
-CM
 qQ
+qK
 qK
 Wr
 xw
@@ -30986,12 +30905,12 @@ ZV
 ZV
 ZV
 Wr
+qK
+qK
 qQ
+vN
 qQ
-qQ
-eq
-qQ
-qQ
+qK
 qK
 Wr
 xw
@@ -31243,12 +31162,12 @@ ZV
 ZV
 ZV
 Wr
+qK
+qK
 qQ
+vN
 qQ
-qQ
-oq
-qQ
-qQ
+qK
 qK
 Wr
 xw
@@ -31500,12 +31419,12 @@ ZV
 ZV
 ZV
 Wr
+qK
+qK
 qQ
 qQ
 qQ
-cb
-em
-TK
+qK
 qK
 Wr
 xw
@@ -31757,12 +31676,12 @@ ZV
 ZV
 ZV
 Wr
-Ez
-uU
-eM
-vL
-TO
-qQ
+qK
+qK
+qK
+qK
+qK
+qK
 qK
 Wr
 xw
@@ -32014,13 +31933,13 @@ ZV
 ZV
 ZV
 Wr
-Ez
-nb
-QV
-dL
-lf
-TK
 qK
+qK
+qK
+qK
+qK
+qK
+lf
 Wr
 xw
 xw
