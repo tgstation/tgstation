@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving two mobs, the user and the target. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, focus_strength = 0, focus_sound = null)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
-		progbar = new(user, time, target)
+		progbar = new(user, time, target, focus_strength, focus_sound)
 	if(target.pixel_x != 0) //shifts the progress bar if target has an offset sprite
 		progbar.bar.pixel_x -= target.pixel_x
 
@@ -261,7 +261,7 @@ GLOBAL_LIST_EMPTY(species_list)
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, focus_strength = 0, focus_sound = null)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/datum/progressbar/progbar
 	if(progress)
-		progbar = new(user, delay, target || user)
+		progbar = new(user, delay, target || user, focus_strength, focus_sound)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -331,7 +331,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 
 ///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, focus_strength = 0, focus_sound = null)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if(progress)
-		progbar = new(user, time, targets[1])
+		progbar = new(user, time, targets[1], focus_strength, focus_sound)
 
 	var/endtime = world.time + time
 	var/starttime = world.time

@@ -234,7 +234,7 @@
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-		if(I.use_tool(src, user, slicing_duration, volume=100))
+		if(I.use_tool(src, user, slicing_duration, volume=100, focus_strength = 5))
 			if(iswallturf(src))
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
