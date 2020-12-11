@@ -124,6 +124,6 @@
 	structure_path = /obj/structure/fans/tiny
 	place_sound = 'sound/items/drill_use.ogg'
 
-/datum/action/innate/construction/place_structure/turret/after_place(var/obj/placed_structure)
+/datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure)
 	if(B.found_aux_console)
 		B.found_aux_console.turrets += placed_structure //Add new turret to the console's control

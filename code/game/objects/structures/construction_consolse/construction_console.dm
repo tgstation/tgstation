@@ -6,7 +6,7 @@
 	icon_state = "construction_drone"
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
-/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, var/linked_cam_console)
+/mob/camera/ai_eye/remote/base_construction/Initialize(mapload, linked_cam_console)
 	. = ..()
 	linked_console = linked_cam_console
 
