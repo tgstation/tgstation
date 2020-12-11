@@ -59,8 +59,8 @@ echo "Deploying rust-g..."
 git checkout "$RUST_G_VERSION"
 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
 mv target/release/librust_g.so "$1/rust_g"
-cd ..
 
 # compile tgui
 echo "Compiling tgui..."
+cd "$1"
 env TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
