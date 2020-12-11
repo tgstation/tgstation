@@ -1,0 +1,5 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "Lavaland is no longer generated in broken diagonals, instead utilizing  a map_generator datum."
+  - code_imp: "Bunch of unused turf paths removed"
