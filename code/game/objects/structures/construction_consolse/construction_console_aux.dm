@@ -1,6 +1,7 @@
 ///base consturctino console subtype for the mining aux base
 /obj/machinery/computer/camera_advanced/base_construction/aux
 	name = "aux base construction console"
+	circuit = /obj/item/circuitboard/computer/base_construction/aux
 	structures = list("fans" = 0, "turrets" = 0)
 	allowed_area = /area/shuttle/auxiliary_base
 

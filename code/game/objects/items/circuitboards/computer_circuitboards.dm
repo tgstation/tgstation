@@ -182,6 +182,11 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction/aux
 
+/obj/item/circuitboard/computer/base_construction
+	name = "circuit board (Centcom Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/centcom
+
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"
 	icon_state = "engineering"
