@@ -68,4 +68,5 @@ cd ..
 
 # compile tgui
 echo "Compiling tgui..."
+cd "$1"
 env TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
