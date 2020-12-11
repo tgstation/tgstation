@@ -111,7 +111,7 @@
 					if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list?.len) //this is danger. it's boss time.
 						picked_mob = pickweight(megafauna_spawn_list)
 					else //this is not danger, don't spawn a boss, spawn something else
-						picked_mob = pickweight(mob_spawn_list.Copy().Remove(SPAWN_MEGAFAUNA)) //What if we used 100% of the brain...and did something (slightly) less shit than a while loop?
+						picked_mob = pickweight(mob_spawn_list - SPAWN_MEGAFAUNA) //What if we used 100% of the brain...and did something (slightly) less shit than a while loop?
 
 				for(var/thing in urange(12, new_open_turf)) //prevents mob clumps
 					if(!ishostile(thing) && !istype(thing, /obj/structure/spawner))
