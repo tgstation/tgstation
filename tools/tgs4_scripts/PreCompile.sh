@@ -68,4 +68,5 @@ cd ..
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
+chmod +x tools/bootstrap/node  # Workaround for https://github.com/tgstation/tgstation-server/issues/1167
 env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
