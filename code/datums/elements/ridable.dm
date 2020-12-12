@@ -133,7 +133,6 @@
 	qdel(speed_potion)
 	return COMPONENT_NO_AFTERATTACK
 
-
 /// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
 /datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)
 	var/atom/movable/AM = target_movable

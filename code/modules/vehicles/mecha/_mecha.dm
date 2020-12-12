@@ -603,6 +603,11 @@
 		return TRUE
 	return FALSE
 
+/obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
+	if(canmove)
+		vehicle_move(direction)
+	return TRUE
+
 /obj/vehicle/sealed/mecha/proc/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
