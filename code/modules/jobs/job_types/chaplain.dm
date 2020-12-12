@@ -124,7 +124,7 @@
 	ears = /obj/item/radio/headset/headset_srv
 	l_pocket = /obj/item/pda/syndicate
 	uniform = /obj/item/clothing/under/pants/tan
-	r_pocket = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
+	r_pocket = /obj/item/food/donkpocket/warm/teriyaki
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/bearpelt
