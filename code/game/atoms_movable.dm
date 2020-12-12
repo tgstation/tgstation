@@ -225,9 +225,15 @@
 			if(var_value != floating_anim_status)
 				switch(var_value)
 					if(HAS_FLOATING_ANIM)
+						if(SSfloating_anim.currentrun[src])
+							SSfloating_anim.UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+							SSfloating_anim.currentrun -= src
 						float()
+					if(UPDATE_FLOATING_ANIM) //I don't know why you'd need that but sure.
+						QUEUE_FLOATING_ANIM(src, 10 SECONDS)
 					else
 						stop_floating(var_value)
+				floating_anim_status = var_value //We make sure the var value is what we want anyway.
 			. = TRUE
 
 	if(!isnull(.))
@@ -612,38 +618,6 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
-/// Called when a movement type trait is added to the mob.
-/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	if(!(movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && floating_anim_status == NO_FLOATING_ANIM)
-		float()
-	movement_type |= GLOB.movement_type_trait_to_flag[trait]
-
-/// Called when a movement type trait is removed from the mob.
-/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	var/flag = GLOB.movement_type_trait_to_flag[trait]
-	if(initial(movement_type) & flag)
-		return
-	movement_type &= ~flag
-	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)) && floating_anim_status == HAS_FLOATING_ANIM)
-		stop_floating(NO_FLOATING_ANIM)
-
-/// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the mob.
-/atom/movable/proc/on_no_floating_anim_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	stop_floating(NEVER_FLOATING_ANIM)
-
-/// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob.
-/atom/movable/proc/on_no_floating_anim_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	if(initial(floating_anim_status) == NEVER_FLOATING_ANIM)
-		return
-	if(movement_type & (FLOATING|FLYING))
-		float()
-	else
-		floating_anim_status = NO_FLOATING_ANIM
-
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
@@ -944,20 +918,55 @@
 	acted_explosions += ex_id
 	return TRUE
 
+/// Called when a movement type trait is added to the mob.
+/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
+	SIGNAL_HANDLER
+	if(!(movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && floating_anim_status == NO_FLOATING_ANIM)
+		float()
+	movement_type |= GLOB.movement_type_trait_to_flag[trait]
+
+/// Called when a movement type trait is removed from the mob.
+/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
+	SIGNAL_HANDLER
+	var/flag = GLOB.movement_type_trait_to_flag[trait]
+	if(initial(movement_type) & flag)
+		return
+	movement_type &= ~flag
+	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)) && floating_anim_status != NEVER_FLOATING_ANIM)
+		stop_floating(NO_FLOATING_ANIM)
+
+/// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the mob.
+/atom/movable/proc/on_no_floating_anim_trait_gain(datum/source, trait)
+	SIGNAL_HANDLER
+	stop_floating(NEVER_FLOATING_ANIM)
+
+/// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob.
+/atom/movable/proc/on_no_floating_anim_trait_loss(datum/source, trait)
+	SIGNAL_HANDLER
+	if(initial(floating_anim_status) == NEVER_FLOATING_ANIM)
+		return
+	if(movement_type & (FLOATING|FLYING))
+		float()
+	else
+		floating_anim_status = NO_FLOATING_ANIM
+
 ///Floats the movable up and down if the conditions are met.
 /atom/movable/proc/float()
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		return
+	if(SSfloating_anim.currentrun[src] > world.time)
+		floating_anim_status = UPDATE_FLOATING_ANIM
+		return
 	floating_anim_status = HAS_FLOATING_ANIM
-	animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
 /// Stops the above.
 /atom/movable/proc/stop_floating(new_status = NO_FLOATING_ANIM)
+	if(floating_anim_status <= new_status)
+		return
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
-	else if(floating_anim_status == NEVER_FLOATING_ANIM)
-		return
 	floating_anim_status = new_status
 
 /* 	Language procs

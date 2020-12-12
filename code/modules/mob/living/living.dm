@@ -944,11 +944,13 @@
 		if(!was_weightless)
 			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 
+// Unlike other movables, living mobs also have a 'body_position_pixel_y_offset' variable.
 /mob/living/stop_floating(new_status = NO_FLOATING_ANIM)
+	if(floating_anim_status <= new_status)
+		return
 	if(floating_anim_status == HAS_FLOATING_ANIM)
 		animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
-		floating_anim_status = NO_FLOATING_ANIM //stops the parent call from nullifying the body position offset.
-	..()
+	floating_anim_status = new_status
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -1042,10 +1044,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = base_pixel_x + body_position_pixel_x_offset
-	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_PARALLEL)
-	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2, flags = ANIMATION_PARALLEL)
+	animate(src, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 2, flags = ANIMATION_RELATIVE)
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C

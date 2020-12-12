@@ -21,7 +21,8 @@
 		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
-		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT), flags = ANIMATION_PARALLEL)
+		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+		QUEUE_FLOATING_ANIM(src, 0.3 SECONDS)
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
