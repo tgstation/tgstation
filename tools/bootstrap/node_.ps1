@@ -55,7 +55,7 @@ Write-Output $NodeExe | Out-File -Encoding utf8 $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
 $Env:PATH = "$NodeDir;$ENV:Path"  # Set PATH so that recursive calls find it
 $ErrorActionPreference = "Continue"
-& $PythonExe $args 2>&1 | ForEach-Object {
+& $NodeExe $args 2>&1 | ForEach-Object {
 	"$_" | Out-File -Encoding utf8 -Append $Log
 	"$_" | Out-Host
 }
