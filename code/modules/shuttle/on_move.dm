@@ -20,14 +20,6 @@ All ShuttleMove procs go here
 	if(!(. & MOVE_TURF))
 		return
 
-	shuttle_gib(shuttle)
-
-/**
-  * Attempt to crush movabkes in a shuttle landing zone.
-  *
-  * * shuttle - The smashing shuttle
-  */
-/turf/proc/shuttle_gib(obj/docking_port/mobile/shuttle)
 	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
 		var/atom/movable/thing = i
@@ -46,7 +38,7 @@ All ShuttleMove procs go here
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if((istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) || istype(thing, /obj/effect/abstract)) //it's a singularity but not a god, ignore it.
+			if(istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
 				continue
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
