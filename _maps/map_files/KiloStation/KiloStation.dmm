@@ -15539,6 +15539,7 @@
 	},
 /area/maintenance/starboard)
 "azH" = (
+/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
