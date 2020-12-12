@@ -10,9 +10,13 @@ SUBSYSTEM_DEF(materials)
 	flags = SS_NO_FIRE | SS_NO_INIT
 	///Dictionary of material.type || material ref
 	var/list/materials
+	///Dictionary of type || list of material refs
+	var/list/materials_by_type
+	///Dictionary of type || list of material ids
+	var/list/materialids_by_type
 	///Dictionary of category || list of material refs
 	var/list/materials_by_category
-	///Dictionary of category || list of material types, mostly used by rnd machines like autolathes.
+	///Dictionary of category || list of material ids, mostly used by rnd machines like autolathes.
 	var/list/materialids_by_category
 	///A cache of all material combinations that have been used
 	var/list/list/material_combos
@@ -31,6 +35,8 @@ SUBSYSTEM_DEF(materials)
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
 	materials = list()
+	materials_by_type = list()
+	materialids_by_type = list()
 	materials_by_category = list()
 	materialids_by_category = list()
 	material_combos = list()
@@ -57,6 +63,8 @@ SUBSYSTEM_DEF(materials)
 
 	var/mat_id = mat_ref.id
 	materials[mat_id] = mat_ref
+	materials_by_type[mat_type] += list(mat_ref)
+	materialids_by_type[mat_type] += list(mat_id)
 	for(var/category in mat_ref.categories)
 		materials_by_category[category] += list(mat_ref)
 		materialids_by_category[category] += list(mat_id)

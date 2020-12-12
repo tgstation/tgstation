@@ -10,21 +10,33 @@
 */
 
 /datum/component/material_container
+	/// The total amount of materials this material container contains
 	var/total_amount = 0
+	/// The maximum amount of materials this material container can contain
 	var/max_amount
+	/// Unused?
 	var/sheet_type
+	/// Map of material ref -> amount
 	var/list/materials //Map of key = material ref | Value = amount
+	/// Unused?
 	var/disable_attackby
+	/// The typecache of things that this material container can accept
 	var/list/allowed_typecache
+	/// The last main material that was inserted into this container
 	var/last_inserted_id
+	/// Whether or not this material container allows specific amounts from sheets to be inserted
 	var/precise_insertion = FALSE
+	/// A callback invoked before materials are inserted into this container
 	var/datum/callback/precondition
+	/// A callback invoked after materials are inserted into this container
 	var/datum/callback/after_insert
-	///The material container flags. See __DEFINES/materials.dm.
+	/// A callback invoked to check whether a newly instantiated material fits into this container
+	var/datum/callback/refresh_mats
+	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _mat_container_flags=NONE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _mat_container_flags=NONE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, datum/callback/_refresh_mats)
 	materials = list()
 	max_amount = max(0, max_amt)
 	mat_container_flags = _mat_container_flags
@@ -37,15 +49,21 @@
 
 	precondition = _precondition
 	after_insert = _after_insert
+	refresh_mats = _refresh_mats
+
+	for(var/mat in mat_list) //Make the assoc list ref | amount
+		materials[GetMaterialRef(mat)] = 0
+
+/datum/component/material_container/RegisterWithParent()
+	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	if(refresh_mats)
+		RegisterSignal(SSmaterials, COMSIG_MATERIALS_INIT_MAT, .proc/check_new_material)
 
-	for(var/mat in mat_list) //Make the assoc list ref | amount
-		var/datum/material/M = GetMaterialRef(mat)
-		materials[M] = 0
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
 	var/old_flags = mat_container_flags
@@ -96,6 +114,13 @@
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user, mat_container_flags)
+
+/// Checks a newly instantiated material datum for whether it can fit into this material container
+/datum/component/material_container/proc/check_new_material(datum/controller/subsystem/materials/SSmat, datum/material/mat_ref)
+	SIGNAL_HANDLER
+	if(refresh_mats.Invoke(mat_ref, materials))
+		materials[mat_ref] += 0 // Adds the new material to the materials list
+	return NONE
 
 /// Proc used for when player inserts materials
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, breakdown_flags = mat_container_flags)
@@ -228,25 +253,28 @@
 	return total_amount_save - total_amount
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, target = null)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, atom/target = null)
 	if(!M.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
 
 	if(!target)
-		target = get_turf(parent)
+		var/atom/parent_atom = parent
+		target = parent_atom.drop_location()
 	if(materials[M] < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 		sheet_amt = round(materials[M] / MINERAL_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE)
+		var/obj/item/stack/sheet/sheet = new M.sheet_type(target, MAX_STACK_SIZE)
 		count += MAX_STACK_SIZE
+		sheet.set_mats_per_unit(list((M) = MINERAL_MATERIAL_AMOUNT))
 		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt)
+		var/obj/item/stack/sheet/sheet = new M.sheet_type(target, sheet_amt)
 		count += sheet_amt
+		sheet.set_mats_per_unit(list((M) = MINERAL_MATERIAL_AMOUNT))
 		use_amount_mat(sheet_amt * MINERAL_MATERIAL_AMOUNT, M)
 	return count
 
