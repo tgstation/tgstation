@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "The implosion compressor now properly gives a message when the bomb is too weak, and will give it back."

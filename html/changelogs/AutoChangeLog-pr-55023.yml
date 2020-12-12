@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The code for determining whether or not a simplemob no sells a melee attack because it uses a weapon that doesn't have a high enough force to damage it now uses a <= in its equation instead of a <, and factors in the simplemob's damage multipliers and resistances as well."

@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixed issue with HFR core cooling that destroyed gas"
-  - tweak: "changed HFR core to use only one port for cooling"
-  - bugfix: "output temperature and coolant temperature now show the right values"
