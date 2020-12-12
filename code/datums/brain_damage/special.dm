@@ -12,7 +12,7 @@
 
 /datum/brain_trauma/special/godwoken/on_life()
 	..()
-	if(rand(1,25)==23) //Hopefully this won't get stuck at true when prob gets stuck
+	if((rand(1,5)==2)&&rand(1,5==3)) //This check should fail if the RNG is stuck
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
