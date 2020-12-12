@@ -120,7 +120,9 @@
 			/obj/machinery/atmospherics,
 			/obj/item/ammo_casing,
 			/obj/item/implant,
-			/obj/singularity
+			/obj/singularity,
+			/obj/energy_ball,
+			/obj/narsie,
 			))
 		if(!can_contaminate || !can_contam || blacklisted[thing.type])
 			continue
