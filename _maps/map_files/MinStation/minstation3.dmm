@@ -731,6 +731,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
+"lg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
+"li" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "lm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
@@ -774,6 +784,9 @@
 /area/science/xenobiology)
 "mi" = (
 /obj/machinery/airalarm/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "mk" = (
@@ -783,6 +796,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"mm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "mo" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -1010,8 +1029,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"qs" = (
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "qv" = (
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "qw" = (
@@ -1784,6 +1812,14 @@
 	},
 /turf/open/openspace,
 /area/ai_monitored/security/armory)
+"BV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "BW" = (
 /obj/machinery/light{
 	dir = 4
@@ -2132,6 +2168,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "Gy" = (
@@ -2229,6 +2266,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"HJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "HP" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
@@ -2812,6 +2856,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/range)
+"RE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "10;12;24"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "RN" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel,
@@ -3266,6 +3318,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/warden)
+"YR" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
 "YS" = (
 /obj/machinery/light{
 	dir = 4
@@ -3340,6 +3397,7 @@
 /area/space)
 "ZD" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "ZV" = (
@@ -34072,7 +34130,7 @@ EM
 AC
 Rm
 qZ
-qZ
+RE
 qZ
 qZ
 qZ
@@ -40467,11 +40525,11 @@ qe
 Pw
 Pw
 Ia
-JX
-JX
-zt
+mm
+li
+HJ
 Gr
-JX
+qs
 zK
 ei
 ei
@@ -40981,7 +41039,7 @@ TH
 Du
 qY
 eL
-VD
+BV
 VD
 ZX
 EK
@@ -41493,9 +41551,9 @@ ZV
 Xx
 vX
 Lt
-Pw
+YR
 ZD
-JX
+lg
 kZ
 JX
 Nc
