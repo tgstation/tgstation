@@ -32812,7 +32812,8 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bat" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;25"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
@@ -52121,7 +52122,8 @@
 /area/maintenance/starboard/aft)
 "bEi" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;25"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
