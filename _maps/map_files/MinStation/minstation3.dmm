@@ -508,6 +508,12 @@
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plasteel,
 /area/security/warden)
+"hU" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "hW" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -899,6 +905,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/genetics/cloning)
+"nP" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "oa" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint";
@@ -31492,7 +31504,7 @@ Rm
 Ep
 FB
 FB
-FB
+nP
 FB
 FB
 go
@@ -33805,7 +33817,7 @@ Rm
 FB
 FB
 FB
-FB
+hU
 FB
 FB
 Xs

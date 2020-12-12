@@ -227,6 +227,12 @@
 "bg" = (
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
+"bh" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "bi" = (
 /obj/machinery/computer/piratepad_control/civilian{
 	dir = 1
@@ -1277,6 +1283,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"hH" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "hI" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -36756,7 +36768,7 @@ qr
 aS
 KW
 KW
-KW
+hH
 KW
 KW
 Lk
@@ -40098,7 +40110,7 @@ wy
 wy
 lW
 gd
-KW
+bh
 KW
 Mi
 qr
