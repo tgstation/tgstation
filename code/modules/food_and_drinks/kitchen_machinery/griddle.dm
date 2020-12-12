@@ -20,7 +20,7 @@
 	///What variant of griddle is this?
 	var/variant = 1
 	///How many shit fits on the griddle?
-	var/max_items = 6
+	var/max_items = 8
 
 /obj/machinery/griddle/Initialize()
 	. = ..()
@@ -28,6 +28,10 @@
 	variant = rand(1,3)
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(griddled_objects.len >= max_items)
+		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
+		return
 	if(user.transferItemToLoc(I, src, silent = FALSE))
 		var/list/click_params = params2list(params)
 		//Center the icon where the user clicked.
