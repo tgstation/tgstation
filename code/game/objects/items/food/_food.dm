@@ -70,7 +70,7 @@
 ///This proc handles grillable components, overwrite if you want different grill results etc.
 /obj/item/food/proc/MakeGrillable()
 	if(burns_on_grill)
-		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), TRUE)
+		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
