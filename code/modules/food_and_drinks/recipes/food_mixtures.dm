@@ -1,6 +1,7 @@
 /datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
+	time = 5 // Skyrat Change, default crafting time is 30 deciseconds, food is crafted much more often and in large numbers.
 
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()

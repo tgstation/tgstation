@@ -66,6 +66,16 @@
 	build_path = /obj/item/food/monkeycube
 	category = list("initial","Food")
 
+//SKYRAT EDIT ADDITION BEGIN
+/datum/design/biomeat
+	name = "Meat Product"
+	id = "meatp"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 125) //Monkey Cube is more efficient, but this is easier on the chef.
+	build_path = /obj/item/food/meat/slab/meatproduct
+	category = list("initial","Food")
+//SKYRAT EDIT ADDITION END
+
 /datum/design/ez_nut   //easy nut :)
 	name = "25u E-Z Nutrient"
 	id = "ez_nut"
