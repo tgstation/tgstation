@@ -53824,7 +53824,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/camera{
-	c_tag = "Recreation VR Sleepers";
+	c_tag = "Recreation Arcade";
 	name = "recreation camera"
 	},
 /obj/effect/decal/cleanable/cobweb,
