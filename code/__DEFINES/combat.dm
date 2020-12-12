@@ -81,6 +81,7 @@
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE 8
+#define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
@@ -142,11 +143,11 @@
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID 20
+#define SHOVE_KNOCKDOWN_HUMAN 20
+#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_COLLATERAL 1
+#define SHOVE_CHAIN_PARALYZE 30
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
@@ -280,6 +281,5 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
 #define NICE_SHOT_RICOCHET_BONUS	10			//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle

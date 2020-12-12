@@ -80,8 +80,8 @@ other types of metals and chemistry for reagents).
 
 /obj/item/disk/design_disk/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 	for(var/i in 1 to max_blueprints)
 		blueprints += null
 

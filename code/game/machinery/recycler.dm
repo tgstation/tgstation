@@ -19,7 +19,19 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE)
+	var/list/allowed_materials = list(/datum/material/iron,
+									/datum/material/glass,
+									/datum/material/silver,
+									/datum/material/plasma,
+									/datum/material/gold,
+									/datum/material/diamond,
+									/datum/material/plastic,
+									/datum/material/uranium,
+									/datum/material/bananium,
+									/datum/material/titanium,
+									/datum/material/bluespace
+									)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -68,7 +80,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_icon()
-	playsound(src, "sparks", 75, TRUE, -1)
+	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon_state()
@@ -149,10 +161,10 @@
 		new L.plank_type(loc, 1 + seed_modifier)
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I)
+		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
 		if(!material_amount)
 			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
+		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
 		materials.retrieve_all()
 
 

@@ -26,6 +26,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	speed = -1 //they don't have to lug a body made of runed metal around
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH

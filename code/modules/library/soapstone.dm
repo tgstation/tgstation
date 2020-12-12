@@ -87,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permamently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -232,6 +232,10 @@
 	return data
 
 /obj/structure/chisel_message/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	var/mob/user = usr
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/is_creator = user.ckey == creator_key

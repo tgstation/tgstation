@@ -83,7 +83,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 	random_revenant_name()
 
-/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
+/mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)
 	return FALSE
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
@@ -149,7 +149,7 @@
 			essencecolor = "#9A5ACB" //oh boy you've got a lot of essence
 		else if(!essence)
 			essencecolor = "#1D2953" //oh jeez you're dying
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
+		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>")
 
 /mob/living/simple_animal/revenant/med_hud_set_health()
 	return //we use no hud
@@ -378,7 +378,7 @@
 	if(!reforming || inert)
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
-						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
+		"<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
 	user.dropItemToGround(src)
 	scatter()
 
@@ -470,17 +470,19 @@
 /datum/objective/revenant_fluff
 
 /datum/objective/revenant_fluff/New()
-	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
-									 "Avoid killing in plain sight.", \
-									 "Cause as much chaos and anger as you can without being killed.", \
-									 "Damage and render as much of the station rusted and unusable as possible.", \
-									 "Disable and cause malfunctions in as many machines as possible.", \
-									 "Ensure that any holy weapons are rendered unusable.", \
-									 "Hinder the crew while attempting to avoid being noticed.", \
-									 "Make the crew as miserable as possible.", \
-									 "Make the clown as miserable as possible.", \
-									 "Make the captain as miserable as possible.", \
-									 "Prevent the use of energy weapons where possible.")
+	var/list/explanationTexts = list(
+		"Assist and exacerbate existing threats at critical moments.", \
+		"Impersonate or be worshipped as a god.", \
+		"Cause as much chaos and anger as you can without being killed.", \
+		"Damage and render as much of the station rusted and unusable as possible.", \
+		"Disable and cause malfunctions in as many machines as possible.", \
+		"Ensure that any holy weapons are rendered unusable.", \
+		"Heed and obey the requests of the dead, provided that carrying them out wouldn't be too inconvenient or self-destructive.", \
+		"Make the crew as miserable as possible.", \
+		"Make the clown as miserable as possible.", \
+		"Make the captain as miserable as possible.", \
+		"Prevent the use of energy weapons where possible.",
+	)
 	explanation_text = pick(explanationTexts)
 	..()
 

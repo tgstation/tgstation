@@ -91,9 +91,6 @@
 		data["trackimplants"] = track_implants
 	return data
 
-/obj/machinery/my_machine/ui_act(action, params)
-  	if(..()) return
-
 /*
  * Hand-tele
  */

@@ -52,6 +52,8 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
@@ -117,6 +119,8 @@
 	anchored = TRUE
 	locked = TRUE
 	breakout_time = 900
+	open_sound = 'sound/effects/shovel_dig.ogg'
+	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE

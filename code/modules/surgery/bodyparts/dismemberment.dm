@@ -17,7 +17,7 @@
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)
 		C.visible_message("<span class='danger'><B>[C]'s [name] is violently dismembered!</B></span>")
-	C.emote("scream")
+	INVOKE_ASYNC(C, /mob.proc/emote, "scream")
 	playsound(get_turf(C), 'sound/effects/dismember.ogg', 80, TRUE)
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
@@ -136,7 +136,6 @@
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
-	phantom_owner.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -150,13 +149,13 @@
 	forceMove(Tsec)
 
 /**
-  * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
-  *
-  * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
-  * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
-  *
-  * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
-  */
+ * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
+ *
+ * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
+ * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
+ *
+ * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_FLESH if our skin is broken, BODYPART_MANGLED_BONE if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
+ */
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
 
@@ -168,18 +167,18 @@
 			. |= BODYPART_MANGLED_FLESH
 
 /**
-  * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
-  *
-  * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state]. This simply makes the roll for whether we actually dismember or not
-  * using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
-  * Lastly, we choose which kind of dismember we want based on the wounding type we hit with. Note we don't care about all the normal mods or armor for this
-  *
-  * Arguments:
-  * * wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message
-  * * wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance
-  * * wound_bonus: Not actually used right now, but maybe someday
-  * * bare_wound_bonus: ditto above
-  */
+ * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
+ *
+ * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state]. This simply makes the roll for whether we actually dismember or not
+ * using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
+ * Lastly, we choose which kind of dismember we want based on the wounding type we hit with. Note we don't care about all the normal mods or armor for this
+ *
+ * Arguments:
+ * * wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message
+ * * wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance
+ * * wound_bonus: Not actually used right now, but maybe someday
+ * * bare_wound_bonus: ditto above
+ */
 /obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 	if(wounding_dmg < DISMEMBER_MINIMUM_DAMAGE)
 		return
@@ -233,10 +232,10 @@
 		if(C.handcuffed)
 			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
-			C.handcuffed = null
+			C.set_handcuffed(null)
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
 				R.update_icon()
 		if(C.gloves)
@@ -251,10 +250,10 @@
 		if(C.handcuffed)
 			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
-			C.handcuffed = null
+			C.set_handcuffed(null)
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
 				L.update_icon()
 		if(C.gloves)
@@ -341,7 +340,7 @@
 		if(C.dna.species.mutanthands && !is_pseudopart)
 			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
-			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
+			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_icon()
 		C.update_inv_gloves()
@@ -378,7 +377,6 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_mobility()
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special = FALSE, abort = FALSE)
@@ -435,7 +433,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_mobility()
+
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())

@@ -188,11 +188,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(600, FALSE)
+	M.AdjustSleeping(600)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(40, FALSE)
+	M.AdjustSleeping(40)
 	..()
 	. = 1
 
@@ -236,8 +236,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(M.has_reagent(/datum/reagent/cryostylane))
-				M.remove_reagent(/datum/reagent/cryostylane, 5)
+			if(holder.has_reagent(/datum/reagent/cryostylane))
+				holder.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)
@@ -266,8 +266,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(M.has_reagent(/datum/reagent/consumable/capsaicin))
-				M.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
+			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -342,12 +342,12 @@
 				victim.vomit()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
-	if(!M.has_reagent(/datum/reagent/consumable/milk))
+	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(prob(10))
 			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
 
-/datum/reagent/consumable/sodiumchloride
+/datum/reagent/consumable/salt
 	name = "Table Salt"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
@@ -355,7 +355,7 @@
 	taste_description = "salt"
 	penetrates_skin = NONE
 
-/datum/reagent/consumable/sodiumchloride/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
+/datum/reagent/consumable/salt/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
@@ -752,12 +752,12 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM)
+		stomach.adjust_charge(reac_volume * REM * 20)
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
-	if(prob(25) && !isethereal(M))
-		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, TRUE)
+	if(prob(25) && !isethereal(M)) //lmao at the newbs who eat energy bars
+		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /datum/reagent/consumable/astrotame
@@ -850,3 +850,11 @@
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
+
+/datum/reagent/consumable/laughsyrup
+	name = "Laughin' Syrup"
+	description = "The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
+	color = "#803280"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	taste_mult = 2
+	taste_description = "fizzy sweetness"

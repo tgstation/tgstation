@@ -407,19 +407,19 @@
 	info = {"<b>Dissection for Dummies</b><br>
 
 <br>
- 1.Acquire fresh specimen.<br>
- 2.Put the specimen on operating table.<br>
- 3.Apply surgical drapes, preparing for experimental dissection.<br>
- 4.Apply scalpel to specimen's torso.<br>
- 5.Clamp bleeders on specimen's torso with a hemostat.<br>
- 6.Retract skin of specimen's torso with a retractor.<br>
- 7.Apply scalpel again to specimen's torso.<br>
- 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
- 9.Insert replacement gland (Retrieve one from gland storage).<br>
- 10.Consider dressing the specimen back to not disturb the habitat. <br>
- 11.Put the specimen in the experiment machinery.<br>
- 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
- 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
+1.Acquire fresh specimen.<br>
+2.Put the specimen on operating table.<br>
+3.Apply surgical drapes, preparing for experimental dissection.<br>
+4.Apply scalpel to specimen's torso.<br>
+5.Clamp bleeders on specimen's torso with a hemostat.<br>
+6.Retract skin of specimen's torso with a retractor.<br>
+7.Apply scalpel again to specimen's torso.<br>
+8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
+9.Insert replacement gland (Retrieve one from gland storage).<br>
+10.Consider dressing the specimen back to not disturb the habitat. <br>
+11.Put the specimen in the experiment machinery.<br>
+12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
+13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
@@ -592,7 +592,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, time_to_cuff) && C.canBeHandcuffed())
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
+					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
 					C.update_handcuffed()
 					to_chat(user, "<span class='notice'>You restrain [C].</span>")
 					log_combat(user, C, "handcuffed")
@@ -812,12 +812,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien table"
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/smooth_structures/alien_table.dmi'
-	icon_state = "alien_table"
+	icon_state = "alien_table-0"
+	base_icon_state = "alien_table"
 	buildstack = /obj/item/stack/sheet/mineral/abductor
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	buildstackamount = 1
 	framestackamount = 1
-	canSmoothWith = null
+	smoothing_groups = list(SMOOTH_GROUP_ABDUCTOR_TABLES)
+	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_TABLES)
 	frame = /obj/structure/table_frame/abductor
 
 /obj/structure/table/optable/abductor

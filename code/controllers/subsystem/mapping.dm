@@ -69,6 +69,8 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
+	run_map_generation()
+
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
@@ -102,7 +104,7 @@ SUBSYSTEM_DEF(mapping)
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
 		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/transparent/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
@@ -155,7 +157,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self-destruct nuke.
+Used by the AI doomsday and the self-destruct nuke.
 */
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
@@ -306,6 +308,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
+/datum/controller/subsystem/mapping/proc/run_map_generation()
+	for(var/area/A in world)
+		A.RunGeneration()
+
 /datum/controller/subsystem/mapping/proc/maprotate()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
@@ -445,7 +451,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return

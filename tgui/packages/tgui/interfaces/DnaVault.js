@@ -37,7 +37,7 @@ export const DnaVault = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Animal DNA">
               <ProgressBar
-                value={animals / animals}>
+                value={animals / animals_max}>
                 {animals + ' / ' + animals_max + ' Samples'}
               </ProgressBar>
             </LabeledList.Item>

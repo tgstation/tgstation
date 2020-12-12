@@ -17,6 +17,7 @@
 #define TOOL_BONESET		"bonesetter"
 #define TOOL_KNIFE			"knife"
 #define TOOL_BLOODFILTER	"bloodfilter"
+#define TOOL_ROLLINGPIN		"rollingpin"
 
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.

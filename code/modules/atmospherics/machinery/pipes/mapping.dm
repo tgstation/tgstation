@@ -81,3 +81,16 @@ HELPER_NAMED(supplymain, "main air supply pipe", rgb(130, 43, 255))
 #undef HELPER
 #undef HELPER_PARTIAL_NAMED
 #undef HELPER_PARTIAL
+
+/obj/machinery/atmospherics/pipe/multiz/layer1
+	piping_layer = 1
+	icon_state = "adapter-1"
+/obj/machinery/atmospherics/pipe/multiz/layer2
+	piping_layer = 2
+	icon_state = "adapter-2"
+/obj/machinery/atmospherics/pipe/multiz/layer4
+	piping_layer = 4
+	icon_state = "adapter-4"
+/obj/machinery/atmospherics/pipe/multiz/layer5
+	piping_layer = 5
+	icon_state = "adapter-5"

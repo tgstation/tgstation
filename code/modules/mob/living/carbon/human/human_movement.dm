@@ -41,11 +41,11 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return ((shoes?.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	if(shoes && (mobility_flags & MOBILITY_STAND) && loc == NewLoc && has_gravity(loc))
+	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
 		var/obj/item/clothing/shoes/S = shoes
 		S.step_action()
 

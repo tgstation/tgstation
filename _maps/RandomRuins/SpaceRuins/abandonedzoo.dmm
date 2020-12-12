@@ -17,7 +17,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "ah" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/abandonedzoo)
 "ai" = (
 /turf/open/floor/plating/asteroid,
@@ -189,6 +189,7 @@
 "aN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aO" = (
@@ -252,8 +253,9 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/medical,
+/obj/item/clothing/suit/space/eva,
 /obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aU" = (
@@ -409,7 +411,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bn" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/carrotfries,
+/obj/item/food/carrotfries,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bp" = (

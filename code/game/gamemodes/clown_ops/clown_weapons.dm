@@ -157,21 +157,19 @@
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
-			sleep(1)
-			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 
 
 //BOMBANANA
 
-/obj/item/reagent_containers/food/snacks/grown/banana/bombanana
-	trash = /obj/item/grown/bananapeel/bombanana
-	bitesize = 1
-	customfoodfilling = FALSE
+/obj/item/food/grown/banana/bombanana
+	trash_type = /obj/item/grown/bananapeel/bombanana
+	bite_consumption = 1
 	seed = null
 	tastes = list("explosives" = 10)
-	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
 /obj/item/grown/bananapeel/bombanana
 	desc = "A peel from a banana. Why is it beeping?"
@@ -187,7 +185,7 @@
 		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
-	bomb.preprime(loc, null, FALSE)
+	bomb.arm_grenade(loc, null, FALSE)
 
 /obj/item/grown/bananapeel/bombanana/ComponentInitialize()
 	. = ..()
@@ -200,7 +198,7 @@
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	bomb.preprime(user, 0, FALSE)
+	bomb.arm_grenade(user, 0, FALSE)
 	return (BRUTELOSS)
 
 //TEARSTACHE GRENADE
@@ -211,7 +209,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
+/obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
 	for(var/mob/living/carbon/M in view(6, myloc))

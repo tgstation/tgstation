@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 /*
  * Morgue
  */
@@ -229,8 +229,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	connected = new /obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)
@@ -296,7 +296,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
 	for(var/i_scream in GetAllContents(/mob/living))
-		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
+		var/obj/item/food/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
 		icecreams += IC
@@ -314,7 +314,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	var/obj/structure/bodycontainer/connected = null
 	anchored = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	max_integrity = 350
 
 /obj/structure/tray/Destroy()
@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	O.forceMove(src.loc)
 	if (user != O)
@@ -388,16 +388,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
+	pass_flags_self = PASSTABLE
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return TRUE
+	if(.)
+		return
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
-
-/obj/structure/tray/m_tray/CanAStarPass(ID, dir, caller)
-	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSTABLE)

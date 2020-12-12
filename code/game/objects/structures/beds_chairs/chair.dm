@@ -37,7 +37,7 @@
 	var/mob/living/L = user
 
 	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 			return FALSE
 		else
 			return TRUE
@@ -89,11 +89,13 @@
 	else
 		return ..()
 
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
-		..()
-	else
-		setDir(turn(dir,-90))
+		return ..()
+	setDir(turn(dir,-90))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -238,9 +240,9 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
+		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+		if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/obj/item/C = new item_chair(loc)
@@ -413,9 +415,9 @@
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
-/obj/structure/chair/bronze/AltClick(mob/living/user)
+/obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message("<span class='notice'>[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER.</span>", \
@@ -466,7 +468,7 @@
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
+		if(do_after(Mob, 6 SECONDS, progress = FALSE))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)

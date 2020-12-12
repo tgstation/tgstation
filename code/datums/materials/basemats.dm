@@ -7,8 +7,8 @@
 	sheet_type = /obj/item/stack/sheet/metal
 	value_per_unit = 0.0025
 
-/datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+/datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
 
 ///Breaks extremely easily but is transparent.
@@ -25,8 +25,8 @@
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, LASER = 0, ENERGY = 1, BOMB = 0, BIO = 0.2, RAD = 0.2, FIRE = 1, ACID = 0.2)
 
-/datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
+/datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
 	return TRUE
 
 /*
@@ -44,8 +44,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.025
 	beauty_modifier = 0.075
 
-/datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+/datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
 
 ///Slight force increase
@@ -60,8 +60,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, RAD = 1, FIRE = 0.7, ACID = 1.1)
 
-/datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+/datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
 
 ///Has no special properties
@@ -76,8 +76,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
 
-/datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+/datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 	return TRUE
 
 ///Is slightly radioactive
@@ -93,15 +93,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going. amount / 50 means 40 radiation per sheet.
 
-/datum/material/uranium/on_removed(atom/source, material_flags)
+/datum/material/uranium/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/radioactive))
 
-/datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
-	S?.reagents?.add_reagent(/datum/reagent/uranium, S.reagents.total_volume*(2/5))
+/datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
+	source_item?.reagents?.add_reagent(/datum/reagent/uranium, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
@@ -122,14 +122,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
-/datum/material/plasma/on_removed(atom/source, material_flags)
+/datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
 	qdel(source.GetComponent(/datum/component/explodable))
 
-/datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
-	S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(2/5))
+/datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
+	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
@@ -143,9 +143,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	value_per_unit = 0.15
 
-/datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
-	S?.reagents?.add_reagent(/datum/reagent/bluespace, S.reagents.total_volume*(2/5))
+/datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
+	source_item?.reagents?.add_reagent(/datum/reagent/bluespace, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Honks and slips
@@ -161,7 +161,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
@@ -169,9 +169,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
 
-/datum/material/bananium/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
-	S?.reagents?.add_reagent(/datum/reagent/consumable/banana, S.reagents.total_volume*(2/5))
+/datum/material/bananium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
+	source_item?.reagents?.add_reagent(/datum/reagent/consumable/banana, source_item.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Mediocre force increase
@@ -186,8 +186,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, RAD = 1, FIRE = 0.7, ACID = 1)
 
-/datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+/datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 	return TRUE
 
 /datum/material/runite
@@ -201,8 +201,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.5
 	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, RAD = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 
-/datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+/datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 	return TRUE
 
 ///Force decrease
@@ -240,6 +240,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.01
 	beauty_modifier = 0.1
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, RAD = 0, FIRE = 0, ACID = 0.3)
+	texture_layer_icon_state = "woodgrain"
 
 /datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
@@ -247,19 +248,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		var/obj/wooden = source
 		wooden.resistance_flags |= FLAMMABLE
 
-/datum/material/wood/on_removed_obj(obj/source, material_flags)
+/datum/material/wood/on_removed_obj(obj/source, amount, material_flags)
 	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/wooden = source
 		wooden.resistance_flags &= ~FLAMMABLE
 
-/datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+/datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+	victim.reagents.add_reagent(/datum/reagent/cellulose, rand(8, 12))
+	source_item?.reagents?.add_reagent(/datum/reagent/cellulose, source_item.reagents.total_volume*(2/5))
 
-	var/obj/item/reagent_containers/food/snacks/food_S = S
-	if(istype(food_S) && food_S?.tastes?.len)
-		food_S.tastes += "wood chips and sawdust"
-		food_S.tastes["wood chips and sawdust"] = 3
 	return TRUE
 
 ///Stronk force increase
@@ -274,8 +273,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.4
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, RAD = 1, FIRE = 2.5, ACID = 1)
 
-/datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+/datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 	return TRUE
 
 ///RPG Magic.
@@ -295,13 +294,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item))
 		source.AddComponent(/datum/component/fantasy)
 
-/datum/material/mythril/on_removed_obj(atom/source, material_flags)
+/datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
 
-/datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+/datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
 	return TRUE
 
 //formed when freon react with o2, emits a lot of plasma when heated
@@ -323,13 +322,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
 	return ..()
 
-/datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
-	S?.reagents?.add_reagent(/datum/reagent/toxin/plasma, S.reagents.total_volume*(3/5))
-	var/obj/item/reagent_containers/food/snacks/food_S = S
-	if(istype(food_S) && food_S?.tastes?.len)
-		food_S.tastes += "salt"
-		food_S.tastes["salt"] = 3
+/datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 6))
+	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*(3/5))
 	return TRUE
 
 /datum/material/metalhydrogen
@@ -344,8 +339,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, RAD = 1, FIRE = 1.3, ACID = 1)
 
-/datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+/datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 	return TRUE
 
 /datum/material/otherworld_crystal
@@ -374,8 +369,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 
-/datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.adjust_disgust(17)
+/datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.adjust_disgust(17)
 	return TRUE
 
 //And now for our lavaland dwelling friends, sand, but in stone form! Truly revolutionary.
@@ -403,8 +398,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 
-/datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
+/datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
 	return TRUE
 
 /datum/material/runedmetal
@@ -418,9 +413,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 
-/datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
-	M.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+/datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
+	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
+	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
 
 /datum/material/bronze
@@ -452,7 +447,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		paper.resistance_flags |= FLAMMABLE
 		paper.obj_flags |= UNIQUE_RENAME
 
-/datum/material/paper/on_removed_obj(obj/source, material_flags)
+/datum/material/paper/on_removed_obj(obj/source, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/paper = source
 		paper.resistance_flags &= ~FLAMMABLE
@@ -475,7 +470,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
 
-/datum/material/cardboard/on_removed_obj(obj/source, material_flags)
+/datum/material/cardboard/on_removed_obj(obj/source, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
 		cardboard.resistance_flags &= ~FLAMMABLE

@@ -252,8 +252,9 @@
 	name = "hedge"
 	desc = "A large bushy hedge."
 	icon = 'icons/obj/smooth_structures/hedge.dmi'
-	icon_state = "hedge"
-	smoothing_flags = SMOOTH_CORNERS
+	icon_state = "hedge-0"
+	base_icon_state = "hedge"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_HEDGE_FLUFF)
 	canSmoothWith = list(SMOOTH_GROUP_HEDGE_FLUFF)
 	density = TRUE

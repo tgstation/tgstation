@@ -92,10 +92,10 @@
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
+		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer?.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
 	else
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[linkedServer && linkedServer.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
+		dat += " Server Power: <u>[linkedServer?.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
 	if(hacking || (obj_flags & EMAGGED))
 		screen = MSG_MON_SCREEN_HACKED

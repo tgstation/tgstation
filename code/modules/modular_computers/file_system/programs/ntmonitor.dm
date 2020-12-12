@@ -8,9 +8,11 @@
 	required_access = ACCESS_NETWORK	//NETWORK CONTROL IS A MORE SECURE PROGRAM.
 	available_on_ntnet = TRUE
 	tgui_id = "NtosNetMonitor"
+	program_icon = "network-wired"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("resetIDS")

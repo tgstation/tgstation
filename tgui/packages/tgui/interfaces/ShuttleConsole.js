@@ -59,6 +59,16 @@ const getLocationIdByName = (locations, name) => {
   return locations?.find(location => location.name === name)?.id;
 };
 
+const STATUS_COLOR_KEYS = {
+  "In Transit": "good",
+  "Idle": "average",
+  "Igniting": "average",
+  "Recharging": "average",
+  "Missing": "bad",
+  "Unauthorized Access": "bad",
+  "Locked": "bad",
+};
+
 const ShuttleConsoleContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -90,13 +100,7 @@ const ShuttleConsoleContent = (props, context) => {
         </Box>
         <Box
           inline
-          color={status==="In Transit"
-            ? 'good'
-            : status==="Idle"
-              ? 'average'
-              : status==="Igniting"
-                ? 'average'
-                : 'bad'}
+          color={STATUS_COLOR_KEYS[status] || "bad"}
           ml={1}>
           {status || "Not Available"}
         </Box>
@@ -110,15 +114,20 @@ const ShuttleConsoleContent = (props, context) => {
           </LabeledList.Item>
           <LabeledList.Item label="Destination">
             {locations.length===0 && (
-              <Box color="bad">
+              <Box
+                mb={1.7}
+                color="bad">
                 Not Available
               </Box>
             ) || locations.length===1 &&(
-              <Box color="average">
+              <Box
+                mb={1.7}
+                color="average">
                 {getLocationNameById(locations, destination)}
               </Box>
             ) || (
               <Dropdown
+                mb={1.7}
                 over
                 width="240px"
                 options={locations.map(location => location.name)}
@@ -134,7 +143,6 @@ const ShuttleConsoleContent = (props, context) => {
           content="Depart"
           disabled={!getLocationNameById(locations, destination)
             || locked || authorization_required}
-          mt={1.5}
           icon="arrow-up"
           textAlign="center"
           onClick={() => act('move', {

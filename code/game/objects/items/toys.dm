@@ -198,14 +198,14 @@
 	return MANUAL_SUICIDE
 
 /**
-  * Internal function used in the toy singularity suicide
-  *
-  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
-  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
-  * Throwing the singularity away will cause the user to start choking themself to death.
-  * Arguments:
-  * * user - Whoever is doing the suiciding
-  */
+ * Internal function used in the toy singularity suicide
+ *
+ * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+ * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+ * Throwing the singularity away will cause the user to start choking themself to death.
+ * Arguments:
+ * * user - Whoever is doing the suiciding
+ */
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
 		return
@@ -281,7 +281,7 @@
 	. = ..()
 	if (flag)
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
@@ -292,8 +292,8 @@
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
-						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='hear'>You hear a gunshot!</span>")
+		"<span class='danger'>You fire [src] at [target]!</span>", \
+		"<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -459,6 +459,10 @@
 
 /obj/item/dualsaber/toy/IsReflect() //Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
+
+/obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
+	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
+	user.adjustStaminaLoss(25)
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -646,6 +650,15 @@
 	var/list/card_attack_verb_continuous = list("attacks")
 	var/list/card_attack_verb_simple = list("attack")
 
+
+/obj/item/toy/cards/Initialize()
+	. = ..()
+	if(card_attack_verb_continuous)
+		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
+	if(card_attack_verb_simple)
+		card_attack_verb_simple = string_list(card_attack_verb_simple)
+
+
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
@@ -765,8 +778,8 @@
 			M.put_in_hands(src)
 			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
-		else if(istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
+		else if(istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
 			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 				to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
@@ -844,16 +857,16 @@
 	newobj.card_throwforce = sourceobj.card_throwforce
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
+	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -862,8 +875,8 @@
 	return TRUE
 
 /**
-  * This proc updates the sprite for when you create a hand of cards
-  */
+ * This proc updates the sprite for when you create a hand of cards
+ */
 /obj/item/toy/cards/cardhand/proc/update_sprite()
 	cut_overlays()
 	var/overlay_cards = currenthand.len
@@ -964,10 +977,8 @@
 	newobj.throw_speed = newobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.throw_range = newobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous
-	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple
-	newobj.attack_verb_simple = newobj.card_attack_verb_simple
+	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
+	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
@@ -1078,8 +1089,9 @@
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
-				sleep(8) // Short delay to match up with the explosion sound
-				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
+				// Short delay to match up with the explosion sound
+				// Shakes player camera 2 squares for 1 second.
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/shake_camera, M, 2, 1), 0.8 SECONDS)
 
 	else
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
@@ -1467,8 +1479,7 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 300)
 		user.visible_message("<span class='notice'>[user] adjusts the dial on [src].</span>")
-		sleep(5)
-		playsound(src, 'sound/items/radiostatic.ogg', 50, FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>The dial on [src] jams up</span>")
 		return
@@ -1483,5 +1494,4 @@
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		sleep(5)
-		playsound(src, 'sound/effects/blobattack.ogg', 50, FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)

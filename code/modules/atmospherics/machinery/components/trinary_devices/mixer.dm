@@ -141,7 +141,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

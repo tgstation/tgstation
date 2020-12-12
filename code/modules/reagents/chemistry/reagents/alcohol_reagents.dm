@@ -144,7 +144,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-40, FALSE)
+	M.AdjustSleeping(-40)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	..()
@@ -405,6 +405,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "grappa"
 	glass_name = "glass of grappa"
 	glass_desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
+
+/datum/reagent/consumable/ethanol/amaretto
+	name = "Amaretto"
+	description = "A gentle drink that carries a sweet aroma."
+	color = "#E17600"
+	boozepwr = 25
+	taste_description = "fruity and nutty sweetness"
+	glass_icon_state = "amarettoglass"
+	glass_name = "glass of amaretto"
+	glass_desc = "A sweet and syrupy looking drink."
+	shot_glass_icon_state = "shotglassgold"
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -1325,10 +1336,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.slurring += 3
 	switch(current_cycle)
 		if(51 to 200)
-			M.Sleeping(100, FALSE)
+			M.Sleeping(100)
 			. = 1
 		if(201 to INFINITY)
-			M.AdjustSleeping(40, FALSE)
+			M.AdjustSleeping(40)
 			M.adjustToxLoss(2, 0)
 			. = 1
 	..()
@@ -1737,6 +1748,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
 	..()
+
+/datum/reagent/consumable/ethanol/amaretto_alexander
+	name = "Amaretto Alexander"
+	description = "A weaker version of the Alexander, what it lacks in strength it makes up for in flavor."
+	color = "#DBD5AE"
+	boozepwr = 35
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet, creamy cacao"
+	glass_icon_state = "alexanderam"
+	glass_name = "Amaretto Alexander"
+	glass_desc = "A creamy, indulgent delight that is in fact as gentle as it seems."
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
@@ -2200,7 +2222,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(prob(10))
 			stored_teleports += rand(2,6)
 			if(prob(70))
-				M.vomit()
+				M.vomit(vomit_type = VOMIT_PURPLE)
 	return ..()
 
 
@@ -2269,3 +2291,37 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
+
+/datum/reagent/consumable/ethanol/ginger_amaretto
+	name = "Ginger Amaretto"
+	description = "A delightfully simple cocktail that pleases the senses."
+	boozepwr = 30
+	color = "#EFB42A"
+	quality = DRINK_GOOD
+	taste_description = "sweetness followed by a soft sourness and warmth"
+	glass_icon_state = "gingeramaretto"
+	glass_name = "Ginger Amaretto"
+	glass_desc = "The sprig of rosemary adds a nice aroma to the drink, and isn't just to be pretentious afterall!"
+
+/datum/reagent/consumable/ethanol/godfather
+	name = "Godfather"
+	description = "A rough cocktail with illegal connections."
+	boozepwr = 50
+	color = "#E68F00"
+	quality = DRINK_GOOD
+	taste_description = "a delightful softened punch"
+	glass_icon_state = "godfather"
+	glass_name = "Godfather"
+	glass_desc = "A classic from old Italy and enjoyed by gangsters, pray the orange peel doesnt end up in your mouth."
+
+/datum/reagent/consumable/ethanol/godmother
+	name = "Godmother"
+	description = "A twist on a classic, liked more by mature women."
+	boozepwr = 50
+	color = "#E68F00"
+	quality = DRINK_GOOD
+	taste_description = "sweetness and a zesty twist"
+	glass_icon_state = "godmother"
+	glass_name = "Godmother"
+	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
+

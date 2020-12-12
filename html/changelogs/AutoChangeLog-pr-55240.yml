@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - bugfix: "Space Ninja's suit cooldown now works properly."
+  - bugfix: "Space Ninja no longer suffers from being slower than he's supposed to be occasionally."

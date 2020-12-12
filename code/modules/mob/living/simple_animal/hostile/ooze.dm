@@ -37,7 +37,7 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -99,7 +99,7 @@
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>")
 
 
 ///* Gelatinious Ooze code below *\\\\
@@ -151,7 +151,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 24 SECONDS
 	var/nutrition_cost = 10
 	var/active = FALSE
@@ -200,14 +200,14 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 
 /datum/action/consume/proc/handle_mob_deletion()
@@ -426,7 +426,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 10 SECONDS
 
 ///Try to put the pulled mob in a cocoon

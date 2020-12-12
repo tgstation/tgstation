@@ -4,9 +4,11 @@
 	default_driver_move = FALSE
 	var/car_traits = NONE //Bitflag for special behavior such as kidnapping
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
-	var/last_enginesound_time
-	var/engine_sound_length = 20 //Set this to the length of the engine sound
-	var/escape_time = 60 //Time it takes to break out of the car
+	///Set this to the length of the engine sound.
+	var/engine_sound_length = 2 SECONDS
+	///Time it takes to break out of the car.
+	var/escape_time = 6 SECONDS
+	COOLDOWN_DECLARE(enginesound_cooldown)
 
 /obj/vehicle/sealed/car/Initialize()
 	. = ..()
@@ -26,14 +28,14 @@
 		return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
-	if(world.time < last_enginesound_time + engine_sound_length)
-		return
-	last_enginesound_time = world.time
+	if(!COOLDOWN_FINISHED(src, enginesound_cooldown))
+		return FALSE
+	COOLDOWN_START(src, enginesound_cooldown, engine_sound_length)
 	playsound(src, engine_sound, 100, TRUE)
 	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.stat || M.restrained())
+	if(M.stat != CONSCIOUS || HAS_TRAIT(M, TRAIT_HANDS_BLOCKED))
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/L = dropping
@@ -52,25 +54,16 @@
 	mob_exit(M, silent)
 	return TRUE
 
-/obj/vehicle/sealed/car/attacked_by(obj/item/I, mob/living/user)
-	if(!I.force)
-		return
-	if(occupants[user])
-		to_chat(user, "<span class='notice'>Your attack bounces off \the [src]'s padded interior.</span>")
-		return
-	return ..()
 
 /obj/vehicle/sealed/car/attack_hand(mob/living/user)
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return
-	if(occupants[user])
-		return
 	to_chat(user, "<span class='notice'>You start opening [src]'s trunk.</span>")
 	if(do_after(user, 30))
 		if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 			to_chat(user, "<span class='notice'>The people stuck in [src]'s trunk all come tumbling out.</span>")
-			DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)
+			dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 		else
 			to_chat(user, "<span class='notice'>It seems [src]'s trunk was empty.</span>")
 
@@ -93,3 +86,8 @@
 		M.visible_message("<span class='warning'>[M] is forced into \the [src]!</span>")
 	M.forceMove(src)
 	add_occupant(M, VEHICLE_CONTROL_KIDNAPPED)
+
+/obj/vehicle/sealed/car/obj_destruction(damage_flag)
+	explosion(loc, 0, 1, 2, 3, 0)
+	log_message("[src] exploded due to destruction", LOG_ATTACK)
+	return ..()

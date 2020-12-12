@@ -200,17 +200,16 @@
 		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
 		return
 
-	for(var/A in SSeconomy.bank_accounts)
-		var/datum/bank_account/B = A
-		if(B.account_id == new_bank_id)
-			if (old_account)
-				old_account.bank_cards -= src
+	var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
+	if(B)
+		if (old_account)
+			old_account.bank_cards -= src
 
-			B.bank_cards += src
-			registered_account = B
-			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+		B.bank_cards += src
+		registered_account = B
+		to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
 
-			return TRUE
+		return TRUE
 
 	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 	return
@@ -419,12 +418,11 @@ update_label()
 				if(ishuman(user))
 					var/mob/living/carbon/human/accountowner = user
 
-					for(var/bank_account in SSeconomy.bank_accounts)
-						var/datum/bank_account/account = bank_account
-						if(account.account_id == accountowner.account_id)
-							account.bank_cards += src
-							registered_account = account
-							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
+					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+					if(account)
+						account.bank_cards += src
+						registered_account = account
+						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 			return
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)

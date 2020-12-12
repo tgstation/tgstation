@@ -55,7 +55,7 @@
 	if(occupant)
 		if(!iscarbon(occupant))
 			occupant.forceMove(drop_location())
-			occupant = null
+			set_occupant(null)
 			return
 		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -176,13 +176,13 @@
 		var/mob/living/carbon/C = occupant
 		if(C.type_of_meat)
 			if(nutrients >= nutrient_to_meat * 2)
-				C.put_in_hands(new /obj/item/reagent_containers/food/snacks/cookie (), TRUE)
+				C.put_in_hands(new /obj/item/food/cookie, del_on_fail = TRUE)
 			while(nutrients >= nutrient_to_meat)
 				nutrients -= nutrient_to_meat
 				new C.type_of_meat (drop_location())
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
-				new /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain (drop_location())
+				new /obj/item/food/meat/rawcutlet/plain (drop_location())
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)

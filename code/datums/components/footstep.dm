@@ -11,7 +11,7 @@
 	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
 	var/footstep_sounds
 
-/datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -1)
+/datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -8)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	volume = volume_
@@ -42,9 +42,12 @@
 		return
 
 	var/mob/living/LM = parent
-	if(!T.footstep || LM.buckled || !((LM.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
-		if (!(LM.mobility_flags & MOBILITY_STAND) && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
-			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * volume)
+
+	if(!T.footstep || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(LM, TRAIT_IMMOBILIZED))
+		return
+
+	if(LM.body_position == LYING_DOWN) //play crawling sound if we're lying
+		playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1)
 		return
 
 	if(iscarbon(LM))
@@ -72,7 +75,7 @@
 	if(!T)
 		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(T, footstep_sounds, volume)
+		playsound(T, footstep_sounds, volume, falloff_distance = 1)
 		return
 	var/turf_footstep
 	switch(footstep_type)
@@ -86,7 +89,7 @@
 			turf_footstep = T.footstep
 	if(!turf_footstep)
 		return
-	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range)
+	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1)
 
 /datum/component/footstep/proc/play_humanstep()
 	SIGNAL_HANDLER
@@ -97,18 +100,18 @@
 	if(!T)
 		return
 	var/mob/living/carbon/human/H = parent
-	var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
 
-	if(H.shoes || feetCover) //are we wearing shoes
+	if ((H.wear_suit?.body_parts_covered | H.w_uniform?.body_parts_covered | H.shoes?.body_parts_covered) & FEET)
+		// we are wearing shoes
 		playsound(T, pick(GLOB.footstep[T.footstep][1]),
 			GLOB.footstep[T.footstep][2] * volume,
 			TRUE,
-			GLOB.footstep[T.footstep][3] + e_range)
+			GLOB.footstep[T.footstep][3] + e_range, falloff_distance = 1)
 	else
 		if(H.dna.species.special_step_sounds)
-			playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
+			playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1)
 		else
 			playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 				GLOB.barefootstep[T.barefootstep][2] * volume,
 				TRUE,
-				GLOB.barefootstep[T.barefootstep][3] + e_range)
+				GLOB.barefootstep[T.barefootstep][3] + e_range, falloff_distance = 1)

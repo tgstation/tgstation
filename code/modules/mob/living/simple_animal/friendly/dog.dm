@@ -42,9 +42,9 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = FALSE
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
+				for(var/obj/item/potential_snack in oview(src,3))
+					if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+						movement_target = potential_snack
 						break
 			if(movement_target)
 				stop_automated_movement = TRUE
@@ -92,7 +92,7 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	held_state = "corgi"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
+	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -130,7 +130,7 @@
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
+	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 	held_state = "pug"
@@ -140,7 +140,7 @@
 
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
-	desc = "This dog can tell someting smells around here, and that something is CRIME!"
+	desc = "This dog can tell something smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/bullterrier
 	name = "\improper bull terrier"
@@ -150,7 +150,7 @@
 	icon_state = "bullterrier"
 	icon_living = "bullterrier"
 	icon_dead = "bullterrier_dead"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
+	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "bullterrier"
 	held_state = "bullterrier"
@@ -169,8 +169,7 @@
 	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
-		if(!D.owner)
-			D.update_owner(src)
+		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
@@ -190,15 +189,19 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	user.set_machine(src)
+	var/list/dat = list()
 
+	dat += "<table>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Collar:</B></td><td><A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'>Nothing"]</A>"
-	dat += "<br><B>Back:</B> <A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'>Nothing"]</A>"
-	dat += "<br><B>Collar:</B> <A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'>Nothing"]</A>"
-
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -343,7 +346,7 @@
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add, /obj/item/grenade/c4)) // last thing he ever wears, I guess
-		item_to_add.afterattack(src,user,1)
+		INVOKE_ASYNC(item_to_add, /obj/item.proc/afterattack, src, user, 1)
 		return
 
 	if(inventory_head)
@@ -399,11 +402,11 @@
 	desc = initial(desc)
 	set_light(0)
 
-	if(inventory_head && inventory_head.dog_fashion)
+	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
 		DF.apply(src)
 
-	if(inventory_back && inventory_back.dog_fashion)
+	if(inventory_back?.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
 

@@ -96,9 +96,9 @@
 
 ///Attempts to unlock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/unlock_vault()
-	if(door1 && door1.density)
+	if(door1?.density)
 		cycle_open(door1)
-	if(door2 && door2.density)
+	if(door2?.density)
 		cycle_open(door2)
 	if(!door1.density && door1.locked && !door2.density && door2.locked)
 		locked = FALSE
@@ -121,7 +121,8 @@
 		ui.open()
 
 /obj/machinery/computer/vaultcontroller/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("togglelock")
@@ -147,44 +148,6 @@
 	if(C.tool_behaviour == TOOL_SCREWDRIVER)
 		return
 	..()
-
-// So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
-/obj/item/dronespeak_manual
-	name = "dronespeak manual"
-	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\""
-	icon = 'icons/obj/library.dmi'
-	icon_state = "book2"
-
-/obj/item/dronespeak_manual/attack_self(mob/living/user)
-	..()
-	if(isdrone(user) || issilicon(user))
-		if(user.has_language(/datum/language/drone))
-			to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know dronespeak.</span>")
-		else
-			to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly the drone chittering makes sense.</span>")
-			user.grant_language(/datum/language/drone, TRUE, TRUE, LANGUAGE_MIND)
-		return
-
-	if(user.has_language(/datum/language/drone))
-		to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know dronespeak.</span>")
-	else
-		to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you can't make any sense of the contents.</span>")
-
-/obj/item/dronespeak_manual/attack(mob/living/M, mob/living/user)
-	if(!istype(M) || !istype(user))
-		return
-	if(M == user)
-		attack_self(user)
-		return
-
-	playsound(loc, "punch", 25, TRUE, -1)
-	if(isdrone(M) || issilicon(M))
-		if(M.has_language(/datum/language/drone))
-			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='hear'>You hear smacking.</span>")
-		else
-			M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], chitters resonate in your mind.</span>", "<span class='hear'>You hear smacking.</span>")
-			M.grant_language(/datum/language/drone, TRUE, TRUE, LANGUAGE_MIND)
-		return
 
 /obj/structure/fluff/oldturret
 	name = "broken turret"

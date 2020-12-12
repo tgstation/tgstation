@@ -18,7 +18,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		H.put_in_hands(new /obj/item/valentine)
 		var/obj/item/storage/backpack/b = locate() in H.contents
-		new /obj/item/reagent_containers/food/snacks/candyheart(b)
+		new /obj/item/food/candyheart(b)
 		new /obj/item/storage/fancy/heart_box(b)
 
 	var/list/valentines = list()
@@ -92,15 +92,15 @@
 /obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/reagent_containers/food/snacks/candyheart
+/obj/item/food/candyheart
 	name = "candy heart"
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
-	list_reagents = list(/datum/reagent/consumable/sugar = 2)
+	food_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
-/obj/item/reagent_containers/food/snacks/candyheart/Initialize()
+/obj/item/food/candyheart/Initialize()
 	. = ..()
 	desc = pick(strings(VALENTINE_FILE, "candyhearts"))
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

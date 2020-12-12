@@ -180,8 +180,8 @@
 	exposed_obj.extinguish()
 	exposed_obj.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
-	if(istype(exposed_obj, /obj/item/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = exposed_obj
+	if(istype(exposed_obj, /obj/item/food/monkeycube))
+		var/obj/item/food/monkeycube/cube = exposed_obj
 		cube.Expand()
 
 	// Dehydrated carp
@@ -340,7 +340,7 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustAllImmobility(-40, FALSE)
+		M.AdjustAllImmobility(-40)
 		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
@@ -782,7 +782,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
+	if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -887,7 +887,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
-	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -1389,26 +1389,6 @@
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
-/datum/reagent/hexane
-	name = "Hexane"
-	description = "A filtering gas, don't breathe it if you suffer from brain conditions"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "fresh"
-
-/datum/reagent/hexane/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	ADD_TRAIT(L, TRAIT_SIXTHSENSE, type)
-
-/datum/reagent/hexane/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	REMOVE_TRAIT(L, TRAIT_SIXTHSENSE, type)
-	return ..()
-
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
@@ -1483,7 +1463,7 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
- /* used by crayons, can't color living things but still used for stuff like food recipes */
+/* used by crayons, can't color living things but still used for stuff like food recipes */
 
 /datum/reagent/colorful_reagent/powder/red/crayon
 	name = "Red Crayon Powder"
@@ -2285,8 +2265,11 @@
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
+
+	/// The material flags used to apply the transmuted materials
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	var/minumum_material_amount = 100
+	/// The amount of materials to apply to the transmuted objects if they don't contain materials
+	var/default_material_amount = 100
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, volume)
 	. = ..()
@@ -2301,19 +2284,19 @@
 	var/metal_ref = data["material"]
 	if(!metal_ref)
 		return
-	var/metal_amount = 0
 
-	for(var/B in A.custom_materials) //list with what they're made of
-		metal_amount += A.custom_materials[B]
+	var/metal_amount = 0
+	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	for(var/metal_key in materials_to_transmute) //list with what they're made of
+		metal_amount += materials_to_transmute[metal_key]
 
 	if(!metal_amount)
-		metal_amount = minumum_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
+		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
 
-	var/list/metal_dat = list()
-	metal_dat[metal_ref] = metal_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
-
+	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
+	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"
@@ -2393,7 +2376,7 @@
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
 	if(IS_HERETIC(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustAllImmobility(-40, FALSE)
+		M.AdjustAllImmobility(-40)
 		M.adjustStaminaLoss(-10, FALSE)
 		M.adjustToxLoss(-2, FALSE)
 		M.adjustOxyLoss(-2, FALSE)

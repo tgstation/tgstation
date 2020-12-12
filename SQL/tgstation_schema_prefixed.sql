@@ -547,7 +547,11 @@ CREATE TABLE `SS13_ticket` (
   `timestamp` datetime NOT NULL,
   `recipient` varchar(32) DEFAULT NULL,
   `sender` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_ticket_act_recip` (`action`, `recipient`),
+  KEY `idx_ticket_act_send` (`action`, `sender`),
+  KEY `idx_ticket_tic_rid` (`ticket`, `round_id`),
+  KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELIMITER $$

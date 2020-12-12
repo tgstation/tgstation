@@ -23,7 +23,7 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -34,6 +34,8 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
 	var/emote_cooldown = 0
+	///Can this cat catch special mice?
+	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE
@@ -45,22 +47,12 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
 
 /mob/living/simple_animal/pet/cat/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/pet/cat/update_mobility()
-	..()
-	if(client && stat != DEAD)
-		if (resting)
-			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
-		else
-			icon_state = "[icon_living]"
-			collar_type = "[initial(collar_type)]"
-	regenerate_icons()
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
@@ -82,10 +74,11 @@
 	icon_dead = "breadcat_dead"
 	collar_type = null
 	held_state = "breadcat"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
 /mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
- 	return
+	return
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
@@ -196,23 +189,33 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
+
+/mob/living/simple_animal/pet/cat/update_resting()
+	. = ..()
+	if(stat == DEAD)
+		return
+	if (resting)
+		icon_state = "[icon_living]_rest"
+		collar_type = "[initial(collar_type)]_rest"
+	else
+		icon_state = "[icon_living]"
+		collar_type = "[initial(collar_type)]"
+	regenerate_icons()
+
+
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
 		if(prob(1))
 			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
-			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
 			set_resting(TRUE)
 		else if (prob(1))
 			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
+			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
-				icon_state = "[icon_living]"
-				collar_type = "[initial(collar_type)]"
 				set_resting(FALSE)
 			else
 				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
@@ -221,7 +224,7 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 					if (emote_cooldown < (world.time - 600))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))
@@ -261,6 +264,11 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
+/mob/living/simple_animal/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
+	name = "Jerry"
+	desc = "Tom is VERY amused."
+	inept_hunter = TRUE
+
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
 	desc = "It's a cat made out of cake."
@@ -272,7 +280,7 @@
 	gender = FEMALE
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
-	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
@@ -303,7 +311,7 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()
 

@@ -124,8 +124,10 @@
 	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 
-/obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting memes
-	return FALSE
+
+/obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
+	return
+
 
 /obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
 	return FALSE
@@ -149,7 +151,7 @@
 		qdel(W)
 		qdel(src)
 
-/obj/item/hemostat/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/nuke_core/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!isliving(hit_atom))
 		return ..()
 	var/mob/living/victim = hit_atom
@@ -175,13 +177,12 @@
 	..()
 	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	var/mob/ded = user
-	user.visible_message("<span class='danger'>[ded] reaches out and tries to pick up [src]. [ded.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
+	user.visible_message("<span class='danger'>[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
 			"<span class='userdanger'>You reach for [src] with your hands. That was dumb.</span>",\
 			"<span class='hear'>Everything suddenly goes silent.</span>")
 	radiation_pulse(user, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-	ded.dust()
+	user.dust()
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter bin"
@@ -268,7 +269,7 @@
 		update_icon()
 	return ..()
 
-/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
+/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/living/user)
 	if(ismob(AM))
 		if(!isliving(AM))
 			return

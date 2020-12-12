@@ -49,8 +49,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigon"
 		name = "lit [initial(name)]"
 		desc = "A [initial(name)]. This one is lit."
-		attack_verb_continuous = list("burns", "sings")
-		attack_verb_simple = list("burn", "sing")
+		attack_verb_continuous = string_list(list("burns", "sings"))
+		attack_verb_simple = string_list(list("burn", "sing"))
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -64,8 +64,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigoff"
 		name = "burnt [initial(name)]"
 		desc = "A [initial(name)]. This one has seen better days."
-		attack_verb_continuous = list("flicks")
-		attack_verb_simple = list("flick")
+		attack_verb_continuous = string_list(list("flicks"))
+		attack_verb_simple = string_list(list("flick"))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/match/extinguish()
@@ -188,8 +188,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	lit = TRUE
 	name = "lit [name]"
-	attack_verb_continuous = list("burns", "sings")
-	attack_verb_simple = list("burn", "sing")
+	attack_verb_continuous = string_list(list("burns", "sings"))
+	attack_verb_simple = string_list(list("burn", "sing"))
 	hitsound = 'sound/items/welder.ogg'
 	damtype = BURN
 	force = 4
@@ -277,7 +277,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	open_flame()
-	if((reagents && reagents.total_volume) && (nextdragtime <= world.time))
+	if((reagents?.total_volume) && (nextdragtime <= world.time))
 		nextdragtime = world.time + dragtime SECONDS
 		handle_reagents()
 
@@ -336,10 +336,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
 
 /obj/item/clothing/mask/cigarette/carp/Initialize()
-    . = ..()
-    if(!prob(5))
-        return
-    reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
+	. = ..()
+	if(!prob(5))
+		return
+	reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
@@ -438,12 +438,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
 	inhand_icon_state = "candyoff"
 	icon_state = "candyoff"
-	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash
+	type_butt = /obj/item/food/candy_trash
 	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
 
 /obj/item/clothing/mask/cigarette/candy/nicotine
 	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
-	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash/nicotine
+	type_butt = /obj/item/food/candy_trash/nicotine
 	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10, /datum/reagent/drug/nicotine = 20) //oh no!
 	smoke_all = TRUE //timmy's not getting out of this one
 
@@ -548,15 +548,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
-	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
+	if(reagents?.total_volume)	//	check if it has any reagents at all
 		handle_reagents()
 
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = O
+	if(istype(O, /obj/item/food/grown))
+		var/obj/item/food/grown/G = O
 		if(!packeditem)
-			if(G.dry == 1)
+			if(HAS_TRAIT(G, TRAIT_DRIED))
 				to_chat(user, "<span class='notice'>You stuff [O] into [src].</span>")
 				smoketime = 13 * 60
 				packeditem = TRUE
@@ -622,7 +622,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
-	custom_price = 55
+	custom_price = PAYCHECK_ASSISTANT * 1.1
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	light_power = 0.6
@@ -680,8 +680,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = 5
 		damtype = BURN
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb_continuous = list("burns", "sings")
-		attack_verb_simple = list("burn", "sing")
+		attack_verb_continuous = string_list(list("burns", "sings"))
+		attack_verb_simple = string_list(list("burn", "sing"))
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
@@ -825,9 +825,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/O = target
-		if(O.dry)
+	if(istype(target, /obj/item/food/grown))
+		var/obj/item/food/grown/O = target
+		if(HAS_TRAIT(O, TRAIT_DRIED))
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
 			target.reagents.trans_to(R, R.chem_volume, transfered_by = user)
@@ -996,7 +996,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
-			M.Paralyze(300, 1, 0)
+			M.Paralyze(300)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()
@@ -1004,5 +1004,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(src)
 			return
 
-	if(reagents && reagents.total_volume)
+	if(reagents?.total_volume)
 		hand_reagents()

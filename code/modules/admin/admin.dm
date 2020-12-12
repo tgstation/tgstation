@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
@@ -205,7 +205,7 @@
 
 
 /datum/admins/proc/access_news_network() //MARKER
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	set name = "Access Newscaster Network"
 	set desc = "Allows you to view, add and edit news feeds."
 
@@ -430,13 +430,6 @@
 					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
 				dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
-		else if (SSticker.IsRoundInProgress())
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin=1'>(Force Next Latejoin Ruleset)</A><br>"
-			if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
-				var/datum/game_mode/dynamic/mode = SSticker.mode
-				if (mode.forced_latejoin_rule)
-					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin_clear=1'>-> [mode.forced_latejoin_rule.name] <-</A><br>"}
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_midround=1'>(Execute Midround Ruleset!)</A><br>"
 		dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
@@ -752,7 +745,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
 	var/datum/mind/target_mind = target_mob.mind
@@ -766,7 +759,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_skill_panel(target)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set desc = "Edit mobs's experience and skill levels"
 	set name = "Show Skill Panel"
 	var/datum/mind/target_mind

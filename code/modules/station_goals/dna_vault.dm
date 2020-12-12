@@ -33,14 +33,14 @@
 
 /datum/station_goal/dna_vault/get_report()
 	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-	 We need you to construct a DNA Vault aboard your station.
+		We need you to construct a DNA Vault aboard your station.
 
-	 The DNA Vault needs to contain samples of:
-	 [animal_count] unique animal data
-	 [plant_count] unique non-standard plant data
-	 [human_count] unique sapient humanoid DNA data
+		The DNA Vault needs to contain samples of:
+		[animal_count] unique animal data
+		[plant_count] unique non-standard plant data
+		[human_count] unique sapient humanoid DNA data
 
-	 Base vault parts are available for shipping via cargo."}
+		Base vault parts are available for shipping via cargo."}
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -203,15 +203,17 @@
 	data["choiceB"] = ""
 	if(user && completed)
 		var/list/L = power_lottery[user]
-		if(L && L.len)
+		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
 			data["choiceB"] = L[2]
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("gene")
 			upgrade(usr,params["choice"])

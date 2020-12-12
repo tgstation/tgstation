@@ -159,14 +159,13 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		if(has_cap)
-			is_capped = !is_capped
-			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
-			update_icon()
+	if(has_cap && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		is_capped = !is_capped
+		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
+		update_icon()
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
-	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		select_colour(user)
 	else
 		return ..()
@@ -229,8 +228,10 @@
 	.["current_colour"] = paint_color
 
 /obj/item/toy/crayon/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("toggle_cap")
 			if(has_cap)
@@ -260,7 +261,7 @@
 
 /obj/item/toy/crayon/proc/select_colour(mob/user)
 	var/chosen_colour = input(user, "", "Choose Color", paint_color) as color|null
-	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		paint_color = chosen_colour
 		return TRUE
 	return FALSE
@@ -285,10 +286,8 @@
 	if(ishuman(user))
 		if (istagger)
 			cost *= 0.5
-	var/charges_used = use_charges(user, cost)
-	if(!charges_used)
+	if(check_empty(user, cost))
 		return
-	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -376,6 +375,11 @@
 		if(!do_after(user, 50, target = target))
 			return
 
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
+		return
+	. = charges_used
+
 	if(length(text_buffer))
 		drawing = text_buffer[1]
 
@@ -409,9 +413,9 @@
 						return
 			C.add_hiddenprint(user)
 			if(istagger)
-				C.AddComponent(/datum/component/art, GOOD_ART)
+				C.AddElement(/datum/element/art, GOOD_ART)
 			else
-				C.AddComponent(/datum/component/art, BAD_ART)
+				C.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")

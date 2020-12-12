@@ -199,4 +199,4 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		. += "</font>"
 
 	else
-		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
+		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? html_encode(returnval) : "null"]</font>"

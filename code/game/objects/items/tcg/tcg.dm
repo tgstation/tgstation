@@ -15,9 +15,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
-	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
+	///Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/id = "code"
-	//Used along with the id for lookup
+	///Used along with the id for lookup
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -55,9 +55,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/list/choices = GLOB.tcgcard_radial_choices
 	if(!length(choices))
 		choices = GLOB.tcgcard_radial_choices = list(
-		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
-		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
-		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
+		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -137,14 +137,14 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
 
 /**
-  * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
-  */
+ * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
+ */
 /obj/item/tcgcard/proc/zoom_in()
 	transform = matrix()
 
 /**
-  * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
-  */
+ * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
+ */
 /obj/item/tcgcard/proc/zoom_out()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
@@ -161,9 +161,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = template.icon_state
 	flipped = !flipped
 /**
-  * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
-  * The "top" card of the deck will always be the bottom card in the stack for our purposes.
-  */
+ * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
+ * The "top" card of the deck will always be the bottom card in the stack for our purposes.
+ */
 /obj/item/tcgcard_deck
 	name = "Trading Card Pile"
 	desc = "A stack of TCG cards."
@@ -171,9 +171,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "deck_up"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
-	var/static/radial_draw = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw")
-	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
-	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
+	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
+	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
+	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
 /obj/item/tcgcard_deck/Initialize()
 	. = ..()
@@ -198,10 +198,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/attack_hand(mob/user)
 	var/list/choices = list(
-		"Draw" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw"),
-		"Shuffle" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle"),
-		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
-		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		"Draw" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw"),
+		"Shuffle" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle"),
+		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
+		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -249,8 +249,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	return ..()
 
 /**
-  * The user draws a single card. The deck is then handled based on how many cards are left.
-  */
+ * The user draws a single card. The deck is then handled based on how many cards are left.
+ */
 /obj/item/tcgcard_deck/proc/draw_card(mob/user)
 	if(!contents.len)
 		CRASH("A TCG deck was created with no cards inside of it.")
@@ -267,11 +267,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		qdel(src)
 
 /**
-  * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
-  * *User: The person doing the shuffling, used in visable message and closing UI.
-  * *Visible: Will anyone need to hear the visable message about the shuffling?
-  */
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+ * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
+ * *User: The person doing the shuffling, used in visable message and closing UI.
+ * *Visible: Will anyone need to hear the visable message about the shuffling?
+ */
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
@@ -282,8 +282,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 						"<span class='notice'>You shuffle \the [src]!</span>")
 
 /**
-  * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
-  */
+ * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
+ */
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
 	var/list/temp_deck = contents.Copy()
@@ -302,6 +302,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -350,8 +351,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/Initialize()
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])

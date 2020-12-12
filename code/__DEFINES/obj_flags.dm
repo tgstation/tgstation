@@ -33,6 +33,7 @@
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define EYE_STAB				(1<<13) /// Item can be used to eyestab
 #define HAND_ITEM				(1<<14) /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
+#define EXAMINE_SKIP			(1<<15) /// Makes the Examine proc not read out this item.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -50,6 +51,8 @@
 #define SNUG_FIT               (1<<11) //Prevents knock-off from things like hat-throwing.
 #define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).
 #define DANGEROUS_OBJECT    (1<<13)     //Clothes that cause a larger notification when placed on a person.
+#define LARGE_WORN_ICON    (1<<14)     //Clothes that use large icons, for applying the proper overlays like blood
+
 /// Flags for the organ_flags var on /obj/item/organ
 
 #define ORGAN_SYNTHETIC			(1<<0)	//Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal

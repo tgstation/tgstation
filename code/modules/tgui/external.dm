@@ -1,4 +1,4 @@
-/**
+/*!
  * External tgui definitions, such as src_object APIs.
  *
  * Copyright (c) 2020 Aleksej Komarov
@@ -71,12 +71,13 @@
  * required action string The action/button that has been invoked by the user.
  * required params list A list of parameters attached to the button.
  *
- * return bool If the UI should be updated or not.
+ * return bool If the user's input has been handled and the UI should update.
  */
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
-		return 1
+		return TRUE
 
 /**
  * public
@@ -157,7 +158,7 @@
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
 	set hidden = TRUE
-	var/mob/user = src && src.mob
+	var/mob/user = src?.mob
 	if(!user)
 		return
 	// Close all tgui datums based on window_id.

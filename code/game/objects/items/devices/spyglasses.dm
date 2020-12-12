@@ -48,7 +48,7 @@
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
 
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	var/list/cam_plane_masters
 	// Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
@@ -69,8 +69,8 @@
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		instance.assigned_map = "spypopup_map"
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "spypopup_map:CENTER"

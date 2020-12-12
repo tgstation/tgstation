@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "The \"Who\" verb now uses a table rather than a list."

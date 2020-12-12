@@ -142,7 +142,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current && current.can_use())
+	if(current?.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
@@ -180,7 +180,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(!(M.mobility_flags & MOBILITY_STAND))
+			if(M.body_position == LYING_DOWN)
 				if(M.buckled)
 					dat += " (Sitting)"
 				else

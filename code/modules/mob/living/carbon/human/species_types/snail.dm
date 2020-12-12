@@ -21,7 +21,7 @@
 	exotic_blood = /datum/reagent/lube
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(istype(chem,/datum/reagent/consumable/sodiumchloride))
+	if(istype(chem,/datum/reagent/consumable/salt))
 		H.adjustFireLoss(2)
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
@@ -54,6 +54,11 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/storage/backpack/snail/dropped(mob/user, silent)
+	. = ..()
+	emptyStorage()
+	qdel(src)
 
 /obj/item/storage/backpack/snail/Initialize()
 	. = ..()

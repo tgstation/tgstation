@@ -79,7 +79,7 @@
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
 					playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 				else if(ishuman(M))
-					if(!(user.mobility_flags & MOBILITY_STAND))
+					if(user.body_position == LYING_DOWN)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
 										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
 					else
@@ -94,7 +94,7 @@
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
-					if(!(M.mobility_flags & MOBILITY_STAND))
+					if(M.body_position == LYING_DOWN)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
 										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
 					else if(user.zone_selected == BODY_ZONE_HEAD)
@@ -117,7 +117,6 @@
 						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
-						M.update_mobility()
 					else
 						if(!iscyborg(M))
 							M.adjustFireLoss(10)
@@ -387,20 +386,20 @@
 		if(O.density)
 			return FALSE
 
-	var/obj/item/reagent_containers/food/snacks/L
+	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			L = new /obj/item/reagent_containers/food/snacks/chewable/lollipop(T)
+			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
-			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
-			var/obj/item/reagent_containers/food/snacks/icecream/I = L
+			food_item = new /obj/item/food/icecream(T)
+			var/obj/item/food/icecream/I = food_item
 			I.add_ice_cream("vanilla")
 			I.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
 		var/mob/M = A
-		into_hands = M.put_in_hands(L)
+		into_hands = M.put_in_hands(food_item)
 
 	candy--
 	check_amount()
@@ -501,20 +500,20 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = FALSE
 	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/chewable/gumball/S = new ammo_type(T)
+		var/obj/item/food/chewable/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -532,8 +531,7 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
-	embedding = null
+	ammo_type = /obj/item/food/chewable/lollipop/cyborg
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
@@ -547,7 +545,7 @@
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
-	var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(src)
+	var/obj/item/food/chewable/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -556,14 +554,14 @@
 /obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(T)
+		var/obj/item/food/chewable/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
 	desc = "A tiny heating device that's powered by a cyborg's excess heat. Its intended purpose is to repair burnt or damaged hull platings, but it can also be used as a crude lighter or cautery."
-	toolspeed = 1.5 //it's not designed to be used as a cautery (although it's close enough to one to be considered to be a proper cautery instead of just a hot object for the purposes of surgery) 
+	toolspeed = 1.5 //it's not designed to be used as a cautery (although it's close enough to one to be considered to be a proper cautery instead of just a hot object for the purposes of surgery)
 	heat = 3800 //this thing is intended for metal-shaping, so it's the same temperature as a lit welder
 	resistance_flags = FIRE_PROOF //if it's channeling a cyborg's excess heat, it's probably fireproof
 	force = 5

@@ -3,9 +3,9 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component } from 'inferno';
+import { Component, Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Flex, Fragment, Input, Knob, LabeledControls, NumberInput, Section } from '../components';
+import { Box, Button, ByondUi, Divider, Flex, Input, Knob, LabeledControls, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 const pod_grey = {
@@ -152,6 +152,25 @@ const DELAYS = [
   {
     title: 'Pre',
     tooltip: 'Time until pod gets to station',
+  },
+  {
+    title: 'Fall',
+    tooltip: 'Duration of pods\nfalling animation',
+  },
+  {
+    title: 'Open',
+    tooltip: 'Time it takes pod to open after landing',
+  },
+  {
+    title: 'Exit',
+    tooltip: 'Time for pod to\nleave after opening',
+  },
+];
+
+const REV_DELAYS = [
+  {
+    title: 'Pre',
+    tooltip: 'Time until pod appears above dropoff point',
   },
   {
     title: 'Fall',
@@ -537,7 +556,7 @@ const TabPod = (props, context) => {
 
 
 const TabBay = (props, context) => {
-  const { act, data, config } = useBackend(context);
+  const { act, data } = useBackend(context);
   return (
     <Fragment>
       <Button
@@ -554,8 +573,7 @@ const TabBay = (props, context) => {
 };
 
 const TabDrop = (props, context) => {
-  const { act, data, config } = useBackend(context);
-  const { mapRef } = data;
+  const { act, data } = useBackend(context);
   return (
     <Fragment>
       <Button
@@ -790,22 +808,24 @@ class PresetsPage extends Component {
   }
 
   saveDataToPreset(id, data) {
-    storage.set("podlauncher_preset_"+id, data);
+    storage.set("podlauncher_preset_" + id, data);
   }
 
   async loadDataFromPreset(id, context) {
-    const { act, data } = useBackend(context);
-    act('loadDataFromPreset', { payload: await storage.get("podlauncher_preset_"+id) });
+    const { act } = useBackend(this.context);
+    act("loadDataFromPreset", {
+      payload: await storage.get("podlauncher_preset_" + id),
+    });
   }
 
   newPreset(presetName, hue, data) {
     let { presets } = this.state;
-    if (!presets || presets === undefined) {
+    if (!presets) {
       presets = [];
       presets.push("hi!");
     }
-    let id = createUuid();
-    let thing = { id, title: presetName, hue };
+    const id = createUuid();
+    const thing = { id, title: presetName, hue };
     presets.push(thing);
     storage.set("podlauncher_presetlist", presets);
     this.saveDataToPreset(id, data);
@@ -869,8 +889,8 @@ class PresetsPage extends Component {
               content=""
               icon="upload"
               tooltip="Loads preset"
-              onClick={() => { // Line break to meet line length reqs
-                this.loadDataFromPreset(presetIndex, this.context);
+              onClick={() => {
+                this.loadDataFromPreset(presetIndex);
               }} />
             <Button
               inline
@@ -1068,50 +1088,87 @@ const Bays = (props, context) => {
 
 const Timing = (props, context) => {
   const { act, data } = useBackend(context);
-
   return (
     <Section
       fill
-      title="Delay"
+      title="Time"
       buttons={(
-        <Button
-          icon="undo"
-          color="transparent"
-          tooltip={multiline`
+        <Fragment>
+          <Button
+            icon="undo"
+            color="transparent"
+            tooltip={multiline`
             Reset all pod
             timings/delays`}
-          tooltipOverrideLong
-          tooltipPosition="bottom-right"
-          onClick={() => act('resetTiming')} />
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('resetTiming')} />
+          <Button
+            icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
+            selected={data.custom_rev_delay}
+            disabled={!data.effectReverse}
+            color="transparent"
+            tooltip={multiline`
+            Toggle Reverse Delays
+            Note: Top set is
+            normal delays, bottom set
+            is reversing pod's delays`}
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('toggleRevDelays')} />
+        </Fragment>
       )}>
-      <LabeledControls wrap>
-        {DELAYS.map((delay, i) => (
-          <LabeledControls.Item
-            key={i}
-            label={delay.title}>
-            <Knob
-              inline
-              step={0.02}
-              value={data["delay_"+(i+1)]/10}
-              unclamped
-              minValue={0}
-              unit={"s"}
-              format={value => toFixed(value, 2)}
-              maxValue={10}
-              color={(data["delay_"+(i+1)]/10) > 10 ? "orange" : "default"}
-              onDrag={(e, value) => {
-                act('editTiming', {
-                  timer: i + 1,
-                  value: Math.max(value, 0),
-                });
-              }} />
-          </LabeledControls.Item>
-        ))}
-      </LabeledControls>
+      <DelayHelper
+        delay_list={DELAYS}
+      />
+      {data.custom_rev_delay && (
+        <Fragment>
+          <Divider horizontal />
+          <DelayHelper
+            delay_list={REV_DELAYS}
+            reverse
+          />
+        </Fragment>
+      )||""}
     </Section>
   );
 };
-
+const DelayHelper = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    delay_list,
+    reverse = false,
+  } = props;
+  return (
+    <LabeledControls wrap>
+      {delay_list.map((delay, i) => (
+        <LabeledControls.Item
+          key={i}
+          label={data.custom_rev_delay ? "" : delay.title}>
+          <Knob
+            inline
+            step={0.02}
+            size={data.custom_rev_delay ? 0.75 : 1}
+            value={(reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10}
+            unclamped
+            minValue={0}
+            unit={"s"}
+            format={value => toFixed(value, 2)}
+            maxValue={10}
+            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10)
+              > 10 ? "orange" : "default"}
+            onDrag={(e, value) => {
+              act('editTiming', {
+                timer: ""+(i + 1),
+                value: Math.max(value, 0),
+                reverse: reverse,
+              });
+            }} />
+        </LabeledControls.Item>
+      ))}
+    </LabeledControls>
+  );
+};
 const Sounds = (props, context) => {
   const { act, data } = useBackend(context);
   return (

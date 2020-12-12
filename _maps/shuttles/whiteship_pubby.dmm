@@ -42,7 +42,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
@@ -71,7 +71,6 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "m" = (
-/obj/machinery/computer/shuttle/white_ship,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
@@ -104,11 +103,12 @@
 /obj/structure/table/glass,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/hardsuit/engine/elite,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,

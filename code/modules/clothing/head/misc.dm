@@ -454,6 +454,7 @@
 	inhand_icon_state = "shrine_wig"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/intern

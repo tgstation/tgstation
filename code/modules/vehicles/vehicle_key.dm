@@ -24,7 +24,7 @@
 	icon_state = "keyjanitor"
 
 /obj/item/key/janitor/suicide_act(mob/living/carbon/user)
-	switch(user.mind.get_skill_level(/datum/skill/cleaning))
+	switch(user.mind?.get_skill_level(/datum/skill/cleaning))
 		if(SKILL_LEVEL_NONE to SKILL_LEVEL_NOVICE) //Their mind is too weak to ascend as a janny
 			user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] mouth and is trying to become one with the janicart, but has no idea where to start! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 			user.gib()
@@ -55,7 +55,7 @@
 	if(user)
 		user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		user.visible_message("<span class='suicide'>[user] forgot [user.p_they()] isn't actually a janicart! That's a paddlin'!</span>")
-		if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
+		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
 		user.adjustOxyLoss(200)
 		user.death(0)

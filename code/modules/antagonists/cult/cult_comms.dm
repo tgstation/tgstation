@@ -4,7 +4,7 @@
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
@@ -174,13 +174,13 @@
 					switch(i)
 						if(1)
 							new /obj/effect/temp_visual/cult/sparks(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 50, TRUE)
+							playsound(mobloc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 						if(2)
 							new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 75, TRUE)
+							playsound(mobloc, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 						if(3)
 							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 100, TRUE)
+							playsound(mobloc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 						if(4)
 							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, TRUE)
 							if(B.current != owner)

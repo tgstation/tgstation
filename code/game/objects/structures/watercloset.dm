@@ -26,6 +26,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, TRUE)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='hear'>You hear reverberating porcelain.</span>")
+		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)
 
 	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -40,13 +41,15 @@
 					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
 					swirlie = GM
 					var/was_alive = (swirlie.stat != DEAD)
-					if(do_after(user, 30, 0, target = src))
+					if(do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
 						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='hear'>You hear a toilet flushing.</span>")
 						if(iscarbon(GM))
 							var/mob/living/carbon/C = GM
 							if(!C.internal)
+								log_combat(user, C, "swirlied (oxy)")
 								C.adjustOxyLoss(5)
 						else
+							log_combat(user, GM, "swirlied (oxy)")
 							GM.adjustOxyLoss(5)
 					if(was_alive && swirlie.stat == DEAD && swirlie.client)
 						swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
@@ -54,6 +57,7 @@
 				else
 					playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
 					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
+					log_combat(user, GM, "toilet slammed")
 					GM.adjustBruteLoss(5)
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
@@ -116,8 +120,8 @@
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
-		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
-			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+		if(istype(I, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
 			return
 		var/obj/item/reagent_containers/RG = I
@@ -154,7 +158,7 @@
 
 /obj/structure/urinal/Initialize()
 	. = ..()
-	hiddenitem = new /obj/item/reagent_containers/food/snacks/urinalcake
+	hiddenitem = new /obj/item/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
 	. = ..()
@@ -214,16 +218,16 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/food/snacks/urinalcake
+/obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	list_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
-	foodtype = TOXIC | GROSS
+	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
+	foodtypes = TOXIC | GROSS
 
-/obj/item/reagent_containers/food/snacks/urinalcake/attack_self(mob/living/user)
+/obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)

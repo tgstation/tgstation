@@ -426,7 +426,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -845,10 +844,10 @@
 /area/awaymission/cabin)
 "cG" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
@@ -1290,8 +1289,8 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ea" = (
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/food/carpmeat,
+/obj/item/food/carpmeat,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "eb" = (
@@ -2339,8 +2338,7 @@
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
 /obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
@@ -2538,7 +2536,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
+/obj/item/food/egg/rainbow{
 	anchored = 0;
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"
@@ -2722,7 +2720,6 @@
 /obj/structure/cable,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/mug/coco{
@@ -2907,7 +2904,6 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -3150,7 +3146,6 @@
 "io" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24;
-	pixel_y = 0
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -3758,7 +3753,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{
@@ -3796,7 +3790,6 @@
 	pixel_y = 4
 	},
 /obj/item/radio/off{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/item/radio/off{
@@ -4075,7 +4068,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{

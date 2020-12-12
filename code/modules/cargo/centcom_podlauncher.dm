@@ -19,7 +19,7 @@
 /client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
 	set name = "Config/Launch Supplypod"
 	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	new /datum/centcom_podlauncher(usr)//create the datum
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
@@ -51,11 +51,10 @@
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	var/list/cam_plane_masters
-	var/obj/screen/background/cam_background
+	var/atom/movable/screen/background/cam_background
 	var/tabIndex = 1
-	var/list/timers = list("landingDelay", "fallDuration", "openingDelay", "departureDelay")
 	var/renderLighting = FALSE
 
 /datum/centcom_podlauncher/New(user) //user can either be a client or a mob
@@ -93,8 +92,8 @@
 	cam_screen.del_on_map_removal = TRUE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
 		instance.assigned_map = map_name
@@ -147,10 +146,9 @@
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
 	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
-	data["delay_1"] = temp_pod.landingDelay //How long the pod takes to land after launching
-	data["delay_2"] = temp_pod.fallDuration //How long the pod's falling animation lasts
-	data["delay_3"] = temp_pod.openingDelay //How long the pod takes to open after landing
-	data["delay_4"] = temp_pod.departureDelay //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
+	data["delays"] = temp_pod.delays
+	data["rev_delays"] = temp_pod.reverse_delays
+	data["custom_rev_delay"] = temp_pod.custom_rev_delay
 	data["styleChoice"] = temp_pod.style //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the GLOB.podstyles list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	data["effectShrapnel"] = temp_pod.effectShrapnel //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	data["shrapnelType"] = "[temp_pod.shrapnel_type]" //Path2String
@@ -181,7 +179,8 @@
 	return data
 
 /datum/centcom_podlauncher/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		////////////////////////////UTILITIES//////////////////
@@ -414,13 +413,19 @@
 		////////////////////////////TIMER DELAYS//////////////////
 		if("editTiming") //Change the different timers relating to the pod
 			var/delay = params["timer"]
-			var/timer = timers[delay]
 			var/value = params["value"]
-			temp_pod.vars[timer] = value * 10
+			var/reverse = params["reverse"]
+			if (reverse)
+				temp_pod.reverse_delays[delay] = value * 10
+			else
+				temp_pod.delays[delay] = value * 10
 			. = TRUE
 		if("resetTiming")
-			for (var/timer in timers)
-				temp_pod.vars[timer] = initial(temp_pod.vars[timer])
+			temp_pod.delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+			temp_pod.reverse_delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+			. = TRUE
+		if("toggleRevDelays")
+			temp_pod.custom_rev_delay = !temp_pod.custom_rev_delay
 			. = TRUE
 		////////////////////////////ADMIN SOUNDS//////////////////
 		if("fallingSound") //Admin sound from a local file that plays when the pod lands
@@ -543,7 +548,7 @@
 	var/turf/drop = locate(coords_list[1], coords_list[2], coords_list[3])
 	setupView(RANGE_TURFS(3, drop))
 
-/datum/centcom_podlauncher/proc/setupView(var/list/visible_turfs)
+/datum/centcom_podlauncher/proc/setupView(list/visible_turfs)
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -552,7 +557,7 @@
 	cam_background.icon_state = "clear"
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
-/datum/centcom_podlauncher/proc/updateCursor(var/forceClear = FALSE) //Update the mouse of the user
+/datum/centcom_podlauncher/proc/updateCursor(forceClear = FALSE) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!
 		return
 	if (!forceClear && (launcherActivated || picking_dropoff_turf)) //If the launching param is true, we give the user new mouse icons.
@@ -576,7 +581,7 @@
 	var/left_click = pa.Find("left")
 	if (launcherActivated)
 		//Clicking on UI elements shouldn't launch a pod
-		if(istype(target,/obj/screen))
+		if(istype(target,/atom/movable/screen))
 			return FALSE
 
 		. = TRUE
@@ -611,7 +616,7 @@
 					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
 	else if (picking_dropoff_turf)
 		//Clicking on UI elements shouldn't pick a dropoff turf
-		if(istype(target,/obj/screen))
+		if(istype(target,/atom/movable/screen))
 			return FALSE
 
 		. = TRUE
@@ -637,7 +642,7 @@
 	refreshView()
 
 /area/centcom/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
-	. = ..() 
+	. = ..()
 	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
 	call(GLOB.podlauncher, "RegisterSignal")(imgbound, "ct[GLOB.podstyles[14][9]]", "[GLOB.podstyles[14][10]]dlauncher")
 
@@ -790,7 +795,7 @@
 		for (var/mob/living/M in whoDyin)
 			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
 
-/datum/centcom_podlauncher/proc/loadData(var/list/dataToLoad)
+/datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]
 	customDropoff = dataToLoad["customDropoff"]
 	renderLighting = dataToLoad["renderLighting"]
@@ -799,10 +804,9 @@
 	launchChoice = dataToLoad["launchChoice"] //Launch turfs all at once (0), ordered (1), or randomly(1)
 	explosionChoice = dataToLoad["explosionChoice"] //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	damageChoice = dataToLoad["damageChoice"] //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
-	temp_pod.landingDelay = dataToLoad["delay_1"] //How long the pod takes to land after launching
-	temp_pod.fallDuration = dataToLoad["delay_2"] //How long the pod's falling animation lasts
-	temp_pod.openingDelay = dataToLoad["delay_3"] //How long the pod takes to open after landing
-	temp_pod.departureDelay = dataToLoad["delay_4"] //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
+	temp_pod.delays = dataToLoad["delays"]
+	temp_pod.reverse_delays = dataToLoad["rev_delays"]
+	temp_pod.custom_rev_delay = dataToLoad["custom_rev_delay"]
 	temp_pod.setStyle(dataToLoad["styleChoice"])  //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the GLOB.podstyles list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	temp_pod.effectShrapnel = dataToLoad["effectShrapnel"] //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	temp_pod.shrapnel_type = text2path(dataToLoad["shrapnelType"])

@@ -35,9 +35,9 @@
 /datum/emote/flip
 	key = "flip"
 	key_third_person = "flips"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -69,7 +69,7 @@
 /datum/emote/spin
 	key = "spin"
 	key_third_person = "spins"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 

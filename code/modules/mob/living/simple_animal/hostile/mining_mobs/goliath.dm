@@ -97,12 +97,12 @@
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup, /obj/item/reagent_containers/food/snacks/grown/ash_flora)//use lavaland plants to feed the lavaland monster
+	food_type = list(/obj/item/food/grown/ash_flora)//use lavaland plants to feed the lavaland monster
 	tame_chance = 10
 	bonus_tame_chance = 5
 	var/saddled = FALSE
@@ -148,7 +148,7 @@
 	pre_attack_icon = "Goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list()
 	crusher_drop_mod = 30
 	wander = FALSE

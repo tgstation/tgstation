@@ -123,16 +123,16 @@
 	set_light_on(FALSE)
 
 /**
-  * Handles actual flashing part of the attack
-  *
-  *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
-  * Arguments:
-  * * M - Victim
-  * * user - Attacker
-  *	* power - handles the amount of confusion it gives you
-  * * targeted - determines if it was aoe or targeted
-  * * generic_message - checks if it should display default message.
-  */
+ * Handles actual flashing part of the attack
+ *
+ *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * Arguments:
+ * * M - Victim
+ * * user - Attacker
+ *	* power - handles the amount of confusion it gives you
+ * * targeted - determines if it was aoe or targeted
+ * * generic_message - checks if it should display default message.
+ */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -186,13 +186,13 @@
 			M.add_confusion(min(power, diff))
 
 /**
-  * Handles the directionality of the attack
-  *
-  *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
-  * Arguments:
-  * * victim - Victim
-  * * attacker - Attacker
-  */
+ * Handles the directionality of the attack
+ *
+ *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+ * Arguments:
+ * * victim - Victim
+ * * attacker - Attacker
+ */
 /obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
 	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
 	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
@@ -271,12 +271,12 @@
 	AOE_flash()
 
 /**
-  * Converts the victim to revs
-  *
-  * Arguments:
-  * * victim - Victim
-  * * aggressor - Attacker
-  */
+ * Converts the victim to revs
+ *
+ * Arguments:
+ * * victim - Victim
+ * * aggressor - Attacker
+ */
 /obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
 	if(!istype(victim) || victim.stat == DEAD)
 		return
@@ -330,7 +330,7 @@
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 
 /obj/item/assembly/flash/armimplant/burn_out()
-	if(I && I.owner)
+	if(I?.owner)
 		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
 	overheat = TRUE
@@ -338,7 +338,7 @@
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		if(I && I.owner)
+		if(I?.owner)
 			to_chat(I.owner, "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>")
 		return FALSE
 	overheat = TRUE

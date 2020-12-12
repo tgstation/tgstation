@@ -108,6 +108,10 @@
 		else //Otherwise randomize it to make the players guessing.
 			addtimer(cb,rand(1,SSnpcpool.wait))
 
+/mob/living/simple_animal/hostile/update_stamina()
+	. = ..()
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
+
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
@@ -504,12 +508,12 @@
 			A.attack_animal(src)
 		return 1
 
+
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
+	return ..()
 
 
 ////// AI Status ///////
@@ -587,17 +591,17 @@
 				. += M.loc
 
 /mob/living/simple_animal/hostile/tamed(whomst)
+	. = ..()
 	if(isliving(whomst))
 		var/mob/living/fren = whomst
 		friends = fren
 		faction = fren.faction.Copy()
-	return ..()
 
 /**
-  * Proc that handles a charge attack windup for a mob.
-  */
-/mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
+ * Proc that handles a charge attack windup for a mob.
+ */
+/mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
+	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return FALSE
 
 	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
@@ -606,23 +610,23 @@
 	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
 
 /**
-  * Proc that throws the mob at the target after the windup.
-  */
-/mob/living/simple_animal/hostile/proc/handle_charge_target(var/atom/target)
+ * Proc that throws the mob at the target after the windup.
+ */
+/mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)
 	return TRUE
 
 /**
-  * Proc that handles a charge attack after it's concluded.
-  */
+ * Proc that handles a charge attack after it's concluded.
+ */
 /mob/living/simple_animal/hostile/proc/charge_end()
 	charge_state = FALSE
 
 /**
-  * Proc that handles the charge impact of the charging mob.
-  */
+ * Proc that handles the charge impact of the charging mob.
+ */
 /mob/living/simple_animal/hostile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charge_state)
 		return ..()
@@ -639,14 +643,12 @@
 				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 				L.Knockdown(knockdown_time)
 			else
-				Stun((knockdown_time * 2), 1, 1)
+				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
-			Stun((knockdown_time * 2), 1, 1)
+			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 
 		if(charge_state)
 			charge_state = FALSE
 			update_icons()
-			update_mobility()
-

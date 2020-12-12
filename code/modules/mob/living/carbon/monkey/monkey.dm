@@ -2,14 +2,12 @@
 	name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
-	icon = 'icons/mob/monkey.dmi'
-	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
+	butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	type_of_meat = /obj/item/food/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = TRUE
 	can_be_shoved_into = TRUE
@@ -26,7 +24,7 @@
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
@@ -48,7 +46,7 @@
 
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, 2)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 
 /mob/living/carbon/monkey/Destroy()
@@ -70,9 +68,9 @@
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
 	var/amount
-	if(has_reagent(/datum/reagent/medicine/morphine))
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
-	if(has_reagent(/datum/reagent/consumable/nuka_cola))
+	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
@@ -109,12 +107,6 @@
 	set category = "IC"
 	internal = null
 	return
-
-
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys can't use advanced tools
-	if(mind && is_monkey(mind))
-		return TRUE
-	return FALSE
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)

@@ -6,7 +6,7 @@
 	name = "???"
 	id = "shadow"
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
+	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 	inherent_factions = list("faithless")
@@ -108,12 +108,12 @@
 	if(M != user)
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
-						 "<span class='danger'>[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!</span>")
+		"<span class='danger'>[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!</span>")
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
 
 	user.visible_message("<span class='warning'>Blood erupts from [user]'s arm as it reforms into a weapon!</span>", \
-						 "<span class='userdanger'>Icy blood pumps through your veins as your arm reforms itself!</span>")
+		"<span class='userdanger'>Icy blood pumps through your veins as your arm reforms itself!</span>")
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
@@ -195,13 +195,12 @@
 		if(isethereal(L))
 			AM.emp_act(EMP_LIGHT)
 
-		else if(iscyborg(L))
-			var/mob/living/silicon/robot/borg = L
-			if(borg.lamp_intensity)
-				borg.update_headlamp(TRUE, INFINITY)
-				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-		else if(ishuman(L))
-			var/mob/living/carbon/human/H = L
+		else if(iscyborg(AM))
+			var/mob/living/silicon/robot/borg = AM
+			if(borg.lamp_enabled)
+				borg.smash_headlamp()
+		else if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
 			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
 				light_item_check(O, H)
 		else
@@ -249,7 +248,6 @@
 /obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
 	if(istype(O, /obj/item/pda))
 		var/obj/item/pda/PDA = O
-		PDA.set_light(0)
 		PDA.set_light_on(FALSE)
 		PDA.set_light_range(0) //It won't be turning on again.
 		PDA.update_icon()

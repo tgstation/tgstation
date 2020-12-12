@@ -26,10 +26,10 @@
 	return
 
 /**
-  * Space Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Space Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/open/space/Initialize()
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
@@ -62,6 +62,13 @@
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
+
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
 
 	ComponentInitialize()
 

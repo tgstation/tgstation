@@ -54,7 +54,6 @@
 		/datum/reagent/potassium,
 		/datum/reagent/uranium/radium,
 		/datum/reagent/silicon,
-		/datum/reagent/silver,
 		/datum/reagent/sodium,
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
@@ -228,7 +227,8 @@
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("amount")
@@ -365,13 +365,13 @@
 	var/list/datum/reagents/R = list()
 	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
 	var/datum/reagents/Q = new(total*10)
-	if(beaker && beaker.reagents)
+	if(beaker?.reagents)
 		R += beaker.reagents
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10)
 	R += Q
 	chem_splash(get_turf(src), 3, R)
-	if(beaker && beaker.reagents)
+	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
 	cell.emp_act(severity)
@@ -497,14 +497,21 @@
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize()
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 1)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/drinks/beer
@@ -551,14 +558,21 @@
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize()
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks/beer(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks/beer(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 1)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/mutagen
@@ -592,14 +606,21 @@
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 1)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
@@ -610,14 +631,21 @@
 /obj/machinery/chem_dispenser/fullupgrade/Initialize()
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 1)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/abductor
@@ -672,12 +700,19 @@
 
 /obj/machinery/chem_dispenser/abductor/Initialize()
 	. = ..()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 1)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(src)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()

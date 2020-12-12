@@ -36,10 +36,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(user)
-		ui_interact(user)
+		INVOKE_ASYNC(src, .proc/ui_interact, user)
 
 ///Called on COMSIG_PARENT_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -132,8 +132,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	return data
 
 /datum/component/gps/item/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
@@ -144,6 +146,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 			gpstag = a
 			. = TRUE
+			log_game("[key_name(usr)] renamed [parentasatom] to \"global positioning system ([gpstag])\".")
 			parentasatom.name = "global positioning system ([gpstag])"
 
 		if("power")

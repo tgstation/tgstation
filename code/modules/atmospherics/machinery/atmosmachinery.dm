@@ -41,6 +41,9 @@
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
 
+	/// Whether it can be painted
+	var/paintable = FALSE
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
@@ -68,7 +71,6 @@
 	SSair.stop_processing_machine(src)
 	SSair.pipenets_needing_rebuilt -= src
 
-	dropContents()
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
@@ -214,7 +216,7 @@
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
-		deconstruct(TRUE)
+		return deconstruct(TRUE)
 	return TRUE
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
@@ -237,6 +239,7 @@
 	// speed is pressures / 1250
 	user.throw_at(get_edge_target_turf(user, get_dir(src, user) || pick(GLOB.cardinals)), pressures / 250, pressures / 1250)
 
+/// Pipe deconstruction proc. Return created pipe fitting.
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
@@ -245,6 +248,7 @@
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
 			transfer_fingerprints_to(stored)
+			. = stored
 	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255), piping_layer=3, trinary = FALSE)
@@ -340,3 +344,6 @@
 
 /obj/machinery/atmospherics/proc/update_layer()
 	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE
+
+/obj/machinery/atmospherics/proc/paint(paint_color)
+	return FALSE

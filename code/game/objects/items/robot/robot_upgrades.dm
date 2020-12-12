@@ -70,6 +70,8 @@
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
+	R.logevent("WARN -- System recovered from unexpected shutdown.")
+	R.logevent("System brought online.")
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -114,6 +116,7 @@
 			return FALSE
 
 		R.ionpulse = TRUE
+		R.toggle_ionpulse() //Enabled by default
 
 /obj/item/borg/upgrade/thrusters/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -271,6 +274,8 @@
 			return FALSE
 
 		R.SetEmagged(1)
+		R.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
+		R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 
 		return TRUE
 
@@ -464,10 +469,6 @@
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
 	module_flags = BORG_MODULE_MEDICAL
-	var/backpack = FALSE //True if we get the defib from a physical backpack unit rather than an upgrade card, so that we can return that upon deactivate()
-
-/obj/item/borg/upgrade/defib/backpack
-	backpack = TRUE
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -485,10 +486,33 @@
 	if (.)
 		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
-		if(backpack)
-			new /obj/item/defibrillator(get_turf(R))
-			qdel(src)
 
+///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
+/obj/item/borg/upgrade/defib/backpack
+	var/obj/item/defibrillator/defib_instance
+
+/obj/item/borg/upgrade/defib/backpack/Initialize(mapload, obj/item/defibrillator/D)
+	. = ..()
+	if(!D)
+		D = new /obj/item/defibrillator
+	defib_instance = D
+	name = defib_instance.name
+	defib_instance.moveToNullspace()
+	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
+
+/obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
+	defib_instance = null
+	qdel(src)
+
+/obj/item/borg/upgrade/defib/backpack/Destroy()
+	if(defib_instance)
+		QDEL_NULL(defib_instance)
+	return ..()
+
+/obj/item/borg/upgrade/defib/backpack/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		defib_instance?.forceMove(R.drop_location()) // [on_defib_instance_qdel_or_moved()] handles the rest.
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"

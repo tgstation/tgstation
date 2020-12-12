@@ -1116,7 +1116,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "eY" = (
-/obj/item/clothing/suit/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "eZ" = (
@@ -1186,7 +1186,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fk" = (
-/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "fl" = (
@@ -3470,7 +3470,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oc" = (
@@ -3499,7 +3499,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oh" = (
-/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oi" = (
@@ -3631,7 +3631,7 @@
 	},
 /area/template_noop)
 "CZ" = (
-/obj/item/clothing/suit/space/syndicate/black/green,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -3736,7 +3736,7 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
 "KP" = (
-/obj/item/dronespeak_manual,
+/obj/item/language_manual/dronespeak_manual,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "KS" = (
@@ -3796,7 +3796,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Ob" = (
-/obj/item/clothing/head/helmet/space/syndicate/black/green,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Oj" = (

@@ -164,7 +164,7 @@
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
 		var/mob/living/m = i
-		m.Stun(20, 1, 1)
+		m.Stun(20, ignore_canstun = TRUE)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
 	for(var/i in T.contents)
@@ -181,7 +181,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	frozen_mobs += L
-	L.Stun(20, 1, 1)
+	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
 	walk(L, 0) //stops them mid pathing even if they're stunimmune
 	if(isanimal(L))
@@ -192,7 +192,7 @@
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
-	L.AdjustStun(-20, 1, 1)
+	L.AdjustStun(-20, ignore_canstun = TRUE)
 	REMOVE_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
 	frozen_mobs -= L
 	if(isanimal(L))

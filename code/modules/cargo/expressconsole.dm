@@ -9,12 +9,13 @@
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package \
-		with 1/40th of the delivery time: made possible by NanoTrasen's new \"1500mm Orbital Railgun\".\
+		with 1/40th of the delivery time: made possible by Nanotrasen's new \"1500mm Orbital Railgun\".\
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
+	is_express = TRUE
 
 	var/message
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
@@ -27,6 +28,10 @@
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
 
 /obj/machinery/computer/cargo/express/Initialize()
+	. = ..()
+	packin_up()
+
+/obj/machinery/computer/cargo/express/on_construction()
 	. = ..()
 	packin_up()
 
@@ -61,9 +66,11 @@
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
+	contraband = TRUE
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
+	board.contraband = TRUE
 	packin_up()
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
@@ -77,7 +84,7 @@
 			) // see, my quartermaster taught me a few things too
 		if((P.hidden) || (P.special)) // like, how not to rip the manifest
 			continue// by using someone else's crate
-		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
+		if(P.contraband && !contraband) // will you show me?
 			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -117,17 +124,21 @@
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
-		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
+		message = "(&!#@ERROR: R0UTING_#PRO7O&OL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	data["message"] = message
 	if(!meme_pack_data)
 		packin_up()
-		stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
+		stack_trace("There was no pack data for [src]")
 	data["supplies"] = meme_pack_data
 	if (cooldown > 0)//cooldown used for printing beacons
 		cooldown--
 	return data
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE
@@ -189,12 +200,15 @@
 								continue
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
-						if(empty_turfs && empty_turfs.len)
+						if(empty_turfs?.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						D.adjust_money(-SO.pack.cost)
-						new /obj/effect/pod_landingzone(LZ, podType, SO)
+						if(pack.special_pod)
+							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+						else
+							new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -205,7 +219,7 @@
 							continue
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
-					if(empty_turfs && empty_turfs.len)
+					if(empty_turfs?.len)
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 
@@ -213,7 +227,10 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/pod_landingzone(LZ, podType, SO)
+							if(pack.special_pod)
+								new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+							else
+								new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

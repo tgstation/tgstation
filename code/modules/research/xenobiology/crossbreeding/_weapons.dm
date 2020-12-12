@@ -33,24 +33,24 @@ Slimecrossing Weapons
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
-			attack_verb_continuous = list("slashes", "slices", "cuts")
-			attack_verb_simple = list("slash", "slice", "cut")
+			attack_verb_continuous = string_list(list("slashes", "slices", "cuts"))
+			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb_continuous = list("burns", "sings", "heats")
-			attack_verb_simple = list("burn", "sing", "heat")
+			attack_verb_continuous = string_list(list("burns", "sings", "heats"))
+			attack_verb_simple = string_list(list("burn", "sing", "heat"))
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
-			attack_verb_continuous = list("poisons", "doses", "toxifies")
-			attack_verb_simple = list("poison", "dose", "toxify")
+			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
+			attack_verb_simple = string_list(list("poison", "dose", "toxify"))
 		if(OXY)
 			hitsound = 'sound/effects/space_wind.ogg'
-			attack_verb_continuous = list("suffocates", "winds", "vacuums")
-			attack_verb_simple = list("suffocate", "wind", "vacuum")
+			attack_verb_continuous = string_list(list("suffocates", "winds", "vacuums"))
+			attack_verb_simple = string_list(list("suffocate", "wind", "vacuum"))
 		if(CLONE)
 			hitsound = 'sound/items/geiger/ext1.ogg'
-			attack_verb_continuous = list("irradiates", "mutates", "maligns")
-			attack_verb_simple = list("irradiate", "mutate", "malign")
+			attack_verb_continuous = string_list(list("irradiates", "mutates", "maligns"))
+			attack_verb_simple = string_list(list("irradiate", "mutate", "malign"))
 	return ..()
 
 //Adamantine shield - Chilling Adamantine

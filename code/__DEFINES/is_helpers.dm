@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/transparent/openspace
+	/turf/open/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-#define istransparentturf(A) (istype(A, /turf/open/transparent))
+#define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -125,6 +125,10 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
+#define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
+
+#define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
@@ -154,6 +158,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isstack(A) (istype(A, /obj/item/stack))
+
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
@@ -167,6 +173,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isstructure(A) (istype(A, /obj/structure))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define isvehicle(A) (istype(A, /obj/vehicle))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
 

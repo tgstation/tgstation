@@ -117,9 +117,9 @@
 	var/atom/movable/AM = parent
 	var/mob/AMM = AM
 	var/kick_us_off
-	if((ride_check_rider_restrained && M.restrained(TRUE)) || (ride_check_rider_incapacitated && M.incapacitated(TRUE, TRUE)))
+	if((ride_check_rider_restrained && HAS_TRAIT(M, TRAIT_RESTRAINED)) || (ride_check_rider_incapacitated && M.incapacitated(TRUE, TRUE)))
 		kick_us_off = TRUE
-	if(kick_us_off || (istype(AMM) && ((ride_check_ridden_restrained && AMM.restrained(TRUE)) || (ride_check_ridden_incapacitated && AMM.incapacitated(TRUE, TRUE)))))
+	if(kick_us_off || (istype(AMM) && ((ride_check_ridden_restrained && HAS_TRAIT(AMM, TRAIT_RESTRAINED)) || (ride_check_ridden_incapacitated && AMM.incapacitated(TRUE, TRUE)))))
 		M.visible_message("<span class='warning'>[M] falls off of [AM]!</span>", \
 						"<span class='warning'>You fall off of [AM]!</span>")
 		AM.unbuckle_mob(M)
@@ -198,8 +198,8 @@
 //BUCKLE HOOKS
 /datum/component/riding/proc/restore_position(mob/living/buckled_mob)
 	if(buckled_mob)
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 0
+		buckled_mob.pixel_x = buckled_mob.base_pixel_x
+		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
 

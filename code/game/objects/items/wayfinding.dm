@@ -27,7 +27,7 @@
 
 	set_expression("neutral")
 
-/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/carbon/user)
+/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
 	if(world.time < user_interact_cooldowns[user.real_name])
 		to_chat(user, "<span class='warning'>It doesn't respond.</span>")
 		return
@@ -59,11 +59,7 @@
 		msg += "to wait another [secsleft/60 > 1 ? "[round(secsleft/60,1)] minute\s" : "[round(secsleft)] second\s"]"
 		dispense = FALSE
 
-	var/datum/bank_account/cust_acc = null
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.get_bank_account())
-			cust_acc = H.get_bank_account()
+	var/datum/bank_account/cust_acc = user.get_bank_account()
 
 	if(cust_acc)
 		if(!cust_acc.has_money(ppt_cost))

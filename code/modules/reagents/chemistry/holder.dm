@@ -63,7 +63,7 @@
 	/// see [/datum/reagents/proc/metabolize] for usage
 	var/addiction_tick = 1
 	/// currently addicted reagents
-	var/list/datum/reagent/addiction_list = new/list()
+	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
 
@@ -81,23 +81,21 @@
 /datum/reagents/Destroy()
 	. = ..()
 	//We're about to delete all reagents, so lets cleanup
-	addiction_list.Cut()
-	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
+	addiction_list = null
+	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
-	cached_reagents.Cut()
-	cached_reagents = null
+	reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
 
 /**
-  * Used in attack logs for reagents in pills and such
-  *
-  * Arguments:
-  * * external_list - list of reagent types = amounts
-  */
+ * Used in attack logs for reagents in pills and such
+ *
+ * Arguments:
+ * * external_list - list of reagent types = amounts
+ */
 /datum/reagents/proc/log_list(external_list)
 	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
@@ -196,21 +194,21 @@
 	return master
 
 /**
-  * Transfer some stuff from this holder to a target object
-  *
-  * Arguments:
-  * * obj/target - Target to attempt transfer to
-  * * amount - amount of reagent volume to transfer
-  * * multiplier - multiplies amount of each reagent by this number
-  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
-  * * mob/transfered_by - used for logging
-  * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
-  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
-  * * show_message - passed through to [/datum/reagents/proc/expose_single]
-  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
-  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
-  */
+ * Transfer some stuff from this holder to a target object
+ *
+ * Arguments:
+ * * obj/target - Target to attempt transfer to
+ * * amount - amount of reagent volume to transfer
+ * * multiplier - multiplies amount of each reagent by this number
+ * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+ * * no_react - passed through to [/datum/reagents/proc/add_reagent]
+ * * mob/transfered_by - used for logging
+ * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
+ * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
+ * * show_message - passed through to [/datum/reagents/proc/expose_single]
+ * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
+ * * ignore_stomach - when using methods INGEST will not use the stomach as the target
+ */
 /datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
@@ -252,7 +250,7 @@
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(methods)
-				if(istype(target_atom, /obj/item/organ/stomach))
+				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(T, target, methods, part, show_message)
 				else
 					R.expose_single(T, target_atom, methods, part, show_message)
@@ -275,7 +273,7 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
-				if(istype(target_atom, /obj/item/organ/stomach))
+				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(T, target, methods, transfer_amount, show_message)
 				else
 					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
@@ -326,6 +324,22 @@
 	src.handle_reactions()
 	return amount
 
+///Multiplies the reagents inside this holder by a specific amount
+/datum/reagents/proc/multiply_reagents(multiplier=1)
+	var/list/cached_reagents = reagent_list
+	if(!total_volume)
+		return
+	var/change = (multiplier - 1) //Get the % change
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/T = reagent
+		if(change > 0)
+			add_reagent(T.type, T.volume * change)
+		else
+			remove_reagent(T.type, abs(T.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
+
+	update_total()
+	handle_reactions()
+
 /// Transfer a specific reagent id to the target object
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	var/list/cached_reagents = reagent_list
@@ -356,13 +370,13 @@
 	return amount
 
 /**
-  * Triggers metabolizing the reagents in this holder
-  *
-  * Arguments:
-  * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
-  * * can_overdose - Allows overdosing
-  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
-  */
+ * Triggers metabolizing the reagents in this holder
+ *
+ * Arguments:
+ * * mob/living/carbon/C - The mob to metabolize in, if null it uses [/datum/reagents/var/my_atom]
+ * * can_overdose - Allows overdosing
+ * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
+ */
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
@@ -390,15 +404,17 @@
 							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
+					var/is_addicted_to = cached_addictions && is_type_in_list(R, cached_addictions)
 					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
+						if(R.volume >= R.addiction_threshold && !is_addicted_to)
 							var/datum/reagent/new_reagent = new R.addiction_type()
-							cached_addictions.Add(new_reagent)
+							LAZYADD(cached_addictions, new_reagent)
+							is_addicted_to = TRUE
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
 					var/datum/reagent/addiction_type = new R.addiction_type()
-					if(is_type_in_list(addiction_type ,cached_addictions))
+					if(is_addicted_to)
 						for(var/addiction in cached_addictions)
 							var/datum/reagent/A = addiction
 							if(istype(addiction_type, A))
@@ -410,25 +426,25 @@
 			addiction_tick = 1
 			for(var/addiction in cached_addictions)
 				var/datum/reagent/R = addiction
-				if(C && R)
-					R.addiction_stage++
-					switch(R.addiction_stage)
-						if(1 to 10)
-							need_mob_update += R.addiction_act_stage1(C)
-						if(10 to 20)
-							need_mob_update += R.addiction_act_stage2(C)
-						if(20 to 30)
-							need_mob_update += R.addiction_act_stage3(C)
-						if(30 to 40)
-							need_mob_update += R.addiction_act_stage4(C)
-						if(40 to INFINITY)
-							remove_addiction(R)
-						else
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+				if(!C)
+					break
+				R.addiction_stage++
+				switch(R.addiction_stage)
+					if(1 to 10)
+						need_mob_update += R.addiction_act_stage1(C)
+					if(10 to 20)
+						need_mob_update += R.addiction_act_stage2(C)
+					if(20 to 30)
+						need_mob_update += R.addiction_act_stage3(C)
+					if(30 to 40)
+						need_mob_update += R.addiction_act_stage4(C)
+					if(40 to INFINITY)
+						remove_addiction(R)
+					else
+						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
-		C.update_mobility()
 		C.update_stamina()
 	update_total()
 
@@ -436,7 +452,7 @@
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
 	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-	addiction_list.Remove(R)
+	LAZYREMOVE(addiction_list, R)
 	qdel(R)
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
@@ -455,12 +471,12 @@
 			R.on_mob_end_metabolize(C)
 
 /**
-  * Calls [/datum/reagent/proc/on_move] on every reagent in this holder
-  *
-  * Arguments:
-  * * atom/A - passed to on_move
-  * * Running - passed to on_move
-  */
+ * Calls [/datum/reagent/proc/on_move] on every reagent in this holder
+ *
+ * Arguments:
+ * * atom/A - passed to on_move
+ * * Running - passed to on_move
+ */
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
@@ -469,11 +485,11 @@
 	update_total()
 
 /**
-  * Calls [/datum/reagent/proc/on_update] on every reagent in this holder
-  *
-  * Arguments:
-  * * atom/A - passed to on_update
-  */
+ * Calls [/datum/reagent/proc/on_update] on every reagent in this holder
+ *
+ * Arguments:
+ * * atom/A - passed to on_update
+ */
 /datum/reagents/proc/conditional_update(atom/A)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
@@ -614,22 +630,14 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.type == reagent)
-			var/mob/living/mob_consumer
-
-			if (isliving(my_atom))
-				mob_consumer = my_atom
-			else if (istype(my_atom, /obj/item/organ))
-				var/obj/item/organ/organ = my_atom
-				mob_consumer = organ.owner
-
-			if (mob_consumer)
+			if(isliving(my_atom))
 				if(R.metabolizing)
 					R.metabolizing = FALSE
-					R.on_mob_end_metabolize(mob_consumer)
-				R.on_mob_delete(mob_consumer)
+					R.on_mob_end_metabolize(my_atom)
+				R.on_mob_delete(my_atom)
 
 			//Clear from relevant lists
-			addiction_list -= R
+			LAZYREMOVE(addiction_list, R)
 			reagent_list -= R
 			qdel(R)
 			update_total()
@@ -643,7 +651,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.1)
+		if(R.volume < 0.05)
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
@@ -659,11 +667,17 @@
 		my_atom.on_reagent_change(CLEAR_REAGENTS)
 
 /**
-  * Applies the relevant expose_ proc for every reagent in this holder
-  * * [/datum/reagent/proc/expose_mob]
-  * * [/datum/reagent/proc/expose_turf]
-  * * [/datum/reagent/proc/expose_obj]
-  */
+ * Applies the relevant expose_ proc for every reagent in this holder
+ * * [/datum/reagent/proc/expose_mob]
+ * * [/datum/reagent/proc/expose_turf]
+ * * [/datum/reagent/proc/expose_obj]
+ *
+ * Arguments
+ * - Atom/A: What mob/turf/object is being exposed to reagents? This is your reaction target.
+ * - Methods: What reaction type is the reagent itself going to call on the reaction target? Types are TOUCH, INGEST, VAPOR, PATCH, and INJECT.
+ * - Volume_modifier: What is the reagent volume multiplied by when exposed? Note that this is called on the volume of EVERY reagent in the base body, so factor in your Maximum_Volume if necessary!
+ * - Show_message: Whether to display anything to mobs when they are exposed.
+ */
 /datum/reagents/proc/expose(atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1)
 	if(isnull(A))
 		return null
@@ -713,15 +727,15 @@
 	chem_temp = clamp(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
 /**
-  * Adds a reagent to this holder
-  *
-  * Arguments:
-  * * reagent - The reagent id to add
-  * * amount - Amount to add
-  * * list/data - Any reagent data for this reagent, used for transferring data with reagents
-  * * reagtemp - Temperature of this reagent, will be equalized
-  * * no_react - prevents reactions being triggered by this addition
-  */
+ * Adds a reagent to this holder
+ *
+ * Arguments:
+ * * reagent - The reagent id to add
+ * * amount - Amount to add
+ * * list/data - Any reagent data for this reagent, used for transferring data with reagents
+ * * reagtemp - Temperature of this reagent, will be equalized
+ * * no_react - prevents reactions being triggered by this addition
+ */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -779,11 +793,8 @@
 		R.on_new(data)
 
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
-	else if(istype(my_atom, /obj/item/organ/stomach))
-		var/obj/item/organ/stomach/belly = my_atom
-		var/mob/living/carbon/body = belly.owner
-		R.on_mob_add(body)
+		R.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
+
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
@@ -938,11 +949,11 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 	. = locate(type) in cached_reagents
 
 /**
-  * Returns what this holder's reagents taste like
-  *
-  * Arguments:
-  * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
-  */
+ * Returns what this holder's reagents taste like
+ *
+ * Arguments:
+ * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
+ */
 /datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
@@ -998,12 +1009,12 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 
 
 /**
-  * Convenience proc to create a reagents holder for an atom
-  *
-  * Arguments:
-  * * max_vol - maximum volume of holder
-  * * flags - flags to pass to the holder
-  */
+ * Convenience proc to create a reagents holder for an atom
+ *
+ * Arguments:
+ * * max_vol - maximum volume of holder
+ * * flags - flags to pass to the holder
+ */
 /atom/proc/create_reagents(max_vol, flags)
 	if(reagents)
 		qdel(reagents)

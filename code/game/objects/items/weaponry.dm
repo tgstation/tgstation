@@ -134,7 +134,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(!QDELETED(target) && iscarbon(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
+	if(!QDELETED(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
@@ -143,9 +143,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/attack_self(mob/living/user)
 	var/closest_victim
 	var/closest_distance = 255
-	for(var/mob/living/carbon/human/H in GLOB.player_list - user)
-		if(H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
-			closest_victim = H
+	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
+		if(scot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = scot
+	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
+		if(siliscot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = siliscot
+
 	if(!closest_victim)
 		to_chat(user, "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>")
 		return
@@ -206,6 +210,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
+
+/obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "claymore_cyborg"
+	var/mob/living/silicon/robot/robot
+
+/obj/item/claymore/highlander/robot/Initialize()
+	var/obj/item/robot_module/kiltkit = loc
+	robot = kiltkit.loc
+	if(!istype(robot))
+		qdel(src)
+	return ..()
+
+/obj/item/claymore/highlander/robot/process()
+	loc.layer = LARGE_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
@@ -319,18 +338,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 0
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
-
-/obj/item/throwing_star/magspear
-	name = "magnetic spear"
-	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "magspear"
-	throwforce = 25 //kills regular carps in one hit
-	force = 10
-	throw_range = 0 //throwing these invalidates the speargun
-	attack_verb_continuous = list("stabs", "rips", "gores", "impales")
-	attack_verb_simple = list("stab", "rip", "gore", "impale")
-	embedding = list("pain_mult" = 8, "embed_chance" = 100, "fall_chance" = 0, "impact_pain_mult" = 15) //55 damage+embed on hit
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -517,8 +524,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000))
+	AddElement(/datum/element/art, impressiveness)
+	AddComponent(/datum/component/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -579,7 +586,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = 500
+	custom_premium_price = PAYCHECK_HARD * 5
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -587,7 +594,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_red"
 	inhand_icon_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
-	custom_premium_price = 2015
+	custom_premium_price = PAYCHECK_COMMAND * 5.4 //If I can't make it a meme I'll make it RAD
 
 /obj/item/melee/skateboard/hoverboard/admin
 	name = "Board Of Directors"

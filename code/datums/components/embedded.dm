@@ -91,7 +91,7 @@
 
 	var/damage = weapon.throwforce
 	if(harmful)
-		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+		victim.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * impact_pain_mult
@@ -136,7 +136,7 @@
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
-	else if(victim.mobility_flags & ~MOBILITY_STAND)
+	else if(victim.body_position == LYING_DOWN)
 		pain_chance_current *= 0.2
 
 	if(harmful && prob(pain_chance_current))
@@ -144,7 +144,7 @@
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
-	if(victim.mobility_flags & ~MOBILITY_STAND)
+	if(victim.body_position == LYING_DOWN)
 		fall_chance_current *= 0.2
 
 	if(prob(fall_chance_current))
@@ -161,7 +161,7 @@
 
 	var/mob/living/carbon/victim = parent
 	var/chance = jostle_chance
-	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
+	if(victim.m_intent == MOVE_INTENT_WALK || victim.body_position == LYING_DOWN)
 		chance *= 0.5
 
 	if(harmful && prob(chance))
@@ -207,7 +207,7 @@
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemove(to_hands)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
@@ -216,7 +216,7 @@
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(to_hands)
-			victim.put_in_hands(weapon)
+			INVOKE_ASYNC(victim, /mob.proc/put_in_hands, weapon)
 		else
 			weapon.forceMove(get_turf(victim))
 

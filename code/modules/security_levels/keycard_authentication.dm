@@ -58,7 +58,9 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
-	if(..() || waiting || !allowed(usr))
+	. = ..()
+
+	if(. || waiting || !allowed(usr))
 		return
 	switch(action)
 		if("red_alert")

@@ -1,8 +1,8 @@
 /**
-  * If your mob is concious, drop the item in the active hand
-  *
-  * This is a hidden verb, likely for binding with winset for hotkeys
-  */
+ * If your mob is concious, drop the item in the active hand
+ *
+ * This is a hidden verb, likely for binding with winset for hotkeys
+ */
 /client/verb/drop_item()
 	set hidden = TRUE
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
@@ -10,15 +10,15 @@
 	return
 
 /**
-  * force move the control_object of your client mob
-  *
-  * Used in admin possession and called from the client Move proc
-  * ensures the possessed object moves and not the admin mob
-  *
-  * Has no sanity other than checking density
-  */
+ * force move the control_object of your client mob
+ *
+ * Used in admin possession and called from the client Move proc
+ * ensures the possessed object moves and not the admin mob
+ *
+ * Has no sanity other than checking density
+ */
 /client/proc/Move_object(direct)
-	if(mob && mob.control_object)
+	if(mob?.control_object)
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
 			if(!mob.control_object)
@@ -31,41 +31,41 @@
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
 /**
-  * Move a client in a direction
-  *
-  * Huge proc, has a lot of functionality
-  *
-  * Mostly it will despatch to the mob that you are the owner of to actually move
-  * in the physical realm
-  *
-  * Things that stop you moving as a mob:
-  * * world time being less than your next move_delay
-  * * not being in a mob, or that mob not having a loc
-  * * missing the n and direction parameters
-  * * being in remote control of an object (calls Moveobject instead)
-  * * being dead (it ghosts you instead)
-  *
-  * Things that stop you moving as a mob living (why even have OO if you're just shoving it all
-  * in the parent proc with istype checks right?):
-  * * having incorporeal_move set (calls Process_Incorpmove() instead)
-  * * being grabbed
-  * * being buckled  (relaymove() is called to the buckled atom instead)
-  * * having your loc be some other mob (relaymove() is called on that mob instead)
-  * * Not having MOBILITY_MOVE
-  * * Failing Process_Spacemove() call
-  *
-  * At this point, if the mob is is confused, then a random direction and target turf will be calculated for you to travel to instead
-  *
-  * Now the parent call is made (to the byond builtin move), which moves you
-  *
-  * Some final move delay calculations (doubling if you moved diagonally successfully)
-  *
-  * if mob throwing is set I believe it's unset at this point via a call to finalize
-  *
-  * Finally if you're pulling an object and it's dense, you are turned 180 after the move
-  * (if you ask me, this should be at the top of the move so you don't dance around)
-  *
-  */
+ * Move a client in a direction
+ *
+ * Huge proc, has a lot of functionality
+ *
+ * Mostly it will despatch to the mob that you are the owner of to actually move
+ * in the physical realm
+ *
+ * Things that stop you moving as a mob:
+ * * world time being less than your next move_delay
+ * * not being in a mob, or that mob not having a loc
+ * * missing the n and direction parameters
+ * * being in remote control of an object (calls Moveobject instead)
+ * * being dead (it ghosts you instead)
+ *
+ * Things that stop you moving as a mob living (why even have OO if you're just shoving it all
+ * in the parent proc with istype checks right?):
+ * * having incorporeal_move set (calls Process_Incorpmove() instead)
+ * * being grabbed
+ * * being buckled  (relaymove() is called to the buckled atom instead)
+ * * having your loc be some other mob (relaymove() is called on that mob instead)
+ * * Not having MOBILITY_MOVE
+ * * Failing Process_Spacemove() call
+ *
+ * At this point, if the mob is is confused, then a random direction and target turf will be calculated for you to travel to instead
+ *
+ * Now the parent call is made (to the byond builtin move), which moves you
+ *
+ * Some final move delay calculations (doubling if you moved diagonally successfully)
+ *
+ * if mob throwing is set I believe it's unset at this point via a call to finalize
+ *
+ * Finally if you're pulling an object and it's dense, you are turned 180 after the move
+ * (if you ask me, this should be at the top of the move so you don't dance around)
+ *
+ */
 /client/Move(n, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
@@ -152,37 +152,38 @@
 		mob.setDir(turn(mob.dir, 180))
 
 /**
-  * Checks to see if you're being grabbed and if so attempts to break it
-  *
-  * Called by client/Move()
-  */
+ * Checks to see if you're being grabbed and if so attempts to break it
+ *
+ * Called by client/Move()
+ */
 /client/proc/Process_Grab()
-	if(mob.pulledby)
-		if((mob.pulledby == mob.pulling) && (mob.pulledby.grab_state == GRAB_PASSIVE))			//Don't autoresist passive grabs if we're grabbing them too.
-			return
-		if(mob.incapacitated(ignore_restraints = 1))
-			move_delay = world.time + 10
-			return TRUE
-		else if(mob.restrained(ignore_grab = 1))
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
-			return TRUE
-		else
-			return mob.resist_grab(1)
+	if(!mob.pulledby)
+		return FALSE
+	if(mob.pulledby == mob.pulling && mob.pulledby.grab_state == GRAB_PASSIVE) //Don't autoresist passive grabs if we're grabbing them too.
+		return FALSE
+	if(mob.incapacitated(ignore_restraints = TRUE))
+		COOLDOWN_START(src, move_delay, 1 SECONDS)
+		return TRUE
+	else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
+		COOLDOWN_START(src, move_delay, 1 SECONDS)
+		to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
+		return TRUE
+	return mob.resist_grab(TRUE)
+
 
 /**
-  * Allows mobs to ignore density and phase through objects
-  *
-  * Called by client/Move()
-  *
-  * The behaviour depends on the incorporeal_move value of the mob
-  *
-  * * INCORPOREAL_MOVE_BASIC - forceMoved to the next tile with no stop
-  * * INCORPOREAL_MOVE_SHADOW  - the same but leaves a cool effect path
-  * * INCORPOREAL_MOVE_JAUNT - the same but blocked by holy tiles
-  *
-  * You'll note this is another mob living level proc living at the client level
-  */
+ * Allows mobs to ignore density and phase through objects
+ *
+ * Called by client/Move()
+ *
+ * The behaviour depends on the incorporeal_move value of the mob
+ *
+ * * INCORPOREAL_MOVE_BASIC - forceMoved to the next tile with no stop
+ * * INCORPOREAL_MOVE_SHADOW  - the same but leaves a cool effect path
+ * * INCORPOREAL_MOVE_JAUNT - the same but blocked by holy tiles
+ *
+ * You'll note this is another mob living level proc living at the client level
+ */
 /client/proc/Process_Incorpmove(direct)
 	var/turf/mobloc = get_turf(mob)
 	if(!isliving(mob))
@@ -259,14 +260,14 @@
 
 
 /**
-  * Handles mob/living movement in space (or no gravity)
-  *
-  * Called by /client/Move()
-  *
-  * return TRUE for movement or FALSE for none
-  *
-  * You can move in space if you have a spacewalk ability
-  */
+ * Handles mob/living movement in space (or no gravity)
+ *
+ * Called by /client/Move()
+ *
+ * return TRUE for movement or FALSE for none
+ *
+ * You can move in space if you have a spacewalk ability
+ */
 /mob/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
@@ -280,8 +281,8 @@
 	return FALSE
 
 /**
-  * Find movable atoms? near a mob that are viable for pushing off when moving
-  */
+ * Find movable atoms? near a mob that are viable for pushing off when moving
+ */
 /mob/get_spacemove_backup()
 	for(var/A in orange(1, get_turf(src)))
 		if(isarea(A))
@@ -309,16 +310,16 @@
 				. = AM
 
 /**
-  * Returns true if a mob has gravity
-  *
-  * I hate that this exists
-  */
+ * Returns true if a mob has gravity
+ *
+ * I hate that this exists
+ */
 /mob/proc/mob_has_gravity()
 	return has_gravity()
 
 /**
-  * Does this mob ignore gravity
-  */
+ * Does this mob ignore gravity
+ */
 /mob/proc/mob_negates_gravity()
 	return FALSE
 
@@ -335,19 +336,22 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 
 //bodypart selection verbs - Cyberboss
-//8:repeated presses toggles through head - eyes - mouth
+//8: repeated presses toggles through head - eyes - mouth
+//9: eyes 8: head 7: mouth
 //4: r-arm 5: chest 6: l-arm
 //1: r-leg 2: groin 3: l-leg
 
 ///Validate the client's mob has a valid zone selected
 /client/proc/check_has_body_select()
-	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
+	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /atom/movable/screen/zone_sel)
 
 /**
-  * Hidden verb to set the target zone of a mob to the head
-  *
-  * (bound to 8) - repeated presses toggles through head - eyes - mouth
-  */
+ * Hidden verb to set the target zone of a mob to the head
+ *
+ * (bound to 8) - repeated presses toggles through head - eyes - mouth
+ */
+
+///Hidden verb to target the head, bound to 8
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
 	set hidden = TRUE
@@ -364,8 +368,30 @@
 		else
 			next_in_line = BODY_ZONE_HEAD
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
+
+///Hidden verb to target the eyes, bound to 7
+/client/verb/body_eyes()
+	set name = "body-eyes"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
+
+///Hidden verb to target the mouth, bound to 9
+/client/verb/body_mouth()
+	set name = "body-mouth"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
 ///Hidden verb to target the right arm, bound to 4
 /client/verb/body_r_arm()
@@ -375,7 +401,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 ///Hidden verb to target the chest, bound to 5
@@ -386,7 +412,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 ///Hidden verb to target the left arm, bound to 6
@@ -397,7 +423,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 ///Hidden verb to target the right leg, bound to 1
@@ -408,7 +434,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 ///Hidden verb to target the groin, bound to 2
@@ -419,7 +445,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 ///Hidden verb to target the left leg, bound to 3
@@ -430,7 +456,7 @@
 	if(!check_has_body_select())
 		return
 
-	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 ///Verb to toggle the walk or run status
@@ -442,17 +468,17 @@
 		mob.toggle_move_intent(usr)
 
 /**
-  * Toggle the move intent of the mob
-  *
-  * triggers an update the move intent hud as well
-  */
+ * Toggle the move intent of the mob
+ *
+ * triggers an update the move intent hud as well
+ */
 /mob/proc/toggle_move_intent(mob/user)
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
 		m_intent = MOVE_INTENT_RUN
-	if(hud_used && hud_used.static_inventory)
-		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
+	if(hud_used?.static_inventory)
+		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_icon()
 
 ///Moves a mob upwards in z level

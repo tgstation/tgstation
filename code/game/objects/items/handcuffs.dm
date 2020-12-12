@@ -9,7 +9,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.handcuffed == src)
-			M.handcuffed = null
+			M.set_handcuffed(null)
 			M.update_handcuffed()
 			if(M.buckled && M.buckled.buckle_requires_restraints)
 				M.buckled.unbuckle_mob(M)
@@ -38,6 +38,7 @@
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	custom_price = PAYCHECK_HARD * 0.35
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -62,6 +63,7 @@
 								"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
+			log_combat(user, C, "attempted to handcuff")
 			if(do_mob(user, C, 30) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
@@ -74,6 +76,7 @@
 				log_combat(user, C, "handcuffed")
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+				log_combat(user, C, "failed to handcuff")
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
@@ -91,7 +94,7 @@
 		cuffs = new type()
 
 	cuffs.forceMove(target)
-	target.handcuffed = cuffs
+	target.set_handcuffed(cuffs)
 
 	target.update_handcuffed()
 	if(trashtype && !dispense)
@@ -238,11 +241,12 @@
 	return (BRUTELOSS)
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
-	..()
-	if(ishuman(user) && !user.stat && !user.restrained())
-		armed = !armed
-		update_icon()
-		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+	. = ..()
+	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return
+	armed = !armed
+	update_icon()
+	to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
@@ -267,7 +271,7 @@
 			var/def_zone = BODY_ZONE_CHEST
 			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				if(C.mobility_flags & MOBILITY_STAND)
+				if(C.body_position == STANDING_UP)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
@@ -333,11 +337,11 @@
 	ensnare(hit_atom)
 
 /**
-  * Attempts to legcuff someone with the bola
-  *
-  * Arguments:
-  * * C - the carbon that we will try to ensnare
-  */
+ * Attempts to legcuff someone with the bola
+ *
+ * Arguments:
+ * * C - the carbon that we will try to ensnare
+ */
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
@@ -366,6 +370,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
+	custom_price = PAYCHECK_HARD * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))

@@ -20,7 +20,7 @@
 
 /obj/structure/ore_box/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
+	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
@@ -79,7 +79,8 @@
 	return data
 
 /obj/structure/ore_box/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!Adjacent(usr))
 		return

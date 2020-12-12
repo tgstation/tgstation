@@ -5,6 +5,7 @@
 	icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
+	pass_flags_self = PASSGRILLE
 	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
@@ -31,7 +32,7 @@
 	var/ratio = obj_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 
-	if(smoothing_flags)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
 	if(ratio > 50)
@@ -118,9 +119,7 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(mover.pass_flags & PASSGRILLE)
-		return TRUE
-	else if(!. && istype(mover, /obj/projectile))
+	if(!. && istype(mover, /obj/projectile))
 		return prob(30)
 
 /obj/structure/grille/CanAStarPass(ID, dir, caller)
@@ -141,13 +140,13 @@
 			W.play_tool_sound(src, 100)
 			set_anchored(!anchored)
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
-								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
+				"<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
 	else if(istype(W, /obj/item/stack/rods) && broken)
 		var/obj/item/stack/rods/R = W
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
-								 "<span class='notice'>You rebuild the broken grille.</span>")
+				"<span class='notice'>You rebuild the broken grille.</span>")
 			new grille_type(src.loc)
 			R.use(1)
 			qdel(src)

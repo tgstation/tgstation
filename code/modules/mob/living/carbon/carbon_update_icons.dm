@@ -8,11 +8,11 @@
 		changed++
 		ntransform.TurnTo(lying_prev , lying_angle)
 		if(!lying_angle) //Lying to standing
-			final_pixel_y = get_standard_pixel_y_offset()
+			final_pixel_y = base_pixel_y
 		else //if(lying != 0)
 			if(lying_prev == 0) //Standing to lying
-				pixel_y = get_standard_pixel_y_offset()
-				final_pixel_y = get_standard_pixel_y_offset(lying_angle)
+				pixel_y = base_pixel_y
+				final_pixel_y = base_pixel_y + PIXEL_Y_OFFSET_LYING
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 	if(resize != RESIZE_DEFAULT_SIZE)
@@ -57,7 +57,7 @@
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
-			if(observers && observers.len)
+			if(observers?.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
 					if(observe.client && observe.client.eye == src)
@@ -110,8 +110,8 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
 		inv.update_icon()
 
 	if(wear_mask)
@@ -124,8 +124,8 @@
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
 		inv.update_icon()
 
 	if(wear_neck)
@@ -138,8 +138,8 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
 		inv.update_icon()
 
 	if(back)
@@ -154,8 +154,8 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
 		inv.update_icon()
 
 	if(head)
@@ -178,7 +178,7 @@
 /mob/living/carbon/proc/update_hud_handcuffed()
 	if(hud_used)
 		for(var/hand in hud_used.hand_slots)
-			var/obj/screen/inventory/hand/H = hud_used.hand_slots[hand]
+			var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
 			if(H)
 				H.update_icon()
 

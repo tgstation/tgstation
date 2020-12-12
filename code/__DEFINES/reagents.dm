@@ -45,4 +45,8 @@
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
 
+//used by chem master
+#define CONDIMASTER_STYLE_AUTO "auto"
+#define CONDIMASTER_STYLE_FALLBACK "_"
+
 #define ALLERGIC_REMOVAL_SKIP "Allergy"

@@ -1,24 +1,3 @@
-/*
-April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
-God bless America.
-          ___----------___
-        _--                ----__
-       -                         ---_
-      -___    ____---_              --_
-  __---_ .-_--   _ O _-                -
- -      -_-       ---                   -
--   __---------___                       -
-- _----                                  -
- -     -_                                 _
- `      _-                                 _
-       _                           _-_  _-_ _
-      _-                   ____    -_  -   --
-      -   _-__   _    __---    -------       -
-     _- _-   -_-- -_--                        _
-     -_-                                       _
-    _-                                          _
-    -
-*/
 
 #define DEEPFRYER_COOKTIME 60
 #define DEEPFRYER_BURNTIME 120
@@ -32,6 +11,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/deep_fryer
 	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.025 //How much cooking oil is used per second
@@ -57,10 +37,6 @@ God bless America.
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
-	component_parts += new /obj/item/stock_parts/micro_laser(null)
-	RefreshParts()
 	fry_loop = new(list(src), FALSE)
 
 /obj/machinery/deepfryer/RefreshParts()

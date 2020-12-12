@@ -24,8 +24,8 @@
 
 	///If disabled, limb is as good as missing.
 	var/bodypart_disabled = FALSE
-	///Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1.
-	var/disable_threshold = 1
+	///Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1. 0 means no disable thru damage
+	var/disable_threshold = 0
 	///Controls whether bodypart_disabled makes sense or not for this limb.
 	var/can_be_disabled = FALSE
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
@@ -179,8 +179,7 @@
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	if(current_gauze)
-		QDEL_NULL(current_gauze)
+	seep_gauze(9999) // destroy any existing gauze if any exists
 	for(var/obj/item/organ/drop_organ in get_organs())
 		drop_organ.transfer_to_limb(src, owner)
 	for(var/obj/item/I in src)
@@ -362,25 +361,25 @@
 	check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
 
 /**
-  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
-  *
-  * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_woundings_mods], then go down the list from most severe to least severe wounds in that category.
-  * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
-  *
-  * Arguments:
-  * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
-  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
-  * * wound_bonus- The wound_bonus of an attack
-  * * bare_wound_bonus- The bare_wound_bonus of an attack
-  */
+ * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
+ *
+ * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_woundings_mods], then go down the list from most severe to least severe wounds in that category.
+ * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
+ *
+ * Arguments:
+ * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
+ * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
+ * * wound_bonus- The wound_bonus of an attack
+ * * bare_wound_bonus- The bare_wound_bonus of an attack
+ */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
 	// note that these are fed into an exponent, so these are magnified
-	if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
+	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	if(HAS_TRAIT(owner,TRAIT_HARDLIMBWOUND))
+	if(HAS_TRAIT(owner,TRAIT_HARDLY_WOUNDED))
 		damage *= 0.85
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
@@ -444,15 +443,15 @@
 	new_wound.apply_wound(src, smited = smited)
 
 /**
-  * check_wounding_mods() is where we handle the various modifiers of a wound roll
-  *
-  * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
-  * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
-  * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
-  *
-  * Arguments:
-  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
-  */
+ * check_wounding_mods() is where we handle the various modifiers of a wound roll
+ *
+ * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+ * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
+ * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
+ *
+ * Arguments:
+ * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
+ */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
@@ -562,15 +561,27 @@
 
 	var/total_damage = max(brute_dam + burn_dam, stamina_dam)
 
-	if(total_damage >= max_damage * disable_threshold) //Easy limb disable disables the limb at 40% health instead of 0%
+	// this block of checks is for limbs that can be disabled, but not through pure damage (AKA limbs that suffer wounds, human/monkey parts and such)
+	if(!disable_threshold)
+		if(total_damage < max_damage)
+			last_maxed = FALSE
+		else
+			if(!last_maxed && owner.stat < UNCONSCIOUS)
+				INVOKE_ASYNC(owner, /mob.proc/emote, "scream")
+			last_maxed = TRUE
+		set_disabled(FALSE) // we only care about the paralysis trait
+		return
+
+	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
+	if(total_damage >= max_damage * disable_threshold)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
-				owner.emote("scream")
+				INVOKE_ASYNC(owner, /mob.proc/emote, "scream")
 			last_maxed = TRUE
 		set_disabled(TRUE)
 		return
 
-	if(bodypart_disabled && total_damage <= max_damage * 0.8) // reenabled at 80% now instead of 50% as of wounds update
+	if(bodypart_disabled && total_damage <= max_damage * 0.5) // reenable the limb at 50% health
 		last_maxed = FALSE
 		set_disabled(FALSE)
 
@@ -584,11 +595,6 @@
 
 	if(!owner)
 		return
-	if(bodypart_disabled)
-		if(!.)
-			owner.update_mobility()
-	else if (.)
-		owner.update_mobility()
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 
@@ -602,14 +608,6 @@
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(.)
 		var/mob/living/carbon/old_owner = .
-		if(can_be_disabled)
-			if(HAS_TRAIT(old_owner, TRAIT_EASYLIMBWOUND))
-				disable_threshold = initial(disable_threshold)
-				needs_update_disabled = TRUE
-			UnregisterSignal(old_owner, list(
-				SIGNAL_REMOVETRAIT(TRAIT_EASYLIMBWOUND),
-				SIGNAL_ADDTRAIT(TRAIT_EASYLIMBWOUND),
-				))
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
 				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
@@ -620,12 +618,6 @@
 				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
 				))
 	if(owner)
-		if(can_be_disabled)
-			if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
-				disable_threshold = 0.6
-				needs_update_disabled = TRUE
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_EASYLIMBWOUND), .proc/on_owner_easylimbwound_trait_loss)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_EASYLIMBWOUND), .proc/on_owner_easylimbwound_trait_gain)
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 				set_can_be_disabled(FALSE)
@@ -648,18 +640,12 @@
 				CRASH("set_can_be_disabled to TRUE with for limb whose owner has TRAIT_NOLIMBDISABLE")
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS), .proc/on_paralysis_trait_gain)
 			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), .proc/on_paralysis_trait_loss)
-			if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
-				disable_threshold = 0.6
-			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_EASYLIMBWOUND), .proc/on_owner_easylimbwound_trait_loss)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_EASYLIMBWOUND), .proc/on_owner_easylimbwound_trait_gain)
 		update_disabled()
 	else if(.)
 		if(owner)
 			UnregisterSignal(owner, list(
 				SIGNAL_ADDTRAIT(TRAIT_PARALYSIS),
 				SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS),
-				SIGNAL_REMOVETRAIT(TRAIT_EASYLIMBWOUND),
-				SIGNAL_ADDTRAIT(TRAIT_EASYLIMBWOUND),
 				))
 		set_disabled(FALSE)
 
@@ -688,23 +674,6 @@
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)
 	SIGNAL_HANDLER
 	set_can_be_disabled(initial(can_be_disabled))
-
-
-///Called when TRAIT_EASYLIMBWOUND is added to the owner.
-/obj/item/bodypart/proc/on_owner_easylimbwound_trait_gain(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	disable_threshold = 0.6
-	if(can_be_disabled)
-		update_disabled()
-
-
-///Called when TRAIT_EASYLIMBWOUND is removed from the owner.
-/obj/item/bodypart/proc/on_owner_easylimbwound_trait_loss(mob/living/carbon/source)
-	SIGNAL_HANDLER
-	disable_threshold = initial(disable_threshold)
-	if(can_be_disabled)
-		update_disabled()
-
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -907,13 +876,13 @@
 			return i
 
 /**
-  * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
-  *
-  * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
-  *
-  * Arguments:
-  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
-  */
+ * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
+ *
+ * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
+ *
+ * Arguments:
+ * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
+ */
 /obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
@@ -922,7 +891,7 @@
 		var/datum/wound/iter_wound = i
 		dam_mul *= iter_wound.damage_mulitplier_penalty
 
-	if(!LAZYLEN(wounds) && current_gauze && !replaced)
+	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		owner.visible_message("<span class='notice'>\The [current_gauze] on [owner]'s [name] fall away.</span>", "<span class='notice'>The [current_gauze] on your [name] fall away.</span>")
 		QDEL_NULL(current_gauze)
 
@@ -947,7 +916,7 @@
 		var/datum/wound/W = thing
 		bleed_rate += W.blood_flow
 
-	if(owner.mobility_flags & ~MOBILITY_STAND)
+	if(owner.body_position == LYING_DOWN)
 		bleed_rate *= 0.75
 
 	if(grasped_by)
@@ -959,35 +928,41 @@
 	return bleed_rate
 
 /**
-  * apply_gauze() is used to- well, apply gauze to a bodypart
-  *
-  * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
-  * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
-  * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
-  * the gauze falls off.
-  *
-  * Arguments:
-  * * gauze- Just the gauze stack we're taking a sheet from to apply here
-  */
+ * apply_gauze() is used to- well, apply gauze to a bodypart
+ *
+ * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
+ * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
+ * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
+ * the gauze falls off.
+ *
+ * Arguments:
+ * * gauze- Just the gauze stack we're taking a sheet from to apply here
+ */
 /obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
 	if(!istype(gauze) || !gauze.absorption_capacity)
 		return
+	var/newly_gauzed = FALSE
+	if(!current_gauze)
+		newly_gauzed = TRUE
 	QDEL_NULL(current_gauze)
 	current_gauze = new gauze.type(src, 1)
 	gauze.use(1)
+	if(newly_gauzed)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, gauze)
 
 /**
-  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
-  *
-  * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
-  *
-  * Arguments:
-  * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
-  */
+ * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
+ *
+ * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
+ *
+ * Arguments:
+ * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+ */
 /obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
 	if(!current_gauze)
 		return
 	current_gauze.absorption_capacity -= seep_amt
-	if(current_gauze.absorption_capacity < 0)
+	if(current_gauze.absorption_capacity <= 0)
 		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)

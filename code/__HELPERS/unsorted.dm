@@ -141,7 +141,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+/**
+ * Get a list of turfs in a line from `M` to `N`.
+ *
+ * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
+ */
+/proc/getline(atom/M,atom/N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
@@ -197,7 +202,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
 
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety && !banned)
+		if(C?.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -233,7 +238,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0,skip_mindless=0)
+/proc/getpois(mobs_only = FALSE, skip_mindless = FALSE, specify_dead_role = TRUE)
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
@@ -247,7 +252,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if(M.stat == DEAD)
+		if(M.stat == DEAD && specify_dead_role)
 			if(isobserver(M))
 				name += " \[ghost\]"
 			else
@@ -332,7 +337,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
+	while(loc?.loc && !isturf(loc.loc))
 		loc = loc.loc
 		if(stop_type && istype(loc, stop_type))
 			break
@@ -382,16 +387,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return locate(x,y,A.z)
 
 /**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
+ * Get ranged target turf, but with direct targets as opposed to directions
+ *
+ * Starts at atom A and gets the exact angle between A and target
+ * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+ * Arguments:
+ * * A - Initial Firer / Position
+ * * target - Target to aim towards
+ * * range - Distance of returned target turf from A
+ * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+ */
 /proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
 	var/angle = ATAN2(target.x - A.x, target.y - A.y)
 	if(offset)
@@ -574,16 +579,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /*
 
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
+Lets the turf this atom's *ICON* appears to inhabit
+it takes into account:
+* Pixel_x/y
+* Matrix x/y
 
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
+NOTE: if your atom has non-standard bounds then this proc
+will handle it, but:
+* if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+* if the bounds are odd, the true middle turf of the atom is returned
 
 */
 
@@ -697,7 +702,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
-	if(!ismob(target) || !(target.mobility_flags & MOBILITY_STAND))
+	if(!isliving(target) || target.body_position == LYING_DOWN)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
@@ -774,7 +779,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
-		if(!(LA.mobility_flags & MOBILITY_STAND))
+		if(LA.body_position == LYING_DOWN)
 			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
@@ -788,21 +793,21 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /*
 rough example of the "cone" made by the 3 dirs checked
 
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
+
+* \
+*  \
+*   >
+*     <
+*      \
+*       \
+*B --><-- A
+*       /
+*      /
+*     <
+*    >
+*   /
+*  /
+
 
 */
 
@@ -1250,44 +1255,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
-	if(!user || !target)
-		return TRUE
-	var/user_loc = user.loc
-
-	var/drifting = FALSE
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = TRUE
-
-	var/target_drifting = FALSE
-	if(!target.Process_Spacemove(0) && target.inertia_dir)
-		target_drifting = TRUE
-
-	var/target_loc = target.loc
-
-	var/endtime = world.time+time
-	. = TRUE
-	while (world.time < endtime)
-		stoplag(1)
-		if(QDELETED(user) || QDELETED(target))
-			. = 0
-			break
-		if(uninterruptible)
-			continue
-
-		if(drifting && !user.inertia_dir)
-			drifting = FALSE
-			user_loc = user.loc
-
-		if(target_drifting && !target.inertia_dir)
-			target_drifting = FALSE
-			target_loc = target.loc
-
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
-			. = FALSE
-			break
-
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
 //	(But may make a nice salt to one)
@@ -1384,26 +1351,26 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
-		/obj/item/reagent_containers/food/snacks/pie,
-		/obj/item/reagent_containers/food/snacks/kebab,
-		/obj/item/reagent_containers/food/snacks/pizza,
-		/obj/item/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/reagent_containers/food/snacks/salad,
-		/obj/item/reagent_containers/food/snacks/meat,
-		/obj/item/reagent_containers/food/snacks/meat/slab,
-		/obj/item/reagent_containers/food/snacks/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/food/pie,
+		/obj/item/food/pieslice,
+		/obj/item/food/kebab,
+		/obj/item/food/pizza,
+		/obj/item/food/pizzaslice,
+		/obj/item/food/salad,
+		/obj/item/food/meat,
+		/obj/item/food/meat/slab,
+		/obj/item/food/soup,
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing,
-		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/food/bread,
-		/obj/item/reagent_containers/food/snacks/grown/nettle
+		/obj/item/food/clothing,
+		/obj/item/food/meat/slab/human/mutant,
+		/obj/item/food/grown/ash_flora,
+		/obj/item/food/grown/nettle,
+		/obj/item/food/grown/shell
 		)
-	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
+	return pick(subtypesof(/obj/item/food) - blocked)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,

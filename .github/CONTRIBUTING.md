@@ -1,5 +1,18 @@
 # CONTRIBUTING
 
+1. [Reporting Issues](#reporting-issues)
+2. [Introduction](#introduction)
+3. [Getting Started](#getting-started)
+4. [Meet the Team](#meet-the-team)
+	1. [Headcoder](#headcoder)
+	2. [Maintainers](#maintainers)
+	3. [Issue Managers](#issue-managers)
+5. [Specifications](#specifications)
+6. [Pull Request Process](#pull-request-process)
+7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+8. [Banned content](#banned-content)
+9. [A word on Git](#a-word-on-git)
+
 ## Reporting Issues
 If you ever encounter a bug in-game, the best way to let a coder know about it is with our GitHub Issue Tracker. Please make sure you use the supplied issue template, and include the round ID for the server.
 
@@ -18,25 +31,62 @@ First things first, we want to make it clear how you can contribute (if you've n
 /tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
-After setting it up, optionally navigate your git commandline to the project folder and run the command: 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
+After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
-There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/-tg-station/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
+There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
-You can of course, as always, ask for help on the discord channels, or the forums, We're just here to have fun and help out, so please don't expect professional support.
+You can of course, as always, ask for help on the Discord channels or the forums. We're just here to have fun and help out, so please don't expect professional support.
 
 ## Meet the Team
 
-**Headcoder**
+### Headcoder
 
 The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
 
-**Maintainers**
+### Maintainers
 
 Maintainers are quality control. If a proposed pull request doesn't meet the following specifications, they can request you to change it, or simply just close the pull request. Maintainers are required to give a reason for closing the pull request.
 
 Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+
+<details>
+<summary>Maintainer Guidelines</summary>
+
+These are the few directives we have for project maintainers.
+
+- Do not merge PRs you create.
+- Do not merge PRs until 24 hours have passed since it was opened. Exceptions include:
+  - Emergency fixes.
+    - Try to get secondary maintainer approval before merging if you are able to.
+  - PRs with empty commits intended to generate a changelog.
+- Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+
+These are not steadfast rules as maintainers are expected to use their best judgement when operating.
+
+Our team is entirely voluntary, as such we extend our thanks to maintainers, issue managers, and contributors alike for helping keep the project alive.
+
+</details>
+
+### Issue Managers
+
+Issue Managers help out the project by labelling bug reports and PRs and closing bug reports which are duplicates or are no longer applicable.
+
+<details>
+<summary>What You Can and Can't Do as an Issue Manager</summary>
+
+This should help you understand what you can and can't do with your newfound github permissions.
+
+Things you **CAN** do:
+* Label issues appropriately
+* Close issues when appropriate
+* Label PRs when appropriate
+
+Things you **CAN'T** do:
+* [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+
+</details>
 
 ## Specifications
 
@@ -51,6 +101,7 @@ As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code mu
 DM will allow you nest almost any type keyword into a block, such as:
 
 ```DM
+// Not our style!
 datum
 	datum1
 		var
@@ -71,7 +122,7 @@ datum
 				proc3()
 					code
 			proc2()
-				..()
+				. = ..()
 				code
 ```
 
@@ -80,6 +131,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 The previous code made compliant:
 
 ```DM
+// Matches /tg/station style.
 /datum/datum1
 	var/varname1
 	var/varname2
@@ -95,18 +147,50 @@ The previous code made compliant:
 /datum/datum1/datum2/proc/proc3()
 	code
 /datum/datum1/datum2/proc2()
-	..()
+	. = ..()
 	code
 ```
+
+### All `process` procs need to make use of delta-time and be frame independent
+
+In a lot of our older code, `process()` is frame dependent. Here's some example mob code:
+
+```DM
+/mob/testmob
+	var/health = 100
+	var/health_loss = 4 //We want to lose 2 health per second, so 4 per SSmobs process
+
+/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+	health -= health_loss
+```
+
+As the mobs subsystem runs once every 2 seconds, the mob now loses 4 health every process, or 2 health per second. This is called frame dependent programming.
+
+Why is this an issue? If someone decides to make it so the mobs subsystem processes once every second (2 times as fast), your effects in process() will also be two times as fast. Resulting in 4 health loss per second rather than 2.
+
+How do we solve this? By using delta-time. Delta-time is the amount of seconds you would theoretically have between 2 process() calls. In the case of the mobs subsystem, this would be 2 (As there is 2 seconds between every call in `process()`). Here is a new example using delta-time:
+
+```DM
+/mob/testmob
+	var/health = 100
+	var/health_loss = 2 //Health loss every second
+
+/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+	health -= health_loss * delta_time
+```
+
+In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * delta_time, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
+
+For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
 ### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-### Type paths must begin with a /
+### Type paths must begin with a `/`
 eg: `/datum/thing`, not `datum/thing`
 
 ### Type paths must be snake case
-eg: `/datum/thing/blue_bird`, not `datum/thing/BLUEBIRD` or `datum/thing/BlueBird` or `datum/thing/Bluebird` or `datum/thing/blueBird`
+eg: `/datum/blue_bird`, not `/datum/BLUEBIRD` or `/datum/BlueBird` or `/datum/Bluebird` or `/datum/blueBird`
 
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
@@ -122,16 +206,16 @@ var/path_type = /obj/item/baseball_bat
 var/path_type = "/obj/item/baseball_bat"
 ```
 
-### Use var/name format when declaring variables
+### Use `var/name` format when declaring variables
 While DM allows other ways of declaring variables, this one should be used for consistency.
 
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-(You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
+You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
 
 ### No hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: 'I couldn't immediately think of a proper way so thus there must be no other option' is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
@@ -181,7 +265,7 @@ This is clearer and enhances readability of your code! Get used to doing it!
 ### Control statements
 (if, while, for, etc)
 
-* All control statements must not contain code on the same line as the statement (`if (blah) return`)
+* No control statement may contain code on the same line as the statement (`if (blah) return`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
 ### Use early return
@@ -230,6 +314,46 @@ This is good:
 		mob.dothing()
 ````
 
+### Getters and setters
+
+* Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
+
+This is bad:
+```DM
+/datum/datum1/proc/simple_getter()
+	return gotten_variable
+```
+Prefer to either access the variable directly or use a macro/define.
+
+
+* Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
+
+These are bad:
+```DM
+/datum/datum1/proc/complex_getter()
+	return condition ? VALUE_A : VALUE_B
+
+/datum/datum1/child_datum/complex_getter()
+	return condition ? VALUE_C : VALUE_D
+```
+
+This is good:
+```DM
+/datum/datum1
+	var/getter_turned_into_variable
+
+/datum/datum1/proc/set_condition(new_value)
+	if(condition == new_value)
+		return
+	condition = new_value
+	on_condition_change()
+
+/datum/datum1/proc/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_A : VALUE_B
+
+/datum/datum1/child_datum/on_condition_change()
+	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
+```
 
 ### Develop Secure Code
 
@@ -271,7 +395,7 @@ This is good:
 
 ### Mapping Standards
 * TGM Format & Map Merge
-	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.
+	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format). This is done using the [Map Merge](https://tgstation13.org/wiki/Map_Merger) utility included in the repo to convert the file to TGM format.
 	* Likewise, you MUST run Map Merge prior to opening your PR when updating existing maps to minimize the change differences (even when using third party mapping programs such as FastDMM.)
 		* Failure to run Map Merge on a map after using third party mapping programs (such as FastDMM) greatly increases the risk of the map's key dictionary becoming corrupted by future edits after running map merge. Resolving the corruption issue involves rebuilding the map's key dictionary; id est rewriting all the keys contained within the map by reconverting it from BYOND to TGM format - which creates very large differences that ultimately delay the PR process and is extremely likely to cause merge conflicts with other pull requests.
 
@@ -287,6 +411,27 @@ This is good:
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
+
+### Signal Handlers
+All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
+```
+/type/path/proc/signal_callback()
+	SIGNAL_HANDLER
+	// rest of the code
+```
+This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
+
+There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+
+### Enforcing parent calling
+When adding new signals to root level procs, eg;
+```
+/atom/proc/setDir(newdir)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	dir = newdir
+```
+The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -330,27 +475,27 @@ Math operators like +, -, /, *, etc are up in the air, just choose which version
 
 #### Use
 * Bitwise AND - '&'
-	* Should be written as ```bitfield & bitflag``` NEVER ```bitflag & bitfield```, both are valid, but the latter is confusing and nonstandard.
+	* Should be written as `variable & CONSTANT` NEVER `CONSTANT & variable`. Both are valid, but the latter is confusing and nonstandard.
 * Associated lists declarations must have their key value quoted if it's a string
-	* WRONG: list(a = "b")
-	* RIGHT: list("a" = "b")
+	* WRONG: `list(a = "b")`
+	* RIGHT: `list("a" = "b")`
 
 ### Dream Maker Quirks/Tricks
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
 
 #### In-To for-loops
-```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```; if you want ```<``` then you should write it as ```1 to some_value-1```).
+`for(var/i = 1, i <= some_value, i++)` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's `for(var/i in 1 to some_value)` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the `to` keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
-HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
+HOWEVER, if either `some_value` or `i` changes within the body of the for (underneath the `for(...)` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for-loop!
 
-### for(var/A in list) VS for(var/i in 1 to list.len)
+#### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
 The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
 
-#### Istypeless for loops
+#### For loops without `istype`
 A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
 ```DM
 var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
@@ -359,7 +504,7 @@ for(var/obj/item/sword/S in bag_of_items)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using ```istype()``` (or some internal-magic similar to ```istype()``` - this is BYOND, after all). This is fine in its current state for ```bag_of_items```, but if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
+The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using `istype()` (or some internal-magic similar to `istype()` - this is BYOND, after all). This is fine in its current state for `bag_of_items`, but if `bag_of_items` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
 ```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword
@@ -370,7 +515,7 @@ for(var/obj/item/sword/S in bag_of_swords)
 specifies a type for DM to filter by.
 
 With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
-you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
+you can circumvent DM's filtering and automatic `istype()` checks by writing the loop as such:
 ```DM
 var/list/bag_of_swords = list(sword, sword, sword, sword)
 var/obj/item/sword/best_sword
@@ -382,25 +527,23 @@ for(var/s in bag_of_swords)
 Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
 
 #### Dot variable
-Like other languages in the C family, DM has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
+Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
 eg:
 ```DM
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
-However, DM also has a dot variable, accessed just as ```.``` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the ```return``` statement) at the end of a proc, provided the proc does not already manually return (```return count``` for example.) Why is this special?
+However, DM also has a dot variable, accessed just as `.` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the `return` statement) at the end of a proc, provided the proc does not already manually return (`return count` for example.) Why is this special?
 
-With ```.``` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the ```.``` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.```, provided that it's a list.
+With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
 
-## Globals versus static
+### Globals versus static
 
 DM has a var keyword, called global. This var keyword is for vars inside of types. For instance:
 
 ```DM
-mob
-	var
-		global
-			thing = TRUE
+/mob
+	var/global/thing = TRUE
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 

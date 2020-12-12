@@ -168,6 +168,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aI" = (
+/obj/item/gps/spaceruin,
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered/clownplanet)
@@ -346,7 +347,7 @@
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
 "bh" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
@@ -360,7 +361,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bk" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)

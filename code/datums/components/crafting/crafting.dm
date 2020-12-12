@@ -6,7 +6,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/H = user.hud_used
-	var/obj/screen/craft/C = new()
+	var/atom/movable/screen/craft/C = new()
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
@@ -60,12 +60,12 @@
 */
 
 /**
-  * Check that the contents of the recipe meet the requirements.
-  *
-  * user: The /mob that initated the crafting.
-  * R: The /datum/crafting_recipe being attempted.
-  * contents: List of items to search for R's reqs.
-  */
+ * Check that the contents of the recipe meet the requirements.
+ *
+ * user: The /mob that initated the crafting.
+ * R: The /datum/crafting_recipe being attempted.
+ * contents: List of items to search for R's reqs.
+ */
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
 	contents = contents["other"]
@@ -311,13 +311,21 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
+		// Snowflake handling of reagent containers and storage atoms.
+		// If we consumed them in our crafting, we should dump their contents out before qdeling them.
+		if(istype(DL, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/container = DL
+			container.reagents.expose(container.loc, TOUCH)
+		else if(istype(DL, /obj/item/storage))
+			var/obj/item/storage/container = DL
+			container.emptyStorage()
 		qdel(DL)
 
-/datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
-	SIGNAL_HANDLER_DOES_SLEEP
+/datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
+	SIGNAL_HANDLER
 
 	if(user == parent)
-		ui_interact(user)
+		INVOKE_ASYNC(src, .proc/ui_interact, user)
 
 /datum/component/personal_crafting/ui_state(mob/user)
 	return GLOB.not_incapacitated_turf_state
@@ -387,7 +395,8 @@
 	return data
 
 /datum/component/personal_crafting/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("make")

@@ -7,6 +7,7 @@
 	anchored = TRUE
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
+	var/crafted = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 /obj/structure/ladder/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
@@ -35,15 +36,17 @@
 	if (!down)
 		L = locate() in SSmapping.get_turf_below(T)
 		if (L)
-			down = L
-			L.up = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				down = L
+				L.up = src  // Don't waste effort looping the other way
+				L.update_icon()
 	if (!up)
 		L = locate() in SSmapping.get_turf_above(T)
 		if (L)
-			up = L
-			L.down = src  // Don't waste effort looping the other way
-			L.update_icon()
+			if(crafted == L.crafted)
+				up = L
+				L.down = src  // Don't waste effort looping the other way
+				L.update_icon()
 
 	update_icon()
 
@@ -84,7 +87,7 @@
 	user.forceMove(T)
 	if(AM)
 		user.start_pulling(AM)
-	
+
 	//reopening ladder radial menu ahead
 	T = get_turf(user)
 	var/obj/structure/ladder/ladder_structure = locate() in T
@@ -103,7 +106,7 @@
 	if (!length(tool_list))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 		return
-	
+
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, is_ghost), require_near = !is_ghost, tooltips = TRUE)
 	if (!is_ghost && !in_range(src, user))
 		return  // nice try
@@ -195,3 +198,6 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+/obj/structure/ladder/crafted
+	crafted = TRUE

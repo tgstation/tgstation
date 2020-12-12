@@ -122,10 +122,6 @@
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
 	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
-/mob/living/simple_animal/bot/mulebot/update_mobility()
-	. = ..()
-	if(!on)
-		mobility_flags |= MOBILITY_STAND //base bots removes all mobility flags when turned off, resulting in the bot becoming passable. we don't want this since it's a large device that should block things.
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -188,7 +184,7 @@
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("[base_icon]-emagged", src)
-	playsound(src, "sparks", 100, FALSE)
+	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
@@ -266,8 +262,11 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	. = ..()
+
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
@@ -416,7 +415,7 @@
 	if (!istype(L))
 		return
 
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
 	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
@@ -515,7 +514,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path && path.len)
+	if(path?.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
@@ -701,7 +700,7 @@
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM && AM.Adjacent(src))
+				if(AM?.Adjacent(src))
 					load(AM)
 					if(report_delivery)
 						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
@@ -831,7 +830,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
 
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
 	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!

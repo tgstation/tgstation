@@ -60,7 +60,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

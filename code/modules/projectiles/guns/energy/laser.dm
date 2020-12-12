@@ -3,7 +3,7 @@
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=2000)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
@@ -38,6 +38,7 @@
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
+	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
@@ -114,6 +115,7 @@
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
 	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null
 	ammo_x_offset = 3

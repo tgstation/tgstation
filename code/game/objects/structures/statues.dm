@@ -7,17 +7,28 @@
 	anchored = FALSE
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	material_modifier = 0.5
+	material_flags = MATERIAL_AFFECT_STATISTICS
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
-	var/art_type = /datum/component/art
+	var/art_type = /datum/element/art
 	/// Abstract root type
 	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(art_type, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75))
+	AddElement(art_type, impressiveness)
+	AddComponent(/datum/component/beauty, impressiveness * 75)
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
+
+/obj/structure/statue/proc/can_be_rotated(mob/user)
+	if(!anchored)
+		return TRUE
+	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
+
+/obj/structure/statue/proc/can_user_rotate(mob/user)
+	return !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -246,9 +257,9 @@
 	icon_state = "snowman"
 
 /obj/structure/statue/snow/snowlegion
-    name = "snowlegion"
-    desc = "Looks like that weird kid with the tiger plushie has been round here again."
-    icon_state = "snowlegion"
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon_state = "snowlegion"
 
 ///////////////////////////////bronze///////////////////////////////////
 
@@ -260,13 +271,13 @@
 	name = "\improper Karl Marx bust"
 	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
 	icon_state = "marx"
-	art_type = /datum/component/art/rev
+	art_type = /datum/element/art/rev
 
 ///////////Elder Atmosian///////////////////////////////////////////
 
 /obj/structure/statue/elder_atmosian
 	name = "Elder Atmosian"
-	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
+	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will."
 	icon_state = "eng"
 	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
@@ -275,7 +286,7 @@
 
 /obj/item/chisel
 	name = "chisel"
-	desc = "breaking and making art since 4000 BC. This one uses advanced technology to allow creation of lifelike moving statues."
+	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
@@ -311,10 +322,10 @@
 	return ..()
 
 /*
- Hit the block to start
- Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
- Hit block again to start sculpting.
- Moving interrupts
+Hit the block to start
+Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+Hit block again to start sculpting.
+Moving interrupts
 */
 /obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
@@ -403,6 +414,7 @@
 	icon_state = "block"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
+	material_modifier = 0.5 //50% effectiveness of materials
 
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/current_target
@@ -428,7 +440,11 @@
 	if(!is_viable_target(target))
 		to_chat(user,"You won't be able to carve that.")
 		return
-	current_target = target.appearance
+	if(istype(target,/obj/structure/statue/custom))
+		var/obj/structure/statue/custom/original = target
+		current_target = original.content_ma
+	else
+		current_target = target.appearance
 	var/mutable_appearance/ma = current_target
 	to_chat(user,"<span class='notice'>You decide to sculpt [src] into [ma.name].</span>",type=MESSAGE_TYPE_INFO)
 

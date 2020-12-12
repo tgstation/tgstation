@@ -16,7 +16,7 @@
 		errors |= MANIFEST_ERROR_ITEM
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
-	return stamped && stamped.len && !is_denied()
+	return stamped?.len && !is_denied()
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
 	return stamped && ("stamp-deny" in stamped)

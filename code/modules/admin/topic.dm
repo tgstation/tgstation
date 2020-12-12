@@ -236,9 +236,9 @@
 		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
 		if(!timer)
 			return
-		SSshuttle.emergency.setTimer(timer*10)
+		SSshuttle.emergency.setTimer(timer SECONDS)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer)].")
+		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer SECONDS)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
@@ -623,7 +623,7 @@
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode.", null, null, null, null)
@@ -655,58 +655,11 @@
 		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
 		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
 
-	else if(href_list["f_dynamic_latejoin"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(!SSticker || !SSticker.mode)
-			return alert(usr, "The game must start first.", null, null, null, null)
-		if(GLOB.master_mode != "dynamic")
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/latejoin_rules = list()
-		for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
-			var/datum/dynamic_ruleset/latejoin/newrule = new rule()
-			latejoin_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortList(latejoin_rules)
-		if (added_rule)
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			mode.forced_latejoin_rule = latejoin_rules[added_rule]
-			log_admin("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
-			message_admins("[key_name(usr)] set [added_rule] to proc on the next latejoin.", 1)
-			Game()
-
-	else if(href_list["f_dynamic_latejoin_clear"])
-		if(!check_rights(R_ADMIN))
-			return
-		if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			mode.forced_latejoin_rule = null
-			Game()
-			log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
-			message_admins("[key_name(usr)] cleared the forced latejoin ruleset.", 1)
-
-	else if(href_list["f_dynamic_midround"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(!SSticker || !SSticker.mode)
-			return alert(usr, "The game must start first.", null, null, null, null)
-		if(GLOB.master_mode != "dynamic")
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-		var/midround_rules = list()
-		for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
-			var/datum/dynamic_ruleset/midround/newrule = new rule()
-			midround_rules[newrule.name] = rule
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortList(midround_rules)
-		if (added_rule)
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
-			message_admins("[key_name(usr)] executed the [added_rule] ruleset.", 1)
-			mode.picking_specific_rule(midround_rules[added_rule],1)
-
 	else if (href_list["f_dynamic_options"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -716,7 +669,7 @@
 	else if(href_list["f_dynamic_roundstart_centre"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -733,7 +686,7 @@
 	else if(href_list["f_dynamic_roundstart_width"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -750,7 +703,7 @@
 	else if(href_list["f_dynamic_roundstart_latejoin_min"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -768,7 +721,7 @@
 	else if(href_list["f_dynamic_roundstart_latejoin_max"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -786,7 +739,7 @@
 	else if(href_list["f_dynamic_roundstart_midround_min"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -804,7 +757,7 @@
 	else if(href_list["f_dynamic_roundstart_midround_max"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "dynamic")
 			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
@@ -871,7 +824,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
 
 		if(GLOB.master_mode != "dynamic")
@@ -891,7 +844,7 @@
 			return
 
 		if (SSticker.HasRoundStarted())
-			if (askuser(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", "Yes", "Cancel", Timeout = null) == 1)
+			if (tgui_alert(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", list("Yes", "Cancel"), timeout = 0) == "Yes")
 				SSticker.save_mode(href_list["c_mode2"])
 			HandleCMode()
 			return
@@ -900,7 +853,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>", confidential = TRUE)
 		Game() // updates the main game menu
-		if (askuser(usr, "Would you like to save this as the default mode for the server?", "Save mode", "Yes", "No", Timeout = null) == 1)
+		if (tgui_alert(usr, "Would you like to save this as the default mode for the server?", "Save mode", list("Yes", "No"), timeout = 0) == "Yes")
 			SSticker.save_mode(GLOB.master_mode)
 		HandleCMode()
 
@@ -1401,15 +1354,15 @@
 			return
 		//let's keep it simple
 		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
-		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
+		var/cookiealt = /obj/item/food/cookie
 		if(isskeleton(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isethereal(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+			cookiealt = /obj/item/food/energybar
 		else if(islizard(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+			cookiealt = /obj/item/food/meat/slab
 		var/obj/item/new_item = new cookiealt(H)
 		if(H.put_in_hands(new_item))
 			H.update_inv_hands()
@@ -2345,7 +2298,7 @@
 			to_chat(usr, "<span class='warning'>The round must be in progress to use this!</span>")
 			return
 		var/mob/heart_recepient = locate(href_list["admincommend"])
-		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
+		if(tgui_alert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", list("Yes", "No")) == "No")
 			return
 		usr.nominate_heart(heart_recepient)
 
@@ -2354,6 +2307,18 @@
 			return
 		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
 		button.force_war()
+
+	else if (href_list["interview"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/interview/I = locate(href_list["interview"])
+		if (I)
+			I.ui_interact(usr)
+
+	else if (href_list["interview_man"])
+		if(!check_rights(R_ADMIN))
+			return
+		GLOB.interviews.ui_interact(usr)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

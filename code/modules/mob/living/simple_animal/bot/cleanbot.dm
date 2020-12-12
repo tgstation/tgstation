@@ -190,7 +190,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && !(C.mobility_flags & MOBILITY_STAND))
+		if(C.stat != DEAD && C.body_position == LYING_DOWN)
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A
@@ -237,7 +237,7 @@
 		target = scan(/obj/item/trash)
 
 	if(!target && trash) //Search for dead mices.
-		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
@@ -307,7 +307,7 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
+		target_types += /obj/item/food/deadmouse
 
 	target_types = typecacheof(target_types)
 

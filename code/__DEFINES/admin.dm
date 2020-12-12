@@ -84,28 +84,6 @@
 /turf/Safe_COORD_Location()
 	return src
 
-
-#define ADMIN_PUNISHMENT_LIGHTNING "Lightning bolt"
-#define ADMIN_PUNISHMENT_BRAINDAMAGE "Brain damage"
-#define ADMIN_PUNISHMENT_GIB "Gib"
-#define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
-#define ADMIN_PUNISHMENT_FIREBALL "Fireball"
-#define ADMIN_PUNISHMENT_ROD "Immovable Rod"
-#define ADMIN_PUNISHMENT_SUPPLYPOD_QUICK "Supply Pod (Quick)"
-#define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
-#define ADMIN_PUNISHMENT_MAZING "Puzzle"
-#define ADMIN_PUNISHMENT_IMMERSE "Fully Immerse"
-#define ADMIN_PUNISHMENT_FAT "Fatten up"
-#define ADMIN_PUNISHMENT_FAKEBWOINK "Fake bwoink"
-#define ADMIN_PUNISHMENT_NUGGET "Nugget"
-#define ADMIN_PUNISHMENT_CRACK ":B:oneless"
-#define ADMIN_PUNISHMENT_BLEED ":B:loodless"
-#define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
-#define ADMIN_PUNISHMENT_SCARIFY "Scarify"
-#define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
-#define ADMIN_PUNISHMENT_DOCK "Dock Pay"
-#define ADMIN_PUNISHMENT_BREAD "Bread"
-
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3

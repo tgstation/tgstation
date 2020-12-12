@@ -209,9 +209,10 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
-	 					/datum/reagent/toxin/slimejelly = 2,
-	 					/datum/reagent/liquidgibs = 2,
-						/datum/reagent/consumable/enzyme = 1)
+		/datum/reagent/toxin/slimejelly = 2,
+		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/enzyme = 1,
+	)
 
 	suppressive_reagents = list(
 						/datum/reagent/consumable/frostoil = -4,
@@ -227,29 +228,33 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
 
 	supplementary_reagents = list(
-	 					/datum/reagent/consumable/nutriment/vitamin = 3,
-	 					/datum/reagent/liquidgibs = 2,
-	 					/datum/reagent/sulfur = 2)
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/sulfur = 2,
+	)
 
 	suppressive_reagents = list(
-						/datum/reagent/consumable/tinlux = -6,
-						/datum/reagent/napalm = -4)
+		/datum/reagent/consumable/tinlux = -6,
+		/datum/reagent/napalm = -4,
+	)
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"
 	required_reagents = list(
-	 					/datum/reagent/consumable/nutriment/protein,
-	 					/datum/reagent/medicine/c2/synthflesh,
-	 					/datum/reagent/sulfur) //grind flares to get this
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/medicine/c2/synthflesh,
+		/datum/reagent/sulfur,
+	) //grind flares to get this
 
 	supplementary_reagents = list(
-	 					/datum/reagent/growthserum = 3,
-	 					/datum/reagent/consumable/nutriment/vitamin = 2,
-	 					/datum/reagent/liquidgibs = 2,
-	 					/datum/reagent/consumable/eggyolk = 2,
-	 					/datum/reagent/consumable/shamblers = 1)
+		/datum/reagent/growthserum = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/liquidgibs = 2,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/shamblers = 1,
+	)
 
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
@@ -259,34 +264,38 @@
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"
 	required_reagents = list(
-	 					/datum/reagent/consumable/nutriment/protein,
-						/datum/reagent/toxin/slimejelly,
-						/datum/reagent/yuck,
-						/datum/reagent/consumable/enzyme) //Powerful enzymes helps the cube digest prey.
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/toxin/slimejelly,
+		/datum/reagent/yuck,
+		/datum/reagent/consumable/enzyme,
+	) //Powerful enzymes helps the cube digest prey.
 
 	supplementary_reagents = list(
-						/datum/reagent/water/hollowwater = 4,
-						/datum/reagent/consumable/corn_syrup = 3,
-						/datum/reagent/gold = 2, //This is why they eat so many adventurers.
-						/datum/reagent/consumable/nutriment/peptides = 2,
-						/datum/reagent/consumable/potato_juice = 1,
-						/datum/reagent/liquidgibs = 1,
-						/datum/reagent/consumable/nutriment/vitamin = 1)
+		/datum/reagent/water/hollowwater = 4,
+		/datum/reagent/consumable/corn_syrup = 3,
+		/datum/reagent/gold = 2, //This is why they eat so many adventurers.
+		/datum/reagent/consumable/nutriment/peptides = 2,
+		/datum/reagent/consumable/potato_juice = 1,
+		/datum/reagent/liquidgibs = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
 
 	suppressive_reagents = list(
-						/datum/reagent/toxin/minttoxin = -3,
-						/datum/reagent/consumable/frostoil = -2,
-						/datum/reagent/consumable/ice = -1)
+		/datum/reagent/toxin/minttoxin = -3,
+		/datum/reagent/consumable/frostoil = -2,
+		/datum/reagent/consumable/ice = -1,
+	)
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/gelatinous = 1)
 
 /datum/micro_organism/cell_line/sholean_grapes
 	desc = "Globular ooze particles"
 	required_reagents = list(
-	 					/datum/reagent/consumable/nutriment/protein,
-						/datum/reagent/toxin/slimejelly,
-						/datum/reagent/yuck,
-						/datum/reagent/consumable/vitfro)
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/toxin/slimejelly,
+		/datum/reagent/yuck,
+		/datum/reagent/consumable/vitfro,
+	)
 
 	supplementary_reagents = list(
 						/datum/reagent/medicine/omnizine = 4,
@@ -365,7 +374,7 @@
 						/datum/reagent/liquidgibs = 1)
 
 	suppressive_reagents = list(
-						/datum/reagent/consumable/sodiumchloride = -3,
+						/datum/reagent/consumable/salt = -3,
 						/datum/reagent/medicine/c2/syriniver = -2)
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
@@ -403,7 +412,7 @@
 	resulting_atoms[random_result] = 1
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 

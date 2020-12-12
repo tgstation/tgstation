@@ -19,6 +19,7 @@
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -51,6 +52,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 40)
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"

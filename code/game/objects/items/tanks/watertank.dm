@@ -84,8 +84,8 @@
 
 /obj/item/watertank/MouseDrop(obj/over_object)
 	var/mob/M = loc
-	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	return ..()
 
@@ -149,7 +149,7 @@
 	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	inhand_icon_state = "waterbackpackjani"
-	custom_price = 1200
+	custom_price = PAYCHECK_EASY * 5
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()

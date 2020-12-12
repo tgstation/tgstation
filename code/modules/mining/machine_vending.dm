@@ -113,29 +113,31 @@
 
 /obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
 	. = list()
-	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
-	if(ishuman(user))
-		H = user
-		C = H.get_idcard(TRUE)
-		if(C)
-			.["user"] = list()
-			.["user"]["points"] = C.mining_points
-			if(C.registered_account)
-				.["user"]["name"] = C.registered_account.account_holder
-				if(C.registered_account.account_job)
-					.["user"]["job"] = C.registered_account.account_job.title
-				else
-					.["user"]["job"] = "No Job"
+	if(isliving(user))
+		var/mob/living/L = user
+		C = L.get_idcard(TRUE)
+	if(C)
+		.["user"] = list()
+		.["user"]["points"] = C.mining_points
+		if(C.registered_account)
+			.["user"]["name"] = C.registered_account.account_holder
+			if(C.registered_account.account_job)
+				.["user"]["job"] = C.registered_account.account_job.title
+			else
+				.["user"]["job"] = "No Job"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("purchase")
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
 			if(!istype(I))
 				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
 				flick(icon_deny, src)
@@ -212,7 +214,7 @@
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
 		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
-		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
+		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/food/monkeycube,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),

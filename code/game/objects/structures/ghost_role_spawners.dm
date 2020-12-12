@@ -109,6 +109,7 @@
 		H.underwear = "Nude"
 		H.update_body()
 		ADD_TRAIT(H, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
+		H.remove_language(/datum/language/common)
 	team.players_spawned += (new_spawn.key)
 	eggshell.egg = null
 	qdel(eggshell)
@@ -460,7 +461,7 @@
 /datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	l_pocket = /obj/item/ammo_box/magazine/m10mm
+	l_pocket = /obj/item/ammo_box/magazine/m9mm
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
@@ -670,6 +671,7 @@
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id
+	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
 
 /obj/effect/mob_spawn/human/beach/alive
@@ -696,7 +698,7 @@
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
 	r_pocket = /obj/item/storage/wallet/random
-	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
+	l_pocket = /obj/item/food/pizzaslice/dank
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	id = /obj/item/card/id
 

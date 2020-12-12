@@ -38,7 +38,7 @@
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	previous_level = get_security_level()
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -46,7 +46,6 @@
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		set_safety()
-	GLOB.poi_list -= src
 	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
@@ -310,7 +309,8 @@
 	return data
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
@@ -456,7 +456,7 @@
 	safety = TRUE
 	update_icon()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	if(SSticker && SSticker.mode)
+	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 
@@ -584,9 +584,10 @@
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
 		return
-	for(var/mob/M in GLOB.mob_list)
-		if(M.stat != DEAD && M.z == z)
-			M.gib()
+	for(var/_victim in GLOB.mob_living_list)
+		var/mob/living/victim = _victim
+		if(victim.stat != DEAD && victim.z == z)
+			victim.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
@@ -634,7 +635,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
 	if(!fake)
-		GLOB.poi_list |= src
+		AddElement(/datum/element/point_of_interest)
 		last_disk_move = world.time
 		START_PROCESSING(SSobj, src)
 
@@ -696,12 +697,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 		H.nuke_disk = src
 		return TRUE
 	return ..()
-
-/obj/item/disk/nuclear/Destroy(force=FALSE)
-	// respawning is handled in /obj/Destroy()
-	if(force)
-		GLOB.poi_list -= src
-	. = ..()
 
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")

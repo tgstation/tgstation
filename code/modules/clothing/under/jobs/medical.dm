@@ -17,6 +17,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/medical/virologist
@@ -34,6 +35,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/medical/doctor/nurse
@@ -80,6 +82,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/medical/chemist
@@ -97,6 +100,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/medical/paramedic
@@ -114,4 +118,5 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP

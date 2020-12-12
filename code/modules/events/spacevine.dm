@@ -307,8 +307,8 @@
 	severity = 10
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
-		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
+	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
+		new/obj/structure/alien/resin/flower_bud(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(25))
@@ -461,7 +461,7 @@
 	growth_queue += SV
 	vines += SV
 	SV.master = src
-	if(muts && muts.len)
+	if(muts?.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
 	if(parent)

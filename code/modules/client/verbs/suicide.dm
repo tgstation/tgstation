@@ -92,9 +92,18 @@
 									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is pulling [p_their()] eyes out of their sockets! It looks like [p_theyre()] trying to commit suicide.")
 		else if(a_intent == INTENT_HELP)
-			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
-									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
-									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
+			var/obj/item/organ/brain/userbrain = getorgan(/obj/item/organ/brain)
+			if(userbrain?.damage >= 75)
+				suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
+						down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \
+						in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting \
+						[p_their()] fingers outward while crossing [p_their()] legs back and forth, repeats this motion again two times while keeping [p_their()] shoulders low\
+						and hunching over, does finger guns with right hand and left hand bent on [p_their()] hip while looking directly forward and putting [p_their()] left leg forward then\
+						crossing [p_their()] arms and leaning back a little while bending [p_their()] knees at an angle! It looks like [p_theyre()] trying to commit suicide."
+			else
+				suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
+							"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
+							"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
 		else
 			suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
 								"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
@@ -188,7 +197,7 @@
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
 		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
-		 "<span class='notice'>[src] bleeps electronically.</span>")
+			"<span class='notice'>[src] bleeps electronically.</span>")
 
 		suicide_log()
 

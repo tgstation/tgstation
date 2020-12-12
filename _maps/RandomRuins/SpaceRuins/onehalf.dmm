@@ -141,6 +141,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
@@ -703,10 +707,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/spacecash/c500{
-	pixel_y = 8
-	},
-/obj/item/stack/spacecash/c1000,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -777,7 +778,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/table/reinforced,
-/obj/item/lighter,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
@@ -875,8 +876,8 @@
 "cI" = (
 /obj/structure/safe/floor,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/mask/gas/syndicate,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/suit/space/eva,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/folder/syndicate/mining,
@@ -944,6 +945,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cY" = (
 /obj/structure/table/reinforced,
+/obj/item/gps/spaceruin,
 /obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -951,6 +953,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/ore/bluespace_crystal,
 /obj/item/coin/plasma,
+/obj/item/lighter,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "da" = (

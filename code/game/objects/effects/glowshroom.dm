@@ -49,13 +49,13 @@
 	. += "This is a [generation]\th generation [name]!"
 
 /**
-  *	Creates a new glowshroom structure.
-  *
-  * Arguments:
-  * * newseed - Seed of the shroom
-  * * mutate_stats - If the plant needs to mutate their stats
-  * * spread - If the plant is a result of spreading, reduce its stats
-  */
+ *	Creates a new glowshroom structure.
+ *
+ * Arguments:
+ * * newseed - Seed of the shroom
+ * * mutate_stats - If the plant needs to mutate their stats
+ * * spread - If the plant is a result of spreading, reduce its stats
+ */
 
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
 	. = ..()
@@ -100,8 +100,8 @@
 	addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /**
-  * Causes glowshroom spreading across the floor/walls.
-  */
+ * Causes glowshroom spreading across the floor/walls.
+ */
 
 /obj/structure/glowshroom/proc/Spread()
 
@@ -110,6 +110,10 @@
 		return
 
 	var/turf/ownturf = get_turf(src)
+	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
+		addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		return //Deal with it not now
+
 	var/shrooms_planted = 0
 	var/list/possibleLocs = list()
 	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
@@ -118,7 +122,7 @@
 	for(var/turf/open/floor/earth in view(3,src))
 		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
-		if(!ownturf.CanAtmosPass(earth))
+		if(!TURF_SHARES(earth))
 			continue
 		possibleLocs += earth
 
@@ -130,7 +134,7 @@
 		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
 		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 
-		 // Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
+		// Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
 		if(prob(max(chance_stats, chance_generation)))
 			var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
 			var/turf/newLoc = null
@@ -209,12 +213,12 @@
 	return 1
 
 /**
-  * Causes the glowshroom to decay by decreasing its endurance.
-  *
-  * Arguments:
-  * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
-  * * amount - Amount of endurance to be reduced due to spread decay.
-  */
+ * Causes the glowshroom to decay by decreasing its endurance.
+ *
+ * Arguments:
+ * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
+ * * amount - Amount of endurance to be reduced due to spread decay.
+ */
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
 		myseed.endurance -= amount

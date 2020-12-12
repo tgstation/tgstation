@@ -33,19 +33,16 @@
 
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
-	SSnanites.nanite_monitored_mobs |= host_mob
+	ADD_TRAIT(host_mob, TRAIT_NANITE_MONITORING, "nanites") //Shows up in diagnostic and medical HUDs as a small blinking icon
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		if(!(H in GLOB.nanite_sensors_list))
-			GLOB.nanite_sensors_list |= H
+		GLOB.nanite_sensors_list |= host_mob
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	. = ..()
-	SSnanites.nanite_monitored_mobs -= host_mob
+	REMOVE_TRAIT(host_mob, TRAIT_NANITE_MONITORING, "nanites")
 	if(ishuman(host_mob))
-		var/mob/living/carbon/human/H = host_mob
-		GLOB.nanite_sensors_list -= H
+		GLOB.nanite_sensors_list -= host_mob
 
 	host_mob.hud_set_nanite_indicator()
 
@@ -261,7 +258,8 @@
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
+		infectee.investigate_log("was infected by spreading nanites with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
 	name = "Nanite Sting"
@@ -285,7 +283,8 @@
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
+		infectee.investigate_log("was infected by a nanite cluster with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
 /datum/nanite_program/mitosis
@@ -304,6 +303,7 @@
 		if(fault == src)
 			return
 		fault.software_error()
+		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"
@@ -346,7 +346,7 @@
 /datum/action/innate/nanite_button
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	button_icon_state = "power_green"
 	var/datum/nanite_program/dermal_button/program
 

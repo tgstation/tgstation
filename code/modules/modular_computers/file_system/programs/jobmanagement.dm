@@ -7,6 +7,7 @@
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosJobManager"
+	program_icon = "address-book"
 
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
@@ -49,7 +50,8 @@
 	return FALSE
 
 /datum/computer_file/program/job_management/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]

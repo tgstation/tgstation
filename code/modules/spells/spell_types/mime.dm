@@ -19,7 +19,7 @@
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
-	if(usr && usr.mind)
+	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
@@ -49,7 +49,7 @@
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
-	if(usr && usr.mind)
+	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
@@ -95,7 +95,7 @@
 		addtimer(CALLBACK(B, /obj/item/storage/box/mime/.proc/emptyStorage, FALSE), (summon_lifespan - 1))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/Click()
-	if(usr && usr.mind)
+	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
@@ -165,7 +165,7 @@
 	action_background_icon_state = "bg_mime"
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
-	if(usr && usr.mind)
+	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
@@ -203,7 +203,7 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
 		return
-	if(usr && usr.mind)
+	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return

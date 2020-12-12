@@ -74,8 +74,8 @@
 	penetrates_skin = NONE
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
-	if(C.has_reagent(/datum/reagent/medicine/epinephrine))
-		C.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
 
@@ -112,10 +112,13 @@
 	material = /datum/material/hot_ice
 
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
-	if(M.has_reagent(/datum/reagent/medicine/epinephrine))
-		M.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	M.adjustPlasma(20)
 	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		humi.adjust_coretemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	return ..()
 
 /datum/reagent/toxin/lexorin
@@ -206,7 +209,7 @@
 	. = ..()
 	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.has_reagent(/datum/reagent/toxin/zombiepowder)
+		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
 		if(istype(zombiepowder))
 			zombiepowder.fakedeath_active = TRUE
 
@@ -378,10 +381,10 @@
 			M.add_confusion(2)
 			M.drowsyness += 2
 		if(10 to 50)
-			M.Sleeping(40, 0)
+			M.Sleeping(40)
 			. = 1
 		if(51 to INFINITY)
-			M.Sleeping(40, 0)
+			M.Sleeping(40)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 			. = 1
 	..()
@@ -399,9 +402,9 @@
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 50)
-			M.Sleeping(40, 0)
+			M.Sleeping(40)
 		if(51 to INFINITY)
-			M.Sleeping(40, 0)
+			M.Sleeping(40)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 	return ..()
 
@@ -521,7 +524,7 @@
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
 	if(prob(15))
-		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
+		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
@@ -541,7 +544,7 @@
 	if(current_cycle >= 4)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
-		M.Sleeping(40, 0)
+		M.Sleeping(40)
 	..()
 	return TRUE
 
@@ -558,7 +561,7 @@
 		M.losebreath += 1
 	if(prob(8))
 		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
-		M.Stun(40, 0)
+		M.Stun(40)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
@@ -595,7 +598,7 @@
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
-		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
+		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 		holder.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
 	..()
@@ -614,7 +617,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Paralyze(60, 0)
+				C.Paralyze(60)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -643,7 +646,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
-		M.Stun(40, 0)
+		M.Stun(40)
 		. = TRUE
 	if(prob(20))
 		M.losebreath += 4
@@ -660,7 +663,7 @@
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
-		M.Sleeping(40, 0)
+		M.Sleeping(40)
 	M.adjustStaminaLoss(10*REM, 0)
 	..()
 	return TRUE
@@ -676,7 +679,7 @@
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 22)
-		M.Sleeping(40, 0)
+		M.Sleeping(40)
 	return ..()
 
 /datum/reagent/toxin/amanitin
@@ -736,7 +739,7 @@
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
-		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
 				C.reagents.remove_reagent(R.type,1)
@@ -758,7 +761,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Paralyze(60, 0)
+		M.Paralyze(60)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -793,7 +796,7 @@
 	return ..()
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
-	if(M && M.hud_used)
+	if(M?.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
@@ -909,7 +912,7 @@
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Paralyze(20, 0)
+			M.Paralyze(20)
 		. = 1
 	..()
 

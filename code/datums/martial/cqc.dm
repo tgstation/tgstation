@@ -44,7 +44,7 @@
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
-	if(D.mobility_flags & MOBILITY_STAND)
+	if(D.body_position == STANDING_UP)
 		D.visible_message("<span class='danger'>[A] slams [D] into the ground!</span>", \
 						"<span class='userdanger'>You're slammed into the ground by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You slam [D] into the ground!</span>")
@@ -147,7 +147,7 @@
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(bonus_damage, BRUTE)

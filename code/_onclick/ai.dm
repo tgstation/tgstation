@@ -1,9 +1,6 @@
 /*
 	AI ClickOn()
 
-	Note currently ai restrained() returns 0 in all cases,
-	therefore restrained code has been removed
-
 	The AI can double click to move the camera (this was already true but is cleaner),
 	or double click a mob to track them.
 
@@ -29,7 +26,7 @@
 	if(multicam_on)
 		var/turf/T = get_turf(A)
 		if(T)
-			for(var/obj/screen/movable/pic_in_pic/ai/P in T.vis_locs)
+			for(var/atom/movable/screen/movable/pic_in_pic/ai/P in T.vis_locs)
 				if(P.ai == src)
 					P.Click(params)
 					break

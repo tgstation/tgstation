@@ -1,12 +1,23 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 5.10; The query to update the schema revision table is:
+The latest database version is 5.11; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 10);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 11);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 10);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 11);
 
 In any query remember to add a prefix to the table names if you use one.
+
+-----------------------------------------------------
+
+Version 5.11, 7 September 2020, by bobbahbrown, MrStonedOne, and Jordie0608
+
+Adds indices to support search operations on the adminhelp ticket tables. This is to support improved performance on Atlanta Ned's Statbus.
+
+CREATE INDEX `idx_ticket_act_recip` (`action`, `recipient`)
+CREATE INDEX `idx_ticket_act_send` (`action`, `sender`)
+CREATE INDEX `idx_ticket_tic_rid` (`ticket`, `round_id`)
+CREATE INDEX `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 
 -----------------------------------------------------
 

@@ -6,9 +6,9 @@
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS)
+	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASILY_WOUNDED,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
@@ -37,7 +37,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi)
 	return
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
@@ -96,10 +96,10 @@
 	id = "goofzombies"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_traits = list(HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_EASYLIMBWOUND)
+	inherent_traits = list(TRAIT_EASILY_WOUNDED)
 
 #undef REGENERATION_DELAY

@@ -8,7 +8,7 @@
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
 	speed = 0
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	maxHealth = 125
 	health = 125
@@ -86,7 +86,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -137,7 +137,7 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 10,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
@@ -150,10 +150,10 @@
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
-		throw_alert("temp", /obj/screen/alert/cold, 1)
+		throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-		throw_alert("temp", /obj/screen/alert/hot, 3)
+		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")
 

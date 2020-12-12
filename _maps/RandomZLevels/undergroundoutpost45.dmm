@@ -1752,10 +1752,10 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "dM" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
@@ -2099,11 +2099,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ev" = (
-/obj/item/clothing/under/misc/pj,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
 	req_access_txt = "201"
 	},
+/obj/item/clothing/under/misc/pj/red,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -3778,7 +3778,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hS" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -8176,14 +8176,10 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
-	icon_state = "in";
 	id_tag = "UO45_air_out";
 	name = "air out"
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "n2=10580;o2=2644";
-	name = "air floor"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
@@ -8447,10 +8443,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -8817,10 +8810,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "qR" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -9162,7 +9152,7 @@
 	locked = 0;
 	req_access_txt = "201"
 	},
-/obj/item/clothing/under/misc/pj,
+/obj/item/clothing/under/misc/pj/blue,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -9224,10 +9214,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "n2=500,TEMP=80";
-	name = "Server Walkway"
-	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -13159,7 +13146,11 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -13170,14 +13161,22 @@
 "OF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 "UM" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
 /area/awaymission/undergroundoutpost45/caves)
 
 (1,1,1) = {"

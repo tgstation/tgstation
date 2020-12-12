@@ -735,7 +735,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
-            Great for blasting airlocks off their frames and knocking down enemies."
+		Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -941,7 +941,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bombanana"
 	desc = "A banana with an explosive taste! discard the peel quickly, as it will explode with the force of a Syndicate minibomb \
 		a few seconds after the banana is eaten."
-	item = /obj/item/reagent_containers/food/snacks/grown/banana/bombanana
+	item = /obj/item/food/grown/banana/bombanana
 	cost = 4 //it is a bit cheaper than a minibomb because you have to take off your helmet to eat it, which is how you arm it
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -1218,7 +1218,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Codespeak Manual"
 	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. \
 			This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
-	item = /obj/item/codespeak_manual/unlimited
+	item = /obj/item/language_manual/codespeak_manual/unlimited
 	cost = 3
 
 /datum/uplink_item/stealthy_tools/combatbananashoes

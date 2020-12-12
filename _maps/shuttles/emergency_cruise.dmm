@@ -70,7 +70,7 @@
 /obj/item/storage/fancy/donut_box{
 	pixel_y = -7
 	},
-/obj/item/reagent_containers/food/snacks/donut{
+/obj/item/food/donut{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -82,8 +82,8 @@
 /area/shuttle/escape)
 "cz" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/nachos,
-/obj/item/reagent_containers/food/snacks/honeybun{
+/obj/item/food/nachos,
+/obj/item/food/honeybun{
 	pixel_x = 3;
 	pixel_y = 13
 	},
@@ -260,7 +260,7 @@
 /obj/item/food/burger/baconburger{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/snacks/cracker{
+/obj/item/food/cracker{
 	pixel_x = -13;
 	pixel_y = 9
 	},
@@ -739,7 +739,7 @@
 /area/shuttle/escape)
 "wf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/salad/fruit{
+/obj/item/food/salad/fruit{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -756,11 +756,11 @@
 /area/shuttle/escape)
 "xf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/donkpocket/warm{
+/obj/item/food/donkpocket/warm{
 	pixel_x = -5;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/snacks/fries{
+/obj/item/food/fries{
 	pixel_x = 16;
 	pixel_y = 11
 	},
@@ -814,7 +814,7 @@
 	pixel_x = 16;
 	pixel_y = -8
 	},
-/obj/item/reagent_containers/food/snacks/burrito{
+/obj/item/food/burrito{
 	pixel_x = -6;
 	pixel_y = -4
 	},
@@ -897,7 +897,7 @@
 /area/shuttle/escape)
 "Dq" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/salad/jungle{
+/obj/item/food/salad/jungle{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,

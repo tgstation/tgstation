@@ -130,7 +130,8 @@ effective or pretty fucking useless.
 	return data
 
 /obj/item/healthanalyzer/rad_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -275,12 +276,12 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
-    if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
-        user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
-            "<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
-        playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-        var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
-        turret.faction = list("[REF(user)]")
-        qdel(src)
+	if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
+		user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
+			"<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+		var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
+		turret.faction = list("[REF(user)]")
+		qdel(src)
 
-    ..()
+	..()

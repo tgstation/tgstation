@@ -5,43 +5,43 @@
 
 //! ## DB defines
 /**
-  * DB major schema version
-  *
-  * Update this whenever the db schema changes
-  *
-  * make sure you add an update to the schema_version stable in the db changelog
-  */
+ * DB major schema version
+ *
+ * Update this whenever the db schema changes
+ *
+ * make sure you add an update to the schema_version stable in the db changelog
+ */
 #define DB_MAJOR_VERSION 5
 
 /**
-  * DB minor schema version
-  *
-  * Update this whenever the db schema changes
-  *
-  * make sure you add an update to the schema_version stable in the db changelog
-  */
-#define DB_MINOR_VERSION 10
+ * DB minor schema version
+ *
+ * Update this whenever the db schema changes
+ *
+ * make sure you add an update to the schema_version stable in the db changelog
+ */
+#define DB_MINOR_VERSION 11
 
 
 //! ## Timing subsystem
 /**
-  * Don't run if there is an identical unique timer active
-  *
-  * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
-  * and returns the id of the existing timer
-  */
+ * Don't run if there is an identical unique timer active
+ *
+ * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
+ * and returns the id of the existing timer
+ */
 #define TIMER_UNIQUE			(1<<0)
 
 ///For unique timers: Replace the old timer rather then not start this one
 #define TIMER_OVERRIDE			(1<<1)
 
 /**
-  * Timing should be based on how timing progresses on clients, not the server.
-  *
-  * Tracking this is more expensive,
-  * should only be used in conjuction with things that have to progress client side, such as
-  * animate() or sound()
-  */
+ * Timing should be based on how timing progresses on clients, not the server.
+ *
+ * Tracking this is more expensive,
+ * should only be used in conjuction with things that have to progress client side, such as
+ * animate() or sound()
+ */
 #define TIMER_CLIENT_TIME		(1<<2)
 
 ///Timer can be stopped using deltimer()
@@ -74,12 +74,12 @@
 ///Nothing happens
 #define INITIALIZE_HINT_NORMAL 0
 /**
-  * call LateInitialize at the end of all atom Initalization
-  *
-  * The item will be added to the late_loaders list, this is iterated over after
-  * initalization of subsystems is complete and calls LateInitalize on the atom
-  * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
-  */
+ * call LateInitialize at the end of all atom Initalization
+ *
+ * The item will be added to the late_loaders list, this is iterated over after
+ * initalization of subsystems is complete and calls LateInitalize on the atom
+ * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
+ */
 #define INITIALIZE_HINT_LATELOAD 1
 
 ///Call qdel on the atom after intialization
@@ -87,11 +87,11 @@
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
-    ..();\
-    if(!(flags_1 & INITIALIZED_1)) {\
-        args[1] = TRUE;\
-        SSatoms.InitAtom(src, args);\
-    }\
+	..();\
+	if(!(flags_1 & INITIALIZED_1)) {\
+		args[1] = TRUE;\
+		SSatoms.InitAtom(src, args);\
+	}\
 }
 
 // Subsystem init_order, from highest priority to lowest priority
@@ -116,6 +116,7 @@
 #define INIT_ORDER_TICKER			55
 #define INIT_ORDER_TCG				55
 #define INIT_ORDER_MAPPING			50
+#define INIT_ORDER_TIMETRACK		47
 #define INIT_ORDER_NETWORKS			45
 #define INIT_ORDER_ECONOMY			40
 #define INIT_ORDER_OUTPUTS			35
@@ -126,6 +127,7 @@
 #define INIT_ORDER_TIMER			1
 #define INIT_ORDER_DEFAULT			0
 #define INIT_ORDER_AIR				-1
+#define INIT_ORDER_PERSISTENCE		-2 //before assets because some assets take data from SSPersistence
 #define INIT_ORDER_ASSETS			-4
 #define INIT_ORDER_ICON_SMOOTHING	-5
 #define INIT_ORDER_OVERLAY			-6
@@ -137,7 +139,6 @@
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_EXPLOSIONS		-69
-#define INIT_ORDER_PERSISTENCE		-95
 #define INIT_ORDER_STATPANELS		-98
 #define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
@@ -232,7 +233,6 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-#define SSAIR_REBUILD_PIPENETS 8
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

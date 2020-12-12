@@ -159,7 +159,7 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
-	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
+	l_pocket = /obj/item/food/grown/banana
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id
 	l_hand = /obj/item/fireaxe
@@ -452,6 +452,36 @@
 		)
 
 /datum/outfit/debug/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/obj/item/card/id/W = H.wear_id
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/admin //for admeem shenanigans and testing things that arent related to equipment, not a subtype of debug just in case debug changes things
+	name = "Admin outfit"
+	uniform = /obj/item/clothing/under/misc/patriotsuit
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin
+	glasses = /obj/item/clothing/glasses/debug
+	ears = /obj/item/radio/headset/headset_cent/commander
+	mask = /obj/item/clothing/mask/gas/welding/up
+	gloves = /obj/item/clothing/gloves/combat
+	belt = /obj/item/storage/belt/utility/chief/full
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	id = /obj/item/card/id/debug
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/storage/backpack/holding
+	box = /obj/item/storage/box/debugtools
+	internals_slot = ITEM_SLOT_SUITSTORE
+	backpack_contents = list(
+		/obj/item/melee/transforming/energy/axe=1,\
+		/obj/item/storage/part_replacer/bluespace/tier4=1,\
+		/obj/item/gun/magic/wand/resurrection/debug=1,\
+		/obj/item/gun/magic/wand/death/debug=1,\
+		/obj/item/debug/human_spawner=1,\
+		/obj/item/debug/omnitool=1,\
+		/obj/item/storage/box/stabilized=1
+		)
+
+/datum/outfit/admin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()

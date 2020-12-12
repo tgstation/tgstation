@@ -36,6 +36,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "bible"
 	inhand_icon_state = "bible"
+	worn_icon_state = "bible"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	var/mob/affecting = null
@@ -88,11 +89,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
@@ -136,7 +137,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
 
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 

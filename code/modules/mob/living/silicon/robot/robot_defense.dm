@@ -100,6 +100,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 
 	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
+			to_chat(user, "<span class='warn'>You can't seem to remove [src]'s existing headwear!</span>")
+			return
 		to_chat(user, "<span class='notice'>You begin to place [W] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [W] on your head...</span>")
 		if(do_after(user, 30, target = src))
@@ -113,6 +116,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!istype(module, /obj/item/robot_module/medical))
 			to_chat(user, "<span class='warning'>[src] does not have correct mounting points for a defibrillator!</span>")
 			return
+		if(stat == DEAD)
+			to_chat(user, "<span class='warning'>This defibrillator unit will not function on a deceased cyborg!</span>")
+			return
 		var/obj/item/defibrillator/D = W
 		if(D.slot_flags != ITEM_SLOT_BACK) //belt defibs need not apply
 			to_chat(user, "<span class='warning'>This defibrillator unit doesn't seem to fit correctly!</span>")
@@ -123,12 +129,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(locate(/obj/item/borg/upgrade/defib) in src || locate(/obj/item/borg/upgrade/defib/backpack) in src)
 			to_chat(user, "<span class='warning'>[src] already has a defibrillator!</span>")
 			return
-		var/obj/item/borg/upgrade/defib/backpack/B = new /obj/item/borg/upgrade/defib/backpack(src)
-		B.action(src, user)
-		to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-		to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[D]</b>\"...Setup complete.\n----------------")
-		upgrades += B
-		qdel(D)
+		var/obj/item/borg/upgrade/defib/backpack/B = new(null, D)
+		add_to_upgrades(B, user)
 		return
 
 	if(istype(W, /obj/item/ai_module))
@@ -171,6 +173,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				update_icons()
 				if(emagged)
 					to_chat(user, "<span class='notice'>The cover interface glitches out for a split second.</span>")
+					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
+				else
+					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
@@ -179,24 +184,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
-		else if(!src.module && U.require_module)
+			return
+		if(!src.module && U.require_module)
 			to_chat(user, "<span class='warning'>The cyborg must choose a module before it can be upgraded!</span>")
-		else if(U.locked)
+			return
+		if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
-		else
-			if(!user.temporarilyRemoveItemFromInventory(U))
-				return
-			if(U.action(src))
-				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-				to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[U]</b>\"...Setup complete.\n----------------")
-				if(U.one_use)
-					qdel(U)
-				else
-					U.forceMove(src)
-					upgrades += U
-			else
-				to_chat(user, "<span class='danger'>Upgrade error.</span>")
-				U.forceMove(drop_location())
+			return
+		if(!user.canUnEquip(U))
+			to_chat(user, "<span class='warning'>The upgrade is stuck to you and you can't seem to let go of it!</span>")
+			return
+		add_to_upgrades(U, user)
 		return
 
 	if(istype(W, /obj/item/toner))
@@ -214,16 +212,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
 			return
-		if(lamp_cooldown <= world.time)
+		if(lamp_functional)
 			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
 			return
-		lamp_cooldown = 0
+		lamp_functional = TRUE
 		qdel(W)
 		to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 		return
+
+	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+		if(!modularInterface)
+			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+			create_modularInterface()
+		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
+		if(modularInterface.install_component(floppy, user))
+			return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
@@ -231,7 +237,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent == INTENT_DISARM)
-		if(mobility_flags & MOBILITY_STAND)
+		if(body_position == STANDING_UP)
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()
 			if(I)
@@ -328,6 +334,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
+		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
@@ -350,10 +357,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 	to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
+	logevent("ALERT: Foreign software detected.")
 	sleep(5)
 	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 	sleep(20)
 	to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
+	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 	sleep(5)
 	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 	sleep(5)

@@ -142,8 +142,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
-
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -202,7 +202,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
 	. = ..()
-	target_temperature = T0C-14
+	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()

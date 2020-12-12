@@ -22,8 +22,7 @@
 	set waitfor = FALSE
 
 	//Reset the buffer
-	for(var/key in keys_held)
-		keyUp(key)
+	reset_held_keys()
 
 	erase_all_macros()
 
@@ -33,7 +32,9 @@
 		var/command = macro_set[key]
 		winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[command]")
 
-	if(prefs.hotkeys)
+	if(prefs?.hotkeys)
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
+
+	update_special_keybinds()

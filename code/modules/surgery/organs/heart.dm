@@ -76,7 +76,7 @@
 
 		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			to_chat(owner, "<span class='notice'>You feel your heart slow down...</span>")
 		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -84,7 +84,7 @@
 
 		if(H.jitteriness)
 			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -98,7 +98,7 @@
 		failed = TRUE
 
 /obj/item/organ/heart/get_availability(datum/species/S)
-	return !(NOBLOOD in S.inherent_traits)
+	return !(NOBLOOD in S.species_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -230,7 +230,7 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.has_reagent(rid))
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()

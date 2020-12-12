@@ -15,6 +15,7 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen, this one is blue."
 	icon_state = "oxygen"
+	tank_holder_icon_state = "holder_oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
@@ -28,11 +29,13 @@
 /obj/item/tank/internals/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
+	tank_holder_icon_state = "holder_oxygen_f"
 	dog_fashion = null
 
 /obj/item/tank/internals/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
+	tank_holder_icon_state = "holder_oxygen_fr"
 	dog_fashion = null
 
 /obj/item/tank/internals/oxygen/empty/populate_gas()
@@ -46,6 +49,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	inhand_icon_state = "an_tank"
+	tank_holder_icon_state = "holder_oxygen_anesthetic"
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
@@ -61,6 +65,7 @@
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
 	worn_icon_state = "plasmatank"
+	tank_holder_icon_state = null
 	flags_1 = CONDUCT_1
 	slot_flags = null	//they have no straps!
 	force = 8
@@ -99,6 +104,7 @@
 	desc = "A tank of plasma gas designed specifically for use as internals, particularly for plasma-based lifeforms. If you're not a Plasmaman, you probably shouldn't use this."
 	icon_state = "plasmaman_tank"
 	inhand_icon_state = "plasmaman_tank"
+	tank_holder_icon_state = null
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
@@ -115,6 +121,7 @@
 	icon_state = "plasmaman_tank_belt"
 	inhand_icon_state = "plasmaman_tank_belt"
 	worn_icon_state = "plasmaman_tank_belt"
+	tank_holder_icon_state = null
 	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
@@ -138,6 +145,7 @@
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
 	worn_icon_state = "emergency"
+	tank_holder_icon_state = "holder_emergency"
 	worn_icon = null
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -159,6 +167,7 @@
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
 	worn_icon_state = "emergency_engi"
+	tank_holder_icon_state = "holder_emergency_engi"
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
 
@@ -168,6 +177,7 @@
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
+	tank_holder_icon_state = null
 	volume = 24
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()

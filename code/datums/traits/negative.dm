@@ -159,7 +159,7 @@
 			if("Chaplain")
 				heirloom_type = pick(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 			if("Assistant")
-				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+				heirloom_type = pick(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 			//Security/Command
 			if("Captain")
 				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
@@ -257,7 +257,7 @@
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
 	value = -2
-	mob_trait = TRAIT_EASYLIMBWOUND
+	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
@@ -463,7 +463,7 @@
 	hardcore_value = 6
 
 /datum/quirk/insanity/on_process(delta_time)
-	if(quirk_holder.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
 	if(DT_PROB(2, delta_time)) //we'll all be mad soon enough
@@ -496,6 +496,8 @@
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
 
 /datum/quirk/social_anxiety/on_process(delta_time)
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
@@ -558,7 +560,6 @@
 	desc = "You can't get enough of hard drugs."
 	value = -2
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
-	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
 	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
@@ -576,7 +577,7 @@
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
-	H.reagents.addiction_list.Add(reagent_instance)
+	LAZYADD(H.reagents.addiction_list, reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
@@ -606,19 +607,26 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
+/datum/quirk/junkie/remove()
+	if(quirk_holder && reagent_instance)
+		quirk_holder.reagents.remove_addiction(reagent_instance) //chat feedback here. No need of lose_text.
+
 /datum/quirk/junkie/proc/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+		return
 	var/mob/living/carbon/human/H = quirk_holder
 	if(world.time > next_process)
 		next_process = world.time + process_interval
-		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(QDELETED(reagent_instance))
+		var/deleted = QDELETED(reagent_instance)
+		if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
+			if(deleted)
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0
-			H.reagents.addiction_list += reagent_instance
+			LAZYADD(H.reagents.addiction_list, reagent_instance)
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
 
 /datum/quirk/junkie/smoker
@@ -626,7 +634,6 @@
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
 	value = -1
 	gain_text = "<span class='danger'>You could really go for a smoke right about now.</span>"
-	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
@@ -710,11 +717,11 @@
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
-		var/datum/reagent/instantiated_med = carbon_quirk_holder.has_reagent(M)
+		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
 		if(!instantiated_med)
 			continue
 		//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
-		if(carbon_quirk_holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
