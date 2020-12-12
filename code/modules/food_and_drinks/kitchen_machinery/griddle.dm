@@ -14,7 +14,7 @@
 	///Things that are being griddled right now, associated as atom | grilled underlay for said atom
 	var/list/griddled_objects = list()
 	///Looping sound for the grill
-	var/datum/looping_sound/deep_fryer/fry_loop
+	var/datum/looping_sound/grill/grill_loop
 	///Whether or not the machine is turned on right now
 	var/on = FALSE
 	///What variant of griddle is this?
@@ -24,7 +24,7 @@
 
 /obj/machinery/griddle/Initialize()
 	. = ..()
-	fry_loop = new(list(src), FALSE)
+	grill_loop = new(list(src), FALSE)
 	variant = rand(1,3)
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
@@ -44,18 +44,17 @@
 	. = ..()
 	on = !on
 	if(on)
-		fry_loop.start()
 		begin_processing()
 		for(var/i in griddled_objects)
 			var/obj/item/griddle_item = i
 			griddle_item.underlays += griddled_objects[griddle_item] //Add the underlay
 	else
-		fry_loop.stop()
 		end_processing()
 		for(var/i in griddled_objects)
 			var/obj/item/griddle_item = i
 			griddle_item.underlays += griddled_objects[griddle_item] //Add the underlay
 	update_icon()
+	update_grill_audio()
 
 
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
@@ -67,6 +66,7 @@
 		item_to_grill.underlays += grill_underlay
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
@@ -75,11 +75,19 @@
 	griddled_objects -= I
 	vis_contents -= I
 	UnregisterSignal(I, COMSIG_GRILL_COMPLETED)
+	update_grill_audio()
 
 /obj/machinery/griddle/proc/GrillCompleted(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
 	griddled_objects -= source //Old object
 	AddToGrill(grilled_result)
+
+/obj/machinery/griddle/proc/update_grill_audio()
+	if(on && griddled_objects.len)
+		grill_loop.start()
+	else
+		grill_loop.stop()
+
 
 /obj/machinery/griddle/process(delta_time)
 	..()
