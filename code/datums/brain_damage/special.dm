@@ -12,14 +12,14 @@
 
 /datum/brain_trauma/special/godwoken/on_life()
 	..()
-	if(prob(4))
+	if(rand(1,25)==23) //Hopefully this won't get stuck at true when prob gets stuck
 		if(prob(33) && (owner.IsStun() || owner.IsParalyzed() || owner.IsUnconscious()))
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
 			speak("heal", TRUE)
 		else if(prob(30) && owner.a_intent == INTENT_HARM)
 			speak("aggressive")
-		else if(prob(33))
+		else
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
