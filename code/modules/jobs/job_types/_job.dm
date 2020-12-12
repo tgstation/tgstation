@@ -132,21 +132,6 @@
 	if(!visualsOnly)
 		var/datum/bank_account/bank_account = new(H.real_name, src, H.dna.species.payday_modifier)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
-		//SKYRAT EDIT ADDITION BEGIN - CUSTOMIZATION
-		if(preference_source?.prefs)
-			var/cultural_cash = 0
-			for(var/cultural_thing in list(CULTURE_CULTURE, CULTURE_FACTION, CULTURE_LOCATION))
-				var/datum/cultural_info/cult
-				switch(cultural_thing)
-					if(CULTURE_CULTURE)
-						cult = GLOB.culture_cultures[preference_source.prefs.pref_culture]
-					if(CULTURE_LOCATION)
-						cult = GLOB.culture_locations[preference_source.prefs.pref_location]
-					if(CULTURE_FACTION)
-						cult = GLOB.culture_factions[preference_source.prefs.pref_faction]
-				cultural_cash += CULTURAL_PAYCHECK * cult.economic_power
-			bank_account.adjust_money(cultural_cash)
-		//SKYRAT EDIT END
 		H.account_id = bank_account.account_id
 
 	//Equip the rest of the gear

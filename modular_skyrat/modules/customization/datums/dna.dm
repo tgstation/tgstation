@@ -68,5 +68,5 @@
 		if(ishuman(src))
 			qdel(language_holder)
 			var/species_holder = initial(mrace.species_language_holder)
-			language_holder = new species_holder(src, pref_load)
+			language_holder = new species_holder(src)
 		update_atom_languages()
