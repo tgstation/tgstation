@@ -1,4 +1,5 @@
-#define STARTING_PAYCHECKS 7
+//#define STARTING_PAYCHECKS 7 //ORIGINAL
+#define STARTING_PAYCHECKS 4 //SKYRAT EDIT CHANGE - CUSTOMIZATION
 
 //Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
 //Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation

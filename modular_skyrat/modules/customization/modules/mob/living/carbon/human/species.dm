@@ -11,6 +11,10 @@
 	///Whether a species can use augmentations in preferences
 	var/can_augment = TRUE
 
+	var/list/cultures = list(CULTURES_EXOTIC, CULTURES_HUMAN)
+	var/list/locations = list(LOCATIONS_GENERIC, LOCATIONS_HUMAN)
+	var/list/factions = list(FACTIONS_GENERIC, FACTIONS_HUMAN)
+
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/standing	= list()
 

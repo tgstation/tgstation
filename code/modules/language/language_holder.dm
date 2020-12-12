@@ -52,6 +52,8 @@ Key procs
 	/// Tracks the entity that owns the holder.
 	var/owner
 
+//SKYRAT EDIT REMOVAL BEGIN - CUSTOMIZATION (moved to modular)
+/*
 /// Initializes, and copies in the languages from the current atom if available.
 /datum/language_holder/New(_owner)
 	owner = _owner
@@ -60,6 +62,8 @@ Key procs
 		if(M.current)
 			update_atom_languages(M.current)
 	get_selected_language()
+*/
+//SKYRAT EDIT END
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
