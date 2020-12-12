@@ -63,7 +63,7 @@
 	desc = "Stabby Stabman!"
 	flags_1 = NONE
 	throwforce = 1
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow
+	projectile_type = /obj/projectile/bullet/reusable/arrow
 	firing_effect_type = null
 	caliber = "arrow"
 	heavy_metal = FALSE
