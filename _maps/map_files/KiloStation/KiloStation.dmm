@@ -41147,6 +41147,12 @@
 	dir = 4
 	},
 /obj/item/storage/bag/tray,
+/obj/item/book/manual/chef_recipes{
+	pixel_y = 2
+	},
+/obj/item/book/manual/chef_recipes{
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "bmU" = (
@@ -42166,7 +42172,6 @@
 /turf/closed/wall,
 /area/hallway/primary/port)
 "boD" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -42174,13 +42179,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/book/manual/chef_recipes{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/book/manual/chef_recipes{
-	pixel_y = 2
-	},
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "boE" = (
