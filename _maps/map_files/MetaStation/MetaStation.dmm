@@ -42725,10 +42725,6 @@
 /obj/structure/table/reinforced{
 	name = "Jim Norton's Quebecois Coffee table"
 	},
-/obj/item/reagent_containers/food/snacks/hotcrossbun{
-	pixel_x = 3;
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 1
 	},

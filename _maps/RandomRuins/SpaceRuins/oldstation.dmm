@@ -7,7 +7,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "ad" = (
 /turf/closed/wall/r_wall,
@@ -5294,7 +5294,7 @@
 /area/ruin/space/has_grav/ancientstation/medbay)
 "mg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "mh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5717,7 +5717,7 @@
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "ni" = (
 /obj/structure/lattice,
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "nj" = (
 /obj/structure/lattice,
@@ -10842,7 +10842,7 @@
 /turf/template_noop,
 /area/template_noop)
 "WI" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "WS" = (
 /obj/structure/chair/comfy/shuttle{
