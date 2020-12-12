@@ -646,7 +646,7 @@
 	do
 		CHECK_DNA_AND_SPECIES(target)
 
-		if (INTERACTING_WITH(src, target))
+		if (DOING_INTERACTION_WITH_TARGET(src,target))
 			return FALSE
 
 		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))

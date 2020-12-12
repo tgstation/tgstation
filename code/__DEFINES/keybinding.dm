@@ -61,6 +61,8 @@
 #define COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN "keybinding_mob_togglemoveintent_down"
 #define COMSIG_KB_MOB_TOGGLEMOVEINTENTALT_DOWN "keybinding_mob_togglemoveintentalt_down"
 #define COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN "keybinding_mob_targetcyclehead_down"
+#define COMSIG_KB_MOB_TARGETEYES_DOWN "keybinding_mob_targeteyes_down"
+#define COMSIG_KB_MOB_TARGETMOUTH_DOWN "keybinding_mob_targetmouth_down"
 #define COMSIG_KB_MOB_TARGETRIGHTARM_DOWN "keybinding_mob_targetrightarm_down"
 #define COMSIG_KB_MOB_TARGETBODYCHEST_DOWN "keybinding_mob_targetbodychest_down"
 #define COMSIG_KB_MOB_TARGETLEFTARM_DOWN "keybinding_mob_targetleftarm_down"

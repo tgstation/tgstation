@@ -187,7 +187,7 @@
 	add_scanmod()
 	add_capacitor()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
@@ -216,7 +216,6 @@
 	QDEL_NULL(capacitor)
 	QDEL_NULL(internal_tank)
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	LAZYCLEARLIST(equipment)
 	if(loc)
 		loc.assume_air(cabin_air)

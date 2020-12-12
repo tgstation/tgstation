@@ -503,7 +503,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, /mob/living/proc/rest_checks_callback)))
+	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, /mob/living/proc/rest_checks_callback), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -963,7 +963,7 @@
 	who.log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
 	log_message("[key_name(who)] is being stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay))
+	if(do_mob(src, who, what.strip_delay, interaction_key = what))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
