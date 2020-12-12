@@ -2,8 +2,8 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "shell",
-			"command": "node tools/build/build.js",
+			"type": "process",
+			"command": "tools/build/build",
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},
