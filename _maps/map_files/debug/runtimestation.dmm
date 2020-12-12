@@ -194,11 +194,16 @@
 /area/engine/gravity_generator)
 "aK" = (
 /obj/structure/table,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/construction/rcd/combat,
-/obj/item/construction/plumbing,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
+/obj/item/stock_parts/cell/infinite,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aN" = (
@@ -425,6 +430,11 @@
 "by" = (
 /turf/closed/wall/r_wall,
 /area/medical/medbay)
+"bz" = (
+/obj/structure/table,
+/obj/item/card/emag,
+/turf/open/floor/plating,
+/area/storage/primary)
 "bA" = (
 /turf/closed/wall/r_wall,
 /area/science)
@@ -463,12 +473,17 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/uplink/debug{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/uplink/nuclear/debug,
 /obj/structure/cable,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
+/obj/item/slimepotion/fireproof,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bH" = (
@@ -477,26 +492,43 @@
 /area/security/brig)
 "bI" = (
 /obj/structure/table,
-/obj/item/card/emag,
-/obj/item/flashlight/emp/debug,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
+/obj/item/slimepotion/lavaproof,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/card/id/ert{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/card/id/syndicate/nuke_leader,
-/obj/item/card/id/captains_spare{
-	pixel_x = -6;
-	pixel_y = 6
-	},
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
+/obj/item/slimepotion/speed,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bK" = (
 /obj/structure/table,
-/obj/item/storage/backpack/holding,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
+/obj/item/stock_parts/cell/high/slime/hypercharged,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -506,8 +538,21 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/construction/rld,
-/obj/item/construction/rcd/arcd,
+/obj/item/dnainjector/xraymut{
+	pixel_y = -4
+	},
+/obj/item/dnainjector/mindread{
+	pixel_y = 10
+	},
+/obj/item/dnainjector/lasereyesmut{
+	pixel_y = -1
+	},
+/obj/item/dnainjector/firemut{
+	pixel_y = 2
+	},
+/obj/item/dnainjector/hulkmut{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "bN" = (
@@ -566,7 +611,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/mob/living/carbon/human,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -578,17 +623,16 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/mob/living/carbon/human,
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
 /area/medical/medbay)
 "bW" = (
-/obj/machinery/camera/autoname,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/mob/living/carbon/human,
+/obj/machinery/clonepod,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -598,6 +642,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -819,9 +864,14 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/gun/magic/wand/resurrection/debug,
+/obj/item/gun/magic/wand/resurrection/debug{
+	pixel_y = 2
+	},
 /obj/item/gun/magic/wand/death/debug{
-	pixel_y = 10
+	pixel_y = 6
+	},
+/obj/item/debug/human_spawner{
+	pixel_y = -3
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
@@ -977,6 +1027,8 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dl" = (
+/obj/structure/table,
+/obj/item/construction/plumbing,
 /turf/open/floor/plating,
 /area/storage/primary)
 "dm" = (
@@ -1004,6 +1056,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/storage/backpack/holding,
 /turf/open/floor/plating,
 /area/storage/primary)
 "dq" = (
@@ -1052,6 +1106,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/uplink/debug,
 /turf/open/floor/plating,
 /area/storage/primary)
 "dy" = (
@@ -1134,13 +1190,13 @@
 /area/construction)
 "dN" = (
 /obj/structure/table,
+/obj/item/forbidden_book/debug,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/storage/firstaid/regular,
-/obj/item/healthanalyzer/advanced,
+/obj/item/airlock_painter/decal/debug,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1152,6 +1208,7 @@
 "dQ" = (
 /obj/structure/table,
 /obj/machinery/light,
+/obj/item/mining_scanner/admin,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dR" = (
@@ -1219,7 +1276,10 @@
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
-/obj/item/gun/magic/wand/resurrection/debug,
+/obj/item/clothing/shoes/combat/debug,
+/obj/item/clothing/suit/armor/vest/debug,
+/obj/item/clothing/suit/space/hardsuit/ert/debug,
+/obj/item/clothing/under/misc/adminsuit,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "eb" = (
@@ -1891,6 +1951,8 @@
 	pixel_x = -32;
 	pixel_y = -7
 	},
+/obj/structure/table,
+/obj/item/construction/rld,
 /turf/open/floor/plating,
 /area/storage/primary)
 "fY" = (
@@ -1948,6 +2010,8 @@
 	pixel_x = 32;
 	pixel_y = -7
 	},
+/obj/structure/table,
+/obj/item/storage/firstaid/tactical,
 /turf/open/floor/plating,
 /area/storage/primary)
 "gi" = (
@@ -2166,7 +2230,7 @@
 /area/engine/atmos)
 "jU" = (
 /obj/structure/table,
-/obj/item/melee/transforming/energy/axe,
+/obj/item/clothing/glasses/debug,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "kj" = (
@@ -2207,6 +2271,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"lZ" = (
+/obj/structure/table,
+/obj/item/uplink/nuclear/debug,
+/turf/open/floor/plating,
+/area/storage/primary)
 "nq" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -2215,7 +2284,9 @@
 /area/storage/primary)
 "ny" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
+/obj/item/autosurgeon/skillchip/syndicate/chameleon_chip{
+	pixel_y = 13
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "od" = (
@@ -2235,6 +2306,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"py" = (
+/obj/structure/table,
+/obj/item/card/id/debug,
+/turf/open/floor/plating,
+/area/storage/primary)
 "pA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -2250,6 +2326,23 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/engine/atmos)
+"qh" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/plating,
+/area/storage/primary)
+"qi" = (
+/obj/structure/table,
+/obj/item/multitool/field_debug,
+/obj/item/toy/plush/lizardplushie{
+	color = "#001aff";
+	desc = "An adorable stuffed toy that resembles a particular lizardperson. A tag on the side reads; 'Wish you well on your debugging!'";
+	name = "Blu Plushie";
+	pixel_x = -13;
+	pixel_y = -12
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "qQ" = (
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -2264,6 +2357,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"sh" = (
+/obj/structure/table,
+/obj/item/melee/transforming/energy/axe,
+/turf/open/floor/plating,
+/area/storage/primary)
 "sE" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -2271,7 +2369,7 @@
 /area/space/nearstation)
 "sH" = (
 /obj/structure/table,
-/obj/item/storage/box/shipping,
+/obj/item/debug/omnitool,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "tG" = (
@@ -2353,10 +2451,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"wE" = (
+/obj/structure/table,
+/obj/item/card/id/syndicate/nuke_leader,
+/turf/open/floor/plating,
+/area/storage/primary)
 "wM" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"wR" = (
+/obj/structure/table,
+/obj/item/gun/magic/wand/resurrection/debug,
+/turf/open/floor/plating,
+/area/storage/primary)
 "wS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2384,6 +2492,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science)
+"Bs" = (
+/obj/structure/table,
+/obj/item/storage/box/rxglasses{
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2396,8 +2511,16 @@
 /area/bridge)
 "BG" = (
 /obj/structure/table,
-/obj/item/ammo_box/c10mm,
-/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
+/obj/item/slimepotion/spaceproof,
 /turf/open/floor/plasteel,
 /area/bridge)
 "Ce" = (
@@ -2419,6 +2542,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"De" = (
+/obj/item/station_charter/admin,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "DW" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -2428,6 +2556,11 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
+"Ev" = (
+/obj/structure/table,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/plating,
+/area/storage/primary)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -2472,6 +2605,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"Gy" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/autosurgeon/organ{
+	pixel_y = 9
+	},
+/turf/open/floor/plating,
+/area/storage/primary)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2492,12 +2635,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"Jf" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/flashlight/emp/debug{
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/storage/primary)
 "JF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"JO" = (
+/obj/item/camera/spooky/badmin,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "Kd" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -2521,6 +2679,13 @@
 /obj/machinery/chem_dispenser/chem_synthesizer,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
+"LS" = (
+/obj/structure/table,
+/obj/item/blackmarket_uplink{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "LW" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -2549,6 +2714,11 @@
 /obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/plasteel,
 /area/science)
+"OS" = (
+/obj/item/hourglass/admin,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/plasteel,
@@ -2570,6 +2740,13 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"Rk" = (
+/obj/structure/table,
+/obj/item/storage/box/rxglasses/spyglasskit{
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "RM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2581,12 +2758,26 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "Sj" = (
-/obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
+"SE" = (
+/obj/item/melee/skateboard/hoverboard/admin,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"SR" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/encryptionkey/binary,
+/obj/item/encryptionkey/heads/captain,
+/obj/item/encryptionkey/headset_cent,
+/obj/item/encryptionkey/syndicate,
+/obj/structure/closet,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "Td" = (
 /obj/machinery/light{
 	dir = 4
@@ -2615,6 +2806,11 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/plasteel,
 /area/medical/medbay)
+"UW" = (
+/obj/structure/table,
+/obj/item/construction/rcd/combat/admin,
+/turf/open/floor/plating,
+/area/storage/primary)
 "Vg" = (
 /obj/machinery/light,
 /obj/structure/cable,
@@ -7247,14 +7443,14 @@ cS
 dd
 dp
 dl
-dl
+UW
 fX
 dE
 dB
-dl
-dl
-dl
-dp
+wE
+py
+bz
+Jf
 dE
 cS
 fO
@@ -7529,7 +7725,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+Bs
 dJ
 ny
 cS
@@ -7621,7 +7817,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+Rk
 dJ
 dO
 cS
@@ -7713,7 +7909,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+LS
 dJ
 jU
 cS
@@ -7803,9 +7999,9 @@ dD
 dJ
 dI
 dJ
+qi
 dJ
-dJ
-dJ
+OS
 dJ
 ea
 cS
@@ -7897,7 +8093,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+JO
 dJ
 sH
 cS
@@ -7989,7 +8185,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+SE
 dJ
 dQ
 cS
@@ -8081,7 +8277,7 @@ dI
 dJ
 dJ
 dJ
-dJ
+De
 dJ
 dN
 cS
@@ -8348,17 +8544,17 @@ Ut
 cm
 cK
 by
-dB
+SR
 dx
-dl
-dl
+lZ
+qh
 gg
 ez
 dB
-dl
-dl
-dl
-dx
+Ev
+sh
+wR
+Gy
 dE
 cS
 fO
