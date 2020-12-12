@@ -27358,7 +27358,8 @@
 /area/medical/medbay/central)
 "aSv" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;70"
+	req_access_txt = null;
+	req_one_access_txt = "12;22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -40088,7 +40089,8 @@
 /area/quartermaster/storage)
 "blq" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -46960,7 +46962,7 @@
 "bvV" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Service Production";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -64271,7 +64273,8 @@
 /area/hallway/primary/aft)
 "bXK" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;35"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -78509,8 +78512,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8;
-	name = "scrubbers pipe"
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -79001,7 +79003,6 @@
 	environment_smash = 0;
 	health = 160;
 	maxHealth = 160;
-	melee_damage_lower = 15;
 	melee_damage_upper = 25;
 	name = "hungry show bear"
 	},
