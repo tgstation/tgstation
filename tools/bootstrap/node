@@ -5,8 +5,7 @@
 # Git for Windows, and GitHub Desktop. Invokable from CLI or automation.
 #
 # If a node.exe installed by `node_.ps1` is present, it will be used.
-# Otherwise, this script requires a system `node` to be provided,
-# and will create a standard virtualenv in which to install `requirements.txt`.
+# Otherwise, this script requires a system `node` to be provided.
 set -e
 
 # Convenience variables
