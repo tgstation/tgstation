@@ -15,7 +15,7 @@
 	var/obj/docking_port/mobile/incoming_shuttle
 
 	/// Unset by docking to prevent stray gibbings
-	var/can_gib = TRUE
+//	var/can_gib = TRUE //HAHA FUCK I SHOULDN'T HAVE SPEEDMERGED
 
 /obj/effect/abstract/ripple/Initialize(mapload, obj/docking_port/mobile/incoming_shuttle, time_left)
 	. = ..()
@@ -32,6 +32,7 @@
 /// Make the ripple dense, and act as a crush for the turf it resides on
 /obj/effect/abstract/ripple/proc/actualize()
 	density = TRUE
-	if(can_gib)
+/*	if(can_gib)
 		var/turf/T = get_turf(src)
 		T.shuttle_gib(incoming_shuttle)
+*/ //Hahaha fuck
