@@ -592,7 +592,7 @@
 	begin_day = 9
 
 /datum/holiday/indigenous/getStationPrefix()
-	return pick("Endangered language", "Word", "Language", "Language revitalization")
+	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
 
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
