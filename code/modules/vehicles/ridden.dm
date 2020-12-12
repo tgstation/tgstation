@@ -4,6 +4,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	default_driver_move = FALSE
+	pass_flags_self = PASSTABLE
 	var/rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS
 	COOLDOWN_DECLARE(message_cooldown)
 
@@ -69,7 +70,7 @@
 		return FALSE
 
 	if(rider_check_flags & REQUIRES_LEGS && HAS_TRAIT(user, TRAIT_FLOORED))
-		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)	
+		if(rider_check_flags & UNBUCKLE_DISABLED_RIDER)
 			unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
 			"<span class='danger'>You fall off \the [src] while trying to operate it while unable to stand!</span>")
@@ -96,7 +97,7 @@
 			to_chat(user, "<span class='warning'>You can't seem to manage that unable to hold onto \the [src] to move it...</span>")
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
 		return FALSE
-	
+
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	return ..()
@@ -114,9 +115,3 @@
 /obj/vehicle/ridden/zap_act(power, zap_flags)
 	zap_buckle_check(power)
 	return ..()
-
-/obj/vehicle/ridden/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-
-	if(mover.pass_flags & PASSTABLE)
-		return TRUE

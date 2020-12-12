@@ -10,6 +10,7 @@
  * Improving standardizing every form of payment handing, as some custom handling is specific to that object.
  **/
 /datum/component/payment
+	dupe_mode = COMPONENT_DUPE_UNIQUE ///NO OVERRIDING TO CHEESE BOUNTIES
 	///Standardized of operation.
 	var/cost = 10
 	///Flavor style for handling cash (Friendly? Hostile? etc.)

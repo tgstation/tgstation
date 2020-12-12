@@ -228,6 +228,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
 
+///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
+#define TRAIT_MAT_TRANSMUTED	"transmuted"
+
 // item traits
 #define TRAIT_NODROP			"nodrop"
 #define TRAIT_NO_STORAGE_INSERT	"no_storage_insert" //cannot be inserted in a storage.
@@ -381,3 +384,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BRAIN_UNAIDED "brain-unaided"
 /// Trait applied by element
 #define ELEMENT_TRAIT "element_trait"
+/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+#define BERSERK_TRAIT "berserk_trait"
