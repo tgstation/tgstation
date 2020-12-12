@@ -17,6 +17,22 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/board/rtg
+	name = "Machine Design (RTG Board)"
+	desc = "The circuit board for a RTG."
+	id = "rtg"
+	build_path = /obj/item/circuitboard/machine/rtg
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/artg
+	name = "Machine Design (ARTG Board)"
+	desc = "The circuit board for a ARTG."
+	id = "artg"
+	build_path = /obj/item/circuitboard/machine/rtg/advanced
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	desc = "The circuit board for an automated announcement system."
