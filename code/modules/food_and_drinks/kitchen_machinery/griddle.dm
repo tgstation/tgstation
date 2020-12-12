@@ -11,7 +11,7 @@
 	processing_flags = START_PROCESSING_MANUALLY
 	resistance_flags = FIRE_PROOF
 
-	///Things that are being griddled right now, associated as atom | grilled underlay for said atom
+	///Things that are being griddled right now
 	var/list/griddled_objects = list()
 	///Looping sound for the grill
 	var/datum/looping_sound/grill/grill_loop
@@ -47,23 +47,18 @@
 		begin_processing()
 		for(var/i in griddled_objects)
 			var/obj/item/griddle_item = i
-			griddle_item.underlays += griddled_objects[griddle_item] //Add the underlay
 	else
 		end_processing()
 		for(var/i in griddled_objects)
 			var/obj/item/griddle_item = i
-			griddle_item.underlays += griddled_objects[griddle_item] //Add the underlay
 	update_icon()
 	update_grill_audio()
 
 
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
-	var/mutable_appearance/grill_underlay = mutable_appearance(icon, "grease")
-	griddled_objects[item_to_grill] = grill_underlay
 	vis_contents += item_to_grill
+	griddled_objects += item_to_grill
 	item_to_grill.flags_1 |= IS_ONTOP_1
-	if(on)
-		item_to_grill.underlays += grill_underlay
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 	update_grill_audio()
@@ -71,7 +66,6 @@
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	I.flags_1 &= ~IS_ONTOP_1
-	I.underlays -= griddled_objects[I]
 	griddled_objects -= I
 	vis_contents -= I
 	UnregisterSignal(I, COMSIG_GRILL_COMPLETED)
