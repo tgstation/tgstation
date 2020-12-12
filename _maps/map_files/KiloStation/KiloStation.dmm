@@ -45652,7 +45652,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -51138,7 +51139,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -55664,8 +55666,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = null;
-	req_one_access_txt = "1;4"
+	req_access_txt = "64";
+	req_one_access_txt = null
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55696,8 +55698,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = null;
-	req_one_access_txt = "1;4"
+	req_access_txt = "64";
+	req_one_access_txt = null
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
