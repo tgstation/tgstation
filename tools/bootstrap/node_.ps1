@@ -51,9 +51,12 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 
 # Invoke Node with all command-line arguments
 Write-Output $NodeExe | Out-File -Encoding utf8 $Log
-[System.String]::Join("`n", $args) | Out-File -Encoding utf8 -Append $Log
+[System.String]::Join([System.Environment]::NewLine, $args) | Out-File -Encoding utf8 -Append $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
 $Env:PATH = "$NodeDir;$ENV:Path"  # Set PATH so that recursive calls find it
 $ErrorActionPreference = "Continue"
-& $NodeExe $args 2>&1 | ForEach-Object { "$_" } | Tee-Object -Append $Log
+& $PythonExe $args 2>&1 | ForEach-Object {
+	"$_" | Out-File -Encoding utf8 -Append $Log
+	"$_" | Out-Host
+}
 exit $LastExitCode
