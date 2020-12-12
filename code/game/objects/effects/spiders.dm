@@ -90,12 +90,8 @@
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
-	GLOB.poi_list |= src
-
-/obj/structure/spider/eggcluster/Destroy()
-	. = ..()
-	GLOB.poi_list.Remove(src)
+	AddElement(/datum/element/point_of_interest)
+	return ..()
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time

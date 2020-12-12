@@ -386,6 +386,10 @@
 	. = ..()
 	charge = 50000
 
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
+	charge = 5000
+
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN
 #undef CELL_POWER_DRAIN

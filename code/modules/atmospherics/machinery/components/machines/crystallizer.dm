@@ -1,6 +1,6 @@
-#define MIN_PROGRESS_AMOUNT 3
-#define MIN_DEVIATION_RATE 0.90
-#define MAX_DEVIATION_RATE 1.1
+#define MIN_PROGRESS_AMOUNT 				3
+#define MIN_DEVIATION_RATE 					0.90
+#define MAX_DEVIATION_RATE 					1.1
 #define HIGH_EFFICIENCY_CONDUCTIVITY 		0.95
 
 /obj/machinery/atmospherics/components/binary/crystallizer
@@ -327,3 +327,8 @@
 			var/_gas_input = params["gas_input"]
 			gas_input = clamp(_gas_input, 0, 500)
 	update_icon()
+
+#undef MIN_PROGRESS_AMOUNT
+#undef MIN_DEVIATION_RATE
+#undef MAX_DEVIATION_RATE
+#undef HIGH_EFFICIENCY_CONDUCTIVITY

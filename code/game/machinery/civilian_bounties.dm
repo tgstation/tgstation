@@ -100,7 +100,7 @@
 		SSeconomy.civ_bounty_tracker++
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.bounty_value = curr_bounty.reward
-		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 10)
+		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 30)
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
