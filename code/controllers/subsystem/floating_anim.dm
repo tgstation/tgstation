@@ -9,8 +9,6 @@ SUBSYSTEM_DEF(floating_anim)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 1 SECONDS
 
-	///Lists of movables queued to have their floating loop restarted.
-	///Assoc value is the world time has to elapse before so. So yea, this is not an actual queue structure.
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/floating_anim/fire()

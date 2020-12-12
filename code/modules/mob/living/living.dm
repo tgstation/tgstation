@@ -944,7 +944,7 @@
 		if(!was_weightless)
 			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 
-// Unlike other movables, living mobs also have a 'body_position_pixel_y_offset' variable.
+// Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
 /mob/living/stop_floating(new_status = NO_FLOATING_ANIM)
 	if(floating_anim_status <= new_status)
 		return

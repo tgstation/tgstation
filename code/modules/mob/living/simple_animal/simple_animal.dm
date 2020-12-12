@@ -467,7 +467,7 @@
 	else
 		if(!HAS_TRAIT(src, TRAIT_MOVE_FLYING)) //stops flying if it has no extrinsic source of flight.
 			movement_type &= ~FLYING
-			if(floating_anim_status != NEVER_FLOATING_ANIM && !(movement_type & FLOATING)) //stops bobbing up and down.
+			if(!(movement_type & FLOATING)) //stops bobbing up and down.
 				stop_floating(NO_FLOATING_ANIM)
 		health = 0
 		icon_state = icon_dead
@@ -517,7 +517,7 @@
 ///Removes intrisic FLYING movement_type when dead.
 /mob/living/simple_animal/on_movement_type_trait_loss(datum/source, trait)
 	..()
-	if(stat == DEAD && trait == TRAIT_MOVE_FLYING && !(movement_type & FLOATING) && floating_anim_status != NEVER_FLOATING_ANIM)
+	if(stat == DEAD && trait == TRAIT_MOVE_FLYING && !(movement_type & FLOATING))
 		movement_type &= ~FLYING
 		stop_floating(NO_FLOATING_ANIM)
 

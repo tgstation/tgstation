@@ -932,7 +932,7 @@
 	if(initial(movement_type) & flag)
 		return
 	movement_type &= ~flag
-	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)) && floating_anim_status != NEVER_FLOATING_ANIM)
+	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)))
 		stop_floating(NO_FLOATING_ANIM)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the mob.
