@@ -190,9 +190,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
 
-/turf/closed/wall/mineral/iron/see_through
-	opacity = FALSE
-
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"
 	desc = "A wall made of densely packed snow blocks."

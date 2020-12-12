@@ -236,13 +236,15 @@
 			var/value = medieval_words[key]
 			if(islist(value))
 				value = pick(value)
-			message = replacetextEx(message, " [uppertext(key)] ", " [uppertext(value)] ")
-			message = replacetextEx(message, " [capitalize(key)] ", " [capitalize(value)] ")
-			message = replacetextEx(message, " [key] ", " [value] ")
+			if(uppertext(key) == key)
+				value = uppertext(value)
+			if(capitalize(key) == key)
+				value = capitalize(value)
+			message = replacetextEx(message,regex("\b[REGEX_QUOTE(key)]\b","ig"), value)
 		message = trim(message)
 		var/chosen_starting = pick(startings)
 		if(copytext(chosen_starting, -1) != "!") //if the starter isn't a sentence of it's own, lowercase the message afterwards
-			message = lowertext(message)
+			message = lowertext(message[1]) + copytext(message, 1 + length(message))
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message

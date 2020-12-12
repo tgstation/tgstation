@@ -48,6 +48,7 @@
 	  "it was": "'twas",
 	  "it will": "'twould",
 	  "it were": "'twere",
+	  "there": "thither",
 	  "shall not": "shan't",
 	  "will not": "shan't",
 	  "over there": "yonder",
@@ -168,7 +169,7 @@
 	  "going": "a-walkin'",
 	  "go": "a-walk",
 	  "bet": "warrant",
-	  "the": "ye",
+	  "the": "yon",
 	  "kidding": [
 		"but pulling a jest",
 		"but pulling a jape"
@@ -277,6 +278,10 @@
 		"mayhaps",
 		"perchance"
 	  ],
+	  "probably": [
+		"mayhaps",
+		"perchance"
+	  ],
 	  "girl": [
 		"madame",
 		"waif",
@@ -309,6 +314,7 @@
 	  "being": "bein",
 	  "of": "o'",
 	  "shit": "nightsoil",
+	  "fuck": "flummery",
 	  "based": [
 		"joly",
 		"jolyf"

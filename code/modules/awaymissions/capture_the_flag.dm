@@ -163,10 +163,12 @@
 	var/control_points = 0
 	var/control_points_to_win = 180
 	var/list/team_members = list()
+	///assoc list: mob = outfit datum (class)
 	var/list/spawned_mobs = list()
 	var/list/recently_dead_ckeys = list()
 	var/ctf_enabled = FALSE
-	var/ctf_gear = /datum/outfit/ctf
+	///assoc list for classes. If there's only one, it'll just equip. Otherwise, it lets you pick which outfit!
+	var/list/ctf_gear = list("white" = /datum/outfit/ctf)
 	var/instagib_gear = /datum/outfit/ctf/instagib
 	var/ammo_type = /obj/effect/ctf/ammo
 
@@ -204,7 +206,7 @@
 	icon_state = "syndbeacon"
 	team = RED_TEAM
 	team_span = "redteamradio"
-	ctf_gear = /datum/outfit/ctf/red
+	ctf_gear = list("red" = /datum/outfit/ctf/red)
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
 /obj/machinery/capture_the_flag/blue
@@ -212,7 +214,7 @@
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
 	team_span = "blueteamradio"
-	ctf_gear = /datum/outfit/ctf/blue
+	ctf_gear = list("blue" = /datum/outfit/ctf/blue)
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -279,13 +281,27 @@
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
+	var/datum/outfit/chosen_class
+	if(ctf_gear.len == 1) //no choices to make
+		chosen_class = ctf_gear[1]
+	if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
+		var/result = input(new_team_member, "Select a class.", "CTF") as null|anything in sortList(ctf_gear)
+		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || new_team_member.mob)
+			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
+		chosen_class = ctf_gear[result]
+	else //2-3 choices
+		var/list/names_only = assoc_list_strip_value(ctf_gear)
+		var/result = alert(new_team_member, "Select a class.", "CTF", names_only[1], names_only[2], names_only[3])
+		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || new_team_member.mob)
+			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
+		chosen_class = ctf_gear[result]
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key
 	M.faction += team
-	M.equipOutfit(ctf_gear)
-	spawned_mobs += M
+	M.equipOutfit(chosen_class)
+	spawned_mobs[M] = chosen_class
 	return M //used in medisim.dm
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -652,7 +668,7 @@
 		return
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		if(M in CTF.spawned_mobs)
-			var/outfit = CTF.ctf_gear
+			var/outfit = CTF.spawned_mobs[M]
 			var/datum/outfit/O = new outfit
 			for(var/obj/item/gun/G in M)
 				qdel(G)
