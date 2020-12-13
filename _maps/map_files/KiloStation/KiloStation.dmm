@@ -9671,6 +9671,12 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/leafybush,
+/obj/machinery/camera{
+	c_tag = "Genetics Monkey Pen";
+	dir = 4;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/grass,
 /area/science/genetics)
 "aqr" = (
@@ -18835,7 +18841,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Sleepers";
+	c_tag = "Medbay Stasis Beds";
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
@@ -34484,14 +34490,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bde" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Experimenter Chamber";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -36692,7 +36690,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Experimenter Lab";
+	c_tag = "Genetics";
 	dir = 8;
 	name = "science camera";
 	network = list("ss13","rd")
