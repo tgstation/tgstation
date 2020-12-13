@@ -151,7 +151,10 @@
 
 	. = list()
 
-	. = src.minimal_access.Copy()
+	if(CONFIG_GET(flag/jobs_have_minimal_access))
+		. = src.minimal_access.Copy()
+	else
+		. = src.access.Copy()
 
 	if(CONFIG_GET(flag/everyone_has_maint_access)) //Config has global maint access set
 		. |= list(ACCESS_MAINT_TUNNELS)
