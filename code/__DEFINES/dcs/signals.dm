@@ -102,6 +102,8 @@
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
+	/// if returned, forces nothing to happen when the atom is attacked by a blob
+	#define COMPONENT_CANCEL_BLOB_ACT (1<<0)
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
@@ -112,7 +114,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (S, current_size)
+///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
@@ -155,6 +157,8 @@
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
+///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+#define COMSIG_ATOM_HITBY "atom_hitby"
 
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
 #define COMSIG_STORAGE_ENTERED "storage_entered"
@@ -192,6 +196,12 @@
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 ///called on /living when someone starts pulling it (atom/movable/puller, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
+
+/// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
+/// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
+#define COMSIG_ATOM_SINGULARITY_TRY_MOVE "atom_singularity_try_move"
+	/// When returned from `COMSIG_ATOM_SINGULARITY_TRY_MOVE`, the singularity will move to that turf
+	#define SINGULARITY_TRY_MOVE_BLOCK (1 << 0)
 
 /////////////////
 
@@ -383,6 +393,9 @@
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
+///From post-can inject check of syringe after attack (mob/user)
+#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+
 
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
@@ -455,6 +468,8 @@
 #define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
 ///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
+///Called when someone attempts to cuff a carbon
+#define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"

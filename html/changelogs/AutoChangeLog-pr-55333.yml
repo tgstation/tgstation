@@ -1,4 +1,0 @@
-author: "thatREALLYgoodsodaflavor, StyleMistake, Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "Implements sound environments into the game. Reverb time."

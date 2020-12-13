@@ -53,7 +53,7 @@
 		dna.species.on_hit(P, src)
 
 
-/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
+/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
@@ -74,7 +74,7 @@
 				// Find a turf near or on the original location to bounce to
 				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-					loc.bullet_act(P)
+					loc.bullet_act(P, def_zone, piercing_hit)
 					return BULLET_ACT_HIT
 				if(P.starting)
 					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -95,10 +95,11 @@
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, 100, def_zone, piercing_hit)
 			return BULLET_ACT_HIT
 
-	return ..(P, def_zone)
+	return ..()
+
 ///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 /mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)

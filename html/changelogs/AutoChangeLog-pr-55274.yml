@@ -1,0 +1,6 @@
+author: "SweptWasTaken"
+delete-after: True
+changes: 
+  - bugfix: "fixed e and w directions on emergency tanks"
+  - bugfix: "double emergency tank has correct volume and shows up in holder"
+  - bugfix: "yellow emergency tank isn't blue when in suit slot"

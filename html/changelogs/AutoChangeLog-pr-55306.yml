@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "You can now sacrifice a shade in a soulstone to reclaim a mechanical toolbox's SOUL"
