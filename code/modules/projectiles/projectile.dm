@@ -441,14 +441,14 @@
  */
 /obj/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
 	// 1. original
-	if(can_hit_target(original, TRUE, FALSE, target == bumped))
+	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
 	var/list/atom/possible = list()		// let's define these ONCE
 	var/list/atom/considering = list()
 	// 2. mobs
 	possible = typecache_filter_list(T, GLOB.typecache_living)	// living only
 	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE, target == bumped))
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
 			continue
 		considering += i
 	if(considering.len)
@@ -457,13 +457,13 @@
 	considering.len = 0
 	// 3. objs and other dense things
 	for(var/i in T.contents)
-		if(!can_hit_target(i, i == original, TRUE, target == bumped))
+		if(!can_hit_target(i, i == original, TRUE, i == bumped))
 			continue
 		considering += i
 	if(considering.len)
 		return pick(considering)
 	// 4. turf
-	if(can_hit_target(T, T == original, TRUE, target == bumped))
+	if(can_hit_target(T, T == original, TRUE, T == bumped))
 		return T
 	// 5. nothing
 		// (returns null)
