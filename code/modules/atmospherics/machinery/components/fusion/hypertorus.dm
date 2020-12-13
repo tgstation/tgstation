@@ -621,18 +621,24 @@
 	 */
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
-	if(power_level >= 5)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e5 + internal_fusion.temperature) / 1e5, 1) - 2500) / 200, 0), 0)
+	if(internal_fusion.total_moles() > MINIMUM_MOLE_COUNT)
+		//Damage calculations
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 1e6 + internal_fusion.temperature) / 1e6, 1) - 2500) / 200, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max(log(10, internal_fusion.temperature) - 7.2, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max(round(iron_content, 1) - 1, 0))
 
-		critical_threshold_proximity = max(critical_threshold_proximity + max(log(10, internal_fusion.temperature) - 5, 0), 0)
+		//Healing done by moles
+		if(internal_fusion.total_moles() < 1500)
+			critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1500) / 150, 0), 0)
+			if(internal_fusion.total_moles() < 500)
+				critical_threshold_proximity = max(critical_threshold_proximity - round(log(10, internal_fusion.total_moles()), 0.1), 0)
+			iron_content = max(iron_content - round(log(10, internal_fusion.total_moles()), 0.1), 0)
 
-	if(internal_fusion.total_moles() < 1200 || power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 800) / 150, 0), 0)
-
-	if(internal_fusion.total_moles() > 0 && internal_fusion.temperature < 5e5 && power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 5.5, 0), 0)
-
-	critical_threshold_proximity += max(round(iron_content, 1) - 1, 0)
+		//Healing done by temperature
+		if(internal_fusion.temperature < 5e6)
+			critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 6.5, 0), 0)
+			if(internal_fusion.temperature < 5e4)
+				critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 4.5, 0), 0)
 
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
