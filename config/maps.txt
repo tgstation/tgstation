@@ -50,6 +50,9 @@ map omegastation
 	votable
 endmap
 
+map bluestation
+endmap
+
 map kilostation
 	votable
 	minplayers 50

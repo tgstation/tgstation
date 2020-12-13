@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "map_name": "Blue Station",
+    "map_path": "map_files/BlueStation",
+    "map_file": "bluestation.dmm",
+	"shuttles": {
+	    "emergency": "emergency_box",
+	    "whiteship": "whiteship_box",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_box"
+    }
+}
