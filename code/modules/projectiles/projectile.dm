@@ -46,7 +46,7 @@
 	/** PROJECTILE PIERCING
 	  * WARNING:
 	  * Projectile piercing MUST be done using these variables.
-	  * Ordinary passflags will be **IGNORED**.
+	  * Ordinary passflags will result in can_hit_target being false unless directly clicked on - similar to projectile_phasing but without even going to process_hit.
 	  * The two flag variables below both use pass flags.
 	  * In the context of LETPASStHROW, it means the projectile will ignore things that are currently "in the air" from a throw.
 	  *
@@ -451,9 +451,8 @@
 		var/mob/living/M = pick(considering)
 		return M.lowest_buckled_mob()
 	considering.len = 0
-	// 3. objs
-	possible = typecache_filter_list(T, GLOB.typecache_machine_or_structure)	// because why are items ever dense?
-	for(var/i in possible)
+	// 3. objs and other dense things
+	for(var/i in T.contents)
 		if(!can_hit_target(i, i == original, TRUE))
 			continue
 		considering += i
@@ -472,8 +471,8 @@
 		return FALSE
 	if(!ignore_loc && (loc != target.loc))
 		return FALSE
-	// if pass_flags match, pass through entirely
-	if(target.pass_flags_self & pass_flags)		// phasing
+	// if pass_flags match, pass through entirely - unless direct target is set.
+	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
@@ -493,7 +492,7 @@
 		if(direct_target)
 			return TRUE
 		// If target not able to use items, move and stand - or if they're just dead, pass over.
-		if(L.stat == DEAD || (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)))
+		if((L.stat == DEAD) || (!L.density) || ((L.body_position == LYING_DOWN) && (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))))
 			return FALSE
 	return TRUE
 
@@ -570,7 +569,7 @@
  * Return PROJECTILE_DELETE_WITHOUT_HITTING to delete projectile without hitting at all!
  */
 /obj/projectile/proc/prehit_pierce(atom/A)
-	if(projectile_phasing & A.pass_flags_self)
+	if((projectile_phasing & A.pass_flags_self) && (!phasing_ignore_direct_target || !(original == A)))
 		return PROJECTILE_PIERCE_PHASE
 	if(projectile_piercing & A.pass_flags_self)
 		return PROJECTILE_PIERCE_HIT
