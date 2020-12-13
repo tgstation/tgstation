@@ -90,12 +90,8 @@
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
-	GLOB.poi_list |= src
-
-/obj/structure/spider/eggcluster/Destroy()
-	. = ..()
-	GLOB.poi_list.Remove(src)
+	AddElement(/datum/element/point_of_interest)
+	return ..()
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time
@@ -109,12 +105,12 @@
 		make_spider(user)
 
 /**
-  * Makes a ghost into a spider based on the type of egg cluster.
-  *
-  * Allows a ghost to get a prompt to use the egg cluster to become a spider.
-  * Arguments:
-  * * user - The ghost attempting to become a spider.
-  */
+ * Makes a ghost into a spider based on the type of egg cluster.
+ *
+ * Allows a ghost to get a prompt to use the egg cluster to become a spider.
+ * Arguments:
+ * * user - The ghost attempting to become a spider.
+ */
 /obj/structure/spider/eggcluster/proc/make_spider(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()

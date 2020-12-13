@@ -42,7 +42,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
-		/obj/item/reagent_containers/food/snacks/deadmouse
+		/obj/item/food/deadmouse
 	))
 
 /datum/component/storage/concrete/pockets/chefhat/can_be_inserted(obj/item/I, stop_messages, mob/M)

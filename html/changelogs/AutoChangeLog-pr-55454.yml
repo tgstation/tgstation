@@ -1,0 +1,4 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Bluespace anomaly cores obtained from ice demons are now raw cores. No more BoH farms!"
