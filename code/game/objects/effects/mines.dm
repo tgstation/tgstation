@@ -42,6 +42,8 @@
 
 	if(AM.movement_type & FLYING)
 		return
+	if(iseffect(AM))
+		return
 
 	triggermine(AM)
 
