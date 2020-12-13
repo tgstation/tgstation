@@ -29,6 +29,7 @@
 	dir = 8
 	},
 /obj/item/stack/sheet/metal,
+/obj/structure/tank_dispenser,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "af" = (
@@ -233,6 +234,7 @@
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "aO" = (
@@ -319,6 +321,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -406,7 +409,9 @@
 "bj" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 50
+	},
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "bk" = (
@@ -517,6 +522,38 @@
 /obj/item/crowbar/red,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
+"pe" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/shreds,
+/obj/item/storage/firstaid/ancient,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"tT" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/turf/open/floor/plasteel/airless,
+/area/shuttle/abandoned)
+"vR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"CQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 15
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"Ib" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -605,7 +642,7 @@ aa
 aa
 ac
 ac
-ag
+CQ
 al
 al
 al
@@ -630,7 +667,7 @@ aq
 aq
 al
 ai
-ap
+pe
 ao
 ab
 bg
@@ -641,7 +678,7 @@ ab
 (7,1,1) = {"
 ab
 ae
-ag
+Ib
 ac
 ao
 ap
@@ -721,7 +758,7 @@ bq
 (11,1,1) = {"
 ab
 ah
-ag
+vR
 ak
 al
 aq
@@ -751,7 +788,7 @@ al
 aq
 ag
 ag
-ax
+tT
 ab
 bh
 bo
@@ -763,7 +800,7 @@ aa
 aa
 aa
 aa
-aq
+al
 aq
 aq
 al
@@ -783,7 +820,7 @@ aa
 aa
 aa
 aa
-aq
+al
 aq
 al
 ag
@@ -803,7 +840,7 @@ aa
 aa
 aa
 aa
-aq
+al
 aq
 aq
 ag
@@ -823,9 +860,9 @@ aa
 aa
 aa
 aa
-aq
-aq
-aq
+al
+al
+al
 aw
 aB
 aE
