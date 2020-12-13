@@ -493,8 +493,8 @@
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a security officer"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon = 'modular_skyrat/modules/cryosleep/icons/cryogenics.dmi'
+	icon_state = "cryopod"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
@@ -512,15 +512,15 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/machinery/cryopod(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldeng
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "an engineer"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon = 'modular_skyrat/modules/cryosleep/icons/cryogenics.dmi'
+	icon_state = "cryopod"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
@@ -538,15 +538,15 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/machinery/cryopod(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/oldsci
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a scientist"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon = 'modular_skyrat/modules/cryosleep/icons/cryogenics.dmi'
+	icon_state = "cryopod"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
@@ -563,7 +563,7 @@
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	new/obj/machinery/cryopod(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate
