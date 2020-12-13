@@ -21,39 +21,39 @@
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	///Check if the object can be unwrenched
-	var/can_unwrench = 0
-	///Check what are the initialized directions
+	var/can_unwrench = FALSE
+	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
 	var/initialize_directions = 0
-	///Store the color of the pipe
+	///The color of the pipe
 	var/pipe_color
-	///Store what layer the pipe is in (from 1 to 5, default 3)
+	///What layer the pipe is in (from 1 to 5, default 3)
 	var/piping_layer = PIPING_LAYER_DEFAULT
-	///Store the flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
+	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
 
 	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
-	///Stores identifiers for the iconset, the path where the image will be taken from
+	///Identifiers for the iconset, the path where the image will be taken from
 	var/static/list/iconsetids = list()
-	///Stores the unique identifier created from the iconsetids, the parameters are then used to define the pipe image (icon, icon_state, color, direction, piping_layer)
+	///The unique identifier created from the iconsetids, the parameters are then used to define the pipe image (icon, icon_state, color, direction, piping_layer)
 	var/static/list/pipeimages = list()
-	///Stores the image of the pipe/device used for ventcrawling
+	///The image of the pipe/device used for ventcrawling
 	var/image/pipe_vision_img = null
 
-	///Stores the type of the device (UNARY, BINARY, TRINARY, QUATERNARY)
+	///The type of the device (UNARY, BINARY, TRINARY, QUATERNARY)
 	var/device_type = 0
-	///Stores the lists of nodes that a pipe/device has, depends on the device_type var (from 1 to 4)
+	///The lists of nodes that a pipe/device has, depends on the device_type var (from 1 to 4)
 	var/list/obj/machinery/atmospherics/nodes
 
-	///Stores the path of the pipe/device that will spawn after unwrenching it (such as pipe fittings)
+	///The path of the pipe/device that will spawn after unwrenching it (such as pipe fittings)
 	var/construction_type
 	///icon_state as a pipe item
 	var/pipe_state
 	///Check if the device should be on or off (mostly used in processing for machines)
 	var/on = FALSE
 
-	/// Whether it can be painted
+	///Whether it can be painted
 	var/paintable = FALSE
 
 /obj/machinery/atmospherics/examine(mob/user)
@@ -176,7 +176,7 @@
 	return ..()
 
 /**
- * check if a node can actually exists by connecting to another machine
+ * Check if a node can actually exists by connecting to another machine
  * called on atmosinit()
  * Arguments:
  * * obj/machinery/atmospherics/target - the machine we are connecting to
