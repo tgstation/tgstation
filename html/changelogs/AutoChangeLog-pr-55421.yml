@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - rscdel: "The invisible flipped tables in the research away mission are now visible unflipped tables"
