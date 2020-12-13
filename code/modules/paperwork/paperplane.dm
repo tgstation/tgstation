@@ -75,7 +75,8 @@
 	internal_paper_tmp.forceMove(loc)
 	internalPaper = null
 	qdel(src)
-	user.put_in_hands(internal_paper_tmp)
+	if(user.Adjacent(internal_paper_tmp))
+		user.put_in_hands(internal_paper_tmp)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -137,5 +138,6 @@
 	if(origami_action?.active)
 		plane_type = /obj/item/paperplane/syndicate
 
-	I = new plane_type(user, src)
-	user.put_in_hands(I)
+	I = new plane_type(loc, src)
+	if(user.Adjacent(I))
+		user.put_in_hands(I)
