@@ -112,7 +112,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if (do_after(user, 40*platingmodifier, target = src, focus_strength = 5))
+				if (do_after(user, time=4 SECONDS*platingmodifier, target = src, bonus_time=1 SECONDS))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)

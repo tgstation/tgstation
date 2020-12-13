@@ -73,7 +73,7 @@
 		last_act = world.time
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
-		if(I.use_tool(src, user, 40, volume=50, focus_strength = 5, focus_sound = 'sound/effects/picaxe1.ogg'))
+		if(I.use_tool(src, user, delay=4 SECONDS, volume=50, bonus_time=1 SECONDS, focus_sound = 'sound/effects/picaxe1.ogg'))
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user, TRUE)

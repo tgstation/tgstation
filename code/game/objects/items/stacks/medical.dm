@@ -43,12 +43,12 @@
 	if(patient == user)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying [src] on yourself...</span>")
-		if(!do_mob(user, patient, self_delay, extra_checks=CALLBACK(patient, /mob/living/proc/can_inject, user, TRUE), focus_strength = 5, focus_sound = 'sound/items/tape_rip.ogg'))
+		if(!do_mob(user, patient, time=self_delay, extra_checks=CALLBACK(patient, /mob/living/proc/can_inject, user, TRUE), bonus_time=1 SECONDS, focus_sound = 'sound/items/tape_rip.ogg'))
 			return
 	else if(other_delay)
 		if(!silent)
 			user.visible_message("<span class='notice'>[user] starts to apply [src] on [patient].</span>", "<span class='notice'>You begin applying [src] on [patient]...</span>")
-		if(!do_mob(user, patient, other_delay, extra_checks=CALLBACK(patient, /mob/living/proc/can_inject, user, TRUE), focus_strength = 5, focus_sound = 'sound/items/tape_rip.ogg'))
+		if(!do_mob(user, patient, time=other_delay, extra_checks=CALLBACK(patient, /mob/living/proc/can_inject, user, TRUE), bonus_time=1 SECONDS, focus_sound = 'sound/items/tape_rip.ogg'))
 			return
 
 	if(heal(patient, user))

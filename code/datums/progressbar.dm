@@ -1,5 +1,6 @@
 #define PROGRESSBAR_HEIGHT 6
 #define PROGRESSBAR_ANIMATION_TIME 5
+#define FOCUS_PER_SECOND_LIMIT 1.5
 
 /datum/progressbar
 	///The progress bar visual element.
@@ -21,7 +22,7 @@
 	///How much bonus progress we've accured from a linked progress booster
 	var/bonus_progress = 0
 
-/datum/progressbar/New(mob/User, goal_number, atom/target, focus_strength, focus_sound)
+/datum/progressbar/New(mob/User, goal_number, atom/target, bonus_time, focus_sound)
 	. = ..()
 	if (!istype(target))
 		EXCEPTION("Invalid target given")
@@ -47,9 +48,8 @@
 	if(user.client)
 		user_client = user.client
 		add_prog_bar_image_to_client()
-	if(focus_strength)
-		booster = new(null, user, src, focus_strength, focus_sound)
-		booster.forceMove(get_turf(target))
+	if(bonus_time)
+		booster = new(get_turf(target), user, src, bonus_time, focus_sound)
 	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/on_user_delete)
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, .proc/clean_user_client)
 	RegisterSignal(user, COMSIG_MOB_LOGIN, .proc/on_user_login)
@@ -148,23 +148,66 @@
 	///The progress bar that this booster is linked to
 	var/datum/progressbar/linked_bar
 	///How much this focus helps overall progress
-	var/focus_strength
+	var/time_per_click
 	///Sound played when clicked
 	var/focus_sound = 'sound/machines/click.ogg'
+	///Reference to a progress trap, used to discourage spam-clicking
+	var/obj/effect/hallucination/simple/progress_trap/trap
+	///How many times this focus can be used
+	var/max_uses
+	///How many times this focus has been used
+	var/uses = 0
 
-/obj/effect/hallucination/simple/progress_focus/Initialize(mapload, mob/target_mob, datum/progressbar/target_bar, f_strength, f_sound)
+/obj/effect/hallucination/simple/progress_focus/Initialize(mapload, mob/target_mob, datum/progressbar/target_bar, bonus_time, f_sound)
 	. = ..()
+	var/fastest_possible_time = target_bar.goal - bonus_time
+	max_uses = round(fastest_possible_time/10/FOCUS_PER_SECOND_LIMIT, 1)
 	target = target_mob
 	linked_bar = target_bar
-	focus_strength = f_strength
+	time_per_click = bonus_time/max_uses
 	if (f_sound)
 		focus_sound = f_sound
+	trap = new(get_turf(src), target_mob, target_bar, time_per_click)
+	message_admins("bar made with normal time [target_bar.goal] and fastest time [fastest_possible_time]. Max uses will be [max_uses] and strength will be [time_per_click].")
 
 /obj/effect/hallucination/simple/progress_focus/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	linked_bar.boost_progress(focus_strength)
+	linked_bar.boost_progress(time_per_click)
 	user.playsound_local(user, focus_sound, 50, TRUE)
-	update_icon(image_state, image_icon, new_px = rand(-12,12), new_py = rand(-12,12))
+	var/new_x = rand(-12,12)
+	var/new_y = rand(-12,12)
+	update_icon(image_state, image_icon, new_px = new_x, new_py = new_y)
+	trap.update_icon(trap.image_state, trap.image_icon, new_px = new_x, new_py = new_y)
+	uses += 1
+	if (uses >= max_uses)
+		linked_bar.booster = null
+		qdel(src)
 
+/obj/effect/hallucination/simple/progress_focus/Destroy()
+	. = ..()
+	QDEL_NULL(trap)
+/obj/effect/hallucination/simple/progress_trap
+	name = ""
+	desc = ""
+	image_icon = 'icons/effects/effects.dmi'
+	image_state = "progress_trap"
+	image_layer = ABOVE_HUD_LAYER
+	///The progress bar that this booster is linked to
+	var/datum/progressbar/linked_bar
+	///How much this focus hurts overall progress
+	var/loss_per_click
+
+/obj/effect/hallucination/simple/progress_trap/Initialize(mapload, mob/target_mob, datum/progressbar/target_bar, time_delta)
+	. = ..()
+	target = target_mob
+	linked_bar = target_bar
+	loss_per_click = -1 * time_delta
+
+/obj/effect/hallucination/simple/progress_trap/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	linked_bar.boost_progress(loss_per_click)
+	user.playsound_local(user, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
+#undef FOCUS_PER_SECOND_LIMIT
 #undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT
