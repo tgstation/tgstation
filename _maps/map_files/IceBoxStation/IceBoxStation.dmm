@@ -23644,15 +23644,12 @@
 	},
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
-"bdb" = (
-/turf/open/floor/plasteel/white/side,
-/area/hallway/primary/starboard)
 "bdc" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/white/corner,
+/turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bdd" = (
 /obj/effect/spawner/randomcolavend,
@@ -24254,11 +24251,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bey" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
-	},
-/area/hallway/primary/starboard)
 "bez" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -96169,7 +96161,7 @@ aJI
 bbA
 aYV
 bdr
-bdb
+aYV
 bBN
 blr
 bho
@@ -96426,7 +96418,7 @@ aJI
 bbz
 aYV
 bdr
-bey
+aYV
 bfL
 bfL
 bfL
