@@ -168,7 +168,6 @@
 	if (f_sound)
 		focus_sound = f_sound
 	trap = new(get_turf(src), target_mob, target_bar, time_per_click)
-	message_admins("bar made with normal time [target_bar.goal] and fastest time [fastest_possible_time]. Max uses will be [max_uses] and strength will be [time_per_click].")
 
 /obj/effect/hallucination/simple/progress_focus/attackby(obj/item/I, mob/user, params)
 	. = ..()
