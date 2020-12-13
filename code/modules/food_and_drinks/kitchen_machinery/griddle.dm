@@ -49,12 +49,8 @@
 	on = !on
 	if(on)
 		begin_processing()
-		for(var/i in griddled_objects)
-			var/obj/item/griddle_item = i
 	else
 		end_processing()
-		for(var/i in griddled_objects)
-			var/obj/item/griddle_item = i
 	update_icon()
 	update_grill_audio()
 
