@@ -159,7 +159,6 @@
 					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
 	to_chat(user, "<span class='danger'>You [hulk_verb] [src]!</span>")
 	apply_damage(15, BRUTE, wound_bonus=10)
-	retaliate(user)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = TRUE
