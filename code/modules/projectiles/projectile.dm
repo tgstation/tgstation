@@ -324,7 +324,7 @@
 
 /obj/projectile/Bump(atom/A)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
-	if(!can_hit_target(A, A == original, TRUE))
+	if(!can_hit_target(A, A == original, TRUE, TRUE))
 		return
 	Impact(A)
 
@@ -364,7 +364,7 @@
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
-	return process_hit(T, select_target(T, A))		// SELECT TARGET FIRST!
+	return process_hit(T, select_target(T, A, A), A)		// SELECT TARGET FIRST!
 
 /**
  * The primary workhorse proc of projectile impacts.
@@ -383,11 +383,13 @@
  * @params
  * T - Turf we're on/supposedly hitting
  * target - target we're hitting
+ * bumped - target we originally bumped. it's here to ensure that if something blocks our projectile by means of Cross() failure, we hit it
+ * 		even if it is not dense.
  * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
  *
  * Returns if we hit something.
  */
-/obj/projectile/proc/process_hit(turf/T, atom/target, hit_something = FALSE)
+/obj/projectile/proc/process_hit(turf/T, atom/target, atom/bumped, hit_something = FALSE)
 	// 1.
 	if(QDELETED(src) || !T || !target)
 		return
@@ -402,7 +404,7 @@
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target), hit_something)	// try to hit something else
+		return process_hit(T, select_target(T, target, bumped), bumped, hit_something)	// try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
@@ -414,7 +416,7 @@
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target), TRUE)
+		return process_hit(T, select_target(T, target, bumped), bumped, TRUE)
 	qdel(src)
 	return hit_something
 
@@ -424,6 +426,8 @@
  * @params
  * T - The turf
  * target - The "preferred" atom to hit, usually what we Bumped() first.
+ * bumped - used to track if something is the reason we impacted in the first place.
+ *    If set, this atom is always treated as dense by can_hit_target.
  *
  * Priority:
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
@@ -435,16 +439,16 @@
  * 4. Turf
  * 5. Nothing
  */
-/obj/projectile/proc/select_target(turf/T, atom/target)
+/obj/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
 	// 1. original
-	if(can_hit_target(original, TRUE, FALSE))
+	if(can_hit_target(original, TRUE, FALSE, target == bumped))
 		return original
 	var/list/atom/possible = list()		// let's define these ONCE
 	var/list/atom/considering = list()
 	// 2. mobs
 	possible = typecache_filter_list(T, GLOB.typecache_living)	// living only
 	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE))
+		if(!can_hit_target(i, i == original, TRUE, target == bumped))
 			continue
 		considering += i
 	if(considering.len)
@@ -453,20 +457,20 @@
 	considering.len = 0
 	// 3. objs and other dense things
 	for(var/i in T.contents)
-		if(!can_hit_target(i, i == original, TRUE))
+		if(!can_hit_target(i, i == original, TRUE, target == bumped))
 			continue
 		considering += i
 	if(considering.len)
 		return pick(considering)
 	// 4. turf
-	if(can_hit_target(T, T == original, TRUE))
+	if(can_hit_target(T, T == original, TRUE, target == bumped))
 		return T
 	// 5. nothing
 		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
-/obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE)
+/obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(QDELETED(target) || impacted[target])
 		return FALSE
 	if(!ignore_loc && (loc != target.loc))
@@ -478,7 +482,7 @@
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+	if(target.density || cross_failed)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(isturf(target))		// non dense turfs
