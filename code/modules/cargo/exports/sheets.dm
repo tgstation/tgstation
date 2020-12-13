@@ -16,7 +16,6 @@
 
 /datum/export/stack/skin/human
 	cost = 100
-	export_category = EXPORT_CONTRABAND
 	unit_name = "piece"
 	message = "of human skin"
 	export_types = list(/obj/item/stack/sheet/animalhide/human)
@@ -28,13 +27,11 @@
 
 /datum/export/stack/skin/cat
 	cost = 150
-	export_category = EXPORT_CONTRABAND
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
 /datum/export/stack/skin/corgi
 	cost = 200
-	export_category = EXPORT_CONTRABAND
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 

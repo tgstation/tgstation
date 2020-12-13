@@ -3,9 +3,6 @@
 	var/shipped_volume = 0
 	var/datum/reagent/wanted_reagent
 
-/datum/bounty/reagent/completion_string()
-	return {"[round(shipped_volume)]/[required_volume] Units"}
-
 /datum/bounty/reagent/can_claim()
 	return ..() && shipped_volume >= required_volume
 
@@ -24,12 +21,6 @@
 	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.type)
 	if(shipped_volume > required_volume)
 		shipped_volume = required_volume
-
-/datum/bounty/reagent/compatible_with(other_bounty)
-	if(!istype(other_bounty, /datum/bounty/reagent))
-		return TRUE
-	var/datum/bounty/reagent/R = other_bounty
-	return wanted_reagent.type != R.wanted_reagent.type
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
@@ -199,9 +190,6 @@
 	/// minimum volume of chemical needed, gets randomized on new()
 	var/wanted_vol = 30
 
-/datum/bounty/pill/completion_string()
-	return {"[shipped_ammount]/[required_ammount] pills"}
-
 /datum/bounty/pill/can_claim()
 	return ..() && shipped_ammount >= required_ammount
 
@@ -218,12 +206,6 @@
 	shipped_ammount += 1
 	if(shipped_ammount > required_ammount)
 		shipped_ammount = required_ammount
-
-/datum/bounty/pill/compatible_with(other_bounty)
-	if(!istype(other_bounty, /datum/bounty/pill/simple_pill))
-		return TRUE
-	var/datum/bounty/pill/simple_pill/P = other_bounty
-	return (wanted_reagent.type == P.wanted_reagent.type) && (wanted_vol == P.wanted_vol)
 
 /datum/bounty/pill/simple_pill
 	name = "Simple Pill"
