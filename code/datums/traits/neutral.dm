@@ -257,10 +257,12 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
 	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
+	var/obj/item/clothing/gloves/old_gloves = locate() in H
 	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
 	old_tongue.Remove(H)
 	new_tongue.Insert(H)
 	qdel(old_tongue)
+	qdel(old_gloves)
 	H.put_in_hands(gloves)
 	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
 	H.regenerate_icons()
@@ -279,7 +281,7 @@
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
+	var/obj/item/storage/photo_album/personal/photo_album = new(get_turf(H))
 	var/list/album_slots = list (
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"hands" = ITEM_SLOT_HANDS

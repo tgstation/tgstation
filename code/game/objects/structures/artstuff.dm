@@ -238,7 +238,7 @@
 
 /obj/structure/sign/painting
 	name = "Painting"
-	desc = "Art or \"Art\"? You decide."
+	desc = "Art or \"Art\"? You decide. Use wirecutters to remove the painting."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
 	custom_materials = list(/datum/material/wood = 2000)
@@ -378,12 +378,18 @@
 
 //Presets for art gallery mapping, for paintings to be shared across stations
 /obj/structure/sign/painting/library
+	name = "Public Painting Exhibit"
+	desc = "Art or \"Art\"? You decide. Part of the Public Painting Exhibit. Any painting placed here will be archived at the end of the shift. Use wirecutters to remove the painting."
 	persistence_id = "library"
 
 /obj/structure/sign/painting/library_secure
+	name = "Secure Painting Exhibit"
+	desc = "A masterpiece hand-picked by the curator, supposedly. Part of the Secure Painting Exhibit. Any painting placed here will be archived at the end of the shift. Use wirecutters to remove the painting."
 	persistence_id = "library_secure"
 
 /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
+	name = "Private Painting Exhibit"
+	desc = "An art piece deemed too subversive or too illegal for prying eyes. Part of the Private Painting Exhibit. Any painting placed here will be archived at the end of the shift. Use wirecutters to remove the painting."
 	persistence_id = "library_private"
 
 /obj/structure/sign/painting/vv_get_dropdown()

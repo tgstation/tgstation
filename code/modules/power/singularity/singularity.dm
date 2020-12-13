@@ -36,7 +36,7 @@
 	energy = starting_energy
 
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	GLOB.singularities |= src
 
 	var/datum/component/singularity/new_component = AddComponent(
@@ -58,7 +58,6 @@
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list.Remove(src)
 	GLOB.singularities.Remove(src)
 	return ..()
 
