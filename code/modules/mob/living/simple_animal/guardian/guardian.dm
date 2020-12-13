@@ -515,6 +515,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
+	var/mori_message = "<span class='holoparasite bold'>The deck shows the Fool! It quickly disappears though, as you need lifeforce to sustain it...</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -528,6 +529,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>")
+		return
+	if(HAS_TRAIT_FROM(user, TRAIT_NODEATH, "memento_mori"))									//checks if the user has an active mori link, if so, give fluff and cancel.
+		to_chat(user, "[mori_message]")
 		return
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allowling)
 		to_chat(user, "[ling_failure]")
@@ -643,6 +647,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+	mori_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. NO ENERGY FOUND TO SUSTAIN OPERATIONS. PLEASE CONTACT SUPPORT.</span>"
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
@@ -725,6 +730,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasite bold'>Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.</span>"
+	mori_message = "<span class='holoparasite bold'>The pungant smell of a false god on your necklace held all the fish at bay. At carp bay.</span>"
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/carp/choose
@@ -741,6 +747,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>This shard seems to have lost all its' power...</span>"
 	failure_message = "<span class='holoparasite bold'>The shard hasn't reacted at all. Maybe try again later...</span>"
 	ling_failure = "<span class='holoparasite bold'>The power of the shard seems to not react with your horrifying, mutated body.</span>"
+	mori_message = "<span class='holoparasite bold'>The shard pierced your skin, but it has no life force to absorb and nothing happens... well, it did hurt a bit.</span>"
 
 /obj/item/guardiancreator/miner/choose
 	random = FALSE
