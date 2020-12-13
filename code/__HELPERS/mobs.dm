@@ -480,7 +480,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			if (!M.client.holder)
 				return
 			else
-				message += " (This is viewable to admins only)."
+				message += "<span class='deadsay'> (This is viewable to admins only).</span>"
 		var/override = FALSE
 		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
