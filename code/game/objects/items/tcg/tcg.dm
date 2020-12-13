@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	if(!temp)
 		return
 	name = temp.name
-	desc = temp.desc
+	desc = "<i>[temp.desc]</i>"
 	icon = icon(temp.icon)
 	icon_state = temp.icon_state
 	id = temp.id
@@ -56,24 +56,22 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	var/list/cached_cards = GLOB.cached_cards[series]
 	if(!cached_cards)
 		return null
+	if(!cached_cards["ALL"][id])
+		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
 	return cached_cards["ALL"][id]
 
-/obj/item/tcgcard/examine(mob/user)
+/obj/item/tcgcard/get_name_chaser(mob/user, text)
 	if(flipped)
 		return ..()
-	var/list/examine_data = ..()
 	var/datum/card/data_holder = extract_datum()
-	if(!data_holder)
-		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
-	. = list()
-	. += examine_data[1] //WOOOOOOOO THIS CAN ONLY GO WELL
-	. += "Faction: [data_holder.faction]"
-	. += "Cost: [data_holder.summoncost]"
-	. += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
-	. += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
+
+	text += "Faction: [data_holder.faction]"
+	text += "Cost: [data_holder.summoncost]"
+	text += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
+	text += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
-		. += "Ruleset: [data_holder.rules]"
-	. += examine_data.Copy(2) //Everything past the name
+		text += "Ruleset: [data_holder.rules]"
+	return text
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
@@ -115,9 +113,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/update_icon_state()
 	. = ..()
 	if(!flipped)
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		name = template.name
-		desc = template.desc
+		desc = "<i>[template.desc]</i>"
 		icon_state = template.icon_state
 
 	else
@@ -183,9 +181,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
 	else
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		name = template.name
-		desc = template.desc
+		desc = "<i>[template.desc]</i>"
 		icon_state = template.icon_state
 	flipped = !flipped
 /**
