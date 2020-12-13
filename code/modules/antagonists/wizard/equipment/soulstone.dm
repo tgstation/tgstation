@@ -127,6 +127,9 @@
 	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
 		return ..()
 
+	if(purified && iscultist(user))
+		hot_potato(user)
+		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Unconscious(10 SECONDS)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
