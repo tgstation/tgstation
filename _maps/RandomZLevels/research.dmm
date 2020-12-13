@@ -5948,6 +5948,16 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"IO" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/yellowsiding,
+/area/awaymission/research/interior/dorm)
+"Jc" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/awaymission/research/interior/dorm)
 "Km" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
@@ -42959,9 +42969,9 @@ id
 id
 eH
 iX
-jn
-jF
-kc
+Jc
+kR
+IO
 iX
 iX
 iX
