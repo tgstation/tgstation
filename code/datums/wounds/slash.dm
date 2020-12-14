@@ -84,9 +84,9 @@
 
 	return bleed_amt
 
-/datum/wound/slash/handle_process()
+/datum/wound/slash/handle_process(delta_time, times_fired)
 	if(victim.stat == DEAD)
-		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN)
+		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time
 		if(blood_flow < minimum_flow)
 			if(demotes_to)
 				replace_wound(demotes_to)
@@ -97,15 +97,15 @@
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
 	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
-		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		blood_flow += 0.25 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		if(clot_rate > 0)
-			blood_flow -= clot_rate
-		blood_flow -= limb.current_gauze.absorption_rate
-		limb.seep_gauze(limb.current_gauze.absorption_rate)
+			blood_flow -= clot_rate * delta_time
+		blood_flow -= limb.current_gauze.absorption_rate * delta_time
+		limb.seep_gauze(limb.current_gauze.absorption_rate * delta_time)
 	else
-		blood_flow -= clot_rate
+		blood_flow -= clot_rate * delta_time
 
 	if(blood_flow > highest_flow)
 		highest_flow = blood_flow
@@ -118,7 +118,7 @@
 			qdel(src)
 
 
-/datum/wound/slash/on_stasis()
+/datum/wound/slash/on_stasis(delta_time, times_fired)
 	if(blood_flow >= minimum_flow)
 		return
 	if(demotes_to)
@@ -181,9 +181,9 @@
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 
-/datum/wound/slash/on_xadone(power)
+/datum/wound/slash/on_xadone(power, delta_time, times_fired)
 	. = ..()
-	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+	blood_flow -= 0.03 * power * delta_time // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/slash/on_synthflesh(power)
 	. = ..()
@@ -255,7 +255,7 @@
 	initial_flow = 2
 	minimum_flow = 0.5
 	max_per_type = 3
-	clot_rate = 0.12
+	clot_rate = 0.06
 	threshold_minimum = 20
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/moderate
@@ -271,7 +271,7 @@
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
 	minimum_flow = 2.75
-	clot_rate = 0.06
+	clot_rate = 0.03
 	max_per_type = 4
 	threshold_minimum = 50
 	threshold_penalty = 25
@@ -289,7 +289,7 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 4.25
 	minimum_flow = 4
-	clot_rate = -0.05 // critical cuts actively get worse instead of better
+	clot_rate = -0.025 // critical cuts actively get worse instead of better
 	max_per_type = 5
 	threshold_minimum = 80
 	threshold_penalty = 40

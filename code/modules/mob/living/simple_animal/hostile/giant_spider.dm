@@ -98,12 +98,12 @@
 	GLOB.spidermobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
+/mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage(delta_time, times_fired)
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(10 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(10 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")

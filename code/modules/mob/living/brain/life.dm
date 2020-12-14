@@ -1,11 +1,11 @@
 
-/mob/living/brain/Life()
+/mob/living/brain/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
 	if (notransform)
 		return
 	if(!loc)
 		return
 	. = ..()
-	handle_emp_damage()
+	handle_emp_damage(delta_time, times_fired)
 
 /mob/living/brain/update_stat()
 	if(status_flags & GODMODE)
@@ -21,17 +21,19 @@
 		if(BR)
 			BR.damage = BRAIN_DAMAGE_DEATH //beaten to a pulp
 
-/mob/living/brain/proc/handle_emp_damage()
-	if(emp_damage)
-		if(stat == DEAD)
-			emp_damage = 0
-		else
-			emp_damage = max(emp_damage-1, 0)
+/mob/living/brain/proc/handle_emp_damage(delta_time, times_fired)
+	if(!emp_damage)
+		return
 
-/mob/living/brain/handle_status_effects()
+	if(stat == DEAD)
+		emp_damage = 0
+	else
+		emp_damage = max(emp_damage - (0.5 * delta_time), 0)
+
+/mob/living/brain/handle_status_effects(delta_time, times_fired)
 	return
 
-/mob/living/brain/handle_traits()
+/mob/living/brain/handle_traits(delta_time, times_fired)
 	return
 
 

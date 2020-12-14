@@ -23,7 +23,7 @@
 	a_intent = INTENT_HARM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
+	unsuitable_atmos_damage = 7.5
 	faction = list(ROLE_ALIEN)
 	status_flags = CANPUSH
 	minbodytemp = 0
@@ -147,12 +147,12 @@
 	damage = 30
 	icon_state = "toxin"
 
-/mob/living/simple_animal/hostile/alien/handle_temperature_damage()
+/mob/living/simple_animal/hostile/alien/handle_temperature_damage(delta_time, times_fired)
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
+		adjustBruteLoss(1 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(10 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")

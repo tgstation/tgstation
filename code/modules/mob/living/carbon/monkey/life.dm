@@ -2,25 +2,29 @@
 
 /mob/living/carbon/monkey
 
-/mob/living/carbon/monkey/handle_mutations_and_radiation()
-	if(radiation)
-		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-			if(!IsParalyzed())
-				emote("collapse")
-			Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
-			to_chat(src, "<span class='danger'>You feel weak.</span>")
-		if(radiation > RAD_MOB_MUTATE)
-			if(prob(1))
-				to_chat(src, "<span class='danger'>You mutate!</span>")
-				easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-				emote("gasp")
-				domutcheck()
+/mob/living/carbon/monkey/handle_mutations_and_radiation(delta_time, times_fired)
+	if(!radiation)
+		return ..()
 
-				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
-					gorillize()
-					return
-		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
-			vomit(10, TRUE)
+	if(radiation > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
+		if(!IsParalyzed())
+			emote("collapse")
+		Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
+		to_chat(src, "<span class='danger'>You feel weak.</span>")
+
+	if(radiation > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
+		to_chat(src, "<span class='danger'>You mutate!</span>")
+		easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+		emote("gasp")
+		domutcheck()
+
+		if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
+			gorillize()
+			return
+
+	if(radiation > RAD_MOB_VOMIT && DT_PROB(RAD_MOB_VOMIT_PROB, delta_time))
+		vomit(10, TRUE)
+
 	return ..()
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
@@ -41,7 +45,7 @@
 
 	. = ..() // interact with body heat after dealing with the hot air
 
-/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
@@ -50,29 +54,29 @@
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
-				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
 			if(400 to 460)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 			if(460 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
 				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 
 	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
 					throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-					apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
+					apply_damage(COLD_DAMAGE_LEVEL_1 * delta_time, BURN)
 				if(120 to 200)
 					throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-					apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
+					apply_damage(COLD_DAMAGE_LEVEL_2 * delta_time, BURN)
 				if(-INFINITY to 120)
 					throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-					apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
+					apply_damage(COLD_DAMAGE_LEVEL_3 * delta_time, BURN)
 		else
 			clear_alert("temp")
 
@@ -99,8 +103,8 @@
 
 	return
 
-/mob/living/carbon/monkey/handle_random_events()
-	if (prob(1) && prob(2))
+/mob/living/carbon/monkey/handle_random_events(delta_time, times_fired)
+	if(DT_PROB(0.01, delta_time))
 		emote("scratch")
 
 /mob/living/carbon/monkey/has_smoke_protection()
@@ -108,7 +112,7 @@
 		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return 1
 
-/mob/living/carbon/monkey/handle_fire()
+/mob/living/carbon/monkey/handle_fire(delta_time, times_fired)
 	. = ..()
 	if(.) //if the mob isn't on fire anymore
 		return
@@ -131,5 +135,5 @@
 		var/obj/item/I = X
 		I.fire_act((fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
 
-	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX * 0.5 * delta_time)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

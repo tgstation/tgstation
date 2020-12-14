@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/bear/Life()
+/mob/living/simple_animal/hostile/bear/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
 	. = ..()
 	if(!rideable && mind)
 		can_buckle = TRUE
@@ -154,11 +154,11 @@
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
 	return //You cannot grow a real bear from butter.
 
-/mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
+/mob/living/simple_animal/hostile/bear/butter/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired) //Heals butter bear really fast when he takes damage.
 	if(stat)
 		return
 	if(health < maxHealth)
-		heal_overall_damage(10) //Fast life regen, makes it hard for you to get eaten to death.
+		heal_overall_damage(5 * delta_time) //Fast life regen, makes it hard for you to get eaten to death.
 
 /mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/L) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	..()

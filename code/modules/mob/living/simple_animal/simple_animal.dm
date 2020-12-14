@@ -52,8 +52,8 @@
 	var/force_threshold = 0
 	///Maximum amount of stamina damage the mob can be inflicted with total
 	var/max_staminaloss = 200
-	///How much stamina the mob recovers per call of update_stamina
-	var/stamina_recovery = 10
+	///How much stamina the mob recovers per second
+	var/stamina_recovery = 5
 
 	///Temperature effect.
 	var/minbodytemp = 250
@@ -66,7 +66,7 @@
 	///Leaving something at 0 means it's off - has no maximum.
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	///This damage is taken when atmos doesn't fit all the requirements above.
-	var/unsuitable_atmos_damage = 2
+	var/unsuitable_atmos_damage = 1
 
 	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
 	melee_damage_lower = 0
@@ -192,10 +192,10 @@
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 
-/mob/living/simple_animal/Life()
+/mob/living/simple_animal/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery, FALSE, TRUE)
+		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -249,7 +249,7 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
-/mob/living/simple_animal/handle_status_effects()
+/mob/living/simple_animal/handle_status_effects(delta_time, times_fired)
 	..()
 	if(stuttering)
 		stuttering = 0
@@ -360,27 +360,26 @@
 	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
 		. = FALSE
 
-/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
+/mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if(abs(areatemp - bodytemperature) > 5)
-			var/diff = areatemp - bodytemperature
-			diff = diff / 5
-			adjust_bodytemperature(diff)
+		var/diff = areatemp - bodytemperature
+		if(abs(diff) > 5)
+			adjust_bodytemperature((diff > 0) ? clamp(diff * delta_time / 10, 0, diff) : clamp(diff * delta_time / 10, diff, 0))
 
 	if(!environment_air_is_safe())
-		adjustHealth(unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage * delta_time)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 	else
 		clear_alert("not_enough_oxy")
 
-	handle_temperature_damage()
+	handle_temperature_damage(delta_time, times_fired)
 
-/mob/living/simple_animal/proc/handle_temperature_damage()
+/mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
 	if(bodytemperature < minbodytemp)
-		adjustHealth(unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage * delta_time)
 		switch(unsuitable_atmos_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
@@ -389,7 +388,7 @@
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
-		adjustHealth(unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage * delta_time)
 		switch(unsuitable_atmos_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
@@ -490,7 +489,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/handle_fire()
+/mob/living/simple_animal/handle_fire(delta_time, times_fired)
 	return TRUE
 
 /mob/living/simple_animal/IgniteMob()

@@ -60,12 +60,12 @@
 /mob/living/simple_animal/hostile/asteroid/proc/spawn_crusher_loot()
 	butcher_results[crusher_loot] = 1
 
-/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
+/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage(delta_time, times_fired)
 	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
+		adjustBruteLoss(1 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
+		adjustBruteLoss(10 * delta_time)
 		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 	else
 		clear_alert("temp")

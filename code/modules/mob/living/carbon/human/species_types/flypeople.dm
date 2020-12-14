@@ -67,7 +67,7 @@
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-/obj/item/organ/stomach/fly/on_life()
+/obj/item/organ/stomach/fly/on_life(delta_time, times_fired)
 	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
 		var/mob/living/carbon/body = owner
 		// we do not loss any nutrition as a fly when vomiting out food

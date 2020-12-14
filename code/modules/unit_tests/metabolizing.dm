@@ -11,7 +11,7 @@
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)
 	C.reagents.add_reagent(reagent_type, 10)
-	C.reagents.metabolize(C, can_overdose = TRUE)
+	C.reagents.metabolize(C, 2, 0, can_overdose = TRUE)
 	C.reagents.clear_reagents()
 
 /datum/unit_test/metabolization/Destroy()
@@ -27,12 +27,12 @@
 	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
 	pill.attack(user, user)
 
-	user.Life()
+	user.Life((2 SECONDS) / (1 SECONDS))
 
 	TEST_ASSERT(user.reagents.has_reagent(meth), "User does not have meth in their system after consuming it")
 	TEST_ASSERT(user.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "User consumed meth, but did not gain movespeed modifier")
 
-	user.Life()
+	user.Life((2 SECONDS) / (1 SECONDS))
 
 	TEST_ASSERT(!user.reagents.has_reagent(meth), "User still has meth in their system when it should've finished metabolizing")
 	TEST_ASSERT(!user.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "User still has movespeed modifier despite not containing any more meth")

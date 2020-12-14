@@ -377,7 +377,7 @@
  * * can_overdose - Allows overdosing
  * * liverless - Stops reagents that aren't set as [/datum/reagent/var/self_consuming] from metabolizing
  */
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, delta_time, times_fired, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -412,14 +412,14 @@
 							is_addicted_to = TRUE
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
-						need_mob_update += R.overdose_process(C)
+						need_mob_update += R.overdose_process(C, delta_time, times_fired)
 					var/datum/reagent/addiction_type = new R.addiction_type()
 					if(is_addicted_to)
 						for(var/addiction in cached_addictions)
 							var/datum/reagent/A = addiction
 							if(istype(addiction_type, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
+				need_mob_update += R.on_mob_life(C, delta_time, times_fired)
 
 	if(can_overdose)
 		if(addiction_tick == 6)

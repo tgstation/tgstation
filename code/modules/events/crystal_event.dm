@@ -661,7 +661,7 @@ This section is for the crystal monsters variations
 	attack_verb_simple = "smash"
 	attack_sound = 'sound/effects/supermatter.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 10
+	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("crystal")

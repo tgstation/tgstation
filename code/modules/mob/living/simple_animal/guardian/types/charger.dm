@@ -15,7 +15,7 @@
 	var/charging = 0
 	var/atom/movable/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
+/mob/living/simple_animal/hostile/guardian/charger/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
 	. = ..()
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)

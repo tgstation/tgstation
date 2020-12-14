@@ -900,7 +900,7 @@
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
-/mob/living/carbon/human/update_gravity(has_gravity,override = 0)
+/mob/living/carbon/human/update_gravity(has_gravity, override = 0)
 	if(dna?.species) //prevents a runtime while a human is being monkeyfied
 		override = dna.species.override_float
 	..()

@@ -5,8 +5,11 @@
 	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
 	var/phobia_type
-	var/next_check = 0
-	var/next_scare = 0
+	/// Cooldown for proximity checks so we don't spam a range 7 view every two seconds.
+	COOLDOWN_DECLARE(check_cooldown)
+	/// Cooldown for freakouts to prevent permastunning.
+	COOLDOWN_DECLARE(scare_cooldown)
+
 	var/regex/trigger_regex
 	//instead of cycling every atom, only cycle the relevant types
 	var/list/trigger_mobs
@@ -31,16 +34,17 @@
 	trigger_species = SStraumas.phobia_species[phobia_type]
 	..()
 
-/datum/brain_trauma/mild/phobia/on_life()
+/datum/brain_trauma/mild/phobia/on_life(delta_time, times_fired)
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 	if(owner.is_blind())
 		return
-	if(world.time > next_check && world.time > next_scare)
-		next_check = world.time + 50
-		var/list/seen_atoms = view(7, owner)
 
+	if(COOLDOWN_FINISHED(src, check_cooldown) && COOLDOWN_FINISHED(src, scare_cooldown))
+		COOLDOWN_START(src, check_cooldown, 5 SECONDS)
+
+		var/list/seen_atoms = view(7, owner)
 		if(LAZYLEN(trigger_objs))
 			for(var/obj/O in seen_atoms)
 				if(is_type_in_typecache(O, trigger_objs))
@@ -68,13 +72,12 @@
 
 				else if(ishuman(M)) //check their species
 					var/mob/living/carbon/human/H = M
-
 					if(LAZYLEN(trigger_species) && H.dna && H.dna.species && is_type_in_typecache(H.dna.species, trigger_species))
 						freak_out(H)
 						return
 
 /datum/brain_trauma/mild/phobia/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || !COOLDOWN_FINISHED(src, scare_cooldown)) //words can't trigger you if you can't hear them *taps head*
 		return
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
@@ -90,7 +93,7 @@
 		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
-	next_scare = world.time + 120
+	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	if(owner.stat == DEAD)
 		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")

@@ -29,17 +29,17 @@
 		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()
 
-/obj/item/organ/body_egg/on_death()
+/obj/item/organ/body_egg/on_death(delta_time, times_fired)
 	. = ..()
 	if(!owner)
 		return
-	egg_process()
+	egg_process(delta_time, times_fired)
 
-/obj/item/organ/body_egg/on_life()
+/obj/item/organ/body_egg/on_life(delta_time, times_fired)
 	. = ..()
-	egg_process()
+	egg_process(delta_time, times_fired)
 
-/obj/item/organ/body_egg/proc/egg_process()
+/obj/item/organ/body_egg/proc/egg_process(delta_time, times_fired)
 	return
 
 /obj/item/organ/body_egg/proc/RefreshInfectionImage()

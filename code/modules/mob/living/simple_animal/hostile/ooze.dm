@@ -55,7 +55,7 @@
 	eat_atom(A)
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life()
+/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change
@@ -66,7 +66,7 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * delta_time)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
 			nutrition_change += consumption_amount * consumable.nutriment_factor
@@ -74,7 +74,7 @@
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.5)
+		adjustBruteLoss(0.25 * delta_time)
 
 ///Returns whether or not the supplied movable atom is edible.
 /mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/potential_food)

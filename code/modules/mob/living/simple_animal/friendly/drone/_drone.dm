@@ -300,7 +300,7 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
-/mob/living/simple_animal/drone/handle_temperature_damage()
+/mob/living/simple_animal/drone/handle_temperature_damage(delta_time, times_fired)
 	return
 
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)

@@ -4,13 +4,13 @@
 	spread_text = "Contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Rest or an injection of mutadone"
-	cure_chance = 6
+	cure_chance = 3
 	agent = ""
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
 	severity = DISEASE_SEVERITY_HARMFUL
 	permeability_mod = 0.4
-	stage_prob = 2
+	stage_prob = 1
 	var/restcure = 0
 
 /datum/disease/dna_retrovirus/New()
@@ -26,7 +26,7 @@
 	D.restcure = restcure
 	return D
 
-/datum/disease/dna_retrovirus/stage_act()
+/datum/disease/dna_retrovirus/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -34,41 +34,41 @@
 	switch(stage)
 		if(1)
 			if(restcure)
-				if(affected_mob.body_position == LYING_DOWN && prob(30))
+				if(affected_mob.body_position == LYING_DOWN && DT_PROB(15, delta_time))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
-			if (prob(8))
+			if(DT_PROB(4, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your head hurts.</span>")
-			if (prob(9))
+			if(DT_PROB(4.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a tingling sensation in your chest.</span>")
-			if (prob(9))
+			if(DT_PROB(4.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel angry.</span>")
 		if(2)
 			if(restcure)
-				if(affected_mob.body_position == LYING_DOWN && prob(20))
+				if(affected_mob.body_position == LYING_DOWN && DT_PROB(10, delta_time))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
-			if (prob(8))
+			if(DT_PROB(4, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your skin feels loose.</span>")
-			if (prob(10))
+			if(DT_PROB(5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel very strange.</span>")
-			if (prob(4))
+			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head!</span>")
 				affected_mob.Unconscious(40)
-			if (prob(4))
+			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your stomach churns.</span>")
 		if(3)
 			if(restcure)
-				if(affected_mob.body_position == LYING_DOWN && prob(20))
+				if(affected_mob.body_position == LYING_DOWN && DT_PROB(10, delta_time))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
-			if (prob(10))
+			if(DT_PROB(5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your entire body vibrates.</span>")
 
-			if (prob(35))
+			if (DT_PROB(20, delta_time))
 				if(prob(50))
 					scramble_dna(affected_mob, 1, 0, rand(15,45))
 				else
@@ -76,11 +76,11 @@
 
 		if(4)
 			if(restcure)
-				if(affected_mob.body_position == LYING_DOWN && prob(5))
+				if(affected_mob.body_position == LYING_DOWN && DT_PROB(2.5, delta_time))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
-			if (prob(60))
+			if (DT_PROB(35, delta_time))
 				if(prob(50))
 					scramble_dna(affected_mob, 1, 0, rand(50,75))
 				else

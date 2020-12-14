@@ -35,14 +35,14 @@
 	if(!reagents)
 		create_reagents(reagent_vol)
 
-/obj/item/organ/stomach/on_life()
+/obj/item/organ/stomach/on_life(delta_time, times_fired)
 	. = ..()
 
 	//Manage species digestion
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			humi.dna.species.handle_digestion(humi)
+			humi.dna.species.handle_digestion(humi, delta_time, times_fired)
 
 	var/mob/living/carbon/body = owner
 
@@ -67,7 +67,7 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min(round(metabolism_efficiency * bit.volume, 0.1) + amount_min, amount_max)
+		var/amount = min((round(metabolism_efficiency * bit.volume, 0.1) + amount_min) * delta_time, amount_max)
 
 		if(!(amount > 0))
 			continue
@@ -79,7 +79,7 @@
 
 	//Handle disgust
 	if(body)
-		handle_disgust(body)
+		handle_disgust(body, delta_time, times_fired)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -102,40 +102,40 @@
 		return
 
 	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
-	if(prob(damage * 0.025 * nutri_vol * nutri_vol))
+	if(DT_PROB(0.0125 * damage * nutri_vol * nutri_vol, delta_time))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 		return
 
 	// the change of vomit is now high
-	if(damage > high_threshold && prob(damage * 0.1 * nutri_vol * nutri_vol))
+	if(damage > high_threshold && DT_PROB(0.05 * damage * nutri_vol * nutri_vol, delta_time))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.inherent_traits)
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.disgust)
-		var/pukeprob = 5 + 0.05 * H.disgust
+		var/pukeprob = 2.5 + (0.025 * H.disgust)
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
-			if(prob(10))
+			if(DT_PROB(5, delta_time))
 				H.stuttering += 1
 				H.add_confusion(2)
-			if(prob(10) && !H.stat)
+			if(DT_PROB(5, delta_time) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
 			H.jitteriness = max(H.jitteriness - 3, 0)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
 				H.add_confusion(2.5)
 				H.stuttering += 1
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)
 		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(prob(25))
+			if(DT_PROB(12.5, delta_time))
 				H.blur_eyes(3) //We need to add more shit down here
 
-		H.adjust_disgust(-0.5 * disgust_metabolism)
+		H.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
@@ -162,18 +162,18 @@
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.05 //very bad
 
-/obj/item/organ/stomach/bone/on_life()
+/obj/item/organ/stomach/bone/on_life(delta_time, times_fired)
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
 	if(milk)
 		var/mob/living/carbon/body = owner
 		if(milk.volume > 10)
 			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
+		body.heal_bodypart_damage(0.75 * delta_time,0, 0)
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate)
+			iter_wound.on_xadone(1, delta_time, times_fired)
+		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 
 /obj/item/organ/stomach/plasmaman
@@ -182,18 +182,18 @@
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.12
 
-/obj/item/organ/stomach/plasmaman/on_life()
+/obj/item/organ/stomach/plasmaman/on_life(delta_time, times_fired)
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
 	if(milk)
 		var/mob/living/carbon/body = owner
 		if(milk.volume > 10)
 			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
+		body.heal_bodypart_damage(0.75 * delta_time, 0, 0)
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate)
+			iter_wound.on_xadone(1, delta_time, times_fired)
+		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 
 /obj/item/organ/stomach/ethereal
@@ -202,9 +202,9 @@
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 
-/obj/item/organ/stomach/ethereal/on_life()
+/obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
 	..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
 	..()
