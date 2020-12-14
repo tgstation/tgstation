@@ -29,7 +29,7 @@
 		to_chat(user, "<span class='warning'>You don't think \the [I] will be the thing getting modified if you use it on \the [src]!</span>")
 		return
 
-	var/signal_out = SEND_SIGNAL(I, COMSIG_ITEM_SHARPEN_ACT, increment, max) //This is used to check more things if the item has a relevant component. As of December 2020, this is only used for two_handed.
+	var/signal_out = SEND_SIGNAL(I, COMSIG_ITEM_SHARPEN_ACT, increment, max) //This is used to check more things if the item has a relevant component. As of December 2020, this is only used for two_handed and transforming.
 	if(signal_out & COMPONENT_BLOCK_SHARPEN_MAXED) //If the item's components enforce more limits on maximum power from sharpening,  we fail
 		to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
 		return
