@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - code_imp: "Removed legacy code that was rendered completely useless six years ago. A round of applause for oldcode everyone!"
