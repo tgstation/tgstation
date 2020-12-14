@@ -231,6 +231,9 @@
 /obj/item/clothing/suit/toggle/labcoat/paramedic
 	mutant_variants = NONE
 
+/obj/item/clothing/suit/toggle/labcoat/roboticist
+	mutant_variants = NONE
+
 /obj/item/clothing/suit/jacket/miljacket
 	mutant_variants = NONE
 
