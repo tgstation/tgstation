@@ -57,6 +57,7 @@
 /obj/effect/hallucination/simple/progress_trap
 	name = ""
 	desc = ""
+	image_icon = 'icons/effects/progressbar_skillcheck.dmi'
 	image_state = "progress_trap"
 	image_layer = ABOVE_HUD_LAYER
 	///The progress bar that this booster is linked to
@@ -79,35 +80,32 @@
 	name = "skill check"
 	desc = "If I get my timing right, I could get my work done a little more efficiently."
 	image_state = "skill_ring"
-	max_use_frequency = 2
-	var/degrees = 0
-	var/degree_increment = 10
+	max_use_frequency = 2.5
+	var/start_time
+	var/spin_speed = 1 SECONDS
 
 /obj/effect/hallucination/simple/progress_focus/skillcheck/Initialize(mapload, mob/target_mob, datum/progressbar/target_bar, bonus_time, f_sound)
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	extra_effect.SpinAnimation(spin_speed, -1)
+	start_time = REALTIMEOFDAY
 
 /obj/effect/hallucination/simple/progress_focus/skillcheck/build_extra_effect()
 	extra_effect = new /obj/effect/hallucination/simple/skill_marker(get_turf(src), target)
 
-/obj/effect/hallucination/simple/progress_focus/skillcheck/process()
-	
-	degrees = (degrees + degree_increment) % 360
-	extra_effect.transform = matrix().Turn(degrees)
-
 /obj/effect/hallucination/simple/progress_focus/skillcheck/on_boost(mob/user)
-	if (degrees >= 150 && degrees <= 230)
+	var/current_time = REALTIMEOFDAY
+	
+	var/time_diff = (current_time - start_time) % spin_speed
+	var/degrees = time_diff * 360/spin_speed
+	var/obj/effect/hallucination/simple/skill_marker/temp_effect = new(get_turf(src), target)
+	temp_effect.transform = matrix().Turn(degrees)
+	QDEL_IN(temp_effect, 1 SECONDS)
+	if (time_diff > (spin_speed/2 * 0.6) && time_diff < spin_speed - (spin_speed/2 * 0.6))
 		linked_bar.boost_progress(time_per_click)
 		user.playsound_local(user, focus_sound, 50, TRUE)
-		var/obj/effect/hallucination/simple/skill_marker/temporary_mark = new(get_turf(src), target)
-		temporary_mark.transform = matrix().Turn(degrees)
-		QDEL_IN(temporary_mark, 0.5 SECONDS)
 	else
+		linked_bar.boost_progress(-1 * time_per_click)
 		user.playsound_local(user, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
-
-/obj/effect/hallucination/simple/progress_focus/skillcheck/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/hallucination/simple/skill_marker
 	name = ""
