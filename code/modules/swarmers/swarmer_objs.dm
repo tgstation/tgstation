@@ -119,6 +119,7 @@
  * Called specifically when a swarmer is about to be destroyed, so we don't have any null references.
  * Arguments:
  * * mob/swarmer - The swarmer to be removed from the list.
+ * * force - Parameter sent by the COSMIG_PARENT_QDELETING signal.  Does nothing in this proc.
  */
 /obj/structure/swarmer_beacon/proc/remove_swarmer(mob/swarmer, force)
 	SIGNAL_HANDLER
