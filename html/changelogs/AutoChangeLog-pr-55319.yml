@@ -1,0 +1,8 @@
+author: "Qustinnus, Kryson"
+delete-after: True
+changes: 
+  - rscadd: "Adds the griddle, a panless stove/grill for you to bake your meat products on. Nanotrasen has decided to move away from microwaving everything"
+  - tweak: "Burgers are now made from patties, patties are grilled on the griddle, raw patties are made by using a rolling pin on a raw meatball"
+  - tweak: "Most meat is grilled on the griddle now instead of microwaved"
+  - tweak: "More meatballs are gained from meat
+sprite: new meatball, patty and sausage sprites"
