@@ -90246,6 +90246,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/machinery/camera{
+	c_tag = "Prison Botany";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "pSs" = (
@@ -90839,6 +90843,11 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/camera{
+	c_tag = "Prison Cafeteria";
+	dir = 1;
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "tCi" = (
@@ -91201,6 +91210,11 @@
 /mob/living/simple_animal/mouse/brown/tom{
 	name = "Jerm"
 	},
+/obj/machinery/camera{
+	c_tag = "Prison Maintenance";
+	dir = 4;
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
 "vAM" = (
@@ -91228,12 +91242,24 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
+"vGA" = (
+/obj/machinery/camera{
+	c_tag = "Prison Recreation";
+	dir = 4;
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "vHi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
 "vIj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/camera{
+	c_tag = "Prison Labor";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "vJw" = (
@@ -91526,6 +91552,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xzI" = (
+/obj/machinery/camera{
+	c_tag = "Prison Cells";
+	dir = 4;
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "xFp" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -97720,7 +97754,7 @@ aeu
 aeU
 aeU
 anu
-tFc
+xzI
 clN
 chR
 chR
@@ -97730,7 +97764,7 @@ gUp
 mBd
 iBG
 chR
-tFc
+vGA
 tFc
 chR
 qgG
