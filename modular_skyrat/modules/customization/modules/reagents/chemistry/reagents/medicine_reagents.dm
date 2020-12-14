@@ -65,7 +65,6 @@
 	..()
 
 /datum/reagent/medicine/nanite_slurry/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
+	M.heal_bodypart_damage(0.5*REM, 0.5*REM, required_status = BODYPART_ROBOTIC)
 	..()
 	. = 1
