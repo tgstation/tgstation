@@ -5,6 +5,7 @@
 	desc = "A block that makes things sharp."
 	///This is how hard the whetstone itself hits stuff
 	force = 5
+	///If zero, the whetstone can be used. If one, the whetstone is a worn whetstone.
 	var/used = 0
 	///How much force the whetstone can add to an item.
 	var/increment = 4
