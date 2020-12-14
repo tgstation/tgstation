@@ -201,3 +201,17 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
 	return TRUE
+
+/obj/machinery/implantchair/month
+	name = "Calendar converter"
+	desc = "Used to purge genomes from a creature's true form."
+	special = TRUE
+	special_name = "Calendarize"
+	injection_cooldown = 0
+	replenish_cooldown = 300
+
+/obj/machinery/implantchair/month/implant_action(mob/living/carbon/human/H,mob/user)
+	if(!istype(H))
+		return FALSE
+	H.set_species(/datum/species/monthmen, 1)//WE RULE
+	return TRUE
