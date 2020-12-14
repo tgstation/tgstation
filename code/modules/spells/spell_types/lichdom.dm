@@ -53,6 +53,7 @@
 		marked_item.name = "ensouled [marked_item.name]"
 		marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
 		marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
+		marked_item.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 		new /obj/item/phylactery(marked_item, M.mind)
 
@@ -92,7 +93,7 @@
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	START_PROCESSING(SSobj, src)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
@@ -100,7 +101,6 @@
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	GLOB.poi_list -= src
 	if(!active_phylacteries)
 		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()

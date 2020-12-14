@@ -186,8 +186,6 @@
 	var/cached_atmos_cooldown = atmos_cooldown + 1
 
 	var/planet_atmos = planetary_atmos
-	if (planet_atmos)
-		adjacent_turfs_length++
 
 	var/datum/gas_mixture/our_air = air
 
@@ -245,12 +243,17 @@
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
+		// archive ourself again so we don't accidentally share more gas than we currently have
+		archive()
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
 				EG.add_turf(src)
 				our_excited_group = excited_group
-			our_air.share(G, adjacent_turfs_length)
+			// shares 4/5 of our difference in moles with the atmosphere
+			our_air.share(G, 0.25)
+			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
+			our_air.temperature_share(G, OPEN_HEAT_TRANSFER_COEFFICIENT, G.temperature_archived, G.heat_capacity() * 5)
 			LAST_SHARE_CHECK
 
 	our_air.react(src)

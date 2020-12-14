@@ -5,19 +5,15 @@
 
 /mob/living/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/projectile))
-		var/obj/projectile/P = mover
-		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
+	if(.)
+		return
 	if(mover.throwing)
 		return (!density || body_position == LYING_DOWN || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
-	return . || !mover.density || body_position == LYING_DOWN
-
+	return !mover.density || body_position == LYING_DOWN
 
 /mob/living/toggle_move_intent()
 	. = ..()

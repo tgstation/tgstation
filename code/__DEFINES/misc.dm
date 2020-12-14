@@ -185,10 +185,19 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
-//Gets the turf this atom inhabits
+/**
+ * Get the turf that `A` resides in, regardless of any containers.
+ *
+ * Use in favor of `A.loc` or `src.loc` so that things work correctly when
+ * stored inside an inventory, locker, or other container.
+ */
 #define get_turf(A) (get_step(A, 0))
 
-//Same as above except gets the area instead
+/**
+ * Get the ultimate area of `A`, similarly to [get_turf].
+ *
+ * Use instead of `A.loc.loc`.
+ */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
 //Ghost orbit types:
@@ -447,6 +456,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
+
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
@@ -522,9 +534,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define NO_BUCKLE_LYING -1
 
 
-// timed_action_flags parameter for `/proc/do_atom`, `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
-#define IGNORE_TARGET_IN_DOAFTERS (1<<0)
-#define IGNORE_USER_LOC_CHANGE (1<<1)
-#define IGNORE_TARGET_LOC_CHANGE (1<<2)
-#define IGNORE_HELD_ITEM (1<<3)
-#define IGNORE_INCAPACITATED (1<<4)
+// timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+#define IGNORE_USER_LOC_CHANGE (1<<0)
+#define IGNORE_TARGET_LOC_CHANGE (1<<1)
+#define IGNORE_HELD_ITEM (1<<2)
+#define IGNORE_INCAPACITATED (1<<3)

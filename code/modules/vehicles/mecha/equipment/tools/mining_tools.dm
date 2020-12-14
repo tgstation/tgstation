@@ -40,12 +40,13 @@
 		if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 			return
 
-	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
-		"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-		"<span class='hear'>You hear drilling.</span>")
-
 	// You can't drill harder by clicking more.
-	if(!(target in source.do_afters) && do_after_cooldown(target, source))
+	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
+
+		target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
+					"<span class='hear'>You hear drilling.</span>")
+
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))

@@ -177,8 +177,9 @@
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
-	tank_holder_icon_state = null
-	volume = 24
+	worn_icon_state = "emergency_engi"
+	tank_holder_icon_state = "holder_emergency_engi"
+	volume = 12 //If it's double of the above, shouldn't it be double the volume??
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

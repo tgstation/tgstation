@@ -43,6 +43,7 @@
 	create_reagents(100, INJECTABLE | DRAWABLE)
 
 /obj/item/slime_extract/on_grind()
+	. = ..()
 	if(Uses)
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
@@ -155,12 +156,11 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
-			var/obj/item/reagent_containers/food/snacks/O = new food_type
-			O.silver_spawned = TRUE
-			if(!user.put_in_active_hand(O))
-				O.forceMove(user.drop_location())
+			var/obj/item/food_item = new food_type
+			if(!user.put_in_active_hand(food_item))
+				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
+			user.visible_message("<span class='warning'>[user] spits out [food_item]!</span>", "<span class='notice'>You spit out [food_item]!</span>")
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
 			var/drink_type = get_random_drink()
