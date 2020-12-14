@@ -3,12 +3,16 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
-	force = 5 //This is how hard the whetstone itself hits stuff
+	///This is how hard the whetstone itself hits stuff
+	force = 5
 	var/used = 0
-	var/increment = 4 //how much force the whetstone can add to an item.
-	var/max = 30 //Maximum force sharpening items with the whetstone can result in
+	///how much force the whetstone can add to an item.
+	var/increment = 4
+	///Maximum force sharpening items with the whetstone can result in
+	var/max = 30
 	var/prefix = "sharpened"
-	var/requires_sharpness = 1 //Items have to already be sharp to be sharpened by a normal whetstone
+	///Items have to already be sharp to be sharpened by a normal whetstone
+	var/requires_sharpness = 1
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
 	if(used) //You can't sharpen stuff with a worn whetstone
