@@ -18,7 +18,7 @@
 	else if(prob(10))
 		name = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
 		if(name == "Furious George")
-			aggressive = TRUE // Furious George is PISSED
+			ai_controller = /datum/ai_controller/monkey/angry //hes always mad
 	. = ..()
 
 	//These have to be after the parent new to ensure that the monkey
