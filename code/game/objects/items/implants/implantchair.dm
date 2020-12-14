@@ -214,4 +214,5 @@
 	if(!istype(H))
 		return FALSE
 	H.set_species(/datum/species/monthmen, 1)//WE RULE
+	H.fully_replace_character_name(H.dna.species.random_name())
 	return TRUE
