@@ -606,7 +606,7 @@
 						break
 				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
-						// If it's a corrupt or rigged sell, attempting to send it through Bluespace could have unforeseen consequences.
+						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
 						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
 							var/obj/item/stock_parts/cell/checked_cell = B
 							// If it's rigged or corrupted, max the charge. Then explode it.
