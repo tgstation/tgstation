@@ -146,6 +146,8 @@
 	var/list/canSmoothWith = null
 	///Reference to atom being orbited
 	var/atom/orbit_target
+	///AI controller that controls this atom. type on init, then turned into an instance during runtime
+	var/datum/ai_controller/ai_controller
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -236,6 +238,7 @@
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
+	InitializeAIController()
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -281,6 +284,7 @@
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
+	QDEL_NULL(ai_controller)
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
@@ -714,6 +718,7 @@
  * throw lots of items around - singularity being a notable example)
  */
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	SEND_SIGNAL(src, COMSIG_ATOM_HITBY, AM, skipcatch, hitpush, blocked, throwingdatum)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
 		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
 
@@ -1097,6 +1102,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1141,6 +1147,16 @@
 		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
 		if(!isnull(strength))
 			AddComponent(/datum/component/radioactive, strength, src)
+
+
+	if(href_list[VV_HK_ADD_AI])
+		if(!check_rights(R_VAREDIT))
+			return
+		var/result = input(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller") as null|anything in subtypesof(/datum/ai_controller)
+		if(!result)
+			return
+		ai_controller = new result(src)
+
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
 		var/matrix/M = transform
@@ -1279,6 +1295,8 @@
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			var/atom/created_atom = new atom_to_create(drop_location())
+			created_atom.pixel_x = rand(-8, 8)
+			created_atom.pixel_y = rand(-8, 8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 			to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src].</span>")
@@ -1687,3 +1705,14 @@
 		var/atom/atom_orbiter = o
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
+
+
+/**
+* Instantiates the AI controller of this atom. Override this if you want to assign variables first.
+*
+* This will work fine without manually passing arguments.
+
++*/
+/atom/proc/InitializeAIController()
+	if(ai_controller)
+		ai_controller = new ai_controller(src)

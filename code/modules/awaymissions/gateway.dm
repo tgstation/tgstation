@@ -171,6 +171,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/datum/gateway_destination/target
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
+	/// icon when off
+	var/icon_off = "off"
+	/// icon when on
+	var/icon_on = "on"
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
@@ -199,9 +203,9 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/update_icon_state()
 	if(target)
-		icon_state = "on"
+		icon_state = icon_on
 	else
-		icon_state = "off"
+		icon_state = icon_off
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
