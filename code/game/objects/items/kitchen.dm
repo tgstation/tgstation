@@ -279,7 +279,7 @@
 /obj/item/kitchen/spoon
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
-	icon_state = "plastic_spoon"
+	icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	force = 2
@@ -295,7 +295,6 @@
 
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
-	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic=120)
