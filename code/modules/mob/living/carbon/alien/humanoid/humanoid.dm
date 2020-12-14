@@ -7,7 +7,7 @@
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
 	melee_damage_lower = 20	//Refers to unarmed damage, aliens do unarmed attacks.
-	melee_damage_upper = 20	//All aliens used to deal a hardcoded 20 damage. Unless defined elsewhere, now they deal a non-hardcoded 20 damage!
+	melee_damage_upper = 20
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
