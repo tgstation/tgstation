@@ -42,7 +42,8 @@ export class Blinking extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.interval !== this.props.interval || prevProps.time !== this.props.time) {
+    if (prevProps.interval !== this.props.interval
+      || prevProps.time !== this.props.time) {
       this.createTimer();
     }
   }
@@ -59,6 +60,6 @@ export class Blinking extends Component {
       }}>
         {props.children}
       </span>
-    )
+    );
   }
 }

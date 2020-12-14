@@ -137,7 +137,7 @@ const NoConnectionModal = () => {
         </Flex.Item>
       </Flex>
     </Dimmer>
-  )
+  );
 };
 
 const PageBuyingShuttle = (props, context) => {

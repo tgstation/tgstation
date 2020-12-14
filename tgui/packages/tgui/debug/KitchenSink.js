@@ -187,7 +187,7 @@ const KitchenSinkBlinker = props => {
       </Blinking>
     </Section>
   );
-}
+};
 
 const KitchenSinkBox = props => {
   return (
