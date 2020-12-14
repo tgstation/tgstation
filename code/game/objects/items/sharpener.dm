@@ -6,12 +6,12 @@
 	///This is how hard the whetstone itself hits stuff
 	force = 5
 	var/used = 0
-	///how much force the whetstone can add to an item.
+	///How much force the whetstone can add to an item.
 	var/increment = 4
 	///Maximum force sharpening items with the whetstone can result in
 	var/max = 30
 	var/prefix = "sharpened"
-	///Items have to already be sharp to be sharpened by a normal whetstone
+	///If true, the whetstone will only sharpen already sharp items
 	var/requires_sharpness = 1
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
