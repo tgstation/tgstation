@@ -5,7 +5,7 @@
  */
 
 export { AnimatedNumber } from './AnimatedNumber';
-export { Blinking } from './Blinking';
+export { Blink } from './Blink';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
 export { Button } from './Button';

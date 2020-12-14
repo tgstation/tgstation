@@ -1,7 +1,7 @@
 import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
-import { Blinking, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
+import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
 import { Window } from "../layouts";
 import { sanitizeText } from "../sanitize";
 
@@ -117,7 +117,7 @@ const NoConnectionModal = () => {
             size={10}
           />
 
-          <Blinking>
+          <Blink>
             <div
               style={{
                 background: "#db2828",
@@ -129,7 +129,7 @@ const NoConnectionModal = () => {
                 width: "150px",
               }}
             />
-          </Blinking>
+          </Blink>
         </Flex.Item>
 
         <Flex.Item fontSize="16px">
