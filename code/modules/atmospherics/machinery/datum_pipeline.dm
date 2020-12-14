@@ -53,12 +53,12 @@
 			if(!result?.len)
 				possible_expansions -= borderline
 				continue
-			for(var/obj/machinery/atmospherics/device in result)
-				if(!istype(device, /obj/machinery/atmospherics/pipe))
-					device.setPipenet(src, borderline)
-					addMachineryMember(device)
+			for(var/obj/machinery/atmospherics/considered_device in result)
+				if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
+					considered_device.setPipenet(src, borderline)
+					addMachineryMember(considered_device)
 					continue
-				var/obj/machinery/atmospherics/pipe/item = device
+				var/obj/machinery/atmospherics/pipe/item = considered_device
 				if(members.Find(item))
 					continue
 				if(item.parent)
@@ -127,17 +127,17 @@
 	update = TRUE
 	qdel(parent_pipeline)
 
-/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/device)
+/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/considered_device)
 	return
 
-/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/device)
-	parent.addMember(device, src)
+/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/considered_device)
+	parent.addMember(considered_device, src)
 
-/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/device)
-	var/datum/pipeline/device_pipeline = returnPipenet(device)
+/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/considered_device)
+	var/datum/pipeline/device_pipeline = returnPipenet(considered_device)
 	if(!device_pipeline)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
-	device_pipeline.addMember(device, src)
+	device_pipeline.addMember(considered_device, src)
 
 
 /datum/pipeline/proc/temporarily_store_air()
