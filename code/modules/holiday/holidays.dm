@@ -278,6 +278,7 @@
 	name = "ANZAC Day"
 	begin_day = 25
 	begin_month = APRIL
+	drone_hat = /obj/item/food/grown/poppy
 
 /datum/holiday/anz/getStationPrefix()
 	return pick("Australian","New Zealand","Poppy", "Southern Cross")
