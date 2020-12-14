@@ -184,6 +184,7 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, bonus_time = 0, focus_sound = null)
 	if(!user || !target)
 		return FALSE
+	time -= bonus_time
 	var/user_loc = user.loc
 
 	var/drifting = FALSE
@@ -283,7 +284,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
-
+	time -= bonus_time
 	time *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
@@ -339,7 +340,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!length(targets))
 		return FALSE
 	var/user_loc = user.loc
-
+	time -= bonus_time
 	time *= user.cached_multiplicative_actions_slowdown
 
 	var/drifting = FALSE
