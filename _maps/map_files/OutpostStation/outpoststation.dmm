@@ -11015,10 +11015,10 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "gET" = (
-/obj/machinery/processor,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
 	dir = 4
 	},
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "gEV" = (
@@ -17059,6 +17059,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"kkn" = (
+/obj/machinery/griddle,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "kko" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/trimline/green/filled/arrow_ccw,
@@ -26180,7 +26184,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "pDl" = (
-/obj/structure/table,
+/obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "pDK" = (
@@ -31874,18 +31878,14 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "sRB" = (
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
-/obj/item/circuitboard/machine/thermomachine/freezer,
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "sRR" = (
@@ -69227,7 +69227,7 @@ tBe
 diL
 rKf
 bqg
-pDl
+kkn
 agj
 tLi
 nOH
@@ -69484,7 +69484,7 @@ tBe
 pDl
 gET
 eAV
-eAV
+kkn
 agj
 tLi
 nOH
