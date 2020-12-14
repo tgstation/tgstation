@@ -9,7 +9,6 @@
 	var/max = 30 //Maximum force sharpening items with the whetstone can result in
 	var/prefix = "sharpened"
 	var/requires_sharpness = 1 //Items have to already be sharp to be sharpened by a normal whetstone
-	
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
 	if(used) //You can't sharpen stuff with a worn whetstone
@@ -45,7 +44,7 @@
 	I.name = "[prefix] [I.name]" //We add a whetstone-type-dependent prefix to the item.
 	name = "worn out [name]" //whetstone becomes used whetstone
 	desc = "[desc] At least, it used to."
-	used = 1 
+	used = 1
 	update_icon()
 
 /obj/item/sharpener/super //Admin-only whetstone that can turn almost anything into a 200 damage weapon. Turn people into one stab man!
