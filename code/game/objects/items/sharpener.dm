@@ -3,8 +3,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
-	///This is how hard the whetstone itself hits stuff
-	force = 5
+	force = 5 //This is how hard the whetstone itself hits stuff
 	///If zero, the whetstone can be used. If one, the whetstone is a worn whetstone.
 	var/used = 0
 	///How much force the whetstone can add to an item.
