@@ -15524,13 +15524,12 @@
 	},
 /area/maintenance/starboard)
 "azH" = (
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/science/robotics/mechbay)
+/area/maintenance/starboard/fore)
 "azI" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/tile/purple{
@@ -18924,8 +18923,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary";
-	req_access_txt = null;
-	req_one_access_txt = "1;4"
+	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -76791,9 +76789,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
 "ctw" = (
@@ -123707,8 +123702,8 @@ aaa
 aaa
 aaa
 aaa
-acm
-acm
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -123965,7 +123960,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+aaa
 aaa
 aaa
 aaa
