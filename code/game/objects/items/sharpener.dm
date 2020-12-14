@@ -10,6 +10,7 @@
 	var/increment = 4
 	///Maximum force sharpening items with the whetstone can result in
 	var/max = 30
+	///The prefix a whetstone applies when an item is sharpened with it
 	var/prefix = "sharpened"
 	///If true, the whetstone will only sharpen already sharp items
 	var/requires_sharpness = 1
