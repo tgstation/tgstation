@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - refactor: "Monkey AI is now contained in a datum, allowing for it to be applied to other mobs."

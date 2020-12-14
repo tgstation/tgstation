@@ -1,4 +1,0 @@
-author: "ATH1909"
-delete-after: True
-changes: 
-  - rscadd: "Nuke disks (and other station-loving items) now make a buzzing noise when they get teleported out of your inventory due to being taken to an area they're not supposed to be in (deep space, lavaland, etc.)."

@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a case where you could get softlocked as a cyborg when trying to choose 2 different modules at once."

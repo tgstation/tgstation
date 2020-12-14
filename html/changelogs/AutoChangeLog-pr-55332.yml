@@ -1,4 +1,0 @@
-author: "KathrinBailey"
-delete-after: True
-changes: 
-  - bugfix: "Players can no longer us the ignore verb to gather a list of people's characters and ckeys together."

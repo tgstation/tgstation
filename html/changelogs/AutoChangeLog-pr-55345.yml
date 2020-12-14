@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "added GUI button to freezer/heater that allow the players to change setting on the fly without the need to deconstruct the machine"
-  - tweak: "changed the name to Temperature control unit"
-  - tweak: "freezer/heater circuitboards will build the machine starting with the freezer, no longer allow a screw to be used (you can still setup the piping layer)"
