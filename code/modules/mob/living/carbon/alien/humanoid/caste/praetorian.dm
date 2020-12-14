@@ -4,8 +4,6 @@
 	maxHealth = 250
 	health = 250
 	icon_state = "alienp"
-	melee_damage_lower = 20
-	melee_damage_upper = 20
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
 	real_name = name

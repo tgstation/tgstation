@@ -4,8 +4,6 @@
 	maxHealth = 150
 	health = 150
 	icon_state = "aliens"
-	melee_damage_lower = 20
-	melee_damage_upper = 20
 
 /mob/living/carbon/alien/humanoid/sentinel/Initialize()
 	AddAbility(new /obj/effect/proc_holder/alien/sneak)

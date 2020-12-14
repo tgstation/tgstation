@@ -4,8 +4,6 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "aliend"
-	melee_damage_lower = 20
-	melee_damage_upper = 20
 
 /mob/living/carbon/alien/humanoid/drone/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
