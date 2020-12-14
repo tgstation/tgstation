@@ -36290,6 +36290,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -78482,11 +78483,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "wfI" = (
-/obj/structure/table,
-/obj/item/kitchen/rollingpin,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

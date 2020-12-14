@@ -53,6 +53,7 @@
 		marked_item.name = "ensouled [marked_item.name]"
 		marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
 		marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
+		marked_item.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 		new /obj/item/phylactery(marked_item, M.mind)
 
