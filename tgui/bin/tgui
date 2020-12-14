@@ -29,8 +29,6 @@ base_dir="$(tgui-realpath "${base_dir}")"
 ## Make use of nvm if it exists
 if [[ -e "${HOME}/.nvm/nvm.sh" ]]; then
   source "${HOME}/.nvm/nvm.sh"
-else
-  alias node="'${base_dir}/../tools/bootstrap/node'"
 fi
 
 ## Fall back to running Yarn from the repo
