@@ -64,7 +64,7 @@
 			updateEmbedding()
 	else
 		force = initial(force) + (get_sharpness() ? sharpened_bonus : 0)
-		throwforce = initial(throwforce)
+		throwforce = initial(throwforce) + (get_sharpness() ? sharpened_bonus : 0)
 		hitsound = initial(hitsound)
 		throw_speed = initial(throw_speed)
 		if(attack_verb_off.len)
@@ -96,4 +96,6 @@
 
 	if(sharpened_bonus)
 		return COMPONENT_BLOCK_SHARPEN_ALREADY
+	if(force_on + increment > max)
+		return COMPONENT_BLOCK_SHARPEN_MAXED
 	sharpened_bonus = increment
