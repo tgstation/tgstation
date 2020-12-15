@@ -51,8 +51,16 @@
 	desc = "[desc] At least, it used to."
 	used = TRUE
 	update_icon()
-
-/obj/item/sharpener/super //Admin-only whetstone that can turn almost anything into a 200 damage weapon. Turn people into one stab man!
+	
+/**
+* # Super whetstone
+*
+* Extremely powerful admin-only whetstone
+*
+* Whetstone that adds 200 damage to an item, with the maximum force and throw_force reachable with it being 200. As with normal whetstones, energy weapons cannot be sharpened with it and two-handed weapons will only get the throw_force bonus.
+*
+*/
+/obj/item/sharpener/super
 	name = "super whetstone"
 	desc = "A block that will make your weapon sharper than Einstein on adderall."
 	increment = 200
