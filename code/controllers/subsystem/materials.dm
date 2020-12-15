@@ -8,7 +8,7 @@ These materials call on_applied() on whatever item they are applied to, common e
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE | SS_NO_INIT
-	///Dictionary of material.type || material ref
+	///Dictionary of material.id || material ref
 	var/list/materials
 	///Dictionary of type || list of material refs
 	var/list/materials_by_type
@@ -77,12 +77,12 @@ SUBSYSTEM_DEF(materials)
  * Arguments:
  * - [arguments][/list]: The list of arguments used to fetch the material ref.
  *   - The first element is a material datum, text string, or material type.
- *     - [Material datums][/datum/material] are assumed to be references to the cached datum and returned
+ *     - [Material datums][/datum/material] are assumed to be references to the cached datum and are returned
  *     - Text is assumed to be the text ID of a material and the corresponding material is fetched from the cache
  *     - A material type is checked for bespokeness:
  *       - If the material type is not bespoke the type is assumed to be the id for a material and the corresponding material is loaded from the cache.
  *       - If the material type is bespoke a text ID is generated from the arguments list and used to load a material datum from the cache.
- *   - The following elements are used to generate bespoke IDs and
+ *   - The following elements are used to generate bespoke IDs
  */
 /datum/controller/subsystem/materials/proc/_GetMaterialRef(list/arguments)
 	if(!materials)
@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(materials)
 	key = GetIdFromArguments(arguments)
 	return materials[key] || InitializeMaterial(arguments)
 
-/** I'm not going to lie, this was swiped from SSdcs.
+/** I'm not going to lie, this was swiped from [SSdcs][/datum/controller/subsystem/processing/dcs].
  * Credit does to ninjanomnom
  *
  * Generates an id for bespoke ~~elements~~ materials when given the argument list
@@ -143,7 +143,7 @@ SUBSYSTEM_DEF(materials)
 	return list2params(fullid)
 
 
-///Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
+/// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
 /datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
 	if(!material_combos)
 		InitializeMaterials()

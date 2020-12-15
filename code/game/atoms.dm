@@ -1522,7 +1522,8 @@
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
-/**Returns the material composition of the atom.
+/**
+ * Returns the material composition of the atom.
  *
  * Used when recycling items, specifically to turn alloys back into their component mats.
  *
@@ -1576,7 +1577,7 @@
  * - no_flags: Any bitflags that must not be present for the category
  * - mat_amount: The minimum amount of materials that must be present
  */
-/atom/proc/has_material_category_list(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
+/atom/proc/has_material_category(category, any_flags=0, all_flags=0, no_flags=0, mat_amount=0)
 	var/list/cached_materials = custom_materials
 	if(!length(cached_materials))
 		return null
@@ -1616,9 +1617,10 @@
 		return GetMaterialRef(most_common_material)
 
 /**
- *
+ * Gets the total amount of materials in this atom.
  */
-/atom/proc/transfer_custom_materials_to(atom/A)
+/atom/proc/get_custom_material_amount()
+	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
