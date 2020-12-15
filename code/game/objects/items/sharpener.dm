@@ -4,16 +4,16 @@
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	force = 5 //This is how hard the whetstone itself hits stuff
-	///If zero, the whetstone can be used. If one, the whetstone is a worn whetstone.
-	var/used = 0
+	///If FALSE, the whetstone can be used. If TRUE, the whetstone is a worn whetstone.
+	var/used = FALSE
 	///How much force the whetstone can add to an item.
 	var/increment = 4
 	///Maximum force sharpening items with the whetstone can result in
 	var/max = 30
 	///The prefix a whetstone applies when an item is sharpened with it
 	var/prefix = "sharpened"
-	///If true, the whetstone will only sharpen already sharp items
-	var/requires_sharpness = 1
+	///If TRUE, the whetstone will only sharpen already sharp items
+	var/requires_sharpness = TRUE
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
 	if(used) //You can't sharpen stuff with a worn whetstone
@@ -49,7 +49,7 @@
 	I.name = "[prefix] [I.name]" //We add a whetstone-type-dependent prefix to the item.
 	name = "worn out [name]" //whetstone becomes used whetstone
 	desc = "[desc] At least, it used to."
-	used = 1
+	used = TRUE
 	update_icon()
 
 /obj/item/sharpener/super //Admin-only whetstone that can turn almost anything into a 200 damage weapon. Turn people into one stab man!
@@ -58,4 +58,4 @@
 	increment = 200
 	max = 200
 	prefix = "super-sharpened"
-	requires_sharpness = 0 //Super whetstones can sharpen even tooboxes
+	requires_sharpness = FALSE //Super whetstones can sharpen even tooboxes
