@@ -96,7 +96,6 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
-	var/pried_so_hard = FALSE
 
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -661,9 +660,6 @@
 		else
 			. += "It looks very robust."
 
-	if(pried_so_hard)
-		. += "<span class='warning'>There are dents and scratches where the halves of the airlock meet, signs of forced entry.</span>"
-
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
@@ -1012,7 +1008,6 @@
 								"<span class='hear'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
-					pried_so_hard = FALSE // Remove the signs of Jaws of Life entry
 					set_machine_stat(machine_stat & ~BROKEN)
 					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
@@ -1090,7 +1085,6 @@
 						return
 					open(2)
 					take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
-					pried_so_hard = TRUE // Just for the description
 					if(density && !open(2))
 						to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 				prying_so_hard = FALSE
