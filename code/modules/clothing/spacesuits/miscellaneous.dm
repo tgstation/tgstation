@@ -272,6 +272,27 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
 	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/food/grown/banana, /obj/item/grown/bananapeel)
 
+	//Admin Suit
+/obj/item/clothing/head/helmet/space/hardsuit/ert/admin
+	name = "jannie hardsuit helmet"
+	desc = "A helmet that's somehow still less thick than the skull of the person wearing it."
+	icon_state = "hardsuit0-admin"
+	inhand_icon_state = "hardsuit0-admin"
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+	hardsuit_type = "admin"
+
+/obj/item/clothing/suit/space/hardsuit/ert/admin
+	name = "jannie hardsuit"
+	desc = "You either made someone mad enough for death to come within a few seconds, or you are the person dealing death."
+	icon_state = "hardsuit-admin"
+	inhand_icon_state = "hardsuit-admin"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/admin
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+	cell = /obj/item/stock_parts/cell/infinite
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	strip_delay = 1000
+	equip_delay_other = 1000
+
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
 	icon_state = "space"
