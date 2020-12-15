@@ -2331,18 +2331,6 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plating,
 /area/storage/primary)
-"qi" = (
-/obj/structure/table,
-/obj/item/multitool/field_debug,
-/obj/item/toy/plush/lizardplushie{
-	color = "#001aff";
-	desc = "An adorable stuffed toy that resembles a particular lizardperson. A tag on the side reads; 'Wish you well on your debugging!'";
-	name = "Blu Plushie";
-	pixel_x = -13;
-	pixel_y = -12
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "qQ" = (
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -2496,6 +2484,13 @@
 /obj/structure/table,
 /obj/item/storage/box/rxglasses{
 	pixel_y = 6
+	},
+/obj/item/toy/plush/lizardplushie{
+	color = "#001aff";
+	desc = "An adorable stuffed toy that resembles a particular lizardperson. A tag on the side reads; 'Wish you well on your debugging!'";
+	name = "Blu Plushie";
+	pixel_x = -13;
+	pixel_y = -12
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -7999,7 +7994,7 @@ dD
 dJ
 dI
 dJ
-qi
+dJ
 dJ
 OS
 dJ
