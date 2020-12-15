@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materialids_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, null, null, CALLBACK(src, .proc/AfterMaterialInsert), CALLBACK(src, .proc/IsRigidMaterial))
+	AddComponent(/datum/component/material_container, SSmaterials.materialids_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, _insertion_check = CALLBACK(src, .proc/IsRigidMaterial), _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)

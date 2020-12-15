@@ -26,17 +26,17 @@
 	var/last_inserted_id
 	/// Whether or not this material container allows specific amounts from sheets to be inserted
 	var/precise_insertion = FALSE
+	/// A callback for checking wheter we can insert a material into this container
+	var/datum/callback/insertion_check
 	/// A callback invoked before materials are inserted into this container
 	var/datum/callback/precondition
 	/// A callback invoked after materials are inserted into this container
 	var/datum/callback/after_insert
-	/// A callback invoked to check whether a newly instantiated material fits into this container
-	var/datum/callback/refresh_mats
 	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _mat_container_flags=NONE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, datum/callback/_refresh_mats)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _mat_container_flags=NONE, list/allowed_types, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
 	materials = list()
 	max_amount = max(0, max_amt)
 	mat_container_flags = _mat_container_flags
@@ -47,12 +47,23 @@
 		else
 			allowed_typecache = typecacheof(allowed_types)
 
+	insertion_check = _insertion_check || CALLBACK(src, .proc/default_insertion_check)
 	precondition = _precondition
 	after_insert = _after_insert
-	refresh_mats = _refresh_mats
 
 	for(var/mat in mat_list) //Make the assoc list ref | amount
 		materials[GetMaterialRef(mat)] = 0
+
+/datum/component/material_container/Destroy(force, silent)
+	materials = null
+	if(precondition)
+		QDEL_NULL(precondition)
+	if(after_insert)
+		QDEL_NULL(after_insert)
+	if(insertion_check)
+		QDEL_NULL(insertion_check)
+	return ..()
+
 
 /datum/component/material_container/RegisterWithParent()
 	. = ..()
@@ -61,8 +72,6 @@
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	if(refresh_mats)
-		RegisterSignal(SSmaterials, COMSIG_MATERIALS_INIT_MAT, .proc/check_new_material)
 
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
@@ -115,13 +124,6 @@
 		return
 	user_insert(I, user, mat_container_flags)
 
-/// Checks a newly instantiated material datum for whether it can fit into this material container
-/datum/component/material_container/proc/check_new_material(datum/controller/subsystem/materials/SSmat, datum/material/mat_ref)
-	SIGNAL_HANDLER
-	if(refresh_mats.Invoke(mat_ref, materials))
-		materials[mat_ref] += 0 // Adds the new material to the materials list
-	return NONE
-
 /// Proc used for when player inserts materials
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, breakdown_flags = mat_container_flags)
 	set waitfor = FALSE
@@ -161,44 +163,73 @@
 	last_inserted_id = insert_item_materials(I, multiplier, breakdown_flags)
 	return material_amount
 
-/datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1, breakdown_flags = mat_container_flags)
+/**
+ * Inserts the relevant materials from an item into this material container.
+ *
+ * Arguments:
+ * - [source][/obj/item]: The source of the materials we are inserting.
+ * - multiplier: The multiplier for the materials being inserted.
+ * - breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source
+ */
+/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, breakdown_flags = mat_container_flags)
 	var/primary_mat
 	var/max_mat_value = 0
-	var/list/item_materials = I.get_material_composition(breakdown_flags)
-	for(var/MAT in materials)
+	var/list/item_materials = source.get_material_composition(breakdown_flags)
+	for(var/MAT in item_materials)
+		if(!insertion_check.Invoke(MAT))
+			continue
 		materials[MAT] += item_materials[MAT] * multiplier
 		total_amount += item_materials[MAT] * multiplier
 		if(item_materials[MAT] > max_mat_value)
 			max_mat_value = item_materials[MAT]
 			primary_mat = MAT
+
 	return primary_mat
+
+/**
+ * The default check for whether we can add materials to this material container.
+ *
+ * Arguments:
+ * - [mat][/atom/material]: The material we are checking for insertability.
+ */
+/datum/component/material_container/proc/default_insertion_check(datum/material/mat)
+	return !isnull(materials[mat])
 
 /// For inserting an amount of material
 /datum/component/material_container/proc/insert_amount_mat(amt, datum/material/mat)
-	if(!istype(mat))
-		mat = GetMaterialRef(mat)
-	if(amt > 0 && has_space(amt))
-		var/total_amount_saved = total_amount
-		if(mat)
-			materials[mat] += amt
-		else
-			for(var/i in materials)
-				materials[i] += amt
-				total_amount += amt
-		return (total_amount - total_amount_saved)
-	return FALSE
+	if(amt <= 0 || !has_space(amt))
+		return 0
+
+	var/total_amount_saved = total_amount
+	if(mat)
+		if(!istype(mat))
+			mat = GetMaterialRef(mat)
+		materials[mat] += amt
+	else
+		var/num_materials = length(materials)
+		if(!num_materials)
+			return 0
+
+		amt /= num_materials
+		for(var/i in materials)
+			materials[i] += amt
+			total_amount += amt
+	return (total_amount - total_amount_saved)
 
 /// Uses an amount of a specific material, effectively removing it.
 /datum/component/material_container/proc/use_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
 		mat = GetMaterialRef(mat)
+
+	if(!mat)
+		return 0
 	var/amount = materials[mat]
-	if(mat)
-		if(amount >= amt)
-			materials[mat] -= amt
-			total_amount -= amt
-			return amt
-	return FALSE
+	if(amount < amt)
+		return 0
+
+	materials[mat] -= amt
+	total_amount -= amt
+	return amt
 
 /// Proc for transfering materials to another container.
 /datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
@@ -208,7 +239,7 @@
 		return FALSE
 	if(amt<0)
 		return T.transer_amt_to(src, -amt, mat)
-	var/tr = min(amt, materials[mat],T.can_insert_amount_mat(amt, mat))
+	var/tr = min(amt, materials[mat], T.can_insert_amount_mat(amt, mat))
 	if(tr)
 		use_amount_mat(tr, mat)
 		T.insert_amount_mat(tr, mat)
@@ -216,14 +247,14 @@
 	return FALSE
 
 /// Proc for checking if there is room in the component, returning the amount or else the amount lacking.
-/datum/component/material_container/proc/can_insert_amount_mat(amt, mat)
-	if(amt && mat)
-		var/datum/material/M = mat
-		if(M)
-			if((total_amount + amt) <= max_amount)
-				return amt
-			else
-				return	(max_amount-total_amount)
+/datum/component/material_container/proc/can_insert_amount_mat(amt, datum/material/mat)
+	if(!amt || !mat)
+		return 0
+
+	if((total_amount + amt) <= max_amount)
+		return amt
+	else
+		return (max_amount - total_amount)
 
 
 /// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=200)
@@ -322,7 +353,6 @@
 		categories += x
 	return categories
 
-
 /// Returns TRUE if you have enough of the specified material.
 /datum/component/material_container/proc/has_enough_of_material(datum/material/req_mat, amount, multiplier=1)
 	if(!materials[req_mat]) //Do we have the resource?
@@ -359,7 +389,9 @@
 		return 0
 	var/material_amount = 0
 	var/list/item_materials = I.get_material_composition(breakdown_flags)
-	for(var/MAT in materials)
+	for(var/MAT in item_materials)
+		if(!insertion_check.Invoke(MAT))
+			continue
 		material_amount += item_materials[MAT]
 	return material_amount
 
@@ -367,4 +399,4 @@
 /datum/component/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
 		mat = GetMaterialRef(mat)
-	return(materials[mat])
+	return materials[mat]

@@ -14,12 +14,7 @@
 /obj/machinery/sheetifier/Initialize()
 	. = ..()
 
-	var/list/meats = list()
-	for(var/meat_type in typesof(/datum/material/meat))
-		if(SSmaterials.materials_by_type[meat_type])
-			meats += SSmaterials.materials_by_type[meat_type]
-
-	AddComponent(/datum/component/material_container, meats, MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, /obj/item/food/meat/slab, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials), CALLBACK(src, .proc/CheckIsMeat))
+	AddComponent(/datum/component/material_container, list(/datum/material/meat), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, /obj/item/food/meat/slab, CALLBACK(src, .proc/CheckIsMeat), CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials))
 
 /obj/machinery/sheetifier/update_overlays()
 	. = ..()
@@ -60,5 +55,5 @@
 	return ..()
 
 /// Checks whether a material is meat
-/obj/machinery/sheetifier/proc/CheckIsMeat(datum/material/meat/meat_ref, ...)
+/obj/machinery/sheetifier/proc/CheckIsMeat(datum/material/meat/meat_ref)
 	return istype(meat_ref)
