@@ -1,3 +1,11 @@
+/**
+* # Whetstone
+*
+* Items used for sharpening stuff
+*
+* Whetstones are used to increase an item's force, throw_force and wound_bonus to items and it's sharpness to SHARP_EDGED. Whetstones do not work with energy weapons and only add throw_force to two-handed weapons.
+*
+*/
 /obj/item/sharpener
 	name = "whetstone"
 	icon = 'icons/obj/kitchen.dmi'
