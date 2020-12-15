@@ -42,7 +42,6 @@
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
-	floating_anim_status = NEVER_FLOATING_ANIM //we don't want this guy to float, messes up his animations
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
 	achievement_type = /datum/award/achievement/boss/colossus_kill
@@ -57,6 +56,10 @@
 							   /datum/action/innate/megafauna_attack/shotgun,
 							   /datum/action/innate/megafauna_attack/alternating_cardinals)
 	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
+
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, ROUNDSTART_TRAIT) //we don't want this guy to float, messes up his animations.
 
 /datum/action/innate/megafauna_attack/spiral_attack
 	name = "Spiral Shots"
@@ -654,7 +657,7 @@
 	friendly_verb_continuous = "taps"
 	friendly_verb_simple = "tap"
 	density = FALSE
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY

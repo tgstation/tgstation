@@ -9,10 +9,10 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	if(movement_type & (FLYING|FLOATING) && floating_anim_status != NEVER_FLOATING_ANIM)
-		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_gain)
-		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_loss)
-		float()
+
+/mob/living/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/movetype_handler)
 
 /mob/living/prepare_huds()
 	..()
@@ -942,15 +942,7 @@
 	else
 		throw_alert("gravity", /atom/movable/screen/alert/weightless)
 		if(!was_weightless)
-			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-
-// Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
-/mob/living/stop_floating(new_status = NO_FLOATING_ANIM)
-	if(floating_anim_status <= new_status)
-		return
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		animate(src, pixel_y = base_pixel_y + body_position_pixel_y_offset, time = 1 SECONDS)
-	floating_anim_status = new_status
+			ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)

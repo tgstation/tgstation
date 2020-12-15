@@ -539,24 +539,3 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
 #define IGNORE_HELD_ITEM (1<<2)
 #define IGNORE_INCAPACITATED (1<<3)
-
-// Floating status defines. Used for the floating animation loop code.
-///The mob will never ever bob up and down when floating. (eg. Colossus, winged flying humanoids)
-#define NEVER_FLOATING_ANIM			-1
-///Isn't currently bobbing.
-#define NO_FLOATING_ANIM			0
-///the loop is on hold and will handled by SSfloating_anim
-#define UPDATE_FLOATING_ANIM		1
-///Is floating up n down.
-#define HAS_FLOATING_ANIM			2
-
-///Puts the floating loop on hold until the wait time has elapsed.
-#define QUEUE_FLOATING_ANIM(AM, wait)\
-	AM.stop_floating(UPDATE_FLOATING_ANIM);\
-	var/__floating_queue = SSfloating_anim.currentrun[AM];\
-	if(!__floating_queue){\
-		SSfloating_anim.RegisterSignal(AM, COMSIG_PARENT_QDELETING, /datum/controller/subsystem/floating_anim.proc/remove_reference);\
-		SSfloating_anim.currentrun[AM] = world.time + wait\
-	} else if(__floating_queue < world.time + wait) {\
-		SSfloating_anim.currentrun[AM] = world.time + wait\
-	}

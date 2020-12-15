@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 					A.pipe_vision_img.plane = ABOVE_HUD_PLANE
 				client.images += A.pipe_vision_img
 				pipes_shown += A.pipe_vision_img
-	ADD_MOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
+	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 
 /mob/living/proc/remove_ventcrawl()
 	if(client)

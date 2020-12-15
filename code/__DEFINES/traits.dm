@@ -219,33 +219,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 
-///Movement type traits for movables.
-
-/**
- * Registers movement trait signals on the movable the first time the macro is used on it,
- * These are necessary to add and remove bit flags, as well as the floating animation.
- * Overall it's a better alternative than doing so on init for every movable.
- */
-#define ADD_MOVE_TRAIT(AM, trait, source)\
-	if(!AM.has_movement_type_signals){\
-		AM.RegisterSignal(AM, GLOB.movement_type_trait_add_signals, /atom/movable/.proc/on_movement_type_trait_gain);\
-		AM.RegisterSignal(AM, GLOB.movement_type_trait_remove_signals, /atom/movable/.proc/on_movement_type_trait_loss);\
-		AM.RegisterSignal(AM, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_gain, TRUE);\
-		AM.RegisterSignal(AM, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), /atom/movable/.proc/on_no_floating_anim_trait_loss, TRUE);\
-		AM.has_movement_type_signals = TRUE;\
-		if(HAS_TRAIT(AM, TRAIT_NO_FLOATING_ANIM)){\
-			AM.floating_anim_status = NEVER_FLOATING_ANIM\
-		};\
-	};\
-	ADD_TRAIT(AM, trait, source)
-
+///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND		"move_ground"
 #define TRAIT_MOVE_FLYING		"move_flying"
 #define TRAIT_MOVE_VENTCRAWLING	"move_ventcrawling"
 #define TRAIT_MOVE_FLOATING		"move_floating"
 #define TRAIT_MOVE_PHASING		"move_phasing"
-
-/// Floating animation
+/// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM		"no-floating-animation"
 
 //non-mob traits

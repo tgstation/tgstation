@@ -1289,14 +1289,6 @@
 /mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
 
-/mob/on_movement_type_trait_gain(datum/source, trait)
-	. = ..()
-	update_movespeed(FALSE)
-
-/mob/on_movement_type_trait_loss(datum/source, trait)
-	. = ..()
-	update_movespeed(FALSE)
-
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()
 	if(!speedies)

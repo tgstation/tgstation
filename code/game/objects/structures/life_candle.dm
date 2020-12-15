@@ -24,6 +24,10 @@
 	var/respawn_time = 50
 	var/respawn_sound = 'sound/magic/staff_animation.ogg'
 
+/obj/structure/life_candle/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/movetype_handler)
+
 /obj/structure/life_candle/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -37,7 +41,7 @@
 			REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 	else
 		if(!linked_minds.len)
-			ADD_MOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
+			ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LIFECANDLE_TRAIT)
 		user.visible_message("<span class='notice'>[user] touches [src]. It seems to respond to [user.p_their()] presence!</span>", "<span class='warning'>You create a connection between you and [src].</span>")
 		linked_minds |= user.mind
 

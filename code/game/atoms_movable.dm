@@ -39,13 +39,9 @@
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	  * You should never be modifying this directly instead of the traits unless you know what you are doing.
+	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
 	  */
 	var/movement_type = GROUND
-	/// Whether the movable has movement_type signals registered or not. See the ADD_MOVE_TRAIT macro on __DEFINES/traits.dm
-	var/has_movement_type_signals = FALSE
-	/// Whether the movable should be bobbing up and down or not.
-	var/floating_anim_status = NO_FLOATING_ANIM
 
 	var/atom/movable/pulling
 	var/grab_state = 0
@@ -220,20 +216,6 @@
 			. = TRUE
 		if(NAMEOF(src, glide_size))
 			set_glide_size(var_value)
-			. = TRUE
-		if(NAMEOF(src, floating_anim_status))
-			if(var_value != floating_anim_status)
-				switch(var_value)
-					if(HAS_FLOATING_ANIM)
-						if(SSfloating_anim.currentrun[src])
-							SSfloating_anim.UnregisterSignal(src, COMSIG_PARENT_QDELETING)
-							SSfloating_anim.currentrun -= src
-						float()
-					if(UPDATE_FLOATING_ANIM) //I don't know why you'd need that but sure.
-						QUEUE_FLOATING_ANIM(src, 10 SECONDS)
-					else
-						stop_floating(var_value)
-				floating_anim_status = var_value //We make sure the var value is what we want anyway.
 			. = TRUE
 
 	if(!isnull(.))
@@ -917,57 +899,6 @@
 		return FALSE
 	acted_explosions += ex_id
 	return TRUE
-
-/// Called when a movement type trait is added to the mob.
-/atom/movable/proc/on_movement_type_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	if(!(movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && floating_anim_status == NO_FLOATING_ANIM)
-		float()
-	movement_type |= GLOB.movement_type_trait_to_flag[trait]
-
-/// Called when a movement type trait is removed from the mob.
-/atom/movable/proc/on_movement_type_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	var/flag = GLOB.movement_type_trait_to_flag[trait]
-	if(initial(movement_type) & flag)
-		return
-	movement_type &= ~flag
-	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(movement_type & (FLOATING|FLYING)))
-		stop_floating(NO_FLOATING_ANIM)
-
-/// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the mob.
-/atom/movable/proc/on_no_floating_anim_trait_gain(datum/source, trait)
-	SIGNAL_HANDLER
-	stop_floating(NEVER_FLOATING_ANIM)
-
-/// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob.
-/atom/movable/proc/on_no_floating_anim_trait_loss(datum/source, trait)
-	SIGNAL_HANDLER
-	if(initial(floating_anim_status) == NEVER_FLOATING_ANIM)
-		return
-	if(movement_type & (FLOATING|FLYING))
-		float()
-	else
-		floating_anim_status = NO_FLOATING_ANIM
-
-///Floats the movable up and down if the conditions are met.
-/atom/movable/proc/float()
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		return
-	if(SSfloating_anim.currentrun[src] > world.time)
-		floating_anim_status = UPDATE_FLOATING_ANIM
-		return
-	floating_anim_status = HAS_FLOATING_ANIM
-	animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-	animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-
-/// Stops the above.
-/atom/movable/proc/stop_floating(new_status = NO_FLOATING_ANIM)
-	if(floating_anim_status <= new_status)
-		return
-	if(floating_anim_status == HAS_FLOATING_ANIM)
-		animate(src, pixel_y = base_pixel_y, time = 1 SECONDS)
-	floating_anim_status = new_status
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.
