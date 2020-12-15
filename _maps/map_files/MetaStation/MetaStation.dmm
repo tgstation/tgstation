@@ -64323,24 +64323,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"dFK" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/item/seeds/onion,
-/obj/item/seeds/garlic,
-/obj/item/seeds/potato,
-/obj/item/seeds/tomato,
-/obj/item/seeds/carrot,
-/obj/item/seeds/grass,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/wheat,
-/obj/item/seeds/pumpkin,
-/obj/effect/spawner/lootdrop/prison_contraband,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "dGH" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -67731,17 +67713,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"ibL" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/structure/sink{
-	pixel_y = 29
-	},
-/mob/living/simple_animal/mouse/brown/tom,
-/turf/open/floor/plating,
-/area/security/prison/safe)
 "icO" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue";
@@ -72650,6 +72621,18 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"oMp" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/structure/sink{
+	pixel_y = 29
+	},
+/mob/living/simple_animal/mouse/brown/tom,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/security/prison/safe)
 "oMJ" = (
 /obj/machinery/door/airlock{
 	name = "Prison Showers"
@@ -73025,6 +73008,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"pjb" = (
+/obj/structure/closet/crate,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/security/prison)
 "pkr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -74755,6 +74749,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"rjd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/security/prison)
 "rji" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -76370,17 +76375,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
-"trA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/security/prison)
 "trJ" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -76620,6 +76614,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"tGc" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/item/seeds/onion,
+/obj/item/seeds/garlic,
+/obj/item/seeds/potato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/carrot,
+/obj/item/seeds/grass,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/wheat,
+/obj/item/seeds/pumpkin,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "tGe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
@@ -76690,16 +76703,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"tMX" = (
-/obj/structure/closet/crate,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/security/prison)
 "tNc" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -99543,7 +99546,7 @@ aaa
 vrW
 aaa
 aax
-dFK
+tGc
 tOw
 dgX
 vSn
@@ -101349,7 +101352,7 @@ tSU
 oXP
 cBe
 yfg
-trA
+rjd
 ady
 yfg
 qzo
@@ -102116,7 +102119,7 @@ sVd
 sQX
 oGS
 agH
-ibL
+oMp
 cUP
 acq
 pdM
@@ -102626,7 +102629,7 @@ wiy
 qbz
 jsA
 abe
-tMX
+pjb
 oFQ
 oGS
 agH
