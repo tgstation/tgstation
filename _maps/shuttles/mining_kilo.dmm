@@ -98,8 +98,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner"
-	dir = 8;
+	icon_state = "warninglinecorner";
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/mining/large)
@@ -175,8 +175,8 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners"
-	dir = 1;
+	icon_state = "box_corners";
+	dir = 1
 	},
 /obj/machinery/airalarm{
 	dir = 4;
@@ -186,12 +186,12 @@
 /area/shuttle/mining/large)
 "u" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners"
-	dir = 4;
+	icon_state = "box_corners";
+	dir = 4
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb"
-	dir = 1;
+	icon_state = "bulb";
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
@@ -207,8 +207,8 @@
 /area/shuttle/mining/large)
 "w" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners"
-	dir = 1;
+	icon_state = "box_corners";
+	dir = 1
 	},
 /obj/machinery/light/small{
 	icon_state = "bulb"
@@ -218,8 +218,8 @@
 /area/shuttle/mining/large)
 "x" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners"
-	dir = 8;
+	icon_state = "box_corners";
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
@@ -227,8 +227,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners"
-	dir = 4;
+	icon_state = "box_corners";
+	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
@@ -257,8 +257,8 @@
 /area/shuttle/mining/large)
 "B" = (
 /obj/effect/turf_decal/box/corners{
-	dir = 8;
-	icon_state = "box_corners"
+	icon_state = "box_corners";
+	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
