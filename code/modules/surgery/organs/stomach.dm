@@ -1,5 +1,5 @@
 //The contant in the rate of reagent transfer on life ticks
-#define STOMACH_METABOLISM_CONSTANT 0.5
+#define STOMACH_METABOLISM_CONSTANT 0.25
 
 /obj/item/organ/stomach
 	name = "stomach"
@@ -26,7 +26,7 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.1 // the lowest we should go is 0.05
+	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
 
 /obj/item/organ/stomach/Initialize()
@@ -52,11 +52,11 @@
 
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
-		if(!(bit.metabolization_rate > 0))
+		if(bit.metabolization_rate <= 0)
 			continue
 
 		//Ensure that the the minimum is equal to the metabolization_rate of the reagent if it is higher then the STOMACH_METABOLISM_CONSTANT
-		var/amount_min = max(bit.metabolization_rate, STOMACH_METABOLISM_CONSTANT)
+		var/rate_min = max(bit.metabolization_rate, STOMACH_METABOLISM_CONSTANT)
 		//Do not transfer over more then we have
 		var/amount_max = bit.volume
 
@@ -67,9 +67,9 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min((round(metabolism_efficiency * bit.volume, 0.1) + amount_min) * delta_time, amount_max)
+		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * delta_time, amount_max)
 
-		if(!(amount > 0))
+		if(amount <= 0)
 			continue
 
 		// transfer the reagents over to the body at the rate of the stomach metabolim
@@ -160,7 +160,7 @@
 
 /obj/item/organ/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
-	metabolism_efficiency = 0.05 //very bad
+	metabolism_efficiency = 0.025 //very bad
 
 /obj/item/organ/stomach/bone/on_life(delta_time, times_fired)
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -180,7 +180,7 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
-	metabolism_efficiency = 0.12
+	metabolism_efficiency = 0.06
 
 /obj/item/organ/stomach/plasmaman/on_life(delta_time, times_fired)
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -235,7 +235,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.7 // not as good at digestion
+	metabolism_efficiency = 0.35 // not as good at digestion
 
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -244,7 +244,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2
 	emp_vulnerability = 40
-	metabolism_efficiency = 0.14
+	metabolism_efficiency = 0.07
 
 /obj/item/organ/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
@@ -253,7 +253,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 3
 	emp_vulnerability = 20
-	metabolism_efficiency = 0.2
+	metabolism_efficiency = 0.1
 
 /obj/item/organ/stomach/cybernetic/emp_act(severity)
 	. = ..()

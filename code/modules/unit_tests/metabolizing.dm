@@ -24,7 +24,7 @@
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 
 	// Give them enough meth to be consumed in 2 metabolizations
-	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
+	pill.reagents.add_reagent(meth, 1.9 * initial(meth.metabolization_rate) * initial(SSmobs.wait) / (1 SECONDS))
 	pill.attack(user, user)
 
 	user.Life((2 SECONDS) / (1 SECONDS))

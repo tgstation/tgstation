@@ -17,7 +17,7 @@
 	TEST_ASSERT_EQUAL(human.reagents.has_reagent(/datum/reagent/consumable/ketchup), FALSE, "Human body has ketchup after eating it should only be in the stomach")
 
 	//Give them meth and let it kick in
-	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
+	pill.reagents.add_reagent(meth, 1.9 * initial(meth.metabolization_rate) * initial(SSmobs.wait) / (1 SECONDS))
 	pill.attack(human, human)
 	human.Life((2 SECONDS) / (1 SECONDS))
 
