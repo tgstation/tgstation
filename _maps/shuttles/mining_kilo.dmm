@@ -211,8 +211,8 @@
 	dir = 1
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb"
-	dir = 1;
+	icon_state = "bulb";
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
