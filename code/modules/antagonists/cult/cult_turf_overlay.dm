@@ -8,9 +8,6 @@
 	if(linked)
 		linked.examine(user)
 
-/obj/effect/cult_turf/overlay/ex_act()
-	return FALSE
-
 /obj/effect/cult_turf/overlay/singularity_act()
 	return
 

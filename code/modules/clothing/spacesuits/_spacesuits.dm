@@ -97,7 +97,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.16))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy
@@ -165,13 +165,13 @@
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return ..()
 	toggle_spacesuit_cell(user)
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user?.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return

@@ -217,7 +217,10 @@
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+	config_entry_value = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/discordbotcommandprefix
+	config_entry_value = "?"
 
 /datum/config_entry/string/roundstatsurl
 

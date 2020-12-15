@@ -47,11 +47,11 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/static/list/accepted = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
-	/obj/item/reagent_containers/food/snacks/grown/tea,
-	/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-	/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-	/obj/item/reagent_containers/food/snacks/grown/wheat))
+	var/static/list/accepted = typecacheof(list(/obj/item/food/grown/tobacco,
+	/obj/item/food/grown/tea,
+	/obj/item/food/grown/ambrosia/vulgaris,
+	/obj/item/food/grown/ambrosia/deus,
+	/obj/item/food/grown/wheat))
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
@@ -69,8 +69,8 @@
 		qdel(src)
 
 	if(CheckAccepted(W))
-		var/obj/item/reagent_containers/food/snacks/grown/leaf = W
-		if(leaf.dry)
+		var/obj/item/food/grown/leaf = W
+		if(HAS_TRAIT(leaf, TRAIT_DRIED))
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
 			usr.dropItemToGround(W)
@@ -156,6 +156,7 @@
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	var/burning = 0
 	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
@@ -167,13 +168,6 @@
 /obj/structure/bonfire/prelit/Initialize()
 	. = ..()
 	StartBurning()
-
-/obj/structure/bonfire/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return TRUE
-	if(mover.throwing)
-		return TRUE
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)

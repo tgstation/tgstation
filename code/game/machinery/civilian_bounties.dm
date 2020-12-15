@@ -67,8 +67,8 @@
 	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /**
-  * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
-  */
+ * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+ */
 /obj/machinery/computer/piratepad_control/civilian/send()
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 	if(!sending)
@@ -100,7 +100,7 @@
 		SSeconomy.civ_bounty_tracker++
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
 		reward.bounty_value = curr_bounty.reward
-		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 10)
+		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 30)
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state

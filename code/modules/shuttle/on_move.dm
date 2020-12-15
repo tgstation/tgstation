@@ -38,7 +38,7 @@ All ShuttleMove procs go here
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+			if(istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
 				continue
 			if(!thing.anchored)
 				step(thing, shuttle_dir)

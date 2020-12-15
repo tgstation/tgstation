@@ -45,7 +45,7 @@
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/berserker(src)
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
@@ -377,9 +377,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
-	return
-
 //Meat Hook
 /obj/item/gun/magic/hook
 	name = "meat hook"
@@ -516,9 +513,6 @@
 	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
-	return
-
-/obj/effect/immortality_talisman/ex_act()
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -838,7 +832,7 @@
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -846,7 +840,6 @@
 		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)

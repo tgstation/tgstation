@@ -1,3 +1,4 @@
+/// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/animal.dmi'
@@ -67,9 +68,9 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 2
 
-	///LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly.
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
+	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	///how much damage this simple animal does to objects, if any.
 	var/obj_damage = 0
 	///How much armour they ignore, as a flat reduction from the targets armour value.
@@ -222,14 +223,13 @@
 		if(tame)
 			return
 		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			tame = TRUE
 			tamed(user)
 		else
 			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
-	return
+	tame = TRUE
 
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
@@ -255,11 +255,11 @@
 		stuttering = 0
 
 /**
-  * Updates the simple mob's stamina loss.
-  *
-  * Updates the speed and staminaloss of a given simplemob.
-  * Reduces the stamina loss by stamina_recovery
-  */
+ * Updates the simple mob's stamina loss.
+ *
+ * Updates the speed and staminaloss of a given simplemob.
+ * Reduces the stamina loss by stamina_recovery
+ */
 /mob/living/simple_animal/update_stamina()
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
@@ -538,18 +538,6 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(incapacitated())
-		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-		return FALSE
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	if(!(no_dexterity || dextrous))
-		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return FALSE
-	return TRUE
-
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, BE_CLOSE))
 		return
@@ -610,7 +598,7 @@
 /mob/living/simple_animal/get_idcard(hand_first)
 	return (..() || access_card)
 
-/mob/living/simple_animal/can_hold_items()
+/mob/living/simple_animal/can_hold_items(obj/item/I)
 	return dextrous && ..()
 
 /mob/living/simple_animal/activate_hand(selhand)

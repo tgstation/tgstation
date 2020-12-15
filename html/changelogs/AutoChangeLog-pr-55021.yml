@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "ghosts are no longer able to empty gibbers"

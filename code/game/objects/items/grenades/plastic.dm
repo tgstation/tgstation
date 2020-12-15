@@ -42,7 +42,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime(mob/living/lanced_by)
+/obj/item/grenade/c4/detonate(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 
@@ -66,7 +66,7 @@
 
 //assembly stuff
 /obj/item/grenade/c4/receive_signal()
-	prime()
+	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
@@ -111,7 +111,7 @@
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
-		addtimer(CALLBACK(src, .proc/prime), det_time*10)
+		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/M)
 	if(!M)
@@ -148,7 +148,7 @@
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	explosion(user,0,2,0) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 

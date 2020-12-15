@@ -278,6 +278,7 @@
 	. = ..()
 	if(anchored)
 		connect_to_network()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -363,6 +364,12 @@
 		F = (locate(/obj/machinery/shieldwall) in T)
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
+
+/obj/machinery/power/shieldwallgen/proc/block_singularity_if_active()
+	SIGNAL_HANDLER
+
+	if (active)
+		return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/power/shieldwallgen/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
@@ -455,6 +462,7 @@
 	for(var/mob/living/L in get_turf(src))
 		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]!</span>")
 		L.gib()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
@@ -488,6 +496,11 @@
 		gen_primary.add_load(drain_amount * 0.5)
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
+
+/obj/machinery/shieldwall/proc/block_singularity()
+	SIGNAL_HANDLER
+
+	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()

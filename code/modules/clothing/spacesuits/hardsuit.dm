@@ -362,7 +362,7 @@
 		if(on)
 			linkedsuit.name = initial(linkedsuit.name)
 			linkedsuit.desc = initial(linkedsuit.desc)
-			linkedsuit.slowdown = 1
+			linkedsuit.slowdown = initial(linkedsuit.slowdown)
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 		else
@@ -411,6 +411,10 @@
 	. = ..()
 	soundloop.volume = 0
 
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
+	name = "jannie hardsuit helmet"
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
 	desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing. It is in travel mode."
@@ -426,6 +430,16 @@
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+
+/obj/item/clothing/suit/space/hardsuit/syndi/elite/admin //the hardsuit to end all other hardsuits
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
+	name = "jannie hardsuit"
+	slowdown = 0
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+	cell = /obj/item/stock_parts/cell/infinite
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	strip_delay = 1000
+	equip_delay_other = 1000
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl

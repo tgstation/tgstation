@@ -1,7 +1,7 @@
 
 /**
-  * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
-  */
+ * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
+ */
 /datum/component/bloodysoles
 	/// The type of the last grub pool we stepped in, used to decide the type of footprints to make
 	var/last_blood_state = BLOOD_STATE_NOT_BLOODY
@@ -31,8 +31,8 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 
 /**
-  * Unregisters from the wielder if necessary
-  */
+ * Unregisters from the wielder if necessary
+ */
 /datum/component/bloodysoles/proc/unregister()
 	if(!QDELETED(wielder))
 		UnregisterSignal(wielder, COMSIG_MOVABLE_MOVED)
@@ -41,21 +41,21 @@
 	equipped_slot = null
 
 /**
-  * Returns true if the parent item is obscured by something else that the wielder is wearing
-  */
+ * Returns true if the parent item is obscured by something else that the wielder is wearing
+ */
 /datum/component/bloodysoles/proc/is_obscured()
 	return wielder.check_obscured_slots(TRUE) & equipped_slot
 
 /**
-  * Run to update the icon of the parent
-  */
+ * Run to update the icon of the parent
+ */
 /datum/component/bloodysoles/proc/update_icon()
 	var/obj/item/parent_item = parent
 	parent_item.update_slot_icon()
 
 /**
-  * Run to equally share the blood between us and a decal
-  */
+ * Run to equally share the blood between us and a decal
+ */
 /datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/pool)
 	last_blood_state = pool.blood_state
 
@@ -72,24 +72,24 @@
 	update_icon()
 
 /**
-  * Find a blood decal on a turf that matches our last_blood_state
-  */
+ * Find a blood decal on a turf that matches our last_blood_state
+ */
 /datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null)
 	for(var/obj/effect/decal/cleanable/blood/pool in turfLoc)
 		if(pool.blood_state == last_blood_state && (!typeFilter || istype(pool, typeFilter)))
 			return pool
 
 /**
-  * Adds the parent type to the footprint's shoe_types var
-  */
+ * Adds the parent type to the footprint's shoe_types var
+ */
 /datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
 	FP.shoe_types |= parent.type
 
 /**
-  * Called when the parent item is equipped by someone
-  *
-  * Used to register our wielder
-  */
+ * Called when the parent item is equipped by someone
+ *
+ * Used to register our wielder
+ */
 /datum/component/bloodysoles/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -106,20 +106,20 @@
 	RegisterSignal(wielder, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
 
 /**
-  * Called when the parent item has been dropped
-  *
-  * Used to deregister our wielder
-  */
+ * Called when the parent item has been dropped
+ *
+ * Used to deregister our wielder
+ */
 /datum/component/bloodysoles/proc/on_drop(datum/source, mob/dropper)
 	SIGNAL_HANDLER
 
 	unregister()
 
 /**
-  * Called when the wielder has moved
-  *
-  * Used to make bloody footprints on the ground
-  */
+ * Called when the wielder has moved
+ *
+ * Used to make bloody footprints on the ground
+ */
 /datum/component/bloodysoles/proc/on_moved(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 
@@ -176,10 +176,10 @@
 
 
 /**
-  * Called when the wielder steps in a pool of blood
-  *
-  * Used to make the parent item bloody
-  */
+ * Called when the wielder steps in a pool of blood
+ *
+ * Used to make the parent item bloody
+ */
 /datum/component/bloodysoles/proc/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
 	SIGNAL_HANDLER
 
@@ -200,8 +200,8 @@
 	last_pickup = world.time
 
 /**
-  * Called when the parent item is being washed
-  */
+ * Called when the parent item is being washed
+ */
 /datum/component/bloodysoles/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
@@ -215,8 +215,8 @@
 
 
 /**
-  * Like its parent but can be applied to carbon mobs instead of clothing items
-  */
+ * Like its parent but can be applied to carbon mobs instead of clothing items
+ */
 /datum/component/bloodysoles/feet
 	var/static/mutable_appearance/bloody_feet
 

@@ -21,7 +21,7 @@
 /obj/item/anomaly_neutralizer{
 	pixel_x = -15
 	},
-/obj/item/reagent_containers/food/snacks/soylentgreen,
+/obj/item/food/soylentgreen,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "f" = (

@@ -228,6 +228,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
 
+///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
+#define TRAIT_MAT_TRANSMUTED	"transmuted"
+
 // item traits
 #define TRAIT_NODROP			"nodrop"
 #define TRAIT_NO_STORAGE_INSERT	"no_storage_insert" //cannot be inserted in a storage.
@@ -260,6 +263,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GRABWEAKNESS		"grab_weakness"
 #define TRAIT_SNOB				"snob"
 #define TRAIT_BALD				"bald"
+///Trait for dryable items
+#define TRAIT_DRYABLE "trait_dryable"
+///Trait for dried items
+#define TRAIT_DRIED "trait_dried"
+//Trait for customizable reagent holder
+#define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -373,3 +382,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
+/// Trait applied by element
+#define ELEMENT_TRAIT "element_trait"
+/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+#define BERSERK_TRAIT "berserk_trait"

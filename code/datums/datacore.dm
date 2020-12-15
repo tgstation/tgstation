@@ -76,13 +76,13 @@
 					return
 
 /**
-  * Adds crime to security record.
-  *
-  * Is used to add single crime to someone's security record.
-  * Arguments:
-  * * id - record id.
-  * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
-  */
+ * Adds crime to security record.
+ *
+ * Is used to add single crime to someone's security record.
+ * Arguments:
+ * * id - record id.
+ * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
+ */
 /datum/datacore/proc/addCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
@@ -91,13 +91,13 @@
 			return
 
 /**
-  * Deletes crime from security record.
-  *
-  * Is used to delete single crime to someone's security record.
-  * Arguments:
-  * * id - record id.
-  * * cDataId - id of already existing crime.
-  */
+ * Deletes crime from security record.
+ *
+ * Is used to delete single crime to someone's security record.
+ * Arguments:
+ * * id - record id.
+ * * cDataId - id of already existing crime.
+ */
 /datum/datacore/proc/removeCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
@@ -108,14 +108,14 @@
 					return
 
 /**
-  * Adds details to a crime.
-  *
-  * Is used to add or replace details to already existing crime.
-  * Arguments:
-  * * id - record id.
-  * * cDataId - id of already existing crime.
-  * * details - data you want to add.
-  */
+ * Adds details to a crime.
+ *
+ * Is used to add or replace details to already existing crime.
+ * Arguments:
+ * * id - record id.
+ * * cDataId - id of already existing crime.
+ * * details - data you want to add.
+ */
 /datum/datacore/proc/addCrimeDetails(id, cDataId, details)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)

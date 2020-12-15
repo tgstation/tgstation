@@ -278,8 +278,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					else
 						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
 						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
-
+	var/reconnecting = FALSE
 	if(GLOB.player_details[ckey])
+		reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
@@ -376,7 +377,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-
+	if (mob && reconnecting)
+		var/stealth_admin = mob.client?.holder?.fakekey
+		var/announce_leave = mob.client?.prefs?.broadcast_login_logout
+		if (!stealth_admin)
+			deadchat_broadcast(" has reconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_leave)
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -446,6 +451,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	if(mob)
+		var/stealth_admin = mob.client?.holder?.fakekey
+		var/announce_join = mob.client?.prefs?.broadcast_login_logout
+		if (!stealth_admin)
+			deadchat_broadcast(" has disconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_join)
+	
 	GLOB.clients -= src
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
@@ -700,7 +711,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
 			qdel(src)
@@ -919,14 +930,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
 /**
-  * Updates the keybinds for special keys
-  *
-  * Handles adding macros for the keys that need it
-  * And adding movement keys to the clients movement_keys list
-  * At the time of writing this, communication(OOC, Say, IC) require macros
-  * Arguments:
-  * * direct_prefs - the preference we're going to get keybinds from
-  */
+ * Updates the keybinds for special keys
+ *
+ * Handles adding macros for the keys that need it
+ * And adding movement keys to the clients movement_keys list
+ * At the time of writing this, communication(OOC, Say, IC) require macros
+ * Arguments:
+ * * direct_prefs - the preference we're going to get keybinds from
+ */
 /client/proc/update_special_keybinds(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
@@ -1022,7 +1033,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	var/list/verblist = list()
 	var/list/verbstoprocess = verbs.Copy()
-	if(mob)
+	if(mob?.client?.prefs.broadcast_login_logout)
 		verbstoprocess += mob.verbs
 		for(var/AM in mob.contents)
 			var/atom/movable/thing = AM
@@ -1046,8 +1057,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")
 
 /**
-  * Initializes dropdown menus on client
-  */
+ * Initializes dropdown menus on client
+ */
 /client/proc/initialize_menus()
 	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)

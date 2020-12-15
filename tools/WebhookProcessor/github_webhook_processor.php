@@ -35,7 +35,7 @@ $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
 $trackPRBalance = true;
 $prBalanceJson = '';
-$startingPRBalance = 5;
+$startingPRBalance = 30;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
@@ -251,7 +251,7 @@ function tag_pr($payload, $opened) {
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
-	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
+	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'code/modules/unit_tests' => 'Unit Tests', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -643,36 +643,38 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$labels = get_pr_labels_array($payload);
 	//anything not in this list defaults to 0
 	$label_values = array(
-		'Fix' => 2,
-		'Refactor' => 2,
-		'CI/Tests' => 3,
-		'Code Improvement' => 1,
+		'Fix' => 3,
+		'Refactor' => 10,
+		'Code Improvement' => 2,
 		'Grammar and Formatting' => 1,
-		'Priority: High' => 4,
-		'Priority: CRITICAL' => 5,
+		'Priority: High' => 15,
+		'Priority: CRITICAL' => 20,
+		'Unit Tests' => 6,
 		'Logging' => 1,
-		'Feedback' => 1,
-		'Performance' => 3,
-		'Feature' => -1,
-		'Balance/Rebalance' => -1,
-		'PRB: Reset' => $startingPRBalance - $oldbalance,
+		'Feedback' => 2,
+		'Performance' => 12,
+		'Feature' => -10,
+		'Balance/Rebalance' => -8,
+		'Tweak' => -2,
+		'GBP: Reset' => $startingPRBalance - $oldbalance,
 	);
 
-	$affecting = 0;
-	$is_neutral = FALSE;
-	$found_something_positive = false;
+	$maxNegative = 0;
+	$maxPositive = 0;
 	foreach($labels as $l){
-		if($l == 'PRB: No Update') {	//no effect on balance
-			$affecting = 0;
-			break;
+		if($l == 'GBP: No Update') {	//no effect on balance
+			return 0;
 		}
 		else if(isset($label_values[$l])) {
 			$friendliness = $label_values[$l];
 			if($friendliness > 0)
-				$found_something_positive = true;
-			$affecting = $found_something_positive ? max($affecting, $friendliness) : $friendliness;
+				$maxPositive = max($friendliness, $maxPositive);
+			else
+				$maxNegative = min($friendliness, $maxNegative);
 		}
 	}
+	
+	$affecting = abs($maxNegative) >= $maxPositive ? $maxNegative : $maxPositive;
 	return $affecting;
 }
 

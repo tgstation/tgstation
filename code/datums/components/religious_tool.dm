@@ -1,8 +1,8 @@
 /**
-  *
-  * Allows the parent to act similarly to the Altar of Gods with modularity. Invoke and Sect Selection is done via attacking with a bible. This means you cannot sacrifice Bibles (you shouldn't want to do this anyways although now that I mentioned it you probably will want to).
-  *
-  */
+ *
+ * Allows the parent to act similarly to the Altar of Gods with modularity. Invoke and Sect Selection is done via attacking with a bible. This means you cannot sacrifice Bibles (you shouldn't want to do this anyways although now that I mentioned it you probably will want to).
+ *
+ */
 /datum/component/religious_tool
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Enables access to the global sect directly
@@ -34,8 +34,8 @@
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**
-  * Sets the easy access variable to the global if it exists.
-  */
+ * Sets the easy access variable to the global if it exists.
+ */
 /datum/component/religious_tool/proc/SetGlobalToLocal()
 	if(easy_access_sect)
 		return TRUE
@@ -48,8 +48,8 @@
 
 
 /**
-  * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
-  */
+ * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
+ */
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -57,7 +57,7 @@
 	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
 			return
-		 //At this point you're intentionally trying to select a sect.
+		//At this point you're intentionally trying to select a sect.
 		INVOKE_ASYNC(src, .proc/select_sect, user)
 		return COMPONENT_NO_AFTERATTACK
 
@@ -122,8 +122,8 @@
 		QDEL_NULL(performing_rite)
 
 /**
-  * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
-  */
+ * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
+ */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	. = list()
 	for(var/i in subtypesof(/datum/religion_sect))
@@ -132,8 +132,8 @@
 			. += list(initial(not_a_real_instance_rs.name) = i)
 
 /**
-  * Appends to examine so the user knows it can be used for religious purposes.
-  */
+ * Appends to examine so the user knows it can be used for religious purposes.
+ */
 /datum/component/religious_tool/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 

@@ -26,6 +26,7 @@
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
+	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
@@ -603,16 +604,16 @@
 
 
 /**
-  * Called whenever an object moves and by mobs when they attempt to move themselves through space
-  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
-  *
-  * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-  *
-  * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
-  *
-  * Arguments:
-  * * movement_dir - 0 when stopping or any dir when trying to move
-  */
+ * Called whenever an object moves and by mobs when they attempt to move themselves through space
+ * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+ *
+ * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+ *
+ * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
+ *
+ * Arguments:
+ * * movement_dir - 0 when stopping or any dir when trying to move
+ */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return TRUE
@@ -907,9 +908,8 @@
 	if(throwing)
 		return
 	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
+		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
+		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 		setMovetype(movement_type | FLOATING)
 	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = base_pixel_y, time = 10)
@@ -1016,10 +1016,10 @@
 	return TRUE
 
 /**
-  * Updates the grab state of the movable
-  *
-  * This exists to act as a hook for behaviour
-  */
+ * Updates the grab state of the movable
+ *
+ * This exists to act as a hook for behaviour
+ */
 /atom/movable/proc/setGrabState(newstate)
 	if(newstate == grab_state)
 		return

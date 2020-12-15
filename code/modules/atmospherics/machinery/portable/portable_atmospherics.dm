@@ -91,7 +91,7 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)) || !can_interact(user))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !can_interact(user))
 		return
 	if(holding)
 		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
