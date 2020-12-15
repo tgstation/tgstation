@@ -1,0 +1,4 @@
+author: "New Zealand"
+delete-after: True
+changes: 
+  - rscadd: "Added Waitangi Day and ANZAC day holidays"
