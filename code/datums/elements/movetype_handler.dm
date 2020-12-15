@@ -106,4 +106,4 @@
 	if(isliving(AM)) //Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
 		var/mob/living/L = AM
 		final_pixel_y += L.body_position_pixel_y_offset
-	animate(src, pixel_y = final_pixel_y, time = 1 SECONDS)
+	animate(AM, pixel_y = final_pixel_y, time = 1 SECONDS)
