@@ -317,6 +317,7 @@
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -337,6 +338,7 @@
 	if(A)
 		on = FALSE
 //		A.update_lights()
+	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(cell)
 	vis_contents.Cut()
 	QDEL_NULL(glowybit)
@@ -794,6 +796,14 @@
 	sleep(1)
 	qdel(src)
 
+/obj/machinery/light/proc/on_light_eater(obj/machinery/light, datum/light_eater)
+	SIGNAL_HANDLER
+	if(status == 1)
+		return COMPONENT_BLOCK_LIGHT_EATER
+	var/obj/item/light/tube = drop_light_tube()
+	tube?.burn()
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 // the light item
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
@@ -888,7 +898,7 @@
 /obj/item/light/on_reagent_change(changetype)
 	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
 	return ..()
-	
+
 #undef LIGHT_REAGENT_CAPACITY
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)

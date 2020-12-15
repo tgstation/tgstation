@@ -180,6 +180,7 @@
 		add_airtank()
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -212,6 +213,7 @@
 			var/obj/item/mecha_parts/mecha_equipment/equip = E
 			equip.detach(loc)
 			qdel(equip)
+	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
 	QDEL_NULL(capacitor)
@@ -1193,3 +1195,15 @@
 		else
 			to_chat(user, "<span class='notice'>None of the equipment on this exosuit can use this ammo!</span>")
 	return FALSE
+
+
+/// Special light eater handling
+/obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/mecha, datum/source)
+	SIGNAL_HANDLER
+	if(mecha_flags & HAS_LIGHTS)
+		visible_message("<span class='danger'>[src]'s lights burn out!</span>")
+		mecha_flags &= ~HAS_LIGHTS
+	set_light_on(FALSE)
+	for(var/occupant in occupants)
+		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
+	return COMPONENT_BLOCK_LIGHT_EATER

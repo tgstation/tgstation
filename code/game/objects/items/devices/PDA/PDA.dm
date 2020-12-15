@@ -116,6 +116,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item =	new /obj/item/pen(src)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	update_icon()
 
 /obj/item/pda/equipped(mob/user, slot)
@@ -887,6 +888,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/// Special light eater handling
+/obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/ligth_eater)
+	SIGNAL_HANDLER
+	set_light_on(FALSE)
+	set_light_range(0) //We won't be turning on again.
+	update_icon()
+	visible_message("<span class='danger'>The light in [src] shorts out!</span>")
+	return COMPONENT_BLOCK_LIGHT_EATER
+
 /obj/item/pda/proc/remove_pen(mob/user)
 
 	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
@@ -1103,6 +1113,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/Destroy()
 	GLOB.PDAs -= src
+	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	if(istype(id))
 		QDEL_NULL(id)
 	if(istype(cartridge))

@@ -5,6 +5,10 @@
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
+
 	if (!isnull(l_power))
 		light_power = l_power
 
@@ -17,8 +21,6 @@
 	if(!isnull(l_on))
 		light_on = l_on
 
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
-
 	update_light()
 
 #undef NONSENSICAL_VALUE
@@ -30,6 +32,7 @@
 	if (QDELETED(src))
 		return
 
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT)
 	if(light_system != STATIC_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 

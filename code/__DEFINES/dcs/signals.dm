@@ -121,6 +121,10 @@
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
 ///from base of atom/set_light(): (l_range, l_power, l_color, l_on)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
+	/// Blocks [/atom/proc/set_light]
+	#define COMPONENT_BLOCK_LIGHT_UPDATE	(1<<0)
+///from base of [/atom/proc/update_light]: ()
+#define COMSIG_ATOM_UPDATE_LIGHT	"atom_update_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/handle_atom_del(): (atom/deleted)
@@ -875,6 +879,14 @@
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
 #define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
+
+// /datum/element/light_eater
+///from base of [/datum/element/light_eater/eat_lights]: (list/light_queue, datum/source)
+#define COMSIG_LIGHT_EATER_QUEUE	"light_eater_queue"
+///from base of [/datum/element/light_eater/eat_light]: (datum/source)
+#define COMSIG_LIGHT_EATER_ACT		"light_eater_act"
+	///Prevents the default light eater behavior from running in case of immunity or custom behavior
+	#define COMPONENT_BLOCK_LIGHT_EATER	(1<<0)
 
 /* Attack signals. They should share the returned flags, to standardize the attack chain. */
 /// tool_act -> pre_attack -> target.attackby (item.attack) -> afterattack

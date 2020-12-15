@@ -113,6 +113,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_ON, .proc/on_toggle)
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_FLAGS, .proc/on_light_flags_change)
 	RegisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
+	RegisterSignal(parent, COMSIG_LIGHT_EATER_QUEUE, .proc/on_light_eater)
 	var/atom/movable/movable_parent = parent
 	if(movable_parent.light_flags & LIGHT_ATTACHED)
 		overlay_lighting_flags |= LIGHTING_ATTACHED
@@ -135,6 +136,7 @@
 		COMSIG_ATOM_SET_LIGHT_ON,
 		COMSIG_ATOM_SET_LIGHT_FLAGS,
 		COMSIG_ATOM_USED_IN_CRAFT,
+		COMSIG_LIGHT_EATER_ACT,
 		))
 	if(directional)
 		UnregisterSignal(parent, COMSIG_ATOM_DIR_CHANGE)
@@ -454,6 +456,12 @@
 	UnregisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT)
 	RegisterSignal(new_craft, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
 	set_parent_attached_to(new_craft)
+
+/// Handles putting the source for overlay lights into the light eater queue since we aren't tracked by [/atom/var/light_sources]
+/datum/component/overlay_lighting/proc/on_light_eater(datum/source, list/light_queue, datum/light_eater)
+	SIGNAL_HANDLER
+	light_queue += parent
+	return NONE
 
 #undef LIGHTING_ON
 #undef LIGHTING_ATTACHED
