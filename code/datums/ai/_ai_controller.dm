@@ -46,16 +46,13 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	pawn = new_pawn
 	pawn.ai_controller = src
 
-	new_pawn.client
-
 	if(!continue_processing_when_client && istype(new_pawn, /mob))
 		var/mob/possible_client_holder = new_pawn
 		if(possible_client_holder.client)
 			set_ai_status(AI_STATUS_OFF)
-
-	else
 		else
 			set_ai_status(AI_STATUS_ON)
+	else
 		set_ai_status(AI_STATUS_ON)
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
