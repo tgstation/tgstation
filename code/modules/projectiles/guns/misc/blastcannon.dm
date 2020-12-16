@@ -1,8 +1,10 @@
+/**
+ *
+ */
 /obj/item/gun/blastcannon
 	name = "pipe gun"
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
-	var/icon_state_loaded = "loaded_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
@@ -10,17 +12,28 @@
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
+	/// The icon state used when this is loaded with a bomb.
+	var/icon_state_loaded = "loaded_blastcannon"
 
-	var/hugbox = TRUE
+	/// Whether or not
+	var/hugbox = FALSE
+	/// The maximum power the blastcannon is capable of reaching
 	var/max_power = INFINITY
-	var/reaction_volume_mod = 0
-	var/reaction_cycles = 3				//How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
-	var/prereaction = TRUE
 
+	/// The TTV this contains that will be used to create the projectile
+	var/obj/item/transfer_valve/bomb
+	/// The volume of the gas mixture the blastcannon uses to calculate the blast range.
+	var/reaction_volume_mod = 0
+	/// Whether the gases are reacted once before calculating the range
+	var/prereaction = TRUE
+	/// How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
+	var/reaction_cycles = 3
+
+	/// Whether you can fire this without a bomb.
 	var/bombcheck = TRUE
+	/// The range this defaults to without a bomb for debugging and badminry
 	var/debug_power = 0
 
-	var/obj/item/transfer_valve/bomb
 
 /obj/item/gun/blastcannon/debug
 	debug_power = 80
@@ -91,9 +104,11 @@
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
 	if((!bomb && bombcheck) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
+
 	var/power = bomb? calculate_bomb() : debug_power
 	power = min(power, max_power)
 	QDEL_NULL(bomb)
+
 	update_icon()
 	var/heavy = power * 0.25
 	var/medium = power * 0.5
@@ -118,20 +133,25 @@
 	nodamage = FALSE
 	movement_type = FLYING
 	projectile_phasing = ALL		// just blows up the turfs lmao
-	var/heavyr = 0
-	var/mediumr = 0
-	var/lightr = 0
-	var/hugbox = TRUE
 	range = 150
+	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
+	var/heavyr = 0
+	/// The maximum distance this will inflict [EXPLODE_HEAVY]
+	var/mediumr = 0
+	/// The maximum distance this will inflict [EXPLODE_LIGHT]
+	var/lightr = 0
+	/// Whether to drastically nerf the effects of this projectile.
+	var/hugbox = FALSE
 
-/obj/projectile/blastwave/Initialize(mapload, _h, _m, _l)
-	heavyr = _h
-	mediumr = _m
-	lightr = _l
+/obj/projectile/blastwave/Initialize(mapload, _heavy, _medium, _light)
+	range = max(_heavy, _medium, _light, 0)
+	heavyr = _heavy
+	mediumr = _medium
+	lightr = _light
 	return ..()
 
 /obj/projectile/blastwave/Range()
-	..()
+	. = ..()
 	var/amount_destruction = EXPLODE_NONE
 	var/wallbreak_chance = 0
 	if(heavyr)
@@ -143,27 +163,32 @@
 	else if(lightr)
 		amount_destruction = EXPLODE_LIGHT
 		wallbreak_chance = 33
-	if(amount_destruction)
-		if(hugbox)
-			loc.contents_explosion(EXPLODE_HEAVY, loc)
-			if(istype(loc, /turf/closed/wall))
-				var/turf/closed/wall/W = loc
-				if(prob(wallbreak_chance))
-					W.dismantle_wall(TRUE, TRUE)
-		else
-			switch(amount_destruction)
-				if(EXPLODE_DEVASTATE)
-					SSexplosions.highturf += loc
-				if(EXPLODE_HEAVY)
-					SSexplosions.medturf += loc
-				if(EXPLODE_LIGHT)
-					SSexplosions.lowturf += loc
-	else
+
+	if(!amount_destruction)
 		qdel(src)
+		return
 
 	heavyr = max(heavyr - 1, 0)
 	mediumr = max(mediumr - 1, 0)
 	lightr = max(lightr - 1, 0)
+	if(!loc)
+		return
+
+	if(hugbox)
+		loc.contents_explosion(EXPLODE_HEAVY, loc)
+		if(istype(loc, /turf/closed/wall))
+			var/turf/closed/wall/W = loc
+			if(prob(wallbreak_chance))
+				W.dismantle_wall(TRUE, TRUE)
+	else
+		switch(amount_destruction)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += loc
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += loc
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += loc
+
 
 /obj/projectile/blastwave/ex_act()
 	return
