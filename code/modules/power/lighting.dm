@@ -253,8 +253,6 @@
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
-	var/obj/effect/overlay/vis/glowybit		// the light overlay
-
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
@@ -307,8 +305,6 @@
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
 
-	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir, alpha = 0, unique = TRUE)
-
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
 		var/obj/machinery/power/apc/temp_apc = A.get_apc()
@@ -338,8 +334,6 @@
 		on = FALSE
 //		A.update_lights()
 	QDEL_NULL(cell)
-	vis_contents.Cut()
-	QDEL_NULL(glowybit)
 	return ..()
 
 /obj/machinery/light/update_icon_state()
@@ -359,10 +353,15 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		glowybit.alpha = clamp(light_power*250, 30, 200)
-	else
-		glowybit.alpha = 0
+		var/area/A = get_area(src)
+		if(emergency_mode || (A?.fire))
+			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		else if (nightshift_enabled)
+			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		else
+			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
