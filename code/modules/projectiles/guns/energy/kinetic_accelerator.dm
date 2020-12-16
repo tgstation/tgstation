@@ -192,8 +192,8 @@
 		return
 	if(kinetic_gun)
 		var/list/mods = kinetic_gun.modkits
-		for(var/obj/item/borg/upgrade/modkit/M in mods)
-			M.projectile_prehit(src, target, kinetic_gun)
+		for(var/obj/item/borg/upgrade/modkit/modkit in mods)
+			modkit.projectile_prehit(src, target, kinetic_gun)
 	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(target)))
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
