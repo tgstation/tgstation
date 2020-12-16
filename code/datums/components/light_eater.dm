@@ -28,40 +28,40 @@
 		COMSIG_ATOM_UPDATE_LIGHT,
 		COMSIG_PARENT_QDELETING,
 	)
-	for(var/light in lights_eaten)
+	for(var/light in eaten_lights)
 		UnregisterSignal(light, signals_to_unregister)
-	lights_eaten = null
+	eaten_lights = null
 	return ..()
 
 /datum/component/light_eater/RegisterWithParent()
 	. = ..()
-	if(isatom(target))
-		if(ismovable(target))
-			RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
-			if(isitem(target))
-				RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
-				RegisterSignal(target, COMSIG_ITEM_HIT_REACT, .proc/on_hit_reaction)
-			else if(isprojectile(target))
-				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
-	else if(istype(target, /datum/reagent))
-		RegisterSignal(target, COMSIG_REAGENT_EXPOSE_ATOM, .proc/on_expose_atom)
+	if(isatom(parent))
+		if(ismovable(parent))
+			RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
+			if(isitem(parent))
+				RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+				RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_reaction)
+			else if(isprojectile(parent))
+				RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
+	else if(istype(parent, /datum/reagent))
+		RegisterSignal(parent, COMSIG_REAGENT_EXPOSE_ATOM, .proc/on_expose_atom)
 
 /datum/component/light_eater/UnregisterFromParent()
 	. = ..()
-	if(isatom(source))
-		if(ismovable(source))
-			UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
-			if(isitem(source))
-				UnregisterSignal(source, list(
+	if(isatom(parent))
+		if(ismovable(parent))
+			UnregisterSignal(parent, COMSIG_MOVABLE_IMPACT)
+			if(isitem(parent))
+				UnregisterSignal(parent, list(
 					COMSIG_ITEM_AFTERATTACK,
 					COMSIG_ITEM_HIT_REACT,
 				))
-			else if(isprojectile(source))
-				UnregisterSignal(source, COMSIG_PROJECTILE_ON_HIT)
-	else if(istype(source, /datum/reagent))
-		UnregisterSignal(source, COMSIG_REAGENT_EXPOSE_ATOM)
+			else if(isprojectile(parent))
+				UnregisterSignal(parent, COMSIG_PROJECTILE_ON_HIT)
+	else if(istype(parent, /datum/reagent))
+		UnregisterSignal(parent, COMSIG_REAGENT_EXPOSE_ATOM)
 
-/datum/component/light_eater/InheritComponent(datum/component/C, i_am_original, list/_eater)
+/datum/component/light_eater/InheritComponent(datum/component/C, i_am_original, list/_eaten)
 	. = ..()
 	if(length(_eaten))
 		var/datum/cached_parent = parent
@@ -180,7 +180,7 @@
 /// Signal handler for preventing flashlights from being turned back on
 /datum/component/light_eater/proc/block_light_update(atom/eaten_light)
 	SIGNAL_HANDLER
-	light_eater_block_light_update(source)
+	light_eater_block_light_update(eaten_light)
 	return NONE
 
 /// Signal handler for light eater flavortext
