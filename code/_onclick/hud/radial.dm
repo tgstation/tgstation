@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 				choice_datums[id] = new_choices[E]
 	setup_menu(use_tooltips)
 
-/datum/radial_menu/proc/extract_image(var/to_extract_from)
+/datum/radial_menu/proc/extract_image(to_extract_from)
 	if (istype(to_extract_from, /datum/radial_menu_choice))
 		var/datum/radial_menu_choice/choice = to_extract_from
 		to_extract_from = choice.image
