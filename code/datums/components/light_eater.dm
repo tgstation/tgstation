@@ -1,12 +1,40 @@
 /**
- * Makes anything it attaches to capable of permanently removing something's ability to produce light.
+ * Makes anything it attaches to capable of removing something's ability to produce light until it is destroyed
  *
- * The temporary equivalent is [/datum/component/light_eater]
+ * The permanent version of this is [/datum/element/light_eater]
  */
-/datum/element/light_eater
-	element_flags = ELEMENT_DETACH
+/datum/component/light_eater
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	/// Tracks things this light eater has eaten
+	var/list/eaten_lights
 
-/datum/element/light_eater/Attach(datum/target)
+/datum/component/light_eater/Initialize(list/_eaten)
+	if(!isatom(parent) && !istype(parent, /datum/reagent))
+		return COMPONENT_INCOMPATIBLE
+
+	if(length(_eaten))
+		var/datum/cached_parent = parent
+		eaten_lights = list()
+		var/list/cached_eaten_lights = eaten_lights
+		for(var/food in _eaten)
+			RegisterSignal(food, COMSIG_ATOM_UPDATE_LIGHT, .proc/block_light_update)
+			RegisterSignal(food, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+			RegisterSignal(food, COMSIG_PARENT_EXAMINE, .proc/on_eaten_light_examine)
+			cached_eaten_lights += food
+	return ..()
+
+/datum/component/light_eater/Destroy(force, silent)
+	var/list/signals_to_unregister = list(
+		COMSIG_ATOM_UPDATE_LIGHT,
+		COMSIG_PARENT_QDELETING,
+	)
+	for(var/light in lights_eaten)
+		UnregisterSignal(light, signals_to_unregister)
+	lights_eaten = null
+	return ..()
+
+/datum/component/light_eater/RegisterWithParent()
+	. = ..()
 	if(isatom(target))
 		if(ismovable(target))
 			RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
@@ -17,12 +45,9 @@
 				RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 	else if(istype(target, /datum/reagent))
 		RegisterSignal(target, COMSIG_REAGENT_EXPOSE_ATOM, .proc/on_expose_atom)
-	else
-		return ELEMENT_INCOMPATIBLE
 
-	return ..()
-
-/datum/element/light_eater/Detach(datum/source, force)
+/datum/component/light_eater/UnregisterFromParent()
+	. = ..()
 	if(isatom(source))
 		if(ismovable(source))
 			UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
@@ -35,41 +60,42 @@
 				UnregisterSignal(source, COMSIG_PROJECTILE_ON_HIT)
 	else if(istype(source, /datum/reagent))
 		UnregisterSignal(source, COMSIG_REAGENT_EXPOSE_ATOM)
-	return ..()
 
+/datum/component/light_eater/InheritComponent(datum/component/C, i_am_original, list/_eater)
+	. = ..()
+	if(length(_eaten))
+		var/datum/cached_parent = parent
+		LAZYINITLIST(eaten_lights)
+		var/list/cached_eaten_lights = eaten_lights
+		for(var/food in _eaten)
+			RegisterSignal(food, COMSIG_ATOM_UPDATE_LIGHT, .proc/block_light_update)
+			RegisterSignal(food, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+			RegisterSignal(food, COMSIG_PARENT_EXAMINE, .proc/on_eaten_light_examine)
+			cached_eaten_lights += food
 
-/**
- * Queues all of the lights attached to a given object and consumes all of them
- *
- * Arguments:
- * - [food][/atom]: The atom being searched for lights
- * - [eater][/datum]: The light eater searching for food
- */
-/datum/element/light_eater/proc/eat_lights(atom/food, datum/eater)
+/// Handles queuing lights to eat
+/datum/component/light_eater/proc/eat_lights(atom/food, datum/eater)
 	var/list/buffet = light_eater_table_buffet(food, eater)
 	for(var/morsel in buffet)
 		devour(morsel, eater)
 
-/**
- * Consumes the light on the target, permanently rendering it incapable of producing light
- *
- * Arguments:
- * - [morsel][/atom]: The light-producing thing we are eating
- * - [eater][/datum]: The light eater eating the morsel
- */
-/datum/element/light_eater/proc/devour(atom/morsel, datum/eater)
+/// Handles eating lights
+/datum/component/light_eater/proc/devour(atom/morsel, datum/eater)
 	if(!light_eater_devour(morsel, eater))
-		return
+		return FALSE
 
+	var/has_eyes
 	morsel.visible_message(
-		"<span class='danger'>Something dark in \the [eater] lashes out at \the [morsel] and [morsel.p_their()] light goes out in an instant!</span>",
-		"<span class='userdanger'>You feel something dark in \the [eater] lash out and gnaw through your light in an instant! You can feel that it's left something hungry behind.</span>",
-		"<span class='danger'>You feel a gnawing pulse eat at your sight.</span>"
+		"<span class='danger'>Something dark and hungry swarms out of \the [eater] and over \the [morsel]!</span>",
+		"<span class='userdanger'>Something dark and hungry swarms out of \the [eater] and burrows into you!</span>",
+		"<span class='danger'>You can feel a dark hum gnaw at your sight.</span>"
 	)
 	morsel.set_light(0, 0, null, FALSE)
-	morsel.AddElement(/datum/element/light_eaten)
-
-
+	RegisterSignal(morsel, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+	RegisterSignal(morsel, COMSIG_ATOM_UPDATE_LIGHT, .proc/block_light_update)
+	RegisterSignal(morsel, COMSIG_PARENT_EXAMINE, .proc/on_eaten_light_examine)
+	LAZYADD(eaten_lights, morsel)
+	return TRUE
 
 
 /////////////////////
@@ -149,4 +175,27 @@
 /datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
+	return NONE
+
+/// Signal handler for preventing flashlights from being turned back on
+/datum/component/light_eater/proc/block_light_update(atom/eaten_light)
+	SIGNAL_HANDLER
+	light_eater_block_light_update(source)
+	return NONE
+
+/// Signal handler for light eater flavortext
+/datum/component/light_eater/proc/on_eaten_light_examine(atom/eaten_light, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+	examine_text += "<span class='warning'>You can feel something you can't see swarming over [eaten_light.p_them()]. Something dark and hungry.</span>"
+	return NONE
+
+/// Signal handler for dereferencing eaten lights
+/datum/component/light_eater/proc/deref_eaten_light(atom/eaten_light)
+	SIGNAL_HANDLER
+	UnregisterSignal(eaten_light, list(
+		COMSIG_PARENT_QDELETING,
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_UPDATE_LIGHT,
+	))
+	LAZYREMOVE(eaten_lights, eaten_light)
 	return NONE
