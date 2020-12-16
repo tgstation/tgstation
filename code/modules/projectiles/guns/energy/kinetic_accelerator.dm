@@ -188,17 +188,19 @@
 	return ..()
 
 /obj/projectile/kinetic/prehit_pierce(atom/target)
-	. = ..()
-	if(.)
-		if(kinetic_gun)
-			var/list/mods = kinetic_gun.modkits
-			for(var/obj/item/borg/upgrade/modkit/M in mods)
-				M.projectile_prehit(src, target, kinetic_gun)
 
-		if(istype(target,/mob/living/simple_animal/hostile))
-			damage = monster_damage
-		else
-			damage = standard_damage
+	if(kinetic_gun)
+		var/list/mods = kinetic_gun.modkits
+		for(var/obj/item/borg/upgrade/modkit/M in mods)
+			M.projectile_prehit(src, target, kinetic_gun)
+
+	if(istype(target,/mob/living/simple_animal/hostile))
+		damage = monster_damage
+	else
+		damage = standard_damage
+
+	return ..()
+
 /obj/projectile/kinetic/on_range()
 	strike_thing()
 	..()
@@ -211,6 +213,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
+
 	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
 		var/list/mods = kinetic_gun.modkits
 		for(var/obj/item/borg/upgrade/modkit/M in mods)
