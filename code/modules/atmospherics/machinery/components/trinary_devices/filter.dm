@@ -48,9 +48,9 @@
 
 		var/image/cap
 		if(node)
-			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer, trinary = TRUE)
+			cap = getpipeimage(icon, "cap", direction, pipe_color, piping_layer = piping_layer, trinary = TRUE)
 		else
-			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer, trinary = TRUE)
+			cap = getpipeimage(icon, "cap", direction, pipe_color, piping_layer = piping_layer, trinary = TRUE)
 
 		add_overlay(cap)
 

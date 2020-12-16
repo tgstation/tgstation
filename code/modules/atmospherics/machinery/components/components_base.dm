@@ -41,7 +41,7 @@
 	update_icon_nopipes()
 
 	underlays.Cut()
-
+	color = null
 	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
@@ -52,13 +52,13 @@
 	for(var/i in 1 to device_type) //adds intact pieces
 		if(nodes[i])
 			var/obj/machinery/atmospherics/node = nodes[i]
-			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
+			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), pipe_color)
 			underlays += img
 			connected |= img.dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction)
+			underlays += get_pipe_underlay("pipe_exposed", direction, pipe_color)
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
@@ -178,3 +178,10 @@
 
 /obj/machinery/atmospherics/components/return_analyzable_air()
 	return airs
+
+/obj/machinery/atmospherics/components/paint(paint_color)
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		pipe_color = paint_color
+		update_node_icon()
+	return paintable

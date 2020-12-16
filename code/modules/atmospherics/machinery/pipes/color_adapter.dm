@@ -1,32 +1,32 @@
-/obj/machinery/atmospherics/pipe/layer_manifold
-	name = "layer adaptor"
+/obj/machinery/atmospherics/pipe/color_adapter
+	name = "color adaptor"
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifoldlayer"
-	desc = "A special pipe to bridge pipe layers with."
+	desc = "A special pipe to bridge pipe layers and colors with."
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH
-	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE
+	pipe_flags = PIPING_ALL_LAYER | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE | PIPING_ALL_COLORS | PIPING_ONE_PER_TURF
 	piping_layer = PIPING_LAYER_DEFAULT
 	device_type = 0
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
-	paintable = TRUE
+	paintable = FALSE
 
 	var/list/front_nodes
 	var/list/back_nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
+/obj/machinery/atmospherics/pipe/color_adapter/Initialize()
 	front_nodes = list()
 	back_nodes = list()
 	icon_state = "manifoldlayer_center"
 	return ..()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
+/obj/machinery/atmospherics/pipe/color_adapter/Destroy()
 	nullifyAllNodes()
 	return ..()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
+/obj/machinery/atmospherics/pipe/color_adapter/proc/nullifyAllNodes()
 	var/list/obj/machinery/atmospherics/needs_nullifying = get_all_connected_nodes()
 	front_nodes = null
 	back_nodes = null
@@ -35,10 +35,10 @@
 		A.disconnect(src)
 		SSair.add_to_rebuild_queue(A)
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
+/obj/machinery/atmospherics/pipe/color_adapter/proc/get_all_connected_nodes()
 	return front_nodes + back_nodes + nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
+/obj/machinery/atmospherics/pipe/color_adapter/update_icon()
 	cut_overlays()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
 
@@ -47,16 +47,16 @@
 	for(var/node in back_nodes)
 		add_attached_images(node)
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_images(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/pipe/color_adapter/proc/add_attached_images(obj/machinery/atmospherics/A)
 	if(!A)
 		return
-	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
+	if(istype(A, /obj/machinery/atmospherics/pipe/color_adapter))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 			add_attached_image(get_dir(src, A), i)
 			return
 	add_attached_image(get_dir(src, A), A.piping_layer, A.pipe_color)
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_image(p_dir, p_layer, p_color = null)
+/obj/machinery/atmospherics/pipe/color_adapter/proc/add_attached_image(p_dir, p_layer, p_color = null)
 	var/image/I
 
 	// Uses pipe-3 because we don't want the vertical shifting
@@ -68,45 +68,44 @@
 	I.layer = layer - 0.01
 	add_overlay(I)
 
-/obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
+/obj/machinery/atmospherics/pipe/color_adapter/SetInitDirections()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer && target.pipe_color == pipe_color)
-		return TRUE
-	. = ..()
+/obj/machinery/atmospherics/pipe/color_adapter/isConnectable()
+	return TRUE
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
+/obj/machinery/atmospherics/pipe/color_adapter/proc/findAllConnections()
 	front_nodes = list()
 	back_nodes = list()
 	var/list/new_nodes = list()
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
-		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
-		front_nodes += foundfront
-		back_nodes += foundback
-		if(foundfront && !QDELETED(foundfront))
-			new_nodes += foundfront
-		if(foundback && !QDELETED(foundback))
-			new_nodes += foundback
+		for(var/color_iter in GLOB.pipe_paint_colors)
+			var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter, TRUE, color_iter)
+			var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter, TRUE, color_iter)
+			front_nodes += foundfront
+			back_nodes += foundback
+			if(foundfront && !QDELETED(foundfront))
+				new_nodes += foundfront
+			if(foundback && !QDELETED(foundback))
+				new_nodes += foundback
 	update_icon()
 	return new_nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
+/obj/machinery/atmospherics/pipe/color_adapter/atmosinit()
 	normalize_cardinal_directions()
 	findAllConnections()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
+/obj/machinery/atmospherics/pipe/color_adapter/setPipingLayer()
 	piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
+/obj/machinery/atmospherics/pipe/color_adapter/pipeline_expansion()
 	return get_all_connected_nodes()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/pipe/color_adapter/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
@@ -122,7 +121,7 @@
 			back_nodes[i] = null
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, direction)
+/obj/machinery/atmospherics/pipe/color_adapter/relaymove(mob/living/user, direction)
 	if(initialize_directions & direction)
 		return ..()
 	if((NORTH|EAST) & direction)
@@ -131,5 +130,5 @@
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
 
-/obj/machinery/atmospherics/pipe/layer_manifold/visible
+/obj/machinery/atmospherics/pipe/color_adapter/visible
 	layer = GAS_PIPE_VISIBLE_LAYER
