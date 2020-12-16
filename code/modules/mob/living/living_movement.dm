@@ -13,7 +13,7 @@
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
-	return !mover.density || (body_position == LYING_DOWN)
+	return !mover.density || body_position == LYING_DOWN
 
 /mob/living/toggle_move_intent()
 	. = ..()

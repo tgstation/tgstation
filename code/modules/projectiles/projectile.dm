@@ -496,8 +496,14 @@
 		if(direct_target)
 			return TRUE
 		// If target not able to use items, move and stand - or if they're just dead, pass over.
-		if((L.stat == DEAD) || (!L.density) || ((L.body_position == LYING_DOWN) && (!hit_stunned_targets && HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))))
+		if(L.stat == DEAD)
 			return FALSE
+		if(!L.density)
+			return FALSE
+		if(L.body_position != LYING_DOWN)
+			return TRUE
+		var/stunned = HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)
+		return !stunned || hit_stunned_targets
 	return TRUE
 
 /**
