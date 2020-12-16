@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Adaptive Paint now uses a radial menu for choosing its color variants."

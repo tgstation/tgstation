@@ -1,6 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "kilo: added a missing length of disposals in mech bay"
-  - bugfix: "kilo: warden's disposals now enter the loop properly"
-  - bugfix: "kilo: lawyers can no longer get into the meeting room through the infirmary"
