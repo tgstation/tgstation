@@ -107,6 +107,29 @@
 	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 
+/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties()
+//Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
+	if(!inserted_scan_id || !inserted_scan_id.registered_account)
+		return
+	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
+	if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
+		var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
+		to_chat(usr, "<span class='warning'>Beep boop go fuck yourself, try again in [curr_time] minutes!</span>")
+		return FALSE
+	if(!pot_acc.account_job)
+		to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
+		return FALSE
+	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types),
+										random_bounty(pot_acc.account_job.bounty_types),
+										random_bounty(pot_acc.account_job.bounty_types)) //It's a good scene from War Dogs (2016).
+	pot_acc.bounty_timer = world.time
+	pot_acc.bounties = crumbs
+
+/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(var/choice)
+	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
+	inserted_scan_id.registered_account.bounties = null
+	return inserted_scan_id.registered_account.civilian_bounty
+
 /obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
 	. = ..()
 	id_eject(user, inserted_scan_id)
@@ -117,6 +140,7 @@
 		ui = new(user, src, "CivCargoHoldTerminal", name)
 		ui.open()
 
+
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
 	data["points"] = points
@@ -125,9 +149,21 @@
 	data["status_report"] = status_report
 	data["id_inserted"] = inserted_scan_id
 	if(inserted_scan_id?.registered_account)
-		data["id_bounty_info"] = inserted_scan_id.registered_account.bounty_text()
-		data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
-		data["id_bounty_value"] = inserted_scan_id.registered_account.bounty_value()
+		if(inserted_scan_id.registered_account.civilian_bounty)
+			data["id_bounty_info"] = inserted_scan_id.registered_account.civilian_bounty.description
+			data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
+			data["id_bounty_value"] = inserted_scan_id.registered_account.civilian_bounty.reward
+		if(inserted_scan_id.registered_account.bounties)
+			data["picking"] = TRUE
+			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[0].name,
+										   inserted_scan_id.registered_account.bounties[1].name,
+									   	   inserted_scan_id.registered_account.bounties[2].name)
+			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[0].reward,
+									        inserted_scan_id.registered_account.bounties[1].reward,
+									        inserted_scan_id.registered_account.bounties[2].reward)
+		else 
+			data["picking"] = FALSE
+			
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
@@ -145,21 +181,10 @@
 			start_sending()
 		if("stop")
 			stop_sending()
+		if("pick")
+			pick_bounty(params["value"])
 		if("bounty")
-			//Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
-			if(!inserted_scan_id || !inserted_scan_id.registered_account)
-				return
-			var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
-			if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
-				var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
-				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
-				return FALSE
-			if(!pot_acc.account_job)
-				to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
-				return FALSE
-			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
-			pot_acc.bounty_timer = world.time
-			pot_acc.civilian_bounty = crumbs
+			add_bounties()
 		if("eject")
 			id_eject(usr, inserted_scan_id)
 	. = TRUE

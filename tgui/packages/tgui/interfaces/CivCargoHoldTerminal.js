@@ -13,6 +13,9 @@ export const CivCargoHoldTerminal = (props, context) => {
     id_bounty_info,
     id_bounty_value,
     id_bounty_num,
+    picking,
+    id_bounty_names,
+    id_bounty_values,
   } = data;
   const in_text = "Welcome valued employee.";
   const out_text = "To begin, insert your ID into the console.";
@@ -39,7 +42,7 @@ export const CivCargoHoldTerminal = (props, context) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-            <BountyTextBox />
+            {picking ? <BountyPickBox /> : <BountyTextBox />}
           </Flex.Item>
           <Flex.Item m={1}>
             <Fragment>
@@ -96,6 +99,47 @@ const BountyTextBox = (props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="Value">
           {id_bounty_info ? id_bounty_value : "N/A"}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+const BountyPickBox = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    id_bounty_names,
+    id_bounty_values,
+  } = data;
+  return (
+    <Section title="Bounty Picker">
+      <LabeledList>
+        <LabeledList.Item label="Bounty1">
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[0]}
+            onClick={() => act('pick', { 'value': 0 })} />
+          id_bounty_values[0]
+        </LabeledList.Item>
+        <LabeledList.Item label="Bounty2">
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[1]}
+            onClick={() => act('pick', { 'value': 1 })} />
+          id_bounty_values[1]
+        </LabeledList.Item>
+        <LabeledList.Item label="Bounty3">
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[2]}
+            onClick={() => act('pick', { 'value': 2 })} />
+          id_bounty_values[2]
         </LabeledList.Item>
       </LabeledList>
     </Section>
