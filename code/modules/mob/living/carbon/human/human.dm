@@ -1190,6 +1190,11 @@
 /mob/living/carbon/human/species/felinid
 	race = /datum/species/human/felinid
 
+/mob/living/carbon/human/species/felinid/Initialize()
+	. = ..()
+	AddElement(/datum/element/squashable, 50, 1, SQUASHED_SHOULD_BE_DOWN | SQUASHED_SHOULD_BE_GIBBED)
+
+
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly
 
