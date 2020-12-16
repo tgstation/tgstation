@@ -1,8 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "bl" = (
 /obj/machinery/door/airlock/research/glass,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
+"cB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"cF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/unpowered/xenoarch)
 "cI" = (
 /obj/machinery/door/firedoor,
@@ -20,8 +38,23 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"ek" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "em" = (
 /turf/open/floor/plating/lavaland_baseturf,
+/area/ruin/unpowered/xenoarch)
+"fB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/ruin/unpowered/xenoarch)
+"fY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "gv" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -30,16 +63,45 @@
 "gM" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "hH" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor/heavy,
+/obj/structure/cable,
 /turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
+"ib" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"jm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
 "jn" = (
 /turf/template_noop,
 /area/template_noop)
+"jJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"jU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
 "kl" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -50,9 +112,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ruin/unpowered/xenoarch)
+"kP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
 "mL" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine/hull/reinforced,
+/turf/open/floor/plasteel/elevatorshaft,
 /area/ruin/unpowered/xenoarch)
 "mO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -65,6 +132,13 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"mW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "nf" = (
 /obj/machinery/door/airlock/research/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -75,9 +149,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"nZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "os" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
+"oA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel,
 /area/ruin/unpowered/xenoarch)
 "oI" = (
 /obj/machinery/door/airlock/public/glass,
@@ -89,6 +173,51 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/xenoarch)
+"pS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"qg" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating/lavaland_baseturf,
+/area/ruin/unpowered/xenoarch)
+"qY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/clothing,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"rn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"rt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer,
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"ss" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"sU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/photocopier,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"tL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"ux" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
 "vr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
@@ -98,11 +227,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
+"wm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"ww" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "wy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"xV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/turf/open/floor/plasteel,
 /area/ruin/unpowered/xenoarch)
 "zQ" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -136,6 +281,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
 /area/ruin/unpowered/xenoarch)
+"Fk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
 "FA" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/xenoarch)
@@ -143,6 +295,23 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"FS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"Gj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"Gq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "GH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -156,6 +325,36 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/ruin/unpowered/xenoarch)
+"Iu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/right{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"Ix" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"IV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"IY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"Jq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
 "JA" = (
 /obj/machinery/door/airlock/glass,
 /obj/effect/decal/cleanable/dirt,
@@ -165,6 +364,11 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/grass,
+/area/ruin/unpowered/xenoarch)
+"KK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
 "KR" = (
 /obj/machinery/door/airlock/glass_large,
@@ -182,6 +386,25 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/xenoarch)
+"Lb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"Lm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"LL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
 "Mv" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
@@ -192,10 +415,49 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"MH" = (
+/obj/machinery/door/airlock/medical/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
 "MO" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/window{
+	dir = 8
+	},
+/obj/machinery/door/window{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"MW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/machine,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"Nw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/medical2,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"NK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"NV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/bookbinder,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"Po" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/bedsheet/brown,
+/turf/open/floor/carpet,
 /area/ruin/unpowered/xenoarch)
 "PM" = (
 /obj/machinery/door/airlock/maintenance,
@@ -207,6 +469,22 @@
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"RD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
+"RK" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/ruin/unpowered/xenoarch)
+"Sj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
 "SA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/medical/glass,
@@ -215,10 +493,35 @@
 "SL" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenoarch)
+"Th" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/medical3,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"TR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/sofa/corp/left{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"TY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/xenoarch)
+"Ue" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
 "VR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/cell_charger,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "Wo" = (
@@ -227,6 +530,8 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
 "Wq" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "WO" = (
@@ -244,6 +549,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/xenoarch)
+"Yd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
 "Ym" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/east,
@@ -254,6 +564,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/xenoarch)
+"YO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/xenoarch)
+"YT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/turf/open/floor/plasteel/white,
 /area/ruin/unpowered/xenoarch)
 "Zd" = (
 /obj/machinery/door/firedoor,
@@ -525,7 +846,7 @@ Zp
 Zp
 Zp
 Dl
-vr
+pS
 vr
 vr
 vN
@@ -583,13 +904,13 @@ Zp
 Zp
 Zp
 Dl
-vr
+pS
 vr
 vr
 Dl
+tL
 vr
-vr
-vr
+YT
 Dl
 vr
 vr
@@ -699,13 +1020,13 @@ Zp
 Zp
 Zp
 Dl
-vr
+Th
 vr
 vr
 vN
-Wq
-Wq
-Wq
+vr
+vr
+vr
 vN
 vr
 vr
@@ -757,13 +1078,13 @@ Zp
 Zp
 Zp
 Dl
-vr
+Th
 vr
 vr
 Dl
 Wq
-Wq
-Wq
+vr
+YT
 Dl
 vr
 vr
@@ -873,7 +1194,7 @@ Zp
 Zp
 Zp
 Dl
-vr
+Ue
 vr
 vr
 VR
@@ -931,10 +1252,10 @@ Zp
 Zp
 Zp
 Dl
+Ue
 vr
 vr
-vr
-zQ
+MH
 vr
 vr
 vr
@@ -989,13 +1310,13 @@ Dl
 Dl
 Zp
 Dl
-vr
+Ue
 vr
 vr
 Dl
+ib
 vr
-vr
-vr
+ib
 Dl
 vr
 vr
@@ -1038,16 +1359,16 @@ Zp
 Dl
 Dl
 Dl
-MB
-MB
-MB
-MB
-MB
-MB
+IV
+ek
+Fk
+IV
+ek
+Fk
 Dl
 Zp
 Dl
-vr
+Nw
 vr
 vr
 Dl
@@ -1057,7 +1378,7 @@ Dl
 Dl
 vr
 vr
-vr
+tL
 Dl
 Hr
 Hr
@@ -1096,12 +1417,12 @@ Zp
 Dl
 Zp
 Dl
-MB
-MB
-MB
-MB
-MB
-MB
+ww
+ek
+jm
+ww
+ek
+jm
 Dl
 Zp
 Dl
@@ -1109,13 +1430,13 @@ vr
 vr
 vr
 vr
+cB
 vr
-vr
-vr
+fY
 Dl
 vr
 vr
-vr
+Gq
 Dl
 Hr
 Hr
@@ -1154,26 +1475,26 @@ Zp
 Zp
 Zp
 Dl
-MB
-MB
-MB
-MB
-MB
-MB
+KK
+ek
+mW
+KK
+ek
+mW
 Dl
 Zp
 Dl
+Yd
 vr
 vr
 vr
 vr
 vr
-vr
-vr
+fY
 Dl
 vr
 vr
-vr
+Gq
 Dl
 Hr
 Hr
@@ -1221,17 +1542,17 @@ MB
 Dl
 Zp
 Dl
+ib
+YO
 vr
 vr
+FS
 vr
-vr
-vr
-vr
-vr
+fY
 Dl
 vr
 vr
-vr
+tL
 Dl
 Hr
 Hr
@@ -1271,10 +1592,10 @@ Dl
 Zp
 Dl
 Yt
-MB
+Lm
 Yt
 Yt
-MB
+Lm
 Yt
 Dl
 kA
@@ -1343,7 +1664,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
+NK
 Hr
 Hr
 Hr
@@ -1401,7 +1722,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
+NK
 Hr
 Hr
 Hr
@@ -1459,7 +1780,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
+NK
 Hr
 Hr
 Hr
@@ -1502,12 +1823,12 @@ Zp
 Dl
 Zp
 Dl
+nZ
 MB
 MB
+ek
 MB
-MB
-MB
-MB
+ek
 Dl
 Hr
 Hr
@@ -1560,7 +1881,7 @@ Zp
 Dl
 Zp
 Dl
-MB
+nZ
 MB
 MB
 MB
@@ -1618,12 +1939,12 @@ Zp
 Dl
 Zp
 Dl
+nZ
 MB
 MB
+ek
 MB
-MB
-MB
-MB
+MW
 Dl
 Hr
 Hr
@@ -1734,16 +2055,16 @@ Zp
 Dl
 Zp
 Dl
-Hr
-Hr
-Hr
-Hr
-Hr
-Hr
+Sj
+cF
+jU
+Sj
+Sj
+Sj
 Dl
-Hr
-Hr
-Hr
+NK
+NK
+NK
 Dl
 MB
 MB
@@ -1757,7 +2078,7 @@ FA
 FA
 FA
 ZQ
-em
+qg
 ZQ
 FA
 FA
@@ -1792,12 +2113,12 @@ Dl
 Dl
 Zp
 Dl
+Sj
 Hr
 Hr
 Hr
 Hr
-Hr
-Hr
+Sj
 Dl
 Hr
 Hr
@@ -1815,7 +2136,7 @@ FA
 FA
 ZQ
 ZQ
-em
+qg
 ZQ
 ZQ
 FA
@@ -1850,12 +2171,12 @@ Zp
 Dl
 Zp
 Dl
+Sj
 Hr
 Hr
 Hr
 Hr
-Hr
-Hr
+Sj
 Dl
 Hr
 Hr
@@ -2024,12 +2345,12 @@ Zp
 Dl
 Zp
 Dl
+Sj
 Hr
 Hr
 Hr
 Hr
-Hr
-Hr
+Sj
 Dl
 Hr
 Hr
@@ -2087,7 +2408,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
+Sj
 Dl
 Hr
 Hr
@@ -2140,12 +2461,12 @@ Zp
 Dl
 Zp
 Dl
-Hr
-Hr
-Hr
-Hr
-Hr
-Hr
+oA
+oA
+rn
+oA
+oA
+Sj
 Dl
 Hr
 Hr
@@ -2161,7 +2482,7 @@ Bx
 Bx
 Bx
 ZQ
-Hr
+ss
 Hr
 Hr
 Hr
@@ -2257,26 +2578,26 @@ Dl
 Zp
 Zp
 Dl
-Hr
-Hr
-Hr
-Hr
-Hr
+cF
+cF
+Sj
+TY
+TY
 os
 Hr
 Hr
 Hr
 Dl
+jU
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+jU
 ZQ
 AI
 AI
 AI
-Zp
+RD
 Hr
 Hr
 Hr
@@ -2284,7 +2605,7 @@ Hr
 Hr
 Hr
 Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2317,7 +2638,7 @@ Zp
 PM
 Hr
 Hr
-Hr
+Sj
 Hr
 Hr
 os
@@ -2325,24 +2646,24 @@ Hr
 Hr
 Hr
 Dl
+jU
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+jU
 ZQ
 AI
 AI
 AI
-Zp
+RD
+ss
 Hr
 Hr
 Hr
 Hr
 Hr
-Hr
-Hr
-Zp
+IY
+RD
 AI
 AI
 AI
@@ -2383,16 +2704,16 @@ Hr
 Hr
 Hr
 Dl
+jU
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+jU
 ZQ
 AI
 AI
 AI
-Zp
+RD
 Hr
 Hr
 Hr
@@ -2400,7 +2721,7 @@ Hr
 Hr
 Hr
 Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2431,7 +2752,7 @@ Zp
 Zp
 Zp
 Dl
-Hr
+TY
 Hr
 Hr
 Hr
@@ -2441,11 +2762,11 @@ Hr
 Hr
 Hr
 os
+jU
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+jU
 ZQ
 ZQ
 ZQ
@@ -2489,7 +2810,7 @@ Dl
 Dl
 Dl
 Dl
-Hr
+oA
 Hr
 Hr
 Hr
@@ -2499,12 +2820,13 @@ Hr
 Hr
 Hr
 os
+jU
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+jU
 ZQ
+ux
 Hr
 Hr
 Hr
@@ -2515,8 +2837,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2543,9 +2864,9 @@ jn
 Dl
 Zp
 Dl
-Hr
-Hr
-Hr
+oA
+oA
+oA
 Dl
 os
 os
@@ -2563,6 +2884,7 @@ Hr
 Hr
 Hr
 ZQ
+ux
 Hr
 Hr
 Hr
@@ -2572,9 +2894,8 @@ Hr
 Hr
 Hr
 Hr
-Hr
-Hr
-Zp
+IY
+RD
 AI
 AI
 AI
@@ -2617,22 +2938,22 @@ Hr
 os
 Hr
 Hr
-Hr
+jU
 Hr
 Hr
 ZQ
+rn
+Hr
+Hr
+jU
+jU
+jU
 Hr
 Hr
 Hr
 Hr
 Hr
-Hr
-Hr
-Hr
-Hr
-Hr
-Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2660,7 +2981,7 @@ Dl
 Dl
 Dl
 Hr
-Hr
+rn
 Hr
 nf
 Hr
@@ -2675,16 +2996,16 @@ Hr
 os
 Hr
 Hr
-Hr
+wm
 Hr
 Hr
 ZQ
+xV
 Hr
 Hr
-Hr
-Hr
-Hr
-Hr
+Sj
+Sj
+Sj
 Hr
 Hr
 Hr
@@ -2731,12 +3052,13 @@ Hr
 Hr
 Hr
 Dl
+wm
 Hr
+jU
 Hr
-Hr
-Hr
-Hr
+wm
 ZQ
+xV
 Hr
 Hr
 Hr
@@ -2747,8 +3069,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2775,9 +3096,9 @@ jn
 jn
 jn
 Dl
-Hr
-Hr
-Hr
+TY
+TY
+TY
 Dl
 Dl
 os
@@ -2789,12 +3110,13 @@ Hr
 Hr
 Hr
 Dl
+Sj
 Hr
 Hr
 Hr
-Hr
-Hr
+Sj
 ZQ
+Sj
 Hr
 Hr
 Hr
@@ -2804,9 +3126,8 @@ Hr
 Hr
 Hr
 Hr
-Hr
-Hr
-Zp
+IY
+RD
 AI
 AI
 AI
@@ -2847,12 +3168,15 @@ os
 nf
 os
 Dl
-Hr
-Hr
-Hr
-Hr
-Hr
+wm
+jU
+jU
+jU
+wm
 ZQ
+Sj
+Jq
+Ix
 Hr
 Hr
 Hr
@@ -2861,10 +3185,7 @@ Hr
 Hr
 Hr
 Hr
-Hr
-Hr
-Hr
-Zp
+RD
 AI
 AI
 AI
@@ -2962,7 +3283,7 @@ Dl
 Hr
 Hr
 Hr
-kA
+RK
 Zp
 Zp
 Zp
@@ -2970,16 +3291,16 @@ Zp
 Zp
 Zp
 Zp
-Zp
+kP
 Zp
 Dl
-Io
-Io
-Dl
-Io
+fB
 Io
 Dl
+fB
 Io
+Dl
+fB
 Io
 Dl
 mL
@@ -3028,16 +3349,16 @@ Dl
 Dl
 Dl
 Dl
+LL
 Zp
-Zp
 Dl
-Io
-Io
-Dl
-Io
+Po
 Io
 Dl
+Po
 Io
+Dl
+Po
 Io
 Dl
 mL
@@ -3147,7 +3468,7 @@ jn
 Dl
 Zp
 Dl
-MB
+MW
 MB
 MB
 MB
@@ -3205,7 +3526,7 @@ jn
 Dl
 Zp
 Dl
-MB
+qY
 MB
 MB
 MB
@@ -3319,7 +3640,7 @@ jn
 jn
 jn
 Dl
-kA
+RK
 Dl
 Dl
 DK
@@ -3330,11 +3651,11 @@ MB
 CY
 DK
 Mv
+nZ
 MB
 MB
 MB
-MB
-MB
+aw
 MB
 MB
 MB
@@ -3392,7 +3713,7 @@ MB
 MB
 MB
 MB
-MB
+aw
 MB
 MB
 MB
@@ -3450,7 +3771,7 @@ MB
 MB
 MB
 MB
-MB
+aw
 MB
 MB
 MB
@@ -3559,18 +3880,18 @@ JE
 Dl
 Dl
 Dl
-MB
-MB
+jJ
+Lb
 MB
 MB
 MB
 MB
 Dl
-MB
-MB
-MB
-MB
-MB
+Gj
+Gj
+Gj
+Gj
+Gj
 Dl
 Zp
 Zp
@@ -3617,8 +3938,8 @@ Dl
 Dl
 jn
 Dl
-MB
-MB
+ek
+ek
 MB
 MB
 MB
@@ -3675,18 +3996,18 @@ jn
 jn
 jn
 Dl
-MB
-MB
+Iu
+TR
 MB
 MB
 MB
 MB
 KR
 MB
+NV
 MB
-MB
-MB
-MB
+ek
+ek
 Dl
 Zp
 Zp
@@ -3733,17 +4054,17 @@ jn
 jn
 jn
 Dl
-MB
-MB
+jJ
+Lb
 MB
 MB
 MB
 MB
 nV
 MB
+sU
 MB
-MB
-MB
+rt
 MB
 Dl
 Dl
@@ -3791,8 +4112,8 @@ jn
 jn
 jn
 Dl
-MB
-MB
+ek
+ek
 MB
 MB
 MB
@@ -3849,18 +4170,18 @@ jn
 jn
 jn
 Dl
-MB
-MB
+Iu
+TR
 MB
 MB
 MB
 MB
 Dl
-MB
-MB
-MB
-MB
-MB
+Gj
+Gj
+Gj
+Gj
+Gj
 Dl
 jn
 jn
