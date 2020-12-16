@@ -51,7 +51,6 @@
 				return default
 	return default
 
-
 /proc/sanitize_hexcolor(color, desired_format = 3, include_crunch = FALSE, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))
@@ -67,21 +66,21 @@
 	var/i = start
 	while(i <= len)
 		char = color[i]
+		i += length(char)
 		switch(text2ascii(char))
 			if(48 to 57)		//numbers 0 to 9
-				char = char
+				. += char
 			if(97 to 102)		//letters a to f
-				char = char
+				. += char
 			if(65 to 70)		//letters A to F
 				char = lowertext(char)
+				. += char
 			else
 				break
-		i += length(char)
-		. += char
 		switch(format_input_ratio)
 			if(0 to 4/6) //skip next one. RRGGBB(AA) -> RGB(A)
 				i += length(color[i])
-			if(6/4 to INFINITY) //repeat current one. RGB(A) -> RRGGBB(AA)
+			if(6/4 to INFINITY) //Add current char again. RGB(A) -> RRGGBB(AA)
 				. += char
 
 	if(length_char(.) == desired_format)
