@@ -29,7 +29,7 @@ jobs:
           bash tools/ci/check_changelogs.sh
           find . -name "*.php" -print0 | xargs -0 -n1 php -l
           find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
-          tgui/bin/tgui --ci
+          tgui/bin/tgui --lint
           bash tools/ci/check_grep.sh
           python3 tools/mapmerge2/dmi.py --test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
