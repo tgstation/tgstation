@@ -13,7 +13,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(length(_eaten))
-		var/datum/cached_parent = parent
 		eaten_lights = list()
 		var/list/cached_eaten_lights = eaten_lights
 		for(var/food in _eaten)
@@ -64,7 +63,6 @@
 /datum/component/light_eater/InheritComponent(datum/component/C, i_am_original, list/_eaten)
 	. = ..()
 	if(length(_eaten))
-		var/datum/cached_parent = parent
 		LAZYINITLIST(eaten_lights)
 		var/list/cached_eaten_lights = eaten_lights
 		for(var/food in _eaten)
@@ -84,7 +82,6 @@
 	if(!light_eater_devour(morsel, eater))
 		return FALSE
 
-	var/has_eyes
 	morsel.visible_message(
 		"<span class='danger'>Something dark and hungry swarms out of \the [eater] and over \the [morsel]!</span>",
 		"<span class='userdanger'>Something dark and hungry swarms out of \the [eater] and burrows into you!</span>",
