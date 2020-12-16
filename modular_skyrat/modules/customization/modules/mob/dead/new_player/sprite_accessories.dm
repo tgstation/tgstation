@@ -30,7 +30,7 @@
 	var/special_x_dimension
 	///Special case of whether the accessory should have a different icon, check taur genitals for example
 	var/special_icon_case
-	///Special case of possibly not applying color to the accessory, important for hardsuit styles
+	///Special case of applying a different color, like hardsuit tails
 	var/special_colorize
 	///Whether it has any extras to render, and their appropriate color sources
 	var/extra = FALSE
@@ -55,17 +55,17 @@
 /datum/sprite_accessory/proc/is_hidden(mob/living/carbon/human/H, obj/item/bodypart/BP)
 	return FALSE
 
-/datum/sprite_accessory/proc/get_special_render_state(mob/living/carbon/human/H, icon_state)
+/datum/sprite_accessory/proc/get_special_render_state(mob/living/carbon/human/H)
 	return null
 
-/datum/sprite_accessory/proc/get_special_icon(mob/living/carbon/human/H)
+/datum/sprite_accessory/proc/get_special_render_colour(mob/living/carbon/human/H, passed_state)
 	return null
 
-/datum/sprite_accessory/proc/get_special_x_dimension(mob/living/carbon/human/H)
+/datum/sprite_accessory/proc/get_special_icon(mob/living/carbon/human/H, passed_state)
+	return null
+
+/datum/sprite_accessory/proc/get_special_x_dimension(mob/living/carbon/human/H, passed_state)
 	return 0
-
-/datum/sprite_accessory/proc/do_colorize(mob/living/carbon/human/H)
-	return TRUE
 
 /datum/sprite_accessory/proc/get_default_color(var/list/features, var/datum/species/pref_species) //Needs features for the color information
 	var/list/colors

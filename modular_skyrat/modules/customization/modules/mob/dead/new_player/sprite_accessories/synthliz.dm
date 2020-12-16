@@ -39,6 +39,7 @@
 	color_src = USE_ONE_COLOR
 	name = "Synthetic Lizard"
 	icon_state = "synthliz"
+	general_type = "lizard"
 
 //Synth Antennae
 /datum/sprite_accessory/antenna/synthliz

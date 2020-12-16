@@ -57,7 +57,7 @@
 			continue
 		var/render_state
 		if(S.special_render_case)
-			render_state = S.get_special_render_state(H, S.icon_state)
+			render_state = S.get_special_render_state(H)
 		else
 			render_state = S.icon_state
 		new_renderkey += "-[key]-[render_state]"
@@ -79,17 +79,22 @@
 
 		var/icon_to_use
 		var/x_shift
+		var/render_state = bodyparts_to_add[S]
+
+		var/override_color = forced_colour
+		if(!override_color && S.special_colorize)
+			override_color = S.get_special_render_colour(H, render_state)
+
 		if(S.special_icon_case)
-			icon_to_use = S.get_special_icon(H, S.icon)
+			icon_to_use = S.get_special_icon(H, render_state)
 		else
 			icon_to_use = S.icon
 
 		if(S.special_x_dimension)
-			x_shift = S.get_special_x_dimension(H, S.icon)
+			x_shift = S.get_special_x_dimension(H, render_state)
 		else
 			x_shift = S.dimension_x
 
-		var/render_state = bodyparts_to_add[S]
 		if(S.gender_specific)
 			render_state = "[g]_[key]_[render_state]"
 		else
@@ -105,45 +110,45 @@
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, x_shift, S.dimension_y)
 
-			if(!forced_colour)
-				if(!S.special_colorize || S.do_colorize(H))
-					if(HAS_TRAIT(H, TRAIT_HUSK))
-						if(S.color_src == USE_MATRIXED_COLORS) //Matrixed+husk needs special care, otherwise we get sparkle dogs
-							accessory_overlay.color = HUSK_COLOR_LIST
-						else
-							accessory_overlay.color = "#AAA" //The gray husk color
+
+			if(!override_color)
+				if(HAS_TRAIT(H, TRAIT_HUSK))
+					if(S.color_src == USE_MATRIXED_COLORS) //Matrixed+husk needs special care, otherwise we get sparkle dogs
+						accessory_overlay.color = HUSK_COLOR_LIST
 					else
-						switch(S.color_src)
-							if(USE_ONE_COLOR)
-								accessory_overlay.color = "#"+mutant_bodyparts[key][MUTANT_INDEX_COLOR_LIST][1]
-							if(USE_MATRIXED_COLORS)
-								var/list/color_list = mutant_bodyparts[key][MUTANT_INDEX_COLOR_LIST]
-								var/list/finished_list = list()
-								finished_list += ReadRGB("[color_list[1]]0")
-								finished_list += ReadRGB("[color_list[2]]0")
-								finished_list += ReadRGB("[color_list[3]]0")
-								finished_list += list(0,0,0,255)
-								for(var/index in 1 to finished_list.len)
-									finished_list[index] /= 255
-								accessory_overlay.color = finished_list
-							if(MUTCOLORS)
-								if(fixed_mut_color)
-									accessory_overlay.color = "#[fixed_mut_color]"
-								else
-									accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-							if(HAIR)
-								if(hair_color == "mutcolor")
-									accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-								else if(hair_color == "fixedmutcolor")
-									accessory_overlay.color = "#[fixed_mut_color]"
-								else
-									accessory_overlay.color = "#[H.hair_color]"
-							if(FACEHAIR)
-								accessory_overlay.color = "#[H.facial_hair_color]"
-							if(EYECOLOR)
-								accessory_overlay.color = "#[H.eye_color]"
+						accessory_overlay.color = "#AAA" //The gray husk color
+				else
+					switch(S.color_src)
+						if(USE_ONE_COLOR)
+							accessory_overlay.color = "#"+mutant_bodyparts[key][MUTANT_INDEX_COLOR_LIST][1]
+						if(USE_MATRIXED_COLORS)
+							var/list/color_list = mutant_bodyparts[key][MUTANT_INDEX_COLOR_LIST]
+							var/list/finished_list = list()
+							finished_list += ReadRGB("[color_list[1]]0")
+							finished_list += ReadRGB("[color_list[2]]0")
+							finished_list += ReadRGB("[color_list[3]]0")
+							finished_list += list(0,0,0,255)
+							for(var/index in 1 to finished_list.len)
+								finished_list[index] /= 255
+							accessory_overlay.color = finished_list
+						if(MUTCOLORS)
+							if(fixed_mut_color)
+								accessory_overlay.color = "#[fixed_mut_color]"
+							else
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+						if(HAIR)
+							if(hair_color == "mutcolor")
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							else if(hair_color == "fixedmutcolor")
+								accessory_overlay.color = "#[fixed_mut_color]"
+							else
+								accessory_overlay.color = "#[H.hair_color]"
+						if(FACEHAIR)
+							accessory_overlay.color = "#[H.facial_hair_color]"
+						if(EYECOLOR)
+							accessory_overlay.color = "#[H.eye_color]"
 			else
-				accessory_overlay.color = forced_colour
+				accessory_overlay.color = override_color
 			standing += accessory_overlay
 
 			if(S.hasinner)
