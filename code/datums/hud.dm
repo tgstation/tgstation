@@ -57,6 +57,8 @@ GLOBAL_LIST_INIT(huds, list(
 	if (absolute || !--hudusers[M])
 		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 		hudusers -= M
+		if(next_time_allowed[M])
+			next_time_allowed -= M
 		if(queued_to_see[M])
 			queued_to_see -= M
 		else
