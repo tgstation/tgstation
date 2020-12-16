@@ -14,7 +14,7 @@
 	glass_desc = "Vitamins! Yay!"
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getOxyLoss() && DT_PROB(15, delta_time))
+	if(M.getOxyLoss() && DT_PROB(16, delta_time))
 		M.adjustOxyLoss(-1, 0)
 		. = 1
 	..()
@@ -64,9 +64,11 @@
 	switch(current_cycle)
 		if(1 to 20)
 			//nothing
-		if(21 to INFINITY)
-			if(DT_PROB((current_cycle-10)/2, delta_time))
+		if(21 to 110)
+			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
 				M.cure_nearsighted(list(EYE_DAMAGE))
+		if(110 to INFINITY)
+			M.cure_nearsighted(list(EYE_DAMAGE))
 	..()
 	return
 
@@ -168,7 +170,7 @@
 	taste_description = "laughter"
 
 /datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(15, delta_time))
+	if(DT_PROB(16, delta_time))
 		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
 		M.Stun(5)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
@@ -887,7 +889,7 @@
 	H.resize = newsize/current_size
 	current_size = newsize
 	H.update_transform()
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(23, delta_time))
 		H.emote("sneeze")
 	..()
 
@@ -925,7 +927,7 @@
 	glass_desc = "A healthy and refreshing juice."
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/M, delta_time, times_fired)
-	if(M.getToxLoss() && DT_PROB(15, delta_time))
+	if(M.getToxLoss() && DT_PROB(16, delta_time))
 		M.adjustToxLoss(-1, 0)
 	..()
 	. = TRUE

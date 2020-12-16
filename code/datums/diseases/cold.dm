@@ -17,7 +17,7 @@
 
 	switch(stage)
 		if(2)
-			if(affected_mob.body_position == LYING_DOWN && DT_PROB(20, delta_time))  //changed FROM prob(10) until sleeping is fixed // Has sleeping been fixed yet?
+			if(affected_mob.body_position == LYING_DOWN && DT_PROB(23, delta_time))  //changed FROM prob(10) until sleeping is fixed // Has sleeping been fixed yet?
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
 				return FALSE

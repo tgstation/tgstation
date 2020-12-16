@@ -34,7 +34,7 @@
 	switch(stage)
 		if(1)
 			if(restcure)
-				if(affected_mob.body_position == LYING_DOWN && DT_PROB(15, delta_time))
+				if(affected_mob.body_position == LYING_DOWN && DT_PROB(16, delta_time))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
@@ -68,7 +68,7 @@
 			if(DT_PROB(5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your entire body vibrates.</span>")
 
-			if (DT_PROB(20, delta_time))
+			if (DT_PROB(19, delta_time))
 				if(prob(50))
 					scramble_dna(affected_mob, 1, 0, rand(15,45))
 				else
@@ -80,7 +80,7 @@
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return FALSE
-			if (DT_PROB(35, delta_time))
+			if (DT_PROB(37, delta_time))
 				if(prob(50))
 					scramble_dna(affected_mob, 1, 0, rand(50,75))
 				else

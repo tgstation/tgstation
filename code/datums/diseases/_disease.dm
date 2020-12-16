@@ -23,7 +23,7 @@
 	var/mob/living/carbon/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	/// The probability of spreading through the air every second
-	var/infectivity = 30
+	var/infectivity = 41
 	/// The probability of this infection being cured every second the cure is present
 	var/cure_chance = 4
 	var/carrier = FALSE //If our host is only a carrier

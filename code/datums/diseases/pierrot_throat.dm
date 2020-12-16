@@ -4,7 +4,7 @@
 	spread_text = "Airborne"
 	cure_text = "Banana products, especially banana bread."
 	cures = list(/datum/reagent/consumable/banana)
-	cure_chance = 30
+	cure_chance = 50
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75

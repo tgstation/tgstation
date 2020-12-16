@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/slime/handle_status_effects(delta_time, times_fired)
 	..()
-	if(!stat && DT_PROB(15, delta_time))
+	if(!stat && DT_PROB(16, delta_time))
 		adjustBruteLoss(-0.5 * delta_time)
 
 /mob/living/simple_animal/slime/proc/handle_feeding(delta_time, times_fired)
@@ -186,7 +186,7 @@
 			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
 		if(M.client && ishuman(M))
-			if(DT_PROB(60, delta_time))
+			if(DT_PROB(61, delta_time))
 				rabid = 1 //we go rabid after finishing to feed on a human with a client.
 
 		Feedstop()
@@ -275,7 +275,7 @@
 	if(Discipline > 0)
 
 		if(Discipline >= 5 && rabid)
-			if(DT_PROB(35, delta_time))
+			if(DT_PROB(37, delta_time))
 				rabid = 0
 
 		if(DT_PROB(5, delta_time))
@@ -301,7 +301,7 @@
 
 		if (nutrition < get_starve_nutrition())
 			hungry = 2
-		else if (nutrition < get_grow_nutrition() && DT_PROB(12.5, delta_time) || nutrition < get_hunger_nutrition())
+		else if (nutrition < get_grow_nutrition() && DT_PROB(13, delta_time) || nutrition < get_hunger_nutrition())
 			hungry = 1
 
 		if(hungry == 2 && !client) // if a slime is starving, it starts losing its friends
@@ -397,7 +397,7 @@
 		newmood = "mischievous"
 
 	if (!newmood)
-		if (Discipline && DT_PROB(12.5, delta_time))
+		if (Discipline && DT_PROB(13, delta_time))
 			newmood = "pout"
 		else if (DT_PROB(0.5, delta_time))
 			newmood = pick("sad", ":3", "pout")

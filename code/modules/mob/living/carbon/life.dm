@@ -509,7 +509,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drunkenness = max(drunkenness - ((0.005 + (drunkenness * 0.02)) * delta_time), 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
-			if(DT_PROB(15, delta_time))
+			if(DT_PROB(16, delta_time))
 				slurring += 2
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
 			throw_alert("drunk", /atom/movable/screen/alert/drunk)
@@ -540,7 +540,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 						say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
 		if(drunkenness >= 41)
-			if(DT_PROB(15, delta_time))
+			if(DT_PROB(16, delta_time))
 				add_confusion(2)
 			Dizzy(5 * delta_time)
 

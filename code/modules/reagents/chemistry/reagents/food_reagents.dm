@@ -406,7 +406,7 @@
 			M.Jitter(20)
 			M.Dizzy(20)
 			M.set_drugginess(40)
-			if(DT_PROB(15, delta_time))
+			if(DT_PROB(16, delta_time))
 				M.emote(pick("twitch","giggle"))
 	..()
 
@@ -593,11 +593,11 @@
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 1.5 * delta_time)
-	if(DT_PROB(35, delta_time))
-		M.adjustBruteLoss(-5*REM*delta_time, 0)
-		M.adjustFireLoss(-5*REM*delta_time, 0)
-		M.adjustOxyLoss(-5*REM*delta_time, 0)
-		M.adjustToxLoss(-5*REM*delta_time, 0)
+	if(DT_PROB(33, delta_time))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		M.adjustOxyLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, 0)
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -818,7 +818,7 @@
 	overdose_threshold = 15
 
 /datum/reagent/consumable/char/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(12.5, delta_time))
+	if(DT_PROB(13, delta_time))
 		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/char)
 	..()
 	return

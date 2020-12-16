@@ -58,7 +58,7 @@
 		return
 
 	var/co2 = T.air.gases[/datum/gas/carbon_dioxide][MOLES]
-	if(co2 > 0 && DT_PROB(12.5, delta_time))
+	if(co2 > 0 && DT_PROB(13, delta_time))
 		var/amt = min(co2, 9)
 		T.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
 		T.atmos_spawn_air("o2=[amt]")

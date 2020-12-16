@@ -122,7 +122,7 @@
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 2.5*delta_time)
 	M.hallucination = max(M.hallucination - (5*delta_time), 0)
-	if(DT_PROB(15, delta_time))
+	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
@@ -139,7 +139,7 @@
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
 		holder.remove_reagent(/datum/reagent/toxin/histamine, 2.5*delta_time)
 	M.hallucination = max(M.hallucination - (5*delta_time), 0)
-	if(DT_PROB(15, delta_time))
+	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
@@ -301,7 +301,7 @@
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
 		M.blood_volume = new_blood_level + extra_regen
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = TRUE
@@ -316,7 +316,7 @@
 		to_chat(M, "<span class='warning'>You feel sweet.</span>")
 		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
@@ -513,7 +513,7 @@
 	if(DT_PROB(3.5, delta_time))
 		to_chat(M, "<span class='notice'>[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
 
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
 		. = 1
@@ -612,7 +612,7 @@
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.drop_all_held_items()
 		M.Dizzy(2)
 		M.Jitter(2)
@@ -675,7 +675,7 @@
 	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
-		M.blur_eyes(5 * delta_time)
+		M.blur_eyes(5)
 	..()
 
 /datum/reagent/medicine/inacusiate
@@ -756,7 +756,7 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustStaminaLoss(2.5*REM, 0)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -899,7 +899,7 @@
 	. = 1
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.adjustStaminaLoss(2.5*REM, 0)
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -1330,7 +1330,7 @@
 
 /datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	..()
-	if(DT_PROB(15, delta_time) && iscarbon(M))
+	if(DT_PROB(16, delta_time) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")

@@ -238,7 +238,7 @@
 	name = "Advanced Mutation Transformation"
 	cure_text = "frost oil"
 	cures = list(/datum/reagent/consumable/frostoil)
-	cure_chance = 40
+	cure_chance = 55
 	agent = "Advanced Mutation Toxin"
 	desc = "This highly concentrated extract converts anything into more of itself."
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -319,7 +319,7 @@
 	name = "Gondola Transformation"
 	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
 	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
-	cure_chance = 40
+	cure_chance = 55
 	stage_prob = 2.5
 	agent = "Tranquility"
 	desc = "Consuming the flesh of a Gondola comes at a terrible price."

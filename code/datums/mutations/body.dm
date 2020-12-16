@@ -280,7 +280,7 @@
 	power_coeff = 1
 
 /datum/mutation/human/fire/on_life(delta_time, times_fired)
-	if(DT_PROB((0.5+(100-dna.stability)/20) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+	if(DT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.IgniteMob()
 
@@ -335,7 +335,7 @@
 	COOLDOWN_DECLARE(msgcooldown)
 
 /datum/mutation/human/acidflesh/on_life(delta_time, times_fired)
-	if(DT_PROB(12.5, delta_time))
+	if(DT_PROB(13, delta_time))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
 			COOLDOWN_START(src, msgcooldown, 20 SECONDS)

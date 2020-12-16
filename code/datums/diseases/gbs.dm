@@ -28,6 +28,6 @@
 				to_chat(affected_mob, "<span class='danger'>Your body hurts all over!</span>")
 		if(4)
 			to_chat(affected_mob, "<span class='userdanger'>Your body feels as if it's trying to rip itself apart!</span>")
-			if(DT_PROB(25, delta_time))
+			if(DT_PROB(30, delta_time))
 				affected_mob.gib()
 				return FALSE

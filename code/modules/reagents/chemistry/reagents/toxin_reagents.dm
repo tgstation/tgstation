@@ -154,7 +154,7 @@
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20, 60)*REM, 0)
 		. = 1
-	else if(DT_PROB(20, delta_time))
+	else if(DT_PROB(23, delta_time))
 		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()

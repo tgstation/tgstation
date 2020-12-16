@@ -332,7 +332,7 @@
 
 	if(we_breath)
 		adjustOxyLoss(4 * delta_time)
-		Unconscious(40 * delta_time)
+		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(1 * delta_time)
 

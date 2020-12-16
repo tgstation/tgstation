@@ -6,7 +6,7 @@
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
 	cures = list(/datum/reagent/water/holywater)
-	cure_chance = 25 //higher chance to cure, because revenants are assholes
+	cure_chance = 30 //higher chance to cure, because revenants are assholes
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE

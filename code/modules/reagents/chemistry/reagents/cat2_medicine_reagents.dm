@@ -482,7 +482,7 @@
 		H.Jitter(rand(0,2))
 		H.Dizzy(rand(0,2))
 
-		if(DT_PROB(20, delta_time))
+		if(DT_PROB(18, delta_time))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
 
 	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //certain death below this threshold

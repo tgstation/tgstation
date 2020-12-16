@@ -41,7 +41,7 @@
 					to_chat(affected_mob, "<span class='notice'>You're... REALLY starting to feel the weight loss.</span>")
 				affected_mob.adjust_nutrition(-6)
 		if(4)
-			if(DT_PROB(15, delta_time))
+			if(DT_PROB(16, delta_time))
 				if(affected_mob.nutrition >= 100)
 					if(prob(10))
 						to_chat(affected_mob, "<span class='warning'>You feel like your body's shedding weight rapidly!</span>")

@@ -211,7 +211,7 @@
 			step(M, pick(GLOB.cardinals))
 	if(DT_PROB(10, delta_time))
 		M.emote("laugh")
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(18, delta_time))
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
 		M.drop_all_held_items()
 	..()
@@ -301,7 +301,7 @@
 			step(M, pick(GLOB.cardinals))
 	if(DT_PROB(10, delta_time))
 		M.emote(pick("twitch","drool","moan"))
-	if(DT_PROB(20, delta_time))
+	if(DT_PROB(28, delta_time))
 		M.drop_all_held_items()
 	..()
 
@@ -400,7 +400,7 @@
 	. = 1
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(15, delta_time))
+	if(DT_PROB(16, delta_time))
 		var/reaction = rand(1,3)
 		switch(reaction)
 			if(1)

@@ -1165,7 +1165,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.satiety = -MAX_SATIETY
 		else if(H.satiety < 0)
 			H.satiety++
-			if(DT_PROB(round(-H.satiety/80), delta_time))
+			if(DT_PROB(round(-H.satiety/77), delta_time))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= H.physiology.hunger_mod
