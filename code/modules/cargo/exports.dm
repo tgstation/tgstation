@@ -137,11 +137,11 @@ Then the player gets the profit from selling his own wasted time.
 	///This is the value of the object, as derived from export datums.
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
 	///Quantity of the object in question.
-	var/amount = get_amount(O)
+	. = get_amount(O)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
 
-	if(amount <=0 || the_cost <=0)
+	if(. <=0 || the_cost <=0)
 		return FALSE
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
@@ -152,16 +152,12 @@ Then the player gets the profit from selling his own wasted time.
 		the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	report.total_value[src] += the_cost
 
-	if(istype(O, /datum/export/material))
-		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
-	else
-		report.total_amount[src] += amount
+	report.total_amount[src] += .
 
 	if(!dry_run)
 		if(apply_elastic)
-			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+			cost *= NUM_E**(-1*k_elasticity*.)		//marginal cost modifier
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
-	return TRUE
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.

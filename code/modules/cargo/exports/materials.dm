@@ -25,6 +25,12 @@
 
 	return round(amount / MINERAL_MATERIAL_AMOUNT)
 
+// For materials, the amount is expressed in volume, not number of sheets exported.
+/datum/export/material/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
+	. = ..()
+	if(.)
+		report.total_amount[src] += . * MINERAL_MATERIAL_AMOUNT - .
+
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
 /datum/export/material/bananium
