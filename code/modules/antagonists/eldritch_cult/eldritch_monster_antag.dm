@@ -40,13 +40,6 @@
 	. = ..()
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
-	//We have to reload the alternative appearances since some things WILL be invisible to us if we get heretic antag after they spawn... sad!
-	for(var/AA in GLOB.active_alternate_appearances)
-		if(!AA || !istype(AA,/datum/atom_hud/alternate_appearance/basic/heretics))
-			continue
-		var/datum/atom_hud/alternate_appearance/appearance = AA
-		appearance.onNewMob(src)
-
 /datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	remove_antag_hud(antag_hud_type, owner.current)

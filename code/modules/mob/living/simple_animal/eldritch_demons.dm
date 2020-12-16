@@ -145,7 +145,7 @@
 	if(len < 3)
 		stack_trace("Eldritch Armsy created with invalid len ([len]). Reverting to 3.")
 		len = 3 //code breaks below 3, let's just not allow it.
-	oldloc = loc
+	oldloc = get_turf(src)
 	RegisterSignal(src,COMSIG_MOVABLE_MOVED,.proc/update_chain_links)
 	if(!spawn_more)
 		return
@@ -191,7 +191,7 @@
 ///Updates chain links to force move onto a single tile
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/contract_next_chain_into_single_tile()
 	if(back)
-		back.forceMove(loc)
+		back.forceMove(get_turf(src))
 		back.contract_next_chain_into_single_tile()
 	return
 
@@ -199,18 +199,17 @@
 	. += 1
 	if(back)
 		. += back.get_length()
-
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
 	if(!follow)
 		return
 	gib_trail()
-	if(back && back.loc != oldloc)
+	if(back && get_turf(back) != oldloc)
 		back.Move(oldloc)
 	// self fixing properties if somehow broken
-	if(front && loc != front.oldloc)
+	if(front && get_turf(src) != get_turf(front))
 		forceMove(front.oldloc)
-	oldloc = loc
+	oldloc = get_turf(src)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
 	if(front) // head makes gibs

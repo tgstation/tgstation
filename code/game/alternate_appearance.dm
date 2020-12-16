@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(alternate_appearances && alternate_appearances[key])
 		return
 	var/list/arguments = args.Copy(2)
-	new type(arglist(arguments))
+	return new type(arglist(arguments))
 
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/heretics/New()
 	..()
-	for(var/mob in  GLOB.player_list)
+	for(var/mob in GLOB.player_list)
 		if(mobShouldSee(mob))
 			add_hud_to(mob)
 

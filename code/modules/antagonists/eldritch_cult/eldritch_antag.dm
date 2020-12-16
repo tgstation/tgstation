@@ -37,13 +37,6 @@
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.Generate()
 
-	//We have to reload the alternative appearances since some influences WILL be invisible to us if we get heretic antag after they spawn... sad!
-	for(var/AA in GLOB.active_alternate_appearances)
-		if(!AA || !istype(AA,/datum/atom_hud/alternate_appearance/basic/heretics))
-			continue
-		var/datum/atom_hud/alternate_appearance/appearance = AA
-		appearance.onNewMob(src)
-
 	START_PROCESSING(SSprocessing,src)
 	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)

@@ -692,7 +692,7 @@
 	var/mob/living/mob_inside = locate() in target.contents - target
 
 	if(!mob_inside)
-		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(get_turf(user),TRUE,segment_length)
 		target.mind.transfer_to(outside, TRUE)
 		target.forceMove(outside)
 		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
@@ -709,7 +709,7 @@
 	if(iscarbon(mob_inside))
 		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
 		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
-			mob_inside.forceMove(armsy.loc)
+			mob_inside.forceMove(get_turf(armsy))
 		armsy.mind.transfer_to(mob_inside, TRUE)
 		segment_length = armsy.get_length()
 		qdel(armsy)
