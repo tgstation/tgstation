@@ -987,6 +987,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
+"fc" = (
+/obj/machinery/posialert,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/shipstation)
 "fg" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 8
@@ -5324,7 +5328,7 @@ ed
 "}
 (30,1,1) = {"
 wd
-ZH
+fc
 Cn
 Lo
 Ie

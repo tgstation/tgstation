@@ -37627,6 +37627,9 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bhC" = (

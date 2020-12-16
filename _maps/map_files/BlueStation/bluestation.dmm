@@ -65,6 +65,13 @@
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/plating/grass,
 /area/hallway/primary/central)
+"aB" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/robotics/lab)
 "aD" = (
 /obj/structure/table/reinforced,
 /obj/item/mmi,
@@ -40511,7 +40518,7 @@ VN
 Kz
 Kz
 Rl
-WB
+aB
 rx
 rx
 il

@@ -23751,6 +23751,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/posialert{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "blF" = (

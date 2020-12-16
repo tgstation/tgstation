@@ -21188,6 +21188,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/aft)
 "mRd" = (

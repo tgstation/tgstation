@@ -53834,6 +53834,9 @@
 	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cDg" = (

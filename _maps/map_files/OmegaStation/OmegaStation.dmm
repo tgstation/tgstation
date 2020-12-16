@@ -34641,6 +34641,20 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
+"rby" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/robotics/lab)
 "rce" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -81916,8 +81930,8 @@ vbH
 okp
 kkl
 hiH
-bjY
-vkD
+bjX
+rby
 btk
 eFl
 bku

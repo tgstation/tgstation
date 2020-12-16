@@ -50501,6 +50501,9 @@
 /area/medical/virology)
 "hKu" = (
 /obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "hQK" = (

@@ -2017,6 +2017,9 @@
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
+/obj/machinery/posialert{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "kD" = (
