@@ -113,6 +113,12 @@
 	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL) && !ismonkey(possible_throwable))
 		return
 
+	if(ishuman(possible_throwable))
+		var/mob/living/carbon/human/human_throwable = possible_throwable
+		if(human_throwable.wear_suit && (human_throwable.wear_suit.flags_inv & HIDEJUMPSUIT))
+			to_chat(user, "<span class='warning'>You can't reach [human_throwable]'s tail through [human_throwable.p_their()] [human_throwable.wear_suit.name]!</span>")
+			return
+
 	user.face_atom(clicked_atom)
 	INVOKE_ASYNC(src, .proc/setup_swing, user, possible_throwable)
 	return(COMSIG_MOB_CANCEL_CLICKON)
@@ -136,6 +142,7 @@
 		to_chat(the_hulk, "<span class='danger'>You lose your grasp on [yeeted_person]'s tail!</span>")
 		return
 
+	// we're officially a-go!
 	yeeted_person.Paralyze(8 SECONDS)
 	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>", \
 					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear wooshing sounds!</span>", null, the_hulk)
@@ -188,7 +195,7 @@
 		yeeted_person.adjustBruteLoss(step*0.5)
 		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE)
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
-		log_combat(the_hulk, yeeted_person, "has smacked > into someone while tail swinging") // i have no idea how to better word this
+		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
 		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
 			the_hulk.visible_message("<span class='warning'>[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!</span>", "<span class='userdanger'>You end up smacking [yeeted_person] into yourself!</span>", ignored_mobs = yeeted_person)
