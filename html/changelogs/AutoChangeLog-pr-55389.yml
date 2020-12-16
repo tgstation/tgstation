@@ -1,5 +1,0 @@
-author: "KathrinBailey"
-delete-after: True
-changes: 
-  - refactor: "Allows damage that baked beanomorphs, monkeys and slimes deal to humans to be modified instead of being hardcoded values."
-  - refactor: "Allows different xenomorph types to deal different amounts of damage, if future coders or VV-happy admins will it."

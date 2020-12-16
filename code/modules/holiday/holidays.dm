@@ -262,6 +262,27 @@
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
+/datum/holiday/nz
+	name = "Waitangi Day"
+	begin_day = 6
+	begin_month = FEBRUARY
+
+/datum/holiday/nz/getStationPrefix()
+	return pick("Aotearoa","Kiwi","Fish 'n' Chips","Kākāpō","Southern Cross")
+
+/datum/holiday/nz/greet()
+	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840 //is this work
+	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!" //thus creating much controversy
+
+/datum/holiday/anz
+	name = "ANZAC Day"
+	begin_day = 25
+	begin_month = APRIL
+	drone_hat = /obj/item/food/grown/poppy
+
+/datum/holiday/anz/getStationPrefix()
+	return pick("Australian","New Zealand","Poppy", "Southern Cross")
+
 /datum/holiday/writer
 	name = "Writer's Day"
 	begin_day = 8
