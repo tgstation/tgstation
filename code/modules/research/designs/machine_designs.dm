@@ -65,6 +65,14 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/condenser
+	name = "Machine Design (Condenser Board)"
+	desc = "The circuit board for a gas condenser."
+	id = "gas_condenser"
+	build_path = /obj/item/circuitboard/machine/condenser
+	category = list("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/board/space_heater
 	name = "Machine Design (Space Heater Board)"
 	desc = "The circuit board for a space heater."

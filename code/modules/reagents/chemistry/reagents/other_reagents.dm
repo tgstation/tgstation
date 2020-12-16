@@ -147,6 +147,11 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
+
+/datum/reagent/water/on_new(data)
+	. = ..()
+	AddElement(/datum/element/boilable, T0C+100, "h2o")
+
 /*
  *	Water reaction to turf
  */
@@ -723,13 +728,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0 // oderless and tasteless
 
-
-/datum/reagent/oxygen/expose_turf(turf/open/exposed_turf, reac_volume)
+/datum/reagent/oxygen/on_new(data)
 	. = ..()
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
-	return
+	AddElement(/datum/element/boilable, BP_OXYGEN, "o2")
 
 /datum/reagent/copper
 	name = "Copper"
@@ -755,11 +756,9 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 
-/datum/reagent/nitrogen/expose_turf(turf/open/exposed_turf, reac_volume)
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
-	return ..()
+/datum/reagent/nitrogen/on_new(data)
+	. = ..()
+	AddElement(/datum/element/boilable, BP_NITROGEN, "n2")
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -1241,11 +1240,9 @@
 	color = "#B0B0B0" // rgb : 192, 192, 192
 	taste_description = "something unknowable"
 
-/datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
-	return ..()
+/datum/reagent/carbondioxide/on_new(data)
+	. = ..()
+	AddElement(/datum/element/boilable, BP_CARBON_DIOXIDE, "co2")
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
@@ -1255,11 +1252,9 @@
 	color = "#808080"
 	taste_description = "sweetness"
 
-/datum/reagent/nitrous_oxide/expose_turf(turf/open/exposed_turf, reac_volume)
+/datum/reagent/nitrous_oxide/on_new(data)
 	. = ..()
-	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2o=[reac_volume/20];TEMP=[temp]")
+	AddElement(/datum/element/boilable, BP_NITROUS_OXIDE, "n2o")
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

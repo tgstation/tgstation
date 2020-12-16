@@ -2,6 +2,25 @@
 #define LIQUID			2
 #define GAS				3
 
+/// Moles per reagent unit. Used to convert between reagent units and gases.
+#define REAGENT_MOLE_DENSITY	10
+/// The boiling point of water.
+#define BP_WATER			(T0C+100)
+/// The boiling point of nitrogen.
+#define BP_NITROGEN			(300+10)
+/// The boiling point of oxygen.
+#define BP_OXYGEN			(300+10)
+/// The boiling point of CO2.
+#define BP_CARBON_DIOXIDE	(195)
+/// The boiling point of nitrous oxide.
+#define BP_NITROUS_OXIDE	(185)
+/// The boiling point of tritium. Actually just used for condensation.
+#define BP_TRITIUM			(25)
+/// The boiling point of hydrogen. Actually just used for condensation since hydrogen gas is supposed to be rare
+#define BP_HYDROGEN			(23)
+/// The boiling point of liquid plasma.
+#define BP_PLASMA			(T0C + 50)
+
 #define INJECTABLE		(1<<0)	// Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE		(1<<1)	// Makes it possible to remove reagents through syringes.
 

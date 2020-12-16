@@ -26,6 +26,11 @@ SUBSYSTEM_DEF(air)
 	var/list/pipe_init_dirs_cache = list()
 
 	//atmos singletons
+	/// Lazy list of the gas meta info lists. Literally just a reference to GLOB.meta_gas_list
+	var/list/gas_metadata
+	/// Lazy list of gas datum singletons. Currently used exclusively to generate condensation event singletons
+	var/list/gas_singletons
+
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
 
@@ -70,6 +75,12 @@ SUBSYSTEM_DEF(air)
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
 	setup_turf_visuals()
+
+	if(GLOB.meta_gas_info)
+		gas_metadata = GLOB.meta_gas_info
+	if(GLOB.gas_singletons)
+		gas_singletons = GLOB.gas_singletons
+
 	return ..()
 
 

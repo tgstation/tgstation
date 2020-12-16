@@ -1000,9 +1000,10 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
 	chem_temp = round(chem_temp)
+	var/new_temp = chem_temp
 	for(var/i in reagent_list)
 		var/datum/reagent/R = i
-		R.on_temp_change()
+		R.on_temp_change(new_temp)
 	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////

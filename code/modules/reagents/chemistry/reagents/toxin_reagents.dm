@@ -60,8 +60,6 @@
 	if(chems.has_reagent(type, 1))
 		mytray.adjustToxic(3) //It is still toxic, mind you, but not to the same degree.
 
-#define	LIQUID_PLASMA_BP (50+T0C)
-
 /datum/reagent/toxin/plasma
 	name = "Plasma"
 	description = "Plasma in its liquid form."
@@ -73,26 +71,14 @@
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 
+/datum/reagent/toxin/plasma/on_new(data)
+	. = ..()
+	AddElement(/datum/element/boilable, BP_PLASMA, "plasma")
+
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
-	return ..()
-
-/datum/reagent/toxin/plasma/on_temp_change()
-	if(holder.chem_temp < LIQUID_PLASMA_BP)
-		return
-	if(holder.my_atom)
-		var/atom/A = holder.my_atom
-		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
-		holder.del_reagent(type)
-
-/datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
-	if(!istype(exposed_turf))
-		return
-	var/temp = holder ? holder.chem_temp : T20C
-	if(temp >= LIQUID_PLASMA_BP)
-		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 	return ..()
 
 /datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!

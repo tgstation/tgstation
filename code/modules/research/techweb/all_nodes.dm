@@ -148,7 +148,7 @@
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
 	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier", "HFR_core", "HFR_fuel_input",
-	"HFR_waste_output", "HFR_moderator_input", "HFR_corner", "HFR_interface")
+	"HFR_waste_output", "HFR_moderator_input", "HFR_corner", "HFR_interface", "gas_condenser")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/anomaly

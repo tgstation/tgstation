@@ -297,6 +297,13 @@
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH
+/datum/component/plumbing/simple_supply/north
+	supply_connects = NORTH
+/datum/component/plumbing/simple_supply/west
+	supply_connects = WEST
+/datum/component/plumbing/simple_supply/east
+	supply_connects = EAST
+
 
 ///input and output, like a holding tank
 /datum/component/plumbing/tank

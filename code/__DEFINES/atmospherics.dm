@@ -10,6 +10,13 @@
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
 #define META_GAS_FUSION_POWER   7
+#define META_GAS_COND_RATE		8
+#define META_GAS_COND_TEMP_MAX	9
+#define META_GAS_COND_TEMP_MIN	10
+#define META_GAS_COND_TYPE		11
+#define META_GAS_COND_HEAT		12
+#define META_GAS_COND_EVENT		13
+
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)

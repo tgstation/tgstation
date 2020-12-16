@@ -292,6 +292,23 @@
 	. = ..()
 	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
 
+/obj/item/circuitboard/machine/condenser
+	name = "Condenser (Machine Board)"
+	desc = "You can use a screwdriver to change the piping layer."
+	build_path = /obj/machinery/atmospherics/components/unary/condenser
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+	)
+
+	/// What piping layer the constructed condenser should use
+	var/piping_layer = PIPING_LAYER_DEFAULT
+
+/obj/item/circuitboard/machine/condenser/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
+
+	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+
 /obj/item/circuitboard/machine/HFR_fuel_input
 	name = "HFR Fuel Input (Machine Board)"
 	icon_state = "engineering"
