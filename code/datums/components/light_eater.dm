@@ -110,7 +110,7 @@
  * - [hit_atom][/atom]: The target atom that was struck by the source in flight
  * - [thrownthing][/datum/thrownthing]: A datum containing the information for the throw
  */
-/datum/element/light_eater/proc/on_throw_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
+/datum/component/light_eater/proc/on_throw_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
 	eat_lights(hit_atom, source)
 	return NONE
@@ -124,7 +124,7 @@
  * - [user][/mob/living]: The mob using the source to strike the target
  * - proximity: Whether the strike was in melee range so you can't eat lights from cameras
  */
-/datum/element/light_eater/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity)
+/datum/component/light_eater/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity)
 	SIGNAL_HANDLER
 	if(!proximity)
 		return NONE
@@ -144,7 +144,7 @@
  * - final_block_chance: The probability of blocking the target with the source
  * - attack_type: The type of attack that was blocked
  */
-/datum/element/light_eater/proc/on_hit_reaction(obj/item/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
+/datum/component/light_eater/proc/on_hit_reaction(obj/item/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	SIGNAL_HANDLER
 	if(prob(final_block_chance))
 		eat_lights(hitby, source)
@@ -159,7 +159,7 @@
  * - [target][/atom]: The atom that was struck by the projectile
  * - angle: The angle the target was struck at
  */
-/datum/element/light_eater/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle)
+/datum/component/light_eater/proc/on_projectile_hit(obj/projectile/source, atom/movable/firer, atom/target, angle)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE
@@ -172,7 +172,7 @@
  * - [target][/atom]: The atom that was exposed to the light reater reagents
  * - reac_volume: The volume of the reagents the target was exposed to
  */
-/datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
+/datum/component/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE
