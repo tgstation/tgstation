@@ -1897,7 +1897,7 @@
  * Human vs human attacks are handled in species code right now.
  */
 /mob/living/proc/apply_martial_art(mob/living/target)
-	if(HAS_TRAIT(src, TRAIT_PACIFISM) || HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
+	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return FALSE
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE
@@ -1906,6 +1906,8 @@
 			if (INTENT_GRAB)
 				attack_result = style.grab_act(src, target)
 			if (INTENT_HARM)
+				if (HAS_TRAIT(src, TRAIT_PACIFISM))
+					return FALSE
 				attack_result = style.harm_act(src, target)
 			if (INTENT_DISARM)
 				attack_result = style.disarm_act(src, target)
