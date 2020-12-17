@@ -2,7 +2,7 @@
 	name = "Mushroom Punch"
 	id = MARTIALART_MUSHPUNCH
 
-/datum/martial_art/mushpunch/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/mushpunch/harm_act(mob/living/A, mob/living/D)
 	var/atk_verb
 	to_chat(A, "<span class='spider'>You begin to wind up an attack...</span>")
 	if(!do_after(A, 25, target = D))
@@ -28,7 +28,7 @@
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
 
-/obj/item/mushpunch/attack_self(mob/living/carbon/human/user)
+/obj/item/mushpunch/attack_self(mob/living/user)
 	if(!istype(user) || !user)
 		return
 	var/message = "<span class='spider'>You devour [src], and a confluence of skill and power from the mushroom enhances your punches! You do need a short moment to charge these powerful punches.</span>"

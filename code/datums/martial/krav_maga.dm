@@ -14,13 +14,12 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "neck_chop")
+	if (owner.mind.martial_art.streak == "neck_chop")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
+		owner.mind.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Neck Chop stance!</span>", "<b><i>Your next attack will be a Neck Chop.</i></b>")
-		H.mind.martial_art.streak = "neck_chop"
+		owner.mind.martial_art.streak = "neck_chop"
 
 /datum/action/leg_sweep
 	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
@@ -31,13 +30,12 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "leg_sweep")
+	if (owner.mind.martial_art.streak == "leg_sweep")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
+		owner.mind.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Leg Sweep stance!</span>", "<b><i>Your next attack will be a Leg Sweep.</i></b>")
-		H.mind.martial_art.streak = "leg_sweep"
+		owner.mind.martial_art.streak = "leg_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
 	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
@@ -48,27 +46,26 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "quick_choke")
+	if (owner.mind.martial_art.streak == "quick_choke")
 		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
+		owner.mind.martial_art.streak = ""
 	else
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
-		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
+		owner.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
+/datum/martial_art/krav_maga/teach(mob/living/carbon/human/owner, make_temporary=FALSE)
 	if(..())
-		to_chat(H, "<span class='userdanger'>You know the arts of [name]!</span>")
-		to_chat(H, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-		neckchop.Grant(H)
-		legsweep.Grant(H)
-		lungpunch.Grant(H)
+		to_chat(owner, "<span class='userdanger'>You know the arts of [name]!</span>")
+		to_chat(owner, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		neckchop.Grant(owner)
+		legsweep.Grant(owner)
+		lungpunch.Grant(owner)
 
-/datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
-	to_chat(H, "<span class='userdanger'>You suddenly forget the arts of [name]...</span>")
-	neckchop.Remove(H)
-	legsweep.Remove(H)
-	lungpunch.Remove(H)
+/datum/martial_art/krav_maga/on_remove(mob/living/owner)
+	to_chat(owner, "<span class='userdanger'>You suddenly forget the arts of [name]...</span>")
+	neckchop.Remove(owner)
+	legsweep.Remove(owner)
+	lungpunch.Remove(owner)
 
 /datum/martial_art/krav_maga/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	switch(streak)
@@ -185,19 +182,13 @@
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user))
-		return
 	if(slot == ITEM_SLOT_GLOVES)
-		var/mob/living/carbon/human/H = user
-		style.teach(H,1)
+		style.teach(user, TRUE)
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		style.remove(H)
+	if(user.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
+		style.remove(user)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
