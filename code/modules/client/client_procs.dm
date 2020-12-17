@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					else
 						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
 						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
-	//var/reconnecting = FALSE
+	var/reconnecting = FALSE
 	if(GLOB.player_details[ckey])
 		//reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
@@ -377,11 +377,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-	/*if (mob && reconnecting)
+	if (mob && reconnecting)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_leave = mob.client?.prefs?.broadcast_login_logout
 		if (!stealth_admin)
-			deadchat_broadcast(" has reconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_leave)*/
+			deadchat_broadcast(" has reconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_leave)
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -1033,11 +1033,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	var/list/verblist = list()
 	var/list/verbstoprocess = verbs.Copy()
-	/*if(mob?.client?.prefs.broadcast_login_logout)
+	if(mob?.client?.prefs.broadcast_login_logout)
 		verbstoprocess += mob.verbs
 		for(var/AM in mob.contents)
 			var/atom/movable/thing = AM
-			verbstoprocess += thing.verbs*/
+			verbstoprocess += thing.verbs
 	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
 	for(var/thing in verbstoprocess)
 		var/procpath/verb_to_init = thing
