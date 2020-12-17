@@ -412,11 +412,13 @@
 			aisync = !aisync
 			return TRUE
 		if("set_ai")
-			forced_ai = select_active_ai(user, z)
+			var/selected_ai = select_active_ai(user, z)
 			if(!in_range(src, user) && loc != user)
 				return
-			if(!forced_ai)
+			if(!selected_ai)
 				to_chat(user, "<span class='alert'>No active AIs detected.</span>")
+				return
+			forced_ai = selected_ai
 			return TRUE
 		if("lawsync")
 			lawsync = !lawsync
