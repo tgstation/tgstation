@@ -1,0 +1,6 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "AI controllers now properly check if a mob is client-controlled and dont start processing if its the case."
+  - bugfix: "AI controllers now handle deletion on unpossesion if that's filled in as an argument"
+  - bugfix: "Dead monkeys stop attacking things"
