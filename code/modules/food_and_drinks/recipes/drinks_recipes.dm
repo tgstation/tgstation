@@ -388,8 +388,8 @@
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
 
 /datum/chemical_reaction/chocolate_milk
-	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
+	results = list(/datum/reagent/consumable/milk/chocolate_milk = 4)
+	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/sugar = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
 /datum/chemical_reaction/hot_coco
