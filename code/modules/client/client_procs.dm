@@ -1033,7 +1033,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	var/list/verblist = list()
 	var/list/verbstoprocess = verbs.Copy()
-	if(mob?.client?.prefs.broadcast_login_logout)
+	if(mob)
 		verbstoprocess += mob.verbs
 		for(var/AM in mob.contents)
 			var/atom/movable/thing = AM
