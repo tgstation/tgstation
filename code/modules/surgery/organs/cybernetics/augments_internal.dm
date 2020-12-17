@@ -1,25 +1,14 @@
 
-/obj/item/organ/cyberimp
-	name = "cybernetic implant"
-	desc = "A state-of-the-art implant that improves a baseline's functionality."
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
-	var/implant_color = "#FFFFFF"
-	var/implant_overlay
-	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
-
-/obj/item/organ/cyberimp/New(mob/M = null)
-	if(iscarbon(M))
-		src.Insert(M)
-	if(implant_overlay)
-		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
-		overlay.color = implant_color
-		add_overlay(overlay)
-	return ..()
-
-
 
 //[[[[BRAIN]]]]
+/obj/item/organ/cyberimp/cyberlink
+	name = "cybernetic brain link"
+	desc = "Allows for smart communication between implants."
+	icon_state = "brain_implant"
+	implant_overlay = "brain_implant_overlay"
+	slot = ORGAN_SLOT_LINK
+	w_class = WEIGHT_CLASS_TINY
+
 
 /obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"

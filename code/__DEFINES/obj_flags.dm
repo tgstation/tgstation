@@ -71,3 +71,29 @@
 
 /// Flags for the pod_flags var on /obj/structure/closet/supplypod
 #define FIRST_SOUNDS (1<<0) // If it shouldn't play sounds the first time it lands, used for reverse mode
+
+
+
+/// Cybernetics defines
+
+#define SECURITY_PROTOCOL "sec_protocol"
+#define ENCODE_PROTOCOL "enc_protocol"
+#define COMPATIBILITY_PROTOCOL "comp_protocol"
+#define OPERATING_PROTOCOL	"op_protocol"
+
+/// Security protocols
+
+///Those names mean nothing don't try to decipher these. They are defines because some cybernetics will be incompatible with eachother. treat those defines like software names.
+#define NT1 "nt1"
+#define NT2 "nt2"
+#define NTX "ntx"
+#define TMSP "tmsp"
+#define TOSP "tosp"
+
+
+/// Encode protocol
+
+#define ENC1 "enc1"
+#define ENC2 "enc2"
+#define TENN "tsnn"
+#define CSEP "csep"

@@ -164,6 +164,7 @@
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 #define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
+#define ORGAN_SLOT_LINK "cyber_link"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
@@ -192,6 +193,7 @@
 ///Organ slot processing order for life proc
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
+	ORGAN_SLOT_LINK,
 	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_RIGHT_ARM_AUG,
 	ORGAN_SLOT_LEFT_ARM_AUG,
