@@ -114,7 +114,7 @@
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	var/datum/species = dying.has_dna()?.species
+	var/datum/species/species = dying.has_dna()?.species
 	if (species)
 		species.species_traits -= TRAIT_BOMBIMMUNE
 	if(dying.stat == DEAD)
