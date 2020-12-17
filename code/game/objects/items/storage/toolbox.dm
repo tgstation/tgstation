@@ -302,3 +302,13 @@
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
 		return
+
+
+/obj/item/storage/toolbox/haunted
+	name = "old toolbox"
+
+/obj/item/storage/toolbox/haunted/Initialize()
+	. = ..()
+	AddComponent(/datum/component/haunted)
+
+

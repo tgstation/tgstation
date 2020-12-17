@@ -4,9 +4,12 @@
 	var/required_distance = 1
 	///Flags for extra behavior
 	var/behavior_flags = NONE
+	///Cooldown between actions performances
+	var/action_cooldown = 0
 
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller)
+	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	return
 
 ///Called when the action is finished.

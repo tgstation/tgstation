@@ -4,6 +4,9 @@
 /// Hard materials, such as iron or metal
 #define MAT_CATEGORY_RIGID "rigid material"
 
+/// Materials that can be used to craft items
+#define MAT_CATEGORY_ITEM_MATERIAL "item material"
+
 ///Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"
 

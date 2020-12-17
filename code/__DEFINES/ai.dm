@@ -10,7 +10,7 @@
 #define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source, TRAIT_INCAPACITATED) || HAS_TRAIT(source, TRAIT_HANDS_BLOCKED) || IS_IN_STASIS(source))
 
 ///Max pathing attempts before auto-fail
-#define MAX_PATHING_ATTEMPTS 30
+#define MAX_PATHING_ATTEMPTS 16
 
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
@@ -33,3 +33,22 @@
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
+
+
+
+
+///Haunted item controller defines
+
+///Chance for haunted item to haunt someone
+#define HAUNTED_ITEM_ATTACK_HAUNT_CHANCE 10
+///Chance for haunted item to try to get itself let go.
+#define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
+///Chance for haunted item to warp somewhere new
+#define HAUNTED_ITEM_TELEPORT_CHANCE 4
+
+///Blackboard keys for haunted items
+#define BB_TO_HAUNT_LIST "BB_to_haunt_list"
+///Actual mob the item is haunting at the moment
+#define BB_HAUNT_TARGET "BB_haunt_target"
+///Amount of successful hits in a row this item has had
+#define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
