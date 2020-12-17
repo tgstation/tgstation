@@ -160,8 +160,8 @@
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon_state = "fake_window"
 	base_icon_state = "reinforced_window"
 	opacity = FALSE
 	smoothing_flags = SMOOTH_BITMASK
@@ -170,8 +170,8 @@
 
 /turf/closed/indestructible/fakeglass/Initialize()
 	. = ..()
-	add_overlay(image(icon='icons/obj/structures.dmi',icon_state="grille"))
-	add_overlay(image(icon='icons/obj/smooth_structures/reinforced_window.dmi',icon_state="fake_window"))
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/opsglass
 	name = "window"

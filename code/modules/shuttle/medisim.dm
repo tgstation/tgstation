@@ -17,7 +17,10 @@
 	start_ctf()//so admins don't have to enable it again, they can just go
 
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
-	var/mob/living/carbon/human/human_knight = ..()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/human_knight = .
 	human_knight.remove_all_languages(LANGUAGE_CTF)
 	human_knight.grant_language(language = /datum/language/oldworld, understood = TRUE, spoken = TRUE, source = LANGUAGE_CTF)
 	randomize_human(human_knight)

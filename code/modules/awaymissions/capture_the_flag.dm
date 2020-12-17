@@ -262,11 +262,11 @@
 		if(CTF.team_members.len < src.team_members.len)
 			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
-	team_members |= user.ckey
 	var/client/new_team_member = user.client
 	if(user.mind && user.mind.current)
 		ctf_dust_old(user.mind.current)
-	spawn_team_member(new_team_member)
+	if(spawn_team_member(new_team_member))
+		team_members |= user.ckey
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
 	if(isliving(body) && (team in body.faction))
@@ -286,16 +286,17 @@
 		chosen_class = ctf_gear[1]
 	if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
 		var/result = input(new_team_member, "Select a class.", "CTF") as null|anything in sortList(ctf_gear)
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || new_team_member.mob)
+		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
 		chosen_class = ctf_gear[result]
 	else //2-3 choices
 		var/list/names_only = assoc_list_strip_value(ctf_gear)
+		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
 		var/result = alert(new_team_member, "Select a class.", "CTF", names_only[1], names_only[2], names_only[3])
-		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || new_team_member.mob)
+		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
 		chosen_class = ctf_gear[result]
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
+	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.copy_to(M)
 	M.set_species(/datum/species/synth)
 	M.key = new_team_member.key

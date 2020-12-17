@@ -1,5 +1,7 @@
 
 /obj/item/gun/ballistic/bow
+	name = "longbow"
+	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "bow"
 	fire_sound = null
@@ -9,6 +11,8 @@
 	attack_verb_simple = list("whip", "crack")
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
+	internal_magazine = TRUE
+	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
 /obj/item/gun/ballistic/bow/dropped(mob/user)
@@ -37,6 +41,9 @@
 		chambered = magazine.get_round(TRUE)
 		chambered.forceMove(src)
 
+/obj/item/gun/ballistic/bow/attackby(obj/item/A, mob/user, params)
+
+
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	drawn = !drawn
 	update_icon()
@@ -47,9 +54,14 @@
 		drop_arrow()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	if(!drawn)
+		return
 	drawn = FALSE
+	. = ..() //fires, removing the arrow
 	update_icon()
-	. = ..()
+
+/obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)
+	return //so clicking sounds please
 
 /obj/item/ammo_box/magazine/internal/bow
 	name = "bowstring"
@@ -70,6 +82,7 @@
 
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
+	icon_state = "arrow"
 	desc = "Ow! Get it out of me!"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	damage = 25
