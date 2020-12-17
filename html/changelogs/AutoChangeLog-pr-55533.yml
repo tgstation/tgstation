@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Bounty cubes now have the bounty's name, value, fulfiller and creation time in the description"
+  - tweak: "The Bounty Cube is now known as the \"[value] cr bounty cube\""
