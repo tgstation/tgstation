@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - tweak: "Mapped in dead bodies/gibs no longer produce miasma"

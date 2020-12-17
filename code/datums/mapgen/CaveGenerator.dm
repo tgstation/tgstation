@@ -60,7 +60,10 @@
 		if(gen_turf.flags_1 & NO_RUINS_1)
 			stored_flags |= NO_RUINS_1
 
-		var/turf/new_turf = gen_turf.ChangeTurf(pickweight(closed ? closed_turf_types : open_turf_types), null, CHANGETURF_DEFER_CHANGE)
+		var/turf/new_turf = pickweight(closed ? closed_turf_types : open_turf_types)
+
+		new_turf = gen_turf.ChangeTurf(new_turf, initial(new_turf.baseturfs), CHANGETURF_DEFER_CHANGE)
+
 		new_turf.flags_1 |= stored_flags
 
 		if(!closed)//Open turfs have some special behavior related to spawning flora and mobs.
