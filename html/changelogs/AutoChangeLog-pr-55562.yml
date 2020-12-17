@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Badmins and coders alike, rejoice! Global advanced proc calls have been fixed."
