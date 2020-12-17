@@ -104,6 +104,9 @@
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
+	if(!check_compatibility())
+		return
+
 	if(!(item in src))
 		return
 
@@ -140,6 +143,10 @@
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
+	if(!check_compatibility())
+		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
+		return
+
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return

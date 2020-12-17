@@ -97,3 +97,10 @@
 #define ENC2 "enc2"
 #define TENN "tsnn"
 #define CSEP "csep"
+
+
+/// Operating protocol
+
+#define NTOS "ntos"
+#define TGMF "tgmf"
+#define CSOF "csof"

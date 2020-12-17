@@ -16,6 +16,9 @@
 	slot = ORGAN_SLOT_STOMACH_AID
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
+	if(!check_compatibility())
+		return
+
 	if(synthesizing)
 		return
 
@@ -56,6 +59,9 @@
 
 
 /obj/item/organ/cyberimp/chest/reviver/on_life()
+	if(!check_compatibility())
+		return
+
 	if(reviving)
 		switch(owner.stat)
 			if(UNCONSCIOUS, HARD_CRIT)
@@ -145,6 +151,10 @@
 	toggle()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
+	if(!check_compatibility())
+		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
+		return
+
 	if(!on)
 		if((organ_flags & ORGAN_FAILING))
 			if(!silent)

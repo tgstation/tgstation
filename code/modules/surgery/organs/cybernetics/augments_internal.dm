@@ -8,6 +8,7 @@
 	implant_overlay = "brain_implant_overlay"
 	slot = ORGAN_SLOT_LINK
 	w_class = WEIGHT_CLASS_TINY
+	encode_info = list(SECURITY_PROTOCOL = NT1, ENCODE_PROTOCOL = ENC2, COMPATIBILITY_PROTOCOL = ENC1, OPERATING_PROTOCOL = NTOS)
 
 
 /obj/item/organ/cyberimp/brain
@@ -37,6 +38,10 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
+	if(!check_compatibility())
+		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
+		return
+
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
@@ -107,6 +112,9 @@
 	RegisterSignal(owner, signalCache, .proc/on_signal)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
+	if(!check_compatibility())
+		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
+		return
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, .proc/clear_stuns), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
