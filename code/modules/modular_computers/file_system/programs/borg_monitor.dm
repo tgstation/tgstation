@@ -21,7 +21,7 @@
 	var/list/data = get_header_data()
 
 	data["card"] = FALSE
-	if(checkID() || emagged)
+	if(checkID())
 		data["card"] = TRUE
 
 	data["cyborgs"] = list()
