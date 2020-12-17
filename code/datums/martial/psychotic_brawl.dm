@@ -2,20 +2,22 @@
 	name = "Psychotic Brawling"
 	id = MARTIALART_PSYCHOBRAWL
 
-/datum/martial_art/psychotic_brawling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/psychotic_brawling/disarm_act(mob/living/A, mob/living/D)
 	return psycho_attack(A,D)
 
-/datum/martial_art/psychotic_brawling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/psychotic_brawling/grab_act(mob/living/A, mob/living/D)
 	return psycho_attack(A,D)
 
-/datum/martial_art/psychotic_brawling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/psychotic_brawling/harm_act(mob/living/A, mob/living/D)
 	return psycho_attack(A,D)
 
-/datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/A, mob/living/D)
 	var/atk_verb
 	switch(rand(1,8))
 		if(1)
-			D.help_shake_act(A)
+			if (iscarbon(D) && iscarbon(A))
+				var/mob/living/carbon/defender = D
+				defender.help_shake_act(A)
 			atk_verb = "helped"
 		if(2)
 			A.emote("cry")
@@ -47,8 +49,10 @@
 			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 40, TRUE, -1)
 			D.apply_damage(rand(5,10), A.get_attack_type(), BODY_ZONE_HEAD)
 			A.apply_damage(rand(5,10), A.get_attack_type(), BODY_ZONE_HEAD)
-			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
-				D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			if (iscarbon(D))
+				var/mob/living/carbon/defender = D
+				if(!istype(defender.head,/obj/item/clothing/head/helmet/) && !istype(defender.head,/obj/item/clothing/head/hardhat))
+					defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			A.Stun(rand(10,45))
 			D.Stun(rand(5,30))
 		if(5,6)
