@@ -34,7 +34,7 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "strong punched (Sleeping Carp)")
-	D.apply_damage(20, A.dna.species.attack_type, affecting)
+	D.apply_damage(20, A.get_attack_type(), affecting)
 	return
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -45,7 +45,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(15, A.dna.species.attack_type, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return
 
@@ -54,13 +54,13 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if(D.body_position == STANDING_UP)
-		D.apply_damage(10, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(10, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.Knockdown(40)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	else
-		D.apply_damage(5, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(5, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \

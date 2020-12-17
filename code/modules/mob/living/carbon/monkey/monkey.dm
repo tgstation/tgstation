@@ -25,6 +25,7 @@
 	melee_damage_upper = 3
 	ai_controller = /datum/ai_controller/monkey
 	faction = list("neutral", "monkey")
+	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	add_verb(src, /mob/living/proc/mob_sleep)

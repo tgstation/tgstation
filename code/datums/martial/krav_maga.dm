@@ -116,7 +116,7 @@
 					"<span class='userdanger'>Your neck is karate chopped by [A], rendering you unable to speak!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You karate chop [D]'s neck, rendering [D.p_them()] unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	D.apply_damage(5, A.dna.species.attack_type)
+	D.apply_damage(5, A.get_attack_type())
 	if(D.silent <= 10)
 		D.silent = clamp(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
@@ -139,7 +139,7 @@
 	if(D.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
-	D.apply_damage(rand(5,10) + bonus_damage, A.dna.species.attack_type, affecting, armor_block)
+	D.apply_damage(rand(5,10) + bonus_damage, A.get_attack_type(), affecting, armor_block)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)

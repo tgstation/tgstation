@@ -3,8 +3,7 @@
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
-	action_intent = new /atom/movable/screen/act_intent()
-	action_intent.icon = ui_style
+	action_intent = new /atom/movable/screen/act_intent/segmented
 	action_intent.icon_state = mymob.a_intent
 	action_intent.screen_loc = ui_acti
 	action_intent.hud = src
