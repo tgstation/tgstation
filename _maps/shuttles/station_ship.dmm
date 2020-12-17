@@ -7,7 +7,6 @@
 /obj/structure/chair/pew{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -52,6 +51,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera,
+/obj/item/multitool,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "au" = (
@@ -246,6 +246,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/multitool,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/shipstation)
 "bB" = (
@@ -344,6 +345,7 @@
 	dir = 1;
 	network = list("ss13","rd","xeno")
 	},
+/obj/machinery/vending/drugs,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "cc" = (
@@ -490,11 +492,6 @@
 "cG" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Test Chamber";
-	dir = 1;
-	network = list("ss13","rd","xeno")
-	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "cI" = (
@@ -676,7 +673,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dB" = (
-/obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
@@ -686,6 +682,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dH" = (
@@ -713,10 +710,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dN" = (
-/obj/machinery/processor/slime,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
+/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dO" = (
@@ -740,7 +737,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/cytology,
+/obj/machinery/clonepod,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dQ" = (
@@ -900,6 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 10
 	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "es" = (
@@ -1056,7 +1054,7 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "gg" = (
-/mob/living/carbon/monkey/angry,
+/obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "gq" = (
@@ -1333,6 +1331,7 @@
 	pixel_y = -30
 	},
 /obj/item/gun/energy/laser/captain,
+/obj/item/multitool,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "jI" = (
@@ -1407,6 +1406,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "kL" = (
@@ -1453,7 +1453,6 @@
 	name = "contraband locker";
 	req_access_txt = "3"
 	},
-/obj/effect/spawner/lootdrop/maintenance/three,
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/shipstation)
@@ -1494,33 +1493,8 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "mc" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
-/obj/structure/window/reinforced,
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/obj/item/storage/box/syringes{
-	pixel_y = 5
-	},
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
-	},
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/effect/landmark/start/geneticist,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "mh" = (
@@ -1548,11 +1522,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "my" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "mM" = (
@@ -1684,9 +1658,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "oi" = (
-/obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -1716,7 +1692,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/effect/landmark/start/paramedic,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "oD" = (
@@ -1800,11 +1778,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 4
 	},
-/obj/machinery/camera,
-/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "pq" = (
@@ -1835,7 +1811,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/cloning,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "pK" = (
@@ -1897,9 +1879,19 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "qq" = (
-/mob/living/simple_animal/chicken{
-	name = "Kentucky";
-	real_name = "Kentucky"
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cloning Lab";
+	req_access_txt = "68"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -1954,6 +1946,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "rl" = (
@@ -2029,6 +2024,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "sC" = (
@@ -2144,8 +2140,17 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "tD" = (
-/obj/machinery/smartfridge/extract/preloaded,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/camera{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "tM" = (
 /obj/machinery/button/door{
@@ -2198,7 +2203,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/clonepod,
+/obj/machinery/camera,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "uC" = (
@@ -2255,14 +2263,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
-"ve" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/effect/landmark/start/geneticist,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
 "vq" = (
 /obj/structure/sign/departments/security,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -2305,9 +2305,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "wF" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 10
-	},
 /obj/machinery/camera{
 	dir = 5
 	},
@@ -2315,14 +2312,9 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
-"wM" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "wS" = (
@@ -2360,7 +2352,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "xl" = (
@@ -2410,9 +2402,6 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2591,7 +2580,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
-/obj/machinery/suit_storage_unit/rd,
+/obj/structure/table,
+/obj/machinery/cell_charger,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "zS" = (
@@ -2612,9 +2602,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/research{
-	name = "Xenobiology Lab";
-	req_access_txt = "55"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cloning Lab";
+	req_access_txt = "68;47"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2799,6 +2789,7 @@
 	dir = 8
 	},
 /obj/item/hand_tele,
+/obj/item/multitool,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Cu" = (
@@ -3049,7 +3040,9 @@
 /area/shuttle/shipstation)
 "Es" = (
 /obj/machinery/door/window/eastleft{
-	dir = 2
+	dir = 2;
+	name = "Chapel";
+	req_access_txt = "22"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -3069,10 +3062,10 @@
 /area/shuttle/shipstation)
 "Ev" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
+	dir = 6
 	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 4
+/obj/machinery/computer/scan_consolenew{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3198,21 +3191,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
-"Gt" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/structure/microscope{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
 "Gu" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -3324,11 +3302,9 @@
 /area/shuttle/shipstation)
 "HK" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "HT" = (
@@ -3347,12 +3323,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Ie" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Ij" = (
@@ -3574,14 +3548,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "KP" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/mob/living/simple_animal/slime,
-/turf/open/floor/engine,
+/mob/living/carbon/monkey/angry,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "KQ" = (
 /obj/machinery/suit_storage_unit/engine,
@@ -3601,19 +3572,21 @@
 	dir = 1
 	},
 /obj/machinery/camera,
-/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "KX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Test Chamber";
+	dir = 1;
+	network = list("ss13","rd","xeno")
+	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "La" = (
-/mob/living/simple_animal/cow{
-	name = "Betsy";
-	real_name = "Betsy"
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
@@ -3657,7 +3630,6 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "Lo" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
@@ -3670,6 +3642,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Lt" = (
@@ -3690,14 +3663,13 @@
 /turf/open/floor/engine,
 /area/shuttle/shipstation)
 "Lw" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/plasteel/dark,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/shipstation)
 "Lz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -3725,11 +3697,13 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "LR" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 9
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
 	},
-/obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/plasteel/dark,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/shipstation)
 "LS" = (
 /obj/effect/landmark/start/medical_doctor,
@@ -3740,19 +3714,6 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
-"Mc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/monkey_recycler,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 5
-	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Mf" = (
@@ -3780,8 +3741,6 @@
 /obj/item/storage/secure/briefcase{
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
-/obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/silver/reaper,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/disabler,
 /obj/item/gun/ballistic/revolver/russian,
@@ -3858,24 +3817,6 @@
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
-"OA" = (
-/obj/machinery/door/window/eastleft{
-	dir = 1;
-	req_one_access_txt = "47"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/shuttle/shipstation)
-"OE" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/effect/landmark/start/roboticist,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
 "OL" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3902,13 +3843,17 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "PB" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/suit_storage_unit/mining,
+/obj/machinery/suit_storage_unit/mining/eva,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "PC" = (
@@ -4223,6 +4168,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/multitool,
 /turf/open/floor/engine,
 /area/shuttle/shipstation)
 "Us" = (
@@ -4273,7 +4219,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Mining Office";
-	req_access_txt = "48"
+	req_one_access_txt = "48,29"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -4290,6 +4236,7 @@
 	desc = "Stolen while the Captain wasn't looking.";
 	name = "HED OF PERSNOL's jetpack"
 	},
+/obj/item/multitool,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Vi" = (
@@ -4382,7 +4329,6 @@
 /obj/structure/chair/pew/right{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26
@@ -4452,14 +4398,16 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "XE" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 10
-	},
 /obj/machinery/camera{
 	dir = 5
 	},
-/obj/machinery/suit_storage_unit/mining/eva,
-/turf/open/floor/plasteel/dark,
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/shipstation)
 "XH" = (
 /obj/machinery/telecomms/allinone{
@@ -4514,16 +4462,6 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
-"Yd" = (
-/mob/living/simple_animal/chicken{
-	name = "Featherbottom";
-	real_name = "Featherbottom"
-	},
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -4610,13 +4548,6 @@
 	},
 /turf/open/floor/engine,
 /area/shuttle/shipstation)
-"Zm" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 1
-	},
-/obj/machinery/camera,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
 "Zq" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -4650,6 +4581,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "ZR" = (
@@ -5146,7 +5078,7 @@ wd
 ed
 dB
 wF
-OA
+GP
 KP
 ZH
 Sr
@@ -5168,12 +5100,12 @@ ZH
 (23,1,1) = {"
 ed
 dN
-wM
-OA
-KP
-ZH
-Zm
-Iu
+CZ
+CV
+mc
+qq
+Sr
+tD
 ZH
 uz
 cv
@@ -5189,12 +5121,12 @@ ig
 ed
 "}
 (24,1,1) = {"
-ed
+ZH
 dP
 xu
 HK
 Ev
-mc
+ZH
 Sr
 Iu
 Gx
@@ -5215,9 +5147,9 @@ ed
 ZH
 ZH
 zS
-tD
-Mc
-Gt
+ZH
+ZH
+ZH
 Sr
 Iu
 kH
@@ -5262,7 +5194,7 @@ ed
 ee
 Bg
 cw
-OE
+GA
 yO
 Sr
 Iu
@@ -5276,7 +5208,7 @@ Xk
 xi
 XZ
 Jb
-Yd
+Jb
 IV
 ed
 "}
@@ -5299,7 +5231,7 @@ Xk
 Ds
 La
 NG
-qq
+CV
 Du
 ed
 "}
@@ -5308,7 +5240,7 @@ ed
 fQ
 Bq
 gg
-ve
+GA
 yO
 Sr
 bo
