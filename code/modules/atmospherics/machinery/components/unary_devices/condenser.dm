@@ -1,5 +1,5 @@
 /// How the condensation rate of the condenser scales with part rating
-#define CONDENSER_RATE_BIN_SCALE 0.1
+#define CONDENSER_RATE_BIN_SCALE 0.25
 
 // Leaking:
 /// The ratio of the condenser's current gas it will vent every second.

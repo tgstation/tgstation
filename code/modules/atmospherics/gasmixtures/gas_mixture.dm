@@ -545,10 +545,10 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
  * Arguments:
  * - [location][/atom]: The location the condensation is happening at
  * - [reagents][/datum/reagents]: The reagent holder to output the condensed gases to
- * - rate_multiplier: A multiplier for the condensation rate
+ * - delta_time: The amount of time the condensation is happening over
  */
-/datum/gas_mixture/proc/condense_gas_to(atom/location, datum/reagents/reagents, rate_multiplier=1)
-	if(rate_multiplier <= 0)
+/datum/gas_mixture/proc/condense_gas_to(atom/location, datum/reagents/reagents, delta_time)
+	if(delta_time <= 0)
 		return
 
 	var/list/cached_gases = gases
@@ -556,7 +556,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		return
 
 	var/cached_temp = return_temperature()
-	var/total_condensation_moles = 0
+	var/total_condensation_volume = 0
 	var/list/condensation_rates = list()
 	for(var/gas_id in cached_gases)
 		var/cond_max_rate = cached_gases[gas_id][GAS_META][META_GAS_COND_RATE]
@@ -568,38 +568,47 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		if(cached_temp >= cond_max_temp)
 			continue
 
-		var/cond_rate = max(cond_max_rate * clamp((cond_max_temp - cached_temp) / (cond_max_temp - cond_min_temp), 0, 1), 0)
+		var/cond_rate = clamp(LERP(0, cond_max_rate, (cond_max_temp - cached_temp) / (cond_max_temp - cond_min_temp)), 0, 1)
+		cond_rate = clamp(cached_gases[gas_id][MOLES] * DT_PROB_RATE(cond_rate, delta_time), 0, cached_gases[gas_id][MOLES])
+		if(!cond_rate)
+			continue
+
 		condensation_rates[gas_id] = cond_rate
 		if(cached_gases[gas_id][GAS_META][META_GAS_COND_TYPE])
-			total_condensation_moles += max(cached_gases[gas_id][MOLES] * cond_rate / REAGENT_MOLE_DENSITY, 0)
+			total_condensation_volume += max(cond_rate / REAGENT_MOLE_DENSITY, 0)
 
 	if(!length(condensation_rates))
 		return
 
 	var/volume_rate_multiplier = 1
-	if(total_condensation_moles)
-		rate_multiplier = reagents ? clamp((reagents.maximum_volume - reagents.total_volume) / total_condensation_moles, 0, 1) : 0
-	volume_rate_multiplier = clamp(volume_rate_multiplier, 0, 1)
+	if(total_condensation_volume)
+		volume_rate_multiplier = reagents ? clamp((reagents.maximum_volume - reagents.total_volume) / total_condensation_volume, 0, 1) : 0
 
 	var/old_heat_capacity = heat_capacity()
+	var/heat_capacity_delta = 0
 	var/total_condensation_heat = 0
 	for(var/cond_id in condensation_rates)
 		var/cond_type = cached_gases[cond_id][GAS_META][META_GAS_COND_TYPE]
 		if(cond_type && !volume_rate_multiplier)
 			continue
 
-		var/cond_moles = max(cached_gases[cond_id][MOLES] * clamp(condensation_rates[cond_id] * rate_multiplier * (cond_type ? volume_rate_multiplier : 1), 0, 1), 0)
+		var/cond_moles = clamp(condensation_rates[cond_id] * (cond_type ? volume_rate_multiplier : 1), 0, cached_gases[cond_id][MOLES])
 		cached_gases[cond_id][MOLES] -= cond_moles
 
 		var/datum/callback/cond_event = cached_gases[cond_id][GAS_META][META_GAS_COND_EVENT]
-		cond_event?.InvokeAsync(src, cond_moles, cached_temp, location, reagents, condensation_rates, rate_multiplier)
+		cond_event?.InvokeAsync(src, cond_moles, cached_temp, location, reagents, condensation_rates, volume_rate_multiplier, delta_time)
 
 		if(cond_type)
-			reagents.add_reagent(cond_type, cond_moles / REAGENT_MOLE_DENSITY, cached_temp)
-		total_condensation_heat += cond_moles * cached_gases[cond_id][GAS_META][META_GAS_COND_HEAT]
+			reagents.add_reagent(cond_type, cond_moles / REAGENT_MOLE_DENSITY, reagtemp = cached_temp)
 
-	var/new_heat_capacity = heat_capacity()
-	if(new_heat_capacity)
-		temperature = max(((cached_temp * old_heat_capacity) + total_condensation_heat) / new_heat_capacity, TCMB)
+		var/cond_heat = cached_gases[cond_id][GAS_META][META_GAS_COND_HEAT]
+		if(cond_heat)
+			total_condensation_heat += cond_moles * cond_heat
+		heat_capacity_delta -= cond_moles * cached_gases[cond_id][GAS_META][META_GAS_SPECIFIC_HEAT]
+
+	if(total_condensation_heat)
+		var/new_heat_capacity = max(old_heat_capacity + heat_capacity_delta, 0)
+		if(new_heat_capacity)
+			temperature = max(((cached_temp * old_heat_capacity) + total_condensation_heat) / new_heat_capacity, TCMB)
 
 	garbage_collect(condensation_rates)

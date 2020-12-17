@@ -123,8 +123,9 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
  *   - For the sake of avoiding race conditions this should be treated as read-only
  *   - NOTE: This does not actually contain the list of absolute condensation rates, only the list of relative condensation rates
  * - rate_multiplier: The multiplier to apply to the condensation rates
+ * - delta_time: The amount of time the condensation is occuring over
  */
-/datum/gas/proc/on_condense(datum/gas_mixture/holder, cond_moles, cond_temp, atom/location, datum/reagents/target, list/cond_rates)
+/datum/gas/proc/on_condense(datum/gas_mixture/holder, cond_moles, cond_temp, atom/location, datum/reagents/target, list/cond_rates, rate_multiplier, delta_time)
 	return
 
 
@@ -133,30 +134,33 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 20
 	name = "Oxygen"
 	rarity = 900
-	cond_rate = 1
+	cond_rate = 0.1
 	cond_temp_max = 90 // Completely unrealistic to prevent major issues for new chemists
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/oxygen
+	cond_heat = 6828
 
 /datum/gas/nitrogen
 	id = "n2"
 	specific_heat = 20
 	name = "Nitrogen"
 	rarity = 1000
-	cond_rate = 1
+	cond_rate = 0.1
 	cond_temp_max = 77	// Completely unrealistic to prevent major issues for new chemists
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/nitrogen
+	cond_heat = 5590
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
 	rarity = 700
-	cond_rate = 0.5
+	cond_rate = 0.05
 	cond_temp_max = BP_CARBON_DIOXIDE
 	cond_temp_min = BP_CARBON_DIOXIDE
 	cond_type = /datum/reagent/carbondioxide
+	cond_heat = 25230
 
 /datum/gas/plasma
 	id = "plasma"
@@ -166,10 +170,11 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 800
-	cond_rate = 1
+	cond_rate = 0.1
 	cond_temp_max = BP_PLASMA
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/toxin/plasma
+	cond_heat = 36000
 
 /datum/gas/water_vapor
 	id = "water_vapor"
@@ -179,10 +184,11 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
 	rarity = 500
-	cond_rate = 2
+	cond_rate = 0.2
 	cond_temp_max = T0C + 100
 	cond_temp_min = T0C
 	cond_type = /datum/reagent/water
+	cond_heat = 40650
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -203,10 +209,11 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 10
 	dangerous = TRUE
 	rarity = 600
-	cond_rate = 0.5
+	cond_rate = 0.05
 	cond_temp_max = BP_NITROUS_OXIDE
 	cond_temp_min = BP_NITROUS_OXIDE - 3
 	cond_type = /datum/reagent/nitrous_oxide
+	cond_heat = 16560
 
 /datum/gas/nitryl
 	id = "no2"
@@ -226,11 +233,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	fusion_power = 5
 	rarity = 300
-	cond_rate = 0.5
+	cond_rate = 0.05
 	cond_temp_max = BP_TRITIUM
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/hydrogen
 	cond_event = TRUE
+	cond_heat = 1390
 
 /datum/gas/tritium/on_condense(datum/gas_mixture/holder, cond_moles, cond_temp, atom/location, datum/reagents/target, list/cond_rates)
 	. = ..()
@@ -285,10 +293,11 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	fusion_power = 2
 	rarity = 600
-	cond_rate = 1
+	cond_rate = 0.1
 	cond_temp_max = BP_HYDROGEN
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/hydrogen
+	cond_heat = 916
 
 /datum/gas/healium
 	id = "healium"
