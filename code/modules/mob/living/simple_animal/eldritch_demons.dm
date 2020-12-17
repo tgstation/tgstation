@@ -207,7 +207,7 @@
 	if(back && get_turf(back) != oldloc)
 		back.Move(oldloc)
 	// self fixing properties if somehow broken
-	if(front && get_turf(src) != get_turf(front))
+	if(front && get_turf(src) != front.oldloc)
 		forceMove(front.oldloc)
 	oldloc = get_turf(src)
 

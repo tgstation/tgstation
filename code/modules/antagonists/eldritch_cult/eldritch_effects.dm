@@ -240,7 +240,7 @@
 
 ///Custom effect that happens on destruction
 /obj/effect/reality_smash/proc/on_destroy()
-	GLOB.reality_smash_track.smashes--
+	GLOB.reality_smash_track.smashes -= src
 	var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
 	illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
 
