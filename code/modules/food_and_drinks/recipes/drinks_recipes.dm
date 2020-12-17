@@ -392,6 +392,11 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/sugar = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
+/datum/chemical_reaction/chocolate_milk_astrotame
+	results = list(/datum/reagent/consumable/milk/chocolate_milk = 60)
+	required_reagents = list(/datum/reagent/consumable/milk = 40, /datum/reagent/consumable/coco = 20, /datum/reagent/consumable/astrotame = 1)
+	mix_message = "The color changes as the mixture blends smoothly."
+
 /datum/chemical_reaction/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 5)
 	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
