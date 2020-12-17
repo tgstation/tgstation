@@ -1,0 +1,5 @@
+author: "That REALLY Good Soda Flavor"
+delete-after: True
+changes: 
+  - bugfix: "Hanukkah and Ramadan should be correct now."
+  - bugfix: "Space Station 13's birthday won't break after 2099."
