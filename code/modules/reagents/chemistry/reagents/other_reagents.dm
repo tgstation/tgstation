@@ -150,7 +150,7 @@
 
 /datum/reagent/water/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, T0C+100, "h2o")
+	AddElement(/datum/element/boilable, BP_WATER, "h2o")
 
 /*
  *	Water reaction to turf
