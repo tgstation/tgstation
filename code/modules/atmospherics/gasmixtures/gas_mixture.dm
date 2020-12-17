@@ -540,7 +540,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 
 
 /**
- * Condenses the gases in the gas mixture into reagents in a areagent container
+ * Condenses the gases in the gas mixture into reagents in a reagent container
  *
  * Arguments:
  * - [location][/atom]: The location the condensation is happening at
