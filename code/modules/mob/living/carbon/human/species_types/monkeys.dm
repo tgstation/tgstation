@@ -34,8 +34,6 @@
 	payday_modifier = 1.5
 
 
-/datum/species/monkey
-
 /datum/species/monkey/random_name(gender,unique,lastname)
 	var/randname = "monkey ([rand(1,999)])"
 
@@ -45,7 +43,6 @@
 	. = ..()
 	C.ventcrawler = VENTCRAWLER_NUDE
 	C.pass_flags |= PASSTABLE
-	C.ai_controller = /datum/ai_controller/monkey
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
@@ -87,6 +84,3 @@
 		return TRUE
 	target.attack_paw(user)
 	return TRUE
-
-
-/datum/species/monkey/spec_su

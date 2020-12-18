@@ -1178,6 +1178,9 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/set_species, race)
 
+/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
+	. = ..()
+	fully_replace_character_name(real_name, dna.species.random_name())
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 
