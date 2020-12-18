@@ -106,6 +106,14 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		L[++L.len] = list("Disconnected:", "[astatclick.update("[num_disconnected]")]", null, REF(astatclick))
 	L[++L.len] = list("Closed Tickets:", "[cstatclick.update("[closed_tickets.len]")]", null, REF(cstatclick))
 	L[++L.len] = list("Resolved Tickets:", "[rstatclick.update("[resolved_tickets.len]")]", null, REF(rstatclick))
+
+	//SKYRAT EDIT ADDITION BEGIN - AMBITIONS
+	for(var/key in GLOB.ambitions_to_review)
+		var/datum/ambitions/AMBI = key
+		var/reviewer = GLOB.ambitions_to_review[key]
+		L[++L.len] = list("[reviewer ? "H-[reviewer]. " : ""]AMB: [AMBI.owner_name]:", "[AMBI.narrative]", REF(AMBI))
+	L[++L.len] = list("Ambitions intensity:", "STL:[GLOB.intensity_counts["[AMBITION_INTENSITY_STEALTH]"]] MLD:[GLOB.intensity_counts["[AMBITION_INTENSITY_MILD]"]] MED:[GLOB.intensity_counts["[AMBITION_INTENSITY_MEDIUM]"]] SEV:[GLOB.intensity_counts["[AMBITION_INTENSITY_SEVERE]"]] EXT:[GLOB.intensity_counts["[AMBITION_INTENSITY_EXTREME]"]] (HAVOC: [GLOB.total_intensity])", null)
+	//SKYRAT EDIT ADDITION END
 	return L
 
 //Reassociate still open ticket if one exists

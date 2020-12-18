@@ -67,9 +67,13 @@
 	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
+	//SKYRAT EDIT REMOVAL BEGIN - AMBITIONS
+	/*
 	create_actions()
 	reset_powers()
 	create_initial_profile()
+	*/
+	//SKYRAT EDIT REMOVAL END
 	if(give_objectives)
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
@@ -83,7 +87,11 @@
 		if(B && (B.decoy_override != initial(B.decoy_override)))
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
+	//SKYRAT EDIT REMOVAL BEGIN - AMBITIONS
+	/*
 	remove_changeling_powers()
+	*/
+	//SKYRAT EDIT REMOVAL END
 	. = ..()
 
 /datum/antagonist/changeling/proc/reset_properties()
@@ -371,6 +379,7 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	owner.announce_objectives()
+	..() //SKYRAT EDIT ADDITION - AMBITIONS
 
 /datum/antagonist/changeling/farewell()
 	to_chat(owner.current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
@@ -381,6 +390,10 @@
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
 
+
+	objectives += new /datum/objective/ambitions() //SKYRAT EDIT ADDITION - AMBITIONS
+	//SKYRAT EDIT REMOVAL BEGIN - AMBITIONS
+	/*
 	var/escape_objective_possible = TRUE
 
 	switch(competitive_objectives ? rand(1,3) : 1)
@@ -447,6 +460,8 @@
 			identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
+	*/
+	//SKYRAT EDIT REMOVAL END
 
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
