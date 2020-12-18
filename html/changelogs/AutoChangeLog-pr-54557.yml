@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the Pubby toxins mass driver door toggle button."
-  - code_imp: "Replaced var edited mass driver machinery with proper subtypes."

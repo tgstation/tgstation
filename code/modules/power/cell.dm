@@ -324,6 +324,7 @@
 	maxcharge = 300
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
+	custom_premium_price = PAYCHECK_ASSISTANT
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
@@ -370,6 +371,10 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
+	charge = 5000
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

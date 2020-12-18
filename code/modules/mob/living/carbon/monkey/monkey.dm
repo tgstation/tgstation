@@ -21,6 +21,10 @@
 		/obj/item/bodypart/l_leg/monkey,
 		)
 	hud_type = /datum/hud/monkey
+	melee_damage_lower = 1
+	melee_damage_upper = 3
+	ai_controller = /datum/ai_controller/monkey
+	faction = list("neutral", "monkey")
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	add_verb(src, /mob/living/proc/mob_sleep)
@@ -68,9 +72,9 @@
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
 	var/amount
-	if(has_reagent(/datum/reagent/medicine/morphine))
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
-	if(has_reagent(/datum/reagent/consumable/nuka_cola))
+	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
@@ -107,12 +111,6 @@
 	set category = "IC"
 	internal = null
 	return
-
-
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys can't use advanced tools
-	if(mind && is_monkey(mind))
-		return TRUE
-	return FALSE
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
@@ -170,10 +168,10 @@
 	return 1
 
 /mob/living/carbon/monkey/angry
-	aggressive = TRUE
 
 /mob/living/carbon/monkey/angry/Initialize()
 	. = ..()
+	ai_controller.blackboard[BB_MONKEY_AGRESSIVE] = TRUE
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
 		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)

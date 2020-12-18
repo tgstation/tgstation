@@ -80,11 +80,24 @@
 		set_glide_size(DELAY_TO_GLIDE_SIZE(ticks * world.tick_lag))
 		curr = curr.transfer(src)
 		if(!curr && active)
-			last.expel(src, loc, dir)
+			last.expel(src, get_turf(src), dir)
 
 		ticks = stoplag()
 		if(!(count--))
 			active = FALSE
+
+//failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
+/obj/structure/disposalholder/Moved(atom/oldLoc, dir)
+	. = ..()
+	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	if(!pipes_typecache[loc.type])
+		var/turf/T = get_turf(loc)
+		if(T)
+			vent_gas(T)
+		for(var/A in contents)
+			var/atom/movable/AM = A
+			AM.forceMove(drop_location())
+		qdel(src)
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()

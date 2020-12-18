@@ -122,6 +122,7 @@
 	if(beegent?.color)
 		col = beegent.color
 
+	icon_state = "[icon_base]_base"
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
@@ -156,7 +157,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/AttackingTarget()
- 	//Pollinate
+	//Pollinate
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
 		pollinate(Hydro)

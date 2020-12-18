@@ -169,11 +169,7 @@
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
-	GLOB.poi_list |= src
-
-/obj/machinery/capture_the_flag/Destroy()
-	GLOB.poi_list.Remove(src)
-	..()
+	AddElement(/datum/element/point_of_interest)
 
 /obj/machinery/capture_the_flag/process(delta_time)
 	for(var/i in spawned_mobs)
@@ -297,14 +293,15 @@
 			victory()
 
 /obj/machinery/capture_the_flag/proc/victory()
-	for(var/mob/M in GLOB.mob_list)
-		var/area/mob_area = get_area(M)
+	for(var/mob/_competitor in GLOB.mob_living_list)
+		var/mob/living/competitor = _competitor
+		var/area/mob_area = get_area(competitor)
 		if(istype(mob_area, /area/ctf))
-			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
-			for(var/obj/item/ctf/W in M)
-				M.dropItemToGround(W)
-			M.dust()
+			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
+			to_chat(competitor, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
+			for(var/obj/item/ctf/W in competitor)
+				competitor.dropItemToGround(W)
+			competitor.dust()
 	for(var/obj/machinery/control_point/control in GLOB.machines)
 		control.icon_state = "dominator"
 		control.controlling = null
@@ -359,10 +356,10 @@
 	ctf_enabled = FALSE
 	arena_reset = FALSE
 	var/area/A = get_area(src)
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		if((get_area(A) == A) && (M.ckey in team_members))
-			M.dust()
+	for(var/_competitor in GLOB.mob_living_list)
+		var/mob/living/competitor = _competitor
+		if((get_area(A) == A) && (competitor.ckey in team_members))
+			competitor.dust()
 	team_members.Cut()
 	spawned_mobs.Cut()
 	recently_dead_ckeys.Cut()
@@ -401,9 +398,10 @@
 /obj/projectile/bullet/ctf
 	damage = 0
 
-/obj/projectile/bullet/ctf/prehit(atom/target)
+/obj/projectile/bullet/ctf/prehit_pierce(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
+		return PROJECTILE_PIERCE_NONE	/// hey uhh don't hit anyone behind them
 	. = ..()
 
 /obj/item/gun/ballistic/automatic/laser/ctf
@@ -437,9 +435,10 @@
 	damage = 0
 	icon_state = "omnilaser"
 
-/obj/projectile/beam/ctf/prehit(atom/target)
+/obj/projectile/beam/ctf/prehit_pierce(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
+		return PROJECTILE_PIERCE_NONE		/// hey uhhh don't hit anyone behind them
 	. = ..()
 
 /proc/is_ctf_target(atom/target)

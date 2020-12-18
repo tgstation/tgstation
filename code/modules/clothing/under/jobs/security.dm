@@ -60,7 +60,7 @@
 	icon_state = "constable"
 	inhand_icon_state = "constable"
 	can_adjust = FALSE
-	custom_price = 200
+	custom_price = PAYCHECK_HARD
 
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"

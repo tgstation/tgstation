@@ -689,7 +689,7 @@
 /datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
 	name = "Tend Wounds"
 	desc = "An upgraded version of the original surgery."
-	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
+	id = "surgery_healing_base" //holder because CI cries otherwise. Not used in techweb unlocks.
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade

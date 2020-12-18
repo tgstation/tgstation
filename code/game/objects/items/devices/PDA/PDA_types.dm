@@ -10,6 +10,7 @@
 /obj/item/pda/clown/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
+	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, .proc/after_sitcom_laugh))
 
 /obj/item/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))
@@ -17,6 +18,9 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
+
+/obj/item/pda/clown/proc/after_sitcom_laugh(mob/victim)
+	victim.visible_message("[src] lets out a burst of laughter!")
 
 //Mime PDA sends "silent" messages.
 /obj/item/pda/mime

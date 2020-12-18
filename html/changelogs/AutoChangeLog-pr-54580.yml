@@ -1,4 +1,0 @@
-author: "Yenwodyah"
-delete-after: True
-changes: 
-  - bugfix: "A few bounties that accepted/refused the wrong items will now accept/refuse the right ones."

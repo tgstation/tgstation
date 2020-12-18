@@ -10,6 +10,10 @@
 
 	START_PROCESSING(SSprocessing, src)
 
+/datum/component/rot/Destroy(force, silent)
+	STOP_PROCESSING(SSprocessing, src)
+	. = ..()
+
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
 
@@ -47,7 +51,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(C.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
+	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead

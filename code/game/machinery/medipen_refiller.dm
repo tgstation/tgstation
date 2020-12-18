@@ -83,9 +83,9 @@
 	return TRUE
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/I)
-    . = ..()
-    if(!.)
-        return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "medipen_refiller_open", "medipen_refiller", I)
 
 /// refills the medipen
 /obj/machinery/medipen_refiller/proc/refill(obj/item/reagent_containers/hypospray/medipen/P, mob/user)

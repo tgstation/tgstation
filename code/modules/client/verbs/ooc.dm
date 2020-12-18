@@ -212,11 +212,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
 		return
 
-	var/list/body = list()
-	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
-	body += get_exp_report()
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
+	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
 /client/verb/select_ignore()
@@ -254,9 +250,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		// Check if both we and the player are ghosts and they're not using a fakekey
 		if(isobserver(mob) && isobserver(C.mob) && !C.holder?.fakekey)
-			// Show us the player's mob name in the list in front of their displayed key
+			// Show us if the player is a ghost or not after their displayed key
 			// Add the player's displayed key to the list
-			players["[C.mob]([displayed_key])"] = displayed_key
+			players["[displayed_key](ghost)"] = displayed_key
 
 		// Add the player's displayed key to the list if we or the player aren't a ghost or they're using a fakekey
 		else

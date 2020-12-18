@@ -15,9 +15,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
-	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
+	///Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/id = "code"
-	//Used along with the id for lookup
+	///Used along with the id for lookup
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -186,6 +186,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		desc = "<i>[template.desc]</i>"
 		icon_state = template.icon_state
 	flipped = !flipped
+
 /****
 	* A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
 	* The "top" card of the deck will always be the bottom card in the stack for our purposes.
@@ -292,6 +293,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		final_card.zoom_out()
 		qdel(src)
 
+
 /****
 	* The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
 	* *User: The person doing the shuffling, used in visable message and closing UI.
@@ -306,6 +308,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(visable)
 		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
 						"<span class='notice'>You shuffle \the [src]!</span>")
+
 
 /****
 	* The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
@@ -328,6 +331,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -374,8 +378,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/Initialize()
 	. = ..()
 	zoom_out()
-	RegisterSignal(src, COMISG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, CONSIG_STORAGE_EXITED, .proc/zoom_out)
+	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
+	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])

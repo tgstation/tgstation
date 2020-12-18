@@ -6,7 +6,7 @@
 	icon = 'icons/obj/decals.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
-	icon_state = "frame-empty"
+	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/photo/displayed
 
@@ -63,7 +63,7 @@
 	name = "picture frame"
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/decals.dmi'
-	icon_state = "frame-empty"
+	icon_state = "frame-overlay"
 	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
 	var/persistence_id
@@ -77,7 +77,7 @@
 
 /obj/structure/sign/picture_frame/Initialize(mapload, dir, building)
 	. = ..()
-	AddComponent(/datum/component/art, 20)
+	AddElement(/datum/element/art, OK_ART)
 	LAZYADD(SSpersistence.photo_frames, src)
 	if(dir)
 		setDir(dir)
@@ -165,3 +165,22 @@
 			I.forceMove(F)
 		F.update_icon()
 	qdel(src)
+
+
+/obj/structure/sign/picture_frame/showroom
+	name = "distinguished crew display"
+	desc = "A photo frame to commemorate crewmembers that distinguished themselves in the line of duty. WARNING: unauthorized tampering will be severely punished."
+	can_decon = FALSE
+
+//persistent frames, make sure the same ID doesn't appear more than once per map
+/obj/structure/sign/picture_frame/showroom/one
+	persistence_id = "frame_showroom1"
+
+/obj/structure/sign/picture_frame/showroom/two
+	persistence_id = "frame_showroom2"
+
+/obj/structure/sign/picture_frame/showroom/three
+	persistence_id = "frame_showroom3"
+
+/obj/structure/sign/picture_frame/showroom/four
+	persistence_id = "frame_showroom4"
