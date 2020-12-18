@@ -887,8 +887,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					var/datum/beam/rcdbeam = user.Beam(A,icon_state="light_beam")
-					QDEL_IN(rcdbeam, 15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
