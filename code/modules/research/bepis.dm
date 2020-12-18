@@ -2,11 +2,11 @@
 
 //economics defined values, subject to change should anything be too high or low in practice.
 
-#define MACHINE_OPERATION 100000
-#define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 3000
-#define MINOR_THRESHOLD 2000
-#define STANDARD_DEVIATION 1000
+#define MACHINE_OPERATION 200*CARGO_CRATE_VALUE
+#define MACHINE_OVERLOAD 1000*CARGO_CRATE_VALUE
+#define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
+#define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
+#define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
