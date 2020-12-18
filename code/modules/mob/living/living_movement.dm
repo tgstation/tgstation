@@ -59,6 +59,6 @@
 	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
 
 /mob/living/keybind_face_direction(direction)
-	if(stat)
+	if(stat > SOFT_CRIT)
 		return
 	return ..()
