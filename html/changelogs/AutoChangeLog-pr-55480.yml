@@ -1,0 +1,4 @@
+author: "jaw-sh"
+delete-after: True
+changes: 
+  - rscadd: "sugar cookies will now spawn with a random Christmas-themed icon during the Festive Season."
