@@ -312,13 +312,13 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 
-//Radioactive puncher, slightly more durable against brute but less against everything else
+//Radioactive puncher, hits for burn but only as hard as human, slightly more durable against brute but less against everything else
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium golem"
 	fixed_mut_color = "7f0"
 	meat = /obj/item/stack/ore/uranium
-	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable."
+	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable against blunt force trauma."
 	attack_verb = "burn"
 	attack_sound = 'sound/weapons/sear.ogg'
 	attack_type = BURN
@@ -336,7 +336,7 @@
 	. = ..()
 	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 	var/radiation_block = target.run_armor_check(affecting, RAD)
-	///standard damage roll for use to determine how much you irradiate per punch
+	///standard damage roll for use in determining how much you irradiate per punch
 	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
 
