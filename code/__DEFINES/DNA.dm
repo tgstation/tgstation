@@ -137,7 +137,8 @@
 #define HAS_BONE	19
 ///If we have a limb-specific overlay sprite
 #define HAS_MARKINGS 20
-
+/// Do not draw blood overlay
+#define NOBLOODOVERLAY 21
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

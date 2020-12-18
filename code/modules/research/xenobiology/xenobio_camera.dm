@@ -261,7 +261,7 @@
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
-			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
+			var/mob/living/carbon/human/monkey/food = new /mob/living/carbon/human/monkey(remote_eye.loc, TRUE, owner)
 			if (!QDELETED(food))
 				food.LAssailant = C
 				X.monkeys--
@@ -290,7 +290,9 @@
 		to_chat(owner, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
+		for(var/mob/living/carbon/human/M in remote_eye.loc)
+			if(!ismonkey(M))
+				continue
 			if(M.stat)
 				M.visible_message("<span class='notice'>[M] vanishes as [M.p_theyre()] reclaimed for recycling!</span>")
 				recycler.use_power(500)
@@ -384,8 +386,8 @@
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
 	..()
 
-//Pick up monkey
-/mob/living/carbon/monkey/CtrlClick(mob/user)
+//Pick up monkey, doing this on the monkey helper subtype is not really kosher, but neither are these fucking stupid signals. use the fucking base signals you clowns.
+/mob/living/carbon/human/monkey/CtrlClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 	..()
 
@@ -463,7 +465,7 @@
 	var/area/turfarea = get_area(T)
 	if(turfarea.name == E.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
 		if(X.monkeys >= 1)
-			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
+			var/mob/living/carbon/human/monkey/food = new /mob/living/carbon/human/monkey(T, TRUE, C)
 			if (!QDELETED(food))
 				food.LAssailant = C
 				X.monkeys--
@@ -473,7 +475,7 @@
 			to_chat(C, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
 
 //Pick up monkey
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/monkey/M)
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/monkey/M)
 	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return

@@ -41,7 +41,7 @@
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
 
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
+	var/mob/living/carbon/human/O = new /mob/living/carbon/human/monkey( loc )
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
@@ -174,184 +174,29 @@
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG | TR_KEEPAI))
+/mob/living/carbon/proc/humanize()
 	if (notransform || transformation_timer)
 		return
-
-	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
-		var/Itemlist = get_equipped_items(TRUE)
-		Itemlist += held_items
-		for(var/obj/item/W in Itemlist)
-			dropItemToGround(W, TRUE)
-			if (client)
-				client.screen -= W
 
 	//Make mob invisible and spawn animation
 	notransform = TRUE
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
-
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 
+	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
 /mob/living/carbon/proc/finish_humanize(tr_flags)
 	transformation_timer = null
+	to_chat(O, "<B>You are now a human.</B>")
+	notransform = FALSE
+	icon = initial(icon)
+	invisibility = 0
+	set_species(/datum/species/human)
 
-	var/list/stored_implants = list()
-	var/list/int_organs = list()
-
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/X in implants)
-			var/obj/item/implant/IMP = X
-			stored_implants += IMP
-			IMP.removed(src, 1, 1)
-
-	var/list/missing_bodyparts_zones = get_missing_limbs()
-
-	var/obj/item/cavity_object
-
-	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item)
-		cavity_object = CH.cavity_item
-		CH.cavity_item = null
-
-	var/mob/living/carbon/human/O = new( loc )
-	for(var/obj/item/C in O.loc)
-		if(C.anchored)
-			continue
-		O.equip_to_appropriate_slot(C)
-
-	dna.transfer_identity(O)
-	O.updateappearance(mutcolor_update=1)
-
-	if(findtext(O.dna.real_name, "monkey", 1, 7)) //7 == length("monkey") + 1
-		O.real_name = random_unique_name(O.gender)
-		O.dna.generate_unique_enzymes(O)
-	else
-		O.real_name = O.dna.real_name
-	O.name = O.real_name
-
-	if(tr_flags & TR_KEEPSE)
-		O.dna.mutation_index = dna.mutation_index
-		O.dna.default_mutation_genes = dna.default_mutation_genes
-		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
-		O.domutcheck()
-
-	if(suiciding)
-		O.set_suicide(suiciding)
-
-	//keep viruses?
-	if (tr_flags & TR_KEEPVIRUS)
-		O.diseases = diseases
-		diseases = null	//null the old diseases, bye bye!
-		for(var/thing in O.diseases)
-			var/datum/disease/D = thing
-			D.affected_mob = O
-		O.med_hud_set_status()
-
-	//keep damage?
-	if (tr_flags & TR_KEEPDAMAGE)
-		O.setToxLoss(getToxLoss(), 0)
-		O.adjustBruteLoss(getBruteLoss(), 0)
-		O.setOxyLoss(getOxyLoss(), 0)
-		O.setCloneLoss(getCloneLoss(), 0)
-		O.adjustFireLoss(getFireLoss(), 0)
-		O.adjustOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN))
-		O.updatehealth()
-		O.radiation = radiation
-
-	//re-add implants to new mob
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/Y in implants)
-			var/obj/item/implant/IMP = Y
-			IMP.implant(O, null, 1)
-
-	if(tr_flags & TR_KEEPORGANS)
-		for(var/X in O.internal_organs)
-			var/obj/item/organ/I = X
-			I.Remove(O, 1)
-
-		if(mind)
-			mind.transfer_to(O)
-			var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling)
-				for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
-					changeling.purchasedpowers -= HF
-					changeling.regain_powers()
-
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			int_organs += I
-			I.Remove(src, 1)
-
-		for(var/X in int_organs)
-			var/obj/item/organ/I = X
-			I.Insert(O, 1)
-
-
-	var/obj/item/bodypart/chest/torso = get_bodypart(BODY_ZONE_CHEST)
-	if(cavity_object)
-		torso.cavity_item = cavity_object //cavity item is given to the new chest
-		cavity_object.forceMove(O)
-
-	for(var/missing_zone in missing_bodyparts_zones)
-		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
-		BP.drop_limb(1)
-		if(!(tr_flags & TR_KEEPORGANS)) //we didn't already get rid of the organs of the newly spawned mob
-			for(var/X in O.internal_organs)
-				var/obj/item/organ/G = X
-				if(BP.body_zone == check_zone(G.zone))
-					if(mind?.has_antag_datum(/datum/antagonist/changeling) && istype(G, /obj/item/organ/brain))
-						continue //so headless changelings don't lose their brain when transforming
-					qdel(G) //we lose the organs in the missing limbs
-		qdel(BP)
-
-	//transfer stuns
-	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(AmountStun(), ignore_canstun = TRUE)
-		O.Knockdown(AmountKnockdown(), ignore_canstun = TRUE)
-		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
-		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
-		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
-		O.Sleeping(AmountSleeping())
-
-	//transfer reagents
-	if(tr_flags & TR_KEEPREAGENTS)
-		reagents.trans_to(O, reagents.total_volume)
-
-	if(mind)
-		mind.transfer_to(O)
-		var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
-				changeling.purchasedpowers -= HF
-				changeling.regain_powers()
-
-	//if we have an AI, transfer it; if we don't, make sure the new thing doesn't either
-	if(tr_flags & TR_KEEPAI)
-		if(ai_controller)
-			ai_controller.PossessPawn(O)
-		else if(O.ai_controller)
-			QDEL_NULL(O.ai_controller)
-
-
-	O.a_intent = INTENT_HELP
-	if (tr_flags & TR_DEFAULTMSG)
-		to_chat(O, "<B>You are now a human.</B>")
-
-	transfer_observers_to(O)
-
-	. = O
-
-	for(var/A in loc.vars)
-		if(loc.vars[A] == src)
-			loc.vars[A] = O
-
-	qdel(src)
+	return src
 
 /mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
