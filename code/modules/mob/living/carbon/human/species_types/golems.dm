@@ -312,27 +312,33 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
 
-//Radioactive
+//Radioactive puncher, slightly more durable against brute but less against everything else
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium golem"
 	fixed_mut_color = "7f0"
 	meat = /obj/item/stack/ore/uranium
-	info_text = "As an <span class='danger'>Uranium Golem</span>, you emit radiation pulses every once in a while. It won't harm fellow golems, but organic lifeforms will be affected."
-
+	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable."
+	attack_verb = "burn"
+	attack_sound = 'sound/weapons/sear.ogg'
+	attack_type = BURN
 	var/last_event = 0
 	var/active = null
+	armor = 40
+	brutemod = 0.5
+	punchdamagelow = 1
+	punchdamagehigh = 10
+	punchstunthreshold = 9
 	prefix = "Uranium"
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
 
-/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
-	if(!active)
-		if(world.time > last_event+30)
-			active = 1
-			radiation_pulse(H, 50)
-			last_event = world.time
-			active = null
-	..()
+/datum/species/golem/uranium/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+	var/radiation_block = target.run_armor_check(affecting, RAD)
+	///standard damage roll for use to determine how much you irradiate per punch
+	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
 
 //Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
 /datum/species/golem/sand
