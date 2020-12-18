@@ -99,6 +99,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
 	lace_time = 20 SECONDS // how the hell do these laces even work??
+	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
