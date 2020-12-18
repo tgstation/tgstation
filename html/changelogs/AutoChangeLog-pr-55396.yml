@@ -1,0 +1,4 @@
+author: "drongood12"
+delete-after: True
+changes: 
+  - bugfix: "Semicolon will no longer display in critical condition"

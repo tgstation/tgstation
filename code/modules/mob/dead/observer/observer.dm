@@ -160,6 +160,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
+	if(data_huds_on)
+		remove_data_huds()
+
 	// Update our old body's medhud since we're abandoning it
 	if(mind?.current)
 		mind.current.med_hud_set_status()

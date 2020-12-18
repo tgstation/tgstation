@@ -10,6 +10,10 @@
 
 	START_PROCESSING(SSprocessing, src)
 
+/datum/component/rot/Destroy(force, silent)
+	STOP_PROCESSING(SSprocessing, src)
+	. = ..()
+
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
 
