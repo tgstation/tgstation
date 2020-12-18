@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "Fixed garbage collection of ghosts and lobby players, making the game run faster"
