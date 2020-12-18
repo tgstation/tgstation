@@ -1624,9 +1624,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(humi.stat < DEAD && !IS_IN_STASIS(humi))
 		body_temperature_core(humi)
 
+	//These do run in statis
 	body_temperature_skin(humi)
 	body_temperature_alerts(humi)
-	body_temperature_damage(humi)
+
+	//Do not cause more damage in statis
+	if(!IS_IN_STASIS(humi))
+		body_temperature_damage(humi)
 
 /**
  * Used to stabilize the core temperature back to normal on living mobs
