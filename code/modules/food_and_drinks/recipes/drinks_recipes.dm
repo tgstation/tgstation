@@ -389,8 +389,10 @@
 
 /datum/chemical_reaction/chocolate_milk
 	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
+	required_reagents = list(/datum/reagent/consumable/hot_coco = 5, /datum/reagent/consumable/coco = 4)
 	mix_message = "The color changes as the mixture blends smoothly."
+	requiered_temp = 300
+	is_cold_recipe = TRUE
 
 /datum/chemical_reaction/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 5)
