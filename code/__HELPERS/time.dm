@@ -41,29 +41,23 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	return GLOB.midnight_rollovers
 
 
-///Returns the current week of the current month, from 1 to 5.
-/proc/week_of_the_month()
-	var/day = time2text(world.timeofday, "DDD") 	// get the current day
-	var/date = text2num(time2text(world.timeofday, "DD")) 	// get the current date
-
-	switch(day)
-		if(MONDAY)
-			date -= 1
-		if(TUESDAY)
-			date -= 2
-		if(WEDNESDAY)
-			date -= 3
-		if(THURSDAY)
-			date -= 4
-		if(FRIDAY)
-			date -= 5
-		if(SATURDAY)
-			date -= 6
-		if(SUNDAY)
-			date -= 7
-
-	return CEILING(date / 7, 1) + 1
-
+///Returns a string day as an integer in ISO format 1 (Monday) - 7 (Sunday)
+/proc/weekday_to_iso(ddd)
+	switch (ddd)
+		if (MONDAY)
+			return 1
+		if (TUESDAY)
+			return 2
+		if (WEDNESDAY)
+			return 3
+		if (THURSDAY)
+			return 4
+		if (FRIDAY)
+			return 5
+		if (SATURDAY)
+			return 6
+		if (SUNDAY)
+			return 7
 
 ///Returns the first day of the given year and month in number format, from 1 (monday) - 7 (sunday).
 /proc/first_day_of_month(year, month)

@@ -58,6 +58,7 @@
 		core.update_icon()
 	update_health_hud()
 	placed = 1
+	announcement_time = world.time + 6000
 	return TRUE
 
 /mob/camera/blob/verb/transport_core()
