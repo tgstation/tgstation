@@ -361,6 +361,8 @@
 	var/list/choices = list()
 	while (length(choices) < 6)
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
+		if(initial(bs.name) == blobstrain.name) // Don't have current strain as an option please
+			continue
 		choices[initial(bs.name)] = bs
 
 	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
