@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Cleaving saws will no longer lose their sharpened damage boost when deactivated, and can no longer be sharpened infinitely"

@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "phobias cannot be triggered by words in languages you don't understand"

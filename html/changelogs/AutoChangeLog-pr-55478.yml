@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Briefcase Launchpads will no longer delete themselves from the game when you attempt to place them."
