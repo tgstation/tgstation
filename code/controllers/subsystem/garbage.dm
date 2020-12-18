@@ -139,6 +139,8 @@ SUBSYSTEM_DEF(garbage)
 
 	lastlevel = level
 
+	//We do this rather then for(var/refID in queue) because that sort of for loop copies the whole list.
+	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
 	for (var/i in 1 to length(queue))
 		var/refID = queue[i]
 		if (!refID)
