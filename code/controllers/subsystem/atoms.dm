@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	var/count
-	var/static/list/mapload_arg = list(TRUE)
+	var/list/mapload_arg = list(TRUE)
 	var/atom/A
 	if(atoms)
 		count = atoms.len
@@ -44,11 +44,32 @@ SUBSYSTEM_DEF(atoms)
 				CHECK_TICK
 	else
 		count = 0
+#ifdef TESTING
+		var/list/order = list( /area = 0, /turf = 0, /obj = 0, /mob = 0)
+		var/last_type = /area
+#endif
 		for(A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
+#ifdef TESTING
+				if(!istype(A, last_type))
+					var/C = order[last_type]
+					testing("Type changed to [last_type], out of order")
+					testing("[last_type] = [C]")
+					for(var/T in order)
+						if(istype(A,T))
+							last_type = T
+							break
+				order[last_type]++
+#endif
 				InitAtom(A, mapload_arg)
 				++count
 				CHECK_TICK
+#ifdef TESTING
+	for(var/T in order)
+		var/C = order[T]
+		testing("Type [T] Initialized")
+#endif
+
 
 	testing("Initialized [count] atoms")
 	pass(count)
