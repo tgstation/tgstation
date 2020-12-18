@@ -176,6 +176,7 @@
 	if(weapon)
 		weapon.melee_attack_chain(living_pawn, target)
 	else
+		living_pawn.UnarmedAttack(target)
 		target.attack_paw(living_pawn)
 
 	// no de-aggro

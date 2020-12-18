@@ -15,21 +15,19 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT
 	limbs_id = "monkey"
-	husk_limb_icon = "monkeyhusk"
 	damage_overlay_type = "monkey"
-	deathanim = "m"
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3
 	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
 	bodypart_overides = list(
-	BODY_ZONE_L_ARM = /obj/item/bodypart/monkey/l_arm,\
-	BODY_ZONE_R_ARM = new /obj/item/bodypart/monkey/r_arm,\
-	BODY_ZONE_HEAD = new /obj/item/bodypart/monkey/head,\
-	BODY_ZONE_L_LEG = new /obj/item/bodypart/monkey/l_leg,\
-	BODY_ZONE_R_LEG = new /obj/item/bodypart/monkey/r_leg,\
-	BODY_ZONE_CHEST = new /obj/item/bodypart/monkey/chest)
+	BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,\
+	BODY_ZONE_R_ARM = new /obj/item/bodypart/r_arm/monkey,\
+	BODY_ZONE_HEAD = new /obj/item/bodypart/head/monkey,\
+	BODY_ZONE_L_LEG = new /obj/item/bodypart/l_leg/monkey,\
+	BODY_ZONE_R_LEG = new /obj/item/bodypart/r_leg/monkey,\
+	BODY_ZONE_CHEST = new /obj/item/bodypart/chest/monkey)
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
@@ -87,7 +85,7 @@
 			var/datum/disease/bite_infection = d
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	victim.attack_paw(user)
+	target.attack_paw(user)
 	return TRUE
 
 

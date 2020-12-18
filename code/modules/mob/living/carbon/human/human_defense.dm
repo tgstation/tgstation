@@ -249,7 +249,7 @@
 
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+			var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 			if(!damage)
 				return
 			if(check_shields(M, damage, "the [M.name]"))

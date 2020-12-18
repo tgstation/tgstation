@@ -1,9 +1,9 @@
-/mob/living/carbon/human/monkey
+/mob/living/carbon/human/species/monkey
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
 	faction = list("neutral", "monkey")
 
-/mob/living/carbon/human/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
+/mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
@@ -13,14 +13,14 @@
 		SSmobs.cubemonkeys += src
 	return ..()
 
-/mob/living/carbon/human/monkey/Destroy()
+/mob/living/carbon/human/species/monkey/Destroy()
 	SSmobs.cubemonkeys -= src
 	return ..()
 
-/mob/living/carbon/human/monkey/angry
+/mob/living/carbon/human/species/monkey/angry
 	ai_controller = /datum/ai_controller/monkey/angry
 
-/mob/living/carbon/human/monkey/angry/Initialize()
+/mob/living/carbon/human/species/monkey/angry/Initialize()
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
@@ -28,7 +28,7 @@
 		helmet.attack_self(src) // todo encapsulate toggle
 
 
-/mob/living/carbon/human/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
+/mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
 	unique_name = 0
 	/// If we had one of the rare names in a past life
@@ -39,7 +39,7 @@
 	var/relic_mask
 	var/memory_saved = FALSE
 
-/mob/living/carbon/human/monkey/punpun/Initialize()
+/mob/living/carbon/human/species/monkey/punpun/Initialize()
 	Read_Memory()
 	if(ancestor_name)
 		name = ancestor_name
@@ -61,18 +61,18 @@
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
 
-/mob/living/carbon/human/monkey/punpun/Life()
+/mob/living/carbon/human/species/monkey/punpun/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
 	..()
 
-/mob/living/carbon/human/monkey/punpun/death(gibbed)
+/mob/living/carbon/human/species/monkey/punpun/death(gibbed)
 	if(!memory_saved)
 		Write_Memory(TRUE, gibbed)
 	..()
 
-/mob/living/carbon/human/monkey/punpun/proc/Read_Memory()
+/mob/living/carbon/human/species/monkey/punpun/proc/Read_Memory()
 	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
 		S["ancestor_name"]	>> ancestor_name
@@ -90,7 +90,7 @@
 		relic_hat = json["relic_hat"]
 		relic_mask = json["relic_hat"]
 
-/mob/living/carbon/human/monkey/punpun/proc/Write_Memory(dead, gibbed)
+/mob/living/carbon/human/species/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/json_file = file("data/npc_saves/Punpun.json")
 	var/list/file_data = list()
 	if(gibbed)

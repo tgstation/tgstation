@@ -112,7 +112,7 @@
 	stage_prob = 4
 	visibility_flags = NONE
 	agent = "Kongey Vibrion M-909"
-	new_form = /mob/living/carbon/human/monkey
+	new_form = /mob/living/carbon/human/species/monkey
 	bantype = ROLE_MONKEY
 
 

@@ -41,7 +41,7 @@
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
 
-	var/mob/living/carbon/human/O = new /mob/living/carbon/human/monkey( loc )
+	var/mob/living/carbon/human/O = new /mob/living/carbon/human/species/monkey( loc )
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
@@ -186,11 +186,11 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
-/mob/living/carbon/proc/finish_humanize(tr_flags)
+/mob/living/carbon/proc/finish_humanize()
 	transformation_timer = null
-	to_chat(O, "<B>You are now a human.</B>")
+	to_chat(src, "<B>You are now a human.</B>")
 	notransform = FALSE
 	icon = initial(icon)
 	invisibility = 0
