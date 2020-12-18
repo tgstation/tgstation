@@ -400,7 +400,7 @@
 	required_temp = 320
 
 /datum/chemical_reaction/hot_coco_from_chocolate_milk
-	results = list(/datum/reagent/consumable/hot_coco = 6)
+	results = list(/datum/reagent/consumable/hot_coco = 3)
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 1, /datum/reagent/consumable/milk = 2)
 	required_temp = 320
 	
