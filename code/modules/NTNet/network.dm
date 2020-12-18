@@ -258,7 +258,7 @@
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station_root/New()
+/datum/ntnet/station_root/New(root_name)
 	. = ..()
 	SSnetworks.add_log("NTNet logging system activated for [root_name]")
 
