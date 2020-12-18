@@ -291,9 +291,8 @@ SUBSYSTEM_DEF(networks)
  * * template - optional, map_template of that area
  */
 /datum/controller/subsystem/networks/proc/lookup_area_root_id(area/A, datum/map_template/M=null)
-	/// Check if the area is valid and if it doesn't have a network root id.  If it has a root assume it has
-	/// network_area_id as well
-	if(!A || A.network_root_id != null)
+	/// Check if the area is valid and if it doesn't have a network root id.
+	if(!istype(A) || A.network_root_id != null)
 		return
 
 	/// If we are a ruin or a shuttle, we get our own network
@@ -308,7 +307,6 @@ SUBSYSTEM_DEF(networks)
 			var/datum/map_template/ruin/R = M
 			A.network_root_id = simple_network_name_fix(R.id)
 
-
 	if(!A.network_root_id) // not assigned?  Then lets use some defaults
 		// Anything in Centcom is completely isolated
 		// Special case for holodecks.
@@ -320,18 +318,21 @@ SUBSYSTEM_DEF(networks)
 		else
 			A.network_root_id =  STATION_NETWORK_ROOT
 
-
+/datum/controller/subsystem/networks/proc/assign_area_network_id(area/A, datum/map_template/M=null)
+	if(!istype(A))
+		return
+	if(!A.network_root_id)
+		lookup_area_root_id(A, M)
+		// finally  set the network area id, bit copy paste from area Initialize
+		// This is done in case we have more than one area type, each area instance has its own network name
+	if(!A.network_area_id)
+		A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
+		if(!(A.area_flags & UNIQUE_AREA)) // if we aren't a unique area, make sure our name is different
+			A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
 
 /datum/controller/subsystem/networks/proc/assign_areas_root_ids(list/areas, datum/map_template/M=null)
 	for(var/area/A in areas)
-		if(!A.network_root_id)
-			lookup_area_root_id(A, M)
-			// finally  set the network area id, bit copy paste from area Initialize
-			// This is done in case we have more than one area type, each area instance has its own network name
-			if(!A.network_area_id)
-				A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
-				A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
-
+		assign_area_network_id(A, M)
 
 /**
  * Converts a list of string's into a full network_id

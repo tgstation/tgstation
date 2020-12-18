@@ -69,10 +69,6 @@
 
 	return ..()
 
-/datum/ntnet/vv_edit_var(var_name)
-	return FALSE // You cannot edit ANYTHING in here, don't even try you stupid admins!
-
-
 /// A network should NEVER be deleted.  If you don't want to show it exists just check if its
 /// empty
 /datum/ntnet/Destroy()
