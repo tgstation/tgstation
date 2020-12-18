@@ -82,9 +82,9 @@
 		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
 			if("Yes")
 				if(admin == M)
-					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  | TR_KEEPSTUNS | TR_KEEPREAGENTS |  TR_DEFAULTMSG)
+					admin = M.humanize()
 				else
-					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_KEEPSTUNS  |  TR_KEEPREAGENTS  |  TR_DEFAULTMSG)
+					M.humanize()
 			if("No")
 				//nothing
 			else

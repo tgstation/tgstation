@@ -75,7 +75,7 @@
 				"<span class='danger'>You avoid [user]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>Your bite misses [victim]!</span>")
 			return TRUE
-		victim.apply_damage(rand(1, 3), BRUTE, affecting, armor)
+		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
 		victim.visible_message("<span class='danger'>[name] bites [victim]!</span>",
 			"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
 		to_chat(user, "<span class='danger'>You bite [victim]!</span>")

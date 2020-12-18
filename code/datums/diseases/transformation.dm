@@ -127,7 +127,7 @@
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
 	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+		var/mob/living/carbon/human/M = affected_mob.monkeyize()
 		M.ventcrawler = VENTCRAWLER_ALWAYS
 
 

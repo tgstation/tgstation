@@ -91,22 +91,6 @@
 #define DNA_MUTATION_BLOCKS			8
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
-//Transformation proc stuff
-#define TR_KEEPITEMS	(1<<0)
-#define TR_KEEPVIRUS	(1<<1)
-#define TR_KEEPDAMAGE	(1<<2)
-/// hashing names (e.g. monkey(e34f)) (only in monkeyize)
-#define TR_HASHNAME		(1<<3)
-#define TR_KEEPIMPLANTS	(1<<4)
-/// changelings shouldn't edit the DNA's SE when turning into a monkey
-#define TR_KEEPSE		(1<<5)
-#define TR_DEFAULTMSG	(1<<6)
-#define TR_KEEPORGANS	(1<<8)
-#define TR_KEEPSTUNS	(1<<9)
-#define TR_KEEPREAGENTS	(1<<10)
-#define TR_KEEPSTAMINADAMAGE (1<<11)
-#define TR_KEEPAI 		(1<<12)
-
 //species traits for mutantraces
 #define MUTCOLORS		1
 #define HAIR			2
