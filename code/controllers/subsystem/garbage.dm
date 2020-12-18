@@ -139,7 +139,8 @@ SUBSYSTEM_DEF(garbage)
 
 	lastlevel = level
 
-	for (var/refID in queue)
+	for (var/i in 1 to length(queue))
+		var/refID = queue[i]
 		if (!refID)
 			count++
 			if (MC_TICK_CHECK)
