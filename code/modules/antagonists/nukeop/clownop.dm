@@ -14,7 +14,7 @@
 
 /datum/antagonist/nukeop/clownop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-	ADD_TRAIT(L, TRAIT_NAIVE, "clownop"
+	ADD_TRAIT(L, TRAIT_NAIVE, "clownop")
 	ADD_TRAIT(L, TRAIT_CLOWNLIKE, "clownop")
 
 /datum/antagonist/nukeop/clownop/remove_innate_effects(mob/living/mob_override)
