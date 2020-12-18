@@ -861,3 +861,16 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_mult = 2
 	taste_description = "fizzy sweetness"
+
+/datum/reagent/consumable/gravy
+	name = "Gravy"
+	description = "A mixture of flour, water, and the juices of cooked meat."
+	taste_description = "gravy"
+	color = "#623301"
+	taste_mult = 1.2
+
+/datum/reagent/consumable/pancakebatter
+	name = "pancake batter"
+	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
+	taste_description = "milky batter"
+	color = "#fccc98"

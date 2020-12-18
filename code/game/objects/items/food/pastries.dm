@@ -695,6 +695,8 @@
 
 #define PANCAKE_MAX_STACK 10
 
+
+
 /obj/item/food/pancakes
 	name = "pancake"
 	desc = "A fluffy pancake. The softer, superior relative of the waffle."
@@ -704,6 +706,17 @@
 	tastes = list("pancakes" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pancakes/raw
+	name = "goopy pancake"
+	desc = "A barely cooked mess that some may mistake for a pancake. You live like this?"
+	icon_state = "pancakes_1"
+	inhand_icon_state = "pancakes"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("pancakes" = 1)
+
+/obj/item/food/pancakes/raw/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/pancakes, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"

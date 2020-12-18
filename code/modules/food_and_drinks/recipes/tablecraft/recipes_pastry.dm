@@ -312,18 +312,10 @@
 	result = /obj/item/food/rofflewaffles
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/pancakes
-	name = "Pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1
-	)
-	result = /obj/item/food/pancakes
-	subcategory = CAT_PASTRY
-
 /datum/crafting_recipe/food/bbpancakes
 	name = "Blueberry pancake"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/pancakes = 1,
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/pancakes/blueberry
@@ -332,7 +324,7 @@
 /datum/crafting_recipe/food/ccpancakes
 	name = "Chocolate chip pancake"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/pancakes = 1,
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/pancakes/chocolatechip
