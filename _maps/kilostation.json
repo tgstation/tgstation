@@ -4,6 +4,7 @@
     "map_path": "map_files/KiloStation",
     "map_file": "KiloStation.dmm",
     "space_ruin_levels": 4,
+    "minetype": "asteroid",
     "shuttles": {
 	    "emergency": "emergency_kilo",
 	    "ferry": "ferry_kilo",

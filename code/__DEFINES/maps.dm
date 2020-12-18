@@ -77,6 +77,9 @@ require only minor tweaks.
 	ZTRAIT_LAVA_RUINS = TRUE, \
 	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
 	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+#define ZTRAITS_ASTEROID list(\
+	ZTRAIT_MINING = TRUE, \
+	ZTRAIT_BOMBCAP_MULTIPLIER = 2)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

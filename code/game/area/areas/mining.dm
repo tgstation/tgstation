@@ -32,6 +32,11 @@
 	ambientsounds = MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
+/area/mine/unexplored/danger
+	icon_state = "danger"
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+	map_generator = /datum/map_generator/cave_generator/asteroid
+
 /area/mine/lobby
 	name = "Mining Station"
 	icon_state = "mining_lobby"
