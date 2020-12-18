@@ -29,7 +29,7 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(default_deconstruction_crowbar(I, TRUE))
+	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
@@ -66,7 +66,7 @@
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
-	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemDeleted)
+	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
@@ -79,10 +79,6 @@
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromGrill(I)
-
-/obj/machinery/griddle/proc/ItemDeleted(datum/source)
-	SIGNAL_HANDLER
-	ItemRemovedFromGrill(source)
 
 /obj/machinery/griddle/proc/GrillCompleted(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
