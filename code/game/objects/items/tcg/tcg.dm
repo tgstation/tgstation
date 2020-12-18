@@ -48,10 +48,10 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	series = temp.series
 
 // This totally isn't overengineered to hell, shut up
-/****
-	* Alright so some brief details here, we store all "immutable" (Think like power) card variables in a global list, indexed by id
-	* This proc gets the card's associated card datum to play with
-	*/
+/**
+ * Alright so some brief details here, we store all "immutable" (Think like power) card variables in a global list, indexed by id
+ * This proc gets the card's associated card datum to play with
+ */
 /obj/item/tcgcard/proc/extract_datum()
 	var/list/cached_cards = GLOB.cached_cards[series]
 	if(!cached_cards)
@@ -162,15 +162,15 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	tapped = !tapped
 	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
 
-/****
-	* Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
-	*/
+/**
+ * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
+ */
 /obj/item/tcgcard/proc/zoom_in()
 	transform = matrix()
 
-/****
-	* Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
-	*/
+/**
+ * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
+ */
 /obj/item/tcgcard/proc/zoom_out()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
@@ -187,10 +187,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = template.icon_state
 	flipped = !flipped
 
-/****
-	* A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
-	* The "top" card of the deck will always be the bottom card in the stack for our purposes.
-	*/
+/**
+ * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
+ * The "top" card of the deck will always be the bottom card in the stack for our purposes.
+ */
 /obj/item/tcgcard_deck
 	name = "Trading Card Pile"
 	desc = "A stack of TCG cards."
@@ -275,9 +275,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	shuffle_deck(user)
 	return ..()
 
-/****
-	* The user draws a single card. The deck is then handled based on how many cards are left.
-	*/
+/**
+ * The user draws a single card. The deck is then handled based on how many cards are left.
+ */
 /obj/item/tcgcard_deck/proc/draw_card(mob/user)
 	if(!contents.len)
 		CRASH("A TCG deck was created with no cards inside of it.")
@@ -294,12 +294,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		qdel(src)
 
 
-/****
-	* The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
-	* *User: The person doing the shuffling, used in visable message and closing UI.
-	* *Visible: Will anyone need to hear the visable message about the shuffling?
-	*/
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+/**
+ * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
+ * *User: The person doing the shuffling, used in visable message and closing UI.
+ * *Visible: Will anyone need to hear the visable message about the shuffling?
+ */
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
@@ -310,9 +310,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 						"<span class='notice'>You shuffle \the [src]!</span>")
 
 
-/****
-	* The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
-	*/
+/**
+ * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
+ */
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
 	var/list/temp_deck = contents.Copy()
