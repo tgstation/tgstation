@@ -148,7 +148,7 @@ SUBSYSTEM_DEF(garbage)
 			if (MC_TICK_CHECK)
 				return
 			continue
-		
+
 		var/GCd_at_time = L[1]
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
