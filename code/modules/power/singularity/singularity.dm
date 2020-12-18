@@ -19,11 +19,11 @@
 	var/allowed_size = 1
 	var/energy = 100 //How strong are we?
 	var/dissipate = TRUE //Do we lose energy over time?
-	/// How long should it take for us to dissipate?
-	var/dissipate_delay = 2 SECONDS
+	/// How long should it take for us to dissipate in seconds?
+	var/dissipate_delay = 20
 	/// How much energy do we lose every dissipate_delay?
 	var/dissipate_strength = 1
-	/// How long its been (in deciseconds) since the last dissipation
+	/// How long its been (in seconds) since the last dissipation
 	var/time_since_last_dissipiation = 0
 	var/event_chance = 10 //Prob for event each tick
 	var/move_self = TRUE
@@ -145,6 +145,7 @@
 
 	time_since_last_dissipiation += delta_time
 
+	// Uses a while in case of especially long delta times
 	while (time_since_last_dissipiation >= dissipate_delay)
 		energy -= dissipate_strength
 		time_since_last_dissipiation -= dissipate_delay
