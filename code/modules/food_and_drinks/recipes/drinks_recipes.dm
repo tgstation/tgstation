@@ -388,17 +388,22 @@
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
 
 /datum/chemical_reaction/chocolate_milk
-	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
-	required_reagents = list(/datum/reagent/consumable/hot_coco = 5, /datum/reagent/consumable/coco = 4)
+	results = list(/datum/reagent/consumable/milk/chocolate_milk = 11)
+	required_reagents = list(/datum/reagent/consumable/hot_coco = 6, /datum/reagent/consumable/coco = 5)
 	mix_message = "The color changes as the mixture blends smoothly."
 	requiered_temp = 300
 	is_cold_recipe = TRUE
 
 /datum/chemical_reaction/hot_coco
-	results = list(/datum/reagent/consumable/hot_coco = 5)
+	results = list(/datum/reagent/consumable/hot_coco = 6)
 	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
 	required_temp = 320
 
+/datum/chemical_reaction/hot_coco_from_chocolate_milk
+	results = list(/datum/reagent/consumable/hot_coco = 6)
+	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 2, /datum/reagent/consumable/milk = 4)
+	required_temp = 320
+	
 /datum/chemical_reaction/coffee
 	results = list(/datum/reagent/consumable/coffee = 5)
 	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
