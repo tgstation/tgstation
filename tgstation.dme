@@ -3387,6 +3387,7 @@
 #include "modular_skyrat\modules\aesthetics\status_display\code\status_display.dm"
 #include "modular_skyrat\modules\aesthetics\tools\code\tools.dm"
 #include "modular_skyrat\modules\aesthetics\wallmed\code\wallmed.dm"
+#include "modular_skyrat\modules\aesthetics\walls\code\walls.dm"
 #include "modular_skyrat\modules\aesthetics\washing_machine\code\washing_machine.dm"
 #include "modular_skyrat\modules\aesthetics\windows\code\windows.dm"
 #include "modular_skyrat\modules\altborgs\code\game\objects\items\robot_items.dm"
