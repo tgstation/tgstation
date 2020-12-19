@@ -3347,6 +3347,7 @@
 #include "modular_frontier\modules\rangedanalyzerandelectriccutter\code\modules\research\designs\tool_designs.dm"
 #include "modular_frontier\modules\weaponthrowsound\code\game\objects\items.dm"
 #include "modular_skyrat\master_files\code\datums\traits\neutral.dm"
+#include "modular_skyrat\master_files\code\game\objects\items\oxygen_candle.dm"
 #include "modular_skyrat\master_files\code\game\objects\structures\trash_pile.dm"
 #include "modular_skyrat\master_files\code\modules\clothing\anthro_clothes.dm"
 #include "modular_skyrat\master_files\code\modules\clothing\non_anthro_clothes.dm"

@@ -128,6 +128,7 @@
 		new internal_type(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+	new /obj/item/oxygen_candle(src) //SKYRAT EDIT ADDITION
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -830,6 +831,7 @@
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+	new /obj/item/oxygen_candle(src) //SKYRAT EDIT ADDITION
 
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"
