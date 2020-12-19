@@ -91183,9 +91183,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
-"vQL" = (
-/turf/open/floor/plating/airless,
-/area/solar/starboard/aft)
 "vSd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -135699,7 +135696,7 @@ cDr
 cFh
 cDr
 cDr
-vQL
+ctQ
 cDr
 cDr
 cDr
