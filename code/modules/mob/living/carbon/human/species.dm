@@ -189,6 +189,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
+	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
+	var/list/knife_butcher_results
+
 ///////////
 // PROCS //
 ///////////

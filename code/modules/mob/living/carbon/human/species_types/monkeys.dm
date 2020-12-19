@@ -9,6 +9,7 @@
 	mutant_bodyparts = list("tail_monkey" = "Monkey")
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
+	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY)
 	inherent_traits = list(TRAIT_MONKEYLIKE)
 	no_equip = list(ITEM_SLOT_EARS, ITEM_SLOT_EYES, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
@@ -43,6 +44,7 @@
 	. = ..()
 	C.ventcrawler = VENTCRAWLER_NUDE
 	C.pass_flags |= PASSTABLE
+	C.butcher_results = knife_butcher_results
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
@@ -53,6 +55,7 @@
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
 	C.pass_flags = initial(C.pass_flags)
+	C.butcher_results = null
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
 	. = ..()
