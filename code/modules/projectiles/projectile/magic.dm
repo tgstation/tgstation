@@ -457,7 +457,7 @@
 	if(.)
 		unmagify()
 
-///Give it the lesses magic icon and tell ot ti delete itself in 15 seconds
+///Give it the lesser magic icon and tell it to delete itself
 /obj/structure/closet/decay/proc/unmagify()
 	icon_state = weakened_icon
 	update_icon()
