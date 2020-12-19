@@ -129,5 +129,5 @@
 /obj/effect/food_cart_stand
 	name = "food cart tent"
 	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
-	icon = "icons/obj/3x3.dmi"
+	icon = 'icons/obj/3x3.dmi'
 	icon_state = "stand"
