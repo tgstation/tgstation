@@ -673,9 +673,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dB" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 9
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -683,6 +680,9 @@
 	pixel_x = -27
 	},
 /obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dH" = (
@@ -710,10 +710,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dN" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/machinery/computer/cloning,
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/cloning,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dO" = (
@@ -731,13 +731,13 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "dP" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 5
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/clonepod,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dQ" = (
@@ -1493,8 +1493,8 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "mc" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/landmark/start/geneticist,
+/obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "mh" = (
@@ -2312,7 +2312,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -2400,7 +2400,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -2587,12 +2587,6 @@
 "zS" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -2605,6 +2599,12 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Cloning Lab";
 	req_access_txt = "68;47"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3061,11 +3061,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Ev" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3154,6 +3154,19 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 50;
 	pixel_y = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"FF" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/mob/living/carbon/monkey/angry,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3301,10 +3314,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "HK" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "HT" = (
@@ -3548,7 +3561,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "KP" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/machinery/door/window{
+	dir = 4;
+	req_access_txt = "68"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
 /mob/living/carbon/monkey/angry,
@@ -5080,7 +5097,7 @@ wd
 ed
 dB
 wF
-GP
+FF
 KP
 ZH
 Sr

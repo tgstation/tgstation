@@ -264,6 +264,15 @@
 /obj/structure/bed,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/medical/chapel)
+"asS" = (
+/obj/item/circuitboard/machine/stasis,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
+"asZ" = (
+/obj/structure/closet/wardrobe/white,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "atF" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/dark,
@@ -490,6 +499,13 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/atmospherics)
+"bBD" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 1;
+	stack_amt = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "bDx" = (
 /obj/item/chair/wood,
 /turf/open/floor/wood,
@@ -824,6 +840,12 @@
 	dir = 1
 	},
 /area/ruin/space/derelict2/medical/chapel)
+"cPK" = (
+/obj/structure/table/glass,
+/obj/item/storage/bag/trash,
+/obj/structure/bedsheetbin,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "cWu" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
@@ -904,8 +926,17 @@
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
 "dha" = (
+/obj/structure/closet,
+/obj/item/clothing/under/suit/black/skirt,
+/obj/item/clothing/under/suit/black_really,
 /obj/structure/window{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/arrival)
@@ -1221,6 +1252,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"eBc" = (
+/obj/structure/chair/office,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/arrival)
 "eCC" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/derelict2/medical/chapel)
@@ -1369,6 +1404,13 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/medical/chapel)
+"fav" = (
+/obj/structure/grille,
+/obj/structure/window{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "faK" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
@@ -1379,6 +1421,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/medical/chapel)
+"fgZ" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "fhf" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/gravity_generator)
@@ -1490,6 +1536,13 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/hallway/primary)
+"fNy" = (
+/obj/structure/grille,
+/obj/structure/window{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "fNJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
@@ -1691,6 +1744,13 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"gEV" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "gHN" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -1753,6 +1813,14 @@
 "gXU" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/storage/equipment)
+"gYF" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "derelictgarbage"
+	},
+/obj/machinery/recycler,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "gYZ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -1847,6 +1915,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"hpd" = (
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "hpt" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -1966,6 +2038,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/gravity_generator)
+"hVg" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/derelict2/arrival)
 "hVL" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
@@ -2117,6 +2196,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/gravity_generator)
+"itg" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "ivt" = (
 /obj/machinery/power/smes{
 	capacity = 9e+006;
@@ -2162,6 +2248,12 @@
 /area/ruin/space/derelict2/bridge)
 "iGw" = (
 /obj/machinery/washing_machine,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/arrival)
 "iGR" = (
@@ -2170,6 +2262,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical/chapel)
+"iHx" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "iKY" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -2181,6 +2277,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
+"iNw" = (
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	pixel_y = 28
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "iRp" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plating,
@@ -2194,6 +2298,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"iUH" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "iVG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2224,6 +2332,12 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/arrival)
 "jjm" = (
@@ -2405,6 +2519,10 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"kiN" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "kjg" = (
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/plasteel,
@@ -2465,9 +2583,26 @@
 "kwT" = (
 /turf/open/floor/carpet,
 /area/ruin/space/derelict2/arrival)
+"kyf" = (
+/obj/structure/closet/toolcloset,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "kzc" = (
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/gravity_generator)
+"kAY" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/arrival)
+"kDf" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/derelict2/arrival)
 "kDk" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
@@ -2515,6 +2650,10 @@
 /obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"kNc" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "kNs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2558,6 +2697,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"kYv" = (
+/obj/structure/table/glass,
+/obj/item/hemostat,
+/obj/item/stock_parts/manipulator,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "kYM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -2661,6 +2806,16 @@
 "lAM" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
+/area/ruin/space/derelict2/arrival)
+"lAU" = (
+/obj/structure/closet/wardrobe/green,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
+"lBD" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
 "lBM" = (
 /obj/structure/closet/crate,
@@ -2838,6 +2993,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/storage/equipment)
+"mlD" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/arrival)
 "mlL" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/derelict2/medical/chapel)
@@ -2872,6 +3031,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/gravity_generator)
+"msu" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/chair,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "msy" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel,
@@ -2909,6 +3074,11 @@
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"mGh" = (
+/obj/structure/closet/wardrobe/black,
+/obj/item/clothing/shoes/jackboots,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "mGM" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
@@ -2949,6 +3119,12 @@
 /obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"mSG" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict2/arrival)
 "mTs" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/medical)
@@ -3006,6 +3182,14 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table,
 /turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
+"njT" = (
+/obj/structure/grille,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window,
+/turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
 "nmQ" = (
 /obj/effect/turf_decal/delivery,
@@ -3235,12 +3419,24 @@
 /obj/machinery/door/airlock/virology,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/medical)
+"oCp" = (
+/obj/structure/grille,
+/obj/structure/window{
+	dir = 1
+	},
+/obj/structure/window,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "oDj" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"oFM" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "oHi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3315,6 +3511,7 @@
 /area/ruin/space/derelict2/gravity_generator)
 "oTB" = (
 /obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
 "oTL" = (
@@ -3363,6 +3560,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/bridge)
+"peX" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "pgk" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall,
@@ -3391,6 +3595,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/gravity_generator)
+"plK" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/derelict2/arrival)
 "poD" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -3454,6 +3664,13 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/gravity_generator)
+"pGP" = (
+/obj/structure/foamedmetal/resin,
+/obj/machinery/conveyor{
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "pJa" = (
 /obj/machinery/chem_heater,
 /obj/structure/window/reinforced{
@@ -3637,6 +3854,13 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/atmospherics)
+"qsG" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "qwf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3712,6 +3936,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"qQg" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/space/derelict2/arrival)
 "qQq" = (
 /obj/machinery/door/airlock/mining,
 /turf/open/floor/plasteel,
@@ -3758,6 +3991,12 @@
 "qYQ" = (
 /obj/machinery/door/airlock/engineering,
 /turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
+"qZL" = (
+/obj/structure/table/glass,
+/obj/item/restraints/handcuffs/cable/zipties,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plating,
 /area/ruin/space/derelict2/arrival)
 "qZM" = (
 /turf/open/floor/circuit,
@@ -3821,6 +4060,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"rqz" = (
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "rqT" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -3994,6 +4237,11 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
+"rXV" = (
+/obj/structure/grille,
+/obj/structure/window,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "rXW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -4059,6 +4307,10 @@
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/derelict2/medical)
+"ssX" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "std" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
@@ -4111,6 +4363,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/gravity_generator)
+"sCI" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "aux_base_shuttersderelict";
+	name = "Auxillary Base Shutters"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "sDn" = (
 /obj/structure/sink{
 	dir = 8;
@@ -4125,6 +4384,13 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/hallway/primary)
+"sFE" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "sHp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4134,6 +4400,10 @@
 "sIh" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/atmospherics)
+"sIv" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "sIF" = (
 /obj/machinery/stasis,
 /turf/open/floor/plasteel,
@@ -4304,6 +4574,10 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/supermatter_engine)
+"tmN" = (
+/obj/effect/spawner/randomsnackvend,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "tmR" = (
 /obj/machinery/door/airlock/mining/glass,
 /obj/structure/disposalpipe/segment{
@@ -4391,6 +4665,14 @@
 "tKv" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/bridge/ai_upload)
+"tLJ" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "derelictgarbage";
+	name = "disposal conveyor"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "tLN" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/atmospherics)
@@ -4508,6 +4790,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/gravity_generator)
+"usg" = (
+/obj/structure/closet/wardrobe/white,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "uun" = (
 /obj/machinery/pipedispenser/disposal/transit_tube,
 /turf/open/floor/plasteel,
@@ -4623,6 +4911,12 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict2/gravity_generator)
+"uLS" = (
+/obj/structure/table/optable{
+	name = "Robotics Operating Table"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "uLT" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -4774,6 +5068,12 @@
 "vIq" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
+"vJh" = (
+/obj/machinery/mineral/stacking_unit_console{
+	machinedir = 8
+	},
+/turf/closed/wall,
 /area/ruin/space/derelict2/arrival)
 "vJK" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -4929,6 +5229,16 @@
 /obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/bridge)
+"wBc" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "aux_base_shuttersderelict";
+	name = "Public Shutters Control";
+	pixel_x = 24;
+	req_one_access_txt = "72"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "wBT" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 4
@@ -5020,6 +5330,17 @@
 /obj/machinery/recharger,
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/bridge)
+"wSR" = (
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	pixel_y = 28
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/circuitboard/computer/operating,
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "wTE" = (
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel/dark,
@@ -5171,6 +5492,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/gravity_generator)
+"xKK" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "derelictgarbage"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict2/arrival)
 "xMi" = (
 /obj/structure/reflector/double/anchored{
 	dir = 6
@@ -5196,6 +5524,11 @@
 "xQp" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/bridge)
+"xSi" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "xUe" = (
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/arrival)
@@ -5511,7 +5844,7 @@ lpM
 lpM
 lpM
 lpM
-tSN
+kiN
 tSN
 tSN
 kIl
@@ -5525,7 +5858,7 @@ yll
 yll
 yll
 kIl
-tSN
+kiN
 tSN
 tSN
 kIl
@@ -6274,7 +6607,7 @@ lpM
 ckO
 rVk
 rVk
-rVk
+oFM
 psX
 yll
 yll
@@ -6284,7 +6617,7 @@ yll
 yll
 yll
 psX
-rVk
+tmN
 rVk
 rVk
 cny
@@ -6298,7 +6631,7 @@ psX
 ckO
 rVk
 rVk
-rVk
+oFM
 psX
 yll
 yll
@@ -6426,7 +6759,7 @@ lpM
 ckO
 rVk
 rVk
-rVk
+oFM
 psX
 yll
 yll
@@ -6450,7 +6783,7 @@ psX
 ckO
 rVk
 rVk
-rVk
+oFM
 psX
 yll
 yll
@@ -6588,7 +6921,7 @@ yll
 yll
 yll
 psX
-rVk
+oFM
 rVk
 rVk
 cny
@@ -6602,7 +6935,7 @@ psX
 ckO
 rVk
 rVk
-rVk
+tmN
 psX
 yll
 yll
@@ -6730,7 +7063,7 @@ lpM
 ckO
 rVk
 rVk
-rVk
+ogx
 psX
 yll
 yll
@@ -6740,7 +7073,7 @@ yll
 yll
 yll
 psX
-rVk
+oFM
 rVk
 rVk
 cny
@@ -6754,7 +7087,7 @@ psX
 ckO
 rVk
 rVk
-rVk
+pJM
 psX
 yll
 yll
@@ -7175,14 +7508,14 @@ yll
 yll
 yll
 lpM
+kyf
 rVk
 rVk
 rVk
 rVk
 rVk
 rVk
-rVk
-rVk
+sCI
 rVk
 rVk
 psX
@@ -7327,14 +7660,14 @@ yll
 yll
 yll
 psX
+kyf
 rVk
 rVk
 rVk
 rVk
 rVk
 rVk
-rVk
-rVk
+qYQ
 rVk
 rVk
 rVk
@@ -7479,13 +7812,13 @@ yll
 yll
 yll
 lpM
-rVk
-rVk
-rVk
-rVk
-rVk
-rVk
-rVk
+hIM
+oPq
+oPq
+msy
+hIy
+hIy
+wBc
 lpM
 rVk
 rVk
@@ -7505,15 +7838,15 @@ rVk
 rVk
 rVk
 lpM
-rVk
+oFM
 psX
 lOo
 psX
-rVk
+oFM
 lpM
 ckO
 rVk
-rVk
+lBD
 kIl
 yll
 yll
@@ -7665,7 +7998,7 @@ rVk
 rVk
 rVk
 rVk
-rVk
+lBD
 kIl
 yll
 yll
@@ -7817,7 +8150,7 @@ rVk
 rVk
 rVk
 rVk
-rVk
+lBD
 lpM
 yll
 yll
@@ -8117,17 +8450,17 @@ xUe
 xUe
 xUe
 xUe
-xUe
+aaN
 lpM
 cBp
 rzU
 ybi
-tSN
-aaC
-aaC
-aaC
-aaC
-aaC
+sFE
+pGP
+pGP
+pGP
+pGP
+pGP
 yll
 yll
 yll
@@ -8265,20 +8598,20 @@ rzj
 rVk
 rVk
 lpM
+kAY
+aaN
 xUe
-xUe
-xUe
-xUe
-xUe
+eBc
+aaN
 lpM
 ksy
 lpM
-tSN
-tSN
+peX
+xKK
 lpM
-aaC
+psX
 lpM
-aaC
+psX
 psX
 yll
 yll
@@ -8392,19 +8725,19 @@ yll
 yll
 yll
 lpM
-rVk
-rVk
+hIy
+kNc
 lpM
 tSN
 lpM
+rqz
 tSN
-tSN
-tSN
-tSN
+iHx
+usg
 lpM
 tSN
 lpM
-rVk
+fmx
 rVk
 hIy
 psX
@@ -8417,20 +8750,20 @@ ufY
 rVk
 rVk
 lpM
-xUe
-xUe
+aaN
+aaN
 kwT
 kwT
-xUe
+aaN
 lpM
 ksy
 lpM
-tSN
-tSN
+peX
+xKK
 fUM
 fzU
-aaC
-aaC
+tSN
+tLJ
 psX
 yll
 yll
@@ -8549,14 +8882,14 @@ tSN
 lpM
 tSN
 lpM
-tSN
-tSN
+iNw
+asS
 tSN
 tSN
 lpM
 tSN
 lpM
-rVk
+fmx
 rVk
 rVk
 mfy
@@ -8577,12 +8910,12 @@ xUe
 lpM
 ksy
 lpM
-tSN
-tSN
-tSN
+gYF
+xKK
+xKK
 ksy
 tSN
-aaC
+tSN
 psX
 yll
 yll
@@ -8701,16 +9034,16 @@ tSN
 fwV
 tSN
 lpM
+sIv
+uLS
 tSN
-tSN
-tSN
-tSN
+iUH
 lpM
 tSN
 lpM
+fmx
 rVk
-rVk
-hIy
+qsG
 psX
 rVk
 rVk
@@ -8721,17 +9054,17 @@ aVF
 rVk
 rVk
 lpM
-xUe
-xUe
+aaN
+aaN
 kwT
 kwT
 xUe
 lpM
 ksy
 lpM
-tSN
-tSN
-tSN
+gEV
+itg
+bBD
 ksy
 tSN
 tSN
@@ -8853,10 +9186,10 @@ tSN
 lpM
 tSN
 lpM
+wSR
 tSN
 tSN
-tSN
-tSN
+kYv
 lpM
 tSN
 fwV
@@ -8873,20 +9206,20 @@ lpM
 rVk
 rVk
 lpM
-xUe
-xUe
+mSG
+aaN
 kwT
 kwT
-xUe
+aaN
 lpM
 ksy
 lpM
 lpM
 lpM
-lpM
+vJh
 ksy
 tSN
-tSN
+hpd
 lpM
 yll
 yll
@@ -9005,10 +9338,10 @@ tSN
 lpM
 tSN
 lpM
+msu
 tSN
-tSN
-tSN
-tSN
+cPK
+qZL
 lpM
 lpM
 lpM
@@ -9028,8 +9361,8 @@ lpM
 xUe
 xUe
 xUe
-xUe
-xUe
+eBc
+aaN
 lpM
 dbG
 uBz
@@ -9177,11 +9510,11 @@ rVk
 rVk
 rVk
 lpM
+aaN
+aaN
+mlD
 xUe
-xUe
-xUe
-xUe
-xUe
+aaN
 lpM
 tSN
 lpM
@@ -9482,12 +9815,12 @@ lpM
 lpM
 lpM
 tSN
+njT
 tSN
 tSN
 tSN
 tSN
-tSN
-tSN
+mQM
 lpM
 ksy
 tSN
@@ -9630,11 +9963,11 @@ rVk
 fug
 rVk
 lpM
+hpd
 tSN
 tSN
 tSN
-tSN
-tSN
+fav
 tSN
 tSN
 tSN
@@ -10092,13 +10425,13 @@ lpM
 lpM
 lpM
 lpM
-biT
+plK
 lpM
-biT
+plK
 lpM
-biT
+plK
 lpM
-biT
+plK
 lpM
 ksy
 kIl
@@ -10238,11 +10571,11 @@ rVk
 fug
 hoV
 lpM
-rVk
-rVk
-rVk
-rVk
-rVk
+asZ
+ssX
+lAU
+fgZ
+mGh
 lpM
 rDI
 lpM
@@ -10549,12 +10882,12 @@ rVk
 rVk
 rDI
 biT
+hVg
+hVg
+hVg
+hVg
 biT
-biT
-biT
-biT
-biT
-biT
+kDf
 lpM
 ksy
 kIl
@@ -10853,13 +11186,13 @@ hIy
 rVk
 uje
 jgH
-cwO
+qQg
 iGw
 lpM
 tSN
 lpM
 tSN
-tSN
+fNy
 ksy
 lpM
 yll
@@ -11004,14 +11337,14 @@ hIy
 hIy
 rVk
 hoV
-cwO
-cwO
+qQg
+qQg
 iGw
 lpM
-tSN
+hpd
 lpM
 tSN
-tSN
+oCp
 ksy
 lpM
 psX
@@ -11157,13 +11490,13 @@ nfm
 oPv
 nXm
 dha
-cwO
+qQg
 iGw
 lpM
 tSN
 lpM
 tSN
-tSN
+rXV
 ksy
 lpM
 rVk
@@ -11612,10 +11945,10 @@ rVk
 rVk
 rVk
 rVk
-oTB
-oTB
-oTB
-oTB
+xSi
+xSi
+xSi
+xSi
 lpM
 tSN
 ksy
@@ -12526,8 +12859,8 @@ ksy
 lpM
 rVk
 rVk
-rVk
-rVk
+msy
+msy
 rVk
 rVk
 rVk
@@ -12834,7 +13167,7 @@ rVk
 rVk
 rVk
 rVk
-rVk
+msy
 lpM
 rVk
 rVk
@@ -12981,12 +13314,12 @@ lpM
 ksy
 fwV
 rVk
+msy
+msy
 rVk
 rVk
 rVk
-rVk
-rVk
-rVk
+msy
 lpM
 lpM
 psX
@@ -13738,8 +14071,8 @@ lpM
 lpM
 lpM
 lpM
-tSN
-rVk
+mQM
+msy
 rVk
 hoV
 agw

@@ -854,10 +854,9 @@
 /area/maintenance/central)
 "ev" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/spear,
-/obj/effect/mob_spawn/human/corpse/assistant,
-/turf/open/floor/plating/asteroid/lowpressure,
-/area/maintenance/central)
+/obj/machinery/rnd/bepis,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "ew" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless{
@@ -2582,11 +2581,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
-"nD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
-/turf/open/floor/plating/asteroid/lowpressure,
-/area/maintenance/central)
 "nE" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/structure/window/reinforced{
@@ -2953,7 +2947,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "pv" = (
@@ -4505,11 +4498,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"wM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/assistant,
-/turf/open/floor/plating/asteroid/lowpressure,
-/area/maintenance/central)
 "wN" = (
 /obj/effect/decal/remains/xeno,
 /obj/effect/decal/cleanable/xenoblood,
@@ -26078,7 +26066,7 @@ bJ
 OO
 aX
 aX
-ev
+MB
 aX
 aX
 bU
@@ -26337,7 +26325,7 @@ aX
 aX
 aX
 FM
-nD
+aX
 aX
 yh
 OO
@@ -27107,7 +27095,7 @@ yh
 MB
 aX
 aX
-wM
+aX
 wU
 aX
 aX
@@ -32724,7 +32712,7 @@ Xr
 Xr
 Xr
 Xr
-Xr
+ev
 ac
 Fv
 aG
