@@ -1877,6 +1877,8 @@
 	dir = 4
 	},
 /obj/machinery/vending/assist,
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "aYo" = (
@@ -4341,6 +4343,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"cCW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/aft)
 "cDj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -11382,6 +11395,10 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/aft)
 "gPv" = (
@@ -13929,6 +13946,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "iwr" = (
+/obj/machinery/light,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/maintenance/aft)
 "iwv" = (
@@ -69257,7 +69275,7 @@ pHV
 hwF
 gqN
 lzh
-pBH
+cCW
 pBH
 pBH
 tOJ
