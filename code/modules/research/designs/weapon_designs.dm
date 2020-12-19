@@ -155,16 +155,6 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/rapidsyringe
-	name = "Rapid Syringe Gun"
-	desc = "A gun that fires many syringes."
-	id = "rapidsyringe"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
-	build_path = /obj/item/gun/syringe/rapidsyringe
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL		//uwu
-
 /datum/design/temp_gun
 	name = "Temperature Gun"
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want

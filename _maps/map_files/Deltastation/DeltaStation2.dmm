@@ -77238,7 +77238,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
@@ -89488,7 +89487,6 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /obj/machinery/light{
 	dir = 4

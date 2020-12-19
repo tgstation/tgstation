@@ -1,7 +1,7 @@
 /obj/item/gun/syringe
-	name = "syringe gun"
-	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon_state = "syringegun"
+	name = "rapid syringe gun"
+	desc = "A highly advanced syringe gun design, using a rotating cylinder to store up to six syringes."
+	icon_state = "rapidsyringegun"
 	inhand_icon_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
@@ -12,8 +12,10 @@
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
-	var/max_syringes = 1 ///The number of syringes it can store.
-	var/has_syringe_overlay = TRUE ///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	///The number of syringes it can store.
+	var/max_syringes = 6
+	///If it has an overlay for inserted syringes. If true, the overlay is determined by the number of syringes inserted into it.
+	var/has_syringe_overlay = TRUE
 
 /obj/item/gun/syringe/Initialize()
 	. = ..()
@@ -81,15 +83,9 @@
 	var/syringe_count = syringes.len
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
-/obj/item/gun/syringe/rapidsyringe
-	name = "rapid syringe gun"
-	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
-	icon_state = "rapidsyringegun"
-	max_syringes = 6
-
 /obj/item/gun/syringe/syndicate
 	name = "dart pistol"
-	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	desc = "A small spring-loaded sidearm that functions as a single shot syringe gun."
 	icon_state = "syringe_pistol"
 	inhand_icon_state = "gun" //Smaller inhand
 	w_class = WEIGHT_CLASS_SMALL
@@ -97,6 +93,7 @@
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
 	syringes = list(new /obj/item/reagent_containers/syringe())
+	max_syringes = 1
 
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"

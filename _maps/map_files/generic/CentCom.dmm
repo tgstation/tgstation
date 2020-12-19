@@ -12712,7 +12712,7 @@
 "CE" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe/rapidsyringe,
+/obj/item/gun/syringe,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},

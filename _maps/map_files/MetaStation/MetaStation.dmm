@@ -47406,8 +47406,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe,
-/obj/item/gun/syringe,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "cml" = (

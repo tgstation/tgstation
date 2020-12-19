@@ -50831,8 +50831,6 @@
 	},
 /obj/item/storage/box/rxglasses,
 /obj/item/hand_labeler,
-/obj/item/gun/syringe,
-/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "jib" = (
