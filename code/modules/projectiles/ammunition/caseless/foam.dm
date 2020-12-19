@@ -1,10 +1,11 @@
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
-	desc = "It's nerf or nothing! Ages 8 and up."
+	desc = "It's Donk or Don't! Ages 8 and up."
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
+	base_icon_state = "foamdart"
 	custom_materials = list(/datum/material/iron = 11.25)
 	harmful = FALSE
 	var/modified = FALSE
@@ -20,7 +21,7 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/update_desc()
 	. = ..()
-	desc = "It's nerf or nothing! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
+	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/projectile/bullet/reusable/foam_dart/FD = BB

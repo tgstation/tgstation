@@ -1,9 +1,11 @@
-/mob/living/carbon/Initialize()
+/mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
+		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1311,3 +1313,6 @@
 		return
 
 	return ..()
+
+/mob/living/carbon/proc/attach_rot(mapload)
+	AddComponent(/datum/component/rot/corpse)

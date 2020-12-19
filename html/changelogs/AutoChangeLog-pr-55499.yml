@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "On Kilo Station all service jobs have access to the service lathe hallway and room again."
