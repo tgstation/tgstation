@@ -564,3 +564,6 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Vox voice blacklist. Find values at code/globalvars/lists/vox.dm for characters.
+#VOX_VOICE_BLACKLIST sans

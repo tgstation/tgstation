@@ -2411,6 +2411,7 @@
 #include "code\modules\mob\living\silicon\ai\multicam.dm"
 #include "code\modules\mob\living\silicon\ai\robot_control.dm"
 #include "code\modules\mob\living\silicon\ai\vox_sounds.dm"
+#include "code\modules\mob\living\silicon\ai\vox_voices.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\cameranet.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\chunk.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\eye.dm"

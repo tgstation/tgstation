@@ -6,10 +6,12 @@
 	var/body
 	var/headers
 	var/url
+	var/options
+	var/raw_data = FALSE
 
 	var/_raw_response
 
-/datum/http_request/proc/prepare(method, url, body = "", list/headers)
+/datum/http_request/proc/prepare(method, url, body = "", list/headers, options)
 	if (!length(headers))
 		headers = ""
 	else
@@ -19,15 +21,16 @@
 	src.url = url
 	src.body = body
 	src.headers = headers
+	src.options = options
 
 /datum/http_request/proc/execute_blocking()
-	_raw_response = rustg_http_request_blocking(method, url, body, headers)
+	_raw_response = rustg_http_request_blocking(method, url, body, headers, options)
 
 /datum/http_request/proc/begin_async()
 	if (in_progress)
 		CRASH("Attempted to re-use a request object.")
 
-	id = rustg_http_request_async(method, url, body, headers)
+	id = rustg_http_request_async(method, url, body, headers, options)
 
 	if (isnull(text2num(id)))
 		stack_trace("Proc error: [id]")

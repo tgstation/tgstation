@@ -49,51 +49,23 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-#define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
-
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
-
-	if(incapacitated())
-		return
-
-	var/dat = {"
-	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
-	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
-	<UL><LI>You can also click on the word to PREVIEW it.</LI>
-	<LI>You can only say 30 words for every announcement.</LI>
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
-	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
-	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
-	"}
-
-	var/index = 0
-	for(var/word in GLOB.vox_sounds)
-		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
-			dat += " / "
-
-	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
-	popup.set_content(dat)
-	popup.open()
-
-
+#define VOX_DELAY 300
 /mob/living/silicon/ai/proc/announcement()
-	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
-
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
+	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_blacklist)
+	var/list/usable_characters = GLOB.available_vox_voices.Copy()
+	for(var/B in banned_characters)
+		usable_characters -= GLOB.vox_config_translator[B]
+	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in usable_characters
+	if(!character_to_use)
+		return
+	var/max_characters = 300 // magic number but its the cap 15 allows
+	var/message = input(src, "Use the power of 15.ai to say anything! ([max_characters] character maximum)", "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
-
-	last_announcement = message
 
 	if(incapacitated())
 		return
@@ -102,55 +74,78 @@
 		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
-	var/list/words = splittext(trim(message), " ")
-	var/list/incorrect_words = list()
-
-	if(words.len > 30)
-		words.len = 30
-
-	for(var/word in words)
-		word = lowertext(trim(word))
-		if(!word)
-			words -= word
-			continue
-		if(!GLOB.vox_sounds[word])
-			incorrect_words += word
-
-	if(incorrect_words.len)
-		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
+	if(length(message) > max_characters)
+		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to [max_characters] or lower.</span>")
 		return
+	var/regex/check_for_bad_chars = regex("\[^a-zA-Z!?.,' :\]+")
+	if(check_for_bad_chars.Find(message))
+		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.group)].</span>")
+		return
+	last_announcement = message
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
-	log_talk(message, LOG_SAY, tag="VOX Announcement")
-
-	for(var/word in words)
-		play_vox_word(word, src.z, null)
+	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
+	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
+	play_vox_word(message, character_to_use, src, src.z, null)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(message, character, mob/living/silicon/ai/speaker, z_level, mob/only_listener)
+	var/api_url = "https://api.15.ai/app/getAudioFile"
+	var/static/vox_voice_number = 0
+	var/datum/http_request/req = new()
+	vox_voice_number++
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"Contextual\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_[vox_voice_number].wav")))
+	req.begin_async()
+	UNTIL(req.is_complete())
+	var/datum/http_response/res = req.into_response()
+	if(res.status_code == 200)
+		var/full_name_file = "data/vox_[vox_voice_number].wav"
+		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -vn -y ./data/vox_[vox_voice_number].mp3")
+		if (!istype(SSassets.transport, /datum/asset_transport/webroot))
+			log_game("CDN not set up, VOX aborted.")
+			message_admins("CDN not set up, VOX aborted.")
+			fdel("data/vox_[vox_voice_number].wav")
+			fdel("data/vox_[vox_voice_number].mp3")
+			return
+		var/datum/asset_transport/webroot/WR = SSassets.transport
+		var/shit_fuck_ass = "data/vox_[vox_voice_number].mp3"
+		var/datum/asset_cache_item/ACI = new("[md5filepath(shit_fuck_ass)].mp3", file("data/vox_[vox_voice_number].mp3"))
+		ACI.namespace = "15aivox"
+		WR.save_asset_to_webroot(ACI)
+		var/url = WR.get_asset_url(null, ACI)
 
-	word = lowertext(word)
-
-	if(GLOB.vox_sounds[word])
-
-		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
-		voice.status = SOUND_STREAM
-
-	// If there is no single listener, broadcast to everyone in the same z level
+		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
+		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
+		speaker.say(";[message]")
+ 		// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
-					var/turf/T = get_turf(M)
-					if(T.z == z_level)
-						SEND_SOUND(M, voice)
+				var/turf/T = get_turf(M)
+				if(T.z == z_level && M.can_hear())
+					to_chat(M, "<audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>")
 		else
-			SEND_SOUND(only_listener, voice)
-		return TRUE
-	return FALSE
+			to_chat(only_listener, "<audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>")
+		fdel("data/vox_[vox_voice_number].wav")
+		fdel("data/vox_[vox_voice_number].mp3")
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/delete_vox_statement, "[CONFIG_GET(string/asset_cdn_webroot)][WR.get_asset_suffex(ACI)]"), 30 SECONDS)
+		return 1
+	else
+		if(!res.status_code)
+			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+		else
+			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+		to_chat(speaker, "The speech synthesizer failed to return audio. Your speech cooldown has been reset. Please try again.")
+		fdel("data/vox_[vox_voice_number].wav")
+		fdel("data/vox_[vox_voice_number].mp3")
+		speaker.announcing_vox = world.time
+	return 0
+
+/proc/delete_vox_statement(string)
+	fdel(string)
 
 #undef VOX_DELAY
 #endif
