@@ -1,6 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "The griddle no longer leaves null objects in the griddle, causing it to seem full"
-  - bugfix: "Bonfires can now be used as ghetto griddles just like with normal grills"
-  - bugfix: "You can now deconstruct griddles"
