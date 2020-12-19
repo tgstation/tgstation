@@ -49276,9 +49276,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"dVy" = (
-/turf/open/floor/plasteel,
-/area/maintenance/port/fore)
 "dWG" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -49691,6 +49688,9 @@
 /obj/item/assembly/mousetrap,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"fEx" = (
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "fGg" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -50838,16 +50838,6 @@
 /obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
-"jhe" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/port/fore)
 "jib" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -55273,6 +55263,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"tZy" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "ubj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -75429,7 +75429,7 @@ atU
 amC
 atJ
 alU
-jhe
+tZy
 aBQ
 aDn
 aDo
@@ -75685,8 +75685,8 @@ alU
 aqO
 amC
 atJ
-dVy
-jhe
+fEx
+tZy
 aBQ
 aDm
 aDo
@@ -75942,7 +75942,7 @@ alU
 alU
 amC
 alU
-dVy
+fEx
 asK
 aBQ
 aDp
