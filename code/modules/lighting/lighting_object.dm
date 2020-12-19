@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
+	vis_flags = VIS_INHERIT_LAYER
 
 	var/needs_update = FALSE
 	var/turf/myturf
