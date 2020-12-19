@@ -21,6 +21,7 @@
 	cart_griddle = new(src)
 	cart_smartfridge = new(src)
 	cart_table = new(src)
+	cart_tent = new(src)
 	packed_things = list(cart_table, cart_smartfridge, cart_tent, cart_griddle) //middle, left, left, right
 	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
 	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
@@ -131,3 +132,4 @@
 	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "stand"
+	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool
