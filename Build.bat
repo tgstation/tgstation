@@ -1,2 +1,2 @@
-@tools\build\build
+@call tools\build\build
 @pause
