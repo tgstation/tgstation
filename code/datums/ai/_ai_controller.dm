@@ -10,7 +10,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/ai_traits
 	///Current actions being performed by the AI.
 	var/list/current_behaviors = list()
-	///Current status of AI (OFF/ON/IDLE)
+	///Current status of AI (OFF/ON	)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
@@ -20,19 +20,21 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/list/blackboard = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/pathing_attempts
+	///Can the AI remain in control if there is a client?
+	var/continue_processing_when_client = FALSE
 
 /datum/ai_controller/New(atom/new_pawn)
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
-	UnpossessPawn()
+	UnpossessPawn(FALSE)
 	return ..()
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
 	if(pawn) //Reset any old signals
-		UnpossessPawn()
+		UnpossessPawn(FALSE)
 
 	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
 		QDEL_NULL(new_pawn.ai_controller)
@@ -44,7 +46,14 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	pawn = new_pawn
 	pawn.ai_controller = src
 
-	set_ai_status(AI_STATUS_ON)
+	if(!continue_processing_when_client && istype(new_pawn, /mob))
+		var/mob/possible_client_holder = new_pawn
+		if(possible_client_holder.client)
+			set_ai_status(AI_STATUS_OFF)
+		else
+			set_ai_status(AI_STATUS_ON)
+	else
+		set_ai_status(AI_STATUS_ON)
 
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
 
@@ -53,10 +62,12 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	return
 
 ///Proc for deinitializing the pawn to the old controller
-/datum/ai_controller/proc/UnpossessPawn()
+/datum/ai_controller/proc/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
 	pawn.ai_controller = null
 	pawn = null
+	if(destroy)
+		qdel(src)
 	return
 
 ///Returns TRUE if the ai controller can actually run at the moment.
@@ -128,7 +139,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 /datum/ai_controller/proc/on_sentience_gained()
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
-	set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
+	if(!continue_processing_when_client)
+		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, .proc/on_sentience_lost)
 
 /datum/ai_controller/proc/on_sentience_lost()
