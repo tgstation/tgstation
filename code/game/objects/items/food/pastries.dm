@@ -634,7 +634,6 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-
 /obj/item/food/cookie/sugar
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -642,6 +641,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6)
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+
+/obj/item/food/cookie/sugar/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[FESTIVE_SEASON])
+		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
+		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
+		icon_state = "sugarcookie_[shape]"
 
 /obj/item/food/chococornet
 	name = "chocolate cornet"

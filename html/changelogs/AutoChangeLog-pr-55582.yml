@@ -1,4 +1,0 @@
-author: "NotRanged"
-delete-after: True
-changes: 
-  - bugfix: "Blob announcement timer now starts upon placing the core as intended, instead of upon spawning of the camera."
