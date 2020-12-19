@@ -98,6 +98,7 @@
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
+	max_syringes = 1
 
 /obj/item/gun/syringe/dna/Initialize()
 	. = ..()
@@ -127,6 +128,7 @@
 	inhand_icon_state = "blowgun"
 	has_syringe_overlay = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
+	max_syringes = 1
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message("<span class='danger'>[user] starts aiming with a blowgun!</span>")
