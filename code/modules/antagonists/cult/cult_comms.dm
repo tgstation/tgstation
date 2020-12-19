@@ -456,7 +456,7 @@
 			if(distance >= 16)
 				return
 			playsound(target,'sound/magic/exit_blood.ogg')
-			attached_action.throwee.Beam(target,icon_state="sendbeam",time=4)
+			attached_action.throwee.Beam(target,icon_state="sendbeam", time = 4)
 			attached_action.throwee.forceMove(get_turf(target))
 			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
 			attached_action.throwing = FALSE

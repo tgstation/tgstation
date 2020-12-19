@@ -60,6 +60,8 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	if(mapload) //Don't rot at roundstart for the love of god
+		return
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else

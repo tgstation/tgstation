@@ -1,5 +1,0 @@
-author: "Son of Space"
-delete-after: True
-changes: 
-  - tweak: "Gives the DonutStation Whiteship a few more materials"
-  - bugfix: "Adds bounds to the DonutStation Whiteship and a PacMan to power it"
