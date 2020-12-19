@@ -747,6 +747,7 @@
 		icon_state = "rawccpancakes_1"
 		inhand_icon_state = "rawccpancakes"
 	if(newresult)
+		qdel(garnish)
 		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
 		grill_comp.cook_result = newresult
 
