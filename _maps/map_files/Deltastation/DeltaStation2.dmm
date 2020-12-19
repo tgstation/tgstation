@@ -30198,7 +30198,9 @@
 /area/crew_quarters/kitchen)
 "bly" = (
 /obj/machinery/light,
-/obj/machinery/processor,
+/obj/machinery/processor{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
@@ -79426,7 +79428,9 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "daB" = (
-/obj/machinery/processor/slime,
+/obj/machinery/processor/slime{
+	dir = 4
+	},
 /obj/machinery/light{
 	dir = 8
 	},

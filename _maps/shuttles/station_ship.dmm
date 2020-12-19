@@ -4414,7 +4414,7 @@
 	id = "tcommsat"
 	},
 /obj/machinery/spaceship_navigation_beacon{
-	pixel_y = 17
+	pixel_y = 19
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium,
@@ -4427,7 +4427,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/machinery/processor,
+/obj/machinery/processor{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "XW" = (

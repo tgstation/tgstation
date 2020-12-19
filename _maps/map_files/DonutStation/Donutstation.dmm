@@ -5564,7 +5564,7 @@
 "anv" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
+	pixel_x = 2;
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -15716,7 +15716,9 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/cmo)
 "aKe" = (
-/obj/machinery/processor/slime,
+/obj/machinery/processor/slime{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -15916,7 +15918,7 @@
 "aKF" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
+	pixel_x = 2;
 	pixel_y = 6
 	},
 /obj/machinery/light{
@@ -27897,7 +27899,9 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/aft)
 "blm" = (
-/obj/machinery/processor,
+/obj/machinery/processor{
+	dir = 8
+	},
 /obj/machinery/requests_console{
 	department = "Kitchen";
 	departmentType = 2;

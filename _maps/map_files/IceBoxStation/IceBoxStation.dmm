@@ -18964,7 +18964,6 @@
 	},
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -27883,7 +27882,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bmX" = (
-/obj/machinery/processor,
+/obj/machinery/processor{
+	dir = 8
+	},
 /obj/machinery/button/door{
 	id = "kitchenhydro";
 	name = "Service Shutter Control";
@@ -53124,7 +53125,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "nIQ" = (
-/obj/machinery/processor/slime,
+/obj/machinery/processor/slime{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "nLm" = (

@@ -35997,7 +35997,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/processor/slime,
+/obj/machinery/processor/slime{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bfe" = (
@@ -42362,9 +42364,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/microwave{
-	pixel_y = 5
-	},
+/obj/machinery/microwave,
 /obj/machinery/light{
 	dir = 1
 	},

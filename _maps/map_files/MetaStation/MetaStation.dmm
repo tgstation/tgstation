@@ -35159,6 +35159,7 @@
 	dir = 1
 	},
 /obj/machinery/processor{
+	dir = 1;
 	pixel_y = 12
 	},
 /obj/effect/turf_decal/bot,
@@ -59179,7 +59180,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/processor/slime,
+/obj/machinery/processor/slime{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
