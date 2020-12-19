@@ -49276,6 +49276,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"dVy" = (
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "dWG" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -50835,6 +50838,16 @@
 /obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"jhe" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "jib" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -54170,9 +54183,6 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
-"qIn" = (
-/turf/open/floor/plasteel,
-/area/maintenance/port/fore)
 "qMc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -55774,16 +55784,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
-"vqf" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/port/fore)
 "vqI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -75429,7 +75429,7 @@ atU
 amC
 atJ
 alU
-vqf
+jhe
 aBQ
 aDn
 aDo
@@ -75685,8 +75685,8 @@ alU
 aqO
 amC
 atJ
-qIn
-vqf
+dVy
+jhe
 aBQ
 aDm
 aDo
@@ -75942,7 +75942,7 @@ alU
 alU
 amC
 alU
-qIn
+dVy
 asK
 aBQ
 aDp
