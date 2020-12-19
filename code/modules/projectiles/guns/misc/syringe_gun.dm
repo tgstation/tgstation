@@ -98,6 +98,7 @@
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
+	icon_state = "syringegun"
 	max_syringes = 1
 
 /obj/item/gun/syringe/dna/Initialize()
