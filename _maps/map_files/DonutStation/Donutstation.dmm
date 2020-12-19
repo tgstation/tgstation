@@ -14725,10 +14725,7 @@
 /area/medical/pharmacy)
 "aHK" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
+/obj/machinery/microwave,
 /obj/machinery/camera{
 	c_tag = "Medical - Virology Backroom";
 	network = list("ss13","Medical")
