@@ -54170,6 +54170,9 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
+"qIn" = (
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "qMc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -55771,6 +55774,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
+"vqf" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "vqI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -72595,7 +72608,7 @@ aqH
 asc
 aAQ
 azF
-azF
+aAQ
 azF
 aLD
 atR
@@ -74646,7 +74659,7 @@ amC
 ayx
 alU
 aAL
-aBQ
+aDo
 aDb
 aDo
 aFY
@@ -75160,7 +75173,7 @@ axj
 alU
 alU
 asK
-aBQ
+aDo
 aDk
 aDo
 asZ
@@ -75416,7 +75429,7 @@ atU
 amC
 atJ
 alU
-asK
+vqf
 aBQ
 aDn
 aDo
@@ -75672,8 +75685,8 @@ alU
 aqO
 amC
 atJ
-alU
-asK
+qIn
+vqf
 aBQ
 aDm
 aDo
@@ -75929,7 +75942,7 @@ alU
 alU
 amC
 alU
-alU
+qIn
 asK
 aBQ
 aDp
