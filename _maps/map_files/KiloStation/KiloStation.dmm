@@ -55664,8 +55664,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = "64";
-	req_one_access_txt = null
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55692,15 +55692,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"bJU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office";
-	req_access_txt = "64";
-	req_one_access_txt = null
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "bJV" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -70974,7 +70965,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "security maintenance";
-	req_access_txt = "1"
+	req_access_txt = "1;4"
 	},
 /obj/structure/sign/directions/evac{
 	pixel_y = -24
@@ -111105,7 +111096,7 @@ cxJ
 agS
 agS
 bJS
-bJU
+bCv
 agS
 cmP
 cub
