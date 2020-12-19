@@ -46,7 +46,7 @@
 	uniform = /obj/item/clothing/under/misc/adminsuit
 	suit = /obj/item/clothing/suit/armor/vest/debug
 	glasses = /obj/item/clothing/glasses/debug
-	ears = /obj/item/radio/headset/headset_cent
+	ears = /obj/item/radio/headset/headset_cent/alt/bst
 	mask = null
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	belt = /obj/item/storage/belt/utility/chief/full/debug
@@ -70,7 +70,7 @@
 	uniform = /obj/item/clothing/under/misc/adminsuit
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/debug
 	glasses = /obj/item/clothing/glasses/debug
-	ears = /obj/item/radio/headset/headset_cent
+	ears = /obj/item/radio/headset/headset_cent/alt/bst
 	mask = /obj/item/clothing/mask/nobreath
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	belt = /obj/item/storage/belt/utility/chief/full/debug
