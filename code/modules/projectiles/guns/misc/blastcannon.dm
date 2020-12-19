@@ -64,18 +64,19 @@
 	. = ..()
 	icon_state = bomb ? icon_state_loaded : initial(icon_state)
 
-/obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/_bomb, mob/user)
-	if(!istype(_bomb))
+/obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
+	if(!istype(bomb_to_attach))
 		return ..()
 
-	if(!_bomb.tank_one || !_bomb.tank_two)
+	if(!bomb_to_attach.tank_one || !bomb_to_attach.tank_two)
 		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 		return FALSE
-	if(!user.transferItemToLoc(_bomb, src))
-		to_chat(user, "<span class='warning'>[_bomb] seems to be stuck to your hand!</span>")
+	if(!user.transferItemToLoc(bomb_to_attach, src))
+		to_chat(user, "<span class='warning'>[bomb_to_attach] seems to be stuck to your hand!</span>")
 		return FALSE
-	user.visible_message("<span class='warning'>[user] attaches [_bomb] to [src]!</span>")
-	bomb = _bomb
+
+	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
+	bomb = bomb_to_attach
 	name = "blast cannon"
 	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 	update_icon()
