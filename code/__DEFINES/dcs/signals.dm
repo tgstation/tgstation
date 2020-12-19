@@ -751,12 +751,11 @@
 
 //NTnet
 
-///called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
-///called on an object by its NTNET connection component on receive. (datum/netdata))
+///called on an object by its NTNET connection component on receive. (data(datum/netdata))
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
 ///called on an object by its NTNET connection component on a port update (hardware_id, port))
 #define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
-/// called when packet was accepted by the target (datum/netdata)
+/// called when packet was accepted by the target (datum/netdata, error_code)
 #define COMSIG_COMPONENT_NTNET_ACK "ntnet_ack"
 /// called when packet was not acknoledged by the target (datum/netdata, error_code)
 #define COMSIG_COMPONENT_NTNET_NAK "ntnet_nack"

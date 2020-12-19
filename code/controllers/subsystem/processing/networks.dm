@@ -51,11 +51,11 @@ SUBSYSTEM_DEF(networks)
 /// You shouldn't need to do this.  But mapping is async and there is no guarantee that Initialize
 /// will run before these networks are dynamically created.  So its here.
 /datum/controller/subsystem/networks/PreInit()
-	// Limbo network needs to be made at boot up for all error devices
+	/// Limbo network needs to be made at boot up for all error devices
 	new/datum/ntnet(LIMBO_NETWORK_ROOT)
 	station_network = new(STATION_NETWORK_ROOT)
 	syndie_network = new(SYNDICATE_NETWORK_ROOT)
-	// As well as the station network incase something funny goes during startup
+	/// As well as the station network incase something funny goes during startup
 	new/datum/ntnet(CENTCOM_NETWORK_ROOT)
 
 
@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(networks)
 			SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data,  NETWORK_ERROR_BAD_RECEIVER_ID)
 		return
 
-	/// Check if we care about permissions.  If we do check if we are allowed the message to be processed
+	// Check if we care about permissions.  If we do check if we are allowed the message to be processed
 	if(data.passkey) // got to check permissions
 		var/obj/O = target_interface.parent
 		if(O)
@@ -122,8 +122,9 @@ SUBSYSTEM_DEF(networks)
 			if(!QDELETED(sending_interface))
 				SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_NAK, data, NETWORK_ERROR_UNAUTHORIZED)
 
-	/// All is good, send the packet then send an ACK to the sender
+
 	SEND_SIGNAL(target_interface.parent, COMSIG_COMPONENT_NTNET_RECEIVE, data)
+	// All is good, send the packet then send an ACK to the sender
 	if(!QDELETED(sending_interface))
 		SEND_SIGNAL(sending_interface.parent, COMSIG_COMPONENT_NTNET_ACK, data)
 	count_good_packets++

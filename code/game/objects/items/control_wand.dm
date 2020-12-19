@@ -22,7 +22,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
-/obj/item/door_remote/proc/bad_signal(target, datum/netdata/data, error_code)
+/obj/item/door_remote/proc/bad_signal(datum/source, datum/netdata/data, error_code)
 	if(QDELETED(data.user))
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
@@ -31,7 +31,7 @@
 		to_chat(data.user, "<span class='notice'>Error: [error_code]</span>")
 
 
-/obj/item/door_remote/proc/good_signal(target, datum/netdata/data,error_code)
+/obj/item/door_remote/proc/good_signal(datum/source, datum/netdata/data, error_code)
 	if(QDELETED(data.user))
 		return
 	var/toggled = data.data["data"]
