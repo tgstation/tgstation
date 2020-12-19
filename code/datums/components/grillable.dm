@@ -15,7 +15,10 @@
 	///Do we use the large steam sprite?
 	var/use_large_steam_sprite = FALSE
 
-/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+	///Does this item have special grill interactions when items are used on it? if so, we need to invoke something on attack.
+	var/datum/callback/attackby_callback
+
+/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, attackby_callback)
 	. = ..()
 	if(!isitem(parent)) //Only items support grilling at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -24,9 +27,18 @@
 	src.required_cook_time = required_cook_time
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
+	src.attackby_callback = attackby_callback
 
 	RegisterSignal(parent, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	if(attackby_callback)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/AttackBy)
+
+///Ran when the grill item is attacked
+/datum/component/grillable/proc/AttackBy(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
+	attackby_callback.Invoke(src, I, user)
 
 ///Ran every time an item is grilled by something
 /datum/component/grillable/proc/OnGrill(datum/source, atom/used_grill, delta_time = 1)

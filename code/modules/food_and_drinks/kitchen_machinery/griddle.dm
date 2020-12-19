@@ -34,11 +34,14 @@
 	if(griddled_objects.len >= max_items || !istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume < 5)
 		return NONE //make sure you have space... it's actually batter... and a proper amount of it.
 
-	var/obj/item/food/pancakes/raw/new_pancake = new(src)
-	new_pancake.pixel_x = rand(16,-16)
-	new_pancake.pixel_y = rand(16,-16)
+	for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
+		var/obj/item/food/pancakes/raw/new_pancake = new(src)
+		new_pancake.pixel_x = rand(16,-16)
+		new_pancake.pixel_y = rand(16,-16)
+		AddToGrill(new_pancake)
+		if(griddled_objects.len >= max_items)
+			break
 	visible_message("<span class='notice'>[exposing_reagent] begins to cook on [src].</span>")
-	AddToGrill(new_pancake)
 	return NONE
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)

@@ -695,8 +695,6 @@
 
 #define PANCAKE_MAX_STACK 10
 
-
-
 /obj/item/food/pancakes
 	name = "pancake"
 	desc = "A fluffy pancake. The softer, superior relative of the waffle."
@@ -706,17 +704,45 @@
 	tastes = list("pancakes" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
 
 /obj/item/food/pancakes/raw
 	name = "goopy pancake"
-	desc = "A barely cooked mess that some may mistake for a pancake. You live like this?"
-	icon_state = "pancakes_1"
-	inhand_icon_state = "pancakes"
+	desc = "A barely cooked mess that some may mistake for a pancake. It longs for the griddle."
+	icon_state = "rawpancakes_1"
+	inhand_icon_state = "rawpancakes"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("pancakes" = 1)
+	tastes = list("milky batter" = 1)
+	burns_on_grill = FALSE
 
 /obj/item/food/pancakes/raw/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/pancakes, rand(30 SECONDS, 40 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable,\
+				cook_result = /obj/item/food/pancakes,\
+				required_cook_time = rand(30 SECONDS, 40 SECONDS),\
+				positive_result = TRUE,\
+				use_large_steam_sprite = TRUE,\
+				attackby_callback = CALLBACK(src, .proc/garnish))
+
+/obj/item/food/pancakes/raw/examine(mob/user)
+	. = ..()
+	if(name == initial(name))
+		. += "<span class='notice'>You can modify the pancake by adding <b>blueberries</b> or <b>chocolate</b> before finishing the griddle."
+
+/obj/item/food/pancakes/raw/proc/garnish(datum/component/grillable/grill_comp, obj/item/garnish, mob/user)
+	var/newresult
+	if(istype(garnish, /obj/item/food/grown/berries))
+		newresult = /obj/item/food/pancakes/blueberry
+		name = "raw blueberry pancake"
+		icon_state = "rawbbpancakes_1"
+		inhand_icon_state = "rawbbpancakes"
+	else if(istype(garnish, /obj/item/food/chocolatebar))
+		newresult = /obj/item/food/pancakes/chocolatechip
+		name = "raw chocolate chip pancake"
+		icon_state = "rawccpancakes_1"
+		inhand_icon_state = "rawccpancakes"
+	if(newresult)
+		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
+		grill_comp.cook_result = newresult
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"
