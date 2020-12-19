@@ -215,7 +215,7 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(user.hasparasites())
-		to_chat(user, "<span class='warning'>The holoparasites in your body are keeping your life force from being drained!")	//Ensures a parasite holder cant use mori
+		to_chat(user, "<span class='warning'>The holoparasites in your body are keeping your life force from being drained!</span>")	//Ensures a parasite holder cant use mori
 		return
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
