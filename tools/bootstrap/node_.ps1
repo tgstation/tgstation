@@ -8,6 +8,7 @@
 # PowerShell finds the `.bat` file first, which ensures this script executes
 # regardless of ExecutionPolicy.
 $ErrorActionPreference = "Stop"
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function ExtractVersion {
 	param([string] $Path, [string] $Key)
@@ -41,9 +42,7 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 		-OutFile $Archive `
 		-ErrorAction Stop
 
-	Expand-Archive $Archive `
-		-DestinationPath $Cache `
-		-ErrorAction Stop
+	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $Cache)
 
 	Remove-Item $Archive
 	Clear-Host
