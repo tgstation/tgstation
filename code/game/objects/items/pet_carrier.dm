@@ -147,6 +147,7 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "pet_carrier_[!occupants.len ? "closed" : "occupied"]"
+	return ..()
 
 /obj/item/pet_carrier/update_overlays()
 	. = ..()

@@ -591,6 +591,7 @@
 		icon_state = "potionflask"
 	else
 		icon_state = "potionflask_empty"
+	return ..()
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
@@ -1188,6 +1189,7 @@
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport

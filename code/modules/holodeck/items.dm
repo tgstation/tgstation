@@ -202,6 +202,7 @@
 		icon_state = "auth_on"
 	else
 		icon_state = "auth_off"
+	return ..()
 
 /obj/machinery/readybutton/proc/begin_event()
 

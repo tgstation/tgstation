@@ -28,6 +28,7 @@
 
 /obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"
+	return ..()
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()

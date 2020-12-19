@@ -187,6 +187,7 @@
 			icon_state = "nuclearbomb_timing"
 		if(NUKE_ON_EXPLODING)
 			icon_state = "nuclearbomb_exploding"
+	return ..()
 
 /obj/machinery/nuclearbomb/update_overlays()
 	. += ..()

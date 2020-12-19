@@ -891,6 +891,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][on]"
+	return ..()
 
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core

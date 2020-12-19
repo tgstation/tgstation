@@ -4,6 +4,7 @@
 	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasn't fun
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
+	base_icon_state = "pump"
 	anchored = FALSE
 	density = TRUE
 	idle_power_usage = 10
@@ -54,8 +55,7 @@
 
 /obj/machinery/plumbing/liquid_pump/update_icon_state()
 	if(geyser)
-		icon_state = initial(icon_state) + "-on"
-	else if(panel_open)
-		icon_state = initial(icon_state) + "-open"
-	else
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]-on"
+		return
+	icon_state = "[base_icon_state][panel_open ? "-open" : null]"
+	return ..()

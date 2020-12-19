@@ -4,6 +4,7 @@
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
+	base_icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -65,10 +66,7 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	if(on)
-		icon_state = "hygienebot-on"
-	else
-		icon_state = "hygienebot"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()

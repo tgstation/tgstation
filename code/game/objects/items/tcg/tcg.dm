@@ -84,17 +84,28 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	zoom_out()
 
-/obj/item/tcgcard/update_icon_state()
+/obj/item/tcgcard/update_name(updates)
 	. = ..()
 	if(!flipped)
 		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
 		name = template.name
-		desc = template.desc
-		icon_state = template.icon_state
-
 	else
 		name = "Trading Card"
+
+/obj/item/tcgcard/update_desc(updates)
+	. = ..()
+	if(!flipped)
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		desc = template.desc
+	else
 		desc = "It's the back of a trading card... no peeking!"
+
+/obj/item/tcgcard/update_icon_state()
+	. = ..()
+	if(!flipped)
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		icon_state = template.icon_state
+	else
 		icon_state = "cardback"
 
 /obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
@@ -169,6 +180,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "A stack of TCG cards."
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "deck_up"
+	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
 	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
@@ -182,15 +194,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/update_icon_state()
 	. = ..()
 	if(flipped)
+		icon_state = "[base_icon_state]_tcg"
 		switch(contents.len)
 			if(1 to 10)
-				icon_state = "deck_tcg_low"
+				icon_state = "[icon_state]_tcg_low"
 			if(11 to 20)
-				icon_state = "deck_tcg_half"
+				icon_state = "[icon_state]_tcg_half"
 			if(21 to INFINITY)
-				icon_state = "deck_tcg_full"
+				icon_state = "[icon_state]_tcg_full"
 	else
-		icon_state = "deck_up"
+		icon_state = "[base_icon_state]_up"
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()

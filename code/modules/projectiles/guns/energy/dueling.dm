@@ -314,6 +314,7 @@
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
+	base_icon_state = "medalbox"
 
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
@@ -323,15 +324,15 @@
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
+	. = ..()
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
-		icon_state = "medalbox+l"
-	else
-		icon_state = "medalbox"
-		if(open)
-			icon_state += "open"
-		if(broken)
-			icon_state += "+b"
+		icon_state = icon_locked
+		return
+	if(broken)
+		icon_state = icon_broken
+		return
+	icon_state = open ? "[base_icon_state]open" : icon_closed
 
 /obj/item/storage/lockbox/dueling/PopulateContents()
 	. = ..()

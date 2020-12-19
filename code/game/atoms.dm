@@ -635,10 +635,25 @@
 		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
 /**
+ * Updates the appearence of the icon
  *
+ * Mostly delegates to update_name, update_desc, and update_icon
+ *
+ * Procs that need to be refactored:
+ * - [/obj/item/ammo_box/proc/update_appearance]: Move custom materials updating out of this
+ * - [/obj/machinery/door/airlock/proc/update_icon]: Has extra args, figure out how to work this out
+ * - [/obj/machinery/door_timer/proc/update_icon]: Delegates to procs to update maptext andd overlays
+ * - [/obj/machinery/roulette/proc/update_icon]: Has extra args, figure out how to work this out
+ * - [/obj/structure/chrono_field/proc/update_icon]: Handles overlays, underlays, and icon state
+ * - [/obj/machinery/atmospherics/proc/components/]:
+ * - [/obj/effect/hallucination/simple/proc/update_icon]: Extra args, figure out how to handle this
+ * - [/mob/dead/observer/proc/update_icon]: Extra args and _massive_, figure out how to handle this
+ *
+ * Arguments:
+ * - updates: A set of bitflags dictating what should be updated. Defaults to [ALL]
  */
 /atom/proc/update_appearance(updates=ALL)
-	SIGNAL_HANDLER
+	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
@@ -652,16 +667,18 @@
 
 /// Updates the name of the atom
 /atom/proc/update_name(updates=ALL)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
 
 /// Updates the description of the atom
 /atom/proc/update_desc(updates=ALL)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
 	SIGNAL_HANDLER
-	// SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
@@ -683,6 +700,7 @@
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
+	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /// Updates the overlays of the atom

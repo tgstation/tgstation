@@ -117,6 +117,7 @@
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "mjollnir0"
+	return ..()
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)

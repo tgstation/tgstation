@@ -70,6 +70,7 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
+	. = ..()
 	if(!is_operational)
 		icon_state = "circ-p-[flipped]"
 	else if(last_pressure_delta > 0)

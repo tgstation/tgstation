@@ -13,6 +13,7 @@
 	update_appearance()
 
 /obj/item/stack/arcadeticket/update_icon_state()
+	. = ..()
 	var/amount = get_amount()
 	switch(amount)
 		if(12 to INFINITY)

@@ -14,7 +14,7 @@
 
 /obj/item/mecha_ammo/update_name()
 	. = ..()
-	name = "[rounds ? "" : "empty "][initial(name)]"
+	name = "[rounds ? null : "empty "][initial(name)]"
 
 /obj/item/mecha_ammo/update_desc()
 	. = ..()

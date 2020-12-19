@@ -44,6 +44,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 
 /obj/item/stack/marker_beacon/update_icon_state()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
+	return ..()
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -106,8 +107,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
-	. = ..()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]-on"
+	return ..()
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user)
 	. = ..()

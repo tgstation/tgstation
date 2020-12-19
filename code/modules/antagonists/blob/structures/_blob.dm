@@ -339,7 +339,7 @@
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(obj_integrity <= 15) ? "fragile " : ""][overmind ? "" : "dead "]blob"
+	name = "[(obj_integrity <= 15) ? "fragile " : null][overmind ? null : "dead "][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()

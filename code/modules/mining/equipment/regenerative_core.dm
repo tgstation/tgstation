@@ -121,6 +121,7 @@
 
 /obj/item/organ/regenerative_core/update_icon_state()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	return ..()
 
 /obj/item/organ/regenerative_core/update_overlays()
 	. = ..()

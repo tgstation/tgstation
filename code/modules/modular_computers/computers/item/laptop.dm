@@ -37,8 +37,8 @@
 /obj/item/modular_computer/laptop/update_icon_state()
 	if(!screen_on)
 		icon_state = icon_state_closed
-	else
-		. = ..()
+		return
+	return ..()
 
 /obj/item/modular_computer/laptop/update_overlays()
 	if(screen_on)

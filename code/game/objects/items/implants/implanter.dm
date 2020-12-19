@@ -19,6 +19,7 @@
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
+	return ..()
 
 
 /obj/item/implanter/attack(mob/living/M, mob/user)

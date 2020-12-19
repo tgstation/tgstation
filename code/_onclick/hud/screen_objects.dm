@@ -159,6 +159,7 @@
 	QDEL_NULL(object_overlay)
 
 /atom/movable/screen/inventory/update_icon_state()
+	. = ..()
 	if(!icon_empty)
 		icon_empty = icon_state
 
@@ -375,6 +376,7 @@
 	toggle(usr)
 
 /atom/movable/screen/mov_intent/update_icon_state()
+	. = ..()
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
@@ -390,6 +392,7 @@
 	name = "stop pulling"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
+	base_icon_state = "pull"
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -397,10 +400,8 @@
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon_state()
-	if(hud?.mymob?.pulling)
-		icon_state = "pull"
-	else
-		icon_state = "pull0"
+	. = ..()
+	icon_state = "[base_icon_state][hud?.mymob?.pulling ? null : 0]"
 
 /atom/movable/screen/resist
 	name = "resist"
@@ -418,6 +419,7 @@
 	name = "rest"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
+	base_icon_state = "act_rest"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -427,13 +429,11 @@
 		L.toggle_resting()
 
 /atom/movable/screen/rest/update_icon_state()
+	. = ..()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-	if(!user.resting)
-		icon_state = "act_rest"
-	else
-		icon_state = "act_rest0"
+	icon_state = "[base_icon_state][user.resting ? 0 : null]"
 
 /atom/movable/screen/storage
 	name = "storage"

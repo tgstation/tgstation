@@ -22,6 +22,7 @@
 
 ///Override to allow for variations
 /obj/item/stack/license_plates/filled/update_icon_state()
+	. = ..()
 	if(novariants)
 		return
 	if(amount <= (max_amount * (1/3)))

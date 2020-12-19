@@ -169,6 +169,7 @@
 		icon_state = "dominator-blue"
 	else
 		icon_state = "dominator"
+	return ..()
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()

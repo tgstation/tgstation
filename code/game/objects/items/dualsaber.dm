@@ -75,6 +75,7 @@
 		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
+	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)

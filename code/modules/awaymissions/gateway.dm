@@ -206,6 +206,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		icon_state = icon_on
 	else
 		icon_state = icon_off
+	return ..()
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return

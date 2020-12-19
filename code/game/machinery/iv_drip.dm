@@ -27,6 +27,7 @@
 	return ..()
 
 /obj/machinery/iv_drip/update_icon_state()
+	. = ..()
 	if(attached)
 		if(mode)
 			icon_state = "injecting"

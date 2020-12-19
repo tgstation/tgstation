@@ -168,10 +168,8 @@
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	if(!enabled)
-		icon_state = icon_state_unpowered
-	else
-		icon_state = icon_state_powered
+	. = ..()
+	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()

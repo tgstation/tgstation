@@ -211,6 +211,7 @@
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
+	return ..()
 
 #undef VOTE_TEXT_LIMIT
 #undef MAX_VOTES

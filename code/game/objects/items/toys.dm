@@ -112,6 +112,7 @@
 	else
 		icon_state = "waterballoon-e"
 		inhand_icon_state = "balloon-empty"
+	return ..()
 
 #define BALLOON_COLORS list("red", "blue", "green", "yellow")
 
@@ -306,6 +307,7 @@
 
 /obj/item/toy/ammo/gun/update_icon_state()
 	icon_state = "357OLD-[amount_left]"
+	return ..()
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
@@ -732,6 +734,7 @@
 			icon_state = "deck_[deckstyle]_low"
 		else
 			icon_state = "deck_[deckstyle]_empty"
+	return ..()
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)

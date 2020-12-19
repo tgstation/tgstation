@@ -5,6 +5,7 @@
 
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "navbeacon0-f"
+	base_icon_state = "navbeacon"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation and crew wayfinding."
 	layer = LOW_OBJ_LAYER
@@ -90,7 +91,8 @@
 
 // update the icon_state
 /obj/machinery/navbeacon/update_icon_state()
-	icon_state = "navbeacon[open]"
+	. = ..()
+	icon_state = "[base_icon_state][open]"
 
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc

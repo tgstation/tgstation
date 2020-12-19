@@ -61,6 +61,7 @@ FLOOR SAFES
 		icon_state = "[initial(icon_state)]-open"
 	else
 		icon_state = initial(icon_state)
+	return ..()
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)

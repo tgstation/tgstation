@@ -68,6 +68,7 @@
 		icon_state = "ladder01"
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
+	return ..()
 
 /obj/structure/ladder/singularity_pull()
 	if (!(resistance_flags & INDESTRUCTIBLE))

@@ -71,6 +71,7 @@
 		icon_state = "stairs_t"
 	else
 		icon_state = "stairs"
+	return ..()
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/AM)
 	var/turf/checking = get_step_multiz(get_turf(src), UP)

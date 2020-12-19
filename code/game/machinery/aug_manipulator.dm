@@ -3,11 +3,11 @@
 	desc = "A machine for custom fitting augmentations, with in-built spraypainter."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
+	base_icon_state = "pdapainter"
 	density = TRUE
 	obj_integrity = 200
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
-	var/initial_icon_state
 	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 
 /obj/machinery/aug_manipulator/examine(mob/user)
@@ -16,23 +16,21 @@
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-	initial_icon_state = initial(icon_state)
+	if(!base_icon_state)
+		base_icon_state = initial(icon_state)
 	return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "[initial_icon_state]-broken"
+		icon_state = "[base_icon_state]-broken"
 		return
-
-	if(powered())
-		icon_state = initial_icon_state
-	else
-		icon_state = "[initial_icon_state]-off"
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/aug_manipulator/update_overlays()
 	. = ..()
 	if(storedpart)
-		. += "[initial_icon_state]-closed"
+		. += "[base_icon_state]-closed"
 
 /obj/machinery/aug_manipulator/Destroy()
 	QDEL_NULL(storedpart)

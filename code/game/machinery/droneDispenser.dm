@@ -181,6 +181,7 @@
 			.++
 
 /obj/machinery/drone_dispenser/update_icon_state()
+	. = ..()
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
 	else if(mode == DRONE_RECHARGING)

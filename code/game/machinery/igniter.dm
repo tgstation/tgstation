@@ -3,6 +3,7 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter0"
+	base_icon_state = "igniter"
 	plane = FLOOR_PLANE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -48,10 +49,8 @@
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "igniter0"
-	else
-		icon_state = "igniter[on]"
+	. = ..()
+	icon_state = "[base_icon_state][(machine_stat & NOPOWER) ? 0 : on]"
 
 /obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -63,6 +62,7 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
+	base_icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/disable = 0
@@ -83,12 +83,11 @@
 	return ..()
 
 /obj/machinery/sparker/update_icon_state()
+	. = ..()
 	if(disable)
-		icon_state = "[initial(icon_state)]-d"
-	else if(powered())
-		icon_state = "[initial(icon_state)]"
-	else
-		icon_state = "[initial(icon_state)]-p"
+		icon_state = "[base_icon_state]-d"
+		return
+	icon_state = "[base_icon_state][powered() ? null : "-p"]"
 
 /obj/machinery/sparker/powered()
 	if(disable)

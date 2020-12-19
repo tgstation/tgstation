@@ -112,12 +112,14 @@
 		icon_state = "jaws_cutter"
 	else
 		icon_state = "jaws_pry"
+	return ..()
 
 /obj/item/crowbar/power/syndicate/update_icon_state()
 	if(tool_behaviour == TOOL_WIRECUTTER)
 		icon_state = "jaws_cutter_syndie"
 	else
 		icon_state = "jaws_pry_syndie"
+	return ..()
 
 /obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)

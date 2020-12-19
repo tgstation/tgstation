@@ -44,6 +44,7 @@
 	setup_device()
 
 /obj/machinery/button/update_icon_state()
+	. = ..()
 	if(panel_open)
 		icon_state = "button-open"
 	else if(machine_stat & (NOPOWER|BROKEN))

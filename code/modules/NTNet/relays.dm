@@ -63,6 +63,7 @@
 		icon_state = "bus"
 	else
 		icon_state = "bus_off"
+	return ..()
 
 /obj/machinery/ntnet_relay/process(delta_time)
 	if(is_operational)

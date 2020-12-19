@@ -59,6 +59,7 @@
 		inhand_icon_state = "[initial(inhand_icon_state)]1"
 	else
 		inhand_icon_state = "[initial(inhand_icon_state)]"
+	return ..()
 
 
 /obj/item/weldingtool/update_overlays()

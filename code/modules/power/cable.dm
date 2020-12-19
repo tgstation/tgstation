@@ -141,6 +141,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 						break
 		dir_string = "l[cable_layer]-[dir_string]"
 		icon_state = dir_string
+	return ..()
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
@@ -387,6 +388,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	inhand_icon_state = "coil"
+	base_icon_state = "coil"
 	novariants = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -424,13 +426,19 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
 
+/obj/item/stack/cable_coil/update_name()
+	. = ..()
+	name = "cable [(amount < 3) ? "piece" : "coil"]"
+
+/obj/item/stack/cable_coil/update_desc()
+	. = ..()
+	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
+
 /obj/item/stack/cable_coil/update_icon_state()
 	if(novariants)
 		return
-	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
-	var/how_many_things = amount < 3 ? "piece" : "coil"
-	name = "cable [how_many_things]"
-	desc = "A [how_many_things] of insulated power cable."
+	. = ..()
+	icon_state = "[base_icon_state][amount < 3 ? amount : ""]"
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
@@ -590,6 +598,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	amount = null
 	icon_state = "coil2"
 	worn_icon_state = "coil"
+	base_icon_state = "coil2"
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload)
 	. = ..()
@@ -640,6 +649,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/cable/multilayer/update_icon()

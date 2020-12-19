@@ -245,6 +245,7 @@
 		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
 	else
 		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
+	return ..()
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2

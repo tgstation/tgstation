@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/machine/public_nanite_chamber
 	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
+	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
@@ -86,15 +87,13 @@
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon_state()
+	. = ..()
 	//running and someone in there
 	if(occupant)
-		if(busy)
-			icon_state = busy_icon_state
-		else
-			icon_state = initial(icon_state)+ "_occupied"
-	else
-		//running
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "")
+		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
+		return
+	//running
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 
 /obj/machinery/public_nanite_chamber/update_overlays()
 	. = ..()

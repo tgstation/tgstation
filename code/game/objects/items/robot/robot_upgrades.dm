@@ -350,6 +350,7 @@
 		icon_state = "selfrepair_[on ? "on" : "off"]"
 	else
 		icon_state = "cyborg_upgrade5"
+	return ..()
 
 /obj/item/borg/upgrade/selfrepair/proc/activate_sr()
 	START_PROCESSING(SSobj, src)

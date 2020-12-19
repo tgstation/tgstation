@@ -173,6 +173,7 @@
 	if(load_random_books)
 		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
+	return ..()
 
 
 /obj/structure/bookcase/manuals/engineering

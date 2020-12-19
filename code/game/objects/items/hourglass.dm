@@ -34,6 +34,7 @@
 		icon_state = "hourglass_active"
 	else
 		icon_state = "hourglass_idle"
+	return ..()
 
 /obj/item/hourglass/proc/start()
 	finish_time = world.time + time

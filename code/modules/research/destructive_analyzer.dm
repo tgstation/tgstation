@@ -9,6 +9,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	name = "destructive analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
+	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 	var/decon_mod = 0
 
@@ -45,10 +46,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	reset_busy()
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	if(loaded_item)
-		icon_state = "d_analyzer_l"
-	else
-		icon_state = initial(icon_state)
+	. = ..()
+	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src))

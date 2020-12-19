@@ -232,10 +232,9 @@
 
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
-	if(!S)
-		return
-	else
+	if(S)
 		icon_state = S.icon_state
+	return ..()
 
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)

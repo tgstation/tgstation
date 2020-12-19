@@ -138,6 +138,7 @@
 			icon_state += "open"
 		if(broken)
 			icon_state += "+b"
+	return ..()
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()

@@ -208,6 +208,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbecue nights."
 	icon_state = "crema1"
+	base_icon_state = "crema"
 	dir = SOUTH
 	var/id = 1
 
@@ -234,18 +235,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium/update_icon_state()
 	. = ..()
 	if(!connected || connected.loc != src)
-		icon_state = "crema0"
-	else
-
-		if(contents.len > 1)
-			icon_state = "crema2"
-		else
-			icon_state = "crema1"
-
-		if(locked)
-			icon_state = "crema_active"
-
-	return
+		icon_state = "[base_icon_state]0"
+		return
+	if(locked)
+		icon_state = "[base_icon_state]_active"
+		return
+	icon_state = "[base_icon_state][(contents.len > 1) ? 2 : 1]"
 
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)

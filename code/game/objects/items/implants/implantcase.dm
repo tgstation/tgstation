@@ -19,6 +19,7 @@
 		icon_state = "implantcase-[imp.implant_color]"
 	else
 		icon_state = "implantcase-0"
+	return ..()
 
 
 /obj/item/implantcase/attackby(obj/item/W, mob/user, params)

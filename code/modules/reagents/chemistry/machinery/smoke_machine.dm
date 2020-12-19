@@ -5,6 +5,7 @@
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
+	base_icon_state = "smoke"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	processing_flags = NONE
@@ -41,13 +42,11 @@
 
 
 /obj/machinery/smoke_machine/update_icon_state()
+	. = ..()
 	if((!is_operational) || (!on) || (reagents.total_volume == 0))
-		if (panel_open)
-			icon_state = "smoke0-o"
-		else
-			icon_state = "smoke0"
-	else
-		icon_state = "smoke1"
+		icon_state = "[base_icon_state]0[panel_open ? "-o" : null]"
+		return
+	icon_state = "[base_icon_state]1"
 
 /obj/machinery/smoke_machine/RefreshParts()
 	var/new_volume = REAGENTS_BASE_VOLUME

@@ -98,6 +98,7 @@
 /obj/item/toy/cards/deck/cas/update_icon_state()
 	if(cards.len < 26)
 		icon_state = "deck_[deckstyle]_low"
+	return ..()
 
 /obj/item/toy/cards/singlecard/cas
 	name = "CAS card"
@@ -141,6 +142,7 @@
 		icon_state = "[card_face]_flipped"
 	else
 		icon_state = "[card_face]"
+	return ..()
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/pen))

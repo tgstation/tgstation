@@ -49,3 +49,4 @@
 		icon_state = "fountain"
 	else
 		icon_state = "fountain-red"
+	return ..()

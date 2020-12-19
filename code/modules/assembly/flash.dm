@@ -43,17 +43,20 @@
 	return FIRELOSS
 
 /obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
-	cut_overlays()
-	attached_overlays = list()
-	if(burnt_out)
-		add_overlay("flashburnt")
-		attached_overlays += "flashburnt"
+	. = ..()
 	if(flash)
 		add_overlay(flashing_overlay)
 		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
-		holder.update_appearance()
+		holder.update_icon(updates)
+
+/obj/item/assembly/flash/update_overlays()
+	attached_overlays = list()
+	. = ..()
+	if(burnt_out)
+		. += "flashburnt"
+		attached_overlays += "flashburnt"
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -113,7 +116,7 @@
 	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	flash_recharge()
-	update_icon(TRUE)
+	update_icon(ALL, TRUE)
 	if(user && !clown_check(user))
 		return FALSE
 	return TRUE
@@ -239,7 +242,7 @@
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
 		log_combat(user, R, "flashed", src)
-		update_icon(1)
+		update_icon(ALL, TRUE)
 		R.Paralyze(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 		R.add_confusion(min(5, diff))
@@ -344,7 +347,7 @@
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	update_icon(1)
+	update_icon(ALL, TRUE)
 	return TRUE
 
 

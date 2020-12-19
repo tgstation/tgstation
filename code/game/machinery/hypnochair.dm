@@ -3,6 +3,7 @@
 	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "hypnochair"
+	base_icon_state = "hypnochair"
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
@@ -169,14 +170,8 @@
 	victim = null
 
 /obj/machinery/hypnochair/update_icon_state()
-	icon_state = initial(icon_state)
-	if(state_open)
-		icon_state += "_open"
-	if(occupant)
-		if(interrogating)
-			icon_state += "_active"
-		else
-			icon_state += "_occupied"
+	. = ..()
+	icon_state = "[base_icon_state][state_open ? "_open" : null][occupant ? "_[interrogating ? "active" : "occupied"]" : null]"
 
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)

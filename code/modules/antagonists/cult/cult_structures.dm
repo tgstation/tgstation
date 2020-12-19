@@ -67,6 +67,7 @@
 
 /obj/structure/destructible/cult/update_icon_state()
 	icon_state = "[initial(icon_state)][anchored ? null : "_off"]"
+	return ..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))

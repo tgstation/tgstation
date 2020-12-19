@@ -51,6 +51,7 @@
 		icon_state = icon_state_active
 	else
 		icon_state = icon_state_inactive
+	return ..()
 
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()

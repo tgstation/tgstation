@@ -285,6 +285,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
+	return ..()
 
 /obj/machinery/washing_machine/update_overlays()
 	. = ..()

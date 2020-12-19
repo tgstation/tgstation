@@ -1159,6 +1159,7 @@
 		icon_state = icon_state_active
 	else
 		icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/hypertorus/interface
 	name = "HFR interface"

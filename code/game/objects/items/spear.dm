@@ -32,6 +32,7 @@
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
+	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -78,6 +79,7 @@
 
 /obj/item/spear/explosive/update_icon_state()
 	icon_state = "spearbomb0"
+	return ..()
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -178,3 +180,4 @@
 
 /obj/item/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear0"
+	return ..()

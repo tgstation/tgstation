@@ -1,6 +1,7 @@
 /obj/item/organ/appendix
 	name = "appendix"
 	icon_state = "appendix"
+	base_icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
 
@@ -14,11 +15,11 @@
 
 /obj/item/organ/appendix/update_name()
 	. = ..()
-	name = "[inflamed ? "inflamed " : ""]appendix"
+	name = "[inflamed ? "inflamed " : null][initial(name)]"
 
 /obj/item/organ/appendix/update_icon_state()
 	. = ..()
-	icon_state = "appendix[inflamed ? "inflamed" : ""]"
+	icon_state = "[base_icon_state][inflamed ? "inflamed" : ""]"
 
 /obj/item/organ/appendix/on_life()
 	..()

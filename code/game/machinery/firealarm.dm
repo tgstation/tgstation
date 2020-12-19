@@ -55,6 +55,7 @@
 	return ..()
 
 /obj/machinery/firealarm/update_icon_state()
+	. = ..()
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return

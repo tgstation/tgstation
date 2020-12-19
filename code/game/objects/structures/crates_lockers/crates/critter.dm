@@ -27,6 +27,7 @@
 	return ..()
 
 /obj/structure/closet/crate/critter/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/closet/crate/critter/update_overlays()

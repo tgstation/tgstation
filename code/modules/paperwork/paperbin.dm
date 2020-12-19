@@ -129,6 +129,7 @@
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
+	return ..()
 
 /obj/item/paper_bin/update_overlays()
 	. = ..()

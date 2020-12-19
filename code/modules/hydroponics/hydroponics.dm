@@ -52,6 +52,8 @@
 	var/mob/lastuser
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
+	///The icon state for the overlay used to represent that this tray is self-sustaining.
+	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -296,27 +298,26 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	cut_overlays()
-
-	if(self_sustaining)
-		if(istype(src, /obj/machinery/hydroponics/soil))
-			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
-		else
-			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
-		set_light(3)
+	. = ..()
 
 	if(myseed)
 		update_icon_plant()
 		update_icon_lights()
 
-	if(!self_sustaining)
-		if(myseed?.get_gene(/datum/plant_gene/trait/glow))
-			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
-		else
-			set_light(0)
+	if(self_sustaining)
+		set_light(3)
+	else if(myseed?.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	else
+		set_light(0)
 
 	return
+
+/obj/machinery/hydroponics/update_overlays()
+	. = ..()
+	if(self_sustaining && self_sustaining_overlay_icon_state)
+		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
 
 /obj/machinery/hydroponics/proc/update_icon_plant()
 	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
@@ -906,6 +907,12 @@
 	use_power = NO_POWER_USE
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
+	self_sustaining_overlay_icon_state = null
+
+/obj/machinery/hydroponics/soil/update_icon(updates=ALL)
+	. = ..()
+	if(self_sustaining)
+		add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/hydroponics/soil/update_icon_lights()
 	return // Has no lights

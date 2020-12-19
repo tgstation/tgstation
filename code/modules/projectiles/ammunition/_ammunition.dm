@@ -48,7 +48,7 @@
 
 /obj/item/ammo_casing/update_desc()
 	. = ..()
-	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
+	desc = "[initial(desc)][BB ? null : " This one is spent."]"
 
 /*
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder

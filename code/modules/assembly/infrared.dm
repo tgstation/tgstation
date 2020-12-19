@@ -56,9 +56,9 @@
 	update_appearance()
 	return secured
 
-/obj/item/assembly/infra/update_icon()
+/obj/item/assembly/infra/update_appearance(updates=ALL)
 	. = ..()
-	holder.update_appearance()
+	holder.update_appearance(updates)
 
 /obj/item/assembly/infra/update_overlays()
 	. = ..()

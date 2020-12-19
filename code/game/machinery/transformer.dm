@@ -39,6 +39,7 @@
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)

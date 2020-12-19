@@ -398,6 +398,7 @@
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
+	return ..()
 
 /obj/structure/displaycase/forsale/update_overlays()
 	. = ..()

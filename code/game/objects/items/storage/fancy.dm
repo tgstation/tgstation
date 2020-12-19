@@ -33,6 +33,7 @@
 		icon_state = "[icon_type]box[contents.len]"
 	else
 		icon_state = "[icon_type]box"
+	return ..()
 
 /obj/item/storage/fancy/examine(mob/user)
 	. = ..()
@@ -90,6 +91,7 @@
 	update_appearance()
 
 /obj/item/storage/fancy/donut_box/update_icon_state()
+	. = ..()
 	if(fancy_open)
 		icon_state = "donutbox_inner"
 	else
@@ -230,6 +232,7 @@
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
+	. = ..()
 	if(fancy_open || !contents.len)
 		if(!contents.len)
 			icon_state = "[initial(icon_state)]_empty"
@@ -372,6 +375,7 @@
 
 ///Overrides to do nothing because fancy boxes are fucking insane.
 /obj/item/storage/fancy/rollingpapers/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
@@ -400,6 +404,7 @@
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
+	. = ..()
 	if(fancy_open)
 		icon_state = "[initial(icon_state)]_open"
 	else

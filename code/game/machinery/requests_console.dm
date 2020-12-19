@@ -29,6 +29,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	desc = "A console intended to send requests to different departments on the station."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
+	base_icon_state = "req_comp"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0 //bitflag
@@ -69,28 +70,32 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
-/obj/machinery/requests_console/update_icon_state()
+/obj/machinery/requests_console/update_appearance(updates=ALL)
+	. = ..()
 	if(machine_stat & NOPOWER)
 		set_light(0)
 	else
 		set_light(1.4,0.7,"#34D352")//green light
+
+/obj/machinery/requests_console/update_icon_state()
 	if(open)
 		if(!hackState)
-			icon_state="req_comp_open"
+			icon_state="[base_icon_state]_open"
 		else
-			icon_state="req_comp_rewired"
+			icon_state="[base_icon_state]_rewired"
 	else if(machine_stat & NOPOWER)
-		if(icon_state != "req_comp_off")
-			icon_state = "req_comp_off"
+		if(icon_state != "[base_icon_state]_off")
+			icon_state = "[base_icon_state]_off"
 	else
 		if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
-			icon_state = "req_comp3"
+			icon_state = "[base_icon_state]3"
 		else if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
-			icon_state = "req_comp2"
+			icon_state = "[base_icon_state]2"
 		else if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
-			icon_state = "req_comp1"
+			icon_state = "[base_icon_state]1"
 		else
-			icon_state = "req_comp0"
+			icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/machinery/requests_console/Initialize()
 	. = ..()

@@ -255,6 +255,7 @@ All the important duct code:
 			if(D == WEST)
 				temp_icon += "_w"
 	icon_state = temp_icon
+	return ..()
 
 ///update the layer we are on
 /obj/machinery/duct/proc/handle_layer()

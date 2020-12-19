@@ -29,6 +29,7 @@
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
+	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()

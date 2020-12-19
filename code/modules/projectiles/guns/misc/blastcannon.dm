@@ -2,8 +2,8 @@
 	name = "pipe gun"
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
-	var/icon_state_loaded = "loaded_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
+	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
@@ -47,10 +47,8 @@
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	if(bomb)
-		icon_state = icon_state_loaded
-	else
-		icon_state = initial(icon_state)
+	. = ..()
+	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/transfer_valve))

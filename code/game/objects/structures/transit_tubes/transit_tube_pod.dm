@@ -26,6 +26,7 @@
 		icon_state = occupied_icon_state
 	else
 		icon_state = initial(icon_state)
+	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)

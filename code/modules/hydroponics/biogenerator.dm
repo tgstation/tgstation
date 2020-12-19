@@ -74,6 +74,7 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
+	return ..()
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)

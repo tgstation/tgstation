@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "AAS_On"
+	base_icon_state = "AAS"
 
 	verb_say = "coldly states"
 	verb_ask = "queries"
@@ -33,10 +34,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	update_appearance()
 
 /obj/machinery/announcement_system/update_icon_state()
-	if(is_operational)
-		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
-	else
-		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
+	. = ..()
+	icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
 
 /obj/machinery/announcement_system/update_overlays()
 	. = ..()

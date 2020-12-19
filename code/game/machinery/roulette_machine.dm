@@ -322,14 +322,18 @@
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
-/obj/machinery/roulette/update_icon(updates=ALL, payout, color, rolled_number, is_winner = FALSE)
-	cut_overlays()
-
+/obj/machinery/roulette/update_overlays()
+	. = ..()
 	if(machine_stat & MAINT)
 		return
 
 	if(playing)
-		add_overlay("random_numbers")
+		. += "random_numbers"
+
+/obj/machinery/roulette/update_icon(updates=ALL, payout, color, rolled_number, is_winner = FALSE)
+	. = ..()
+	if(machine_stat & MAINT)
+		return
 
 	if(!payout || !color || isnull(rolled_number)) //Don't fall for tricks.
 		return

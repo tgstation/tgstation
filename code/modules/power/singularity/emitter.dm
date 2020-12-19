@@ -133,10 +133,8 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon_state()
-	if(active && powernet)
-		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
-	else
-		icon_state = initial(icon_state)
+	. = ..()
+	icon_state = (active && powernet) ? (avail(active_power_usage) ? icon_state_on : icon_state_underpowered) : base_icon_state
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -374,6 +372,7 @@
 	icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
+	base_icon_state = "protoemitter"
 	can_buckle = TRUE
 	buckle_lying = 0
 	var/view_range = 4.5

@@ -4,6 +4,7 @@
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
 	icon = 'icons/obj/machines/stasis.dmi'
 	icon_state = "stasis"
+	base_icon_state = "stasis"
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -70,12 +71,13 @@
 
 /obj/machinery/stasis/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "stasis_broken"
+		icon_state = "[base_icon_state]_broken"
 		return
 	if(panel_open || machine_stat & MAINT)
-		icon_state = "stasis_maintenance"
+		icon_state = "[base_icon_state]_maintenance"
 		return
-	icon_state = "stasis"
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/stasis/update_overlays()
 	. = ..()

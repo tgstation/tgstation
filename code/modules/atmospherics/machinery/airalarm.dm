@@ -662,6 +662,7 @@
 			icon_state = "alarm2" //yes, alarm2 is yellow alarm
 		if(2)
 			icon_state = "alarm1"
+	return ..()
 
 /obj/machinery/airalarm/process()
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)

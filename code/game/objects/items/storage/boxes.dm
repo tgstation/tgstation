@@ -897,6 +897,7 @@
 		icon_state = "[inhand_icon_state]"
 	else
 		icon_state = "[inhand_icon_state]_closed"
+	return ..()
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))

@@ -40,6 +40,7 @@
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
 /obj/item/organ/heart/fly/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return //don't set icon thank you
 
 /obj/item/organ/lungs/fly

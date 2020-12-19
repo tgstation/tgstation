@@ -241,6 +241,7 @@
 	desc = "Art or \"Art\"? You decide. Use wirecutters to remove the painting."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
 	buildable_sign = FALSE
 	var/obj/item/canvas/C
@@ -296,10 +297,7 @@
 
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
-	if(C?.generated_icon)
-		icon_state = "frame-overlay"
-	else
-		icon_state = "frame-empty"
+	icon_state = "[base_icon_state]-[C?.generated_icon ? "overlay" : "empty"]"
 
 
 /obj/structure/sign/painting/update_overlays()

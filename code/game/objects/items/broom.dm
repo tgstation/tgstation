@@ -28,6 +28,7 @@
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "broom0"
+	return ..()
 
 /**
  * Handles registering the sweep proc when the broom is wielded

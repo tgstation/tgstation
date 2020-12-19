@@ -5,6 +5,7 @@
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	base_icon_state = "tdoppler"
 	density = TRUE
 	verb_say = "states coldly"
 	var/cooldown = 10
@@ -185,12 +186,11 @@
 	return ..()
 
 /obj/machinery/doppler_array/update_icon_state()
+	. = ..()
 	if(machine_stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-	else if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
+		icon_state = "[base_icon_state]-broken"
+		return
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
 
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"

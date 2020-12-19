@@ -3,6 +3,7 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
+	base_icon_state = "scanner"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -34,22 +35,23 @@
 		. += "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.</span>"
 
 /obj/machinery/dna_scannernew/update_icon_state()
+	. = ..()
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
+		icon_state = "[base_icon_state][state_open ? "_open" : null]_unpowered"
 		return
 
 	if((machine_stat & MAINT) || panel_open)
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
+		icon_state = "[base_icon_state][state_open ? "_open" : null]_maintenance"
 		return
 
 	//running and someone in there
 	if(occupant)
-		icon_state = initial(icon_state)+ "_occupied"
+		icon_state = "[base_icon_state]_occupied"
 		return
 
 	//running
-	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)

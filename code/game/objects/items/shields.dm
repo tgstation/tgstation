@@ -181,6 +181,7 @@
 	else
 		icon_state = "flashshield"
 		inhand_icon_state = "flashshield"
+	return ..()
 
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()

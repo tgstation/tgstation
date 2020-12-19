@@ -13,6 +13,7 @@
 	desc = "A high fidelity testing device which unlocks the secrets of the known universe using the two most powerful substances available to man: excessive amounts of electricity and capital."
 	icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
+	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
 	use_power = IDLE_POWER_USE
@@ -166,20 +167,21 @@
 	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
+	. = ..()
 	if(panel_open == TRUE)
-		icon_state = "chamber_open"
+		icon_state = "[base_icon_state]_open"
 		return
 	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
-		icon_state = "chamber_active_loaded"
+		icon_state = "[base_icon_state]_active_loaded"
 		return
 	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
-		icon_state = "chamber_loaded"
+		icon_state = "[base_icon_state]_loaded"
 		return
 	if(use_power == ACTIVE_POWER_USE && is_operational)
-		icon_state = "chamber_active"
+		icon_state = "[base_icon_state]_active"
 		return
 	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
-		icon_state = "chamber"
+		icon_state = base_icon_state
 		return
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)

@@ -82,6 +82,7 @@
 		icon_state = "portablechemicalmixer_full"
 	else
 		icon_state = "portablechemicalmixer_empty"
+	return ..()
 
 
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)

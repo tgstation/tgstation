@@ -63,6 +63,7 @@
 
 /obj/structure/etherealball/update_icon_state()
 	icon_state = "ethdisco_head_[TurnedOn]"
+	return ..()
 
 /obj/structure/etherealball/update_overlays()
 	. = ..()

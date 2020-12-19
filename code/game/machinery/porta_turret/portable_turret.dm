@@ -142,6 +142,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			begin_processing()
 
 /obj/machinery/porta_turret/update_icon_state()
+	. = ..()
 	if(!anchored)
 		icon_state = "turretCover"
 		return
@@ -840,6 +841,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
+	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -997,15 +999,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	update_appearance()
 
 /obj/machinery/turretid/update_icon_state()
+	. = ..()
 	if(machine_stat & NOPOWER)
-		icon_state = "control_off"
+		icon_state = "[base_icon_state]_off"
 	else if (enabled)
-		if (lethal)
-			icon_state = "control_kill"
-		else
-			icon_state = "control_stun"
+		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
 	else
-		icon_state = "control_standby"
+		icon_state = "[base_icon_state]_standby"
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"

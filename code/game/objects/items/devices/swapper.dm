@@ -25,6 +25,7 @@
 		icon_state = "swapper-linked"
 	else
 		icon_state = "swapper"
+	return ..()
 
 /obj/item/swapper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/swapper))

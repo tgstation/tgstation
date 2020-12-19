@@ -7,6 +7,7 @@
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
+	base_icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
@@ -59,10 +60,8 @@
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
-	if(is_operational)
-		icon_state = "kiosk_off"
-	else
-		icon_state = "kiosk"
+	. = ..()
+	icon_state = "[base_icon_state][is_operational ? null : "_off"]"
 
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
 	..()

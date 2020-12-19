@@ -3,6 +3,7 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -24,10 +25,8 @@
 		update_appearance()
 
 /obj/machinery/chem_heater/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1b"
-	else
-		icon_state = "mixer0b"
+	. = ..()
+	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()

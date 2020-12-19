@@ -44,9 +44,9 @@
 		a_right = A
 	A.holder_movement()
 
-/obj/item/assembly_holder/update_icon()
+/obj/item/assembly_holder/update_appearance(updates=ALL)
 	. = ..()
-	master?.update_appearance()
+	master?.update_appearance(updates)
 
 /obj/item/assembly_holder/update_overlays()
 	. = ..()

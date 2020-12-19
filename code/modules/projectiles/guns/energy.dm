@@ -140,6 +140,7 @@
 	return
 
 /obj/item/gun/energy/update_icon_state()
+	. = ..()
 	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon
 	var/skip_worn_icon = initial(worn_icon_state) //only build if we aren't using a preset worn icon
 

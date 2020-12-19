@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor_map"
+	base_icon_state = "conveyor"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
@@ -111,10 +112,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update()
 
 /obj/machinery/conveyor/update_icon_state()
-	if(machine_stat & BROKEN)
-		icon_state = "conveyor-broken"
-	else
-		icon_state = "conveyor[operating * verted]"
+	. = ..()
+	icon_state = "[base_icon_state][(machine_stat & BROKEN) ? "-broken" : (operating * verted)]"
 
 /obj/machinery/conveyor/proc/update()
 	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
@@ -246,6 +245,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	base_icon_state = "switch"
 	processing_flags = START_PROCESSING_MANUALLY
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
@@ -280,18 +280,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/update_icon_state()
-	if(position<0)
-		if(invert_icon)
-			icon_state = "switch-fwd"
-		else
-			icon_state = "switch-rev"
-	else if(position>0)
-		if(invert_icon)
-			icon_state = "switch-rev"
-		else
-			icon_state = "switch-fwd"
-	else
-		icon_state = "switch-off"
+	. = ..()
+	if(position < 0)
+		icon_state = "[base_icon_state]-[invert_icon ? "fwd" : "rev"]"
+		return
+	if(position > 0)
+		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
+		return
+	icon_state = "[base_icon_state]-off"
 
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()

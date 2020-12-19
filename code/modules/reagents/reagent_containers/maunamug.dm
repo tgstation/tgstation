@@ -3,6 +3,7 @@
 	desc = "A drink served in a classy mug. Now with built-in heating!"
 	icon = 'icons/obj/mauna_mug.dmi'
 	icon_state = "maunamug"
+	base_icon_state = "maunamug"
 	spillable = TRUE
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
@@ -100,14 +101,9 @@
 /obj/item/reagent_containers/glass/maunamug/update_icon_state()
 	. = ..()
 	if(open)
-		if(cell)
-			icon_state = "maunamug_bat"
-		else
-			icon_state = "maunamug_no_bat"
-	else if(on)
-		icon_state = "maunamug_on"
-	else
-		icon_state = "maunamug"
+		icon_state = "[base_icon_state][cell ? null : "_no"]_bat"
+		return
+	icon_state = "[base_icon_state][on ? "_on" : null]"
 
 /obj/item/reagent_containers/glass/maunamug/update_overlays()
 	. = ..()

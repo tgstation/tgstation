@@ -38,6 +38,7 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+	return ..()
 
 /obj/machinery/skill_station/update_overlays()
 	. = ..()

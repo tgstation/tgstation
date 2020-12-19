@@ -38,6 +38,7 @@
 		icon_state = "mmi_brain_alien"
 	else
 		icon_state = "mmi_brain"
+	return ..()
 
 /obj/item/mmi/update_overlays()
 	. = ..()

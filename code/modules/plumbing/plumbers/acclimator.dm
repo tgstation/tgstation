@@ -9,6 +9,7 @@
 	desc = "An efficient cooler and heater for the perfect showering temperature or illicit chemical factory."
 
 	icon_state = "acclimator"
+	base_icon_state = "acclimator"
 	buffer = 200
 
 	///towards wich temperature do we build?
@@ -59,12 +60,14 @@
 		update_appearance()
 
 /obj/machinery/plumbing/acclimator/update_icon_state()
-	icon_state = initial(icon_state)
 	switch(acclimate_state)
 		if(COOLING)
-			icon_state += "_cold"
+			icon_state = "[base_icon_state]_cold"
 		if(HEATING)
-			icon_state += "_hot"
+			icon_state = "[base_icon_state]_hot"
+		else
+			icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/plumbing/acclimator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

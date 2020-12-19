@@ -130,6 +130,7 @@
 		else
 			icon_state = "rcl-0"
 			inhand_icon_state = "rcl-0"
+	return ..()
 
 /obj/item/rcl/proc/is_empty(mob/user, loud = 1)
 	update_appearance()
@@ -343,3 +344,4 @@
 		else
 			icon_state = "rclg-1"
 			inhand_icon_state = "rclg-1"
+	return ..()

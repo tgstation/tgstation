@@ -68,6 +68,7 @@
 		setDir(ndir)
 
 /obj/structure/camera_assembly/update_icon_state()
+	. = ..()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"
 
 /obj/structure/camera_assembly/handle_atom_del(atom/A)
