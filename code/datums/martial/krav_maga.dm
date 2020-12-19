@@ -53,7 +53,7 @@
 		owner.visible_message("<span class='danger'>[owner] assumes the Lung Punch stance!</span>", "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		owner.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(mob/living/carbon/human/owner, make_temporary=FALSE)
+/datum/martial_art/krav_maga/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
 		to_chat(owner, "<span class='userdanger'>You know the arts of [name]!</span>")
 		to_chat(owner, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
@@ -67,7 +67,7 @@
 	legsweep.Remove(owner)
 	lungpunch.Remove(owner)
 
-/datum/martial_art/krav_maga/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/proc/check_streak(mob/living/A, mob/living/D)
 	switch(streak)
 		if("neck_chop")
 			streak = ""
@@ -83,7 +83,7 @@
 			return TRUE
 	return FALSE
 
-/datum/martial_art/krav_maga/proc/leg_sweep(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/proc/leg_sweep(mob/living/A, mob/living/D)
 	if(D.stat || D.IsParalyzed())
 		return FALSE
 	var/obj/item/bodypart/affecting = D.get_bodypart(BODY_ZONE_CHEST)
@@ -97,7 +97,7 @@
 	log_combat(A, D, "leg sweeped")
 	return TRUE
 
-/datum/martial_art/krav_maga/proc/quick_choke(mob/living/carbon/human/A, mob/living/carbon/human/D)//is actually lung punch
+/datum/martial_art/krav_maga/proc/quick_choke(mob/living/A, mob/living/D)//is actually lung punch
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 					"<span class='userdanger'>Your chest is slammed by [A]! You can't breathe!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You pound [D] on the chest!</span>")
@@ -108,24 +108,26 @@
 	log_combat(A, D, "quickchoked")
 	return TRUE
 
-/datum/martial_art/krav_maga/proc/neck_chop(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/proc/neck_chop(mob/living/A, mob/living/D)
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 					"<span class='userdanger'>Your neck is karate chopped by [A], rendering you unable to speak!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You karate chop [D]'s neck, rendering [D.p_them()] unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	D.apply_damage(5, A.get_attack_type())
-	if(D.silent <= 10)
-		D.silent = clamp(D.silent + 10, 0, 10)
+	if (iscarbon(D))
+		var/mob/living/carbon/carbon_defender = D
+		if(carbon_defender.silent <= 10)
+			carbon_defender.silent = clamp(carbon_defender.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
 	return TRUE
 
-/datum/martial_art/krav_maga/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/grab_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "grabbed (Krav Maga)")
 	..()
 
-/datum/martial_art/krav_maga/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/harm_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "punched")
@@ -149,7 +151,7 @@
 	log_combat(A, D, "[picked_hit_type] with [name]")
 	return TRUE
 
-/datum/martial_art/krav_maga/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/disarm_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
