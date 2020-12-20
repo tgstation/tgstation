@@ -372,9 +372,9 @@
 /datum/action/regurgitate
 	name = "Regurgitate"
 	desc = "Regurgitates a single item from the depths of your pouch."
-	background_icon_state = "bg_hive"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	button_icon_state = "consume"
+	background_icon_state = "bg_changeling"
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/regurgitate/Trigger()
@@ -385,5 +385,5 @@
 	if(!pouch_owner.prank_pouch.len)
 		return
 	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
-	//bugged_shit
+	projected_morsel.forceMove(src)
 	projected_morsel.throw_at(get_step(7, owner.dir), 7, projected_morsel.throw_speed, owner)
