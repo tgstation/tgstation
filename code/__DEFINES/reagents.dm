@@ -4,12 +4,13 @@
 
 /// Moles per reagent unit. Used to convert between reagent units and gases.
 #define REAGENT_MOLE_DENSITY	10
+
 /// The boiling point of water.
-#define BP_WATER			(T0C+100)
-/// The boiling point of nitrogen.
-#define BP_NITROGEN			(300+10)
-/// The boiling point of oxygen.
-#define BP_OXYGEN			(300+10)
+#define BP_WATER			(T0C + 100)
+/// The boiling point of nitrogen. Should remain above 300 while the chem dispenser exists.
+#define BP_NITROGEN			(310)
+/// The boiling point of oxygen. Should remain above 300 while the chem dispenser exists.
+#define BP_OXYGEN			(310)
 /// The boiling point of CO2.
 #define BP_CARBON_DIOXIDE	(195)
 /// The boiling point of nitrous oxide.
