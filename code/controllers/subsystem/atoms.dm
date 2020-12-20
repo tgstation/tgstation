@@ -14,8 +14,9 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
-	var/list/created_atoms = list()
-	var/is_returning_atom_list = FALSE
+
+	var/creating_atoms_list = FALSE //if this is true then ssAtoms is currently recording every atom initialized from a map template
+	var/list/created_atoms = list() //initAtom() adds the atom its creating to this list if creating_atoms_list is true
 
 	initialized = INITIALIZATION_INSSATOMS
 
@@ -34,8 +35,9 @@ SUBSYSTEM_DEF(atoms)
 
 	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+
 	if (atoms_to_return)
-		is_returning_atom_list = TRUE
+		creating_atoms_list = TRUE
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
@@ -66,8 +68,8 @@ SUBSYSTEM_DEF(atoms)
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 
-	if (is_returning_atom_list)
-		is_returning_atom_list = FALSE
+	if (creating_atoms_list)
+		creating_atoms_list = FALSE
 		atoms_to_return += created_atoms
 		created_atoms.Cut()
 
@@ -108,7 +110,7 @@ SUBSYSTEM_DEF(atoms)
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
-	if (is_returning_atom_list)
+	if (creating_atoms_list)
 		created_atoms += A
 
 	return qdeleted || QDELING(A)

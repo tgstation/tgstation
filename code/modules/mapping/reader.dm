@@ -22,8 +22,6 @@
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
-	var/returns_created_atoms = FALSE
-	var/list/created_atoms = list()
 	var/list/turf_blacklist = list()
 
 	// raw strings used to represent regexes more accurately
@@ -189,9 +187,6 @@
 							if(!cache)
 								CRASH("Undefined model key in DMM: [model_key]")
 							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
-							//TODO: make it impossible for turfs in blacklist to have build_coordinate called on their coordinates
-							//so that build_coordinate doesnt have to go through the entire list every time, its just figured out once
-							//might not be possible?
 
 							// only bother with bounds that actually exist
 							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
@@ -313,7 +308,7 @@
 
 	for (var/_turf in turf_blacklist)
 		var/turf/turf_in_blacklist = _turf
-		if (crds == turf_in_blacklist)
+		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
 			return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
@@ -486,4 +481,9 @@
 
 /datum/parsed_map/Destroy()
 	..()
+	turf_blacklist.Cut()
+	parsed_bounds.Cut()
+	bounds.Cut()
+	grid_models.Cut()
+	gridSets.Cut()
 	return QDEL_HINT_HARDDEL_NOW

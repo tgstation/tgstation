@@ -31,7 +31,11 @@
 			cached_map = parsed
 	return bounds
 
-/datum/parsed_map/proc/initTemplateBounds()
+/datum/map_template/proc/initTemplateBounds(list/bounds)
+	if (!bounds)
+		message_admins("[name] template failed to initialize!")
+		return
+
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -90,7 +94,7 @@
 	var/y = round((world.maxy - height) * 0.5) + 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -98,7 +102,7 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
+	initTemplateBounds(bounds)
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
@@ -128,7 +132,7 @@
 
 	update_blacklist(T)
 
-	parsed.returns_created_atoms = returns_created_atoms
+	//parsed.returns_created_atoms = returns_created_atoms
 	parsed.turf_blacklist = turf_blacklist
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
@@ -140,9 +144,8 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
-	created_atoms = parsed.created_atoms
-
+	initTemplateBounds(bounds)
+	turf_blacklist.Cut()
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds

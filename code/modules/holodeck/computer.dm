@@ -3,24 +3,23 @@
 
 	Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the
 	same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
-	flag), these program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
-	ui calls load_program with the id of the selected program. load program map_template/load() on map_template/holodeck, holodeck map templates
+	flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
+	ui calls load_program() with the id of the selected program.
+	load_program() -> map_template/load() on map_template/holodeck.
+	holodeck map templates:
 	1. have an update_blacklist that doesnt allow placing on non holofloors
 	2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
 	3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
 	all the fancy flags and shit are added to holodeck objects in finish_spawn()
 
-
-	Easiest way to add new holodeck programs
-	1) Define new map template datums in code/modules/holodeck/holodeck_map_templates
-	2) Create the new map templates in _maps/templates (remember theyre 9x10)
-	3) Create a new holodeck console that uses those templates
-
-
+	Easiest way to add new holodeck programs:
+	1) Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
+	   of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
+	2) Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
 */
 
 #define HOLODECK_CD 25
-#define HOLODECK_DMG_CD 500
+#define HOLODECK_DMG_CD 50
 
 
 /obj/machinery/computer/holodeck
@@ -30,22 +29,24 @@
 	idle_power_usage = 10
 	active_power_usage = 50
 
-	var/area/holodeck/linked
+	var/area/holodeck/linked //the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
 	var/area/mappedstartarea = /area/holodeck/rec_center //change this to a different area if youre making a second holodeck different from the station one
-	var/program = "holodeck_offline"
+	var/program = "holodeck_offline" //what program is loaded right now
 	var/last_program
-	var/offline_program = "holodeck_offline"
-	var/holodeck_access = STATION_HOLODECK
+	var/offline_program = "holodeck_offline" //the default program loaded by this holodeck when spawned and when deactivated
+	var/holodeck_access = STATION_HOLODECK //what access type this holodeck has, used to specify programs for another holodeck that others cant load
 
-	var/list/program_cache
-	var/list/emag_programs
+	var/list/program_cache //this stores all of the unrestricted holodeck map templates that this computer has access to
+	var/list/emag_programs //as above, but for restricted ones that requires the safeties to be disabled to load
 
 	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
 
+	var/list/spawned = list() //every holo object created by the holodeck goes in here to track it
+	var/list/effects = list() //like above, but for holo effects
+
 	var/active = FALSE
 	var/damaged = FALSE
-	var/list/spawned = list()
-	var/list/effects = list()
+
 	var/current_cd = 0
 	var/datum/map_template/holodeck/template
 	var/turf/bottom_left
@@ -83,8 +84,9 @@
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
-	load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
+	load_program(offline_program,TRUE)
 
+///adds all programs that this holodeck has access to, and separates the restricted and unrestricted ones
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/program = typekey
@@ -144,8 +146,8 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating)
 
+///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement)
 	turf_blacklist.Cut()
 	for (var/_turf in get_affected_turfs(placement))
@@ -178,39 +180,43 @@
 	program = map_id
 
 	//clear the items from the previous program
-	if (spawned)
-		for (var/_item in spawned)
-			var/obj/holo_item = _item
-			derez(holo_item)
-	if (effects)
-		for (var/_effect in effects)
-			var/obj/effect/holodeck_effect/holo_effect = _effect
-			effects -= holo_effect
-			holo_effect.deactivate(src)
+	for (var/_item in spawned)
+		var/obj/holo_item = _item
+		derez(holo_item)
 
-	//makes sure that any time a holoturf is inside a baseturf list (if someone put a wall over it) its set to the OFFLINE turf
+	for (var/_effect in effects)
+		var/obj/effect/holodeck_effect/holo_effect = _effect
+		effects -= holo_effect
+		holo_effect.deactivate(src)
+
+	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
 	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
-	/*
 	for (var/turf/closed/holo_turf in linked)
 		for (var/_baseturf in holo_turf.baseturfs)
 			if (ispath(_baseturf, /turf/open/floor/holofloor))
 				holo_turf.baseturfs -= _baseturf
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
-				*/
+
 
 	template = SSmapping.holodeck_templates[map_id]
-	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
+	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
-	spawned = template.created_atoms
+	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
 
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
 
-/obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
+///finalizes objects in the spawned list
+/obj/machinery/computer/holodeck/proc/finish_spawn()
+	//this is used for holodeck effects (like spawners). otherwise they dont do shit
+	//holo effects are taken out of the spawned list and added to the effects list
+	//turfs are taken out of the spawned list
+	//objects get resistance flags added to them
 	for (var/_atom in spawned)
 		var/atom/atoms = _atom
 
-		if (isturf(atoms))
+		if (isturf(atoms)) //ssatoms
+			message_admins("[atoms.name] is being taken out of the spawned list")
 			var/turf/holo_turf = atoms
 			spawned -= holo_turf
 
@@ -223,10 +229,15 @@
 			var/atom/active_effect = holo_effect.activate(src)
 			if(istype(active_effect) || islist(active_effect))
 				spawned += active_effect // holocarp are not forever
+			continue
 
 		if (isobj(atoms))
 			var/obj/holo_object = atoms
 			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+			if (isstructure(holo_object))
+				holo_object.flags_1 |= NODECONSTRUCT_1
+				continue
 
 			if (ismachinery(holo_object))
 				var/obj/machinery/machines = holo_object
@@ -237,20 +248,15 @@
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
 
-			if (isstructure(holo_object))
-				holo_object.flags_1 |= NODECONSTRUCT_1
-
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
 	if(!object)
 		return
 
 	spawned -= object
-	//var/turf/target_turf = get_turf(object)
-	//for(var/atom/movable/object_contents in object) // these should be derezed if they were generated
-	//	object_contents.forceMove(target_turf)
-	//	if(ismob(object_contents))
-		//	silent = FALSE // otherwise make sure they are dropped
+	var/turf/target_turf = get_turf(object)
+	for(var/atom/movable/object_contents in object) //make sure that things inside of a holoitem are moved outside before destroying it
+		object_contents.forceMove(target_turf)
 
 	if(!silent)
 		visible_message("<span class='notice'>[object] fades away!</span>")
@@ -267,7 +273,7 @@
 	if(!..() || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
 		return
 
-	if(!floorcheck())
+	if(!floorcheck()) //if any turfs in the floor of the holodeck are broken
 		emergency_shutdown()
 		damaged = TRUE
 		for(var/mob/can_see_fuckup in urange(10,src))
@@ -305,11 +311,13 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
 
+///shuts down the holodeck and force loads the offline_program
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	active = FALSE
 	load_program(offline_program, TRUE)
 
+///returns TRUE if the entire floor of the holodeck is intact, returns FALSE if any are broken
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
 		if(isspaceturf(holo_floor))
@@ -363,12 +371,12 @@
 	return ..()
 
 
-/obj/machinery/computer/holodeck/offstation
+/obj/machinery/computer/holodeck/offstation //second holodeck if you want to add one to a ruin :flushed:
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	offline_program = "holodeck_offline"
 	holodeck_access = CUSTOM_HOLODECK_ONE
-	//mappedstartarea = /area/holodeck/rec_center/offstation_one
+	mappedstartarea = /area/holodeck/rec_center/offstation_one
 
 /obj/machinery/computer/holodeck/offstation/LateInitialize()
 	holodeck_access |= STATION_HOLODECK
